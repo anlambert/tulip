@@ -302,6 +302,8 @@ jobs:
         - sudo port -N install ninja
         - sudo port -N install qhull
         - sudo port -N install yajl
+        - sudo port -N install freetype
+        - sudo port -N install glew
         - sudo port -N install pkgconfig
         - sudo port -N install cppunit
       env:
@@ -317,9 +319,13 @@ jobs:
             -DCMAKE_C_COMPILER=/opt/local/bin/clang-mp-9.0
             -DCMAKE_CXX_COMPILER=/opt/local/bin/clang++-mp-9.0
             -DPYTHON_EXECUTABLE=/usr/bin/python2.7
+            -DZLIB_INCLUDE_DIR=/opt/local/include
+            -DZLIB_LIBRARY_RELEASE=/opt/local/lib/libz.dylib
+            -DGLEW_SHARED_LIBRARY_RELEASE=/opt/local/lib/libGLEW.dylib
             -DTALIPOT_BUILD_TESTS=ON
             -DTALIPOT_USE_CCACHE=ON
-            -DTALIPOT_BUILD_CORE_ONLY=ON || travis_terminate 1
+            -DTALIPOT_BUILD_CORE_ONLY=ON
+            -DTALIPOT_BUILD_OGL=ON || travis_terminate 1
         # compile Talipot using ninja for faster builds
         - ninja -j4 || travis_terminate 1
         - ninja -j4 install || travis_terminate 1

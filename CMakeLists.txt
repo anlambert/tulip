@@ -199,6 +199,12 @@ ELSE()
   SET(TALIPOT_BUILD_CORE_ONLY OFF CACHE BOOL "Do you want a minimal build of Talipot (no OpenGL rendering, no Qt gui, no documentation) ? [ON|OFF]")
 ENDIF()
 
+IF(TALIPOT_BUILD_CORE_ONLY)
+  # Allow to build OpenGL components to tweak CI builds and cache more
+  # compiled object files between stages.
+  SET(TALIPOT_BUILD_OGL OFF CACHE BOOL "")
+ENDIF(TALIPOT_BUILD_CORE_ONLY)
+
 SET(TALIPOT_PYTHON_ROOT_FOLDER ${CMAKE_BINARY_DIR}/library/talipot-python/bindings/talipot-core/talipot_module)
 SET(TALIPOT_PYTHON_FOLDER ${TALIPOT_PYTHON_ROOT_FOLDER}/talipot)
 SET(TALIPOTGUI_PYTHON_ROOT_FOLDER ${CMAKE_BINARY_DIR}/library/talipot-python/bindings/talipot-gui/talipotgui_module)
@@ -252,7 +258,8 @@ FIND_PACKAGE(Qhull)
 #Yajl
 FIND_PACKAGE(Yajl)
 
-IF(NOT TALIPOT_BUILD_CORE_ONLY)
+IF(NOT TALIPOT_BUILD_CORE_ONLY OR TALIPOT_BUILD_OGL)
+
   # OpenGL
   FIND_PACKAGE(OpenGL REQUIRED)
 
@@ -270,6 +277,9 @@ IF(NOT TALIPOT_BUILD_CORE_ONLY)
 
   # Freetype
   FIND_PACKAGE(Freetype REQUIRED)
+ENDIF(NOT TALIPOT_BUILD_CORE_ONLY OR TALIPOT_BUILD_OGL)
+
+IF(NOT TALIPOT_BUILD_CORE_ONLY)
 
   # Qt
   FIND_PACKAGE(QtX)
@@ -287,12 +297,12 @@ INCLUDE(cmake/TalipotPython.cmake)
 ## ========================================================
 SET(GZStreamInclude ${PROJECT_SOURCE_DIR}/thirdparty/gzstream/)
 SET(GZStreamLibrary gzstream-talipot-${TalipotMMVersion})
-IF(NOT TALIPOT_BUILD_CORE_ONLY)
+IF(NOT TALIPOT_BUILD_CORE_ONLY OR TALIPOT_BUILD_OGL)
   SET(FTGLInclude ${PROJECT_SOURCE_DIR}/thirdparty/ftgl/)
   SET(FTGLLibrary ftgl-talipot-${TalipotMMVersion})
   SET(Tess2Include ${PROJECT_SOURCE_DIR}/thirdparty/libtess2/Include)
   SET(Tess2Library tess2-talipot-${TalipotMMVersion})
-ENDIF(NOT TALIPOT_BUILD_CORE_ONLY)
+ENDIF(NOT TALIPOT_BUILD_CORE_ONLY OR TALIPOT_BUILD_OGL)
 
 SET(OGDFInclude ${PROJECT_SOURCE_DIR}/thirdparty/OGDF/include)
 SET(OGDFLibrary OGDF-talipot-${TalipotMMVersion})
