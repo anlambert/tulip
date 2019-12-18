@@ -33,20 +33,6 @@
 
 #include "ui_FindReplaceDialog.h"
 
-#if (QT_VERSION < QT_VERSION_CHECK(5, 11, 0))
-#define FONT_METRICS_WIDTH(ch) fontMetrics().width(QLatin1Char(ch))
-#else
-#define FONT_METRICS_WIDTH(ch) fontMetrics().horizontalAdvance(QLatin1Char(ch))
-#endif
-
-#if (QT_VERSION < QT_VERSION_CHECK(5, 10, 0))
-#define TAB_STOP_WIDTH tabStopWidth()
-#define SET_TAB_STOP_WIDTH(w) setTabStopWidth(w)
-#else
-#define TAB_STOP_WIDTH tabStopDistance()
-#define SET_TAB_STOP_WIDTH(w) setTabStopDistance(w)
-#endif
-
 using namespace std;
 using namespace tlp;
 
@@ -547,7 +533,7 @@ int PythonCodeEditor::lineNumberAreaWidth() const {
     ++digits;
   }
 
-  int space = 3 + FONT_METRICS_WIDTH('9') * digits;
+  int space = 3 + charWidth('9') * digits;
   return space;
 }
 
@@ -601,7 +587,7 @@ static float clamp(float f, float minV, float maxV) {
 }
 
 void PythonCodeEditor::updateTabStopWidth() {
-  SET_TAB_STOP_WIDTH(2 * FONT_METRICS_WIDTH(' '));
+  setTabWidth(2 * charWidth(' '));
 }
 
 void PythonCodeEditor::zoomIn() {
@@ -650,9 +636,9 @@ void PythonCodeEditor::paintEvent(QPaintEvent *event) {
 
     for (int i = 0; i < _toolTipPos.y(); ++i) {
       if (blockText[i] == '\t') {
-        left += TAB_STOP_WIDTH;
+        left += tabWidth();
       } else {
-        left += FONT_METRICS_WIDTH(blockText[i].toLatin1());
+        left += charWidth(blockText[i].toLatin1());
       }
     }
 
@@ -664,7 +650,7 @@ void PythonCodeEditor::paintEvent(QPaintEvent *event) {
       int w = 0;
 
       for (int j = 0; j < toolTipLines[i].length(); ++j) {
-        w += FONT_METRICS_WIDTH(toolTipLines[i][j].toLatin1());
+        w += charWidth(toolTipLines[i][j].toLatin1());
       }
 
       width = std::max(w, width);
@@ -674,7 +660,7 @@ void PythonCodeEditor::paintEvent(QPaintEvent *event) {
 #ifndef __APPLE__
     QRect tooltipRect(tPos, tPos + QPoint(width, height));
 #else
-    QRect tooltipRect(tPos, tPos + QPoint(width + 2 * FONT_METRICS_WIDTH(' '), height));
+    QRect tooltipRect(tPos, tPos + QPoint(width + 2 * charWidth(' '), height));
 #endif
     painter.drawRect(tooltipRect);
     painter.fillRect(tooltipRect, QColor(249, 251, 100, 200));
@@ -707,19 +693,19 @@ void PythonCodeEditor::paintEvent(QPaintEvent *event) {
 
       for (int i = 0; i < text.length(); ++i) {
         if (text[i] == ' ')
-          indentVal += FONT_METRICS_WIDTH(' ');
+          indentVal += charWidth(' ');
         else if (text[i] == '\t')
-          indentVal += TAB_STOP_WIDTH;
+          indentVal += tabWidth();
         else
           break;
       }
 
       int i = 1;
 
-      while (indentVal > TAB_STOP_WIDTH) {
-        painter.drawLine(contentOffset().x() + i * TAB_STOP_WIDTH + 4, top,
-                         contentOffset().x() + i * TAB_STOP_WIDTH + 4, bottom);
-        indentVal -= TAB_STOP_WIDTH;
+      while (indentVal > tabWidth()) {
+        painter.drawLine(contentOffset().x() + i * tabWidth() + 4, top,
+                         contentOffset().x() + i * tabWidth() + 4, bottom);
+        indentVal -= tabWidth();
         ++i;
       }
     }
@@ -1239,9 +1225,9 @@ void PythonCodeEditor::updateAutoCompletionListPosition() {
 
   for (int i = 0; i < stop; ++i) {
     if (textBeforeCursor[i] == '\t') {
-      pos += TAB_STOP_WIDTH;
+      pos += tabWidth();
     } else {
-      pos += FONT_METRICS_WIDTH(textBeforeCursor[i].toLatin1());
+      pos += charWidth(textBeforeCursor[i].toLatin1());
     }
   }
 
@@ -1687,4 +1673,28 @@ void PythonCodeEditor::setPlainText(const QString &text) {
   setCurrentCharFormat(format);
   setTextCursor(cursor);
   updateTabStopWidth();
+}
+
+inline qreal PythonCodeEditor::tabWidth() const {
+#if (QT_VERSION < QT_VERSION_CHECK(5, 10, 0))
+  return tabStopWidth();
+#else
+  return tabStopDistance();
+#endif
+}
+
+inline void PythonCodeEditor::setTabWidth(qreal width) {
+#if (QT_VERSION < QT_VERSION_CHECK(5, 10, 0))
+  setTabStopWidth(width);
+#else
+  setTabStopDistance(width);
+#endif
+}
+
+inline int PythonCodeEditor::charWidth(char c) const {
+#if (QT_VERSION < QT_VERSION_CHECK(5, 11, 0))
+  return fontMetrics().width(QLatin1Char(c));
+#else
+  return fontMetrics().horizontalAdvance(QLatin1Char(c));
+#endif
 }

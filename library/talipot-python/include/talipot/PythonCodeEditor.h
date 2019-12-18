@@ -105,6 +105,11 @@ public:
 
   int lineNumberAreaWidth() const;
 
+  qreal tabWidth() const;
+  void setTabWidth(qreal width);
+
+  int charWidth(char c) const;
+
   void indicateScriptCurrentError(int lineNumber);
   void clearErrorIndicator();
 
