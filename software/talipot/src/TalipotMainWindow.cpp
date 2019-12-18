@@ -812,10 +812,9 @@ void TalipotMainWindow::importGraph(const std::string &module, DataSet &data) {
     }
 
     if (g->getName().empty()) {
-      QString n =
-          tlp::tlpStringToQString(module) + " - " + tlp::tlpStringToQString(data.toString());
-      n.replace(QRegExp("[\\w]*::"), ""); // remove words before "::"
-      g->setName(tlp::QStringToTlpString(n));
+      g->setName(module);
+      g->setAttribute("Import algorithm", module);
+      g->setAttribute("Import parameters", data.toString());
     }
   } else {
     g = tlp::newGraph();
