@@ -169,26 +169,25 @@ void GraphHierarchiesEditor::contextMenuRequested(const QPoint &p) {
     menu.addSeparator();
     menu.addAction(_ui->actionRename);
     menu.addSeparator();
-    auto subMenu = menu.addMenu("Create");
-    subMenu->addAction(_ui->actionAdd_sub_graph);
-    subMenu->addAction(_ui->actionCreate_induced_sub_graph);
-    subMenu->addAction(_ui->actionClone_subgraph);
+    menu.addAction(_ui->actionAdd_sub_graph);
+    menu.addAction(_ui->actionCreate_induced_sub_graph);
+    menu.addAction(_ui->actionClone_subgraph);
 
     if (_contextGraph->getRoot() != _contextGraph) {
-      subMenu->addAction(_ui->actionClone_sibling);
-      subMenu->addAction(_ui->actionClone_sibling_with_properties);
+      menu.addAction(_ui->actionClone_sibling);
+      menu.addAction(_ui->actionClone_sibling_with_properties);
     }
-    subMenu = menu.addMenu("Delete");
+    menu.addSeparator();
     if (_contextGraph->getRoot() != _contextGraph) {
-      subMenu->addAction(_ui->actionDelete_graph);
+      menu.addAction(_ui->actionDelete_graph);
     }
 
-    subMenu->addAction(_ui->actionDelete_All);
-    subMenu->addAction(_ui->actionDelete_all_nodes);
-    subMenu->addAction(_ui->actionDelete_all_edges);
-    subMenu->addAction(_ui->actionDelete_selection);
+    menu.addAction(_ui->actionDelete_All);
+    menu.addAction(_ui->actionDelete_all_nodes);
+    menu.addAction(_ui->actionDelete_all_edges);
+    menu.addAction(_ui->actionDelete_selection);
     if (_contextGraph->getRoot() != _contextGraph)
-      subMenu->addAction(_ui->actionDelete_selection_from_root_graph);
+      menu.addAction(_ui->actionDelete_selection_from_root_graph);
     if (!_contextGraph->subGraphs().empty()) {
       menu.addSeparator();
       if (!_ui->hierarchiesTree->isExpanded(_contextIndex))
