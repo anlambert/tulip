@@ -1006,9 +1006,9 @@ void TalipotMainWindow::openProjectFile(const QString &path) {
 
 void TalipotMainWindow::initPythonIDE() {
   _pythonIDE->setProject(_project);
+  _pythonIDE->setAnchored(Settings::instance().pythonIDEAnchored());
   if (Settings::instance().pythonIDEAnchored()) {
     _pythonIDE->setVisible(false);
-    _pythonIDE->setAnchored(true);
     _pythonIDE->setParent(nullptr);
     _ui->mainSplitter->addWidget(_pythonIDE);
     _ui->mainSplitter->setCollapsible(2, false);
