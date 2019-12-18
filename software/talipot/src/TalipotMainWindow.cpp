@@ -427,10 +427,7 @@ TalipotMainWindow::TalipotMainWindow()
     _ui->actionShowAPIDocumentation->setVisible(false);
   }
 
-  // Setting initial sizes for splitters
-  _ui->mainSplitter->setSizes(QList<int>() << 350 << 850);
-  _ui->mainSplitter->setStretchFactor(0, 0);
-  _ui->mainSplitter->setStretchFactor(1, 1);
+  _ui->mainSplitter->setCollapsible(0, false);
   _ui->mainSplitter->setCollapsible(1, false);
 
   connect(_project, &Project::projectFileChanged, this, &TalipotMainWindow::projectFileChanged);
@@ -1011,7 +1008,6 @@ void TalipotMainWindow::initPythonIDE() {
     _pythonIDE->setVisible(false);
     _pythonIDE->setParent(nullptr);
     _ui->mainSplitter->addWidget(_pythonIDE);
-    _ui->mainSplitter->setCollapsible(2, false);
     _ui->developButton->setCheckable(true);
   }
 }
@@ -1023,13 +1019,15 @@ void TalipotMainWindow::anchoredPythonIDE(bool anchored) {
     _pythonIDEDialog->hide();
     _pythonIDE->setParent(nullptr);
     _ui->mainSplitter->addWidget(_pythonIDE);
-    _ui->mainSplitter->setCollapsible(2, false);
+    _ui->mainSplitter->setCollapsible(1, true);
+    _ui->mainSplitter->setCollapsible(2, true);
     _ui->developButton->setChecked(anchored);
   } else {
     _pythonIDE->setParent(nullptr);
     _pythonIDEDialog->layout()->addWidget(_pythonIDE);
     _pythonIDEDialog->show();
     _ui->developButton->setChecked(false);
+    _ui->mainSplitter->setCollapsible(1, false);
   }
 }
 
@@ -1601,6 +1599,8 @@ void TalipotMainWindow::showPythonIDE() {
   } else {
     _pythonIDE->setVisible(!_pythonIDE->isVisible());
     _ui->developButton->setChecked(_pythonIDE->isVisible());
+    _ui->mainSplitter->setCollapsible(1, _pythonIDE->isVisible());
+    _ui->mainSplitter->setCollapsible(2, _pythonIDE->isVisible());
   }
 }
 
