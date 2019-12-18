@@ -1460,7 +1460,7 @@ void TalipotMainWindow::showStartPanels(Graph *g) {
   }
 
   _ui->workspace->setActivePanel(firstPanel);
-  _ui->workspace->switchToSplitMode();
+  _ui->workspace->switchToSplitHorizontalMode();
 }
 
 void TalipotMainWindow::applyRandomLayout(Graph *g) {
