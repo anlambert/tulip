@@ -94,35 +94,6 @@ padding-top: 5px;
     <number>0</number>
    </property>
    <item>
-    <widget class="QFrame" name="horizontalFrame_2">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_4">
-      <item>
-       <widget class="QLabel" name="title">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>36</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold;
-	       color: #595959;</string>
-        </property>
-        <property name="text">
-         <string>&lt;font size=&quot;5&quot;&gt;Layer settings&lt;/font&gt;</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
     <widget class="QScrollArea" name="scrollArea">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -168,7 +139,7 @@ padding-top: 5px;
         <number>0</number>
        </property>
        <property name="rightMargin">
-        <number>20</number>
+        <number>0</number>
        </property>
        <property name="bottomMargin">
         <number>0</number>
@@ -178,12 +149,24 @@ padding-top: 5px;
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>
+         <property name="autoScrollMargin">
+          <number>16</number>
+         </property>
          <property name="editTriggers">
           <set>QAbstractItemView::AllEditTriggers</set>
          </property>
-         <property name="section" stdset="0">
+         <property name="indentation">
+          <number>20</number>
+         </property>
+         <property name="expandsOnDoubleClick">
           <bool>true</bool>
          </property>
+         <property name="section" stdset="0">
+          <bool>false</bool>
+         </property>
+         <attribute name="headerVisible">
+          <bool>true</bool>
+         </attribute>
         </widget>
        </item>
       </layout>
