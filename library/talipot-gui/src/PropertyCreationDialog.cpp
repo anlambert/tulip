@@ -62,7 +62,7 @@ void PropertyCreationDialog::initGui() {
   labels << propertyTypeToPropertyTypeLabel("vector<size>");
   labels << propertyTypeToPropertyTypeLabel("vector<string>");
   ui->propertyTypeComboBox->addItems(labels);
-  _createPropertyButton = ui->buttonBox->addButton(tr("Create"), QDialogButtonBox::AcceptRole);
+  _createPropertyButton = ui->buttonBox->addButton("Create", QDialogButtonBox::AcceptRole);
   ui->errorIconLabel->setPixmap(
       QApplication::style()->standardIcon(QStyle::SP_MessageBoxWarning).pixmap(16, 16));
   connect(ui->propertyNameLineEdit, SIGNAL(textChanged(QString)), this, SLOT(checkValidity()));
@@ -130,17 +130,17 @@ void PropertyCreationDialog::checkValidity() {
   QString propertyName = ui->propertyNameLineEdit->text();
 
   if (_graph == nullptr) {
-    ui->errorLabel->setText(tr("You need to specify a parent graph"));
+    ui->errorLabel->setText("You need to specify a parent graph");
     ui->errorNotificationWidget->setVisible(true);
     _createPropertyButton->setEnabled(false);
     return;
   } else if (propertyName.isEmpty()) {
-    ui->errorLabel->setText(tr("You cannot create a property with an empty name"));
+    ui->errorLabel->setText("You cannot create a property with an empty name");
     _createPropertyButton->setEnabled(false);
     ui->errorNotificationWidget->setVisible(true);
     return;
   } else if (_graph->existLocalProperty(QStringToTlpString(propertyName))) {
-    ui->errorLabel->setText(tr("A property with the same name already exists"));
+    ui->errorLabel->setText("A property with the same name already exists");
     _createPropertyButton->setEnabled(false);
     ui->errorNotificationWidget->setVisible(true);
     return;

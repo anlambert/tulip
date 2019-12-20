@@ -226,12 +226,11 @@ void MatrixView::fillContextMenu(QMenu *menu, const QPointF &point) {
       return s + (isNode ? " node #" : " edge #") + sId;
     };
 
-    QAction *action =
-        menu->addAction(tr("Toggle selection"), this, SLOT(addRemoveItemToSelection()));
+    QAction *action = menu->addAction("Toggle selection", this, SLOT(addRemoveItemToSelection()));
     action->setToolTip(genEltToolTip("Invert the selection of the"));
-    action = menu->addAction(tr("Select"), this, SLOT(selectItem()));
+    action = menu->addAction("Select", this, SLOT(selectItem()));
     action->setToolTip(genEltToolTip("Select the"));
-    action = menu->addAction(tr("Delete"), this, SLOT(deleteItem()));
+    action = menu->addAction("Delete", this, SLOT(deleteItem()));
     action->setToolTip(genEltToolTip("Delete the"));
   }
 }

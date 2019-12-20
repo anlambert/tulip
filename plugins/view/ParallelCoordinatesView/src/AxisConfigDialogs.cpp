@@ -154,7 +154,7 @@ NominalAxisConfigDialog::NominalAxisConfigDialog(NominalParallelAxis *axis)
   labelsOrderLayout->addWidget(axisLabelsOrder);
   labelsOrderLayout->addLayout(buttonsUpDownLayout);
 
-  dialogLayout->addWidget(new QLabel(tr("Axis Labels Order")));
+  dialogLayout->addWidget(new QLabel("Axis Labels Order"));
   dialogLayout->addLayout(labelsOrderLayout);
   okButtonLayout->addStretch(1);
   okButtonLayout->addWidget(okButton);

@@ -68,7 +68,7 @@ void CSVParsingConfigurationQWizardPage::parserChanged() {
     previewTableWidget->setEnabled(true);
     SimplePluginProgressDialog progress(this);
     progress.showPreview(false);
-    progress.setWindowTitle(tr("Parsing file"));
+    progress.setWindowTitle("Parsing file");
     parser->parse(previewTableWidget, &progress);
     unsigned int nbCommentsLines = previewTableWidget->getNbCommentsLines();
 

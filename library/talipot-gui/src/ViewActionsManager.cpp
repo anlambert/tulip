@@ -28,7 +28,7 @@ ViewActionsManager::ViewActionsManager(View *view, GlMainWidget *widget, bool ke
   _forceRedrawAction = new QAction("Force redraw", widget);
   setToolTipWithCtrlShortcut(_forceRedrawAction, "Redraw the current view", "Shift+R");
   connect(_forceRedrawAction, SIGNAL(triggered()), this, SLOT(redraw()));
-  _forceRedrawAction->setShortcut(tr("Ctrl+Shift+R"));
+  _forceRedrawAction->setShortcut(QKeySequence("Ctrl+Shift+R"));
   _forceRedrawAction->setShortcutContext(Qt::WidgetWithChildrenShortcut);
   _view->graphicsView()->addAction(_forceRedrawAction);
 
@@ -36,7 +36,7 @@ ViewActionsManager::ViewActionsManager(View *view, GlMainWidget *widget, bool ke
   setToolTipWithCtrlShortcut(_centerViewAction,
                              "Make the view to fully display and center its contents", "Shif+C");
   connect(_centerViewAction, SIGNAL(triggered()), this, SLOT(centerView()));
-  _centerViewAction->setShortcut(tr("Ctrl+Shift+C"));
+  _centerViewAction->setShortcut(QKeySequence("Ctrl+Shift+C"));
   _centerViewAction->setShortcutContext(Qt::WidgetWithChildrenShortcut);
   _view->graphicsView()->addAction(_centerViewAction);
 
@@ -44,7 +44,7 @@ ViewActionsManager::ViewActionsManager(View *view, GlMainWidget *widget, bool ke
   setToolTipWithCtrlShortcut(
       _snapshotAction, "Show a dialog to save a snapshot of the current view display", "Shift+P");
   connect(_snapshotAction, SIGNAL(triggered()), this, SLOT(openSnapshotDialog()));
-  _snapshotAction->setShortcut(tr("Ctrl+Shift+P"));
+  _snapshotAction->setShortcut(QKeySequence("Ctrl+Shift+P"));
   _snapshotAction->setShortcutContext(Qt::WidgetWithChildrenShortcut);
   _view->graphicsView()->addAction(_snapshotAction);
 }

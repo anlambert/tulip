@@ -176,7 +176,7 @@ PropertyInterface *CopyPropertyDialog::copyProperty(Graph *graph, PropertyInterf
                                                     QWidget *parent) {
   PropertyInterface *property = nullptr;
   CopyPropertyDialog dialog(parent);
-  dialog.setWindowTitle(tr("Copy property ") + tlpStringToQString(toCopy->getName()));
+  dialog.setWindowTitle("Copy property " + tlpStringToQString(toCopy->getName()));
   dialog.init(graph, toCopy);
 
   if (dialog.exec() == QDialog::Accepted) {
