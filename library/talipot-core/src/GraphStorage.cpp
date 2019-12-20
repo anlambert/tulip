@@ -18,11 +18,6 @@
 
 using namespace tlp;
 
-#define VECT_SET_SIZE(v, t, sz) reinterpret_cast<t **>(v)[1] = reinterpret_cast<t **>(v)[0] + sz
-#define VECT_INC_SIZE(v, t, sz) \
-  (*v).reserve(sz);             \
-  VECT_SET_SIZE(v, t, sz)
-
 //=======================================================
 void GraphStorage::clear() {
   nodeData.clear();
@@ -74,27 +69,17 @@ void GraphStorage::reserveAdj(const size_t nb) {
  * @brief restore adjacency edges of a given node
  */
 void GraphStorage::restoreAdj(const node n, const std::vector<edge> &edges) {
-  std::vector<edge> &nEdges = nodeData[n.id].edges;
-  VECT_INC_SIZE(&nEdges, edge, edges.size());
-  memcpy(nEdges.data(), edges.data(), edges.size() * sizeof(edge));
+  nodeData[n.id].edges = edges;
 }
-//=======================================================
-// define a simple class to encapsulate the memento of ids
-struct IdsMemento : public GraphStorageIdsMemento {
-  IdContainer<node> nodeIds;
-  IdContainer<edge> edgeIds;
-  ~IdsMemento() override {}
-};
 //=======================================================
 /**
  * @brief Return the current state of the ids management
  * must be deleted by the caller
  */
 const GraphStorageIdsMemento *GraphStorage::getIdsMemento() const {
-  IdsMemento *memento = new IdsMemento();
-  nodeIds.copyTo(memento->nodeIds);
-  edgeIds.copyTo(memento->edgeIds);
-
+  GraphStorageIdsMemento *memento = new GraphStorageIdsMemento();
+  memento->nodeIds = nodeIds;
+  memento->edgeIds = edgeIds;
   return memento;
 }
 //=======================================================
@@ -102,8 +87,8 @@ const GraphStorageIdsMemento *GraphStorage::getIdsMemento() const {
  * @brief restore a state of the ids management
  */
 void GraphStorage::restoreIdsMemento(const GraphStorageIdsMemento *memento) {
-  static_cast<const IdsMemento *>(memento)->nodeIds.copyTo(nodeIds);
-  static_cast<const IdsMemento *>(memento)->edgeIds.copyTo(edgeIds);
+  nodeIds = memento->nodeIds;
+  edgeIds = memento->edgeIds;
 }
 //=======================================================
 // specific iterator classes used to implement
@@ -398,7 +383,7 @@ void GraphStorage::restoreNode(const node n) {
  * @complexity: o(1)
  */
 node GraphStorage::addNode() {
-  node n(nodeIds.get());
+  node n(nodeIds.add());
   restoreNode(n);
   return n;
 }
@@ -416,12 +401,7 @@ void GraphStorage::addNodes(unsigned int nb, std::vector<node> *addedNodes) {
     addedNodes->reserve(nb);
   }
 
-  unsigned int first = nodeIds.getFirstOfRange(nb);
-
-  if (addedNodes) {
-    VECT_INC_SIZE(addedNodes, node, nb);
-    memcpy(addedNodes->data(), &nodeIds[first], nb * sizeof(node));
-  }
+  unsigned int first = nodeIds.addNb(nb, addedNodes);
 
   unsigned int sz = nodeData.size();
 
@@ -432,8 +412,9 @@ void GraphStorage::addNodes(unsigned int nb, std::vector<node> *addedNodes) {
     nb -= nodeIds.size() - sz;
   }
 
-  for (unsigned int i = 0; i < nb; ++i)
+  for (unsigned int i = 0; i < nb; ++i) {
     restoreNode(nodeIds[first + i]);
+  }
 }
 //=======================================================
 /**
@@ -500,7 +481,7 @@ void GraphStorage::restoreEdge(const node src, const node tgt, const edge e) {
  * these structures will be devalidated.
  */
 edge GraphStorage::addEdge(const node src, const node tgt) {
-  edge e(edgeIds.get());
+  edge e(edgeIds.add());
 
   if (e.id == edgeEnds.size())
     edgeEnds.resize(e.id + 1);
@@ -532,12 +513,7 @@ void GraphStorage::addEdges(const std::vector<std::pair<node, node>> &ends,
     addedEdges->reserve(nb);
   }
 
-  unsigned int first = edgeIds.getFirstOfRange(nb);
-
-  if (addedEdges) {
-    VECT_INC_SIZE(addedEdges, edge, nb);
-    memcpy(addedEdges->data(), &edgeIds[first], nb * sizeof(edge));
-  }
+  unsigned int first = edgeIds.addNb(nb, addedEdges);
 
   unsigned int sz = edgeEnds.size();
 

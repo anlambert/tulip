@@ -1887,10 +1887,8 @@ const std::vector<node> &GraphEvent::getNodes() const {
     addedNodes->reserve(nbElts);
     const std::vector<node> &nodes = getGraph()->nodes();
     // copy new graph nodes in addedNodes reserved memory
-    memcpy(addedNodes->data(), &nodes[nodes.size() - nbElts], nbElts * sizeof(node));
-    // set addedNodes size using underlying vector pointers
-    // to avoid unnecessary multiple constructeur calls
-    reinterpret_cast<node **>(addedNodes)[1] = reinterpret_cast<node **>(addedNodes)[0] + nbElts;
+    std::copy(nodes.begin() + (nodes.size() - nbElts), nodes.end(),
+              std::back_inserter(*addedNodes));
     // record allocated vector in vectInfos
     const_cast<GraphEvent *>(this)->vectInfos.addedNodes = addedNodes;
   }
@@ -1907,10 +1905,8 @@ const std::vector<edge> &GraphEvent::getEdges() const {
     addedEdges->reserve(nbElts);
     const std::vector<edge> &edges = getGraph()->edges();
     // copy new graph edges in addedEdges reserved memory
-    memcpy(addedEdges->data(), &edges[edges.size() - nbElts], nbElts * sizeof(edge));
-    // set addedEdges size using underlying vector pointers
-    // to avoid unnecessary multiple constructeur calls
-    reinterpret_cast<edge **>(addedEdges)[1] = reinterpret_cast<edge **>(addedEdges)[0] + nbElts;
+    std::copy(edges.begin() + (edges.size() - nbElts), edges.end(),
+              std::back_inserter(*addedEdges));
     // record allocated vector in vectInfos
     const_cast<GraphEvent *>(this)->vectInfos.addedEdges = addedEdges;
   }

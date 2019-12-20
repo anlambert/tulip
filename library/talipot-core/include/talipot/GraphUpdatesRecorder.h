@@ -39,7 +39,7 @@ struct less<tlp::Graph *> {
 
 namespace tlp {
 class GraphImpl;
-class GraphStorageIdsMemento;
+struct GraphStorageIdsMemento;
 
 class GraphUpdatesRecorder : public Observable {
   friend class GraphImpl;

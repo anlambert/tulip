@@ -288,7 +288,7 @@ Iterator<node> *VectorGraph::getOutNodes(const node n) const {
 }
 //=======================================================
 node VectorGraph::addNode() {
-  node newNode(_nodes.get());
+  node newNode(_nodes.add());
 
   if (newNode.id == _nData.size()) {
     _nData.push_back(_iNodes());
@@ -305,12 +305,7 @@ void VectorGraph::addNodes(unsigned int nb, std::vector<node> *addedNodes) {
     addedNodes->reserve(nb);
   }
 
-  unsigned int first = _nodes.getFirstOfRange(nb);
-
-  if (addedNodes) {
-    addedNodes->resize(nb);
-    memcpy(addedNodes->data(), &_nodes[first], nb * sizeof(node));
-  }
+  unsigned int first = _nodes.addNb(nb, addedNodes);
 
   unsigned int sz = _nData.size();
 
@@ -360,7 +355,7 @@ void VectorGraph::addEdgeInternal(const edge newEdge, const node src, const node
 edge VectorGraph::addEdge(const node src, const node tgt) {
   assert(isElement(src));
   assert(isElement(tgt));
-  edge newEdge(_edges.get());
+  edge newEdge(_edges.add());
 
   if (newEdge.id == _eData.size()) {
     _eData.resize(newEdge.id + 1);
@@ -385,12 +380,7 @@ void VectorGraph::addEdges(const std::vector<std::pair<node, node>> &ends,
     addedEdges->reserve(nb);
   }
 
-  unsigned int first = _edges.getFirstOfRange(nb);
-
-  if (addedEdges) {
-    addedEdges->resize(nb);
-    memcpy(addedEdges->data(), &_edges[first], nb * sizeof(edge));
-  }
+  unsigned int first = _edges.addNb(nb, addedEdges);
 
   unsigned int sz = _eData.size();
 

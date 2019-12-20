@@ -31,12 +31,12 @@ class Graph;
 //===========================================
 /**
  * @class GraphStorageIdsMemento
- * @brief that class provides a simple interface
- * to save the state of the ids manage by the GraphStorage class
+ * @brief simple class to save the state of the ids managed by the
+ * GraphStorage class
  */
-class GraphStorageIdsMemento {
-public:
-  virtual ~GraphStorageIdsMemento() {}
+struct GraphStorageIdsMemento {
+  IdContainer<node> nodeIds;
+  IdContainer<edge> edgeIds;
 };
 //===========================================
 /**

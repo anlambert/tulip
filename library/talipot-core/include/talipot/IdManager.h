@@ -20,6 +20,7 @@
 #include <climits>
 #include <set>
 #include <vector>
+#include <deque>
 #include <iostream>
 #include <talipot/MutableContainer.h>
 #include <talipot/StlIterator.h>
@@ -112,14 +113,6 @@ public:
     return state.firstId ? --state.firstId : (state.freeIds.empty() ? state.nextId++ : getFreeId());
 #endif
   }
-  /**
-   * Returns the first id of a range of nb new ids.
-   */
-  unsigned int getFirstOfRange(unsigned nb) {
-    unsigned int first = state.nextId;
-    state.nextId += nb;
-    return first;
-  }
 
 #ifndef TLP_NO_IDS_REUSE
   /**
@@ -165,31 +158,19 @@ std::ostream &operator<<(std::ostream &, const IdManager &);
 // or any type which can be easily cast in an unsigned int
 template <typename ID_TYPE>
 class TLP_SCOPE IdContainer : public std::vector<ID_TYPE> {
-  // the number of free ids
-  unsigned int nbFree;
+  // queue of free ids
+  std::deque<ID_TYPE> freeIds;
   // the position of the ids
   std::vector<unsigned int> pos;
 
-  inline ID_TYPE *&beginPtr() {
-    return reinterpret_cast<ID_TYPE **>(this)[0];
-  }
-
-  inline ID_TYPE *&sizePtr() {
-    return reinterpret_cast<ID_TYPE **>(this)[1];
-  }
-
-  inline void setSize(unsigned int size) {
-    sizePtr() = beginPtr() + size;
-  }
-
 public:
-  IdContainer() : std::vector<ID_TYPE>(), nbFree(0) {}
+  IdContainer() : std::vector<ID_TYPE>() {}
 
   // reset
   void clear() {
     std::vector<ID_TYPE>::clear();
     pos.clear();
-    nbFree = 0;
+    freeIds.clear();
   }
 
   // reserve enough room to store nb elts
@@ -199,72 +180,79 @@ public:
   }
 
   // return whether there is free ids or not
-  inline bool hasFree() const {
-    return nbFree > 0;
+  bool hasFree() const {
+    return !freeIds.empty();
   }
 
   // return the number of elts in the free storage
-  inline unsigned int numberOfFree() const {
-    return nbFree;
+  unsigned int numberOfFree() const {
+    return freeIds.size();
   }
 
   // return whether the id exist or not
-  inline bool isElement(ID_TYPE elt) const {
+  bool isElement(ID_TYPE elt) const {
     unsigned int id = elt;
     return id < pos.size() && pos[id] != UINT_MAX;
   }
 
   // return an iterator on the existing elts
-  inline Iterator<ID_TYPE> *getElts() const {
+  Iterator<ID_TYPE> *getElts() const {
     return stlIterator(*this);
   }
 
   // return the position of an existing elt
-  inline unsigned int getPos(ID_TYPE elt) const {
+  unsigned int getPos(ID_TYPE elt) const {
     assert(isElement(elt));
     return pos[elt];
   }
 
-  // return a new elt
-  ID_TYPE get() {
-    unsigned int freePos = this->size();
-
-    if (nbFree) {
-      setSize(freePos + 1);
-      --nbFree;
+  // add a new elt
+  ID_TYPE add() {
+    unsigned int curSize = this->size();
+    // use a previously freed id if available,
+    // create a new one otherwise
+    ID_TYPE elt = hasFree() ? freeIds.front() : ID_TYPE(curSize);
+    // pop reused freed id if any
+    if (hasFree()) {
+      freeIds.pop_front();
     } else {
-      this->resize(freePos + 1);
-      pos.resize(freePos + 1);
-      (*this)[freePos] = ID_TYPE(freePos);
+      pos.resize(curSize + 1);
     }
-
-    ID_TYPE elt = (*this)[freePos];
-    pos[elt] = freePos;
+    this->push_back(elt);
+    pos[elt] = curSize;
     return elt;
   }
 
-  // return the index of the first elt of a range of nb new elts
-  unsigned int getFirstOfRange(unsigned int nb) {
-    unsigned int freePos = this->size();
-    unsigned int i = std::min(nbFree, nb);
-
-    if (i) {
-      setSize(freePos + i);
-      nbFree -= i;
+  // add nb new elts
+  unsigned int addNb(unsigned int nb, std::vector<ID_TYPE> *elts = nullptr) {
+    if (elts) {
+      elts->clear();
+      elts->reserve(nb);
+    }
+    unsigned int lastPos = this->size();
+    unsigned int i = 0;
+    while (i++ < nb) {
+      // use a previously freed id if available
+      if (hasFree()) {
+        this->push_back(freeIds.front());
+        freeIds.pop_front();
+        // create a new one otherwise
+      } else {
+        this->push_back(ID_TYPE(this->size()));
+      }
     }
 
-    if (i < nb) {
-      this->resize(freePos + nb);
-      pos.resize(freePos + nb);
+    pos.resize(lastPos + nb);
 
-      for (; i < nb; ++i)
-        (*this)[freePos + i] = ID_TYPE(freePos + i);
+    for (i = 0; i < nb; ++i) {
+      ID_TYPE elt = (*this)[lastPos + i];
+      pos[elt] = lastPos + i;
+      if (elts) {
+        elts->push_back(elt);
+      }
     }
 
-    for (i = 0; i < nb; ++i)
-      pos[(*this)[freePos + i]] = freePos + i;
-
-    return freePos;
+    return lastPos;
   }
 
   // push the elt in the free storage
@@ -272,53 +260,34 @@ public:
     unsigned int curPos = pos[elt];
     unsigned int lastPos = this->size() - 1;
 
-    ID_TYPE tmp;
-
     if (curPos != lastPos) {
       // swap the elt with the last one
-      tmp = (*this)[lastPos];
-      (*this)[lastPos] = (*this)[curPos];
       assert((*this)[curPos] == elt);
-      (*this)[curPos] = tmp;
-      pos[tmp] = curPos;
+      std::swap((*this)[curPos], (*this)[lastPos]);
+      pos[(*this)[curPos]] = curPos;
     }
+
+    // push free id at the end of the freeIds queue
+    freeIds.push_back(elt);
+
+    // decrement ids vector size
+    this->resize(lastPos);
 
     pos[elt] = UINT_MAX;
 
-    if (lastPos) {
-      // lastPos is now the beginning
-      // of the freed elts
-      ++nbFree;
-      setSize(lastPos);
-    } else {
+    if (this->empty()) {
       // all elts are freed so forget them
-      nbFree = 0;
-      setSize(0);
+      freeIds.clear();
       pos.resize(0);
     }
-  }
-
-  // copy this into ids
-  void copyTo(IdContainer<ID_TYPE> &ids) const {
-    unsigned int sz = std::vector<ID_TYPE>::size() + nbFree;
-    ids.reserve(sz);
-    memcpy(ids.data(), this->data(), sz * sizeof(ID_TYPE));
-    ids.pos.resize(sz);
-    memcpy(ids.pos.data(), this->pos.data(), sz * sizeof(unsigned int));
-    ids.nbFree = nbFree;
-    ids.setSize(std::vector<ID_TYPE>::size());
   }
 
   // swap two elts
   void swap(ID_TYPE a, ID_TYPE b) {
     assert(isElement(a));
     assert(isElement(b));
-    unsigned int pa = pos[a];
-    unsigned int tmp = pos[b];
-    pos[b] = pa;
-    pos[a] = tmp;
-    (*this)[pa] = b;
-    (*this)[tmp] = a;
+    std::swap((*this)[pos[a]], (*this)[pos[b]]);
+    std::swap(pos[a], pos[b]);
   }
 
   // recompute elts positions
