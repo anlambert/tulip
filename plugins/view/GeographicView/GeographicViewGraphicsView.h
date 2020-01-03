@@ -101,10 +101,6 @@ public:
 
   void afterSetAllNodeValue(PropertyInterface *);
 
-  void forceRedraw() {
-    currentMapZoom = 0;
-  }
-
   GlMainWidgetGraphicsItem *getGlMainWidgetItem() {
     return glWidgetItem;
   }
@@ -147,7 +143,6 @@ protected:
   int tId;
   void timerEvent(QTimerEvent *event) override;
 #endif
-  void paintEvent(QPaintEvent *event) override;
   void updateMapTexture();
 
 private:
@@ -157,8 +152,7 @@ private:
   std::unordered_map<node, std::pair<double, double>> nodeLatLng;
   std::unordered_map<node, std::pair<double, double>> nodeLatLngFOR;
   std::unordered_map<edge, std::vector<std::pair<double, double>>> edgeBendsLatLng;
-  std::pair<double, double> currentMapCenter;
-  int currentMapZoom;
+
   Camera globeCameraBackup;
   Camera mapCameraBackup;
 
