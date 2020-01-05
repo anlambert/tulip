@@ -14,7 +14,7 @@
    <string>Add panel</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../../../library/talipot-gui/resources/TalipotGUIResource.qrc">
+   <iconset>
     <normaloff>:/talipot/gui/icons/logo32x32.png</normaloff>:/talipot/gui/icons/logo32x32.png</iconset>
   </property>
   <property name="styleSheet">
@@ -56,7 +56,7 @@ border: 0px;
   </property>
   <widget class="QWizardPage" name="choosePanelPage">
    <property name="title">
-    <string>&lt;img src=&quot;:/talipot/app/icons/32/view-open.png&quot; width=32 height=32/&gt; Panel Creation Dialog</string>
+    <string/>
    </property>
    <attribute name="pageId">
     <string notr="true">0</string>
@@ -68,7 +68,7 @@ border: 0px;
     <item>
      <widget class="QLabel" name="page1HelpLabel">
       <property name="text">
-          <string>Select a new panel to add into the workspace for displaying the selected graph.</string>
+       <string>Select a new panel to add into the workspace for displaying the selected graph.</string>
       </property>
       <property name="wordWrap">
        <bool>true</bool>
@@ -130,7 +130,16 @@ border: 0px;
          <enum>QFrame::Plain</enum>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_3">
-         <property name="margin">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
           <number>0</number>
          </property>
          <item>
@@ -209,7 +218,16 @@ background-color: white
          <enum>QFrame::Plain</enum>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_4">
-         <property name="margin">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
           <number>0</number>
          </property>
          <item>
