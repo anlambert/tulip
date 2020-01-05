@@ -242,7 +242,12 @@ void Settings::setDefaultSelectionColor(const tlp::Color &color) {
 }
 
 QSet<QString> Settings::favoriteAlgorithms() const {
-  return value(TS_FavoriteAlgorithms, QStringList()).toStringList().toSet();
+  QStringList list = value(TS_FavoriteAlgorithms, QStringList()).toStringList();
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+  return QSet<QString>(list.begin(), list.end());
+#else
+  return list.toSet();
+#endif
 }
 
 void Settings::addFavoriteAlgorithm(const QString &name) {
@@ -383,7 +388,7 @@ void Settings::setViewOrtho(bool f) {
 }
 
 void Settings::setFavoriteAlgorithms(const QSet<QString> &lst) {
-  setValue(TS_FavoriteAlgorithms, static_cast<QStringList>(lst.toList()));
+  setValue(TS_FavoriteAlgorithms, static_cast<QStringList>(lst.values()));
 }
 
 bool Settings::isResultPropertyStored() const {

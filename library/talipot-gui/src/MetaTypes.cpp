@@ -80,9 +80,11 @@ tlp::DataType *MetaTypes::qVariantToDataType(const QVariant &v) {
   CHECK_QVARIANT(tlp::BooleanType::RealType);
 
   // CHECK_QVARIANT(tlp::BooleanVectorType::RealType);
-  if (v.userType() == qMetaTypeId<QVector<bool>>())
+  if (v.userType() == qMetaTypeId<QVector<bool>>()) {
+    QVector<bool> vb = v.value<QVector<bool>>();
     return new TypedData<tlp::BooleanVectorType::RealType>(
-        new tlp::BooleanVectorType::RealType(v.value<QVector<bool>>().toStdVector()));
+        new tlp::BooleanVectorType::RealType(std::vector<bool>(vb.begin(), vb.end())));
+  }
 
   CHECK_QVARIANT(tlp::PointType::RealType);
   CHECK_QVARIANT(tlp::SizeType::RealType);
@@ -171,8 +173,11 @@ QVariant MetaTypes::dataTypeToQvariant(tlp::DataType *dm, const std::string &par
 
     if (dm)
       result = *(static_cast<tlp::BooleanVectorType::RealType *>(dm->value));
-
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+    return QVariant::fromValue<QVector<bool>>(QVector<bool>(result.begin(), result.end()));
+#else
     return QVariant::fromValue<QVector<bool>>(QVector<bool>::fromStdVector(result));
+#endif
   }
 
   CHECK_DATATYPE(tlp::PointType::RealType);

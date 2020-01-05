@@ -955,7 +955,8 @@ QVariant QVectorBoolEditorCreator::editorData(QWidget *editor, tlp::Graph *) {
 }
 
 QString QVectorBoolEditorCreator::displayText(const QVariant &data) const {
-  std::vector<bool> v = data.value<QVector<bool>>().toStdVector();
+  QVector<bool> vb = data.value<QVector<bool>>();
+  std::vector<bool> v(vb.begin(), vb.end());
 
   if (v.empty())
     return QString();
