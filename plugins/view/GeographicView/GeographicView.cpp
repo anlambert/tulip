@@ -248,7 +248,6 @@ void GeographicView::refresh() {
 }
 
 void GeographicView::computeGeoLayout() {
-  static bool firstComputation = true;
   if (geolocalisationConfigWidget->geolocateByAddress()) {
     geoViewGraphicsView->createLayoutWithAddresses(
         geolocalisationConfigWidget->getAddressGraphPropertyName(),
@@ -280,23 +279,6 @@ void GeographicView::computeGeoLayout() {
   geoViewGraphicsView->setGeoLayoutComputed();
   // compute view layout
   geoViewGraphicsView->switchViewType();
-  // try to display a clean map with no grey or fuzzy tiles
-  if (firstComputation) {
-    firstComputation = false;
-    connect(geoViewGraphicsView->getLeafletMapsPage(), SIGNAL(refreshMap()), this,
-            SLOT(firstLayoutRefresh()));
-  }
-}
-
-void GeographicView::firstLayoutRefresh() {
-  static int cnt = 1;
-  --cnt;
-  if (cnt == 0) {
-    disconnect(geoViewGraphicsView->getLeafletMapsPage(), SIGNAL(refreshMap()), this,
-               SLOT(firstLayoutRefresh()));
-    // ensure a clean display of the centered view
-    QTimer::singleShot(1500, this, SLOT(centerView()));
-  }
 }
 
 void GeographicView::centerView() {
