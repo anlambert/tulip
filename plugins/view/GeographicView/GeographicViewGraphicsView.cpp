@@ -366,6 +366,7 @@ GeographicViewGraphicsView::GeographicViewGraphicsView(GeographicView *geoView,
       mapTranslationBlocked(false), geocodingActive(false), cancelGeocoding(false),
       polygonEntity(nullptr), planisphereEntity(nullptr), noLayoutMsgBox(nullptr),
       firstGlobeSwitch(true), geoLayoutComputed(false), renderFbo(nullptr) {
+  mapTextureId = "leafletMap" + to_string(reinterpret_cast<unsigned long long>(this));
   setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing |
                  QPainter::TextAntialiasing);
   setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
@@ -560,7 +561,7 @@ void GeographicViewGraphicsView::setGraph(Graph *graph) {
 
     backgroundLayer = new GlLayer("Background");
     backgroundLayer->set2DMode();
-    Gl2DRect *backgroundRect = new Gl2DRect(0, 1, 0, 1, "leaflet", true);
+    Gl2DRect *backgroundRect = new Gl2DRect(0, 1, 0, 1, mapTextureId, true);
     backgroundLayer->addGlEntity(backgroundRect, "geoview_background");
     scene->addExistingLayerBefore(backgroundLayer, "Main");
 
@@ -1151,6 +1152,7 @@ void GeographicViewGraphicsView::switchViewType() {
   else {
 
     if (!planisphereEntity) {
+      GlOffscreenRenderer::getInstance()->makeOpenGLContextCurrent();
       GlTextureManager::loadTexture(planisphereTextureId);
       planisphereEntity = new GlSphere(Coord(0., 0., 0.), 50., planisphereTextureId, 255, 0, 0, 90);
       glMainWidget->getScene()->getLayer("Main")->addGlEntity(planisphereEntity, "globeMap");
@@ -1284,7 +1286,7 @@ void GeographicViewGraphicsView::updateMapTexture() {
   if (renderFbo == nullptr || renderFbo->width() != width || renderFbo->height() != height) {
     delete renderFbo;
     renderFbo = new QOpenGLFramebufferObject(width, height);
-    GlTextureManager::registerExternalTexture("leaflet", renderFbo->texture());
+    GlTextureManager::registerExternalTexture(mapTextureId, renderFbo->texture());
   }
 
   renderFbo->bind();

@@ -188,6 +188,7 @@ private:
 
   QOpenGLFramebufferObject *renderFbo;
   GlLayer *backgroundLayer;
+  std::string mapTextureId;
 };
 }
 
