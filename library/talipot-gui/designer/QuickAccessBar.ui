@@ -87,168 +87,18 @@ background-color: rgba(255,255,255,100);
    <property name="spacing">
     <number>4</number>
    </property>
-   <property name="margin">
+   <property name="leftMargin">
     <number>0</number>
    </property>
-   <item>
-    <widget class="QPushButton" name="nodesColorCaptionButton">
-     <property name="minimumSize">
-      <size>
-       <width>26</width>
-       <height>26</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>26</width>
-       <height>26</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string>Show/Hide the caption of the nodes color metric mapping</string>
-     </property>
-     <property name="statusTip">
-      <string>Show/Hide nodes color caption</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../resources/TalipotGUIResource.qrc">
-       <normaloff>:/talipot/gui/icons/20/node_color_interpolation.png</normaloff>:/talipot/gui/icons/20/node_color_interpolation.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>20</width>
-       <height>20</height>
-      </size>
-     </property>
-     <property name="flat">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="edgesColorCaptionButton">
-     <property name="minimumSize">
-      <size>
-       <width>26</width>
-       <height>26</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>26</width>
-       <height>26</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string>Show/Hide the caption of the edges color metric mapping</string>
-     </property>
-     <property name="statusTip">
-      <string>Show/Hide edges color caption</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../resources/TalipotGUIResource.qrc">
-       <normaloff>:/talipot/gui/icons/20/edge_color_interpolation.png</normaloff>:/talipot/gui/icons/20/edge_color_interpolation.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>20</width>
-       <height>20</height>
-      </size>
-     </property>
-     <property name="flat">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="nodesSizeCaptionButton">
-     <property name="minimumSize">
-      <size>
-       <width>26</width>
-       <height>26</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>26</width>
-       <height>26</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string>Show/Hide the caption of the nodes size metric mapping</string>
-     </property>
-     <property name="statusTip">
-      <string>Show/Hide nodes size caption</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../resources/TalipotGUIResource.qrc">
-       <normaloff>:/talipot/gui/icons/20/node_size_interpolation.png</normaloff>:/talipot/gui/icons/20/node_size_interpolation.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>20</width>
-       <height>20</height>
-      </size>
-     </property>
-     <property name="flat">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="edgesSizeCaptionButton">
-     <property name="minimumSize">
-      <size>
-       <width>26</width>
-       <height>26</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>26</width>
-       <height>26</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string>Show/Hide the caption of the edges size metric mapping</string>
-     </property>
-     <property name="statusTip">
-      <string>Show/Hide edges size caption</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../resources/TalipotGUIResource.qrc">
-       <normaloff>:/talipot/gui/icons/20/edge_size_interpolation.png</normaloff>:/talipot/gui/icons/20/edge_size_interpolation.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>20</width>
-       <height>20</height>
-      </size>
-     </property>
-     <property name="flat">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="Line" name="sep1">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-    </widget>
-   </item>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QPushButton" name="screenshotButton">
      <property name="minimumSize">
@@ -935,6 +785,170 @@ background-color: rgba(255,255,255,100);
      </property>
     </spacer>
    </item>
+   <item>
+    <widget class="QPushButton" name="edgesColorCaptionButton">
+     <property name="minimumSize">
+      <size>
+       <width>26</width>
+       <height>26</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>26</width>
+       <height>26</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Show/Hide the caption of the edges color metric mapping</string>
+     </property>
+     <property name="statusTip">
+      <string>Show/Hide edges color caption</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../resources/TalipotGUIResource.qrc">
+       <normaloff>:/talipot/gui/icons/20/edge_color_interpolation.png</normaloff>:/talipot/gui/icons/20/edge_color_interpolation.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="nodesColorCaptionButton">
+     <property name="minimumSize">
+      <size>
+       <width>26</width>
+       <height>26</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>26</width>
+       <height>26</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Show/Hide the caption of the nodes color metric mapping</string>
+     </property>
+     <property name="statusTip">
+      <string>Show/Hide nodes color caption</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../resources/TalipotGUIResource.qrc">
+       <normaloff>:/talipot/gui/icons/20/node_color_interpolation.png</normaloff>:/talipot/gui/icons/20/node_color_interpolation.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="nodesSizeCaptionButton">
+     <property name="minimumSize">
+      <size>
+       <width>26</width>
+       <height>26</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>26</width>
+       <height>26</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Show/Hide the caption of the nodes size metric mapping</string>
+     </property>
+     <property name="statusTip">
+      <string>Show/Hide nodes size caption</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../resources/TalipotGUIResource.qrc">
+       <normaloff>:/talipot/gui/icons/20/node_size_interpolation.png</normaloff>:/talipot/gui/icons/20/node_size_interpolation.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="edgesSizeCaptionButton">
+     <property name="minimumSize">
+      <size>
+       <width>26</width>
+       <height>26</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>26</width>
+       <height>26</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Show/Hide the caption of the edges size metric mapping</string>
+     </property>
+     <property name="statusTip">
+      <string>Show/Hide edges size caption</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../resources/TalipotGUIResource.qrc">
+       <normaloff>:/talipot/gui/icons/20/edge_size_interpolation.png</normaloff>:/talipot/gui/icons/20/edge_size_interpolation.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -1025,9 +1039,9 @@ background-color: rgba(255,255,255,100);
   </connection>
   <connection>
    <sender>nodesColorCaptionButton</sender>
-   <signal>clicked()</signal>
+   <signal>clicked(bool)</signal>
    <receiver>QuickAccessBar</receiver>
-   <slot>showHideNodesColorCaption()</slot>
+   <slot>showHideNodesColorCaption(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>15</x>
@@ -1041,9 +1055,9 @@ background-color: rgba(255,255,255,100);
   </connection>
   <connection>
    <sender>nodesSizeCaptionButton</sender>
-   <signal>clicked()</signal>
+   <signal>clicked(bool)</signal>
    <receiver>QuickAccessBar</receiver>
-   <slot>showHideNodesSizeCaption()</slot>
+   <slot>showHideNodesSizeCaption(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>15</x>
@@ -1057,9 +1071,9 @@ background-color: rgba(255,255,255,100);
   </connection>
   <connection>
    <sender>edgesColorCaptionButton</sender>
-   <signal>clicked()</signal>
+   <signal>clicked(bool)</signal>
    <receiver>QuickAccessBar</receiver>
-   <slot>showHideEdgesColorCaption()</slot>
+   <slot>showHideEdgesColorCaption(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>15</x>
@@ -1073,9 +1087,9 @@ background-color: rgba(255,255,255,100);
   </connection>
   <connection>
    <sender>edgesSizeCaptionButton</sender>
-   <signal>clicked()</signal>
+   <signal>clicked(bool)</signal>
    <receiver>QuickAccessBar</receiver>
-   <slot>showHideEdgesSizeCaption()</slot>
+   <slot>showHideEdgesSizeCaption(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>15</x>

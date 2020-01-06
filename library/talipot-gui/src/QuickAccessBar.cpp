@@ -264,20 +264,24 @@ void QuickAccessBarImpl::reset() {
   _resetting = false;
 }
 
-void QuickAccessBarImpl::showHideNodesColorCaption() {
+void QuickAccessBarImpl::showHideNodesColorCaption(bool val) {
   showHideCaption(CaptionItem::NodesColorCaption);
+  _ui->nodesColorCaptionButton->setChecked(val);
 }
 
-void QuickAccessBarImpl::showHideNodesSizeCaption() {
+void QuickAccessBarImpl::showHideNodesSizeCaption(bool val) {
   showHideCaption(CaptionItem::NodesSizeCaption);
+  _ui->nodesSizeCaptionButton->setChecked(val);
 }
 
-void QuickAccessBarImpl::showHideEdgesColorCaption() {
+void QuickAccessBarImpl::showHideEdgesColorCaption(bool val) {
   showHideCaption(CaptionItem::EdgesColorCaption);
+  _ui->edgesColorCaptionButton->setChecked(val);
 }
 
-void QuickAccessBarImpl::showHideEdgesSizeCaption() {
+void QuickAccessBarImpl::showHideEdgesSizeCaption(bool val) {
   showHideCaption(CaptionItem::EdgesSizeCaption);
+  _ui->edgesSizeCaptionButton->setChecked(val);
 }
 
 void QuickAccessBarImpl::showHideCaption(CaptionItem::CaptionType captionType) {

@@ -135,10 +135,10 @@ public slots:
   void setNodeSize();
   void setEdgeSize();
   void setSizeInterpolation(bool);
-  void showHideNodesColorCaption();
-  void showHideNodesSizeCaption();
-  void showHideEdgesColorCaption();
-  void showHideEdgesSizeCaption();
+  void showHideNodesColorCaption(bool);
+  void showHideNodesSizeCaption(bool);
+  void showHideEdgesColorCaption(bool);
+  void showHideEdgesSizeCaption(bool);
   void takeSnapshot();
   virtual void setEdgesVisible(bool);
   virtual void setNodesVisible(bool);
