@@ -9,7 +9,9 @@ yum -y update
 
 # install base build system
 yum -y install epel-release
-yum -y install xz cmake tar gzip make wget ccache
+yum -y install xz cmake tar gzip make wget ccache curl
+
+curl https://copr.fedorainfracloud.org/coprs/scx/qt5-qtwebengine/repo/epel-7/scx-qt5-qtwebengine-epel-7.repo > /etc/yum.repos.d/scx-qt5-qtwebengine-epel-7.repo
 
 # install GCC
 yum -y install gcc gcc-c++
@@ -18,7 +20,7 @@ yum -y install gcc gcc-c++
 yum -y install zlib-devel qhull-devel yajl-devel binutils-devel
 yum -y install freetype-devel glew-devel
 yum -y install python36-devel python36-pip
-yum -y install qt5-qtbase-devel qt5-qtimageformats qt5-qtsvg quazip-qt5-devel qt5-qtwebkit-devel
+yum -y install qt5-qtbase-devel qt5-qtimageformats qt5-qtsvg quazip-qt5-devel qt5-qtwebengine-devel
 
 # needed for qt5 gtk3 platform theme
 yum -y install gtk3-devel

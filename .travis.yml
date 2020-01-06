@@ -275,7 +275,7 @@ jobs:
         provider: bintray
         skip_cleanup: true
         on:
-          branch: master
+          branch: talipot-appimage-qtwebengine
         file: "build/deploy/TalipotPackagesToBintray.json"
         user: "anlambert"
         key:
