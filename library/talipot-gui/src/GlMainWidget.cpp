@@ -43,6 +43,8 @@
 #include <talipot/GlOffscreenRenderer.h>
 #include <talipot/GlTextureManager.h>
 
+#include <cstdint>
+
 using namespace std;
 
 namespace tlp {
@@ -54,7 +56,7 @@ GlMainWidget::GlMainWidget(QWidget *parent, View *view)
     : QOpenGLWidget(parent), scene(new GlQuadTreeLODCalculator), view(view), widthStored(0),
       heightStored(0), glFrameBuf(nullptr), glFrameBuf2(nullptr),
       keepPointOfViewOnSubgraphChanging(false),
-      sceneTextureId("scene" + to_string(reinterpret_cast<unsigned long long>(this))) {
+      sceneTextureId("scene" + to_string(reinterpret_cast<uintptr_t>(this))) {
   setFocusPolicy(Qt::StrongFocus);
   setMouseTracking(true);
   grabGesture(Qt::PinchGesture);

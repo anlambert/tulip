@@ -39,6 +39,8 @@
 #include <QOpenGLFramebufferObject>
 #include <QOpenGLPaintDevice>
 
+#include <cstdint>
+
 using namespace std;
 
 namespace tlp {
@@ -366,7 +368,7 @@ GeographicViewGraphicsView::GeographicViewGraphicsView(GeographicView *geoView,
       mapTranslationBlocked(false), geocodingActive(false), cancelGeocoding(false),
       polygonEntity(nullptr), planisphereEntity(nullptr), noLayoutMsgBox(nullptr),
       firstGlobeSwitch(true), geoLayoutComputed(false), renderFbo(nullptr) {
-  mapTextureId = "leafletMap" + to_string(reinterpret_cast<unsigned long long>(this));
+  mapTextureId = "leafletMap" + to_string(reinterpret_cast<uintptr_t>(this));
   setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing |
                  QPainter::TextAntialiasing);
   setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
