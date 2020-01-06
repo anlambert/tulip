@@ -164,7 +164,7 @@ void MouseMagnifyingGlassInteractorComponent::generateMagnifyingGlassTexture(
     }
   }
 
-  const Vec4i &viewport = glWidget->getScene()->getViewport();
+  const Vec4i viewport = glWidget->getScene()->getViewport();
 
   // get the magnifying glass bounding box in screen space
   BoundingBox boundingBox;
