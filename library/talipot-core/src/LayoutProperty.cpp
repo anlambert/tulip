@@ -41,9 +41,7 @@ void minV(tlp::Coord &res, const tlp::Coord &cmp) {
 template <>
 std::pair<tlp::Coord, tlp::Coord>
 tlp::MinMaxProperty<tlp::PointType, tlp::LineType>::computeMinMaxNode(const Graph *sg) {
-#ifndef NDEBUG
-  tlp::warning() << __PRETTY_FUNCTION__ << std::endl;
-#endif
+
   tlp::Coord maxT = {-FLT_MAX, -FLT_MAX, -FLT_MAX};
   tlp::Coord minT = {FLT_MAX, FLT_MAX, FLT_MAX};
 
@@ -525,36 +523,16 @@ void LayoutProperty::setEdgeValue(const edge e,
   LayoutMinMaxProperty::setEdgeValue(e, v);
 }
 //=================================================================================
-void LayoutProperty::setAllNodeValue(tlp::StoredType<Coord>::ReturnedConstValue v) {
-  resetBoundingBox();
-  LayoutMinMaxProperty::setAllNodeValue(v);
-}
-//=================================================================================
 void LayoutProperty::setAllNodeValue(tlp::StoredType<Coord>::ReturnedConstValue v,
                                      const Graph *graph) {
-  setValueToGraphNodes(v, graph);
-}
-//=================================================================================
-void LayoutProperty::setValueToGraphNodes(tlp::StoredType<Coord>::ReturnedConstValue v,
-                                          const Graph *graph) {
   resetBoundingBox();
-  LayoutMinMaxProperty::setValueToGraphNodes(v, graph);
-}
-//=================================================================================
-void LayoutProperty::setAllEdgeValue(tlp::StoredType<std::vector<Coord>>::ReturnedConstValue v) {
-  resetBoundingBox();
-  LayoutMinMaxProperty::setAllEdgeValue(v);
+  LayoutMinMaxProperty::setAllNodeValue(v, graph);
 }
 //=================================================================================
 void LayoutProperty::setAllEdgeValue(tlp::StoredType<std::vector<Coord>>::ReturnedConstValue v,
                                      const Graph *graph) {
-  setValueToGraphEdges(v, graph);
-}
-//=================================================================================
-void LayoutProperty::setValueToGraphEdges(tlp::StoredType<std::vector<Coord>>::ReturnedConstValue v,
-                                          const Graph *graph) {
   resetBoundingBox();
-  LayoutMinMaxProperty::setValueToGraphEdges(v, graph);
+  LayoutMinMaxProperty::setAllEdgeValue(v, graph);
 }
 //=================================================================================
 double LayoutProperty::averageAngularResolution(const Graph *sg) const {

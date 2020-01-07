@@ -176,20 +176,10 @@ void SizeProperty::setNodeValue(const node n, tlp::StoredType<Size>::ReturnedCon
   AbstractSizeProperty::setNodeValue(n, v);
 }
 //=================================================================================
-void SizeProperty::setAllNodeValue(tlp::StoredType<Size>::ReturnedConstValue v) {
-  resetMinMax();
-  AbstractSizeProperty::setAllNodeValue(v);
-}
-//=================================================================================
 void SizeProperty::setAllNodeValue(tlp::StoredType<Size>::ReturnedConstValue v,
                                    const Graph *graph) {
-  setValueToGraphNodes(v, graph);
-}
-//=================================================================================
-void SizeProperty::setValueToGraphNodes(tlp::StoredType<Size>::ReturnedConstValue v,
-                                        const Graph *graph) {
   resetMinMax();
-  AbstractSizeProperty::setValueToGraphNodes(v, graph);
+  AbstractSizeProperty::setAllNodeValue(v, graph);
 }
 //=============================================================================
 PropertyInterface *SizeProperty::clonePrototype(Graph *g, const std::string &n) const {

@@ -288,17 +288,10 @@ public:
   // redefinition of some AbstractProperty methods
   void setNodeValue(const node, tlp::StoredType<Coord>::ReturnedConstValue v) override;
   void setEdgeValue(const edge, tlp::StoredType<std::vector<Coord>>::ReturnedConstValue v) override;
-  void setAllNodeValue(tlp::StoredType<Coord>::ReturnedConstValue v) override;
-  void setValueToGraphNodes(tlp::StoredType<Coord>::ReturnedConstValue v,
-                            const Graph *graph) override;
-  void setAllEdgeValue(tlp::StoredType<std::vector<Coord>>::ReturnedConstValue v) override;
-  void setValueToGraphEdges(tlp::StoredType<std::vector<Coord>>::ReturnedConstValue v,
-                            const Graph *graph) override;
-
-  _DEPRECATED void setAllNodeValue(tlp::StoredType<Coord>::ReturnedConstValue v,
-                                   const Graph *graph) override;
-  _DEPRECATED void setAllEdgeValue(tlp::StoredType<std::vector<Coord>>::ReturnedConstValue v,
-                                   const Graph *graph) override;
+  void setAllNodeValue(tlp::StoredType<Coord>::ReturnedConstValue v,
+                       const Graph *graph = nullptr) override;
+  void setAllEdgeValue(tlp::StoredType<std::vector<Coord>>::ReturnedConstValue v,
+                       const Graph *graph = nullptr) override;
 
 protected:
   void clone_handler(AbstractProperty<tlp::PointType, tlp::LineType> &) override;

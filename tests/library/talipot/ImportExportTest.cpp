@@ -443,8 +443,8 @@ void ImportExportTest::importExportGraph(tlp::Graph *original) {
   if (original != original->getSuperGraph() && original->numberOfSubGraphs() == 0 &&
       original->existProperty("viewMetaGraph")) {
     GraphProperty *viewMetaGraph = original->getGraphProperty("viewMetaGraph");
-    viewMetaGraph->setValueToGraphNodes(nullptr, original);
-    viewMetaGraph->setValueToGraphEdges(set<edge>(), original);
+    viewMetaGraph->setAllNodeValue(nullptr, original);
+    viewMetaGraph->setAllEdgeValue(set<edge>(), original);
   }
 
   testGraphsAreEqual(original, imported);

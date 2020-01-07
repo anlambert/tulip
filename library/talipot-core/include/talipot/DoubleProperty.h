@@ -45,13 +45,10 @@ public:
 
   void setNodeValue(const node n, tlp::StoredType<double>::ReturnedConstValue v) override;
   void setEdgeValue(const edge e, tlp::StoredType<double>::ReturnedConstValue v) override;
-  void setAllNodeValue(tlp::StoredType<double>::ReturnedConstValue v) override;
-
-  void setValueToGraphNodes(tlp::StoredType<double>::ReturnedConstValue v,
-                            const Graph *graph) override;
-  void setAllEdgeValue(tlp::StoredType<double>::ReturnedConstValue v) override;
-  void setValueToGraphEdges(tlp::StoredType<double>::ReturnedConstValue v,
-                            const Graph *graph) override;
+  void setAllNodeValue(tlp::StoredType<double>::ReturnedConstValue v,
+                       const Graph *graph = nullptr) override;
+  void setAllEdgeValue(tlp::StoredType<double>::ReturnedConstValue v,
+                       const Graph *graph = nullptr) override;
 
   enum PredefinedMetaValueCalculator {
     NO_CALC = 0,
@@ -102,11 +99,6 @@ public:
 
     return newProp;
   }
-
-  _DEPRECATED void setAllEdgeValue(tlp::StoredType<double>::ReturnedConstValue v,
-                                   const Graph *graph) override;
-  _DEPRECATED void setAllNodeValue(tlp::StoredType<double>::ReturnedConstValue v,
-                                   const Graph *graph) override;
 
 private:
   // override Observable::treatEvent

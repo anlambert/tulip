@@ -216,8 +216,8 @@ void DoublePropertyTest::testDoublePropertySetAllValue() {
   CPPUNIT_ASSERT_DOUBLES_EQUAL(prop->getEdgeDefaultValue(), v2, 1e-6);
 
   // set different values for the nodes and edges of the subgraph
-  prop->setValueToGraphNodes(v2, sg);
-  prop->setValueToGraphEdges(v1, sg);
+  prop->setAllNodeValue(v2, sg);
+  prop->setAllEdgeValue(v1, sg);
 
   // check that the default property value has not been modified
   CPPUNIT_ASSERT_DOUBLES_EQUAL(prop->getNodeDefaultValue(), v1, 1e-6);

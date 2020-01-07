@@ -88,7 +88,7 @@ Geometry
 .. autofunction:: talipot::tlp.delaunayTriangulation
 
 .. autoclass:: talipot::tlp.VoronoiDiagram
-    :members:
+  :members:
 
 .. autofunction:: talipot::tlp.voronoiDiagram
 
@@ -565,25 +565,25 @@ tlp.BoundingBox
 
 .. autoclass:: talipot::tlp.BoundingBox
 
-        .. automethod:: talipot::tlp.BoundingBox.center
+  .. automethod:: talipot::tlp.BoundingBox.center
 
-        .. automethod:: talipot::tlp.BoundingBox.contains
+  .. automethod:: talipot::tlp.BoundingBox.contains
 
-        .. automethod:: talipot::tlp.BoundingBox.depth
+  .. automethod:: talipot::tlp.BoundingBox.depth
 
-        .. automethod:: talipot::tlp.BoundingBox.expand
+  .. automethod:: talipot::tlp.BoundingBox.expand
 
-        .. automethod:: talipot::tlp.BoundingBox.height
+  .. automethod:: talipot::tlp.BoundingBox.height
 
-        .. automethod:: talipot::tlp.BoundingBox.intersect
+  .. automethod:: talipot::tlp.BoundingBox.intersect
 
-        .. automethod:: talipot::tlp.BoundingBox.intersect
+  .. automethod:: talipot::tlp.BoundingBox.intersect
 
-        .. automethod:: talipot::tlp.BoundingBox.isValid
+  .. automethod:: talipot::tlp.BoundingBox.isValid
 
-        .. automethod:: talipot::tlp.BoundingBox.translate
+  .. automethod:: talipot::tlp.BoundingBox.translate
 
-        .. automethod:: talipot::tlp.BoundingBox.width
+  .. automethod:: talipot::tlp.BoundingBox.width
 
 tlp.Size
 ^^^^^^^^
@@ -634,25 +634,25 @@ tlp.Event
 ^^^^^^^^^
 
 .. autoclass:: talipot::tlp.Event
-        :members:
+  :members:
 
 tlp.GraphEvent
 ^^^^^^^^^^^^^^
 
 .. autoclass:: talipot::tlp.GraphEvent
-        :members:
+  :members:
 
 tlp.PropertyEvent
 ^^^^^^^^^^^^^^^^^^
 
 .. autoclass:: talipot::tlp.PropertyEvent
-        :members:
+  :members:
 
 tlp.Observable
 ^^^^^^^^^^^^^^
 
 .. autoclass:: talipot::tlp.Observable
-        :members:
+  :members:
 
 Graph properties classes
 ------------------------
@@ -668,152 +668,168 @@ tlp.BooleanProperty
 ^^^^^^^^^^^^^^^^^^^
 
 .. autoclass:: talipot::tlp.BooleanProperty
-        :members: copy, copy, copy, getNodesEqualTo, getEdgesEqualTo, reverse, reverseEdgeDirection,
-	          getEdgeDefaultValue, getEdgeValue, getNodeDefaultValue, getNodeValue,
-            setAllEdgeValue, setAllEdgeValue, setAllNodeValue, setAllNodeValue,
-            setValueToGraphNodes, setValueToGraphEdges, setEdgeValue, setNodeValue, setNodeDefaultValue, setEdgeDefaultValue
+  :members:
+    copy, copy, copy, getNodesEqualTo, getEdgesEqualTo, reverse, reverseEdgeDirection,
+    getEdgeDefaultValue, getEdgeValue, getNodeDefaultValue, getNodeValue,
+    setAllEdgeValue, setAllNodeValue, setEdgeValue, setNodeValue, setNodeDefaultValue,
+    setEdgeDefaultValue
 
 tlp.ColorProperty
 ^^^^^^^^^^^^^^^^^
 
 .. autoclass:: talipot::tlp.ColorProperty
-        :members: copy, copy, copy, getNodesEqualTo, getEdgesEqualTo, getEdgeDefaultValue, getEdgeValue, getNodeDefaultValue, getNodeValue,
-                  setAllEdgeValue, setAllEdgeValue, setAllNodeValue, setAllNodeValue,
-                  setValueToGraphNodes, setValueToGraphEdges, setEdgeValue, setNodeValue, setNodeDefaultValue, setEdgeDefaultValue
+  :members:
+    copy, copy, copy, getNodesEqualTo, getEdgesEqualTo, getEdgeDefaultValue,
+    getEdgeValue, getNodeDefaultValue, getNodeValue, setAllEdgeValue, setAllNodeValue,
+    setEdgeValue, setNodeValue, setNodeDefaultValue, setEdgeDefaultValue
 
 tlp.NumericProperty
 ^^^^^^^^^^^^^^^^^^^
 
 .. autoclass:: talipot::tlp.NumericProperty
-        :members:
-                  copyProperty, uniformQuantification, nodesUniformQuantification, edgesUniformQuantification,
-                  getEdgeDoubleMin, getEdgeDoubleMax, getNodeDoubleMin, getNodeDoubleMax,
-                  getEdgeDoubleDefaultValue, getEdgeDoubleValue, getNodeDoubleDefaultValue, getNodeDoubleValue,
-                  getSortedNodes, getSortedEdges, getSortedEdgesBySourceValue, getSortedEdgesByTargetValue, getSortedEdgesByExtremitiesValues
+  :members:
+    copyProperty, uniformQuantification, nodesUniformQuantification,
+    edgesUniformQuantification, getEdgeDoubleMin, getEdgeDoubleMax,
+    getNodeDoubleMin, getNodeDoubleMax, getEdgeDoubleDefaultValue,
+    getEdgeDoubleValue, getNodeDoubleDefaultValue, getNodeDoubleValue,
+    getSortedNodes, getSortedEdges, getSortedEdgesBySourceValue,
+    getSortedEdgesByTargetValue, getSortedEdgesByExtremitiesValues
 
 tlp.DoubleProperty
 ^^^^^^^^^^^^^^^^^^
 
 .. autoclass:: talipot::tlp.DoubleProperty
-        :members: copy, copy, copy, getNodesEqualTo, getEdgesEqualTo, getNodeMin, getNodeMax, getEdgeMin, getEdgeMax,
-	          getEdgeDefaultValue, getEdgeValue, getNodeDefaultValue, getNodeValue,
-            setAllEdgeValue, setAllEdgeValue, setAllNodeValue, setAllNodeValue,
-            setValueToGraphNodes, setValueToGraphEdges, setEdgeValue, setNodeValue, setNodeDefaultValue, setEdgeDefaultValue
+  :members:
+    copy, copy, copy, getNodesEqualTo, getEdgesEqualTo, getNodeMin,
+    getNodeMax, getEdgeMin, getEdgeMax, getEdgeDefaultValue, getEdgeValue,
+    getNodeDefaultValue, getNodeValue, setAllEdgeValue, setAllNodeValue,
+    setEdgeValue, setNodeValue, setNodeDefaultValue, setEdgeDefaultValue
 
 tlp.IntegerProperty
 ^^^^^^^^^^^^^^^^^^^
 
 .. autoclass:: talipot::tlp.IntegerProperty
-        :members: copy, copy, copy, getNodesEqualTo, getEdgesEqualTo, getNodeMin, getNodeMax, getEdgeMin, getEdgeMax,
-                  getEdgeDefaultValue, getEdgeValue, getNodeDefaultValue, getNodeValue,
-                  setAllEdgeValue, setAllEdgeValue, setAllNodeValue, setAllNodeValue,
-                  setValueToGraphNodes, setValueToGraphEdges, setEdgeValue, setNodeValue, setNodeDefaultValue, setEdgeDefaultValue
+  :members:
+    copy, copy, copy, getNodesEqualTo, getEdgesEqualTo, getNodeMin,
+    getNodeMax, getEdgeMin, getEdgeMax, getEdgeDefaultValue, getEdgeValue,
+    getNodeDefaultValue, getNodeValue, setAllEdgeValue, setAllNodeValue,
+    setEdgeValue, setNodeValue, setNodeDefaultValue, setEdgeDefaultValue
 
 tlp.LayoutProperty
 ^^^^^^^^^^^^^^^^^^
 
 .. autoclass:: talipot::tlp.LayoutProperty
-	:members: angularResolutions, averageAngularResolution, averageAngularResolution,
-            averageEdgeLength, center, center, computeEmbedding, computeEmbedding, copy, copy, copy,
-            getNodesEqualTo, getEdgesEqualTo, edgeLength, getMin, getMax, normalize, perfectAspectRatio,
-            rotateX, rotateX, rotateY, rotateY, rotateZ, rotateZ, scale, scale, translate, translate,
-            getEdgeDefaultValue, getEdgeValue, getNodeDefaultValue, getNodeValue,
-            setAllEdgeValue, setAllEdgeValue, setAllNodeValue, setAllNodeValue,
-            setValueToGraphNodes, setValueToGraphEdges, setEdgeValue, setNodeValue, setNodeDefaultValue, setEdgeDefaultValue
+  :members:
+    angularResolutions, averageAngularResolution, averageAngularResolution,
+    averageEdgeLength, center, center, computeEmbedding, computeEmbedding,
+    copy, copy, copy, getNodesEqualTo, getEdgesEqualTo, edgeLength, getMin,
+    getMax, normalize, perfectAspectRatio, rotateX, rotateX, rotateY, rotateY,
+    rotateZ, rotateZ, scale, scale, translate, translate, getEdgeDefaultValue,
+    getEdgeValue, getNodeDefaultValue, getNodeValue, setAllEdgeValue, setAllNodeValue,
+    setEdgeValue, setNodeValue, setNodeDefaultValue, setEdgeDefaultValue
 
 tlp.SizeProperty
 ^^^^^^^^^^^^^^^^
 
 .. autoclass:: talipot::tlp.SizeProperty
-        :members: copy, copy, copy, getNodesEqualTo, getEdgesEqualTo, getMin, getMax, scale, scale,
-                  getEdgeDefaultValue, getEdgeValue, getNodeDefaultValue, getNodeValue,
-                  setAllEdgeValue, setAllEdgeValue, setAllNodeValue, setAllNodeValue,
-                  setValueToGraphNodes, setValueToGraphEdges, setEdgeValue, setNodeValue, setNodeDefaultValue, setEdgeDefaultValue
+  :members:
+    copy, copy, copy, getNodesEqualTo, getEdgesEqualTo, getMin, getMax, scale, scale,
+    getEdgeDefaultValue, getEdgeValue, getNodeDefaultValue, getNodeValue,
+    setAllEdgeValue, setAllNodeValue, setEdgeValue, setNodeValue,
+    setNodeDefaultValue, setEdgeDefaultValue
 
 tlp.StringProperty
 ^^^^^^^^^^^^^^^^^^
 
 .. autoclass:: talipot::tlp.StringProperty
-        :members: copy, copy, copy, getNodesEqualTo, getEdgesEqualTo, getEdgeDefaultValue, getEdgeValue, getNodeDefaultValue, getNodeValue,
-                  setAllEdgeValue, setAllEdgeValue, setAllNodeValue, setAllNodeValue,
-                  setValueToGraphNodes, setValueToGraphEdges, setEdgeValue, setNodeValue, setNodeDefaultValue, setEdgeDefaultValue
+  :members:
+    copy, copy, copy, getNodesEqualTo, getEdgesEqualTo, getEdgeDefaultValue,
+    getEdgeValue, getNodeDefaultValue, getNodeValue, setAllEdgeValue, setAllNodeValue,
+    setEdgeValue, setNodeValue, setNodeDefaultValue, setEdgeDefaultValue
 
 tlp.BooleanVectorProperty
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. autoclass:: talipot::tlp.BooleanVectorProperty
-        :members: copy, copy, copy, getNodesEqualTo, getEdgesEqualTo, getEdgeDefaultValue, getEdgeValue, getNodeDefaultValue, getNodeValue,
-            setAllEdgeValue, setAllEdgeValue, setAllNodeValue, setAllNodeValue,
-            setValueToGraphNodes, setValueToGraphEdges, setEdgeValue, setNodeValue, setNodeDefaultValue, setEdgeDefaultValue,
-	          getNodeEltValue, setNodeEltValue, pushBackNodeEltValue, popBackNodeEltValue,
-	          resizeNodeValue, resizeNodeValue, getEdgeEltValue, setEdgeEltValue,
-	          pushBackEdgeEltValue, popBackEdgeEltValue, resizeEdgeValue, resizeEdgeValue
+  :members:
+    copy, copy, copy, getNodesEqualTo, getEdgesEqualTo, getEdgeDefaultValue,
+    getEdgeValue, getNodeDefaultValue, getNodeValue, setAllEdgeValue,
+    setAllNodeValue, setEdgeValue, setNodeValue, setNodeDefaultValue, setEdgeDefaultValue,
+    getNodeEltValue, setNodeEltValue, pushBackNodeEltValue, popBackNodeEltValue,
+    resizeNodeValue, resizeNodeValue, getEdgeEltValue, setEdgeEltValue,
+    pushBackEdgeEltValue, popBackEdgeEltValue, resizeEdgeValue, resizeEdgeValue
 
 tlp.CoordVectorProperty
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 .. autoclass:: talipot::tlp.CoordVectorProperty
-        :members: copy, copy, copy, getNodesEqualTo, getEdgesEqualTo, getEdgeDefaultValue, getEdgeValue, getNodeDefaultValue, getNodeValue,
-            setAllEdgeValue, setAllEdgeValue, setAllNodeValue, setAllNodeValue,
-            setValueToGraphNodes, setValueToGraphEdges, setEdgeValue, setNodeValue, setNodeDefaultValue, setEdgeDefaultValue,
-	          getNodeEltValue, setNodeEltValue, pushBackNodeEltValue, popBackNodeEltValue,
-	          resizeNodeValue, resizeNodeValue, getEdgeEltValue, setEdgeEltValue,
-	          pushBackEdgeEltValue, popBackEdgeEltValue, resizeEdgeValue, resizeEdgeValue
+  :members:
+    copy, copy, copy, getNodesEqualTo, getEdgesEqualTo, getEdgeDefaultValue,
+    getEdgeValue, getNodeDefaultValue, getNodeValue, setAllEdgeValue,
+    setAllNodeValue, setEdgeValue, setNodeValue, setNodeDefaultValue, setEdgeDefaultValue,
+    getNodeEltValue, setNodeEltValue, pushBackNodeEltValue, popBackNodeEltValue,
+    resizeNodeValue, resizeNodeValue, getEdgeEltValue, setEdgeEltValue,
+    pushBackEdgeEltValue, popBackEdgeEltValue, resizeEdgeValue, resizeEdgeValue
 
 tlp.ColorVectorProperty
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 .. autoclass:: talipot::tlp.ColorVectorProperty
-        :members: copy, copy, copy, getNodesEqualTo, getEdgesEqualTo, getEdgeDefaultValue, getEdgeValue, getNodeDefaultValue, getNodeValue,
-            setAllEdgeValue, setAllEdgeValue, setAllNodeValue, setAllNodeValue,
-            setValueToGraphNodes, setValueToGraphEdges, setEdgeValue, setNodeValue, setNodeDefaultValue, setEdgeDefaultValue,
-	          getNodeEltValue, setNodeEltValue, pushBackNodeEltValue, popBackNodeEltValue,
-	          resizeNodeValue, resizeNodeValue, getEdgeEltValue, setEdgeEltValue,
-	          pushBackEdgeEltValue, popBackEdgeEltValue, resizeEdgeValue, resizeEdgeValue
+  :members:
+    copy, copy, copy, getNodesEqualTo, getEdgesEqualTo, getEdgeDefaultValue,
+    getEdgeValue, getNodeDefaultValue, getNodeValue, setAllEdgeValue, setAllNodeValue,
+    setEdgeValue, setNodeValue, setNodeDefaultValue, setEdgeDefaultValue,
+    getNodeEltValue, setNodeEltValue, pushBackNodeEltValue, popBackNodeEltValue,
+    resizeNodeValue, resizeNodeValue, getEdgeEltValue, setEdgeEltValue,
+    pushBackEdgeEltValue, popBackEdgeEltValue, resizeEdgeValue, resizeEdgeValue
 
 tlp.DoubleVectorProperty
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. autoclass:: talipot::tlp.DoubleVectorProperty
-        :members: copy, copy, copy, getNodesEqualTo, getEdgesEqualTo, getEdgeDefaultValue, getEdgeValue, getNodeDefaultValue, getNodeValue,
-            setAllEdgeValue, setAllEdgeValue, setAllNodeValue, setAllNodeValue,
-            setValueToGraphNodes, setValueToGraphEdges, setEdgeValue, setNodeValue, setNodeDefaultValue, setEdgeDefaultValue,
-	          getNodeEltValue, setNodeEltValue, pushBackNodeEltValue, popBackNodeEltValue,
-	          resizeNodeValue, resizeNodeValue, getEdgeEltValue, setEdgeEltValue,
-	          pushBackEdgeEltValue, popBackEdgeEltValue, resizeEdgeValue, resizeEdgeValue
+  :members:
+    copy, copy, copy, getNodesEqualTo, getEdgesEqualTo, getEdgeDefaultValue,
+    getEdgeValue, getNodeDefaultValue, getNodeValue, setAllEdgeValue, setAllNodeValue,
+    setEdgeValue, setNodeValue, setNodeDefaultValue, setEdgeDefaultValue,
+    getNodeEltValue, setNodeEltValue, pushBackNodeEltValue, popBackNodeEltValue,
+    resizeNodeValue, resizeNodeValue, getEdgeEltValue, setEdgeEltValue,
+    pushBackEdgeEltValue, popBackEdgeEltValue, resizeEdgeValue, resizeEdgeValue
 
 tlp.IntegerVectorProperty
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. autoclass:: talipot::tlp.IntegerVectorProperty
-        :members: copy, copy, copy, getNodesEqualTo, getEdgesEqualTo, getEdgeDefaultValue, getEdgeValue, getNodeDefaultValue, getNodeValue,
-            setAllEdgeValue, setAllEdgeValue, setAllNodeValue, setAllNodeValue,
-            setValueToGraphNodes, setValueToGraphEdges, setEdgeValue, setNodeValue, setNodeDefaultValue, setEdgeDefaultValue,
-	          getNodeEltValue, setNodeEltValue, pushBackNodeEltValue, popBackNodeEltValue,
-	          resizeNodeValue, resizeNodeValue, getEdgeEltValue, setEdgeEltValue,
-	          pushBackEdgeEltValue, popBackEdgeEltValue, resizeEdgeValue, resizeEdgeValue
+  :members:
+    copy, copy, copy, getNodesEqualTo, getEdgesEqualTo, getEdgeDefaultValue,
+    getEdgeValue, getNodeDefaultValue, getNodeValue, setAllEdgeValue, setAllNodeValue,
+    setEdgeValue, setNodeValue, setNodeDefaultValue, setEdgeDefaultValue,
+    getNodeEltValue, setNodeEltValue, pushBackNodeEltValue, popBackNodeEltValue,
+    resizeNodeValue, resizeNodeValue, getEdgeEltValue, setEdgeEltValue,
+    pushBackEdgeEltValue, popBackEdgeEltValue, resizeEdgeValue, resizeEdgeValue
 
 tlp.SizeVectorProperty
 ^^^^^^^^^^^^^^^^^^^^^^
 
 .. autoclass:: talipot::tlp.SizeVectorProperty
-        :members: copy, copy, copy, getNodesEqualTo, getEdgesEqualTo, getEdgeDefaultValue, getEdgeValue, getNodeDefaultValue, getNodeValue,
-            setAllEdgeValue, setAllEdgeValue, setAllNodeValue, setAllNodeValue,
-            setValueToGraphNodes, setValueToGraphEdges, setEdgeValue, setNodeValue, setNodeDefaultValue, setEdgeDefaultValue,
-	          getNodeEltValue, setNodeEltValue, pushBackNodeEltValue, popBackNodeEltValue,
-	          resizeNodeValue, resizeNodeValue, getEdgeEltValue, setEdgeEltValue,
-	          pushBackEdgeEltValue, popBackEdgeEltValue, resizeEdgeValue, resizeEdgeValue
+  :members:
+    copy, copy, copy, getNodesEqualTo, getEdgesEqualTo, getEdgeDefaultValue,
+    getEdgeValue, getNodeDefaultValue, getNodeValue, setAllEdgeValue, setAllNodeValue,
+    setEdgeValue, setNodeValue, setNodeDefaultValue, setEdgeDefaultValue,
+    getNodeEltValue, setNodeEltValue, pushBackNodeEltValue, popBackNodeEltValue,
+    resizeNodeValue, resizeNodeValue, getEdgeEltValue, setEdgeEltValue,
+    pushBackEdgeEltValue, popBackEdgeEltValue, resizeEdgeValue, resizeEdgeValue
 
 tlp.StringVectorProperty
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. autoclass:: talipot::tlp.StringVectorProperty
-        :members: copy, copy, copy, getNodesEqualTo, getEdgesEqualTo, getEdgeDefaultValue, getEdgeValue, getNodeDefaultValue, getNodeValue,
-            setAllEdgeValue, setAllEdgeValue, setAllNodeValue, setAllNodeValue,
-            setValueToGraphNodes, setValueToGraphEdges, setEdgeValue, setNodeValue, setNodeDefaultValue, setEdgeDefaultValue,
-	          getNodeEltValue, setNodeEltValue, pushBackNodeEltValue, popBackNodeEltValue,
-	          resizeNodeValue, resizeNodeValue, getEdgeEltValue, setEdgeEltValue,
-	          pushBackEdgeEltValue, popBackEdgeEltValue, resizeEdgeValue, resizeEdgeValue
+  :members:
+    copy, copy, copy, getNodesEqualTo, getEdgesEqualTo, getEdgeDefaultValue,
+    getEdgeValue, getNodeDefaultValue, getNodeValue, setAllEdgeValue, setAllNodeValue,
+    setEdgeValue, setNodeValue, setNodeDefaultValue, setEdgeDefaultValue,
+    getNodeEltValue, setNodeEltValue, pushBackNodeEltValue, popBackNodeEltValue,
+    resizeNodeValue, resizeNodeValue, getEdgeEltValue, setEdgeEltValue,
+    pushBackEdgeEltValue, popBackEdgeEltValue, resizeEdgeValue, resizeEdgeValue
 
 Talipot plugins classes
 -----------------------
@@ -828,7 +844,7 @@ tlp.Plugin
 ^^^^^^^^^^
 
 .. autoclass:: talipot::tlp.Plugin
-        :members:
+  :members:
 
 tlp.Algorithm
 ^^^^^^^^^^^^^
@@ -854,7 +870,7 @@ tlp.DoubleAlgorithm
 ^^^^^^^^^^^^^^^^^^^
 
 .. autoclass:: talipot::tlp.DoubleAlgorithm
-        :members:
+  :members:
 
 tlp.IntegerAlgorithm
 ^^^^^^^^^^^^^^^^^^^^

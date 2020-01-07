@@ -49,14 +49,10 @@ public:
 
   // redefinition of some AbstractProperty methods
   void setNodeValue(const node n, tlp::StoredType<Size>::ReturnedConstValue v) override;
-  void setAllNodeValue(tlp::StoredType<Size>::ReturnedConstValue v) override;
-  void setValueToGraphNodes(tlp::StoredType<Size>::ReturnedConstValue v,
-                            const Graph *graph) override;
+  void setAllNodeValue(tlp::StoredType<Size>::ReturnedConstValue v,
+                       const Graph *graph = nullptr) override;
 
   int compare(const node n1, const node n2) const override;
-
-  _DEPRECATED void setAllNodeValue(tlp::StoredType<Size>::ReturnedConstValue v,
-                                   const Graph *graph) override;
 
 protected:
   void resetMinMax();

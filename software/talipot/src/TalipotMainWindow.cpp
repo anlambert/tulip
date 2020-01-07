@@ -1089,8 +1089,8 @@ void TalipotMainWindow::cancelSelection() {
   tlp::Graph *graph = _graphs->currentGraph();
   tlp::BooleanProperty *selection = graph->getBooleanProperty("viewSelection");
   graph->push();
-  selection->setValueToGraphNodes(false, graph);
-  selection->setValueToGraphEdges(false, graph);
+  selection->setAllNodeValue(false, graph);
+  selection->setAllEdgeValue(false, graph);
   graph->popIfNoUpdates();
   Observable::unholdObservers();
 }
@@ -1104,11 +1104,11 @@ void TalipotMainWindow::selectAll(bool nodes, bool edges) {
   selection->setAllEdgeValue(false);
 
   if (nodes) {
-    selection->setValueToGraphNodes(true, graph);
+    selection->setAllNodeValue(true, graph);
   }
 
   if (edges) {
-    selection->setValueToGraphEdges(true, graph);
+    selection->setAllEdgeValue(true, graph);
   }
 
   Observable::unholdObservers();

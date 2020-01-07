@@ -291,36 +291,16 @@ void DoubleProperty::setEdgeValue(const edge e, tlp::StoredType<double>::Returne
   DoubleMinMaxProperty::setEdgeValue(e, v);
 }
 //=================================================================================
-void DoubleProperty::setAllNodeValue(tlp::StoredType<double>::ReturnedConstValue v) {
-  DoubleMinMaxProperty::updateAllNodesValues(v);
-  DoubleMinMaxProperty::setAllNodeValue(v);
-}
-//=================================================================================
 void DoubleProperty::setAllNodeValue(tlp::StoredType<double>::ReturnedConstValue v,
                                      const Graph *graph) {
-  setValueToGraphNodes(v, graph);
-}
-//=================================================================================
-void DoubleProperty::setValueToGraphNodes(tlp::StoredType<double>::ReturnedConstValue v,
-                                          const Graph *graph) {
   DoubleMinMaxProperty::updateAllNodesValues(v);
-  DoubleMinMaxProperty::setValueToGraphNodes(v, graph);
-}
-//=================================================================================
-void DoubleProperty::setAllEdgeValue(tlp::StoredType<double>::ReturnedConstValue v) {
-  DoubleMinMaxProperty::updateAllEdgesValues(v);
-  DoubleMinMaxProperty::setAllEdgeValue(v);
+  DoubleMinMaxProperty::setAllNodeValue(v, graph);
 }
 //=================================================================================
 void DoubleProperty::setAllEdgeValue(tlp::StoredType<double>::ReturnedConstValue v,
                                      const Graph *graph) {
-  setValueToGraphEdges(v, graph);
-}
-//=================================================================================
-void DoubleProperty::setValueToGraphEdges(tlp::StoredType<double>::ReturnedConstValue v,
-                                          const Graph *graph) {
   DoubleMinMaxProperty::updateAllEdgesValues(v);
-  DoubleMinMaxProperty::setValueToGraphEdges(v, graph);
+  DoubleMinMaxProperty::setAllEdgeValue(v, graph);
 }
 //=================================================================================
 PropertyInterface *DoubleProperty::clonePrototype(Graph *g, const std::string &n) const {

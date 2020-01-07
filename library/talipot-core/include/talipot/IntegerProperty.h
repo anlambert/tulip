@@ -43,13 +43,10 @@ public:
   }
   void setNodeValue(const node n, tlp::StoredType<int>::ReturnedConstValue v) override;
   void setEdgeValue(const edge e, tlp::StoredType<int>::ReturnedConstValue v) override;
-  void setAllNodeValue(tlp::StoredType<int>::ReturnedConstValue v) override;
-
-  void setValueToGraphNodes(tlp::StoredType<int>::ReturnedConstValue v,
-                            const Graph *graph) override;
-  void setAllEdgeValue(tlp::StoredType<int>::ReturnedConstValue v) override;
-  void setValueToGraphEdges(tlp::StoredType<int>::ReturnedConstValue v,
-                            const Graph *graph) override;
+  void setAllNodeValue(tlp::StoredType<int>::ReturnedConstValue v,
+                       const Graph *graph = nullptr) override;
+  void setAllEdgeValue(tlp::StoredType<int>::ReturnedConstValue v,
+                       const Graph *graph = nullptr) override;
 
   int compare(const node n1, const node n2) const override;
   int compare(const edge e1, const edge e2) const override;
@@ -90,11 +87,6 @@ public:
 
     return newProp;
   }
-
-  _DEPRECATED void setAllNodeValue(tlp::StoredType<int>::ReturnedConstValue v,
-                                   const Graph *graph) override;
-  _DEPRECATED void setAllEdgeValue(tlp::StoredType<int>::ReturnedConstValue v,
-                                   const Graph *graph) override;
 
 protected:
   void clone_handler(

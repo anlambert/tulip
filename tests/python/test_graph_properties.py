@@ -164,7 +164,7 @@ class TestGraphProperties(unittest.TestCase):
         self.assertEqual(edges_equal[0], self.e)
 
         self.prop.setAllNodeValue(node_default_value)
-        self.prop.setValueToGraphNodes(node_value, self.sub_graph)
+        self.prop.setAllNodeValue(node_value, self.sub_graph)
         for n in self.graph.getNodes():
             if self.sub_graph.isElement(n):
                 self.assertEqual(self.prop[n], node_value)
@@ -172,7 +172,7 @@ class TestGraphProperties(unittest.TestCase):
                 self.assertEqual(self.prop[n], node_default_value)
 
         self.prop.setAllEdgeValue(edge_default_value)
-        self.prop.setValueToGraphEdges(edge_value, self.sub_graph)
+        self.prop.setAllEdgeValue(edge_value, self.sub_graph)
         for e in self.graph.getEdges():
             if self.sub_graph.isElement(e):
                 self.assertEqual(self.prop[e], edge_value)

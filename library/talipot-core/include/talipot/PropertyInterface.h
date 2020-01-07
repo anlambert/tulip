@@ -223,53 +223,24 @@ public:
   virtual bool setNodeDefaultStringValue(const std::string &value) = 0;
 
   /**
-   * @brief Sets all the nodes value to the value represented by the string. For some types, some
-   * parsing will be necessary (e.g. LayoutProperty).
-   * All previous values are lost and the represented value is assigned as the default one to the
-   * future added nodes.
+   * @brief Sets all the nodes value to the value represented by the string.
+   *
+   * For some types, some parsing will be necessary (e.g. LayoutProperty).
+   * All previous values are lost and the represented value is assigned as the
+   * default one to the future added nodes.
    *
    * @param value A string representing the new value to set on all the nodes.
+   * @param graph An optional descendant graph from the one associated to that
+   * property (itself included). If provided, only the nodes from that graph
+   * will have their value modified and the default node value will not be modified.
    *
-   * @return Whether the given string was a correct representation for this property's type. If not,
-   * the values are not set.
+   * @warning If the provided graph is not a descendant of the one associated to that
+   * property, no node value will be modified in it.
+   *
+   * @return Whether the given string was a correct representation for this
+   * property's type. If not, the values are not set.
    */
-  virtual bool setAllNodeStringValue(const std::string &value) = 0;
-
-  /**
-   * @brief Sets all the nodes value to the value represented by the string for a graph. For some
-   * types, some parsing will be necessary (e.g. LayoutProperty).
-   * Only the nodes from that graph will have their value modified in the property
-   * and the default node value will not be modified.
-   *
-   * @deprecated use method setStringValueToGraphNodes instead
-   *
-   * @param value A string representing the new value to set on all the nodes.
-   * @param graph A graph that defines the set of nodes.
-   *
-   * @warning If the provided graph is not a descendant of the one associated to that property
-   * (including itself), no node value will be modified in it.
-   *
-   * @return Whether the given string was a correct representation for this property's type. If not,
-   * the values are not set.
-   */
-  _DEPRECATED virtual bool setAllNodeStringValue(const std::string &value, const Graph *graph) = 0;
-
-  /**
-   * @brief Sets all the nodes value to the value represented by the string for a graph. For some
-   * types, some parsing will be necessary (e.g. LayoutProperty).
-   * Only the nodes from that graph will have their value modified in the property
-   * and the default node value will not be modified.
-   *
-   * @param value A string representing the new value to set on all the nodes.
-   * @param graph A graph that defines the set of nodes.
-   *
-   * @warning If the provided graph is not a descendant of the one associated to that property
-   * (including itself), no node value will be modified in it.
-   *
-   * @return Whether the given string was a correct representation for this property's type. If not,
-   * the values are not set.
-   */
-  virtual bool setStringValueToGraphNodes(const std::string &value, const Graph *graph) = 0;
+  virtual bool setAllNodeStringValue(const std::string &value, const Graph *graph = nullptr) = 0;
 
   /**
    * @brief Sets the value assigned as the default one to the future added edges from a string
@@ -283,53 +254,24 @@ public:
   virtual bool setEdgeDefaultStringValue(const std::string &value) = 0;
 
   /**
-   * @brief Sets all the edges value to the value represented by the string. For some types, some
-   * parsing will be necessary (e.g. LayoutProperty).
-   * All previous values are lost and the represented value is assigned as the default one to the
-   * future added edges.
+   * @brief Sets all the edges value to the value represented by the string.
+   *
+   * For some types, some parsing will be necessary (e.g. LayoutProperty).
+   * All previous values are lost and the represented value is assigned as
+   * the default one to the future added edges.
    *
    * @param value A string representing the new value to set on all the edges.
+   * @param graph An optional descendant graph from the one associated to that
+   * property (itself included). If provided, only the edges from that graph
+   * will have their value modified and the default edge value will not be modified.
    *
-   * @return Whether the given string was a correct representation for this property's type. If not,
-   * the values are not set.
+   * @warning If the provided graph is not a descendant of the one associated to
+   * that property, no edge value will be modified in it.
+   *
+   * @return Whether the given string was a correct representation for this
+   * property's type. If not, the values are not set.
    */
-  virtual bool setAllEdgeStringValue(const std::string &value) = 0;
-
-  /**
-   * @brief Sets all the edges value to the value represented by the string for a graph. For some
-   * types, some parsing will be necessary (e.g. LayoutProperty).
-   * Only the edges from that graph will have their value modified in the property
-   * and the default edge value will not be modified.
-   *
-   * @deprecated use method setStringValueToGraphEdges instead
-   *
-   * @param value A string representing the new value to set on all the edges.
-   * @param graph A graph that defines the set of edges.
-   *
-   * @warning If the provided graph is not a descendant of the one associated to that property
-   * (including itself), no edge value will be modified in it.
-   *
-   * @return Whether the given string was a correct representation for this property's type. If not,
-   * the values are not set.
-   */
-  _DEPRECATED virtual bool setAllEdgeStringValue(const std::string &value, const Graph *graph) = 0;
-
-  /**
-   * @brief Sets all the edges value to the value represented by the string for a graph. For some
-   * types, some parsing will be necessary (e.g. LayoutProperty).
-   * Only the edges from that graph will have their value modified in the property
-   * and the default edge value will not be modified.
-   *
-   * @param value A string representing the new value to set on all the edges.
-   * @param graph A graph that defines the set of edges.
-   *
-   * @warning If the provided graph is not a descendant of the one associated to that property
-   * (including itself), no edge value will be modified in it.
-   *
-   * @return Whether the given string was a correct representation for this property's type. If not,
-   * the values are not set.
-   */
-  virtual bool setStringValueToGraphEdges(const std::string &value, const Graph *graph) = 0;
+  virtual bool setAllEdgeStringValue(const std::string &value, const Graph *graph = nullptr) = 0;
 
   /**
    * @brief Gets a pointer to the tlp::DataMem structure that contains the node default value.

@@ -45,11 +45,9 @@ public:
   // redefinition of some PropertyInterface methods
   PropertyInterface *clonePrototype(Graph *, const std::string &) const override;
   bool setNodeStringValue(const node n, const std::string &v) override;
-  bool setAllNodeStringValue(const std::string &v) override;
-  bool setStringValueToGraphNodes(const std::string &v, const tlp::Graph *graph) override;
+  bool setAllNodeStringValue(const std::string &v, const Graph *graph = nullptr) override;
   bool setEdgeStringValue(const edge e, const std::string &v) override;
-  bool setAllEdgeStringValue(const std::string &v) override;
-  bool setStringValueToGraphEdges(const std::string &v, const tlp::Graph *graph) override;
+  bool setAllEdgeStringValue(const std::string &v, const Graph *graph = nullptr) override;
   static const std::string propertyTypename;
   const std::string &getTypename() const override {
     return propertyTypename;
@@ -58,9 +56,8 @@ public:
   // redefinition of some AbstractProperty methods
   void setNodeValue(const node n,
                     tlp::StoredType<GraphType::RealType>::ReturnedConstValue g) override;
-  void setAllNodeValue(tlp::StoredType<GraphType::RealType>::ReturnedConstValue g) override;
-  void setValueToGraphNodes(tlp::StoredType<GraphType::RealType>::ReturnedConstValue g,
-                            const Graph *graph) override;
+  void setAllNodeValue(tlp::StoredType<GraphType::RealType>::ReturnedConstValue g,
+                       const Graph *graph = nullptr) override;
   bool readNodeDefaultValue(std::istream &iss) override;
   bool readNodeValue(std::istream &iss, node n) override;
   // tlp::GraphType encapsulates a tlp::Graph pointer but that is the graph id
