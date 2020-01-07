@@ -412,7 +412,8 @@ background-color: rgba(255,255,255,100);
       </size>
      </property>
      <property name="toolTip">
-      <string>Set color of selected nodes if any, of all nodes if not</string>
+      <string>Set color of selected nodes if any, of all nodes if not.
+Only nodes of the visualized graph will have their value modified.</string>
      </property>
      <property name="text">
       <string/>
@@ -447,7 +448,8 @@ background-color: rgba(255,255,255,100);
       </size>
      </property>
      <property name="toolTip">
-      <string>Set color of selected edges if any, of all edges if not</string>
+      <string>Set color of selected edges if any, of all edges if not.
+Only edges of the visualized graph will have their value modified.</string>
      </property>
      <property name="text">
       <string/>
@@ -482,7 +484,8 @@ background-color: rgba(255,255,255,100);
       </size>
      </property>
      <property name="toolTip">
-      <string>Set border color of selected nodes if any, of all nodes if not</string>
+      <string>Set border color of selected nodes if any, of all nodes if not.
+Only nodes of the visualized graph will have their value modified.</string>
      </property>
      <property name="text">
       <string/>
@@ -517,7 +520,8 @@ background-color: rgba(255,255,255,100);
       </size>
      </property>
      <property name="toolTip">
-      <string>Set border color of selected edges if any, of all edges if not</string>
+      <string>Set border color of selected edges if any, of all edges if not.
+Only edges of the visualized graph will have their value modified.</string>
      </property>
      <property name="text">
       <string/>
@@ -552,7 +556,8 @@ background-color: rgba(255,255,255,100);
       </size>
      </property>
      <property name="toolTip">
-      <string>Set shape of selected nodes if any, of all nodes if not</string>
+      <string>Set shape of selected nodes if any, of all nodes if not.
+Only nodes of the visualized graph will have their value modified.</string>
      </property>
      <property name="text">
       <string/>
@@ -587,7 +592,8 @@ background-color: rgba(255,255,255,100);
       </size>
      </property>
      <property name="toolTip">
-      <string>Set shape of selected edges if any, of all edges if not</string>
+      <string>Set shape of selected edges if any, of all edges if not.
+Only edges of the visualized graph will have their value modified.</string>
      </property>
      <property name="text">
       <string/>
@@ -622,7 +628,8 @@ background-color: rgba(255,255,255,100);
       </size>
      </property>
      <property name="toolTip">
-      <string>Set size of selected nodes if any, of all nodes if not</string>
+      <string>Set size of selected nodes if any, of all nodes if not.
+Only nodes of the visualized graph will have their value modified.</string>
      </property>
      <property name="text">
       <string/>
@@ -657,7 +664,8 @@ background-color: rgba(255,255,255,100);
       </size>
      </property>
      <property name="toolTip">
-      <string>Set size of selected edges if any, of all edges if not</string>
+      <string>Set size of selected edges if any, of all edges if not.
+Only edges of the visualized graph will have their value modified.</string>
      </property>
      <property name="text">
       <string/>
@@ -692,7 +700,8 @@ background-color: rgba(255,255,255,100);
       </size>
      </property>
      <property name="toolTip">
-      <string>Set label color of selected elements if any, of all elements if not</string>
+      <string>Set label color of selected elements if any, of all elements if not.
+Only elements of the visualized graph will have their value modified.</string>
      </property>
      <property name="text">
       <string/>
@@ -727,7 +736,8 @@ background-color: rgba(255,255,255,100);
       </size>
      </property>
      <property name="toolTip">
-      <string>Set label position of selected nodes if any, of all nodes if not</string>
+      <string>Set label position of selected nodes if any, of all nodes if not.
+Only nodes of the visualized graph will have their value modified.</string>
      </property>
      <property name="text">
       <string/>
@@ -762,7 +772,8 @@ background-color: rgba(255,255,255,100);
       </size>
      </property>
      <property name="toolTip">
-      <string>Set font of elements labels</string>
+      <string>Set font of elements labels
+Only elements of the visualized graph will have their value modified.</string>
      </property>
      <property name="statusTip">
       <string>Change font for labels</string>

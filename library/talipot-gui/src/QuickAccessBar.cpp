@@ -394,9 +394,9 @@ void QuickAccessBarImpl::setLabelColor(const QColor &c) {
     hasSelected = true;
   }
 
-  if (hasSelected == false) {
-    labelColors->setAllNodeValue(color);
-    labelBorderColors->setAllNodeValue(color);
+  if (!hasSelected) {
+    labelColors->setAllNodeValue(color, _mainView->graph());
+    labelBorderColors->setAllNodeValue(color, _mainView->graph());
   }
 
   for (auto e : selected->getNonDefaultValuatedEdges(_mainView->graph())) {
@@ -405,9 +405,9 @@ void QuickAccessBarImpl::setLabelColor(const QColor &c) {
     hasSelected = true;
   }
 
-  if (hasSelected == false) {
-    labelColors->setAllEdgeValue(color);
-    labelBorderColors->setAllEdgeValue(color);
+  if (!hasSelected) {
+    labelColors->setAllEdgeValue(color, _mainView->graph());
+    labelBorderColors->setAllEdgeValue(color, _mainView->graph());
   }
 
   Observable::unholdObservers();
@@ -430,16 +430,16 @@ void QuickAccessBarImpl::setAllColorValues(unsigned int eltType, ColorProperty *
       hasSelected = true;
     }
 
-    if (hasSelected == false)
-      prop->setAllNodeValue(color);
+    if (!hasSelected)
+      prop->setAllNodeValue(color, _mainView->graph());
   } else {
     for (auto e : selected->getNonDefaultValuatedEdges(_mainView->graph())) {
       prop->setEdgeValue(e, color);
       hasSelected = true;
     }
 
-    if (hasSelected == false)
-      prop->setAllEdgeValue(color);
+    if (!hasSelected)
+      prop->setAllEdgeValue(color, _mainView->graph());
   }
 
   Observable::unholdObservers();
@@ -485,16 +485,16 @@ void QuickAccessBarImpl::setAllValues(unsigned int eltType, PropertyInterface *p
       hasSelected = true;
     }
 
-    if (hasSelected == false)
-      GraphModel::setAllNodeValue(prop, val);
+    if (!hasSelected)
+      GraphModel::setAllNodeValue(prop, val, _mainView->graph());
   } else {
     for (auto e : selected->getNonDefaultValuatedEdges(_mainView->graph())) {
       GraphModel::setEdgeValue(e.id, prop, val);
       hasSelected = true;
     }
 
-    if (hasSelected == false)
-      GraphModel::setAllEdgeValue(prop, val);
+    if (!hasSelected)
+      GraphModel::setAllEdgeValue(prop, val, _mainView->graph());
   }
 
   Observable::unholdObservers();
@@ -577,10 +577,12 @@ void QuickAccessBarImpl::selectFont() {
 
   Observable::holdObservers();
 
-  inputData()->getElementFont()->setAllNodeValue(QStringToTlpString(dlg.font().fontFile()));
-  inputData()->getElementFont()->setAllEdgeValue(QStringToTlpString(dlg.font().fontFile()));
-  inputData()->getElementFontSize()->setAllNodeValue(dlg.fontSize());
-  inputData()->getElementFontSize()->setAllEdgeValue(dlg.fontSize());
+  inputData()->getElementFont()->setAllNodeValue(QStringToTlpString(dlg.font().fontFile()),
+                                                 _mainView->graph());
+  inputData()->getElementFont()->setAllEdgeValue(QStringToTlpString(dlg.font().fontFile()),
+                                                 _mainView->graph());
+  inputData()->getElementFontSize()->setAllNodeValue(dlg.fontSize(), _mainView->graph());
+  inputData()->getElementFontSize()->setAllEdgeValue(dlg.fontSize(), _mainView->graph());
 
   Observable::unholdObservers();
   _mainView->graph()->popIfNoUpdates();
