@@ -74,10 +74,10 @@ if platform.system() == 'Darwin' and len(sys.argv) > 1 \
     talipotNativeLibsPath = os.getcwd() + '/talipot/native/'
     talipotNativePluginsLibsPath = os.getcwd() + '/talipot/native/plugins/'
 
-    print("Copying dylibs dependencies in talipot-python wheel ...")
+    print("Copying dylibs dependencies in talipot wheel ...")
     copyDyLibsDependencies(talipotNativeLibsPath)
     copyDyLibsDependencies(talipotNativePluginsLibsPath, '../')
-    print("Relinking dylibs and setting rpaths in talipot-python wheel ...")
+    print("Relinking dylibs and setting rpaths in talipot wheel ...")
     relinkDyLibsInDirAndSetRpaths(talipotNativeLibsPath, ['@loader_path/'])
     relinkDyLibsInDirAndSetRpaths(talipotNativePluginsLibsPath,
                                   ['@loader_path/..'])
@@ -113,7 +113,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='talipot-python',
+    name='talipot',
 
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
@@ -125,7 +125,6 @@ setup(
 
     url='http://github.com/anlambert/talipot',
     project_urls={
-        'Documentation': '',
         'Issue Tracker': 'https://github.com/anlambert/talipot/issues',
         'Sources': 'https://github.com/anlambert/talipot',
     },

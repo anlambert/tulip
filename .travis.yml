@@ -228,7 +228,57 @@ jobs:
         - ninja -j4 install || travis_terminate 1
         # run Talipot unit tests
         - ninja runTests
+  #==============================================================================================================================================================
+    # Talipot-Python wheel build on manylinux2010
+    - stage: Tulip-Python wheels build (manylinux2010)
+      os: linux
+      dist: bionic
+      addons:
+        apt:
+          packages:
+            - python-pip
+            - python3-pip
+      cache:
+        directories:
+          - $HOME/ccache
 
+      sudo: required
+      env:
+        - ARCH=x86_64
+        - DOCKER_IMAGE=quay.io/pypa/manylinux2010_x86_64
+
+      services:
+        - docker
+
+      before_install:
+        - echo 'DOCKER_OPTS="-H tcp://127.0.0.1:2375 -H unix:///var/run/docker.sock
+            -s devicemapper"' | sudo tee /etc/default/docker > /dev/null
+        - sudo service docker restart
+        - sleep 5
+        - sudo docker pull ${DOCKER_IMAGE}
+        - sudo docker create -v $HOME/ccache:/ccache --name ccache ${DOCKER_IMAGE}
+
+      script:
+        - |
+          LAST_VERSION=$(curl -s 'https://test.pypi.org/pypi/talipot/json' | \
+            python -c "import sys, json; print(json.load(sys.stdin)['info']['version'])" 2>/dev/null)
+          DEV_VERSION=$(echo $LAST_VERSION | cut -f4 -d '.' | sed 's/dev//')
+          let DEV_VERSION+=1
+          sudo docker run --rm=true -e CCACHE_DIR=/ccache --volumes-from ccache \
+            --cap-add SYS_ADMIN -v `pwd`:/talipot:rw ${DOCKER_IMAGE} /bin/bash -c \
+            "bash -xe /talipot/bundlers/linux/talipot_python_wheels_manylinux_build.sh \
+              dev$DEV_VERSION $TEST_PYPI_API_TOKEN $TRAVIS_BRANCH"
+        - cd tests/python
+
+        - pip2 install --upgrade pip --user
+        - pip2 install --index-url https://test.pypi.org/simple/ talipot --user
+        - python -c "from talipot import tlp; print(tlp.getLayoutAlgorithmPluginsList())"
+        - TALIPOT_BUILD_DIR= python -m unittest discover
+
+        - pip3 install --upgrade pip --user
+        - pip3 install --index-url https://test.pypi.org/simple/ talipot --user
+        - python3 -c "from talipot import tlp; print(tlp.getLayoutAlgorithmPluginsList())"
+        - TALIPOT_BUILD_DIR= python3 -m unittest discover
   #=============================================================================================
     # Talipot AppImage build on CentOS
     - stage: Talipot AppImage build (CentOS)
