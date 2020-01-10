@@ -230,7 +230,7 @@ jobs:
         - ninja runTests
   #==============================================================================================================================================================
     # Talipot-Python wheel build on manylinux2010
-    - stage: Tulip-Python wheels build (manylinux2010)
+    - stage: Talipot-Python wheels build (manylinux2010)
       os: linux
       dist: bionic
       addons:
