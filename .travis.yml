@@ -373,12 +373,12 @@ jobs:
             -DTALIPOT_BUILD_TESTS=ON
             -DTALIPOT_USE_CCACHE=ON
             -DTALIPOT_BUILD_CORE_ONLY=ON
-            -DTALIPOT_BUILD_OGL=ON || travis_terminate 1
+            -DTALIPOT_BUILD_OGL=OFF || travis_terminate 1
         # compile Talipot using ninja for faster builds
         - ninja -j4 || travis_terminate 1
-        - ninja -j4 install || travis_terminate 1
+        # - ninja -j4 install || travis_terminate 1
         # run Talipot unit tests
-        - ninja runTests
+        # - ninja runTests
 
     #-------------------------------------------------------------------------------------------
     # Talipot core build on Mac OS (Homebrew)
