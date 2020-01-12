@@ -330,7 +330,43 @@ jobs:
         user: "anlambert"
         key:
           secure: "${BINTRAY_API_KEY}"
+  #=============================================================================================
+    # Talipot core build stage on Mac OS 10.12
+    - stage: Talipot thirdparty build (Mac OS)
+      os: osx
+      osx_image: xcode9.2
+      compiler: clang
+      cache: ccache
+      install:
+        # install MacPorts in order to easily retrieve Talipot dependencies
+        - curl -LO https://raw.githubusercontent.com/GiovanniBussi/macports-ci/master/macports-ci
+        - source ./macports-ci install
+        # install Talipot core build dependencies
+        - sudo port -N install cmake
+        - sudo port -N install clang-9.0
+        - sudo port -N install ccache
+        - sudo port -N install ninja
+        - sudo port -N install qhull
+        - sudo port -N install yajl
+      env:
+        - ENV="MacOS 10.12, LLVM Clang, MacPorts"
 
+      script:
+        # create build directory
+        - mkdir build && cd build
+        # configure Talipot core build using cmake
+        - cmake .. -G Ninja
+            -DCMAKE_BUILD_TYPE=Release
+            -DCMAKE_INSTALL_PREFIX=$PWD/install
+            -DCMAKE_C_COMPILER=/opt/local/bin/clang-mp-9.0
+            -DCMAKE_CXX_COMPILER=/opt/local/bin/clang++-mp-9.0
+            -DPYTHON_EXECUTABLE=/usr/bin/python2.7
+            -DZLIB_INCLUDE_DIR=/opt/local/include
+            -DZLIB_LIBRARY_RELEASE=/opt/local/lib/libz.dylib
+            -DTALIPOT_USE_CCACHE=ON
+            -DTALIPOT_BUILD_CORE_ONLY=ON || travis_terminate 1
+        # compile Talipot using ninja for faster builds
+        - ninja -j4 thirdparty/all || travis_terminate 1
   #=============================================================================================
     # Talipot core build stage on Mac OS
     - stage: Talipot core build (Mac OS)
@@ -373,12 +409,12 @@ jobs:
             -DTALIPOT_BUILD_TESTS=ON
             -DTALIPOT_USE_CCACHE=ON
             -DTALIPOT_BUILD_CORE_ONLY=ON
-            -DTALIPOT_BUILD_OGL=OFF || travis_terminate 1
+            -DTALIPOT_BUILD_OGL=ON || travis_terminate 1
         # compile Talipot using ninja for faster builds
         - ninja -j4 || travis_terminate 1
-        # - ninja -j4 install || travis_terminate 1
+        - ninja -j4 install || travis_terminate 1
         # run Talipot unit tests
-        # - ninja runTests
+        - ninja runTests
 
     #-------------------------------------------------------------------------------------------
     # Talipot core build on Mac OS (Homebrew)
