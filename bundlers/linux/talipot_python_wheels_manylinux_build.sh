@@ -51,6 +51,10 @@ fi
 # iterate on available Python versions
 for CPYBIN in /opt/python/cp*/bin
 do
+  if [[ $CPYBIN == *"cp34"* ]]
+  then
+    continue
+  fi
   ${CPYBIN}/pip install twine
   # configure and build python wheel with specific Python version
   cmake ${TALIPOT_SRC} \
@@ -64,15 +68,16 @@ do
   if [ -n "$TALIPOT_PYTHON_TEST_WHEEL_SUFFIX" ]
   then
     make test-wheel
-    if [ "$3" == "master" ]; then
-      make test-wheel-upload
-    fi
   else
     make wheel
   fi
   if [ $? -ne 0 ]
   then
     break
+  fi
+
+  if [ "$3" == "master" ]; then
+    make test-wheel-upload
   fi
 
   # check the talipot wheel
