@@ -270,7 +270,7 @@ jobs:
           sudo docker run --rm=true -e CCACHE_DIR=/ccache --volumes-from ccache \
             --cap-add SYS_ADMIN -v `pwd`:/talipot:rw ${DOCKER_IMAGE} /bin/bash -c \
             "bash -xe /talipot/bundlers/linux/talipot_python_wheels_manylinux_build.sh \
-              dev$DEV_VERSION $TEST_PYTEST_PYPI_API_TOKEN $TRAVIS_BRANCH"
+              dev$DEV_VERSION $TEST_PYPI_API_TOKEN $TRAVIS_BRANCH"
 
         - cd tests/python
 

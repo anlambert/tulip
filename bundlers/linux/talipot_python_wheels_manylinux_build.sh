@@ -76,10 +76,6 @@ do
     break
   fi
 
-  if [ "$3" == "master" ]; then
-    make test-wheel-upload
-  fi
-
   # check the talipot wheel
   pushd ./library/talipot-python/bindings/talipot-core/talipot_module/dist
   ${CPYBIN}/pip install $(ls -t | head -1)
@@ -95,3 +91,11 @@ print('Talipot %s successfully imported in Python %s' %
   fi
   popd
 done
+
+if [ -n "$TALIPOT_PYTHON_TEST_WHEEL_SUFFIX" ]
+then
+  if [ "$3" == "master" ]
+  then
+    make test-wheel-upload
+  fi
+fi
