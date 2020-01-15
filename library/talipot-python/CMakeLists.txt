@@ -7,7 +7,7 @@ ENDIF(MINGW AND X86_64)
 # This leads to a huge spew of warnings when compiling with VS2013, and presumably it also leads to undefined behavior.
 # So define HAVE_ROUND for that compiler.
 IF(MSVC12)
-  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DHAVE_ROUND")
+  TALIPOT_SET_CXX_FLAGS("-DHAVE_ROUND")
 ENDIF(MSVC12)
 
 ADD_DEFINITIONS("-DSIP_MODULE=${SIP_MODULE}")

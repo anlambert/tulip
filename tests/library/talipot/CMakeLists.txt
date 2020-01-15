@@ -14,7 +14,7 @@ ADD_CUSTOM_TARGET(copyTestData ALL ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CU
 
 # disable MSVC warning 'potential divide by 0' for DoublePropertyTest
 IF(MSVC)
-  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4723")
+  TALIPOT_SET_CXX_FLAGS("/wd4723")
 ENDIF(MSVC)
 
 UNIT_TEST(ImportExportTest ImportExportTest.cpp talipotlibtest.cpp)

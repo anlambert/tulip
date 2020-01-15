@@ -1,6 +1,6 @@
 INCLUDE_DIRECTORIES(${TalipotCoreBuildInclude} ${TalipotCoreInclude} ${TalipotOGLInclude} ${TalipotGUIInclude})
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
+TALIPOT_SET_CXX_FLAGS("${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
 
 ADD_EXECUTABLE(graph_display graph_display.cpp)
 TARGET_LINK_LIBRARIES(graph_display ${TalipotLibs} ${QT_LIBRARIES})

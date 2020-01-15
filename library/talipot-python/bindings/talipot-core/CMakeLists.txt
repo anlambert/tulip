@@ -1,5 +1,5 @@
 IF(WIN32)
-  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DDLL_TALIPOT_PYTHON")
+  TALIPOT_SET_CXX_FLAGS("-DDLL_TALIPOT_PYTHON")
 ENDIF(WIN32)
 
 # Visual Studio has a limit for string constants length

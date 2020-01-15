@@ -38,6 +38,11 @@ ENDIF(NOT MSVC)
 
 PROJECT(talipot)
 
+## ========================================================
+## Talipot CMake macros
+## ========================================================
+INCLUDE(cmake/TalipotUseFile.cmake)
+
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake)
 
 #convert CMAKE_INSTALL_PREFIX path into a cmake style path with unix /
@@ -56,7 +61,7 @@ ENDIF(NOT MSVC AND "${CMAKE_BUILD_TYPE}" STREQUAL "")
 STRING(COMPARE EQUAL "${CMAKE_SIZEOF_VOID_P}" "8" X86_64)
 IF(X86_64)
   SET(PROCESSOR_ARCHITECTURE "64")
-  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DX86_64")
+  TALIPOT_SET_CXX_FLAGS("-DX86_64")
 ELSE(X86_64)
   SET(PROCESSOR_ARCHITECTURE "32")
 ENDIF(X86_64)
@@ -120,11 +125,6 @@ SET(TalipotBinInstallDir ${CMAKE_INSTALL_BINDIR})
 SET(TalipotIncludeInstallDir ${CMAKE_INSTALL_INCLUDEDIR})
 SET(TalipotShareInstallDir ${CMAKE_INSTALL_DATADIR}/talipot)
 SET(TalipotBitmapInstallDir ${TalipotShareInstallDir}/bitmaps)
-
-## ========================================================
-## Talipot CMake macros
-## ========================================================
-INCLUDE(cmake/TalipotUseFile.cmake)
 
 ## ========================================================
 ## Talipot version variables
@@ -483,7 +483,7 @@ ELSE(WIN32)
 ENDIF(WIN32)
 SET(QT_LDFLAGS "${QT_QTCORE_LIBRARY_RELEASE} ${QT_QTGUI_LIBRARY_RELEASE} ${QT_QTOPENGL_LIBRARY_RELEASE} ${QT_QTXML_LIBRARY_RELEASE} ${QT_QTNETWORK_LIBRARY_RELEASE} ${QT_QTWEBKIT_LIBRARY_RELEASE}")
 IF(APPLE AND NOT "${CMAKE_OSX_SYSROOT}" STREQUAL "")
-  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -isysroot ${CMAKE_OSX_SYSROOT}")
+  TALIPOT_SET_CXX_FLAGS("-isysroot ${CMAKE_OSX_SYSROOT}")
 ENDIF(APPLE AND NOT "${CMAKE_OSX_SYSROOT}" STREQUAL "")
 
 CONFIGURE_FILE("talipot-config.in" "talipot-config" @ONLY)

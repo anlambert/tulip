@@ -67,7 +67,7 @@ INCLUDE_DIRECTORIES(../crash_handling include/ ${CMAKE_CURRENT_BINARY_DIR})
 INCLUDE_DIRECTORIES(${TalipotCoreBuildInclude} ${TalipotCoreInclude} ${TalipotOGLInclude}
                     ${TalipotPythonInclude} ${TalipotGUIInclude} ${OPENGL_INCLUDE_DIR})
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
+TALIPOT_SET_CXX_FLAGS("${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
 
 IF(WIN32)
 
