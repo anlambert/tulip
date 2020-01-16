@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -27,7 +27,9 @@
 #include <talipot/Settings.h>
 
 TalipotLogger::TalipotLogger(QWidget *parent)
-    : QDialog(parent), _logType(QtDebugMsg), _ui(new Ui::TalipotLogger), _pythonOutput(false) {
+    : QDialog(parent), _logType(QtDebugMsg), _ui(new Ui::TalipotLogger), _pythonOutput(false),
+      _nbLog(0), _emptyIcon(16, 16) {
+  _emptyIcon.fill(Qt::transparent);
   _ui->setupUi(this);
   _ui->listWidget->installEventFilter(this);
   _ui->listWidget->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -115,8 +117,20 @@ void TalipotLogger::logImpl(QtMsgType type, const QString &msg) {
   }
 
   LogType lastLogType = getLastLogType();
-  _ui->listWidget->addItem(new QListWidgetItem(QIcon(icon(lastLogType)), msgClean));
+  QBrush c = (_nbLog % 2 == 0) ? palette().base() : palette().alternateBase();
+  auto lines = msgClean.split('\n');
+  for (int i = 0; i < lines.count(); ++i) {
+    QListWidgetItem *item = nullptr;
+    if (i == 0) {
+      item = new QListWidgetItem(QIcon(icon(lastLogType)), lines[i]);
+    } else {
+      item = new QListWidgetItem(QIcon(_emptyIcon), lines[i]);
+    }
+    item->setBackground(c);
+    _ui->listWidget->addItem(item);
+  }
   _logCounts[lastLogType] += 1;
+  _nbLog += 1;
 }
 
 QPixmap TalipotLogger::icon(LogType logType) const {
@@ -152,6 +166,7 @@ void TalipotLogger::clear() {
   _logCounts[Warning] = 0;
   _logCounts[Error] = 0;
   _logCounts[Python] = 0;
+  _nbLog = 0;
 }
 
 void TalipotLogger::copy() {
