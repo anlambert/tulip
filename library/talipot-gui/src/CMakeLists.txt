@@ -61,7 +61,7 @@ SET(SRCS
   Workspace.cpp
   PlaceHolderWidget.cpp
   GraphHierarchiesModel.cpp
-  CoordEditor.cpp
+  Vec3fEditor.cpp
   GlOverviewGraphicsItem.cpp
   SceneConfigWidget.cpp
   QuickAccessBar.cpp
@@ -128,7 +128,7 @@ ENDIF(UNIX)
 QTX_WRAP_UI(UI_HEADERS
   ../designer/AboutPage.ui
   ../designer/ColorScaleConfigDialog.ui
-  ../designer/CoordEditor.ui
+  ../designer/Vec3fEditor.ui
   ../designer/CopyPropertyDialog.ui
   ../designer/CSVGraphMappingConfigurationWidget.ui
   ../designer/CSVImportConfigurationWidget.ui
@@ -164,7 +164,7 @@ QTX_WRAP_CPP(MOC_SRCS
   ../include/talipot/ColorButton.h
   ../include/talipot/ColorScaleButton.h
   ../include/talipot/ColorScaleConfigDialog.h
-  ../include/talipot/CoordEditor.h
+  ../include/talipot/Vec3fEditor.h
   ../include/talipot/CopyPropertyDialog.h
   ../include/talipot/CSVGraphMappingConfigurationWidget.h
   ../include/talipot/CSVImportConfigurationWidget.h

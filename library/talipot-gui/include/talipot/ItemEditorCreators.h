@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -103,11 +103,11 @@ public:
   QString displayText(const QVariant &) const override;
 };
 
-class TLP_QT_SCOPE CoordEditorCreator : public StringDisplayEditorCreator<tlp::PointType> {
+class TLP_QT_SCOPE Vec3fEditorCreator : public StringDisplayEditorCreator<tlp::PointType> {
   bool editSize;
 
 public:
-  CoordEditorCreator() : editSize(false) {}
+  Vec3fEditorCreator(bool editSize = false) : editSize(editSize) {}
   QWidget *createWidget(QWidget *) const override;
   void setEditorData(QWidget *, const QVariant &, bool, tlp::Graph *) override;
   QVariant editorData(QWidget *, tlp::Graph *) override;

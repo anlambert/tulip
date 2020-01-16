@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -42,7 +42,8 @@ ItemDelegate::ItemDelegate(QObject *parent)
   registerCreator<QString>(new MultiLinesEditEditorCreator<tlp::QStringType>);
   registerCreator<QStringList>(new QStringListEditorCreator);
   registerCreator<tlp::Color>(new ColorEditorCreator);
-  registerCreator<tlp::Coord>(new CoordEditorCreator);
+  registerCreator<tlp::Coord>(new Vec3fEditorCreator);
+  registerCreator<tlp::Size>(new Vec3fEditorCreator(true));
   registerCreator<tlp::BooleanProperty *>(new PropertyEditorCreator<tlp::BooleanProperty>);
   registerCreator<tlp::DoubleProperty *>(new PropertyEditorCreator<tlp::DoubleProperty>);
   registerCreator<tlp::LayoutProperty *>(new PropertyEditorCreator<tlp::LayoutProperty>);

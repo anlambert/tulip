@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -25,7 +25,7 @@
 #include <talipot/TlpTools.h>
 #include <talipot/ColorScaleButton.h>
 #include <talipot/MetaTypes.h>
-#include <talipot/CoordEditor.h>
+#include <talipot/Vec3fEditor.h>
 #include <talipot/StringEditor.h>
 #include <talipot/GlyphRenderer.h>
 #include <talipot/EdgeExtremityGlyphManager.h>
@@ -151,22 +151,30 @@ QString BooleanEditorCreator::displayText(const QVariant &v) const {
 }
 
 /*
-  CoordEditorCreator
+  Vec3fEditorCreator
 */
-QWidget *CoordEditorCreator::createWidget(QWidget *parent) const {
+QWidget *Vec3fEditorCreator::createWidget(QWidget *parent) const {
   QMainWindow *mainWindow = getMainWindow();
-  return new CoordEditor(mainWindow ? mainWindow : parent, editSize);
+  return new Vec3fEditor(mainWindow ? mainWindow : parent, editSize);
 }
 
-void CoordEditorCreator::setEditorData(QWidget *w, const QVariant &v, bool, tlp::Graph *) {
-  static_cast<CoordEditor *>(w)->setCoord(v.value<tlp::Coord>());
+void Vec3fEditorCreator::setEditorData(QWidget *w, const QVariant &v, bool, tlp::Graph *) {
+  if (editSize) {
+    static_cast<Vec3fEditor *>(w)->setVec3f(v.value<tlp::Size>());
+  } else {
+    static_cast<Vec3fEditor *>(w)->setVec3f(v.value<tlp::Coord>());
+  }
 }
 
-QVariant CoordEditorCreator::editorData(QWidget *w, tlp::Graph *) {
-  return QVariant::fromValue<tlp::Coord>(static_cast<CoordEditor *>(w)->coord());
+QVariant Vec3fEditorCreator::editorData(QWidget *w, tlp::Graph *) {
+  if (editSize) {
+    return QVariant::fromValue<tlp::Size>(static_cast<Vec3fEditor *>(w)->vec3f());
+  } else {
+    return QVariant::fromValue<tlp::Coord>(static_cast<Vec3fEditor *>(w)->vec3f());
+  }
 }
 
-void CoordEditorCreator::setPropertyToEdit(tlp::PropertyInterface *prop) {
+void Vec3fEditorCreator::setPropertyToEdit(tlp::PropertyInterface *prop) {
   editSize = (dynamic_cast<tlp::SizeProperty *>(prop) != nullptr);
 }
 
