@@ -1,4 +1,4 @@
-# Copyright (C) 2019  The Talipot developers
+# Copyright (C) 2019-2020  The Talipot developers
 #
 # Talipot is a fork of Tulip, created by David Auber
 # and the Tulip development Team from LaBRI, University of Bordeaux
@@ -15,13 +15,14 @@ import sys
 import traceback
 import platform
 
-_talipotNativeLibsPath = os.path.dirname(__file__) + '/native/'
+_talipotNativeLibsPath = os.path.join(os.path.dirname(__file__), 'native')
 sys.path.append(_talipotNativeLibsPath)
 
 if platform.system() == 'Windows':
-    os.environ['PATH'] = '%s;%s../../../;%s' % (_talipotNativeLibsPath,
-                                                _talipotNativeLibsPath,
-                                                os.environ['PATH'])
+    os.environ['PATH'] = '%s;%s;%s' % (
+        _talipotNativeLibsPath,
+        os.path.join(_talipotNativeLibsPath, '../../..'),
+        os.environ['PATH'])
 
 import _talipot # noqa
 
@@ -60,8 +61,9 @@ class tlp(with_metaclass(tlpType, _talipot.tlp)):
 
     @staticmethod
     def loadTalipotPythonPlugin(pluginFilePath):
-        if (not os.path.isfile(pluginFilePath) or
-                not pluginFilePath.endswith('.py')):
+        if not os.path.isfile(pluginFilePath):
+            print('[talipot] Error: Path %s is not a valid file' %
+                  pluginFilePath)
             return False
 
         try:
@@ -102,12 +104,12 @@ class tlp(with_metaclass(tlpType, _talipot.tlp)):
         files = os.listdir(pluginsDirPath)
 
         for file in files:
-            filePath = pluginsDirPath+'/'+file
-            if not os.path.isdir(filePath):
+            filePath = os.path.join(pluginsDirPath, file)
+            if not os.path.isdir(filePath) and filePath.endswith('.py'):
                 tlp.loadTalipotPythonPlugin(filePath)
 
         for file in files:
-            filePath = pluginsDirPath+'/'+file
+            filePath = os.path.join(pluginsDirPath, file)
             if os.path.isdir(filePath):
                 tlp.loadTalipotPluginsFromDir(filePath, loadCppPlugin,
                                               pluginLoader)
@@ -118,9 +120,10 @@ class tlp(with_metaclass(tlpType, _talipot.tlp)):
 talipotVersion = tlp.getRelease()
 talipotVersion = talipotVersion[:talipotVersion.rfind('.')]
 
-startupScriptsPath = '%s/talipot/python/startup' % tlp.TalipotLibDir
-startupScriptsHomePath = '%s/.Talipot-%s/python/startup' % (
-    os.path.expanduser('~'), talipotVersion)
+startupScriptsPath = os.path.join(
+    tlp.TalipotLibDir, 'talipot/python/startup')
+startupScriptsHomePath = os.path.join(
+    os.path.expanduser('~'), '.Talipot-%s/python/startup' % talipotVersion)
 
 
 def runStartupScripts(scriptsPath):
@@ -130,7 +133,7 @@ def runStartupScripts(scriptsPath):
     files = os.listdir(scriptsPath)
 
     for file in files:
-        filePath = scriptsPath+'/'+file
+        filePath = os.path.join(scriptsPath, file)
         if os.path.isfile(filePath) and filePath.endswith('.py'):
             with open(filePath) as fd:
                 exec(compile(fd.read(), filePath, 'exec'),
@@ -140,14 +143,15 @@ def runStartupScripts(scriptsPath):
 runStartupScripts(startupScriptsPath)
 runStartupScripts(startupScriptsHomePath)
 
-tlpPythonPluginsPath = '%s/talipot/python/talipot/plugins' % tlp.TalipotLibDir
-tlpPythonPluginsHomePath = '%s/.Talipot-%s/plugins/python' % (
-    os.path.expanduser('~'), talipotVersion)
+tlpPythonPluginsPath = os.path.join(
+    tlp.TalipotLibDir, 'talipot/python/talipot/plugins')
+tlpPythonPluginsHomePath = os.path.join(
+    os.path.expanduser('~'), '.Talipot-%s/plugins/python' % talipotVersion)
 
 tlp.loadTalipotPluginsFromDir(tlpPythonPluginsPath, False)
 tlp.loadTalipotPluginsFromDir(tlpPythonPluginsHomePath, False)
 
-_talipotNativePluginsPath = _talipotNativeLibsPath + 'plugins'
+_talipotNativePluginsPath = os.path.join(_talipotNativeLibsPath, 'plugins')
 
 # fix loading of Talipot plugins when the talipot module has been
 # installed with the pip tool
@@ -165,7 +169,8 @@ tlp.loadTalipotPluginsFromDir(_talipotNativePluginsPath)
 # load bundled Talipot Python plugins when the talipot module has been
 # installed with the pip tool
 if not sys.argv[0] == 'talipot':
-    tlp.loadTalipotPluginsFromDir('%s/plugins/' % os.path.dirname(__file__))
+    tlp.loadTalipotPluginsFromDir(
+        os.path.join(os.path.dirname(__file__), 'plugins'))
 
 if platform.system() == 'Linux' and os.path.exists(_talipotNativePluginsPath):
     sys.setdlopenflags(dlOpenFlagsBackup)
