@@ -2200,6 +2200,17 @@ void PythonIDE::setAnchored(bool anchored) {
   connect(_ui->anchoredCB, SIGNAL(toggled(bool)), this, SLOT(anchored(bool)));
   connect(_ui->anchoredCB_2, SIGNAL(toggled(bool)), this, SLOT(anchored(bool)));
   connect(_ui->anchoredCB_3, SIGNAL(toggled(bool)), this, SLOT(anchored(bool)));
+  for (int i = _ui->mainScriptsTabWidget->count() - 1; i >= 0; --i) {
+    _ui->mainScriptsTabWidget->getEditor(i)->resetFindReplaceDialog();
+  }
+
+  for (int i = _ui->pluginsTabWidget->count() - 1; i >= 0; --i) {
+    _ui->pluginsTabWidget->getEditor(i)->resetFindReplaceDialog();
+  }
+
+  for (int i = _ui->modulesTabWidget->count() - 1; i >= 0; --i) {
+    _ui->modulesTabWidget->getEditor(i)->resetFindReplaceDialog();
+  }
 }
 
 bool PythonIDE::isAnchored() const {

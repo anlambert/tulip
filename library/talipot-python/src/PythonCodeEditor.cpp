@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -239,9 +239,10 @@ bool AutoCompletionList::eventFilter(QObject *obj, QEvent *event) {
   return false;
 }
 
-FindReplaceDialog::FindReplaceDialog(QPlainTextEdit *editor, QWidget *parent)
-    : QDialog(parent), _ui(new Ui::FindReplaceDialogData), _editor(editor) {
+FindReplaceDialog::FindReplaceDialog(QPlainTextEdit *editor)
+    : QDialog(editor), _ui(new Ui::FindReplaceDialogData), _editor(editor) {
   _ui->setupUi(this);
+  _editor->installEventFilter(this);
   connect(_ui->findButton, SIGNAL(clicked()), this, SLOT(doFind()));
   connect(_ui->replaceButton, SIGNAL(clicked()), this, SLOT(doReplace()));
   connect(_ui->replaceFindButton, SIGNAL(clicked()), this, SLOT(doReplaceFind()));
@@ -421,8 +422,18 @@ void FindReplaceDialog::doReplaceAll() {
   }
 }
 
-void FindReplaceDialog::hideEvent(QHideEvent *) {
-  _editor->setFocus();
+void FindReplaceDialog::hideEvent(QHideEvent *evt) {
+  QDialog::hideEvent(evt);
+  if (_editor->isVisible()) {
+    _editor->setFocus();
+  }
+}
+
+bool FindReplaceDialog::eventFilter(QObject *, QEvent *evt) {
+  if (evt->type() == QEvent::Hide) {
+    hide();
+  }
+  return false;
 }
 
 AutoCompletionList *PythonCodeEditor::_autoCompletionList = nullptr;
@@ -499,6 +510,11 @@ PythonCodeEditor::PythonCodeEditor(QWidget *parent)
 
 PythonCodeEditor::~PythonCodeEditor() {
   removeEventFilter(_autoCompletionList);
+}
+
+void PythonCodeEditor::resetFindReplaceDialog() {
+  delete _findReplaceDialog;
+  _findReplaceDialog = new FindReplaceDialog(this);
 }
 
 QString PythonCodeEditor::getCleanCode() const {

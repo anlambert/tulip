@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -67,7 +67,7 @@ class TLP_PYTHON_SCOPE FindReplaceDialog : public QDialog {
   void setSearchResult(const bool result);
 
 public:
-  FindReplaceDialog(QPlainTextEdit *_editor, QWidget *parent = nullptr);
+  FindReplaceDialog(QPlainTextEdit *editor);
   ~FindReplaceDialog() override;
 
   void setFindMode(const bool findMode);
@@ -87,6 +87,7 @@ public slots:
   void regexpToggled(bool toggled);
 
 protected:
+  bool eventFilter(QObject *obj, QEvent *evt) override;
   void hideEvent(QHideEvent *event) override;
 };
 
@@ -218,6 +219,8 @@ public:
   QMainWindow *mainWindow() const {
     return _mainWindow;
   }
+
+  void resetFindReplaceDialog();
 
   static void deleteStaticResources() {
     delete _autoCompletionDb;
