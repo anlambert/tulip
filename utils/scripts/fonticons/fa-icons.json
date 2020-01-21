@@ -508,7 +508,8 @@
   "android": {
     "changes": [
       "3.2",
-      "5.0.0"
+      "5.0.0",
+      "5.12.0"
     ],
     "label": "Android",
     "search": {
@@ -1337,15 +1338,20 @@
   },
   "atom": {
     "changes": [
-      "5.2.0"
+      "5.2.0",
+      "5.12.0"
     ],
     "label": "Atom",
     "search": {
       "terms": [
         "atheism",
         "chemistry",
+        "electron",
         "ion",
+        "isotope",
+        "neutron",
         "nuclear",
+        "proton",
         "science"
       ]
     },
@@ -1579,6 +1585,25 @@
     "unicode": "f7e5",
     "voted": false
   },
+  "bahai": {
+    "changes": [
+      "5.3.0",
+      "5.12.0"
+    ],
+    "label": "Bahá'í",
+    "search": {
+      "terms": [
+        "bahai",
+        "bahá'í",
+        "star"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f666",
+    "voted": false
+  },
   "balance-scale": {
     "changes": [
       "4.4",
@@ -1603,7 +1628,9 @@
   },
   "balance-scale-left": {
     "changes": [
-      "5.0.13"
+      "5.0.13",
+      "5.9.0",
+      "5.12.0"
     ],
     "label": "Balance Scale (Left-Weighted)",
     "search": {
@@ -1623,7 +1650,9 @@
   },
   "balance-scale-right": {
     "changes": [
-      "5.0.13"
+      "5.0.13",
+      "5.9.0",
+      "5.12.0"
     ],
     "label": "Balance Scale (Right-Weighted)",
     "search": {
@@ -1799,7 +1828,8 @@
   "bath": {
     "changes": [
       "4.7",
-      "5.0.0"
+      "5.0.0",
+      "5.12.0"
     ],
     "label": "Bath",
     "search": {
@@ -1936,6 +1966,7 @@
     "search": {
       "terms": [
         "lodging",
+        "mattress",
         "rest",
         "sleep",
         "travel"
@@ -3763,6 +3794,26 @@
     ],
     "unicode": "f5e4",
     "voted": false
+  },
+  "caravan": {
+    "changes": [
+      "5.12.0"
+    ],
+    "label": "Caravan",
+    "search": {
+      "terms": [
+        "camper",
+        "motor home",
+        "rv",
+        "trailer",
+        "travel"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f8ff",
+    "voted": true
   },
   "caret-down": {
     "changes": [
@@ -5956,6 +6007,30 @@
     "unicode": "f066",
     "voted": false
   },
+  "compress-alt": {
+    "changes": [
+      "1",
+      "5.0.0",
+      "5.12.0"
+    ],
+    "label": "Alternate Compress",
+    "search": {
+      "terms": [
+        "collapse",
+        "fullscreen",
+        "minimize",
+        "move",
+        "resize",
+        "shrink",
+        "smaller"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f422",
+    "voted": false
+  },
   "compress-arrows-alt": {
     "changes": [
       "5.6.0"
@@ -7346,7 +7421,8 @@
   },
   "dog": {
     "changes": [
-      "5.4.0"
+      "5.4.0",
+      "5.12.0"
     ],
     "label": "Dog",
     "search": {
@@ -8127,7 +8203,8 @@
   "envelope-open-text": {
     "changes": [
       "5.3.0",
-      "5.10.1"
+      "5.10.1",
+      "5.12.0"
     ],
     "label": "Envelope Open-text",
     "search": {
@@ -8445,6 +8522,27 @@
       "solid"
     ],
     "unicode": "f065",
+    "voted": false
+  },
+  "expand-alt": {
+    "changes": [
+      "1",
+      "5.0.0",
+      "5.12.0"
+    ],
+    "label": "Alternate Expand",
+    "search": {
+      "terms": [
+        "arrow",
+        "bigger",
+        "enlarge",
+        "resize"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f424",
     "voted": false
   },
   "expand-arrows-alt": {
@@ -9604,7 +9702,8 @@
     "changes": [
       "4.4",
       "5.0.0",
-      "5.0.1"
+      "5.0.1",
+      "5.12.0"
     ],
     "label": "Firefox",
     "search": {
@@ -9616,6 +9715,22 @@
       "brands"
     ],
     "unicode": "f269",
+    "voted": false
+  },
+  "firefox-browser": {
+    "changes": [
+      "5.12.0"
+    ],
+    "label": "Firefox Browser",
+    "search": {
+      "terms": [
+        "browser"
+      ]
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "f907",
     "voted": false
   },
   "first-aid": {
@@ -10199,9 +10314,10 @@
   "free-code-camp": {
     "changes": [
       "4.7",
-      "5.0.0"
+      "5.0.0",
+      "5.12.0"
     ],
-    "label": "Free Code Camp",
+    "label": "freeCodeCamp",
     "search": {
       "terms": []
     },
@@ -11610,7 +11726,8 @@
     "changes": [
       "5.1.0",
       "5.11.0",
-      "5.11.1"
+      "5.11.1",
+      "5.12.0"
     ],
     "label": "Winking Face With Tongue",
     "search": {
@@ -12220,7 +12337,8 @@
   "hand-spock": {
     "changes": [
       "4.4",
-      "5.0.0"
+      "5.0.0",
+      "5.12.0"
     ],
     "label": "Spock (Hand)",
     "search": {
@@ -12439,24 +12557,6 @@
       "solid"
     ],
     "unicode": "f6e8",
-    "voted": false
-  },
-  "haykal": {
-    "changes": [
-      "5.3.0"
-    ],
-    "label": "Haykal",
-    "search": {
-      "terms": [
-        "bahai",
-        "bahá'í",
-        "star"
-      ]
-    },
-    "styles": [
-      "solid"
-    ],
-    "unicode": "f666",
     "voted": false
   },
   "hdd": {
@@ -13382,6 +13482,20 @@
     ],
     "unicode": "f47f",
     "voted": false
+  },
+  "ideal": {
+    "changes": [
+      "5.12.0"
+    ],
+    "label": "iDeal",
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "f913",
+    "voted": true
   },
   "igloo": {
     "changes": [
@@ -15868,7 +15982,8 @@
   },
   "meteor": {
     "changes": [
-      "5.5.0"
+      "5.5.0",
+      "5.12.0"
     ],
     "label": "Meteor",
     "search": {
@@ -15885,6 +16000,20 @@
     ],
     "unicode": "f753",
     "voted": false
+  },
+  "microblog": {
+    "changes": [
+      "5.12.0"
+    ],
+    "label": "Micro.blog",
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "f91a",
+    "voted": true
   },
   "microchip": {
     "changes": [
@@ -18017,7 +18146,8 @@
     "changes": [
       "4.6",
       "5.0.0",
-      "5.0.10"
+      "5.0.10",
+      "5.12.0"
     ],
     "label": "Pied Piper Logo",
     "search": {
@@ -18035,7 +18165,7 @@
       "5.0.0",
       "5.7.0"
     ],
-    "label": "Alternate Pied Piper Logo",
+    "label": "Alternate Pied Piper Logo (Old)",
     "search": {
       "terms": []
     },
@@ -18049,7 +18179,7 @@
     "changes": [
       "5.0.10"
     ],
-    "label": "Pied Piper-hat",
+    "label": "Pied Piper Hat (Old)",
     "search": {
       "terms": [
         "clothing"
@@ -18074,6 +18204,20 @@
       "brands"
     ],
     "unicode": "f1a7",
+    "voted": false
+  },
+  "pied-piper-square": {
+    "changes": [
+      "5.12.0"
+    ],
+    "label": "Pied Piper Square Logo (Old)",
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "f91e",
     "voted": false
   },
   "piggy-bank": {
@@ -18343,7 +18487,8 @@
   "plug": {
     "changes": [
       "4.2",
-      "5.0.0"
+      "5.0.0",
+      "5.12.0"
     ],
     "label": "Plug",
     "search": {
@@ -19702,7 +19847,8 @@
   },
   "robot": {
     "changes": [
-      "5.0.13"
+      "5.0.13",
+      "5.12.0"
     ],
     "label": "Robot",
     "search": {
@@ -19723,7 +19869,8 @@
     "changes": [
       "3.1",
       "5.0.0",
-      "5.7.0"
+      "5.7.0",
+      "5.12.0"
     ],
     "label": "rocket",
     "search": {
@@ -20022,7 +20169,8 @@
   "safari": {
     "changes": [
       "4.4",
-      "5.0.0"
+      "5.0.0",
+      "5.12.0"
     ],
     "label": "Safari",
     "search": {
@@ -20067,7 +20215,8 @@
   "satellite": {
     "changes": [
       "5.6.0",
-      "5.10.1"
+      "5.10.1",
+      "5.12.0"
     ],
     "label": "Satellite",
     "search": {
@@ -20086,7 +20235,8 @@
   },
   "satellite-dish": {
     "changes": [
-      "5.6.0"
+      "5.6.0",
+      "5.12.0"
     ],
     "label": "Satellite Dish",
     "search": {
@@ -20096,7 +20246,8 @@
         "hardware",
         "receiver",
         "saucer",
-        "signal"
+        "signal",
+        "space"
       ]
     },
     "styles": [
@@ -20449,7 +20600,8 @@
   },
   "shapes": {
     "changes": [
-      "5.2.0"
+      "5.2.0",
+      "5.12.0"
     ],
     "label": "Shapes",
     "search": {
@@ -20747,7 +20899,8 @@
   "shower": {
     "changes": [
       "4.7",
-      "5.0.0"
+      "5.0.0",
+      "5.12.0"
     ],
     "label": "Shower",
     "search": {
@@ -21981,6 +22134,7 @@
         "machine",
         "nasa",
         "rocket",
+        "space",
         "transportation"
       ]
     },
@@ -24420,6 +24574,25 @@
     "unicode": "f637",
     "voted": false
   },
+  "trailer": {
+    "changes": [
+      "5.12.0"
+    ],
+    "label": "Trailer",
+    "search": {
+      "terms": [
+        "carry",
+        "haul",
+        "moving",
+        "travel"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f941",
+    "voted": true
+  },
   "train": {
     "changes": [
       "4.3",
@@ -24851,7 +25024,8 @@
   "twitch": {
     "changes": [
       "4.2",
-      "5.0.0"
+      "5.0.0",
+      "5.12.0"
     ],
     "label": "Twitch",
     "search": {
@@ -25093,6 +25267,20 @@
     ],
     "unicode": "f404",
     "voted": false
+  },
+  "unity": {
+    "changes": [
+      "5.12.0"
+    ],
+    "label": "Unity 3D",
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "f949",
+    "voted": true
   },
   "universal-access": {
     "changes": [
@@ -25617,7 +25805,8 @@
   },
   "user-nurse": {
     "changes": [
-      "5.7.0"
+      "5.7.0",
+      "5.12.0"
     ],
     "label": "Nurse",
     "search": {
