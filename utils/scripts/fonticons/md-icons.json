@@ -167,6 +167,22 @@
   "author": "Google",
   "version": "1.5.54"
 }, {
+  "id": "31CE9FF1-9698-4ED6-8E9B-392840E55DDE",
+  "name": "account-cancel",
+  "codepoint": "F030A",
+  "aliases": ["user-cancel", "user-block", "person-cancel", "person-block"],
+  "tags": ["Account \/ User"],
+  "author": "Cody",
+  "version": "4.8.95"
+}, {
+  "id": "D2CDB839-C734-46EA-A4DE-085CBF29DD0F",
+  "name": "account-cancel-outline",
+  "codepoint": "F030B",
+  "aliases": ["user-cancel-outline", "user-block-outline", "person-cancel-outline", "person-block-outline"],
+  "tags": ["Account \/ User"],
+  "author": "Cody",
+  "version": "4.8.95"
+}, {
   "id": "4ACD18FB-87D4-46F1-9231-8BD0A91867A9",
   "name": "account-card-details",
   "codepoint": "F5D2",
@@ -279,6 +295,14 @@
   "author": "Austin Andrews",
   "version": "1.5.54"
 }, {
+  "id": "BED42D20-9EEE-4297-81DC-A72F2F9D935D",
+  "name": "account-convert-outline",
+  "codepoint": "F032C",
+  "aliases": [],
+  "tags": ["Account \/ User"],
+  "author": "Cody",
+  "version": "4.8.95"
+}, {
   "id": "3696B7DF-3E12-44EF-B27F-E171AEB5241F",
   "name": "account-details",
   "codepoint": "F631",
@@ -354,7 +378,7 @@
   "id": "BD94D7C7-DFDF-419F-862E-FB1AC3263967",
   "name": "account-lock",
   "codepoint": "F0189",
-  "aliases": ["account-security", "account-secure"],
+  "aliases": ["account-security", "account-secure", "user-lock", "person-lock"],
   "tags": ["Account \/ User", "Lock"],
   "author": "Michael Irigoyen",
   "version": "4.4.95"
@@ -362,7 +386,7 @@
   "id": "F0E25FF6-2E45-4F3D-B9E3-6F251A6B1651",
   "name": "account-lock-outline",
   "codepoint": "F018A",
-  "aliases": ["account-security-outline", "account-secure-outline"],
+  "aliases": ["account-security-outline", "account-secure-outline", "person-lock-outline", "user-lock-outline"],
   "tags": ["Account \/ User", "Lock"],
   "author": "Michael Irigoyen",
   "version": "4.4.95"
@@ -399,6 +423,14 @@
   "author": "Roberto Graham",
   "version": "2.3.50"
 }, {
+  "id": "4391B451-368F-4E41-82C5-63A89A2CDE69",
+  "name": "account-multiple-check-outline",
+  "codepoint": "F0229",
+  "aliases": ["user-multiple-check-outline", "account-multiple-tick-outline", "accounts-check-outline", "accounts-tick-outline", "users-check-outline", "users-tick-outline", "user-multiple-tick-outline", "person-multiple-check-outline", "person-multiple-tick-outline", "people-check-outline", "people-tick-outline"],
+  "tags": ["Account \/ User"],
+  "author": "Michael Richins",
+  "version": "4.6.95"
+}, {
   "id": "BD31FA9F-EC76-44E9-A9F3-A85F83045D78",
   "name": "account-multiple-minus",
   "codepoint": "F5D3",
@@ -426,7 +458,7 @@
   "id": "047F8AC1-524D-4077-BCEB-434FE1C50C8B",
   "name": "account-multiple-plus",
   "codepoint": "F010",
-  "aliases": ["user-multiple-plus", "group-add", "accounts-plus", "users-plus", "person-multiple-plus", "people-plus", "person-multiple-add", "people-add", "account-multiple-add", "accounts-add", "user-multiple-add", "users-add"],
+  "aliases": ["user-multiple-plus", "group-add", "accounts-plus", "users-plus", "person-multiple-plus", "people-plus", "person-multiple-add", "people-add", "account-multiple-add", "accounts-add", "user-multiple-add", "users-add", "invite"],
   "tags": ["Account \/ User"],
   "author": "Google",
   "version": "1.5.54"
@@ -434,10 +466,26 @@
   "id": "AFF0AB6B-616A-4C18-8E28-EE8067224EED",
   "name": "account-multiple-plus-outline",
   "codepoint": "F7FF",
-  "aliases": ["group-add-outline", "user-multiple-plus-outline", "accounts-plus-outline", "users-plus-outline", "person-multiple-plus-outline", "people-plus-outline", "person-multiple-add-outline", "people-add-outline", "account-multiple-add-outline", "accounts-add-outline", "user-multiple-add-outline", "users-add-outline"],
+  "aliases": ["group-add-outline", "user-multiple-plus-outline", "accounts-plus-outline", "users-plus-outline", "person-multiple-plus-outline", "people-plus-outline", "person-multiple-add-outline", "people-add-outline", "account-multiple-add-outline", "accounts-add-outline", "user-multiple-add-outline", "users-add-outline", "invite"],
   "tags": ["Account \/ User"],
   "author": "Google",
   "version": "2.1.19"
+}, {
+  "id": "998E10E4-B96A-4DB2-9793-3E1C31D42501",
+  "name": "account-multiple-remove",
+  "codepoint": "F0235",
+  "aliases": ["user-multiple-remove", "person-multiple-remove"],
+  "tags": ["Account \/ User"],
+  "author": "Michael Richins",
+  "version": "4.6.95"
+}, {
+  "id": "618B092A-7228-4E70-A95C-7EB4EC1BA2FB",
+  "name": "account-multiple-remove-outline",
+  "codepoint": "F0236",
+  "aliases": ["user-multiple-remove-outline", "person-multiple-remove-outline"],
+  "tags": ["Account \/ User"],
+  "author": "Michael Richins",
+  "version": "4.6.95"
 }, {
   "id": "8F49C741-4ED8-4DD3-A22E-310C039EDDA6",
   "name": "account-network",
@@ -482,7 +530,7 @@
   "id": "66556BA4-6B65-4ED9-B813-AD33CA8C2CCF",
   "name": "account-plus",
   "codepoint": "F014",
-  "aliases": ["register", "user-plus", "person-add", "account-add", "person-plus", "user-add"],
+  "aliases": ["register", "user-plus", "person-add", "account-add", "person-plus", "user-add", "invite"],
   "tags": ["Account \/ User", "Home Automation"],
   "author": "Google",
   "version": "1.5.54"
@@ -490,7 +538,7 @@
   "id": "1095C7C6-C264-4415-BD6D-A2078242477E",
   "name": "account-plus-outline",
   "codepoint": "F800",
-  "aliases": ["person-add-outline", "register-outline", "user-plus-outline", "account-add-outline", "person-plus-outline", "user-add-outline"],
+  "aliases": ["person-add-outline", "register-outline", "user-plus-outline", "account-add-outline", "person-plus-outline", "user-add-outline", "invite"],
   "tags": ["Account \/ User"],
   "author": "GreenTurtwig",
   "version": "2.1.19"
@@ -623,6 +671,38 @@
   "author": "Sascha Wohlgemuth",
   "version": "4.3.95"
 }, {
+  "id": "7EAF1288-141D-4C8E-91E6-891D04BAE32C",
+  "name": "account-tie-voice",
+  "codepoint": "F0333",
+  "aliases": [],
+  "tags": ["Account \/ User"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
+  "id": "F835F775-8FC4-4E85-9B26-7C95F8F45B05",
+  "name": "account-tie-voice-off",
+  "codepoint": "F0335",
+  "aliases": [],
+  "tags": ["Account \/ User"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
+  "id": "6CDB4F0E-41EC-409E-A2E0-87785BDAC858",
+  "name": "account-tie-voice-off-outline",
+  "codepoint": "F0336",
+  "aliases": [],
+  "tags": ["Account \/ User"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
+  "id": "5712C24C-E8EE-48CD-9E6F-9712AD2BA502",
+  "name": "account-tie-voice-outline",
+  "codepoint": "F0334",
+  "aliases": [],
+  "tags": ["Account \/ User"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
   "id": "CABA2832-65F9-4196-9681-51C5E2C1CFB2",
   "name": "accusoft",
   "codepoint": "F849",
@@ -631,14 +711,6 @@
   "author": "Contributors",
   "version": "2.1.99",
   "deprecated": true
-}, {
-  "id": "91B50C6E-CEBB-42A7-8D07-8D73F2EB20C1",
-  "name": "adchoices",
-  "codepoint": "FD1E",
-  "aliases": [],
-  "tags": ["Brand \/ Logo"],
-  "author": "Contributors",
-  "version": "3.4.93"
 }, {
   "id": "3334E19F-962D-45B4-BE11-F009E1192165",
   "name": "adjust",
@@ -908,7 +980,7 @@
   "name": "alert-circle-check",
   "codepoint": "F0218",
   "aliases": [],
-  "tags": [],
+  "tags": ["Alert \/ Error"],
   "author": "Austin Andrews",
   "version": "4.5.95"
 }, {
@@ -916,7 +988,7 @@
   "name": "alert-circle-check-outline",
   "codepoint": "F0219",
   "aliases": [],
-  "tags": [],
+  "tags": ["Alert \/ Error"],
   "author": "Austin Andrews",
   "version": "4.5.95"
 }, {
@@ -1019,7 +1091,7 @@
   "id": "05901A9E-71D5-47D9-B5E1-DC55B687E8E0",
   "name": "align-horizontal-center",
   "codepoint": "F01EE",
-  "aliases": [],
+  "aliases": ["align-horizontal-centre"],
   "tags": [],
   "author": "Michael Irigoyen",
   "version": "4.5.95"
@@ -1051,7 +1123,7 @@
   "id": "04AE9704-928E-4272-B7FA-BD2ABC38ABE0",
   "name": "align-vertical-center",
   "codepoint": "F01F1",
-  "aliases": [],
+  "aliases": ["align-vertical-centre"],
   "tags": [],
   "author": "Michael Irigoyen",
   "version": "4.5.95"
@@ -1071,6 +1143,14 @@
   "tags": [],
   "author": "Google",
   "version": "1.8.36"
+}, {
+  "id": "76B6381F-14CA-4453-8B28-184C508D003B",
+  "name": "allergy",
+  "codepoint": "F0283",
+  "aliases": ["hand", "rash", "germ"],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.7.95"
 }, {
   "id": "0B93DD30-B279-4997-BD6D-AC86E29D34CA",
   "name": "alpha",
@@ -2286,7 +2366,7 @@
   "codepoint": "F936",
   "aliases": [],
   "tags": ["Math"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "2.4.85"
 }, {
   "id": "7A6B88D9-B385-4A6B-84C8-8280456944E4",
@@ -2294,7 +2374,7 @@
   "codepoint": "F937",
   "aliases": [],
   "tags": ["Math"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "2.4.85"
 }, {
   "id": "77550809-9FBB-4283-BA57-7C48AB2B86C0",
@@ -2302,7 +2382,7 @@
   "codepoint": "F938",
   "aliases": [],
   "tags": ["Math"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "2.4.85"
 }, {
   "id": "549F8173-7E91-411F-9ECF-D04D2B64B386",
@@ -2392,6 +2472,14 @@
   "tags": ["Developer \/ Languages"],
   "author": "Google",
   "version": "4.2.95"
+}, {
+  "id": "22B88F3A-28F4-41FA-A63B-721699E2A8B2",
+  "name": "api-off",
+  "codepoint": "F0282",
+  "aliases": [],
+  "tags": [],
+  "author": "Contributors",
+  "version": "4.6.95"
 }, {
   "id": "2829275C-A01C-42CD-A195-447629791D04",
   "name": "apple",
@@ -2545,6 +2633,46 @@
   "author": "Austin Andrews",
   "version": "1.5.54"
 }, {
+  "id": "237B205E-C03C-424A-93F9-8C771FE01A38",
+  "name": "archive-arrow-down",
+  "codepoint": "F0284",
+  "aliases": [],
+  "tags": [],
+  "author": "frankgrinaert",
+  "version": "4.7.95"
+}, {
+  "id": "133BA980-E797-4DB3-9C92-F59AC3DB3399",
+  "name": "archive-arrow-down-outline",
+  "codepoint": "F0285",
+  "aliases": [],
+  "tags": [],
+  "author": "frankgrinaert",
+  "version": "4.7.95"
+}, {
+  "id": "43E8F715-D3DB-4CAA-9355-88E22C7E4D28",
+  "name": "archive-arrow-up",
+  "codepoint": "F0286",
+  "aliases": [],
+  "tags": [],
+  "author": "frankgrinaert",
+  "version": "4.7.95"
+}, {
+  "id": "643EF8E3-148D-4858-85C6-A965822B74CF",
+  "name": "archive-arrow-up-outline",
+  "codepoint": "F0287",
+  "aliases": [],
+  "tags": [],
+  "author": "frankgrinaert",
+  "version": "4.7.95"
+}, {
+  "id": "4B8AAB0C-9EB8-44D9-B1DF-C2EE6ACB91BE",
+  "name": "archive-outline",
+  "codepoint": "F0239",
+  "aliases": [],
+  "tags": [],
+  "author": "James Coyle",
+  "version": "4.6.95"
+}, {
   "id": "F7613EF8-368F-4AA6-B833-7246A01C3961",
   "name": "arm-flex",
   "codepoint": "F008F",
@@ -2565,7 +2693,7 @@
   "name": "arrange-bring-forward",
   "codepoint": "F03D",
   "aliases": [],
-  "tags": ["Arrange"],
+  "tags": ["Arrange", "Geographic Information System"],
   "author": "Austin Andrews",
   "version": "1.5.54"
 }, {
@@ -2573,7 +2701,7 @@
   "name": "arrange-bring-to-front",
   "codepoint": "F03E",
   "aliases": [],
-  "tags": ["Arrange"],
+  "tags": ["Arrange", "Geographic Information System"],
   "author": "Austin Andrews",
   "version": "1.5.54"
 }, {
@@ -2581,7 +2709,7 @@
   "name": "arrange-send-backward",
   "codepoint": "F03F",
   "aliases": [],
-  "tags": ["Arrange"],
+  "tags": ["Arrange", "Geographic Information System"],
   "author": "Austin Andrews",
   "version": "1.5.54"
 }, {
@@ -2589,7 +2717,7 @@
   "name": "arrange-send-to-back",
   "codepoint": "F040",
   "aliases": [],
-  "tags": ["Arrange"],
+  "tags": ["Arrange", "Geographic Information System"],
   "author": "Austin Andrews",
   "version": "1.5.54"
 }, {
@@ -2869,7 +2997,7 @@
   "name": "arrow-expand-all",
   "codepoint": "F04C",
   "aliases": [],
-  "tags": ["Arrow"],
+  "tags": ["Arrow", "Geographic Information System"],
   "author": "Austin Andrews",
   "version": "1.5.54"
 }, {
@@ -4081,6 +4209,14 @@
   "author": "Austin Andrews",
   "version": "1.5.54"
 }, {
+  "id": "AF7144E7-5004-4685-A100-78425F035F51",
+  "name": "barcode-off",
+  "codepoint": "F0261",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.6.95"
+}, {
   "id": "40365CB0-4664-4648-8C51-2E6E20A0D096",
   "name": "barcode-scan",
   "codepoint": "F072",
@@ -4506,6 +4642,30 @@
   "author": "Google",
   "version": "1.5.54"
 }, {
+  "id": "2BD37CBE-629C-41E8-8631-CD438C1E7704",
+  "name": "battery-charging-high",
+  "codepoint": "F02D1",
+  "aliases": [],
+  "tags": ["Battery"],
+  "author": "Michael Irigoyen",
+  "version": "4.7.95"
+}, {
+  "id": "C0158CBD-1F8D-491B-9825-9DB96D901908",
+  "name": "battery-charging-low",
+  "codepoint": "F02CF",
+  "aliases": [],
+  "tags": ["Battery"],
+  "author": "Michael Irigoyen",
+  "version": "4.7.95"
+}, {
+  "id": "FD7F7486-1E30-44A5-A4B2-C908372835CD",
+  "name": "battery-charging-medium",
+  "codepoint": "F02D0",
+  "aliases": [],
+  "tags": ["Battery"],
+  "author": "Michael Irigoyen",
+  "version": "4.7.95"
+}, {
   "id": "A057A8D0-A442-4948-B2BF-63CECE073AF5",
   "name": "battery-charging-outline",
   "codepoint": "F89E",
@@ -4610,6 +4770,54 @@
   "author": "Michael Richins",
   "version": "2.1.19"
 }, {
+  "id": "DEE88AFA-DFF3-4100-8475-EB5EB72CCFCB",
+  "name": "battery-heart",
+  "codepoint": "F023A",
+  "aliases": [],
+  "tags": ["Battery"],
+  "author": "Michael Richins",
+  "version": "4.6.95"
+}, {
+  "id": "0D342AE3-0BE6-40C3-BAF9-D519508C4546",
+  "name": "battery-heart-outline",
+  "codepoint": "F023B",
+  "aliases": [],
+  "tags": ["Battery"],
+  "author": "Michael Richins",
+  "version": "4.6.95"
+}, {
+  "id": "2DE04585-054B-4E09-AC31-33E28DD80942",
+  "name": "battery-heart-variant",
+  "codepoint": "F023C",
+  "aliases": [],
+  "tags": ["Battery"],
+  "author": "Michael Richins",
+  "version": "4.6.95"
+}, {
+  "id": "253E4BDF-CE79-459D-B06D-915B34A12227",
+  "name": "battery-high",
+  "codepoint": "F02CE",
+  "aliases": [],
+  "tags": ["Battery"],
+  "author": "Austin Andrews",
+  "version": "4.7.95"
+}, {
+  "id": "4BDC283A-A6B7-4B2B-A18A-2B25410AF35C",
+  "name": "battery-low",
+  "codepoint": "F02CC",
+  "aliases": [],
+  "tags": ["Battery"],
+  "author": "Austin Andrews",
+  "version": "4.7.95"
+}, {
+  "id": "59FF99D5-138F-4D6B-90B2-4782A4B3F8EB",
+  "name": "battery-medium",
+  "codepoint": "F02CD",
+  "aliases": [],
+  "tags": ["Battery"],
+  "author": "Austin Andrews",
+  "version": "4.7.95"
+}, {
   "id": "15E0E37E-564A-40D5-9D4A-948C932C8E52",
   "name": "battery-minus",
   "codepoint": "F08C",
@@ -4625,6 +4833,22 @@
   "tags": ["Battery", "Home Automation"],
   "author": "Austin Andrews",
   "version": "1.5.54"
+}, {
+  "id": "C0939A88-BF53-4323-A12F-E6A92F7BE327",
+  "name": "battery-off",
+  "codepoint": "F0288",
+  "aliases": [],
+  "tags": ["Battery"],
+  "author": "Michael Richins",
+  "version": "4.7.95"
+}, {
+  "id": "66A0E28A-53F2-4E22-B14A-BADBE10E0CA9",
+  "name": "battery-off-outline",
+  "codepoint": "F0289",
+  "aliases": [],
+  "tags": ["Battery"],
+  "author": "Michael Richins",
+  "version": "4.7.95"
 }, {
   "id": "925B02B4-CA05-4545-A4E3-421F8412DA37",
   "name": "battery-outline",
@@ -4690,6 +4914,54 @@
   "author": "Michael Irigoyen",
   "version": "3.3.92"
 }, {
+  "id": "22743DE0-B662-44CD-8707-91ABF624D0E3",
+  "name": "beaker-alert",
+  "codepoint": "F0254",
+  "aliases": [],
+  "tags": ["Alert \/ Error"],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
+}, {
+  "id": "327C0F93-7EBD-4B24-A31C-285F6FC14DF3",
+  "name": "beaker-alert-outline",
+  "codepoint": "F0255",
+  "aliases": [],
+  "tags": ["Alert \/ Error"],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
+}, {
+  "id": "252089E7-6AA1-400C-99DF-B8F2090BE78A",
+  "name": "beaker-check",
+  "codepoint": "F0256",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
+}, {
+  "id": "23EFC5EC-7DAE-46FC-8E1C-488CF2EFFEB3",
+  "name": "beaker-check-outline",
+  "codepoint": "F0257",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
+}, {
+  "id": "FC008372-099E-45EB-BD51-13D1CA45A9BF",
+  "name": "beaker-minus",
+  "codepoint": "F0258",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
+}, {
+  "id": "15C31E14-F9D4-49E7-A9FA-266E3C2C7F1B",
+  "name": "beaker-minus-outline",
+  "codepoint": "F0259",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
+}, {
   "id": "95E06F22-3EA5-448F-B260-E555C1DCD18E",
   "name": "beaker-outline",
   "codepoint": "F68F",
@@ -4697,6 +4969,54 @@
   "tags": ["Science"],
   "author": "Cody",
   "version": "1.7.12"
+}, {
+  "id": "CDF9CCFD-BDE5-4BBF-94DA-BF61466906A6",
+  "name": "beaker-plus",
+  "codepoint": "F025A",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
+}, {
+  "id": "210E9002-74BB-44CB-9D93-7CC8EE95D519",
+  "name": "beaker-plus-outline",
+  "codepoint": "F025B",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
+}, {
+  "id": "21A03544-7009-4069-8BF0-17168DF93ED9",
+  "name": "beaker-question",
+  "codepoint": "F025C",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
+}, {
+  "id": "3C151400-745C-44BE-A94E-A2F5365C7DD6",
+  "name": "beaker-question-outline",
+  "codepoint": "F025D",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
+}, {
+  "id": "0F41805A-67FE-4ADB-A398-B22032BF0C89",
+  "name": "beaker-remove",
+  "codepoint": "F025E",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
+}, {
+  "id": "DF5AF4E0-65C2-492A-AEDD-0297AE36BA2B",
+  "name": "beaker-remove-outline",
+  "codepoint": "F025F",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
 }, {
   "id": "D3DFF539-E101-40B2-BA6D-B62327AFE6AC",
   "name": "beats",
@@ -4810,6 +5130,14 @@
   "tags": ["Food \/ Drink"],
   "author": "Austin Andrews",
   "version": "1.5.54"
+}, {
+  "id": "524E1789-7B3A-4BAD-9D04-2E8FD838DCFB",
+  "name": "beer-outline",
+  "codepoint": "F0337",
+  "aliases": [],
+  "tags": ["Food \/ Drink"],
+  "author": "Cody",
+  "version": "4.8.95"
 }, {
   "id": "860292B0-C722-4829-9E30-AACF00D09C8C",
   "name": "behance",
@@ -4987,6 +5315,14 @@
   "tags": ["Transportation + Other"],
   "author": "Fran\u00e7ois Risoud",
   "version": "4.2.95"
+}, {
+  "id": "CF4876E1-DEBA-4C41-B5B7-4C90C3EF68F4",
+  "name": "bicycle-basket",
+  "codepoint": "F0260",
+  "aliases": ["bike-basket"],
+  "tags": [],
+  "author": "Fran\u00e7ois Risoud",
+  "version": "4.6.95"
 }, {
   "id": "627C7FF1-BCAD-4741-966E-7CED73B35DC2",
   "name": "bike",
@@ -5549,6 +5885,14 @@
   "author": "Austin Andrews",
   "version": "1.5.54"
 }, {
+  "id": "562F5DDE-E65C-4ACC-98B7-54C0D5406AED",
+  "name": "bookshelf",
+  "codepoint": "F028A",
+  "aliases": [],
+  "tags": [],
+  "author": "Thomas de Saint-Exup\u00e9ry",
+  "version": "4.7.95"
+}, {
   "id": "D24517D5-27A6-4BE4-B9C8-C575A1431310",
   "name": "boom-gate",
   "codepoint": "FEA3",
@@ -5861,6 +6205,14 @@
   "author": "James Coyle",
   "version": "2.1.99"
 }, {
+  "id": "B04C5F90-A3FB-4A60-B773-25AE19D293C7",
+  "name": "bottle-wine-outline",
+  "codepoint": "F033B",
+  "aliases": [],
+  "tags": ["Food \/ Drink"],
+  "author": "Cody",
+  "version": "4.8.95"
+}, {
   "id": "741B300C-06EF-459D-BB3E-95DB8E21194E",
   "name": "bow-tie",
   "codepoint": "F677",
@@ -5988,6 +6340,14 @@
   "tags": [],
   "author": "Google",
   "version": "1.5.54"
+}, {
+  "id": "3889AEB1-7257-4D20-ACD4-78CB27879639",
+  "name": "briefcase-check-outline",
+  "codepoint": "F0349",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
 }, {
   "id": "1BC68384-3EB0-4296-A3B2-9F348DD7AF1E",
   "name": "briefcase-clock",
@@ -6325,6 +6685,22 @@
   "author": "Cody",
   "version": "2.3.50"
 }, {
+  "id": "103BB26D-356A-4F6D-9F98-787CEC908FAD",
+  "name": "bulma",
+  "codepoint": "F0312",
+  "aliases": [],
+  "tags": ["Developer \/ Languages", "Brand \/ Logo"],
+  "author": "Contributors",
+  "version": "4.8.95"
+}, {
+  "id": "8428337D-0DED-4E4D-8F89-326FCAD97884",
+  "name": "bunk-bed",
+  "codepoint": "F032D",
+  "aliases": [],
+  "tags": ["Home Automation"],
+  "author": "Cody",
+  "version": "4.8.95"
+}, {
   "id": "F6516F38-B29E-4CC9-A7E2-706817121D45",
   "name": "bus",
   "codepoint": "F0E7",
@@ -6372,6 +6748,14 @@
   "tags": ["Transportation + Road"],
   "author": "GreenTurtwig",
   "version": "2.0.46"
+}, {
+  "id": "42DCF950-C2F2-4989-8E0B-ACF16326A6A7",
+  "name": "bus-marker",
+  "codepoint": "F023D",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.6.95"
 }, {
   "id": "E007EC1E-915B-4A12-89A0-8F7249AEF9FC",
   "name": "bus-multiple",
@@ -7448,7 +7832,7 @@
   "id": "CB49A868-3317-4445-BFED-13CB6533000E",
   "name": "car-side",
   "codepoint": "F7AA",
-  "aliases": [],
+  "aliases": ["car-saloon"],
   "tags": ["Transportation + Road", "Automotive"],
   "author": "GreenTurtwig",
   "version": "2.0.46"
@@ -7580,6 +7964,22 @@
   "tags": [],
   "author": "Rynco Li",
   "version": "3.0.39"
+}, {
+  "id": "3B4FC4CD-DB60-407A-B230-C6CA593977DD",
+  "name": "card-plus",
+  "codepoint": "F022A",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.6.95"
+}, {
+  "id": "DD8BE7C3-7AE2-420C-8DA2-B3AA4EEC5614",
+  "name": "card-plus-outline",
+  "codepoint": "F022B",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.6.95"
 }, {
   "id": "2A09F869-B221-4ABC-B803-16560B7BA900",
   "name": "card-search",
@@ -7797,6 +8197,14 @@
   "author": "Michael Irigoyen",
   "version": "3.5.94"
 }, {
+  "id": "20240E77-778A-4B82-9975-585C647AE81C",
+  "name": "cash-minus",
+  "codepoint": "F028B",
+  "aliases": [],
+  "tags": [],
+  "author": "Contributors",
+  "version": "4.7.95"
+}, {
   "id": "80D4170E-FDA3-40D0-9B05-1020D5FCA817",
   "name": "cash-multiple",
   "codepoint": "F116",
@@ -7804,6 +8212,14 @@
   "tags": ["Currency", "Banking"],
   "author": "Austin Andrews",
   "version": "1.5.54"
+}, {
+  "id": "C2E340E3-EA0A-4726-B595-6149C8C662B8",
+  "name": "cash-plus",
+  "codepoint": "F028C",
+  "aliases": [],
+  "tags": [],
+  "author": "Contributors",
+  "version": "4.7.95"
 }, {
   "id": "EADBBD96-B2BD-4C31-969E-BFBA6DF519B1",
   "name": "cash-refund",
@@ -7820,6 +8236,14 @@
   "tags": ["Shopping"],
   "author": "Contributors",
   "version": "3.3.92"
+}, {
+  "id": "C4DA23E6-9BE6-490B-83FB-B39A3E22E9E1",
+  "name": "cash-remove",
+  "codepoint": "F028D",
+  "aliases": [],
+  "tags": [],
+  "author": "Contributors",
+  "version": "4.7.95"
 }, {
   "id": "22ECB099-6A57-4DA8-9E42-0E3D8000C003",
   "name": "cash-usd",
@@ -8025,7 +8449,7 @@
   "name": "cellphone-message-off",
   "codepoint": "F00FD",
   "aliases": [],
-  "tags": [],
+  "tags": ["Cellphone \/ Phone"],
   "author": "Terren",
   "version": "4.3.95"
 }, {
@@ -8036,6 +8460,14 @@
   "tags": ["Automotive", "Cellphone \/ Phone", "Device \/ Tech"],
   "author": "Google",
   "version": "3.7.94"
+}, {
+  "id": "E036E842-B41C-410B-BF8A-85B10A7E26D0",
+  "name": "cellphone-nfc-off",
+  "codepoint": "F0303",
+  "aliases": [],
+  "tags": ["Cellphone \/ Phone"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
 }, {
   "id": "2AD1736A-2142-4E3D-BA70-9CF8584C366D",
   "name": "cellphone-off",
@@ -8049,7 +8481,7 @@
   "name": "cellphone-play",
   "codepoint": "F0041",
   "aliases": [],
-  "tags": [],
+  "tags": ["Cellphone \/ Phone"],
   "author": "Google",
   "version": "4.1.95"
 }, {
@@ -8266,7 +8698,7 @@
   "codepoint": "F76A",
   "aliases": [],
   "tags": ["Math"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "1.9.32"
 }, {
   "id": "2FAF8E0B-5AB4-4914-A0A1-CECFFAF85427",
@@ -8284,6 +8716,14 @@
   "tags": ["Math"],
   "author": "Google",
   "version": "2.3.50"
+}, {
+  "id": "42E3BF4B-FFE9-449F-AFEE-66F565602A9B",
+  "name": "chart-multiple",
+  "codepoint": "F023E",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.6.95"
 }, {
   "id": "9C6B53C5-698B-4428-9738-A6700BF8698C",
   "name": "chart-pie",
@@ -8365,6 +8805,14 @@
   "author": "Austin Andrews",
   "version": "3.0.39"
 }, {
+  "id": "C0C2065A-8B0C-4DE2-AD4E-D909080FFB42",
+  "name": "chat-alert-outline",
+  "codepoint": "F02F4",
+  "aliases": [],
+  "tags": ["Alert \/ Error"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
   "id": "E6394813-3C45-4D08-A207-9008A2E5CECB",
   "name": "chat-outline",
   "codepoint": "FEFB",
@@ -8376,10 +8824,34 @@
   "id": "95003FC4-C655-4687-AF82-660A49B95978",
   "name": "chat-processing",
   "codepoint": "FB57",
-  "aliases": [],
+  "aliases": ["chat-typing"],
   "tags": [],
   "author": "Austin Andrews",
   "version": "3.0.39"
+}, {
+  "id": "F753E08E-F7C9-4BAF-8647-9328D56D1837",
+  "name": "chat-processing-outline",
+  "codepoint": "F02F5",
+  "aliases": ["chat-typing-outline"],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
+  "id": "4B555315-27A3-4DD2-8A85-0F05260CDA33",
+  "name": "chat-sleep",
+  "codepoint": "F02FC",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
+  "id": "ABE1573F-24A9-4AC1-9ADB-6A9A32FB10AA",
+  "name": "chat-sleep-outline",
+  "codepoint": "F02FD",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
 }, {
   "id": "F789CE44-7EA3-4E97-88FB-BEC22EB2030C",
   "name": "check",
@@ -8525,6 +8997,22 @@
   "author": "Google",
   "version": "1.5.54"
 }, {
+  "id": "8F505717-7778-4909-81E9-0714F01B44AF",
+  "name": "checkbox-blank-off",
+  "codepoint": "F0317",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
+  "id": "06F6526C-6D2A-45F5-A5DF-46860DE27EAC",
+  "name": "checkbox-blank-off-outline",
+  "codepoint": "F0318",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
   "id": "C7D0E43D-6393-429B-BDCE-B522419B7B3D",
   "name": "checkbox-blank-outline",
   "codepoint": "F131",
@@ -8640,15 +9128,47 @@
   "id": "A5F7D4AF-C7A3-4F38-B21B-B9F3E68770DE",
   "name": "checkerboard",
   "codepoint": "F13A",
-  "aliases": [],
-  "tags": ["Gaming \/ RPG"],
+  "aliases": ["raster"],
+  "tags": ["Gaming \/ RPG", "Geographic Information System"],
   "author": "Austin Andrews",
   "version": "1.5.54"
+}, {
+  "id": "925C7A7F-E7D0-4260-B131-D96FF2F7B8DB",
+  "name": "checkerboard-minus",
+  "codepoint": "F022D",
+  "aliases": ["raster-minus"],
+  "tags": ["Geographic Information System"],
+  "author": "Michael Irigoyen",
+  "version": "4.6.95"
+}, {
+  "id": "020A5F88-EE7B-4FE7-ADC7-999A0ADB16EE",
+  "name": "checkerboard-plus",
+  "codepoint": "F022C",
+  "aliases": ["raster-plus"],
+  "tags": ["Geographic Information System"],
+  "author": "Michael Irigoyen",
+  "version": "4.6.95"
+}, {
+  "id": "CDCAA6DE-0885-474F-992F-6A7F46563A15",
+  "name": "checkerboard-remove",
+  "codepoint": "F022E",
+  "aliases": ["raster-remove"],
+  "tags": ["Geographic Information System"],
+  "author": "Michael Irigoyen",
+  "version": "4.6.95"
+}, {
+  "id": "618E3DC0-F776-4CFF-BE9F-D6A23D580F5B",
+  "name": "cheese",
+  "codepoint": "F02E4",
+  "aliases": ["swiss-cheese"],
+  "tags": ["Food \/ Drink"],
+  "author": "Thomas de Saint-Exup\u00e9ry",
+  "version": "4.7.95"
 }, {
   "id": "E22BD22B-9748-4CA8-A748-B5598B08A7DE",
   "name": "chef-hat",
   "codepoint": "FB58",
-  "aliases": [],
+  "aliases": ["toque", "cook"],
   "tags": ["Clothing"],
   "author": "Cody",
   "version": "3.0.39"
@@ -9277,6 +9797,22 @@
   "author": "Google",
   "version": "1.5.54"
 }, {
+  "id": "6DBE3F30-C444-443C-A515-75657C468338",
+  "name": "clipboard-check-multiple",
+  "codepoint": "F028E",
+  "aliases": [],
+  "tags": [],
+  "author": "frankgrinaert",
+  "version": "4.7.95"
+}, {
+  "id": "2FB7020B-64CC-4CA8-A46E-0D3E5B65A697",
+  "name": "clipboard-check-multiple-outline",
+  "codepoint": "F028F",
+  "aliases": [],
+  "tags": [],
+  "author": "frankgrinaert",
+  "version": "4.7.95"
+}, {
   "id": "6A0DFB73-2DBF-4D3C-8C6B-2B4758B11782",
   "name": "clipboard-check-outline",
   "codepoint": "F8A7",
@@ -9284,6 +9820,22 @@
   "tags": [],
   "author": "James Coyle",
   "version": "2.2.43"
+}, {
+  "id": "CE6923D5-218F-4817-B904-E03A842CE696",
+  "name": "clipboard-file",
+  "codepoint": "F0290",
+  "aliases": [],
+  "tags": [],
+  "author": "frankgrinaert",
+  "version": "4.7.95"
+}, {
+  "id": "B9BE1636-2925-4AA2-B21A-1EE197FA7774",
+  "name": "clipboard-file-outline",
+  "codepoint": "F0291",
+  "aliases": [],
+  "tags": [],
+  "author": "frankgrinaert",
+  "version": "4.7.95"
 }, {
   "id": "5A450EF8-D2F0-4F32-8D10-A606DD847E19",
   "name": "clipboard-flow",
@@ -9317,6 +9869,22 @@
   "author": "Contributors",
   "version": "4.3.95"
 }, {
+  "id": "8CD0EB09-AC6D-43C7-8DD6-4F2FD9A1DBC5",
+  "name": "clipboard-multiple",
+  "codepoint": "F0292",
+  "aliases": [],
+  "tags": [],
+  "author": "frankgrinaert",
+  "version": "4.7.95"
+}, {
+  "id": "81D9B376-8054-4DB5-BA79-274E4B3EF79D",
+  "name": "clipboard-multiple-outline",
+  "codepoint": "F0293",
+  "aliases": [],
+  "tags": [],
+  "author": "frankgrinaert",
+  "version": "4.7.95"
+}, {
   "id": "54F34575-7348-4032-B072-EC8F9A6C843D",
   "name": "clipboard-outline",
   "codepoint": "F14D",
@@ -9333,6 +9901,22 @@
   "author": "Michael Richins",
   "version": "3.2.89"
 }, {
+  "id": "E78AF95D-A3B1-483C-9F46-B503AEF6B4C0",
+  "name": "clipboard-play-multiple",
+  "codepoint": "F0294",
+  "aliases": [],
+  "tags": [],
+  "author": "frankgrinaert",
+  "version": "4.7.95"
+}, {
+  "id": "2FCD745F-4980-4CAA-A51D-94574CAB1DA4",
+  "name": "clipboard-play-multiple-outline",
+  "codepoint": "F0295",
+  "aliases": [],
+  "tags": [],
+  "author": "frankgrinaert",
+  "version": "4.7.95"
+}, {
   "id": "B2D48D43-940B-4758-A9E1-00E13202B239",
   "name": "clipboard-play-outline",
   "codepoint": "FC36",
@@ -9348,6 +9932,14 @@
   "tags": [],
   "author": "Austin Andrews",
   "version": "1.9.32"
+}, {
+  "id": "4662F629-FEF3-4F7A-A901-56FF827CF051",
+  "name": "clipboard-plus-outline",
+  "codepoint": "F034A",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
 }, {
   "id": "8E3D93CC-DE0A-4828-AC9A-9A6CFD932978",
   "name": "clipboard-pulse",
@@ -9372,6 +9964,22 @@
   "tags": [],
   "author": "Google",
   "version": "1.5.54"
+}, {
+  "id": "37090A31-A50D-43AB-92C4-BFB2C17273E6",
+  "name": "clipboard-text-multiple",
+  "codepoint": "F0296",
+  "aliases": [],
+  "tags": [],
+  "author": "frankgrinaert",
+  "version": "4.7.95"
+}, {
+  "id": "4FF17874-C828-4EA8-9F4D-BEAEB614D69F",
+  "name": "clipboard-text-multiple-outline",
+  "codepoint": "F0297",
+  "aliases": [],
+  "tags": [],
+  "author": "frankgrinaert",
+  "version": "4.7.95"
 }, {
   "id": "9C5136D5-E614-4DBD-AB36-EBB044178B6D",
   "name": "clipboard-text-outline",
@@ -9645,6 +10253,14 @@
   "author": "Google",
   "version": "1.5.54"
 }, {
+  "id": "A56D0A20-FC19-455F-B1E8-3CA24270957A",
+  "name": "cloud-check-outline",
+  "codepoint": "F02F7",
+  "aliases": [],
+  "tags": ["Cloud"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
   "id": "06BCD41B-8BFF-43C0-88A1-69F262C51C5F",
   "name": "cloud-circle",
   "codepoint": "F161",
@@ -9673,7 +10289,7 @@
   "name": "cloud-lock",
   "codepoint": "F021C",
   "aliases": [],
-  "tags": [],
+  "tags": ["Cloud"],
   "author": "Michael Richins",
   "version": "4.5.95"
 }, {
@@ -9681,7 +10297,7 @@
   "name": "cloud-lock-outline",
   "codepoint": "F021D",
   "aliases": [],
-  "tags": [],
+  "tags": ["Cloud"],
   "author": "Michael Richins",
   "version": "4.5.95"
 }, {
@@ -9746,8 +10362,16 @@
   "codepoint": "F63F",
   "aliases": [],
   "tags": ["Cloud"],
-  "author": "Cody",
+  "author": "Michael Irigoyen",
   "version": "1.6.50"
+}, {
+  "id": "FA6B7B54-7817-40EE-9A64-3D30EAC0F4CF",
+  "name": "cloud-sync-outline",
+  "codepoint": "F0301",
+  "aliases": [],
+  "tags": ["Cloud"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
 }, {
   "id": "AE3A5033-BA77-4E82-BFD0-4C23275B602F",
   "name": "cloud-tags",
@@ -9981,6 +10605,14 @@
   "author": "Austin Andrews",
   "version": "1.5.54"
 }, {
+  "id": "DC66752A-65C6-461D-AAA6-65E8389E7D3B",
+  "name": "coffee-to-go-outline",
+  "codepoint": "F0339",
+  "aliases": [],
+  "tags": ["Food \/ Drink"],
+  "author": "Cody",
+  "version": "4.8.95"
+}, {
   "id": "AC6E8289-8D3C-4CE0-ADA6-D17DC639B7FB",
   "name": "coffin",
   "codepoint": "FB5B",
@@ -10202,8 +10834,16 @@
   "codepoint": "F01EA",
   "aliases": [],
   "tags": ["Edit \/ Modify"],
-  "author": "Austin Andrews",
+  "author": "Michael Irigoyen",
   "version": "4.5.95"
+}, {
+  "id": "3A7903C6-EA94-4FF6-8B95-FECC91058756",
+  "name": "comment-edit-outline",
+  "codepoint": "F02EF",
+  "aliases": [],
+  "tags": ["Edit \/ Modify"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
 }, {
   "id": "7CDBE4A1-9E98-419D-A309-4ECB9476DA12",
   "name": "comment-eye",
@@ -10385,7 +11025,7 @@
   "name": "compass",
   "codepoint": "F18B",
   "aliases": ["explore"],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "Google",
   "version": "1.5.54"
 }, {
@@ -10393,7 +11033,7 @@
   "name": "compass-off",
   "codepoint": "FB5C",
   "aliases": [],
-  "tags": [],
+  "tags": ["Geographic Information System"],
   "author": "Google",
   "version": "3.0.39"
 }, {
@@ -10401,7 +11041,7 @@
   "name": "compass-off-outline",
   "codepoint": "FB5D",
   "aliases": [],
-  "tags": [],
+  "tags": ["Geographic Information System"],
   "author": "Google",
   "version": "3.0.39"
 }, {
@@ -10409,7 +11049,7 @@
   "name": "compass-outline",
   "codepoint": "F18C",
   "aliases": [],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "Gabriel",
   "version": "1.5.54"
 }, {
@@ -11057,7 +11697,7 @@
   "name": "crosshairs",
   "codepoint": "F1A3",
   "aliases": ["gps-not-fixed", "location-searching"],
-  "tags": [],
+  "tags": ["Geographic Information System"],
   "author": "Google",
   "version": "1.5.54"
 }, {
@@ -11065,7 +11705,7 @@
   "name": "crosshairs-gps",
   "codepoint": "F1A4",
   "aliases": ["gps-fixed", "my-location"],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "Google",
   "version": "1.5.54"
 }, {
@@ -11073,7 +11713,7 @@
   "name": "crosshairs-off",
   "codepoint": "FF62",
   "aliases": [],
-  "tags": [],
+  "tags": ["Geographic Information System"],
   "author": "Google",
   "version": "3.9.97"
 }, {
@@ -11081,7 +11721,7 @@
   "name": "crosshairs-question",
   "codepoint": "F0161",
   "aliases": ["crosshairs-unknown", "gps-unknown"],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "Google",
   "version": "4.4.95"
 }, {
@@ -11173,6 +11813,14 @@
   "author": "Austin Andrews",
   "version": "1.5.54"
 }, {
+  "id": "FEA3388A-F985-482C-8CE0-0B4ABCD31691",
+  "name": "cup-outline",
+  "codepoint": "F033A",
+  "aliases": [],
+  "tags": ["Food \/ Drink"],
+  "author": "Cody",
+  "version": "4.8.95"
+}, {
   "id": "AC4AD054-775A-4D59-BF92-A57A6A952607",
   "name": "cup-water",
   "codepoint": "F1AB",
@@ -11242,7 +11890,7 @@
   "codepoint": "F7B9",
   "aliases": ["yuan", "renminbi"],
   "tags": ["Currency", "Banking"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "2.0.46"
 }, {
   "id": "222B8F14-2217-4FC1-8940-AC1CF8AB150B",
@@ -11260,6 +11908,14 @@
   "tags": ["Currency", "Banking"],
   "author": "Austin Andrews",
   "version": "1.5.54"
+}, {
+  "id": "010841EE-1569-425A-9849-9FC6E4D05C3B",
+  "name": "currency-eur-off",
+  "codepoint": "F0340",
+  "aliases": [],
+  "tags": ["Currency"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
 }, {
   "id": "F9BD830F-EBB6-45A4-A576-0DEC27084A95",
   "name": "currency-gbp",
@@ -11290,7 +11946,7 @@
   "codepoint": "F7BB",
   "aliases": ["yen"],
   "tags": ["Currency", "Banking"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "2.0.46"
 }, {
   "id": "72750D9E-229F-4D77-B1CB-9C2C0FD12335",
@@ -11298,7 +11954,7 @@
   "codepoint": "F7BC",
   "aliases": ["won"],
   "tags": ["Currency", "Banking"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "2.0.46"
 }, {
   "id": "FDA284E5-BF4A-47DC-B68F-255E07DB89CF",
@@ -11330,7 +11986,7 @@
   "codepoint": "FEB9",
   "aliases": ["currency-riyal", "currency-irr", "currency-omr", "currency-yer", "currency-sar"],
   "tags": ["Currency", "Banking"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "3.7.94"
 }, {
   "id": "57057EA1-1BA7-49F3-A8C7-51AF633DED68",
@@ -11362,7 +12018,7 @@
   "codepoint": "F7BE",
   "aliases": ["new-taiwan-dollar"],
   "tags": ["Currency", "Banking"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "2.0.46"
 }, {
   "id": "3FA4946C-029B-42D3-AA31-3D607FB4A2F1",
@@ -11473,7 +12129,7 @@
   "name": "database",
   "codepoint": "F1B8",
   "aliases": [],
-  "tags": [],
+  "tags": ["Geographic Information System"],
   "author": "Cody",
   "version": "1.5.54"
 }, {
@@ -11481,7 +12137,7 @@
   "name": "database-check",
   "codepoint": "FAA8",
   "aliases": ["database-tick"],
-  "tags": [],
+  "tags": ["Geographic Information System"],
   "author": "Andrew Nenakhov",
   "version": "2.7.94"
 }, {
@@ -11489,7 +12145,7 @@
   "name": "database-edit",
   "codepoint": "FB62",
   "aliases": [],
-  "tags": ["Edit \/ Modify"],
+  "tags": ["Edit \/ Modify", "Geographic Information System"],
   "author": "Michael Richins",
   "version": "3.0.39"
 }, {
@@ -11497,7 +12153,7 @@
   "name": "database-export",
   "codepoint": "F95D",
   "aliases": [],
-  "tags": [],
+  "tags": ["Geographic Information System"],
   "author": "Michael Richins",
   "version": "2.4.85"
 }, {
@@ -11505,7 +12161,7 @@
   "name": "database-import",
   "codepoint": "F95C",
   "aliases": [],
-  "tags": [],
+  "tags": ["Geographic Information System"],
   "author": "Michael Richins",
   "version": "2.4.85"
 }, {
@@ -11513,15 +12169,23 @@
   "name": "database-lock",
   "codepoint": "FAA9",
   "aliases": [],
-  "tags": ["Lock"],
+  "tags": ["Lock", "Geographic Information System"],
   "author": "Andrew Nenakhov",
   "version": "2.7.94"
+}, {
+  "id": "91AD02DB-7EBD-4B39-AACB-8037B50728AC",
+  "name": "database-marker",
+  "codepoint": "F0321",
+  "aliases": [],
+  "tags": ["Geographic Information System"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
 }, {
   "id": "31CE0431-ABF2-4650-8439-515C0E9012CD",
   "name": "database-minus",
   "codepoint": "F1B9",
   "aliases": [],
-  "tags": [],
+  "tags": ["Geographic Information System"],
   "author": "Cody",
   "version": "1.5.54"
 }, {
@@ -11529,7 +12193,7 @@
   "name": "database-plus",
   "codepoint": "F1BA",
   "aliases": ["database-add"],
-  "tags": [],
+  "tags": ["Geographic Information System"],
   "author": "Cody",
   "version": "1.5.54"
 }, {
@@ -11537,7 +12201,7 @@
   "name": "database-refresh",
   "codepoint": "FCDB",
   "aliases": ["database-sync"],
-  "tags": [],
+  "tags": ["Geographic Information System"],
   "author": "Michael Richins",
   "version": "3.3.92"
 }, {
@@ -11545,7 +12209,7 @@
   "name": "database-remove",
   "codepoint": "FCDC",
   "aliases": [],
-  "tags": [],
+  "tags": ["Geographic Information System"],
   "author": "Michael Richins",
   "version": "3.3.92"
 }, {
@@ -11553,7 +12217,7 @@
   "name": "database-search",
   "codepoint": "F865",
   "aliases": [],
-  "tags": [],
+  "tags": ["Geographic Information System"],
   "author": "GreenTurtwig",
   "version": "2.1.99"
 }, {
@@ -11561,7 +12225,7 @@
   "name": "database-settings",
   "codepoint": "FCDD",
   "aliases": [],
-  "tags": ["Settings"],
+  "tags": ["Settings", "Geographic Information System"],
   "author": "Michael Richins",
   "version": "3.3.92"
 }, {
@@ -11616,7 +12280,7 @@
   "id": "8242E7C8-1400-476D-AC27-DCA7B6292C70",
   "name": "debug-step-over",
   "codepoint": "F1BD",
-  "aliases": [],
+  "aliases": ["skip", "jump"],
   "tags": [],
   "author": "Austin Andrews",
   "version": "1.5.54"
@@ -11820,6 +12484,14 @@
   "tags": ["Math", "Alpha \/ Numeric"],
   "author": "Google",
   "version": "1.5.54"
+}, {
+  "id": "35E2D33D-B4A8-4E12-B844-8EC1172F15A9",
+  "name": "desk",
+  "codepoint": "F0264",
+  "aliases": [],
+  "tags": [],
+  "author": "Contributors",
+  "version": "4.6.95"
 }, {
   "id": "80459D13-2662-4F47-AB31-F6A2B84C8DEB",
   "name": "desk-lamp",
@@ -12197,6 +12869,14 @@
   "author": "Christopher Schreiner",
   "version": "1.6.50"
 }, {
+  "id": "58BA7D31-6B34-46E6-B325-080C95B32A6F",
+  "name": "digital-ocean",
+  "codepoint": "F0262",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.6.95"
+}, {
   "id": "2356EE38-11BE-44B1-BAD9-D74ECE86F8E7",
   "name": "dip-switch",
   "codepoint": "F7C0",
@@ -12426,7 +13106,7 @@
   "codepoint": "F683",
   "aliases": ["helix"],
   "tags": ["Science"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "1.7.12"
 }, {
   "id": "D4A20191-F5B8-4323-A0A8-F4C15A86A83B",
@@ -12602,7 +13282,7 @@
   "codepoint": "F819",
   "aliases": [],
   "tags": ["Home Automation"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "2.1.19"
 }, {
   "id": "DFE96305-5114-4F53-AB08-08F99F37C2FE",
@@ -12610,7 +13290,7 @@
   "codepoint": "F81A",
   "aliases": [],
   "tags": ["Home Automation"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "2.1.19"
 }, {
   "id": "792A98B0-E031-43CF-AF8B-ACF21C97C4C2",
@@ -12626,8 +13306,16 @@
   "codepoint": "F81B",
   "aliases": [],
   "tags": ["Home Automation"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "2.1.19"
+}, {
+  "id": "91D0BB43-E5D4-4F0B-89E7-B379A6F9A455",
+  "name": "doorbell",
+  "codepoint": "F0311",
+  "aliases": [],
+  "tags": ["Home Automation"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
 }, {
   "id": "63848BB0-8CBA-491A-9D3A-5964BAA67CC2",
   "name": "doorbell-video",
@@ -12773,6 +13461,14 @@
   "author": "Austin Andrews",
   "version": "1.5.54"
 }, {
+  "id": "FA5B1F76-C0C4-4F08-B545-D28E78781F67",
+  "name": "drag-horizontal-variant",
+  "codepoint": "F031B",
+  "aliases": [],
+  "tags": [],
+  "author": "Google",
+  "version": "4.8.95"
+}, {
   "id": "5B3C7AEE-2539-4DD7-AA86-D5B3ED1EB097",
   "name": "drag-variant",
   "codepoint": "FB6C",
@@ -12788,6 +13484,14 @@
   "tags": [],
   "author": "Austin Andrews",
   "version": "1.5.54"
+}, {
+  "id": "BAD1F323-E74E-4E04-A1F6-4CCC7CAC2E34",
+  "name": "drag-vertical-variant",
+  "codepoint": "F031C",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
 }, {
   "id": "ACAF4137-3EA8-4B7C-A1DB-C34759C70A5D",
   "name": "drama-masks",
@@ -12898,7 +13602,7 @@
   "id": "50BCAB01-5182-4FBA-9F6D-62DF6872B743",
   "name": "dump-truck",
   "codepoint": "FC43",
-  "aliases": [],
+  "aliases": ["tipper-lorry"],
   "tags": ["Transportation + Road", "Hardware \/ Tools"],
   "author": "Michael Irigoyen",
   "version": "3.2.89"
@@ -12923,9 +13627,17 @@
   "name": "earth",
   "codepoint": "F1E7",
   "aliases": ["globe", "public", "planet"],
-  "tags": [],
+  "tags": ["Geographic Information System"],
   "author": "Google",
   "version": "1.5.54"
+}, {
+  "id": "E6C7261B-1CC0-41EA-844B-0DA761CDCC12",
+  "name": "earth-arrow-right",
+  "codepoint": "F033C",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
 }, {
   "id": "3F4C3330-49D5-4F2B-8FCC-A3448BEF521E",
   "name": "earth-box",
@@ -12947,7 +13659,7 @@
   "name": "earth-off",
   "codepoint": "F1E8",
   "aliases": [],
-  "tags": [],
+  "tags": ["Geographic Information System"],
   "author": "Austin Andrews",
   "version": "1.5.54"
 }, {
@@ -12958,6 +13670,14 @@
   "tags": ["Brand \/ Logo"],
   "author": "Contributors",
   "version": "1.5.54"
+}, {
+  "id": "F2B4075E-3226-40CB-9165-2C66A4BB4BBD",
+  "name": "edge-legacy",
+  "codepoint": "F027B",
+  "aliases": [],
+  "tags": [],
+  "author": "Contributors",
+  "version": "4.6.95"
 }, {
   "id": "993BB952-DF8E-47E6-AF9A-1FCBF15C6B63",
   "name": "egg",
@@ -13051,9 +13771,25 @@
   "name": "elevator",
   "codepoint": "F1ED",
   "aliases": [],
-  "tags": [],
+  "tags": ["Transportation + Other"],
   "author": "Austin Andrews",
   "version": "1.5.54"
+}, {
+  "id": "57DB3FF8-34D8-46A7-8D41-1A99EB31AD59",
+  "name": "elevator-down",
+  "codepoint": "F02ED",
+  "aliases": [],
+  "tags": ["Transportation + Other"],
+  "author": "Austin Andrews",
+  "version": "4.8.95"
+}, {
+  "id": "8EA26066-2C66-4A38-996B-8F23E288E0B7",
+  "name": "elevator-up",
+  "codepoint": "F02EC",
+  "aliases": [],
+  "tags": ["Transportation + Other"],
+  "author": "Austin Andrews",
+  "version": "4.8.95"
 }, {
   "id": "0CAAACF8-3D1C-4CCA-A3E4-3590CDEEC5D6",
   "name": "ellipse",
@@ -13086,6 +13822,14 @@
   "tags": ["Alert \/ Error"],
   "author": "Austin Andrews",
   "version": "1.8.36"
+}, {
+  "id": "91B50C6E-CEBB-42A7-8D07-8D73F2EB20C1",
+  "name": "email-alert-outline",
+  "codepoint": "FD1E",
+  "aliases": [],
+  "tags": ["Alert \/ Error"],
+  "author": "Michael Irigoyen",
+  "version": "3.4.93"
 }, {
   "id": "6930A4EF-08EB-4649-B2BB-369269DA918F",
   "name": "email-box",
@@ -13287,6 +14031,22 @@
   "author": "Michael Richins",
   "version": "4.3.95"
 }, {
+  "id": "72B2D41E-42AA-44E7-8F1E-42AC62577F73",
+  "name": "email-sync",
+  "codepoint": "F02F2",
+  "aliases": ["email-refresh", "email-resend"],
+  "tags": [],
+  "author": "Cody",
+  "version": "4.8.95"
+}, {
+  "id": "0FAB1B0E-FEAB-4F12-A7FC-58D48CB9682F",
+  "name": "email-sync-outline",
+  "codepoint": "F02F3",
+  "aliases": ["email-refresh-outline", "email-resend-outline"],
+  "tags": [],
+  "author": "Cody",
+  "version": "4.8.95"
+}, {
   "id": "80BB05EB-8F75-4205-9952-60B09204A9F6",
   "name": "email-variant",
   "codepoint": "F5F0",
@@ -13479,6 +14239,22 @@
   "author": "Michael Irigoyen",
   "version": "3.2.89"
 }, {
+  "id": "11CEDEB3-DB1A-45F4-92C9-6AF6FCEE4FC5",
+  "name": "emoticon-lol",
+  "codepoint": "F023F",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.6.95"
+}, {
+  "id": "2A7BA4B1-C436-4EE6-BF5A-34B150A9A746",
+  "name": "emoticon-lol-outline",
+  "codepoint": "F0240",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.6.95"
+}, {
   "id": "922B06B7-9C78-452C-AF29-79A47F0F6931",
   "name": "emoticon-neutral",
   "codepoint": "FC50",
@@ -13659,9 +14435,25 @@
   "name": "escalator",
   "codepoint": "F1FF",
   "aliases": [],
-  "tags": [],
+  "tags": ["Transportation + Other"],
   "author": "Austin Andrews",
   "version": "1.5.54"
+}, {
+  "id": "F29A47AC-C3B6-4568-8ADA-94C5F92F0DC0",
+  "name": "escalator-down",
+  "codepoint": "F02EB",
+  "aliases": [],
+  "tags": ["Transportation + Other"],
+  "author": "Austin Andrews",
+  "version": "4.8.95"
+}, {
+  "id": "4BA51088-9403-4E34-A829-1F31D8DE2646",
+  "name": "escalator-up",
+  "codepoint": "F02EA",
+  "aliases": [],
+  "tags": ["Transportation + Other"],
+  "author": "Austin Andrews",
+  "version": "4.8.95"
 }, {
   "id": "9D305B93-7722-4784-A9D3-8F64824A67AB",
   "name": "eslint",
@@ -13760,6 +14552,14 @@
   "tags": ["Math"],
   "author": "Austin Andrews",
   "version": "1.5.54"
+}, {
+  "id": "2DEA5CA1-8412-4DA4-95C4-7E1AA2C27404",
+  "name": "exclamation-thick",
+  "codepoint": "F0263",
+  "aliases": [],
+  "tags": [],
+  "author": "frankgrinaert",
+  "version": "4.6.95"
 }, {
   "id": "9F68722F-B500-48AD-BE3A-EB7591496084",
   "name": "exit-run",
@@ -13956,7 +14756,7 @@
   "id": "89350468-16D8-4F39-AA78-C3E00EE8FB2C",
   "name": "eyedropper",
   "codepoint": "F20A",
-  "aliases": [],
+  "aliases": ["pipette"],
   "tags": ["Color"],
   "author": "Austin Andrews",
   "version": "1.5.54"
@@ -13964,7 +14764,7 @@
   "id": "24A1E7A8-D8A4-4216-B467-72C144972358",
   "name": "eyedropper-variant",
   "codepoint": "F20B",
-  "aliases": ["colorize", "colourise"],
+  "aliases": ["colorize", "colourise", "pipette-variant"],
   "tags": ["Color"],
   "author": "Google",
   "version": "1.5.54"
@@ -14112,6 +14912,14 @@
   "tags": [],
   "author": "Austin Andrews",
   "version": "3.3.92"
+}, {
+  "id": "C57CDDE7-5F5E-44B4-B1E2-E5FEFBB17A85",
+  "name": "fast-forward-5",
+  "codepoint": "F0223",
+  "aliases": [],
+  "tags": [],
+  "author": "Contributors",
+  "version": "4.6.95"
 }, {
   "id": "05435BA8-4BB4-4581-A2BA-D2D7679B831F",
   "name": "fast-forward-outline",
@@ -14305,6 +15113,22 @@
   "author": "Terren",
   "version": "3.6.95"
 }, {
+  "id": "AA0F1B90-E844-4BE2-BD8F-6D7AAB2451AB",
+  "name": "file-clock",
+  "codepoint": "F030C",
+  "aliases": [],
+  "tags": ["Files \/ Folders"],
+  "author": "Cody",
+  "version": "4.8.95"
+}, {
+  "id": "90AB6510-AEEC-4C00-BCFD-71B3F6E591CC",
+  "name": "file-clock-outline",
+  "codepoint": "F030D",
+  "aliases": [],
+  "tags": ["Files \/ Folders"],
+  "author": "Cody",
+  "version": "4.8.95"
+}, {
   "id": "452A53B0-3718-4483-ABB0-2897EBE97312",
   "name": "file-cloud",
   "codepoint": "F217",
@@ -14484,7 +15308,7 @@
   "id": "83E06672-D36B-41FF-8463-080EB639F00F",
   "name": "file-document-edit",
   "codepoint": "FDA4",
-  "aliases": [],
+  "aliases": ["contract"],
   "tags": ["Edit \/ Modify", "Files \/ Folders"],
   "author": "GreenTurtwig",
   "version": "3.5.94"
@@ -14492,7 +15316,7 @@
   "id": "E33F3608-CA6A-4BC3-BA3B-16AC369F10FD",
   "name": "file-document-edit-outline",
   "codepoint": "FDA5",
-  "aliases": [],
+  "aliases": ["contract-outline"],
   "tags": ["Edit \/ Modify", "Files \/ Folders"],
   "author": "Michael Irigoyen",
   "version": "3.5.94"
@@ -15040,6 +15864,22 @@
   "tags": ["Files \/ Folders"],
   "author": "Michael Richins",
   "version": "4.0.96"
+}, {
+  "id": "C17D4D8C-F028-4EED-9C77-B9E1A66FE372",
+  "name": "file-sync",
+  "codepoint": "F0241",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.6.95"
+}, {
+  "id": "F642DE27-0183-4EF7-87FD-70A1D8E031D4",
+  "name": "file-sync-outline",
+  "codepoint": "F0242",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.6.95"
 }, {
   "id": "663EC5E6-16C5-4075-AB5C-1215864F3B2B",
   "name": "file-table",
@@ -15673,6 +16513,22 @@
   "author": "Austin Andrews",
   "version": "1.5.54"
 }, {
+  "id": "845569FD-A57A-4F03-9048-707A046521E9",
+  "name": "flask-empty-minus",
+  "codepoint": "F0265",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
+}, {
+  "id": "500AF1DD-69C7-4C42-AE74-B6AC589BA8A8",
+  "name": "flask-empty-minus-outline",
+  "codepoint": "F0266",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
+}, {
   "id": "E9FFE6A9-C641-47BE-988B-A94B34A90CED",
   "name": "flask-empty-outline",
   "codepoint": "F095",
@@ -15680,6 +16536,54 @@
   "tags": ["Science", "Gaming \/ RPG"],
   "author": "Austin Andrews",
   "version": "1.5.54"
+}, {
+  "id": "716D7945-ED6F-40B5-890A-18A1F93247B0",
+  "name": "flask-empty-plus",
+  "codepoint": "F0267",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
+}, {
+  "id": "DD0BAE86-6060-4A90-8A57-32CCFBC7D617",
+  "name": "flask-empty-plus-outline",
+  "codepoint": "F0268",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
+}, {
+  "id": "64BC4DF4-E408-446C-975F-20A2F1646F1F",
+  "name": "flask-empty-remove",
+  "codepoint": "F0269",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
+}, {
+  "id": "5B25EC76-4EB5-46AC-9445-7411CD0567DD",
+  "name": "flask-empty-remove-outline",
+  "codepoint": "F026A",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
+}, {
+  "id": "E4673F66-5785-4A63-855D-92A9F6B0E4AE",
+  "name": "flask-minus",
+  "codepoint": "F026B",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
+}, {
+  "id": "B8EB4BF1-B423-4C0D-9DE5-24D691E9EAF3",
+  "name": "flask-minus-outline",
+  "codepoint": "F026C",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
 }, {
   "id": "14C068EE-90AC-42DA-AA1E-D24F74EE7263",
   "name": "flask-outline",
@@ -15689,6 +16593,70 @@
   "author": "Austin Andrews",
   "version": "1.5.54"
 }, {
+  "id": "6FA94A7A-788F-44B6-90A7-B4EACF9B6FD3",
+  "name": "flask-plus",
+  "codepoint": "F026D",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
+}, {
+  "id": "AE491BF6-EA26-4732-AF63-8A3D83379CC6",
+  "name": "flask-plus-outline",
+  "codepoint": "F026E",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
+}, {
+  "id": "ED698844-E3E9-4FD3-89F2-A41163ACD80A",
+  "name": "flask-remove",
+  "codepoint": "F026F",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
+}, {
+  "id": "67E2EA68-867E-4514-A952-2E0A90D5C2AC",
+  "name": "flask-remove-outline",
+  "codepoint": "F0270",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
+}, {
+  "id": "E7D0BD51-A831-4355-AE75-1D903C121D3F",
+  "name": "flask-round-bottom",
+  "codepoint": "F0276",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
+}, {
+  "id": "A08CBFD8-DD21-47F9-B213-7EF3AD89EDAD",
+  "name": "flask-round-bottom-empty",
+  "codepoint": "F0277",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
+}, {
+  "id": "2BD05FF6-4E09-40EC-9D34-59FB9CCD09FF",
+  "name": "flask-round-bottom-empty-outline",
+  "codepoint": "F0278",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
+}, {
+  "id": "383DEA4E-9820-4C4C-A5FD-05C151C7B82A",
+  "name": "flask-round-bottom-outline",
+  "codepoint": "F0279",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
+}, {
   "id": "E86BFC0D-B4A4-41F2-A8E3-D1AE79072A45",
   "name": "flattr",
   "codepoint": "F246",
@@ -15697,6 +16665,14 @@
   "author": "Contributors",
   "version": "1.5.54",
   "deprecated": true
+}, {
+  "id": "1BB3488A-A7B4-4DA5-99A2-AD23A184606B",
+  "name": "fleur-de-lis",
+  "codepoint": "F032E",
+  "aliases": [],
+  "tags": [],
+  "author": "Nick",
+  "version": "4.8.95"
 }, {
   "id": "D9CEAAB0-32D3-4A42-A0F3-74B1FC50E9F0",
   "name": "flickr",
@@ -16058,6 +17034,22 @@
   "author": "Austin Andrews",
   "version": "1.5.54"
 }, {
+  "id": "00FD0F50-240F-4654-9712-C219B0FF9A97",
+  "name": "folder-marker",
+  "codepoint": "F0298",
+  "aliases": [],
+  "tags": ["Geographic Information System"],
+  "author": "Contributors",
+  "version": "4.7.95"
+}, {
+  "id": "A542AF06-5931-4B8A-8DE0-777F11304ACC",
+  "name": "folder-marker-outline",
+  "codepoint": "F0299",
+  "aliases": [],
+  "tags": ["Geographic Information System"],
+  "author": "Contributors",
+  "version": "4.7.95"
+}, {
   "id": "B7AD0302-5738-4474-9679-AC118E566A7E",
   "name": "folder-move",
   "codepoint": "F252",
@@ -16065,6 +17057,14 @@
   "tags": ["Files \/ Folders"],
   "author": "Google",
   "version": "1.5.54"
+}, {
+  "id": "F3985E52-B82C-4008-98E3-48DCDBC21749",
+  "name": "folder-move-outline",
+  "codepoint": "F0271",
+  "aliases": [],
+  "tags": [],
+  "author": "Sascha Wohlgemuth",
+  "version": "4.6.95"
 }, {
   "id": "7116841C-C243-4A44-8C68-267048AAF939",
   "name": "folder-multiple",
@@ -16273,6 +17273,22 @@
   "tags": ["Files \/ Folders"],
   "author": "Austin Andrews",
   "version": "3.3.92"
+}, {
+  "id": "58AC43F6-6A0B-43AC-B681-A68B6714B4F1",
+  "name": "folder-table",
+  "codepoint": "F030E",
+  "aliases": [],
+  "tags": ["Files \/ Folders"],
+  "author": "Cody",
+  "version": "4.8.95"
+}, {
+  "id": "1C994AC5-D1CA-457D-8A8C-F6E40821815F",
+  "name": "folder-table-outline",
+  "codepoint": "F030F",
+  "aliases": [],
+  "tags": ["Files \/ Folders"],
+  "author": "Cody",
+  "version": "4.8.95"
 }, {
   "id": "2A24B473-B162-4B0E-9723-6867EEA702A9",
   "name": "folder-text",
@@ -16530,6 +17546,14 @@
   "author": "Austin Andrews",
   "version": "3.6.95"
 }, {
+  "id": "C6D32152-B2F3-43D3-A78E-D69CBDC5E054",
+  "name": "format-color-marker-cancel",
+  "codepoint": "F033E",
+  "aliases": ["format-color-redact"],
+  "tags": ["Text \/ Content \/ Format"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
   "id": "D28EF658-3CE7-4F5B-99B3-50F60F5B0BA0",
   "name": "format-color-text",
   "codepoint": "F69D",
@@ -16583,7 +17607,7 @@
   "codepoint": "F6D5",
   "aliases": [],
   "tags": ["Text \/ Content \/ Format"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "1.8.36"
 }, {
   "id": "4FA696A5-8843-4E3F-B9BF-5BCF5B6C4D2C",
@@ -16865,6 +17889,14 @@
   "tags": ["Text \/ Content \/ Format"],
   "author": "Google",
   "version": "3.3.92"
+}, {
+  "id": "5458AB97-471F-4A96-92E0-FB0AE72AFF33",
+  "name": "format-list-text",
+  "codepoint": "F029A",
+  "aliases": [],
+  "tags": [],
+  "author": "Yaroslav Bandura",
+  "version": "4.7.95"
 }, {
   "id": "5D87D3E1-C59B-47A2-9ADE-C96FF1C7CA21",
   "name": "format-overline",
@@ -17384,7 +18416,7 @@
   "codepoint": "F7C9",
   "aliases": ["petrol", "gasoline"],
   "tags": ["Automotive"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "2.0.46"
 }, {
   "id": "A4F7E2E4-704C-4A71-99D5-4BD19AD8E755",
@@ -17424,7 +18456,7 @@
   "codepoint": "F00AC",
   "aliases": ["ruby-horizontal"],
   "tags": ["Text \/ Content \/ Format"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "4.2.95"
 }, {
   "id": "68042B53-6F94-4EE1-A40D-9415AE0EE14A",
@@ -17432,7 +18464,7 @@
   "codepoint": "F00AD",
   "aliases": ["ruby-vertical"],
   "tags": ["Text \/ Content \/ Format"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "4.2.95"
 }, {
   "id": "E1A77AA6-9DC6-49C8-8049-89EEE3545A4A",
@@ -17464,7 +18496,7 @@
   "codepoint": "FE16",
   "aliases": [],
   "tags": ["Gaming \/ RPG"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "3.6.95"
 }, {
   "id": "A7E881F0-76BD-4711-A238-5ECAEA02EAFC",
@@ -17472,7 +18504,7 @@
   "codepoint": "FE17",
   "aliases": [],
   "tags": ["Gaming \/ RPG"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "3.6.95"
 }, {
   "id": "AE90913A-5172-4699-98FC-7B935C753E1E",
@@ -17480,7 +18512,7 @@
   "codepoint": "FE18",
   "aliases": [],
   "tags": ["Gaming \/ RPG"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "3.6.95"
 }, {
   "id": "D227F063-202F-4B7D-9175-790055F07506",
@@ -17488,7 +18520,7 @@
   "codepoint": "FE19",
   "aliases": [],
   "tags": ["Gaming \/ RPG"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "3.6.95"
 }, {
   "id": "97C7D65D-6073-473D-9D21-7DCB3CA7556D",
@@ -17496,7 +18528,7 @@
   "codepoint": "FE1A",
   "aliases": [],
   "tags": ["Gaming \/ RPG"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "3.6.95"
 }, {
   "id": "233618F0-A837-4938-AEF8-93DA6A92A70E",
@@ -17504,7 +18536,7 @@
   "codepoint": "FE1B",
   "aliases": [],
   "tags": ["Gaming \/ RPG"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "3.6.95"
 }, {
   "id": "E007AB79-ED6E-4746-9D55-A35F6BD2C93C",
@@ -17536,7 +18568,7 @@
   "codepoint": "FE1F",
   "aliases": [],
   "tags": ["Gaming \/ RPG"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "3.6.95"
 }, {
   "id": "ABC572E9-CE00-450F-A1E0-E59BCF0C3DC3",
@@ -17544,7 +18576,7 @@
   "codepoint": "FE7E",
   "aliases": [],
   "tags": ["Gaming \/ RPG"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "3.6.95"
 }, {
   "id": "07D26BD5-0B09-4FAF-9710-DA1F19C40C39",
@@ -17552,7 +18584,7 @@
   "codepoint": "FE7F",
   "aliases": [],
   "tags": ["Gaming \/ RPG"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "3.6.95"
 }, {
   "id": "808C141C-877E-49D3-93D6-A69F985A7881",
@@ -17560,7 +18592,7 @@
   "codepoint": "FE80",
   "aliases": [],
   "tags": ["Gaming \/ RPG"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "3.6.95"
 }, {
   "id": "4D10A9D6-5E25-457D-B4ED-25BCC647E62E",
@@ -17568,7 +18600,7 @@
   "codepoint": "FE81",
   "aliases": [],
   "tags": ["Gaming \/ RPG"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "3.6.95"
 }, {
   "id": "D3C1F57B-FF1A-4CD9-AD39-E3F3AB752779",
@@ -17576,7 +18608,7 @@
   "codepoint": "FE82",
   "aliases": [],
   "tags": ["Gaming \/ RPG"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "3.6.95"
 }, {
   "id": "0FE0FB42-286B-4D56-AE93-6D93EA514C4B",
@@ -17651,6 +18683,14 @@
   "author": "Michael Richins",
   "version": "2.1.99"
 }, {
+  "id": "25425A4D-48BD-4139-BA72-81D0DAB54020",
+  "name": "garage-alert-variant",
+  "codepoint": "F0300",
+  "aliases": [],
+  "tags": ["Home Automation", "Alert \/ Error"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
   "id": "6B34986A-5D17-4C64-9840-994B66EC00AB",
   "name": "garage-open",
   "codepoint": "F6D9",
@@ -17658,6 +18698,22 @@
   "tags": ["Home Automation"],
   "author": "Alex Efremo",
   "version": "1.8.36"
+}, {
+  "id": "8AE7213F-00BD-40D9-A524-2CCB60511BBA",
+  "name": "garage-open-variant",
+  "codepoint": "F02FF",
+  "aliases": [],
+  "tags": ["Home Automation"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
+  "id": "11A3EA2E-E0A4-435D-B53D-55EB0E8A5F10",
+  "name": "garage-variant",
+  "codepoint": "F02FE",
+  "aliases": [],
+  "tags": ["Home Automation"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
 }, {
   "id": "7CEC48C5-3A70-4BA2-9FB8-A383387DC4A1",
   "name": "gas-cylinder",
@@ -17963,6 +19019,22 @@
   "author": "Michael Richins",
   "version": "1.9.32"
 }, {
+  "id": "FC2EE3B3-9885-4278-9BCE-491B27B4666E",
+  "name": "gesture-tap-box",
+  "codepoint": "F02D4",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.7.95"
+}, {
+  "id": "51E5488F-71C4-4E08-950D-EAAAB7B22D53",
+  "name": "gesture-tap-button",
+  "codepoint": "F02D3",
+  "aliases": ["call-to-action", "cta"],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.7.95"
+}, {
   "id": "B502F4A5-5545-42F7-A0B4-E90BF4421D17",
   "name": "gesture-tap-hold",
   "codepoint": "FD53",
@@ -18099,6 +19171,14 @@
   "author": "Cody",
   "version": "4.3.95"
 }, {
+  "id": "AFF2782E-A558-40EF-9B8C-787BAE055D57",
+  "name": "glass-pint-outline",
+  "codepoint": "F0338",
+  "aliases": [],
+  "tags": ["Food \/ Drink"],
+  "author": "Cody",
+  "version": "4.8.95"
+}, {
   "id": "E26942A0-61AE-4D1A-941C-895D92E94C5D",
   "name": "glass-stange",
   "codepoint": "F2A7",
@@ -18139,6 +19219,14 @@
   "tags": ["Clothing"],
   "author": "Cody",
   "version": "1.5.54"
+}, {
+  "id": "A498671D-3C09-4874-B7BA-3F371208F4A0",
+  "name": "globe-light",
+  "codepoint": "F0302",
+  "aliases": [],
+  "tags": ["Home Automation"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
 }, {
   "id": "3E5EE2B1-AE6A-4675-BBAB-1D6B70FBFC36",
   "name": "globe-model",
@@ -18187,6 +19275,14 @@
   "tags": ["Brand \/ Logo", "Gaming \/ RPG"],
   "author": "Contributors",
   "version": "3.0.39"
+}, {
+  "id": "8B0AC7A2-11DB-43DF-96AF-D6193A2DCEFE",
+  "name": "gold",
+  "codepoint": "F027A",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
 }, {
   "id": "80A4F47A-3512-4C76-AA10-C0232C57E624",
   "name": "golf",
@@ -18315,6 +19411,14 @@
   "tags": ["Brand \/ Logo"],
   "author": "Google",
   "version": "1.5.54"
+}, {
+  "id": "14A23373-DFBF-443C-9143-90E6C78D144C",
+  "name": "google-cloud",
+  "codepoint": "F0221",
+  "aliases": [],
+  "tags": ["Brand \/ Logo"],
+  "author": "Google",
+  "version": "4.6.95"
 }, {
   "id": "605CAD46-2EA0-47AE-8A41-953C1F27F9CD",
   "name": "google-controller",
@@ -18519,7 +19623,7 @@
   "id": "76AC59FA-C58D-4A55-AE8F-A351AF2CD43A",
   "name": "graph",
   "codepoint": "F006B",
-  "aliases": [],
+  "aliases": ["dependency", "dependencies"],
   "tags": [],
   "author": "Cody",
   "version": "4.1.95"
@@ -18527,7 +19631,7 @@
   "id": "2B8A2BB1-0887-493F-A644-88015BFA507A",
   "name": "graph-outline",
   "codepoint": "F006C",
-  "aliases": [],
+  "aliases": ["dependency", "dependencies"],
   "tags": [],
   "author": "Cody",
   "version": "4.1.95"
@@ -18625,7 +19729,7 @@
   "codepoint": "F770",
   "aliases": [],
   "tags": ["Music"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "1.9.32"
 }, {
   "id": "C2F16EBD-E72B-45E0-9A34-0BAF7ADB87B3",
@@ -18633,7 +19737,7 @@
   "codepoint": "F2C4",
   "aliases": [],
   "tags": ["Music"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "1.5.54"
 }, {
   "id": "68377A86-6428-4553-B768-7E9FC306E962",
@@ -18671,8 +19775,8 @@
   "id": "B4AC04DD-9F29-4F55-ABB6-A4AE4F272EC4",
   "name": "hail",
   "codepoint": "FAC0",
-  "aliases": [],
-  "tags": [],
+  "aliases": ["hail-taxi", "hail-cab"],
+  "tags": ["Transportation + Road", "Navigation"],
   "author": "Google",
   "version": "2.7.94"
 }, {
@@ -18705,7 +19809,7 @@
   "codepoint": "F684",
   "aliases": [],
   "tags": ["Food \/ Drink"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "1.7.12"
 }, {
   "id": "A3F55E77-82C2-48F6-B1B1-92C9259C9C26",
@@ -18827,6 +19931,14 @@
   "tags": [],
   "author": "Michael Irigoyen",
   "version": "4.4.95"
+}, {
+  "id": "A41E35E2-6756-46D9-BE48-4DFA705A6A6A",
+  "name": "handshake",
+  "codepoint": "F0243",
+  "aliases": ["business", "deal", "help"],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.6.95"
 }, {
   "id": "2FB0994B-BBA8-4F59-93AF-87F2065F34EA",
   "name": "hanger",
@@ -19163,6 +20275,14 @@
   "tags": [],
   "author": "Michael Irigoyen",
   "version": "3.0.39"
+}, {
+  "id": "4FB1FDA2-96F8-4983-83B9-470C1526042F",
+  "name": "hexadecimal",
+  "codepoint": "F02D2",
+  "aliases": [],
+  "tags": ["Developer \/ Languages"],
+  "author": "Michael Irigoyen",
+  "version": "4.7.95"
 }, {
   "id": "229D267D-F77F-4F33-ADD4-325647EC2662",
   "name": "hexagon",
@@ -19548,6 +20668,22 @@
   "author": "Michael Irigoyen",
   "version": "3.9.97"
 }, {
+  "id": "06C5C86B-2918-4501-B247-890B18874E8E",
+  "name": "home-lightbulb",
+  "codepoint": "F027C",
+  "aliases": [],
+  "tags": ["Home Automation"],
+  "author": "Michael Richins",
+  "version": "4.6.95"
+}, {
+  "id": "5F0E0727-76E9-4793-9406-FD513FF7CB58",
+  "name": "home-lightbulb-outline",
+  "codepoint": "F027D",
+  "aliases": [],
+  "tags": ["Home Automation"],
+  "author": "Michael Richins",
+  "version": "4.6.95"
+}, {
   "id": "ECB8FF23-47EC-4038-9673-1A3A1619C071",
   "name": "home-lock",
   "codepoint": "F8EA",
@@ -19603,6 +20739,14 @@
   "tags": ["Home Automation"],
   "author": "Peter Noble",
   "version": "2.4.85"
+}, {
+  "id": "FEF8AC85-F9E6-4C9B-B0C2-A5158AAD8A8B",
+  "name": "home-remove",
+  "codepoint": "F0272",
+  "aliases": [],
+  "tags": ["Home Automation"],
+  "author": "Michael Irigoyen",
+  "version": "4.6.95"
 }, {
   "id": "32EF139A-14EB-4767-ADDD-08120FB530A0",
   "name": "home-roof",
@@ -19925,6 +21069,14 @@
   "tags": ["Brand \/ Logo"],
   "author": "Contributors",
   "version": "1.9.32"
+}, {
+  "id": "97D5D644-DB37-4DA8-8B37-444B242A88EF",
+  "name": "hydro-power",
+  "codepoint": "F0310",
+  "aliases": ["hydraulic-turbine", "water-turbine", "watermill"],
+  "tags": ["Device \/ Tech"],
+  "author": "Contributors",
+  "version": "4.8.95"
 }, {
   "id": "C8D5186F-BF39-40DA-9F7A-747DB166EABD",
   "name": "ice-cream",
@@ -20326,13 +21478,45 @@
   "author": "Google",
   "version": "1.5.54"
 }, {
+  "id": "B7B431BB-E448-47F4-A7DC-03CCCA93C3D1",
+  "name": "inbox-arrow-down-outline",
+  "codepoint": "F029B",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.7.95"
+}, {
   "id": "5317ED5A-9D37-4C50-AA7D-83491547D214",
   "name": "inbox-arrow-up",
   "codepoint": "F3D1",
-  "aliases": [],
+  "aliases": ["move-from-inbox"],
   "tags": [],
   "author": "Austin Andrews",
   "version": "1.5.54"
+}, {
+  "id": "B84765D3-091A-483D-A788-C0269238CF6D",
+  "name": "inbox-arrow-up-outline",
+  "codepoint": "F029C",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.7.95"
+}, {
+  "id": "1CB38744-AE8F-4B42-ACED-10749BBF81F5",
+  "name": "inbox-full",
+  "codepoint": "F029D",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.7.95"
+}, {
+  "id": "BD7DE99A-F6EC-46CF-BE18-8371E6BCD9CA",
+  "name": "inbox-full-outline",
+  "codepoint": "F029E",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.7.95"
 }, {
   "id": "6FF18A17-48D4-4173-9CBD-8DB77F5A6E2A",
   "name": "inbox-multiple",
@@ -20349,6 +21533,14 @@
   "tags": [],
   "author": "Google",
   "version": "3.0.39"
+}, {
+  "id": "7082C01E-4FF9-489E-BD05-53140FCD382A",
+  "name": "inbox-outline",
+  "codepoint": "F029F",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.7.95"
 }, {
   "id": "1350E7BA-9354-4F62-9B21-0238E3DF4D81",
   "name": "incognito",
@@ -20410,7 +21602,7 @@
   "id": "7A8E4735-E738-4ECE-8386-889694014C22",
   "name": "instrument-triangle",
   "codepoint": "F0070",
-  "aliases": [],
+  "aliases": ["dinner-bell"],
   "tags": ["Music"],
   "author": "Michael Irigoyen",
   "version": "4.1.95"
@@ -20438,6 +21630,14 @@
   "tags": ["Color"],
   "author": "Google",
   "version": "3.6.95"
+}, {
+  "id": "A360D72F-7DC7-4E24-B7F0-1856C918CB8A",
+  "name": "iobroker",
+  "codepoint": "F0313",
+  "aliases": [],
+  "tags": ["Brand \/ Logo"],
+  "author": "Contributors",
+  "version": "4.8.95"
 }, {
   "id": "4560EF32-158B-40B1-829E-A078219A808A",
   "name": "ip",
@@ -20576,6 +21776,14 @@
   "author": "Nick",
   "version": "2.4.85"
 }, {
+  "id": "FC2D912E-451A-4AE8-8399-67F116ED12D9",
+  "name": "jump-rope",
+  "codepoint": "F032A",
+  "aliases": [],
+  "tags": ["Sport"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
   "id": "24CB8442-6875-4A22-A265-0C625118C7E7",
   "name": "kabaddi",
   "codepoint": "FD63",
@@ -20608,6 +21816,38 @@
   "author": "Cody",
   "version": "1.5.54"
 }, {
+  "id": "123DA4E5-7243-4495-8CE4-2CDA32A65C01",
+  "name": "kettle-alert",
+  "codepoint": "F0342",
+  "aliases": ["tea-kettle-alert", "kettle-full-alert", "tea-kettle-full-alert"],
+  "tags": ["Home Automation", "Alert \/ Error"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
+  "id": "4F1F1AC0-68D1-4C74-8F03-DF6EBC2C8B29",
+  "name": "kettle-alert-outline",
+  "codepoint": "F0343",
+  "aliases": ["tea-kettle-alert-outline", "kettle-empty-alert", "tea-kettle-empty-alert"],
+  "tags": ["Home Automation", "Alert \/ Error"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
+  "id": "A28C7FA8-2D3A-482A-ADC8-46391CF201E1",
+  "name": "kettle-off",
+  "codepoint": "F0346",
+  "aliases": ["tea-kettle-off", "tea-kettle-full-off", "kettle-full-off"],
+  "tags": ["Home Automation"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
+  "id": "15C6F7FE-65D4-4116-AF5C-7A171407E460",
+  "name": "kettle-off-outline",
+  "codepoint": "F0347",
+  "aliases": ["tea-kettle-off-outline", "kettle-empty-off", "tea-kettle-empty-off"],
+  "tags": ["Home Automation"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
   "id": "FCE0A2B1-414F-4E9F-AF73-F878AE890F38",
   "name": "kettle-outline",
   "codepoint": "FF73",
@@ -20616,6 +21856,30 @@
   "author": "Nick",
   "version": "3.9.97"
 }, {
+  "id": "B976C4B0-D50C-49ED-B072-CD8E8A38A4AF",
+  "name": "kettle-steam",
+  "codepoint": "F0344",
+  "aliases": ["tea-kettle-steam", "kettle-full-steam", "tea-kettle-full-steam"],
+  "tags": ["Home Automation"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
+  "id": "6D9BDFFF-63EE-45DE-A6F5-712B0EE12534",
+  "name": "kettle-steam-outline",
+  "codepoint": "F0345",
+  "aliases": ["tea-kettle-steam-outline", "kettle-empty-steam", "tea-kettle-empty-steam"],
+  "tags": ["Home Automation"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
+  "id": "E3220479-E885-4EDD-9678-E60F670DFBAA",
+  "name": "kettlebell",
+  "codepoint": "F032B",
+  "aliases": [],
+  "tags": ["Sport"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
   "id": "D6208581-CF7F-438A-8578-B6ADEE462212",
   "name": "key",
   "codepoint": "F306",
@@ -20623,6 +21887,14 @@
   "tags": ["Automotive"],
   "author": "Google",
   "version": "1.5.54"
+}, {
+  "id": "7A79C7BB-6669-46CA-8AB0-E3B537D83EA2",
+  "name": "key-arrow-right",
+  "codepoint": "F033D",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
 }, {
   "id": "FEEA71CA-4810-46DD-B459-6D9327720D17",
   "name": "key-change",
@@ -20637,7 +21909,7 @@
   "codepoint": "F01CA",
   "aliases": ["foreign-key", "sql-foreign-key"],
   "tags": [],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "4.4.95"
 }, {
   "id": "F58302B9-82F4-46AC-9A60-4640CFCE33B2",
@@ -20677,7 +21949,7 @@
   "codepoint": "F01C9",
   "aliases": ["primary-key", "sql-primary-key"],
   "tags": [],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "4.4.95"
 }, {
   "id": "967692C3-B061-425E-A0E4-FF1F580275E5",
@@ -20727,6 +21999,110 @@
   "tags": [],
   "author": "Google",
   "version": "1.5.54"
+}, {
+  "id": "3EB07099-2309-466E-8BC0-EA835C273E37",
+  "name": "keyboard-esc",
+  "codepoint": "F02E2",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.7.95"
+}, {
+  "id": "512A5D44-18A8-4644-AA17-E8E026E0F1B0",
+  "name": "keyboard-f1",
+  "codepoint": "F02D6",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.7.95"
+}, {
+  "id": "29296B9C-9A28-4F04-A2AD-550CB1EC89E1",
+  "name": "keyboard-f10",
+  "codepoint": "F02DF",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.7.95"
+}, {
+  "id": "DDF92650-C04B-4826-BD5A-FB12B06F7E6E",
+  "name": "keyboard-f11",
+  "codepoint": "F02E0",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.7.95"
+}, {
+  "id": "7C97B45E-8039-41C4-A188-A21475A4FB3F",
+  "name": "keyboard-f12",
+  "codepoint": "F02E1",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.7.95"
+}, {
+  "id": "3DFC5B29-C785-4D97-A04D-E63FAD987C25",
+  "name": "keyboard-f2",
+  "codepoint": "F02D7",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.7.95"
+}, {
+  "id": "7776F4B4-2F61-47FF-83F5-A768239E3F80",
+  "name": "keyboard-f3",
+  "codepoint": "F02D8",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.7.95"
+}, {
+  "id": "C227FD26-6801-4545-AC74-66C63B56807A",
+  "name": "keyboard-f4",
+  "codepoint": "F02D9",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.7.95"
+}, {
+  "id": "C50601AF-7AD6-4677-B8B3-181B978613A8",
+  "name": "keyboard-f5",
+  "codepoint": "F02DA",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.7.95"
+}, {
+  "id": "9B4318C8-A2CC-43A9-8706-C9D3DDF33D5E",
+  "name": "keyboard-f6",
+  "codepoint": "F02DB",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.7.95"
+}, {
+  "id": "DDE4A6E4-BDE8-4E63-8F77-E3D06BF29BF1",
+  "name": "keyboard-f7",
+  "codepoint": "F02DC",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.7.95"
+}, {
+  "id": "3392982E-1464-49EF-B22F-EE0FBA421D4E",
+  "name": "keyboard-f8",
+  "codepoint": "F02DD",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.7.95"
+}, {
+  "id": "BBFF3508-533C-4378-B9FC-60EC20CAB214",
+  "name": "keyboard-f9",
+  "codepoint": "F02DE",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.7.95"
 }, {
   "id": "A7DFF78C-C6DD-4BB6-BBFA-A88242516A74",
   "name": "keyboard-off",
@@ -20840,6 +22216,14 @@
   "author": "Contributors",
   "version": "1.5.54"
 }, {
+  "id": "D3EC3384-B91D-46C9-8D43-7D333DB2273D",
+  "name": "kotlin",
+  "codepoint": "F0244",
+  "aliases": [],
+  "tags": [],
+  "author": "Contributors",
+  "version": "4.6.95"
+}, {
   "id": "9823C48B-5D2E-4058-9836-F2C6DCACAB71",
   "name": "kubernetes",
   "codepoint": "F0129",
@@ -20879,6 +22263,22 @@
   "tags": [],
   "author": "Google",
   "version": "1.5.54"
+}, {
+  "id": "62FCE66D-4003-4B22-8C47-501947EA4CC8",
+  "name": "label-percent",
+  "codepoint": "F0315",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
+  "id": "7EBE7C17-4905-43F9-A084-0756FBB3905D",
+  "name": "label-percent-outline",
+  "codepoint": "F0316",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
 }, {
   "id": "3A54255E-EDE1-4622-87F4-9FCB31B1B688",
   "name": "label-variant",
@@ -20927,6 +22327,14 @@
   "tags": [],
   "author": "Cody",
   "version": "1.5.54"
+}, {
+  "id": "9DF15E25-DE45-4D9B-8E3B-EA6D643EA0CC",
+  "name": "lan-check",
+  "codepoint": "F02D5",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.7.95"
 }, {
   "id": "B52D6944-3AC2-4113-A91C-199C0CD577A6",
   "name": "lan-connect",
@@ -20983,6 +22391,14 @@
   "tags": ["Developer \/ Languages"],
   "author": "Contributors",
   "version": "1.5.54"
+}, {
+  "id": "F1DEF74B-8116-4E0E-98BE-97A699812E5A",
+  "name": "language-fortran",
+  "codepoint": "F0245",
+  "aliases": [],
+  "tags": [],
+  "author": "Contributors",
+  "version": "4.6.95"
 }, {
   "id": "ACAFCF05-E04D-4212-AB53-C72BD8DB5768",
   "name": "language-go",
@@ -21165,7 +22581,7 @@
   "name": "latitude",
   "codepoint": "FF74",
   "aliases": [],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "Michael Richins",
   "version": "3.9.97"
 }, {
@@ -21189,7 +22605,7 @@
   "name": "layers",
   "codepoint": "F328",
   "aliases": [],
-  "tags": [],
+  "tags": ["Geographic Information System"],
   "author": "Google",
   "version": "1.5.54"
 }, {
@@ -21197,7 +22613,7 @@
   "name": "layers-minus",
   "codepoint": "FE8D",
   "aliases": [],
-  "tags": [],
+  "tags": ["Geographic Information System"],
   "author": "Austin Andrews",
   "version": "3.6.95"
 }, {
@@ -21205,7 +22621,7 @@
   "name": "layers-off",
   "codepoint": "F329",
   "aliases": ["layers-clear"],
-  "tags": [],
+  "tags": ["Geographic Information System"],
   "author": "Google",
   "version": "1.5.54"
 }, {
@@ -21213,7 +22629,7 @@
   "name": "layers-off-outline",
   "codepoint": "F9FC",
   "aliases": [],
-  "tags": [],
+  "tags": ["Geographic Information System"],
   "author": "Google",
   "version": "2.5.94"
 }, {
@@ -21221,7 +22637,7 @@
   "name": "layers-outline",
   "codepoint": "F9FD",
   "aliases": [],
-  "tags": [],
+  "tags": ["Geographic Information System"],
   "author": "Google",
   "version": "2.5.94"
 }, {
@@ -21229,7 +22645,7 @@
   "name": "layers-plus",
   "codepoint": "FE30",
   "aliases": [],
-  "tags": [],
+  "tags": ["Geographic Information System"],
   "author": "Austin Andrews",
   "version": "3.6.95"
 }, {
@@ -21237,9 +22653,25 @@
   "name": "layers-remove",
   "codepoint": "FE31",
   "aliases": [],
-  "tags": [],
+  "tags": ["Geographic Information System"],
   "author": "Austin Andrews",
   "version": "3.6.95"
+}, {
+  "id": "8502BBC1-8C93-4D63-97C6-1BA163C1DDC0",
+  "name": "layers-search",
+  "codepoint": "F0231",
+  "aliases": [],
+  "tags": ["Geographic Information System"],
+  "author": "Michael Irigoyen",
+  "version": "4.6.95"
+}, {
+  "id": "6EC54CC3-3FAD-4692-B123-9FA5A8F3D80E",
+  "name": "layers-search-outline",
+  "codepoint": "F0232",
+  "aliases": [],
+  "tags": ["Geographic Information System"],
+  "author": "Michael Irigoyen",
+  "version": "4.6.95"
 }, {
   "id": "E13ACA71-A398-4E3F-A1DF-ED7E4A1E1A84",
   "name": "layers-triple",
@@ -21280,6 +22712,22 @@
   "tags": ["Nature"],
   "author": "Michael Richins",
   "version": "3.2.89"
+}, {
+  "id": "D1DE0E7A-928A-430D-BD2B-B80C9FA2D2F4",
+  "name": "leaf-maple-off",
+  "codepoint": "F0305",
+  "aliases": [],
+  "tags": ["Nature"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
+  "id": "96F48C59-4C64-4584-9E07-73AAD3533FAA",
+  "name": "leaf-off",
+  "codepoint": "F0304",
+  "aliases": [],
+  "tags": ["Nature"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
 }, {
   "id": "D648ECFA-B185-4041-8B54-6D1C125CD08E",
   "name": "leak",
@@ -21473,11 +22921,107 @@
   "author": "Google",
   "version": "1.5.54"
 }, {
+  "id": "7D6FF098-D459-4B89-A13C-C9145A1EB992",
+  "name": "lightbulb-cfl",
+  "codepoint": "F0233",
+  "aliases": [],
+  "tags": ["Home Automation"],
+  "author": "GreenTurtwig",
+  "version": "4.6.95"
+}, {
+  "id": "9E3FA5DD-7C93-4283-A7BD-30AE71ACD2C6",
+  "name": "lightbulb-cfl-off",
+  "codepoint": "F0234",
+  "aliases": [],
+  "tags": ["Home Automation"],
+  "author": "Michael Irigoyen",
+  "version": "4.6.95"
+}, {
+  "id": "0F61D2EB-5321-4D49-B9DD-4F205DA010A2",
+  "name": "lightbulb-cfl-spiral",
+  "codepoint": "F02A0",
+  "aliases": [],
+  "tags": ["Home Automation"],
+  "author": "Contributors",
+  "version": "4.7.95"
+}, {
+  "id": "49D60773-F400-491A-AD3F-B50110089F63",
+  "name": "lightbulb-cfl-spiral-off",
+  "codepoint": "F02EE",
+  "aliases": [],
+  "tags": ["Home Automation"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
+  "id": "DB267C0E-F298-4380-99C8-E18FA8E06554",
+  "name": "lightbulb-group",
+  "codepoint": "F027E",
+  "aliases": [],
+  "tags": ["Home Automation"],
+  "author": "Michael Richins",
+  "version": "4.6.95"
+}, {
+  "id": "CA2B5020-40AD-44C1-8868-F14927FCD535",
+  "name": "lightbulb-group-off",
+  "codepoint": "F02F8",
+  "aliases": [],
+  "tags": ["Home Automation"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
+  "id": "54E68537-16C8-48C4-82F8-4A1000DA605D",
+  "name": "lightbulb-group-off-outline",
+  "codepoint": "F02F9",
+  "aliases": [],
+  "tags": ["Home Automation"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
+  "id": "C4751630-A657-4A0B-89C5-6FD3037A8CD6",
+  "name": "lightbulb-group-outline",
+  "codepoint": "F027F",
+  "aliases": [],
+  "tags": ["Home Automation"],
+  "author": "Michael Richins",
+  "version": "4.6.95"
+}, {
+  "id": "33D321D2-E427-469E-9646-D5758B4D5038",
+  "name": "lightbulb-multiple",
+  "codepoint": "F0280",
+  "aliases": [],
+  "tags": ["Home Automation"],
+  "author": "Michael Richins",
+  "version": "4.6.95"
+}, {
+  "id": "B336C5E4-48AB-4620-9DA4-DB1144885F7C",
+  "name": "lightbulb-multiple-off",
+  "codepoint": "F02FA",
+  "aliases": [],
+  "tags": ["Home Automation"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
+  "id": "827B8418-9667-4429-A4D3-7C0553D1946E",
+  "name": "lightbulb-multiple-off-outline",
+  "codepoint": "F02FB",
+  "aliases": [],
+  "tags": ["Home Automation"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
+  "id": "7AAEC297-D587-4D13-9397-50C8C93B48C8",
+  "name": "lightbulb-multiple-outline",
+  "codepoint": "F0281",
+  "aliases": [],
+  "tags": ["Home Automation"],
+  "author": "Michael Richins",
+  "version": "4.6.95"
+}, {
   "id": "14D09F5A-C467-428B-9C5A-F2B3939D1678",
   "name": "lightbulb-off",
   "codepoint": "FE32",
   "aliases": [],
-  "tags": [],
+  "tags": ["Home Automation"],
   "author": "Contributors",
   "version": "3.6.95"
 }, {
@@ -21485,7 +23029,7 @@
   "name": "lightbulb-off-outline",
   "codepoint": "FE33",
   "aliases": [],
-  "tags": [],
+  "tags": ["Home Automation"],
   "author": "Contributors",
   "version": "3.6.95"
 }, {
@@ -21766,7 +23310,7 @@
   "codepoint": "F6E9",
   "aliases": [],
   "tags": [],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "1.8.36"
 }, {
   "id": "BA4D2E1E-2BCB-4B17-AC02-52C8F34FAEAE",
@@ -21853,7 +23397,7 @@
   "name": "longitude",
   "codepoint": "FF77",
   "aliases": [],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "Michael Richins",
   "version": "3.9.97"
 }, {
@@ -21918,7 +23462,7 @@
   "name": "magnify",
   "codepoint": "F349",
   "aliases": ["search"],
-  "tags": [],
+  "tags": ["Geographic Information System"],
   "author": "Google",
   "version": "1.5.54"
 }, {
@@ -21950,7 +23494,7 @@
   "name": "magnify-minus-outline",
   "codepoint": "F6EB",
   "aliases": ["zoom-out-outline", "search-minus-outline"],
-  "tags": [],
+  "tags": ["Geographic Information System"],
   "author": "Google",
   "version": "1.8.36"
 }, {
@@ -21974,9 +23518,33 @@
   "name": "magnify-plus-outline",
   "codepoint": "F6EC",
   "aliases": ["zoom-in-outline", "magnify-add-outline", "search-plus-outline", "search-add-outline"],
-  "tags": [],
+  "tags": ["Geographic Information System"],
   "author": "Google",
   "version": "1.8.36"
+}, {
+  "id": "845BBEA5-F20E-4E1B-AB42-FE7BF45FCDAB",
+  "name": "magnify-remove-cursor",
+  "codepoint": "F0237",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.6.95"
+}, {
+  "id": "1465D0D4-32FE-4495-B137-CFE49A390474",
+  "name": "magnify-remove-outline",
+  "codepoint": "F0238",
+  "aliases": [],
+  "tags": ["Geographic Information System"],
+  "author": "Michael Irigoyen",
+  "version": "4.6.95"
+}, {
+  "id": "DF9ACF3F-5AF0-4F55-845C-569018942B95",
+  "name": "magnify-scan",
+  "codepoint": "F02A1",
+  "aliases": [],
+  "tags": [],
+  "author": "Sascha Wohlgemuth",
+  "version": "4.7.95"
 }, {
   "id": "269E49C3-261D-42CD-8EFA-FD76C0BA7B7C",
   "name": "mail",
@@ -22063,7 +23631,7 @@
   "name": "map",
   "codepoint": "F34D",
   "aliases": [],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "Google",
   "version": "1.5.54"
 }, {
@@ -22071,7 +23639,7 @@
   "name": "map-check",
   "codepoint": "FED9",
   "aliases": ["map-tick"],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "Contributors",
   "version": "3.7.94"
 }, {
@@ -22079,7 +23647,7 @@
   "name": "map-check-outline",
   "codepoint": "FEDA",
   "aliases": ["map-tick-outline"],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "Contributors",
   "version": "3.7.94"
 }, {
@@ -22087,7 +23655,7 @@
   "name": "map-clock",
   "codepoint": "FCFA",
   "aliases": ["timezone"],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "Augustin Ursu",
   "version": "3.3.92"
 }, {
@@ -22095,7 +23663,7 @@
   "name": "map-clock-outline",
   "codepoint": "FCFB",
   "aliases": ["timezone-outline"],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "Augustin Ursu",
   "version": "3.3.92"
 }, {
@@ -22103,7 +23671,7 @@
   "name": "map-legend",
   "codepoint": "FA00",
   "aliases": [],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "Perth Totty",
   "version": "2.5.94"
 }, {
@@ -22111,7 +23679,7 @@
   "name": "map-marker",
   "codepoint": "F34E",
   "aliases": ["location", "address-marker", "location-on", "place", "room"],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "Google",
   "version": "1.5.54"
 }, {
@@ -22119,7 +23687,7 @@
   "name": "map-marker-alert",
   "codepoint": "FF22",
   "aliases": [],
-  "tags": ["Navigation", "Alert \/ Error"],
+  "tags": ["Navigation", "Alert \/ Error", "Geographic Information System"],
   "author": "Fran\u00e7ois Risoud",
   "version": "3.8.95"
 }, {
@@ -22127,7 +23695,7 @@
   "name": "map-marker-alert-outline",
   "codepoint": "FF23",
   "aliases": [],
-  "tags": ["Navigation", "Alert \/ Error"],
+  "tags": ["Navigation", "Alert \/ Error", "Geographic Information System"],
   "author": "Fran\u00e7ois Risoud",
   "version": "3.8.95"
 }, {
@@ -22135,15 +23703,23 @@
   "name": "map-marker-check",
   "codepoint": "FC71",
   "aliases": ["map-marker-tick", "where-to-vote"],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "Google",
   "version": "3.2.89"
+}, {
+  "id": "76C82A3D-F79E-46D9-8234-456F39A35567",
+  "name": "map-marker-check-outline",
+  "codepoint": "F0326",
+  "aliases": [],
+  "tags": ["Navigation", "Geographic Information System"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
 }, {
   "id": "03F79839-314C-4F29-B3E3-43B97D7F7FA6",
   "name": "map-marker-circle",
   "codepoint": "F34F",
   "aliases": ["explore-nearby"],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "Google",
   "version": "1.5.54"
 }, {
@@ -22151,7 +23727,7 @@
   "name": "map-marker-distance",
   "codepoint": "F8EF",
   "aliases": [],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "Michael Richins",
   "version": "2.3.50"
 }, {
@@ -22159,39 +23735,79 @@
   "name": "map-marker-down",
   "codepoint": "F012D",
   "aliases": [],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "Fran\u00e7ois Risoud",
   "version": "4.3.95"
+}, {
+  "id": "5FFC5505-B029-4487-A68E-EDE4B708E5B9",
+  "name": "map-marker-left",
+  "codepoint": "F0306",
+  "aliases": [],
+  "tags": ["Navigation", "Geographic Information System"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
+  "id": "0283CCF3-BC73-4642-92FA-38E62D635368",
+  "name": "map-marker-left-outline",
+  "codepoint": "F0308",
+  "aliases": [],
+  "tags": ["Navigation", "Geographic Information System"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
 }, {
   "id": "34DD1168-3875-4F77-9C0B-5BCFFB80FBBD",
   "name": "map-marker-minus",
   "codepoint": "F650",
   "aliases": [],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "Cody",
   "version": "1.6.50"
+}, {
+  "id": "21A7EBBF-D884-4A4E-B722-01600B89FFB4",
+  "name": "map-marker-minus-outline",
+  "codepoint": "F0324",
+  "aliases": [],
+  "tags": ["Geographic Information System", "Navigation"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
 }, {
   "id": "6283577D-6B31-4297-8747-4F466580E79A",
   "name": "map-marker-multiple",
   "codepoint": "F350",
   "aliases": ["map-markers"],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "Austin Andrews",
   "version": "1.5.54"
+}, {
+  "id": "360866E5-D407-4E54-9470-7ECF6759F941",
+  "name": "map-marker-multiple-outline",
+  "codepoint": "F02A2",
+  "aliases": [],
+  "tags": ["Navigation", "Geographic Information System"],
+  "author": "Austin Andrews",
+  "version": "4.7.95"
 }, {
   "id": "92410469-09D9-4C29-AC79-CD0DF882D05F",
   "name": "map-marker-off",
   "codepoint": "F351",
   "aliases": ["location-off"],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "Austin Andrews",
   "version": "1.5.54"
+}, {
+  "id": "48218DC3-F2A6-4C4B-9B5E-0648815B8864",
+  "name": "map-marker-off-outline",
+  "codepoint": "F0328",
+  "aliases": [],
+  "tags": ["Navigation", "Geographic Information System"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
 }, {
   "id": "DE8F4623-A6D4-4DD4-B61A-5936A0538FD2",
   "name": "map-marker-outline",
   "codepoint": "F7D8",
   "aliases": [],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "Google",
   "version": "2.0.46"
 }, {
@@ -22199,7 +23815,7 @@
   "name": "map-marker-path",
   "codepoint": "FCFC",
   "aliases": [],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "Austin Andrews",
   "version": "3.3.92"
 }, {
@@ -22207,15 +23823,23 @@
   "name": "map-marker-plus",
   "codepoint": "F651",
   "aliases": ["add-location"],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "Cody",
   "version": "1.6.50"
+}, {
+  "id": "C1F80E9D-2408-46FC-9E92-AE61A8D5C650",
+  "name": "map-marker-plus-outline",
+  "codepoint": "F0323",
+  "aliases": [],
+  "tags": ["Geographic Information System", "Navigation"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
 }, {
   "id": "C9930FE9-E831-4194-A4FA-905CE141CFEA",
   "name": "map-marker-question",
   "codepoint": "FF24",
   "aliases": [],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "Google",
   "version": "3.8.95"
 }, {
@@ -22223,7 +23847,7 @@
   "name": "map-marker-question-outline",
   "codepoint": "FF25",
   "aliases": [],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "Google",
   "version": "3.8.95"
 }, {
@@ -22231,31 +23855,63 @@
   "name": "map-marker-radius",
   "codepoint": "F352",
   "aliases": [],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "Austin Andrews",
   "version": "1.5.54"
+}, {
+  "id": "865AB612-D546-431D-85A8-52C305B263F8",
+  "name": "map-marker-radius-outline",
+  "codepoint": "F0327",
+  "aliases": [],
+  "tags": ["Navigation", "Geographic Information System"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
 }, {
   "id": "8BC7ABEC-FE5F-4C2F-889C-8C8804DD12E4",
   "name": "map-marker-remove",
   "codepoint": "FF26",
   "aliases": [],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "GreenTurtwig",
   "version": "3.8.95"
+}, {
+  "id": "75FDE93C-EB66-4824-9F96-1B4212BDA785",
+  "name": "map-marker-remove-outline",
+  "codepoint": "F0325",
+  "aliases": [],
+  "tags": ["Geographic Information System", "Navigation"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
 }, {
   "id": "D19361A0-41AB-4E11-B4D4-AE50D42B3B2C",
   "name": "map-marker-remove-variant",
   "codepoint": "FF27",
   "aliases": [],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System", "Geographic Information System", "Geographic Information System"],
   "author": "GreenTurtwig",
   "version": "3.8.95"
+}, {
+  "id": "445C4B6D-5A56-42F3-845F-92C22A11BB64",
+  "name": "map-marker-right",
+  "codepoint": "F0307",
+  "aliases": [],
+  "tags": ["Navigation", "Geographic Information System"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
+  "id": "9456009F-0387-4A76-8B0F-22CCBBA53071",
+  "name": "map-marker-right-outline",
+  "codepoint": "F0309",
+  "aliases": [],
+  "tags": ["Navigation", "Geographic Information System"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
 }, {
   "id": "0C1B9015-C0F4-4710-87D2-BA7B710943F2",
   "name": "map-marker-up",
   "codepoint": "F012E",
   "aliases": [],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "Fran\u00e7ois Risoud",
   "version": "4.3.95"
 }, {
@@ -22263,7 +23919,7 @@
   "name": "map-minus",
   "codepoint": "F980",
   "aliases": [],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "Peter Noble",
   "version": "2.4.85"
 }, {
@@ -22271,7 +23927,7 @@
   "name": "map-outline",
   "codepoint": "F981",
   "aliases": [],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "Google",
   "version": "2.4.85"
 }, {
@@ -22279,7 +23935,7 @@
   "name": "map-plus",
   "codepoint": "F982",
   "aliases": ["map-add"],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "Peter Noble",
   "version": "2.4.85"
 }, {
@@ -22287,7 +23943,7 @@
   "name": "map-search",
   "codepoint": "F983",
   "aliases": [],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "GreenTurtwig",
   "version": "2.4.85"
 }, {
@@ -22295,7 +23951,7 @@
   "name": "map-search-outline",
   "codepoint": "F984",
   "aliases": [],
-  "tags": ["Navigation"],
+  "tags": ["Navigation", "Geographic Information System"],
   "author": "GreenTurtwig",
   "version": "2.4.85"
 }, {
@@ -22466,14 +24122,6 @@
   "tags": [],
   "author": "Austin Andrews",
   "version": "1.6.50"
-}, {
-  "id": "7FB125A0-875A-4766-BFAF-02CC45226530",
-  "name": "maxcdn",
-  "codepoint": "F359",
-  "aliases": [],
-  "tags": ["Brand \/ Logo"],
-  "author": "Contributors",
-  "version": "1.5.54"
 }, {
   "id": "626FA95C-E655-44A6-BA6A-4B60CED44B6D",
   "name": "medal",
@@ -22652,6 +24300,38 @@
   "tags": ["Alert \/ Error"],
   "author": "Colton Wiscombe",
   "version": "2.5.94"
+}, {
+  "id": "F359CA31-2575-4648-B1E1-466A757F2184",
+  "name": "message-arrow-left",
+  "codepoint": "F031D",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
+  "id": "EAF47F59-C768-4B46-841F-1D8C216D15F2",
+  "name": "message-arrow-left-outline",
+  "codepoint": "F031E",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
+  "id": "3292CBC5-7E1D-405F-A8CD-BAB528B88D45",
+  "name": "message-arrow-right",
+  "codepoint": "F031F",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
+  "id": "BEDCDC33-9EAE-46D2-B380-80A6B47B400C",
+  "name": "message-arrow-right-outline",
+  "codepoint": "F0320",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
 }, {
   "id": "1EC9427A-2A02-4F74-9C1B-C4EC5E62B793",
   "name": "message-bulleted",
@@ -22882,7 +24562,7 @@
   "codepoint": "F7D9",
   "aliases": ["tempo", "bpm", "beats-per-minute"],
   "tags": ["Music"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "2.0.46"
 }, {
   "id": "43A2B10E-F7DF-4181-B607-EC2039AFFA0D",
@@ -22890,7 +24570,7 @@
   "codepoint": "F7DA",
   "aliases": ["tempo-tick", "bpm-tick", "beats-per-minute-tick"],
   "tags": ["Music"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "2.0.46"
 }, {
   "id": "6A3136A3-62AD-4DE6-A783-D9D69AAD8919",
@@ -23133,6 +24813,14 @@
   "author": "Michael Irigoyen",
   "version": "3.2.89"
 }, {
+  "id": "AB90BAF0-E671-4418-9CBB-74C3F03A94DB",
+  "name": "mirror",
+  "codepoint": "F0228",
+  "aliases": [],
+  "tags": ["Home Automation"],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
+}, {
   "id": "77B97AED-2613-434C-BD9C-82755C8B468C",
   "name": "mixcloud",
   "codepoint": "F62A",
@@ -23213,6 +24901,14 @@
   "tags": ["Device \/ Tech", "Device \/ Tech"],
   "author": "Austin Andrews",
   "version": "2.5.94"
+}, {
+  "id": "E04B6974-751D-4A55-9309-02336DDB5070",
+  "name": "monitor-edit",
+  "codepoint": "F02F1",
+  "aliases": [],
+  "tags": ["Edit \/ Modify"],
+  "author": "Michael Richins",
+  "version": "4.8.95"
 }, {
   "id": "59544B54-B690-47F4-AE30-4A9D9FE08FD1",
   "name": "monitor-lock",
@@ -23349,6 +25045,14 @@
   "tags": [],
   "author": "Google",
   "version": "1.5.54"
+}, {
+  "id": "12E07384-2645-4F67-9A4F-4DA26FA1F75C",
+  "name": "mother-heart",
+  "codepoint": "F033F",
+  "aliases": [],
+  "tags": ["People \/ Family"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
 }, {
   "id": "ACE8B129-F064-47BF-9FD5-AB472736ED43",
   "name": "mother-nurse",
@@ -23643,7 +25347,7 @@
   "codepoint": "FF8B",
   "aliases": ["music-c-clef", "music-clef-tenor", "music-clef-soprano", "music-clef-baritone"],
   "tags": ["Music"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "3.9.97"
 }, {
   "id": "279EAB4C-7D62-4C41-A67F-2928723476DA",
@@ -23651,7 +25355,7 @@
   "codepoint": "FF8C",
   "aliases": ["music-f-clef"],
   "tags": ["Music"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "3.9.97"
 }, {
   "id": "7ED69559-58ED-432E-800F-9B8DE4CD53A2",
@@ -23659,7 +25363,7 @@
   "codepoint": "FF8D",
   "aliases": ["music-g-clef"],
   "tags": ["Music"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "3.9.97"
 }, {
   "id": "05F3F5DD-59CC-4FBD-9428-0D0CB125A8AE",
@@ -25086,6 +26790,14 @@
   "author": "Michael Irigoyen",
   "version": "3.5.94"
 }, {
+  "id": "53021908-1FB5-4293-896E-94C5330E6101",
+  "name": "oci",
+  "codepoint": "F0314",
+  "aliases": ["open-container-initiative"],
+  "tags": ["Developer \/ Languages", "Brand \/ Logo"],
+  "author": "Contributors",
+  "version": "4.8.95"
+}, {
   "id": "2943D362-A548-448C-A868-19E6D37C8B2D",
   "name": "ocr",
   "codepoint": "F0165",
@@ -25133,6 +26845,14 @@
   "tags": ["Brand \/ Logo"],
   "author": "Contributors",
   "version": "1.5.54"
+}, {
+  "id": "64C3CB40-BBDF-4A82-9B07-62CA527A258C",
+  "name": "offer",
+  "codepoint": "F0246",
+  "aliases": [],
+  "tags": [],
+  "author": "Cody",
+  "version": "4.6.95"
 }, {
   "id": "7E2456A3-891B-43F4-B233-AA0D890815CF",
   "name": "office",
@@ -25498,7 +27218,7 @@
   "name": "palette-outline",
   "codepoint": "FE6C",
   "aliases": [],
-  "tags": ["Drawing \/ Art", "Color"],
+  "tags": ["Drawing \/ Art", "Color", "Geographic Information System"],
   "author": "Google",
   "version": "3.5.95"
 }, {
@@ -26103,6 +27823,14 @@
   "author": "Cody",
   "version": "1.5.54"
 }, {
+  "id": "0625AC7C-AD52-4221-8F53-A9AE6DAA57BD",
+  "name": "percent-outline",
+  "codepoint": "F02A3",
+  "aliases": [],
+  "tags": [],
+  "author": "Contributors",
+  "version": "4.7.95"
+}, {
   "id": "1DB2BD6D-830D-4A4F-8E04-94D14901895A",
   "name": "periodic-table",
   "codepoint": "F8B5",
@@ -26110,6 +27838,14 @@
   "tags": ["Science"],
   "author": "Cody",
   "version": "2.2.43"
+}, {
+  "id": "F3FDFD25-C4F6-4ECF-8F8B-C460E4C6BD7C",
+  "name": "periodic-table-co",
+  "codepoint": "F0329",
+  "aliases": ["carbon-monoxide"],
+  "tags": ["Home Automation", "Science"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
 }, {
   "id": "6F7A0011-054A-4805-A970-A48BEAA9454B",
   "name": "periodic-table-co2",
@@ -26231,6 +27967,14 @@
   "tags": ["Cellphone \/ Phone"],
   "author": "Cody",
   "version": "1.5.54"
+}, {
+  "id": "4D938684-537A-4ED1-B227-6859EA3DADAF",
+  "name": "phone-classic-off",
+  "codepoint": "F02A4",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.7.95"
 }, {
   "id": "5EF77B27-31D7-47F8-8D72-8BC040CD154E",
   "name": "phone-forward",
@@ -26792,6 +28536,14 @@
   "author": "Google",
   "version": "1.5.54"
 }, {
+  "id": "B60DF8C7-F693-4E2B-B5AB-65CA6DC21A8E",
+  "name": "play-box",
+  "codepoint": "F02A5",
+  "aliases": [],
+  "tags": [],
+  "author": "frankgrinaert",
+  "version": "4.7.95"
+}, {
   "id": "D0431F42-A1C2-409B-9D44-2EDDEF3F9AB3",
   "name": "play-box-outline",
   "codepoint": "F40B",
@@ -27067,8 +28819,8 @@
   "id": "2FD9933D-7226-4745-B5DB-C8E6245FB170",
   "name": "plus-thick",
   "codepoint": "F0217",
-  "aliases": [],
-  "tags": [],
+  "aliases": ["add-thick"],
+  "tags": ["Math"],
   "author": "Austin Andrews",
   "version": "4.5.95"
 }, {
@@ -27192,6 +28944,14 @@
   "tags": [],
   "author": "Google",
   "version": "1.5.54"
+}, {
+  "id": "32388085-89F4-4C2C-BE98-1AEBED8F9B95",
+  "name": "poll-box-outline",
+  "codepoint": "F02A6",
+  "aliases": [],
+  "tags": [],
+  "author": "Google",
+  "version": "4.7.95"
 }, {
   "id": "528FF16A-C55C-43F9-8E0B-3879A209AEDE",
   "name": "polymer",
@@ -27390,7 +29150,7 @@
   "codepoint": "F0134",
   "aliases": [],
   "tags": ["Home Automation"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "4.3.95"
 }, {
   "id": "E9F0AC95-A660-4FB1-BE5D-20153B709E15",
@@ -27404,7 +29164,7 @@
   "id": "C4F7F8FF-3465-4F85-B615-B852A6919100",
   "name": "power-socket-us",
   "codepoint": "F7E8",
-  "aliases": ["plug-socket-us", "power-socket-jp", "power-socket-ca", "power-socket-mx", "power-socket-type-b", "power-socket-united-states", "power-socket-japan", "power-socket-canada", "power-socket-mexico"],
+  "aliases": ["plug-socket-us", "power-socket-ca", "power-socket-mx", "power-socket-type-b", "power-socket-united-states", "power-socket-japan", "power-socket-canada", "power-socket-mexico"],
   "tags": ["Home Automation"],
   "author": "GreenTurtwig",
   "version": "2.0.46"
@@ -27905,6 +29665,14 @@
   "tags": ["Device \/ Tech"],
   "author": "Cody",
   "version": "1.5.54"
+}, {
+  "id": "B39962EE-105B-4093-9B4C-6078FEA43DA2",
+  "name": "radio-off",
+  "codepoint": "F0247",
+  "aliases": [],
+  "tags": [],
+  "author": "Contributors",
+  "version": "4.6.95"
 }, {
   "id": "8E5FC366-E9F8-40ED-A16D-CD6C87B0C5B1",
   "name": "radio-tower",
@@ -28466,6 +30234,14 @@
   "author": "Austin Andrews",
   "version": "3.4.93"
 }, {
+  "id": "167E7244-A6F8-400E-8CF7-F71B3FAEEEBE",
+  "name": "rewind-5",
+  "codepoint": "F0224",
+  "aliases": [],
+  "tags": [],
+  "author": "Contributors",
+  "version": "4.6.95"
+}, {
   "id": "61E83433-F6D1-442D-9EDE-EDEF27AB789D",
   "name": "rewind-outline",
   "codepoint": "F709",
@@ -28578,10 +30354,18 @@
   "author": "Michael Richins",
   "version": "2.8.94"
 }, {
+  "id": "2029DE02-EC25-4242-945F-D7495F35D071",
+  "name": "robot-mower",
+  "codepoint": "F0222",
+  "aliases": ["lawn-mower"],
+  "tags": ["Home Automation"],
+  "author": "Contributors",
+  "version": "4.6.95"
+}, {
   "id": "D40FCE9F-E14E-4F2E-83BD-39704B38E446",
   "name": "robot-mower-outline",
   "codepoint": "F021E",
-  "aliases": ["lawn-mower"],
+  "aliases": ["lawn-mower-outline"],
   "tags": ["Home Automation"],
   "author": "Contributors",
   "version": "4.5.95"
@@ -28925,7 +30709,7 @@
   "id": "43C3E250-2842-4973-8D19-CA1E48BCF61C",
   "name": "rv-truck",
   "codepoint": "F01FF",
-  "aliases": [],
+  "aliases": ["recreational-vehicle", "campervan"],
   "tags": ["Transportation + Road"],
   "author": "Michael Richins",
   "version": "4.5.95"
@@ -28953,6 +30737,22 @@
   "tags": ["Banking"],
   "author": "GreenTurtwig",
   "version": "2.6.95"
+}, {
+  "id": "B12FE612-BEB7-45A2-BB7D-B04C6F33AE1B",
+  "name": "safe-square",
+  "codepoint": "F02A7",
+  "aliases": [],
+  "tags": [],
+  "author": "Yaroslav Bandura",
+  "version": "4.7.95"
+}, {
+  "id": "6F471894-793E-4F7F-848D-CE2AA2F4C67D",
+  "name": "safe-square-outline",
+  "codepoint": "F02A8",
+  "aliases": [],
+  "tags": [],
+  "author": "Yaroslav Bandura",
+  "version": "4.7.95"
 }, {
   "id": "438888DA-342B-4861-95EA-026A3F4E2F95",
   "name": "safety-goggles",
@@ -29137,6 +30937,22 @@
   "tags": ["Sport", "Transportation + Other"],
   "author": "Google",
   "version": "4.5.95"
+}, {
+  "id": "C20508AC-CC67-48DF-9B05-72DE40E417AF",
+  "name": "scoreboard",
+  "codepoint": "F02A9",
+  "aliases": [],
+  "tags": ["Sport"],
+  "author": "Yaroslav Bandura",
+  "version": "4.7.95"
+}, {
+  "id": "3E4214BB-1283-436F-A658-7F6015745C88",
+  "name": "scoreboard-outline",
+  "codepoint": "F02AA",
+  "aliases": [],
+  "tags": ["Sport"],
+  "author": "Yaroslav Bandura",
+  "version": "4.7.95"
 }, {
   "id": "913EA106-BCB3-410B-A5F4-6FAAA1B79880",
   "name": "screen-rotation",
@@ -29330,6 +31146,14 @@
   "author": "Google",
   "version": "3.2.89"
 }, {
+  "id": "BF015C93-A5AD-47BF-9451-A9B5DFFAD50C",
+  "name": "seat-passenger",
+  "codepoint": "F0274",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.6.95"
+}, {
   "id": "EB83D5D9-0439-476C-9BFD-04B5D6789940",
   "name": "seat-recline-extra",
   "codepoint": "F481",
@@ -29450,6 +31274,30 @@
   "author": "Austin Andrews",
   "version": "1.5.54"
 }, {
+  "id": "A312AB96-5A12-4223-AF67-7067653E17E5",
+  "name": "select-marker",
+  "codepoint": "F02AB",
+  "aliases": [],
+  "tags": [],
+  "author": "Contributors",
+  "version": "4.7.95"
+}, {
+  "id": "1958E6ED-3D6C-4341-8F21-DDE80D030CEF",
+  "name": "select-multiple",
+  "codepoint": "F02AC",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.7.95"
+}, {
+  "id": "0A8AB6EF-B388-4086-BF8D-1F0015ADC972",
+  "name": "select-multiple-marker",
+  "codepoint": "F02AD",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.7.95"
+}, {
   "id": "B2C462E1-44F0-456A-8A73-919DB480D978",
   "name": "select-off",
   "codepoint": "F488",
@@ -29465,6 +31313,14 @@
   "tags": [],
   "author": "Michael Irigoyen",
   "version": "4.0.96"
+}, {
+  "id": "5D558A02-EC98-47D7-AD04-D02E225AF4C6",
+  "name": "select-search",
+  "codepoint": "F022F",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.6.95"
 }, {
   "id": "33A5D3FF-E2A7-4E3A-95B5-86D4C6604911",
   "name": "selection",
@@ -29498,6 +31354,30 @@
   "author": "Google",
   "version": "3.8.95"
 }, {
+  "id": "DA670815-123E-4443-B813-5BB4A556AB1C",
+  "name": "selection-marker",
+  "codepoint": "F02AE",
+  "aliases": [],
+  "tags": [],
+  "author": "Contributors",
+  "version": "4.7.95"
+}, {
+  "id": "5B06BC81-DA70-41F2-B05C-31E9BD7F571E",
+  "name": "selection-multiple-marker",
+  "codepoint": "F02AF",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.7.95"
+}, {
+  "id": "31DDE08D-A49D-4B2D-9D90-3E79FDDF49C9",
+  "name": "selection-mutliple",
+  "codepoint": "F02B0",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.7.95"
+}, {
   "id": "DE8BF55F-05A8-4CB8-86FC-63D6EAC57A6C",
   "name": "selection-off",
   "codepoint": "F776",
@@ -29505,6 +31385,22 @@
   "tags": [],
   "author": "Austin Andrews",
   "version": "1.9.32"
+}, {
+  "id": "2123E467-F48C-4AC6-8061-FEEB686ADB19",
+  "name": "selection-search",
+  "codepoint": "F0230",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.6.95"
+}, {
+  "id": "43AB1D06-4033-4F02-8147-B692F4534174",
+  "name": "semantic-web",
+  "codepoint": "F0341",
+  "aliases": ["rdf", "resource-description-framework", "owl", "web-ontology-language", "w3c"],
+  "tags": ["Developer \/ Languages", "Brand \/ Logo"],
+  "author": "Contributors",
+  "version": "4.8.95"
 }, {
   "id": "6791A1E4-DBF8-471C-AA27-0D4540A23678",
   "name": "send",
@@ -29818,6 +31714,14 @@
   "author": "Google",
   "version": "2.1.19"
 }, {
+  "id": "CE4CFCD5-20D8-4248-A3E8-0B1EFDCC8EC4",
+  "name": "shape-oval-plus",
+  "codepoint": "F0225",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
+}, {
   "id": "C91D9DCD-5ADA-4D48-857C-39D38CD37A6B",
   "name": "shape-plus",
   "codepoint": "F495",
@@ -29857,6 +31761,22 @@
   "tags": ["Arrow"],
   "author": "Google",
   "version": "1.5.54"
+}, {
+  "id": "3A9176D6-A724-4E82-9F8B-00CEEC8A9D64",
+  "name": "share-all",
+  "codepoint": "F021F",
+  "aliases": [],
+  "tags": [],
+  "author": "Contributors",
+  "version": "4.6.95"
+}, {
+  "id": "E9397228-BC9E-4B65-9301-948CBB1D0905",
+  "name": "share-all-outline",
+  "codepoint": "F0220",
+  "aliases": [],
+  "tags": [],
+  "author": "Contributors",
+  "version": "4.6.95"
 }, {
   "id": "2381C112-2883-4B31-829E-D656430AB707",
   "name": "share-circle",
@@ -30246,7 +32166,7 @@
   "id": "7A5ED547-B142-4921-8050-647B2B9F4DC0",
   "name": "shopping",
   "codepoint": "F49A",
-  "aliases": ["local-mall"],
+  "aliases": ["local-mall", "marketplace"],
   "tags": ["Shopping"],
   "author": "Google",
   "version": "1.5.54"
@@ -30262,7 +32182,7 @@
   "id": "EBE771F9-2EF2-41D9-AE7D-8FDBA1B4C684",
   "name": "shopping-outline",
   "codepoint": "F0200",
-  "aliases": [],
+  "aliases": ["local-mall-outline", "marketplace-outline"],
   "tags": ["Shopping"],
   "author": "Google",
   "version": "4.5.95"
@@ -30635,6 +32555,14 @@
   "author": "Google",
   "version": "1.5.54"
 }, {
+  "id": "A062A6A1-E475-41CD-AFB2-283199B67CC8",
+  "name": "simple-icons",
+  "codepoint": "F0348",
+  "aliases": [],
+  "tags": ["Brand \/ Logo"],
+  "author": "Contributors",
+  "version": "4.8.95"
+}, {
   "id": "2AA993E0-4C1C-4993-84E6-D0BA0AC89EB0",
   "name": "sina-weibo",
   "codepoint": "FADE",
@@ -30674,6 +32602,30 @@
   "tags": ["Math"],
   "author": "Michael Irigoyen",
   "version": "3.3.92"
+}, {
+  "id": "197B0D1A-34DB-4FD7-825B-FFE5C28297BB",
+  "name": "ski",
+  "codepoint": "F032F",
+  "aliases": [],
+  "tags": ["Sport"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
+  "id": "BD9C05A6-55EA-4F72-A216-85F990F65EDA",
+  "name": "ski-cross-country",
+  "codepoint": "F0330",
+  "aliases": [],
+  "tags": ["Sport"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
+  "id": "51D8DB1F-FA7C-4527-AD8E-495024CD4E2D",
+  "name": "ski-water",
+  "codepoint": "F0331",
+  "aliases": [],
+  "tags": ["Sport"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
 }, {
   "id": "45260E4C-E8EB-4E35-85A8-F19A91FE1A2C",
   "name": "skip-backward",
@@ -30776,7 +32728,7 @@
   "codepoint": "F68B",
   "aliases": [],
   "tags": ["Holiday", "Gaming \/ RPG"],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "1.7.12"
 }, {
   "id": "C85F31B5-3C18-480D-B3A6-7F4FB7095273",
@@ -30972,6 +32924,14 @@
   "author": "Contributors",
   "version": "1.5.54"
 }, {
+  "id": "C2A03E16-166E-4FAA-A5DB-462CE38C44FE",
+  "name": "snowboard",
+  "codepoint": "F0332",
+  "aliases": [],
+  "tags": ["Sport"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
   "id": "5675A747-D467-473E-9A1D-1C61E1B5C619",
   "name": "snowflake",
   "codepoint": "F716",
@@ -30987,6 +32947,14 @@
   "tags": ["Weather", "Alert \/ Error"],
   "author": "Michael Irigoyen",
   "version": "3.8.95"
+}, {
+  "id": "017BAEB6-E5B4-4BEF-8CA3-D0ABA689DE2C",
+  "name": "snowflake-melt",
+  "codepoint": "F02F6",
+  "aliases": ["defrost"],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
 }, {
   "id": "50B6D484-E7DC-4B88-9981-9C962C9A9EB6",
   "name": "snowflake-variant",
@@ -31383,7 +33351,7 @@
   "id": "BCDD4A6F-3064-4FF3-9172-0BBF8BED2D2C",
   "name": "spider",
   "codepoint": "F0215",
-  "aliases": [],
+  "aliases": ["arachnid"],
   "tags": ["Holiday", "Nature"],
   "author": "Michael Richins",
   "version": "4.5.95"
@@ -31391,15 +33359,15 @@
   "id": "1F613123-9D4B-4C5A-84FB-F6B804BBFB21",
   "name": "spider-thread",
   "codepoint": "F0216",
-  "aliases": [],
-  "tags": ["Holiday"],
+  "aliases": ["arachnid-thread"],
+  "tags": ["Holiday", "Nature"],
   "author": "Michael Richins",
   "version": "4.5.95"
 }, {
   "id": "8464C75D-EA57-4E89-80E9-BE6A48793809",
   "name": "spider-web",
   "codepoint": "FBA6",
-  "aliases": ["cobweb"],
+  "aliases": ["cobweb", "arachnid-web"],
   "tags": ["Holiday"],
   "author": "Austin Andrews",
   "version": "3.0.39"
@@ -31526,6 +33494,22 @@
   "author": "Michael Irigoyen",
   "version": "2.5.94"
 }, {
+  "id": "19F3DC9F-4861-4220-944C-8BE8D543902B",
+  "name": "square-off",
+  "codepoint": "F0319",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
+  "id": "32823532-5FAC-4894-8577-EAED930DE4C2",
+  "name": "square-off-outline",
+  "codepoint": "F031A",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
   "id": "5ED659B5-F175-445F-950D-0B4DDAB3F8B3",
   "name": "square-outline",
   "codepoint": "F762",
@@ -31590,6 +33574,14 @@
   "author": "Contributors",
   "version": "1.5.54"
 }, {
+  "id": "7FB125A0-875A-4766-BFAF-02CC45226530",
+  "name": "stackpath",
+  "codepoint": "F359",
+  "aliases": [],
+  "tags": ["Brand \/ Logo"],
+  "author": "Contributors",
+  "version": "1.5.54"
+}, {
   "id": "5FDB24B6-FF16-4575-A794-E5CCEB95CC81",
   "name": "stadium",
   "codepoint": "F001A",
@@ -31610,9 +33602,25 @@
   "name": "stairs",
   "codepoint": "F4CD",
   "aliases": [],
-  "tags": [],
+  "tags": ["Transportation + Other"],
   "author": "Cody",
   "version": "1.5.54"
+}, {
+  "id": "5B344682-C177-40CC-97EC-418D010EAE07",
+  "name": "stairs-down",
+  "codepoint": "F02E9",
+  "aliases": [],
+  "tags": ["Transportation + Other"],
+  "author": "Austin Andrews",
+  "version": "4.8.95"
+}, {
+  "id": "8F09C6B0-DFE8-4700-A90A-476EFA6454F4",
+  "name": "stairs-up",
+  "codepoint": "F02E8",
+  "aliases": [],
+  "tags": ["Transportation + Other"],
+  "author": "Austin Andrews",
+  "version": "4.8.95"
 }, {
   "id": "2D9C68D6-6DFA-42CC-B69C-E28011FC2BF7",
   "name": "stamper",
@@ -31645,6 +33653,22 @@
   "tags": [],
   "author": "Austin Andrews",
   "version": "2.6.95"
+}, {
+  "id": "9270C3C4-1ADB-4965-9DAE-444F9448B39E",
+  "name": "star-box-multiple",
+  "codepoint": "F02B1",
+  "aliases": [],
+  "tags": [],
+  "author": "Yaroslav Bandura",
+  "version": "4.7.95"
+}, {
+  "id": "2B9ACC0A-EA3D-478D-935E-EAFA8F8580CF",
+  "name": "star-box-multiple-outline",
+  "codepoint": "F02B2",
+  "aliases": [],
+  "tags": [],
+  "author": "Yaroslav Bandura",
+  "version": "4.7.95"
 }, {
   "id": "B22FEE66-3EC9-466A-9014-EF53030FA3D9",
   "name": "star-box-outline",
@@ -31905,7 +33929,7 @@
   "id": "854C16E8-58EA-49E3-B1AE-7EC84B313005",
   "name": "strategy",
   "codepoint": "F0201",
-  "aliases": [],
+  "aliases": ["football-play"],
   "tags": ["Sport"],
   "author": "Michael Richins",
   "version": "4.5.95"
@@ -31934,6 +33958,22 @@
   "tags": ["Text \/ Content \/ Format", "Arrow"],
   "author": "Michael Irigoyen",
   "version": "3.8.95"
+}, {
+  "id": "6CCDB34F-9B02-4712-B615-A7E1056B534D",
+  "name": "string-lights",
+  "codepoint": "F02E5",
+  "aliases": ["italian-lights", "christmas-lights", "fairy-lights"],
+  "tags": ["Home Automation"],
+  "author": "Michael Irigoyen",
+  "version": "4.7.95"
+}, {
+  "id": "F1B6F6EB-6D20-4C27-A631-8FAF759D183A",
+  "name": "string-lights-off",
+  "codepoint": "F02E6",
+  "aliases": ["italian-lights-off", "christmas-lights-off", "fairy-lights-off"],
+  "tags": ["Home Automation"],
+  "author": "Michael Irigoyen",
+  "version": "4.7.95"
 }, {
   "id": "FC46F7BD-E8E2-452C-868C-E168E13B278D",
   "name": "subdirectory-arrow-left",
@@ -32319,11 +34359,27 @@
   "author": "Terren",
   "version": "4.2.95"
 }, {
+  "id": "9AB8E55A-A51C-4384-A6C6-1F88BFBBD63B",
+  "name": "table-headers-eye",
+  "codepoint": "F0248",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.6.95"
+}, {
+  "id": "2F8C23A5-717B-4483-9C22-A8C5D4F7C31A",
+  "name": "table-headers-eye-off",
+  "codepoint": "F0249",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.6.95"
+}, {
   "id": "99BE0AB4-A123-4745-839F-DC355DA8C3D4",
   "name": "table-large",
   "codepoint": "F4F1",
   "aliases": [],
-  "tags": ["Text \/ Content \/ Format"],
+  "tags": ["Text \/ Content \/ Format", "Geographic Information System"],
   "author": "Austin Andrews",
   "version": "1.5.54"
 }, {
@@ -32331,7 +34387,7 @@
   "name": "table-large-plus",
   "codepoint": "FFA4",
   "aliases": ["table-large-add"],
-  "tags": ["Text \/ Content \/ Format"],
+  "tags": ["Text \/ Content \/ Format", "Geographic Information System"],
   "author": "Michael Irigoyen",
   "version": "3.9.97"
 }, {
@@ -32339,7 +34395,7 @@
   "name": "table-large-remove",
   "codepoint": "FFA5",
   "aliases": [],
-  "tags": ["Text \/ Content \/ Format"],
+  "tags": ["Text \/ Content \/ Format", "Geographic Information System"],
   "author": "Michael Irigoyen",
   "version": "3.9.97"
 }, {
@@ -32527,6 +34583,14 @@
   "author": "GreenTurtwig",
   "version": "2.3.50"
 }, {
+  "id": "E8EF5D5C-B3EE-459C-9C6D-B6A045B8052C",
+  "name": "tag-minus-outline",
+  "codepoint": "F024A",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.6.95"
+}, {
   "id": "408AB5A3-F100-4175-96CD-8602BE101150",
   "name": "tag-multiple",
   "codepoint": "F4FB",
@@ -32535,12 +34599,36 @@
   "author": "Austin Andrews",
   "version": "1.5.54"
 }, {
+  "id": "340D1192-13CE-4752-86C3-186FEA8DC315",
+  "name": "tag-multiple-outline",
+  "codepoint": "F0322",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
+}, {
+  "id": "A85425D5-61FC-46C8-B604-4105C407967B",
+  "name": "tag-off",
+  "codepoint": "F024B",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.6.95"
+}, {
+  "id": "E6157F0C-1143-4F4D-B308-CCA13CC24BFC",
+  "name": "tag-off-outline",
+  "codepoint": "F024C",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.6.95"
+}, {
   "id": "2022546E-45D4-4AC5-B24F-6D6AAEA0F452",
   "name": "tag-outline",
   "codepoint": "F4FC",
   "aliases": [],
   "tags": [],
-  "author": "Austin Andrews",
+  "author": "Google",
   "version": "1.5.54"
 }, {
   "id": "83C0C7C5-26FF-4EF7-A05B-B05472FC40FC",
@@ -32551,6 +34639,14 @@
   "author": "Michael Richins",
   "version": "1.8.36"
 }, {
+  "id": "0BCB9F00-8D30-4DD7-85CB-31930035DF0E",
+  "name": "tag-plus-outline",
+  "codepoint": "F024D",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.6.95"
+}, {
   "id": "E90C088F-8DFD-4B7D-962C-BE2DD9DB61BD",
   "name": "tag-remove",
   "codepoint": "F722",
@@ -32558,6 +34654,22 @@
   "tags": [],
   "author": "Michael Richins",
   "version": "1.8.36"
+}, {
+  "id": "DD1E4B8E-E8C2-4B72-A56D-F42B3259AD49",
+  "name": "tag-remove-outline",
+  "codepoint": "F024E",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.6.95"
+}, {
+  "id": "92B97B44-052D-48B5-993F-1AB16F76DC65",
+  "name": "tag-text",
+  "codepoint": "F024F",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.6.95"
 }, {
   "id": "8ED927D3-84B9-43D1-82B4-3859653006D6",
   "name": "tag-text-outline",
@@ -32578,7 +34690,7 @@
   "id": "E7134093-7DFD-48A0-A687-299B70E6D42D",
   "name": "tanker-truck",
   "codepoint": "F0006",
-  "aliases": ["fuel-truck", "oil-truck", "water-truck"],
+  "aliases": ["fuel-truck", "oil-truck", "water-truck", "tanker"],
   "tags": ["Transportation + Road"],
   "author": "Michael Irigoyen",
   "version": "4.0.96"
@@ -32618,8 +34730,8 @@
   "id": "32F3835A-EBD0-4927-9497-6F67F7075EAF",
   "name": "taxi",
   "codepoint": "F4FF",
-  "aliases": ["local-taxi"],
-  "tags": ["Transportation + Road"],
+  "aliases": ["local-taxi", "cab"],
+  "tags": ["Transportation + Road", "Navigation"],
   "author": "Google",
   "version": "1.5.54"
 }, {
@@ -32852,7 +34964,7 @@
   "codepoint": "F0168",
   "aliases": [],
   "tags": [],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "4.4.95"
 }, {
   "id": "4595BB97-16B7-4B19-8AC5-9C33167A6D20",
@@ -33183,6 +35295,22 @@
   "author": "Austin Andrews",
   "version": "3.9.97"
 }, {
+  "id": "2671B127-348C-47F5-B016-F30389D649CF",
+  "name": "timeline-clock",
+  "codepoint": "F0226",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
+}, {
+  "id": "2C73EA7B-CAD0-439D-8D8F-8779B100F927",
+  "name": "timeline-clock-outline",
+  "codepoint": "F0227",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.6.95"
+}, {
   "id": "92637DDF-E9A3-43E1-986D-DA5DE7FA8CDE",
   "name": "timeline-help",
   "codepoint": "FFB6",
@@ -33412,8 +35540,16 @@
   "codepoint": "F524",
   "aliases": [],
   "tags": ["Tooltip", "Edit \/ Modify"],
-  "author": "Austin Andrews",
+  "author": "Michael Irigoyen",
   "version": "1.5.54"
+}, {
+  "id": "B9D8D642-EFDD-4AFF-B1CD-86AB7E914347",
+  "name": "tooltip-edit-outline",
+  "codepoint": "F02F0",
+  "aliases": [],
+  "tags": ["Edit \/ Modify"],
+  "author": "Michael Irigoyen",
+  "version": "4.8.95"
 }, {
   "id": "1DF33E50-EBEA-4A62-8455-84C28271C8D2",
   "name": "tooltip-image",
@@ -33528,6 +35664,14 @@
   "author": "Nick",
   "version": "3.3.92"
 }, {
+  "id": "207A1D36-F4A1-4ACB-B588-7BEA51C2E285",
+  "name": "toslink",
+  "codepoint": "F02E3",
+  "aliases": ["optical-audio"],
+  "tags": ["Audio"],
+  "author": "Michael Irigoyen",
+  "version": "4.7.95"
+}, {
   "id": "E2623132-7507-4FFD-8382-E192DDC62D17",
   "name": "tournament",
   "codepoint": "F9AD",
@@ -33559,6 +35703,102 @@
   "tags": ["Transportation + Road"],
   "author": "Google",
   "version": "2.1.19"
+}, {
+  "id": "DDCE3E75-1E43-45A9-8D94-E24CFD8284B0",
+  "name": "toy-brick",
+  "codepoint": "F02B3",
+  "aliases": ["lego", "plugin", "extension"],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.7.95"
+}, {
+  "id": "602DF6D1-21C6-4540-960D-79D7C37AECF9",
+  "name": "toy-brick-marker",
+  "codepoint": "F02B4",
+  "aliases": ["lego", "plugin", "extension"],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.7.95"
+}, {
+  "id": "6EE7FD45-3389-4007-A362-0EDB4B9DF9BD",
+  "name": "toy-brick-marker-outline",
+  "codepoint": "F02B5",
+  "aliases": ["lego", "plugin", "extension"],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.7.95"
+}, {
+  "id": "03BB26E3-61C3-4FCF-9532-056FC8DC1E4D",
+  "name": "toy-brick-minus",
+  "codepoint": "F02B6",
+  "aliases": ["lego", "plugin", "extension"],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.7.95"
+}, {
+  "id": "BA71CE05-DEA6-4638-AF5C-2194D6FB946E",
+  "name": "toy-brick-minus-outline",
+  "codepoint": "F02B7",
+  "aliases": ["lego", "plugin", "extension"],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.7.95"
+}, {
+  "id": "E178F91C-A54C-41B1-892F-F17A96283D14",
+  "name": "toy-brick-outline",
+  "codepoint": "F02B8",
+  "aliases": ["lego", "plugin", "extension"],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.7.95"
+}, {
+  "id": "9426C325-5C35-40D8-9CA4-DA230CCC2736",
+  "name": "toy-brick-plus",
+  "codepoint": "F02B9",
+  "aliases": ["lego", "plugin", "extension"],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.7.95"
+}, {
+  "id": "A710B239-7C1A-4BDE-B337-AFEF3CD9E067",
+  "name": "toy-brick-plus-outline",
+  "codepoint": "F02BA",
+  "aliases": ["lego", "plugin", "extension"],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.7.95"
+}, {
+  "id": "F5773738-AE3C-423C-8B64-6C951B9A4B3A",
+  "name": "toy-brick-remove",
+  "codepoint": "F02BB",
+  "aliases": ["lego", "plugin", "extension"],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.7.95"
+}, {
+  "id": "497261EB-0B21-4829-8659-1B1EB39043D1",
+  "name": "toy-brick-remove-outline",
+  "codepoint": "F02BC",
+  "aliases": ["lego", "plugin", "extension"],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.7.95"
+}, {
+  "id": "AEED3DA4-5EAF-4630-BA5B-6E4675E29FA1",
+  "name": "toy-brick-search",
+  "codepoint": "F02BD",
+  "aliases": ["lego", "plugin", "extension"],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.7.95"
+}, {
+  "id": "86074918-B854-4C06-AAD5-C02EA910A6A2",
+  "name": "toy-brick-search-outline",
+  "codepoint": "F02BE",
+  "aliases": ["lego", "plugin", "extension"],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.7.95"
 }, {
   "id": "6BF0AEDF-F822-460F-8CEB-AEF0D83815F5",
   "name": "track-light",
@@ -33792,6 +36032,54 @@
   "author": "GreenTurtwig",
   "version": "2.6.95"
 }, {
+  "id": "F9A7F6AA-7379-4215-A97A-0E2FCAF3A9ED",
+  "name": "tray",
+  "codepoint": "F02BF",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.7.95"
+}, {
+  "id": "A1CCEE33-5CCA-43B9-B056-23F3EAFBE506",
+  "name": "tray-alert",
+  "codepoint": "F02C0",
+  "aliases": [],
+  "tags": ["Alert \/ Error"],
+  "author": "Michael Richins",
+  "version": "4.7.95"
+}, {
+  "id": "B81435D3-9FE4-470D-A46A-7FEDA1773D15",
+  "name": "tray-full",
+  "codepoint": "F02C1",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.7.95"
+}, {
+  "id": "F7F07C92-4531-466D-AC3E-F7822D2FDFBD",
+  "name": "tray-minus",
+  "codepoint": "F02C2",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.7.95"
+}, {
+  "id": "BF55355C-56CC-4C1F-9136-D92AA0800706",
+  "name": "tray-plus",
+  "codepoint": "F02C3",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.7.95"
+}, {
+  "id": "FACF04CD-2633-47EC-97BE-59A3341289C3",
+  "name": "tray-remove",
+  "codepoint": "F02C4",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Richins",
+  "version": "4.7.95"
+}, {
   "id": "A0678E6D-C3D3-42AB-B9E7-C1B12D368B70",
   "name": "treasure-chest",
   "codepoint": "F725",
@@ -33936,6 +36224,14 @@
   "author": "Austin Andrews",
   "version": "3.2.89"
 }, {
+  "id": "BCEE78F4-69D9-40FC-8174-D299610C0690",
+  "name": "truck-check-outline",
+  "codepoint": "F02C5",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.7.95"
+}, {
   "id": "D0EB091D-C62C-4A93-9AE4-AE942F5738C7",
   "name": "truck-delivery",
   "codepoint": "F53E",
@@ -33944,6 +36240,14 @@
   "author": "Cody",
   "version": "1.5.54"
 }, {
+  "id": "E65E8E41-4516-4C25-B3C1-F6B71894B5B2",
+  "name": "truck-delivery-outline",
+  "codepoint": "F02C6",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.7.95"
+}, {
   "id": "401AC514-6441-4DDC-80DC-48CF851C5B5E",
   "name": "truck-fast",
   "codepoint": "F787",
@@ -33951,6 +36255,22 @@
   "tags": ["Transportation + Road"],
   "author": "Austin Andrews",
   "version": "1.9.32"
+}, {
+  "id": "42696369-BAF9-4854-A57D-355F89630929",
+  "name": "truck-fast-outline",
+  "codepoint": "F02C7",
+  "aliases": [],
+  "tags": [],
+  "author": "Austin Andrews",
+  "version": "4.7.95"
+}, {
+  "id": "09111629-7960-46BA-A70E-DC85128E4F4A",
+  "name": "truck-outline",
+  "codepoint": "F02C8",
+  "aliases": [],
+  "tags": [],
+  "author": "Google",
+  "version": "4.7.95"
 }, {
   "id": "6F488FA3-B882-443D-8619-0124217E267C",
   "name": "truck-trailer",
@@ -34388,6 +36708,22 @@
   "author": "Google",
   "version": "1.5.54"
 }, {
+  "id": "DB728530-EAF2-488E-8971-9567A31354DE",
+  "name": "usb-flash-drive",
+  "codepoint": "F02C9",
+  "aliases": [],
+  "tags": [],
+  "author": "Yaroslav Bandura",
+  "version": "4.7.95"
+}, {
+  "id": "9FD568CE-B873-45FC-8F8A-8D8172FB4C7E",
+  "name": "usb-flash-drive-outline",
+  "codepoint": "F02CA",
+  "aliases": [],
+  "tags": [],
+  "author": "Yaroslav Bandura",
+  "version": "4.7.95"
+}, {
   "id": "B271CD5A-6340-440A-896E-6A53BAE3B685",
   "name": "usb-port",
   "codepoint": "F021B",
@@ -34472,7 +36808,7 @@
   "name": "vector-arrange-above",
   "codepoint": "F554",
   "aliases": [],
-  "tags": ["Vector", "Arrange"],
+  "tags": ["Vector", "Arrange", "Geographic Information System"],
   "author": "Cody",
   "version": "1.5.54"
 }, {
@@ -34480,7 +36816,7 @@
   "name": "vector-arrange-below",
   "codepoint": "F555",
   "aliases": [],
-  "tags": ["Vector", "Arrange"],
+  "tags": ["Vector", "Arrange", "Geographic Information System"],
   "author": "Cody",
   "version": "1.5.54"
 }, {
@@ -34496,7 +36832,7 @@
   "name": "vector-circle",
   "codepoint": "F556",
   "aliases": [],
-  "tags": ["Vector"],
+  "tags": ["Vector", "Geographic Information System"],
   "author": "Cody",
   "version": "1.5.54"
 }, {
@@ -34512,7 +36848,7 @@
   "name": "vector-combine",
   "codepoint": "F558",
   "aliases": [],
-  "tags": ["Vector"],
+  "tags": ["Vector", "Geographic Information System"],
   "author": "Cody",
   "version": "1.5.54"
 }, {
@@ -34520,7 +36856,7 @@
   "name": "vector-curve",
   "codepoint": "F559",
   "aliases": ["bezier"],
-  "tags": ["Vector"],
+  "tags": ["Vector", "Geographic Information System"],
   "author": "Austin Andrews",
   "version": "1.5.54"
 }, {
@@ -34528,7 +36864,7 @@
   "name": "vector-difference",
   "codepoint": "F55A",
   "aliases": [],
-  "tags": ["Vector"],
+  "tags": ["Vector", "Geographic Information System"],
   "author": "Cody",
   "version": "1.5.54"
 }, {
@@ -34536,7 +36872,7 @@
   "name": "vector-difference-ab",
   "codepoint": "F55B",
   "aliases": [],
-  "tags": ["Vector"],
+  "tags": ["Vector", "Geographic Information System"],
   "author": "Cody",
   "version": "1.5.54"
 }, {
@@ -34544,7 +36880,7 @@
   "name": "vector-difference-ba",
   "codepoint": "F55C",
   "aliases": [],
-  "tags": ["Vector"],
+  "tags": ["Vector", "Geographic Information System"],
   "author": "Cody",
   "version": "1.5.54"
 }, {
@@ -34552,7 +36888,7 @@
   "name": "vector-ellipse",
   "codepoint": "F892",
   "aliases": [],
-  "tags": ["Vector"],
+  "tags": ["Vector", "Geographic Information System"],
   "author": "Austin Andrews",
   "version": "2.1.99"
 }, {
@@ -34560,7 +36896,7 @@
   "name": "vector-intersection",
   "codepoint": "F55D",
   "aliases": [],
-  "tags": ["Vector"],
+  "tags": ["Vector", "Geographic Information System"],
   "author": "Cody",
   "version": "1.5.54"
 }, {
@@ -34568,7 +36904,7 @@
   "name": "vector-line",
   "codepoint": "F55E",
   "aliases": [],
-  "tags": ["Vector"],
+  "tags": ["Vector", "Geographic Information System"],
   "author": "Cody",
   "version": "1.5.54"
 }, {
@@ -34576,7 +36912,7 @@
   "name": "vector-link",
   "codepoint": "F0009",
   "aliases": [],
-  "tags": ["Vector"],
+  "tags": ["Vector", "Geographic Information System"],
   "author": "Cody",
   "version": "4.0.96"
 }, {
@@ -34584,7 +36920,7 @@
   "name": "vector-point",
   "codepoint": "F55F",
   "aliases": [],
-  "tags": ["Vector"],
+  "tags": ["Vector", "Geographic Information System"],
   "author": "Austin Andrews",
   "version": "1.5.54"
 }, {
@@ -34592,7 +36928,7 @@
   "name": "vector-polygon",
   "codepoint": "F560",
   "aliases": [],
-  "tags": ["Vector"],
+  "tags": ["Vector", "Geographic Information System"],
   "author": "Cody",
   "version": "1.5.54"
 }, {
@@ -34600,15 +36936,47 @@
   "name": "vector-polyline",
   "codepoint": "F561",
   "aliases": [],
-  "tags": ["Vector"],
-  "author": "Cody",
+  "tags": ["Vector", "Geographic Information System"],
+  "author": "Contributors",
   "version": "1.5.54"
+}, {
+  "id": "D2CE645F-5DC0-4E94-AD3C-346D59DD6AB1",
+  "name": "vector-polyline-edit",
+  "codepoint": "F0250",
+  "aliases": [],
+  "tags": ["Edit \/ Modify"],
+  "author": "Contributors",
+  "version": "4.6.95"
+}, {
+  "id": "ADB52436-4BAD-40E2-8A13-48C76188FCE6",
+  "name": "vector-polyline-minus",
+  "codepoint": "F0251",
+  "aliases": [],
+  "tags": [],
+  "author": "Contributors",
+  "version": "4.6.95"
+}, {
+  "id": "EFE8791E-593A-4B6F-8EFE-553A00C8E5A4",
+  "name": "vector-polyline-plus",
+  "codepoint": "F0252",
+  "aliases": [],
+  "tags": [],
+  "author": "Contributors",
+  "version": "4.6.95"
+}, {
+  "id": "0B173B1A-A4BE-4B96-A33F-2C332150B5AE",
+  "name": "vector-polyline-remove",
+  "codepoint": "F0253",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "4.6.95"
 }, {
   "id": "1B112A31-E2A7-4BAD-B1F1-5289B8811F08",
   "name": "vector-radius",
   "codepoint": "F749",
   "aliases": [],
-  "tags": ["Vector"],
+  "tags": ["Vector", "Geographic Information System"],
   "author": "Austin Andrews",
   "version": "1.9.32"
 }, {
@@ -34616,7 +36984,7 @@
   "name": "vector-rectangle",
   "codepoint": "F5C6",
   "aliases": [],
-  "tags": ["Vector"],
+  "tags": ["Vector", "Geographic Information System"],
   "author": "Austin Andrews",
   "version": "1.5.54"
 }, {
@@ -34624,7 +36992,7 @@
   "name": "vector-selection",
   "codepoint": "F562",
   "aliases": [],
-  "tags": ["Vector"],
+  "tags": ["Vector", "Geographic Information System"],
   "author": "Cody",
   "version": "1.5.54"
 }, {
@@ -34632,7 +37000,7 @@
   "name": "vector-square",
   "codepoint": "F001",
   "aliases": ["mdi"],
-  "tags": ["Vector"],
+  "tags": ["Vector", "Geographic Information System"],
   "author": "Austin Andrews",
   "version": "1.5.54"
 }, {
@@ -34640,7 +37008,7 @@
   "name": "vector-triangle",
   "codepoint": "F563",
   "aliases": [],
-  "tags": ["Vector"],
+  "tags": ["Vector", "Geographic Information System"],
   "author": "Cody",
   "version": "1.5.54"
 }, {
@@ -34648,7 +37016,7 @@
   "name": "vector-union",
   "codepoint": "F564",
   "aliases": [],
-  "tags": ["Vector"],
+  "tags": ["Vector", "Geographic Information System"],
   "author": "Cody",
   "version": "1.5.54"
 }, {
@@ -35328,7 +37696,7 @@
   "id": "4F0EF72A-F2A8-4BFA-9E6F-279E159FC888",
   "name": "wall-sconce-flat",
   "codepoint": "F91C",
-  "aliases": [],
+  "aliases": ["ceiling-light-flat"],
   "tags": ["Home Automation"],
   "author": "GreenTurtwig",
   "version": "2.3.50"
@@ -35580,6 +37948,14 @@
   "tags": ["Weather", "Home Automation"],
   "author": "Cody",
   "version": "1.5.54"
+}, {
+  "id": "09C341A8-067F-4CE2-96BC-D96E18334AB3",
+  "name": "water-polo",
+  "codepoint": "F02CB",
+  "aliases": [],
+  "tags": ["Sport"],
+  "author": "Yaroslav Bandura",
+  "version": "4.7.95"
 }, {
   "id": "06862D93-608A-4B21-9193-83FA8C6BBDCD",
   "name": "water-pump",
@@ -35881,7 +38257,7 @@
   "name": "web",
   "codepoint": "F59F",
   "aliases": ["language"],
-  "tags": [],
+  "tags": ["Geographic Information System"],
   "author": "Google",
   "version": "1.5.54"
 }, {
@@ -35889,9 +38265,17 @@
   "name": "web-box",
   "codepoint": "FFB1",
   "aliases": ["language-box"],
-  "tags": [],
+  "tags": ["Geographic Information System"],
   "author": "Contributors",
   "version": "3.9.97"
+}, {
+  "id": "FABF6519-0CE7-461D-986D-60B4BF7374A7",
+  "name": "web-clock",
+  "codepoint": "F0275",
+  "aliases": [],
+  "tags": [],
+  "author": "frankgrinaert",
+  "version": "4.6.95"
 }, {
   "id": "03483AFB-9D53-4E10-B00C-1095C1873276",
   "name": "webcam",
@@ -35916,6 +38300,14 @@
   "tags": ["Brand \/ Logo", "Developer \/ Languages"],
   "author": "Contributors",
   "version": "1.8.36"
+}, {
+  "id": "972B66F0-ED66-42B4-BEE8-63EF28F4658B",
+  "name": "webrtc",
+  "codepoint": "F0273",
+  "aliases": [],
+  "tags": [],
+  "author": "Contributors",
+  "version": "4.6.95"
 }, {
   "id": "31CBB823-2223-40D5-BCF7-470F91159757",
   "name": "wechat",
@@ -35962,7 +38354,7 @@
   "codepoint": "F9B4",
   "aliases": ["weight-lb"],
   "tags": [],
-  "author": "JapanYoshi",
+  "author": "Haley Halcyon",
   "version": "2.4.85"
 }, {
   "id": "C58497CE-5E84-483C-9C85-3007ADF9BC9A",
@@ -35985,9 +38377,17 @@
   "name": "whistle",
   "codepoint": "F9B5",
   "aliases": [],
-  "tags": [],
+  "tags": ["Sport"],
   "author": "Michael Richins",
   "version": "2.4.85"
+}, {
+  "id": "93CDBDF3-A4BE-4ADE-9179-171FA94726A6",
+  "name": "whistle-outline",
+  "codepoint": "F02E7",
+  "aliases": [],
+  "tags": ["Sport"],
+  "author": "Michael Richins",
+  "version": "4.8.95"
 }, {
   "id": "2FE12EF0-B5CE-4ADB-9B1B-3F796F0EDE0E",
   "name": "white-balance-auto",
