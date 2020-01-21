@@ -19,7 +19,7 @@
 #include <talipot/config.h>
 
 namespace Ui {
-class SnapshotDialogData;
+class SnapshotDialog;
 }
 
 class QGraphicsScene;
@@ -57,7 +57,7 @@ protected:
 
   void sizeSpinBoxValueChanged();
 
-  Ui::SnapshotDialogData *ui;
+  Ui::SnapshotDialog *ui;
   const View *view;
 
   LockLabel *lockLabel;

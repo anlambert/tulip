@@ -215,14 +215,6 @@ QList<QWidget *> View::configurationWidgets() const {
   return QList<QWidget *>();
 }
 
-QString View::configurationWidgetsStyleSheet() const {
-  QFile css(":/talipot/gui/txt/view_configurationtab.css");
-  css.open(QIODevice::ReadOnly);
-  QString style(css.readAll());
-  css.close();
-  return style;
-}
-
 void View::interactorsInstalled(const QList<tlp::Interactor *> &) {
   emit interactorsChanged();
 }

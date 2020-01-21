@@ -19,67 +19,6 @@
   <property name="windowTitle">
    <string>Scene</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true">QPushButton, QComboBox {
-border-image: url(:/talipot/gui/ui/btn_26.png) 4;
-border-width: 4;
-padding: 0px 6px;
-font-size: 12px;
-}
-QPushButton::flat {
-border-image: none;
-border-width: 4;
-padding: 0px 6px;
-font-size: 12px;
-background-color: transparent;
-}
-QPushButton, QComboBox, QLabel {
-color: black;
-}
-QPushButton:hover, QComboBox:hover {
-border-image: url(:/talipot/gui/ui/btn_26_hover.png) 4;
-}
-QPushButton:disabled, QComboBox::disabled {
-color:gray;
-}
-QPushButton:pressed{
-border-image: url(:/talipot/gui/ui/btn_26_pressed.png) 4;
-}
-QPushButton::menu-indicator{
-subcontrol-origin: margin;
-subcontrol-position: center right;
-right: 4px;
-}
-QPushButton {
-outline: none;
-margin: 2
-}
-QComboBox::down-arrow {
-image: url(:/talipot/gui/ui/combobox_arrow.png);
-}
-QComboBox:drop-down {
-subcontrol-origin: padding;
-subcontrol-position: top right;
-border-left-style: none;
-border-top-right-radius: 1px;
-border-bottom-right-radius: 1px;
-}
-#scrollArea, #scrollAreaWidgetContents {
-background-color: white;
-border: 0px;
-}
-QScrollArea {
-border: 0px;
-}
-QFrame[ section=&quot;true&quot; ] {
-border-top: 1px solid #D9D9D9;
-padding-top: 20px;
-}
-QFrame[ subsection = &quot;true&quot; ] {
-border-top: 1px solid #D9D9D9;
-padding-top: 5px;
-}</string>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>2</number>
@@ -119,7 +58,7 @@ padding-top: 5px;
         <x>0</x>
         <y>0</y>
         <width>357</width>
-        <height>683</height>
+        <height>680</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -155,9 +94,6 @@ padding-top: 5px;
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <property name="section" stdset="0">
-          <bool>false</bool>
-         </property>
          <layout class="QVBoxLayout" name="verticalLayout_8">
           <property name="spacing">
            <number>0</number>
@@ -187,10 +123,6 @@ padding-top: 5px;
               <width>80</width>
               <height>0</height>
              </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font-weight: bold;
-background-color: rgb(160, 160, 160);</string>
             </property>
             <property name="text">
              <string>Colors</string>
@@ -319,9 +251,6 @@ background-color: rgb(160, 160, 160);</string>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <property name="section" stdset="0">
-          <bool>false</bool>
-         </property>
          <layout class="QVBoxLayout" name="verticalLayout_7">
           <property name="spacing">
            <number>0</number>
@@ -353,10 +282,6 @@ background-color: rgb(160, 160, 160);</string>
                 <width>80</width>
                 <height>0</height>
                </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">font-weight: bold;
-background-color: rgb(160, 160, 160);</string>
               </property>
               <property name="text">
                <string>Edges</string>
@@ -507,10 +432,6 @@ background-color: rgb(160, 160, 160);</string>
           </property>
           <item>
            <widget class="QLabel" name="label_3">
-            <property name="styleSheet">
-             <string notr="true">font-weight: bold;
-background-color: rgb(160, 160, 160);</string>
-            </property>
             <property name="text">
              <string>Elements ordering</string>
             </property>
@@ -617,10 +538,6 @@ background-color: rgb(160, 160, 160);</string>
               <height>0</height>
              </size>
             </property>
-            <property name="styleSheet">
-             <string notr="true">font-weight: bold;
-background-color: rgb(160, 160, 160);</string>
-            </property>
             <property name="text">
              <string>Labels</string>
             </property>
@@ -690,7 +607,7 @@ background-color: rgb(160, 160, 160);</string>
              <item>
               <widget class="QRadioButton" name="dynamicFontSizeRB">
                <property name="text">
-                <string>Use d&amp;ynamic font size</string>
+                <string>Use dyna&amp;mic font size</string>
                </property>
                <property name="checked">
                 <bool>true</bool>
@@ -700,7 +617,7 @@ background-color: rgb(160, 160, 160);</string>
              <item>
               <widget class="QRadioButton" name="fixedFontSizeRB">
                <property name="text">
-                <string>Use fixed font si&amp;ze</string>
+                <string>Use fi&amp;xed font size</string>
                </property>
               </widget>
              </item>
@@ -879,7 +796,7 @@ background-color: rgb(160, 160, 160);</string>
                 <enum>Qt::Horizontal</enum>
                </property>
                <property name="tickPosition">
-                <enum>QSlider::TicksAbove</enum>
+                <enum>QSlider::NoTicks</enum>
                </property>
                <property name="tickInterval">
                 <number>100</number>
@@ -910,9 +827,6 @@ background-color: rgb(160, 160, 160);</string>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <property name="section" stdset="0">
-          <bool>false</bool>
-         </property>
          <layout class="QVBoxLayout" name="verticalLayout_1">
           <property name="spacing">
            <number>0</number>
@@ -942,10 +856,6 @@ background-color: rgb(160, 160, 160);</string>
                 <height>0</height>
                </size>
               </property>
-              <property name="styleSheet">
-               <string notr="true">font-weight: bold;
-background-color: rgb(160, 160, 160);</string>
-              </property>
               <property name="text">
                <string>Graph changing</string>
               </property>
@@ -961,7 +871,7 @@ background-color: rgb(160, 160, 160);</string>
 to draw the graph in the center of the panel.</string>
               </property>
               <property name="text">
-               <string>Always center &amp;scene when changing graph</string>
+               <string>Always center scene &amp;when changing graph</string>
               </property>
              </widget>
             </item>
@@ -973,7 +883,7 @@ of the previously displayed graph, the point of view
 of the scene remains unchanged.</string>
               </property>
               <property name="text">
-               <string>&amp;Keep same point of view for subgraphs</string>
+               <string>K&amp;eep same point of view for subgraphs</string>
               </property>
              </widget>
             </item>
@@ -995,9 +905,6 @@ of the scene remains unchanged.</string>
          </property>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
-         </property>
-         <property name="section" stdset="0">
-          <bool>false</bool>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_9">
           <property name="spacing">
@@ -1028,10 +935,6 @@ of the scene remains unchanged.</string>
                 <height>0</height>
                </size>
               </property>
-              <property name="styleSheet">
-               <string notr="true">font-weight: bold;
-background-color: rgb(160, 160, 160);</string>
-              </property>
               <property name="text">
                <string>Projection</string>
               </property>
@@ -1046,7 +949,7 @@ background-color: rgb(160, 160, 160);</string>
                <string>Parallel lines are preserved.</string>
               </property>
               <property name="text">
-               <string>O&amp;rthogonal (no shape distorsion)</string>
+               <string>Or&amp;thogonal (no shape distorsion)</string>
               </property>
              </widget>
             </item>
@@ -1056,7 +959,7 @@ background-color: rgb(160, 160, 160);</string>
                <string>&lt;p&gt;As in the human view perception,&lt;br/&gt;parallel lines are not necessarily represented as parallel&lt;br/&gt;and closer the nodes are, the bigger they are represented.&lt;/p&gt;</string>
               </property>
               <property name="text">
-               <string>Central perspecti&amp;ve (shape distorsion)</string>
+               <string>Central &amp;perspective (shape distorsion)</string>
               </property>
              </widget>
             </item>

@@ -13,9 +13,6 @@
   <property name="windowTitle">
    <string>Talipot Message Log</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true"/>
-  </property>
   <property name="sizeGripEnabled">
    <bool>true</bool>
   </property>
@@ -39,11 +36,6 @@
     <widget class="QFrame" name="frame">
      <property name="autoFillBackground">
       <bool>false</bool>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QFrame {
-	border-top: 1px solid black;
-}</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <property name="leftMargin">

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -165,16 +165,6 @@ public:
     @warning This method must not instantiate configuration widgets on the fly.
     */
   virtual QList<QWidget *> configurationWidgets() const;
-
-  /**
-   * @brief This method can be used to change the configuration widgets' style
-   * sheet. From Qt documentation: The style sheet contains a textual description of customizations
-   * to the
-   *  widget's style, as described in the Qt Style Sheets document. see
-   * http://qt-project.org/doc/qt-4.7/stylesheet.html.
-   * @return The stylesheet to use
-   */
-  virtual QString configurationWidgetsStyleSheet() const;
 
   /**
     @brief Backup the state of the view.

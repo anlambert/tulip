@@ -22,8 +22,7 @@
 
 using namespace tlp;
 
-ChooseColorButton::ChooseColorButton(QWidget *parent)
-    : QPushButton(parent), _color(Qt::black), _dialogParent(parent) {
+ChooseColorButton::ChooseColorButton(QWidget *parent) : QPushButton(parent), _color(Qt::black) {
   connect(this, &QAbstractButton::clicked, this, &ChooseColorButton::chooseColor);
   setFocusPolicy(Qt::WheelFocus);
 }
@@ -34,10 +33,6 @@ QColor ChooseColorButton::color() const {
 
 QString ChooseColorButton::text() const {
   return _text;
-}
-
-void ChooseColorButton::setDialogParent(QWidget *w) {
-  _dialogParent = w;
 }
 
 void ChooseColorButton::setDialogTitle(const QString &title) {
@@ -65,7 +60,7 @@ void ChooseColorButton::setColor(const tlp::Color &c) {
 
 void ChooseColorButton::chooseColor() {
   QColor c = QColorDialog::getColor(
-      _color, _dialogParent, _dialogTitle.isEmpty() ? QString("Choose a color") : _dialogTitle,
+      _color, getMainWindow(), _dialogTitle.isEmpty() ? QString("Choose a color") : _dialogTitle,
       // we don't use native dialog to ensure alpha channel can be set
       // it may not be shown when using gnome
       QColorDialog::ShowAlphaChannel | QColorDialog::DontUseNativeDialog);

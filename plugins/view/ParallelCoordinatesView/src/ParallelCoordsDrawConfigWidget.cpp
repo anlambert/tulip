@@ -39,8 +39,6 @@ ParallelCoordsDrawConfigWidget::ParallelCoordsDrawConfigWidget(QWidget *parent)
           &ParallelCoordsDrawConfigWidget::minAxisPointSizeValueChanged);
   connect(_ui->maxAxisPointSize, QOverload<int>::of(&QSpinBox::valueChanged), this,
           &ParallelCoordsDrawConfigWidget::maxAxisPointSizeValueChanged);
-
-  _ui->bgColorButton->setDialogParent(getMainWindow());
 }
 
 ParallelCoordsDrawConfigWidget::~ParallelCoordsDrawConfigWidget() {

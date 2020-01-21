@@ -25,7 +25,6 @@ namespace tlp {
 HistoOptionsWidget::HistoOptionsWidget(QWidget *parent)
     : QWidget(parent), oldValueInitialized(false), _ui(new Ui::HistoOptionsWidgetData) {
   _ui->setupUi(this);
-  _ui->backColorButton->setDialogParent(getMainWindow());
   _ui->backColorButton->setDialogTitle("Choose the background color");
   setBackgroundColor(Color(255, 255, 255));
   connect(_ui->useXScaleCheckBox, &QAbstractButton::toggled, this,

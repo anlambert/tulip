@@ -38,7 +38,7 @@ using namespace tlp;
 const QString anyProperty = "Any property";
 
 TableView::TableView(tlp::PluginContext *)
-    : ViewWidget(), _ui(new Ui::TableViewWidget), propertiesEditor(nullptr), _model(nullptr),
+    : ViewWidget(), _ui(new Ui::TableView), propertiesEditor(nullptr), _model(nullptr),
       isNewGraph(false), filteringColumns(false), previousGraph(nullptr), minFontSize(-1) {}
 
 TableView::~TableView() {

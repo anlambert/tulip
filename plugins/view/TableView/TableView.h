@@ -19,7 +19,7 @@
 #include <QModelIndex>
 
 namespace Ui {
-class TableViewWidget;
+class TableView;
 }
 
 namespace tlp {
@@ -32,7 +32,7 @@ class PropertiesEditor;
 class TableView : public tlp::ViewWidget {
   Q_OBJECT
 
-  Ui::TableViewWidget *_ui;
+  Ui::TableView *_ui;
   PropertiesEditor *propertiesEditor;
   tlp::GraphModel *_model;
   bool isNewGraph;

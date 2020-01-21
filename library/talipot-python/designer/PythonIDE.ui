@@ -25,56 +25,6 @@
   <property name="autoFillBackground">
    <bool>false</bool>
   </property>
-  <property name="styleSheet">
-   <string notr="true">
-QTabWidget {
-  background-color: #494949;
-}
-
-QTabWidget::pane {
-  background-color: #494949;
-  border: 1px solid #262829;
-  border-left: 0px;
-  border-right: 0px;
-}
-
-QTabBar::tab {
-  border-image:none;
-  border-bottom: 0px;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-  min-width: 15ex;
-  padding-bottom: 3px;
-  margin-top: 1px;
-  margin-left: 2px;
-  font: bold;
-  color: black;
-  background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: 1.35, stop: 0 #fff, stop: 1 #888);
-  min-width:120px;
-}
-
-QTabBar::tab:!selected {
-  margin-top: 2px;
-  border: 1px solid #262829;
-  border-bottom: 0px;
-  background-color: rgba(130, 130, 130, 255);
-  color: #494949;
-}
-
-QTabBar::tab:hover {
-    background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: 1.35, stop: 0 #fff, stop: 1 #bbb);
-}
-
-QTabBar::tab:selected {
-    background-color: #494949;
-    color: white;
-    border: 1px solid gray;
-    border-bottom: 0px;
-}
-
-
-</string>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout_5">
    <property name="spacing">
     <number>0</number>
@@ -109,30 +59,15 @@ QTabBar::tab:selected {
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
-      <property name="styleSheet">
-       <string notr="true">QTabWidget::pane {
-     border-top: none;
- }
-
-
-
-</string>
-      </property>
       <property name="currentIndex">
        <number>0</number>
       </property>
-      <widget class="QWidget" name="tab_7">
-       <property name="styleSheet">
-        <string notr="true">#tab_7 {
-background-color:#838383;
-}
-
-QTabWidget::pane { /* The tab widget frame */
-    border-top: none;
- }</string>
+      <widget class="QWidget" name="scriptsTab">
+       <property name="pythonIDETab" stdset="0">
+        <bool>true</bool>
        </property>
        <attribute name="title">
-        <string>Scripts editor</string>
+        <string>Scripts</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout">
         <property name="spacing">
@@ -164,66 +99,14 @@ QTabWidget::pane { /* The tab widget frame */
             <height>40</height>
            </size>
           </property>
-          <property name="styleSheet">
-           <string notr="true">QFrame {
-	border-top: black;
-	border-bottom: black;
-	border-right: black;
-	border-left: black;
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(73, 73, 73, 255), stop:1 rgba(130, 130, 130, 255));
-}
-
-QToolButton {
-	border-image:none;
-	border-top: 1px solid rgba(0,0,0,0);
-	border-bottom: 1px solid rgba(0,0,0,0);
-	border-left: 0px solid rgba(0,0,0,0);
-	border-right: 0px solid rgba(0,0,0,0);
-	color: white;
-	font: bold 10px;
-	height:20px;
-    background-color: rgba(0,0,0,0);
-}
-
-QToolButton:hover {
-	border-image:none;
-	background-color: #595B5D;
-	border-left: 1px solid qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-	stop: 0.0 rgba(0,0,0,0),
-	stop: 0.4 rgba(170,170,170,255),
-	stop: 0.5 rgba(170,170,170,255),
-	stop: 1.0 rgba(0,0,0,0));
-	border-right: 1px solid qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-	stop: 0.0 rgba(0,0,0,0),
-	stop: 0.4 rgba(170,170,170,255),
-	stop: 0.5 rgba(170,170,170,255),
-	stop: 1.0 rgba(0,0,0,0));
-}
-
-QToolButton:checked, QToolButton:checked:pressed, QToolButton:pressed {
-	border-image:none;
-    background-color: #262829;
-	border-left: 1px solid rgba(70,70,70,255);
-	border-right: 1px solid rgba(70,70,70,255);
-}
-
-QPushButton::pressed {
-	border-image:none;
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(53, 53, 53, 255), stop:1 rgba(120, 120, 120, 255));
-	border-top: 1px solid rgba(70,70,70,255);
-	border-bottom: 1px solid rgba(70,70,70,255);
-}
-
-QToolButton:pressed {
-	border-image:none;
-}
-</string>
-          </property>
           <property name="frameShape">
            <enum>QFrame::NoFrame</enum>
           </property>
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
+          </property>
+          <property name="pythonToolbar" stdset="0">
+           <bool>true</bool>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_3">
            <property name="spacing">
@@ -369,9 +252,6 @@ QToolButton:pressed {
                <height>16777215</height>
               </size>
              </property>
-             <property name="styleSheet">
-              <string notr="true">background: white;</string>
-             </property>
              <property name="frameShadow">
               <enum>QFrame::Sunken</enum>
              </property>
@@ -384,11 +264,7 @@ QToolButton:pressed {
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="label_2">
-             <property name="styleSheet">
-              <string notr="true">color:white;
-font: bold;</string>
-             </property>
+            <widget class="QLabel" name="graphLabel">
              <property name="text">
               <string>graph:</string>
              </property>
@@ -421,17 +297,6 @@ font: bold;</string>
             <height>100</height>
            </size>
           </property>
-          <property name="styleSheet">
-           <string notr="true">QTabBar::tab {
-    font:normal;
-}
-
-QTabWidget::pane { /* The tab widget frame */
-    border-top: none;
- }
-
-</string>
-          </property>
           <property name="currentIndex">
            <number>0</number>
           </property>
@@ -439,6 +304,9 @@ QTabWidget::pane { /* The tab widget frame */
            <bool>true</bool>
           </property>
           <property name="movable">
+           <bool>true</bool>
+          </property>
+          <property name="pythonEditorsTabWidget" stdset="0">
            <bool>true</bool>
           </property>
           <widget class="QWidget" name="tab_5">
@@ -455,21 +323,15 @@ QTabWidget::pane { /* The tab widget frame */
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_8">
+      <widget class="QWidget" name="pluginsTab">
        <property name="enabled">
         <bool>true</bool>
        </property>
-       <property name="styleSheet">
-        <string notr="true">#tab_8 {
-     background-color:#838383;
-}
-
-QTabWidget::pane { /* The tab widget frame */
-    border-top: none;
- }</string>
+       <property name="pythonIDETab" stdset="0">
+        <bool>true</bool>
        </property>
        <attribute name="title">
-        <string>Plugins editor</string>
+        <string>Plugins</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <property name="spacing">
@@ -501,61 +363,14 @@ QTabWidget::pane { /* The tab widget frame */
             <height>40</height>
            </size>
           </property>
-          <property name="styleSheet">
-           <string notr="true">#pluginsToolBarWidget {
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(73, 73, 73, 255), stop:1 rgba(130, 130, 130, 255));
-}
-
-QToolButton {
-	border-image:none;
-	border-top: 1px solid rgba(0,0,0,0);
-	border-bottom: 1px solid rgba(0,0,0,0);
-	border-left: 0px solid rgba(0,0,0,0);
-	border-right: 0px solid rgba(0,0,0,0);
-	color: white;
-	font: bold 10px;
-	height:20px;
-    background-color: rgba(0,0,0,0);
-}
-
-QToolButton:hover {
-	border-image:none;
-	background-color: #595B5D;
-	border-left: 1px solid qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-	stop: 0.0 rgba(0,0,0,0),
-	stop: 0.4 rgba(170,170,170,255),
-	stop: 0.5 rgba(170,170,170,255),
-	stop: 1.0 rgba(0,0,0,0));
-	border-right: 1px solid qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-	stop: 0.0 rgba(0,0,0,0),
-	stop: 0.4 rgba(170,170,170,255),
-	stop: 0.5 rgba(170,170,170,255),
-	stop: 1.0 rgba(0,0,0,0));
-}
-
-QToolButton:checked, QToolButton:checked:pressed, QToolButton:pressed {
-	border-image:none;
-    background-color: #262829;
-	border-left: 1px solid rgba(70,70,70,255);
-	border-right: 1px solid rgba(70,70,70,255);
-}
-
-QPushButton::pressed {
-	border-image:none;
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(53, 53, 53, 255), stop:1 rgba(120, 120, 120, 255));
-	border-top: 1px solid rgba(70,70,70,255);
-	border-bottom: 1px solid rgba(70,70,70,255);
-}
-
-QToolButton:pressed {
-	border-image:none;
-}</string>
-          </property>
           <property name="frameShape">
            <enum>QFrame::NoFrame</enum>
           </property>
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
+          </property>
+          <property name="pythonToolbar" stdset="0">
+           <bool>true</bool>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_2">
            <property name="spacing">
@@ -702,16 +517,6 @@ QToolButton:pressed {
             <height>100</height>
            </size>
           </property>
-          <property name="styleSheet">
-           <string notr="true">QTabBar::tab {
-    font:normal;
-}
-
-#pluginsTabWidget {
-    background-color:#838383;
-}
-</string>
-          </property>
           <property name="currentIndex">
            <number>0</number>
           </property>
@@ -719,6 +524,9 @@ QToolButton:pressed {
            <bool>true</bool>
           </property>
           <property name="movable">
+           <bool>true</bool>
+          </property>
+          <property name="pythonEditorsTabWidget" stdset="0">
            <bool>true</bool>
           </property>
           <widget class="QWidget" name="tab_9">
@@ -735,18 +543,12 @@ QToolButton:pressed {
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_2">
-       <property name="styleSheet">
-        <string notr="true">#tab_2 {
-background-color:#838383;
-}
-
-QTabWidget::pane { /* The tab widget frame */
-    border-top: none;
- }</string>
+      <widget class="QWidget" name="modulesTab">
+       <property name="pythonIDETab" stdset="0">
+        <bool>true</bool>
        </property>
        <attribute name="title">
-        <string>Modules editor</string>
+        <string>Modules</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <property name="spacing">
@@ -778,115 +580,14 @@ QTabWidget::pane { /* The tab widget frame */
             <height>40</height>
            </size>
           </property>
-          <property name="styleSheet">
-           <string notr="true">#modulesToolBarWidget {
-	border-top: black;
-	border-bottom: black;
-	border-right: black;
-	border-left: black;
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(73, 73, 73, 255), stop:1 rgba(130, 130, 130, 255));
-}
-
-QToolButton {
-	border-image:none;
-	border-top: 1px solid rgba(0,0,0,0);
-	border-bottom: 1px solid rgba(0,0,0,0);
-	border-left: 0px solid rgba(0,0,0,0);
-	border-right: 0px solid rgba(0,0,0,0);
-	color: white;
-	font: bold 10px;
-	height:20px;
-    background-color: rgba(0,0,0,0);
-}
-
-QToolButton:hover {
-	border-image:none;
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0,
-    stop:0 rgba(93, 93, 93, 255),
-    stop:1 rgba(150, 150, 150, 255));
-	border-top: 1px solid qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0,
-	stop: 0.0 rgba(0,0,0,0),
-	stop: 0.4 rgba(170,170,170,255),
-	stop: 0.5 rgba(170,170,170,255),
-	stop: 1.0 rgba(0,0,0,0));
-	border-bottom: 1px solid qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0,
-	stop: 0.0 rgba(0,0,0,0),
-	stop: 0.4 rgba(170,170,170,255),
-	stop: 0.5 rgba(170,170,170,255),
-	stop: 1.0 rgba(0,0,0,0));
-}
-
-QToolButton:checked, QToolButton:checked:pressed, QToolButton:pressed {
-	border-image:none;
-	color: black;
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0,
-    stop:0 rgba(198, 198, 198, 255),
-    stop:1 rgba(255, 255, 255, 255));
-	border-top: 1px solid rgba(70,70,70,255);
-	border-bottom: 1px solid rgba(70,70,70,255);
-}
-
-QPushButton::pressed {
-	border-image:none;
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(53, 53, 53, 255), stop:1 rgba(120, 120, 120, 255));
-	border-top: 1px solid rgba(70,70,70,255);
-	border-bottom: 1px solid rgba(70,70,70,255);
-}
-
-QToolButton:pressed {
-	border-image:none;
-}
-
-QToolButton {
-	border-image:none;
-	border-top: 1px solid rgba(0,0,0,0);
-	border-bottom: 1px solid rgba(0,0,0,0);
-	border-left: 0px solid rgba(0,0,0,0);
-	border-right: 0px solid rgba(0,0,0,0);
-	color: white;
-	font: bold 10px;
-	height:20px;
-    background-color: rgba(0,0,0,0);
-}
-
-QToolButton:hover {
-	border-image:none;
-	background-color: #595B5D;
-	border-left: 1px solid qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-	stop: 0.0 rgba(0,0,0,0),
-	stop: 0.4 rgba(170,170,170,255),
-	stop: 0.5 rgba(170,170,170,255),
-	stop: 1.0 rgba(0,0,0,0));
-	border-right: 1px solid qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-	stop: 0.0 rgba(0,0,0,0),
-	stop: 0.4 rgba(170,170,170,255),
-	stop: 0.5 rgba(170,170,170,255),
-	stop: 1.0 rgba(0,0,0,0));
-}
-
-QToolButton:checked, QToolButton:checked:pressed, QToolButton:pressed {
-	border-image:none;
-    background-color: #262829;
-	border-left: 1px solid rgba(70,70,70,255);
-	border-right: 1px solid rgba(70,70,70,255);
-}
-
-QPushButton::pressed {
-	border-image:none;
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(53, 53, 53, 255), stop:1 rgba(120, 120, 120, 255));
-	border-top: 1px solid rgba(70,70,70,255);
-	border-bottom: 1px solid rgba(70,70,70,255);
-}
-
-QToolButton:pressed {
-	border-image:none;
-}</string>
-          </property>
           <property name="frameShape">
            <enum>QFrame::StyledPanel</enum>
           </property>
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
+          </property>
+          <property name="pythonToolbar" stdset="0">
+           <bool>true</bool>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_4">
            <property name="spacing">
@@ -1068,14 +769,6 @@ QToolButton:pressed {
             <height>100</height>
            </size>
           </property>
-          <property name="styleSheet">
-           <string notr="true">QTabBar::tab {
-font:normal;
-}
-#modulesTabWidget {
-background-color:#838383;
-}</string>
-          </property>
           <property name="currentIndex">
            <number>0</number>
           </property>
@@ -1083,6 +776,9 @@ background-color:#838383;
            <bool>true</bool>
           </property>
           <property name="movable">
+           <bool>true</bool>
+          </property>
+          <property name="pythonEditorsTabWidget" stdset="0">
            <bool>true</bool>
           </property>
           <widget class="QWidget" name="tab_3">
@@ -1106,16 +802,12 @@ background-color:#838383;
         <number>0</number>
        </property>
        <item>
-        <widget class="QLabel" name="label">
+        <widget class="QLabel" name="pythonOutputLabel">
          <property name="maximumSize">
           <size>
            <width>16777215</width>
            <height>20</height>
           </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color:white;
-</string>
          </property>
          <property name="lineWidth">
           <number>1</number>
@@ -1138,6 +830,9 @@ background-color:#838383;
            <width>0</width>
            <height>50</height>
           </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
          </property>
          <property name="openLinks">
           <bool>false</bool>
@@ -1172,508 +867,347 @@ background-color:#838383;
       <number>0</number>
      </property>
      <widget class="QWidget" name="page">
+      <property name="pythonIDEBottomWidget" stdset="0">
+       <bool>true</bool>
+      </property>
       <layout class="QHBoxLayout" name="horizontalLayout_6">
-       <property name="spacing">
-        <number>0</number>
-       </property>
        <property name="leftMargin">
-        <number>0</number>
+        <number>3</number>
        </property>
        <property name="topMargin">
         <number>0</number>
        </property>
        <property name="rightMargin">
-        <number>0</number>
+        <number>4</number>
        </property>
        <property name="bottomMargin">
         <number>0</number>
        </property>
        <item>
-        <widget class="QFrame" name="frame">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>27</height>
-          </size>
+        <widget class="QToolButton" name="runScriptButton">
+         <property name="enabled">
+          <bool>false</bool>
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
-           <height>27</height>
+           <width>19</width>
+           <height>19</height>
           </size>
          </property>
-         <property name="styleSheet">
-          <string notr="true">QFrame#frame {
-  border-top: 1px solid black;
-  border-bottom: 1px solid rgba(117,117,117,255);
-  border-right: 1px solid rgba(117,117,117,255);
-  border-left: 1px solid rgba(117,117,117,255);
-  background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:, y2:1, stop:0 rgb(75,75,75),stop:1 rgb(60, 60, 60));
-}
-
-/* needed to ensure color: white
-   in a QCheckBox */
-QCheckBox {
-	border: none;
-}
-
-QWidget {
-	color: white;
-	font: bold;
-	font-size: 10px;
-}</string>
+         <property name="toolTip">
+          <string>Run script (Ctrl + Return)</string>
          </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
+         <property name="text">
+          <string>...</string>
          </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
+         <property name="icon">
+          <iconset resource="../resources/TalipotPython.qrc">
+           <normaloff>:/talipot/python/icons/playback_play.png</normaloff>:/talipot/python/icons/playback_play.png</iconset>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_8">
-          <property name="leftMargin">
-           <number>3</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>3</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="QToolButton" name="runScriptButton">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>19</width>
-              <height>19</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>Run script (Ctrl + Return)</string>
-            </property>
-            <property name="text">
-             <string>...</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../resources/TalipotPython.qrc">
-              <normaloff>:/talipot/python/icons/playback_play.png</normaloff>:/talipot/python/icons/playback_play.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>14</width>
-              <height>14</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="pauseScriptButton">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>19</width>
-              <height>19</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>Pause script</string>
-            </property>
-            <property name="text">
-             <string>...</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../resources/TalipotPython.qrc">
-              <normaloff>:/talipot/python/icons/playback_pause.png</normaloff>:/talipot/python/icons/playback_pause.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>14</width>
-              <height>14</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="stopScriptButton">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>19</width>
-              <height>19</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>Stop script</string>
-            </property>
-            <property name="text">
-             <string>...</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../resources/TalipotPython.qrc">
-              <normaloff>:/talipot/python/icons/playback_stop.png</normaloff>:/talipot/python/icons/playback_stop.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>14</width>
-              <height>14</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="useUndoCB">
-            <property name="toolTip">
-             <string>If checked, current graph state will be saved before the script execution
+         <property name="iconSize">
+          <size>
+           <width>14</width>
+           <height>14</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="pauseScriptButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>19</width>
+           <height>19</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Pause script</string>
+         </property>
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../resources/TalipotPython.qrc">
+           <normaloff>:/talipot/python/icons/playback_pause.png</normaloff>:/talipot/python/icons/playback_pause.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>14</width>
+           <height>14</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="stopScriptButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>19</width>
+           <height>19</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Stop script</string>
+         </property>
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../resources/TalipotPython.qrc">
+           <normaloff>:/talipot/python/icons/playback_stop.png</normaloff>:/talipot/python/icons/playback_stop.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>14</width>
+           <height>14</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="useUndoCB">
+         <property name="toolTip">
+          <string>If checked, current graph state will be saved before the script execution
 and will be restored automatically if the script fails, or manually
 if the script succeeds by clicking on the 'Undo' button.
 If unchecked, every modification performed by the script on the graph
 can not be undone but performance of the script execution will be better
 (in particular when dealing with a large graph).</string>
-            </property>
-            <property name="text">
-             <string>Use undo feature</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QProgressBar" name="progressBar">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="maximum">
-             <number>100</number>
-            </property>
-            <property name="value">
-             <number>-1</number>
-            </property>
-            <property name="textVisible">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-           <item>
-           <widget class="QCheckBox" name="anchoredCB">
-            <property name="toolTip">
-             <string>Anchor the Python IDE window to the main Talipot window</string>
-            </property>
-            <property name="text">
-             <string>anchored</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_4">
-            <property name="toolTip">
-             <string>Decrease/Increase the size of the font of the python code editors</string>
-            </property>
-            <property name="text">
-             <string>Font size :</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="decreaseFontSizeButton_2">
-            <property name="maximumSize">
-             <size>
-              <width>19</width>
-              <height>19</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>Decrease the size of the font of the python code editors</string>
-            </property>
-            <property name="text">
-             <string>...</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../resources/TalipotPython.qrc">
-              <normaloff>:/talipot/python/icons/round_minus.png</normaloff>:/talipot/python/icons/round_minus.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>14</width>
-              <height>14</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="increaseFontSizeButton_2">
-            <property name="maximumSize">
-             <size>
-              <width>19</width>
-              <height>19</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>Increase the size of the font of the python code editors</string>
-            </property>
-            <property name="text">
-             <string>...</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../resources/TalipotPython.qrc">
-              <normaloff>:/talipot/python/icons/round_plus.png</normaloff>:/talipot/python/icons/round_plus.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>14</width>
-              <height>14</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         </property>
+         <property name="text">
+          <string>Allow undo</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QProgressBar" name="progressBar">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="value">
+          <number>-1</number>
+         </property>
+         <property name="textVisible">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="anchoredCB">
+         <property name="toolTip">
+          <string>Anchor the Python IDE window to the main Talipot window</string>
+         </property>
+         <property name="text">
+          <string>anchored</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_4">
+         <property name="toolTip">
+          <string>Decrease/Increase the size of the font of the python code editors</string>
+         </property>
+         <property name="text">
+          <string>Font size :</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="decreaseFontSizeButton_2">
+         <property name="maximumSize">
+          <size>
+           <width>19</width>
+           <height>19</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Decrease the size of the font of the python code editors</string>
+         </property>
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../resources/TalipotPython.qrc">
+           <normaloff>:/talipot/python/icons/round_minus.png</normaloff>:/talipot/python/icons/round_minus.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>14</width>
+           <height>14</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="increaseFontSizeButton_2">
+         <property name="maximumSize">
+          <size>
+           <width>19</width>
+           <height>19</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Increase the size of the font of the python code editors</string>
+         </property>
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../resources/TalipotPython.qrc">
+           <normaloff>:/talipot/python/icons/round_plus.png</normaloff>:/talipot/python/icons/round_plus.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>14</width>
+           <height>14</height>
+          </size>
+         </property>
         </widget>
        </item>
       </layout>
      </widget>
      <widget class="QWidget" name="page_2">
-      <property name="styleSheet">
-       <string notr="true"/>
+      <property name="pythonIDEBottomWidget" stdset="0">
+       <bool>true</bool>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_7">
-       <property name="spacing">
-        <number>0</number>
-       </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
        <property name="leftMargin">
-        <number>0</number>
+        <number>3</number>
        </property>
        <property name="topMargin">
         <number>0</number>
        </property>
        <property name="rightMargin">
-        <number>0</number>
+        <number>4</number>
        </property>
        <property name="bottomMargin">
         <number>0</number>
        </property>
        <item>
-        <widget class="QFrame" name="frame_2">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>27</height>
-          </size>
+        <widget class="QPushButton" name="registerPluginButton">
+         <property name="enabled">
+          <bool>false</bool>
          </property>
+         <property name="text">
+          <string>Register Plugin</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="removePluginButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Remove Plugin</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="pluginStatusLabel">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="anchoredCB_2">
+         <property name="toolTip">
+          <string>Anchor the Python IDE window to the main Tulip window</string>
+         </property>
+         <property name="text">
+          <string>anchored</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="font">
+          <font/>
+         </property>
+         <property name="text">
+          <string>Font size :</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="decreaseFontSizeButton">
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
-           <height>27</height>
+           <width>19</width>
+           <height>19</height>
           </size>
          </property>
-         <property name="styleSheet">
-          <string notr="true">QFrame#frame_2 {
-  border-top: 1px solid black;
-  border-bottom: 1px solid rgba(117,117,117,255);
-  border-right: 1px solid rgba(117,117,117,255);
-  border-left: 1px solid rgba(117,117,117,255);
-  background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:, y2:1, stop:0 rgb(75,75,75),stop:1 rgb(60, 60, 60));
-}
-
-QLabel {
-	color: white;
-	font:bold;
-}
-
-QToolButton {
-	color: white;
-}</string>
+         <property name="autoFillBackground">
+          <bool>false</bool>
          </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
+         <property name="text">
+          <string>...</string>
          </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
+         <property name="icon">
+          <iconset resource="../resources/TalipotPython.qrc">
+           <normaloff>:/talipot/python/icons/round_minus.png</normaloff>:/talipot/python/icons/round_minus.png</iconset>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_5">
-          <property name="leftMargin">
-           <number>3</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>3</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="QPushButton" name="registerPluginButton">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font: bold;
-font-size: 10px;</string>
-            </property>
-            <property name="text">
-             <string>Register Plugin</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="removePluginButton">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font: bold;
-font-size: 10px;</string>
-            </property>
-            <property name="text">
-             <string>Remove Plugin</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="pluginStatusLabel">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-           <item>
-           <widget class="QCheckBox" name="anchoredCB_2">
-            <property name="toolTip">
-             <string>Anchor the Python IDE window to the main Tulip window</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QCheckBox {
-  border: none;
-  color: white;
-  font: bold;
-  font-size: 10px;
-}</string>
-            </property>
-            <property name="text">
-             <string>anchored</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_3">
-            <property name="font">
-             <font>
-              <pointsize>-1</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font-size: 10px;</string>
-            </property>
-            <property name="text">
-             <string>Font size :</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="decreaseFontSizeButton">
-            <property name="maximumSize">
-             <size>
-              <width>19</width>
-              <height>19</height>
-             </size>
-            </property>
-            <property name="autoFillBackground">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>...</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../resources/TalipotPython.qrc">
-              <normaloff>:/talipot/python/icons/round_minus.png</normaloff>:/talipot/python/icons/round_minus.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>14</width>
-              <height>14</height>
-             </size>
-            </property>
-            <property name="autoRaise">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="increaseFontSizeButton">
-            <property name="maximumSize">
-             <size>
-              <width>19</width>
-              <height>19</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>...</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../resources/TalipotPython.qrc">
-              <normaloff>:/talipot/python/icons/round_plus.png</normaloff>:/talipot/python/icons/round_plus.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>14</width>
-              <height>14</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-         </layout>
-         <zorder>increaseFontSizeButton</zorder>
-         <zorder>removePluginButton</zorder>
-         <zorder>pluginStatusLabel</zorder>
-         <zorder>decreaseFontSizeButton</zorder>
-         <zorder>label_3</zorder>
-         <zorder>registerPluginButton</zorder>
-         <zorder>anchoredCB_2</zorder>
+         <property name="iconSize">
+          <size>
+           <width>14</width>
+           <height>14</height>
+          </size>
+         </property>
+         <property name="autoRaise">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="increaseFontSizeButton">
+         <property name="maximumSize">
+          <size>
+           <width>19</width>
+           <height>19</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../resources/TalipotPython.qrc">
+           <normaloff>:/talipot/python/icons/round_plus.png</normaloff>:/talipot/python/icons/round_plus.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>14</width>
+           <height>14</height>
+          </size>
+         </property>
         </widget>
        </item>
       </layout>
      </widget>
      <widget class="QWidget" name="page_3">
-      <property name="styleSheet">
-       <string notr="true">QWidget#page_3 {
-  border-top: 1px solid black;
-  border-bottom: 1px solid rgba(117,117,117,255);
-  border-right: 1px solid rgba(117,117,117,255);
-  border-left: 1px solid rgba(117,117,117,255);
-  background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:, y2:1, stop:0 rgb(75,75,75),stop:1 rgb(60, 60, 60));
-}
-
-QLabel {
-	color: white;
-	font: bold
-}
-
-QToolButton {
-	color: white;
-}
-</string>
+      <property name="pythonIDEBottomWidget" stdset="0">
+       <bool>true</bool>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <property name="spacing">
@@ -1709,14 +1243,6 @@ QToolButton {
          <property name="toolTip">
           <string>Anchor the Python IDE window to the main Tulip window</string>
          </property>
-         <property name="styleSheet">
-          <string notr="true">QCheckBox {
-	border: none;
-	color: white;
-	font: bold;
-	font-size: 10px;
-}</string>
-         </property>
          <property name="text">
           <string>anchored</string>
          </property>
@@ -1724,9 +1250,6 @@ QToolButton {
        </item>
        <item>
         <widget class="QLabel" name="label_5">
-         <property name="styleSheet">
-          <string notr="true">font-size:10px;</string>
-         </property>
          <property name="text">
           <string>Font size :</string>
          </property>

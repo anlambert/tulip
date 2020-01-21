@@ -13,6 +13,9 @@
   <property name="acceptDrops">
    <bool>true</bool>
   </property>
+  <property name="focused" stdset="0">
+   <bool>false</bool>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>0</number>
@@ -30,30 +33,37 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QFrame" name="borderFrame">
-     <property name="styleSheet">
-      <string notr="true">QFrame[border = &quot;true&quot;] {
-border-image:none;
-background-color: qlineargradient(x1: 0, y1: 0, x2: 0.0, y2: 1.0,
-stop: 0 #838383,
-stop: 0.4 #707070,
-stop: 0.401 #636363,
-stop: 1 #4a4a4a);
-color: white;
-}</string>
+    <widget class="QFrame" name="headerFrame">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
-     <property name="border" stdset="0">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="header" stdset="0">
       <bool>true</bool>
      </property>
-     <layout class="QVBoxLayout" name="borderLayout">
+     <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="spacing">
-       <number>0</number>
+       <number>4</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>2</number>
+       <number>0</number>
       </property>
       <property name="rightMargin">
        <number>0</number>
@@ -62,9 +72,79 @@ color: white;
        <number>0</number>
       </property>
       <item>
-       <widget class="QFrame" name="headerFrame">
+       <widget class="QToolButton" name="currentInteractorButton">
+        <property name="minimumSize">
+         <size>
+          <width>130</width>
+          <height>22</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>130</width>
+          <height>22</height>
+         </size>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="toolTip">
+         <string>Active tool&lt;br/&gt;&lt;i&gt;click to show/hide its configuration panel.&lt;/i&gt;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="Line" name="sep4">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>1</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="interactorsLeft">
+        <property name="minimumSize">
+         <size>
+          <width>15</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>15</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="icon">
+         <iconset resource="../resources/TalipotGUIResource.qrc">
+          <normaloff>:/talipot/gui/icons/svg/menu-left-white.svg</normaloff>:/talipot/gui/icons/svg/menu-left-white.svg</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QScrollArea" name="scrollArea">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+         <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -78,358 +158,169 @@ color: white;
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>36</height>
+          <height>25</height>
          </size>
         </property>
-        <property name="styleSheet">
-         <string notr="true">QFrame[header = &quot;true&quot;], QComboBox, QLabel, QToolButton, QPushButton, #interactorsFrame {
-border-image:none;
-background-color: qlineargradient(x1: 0, y1: 0, x2: 0.0, y2: 1.0,
-stop: 0 #838383,
-stop: 0.4 #707070,
-stop: 0.401 #636363,
-stop: 1 #4a4a4a);
-border: 0px;
-color: white;
-}
-QComboBox:hover, QToolButton:hover, QPushButton:hover {
-border-image:none;
-background-color: qlineargradient(x1: 0, y1: 0, x2: 0.0, y2: 1.0,
-stop: 0 #8F8F8F,
-stop: 0.4 #7C7C7C,
-stop: 0.401 #6F6F6F,
-stop: 1 #565656);
-border: 0px;
-color: white;
-}
-QToolButton:pressed, QPushButton:pressed {
-border-image:none;
-background-color: qlineargradient(x1: 0, y1: 0, x2: 0.0, y2: 1.0,
-stop: 0 #777777,
-stop: 0.4 #646464,
-stop: 0.401 #575757,
-stop: 1 #3e3e3e);
-border: 0px;
-color: white;
-}
-QComboBox,QLabel {
-height:20px;
-}
-QComboBox::down-arrow {
-image: url(&quot;:/talipot/gui/ui/down_arrow-white.png&quot;);
-}
-QComboBox:drop-down {
-subcontrol-origin: padding;
-subcontrol-position: top right;
-border-left-style: none;
-border-top-right-radius: 1px;
-border-bottom-right-radius: 1px;
-}
-QComboBox QAbstractItemView {
-background-color: white;
-color: black;
-border: 1px solid #C9C9C9;
-}</string>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
         </property>
-        <property name="header" stdset="0">
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
+        <property name="horizontalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
+        <property name="widgetResizable">
          <bool>true</bool>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <property name="spacing">
-          <number>4</number>
+        <widget class="QWidget" name="interactorsFrame">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>80</width>
+           <height>25</height>
+          </rect>
          </property>
-         <property name="leftMargin">
-          <number>0</number>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>25</height>
+          </size>
          </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="Line" name="sep1">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>22</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>1</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">#sep1 {
-background-color: #A9A9A9;
-}</string>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QToolButton" name="currentInteractorButton">
-           <property name="minimumSize">
-            <size>
-             <width>130</width>
-             <height>22</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>130</width>
-             <height>22</height>
-            </size>
-           </property>
-           <property name="cursor">
-            <cursorShape>PointingHandCursor</cursorShape>
-           </property>
-           <property name="toolTip">
-            <string>Active tool&lt;br/&gt;&lt;i&gt;click to show/hide its configuration panel.&lt;/i&gt;</string>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">#currentInteractorButton {
-font: bold 10px;
-}</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="checkable">
-            <bool>false</bool>
-           </property>
-           <property name="toolButtonStyle">
-            <enum>Qt::ToolButtonTextBesideIcon</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="Line" name="sep4">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="interactorsLeft">
-           <property name="minimumSize">
-            <size>
-             <width>15</width>
-             <height>25</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>15</width>
-             <height>24</height>
-            </size>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normaloff>:/talipot/gui/ui/left_arrow-white.png</normaloff>:/talipot/gui/ui/left_arrow-white.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QScrollArea" name="scrollArea">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>100</width>
-             <height>25</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>25</height>
-            </size>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::NoFrame</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Plain</enum>
-           </property>
-           <property name="verticalScrollBarPolicy">
-            <enum>Qt::ScrollBarAlwaysOff</enum>
-           </property>
-           <property name="horizontalScrollBarPolicy">
-            <enum>Qt::ScrollBarAlwaysOff</enum>
-           </property>
-           <property name="widgetResizable">
-            <bool>true</bool>
-           </property>
-           <widget class="QWidget" name="interactorsFrame">
-            <property name="geometry">
-             <rect>
-              <x>0</x>
-              <y>0</y>
-              <width>100</width>
-              <height>25</height>
-             </rect>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>25</height>
-             </size>
-            </property>
-           </widget>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="interactorsRight">
-           <property name="minimumSize">
-            <size>
-             <width>15</width>
-             <height>25</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>15</width>
-             <height>24</height>
-            </size>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normaloff>:/talipot/gui/ui/right_arrow-white.png</normaloff>:/talipot/gui/ui/right_arrow-white.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="Line" name="sep2">
-           <property name="maximumSize">
-            <size>
-             <width>1</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">#sep2 {
-background-color: #A9A9A9;
-}</string>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="TreeViewComboBox" name="graphCombo">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>100</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Select a graph to display</string>
-           </property>
-           <property name="sizeAdjustPolicy">
-            <enum>QComboBox::AdjustToContents</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QToolButton" name="linkButton">
-           <property name="minimumSize">
-            <size>
-             <width>25</width>
-             <height>25</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>25</width>
-             <height>25</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Click here to enable the synchronization with the Graphs panel.
+        </widget>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="interactorsRight">
+        <property name="minimumSize">
+         <size>
+          <width>15</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>15</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="icon">
+         <iconset resource="../resources/TalipotGUIResource.qrc">
+          <normaloff>:/talipot/gui/icons/svg/menu-right-white.svg</normaloff>:/talipot/gui/icons/svg/menu-right-white.svg</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="Line" name="sep2">
+        <property name="maximumSize">
+         <size>
+          <width>1</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="TreeViewComboBox" name="graphCombo">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Select a graph to display</string>
+        </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QComboBox::AdjustToContents</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="linkButton">
+        <property name="minimumSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Click here to enable the synchronization with the Graphs panel.
 When synchronization is enabled, the current graph of the Graphs panel,
 becomes the current one in the workspace active panel.</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normaloff>:/talipot/gui/icons/16/unlink.png</normaloff>:/talipot/gui/icons/16/unlink.png</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>22</width>
-             <height>22</height>
-            </size>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="Line" name="sep3">
-           <property name="maximumSize">
-            <size>
-             <width>1</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">#sep3 {
-background-color: #A9A9A9;
-}</string>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="tlp::DragHandle" name="dragHandle">
-           <property name="toolTip">
-            <string>Press here to begin dragging this view</string>
-           </property>
-           <property name="pixmap">
-            <pixmap>:/talipot/gui/ui/lightdragbutton.png</pixmap>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QToolButton" name="closeButton">
-           <property name="toolTip">
-            <string>Close</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normaloff>:/talipot/gui/ui/lightclosebutton.png</normaloff>:/talipot/gui/ui/lightclosebutton.png</iconset>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../resources/TalipotGUIResource.qrc">
+          <normaloff>:/talipot/gui/icons/16/unlink.png</normaloff>:/talipot/gui/icons/16/unlink.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>22</width>
+          <height>22</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="Line" name="sep3">
+        <property name="maximumSize">
+         <size>
+          <width>1</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="tlp::DragHandle" name="dragHandle">
+        <property name="toolTip">
+         <string>Press here to begin dragging this view</string>
+        </property>
+        <property name="pixmap">
+         <pixmap resource="../resources/TalipotGUIResource.qrc">:/talipot/gui/ui/lightdragbutton.png</pixmap>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="closeButton">
+        <property name="toolTip">
+         <string>Close</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../resources/TalipotGUIResource.qrc">
+          <normaloff>:/talipot/gui/ui/lightclosebutton.png</normaloff>:/talipot/gui/ui/lightclosebutton.png</iconset>
+        </property>
        </widget>
       </item>
      </layout>
@@ -458,24 +349,10 @@ background-color: #A9A9A9;
    <header location="global">talipot/DragHandle.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../resources/TalipotGUIResource.qrc"/>
+ </resources>
  <connections>
-  <connection>
-   <sender>currentInteractorButton</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>WorkspacePanel</receiver>
-   <slot>setCurrentInteractorConfigurationVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>10</x>
-     <y>297</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>472</x>
-     <y>298</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>interactorsLeft</sender>
    <signal>clicked()</signal>
@@ -483,12 +360,12 @@ background-color: #A9A9A9;
    <slot>scrollInteractorsLeft()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>147</x>
-     <y>299</y>
+     <x>153</x>
+     <y>298</y>
     </hint>
     <hint type="destinationlabel">
-     <x>472</x>
-     <y>298</y>
+     <x>471</x>
+     <y>297</y>
     </hint>
    </hints>
   </connection>
@@ -499,12 +376,12 @@ background-color: #A9A9A9;
    <slot>scrollInteractorsRight()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>507</x>
-     <y>299</y>
+     <x>276</x>
+     <y>298</y>
     </hint>
     <hint type="destinationlabel">
-     <x>472</x>
-     <y>298</y>
+     <x>471</x>
+     <y>297</y>
     </hint>
    </hints>
   </connection>
@@ -519,8 +396,24 @@ background-color: #A9A9A9;
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>935</x>
-     <y>298</y>
+     <x>933</x>
+     <y>297</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>currentInteractorButton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>WorkspacePanel</receiver>
+   <slot>setCurrentInteractorConfigurationVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>69</x>
+     <y>296</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>471</x>
+     <y>297</y>
     </hint>
    </hints>
   </connection>

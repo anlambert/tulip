@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SnapshotDialogData</class>
- <widget class="QDialog" name="SnapshotDialogData">
+ <class>SnapshotDialog</class>
+ <widget class="QDialog" name="SnapshotDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -93,11 +93,6 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QLabel {
-font: bold;
-}</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -319,7 +314,7 @@ font: bold;
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>SnapshotDialogData</receiver>
+   <receiver>SnapshotDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -335,7 +330,7 @@ font: bold;
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>SnapshotDialogData</receiver>
+   <receiver>SnapshotDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

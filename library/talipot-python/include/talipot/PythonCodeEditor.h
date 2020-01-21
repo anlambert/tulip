@@ -22,7 +22,7 @@
 #include <QDialog>
 
 namespace Ui {
-class FindReplaceDialogData;
+class FindReplaceDialog;
 }
 
 class PythonCodeHighlighter;
@@ -59,7 +59,7 @@ class TLP_PYTHON_SCOPE FindReplaceDialog : public QDialog {
 
   Q_OBJECT
 
-  Ui::FindReplaceDialogData *_ui;
+  Ui::FindReplaceDialog *_ui;
   QPlainTextEdit *_editor;
   QString _lastSearch;
   bool _resetSearch;

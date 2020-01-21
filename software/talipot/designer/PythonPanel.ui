@@ -16,42 +16,6 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true">.QWidget, QScrollArea, .QFrame {
-background-color: white;
-}
-
-QTabWidget:pane {
-border: 0px;
-}
-
-QTabBar::tab {
-   color: #333;
-border: 1px solid #000;
-/*border-top-left-radius: 11px;
-border-top-right-radius: 11px;*/
-border-bottom: none;
-padding: 2px;
-background: qradialgradient(cx: 0.3, cy: -0.4,
-fx: 0.3, fy: -0.4,
-radius: 1.35, stop: 0 #fff, stop: 1 #888);
-min-width: 60px;
-}
-
-QTabBar::tab:hover {
-    background: qradialgradient(cx: 0.3, cy: -0.4,
-fx: 0.3, fy: -0.4,
-radius: 1.35, stop: 0 #fff, stop: 1 #bbb);
-}
-
-QTabBar::tab:selected {
-    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-    stop: 0 #EFEFEF, stop: 1 #EEEEEE);
-    color: #3c3c3c;
-}
-
-</string>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
     <number>0</number>
@@ -82,11 +46,6 @@ QTabBar::tab:selected {
     <widget class="QWidget" name="tabWidget" native="true">
      <property name="toolTip">
       <string/>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QTabWidget::pane {
-     border-top: none;
- }</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <property name="spacing">

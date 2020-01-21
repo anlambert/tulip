@@ -18,12 +18,12 @@
 #include <talipot/Plugin.h>
 
 namespace Ui {
-class PluginInformationListItemData;
+class PluginInformationListItem;
 }
 
 class PluginInformationListItem : public QWidget {
   Q_OBJECT
-  Ui::PluginInformationListItemData *_ui;
+  Ui::PluginInformationListItem *_ui;
 
 public:
   explicit PluginInformationListItem(const tlp::Plugin &plugin, QWidget *parent = nullptr);

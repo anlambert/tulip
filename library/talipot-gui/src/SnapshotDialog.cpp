@@ -75,7 +75,7 @@ protected:
 };
 
 SnapshotDialog::SnapshotDialog(const View *v, QWidget *parent)
-    : QDialog(parent), ui(new Ui::SnapshotDialogData()), view(v), ratio(-1),
+    : QDialog(parent), ui(new Ui::SnapshotDialog()), view(v), ratio(-1),
       inSizeSpinBoxValueChanged(false) {
   ui->setupUi(this);
 

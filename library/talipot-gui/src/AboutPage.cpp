@@ -38,7 +38,7 @@ const QString TalipotRepoUrl = "https://github.com/anlambert/talipot";
 
 using namespace tlp;
 
-AboutPage::AboutPage(QWidget *parent) : QWidget(parent), _ui(new Ui::AboutPageData()) {
+AboutPage::AboutPage(QWidget *parent) : QWidget(parent), _ui(new Ui::AboutPage()) {
   _ui->setupUi(this);
 
   QString title("Talipot ");

@@ -17,13 +17,14 @@
 #include <talipot/TlpTools.h>
 #include <talipot/TlpQtTools.h>
 
+#include <QApplication>
 #include <QPainter>
 #include <QNetworkReply>
 
 using namespace tlp;
 
 PluginInformationListItem::PluginInformationListItem(const Plugin &plugin, QWidget *parent)
-    : QWidget(parent), _ui(new Ui::PluginInformationListItemData) {
+    : QWidget(parent), _ui(new Ui::PluginInformationListItem) {
   _ui->setupUi(this);
   QPixmap pix = QPixmap(tlpStringToQString(plugin.icon()));
   _ui->icon->setPixmap(pix);
@@ -43,12 +44,12 @@ QWidget *PluginInformationListItem::description() {
 
 void PluginInformationListItem::focusOut() {
   _ui->contentsFrame->setProperty("highlighted", false);
-  _ui->contentsFrame->setStyleSheet(_ui->contentsFrame->styleSheet());
+  _ui->contentsFrame->setStyleSheet(qApp->styleSheet());
 }
 
 void PluginInformationListItem::focusIn() {
   _ui->contentsFrame->setProperty("highlighted", true);
-  _ui->contentsFrame->setStyleSheet(_ui->contentsFrame->styleSheet());
+  _ui->contentsFrame->setStyleSheet(qApp->styleSheet());
 }
 
 void PluginInformationListItem::enterEvent(QEvent *) {

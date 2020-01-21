@@ -39,8 +39,6 @@ MatrixViewConfigurationWidget::MatrixViewConfigurationWidget(QWidget *parent)
           &MatrixViewConfigurationWidget::updateOriented);
   connect(_ui->ascendingOrderCBox, &QAbstractButton::toggled, this,
           &MatrixViewConfigurationWidget::orderingDirectionChanged);
-
-  _ui->backgroundColorBtn->setDialogParent(getMainWindow());
 }
 
 MatrixViewConfigurationWidget::~MatrixViewConfigurationWidget() {

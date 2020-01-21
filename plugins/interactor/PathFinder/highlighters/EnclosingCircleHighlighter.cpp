@@ -40,7 +40,6 @@ EnclosingCircleConfigurationWidget::EnclosingCircleConfigurationWidget(Color &ci
           &EnclosingCircleConfigurationWidget::colorButtonClicked);
   connect(_ui->alphaSlider, &QAbstractSlider::valueChanged, this,
           &EnclosingCircleConfigurationWidget::alphaChanged);
-  _ui->circleColorBtn->setDialogParent(parent);
   _ui->circleColorBtn->setDialogTitle("Choose the enclosing circle color");
   _ui->circleColorBtn->setColor(circleColor);
 }

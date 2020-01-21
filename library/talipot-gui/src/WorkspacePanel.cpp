@@ -181,6 +181,8 @@ void WorkspacePanel::setView(tlp::View *view) {
 
   if (!compatibleInteractors.empty()) {
     setCurrentInteractor(compatibleInteractors[0]);
+  } else {
+    _ui->sep4->hide();
   }
 
   connect(_view, &QObject::destroyed, this, &WorkspacePanel::viewDestroyed);
@@ -195,11 +197,11 @@ void WorkspacePanel::setView(tlp::View *view) {
 #else
     QTabWidget *viewConfigurationTabs = new QTabWidget();
 #endif
+    viewConfigurationTabs->setObjectName("ViewConfigurationTabWidget");
     viewConfigurationTabs->setTabsClosable(true);
     connect(viewConfigurationTabs, &QTabWidget::tabCloseRequested, this,
             &WorkspacePanel::hideConfigurationTab);
     viewConfigurationTabs->setTabPosition(QTabWidget::West);
-    viewConfigurationTabs->setStyleSheet(_view->configurationWidgetsStyleSheet());
     viewConfigurationTabs->findChild<QTabBar *>()->installEventFilter(this);
 
     for (auto w : _view->configurationWidgets()) {
@@ -378,7 +380,6 @@ void WorkspacePanel::refreshInteractorsToolbar() {
   bool interactorsUiShown = !compatibleInteractors.isEmpty();
   _ui->currentInteractorButton->setVisible(interactorsUiShown);
   _ui->interactorsFrame->setVisible(interactorsUiShown);
-  _ui->sep1->setVisible(interactorsUiShown);
   _ui->sep2->setVisible(interactorsUiShown);
 
   if (interactorsUiShown) {
@@ -551,30 +552,10 @@ void WorkspacePanel::setOverlayMode(bool m) {
 }
 
 void WorkspacePanel::setHighlightMode(bool hm) {
-  // when highlighted the background color
-  // is set to a light green
-  // which made appear a 2 pixel height line
-  // on top of this panel
-  // (only top margin has a non null value in WorkspacePanel.ui)
-  if (hm) {
-    _ui->borderFrame->setStyleSheet("QFrame[border = \"true\"] {\n"
-                                    "border-image:none;\n"
-                                    "background-color: #CBDE5D;\n"
-                                    "color: white;\n"
-                                    "}");
-  } else {
-    // restore the style sheet as described in WorkspacePanel.ui
-    _ui->borderFrame->setStyleSheet(
-        "QFrame[border = \"true\"] {\n"
-        "border-image:none;\n"
-        "background-color: qlineargradient(x1: 0, y1: 0, x2: 0.0, y2: 1.0,\n"
-        "stop: 0 #838383,\n"
-        "stop: 0.4 #707070,\n"
-        "stop: 0.401 #636363,\n"
-        "stop: 1 #4a4a4a);\n"
-        "color: white;\n"
-        "}");
-  }
+  setProperty("focused", hm);
+  qApp->style()->unpolish(qApp);
+  qApp->style()->polish(qApp);
+  update();
 }
 
 void WorkspacePanel::dragEnterEvent(QDragEnterEvent *evt) {

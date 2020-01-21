@@ -19,11 +19,6 @@
   <property name="acceptDrops">
    <bool>true</bool>
   </property>
-  <property name="styleSheet">
-   <string notr="true">.QWidget, QScrollArea, .QFrame {
-background-color: white;
-}</string>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>0</number>
@@ -440,14 +435,6 @@ background-color: white;
                  <height>30</height>
                 </size>
                </property>
-               <property name="styleSheet">
-                <string notr="true">QTableView {
-background-color: #F9F9F9;
-border: 1px solid #C9C9C9;
-color: black;
-font: 12px;
-}</string>
-               </property>
                <property name="frameShape">
                 <enum>QFrame::NoFrame</enum>
                </property>
@@ -455,13 +442,13 @@ font: 12px;
                 <enum>QFrame::Plain</enum>
                </property>
                <property name="lineWidth">
-                <number>0</number>
+                <number>1</number>
                </property>
                <property name="midLineWidth">
-                <number>0</number>
+                <number>1</number>
                </property>
                <property name="showGrid">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="cornerButtonEnabled">
                 <bool>false</bool>
@@ -543,11 +530,6 @@ font: 12px;
           <property name="statusTip">
            <string>Execute the search</string>
           </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton {
-font: bold;
-}</string>
-          </property>
           <property name="text">
            <string>Search</string>
           </property>
@@ -567,9 +549,6 @@ font: bold;
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">font: normal;</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignLeading</set>

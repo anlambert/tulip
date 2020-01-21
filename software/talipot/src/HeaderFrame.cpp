@@ -17,13 +17,13 @@
 
 #include "ui_HeaderFrame.h"
 
-void switchToLabel(Ui::HeaderFrameData *ui, bool f = true) {
+void switchToLabel(Ui::HeaderFrame *ui, bool f = true) {
   ui->titleLabel->setVisible(f);
   ui->menusCombo->setVisible(!f);
 }
 
 HeaderFrame::HeaderFrame(QWidget *parent)
-    : QWidget(parent), _ui(new Ui::HeaderFrameData), _expanded(true) {
+    : QWidget(parent), _ui(new Ui::HeaderFrame), _expanded(true) {
   _ui->setupUi(this);
   switchToLabel(_ui);
   connect(_ui->menusCombo, QOverload<const QString &>::of(&QComboBox::currentIndexChanged), this,
