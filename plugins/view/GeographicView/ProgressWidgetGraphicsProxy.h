@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -22,7 +22,7 @@ class QPainter;
 class QStyleOptionGraphicsItem;
 
 namespace Ui {
-class ProgressWidgetData;
+class ProgressWidget;
 }
 
 namespace tlp {
@@ -31,7 +31,7 @@ class ProgressWidget : public QWidget {
 
   Q_OBJECT
 
-  Ui::ProgressWidgetData *_ui;
+  Ui::ProgressWidget *_ui;
 
 public:
   ProgressWidget(QWidget *parent = nullptr);

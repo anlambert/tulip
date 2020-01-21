@@ -7,7 +7,6 @@ SET(SRCS
     src/GraphHierarchiesEditor.cpp
     src/HeaderFrame.cpp
     src/ImportWizard.cpp
-    src/OutputPanelButton.cpp
     src/PanelSelectionWizard.cpp
     src/PreferencesDialog.cpp
     src/PythonPanel.cpp
@@ -32,7 +31,6 @@ QTX_WRAP_CPP(
   include/GraphHierarchiesEditor.h
   include/HeaderFrame.h
   include/ImportWizard.h
-  include/OutputPanelButton.h
   include/PanelSelectionWizard.h
   include/PluginInformationListItem.h
   include/PluginsCenter.h
@@ -218,8 +216,7 @@ IF(LINUX)
         COMMAND mkdir -p ${DESKTOP_CONFIG_INSTALL_PREFIX}/share/mime/packages
         COMMAND mkdir -p ${DESKTOP_CONFIG_INSTALL_PREFIX}/share/applications
         COMMAND mkdir -p ${DESKTOP_CONFIG_INSTALL_PREFIX}/share/pixmaps
-        COMMAND mkdir -p ${DESKTOP_CONFIG_INSTALL_PREFIX}/share/icons)"
-    )
+        COMMAND mkdir -p ${DESKTOP_CONFIG_INSTALL_PREFIX}/share/icons)")
 
     INSTALL(
       FILES resources/linux_desktop/application-x-talipot-tlpx.xml

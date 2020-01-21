@@ -1,0 +1,1081 @@
+/**
+ *
+ * Copyright (C) 2020  The Talipot developers
+ *
+ * Talipot is a fork of Tulip, created by David Auber
+ * and the Tulip development Team from LaBRI, University of Bordeaux
+ *
+ * See the AUTHORS file at the top-level directory of this distribution
+ * License: GNU General Public License version 3, or any later version
+ * See top-level LICENSE file for more information
+ *
+ */
+
+QPushButton,
+QComboBox {
+  border-width: 4;
+  padding: 0px 6px;
+  font-size: 12px;
+}
+
+QComboBox {
+  combobox-popup: 0;
+}
+
+QPushButton::flat {
+  border-image: none;
+  border-width: 4;
+  padding: 0px 6px;
+  font-size: 12px;
+  background: transparent;
+}
+
+QPushButton:disabled,
+QComboBox::disabled,
+QToolButton::disabled {
+  color: gray;
+}
+
+QPushButton {
+  outline: none;
+  margin: 2
+}
+
+QSplitter::handle {
+  background: #262829;
+  border-width: 0px;
+}
+
+QSplitter::handle:horizontal {
+  width: 0px;
+}
+
+QSplitter::handle:vertical {
+  height: 0px;
+}
+
+QFrame[bottomFrame="true"] {
+  border-top: 1px solid #262829;
+  border-bottom: 1px solid #262829;
+  background: #404244;
+}
+
+QFrame[bottomFrame="true"] * {
+  color: white;
+  font: bold 11px;
+}
+
+QFrame[bottomFrame="true"] QPushButton,
+QFrame[bottomFrame="true"] QToolButton {
+  border: 0px;
+  border-image: none;
+}
+
+QFrame[bottomFrame="true"] QPushButton:hover,
+QFrame[bottomFrame="true"] QToolButton:hover {
+  background: #565656;
+}
+
+QFrame[bottomFrame="true"] QPushButton:pressed,
+QFrame[bottomFrame="true"] QPushButton:checked,
+QFrame[bottomFrame="true"] QToolButton:pressed {
+  background: #262829;
+}
+
+QWidget[header="true"] #mainFrame,
+QWidget[header="true"] QToolButton,
+QWidget[header="true"] QPushButton,
+QWidget[header="true"] .QWidget {
+  border-image: none;
+  background: #404244;
+  border: 0px;
+  color: white;
+}
+
+QWidget[header="true"] #mainFrame,
+QWidget[header="true"] #linkButton {
+  border-top: 1px solid #262829;
+  border-bottom: 1px solid #262829;
+}
+
+QWidget[header="true"] QLabel {
+  border-image: none;
+  border: 0px;
+  color: white;
+}
+
+QWidget[header="true"] QComboBox:hover,
+QWidget[header="true"] QToolButton:hover,
+QWidget[header="true"] QPushButton:hover {
+  border-image: none;
+  background: #595b5d;
+  border: 0px;
+  color: white;
+}
+
+QWidget[header="true"] QToolButton:pressed,
+QWidget[header="true"] QPushButton:pressed {
+  border-image: none;
+  background: #595b5d;
+  border: 0px;
+  color: white;
+}
+
+QWidget[header="true"] #expandButton {
+  image: url(":/talipot/app/icons/svg/chevron-up.svg");
+}
+
+QWidget[header="true"] #expandButton::checked {
+  image: url(":/talipot/app/icons/svg/chevron-down.svg");
+}
+
+QWidget[header="true"] QComboBox::down-arrow {
+  image: url(":/talipot/gui/icons/svg/menu-down-white.svg");
+}
+
+QWidget[header="true"] QComboBox:drop-down {
+  subcontrol-origin: padding;
+  subcontrol-position: top right;
+  border-left: none;
+  border-top-right-radius: 1px;
+  border-bottom-right-radius: 1px;
+}
+
+QWidget[header="true"] QComboBox QAbstractItemView {
+  background: white;
+  color: black;
+  border: 1px solid #c9c9c9;
+}
+
+QAbstractItemView {
+  background: white;
+}
+
+#TalipotMainWindow #mainWidget {
+  background: white;
+}
+
+#TalipotMainWindow #modeSwitcherPanel {
+  border-top: black;
+  border-bottom: black;
+  border-right: 1px solid #262829;
+  border-left: black;
+  background: #404244;
+}
+
+#TalipotMainWindow #modeSwitcherPanel QToolButton {
+  border-image: none;
+  border-top: 1px solid rgba(0,0,0,0);
+  border-bottom: 1px solid rgba(0,0,0,0);
+  border-left: 0px solid rgba(0,0,0,0);
+  border-right: 0px solid rgba(0,0,0,0);
+  color: white;
+  font: bold 10px;
+  height: 20px;
+  background: rgba(0,0,0,0);
+}
+
+#TalipotMainWindow #modeSwitcherPanel QToolButton:hover {
+  border-image: none;
+  background: #565656;
+}
+
+#TalipotMainWindow #modeSwitcherPanel QToolButton:checked,
+#TalipotMainWindow #modeSwitcherPanel QToolButton:pressed {
+  border-image: none;
+  background: #262829;
+}
+
+#TalipotMainWindow #loggerFrame QLabel,
+#TalipotMainWindow #loggerFrameInfo QLabel,
+#TalipotMainWindow #loggerFramePython QLabel,
+#TalipotMainWindow #loggerFrameWarning QLabel,
+#TalipotMainWindow #loggerFrameError QLabel {
+  font: bold 10px;
+  color: white;
+}
+
+#TalipotMainWindow #workspaceFrame {
+  border: 0px;
+  background: white;
+}
+
+#TalipotLogger #frame {
+  border-top: 1px solid black;
+}
+
+#SearchWidget QWidget,
+#SearchWidget QScrollArea,
+#SearchWidget QFrame {
+  background: white;
+}
+
+#SearchWidget #searchButton {
+  font: bold;
+}
+
+#PythonPanel QWidget,
+#PythonPanel QScrollArea,
+#PythonPanel QFrame {
+  background: white;
+}
+
+#PythonPanel QTabWidget:pane {
+  border: 0px;
+}
+
+#PythonPanel QTabBar::tab {
+  color: #333;
+  border: 1px solid #000;
+  border-bottom: none;
+  padding: 2px;
+  background: qradialgradient(cx: 0.3, cy: -0.4,
+                              fx: 0.3, fy: -0.4,
+                              radius: 1.35,
+                              stop: 0 #fff,
+                              stop: 1 #888);
+  min-width: 60px;
+}
+
+#PythonPanel QTabBar::tab:hover {
+  background: qradialgradient(cx: 0.3, cy: -0.4,
+                              fx: 0.3, fy: -0.4,
+                              radius: 1.35,
+                              stop: 0 #fff,
+                              stop: 1 #bbb);
+}
+
+#PythonPanel QTabBar::tab:selected {
+  background: qlineargradient(x1: 0, y1: 0,
+                              x2: 0, y2: 1,
+                              stop: 0 #efefef,
+                              stop: 1 #eeeeee);
+  color: #3c3c3c;
+}
+
+#PythonPanel #tabWidget QTabWidget::pane {
+  border-top: none;
+}
+
+#PreferencesDialog {
+  border: 0px;
+}
+
+#PreferencesDialog QFrame[section="true"] {
+  border-top: 1px solid #d9d9d9;
+  padding-top: 20px;
+}
+
+#PreferencesDialog QFrame[subsection="true"] {
+  border-top: 1px solid #d9d9d9;
+  padding-top: 5px;
+}
+
+#PreferencesDialog #graphDefaultsTable QAbstractItemView {
+  border: 0px;
+}
+
+#PreferencesDialog #graphDefaultsTable QHeaderView::section {
+  background: white;
+  height: 30px;
+  font: bold 12px;
+  color: black;
+  border: 0px;
+}
+
+#PreferencesDialog #graphDefaultsTable QTableView {
+  font: 12px;
+}
+
+#PreferencesDialog #proxyCheck {
+  font: italic;
+}
+
+#AboutPage QWidget {
+  background: white;
+}
+
+#ElementInformationWidget #frame {
+  background: white;
+  border: 1px solid #c9c9c9;
+}
+
+#ElementInformationWidget #label {
+  font: bold 12px;
+  color: black;
+  background: white;
+}
+
+#ElementInformationWidget QTableView {
+  background: white;
+  border: 0px;
+  font: 12px;
+}
+
+#ElementInformationWidget QHeaderView::section {
+  background: white;
+  width: 150px;
+  font: bold 12px;
+  color: black;
+}
+
+#FontDialog label,
+#FontDialog label_2,
+#FontDialog label_3 {
+  font-weight: bold;
+}
+
+#GridOptionsWidget #frame {
+  background: white;
+  border: 1px solid #c9c9c9;
+}
+
+#InteractorConfigWidget #contents,
+#InteractorConfigWidget #scrollAreaDoc {
+  background: white;
+}
+
+#QuickAccessBar {
+  background: rgba(255, 255, 255, 100);
+}
+
+#QuickAccessBar QPushButton {
+  border: 0px;
+}
+
+#QuickAccessBar QPushButton:hover {
+  background: rgba(0, 0, 0, 50);
+}
+
+#QuickAccessBar QPushButton:checked,
+#QuickAccessBar QPushButton:pressed {
+  background: rgba(0, 0, 0, 100);
+}
+
+#SceneConfigWidget #scrollArea,
+#SceneConfigWidget #scrollAreaWidgetContents,
+#SceneLayersConfigWidget #scrollArea,
+#SceneLayersConfigWidget #scrollAreaWidgetContents {
+  background: white;
+  border: 0px;
+}
+
+#SceneConfigWidget QScrollArea,
+#SceneLayersConfigWidget QScrollArea {
+  border: 0px;
+}
+
+#SceneConfigWidget #label,
+#SceneConfigWidget #edgesFrameTitle,
+#SceneConfigWidget #label_3,
+#SceneConfigWidget #labelsFrameTitle,
+#SceneConfigWidget #changeGraphFrameTitle,
+#SceneConfigWidget #projectionFrameTitle {
+  font-weight: bold;
+  background: rgb(160, 160, 160);
+}
+
+#SnapshotDialog #frame QLabel {
+  font-weight: bold;
+}
+
+#StringsListSelectionDialog #frame {
+  background: white;
+  border: 1px solid #c9c9c9;
+}
+
+#VectorEditor QListView {
+  border: 1px solid #c9c9c9;
+}
+
+#VectorEditor QListView::item {
+  height: 30px;
+}
+
+#VectorEditor QPushButton,
+#VectorEditor QComboBox {
+  border-width: 4;
+  padding: 0px 6px;
+  font-size: 12px;
+}
+
+#VectorEditor QPushButton {
+  outline: none;
+  margin: 2
+}
+
+#Workspace {
+  border: 0px;
+}
+
+#Workspace QSplitter::handle {
+  background: #262829;
+}
+
+#Workspace QSplitter::handle:horizontal {
+  width: 1px;
+}
+
+#Workspace QSplitter::handle:vertical {
+  height: 1px;
+}
+
+#Workspace #workspaceContents {
+  border: 0px;
+  background: white;
+}
+
+#Workspace #exposeMode {
+  border: 0px;
+}
+
+PlaceHolderWidget {
+  background: white;
+}
+
+#WorkspacePanel,
+#WorkspacePanel QFrame[header="true"],
+#WorkspacePanel QComboBox,
+#WorkspacePanel QLabel,
+#WorkspacePanel QToolButton,
+#WorkspacePanel QPushButton,
+#WorkspacePanel #interactorsFrame {
+  border-image: none;
+  background: #404244;
+  border: 0px;
+  color: white;
+}
+
+#WorkspacePanel QComboBox:hover,
+#WorkspacePanel QToolButton:hover,
+#WorkspacePanel QPushButton:hover,
+#WorkspacePanel[focused="true"] QComboBox:hover,
+#WorkspacePanel[focused="true"] QToolButton:hover,
+#WorkspacePanel[focused="true"] QPushButton:hover {
+  border-image: none;
+  background: #565656;
+  border: 0px;
+  color: white;
+}
+
+#WorkspacePanel QToolButton:pressed,
+#WorkspacePanel QPushButton:pressed,
+#WorkspacePanel[focused="true"] QToolButton:pressed,
+#WorkspacePanel[focused="true"] QPushButton:pressed {
+  border-image: none;
+  background: #3e3e3e;
+  border: 0px;
+  color: white;
+}
+
+#WorkspacePanel QComboBox,
+#WorkspacePanel QLabel {
+  height: 20px;
+}
+
+#WorkspacePanel QComboBox::down-arrow {
+  image: url(":/talipot/gui/icons/svg/menu-down-white.svg");
+}
+
+#WorkspacePanel QComboBox:drop-down {
+  subcontrol-origin: padding;
+  subcontrol-position: top right;
+  border-left: none;
+  border-top-right-radius: 1px;
+  border-bottom-right-radius: 1px;
+}
+
+#WorkspacePanel QComboBox QAbstractItemView {
+  background: white;
+  color: black;
+  border: 1px solid #c9c9c9;
+}
+
+#WorkspacePanel #currentInteractorButton {
+  font: bold 10px;
+}
+
+#WorkspacePanel #sep2,
+#WorkspacePanel #sep3,
+#WorkspacePanel #sep4 {
+  background: #a9a9a9;
+}
+
+#WorkspacePanel[focused="true"],
+#WorkspacePanel[focused="true"] QFrame[header="true"],
+#WorkspacePanel[focused="true"] QComboBox,
+#WorkspacePanel[focused="true"] QLabel,
+#WorkspacePanel[focused="true"] QToolButton,
+#WorkspacePanel[focused="true"] QPushButton,
+#WorkspacePanel[focused="true"] #interactorsFrame {
+  background: #262829;
+}
+
+#PropertiesEditor {
+  background: white;
+  border: 0px;
+}
+
+#PropertiesEditor QScrollArea {
+  border: 0px;
+}
+
+#PropertiesEditorQFrame[ section="true" ] {
+  border: 1px solid #D9D9D9;
+  padding-top: 0px;
+}
+
+#PropertiesEditor #frame_2 {
+  border-right: 0px;
+}
+
+#PropertiesEditor QTableView {
+  font: 12px;
+}
+
+#PropertiesEditor QTableView::indicator:checked {
+  image: url(:/talipot/gui/icons/eye.png);
+}
+
+#PropertiesEditor QTableView::indicator:unchecked {
+  image: url(:/talipot/gui/icons/eye_disabled.png);
+}
+
+#PropertiesEditor QCheckBox::indicator:checked {
+  image: url(:/talipot/gui/icons/eye.png);
+}
+
+#PropertiesEditor #propsVisibilityCheck::indicator:indeterminate {
+  image: url(:/talipot/gui/icons/eye_partially_disabled.png);
+}
+
+#PythonIDE QTabWidget {
+  background: #404244;
+}
+
+#PythonIDE QTabWidget::pane {
+  background: #404244;
+  border: 1px solid #262829;
+  border-left: 0px;
+  border-right: 0px;
+}
+
+#PythonIDE QTabBar::tab {
+  border-image: none;
+  border-bottom: 0px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  min-width: 60px;
+  padding-bottom: 3px;
+  margin-top: 1px;
+  margin-left: 2px;
+  font: bold;
+}
+
+#PythonIDE QTabBar::tab:!selected {
+  margin-top: 2px;
+  border: 1px solid #262829;
+  border-bottom: 0px;
+  background: #404244;
+  color: gray;
+}
+
+#PythonIDE QTabBar::tab:!selected:hover {
+  background: #565656;
+}
+
+#PythonIDE QTabBar::tab:selected {
+  background: #404244;
+  border: 1px solid #262829;
+  border-bottom: 0px;
+  color: white;
+}
+
+#PythonIDE  QTabBar::close-button:selected  {
+  image: url(:/talipot/gui/icons/svg/close-selected.svg);
+  background: transparent;
+}
+
+#PythonIDE QTabBar::close-button  {
+  image: url(:/talipot/gui/icons/svg/close-unselected.svg);
+  background: transparent;
+}
+
+#PythonIDE QTabBar::close-button:hover {
+  image: url(:/talipot/gui/icons/svg/close-hover.svg);
+  background: transparent;
+}
+
+#PythonIDE QTabBar::close-button:pressed {
+  image: url(:/talipot/gui/icons/svg/close-pressed.svg);
+  background: transparent;
+}
+
+#PythonIDE QSplitter::handle {
+  background: #404244;
+  border-width:0px;
+}
+
+#PythonIDE QSplitter::handle:horizontal {
+  width: 0px;
+}
+
+#PythonIDE QSplitter::handle:vertical {
+  height: 0px;
+}
+
+#PythonIDE #splitter {
+  background: #404244;
+}
+
+#PythonIDE #tabWidget {
+  border-top: none;
+  border-bottom: none;
+}
+
+#PythonIDE QWidget[pythonIDETab="true"] {
+  background: #404244;
+  border-top: none;
+}
+
+#PythonIDE QFrame[pythonToolbar="true"] {
+  border-top: 1px solid #262829;
+  border-bottom: 1px solid #262829;
+  border-right: black;
+  border-left: black;
+  background: #404244;
+}
+
+#PythonIDE QFrame[pythonToolbar="true"] QToolButton,
+#PythonIDE QWidget[pythonIDEBottomWidget="true"] QToolButton {
+  border-image: none;
+  border-top: 1px solid rgba(0,0,0,0);
+  border-bottom: 1px solid rgba(0,0,0,0);
+  border-left: 0px solid rgba(0,0,0,0);
+  border-right: 0px solid rgba(0,0,0,0);
+  color: white;
+  font: bold 10px;
+  height: 20px;
+  background: rgba(0,0,0,0);
+}
+
+#PythonIDE QFrame[pythonToolbar="true"] QToolButton:hover {
+  border-image: none;
+  background: #595b5d;
+}
+
+#PythonIDE QFrame[pythonToolbar="true"] QToolButton:checked,
+#PythonIDE QFrame[pythonToolbar="true"] QToolButton:pressed,
+#PythonIDE QFrame[pythonToolbar="true"] QPushButton:pressed {
+  border-image: none;
+  background: #262829;
+}
+
+#PythonIDE QFrame[pythonToolbar="true"] QToolBar {
+	border: none;
+}
+
+#PythonIDE #line {
+  background: white;
+}
+
+#PythonIDE #graphLabel {
+  color: white;
+  font: bold;
+  border-color: transparent;
+}
+
+#PythonIDE QTabWidget[pythonEditorsTabWidget="true"] {
+  background: #404244;
+}
+
+#PythonIDE QTabWidget[pythonEditorsTabWidget="true"]::tab-bar {
+  min-height: 20px;
+}
+
+#PythonIDE QTabWidget[pythonEditorsTabWidget="true"] QTabBar::tab {
+  font: normal;
+}
+
+#PythonIDE QTabWidget[pythonEditorsTabWidget="true"]::pane {
+  border-top: none;
+  border-bottom: none;
+}
+
+#PythonIDE #pythonOutputLabel {
+  background: #404244;
+  color: white;
+  border: 1px solid black;
+  border-left: none;
+  border-right: none;
+}
+
+#PythonIDE QWidget[pythonIDEBottomWidget="true"] {
+  border-top: 1px solid #262829;
+  border-bottom: 1px solid #262829;
+  background: #404244;
+}
+
+#PythonIDE QWidget[pythonIDEBottomWidget="true"] * {
+  color: white;
+  font: bold 11px;
+}
+
+ExpandableGroupBox[expanded="true"] {
+  margin-top: 1.5px;
+}
+
+ExpandableGroupBox[expanded="false"] {
+  margin-top: 0px;
+  margin-left: 0px;
+}
+
+ExpandableGroupBox::title {
+  subcontrol-origin: margin;
+  subcontrol-position: top left;
+  padding: 0 3px;
+}
+
+ExpandableGroupBox::indicator:unchecked {
+  image: url(:/talipot/gui/icons/svg/menu-right-black.svg);
+}
+
+ExpandableGroupBox::indicator:checked {
+  image: url(:/talipot/gui/icons/svg/menu-down-black.svg);
+}
+
+ExpandableGroupBox {
+  background: #fdfdfd;
+  border: 0px;
+}
+
+ExpandableGroupBox[root="true"] {
+  font: bold;
+}
+
+ExpandableGroupBox[root="true"][expanded ="true"] {
+  margin-left: 1px;
+}
+
+ExpandableGroupBox[root="false"][expanded="true"] {
+  margin-left: 3px;
+}
+
+AlgorithmRunner,
+AlgorithmRunner #contents {
+  background: white;
+}
+
+AlgorithmRunner QPushButton:flat {
+  border-image: none;
+  background: white;
+  border: 1px solid #e9e9e9;
+  color: black;
+  outline: none;
+}
+
+AlgorithmRunner QPushButton:hover {
+  border-image: none;
+  background: white;
+  border: 1px solid #c9c9c9;
+}
+
+AlgorithmRunner QPushButton:disabled {
+  color: gray;
+}
+
+AlgorithmRunner QPushButton:pressed {
+  border-image: none;
+  background: #e9e9e9;
+  border: 1px solid #c9c9c9;
+}
+
+AlgorithmRunner #favoritesBox {
+  border: 0px;
+  border-bottom: 1px solid #c9c9c9;
+}
+
+AlgorithmRunner #favoritesBox::title {
+  spacing: 24px;
+}
+
+AlgorithmRunner #searchBox {
+  background: white;
+  border-left: 1px solid #c9c9c9;
+  border-right: 0px;
+  border-top: 0px;
+  border-bottom: 1px solid #c9c9c9;
+}
+
+#AlgorithmRunnerItem #algFrame {
+  border: 0px;
+}
+
+#AlgorithmRunnerItem QCheckBox {
+  spacing: 0px;
+}
+
+#AlgorithmRunnerItem QCheckBox::indicator {
+  width: 28px;
+  height: 28px;
+}
+
+#AlgorithmRunnerItem QCheckBox::indicator:unchecked {
+  image: url(:/talipot/app/icons/svg/star-outline.svg);
+}
+
+#AlgorithmRunnerItem QCheckBox::indicator:unchecked:hover {
+  image: url(:/talipot/app/icons/svg/star-outline-hover.svg);
+}
+
+#AlgorithmRunnerItem QCheckBox::indicator:checked {
+  image: url(:/talipot/app/icons/svg/star.svg);
+}
+
+#AlgorithmRunnerItem QCheckBox::indicator:checked:hover {
+  image: url(:/talipot/app/icons/svg/star-hover.svg);
+}
+
+#AlgorithmRunnerItem QHeaderView::section {
+  background: white;
+  color: black;
+  padding-left: 4px;
+  padding-right: 4px;
+  border: 1px solid #c9c9c9;
+  font: bold;
+}
+
+#AlgorithmRunnerItem QHeaderView {
+  background: white;
+  font: bold 12px;
+}
+
+#AlgorithmRunnerItem  QTableView {
+  background: transparent;
+  font: 12px;
+}
+
+#MatrixViewConfigurationWidget #scrollArea,
+#MatrixViewConfigurationWidget #scrollAreaWidgetContents {
+  background: white;
+  border: 0px;
+}
+
+#MatrixViewConfigurationWidget QScrollArea {
+  border: 0px;
+}
+
+#MatrixViewConfigurationWidget #title {
+  font-weight: bold;
+  color: #595959;
+}
+
+#MatrixViewConfigurationWidget #label_2,
+#MatrixViewConfigurationWidget #label_5,
+#MatrixViewConfigurationWidget #nodesOrderingLabel,
+#MatrixViewConfigurationWidget #nodesOrderingLabel_2 {
+  font-weight: bold;
+  background: rgb(160, 160, 160);
+}
+
+#TableView {
+  background: white;
+}
+
+#TableView QAbstractItemView {
+  background: white;
+  color: black;
+  border: 0px;
+}
+
+#TableView #frame_3 {
+  padding-top: 5px;
+}
+
+#TableView #filterEdit,
+#TableView #columnsFilterEdit,
+#PropertiesEditor #propertiesFilterEdit {
+  background: white;
+  color: black;
+  border: 1px solid #c9c9c9;
+}
+
+QWizard {
+  background: white;
+}
+
+QWizard QListView,
+QWizard QListWidget {
+  background: white;
+  border: 0px;
+}
+
+QWizard QListWidget::item {
+  padding: 6px;
+}
+
+QWizard #categoryFrame,
+QWizard #parametersFrame,
+QWizard #algorithmFrame,
+QWizard #panelsFrame,
+QWizard #panelDescriptionFrame {
+  background: white;
+  border: 1px solid #c9c9c9;
+}
+
+QWizard #categoryLabel,
+QWizard #parametersLabel,
+QWizard #algorithmLabel,
+QWizard #panelListTitle,
+QWizard #panelDescriptionTitle {
+  border: 1px solid #c9c9c9;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+QWizard QTreeView::branch:has-children:!has-siblings:closed,
+QWizard QTreeView::branch:closed:has-children:has-siblings {
+  border-image: none;
+  image: url(:/talipot/gui/icons/svg/menu-right-black.svg);
+}
+
+QWizard QTreeView::branch:open:has-children:!has-siblings,
+QWizard QTreeView::branch:open:has-children:has-siblings  {
+  border-image: none;
+  image: url(:/talipot/gui/icons/svg/menu-down-black.svg);
+}
+
+QWizard QHeaderView::section {
+  background: white;
+  color: black;
+  padding-left: 4px;
+  padding-right: 4px;
+  border: 1px solid #c9c9c9;
+  font: bold 12px;
+}
+
+QWizard QHeaderView {
+  background: white;
+}
+
+QWizard QTableView {
+  background: white;
+  font: 12px;
+}
+
+#PluginInformationListItem #contentsFrame {
+  border: 1px solid #c9c9c9;
+}
+
+#PluginInformationListItem #name {
+  font: bold;
+  font-size: 15px;
+}
+
+#PluginInformationListItem #desc {
+  color: #292929;
+}
+
+#PluginsCenter #pluginsSideList {
+  background: white;
+  border-top: 1px solid #c9c9c9;
+  border-right: 1px solid #c9c9c9;
+  border-bottom: 1px solid #c9c9c9;
+}
+
+#PluginsCenter #homePage {
+  background: white;
+}
+
+#PluginsCenter #pluginsListTitleFrame {
+  border-top: 1px solid #c9c9c9;
+  border-left: 1px solid #c9c9c9;
+  border-right: 1px solid #c9c9c9;
+}
+
+#PluginsCenter #pluginsListFrame {
+  border-left: 1px solid #c9c9c9;
+  border-right: 1px solid #c9c9c9;
+  border-bottom: 1px solid #c9c9c9;
+}
+
+#PluginsCenter #pluginsSearchList {
+  border-top: 1px solid #c9c9c9;
+  border-right: 1px solid #c9c9c9;
+  border-left: 1px solid #c9c9c9;
+  border-bottom: 1px solid #c9c9c9;
+}
+
+#PluginsCenter #pluginsSearchListContent {
+  background: white;
+}
+
+#PluginsCenter #errorsLogArea {
+  border-left: 1px solid #c9c9c9;
+  border-right: 1px solid #c9c9c9;
+  border-bottom: 1px solid #c9c9c9;
+  border-top: 1px solid #c9c9c9;
+}
+
+#PluginsCenter #errorsLogAreaContent {
+  background: white;
+}
+
+#ViewConfigurationTabWidget {
+  background: transparent;
+}
+
+#ViewConfigurationTabWidget::pane {
+  background: white;
+  border: 1px solid #262829;
+  border-right: 0px;
+}
+
+#ViewConfigurationTabWidget QTabBar::tab {
+  border-image:none;
+  border: 1px solid #262829;
+  border-right: 0px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  min-height: 15ex;
+  padding-right: 3px;
+  font: bold;
+}
+
+#ViewConfigurationTabWidget QTabBar::tab:!selected {
+  margin-left: 1px;
+  background: #404244;
+  border: 1px solid #262829;
+  color: gray;
+}
+
+#ViewConfigurationTabWidget QTabBar::tab:!selected:hover {
+  background: #565656;
+}
+
+#ViewConfigurationTabWidget QTabBar::tab:selected {
+  background: #262829;
+  border: 1px solid gray;
+  color: white;
+}
+
+#ViewConfigurationTabWidget QTabBar::close-button:selected  {
+  image: url(:/talipot/gui/icons/svg/close-selected.svg);
+  background: transparent;
+}
+
+#ViewConfigurationTabWidget QTabBar::close-button  {
+  image: url(:/talipot/gui/icons/svg/close-unselected.svg);
+  background: transparent;
+}
+
+#ViewConfigurationTabWidget QTabBar::close-button:hover {
+  image: url(:/talipot/gui/icons/svg/close-hover.svg);
+  background: transparent;
+}
+
+#ViewConfigurationTabWidget QTabBar::close-button:pressed {
+  image: url(:/talipot/gui/icons/svg/close-pressed.svg);
+  background: transparent;
+}

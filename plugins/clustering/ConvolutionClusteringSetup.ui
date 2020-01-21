@@ -1,6 +1,6 @@
 <ui version="4.0" >
- <class>ConvolutionClusteringSetupData</class>
- <widget class="QDialog" name="ConvolutionClusteringSetupData" >
+ <class>ConvolutionClusteringSetup</class>
+ <widget class="QDialog" name="ConvolutionClusteringSetup" >
   <property name="geometry" >
    <rect>
     <x>0</x>
@@ -110,7 +110,7 @@
   <connection>
    <sender>widthSlider</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>ConvolutionClusteringSetupData</receiver>
+   <receiver>ConvolutionClusteringSetup</receiver>
    <slot>update()</slot>
    <hints>
     <hint type="sourcelabel" >
@@ -126,7 +126,7 @@
   <connection>
    <sender>okButton</sender>
    <signal>pressed()</signal>
-   <receiver>ConvolutionClusteringSetupData</receiver>
+   <receiver>ConvolutionClusteringSetup</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel" >
@@ -142,7 +142,7 @@
   <connection>
    <sender>cancelButton</sender>
    <signal>pressed()</signal>
-   <receiver>ConvolutionClusteringSetupData</receiver>
+   <receiver>ConvolutionClusteringSetup</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel" >
@@ -158,7 +158,7 @@
   <connection>
    <sender>discretizationSlider</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>ConvolutionClusteringSetupData</receiver>
+   <receiver>ConvolutionClusteringSetup</receiver>
    <slot>update()</slot>
    <hints>
     <hint type="sourcelabel" >
@@ -190,7 +190,7 @@
   <connection>
    <sender>CheckBox1</sender>
    <signal>toggled(bool)</signal>
-   <receiver>ConvolutionClusteringSetupData</receiver>
+   <receiver>ConvolutionClusteringSetup</receiver>
    <slot>setlog(bool)</slot>
    <hints>
     <hint type="sourcelabel" >

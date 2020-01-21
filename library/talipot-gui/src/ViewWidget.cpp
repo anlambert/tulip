@@ -16,10 +16,12 @@
 #include <QApplication>
 #include <QGraphicsView>
 #include <QGraphicsProxyWidget>
+#include <QMainWindow>
 
 #include <talipot/GlMainWidget.h>
 #include <talipot/GlMainWidgetGraphicsItem.h>
 #include <talipot/Interactor.h>
+#include <talipot/TlpQtTools.h>
 
 using namespace tlp;
 
@@ -145,7 +147,6 @@ void ViewWidget::setCentralWidget(QWidget *w, bool deleteOldCentralWidget) {
     glMainWidgetItem->resize(_graphicsView->width(), _graphicsView->height());
   } else {
     _graphicsView->setRenderHints(QPainter::TextAntialiasing);
-    _graphicsView->setViewport(nullptr);
     _graphicsView->setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
     _centralWidgetItem = _graphicsView->scene()->addWidget(w);
     _centralWidget->resize(_graphicsView->width(), _graphicsView->height());

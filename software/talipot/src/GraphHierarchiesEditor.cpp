@@ -108,7 +108,7 @@ void CustomTreeView::resizeFirstColumnToContent() {
 }
 
 GraphHierarchiesEditor::GraphHierarchiesEditor(QWidget *parent)
-    : QWidget(parent), _ui(new Ui::GraphHierarchiesEditorData), _contextGraph(nullptr),
+    : QWidget(parent), _ui(new Ui::GraphHierarchiesEditor), _contextGraph(nullptr),
       _model(nullptr) {
   _ui->setupUi(this);
   _ui->hierarchiesTree->addAction(_ui->actionDelete_All);
@@ -121,7 +121,7 @@ GraphHierarchiesEditor::GraphHierarchiesEditor(QWidget *parent)
                          "panel.\nWhen synchronization is enabled, the graph currently "
                          "displayed\nin the active panel, becomes the current one in the Graphs "
                          "panel.");
-  linkButton->setIconSize(QSize(22, 22));
+  linkButton->setIconSize(QSize(23, 23));
   linkButton->setMinimumSize(25, 25);
   linkButton->setMaximumSize(25, 25);
   linkButton->setCheckable(true);

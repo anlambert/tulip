@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -18,7 +18,7 @@
 #include <QStringList>
 
 namespace Ui {
-class GlyphScaleConfigDialogData;
+class GlyphScaleConfigDialog;
 }
 
 class QShowEvent;
@@ -44,7 +44,7 @@ private slots:
 
 private:
   QStringList glyphsNameList;
-  Ui::GlyphScaleConfigDialogData *_ui;
+  Ui::GlyphScaleConfigDialog *_ui;
 };
 }
 #endif // GLYPH_SCALE_CONFIG_DIALOG_H

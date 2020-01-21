@@ -17,7 +17,7 @@
 #include <QWidget>
 
 namespace Ui {
-class HeaderFrameData;
+class HeaderFrame;
 }
 
 class HeaderFrame : public QWidget {
@@ -25,7 +25,7 @@ class HeaderFrame : public QWidget {
 
   QPair<int, int> _oldHeightInfo;
 
-  Ui::HeaderFrameData *_ui;
+  Ui::HeaderFrame *_ui;
   Q_PROPERTY(QString title READ title WRITE setTitle)
   QString _title;
 

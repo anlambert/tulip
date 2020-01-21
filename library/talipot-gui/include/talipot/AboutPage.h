@@ -19,7 +19,7 @@
 #include <QWidget>
 
 namespace Ui {
-class AboutPageData;
+class AboutPage;
 }
 
 namespace tlp {
@@ -41,7 +41,7 @@ private slots:
   void openUrlInBrowser(const QString &url);
 
 private:
-  Ui::AboutPageData *_ui;
+  Ui::AboutPage *_ui;
 };
 }
 

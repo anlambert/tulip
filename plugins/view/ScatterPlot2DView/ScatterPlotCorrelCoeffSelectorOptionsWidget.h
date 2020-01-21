@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -21,7 +21,7 @@
 class QPushButton;
 
 namespace Ui {
-class ScatterPlotCorrelCoeffSelectorOptionsWidgetData;
+class ScatterPlotCorrelCoeffSelectorOptionsWidget;
 }
 
 namespace tlp {
@@ -47,7 +47,7 @@ private slots:
 
 private:
   void setButtonColor(tlp::ColorButton *button, const Color &color);
-  Ui::ScatterPlotCorrelCoeffSelectorOptionsWidgetData *_ui;
+  Ui::ScatterPlotCorrelCoeffSelectorOptionsWidget *_ui;
 };
 }
 

@@ -19,7 +19,7 @@
 using namespace tlp;
 
 ProgressWidget::ProgressWidget(QWidget *parent)
-    : QWidget(parent), _ui(new Ui::ProgressWidgetData), cancelClicked(true) {
+    : QWidget(parent), _ui(new Ui::ProgressWidget), cancelClicked(true) {
   _ui->setupUi(this);
   connect(_ui->cancelButton, &QAbstractButton::clicked, this, &ProgressWidget::cancelButtonClicked);
 }

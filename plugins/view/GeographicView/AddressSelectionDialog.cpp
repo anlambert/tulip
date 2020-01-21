@@ -17,7 +17,7 @@
 namespace tlp {
 
 AddressSelectionDialog::AddressSelectionDialog(QWidget *parent)
-    : QDialog(parent), _ui(new Ui::AddressSelectionDialogData) {
+    : QDialog(parent), _ui(new Ui::AddressSelectionDialog) {
   _ui->setupUi(this);
   connect(_ui->okButton, &QAbstractButton::clicked, this, &QDialog::accept);
 }

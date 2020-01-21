@@ -18,6 +18,10 @@
 #include <QMessageBox>
 #include <QDesktopWidget>
 #include <QStandardPaths>
+#include <QFile>
+#if defined(Q_OS_MAC)
+#include <QStyleFactory>
+#endif
 
 #include <CrashHandling.h>
 
@@ -87,6 +91,17 @@ int main(int argc, char **argv) {
 
   QApplication talipot(argc, argv);
   talipot.setApplicationName("Talipot");
+
+  QFile talipotQss(":/talipot/app/style/talipot.qss");
+  talipotQss.open(QIODevice::ReadOnly | QIODevice::Text);
+  talipot.setStyleSheet(talipotQss.readAll());
+  talipotQss.close();
+
+#if defined(Q_OS_MAC)
+  // Use Qt Fusion widgets style on MacOS as default OS theme
+  // does not integrate nicely with Talipot custom stylesheet
+  talipot.setStyle(QStyleFactory::create("Fusion"));
+#endif
 
   // Check arguments
   QString inputFilePath;

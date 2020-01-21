@@ -146,7 +146,7 @@ protected:
 };
 
 TalipotMainWindow::TalipotMainWindow()
-    : _ui(new Ui::TalipotMainWindowData), _graphs(new GraphHierarchiesModel(this)),
+    : _ui(new Ui::TalipotMainWindow), _graphs(new GraphHierarchiesModel(this)),
       _project(Project::newProject()), _pluginsCenter(new PluginsCenter()),
       _recentDocumentsSettingsKey("talipot/recent_files"), _maximized(false) {
   Q_INIT_RESOURCE(TalipotApp);
@@ -164,17 +164,11 @@ TalipotMainWindow::TalipotMainWindow()
 
   setWindowTitle(_title);
 
-  _pythonPanel = new PythonPanel();
-  QVBoxLayout *layout = new QVBoxLayout();
-  layout->addWidget(_pythonPanel);
-  layout->setContentsMargins(0, 0, 0, 0);
-  _ui->pythonPanel->setLayout(layout);
   _pythonIDE = new PythonIDE();
   QVBoxLayout *dialogLayout = new QVBoxLayout();
   dialogLayout->addWidget(_pythonIDE);
   dialogLayout->setContentsMargins(0, 0, 0, 0);
   _pythonIDEDialog = new PythonIDEDialog(nullptr, Qt::Window);
-  _pythonIDEDialog->setStyleSheet(styleSheet());
   _pythonIDEDialog->setWindowIcon(windowIcon());
   _pythonIDEDialog->setLayout(dialogLayout);
   _pythonIDEDialog->resize(800, 600);
@@ -668,7 +662,7 @@ void TalipotMainWindow::start(const QString &inputFilePath) {
 
   connect(_ui->pythonButton, &QAbstractButton::clicked, this, &TalipotMainWindow::setPythonPanel);
   connect(_ui->developButton, &QAbstractButton::clicked, this, &TalipotMainWindow::showPythonIDE);
-  _pythonPanel->setModel(_graphs);
+  _ui->pythonPanel->setModel(_graphs);
   _pythonIDE->setGraphsModel(_graphs);
   connect(_pythonIDE, &PythonIDE::anchoredRequest, this, &TalipotMainWindow::anchoredPythonIDE);
   tlp::PluginsManager::instance().addListener(this);

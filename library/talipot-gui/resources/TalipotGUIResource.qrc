@@ -17,17 +17,9 @@
         <file>icons/tlp32x32.png</file>
         <file>icons/tlpb32x32.png</file>
         <file>icons/talipot.ico</file>
-        <file>ui/arrowdown.png</file>
-        <file>ui/arrowup.png</file>
-        <file>ui/btn_26.png</file>
-        <file>ui/btn_26_hover.png</file>
-        <file>ui/btn_26_pressed.png</file>
         <file>ui/full_screen.png</file>
-        <file>ui/combobox_arrow.png</file>
         <file>ui/darkclosebutton.png</file>
         <file>ui/blackclosebutton.png</file>
-        <file>ui/down_arrow-black.png</file>
-        <file>ui/down_arrow-white.png</file>
         <file>ui/grid_screen.png</file>
         <file>ui/lightclosebutton.png</file>
         <file>ui/whiteclosebutton.png</file>
@@ -36,7 +28,6 @@
         <file>ui/next.png</file>
         <file>ui/previous.png</file>
         <file>ui/process-working.png</file>
-        <file>ui/right_arrow-black.png</file>
         <file>ui/split_screen.png</file>
         <file>ui/split_screen_horizontal.png</file>
         <file>icons/64/list-add.png</file>
@@ -75,7 +66,6 @@
         <file>icons/16/go-up.png</file>
         <file>icons/22/start.png</file>
         <file>icons/16/preferences-other.png</file>
-        <file>txt/view_configurationtab.css</file>
         <file>icons/32/node_link_diagram_view.png</file>
         <file>icons/32/plugin_algorithm.png</file>
         <file>icons/32/plugin_controller.png</file>
@@ -90,8 +80,6 @@
         <file>icons/eye.png</file>
         <file>icons/eye_disabled.png</file>
         <file>icons/eye_partially_disabled.png</file>
-        <file>ui/left_arrow-white.png</file>
-        <file>ui/right_arrow-white.png</file>
         <file>ui/six_screen.png</file>
         <file>icons/16/clipboard.png</file>
         <file>icons/64/document-export.png</file>
@@ -100,8 +88,6 @@
         <file>ui/split3_3_screen.png</file>
         <file>ui/sidebar.png</file>
         <file>ui/statusbar.png</file>
-        <file>icons/bugs.png</file>
-        <file>icons/forums.png</file>
         <file>icons/icon-quote.gif</file>
         <file>icons/screenshots.png</file>
         <file>icons/tutorials.png</file>
@@ -111,5 +97,16 @@
         <file>icons/20/nodes_disabled.png</file>
         <file>icons/20/nodes_enabled.png</file>
         <file>ui/menubar.png</file>
+        <file>icons/svg/menu-down-black.svg</file>
+        <file>icons/svg/menu-left-black.svg</file>
+        <file>icons/svg/menu-right-black.svg</file>
+        <file>icons/svg/menu-down-white.svg</file>
+        <file>icons/svg/menu-left-white.svg</file>
+        <file>icons/svg/menu-right-white.svg</file>
+        <file>icons/svg/close-hover.svg</file>
+        <file>icons/svg/close-pressed.svg</file>
+        <file>icons/svg/close-selected.svg</file>
+        <file>icons/svg/close-unselected.svg</file>
+        <file>icons/svg/chevron-down.svg</file>
     </qresource>
 </RCC>

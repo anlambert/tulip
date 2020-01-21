@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -19,7 +19,7 @@
 #include <talipot/Color.h>
 
 namespace Ui {
-class PixelOrientedOptionsWidgetData;
+class PixelOrientedOptionsWidget;
 }
 
 namespace tlp {
@@ -28,7 +28,7 @@ class PixelOrientedOptionsWidget : public QWidget {
 
   Q_OBJECT
 
-  Ui::PixelOrientedOptionsWidgetData *_ui;
+  Ui::PixelOrientedOptionsWidget *_ui;
 
 public:
   PixelOrientedOptionsWidget(QWidget *parent = nullptr);

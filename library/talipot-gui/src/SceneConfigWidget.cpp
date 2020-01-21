@@ -35,12 +35,6 @@ SceneConfigWidget::SceneConfigWidget(QWidget *parent)
   _ui->selectionColorButton->setDialogTitle("Choose the color of selected nodes or edges");
   _ui->backgroundColorButton->setDialogTitle("Choose the background color");
 
-  QMainWindow *mainWindow = getMainWindow();
-  if (mainWindow) {
-    _ui->selectionColorButton->setDialogParent(mainWindow);
-    _ui->backgroundColorButton->setDialogParent(mainWindow);
-  }
-
   _ui->labelsDisabledLabel->installEventFilter(this);
   _ui->labelsNoOverlapLabel->installEventFilter(this);
   _ui->labelsShowAllLabel->installEventFilter(this);

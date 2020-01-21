@@ -17,31 +17,6 @@
    <iconset>
     <normaloff>:/talipot/gui/icons/logo32x32.png</normaloff>:/talipot/gui/icons/logo32x32.png</iconset>
   </property>
-  <property name="styleSheet">
-   <string notr="true">QWizard {
-background-color: white;
-}
-QListView, QListWidget {
-background-color: white;
-border: 0px;
-}
-
-QListWidget::item {
-padding: 6px;
-}
-
-#categoryFrame,#parametersFrame,#algorithmFrame {
-border: 1px solid #C9C9C9;
-background-color: white;
-}
-
-#categoryLabel,#parametersLabel,#algorithmLabel {
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1,
-stop:1 rgba(0,0,0,0),
-stop:0 #F0F0F0);
-border: 0px;
-}</string>
-  </property>
   <property name="sizeGripEnabled">
    <bool>true</bool>
   </property>
@@ -129,7 +104,7 @@ border: 0px;
          </property>
          <layout class="QVBoxLayout" name="leftLayout">
           <property name="spacing">
-           <number>10</number>
+           <number>0</number>
           </property>
           <property name="leftMargin">
            <number>0</number>
@@ -161,23 +136,6 @@ border: 0px;
           </item>
           <item>
            <widget class="QTreeView" name="exportModules">
-            <property name="styleSheet">
-             <string notr="true"> QTreeView::branch {
- border-image: url(none.png) 0;
- }
-
- QTreeView::branch:has-children:!has-siblings:closed,
- QTreeView::branch:closed:has-children:has-siblings {
-         border-image: none;
-         image: url(:/talipot/gui/ui/right_arrow-black.png);
- }
-
- QTreeView::branch:open:has-children:!has-siblings,
- QTreeView::branch:open:has-children:has-siblings  {
-         border-image: none;
-         image: url(:/talipot/gui/ui/down_arrow-black.png);
- }</string>
-            </property>
             <property name="frameShadow">
              <enum>QFrame::Plain</enum>
             </property>
@@ -233,7 +191,7 @@ border: 0px;
             <widget class="QFrame" name="parametersFrame">
              <layout class="QVBoxLayout" name="rLayout2">
               <property name="spacing">
-               <number>10</number>
+               <number>6</number>
               </property>
               <property name="leftMargin">
                <number>0</number>
@@ -265,25 +223,6 @@ border: 0px;
               </item>
               <item>
                <widget class="QTableView" name="parametersList">
-                <property name="styleSheet">
-                 <string notr="true">QHeaderView::section {
-background-color: white;
-color: black;
-padding-left: 4px;
-padding-right: 4px;
-margin-bottom: -1px;
-border: 1px solid #C9C9C9;
-border-bottom: 0px;
-font: bold 12px;
-}
-QHeaderView {
-background-color: white;
-}
-QTableView {
-background-color: white;
-font: 12px;
-}</string>
-                </property>
                 <property name="frameShape">
                  <enum>QFrame::NoFrame</enum>
                 </property>

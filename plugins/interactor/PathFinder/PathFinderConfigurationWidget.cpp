@@ -18,7 +18,7 @@ using namespace tlp;
 using namespace std;
 
 PathFinderConfigurationWidget::PathFinderConfigurationWidget(QWidget *parent)
-    : QWidget(parent), _ui(new Ui::PathFinderConfigurationData) {
+    : QWidget(parent), _ui(new Ui::PathFinderConfiguration) {
   _ui->setupUi(this);
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))

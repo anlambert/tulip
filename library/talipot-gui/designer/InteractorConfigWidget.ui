@@ -13,9 +13,6 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true">#contents { background-color: white; border: 1px solid #C9C9C9; }</string>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="leftMargin">
     <number>0</number>
@@ -46,9 +43,6 @@
         <widget class="QScrollArea" name="scrollAreaDoc">
          <property name="autoFillBackground">
           <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background: white</string>
          </property>
          <property name="widgetResizable">
           <bool>true</bool>

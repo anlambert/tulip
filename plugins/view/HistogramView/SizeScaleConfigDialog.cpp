@@ -17,7 +17,7 @@
 namespace tlp {
 
 SizeScaleConfigDialog::SizeScaleConfigDialog(QWidget *d)
-    : QDialog(d), _ui(new Ui::SizeScaleConfigDialogData) {
+    : QDialog(d), _ui(new Ui::SizeScaleConfigDialog) {
   _ui->setupUi(this);
   connect(_ui->minSizeSpinBox, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this,
           &SizeScaleConfigDialog::minSizeValueChanged);

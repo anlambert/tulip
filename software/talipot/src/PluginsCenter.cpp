@@ -42,7 +42,7 @@ using namespace std;
 using namespace tlp;
 
 PluginsCenter::PluginsCenter(QWidget *parent)
-    : QWidget(parent), _ui(new Ui::PluginsCenterData()), _currentItem(nullptr) {
+    : QWidget(parent), _ui(new Ui::PluginsCenter()), _currentItem(nullptr) {
   _ui->setupUi(this);
   _ui->pluginsSideList->setCurrentRow(ALL_ROW);
 }

@@ -34,12 +34,9 @@ public:
   QString text() const;
   Color talipotColor() const;
 
-  void setDialogParent(QWidget *w);
-
 protected:
   QColor _color;
   QString _text;
-  QWidget *_dialogParent;
   QString _dialogTitle;
 
 signals:

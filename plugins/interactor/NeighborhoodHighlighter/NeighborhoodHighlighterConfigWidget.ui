@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>NeighborhoodHighlighterConfigWidgetData</class>
- <widget class="QWidget" name="NeighborhoodHighlighterConfigWidgetData">
+ <class>NeighborhoodHighlighterConfigWidget</class>
+ <widget class="QWidget" name="NeighborhoodHighlighterConfigWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -81,7 +81,7 @@
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Change with the mouse wheel after locking a node with a left click&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="text">
-        <string>Distance between the central node 
+        <string>Distance between the central node
 and reachable nodes:</string>
        </property>
       </widget>

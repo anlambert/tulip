@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -23,9 +23,8 @@ using namespace std;
 using namespace tlp;
 
 PixelOrientedOptionsWidget::PixelOrientedOptionsWidget(QWidget *parent)
-    : QWidget(parent), _ui(new Ui::PixelOrientedOptionsWidgetData), oldValuesInitialized(false) {
+    : QWidget(parent), _ui(new Ui::PixelOrientedOptionsWidget), oldValuesInitialized(false) {
   _ui->setupUi(this);
-  _ui->backColorButton->setDialogParent(getMainWindow());
   _ui->backColorButton->setDialogTitle("Choose the background color");
   setBackgroundColor(Color(255, 255, 255));
 }

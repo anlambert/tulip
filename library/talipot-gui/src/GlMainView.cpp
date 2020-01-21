@@ -264,7 +264,8 @@ void GlMainView::updateShowQuickAccessBarButton() {
       _showQabButton->setText("x");
       _showQabButton->setChecked(true);
       _showQabButton->setToolTip("Hide quick access bar");
-      _showQabButton->move(0, rect.height() - _quickAccessBarItem->size().height() - 4);
+      _showQabButton->move(0, rect.height() - _quickAccessBarItem->size().height() -
+                                  _showQabButton->height());
     } else {
       _showQabButton->setText("^");
       _showQabButton->setChecked(false);

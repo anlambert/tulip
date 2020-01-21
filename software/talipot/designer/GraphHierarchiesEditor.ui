@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>GraphHierarchiesEditorData</class>
- <widget class="QWidget" name="GraphHierarchiesEditorData">
+ <class>GraphHierarchiesEditor</class>
+ <widget class="QWidget" name="GraphHierarchiesEditor">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -342,7 +342,7 @@
   <connection>
    <sender>hierarchiesTree</sender>
    <signal>customContextMenuRequested(QPoint)</signal>
-   <receiver>GraphHierarchiesEditorData</receiver>
+   <receiver>GraphHierarchiesEditor</receiver>
    <slot>contextMenuRequested(QPoint)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -358,7 +358,7 @@
   <connection>
    <sender>actionAdd_sub_graph</sender>
    <signal>triggered()</signal>
-   <receiver>GraphHierarchiesEditorData</receiver>
+   <receiver>GraphHierarchiesEditor</receiver>
    <slot>addSubGraph()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -374,7 +374,7 @@
   <connection>
    <sender>actionClone_subgraph</sender>
    <signal>triggered()</signal>
-   <receiver>GraphHierarchiesEditorData</receiver>
+   <receiver>GraphHierarchiesEditor</receiver>
    <slot>cloneSubGraph()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -390,7 +390,7 @@
   <connection>
    <sender>actionClone_sibling</sender>
    <signal>triggered()</signal>
-   <receiver>GraphHierarchiesEditorData</receiver>
+   <receiver>GraphHierarchiesEditor</receiver>
    <slot>cloneSibling()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -406,7 +406,7 @@
   <connection>
    <sender>actionClone_sibling_with_properties</sender>
    <signal>triggered()</signal>
-   <receiver>GraphHierarchiesEditorData</receiver>
+   <receiver>GraphHierarchiesEditor</receiver>
    <slot>cloneSiblingWithProperties()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -422,7 +422,7 @@
   <connection>
    <sender>actionDelete_graph</sender>
    <signal>triggered()</signal>
-   <receiver>GraphHierarchiesEditorData</receiver>
+   <receiver>GraphHierarchiesEditor</receiver>
    <slot>delGraph()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -438,7 +438,7 @@
   <connection>
    <sender>actionDelete_All</sender>
    <signal>triggered()</signal>
-   <receiver>GraphHierarchiesEditorData</receiver>
+   <receiver>GraphHierarchiesEditor</receiver>
    <slot>delAllGraph()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -454,7 +454,7 @@
   <connection>
    <sender>actionCreate_panel</sender>
    <signal>triggered()</signal>
-   <receiver>GraphHierarchiesEditorData</receiver>
+   <receiver>GraphHierarchiesEditor</receiver>
    <slot>createPanel()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -470,7 +470,7 @@
   <connection>
    <sender>actionExpand_hierarchy</sender>
    <signal>triggered()</signal>
-   <receiver>GraphHierarchiesEditorData</receiver>
+   <receiver>GraphHierarchiesEditor</receiver>
    <slot>expandGraphHierarchy()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -486,7 +486,7 @@
   <connection>
    <sender>actionCollapse_hierarchy</sender>
    <signal>triggered()</signal>
-   <receiver>GraphHierarchiesEditorData</receiver>
+   <receiver>GraphHierarchiesEditor</receiver>
    <slot>collapseGraphHierarchy()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -502,7 +502,7 @@
   <connection>
    <sender>actionExport</sender>
    <signal>triggered()</signal>
-   <receiver>GraphHierarchiesEditorData</receiver>
+   <receiver>GraphHierarchiesEditor</receiver>
    <slot>exportGraph()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -518,7 +518,7 @@
   <connection>
    <sender>actionRename</sender>
    <signal>triggered()</signal>
-   <receiver>GraphHierarchiesEditorData</receiver>
+   <receiver>GraphHierarchiesEditor</receiver>
    <slot>renameGraph()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -534,7 +534,7 @@
   <connection>
    <sender>hierarchiesTree</sender>
    <signal>doubleClicked(QModelIndex)</signal>
-   <receiver>GraphHierarchiesEditorData</receiver>
+   <receiver>GraphHierarchiesEditor</receiver>
    <slot>doubleClicked(QModelIndex)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -550,7 +550,7 @@
   <connection>
    <sender>actionSave_to_file</sender>
    <signal>triggered()</signal>
-   <receiver>GraphHierarchiesEditorData</receiver>
+   <receiver>GraphHierarchiesEditor</receiver>
    <slot>saveGraphHierarchyInTlpFile()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -566,7 +566,7 @@
   <connection>
    <sender>actionCreate_induced_sub_graph</sender>
    <signal>triggered()</signal>
-   <receiver>GraphHierarchiesEditorData</receiver>
+   <receiver>GraphHierarchiesEditor</receiver>
    <slot>addInducedSubGraph()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -582,7 +582,7 @@
   <connection>
    <sender>actionDelete_all_edges</sender>
    <signal>triggered()</signal>
-   <receiver>GraphHierarchiesEditorData</receiver>
+   <receiver>GraphHierarchiesEditor</receiver>
    <slot>delAllEdges()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -598,7 +598,7 @@
   <connection>
    <sender>actionDelete_all_nodes</sender>
    <signal>triggered()</signal>
-   <receiver>GraphHierarchiesEditorData</receiver>
+   <receiver>GraphHierarchiesEditor</receiver>
    <slot>delAllNodes()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -614,7 +614,7 @@
   <connection>
    <sender>actionDelete_selection</sender>
    <signal>triggered()</signal>
-   <receiver>GraphHierarchiesEditorData</receiver>
+   <receiver>GraphHierarchiesEditor</receiver>
    <slot>delSelection()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -630,7 +630,7 @@
   <connection>
    <sender>actionDelete_selection_from_root_graph</sender>
    <signal>triggered()</signal>
-   <receiver>GraphHierarchiesEditorData</receiver>
+   <receiver>GraphHierarchiesEditor</receiver>
    <slot>delSelectionFromRoot()</slot>
    <hints>
     <hint type="sourcelabel">

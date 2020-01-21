@@ -21,7 +21,7 @@
 #include <QDialog>
 
 namespace Ui {
-class SimplePluginProgressWidgetData;
+class SimplePluginProgressWidget;
 }
 
 class QCloseEvent;
@@ -30,7 +30,7 @@ namespace tlp {
 
 class TLP_QT_SCOPE SimplePluginProgressWidget : public QWidget, public tlp::PluginProgress {
   Q_OBJECT
-  Ui::SimplePluginProgressWidgetData *_ui;
+  Ui::SimplePluginProgressWidget *_ui;
 
   QTime _lastUpdate;
   void checkLastUpdate();

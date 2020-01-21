@@ -24,7 +24,7 @@ using namespace std;
 using namespace tlp;
 
 GeographicViewConfigWidget::GeographicViewConfigWidget(QWidget *parent)
-    : QWidget(parent), _ui(new Ui::GeographicViewConfigWidgetData), _oldPolyFileType(None),
+    : QWidget(parent), _ui(new Ui::GeographicViewConfigWidget), _oldPolyFileType(None),
       _oldFileLoaded("") {
   _ui->setupUi(this);
 }

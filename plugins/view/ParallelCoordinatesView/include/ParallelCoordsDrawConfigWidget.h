@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -20,7 +20,7 @@
 #include <talipot/Color.h>
 
 namespace Ui {
-class ParallelCoordsDrawConfigWidgetData;
+class ParallelCoordsDrawConfigWidget;
 }
 
 namespace tlp {
@@ -71,7 +71,7 @@ private:
   Color oldBackgroundColor;
   unsigned int oldUnhighlightedEltsColorsAlphaValue;
   std::string oldLinesTextureFilename;
-  Ui::ParallelCoordsDrawConfigWidgetData *_ui;
+  Ui::ParallelCoordsDrawConfigWidget *_ui;
 };
 }
 

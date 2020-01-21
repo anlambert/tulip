@@ -25,7 +25,7 @@
 using namespace tlp;
 
 SimplePluginProgressWidget::SimplePluginProgressWidget(QWidget *parent, Qt::WindowFlags f)
-    : QWidget(parent, f), _ui(new Ui::SimplePluginProgressWidgetData),
+    : QWidget(parent, f), _ui(new Ui::SimplePluginProgressWidget),
       _lastUpdate(QTime::currentTime()), _state(tlp::TLP_CONTINUE) {
   _ui->setupUi(this);
   _ui->cancelButton->setIcon(QApplication::style()->standardIcon(QStyle::SP_DialogCancelButton));

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -27,7 +27,7 @@ class Graph;
 }
 
 namespace Ui {
-class GraphHierarchiesEditorData;
+class GraphHierarchiesEditor;
 }
 
 class CustomTreeView : public QTreeView {
@@ -51,7 +51,7 @@ protected:
 
 class GraphHierarchiesEditor : public QWidget {
   Q_OBJECT
-  Ui::GraphHierarchiesEditorData *_ui;
+  Ui::GraphHierarchiesEditor *_ui;
   tlp::Graph *_contextGraph;
   QModelIndex _contextIndex;
   QAbstractButton *_linkButton;

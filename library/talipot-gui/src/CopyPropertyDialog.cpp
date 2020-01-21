@@ -38,7 +38,7 @@ using namespace tlp;
 
 //=============================================================================
 CopyPropertyDialog::CopyPropertyDialog(QWidget *parent)
-    : QDialog(parent), ui(new Ui::CopyPropertyDialogData()), _graph(nullptr), _source(nullptr) {
+    : QDialog(parent), ui(new Ui::CopyPropertyDialog()), _graph(nullptr), _source(nullptr) {
   ui->setupUi(this);
 
   ui->buttonBox->button(QDialogButtonBox::Ok)->setText("&Copy");

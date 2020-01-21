@@ -90,16 +90,8 @@ void SplashScreen::drawContents(QPainter *painter) {
   painter->drawPixmap(0, 0, pixmap());
   QRectF messageRect(0, size.height() * 2 / 3, size.width(), size.height() / 3);
 
-  painter->setPen(Qt::transparent);
-  QLinearGradient grad(messageRect.x(), messageRect.y(), messageRect.x(),
-                       messageRect.y() + messageRect.height());
-  grad.setColorAt(0, Qt::transparent);
-  grad.setColorAt(0.4, QColor(255, 255, 255, 170));
-  painter->setBrush(grad);
-  painter->drawRect(messageRect);
-
-  painter->setBrush(Qt::black);
-  painter->setPen(Qt::black);
+  painter->setBrush(Qt::white);
+  painter->setPen(Qt::white);
   QFont font = painter->font();
   font.setBold(true);
   painter->setFont(font);
@@ -112,8 +104,8 @@ void SplashScreen::drawContents(QPainter *painter) {
 
   QRectF progressRect(messageRect.x() + 10, messageRect.y() + messageRect.height() - 10,
                       messageRect.width() - 20, 5);
-  painter->setBrush(QColor(0, 0, 0, 50));
-  painter->setPen(QColor(0, 0, 0, 50));
+  painter->setBrush(Qt::transparent);
+  painter->setPen(Qt::white);
   painter->drawRect(progressRect);
   qreal w = progressRect.width();
 
@@ -121,6 +113,6 @@ void SplashScreen::drawContents(QPainter *painter) {
     w = 1. * _fileCounter * progressRect.width() / _numberOfFiles;
   }
 
-  painter->setBrush(QColor(0, 0, 0, 200));
+  painter->setBrush(Qt::white);
   painter->drawRect(progressRect.x(), progressRect.y(), w, progressRect.height());
 }

@@ -20,7 +20,7 @@
 using namespace tlp;
 
 TextureFileDialog::TextureFileDialog(QWidget *parent)
-    : QDialog(parent), ui(new Ui::TextureFileDialogData()) {
+    : QDialog(parent), ui(new Ui::TextureFileDialog()) {
   ui->setupUi(this);
   connect(ui->chooseFileOrDirButton, &QAbstractButton::clicked, this, &TextureFileDialog::browse);
 }

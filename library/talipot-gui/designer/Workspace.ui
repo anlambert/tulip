@@ -13,15 +13,6 @@
   <property name="acceptDrops">
    <bool>true</bool>
   </property>
-  <property name="styleSheet">
-   <string notr="true">#Workspace {
-border: 0px;
-}
-
-QSplitter::handle {
-background-color: #A9A9A9;
-}</string>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>0</number>
@@ -40,16 +31,6 @@ background-color: #A9A9A9;
    </property>
    <item>
     <widget class="QStackedWidget" name="workspaceContents">
-     <property name="styleSheet">
-      <string notr="true">#workspaceContents {
-border: 0px;
-background-color: white;
-}
-
-PlaceHolderWidget {
-background-color: white;
-}</string>
-     </property>
      <property name="currentIndex">
       <number>5</number>
      </property>
@@ -259,9 +240,6 @@ p, li { white-space: pre-wrap; }
        </property>
        <item>
         <widget class="tlp::WorkspaceExposeWidget" name="exposeMode">
-         <property name="styleSheet">
-          <string notr="true">border: 0px;</string>
-         </property>
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>

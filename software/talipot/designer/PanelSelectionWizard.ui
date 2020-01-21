@@ -17,28 +17,6 @@
    <iconset>
     <normaloff>:/talipot/gui/icons/logo32x32.png</normaloff>:/talipot/gui/icons/logo32x32.png</iconset>
   </property>
-  <property name="styleSheet">
-   <string notr="true">QWizard, #choosePanelPage {
-background-color: white;
-}
-QComboBox QTreeView {
-background-color:white;
-color: black;
-border: 1px solid #C9C9C9;
-}
-
-#panelsFrame,#panelDescriptionFrame {
-border: 1px solid #C9C9C9;
-background-color: white;
-}
-
-#panelListTitle,#panelDescriptionTitle {
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1,
-stop:1 rgba(0,0,0,0),
-stop:0 #F0F0F0);
-border: 0px;
-}</string>
-  </property>
   <property name="sizeGripEnabled">
    <bool>true</bool>
   </property>
@@ -130,6 +108,9 @@ border: 0px;
          <enum>QFrame::Plain</enum>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_3">
+         <property name="spacing">
+          <number>0</number>
+         </property>
          <property name="leftMargin">
           <number>0</number>
          </property>
@@ -166,11 +147,6 @@ border: 0px;
          </item>
          <item>
           <widget class="QListView" name="panelList">
-           <property name="styleSheet">
-            <string notr="true">#panelList {
-background-color: white
-}</string>
-           </property>
            <property name="frameShape">
             <enum>QFrame::NoFrame</enum>
            </property>
@@ -218,6 +194,9 @@ background-color: white
          <enum>QFrame::Plain</enum>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_4">
+         <property name="spacing">
+          <number>0</number>
+         </property>
          <property name="leftMargin">
           <number>0</number>
          </property>

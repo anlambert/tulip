@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -17,7 +17,7 @@
 #include <QDialog>
 
 namespace Ui {
-class SizeScaleConfigDialogData;
+class SizeScaleConfigDialog;
 }
 
 class QWidget;
@@ -27,7 +27,7 @@ class SizeScaleConfigDialog : public QDialog {
 
   Q_OBJECT
 
-  Ui::SizeScaleConfigDialogData *_ui;
+  Ui::SizeScaleConfigDialog *_ui;
 
 public:
   SizeScaleConfigDialog(QWidget *d = nullptr);

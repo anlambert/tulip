@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -19,7 +19,7 @@
 #include <talipot/Color.h>
 
 namespace Ui {
-class HistoOptionsWidgetData;
+class HistoOptionsWidget;
 }
 
 namespace tlp {
@@ -105,7 +105,7 @@ private:
   bool oldUseCustomYAxisScale;
   std::pair<double, double> oldXAxisScale, oldYAxisScale; //<min, max>
   std::pair<double, double> initXAxisScale, initYAxisScale;
-  Ui::HistoOptionsWidgetData *_ui;
+  Ui::HistoOptionsWidget *_ui;
 };
 }
 

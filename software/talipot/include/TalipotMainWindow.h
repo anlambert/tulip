@@ -42,10 +42,9 @@ class View;
 }
 
 namespace Ui {
-class TalipotMainWindowData;
+class TalipotMainWindow;
 }
 
-class PythonPanel;
 namespace tlp {
 class PythonIDE;
 }
@@ -57,12 +56,11 @@ class TalipotMainWindow : public QMainWindow,
 
   friend tlp::Singleton<TalipotMainWindow>;
 
-  Ui::TalipotMainWindowData *_ui;
+  Ui::TalipotMainWindow *_ui;
   tlp::GraphHierarchiesModel *_graphs;
   tlp::ColorScaleConfigDialog *_colorScalesDialog;
   tlp::Project *_project;
   PluginsCenter *_pluginsCenter;
-  PythonPanel *_pythonPanel;
   tlp::PythonIDE *_pythonIDE;
   QDialog *_pythonIDEDialog;
   TalipotLogger *_logger;

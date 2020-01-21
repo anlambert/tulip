@@ -38,54 +38,6 @@
 
 using namespace tlp;
 
-class TopPopupComboBox : public QComboBox {
-  QListView *_view;
-
-public:
-  TopPopupComboBox(QWidget *parent = nullptr) : QComboBox(parent), _view(nullptr) {}
-
-  bool eventFilter(QObject *, QEvent *ev) override {
-    if (ev->type() == QEvent::MouseButtonPress) {
-      QMouseEvent *mouseEv = static_cast<QMouseEvent *>(ev);
-
-      if (!_view->geometry().contains(mouseEv->globalPos())) {
-        _view->close();
-      } else {
-        setCurrentIndex(_view->indexAt(mouseEv->pos()).row());
-        _view->close();
-      }
-    }
-
-    return false;
-  }
-
-  void showPopup() override {
-    QMainWindow *mainWindow = getMainWindow();
-    QPoint mainWindowPos = mainWindow ? mainWindow->pos() : QPoint(0, 0);
-
-    if (_view == nullptr) {
-      _view = findChild<QListView *>();
-      _view->installEventFilter(this);
-      _view->viewport()->installEventFilter(this);
-      _view->setParent(nullptr);
-      _view->setMouseTracking(true);
-    }
-
-    _view->setAutoScroll(false);
-    _view->setWindowFlags(Qt::Popup);
-    _view->resize(width(), 200);
-    _view->move(mapToGlobal(pos()).x() + mainWindowPos.x(),
-                QCursor::pos().y() - 200 - height() / 2);
-    _view->show();
-  }
-
-  void hidePopup() override {
-    if (_view != nullptr) {
-      _view->close();
-    }
-  }
-};
-
 QuickAccessBar::QuickAccessBar(QWidget *parent) : QWidget(parent), _mainView(nullptr) {}
 
 #include "ui_QuickAccessBar.h"
@@ -270,13 +222,6 @@ void QuickAccessBar::setGlMainView(GlMainView *v) {
 
 void QuickAccessBarImpl::reset() {
   _resetting = true;
-
-  _ui->backgroundColorButton->setDialogParent(_mainView->graphicsView()->window());
-  _ui->nodeColorButton->setDialogParent(_mainView->graphicsView()->window());
-  _ui->edgeColorButton->setDialogParent(_mainView->graphicsView()->window());
-  _ui->nodeBorderColorButton->setDialogParent(_mainView->graphicsView()->window());
-  _ui->edgeBorderColorButton->setDialogParent(_mainView->graphicsView()->window());
-  _ui->labelColorButton->setDialogParent(_mainView->graphicsView()->window());
 
   _ui->backgroundColorButton->setColor(scene()->getBackgroundColor());
   _ui->colorInterpolationToggle->setChecked(renderingParameters()->isEdgeColorInterpolate());

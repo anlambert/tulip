@@ -25,7 +25,7 @@ using namespace std;
 using namespace tlp;
 
 GlyphScaleConfigDialog::GlyphScaleConfigDialog(QWidget *parent)
-    : QDialog(parent), _ui(new Ui::GlyphScaleConfigDialogData) {
+    : QDialog(parent), _ui(new Ui::GlyphScaleConfigDialog) {
   _ui->setupUi(this);
   _ui->tableWidget->setRowCount(5);
   list<string> pluginsList = PluginsManager::availablePlugins<Glyph>();

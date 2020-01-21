@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>GeolocalisationConfigWidgetData</class>
- <widget class="QWidget" name="GeolocalisationConfigWidgetData">
+ <class>GeolocalisationConfigWidget</class>
+ <widget class="QWidget" name="GeolocalisationConfigWidget">
   <property name="geometry">
    <rect>
     <x>0</x>

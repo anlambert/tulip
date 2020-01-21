@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1100</width>
-    <height>35</height>
+    <height>25</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -16,72 +16,17 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
-  <property name="styleSheet">
-   <string notr="true">QPushButton, QComboBox {
-border-image: url(:/talipot/gui/ui/btn_26.png) 4;
-border-width: 4;
-padding: 0px 6px;
-font-size: 12px;
-}
-QPushButton::flat {
-border-width: 0;
-background-color: transparent;
-}
-QPushButton, QComboBox, QLabel {
-color: black;
-}
-QPushButton:hover, QComboBox:hover {
-border-image: url(:/talipot/gui/ui/btn_26_hover.png) 4;
-border-width: 4;
-}
-QPushButton:disabled, QComboBox::disabled {
-color:gray;
-}
-QPushButton:pressed{
-border-image: url(:/talipot/gui/ui/btn_26_pressed.png) 4;
-}
-QPushButton::menu-indicator{
-subcontrol-origin: margin;
-subcontrol-position: center right;
-right: 4px;
-}
-QPushButton {
-outline: none;
-margin: 2
-}
-QComboBox::down-arrow {
-image: url(:/talipot/gui/ui/combobox_arrow.png);
-}
-QComboBox:drop-down {
-subcontrol-origin: padding;
-subcontrol-position: top right;
-border-left-style: none;
-border-top-right-radius: 1px;
-border-bottom-right-radius: 1px;
-}
- QComboBox QAbstractItemView {
-subcontrol-origin: padding;
-subcontrol-position: top right;
- }
-#scrollAreaWidgetContents, #SceneConfigWidget {
-background-color: white;
-border: 0px;
-}
-QScrollArea {
-border: 0px;
-}
-QFrame[ section=&quot;true&quot; ] {
-border-top: 1px solid #D9D9D9;
-padding-top: 20px;
-}
-QFrame[ subsection = &quot;true&quot; ] {
-border-top: 1px solid #D9D9D9;
-padding-top: 5px;
-background-color: #F4F4F4;
-}
-#QuickAccessBar {
-background-color: rgba(255,255,255,100);
-}</string>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>25</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>25</height>
+   </size>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">
@@ -103,14 +48,14 @@ background-color: rgba(255,255,255,100);
     <widget class="QPushButton" name="screenshotButton">
      <property name="minimumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="toolTip">
@@ -128,12 +73,12 @@ background-color: rgba(255,255,255,100);
      </property>
      <property name="iconSize">
       <size>
-       <width>20</width>
-       <height>20</height>
+       <width>16</width>
+       <height>16</height>
       </size>
      </property>
      <property name="flat">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -141,14 +86,14 @@ background-color: rgba(255,255,255,100);
     <widget class="tlp::ColorButton" name="backgroundColorButton">
      <property name="minimumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="toolTip">
@@ -158,16 +103,22 @@ background-color: rgba(255,255,255,100);
       <string/>
      </property>
      <property name="flat">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QPushButton" name="colorInterpolationToggle">
+     <property name="minimumSize">
+      <size>
+       <width>23</width>
+       <height>23</height>
+      </size>
+     </property>
      <property name="maximumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="toolTip">
@@ -186,15 +137,15 @@ background-color: rgba(255,255,255,100);
      </property>
      <property name="iconSize">
       <size>
-       <width>20</width>
-       <height>20</height>
+       <width>16</width>
+       <height>16</height>
       </size>
      </property>
      <property name="checkable">
       <bool>true</bool>
      </property>
      <property name="flat">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -202,8 +153,8 @@ background-color: rgba(255,255,255,100);
     <widget class="QPushButton" name="sizeInterpolationToggle">
      <property name="maximumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="toolTip">
@@ -222,15 +173,15 @@ background-color: rgba(255,255,255,100);
      </property>
      <property name="iconSize">
       <size>
-       <width>20</width>
-       <height>20</height>
+       <width>16</width>
+       <height>16</height>
       </size>
      </property>
      <property name="checkable">
       <bool>true</bool>
      </property>
      <property name="flat">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -238,14 +189,14 @@ background-color: rgba(255,255,255,100);
     <widget class="QPushButton" name="showEdgesToggle">
      <property name="minimumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="toolTip">
@@ -264,15 +215,15 @@ background-color: rgba(255,255,255,100);
      </property>
      <property name="iconSize">
       <size>
-       <width>20</width>
-       <height>20</height>
+       <width>16</width>
+       <height>16</height>
       </size>
      </property>
      <property name="checkable">
       <bool>true</bool>
      </property>
      <property name="flat">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -280,14 +231,14 @@ background-color: rgba(255,255,255,100);
     <widget class="QPushButton" name="showNodesToggle">
      <property name="minimumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="toolTip">
@@ -306,15 +257,15 @@ background-color: rgba(255,255,255,100);
      </property>
      <property name="iconSize">
       <size>
-       <width>20</width>
-       <height>20</height>
+       <width>16</width>
+       <height>16</height>
       </size>
      </property>
      <property name="checkable">
       <bool>true</bool>
      </property>
      <property name="flat">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -322,8 +273,8 @@ background-color: rgba(255,255,255,100);
     <widget class="QPushButton" name="showLabelsToggle">
      <property name="maximumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="toolTip">
@@ -342,15 +293,15 @@ background-color: rgba(255,255,255,100);
      </property>
      <property name="iconSize">
       <size>
-       <width>20</width>
-       <height>20</height>
+       <width>16</width>
+       <height>16</height>
       </size>
      </property>
      <property name="checkable">
       <bool>true</bool>
      </property>
      <property name="flat">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -358,8 +309,8 @@ background-color: rgba(255,255,255,100);
     <widget class="QPushButton" name="labelsScaledToggle">
      <property name="maximumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="toolTip">
@@ -378,15 +329,15 @@ background-color: rgba(255,255,255,100);
      </property>
      <property name="iconSize">
       <size>
-       <width>20</width>
-       <height>20</height>
+       <width>16</width>
+       <height>16</height>
       </size>
      </property>
      <property name="checkable">
       <bool>true</bool>
      </property>
      <property name="flat">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -401,14 +352,14 @@ background-color: rgba(255,255,255,100);
     <widget class="tlp::ChooseColorButton" name="nodeColorButton">
      <property name="minimumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="toolTip">
@@ -424,12 +375,12 @@ Only nodes of the visualized graph will have their value modified.</string>
      </property>
      <property name="iconSize">
       <size>
-       <width>20</width>
-       <height>20</height>
+       <width>16</width>
+       <height>16</height>
       </size>
      </property>
      <property name="flat">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -437,14 +388,14 @@ Only nodes of the visualized graph will have their value modified.</string>
     <widget class="tlp::ChooseColorButton" name="edgeColorButton">
      <property name="minimumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="toolTip">
@@ -460,12 +411,12 @@ Only edges of the visualized graph will have their value modified.</string>
      </property>
      <property name="iconSize">
       <size>
-       <width>20</width>
-       <height>20</height>
+       <width>16</width>
+       <height>16</height>
       </size>
      </property>
      <property name="flat">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -473,14 +424,14 @@ Only edges of the visualized graph will have their value modified.</string>
     <widget class="tlp::ChooseColorButton" name="nodeBorderColorButton">
      <property name="minimumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="toolTip">
@@ -496,12 +447,12 @@ Only nodes of the visualized graph will have their value modified.</string>
      </property>
      <property name="iconSize">
       <size>
-       <width>20</width>
-       <height>20</height>
+       <width>16</width>
+       <height>16</height>
       </size>
      </property>
      <property name="flat">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -509,14 +460,14 @@ Only nodes of the visualized graph will have their value modified.</string>
     <widget class="tlp::ChooseColorButton" name="edgeBorderColorButton">
      <property name="minimumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="toolTip">
@@ -532,12 +483,12 @@ Only edges of the visualized graph will have their value modified.</string>
      </property>
      <property name="iconSize">
       <size>
-       <width>20</width>
-       <height>20</height>
+       <width>16</width>
+       <height>16</height>
       </size>
      </property>
      <property name="flat">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -545,14 +496,14 @@ Only edges of the visualized graph will have their value modified.</string>
     <widget class="QPushButton" name="nodeShapeButton">
      <property name="minimumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="toolTip">
@@ -568,12 +519,12 @@ Only nodes of the visualized graph will have their value modified.</string>
      </property>
      <property name="iconSize">
       <size>
-       <width>20</width>
-       <height>20</height>
+       <width>16</width>
+       <height>16</height>
       </size>
      </property>
      <property name="flat">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -581,14 +532,14 @@ Only nodes of the visualized graph will have their value modified.</string>
     <widget class="QPushButton" name="edgeShapeButton">
      <property name="minimumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="toolTip">
@@ -604,12 +555,12 @@ Only edges of the visualized graph will have their value modified.</string>
      </property>
      <property name="iconSize">
       <size>
-       <width>20</width>
-       <height>20</height>
+       <width>16</width>
+       <height>16</height>
       </size>
      </property>
      <property name="flat">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -617,14 +568,14 @@ Only edges of the visualized graph will have their value modified.</string>
     <widget class="QPushButton" name="nodeSizeButton">
      <property name="minimumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="toolTip">
@@ -640,12 +591,12 @@ Only nodes of the visualized graph will have their value modified.</string>
      </property>
      <property name="iconSize">
       <size>
-       <width>20</width>
-       <height>20</height>
+       <width>16</width>
+       <height>16</height>
       </size>
      </property>
      <property name="flat">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -653,14 +604,14 @@ Only nodes of the visualized graph will have their value modified.</string>
     <widget class="QPushButton" name="edgeSizeButton">
      <property name="minimumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="toolTip">
@@ -676,12 +627,12 @@ Only edges of the visualized graph will have their value modified.</string>
      </property>
      <property name="iconSize">
       <size>
-       <width>20</width>
-       <height>20</height>
+       <width>16</width>
+       <height>16</height>
       </size>
      </property>
      <property name="flat">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -689,14 +640,14 @@ Only edges of the visualized graph will have their value modified.</string>
     <widget class="tlp::ChooseColorButton" name="labelColorButton">
      <property name="minimumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="toolTip">
@@ -712,12 +663,12 @@ Only elements of the visualized graph will have their value modified.</string>
      </property>
      <property name="iconSize">
       <size>
-       <width>20</width>
-       <height>20</height>
+       <width>16</width>
+       <height>16</height>
       </size>
      </property>
      <property name="flat">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -725,14 +676,14 @@ Only elements of the visualized graph will have their value modified.</string>
     <widget class="QPushButton" name="labelPositionButton">
      <property name="minimumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="toolTip">
@@ -748,12 +699,12 @@ Only nodes of the visualized graph will have their value modified.</string>
      </property>
      <property name="iconSize">
       <size>
-       <width>20</width>
-       <height>20</height>
+       <width>16</width>
+       <height>16</height>
       </size>
      </property>
      <property name="flat">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -765,10 +716,16 @@ Only nodes of the visualized graph will have their value modified.</string>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>23</height>
+      </size>
+     </property>
      <property name="maximumSize">
       <size>
-       <width>200</width>
-       <height>16777215</height>
+       <width>40</width>
+       <height>23</height>
       </size>
      </property>
      <property name="toolTip">
@@ -780,6 +737,9 @@ Only elements of the visualized graph will have their value modified.</string>
      </property>
      <property name="text">
       <string>Aa</string>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -800,14 +760,14 @@ Only elements of the visualized graph will have their value modified.</string>
     <widget class="QPushButton" name="edgesColorCaptionButton">
      <property name="minimumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="toolTip">
@@ -825,15 +785,15 @@ Only elements of the visualized graph will have their value modified.</string>
      </property>
      <property name="iconSize">
       <size>
-       <width>20</width>
-       <height>20</height>
+       <width>16</width>
+       <height>16</height>
       </size>
      </property>
      <property name="checkable">
       <bool>true</bool>
      </property>
      <property name="flat">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -841,14 +801,14 @@ Only elements of the visualized graph will have their value modified.</string>
     <widget class="QPushButton" name="nodesColorCaptionButton">
      <property name="minimumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="toolTip">
@@ -866,15 +826,15 @@ Only elements of the visualized graph will have their value modified.</string>
      </property>
      <property name="iconSize">
       <size>
-       <width>20</width>
-       <height>20</height>
+       <width>16</width>
+       <height>16</height>
       </size>
      </property>
      <property name="checkable">
       <bool>true</bool>
      </property>
      <property name="flat">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -882,14 +842,14 @@ Only elements of the visualized graph will have their value modified.</string>
     <widget class="QPushButton" name="nodesSizeCaptionButton">
      <property name="minimumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="toolTip">
@@ -907,15 +867,15 @@ Only elements of the visualized graph will have their value modified.</string>
      </property>
      <property name="iconSize">
       <size>
-       <width>20</width>
-       <height>20</height>
+       <width>16</width>
+       <height>16</height>
       </size>
      </property>
      <property name="checkable">
       <bool>true</bool>
      </property>
      <property name="flat">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -923,14 +883,14 @@ Only elements of the visualized graph will have their value modified.</string>
     <widget class="QPushButton" name="edgesSizeCaptionButton">
      <property name="minimumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>26</width>
-       <height>26</height>
+       <width>23</width>
+       <height>23</height>
       </size>
      </property>
      <property name="toolTip">
@@ -948,15 +908,15 @@ Only elements of the visualized graph will have their value modified.</string>
      </property>
      <property name="iconSize">
       <size>
-       <width>20</width>
-       <height>20</height>
+       <width>16</width>
+       <height>16</height>
       </size>
      </property>
      <property name="checkable">
       <bool>true</bool>
      </property>
      <property name="flat">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
     </widget>
    </item>

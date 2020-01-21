@@ -185,10 +185,10 @@ AlgorithmRunner::AlgorithmRunner(QWidget *parent)
 
   _ui->contents->setEnabled(false);
   _storeResultAsLocalButton = new QToolButton(_ui->header);
-  _storeResultAsLocalButton->setMaximumSize(25, 25);
-  _storeResultAsLocalButton->setMinimumSize(25, 25);
+  _storeResultAsLocalButton->setMaximumSize(23, 23);
+  _storeResultAsLocalButton->setMinimumSize(23, 23);
   _storeResultAsLocalButton->setIcon(QIcon(":/talipot/app/icons/16/hierarchy_add.png"));
-  _storeResultAsLocalButton->setIconSize(QSize(22, 22));
+  _storeResultAsLocalButton->setIconSize(QSize(23, 23));
   _storeResultAsLocalButton->setToolTip(
       "Choose the storage policy for the result of property algorithms\nWhen they are "
       "applied to a subgraph, this result can be stored either\n- in a local subgraph "

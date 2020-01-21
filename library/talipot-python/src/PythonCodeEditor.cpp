@@ -243,8 +243,9 @@ bool AutoCompletionList::eventFilter(QObject *obj, QEvent *event) {
 }
 
 FindReplaceDialog::FindReplaceDialog(QPlainTextEdit *editor)
-    : QDialog(editor), _ui(new Ui::FindReplaceDialogData), _editor(editor) {
+    : QDialog(editor), _ui(new Ui::FindReplaceDialog), _editor(editor) {
   _ui->setupUi(this);
+  setStyleSheet("QLabel { background: transparent; }");
   _editor->installEventFilter(this);
   connect(_ui->findButton, &QAbstractButton::clicked, this, &FindReplaceDialog::doFind);
   connect(_ui->replaceButton, &QAbstractButton::clicked, this, &FindReplaceDialog::doReplace);
@@ -460,6 +461,7 @@ PythonCodeEditor::PythonCodeEditor(QWidget *parent)
   setIndentShortcutsActivated(true);
   setWordWrapMode(QTextOption::NoWrap);
   setFocusPolicy(Qt::ClickFocus);
+  setFrameStyle(QFrame::NoFrame);
   QTextCharFormat format = currentCharFormat();
 #if defined(WIN32)
   _currentFont.setFamily("Courier New");

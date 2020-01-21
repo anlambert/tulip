@@ -34,12 +34,6 @@
    </property>
    <item>
     <widget class="QFrame" name="frame">
-     <property name="styleSheet">
-      <string notr="true">#frame{
-background-color: white;
-border: 1px solid #C9C9C9;
-}</string>
-     </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <property name="spacing">
        <number>5</number>
@@ -65,11 +59,6 @@ border: 1px solid #C9C9C9;
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">font: bold 12px;
-color: black;
-background-color: white;</string>
           </property>
           <property name="text">
            <string/>
@@ -108,19 +97,6 @@ background-color: white;</string>
       </item>
       <item>
        <widget class="QTableView" name="tableView">
-        <property name="styleSheet">
-         <string notr="true">QTableView {
-background-color: white;
-border: 0px;
-font: 12px;
-}
-QHeaderView::section {
-background-color: white;
-width: 150px;
-font: bold 12px;
-color: black;
-}</string>
-        </property>
         <property name="frameShape">
          <enum>QFrame::NoFrame</enum>
         </property>

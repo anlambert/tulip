@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -20,7 +20,7 @@
 #include <talipot/Size.h>
 
 namespace Ui {
-class ScatterPlot2DOptionsWidgetData;
+class ScatterPlot2DOptionsWidget;
 }
 
 class QPushButton;
@@ -104,7 +104,7 @@ private:
   bool oldUseCustomYAxisScale;
   std::pair<double, double> oldXAxisScale, oldYAxisScale; //<min, max>
   std::pair<double, double> initXAxisScale, initYAxisScale;
-  Ui::ScatterPlot2DOptionsWidgetData *_ui;
+  Ui::ScatterPlot2DOptionsWidget *_ui;
 };
 }
 

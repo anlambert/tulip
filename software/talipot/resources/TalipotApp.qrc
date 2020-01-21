@@ -56,12 +56,13 @@
         <file>icons/48/desktop.png</file>
         <file>icons/48/document-import.png</file>
         <file>icons/48/python.png</file>
-        <file>ui/panel_button.png</file>
-        <file>ui/panel_button_checked.png</file>
-        <file>ui/panel_button_checked_hover.png</file>
-        <file>ui/panel_button_hover.png</file>
-        <file>ui/panel_button_pressed.png</file>
-        <file>icons/32/desktop.png</file>
         <file>icons/32/magnifying-glass.png</file>
+        <file>icons/svg/chevron-down.svg</file>
+        <file>icons/svg/chevron-up.svg</file>
+        <file>icons/svg/star.svg</file>
+        <file>icons/svg/star-hover.svg</file>
+        <file>icons/svg/star-outline.svg</file>
+        <file>icons/svg/star-outline-hover.svg</file>
+        <file>style/talipot.qss</file>
     </qresource>
 </RCC>

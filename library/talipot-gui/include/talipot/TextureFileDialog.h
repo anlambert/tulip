@@ -21,7 +21,7 @@
 #include "ui_TextureFileDialog.h"
 
 namespace Ui {
-class TextureFileDialogData;
+class TextureFileDialog;
 }
 
 namespace tlp {
@@ -35,7 +35,7 @@ namespace tlp {
 class TLP_QT_SCOPE TextureFileDialog : public QDialog {
   Q_OBJECT
 public:
-  Ui::TextureFileDialogData *ui;
+  Ui::TextureFileDialog *ui;
   TextureFile _data;
   int ok;
   TextureFileDialog(QWidget *parent = nullptr);

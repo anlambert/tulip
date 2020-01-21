@@ -114,7 +114,7 @@ private:
 
 ConvolutionClusteringSetup::ConvolutionClusteringSetup(ConvolutionClustering *convolPlugin,
                                                        QWidget *parent)
-    : QDialog(parent), _ui(new Ui::ConvolutionClusteringSetupData), convolPlugin(convolPlugin),
+    : QDialog(parent), _ui(new Ui::ConvolutionClusteringSetup), convolPlugin(convolPlugin),
       useLogarithmicScale(false) {
   _ui->setupUi(this);
   histogramWidget = new HistogramWidget(this, _ui->Frame3);

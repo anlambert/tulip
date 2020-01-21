@@ -19,7 +19,7 @@
 #include <QDialog>
 
 namespace Ui {
-class CopyPropertyDialogData;
+class CopyPropertyDialog;
 }
 
 namespace tlp {
@@ -91,7 +91,7 @@ public:
                                          QWidget *parent = nullptr);
 
 private:
-  Ui::CopyPropertyDialogData *ui;
+  Ui::CopyPropertyDialog *ui;
   tlp::Graph *_graph;
   tlp::PropertyInterface *_source;
 

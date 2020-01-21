@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -22,7 +22,7 @@
 #include <QObject>
 
 namespace Ui {
-class EnclosingCircleConfigurationData;
+class EnclosingCircleConfiguration;
 }
 
 namespace tlp {
@@ -31,7 +31,7 @@ class EnclosingCircleConfigurationWidget : public QWidget {
 
   Q_OBJECT
 
-  Ui::EnclosingCircleConfigurationData *_ui;
+  Ui::EnclosingCircleConfiguration *_ui;
 
 public:
   EnclosingCircleConfigurationWidget(Color &circleColor, QWidget *parent = nullptr);

@@ -31,15 +31,7 @@ void PythonTabWidget::paintEvent(QPaintEvent *event) {
   painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing |
                          QPainter::SmoothPixmapTransform);
 
-  if (_drawGradient) {
-    QLinearGradient gradient(width() / 2, tabBar()->pos().y(), width() / 2,
-                             tabBar()->pos().y() + tabBar()->height());
-    gradient.setColorAt(0.0, "#838383");
-    gradient.setColorAt(0.4, "#707070");
-    gradient.setColorAt(0.401, "#636363");
-    gradient.setColorAt(1.0, "#4a4a4a");
-    painter.fillRect(x(), tabBar()->pos().y(), width(), tabBar()->height(), gradient);
-  }
+  painter.fillRect(x(), tabBar()->pos().y(), width(), tabBar()->height(), QColor("#404244"));
 
   painter.setPen(_textColor);
 #ifndef __APPLE__

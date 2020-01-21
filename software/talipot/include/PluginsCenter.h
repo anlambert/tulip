@@ -25,7 +25,7 @@
 #include <vector>
 
 namespace Ui {
-class PluginsCenterData;
+class PluginsCenter;
 }
 
 class PluginInformationListItem;
@@ -33,7 +33,7 @@ class PluginInformationListItem;
 class PluginsCenter : public QWidget {
   Q_OBJECT
 
-  Ui::PluginsCenterData *_ui;
+  Ui::PluginsCenter *_ui;
 
   QStringList _categoryFilters;
   QString _nameFilter;

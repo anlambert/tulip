@@ -644,7 +644,6 @@ void ParallelCoordinatesView::buildContextMenu() {
 void ParallelCoordinatesView::fillContextMenu(QMenu *menu, const QPointF &point) {
   GlMainView::fillContextMenu(menu, point);
   menu->addAction(viewSetupMenu->menuAction());
-  viewSetupMenu->setStyleSheet(menu->styleSheet());
 
   axisUnderPointer = getAxisUnderPointer(point.x(), point.y());
 

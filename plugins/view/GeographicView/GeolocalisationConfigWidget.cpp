@@ -46,7 +46,7 @@ static vector<string> getGraphPropertiesListAccordingToType(Graph *graph, const 
 }
 
 GeolocalisationConfigWidget::GeolocalisationConfigWidget(QWidget *parent)
-    : QWidget(parent), _ui(new Ui::GeolocalisationConfigWidgetData) {
+    : QWidget(parent), _ui(new Ui::GeolocalisationConfigWidget) {
   _ui->setupUi(this);
   connect(_ui->addressLocRB, &QAbstractButton::toggled, this,
           &GeolocalisationConfigWidget::enableDisableComboBoxes);

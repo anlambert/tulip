@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>GeographicViewConfigWidgetData</class>
- <widget class="QWidget" name="GeographicViewConfigWidgetData">
+ <class>GeographicViewConfigWidget</class>
+ <widget class="QWidget" name="GeographicViewConfigWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -376,7 +376,7 @@
   <connection>
    <sender>csvFilePushButton</sender>
    <signal>clicked()</signal>
-   <receiver>GeographicViewConfigWidgetData</receiver>
+   <receiver>GeographicViewConfigWidget</receiver>
    <slot>openCsvFileBrowser()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -392,7 +392,7 @@
   <connection>
    <sender>polyFilePushButton</sender>
    <signal>clicked()</signal>
-   <receiver>GeographicViewConfigWidgetData</receiver>
+   <receiver>GeographicViewConfigWidget</receiver>
    <slot>openPolyFileBrowser()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -408,7 +408,7 @@
   <connection>
    <sender>csvHelpButton</sender>
    <signal>clicked()</signal>
-   <receiver>GeographicViewConfigWidgetData</receiver>
+   <receiver>GeographicViewConfigWidget</receiver>
    <slot>openCsvHelp()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -424,7 +424,7 @@
   <connection>
    <sender>polyHelpButton</sender>
    <signal>clicked()</signal>
-   <receiver>GeographicViewConfigWidgetData</receiver>
+   <receiver>GeographicViewConfigWidget</receiver>
    <slot>openPolyHelp()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -440,7 +440,7 @@
   <connection>
    <sender>mapToPolygon</sender>
    <signal>clicked()</signal>
-   <receiver>GeographicViewConfigWidgetData</receiver>
+   <receiver>GeographicViewConfigWidget</receiver>
    <slot>mapToPolygonSlot()</slot>
    <hints>
     <hint type="sourcelabel">

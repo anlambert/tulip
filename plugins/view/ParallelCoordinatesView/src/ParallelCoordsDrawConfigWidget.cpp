@@ -27,8 +27,7 @@ using namespace std;
 namespace tlp {
 
 ParallelCoordsDrawConfigWidget::ParallelCoordsDrawConfigWidget(QWidget *parent)
-    : QWidget(parent), oldValuesInitialized(false),
-      _ui(new Ui::ParallelCoordsDrawConfigWidgetData) {
+    : QWidget(parent), oldValuesInitialized(false), _ui(new Ui::ParallelCoordsDrawConfigWidget) {
   _ui->setupUi(this);
   setBackgroundColor(Color(255, 255, 255));
   connect(_ui->browseButton, &QAbstractButton::clicked, this,
@@ -39,8 +38,6 @@ ParallelCoordsDrawConfigWidget::ParallelCoordsDrawConfigWidget(QWidget *parent)
           &ParallelCoordsDrawConfigWidget::minAxisPointSizeValueChanged);
   connect(_ui->maxAxisPointSize, QOverload<int>::of(&QSpinBox::valueChanged), this,
           &ParallelCoordsDrawConfigWidget::maxAxisPointSizeValueChanged);
-
-  _ui->bgColorButton->setDialogParent(getMainWindow());
 }
 
 ParallelCoordsDrawConfigWidget::~ParallelCoordsDrawConfigWidget() {

@@ -30,7 +30,7 @@ using namespace std;
 
 EnclosingCircleConfigurationWidget::EnclosingCircleConfigurationWidget(Color &circleColor,
                                                                        QWidget *parent)
-    : QWidget(parent), _ui(new Ui::EnclosingCircleConfigurationData) {
+    : QWidget(parent), _ui(new Ui::EnclosingCircleConfiguration) {
   _ui->setupUi(this);
   connect(_ui->solidColorRadio, &QAbstractButton::clicked, this,
           &EnclosingCircleConfigurationWidget::solidColorRadioChecked);
@@ -40,7 +40,6 @@ EnclosingCircleConfigurationWidget::EnclosingCircleConfigurationWidget(Color &ci
           &EnclosingCircleConfigurationWidget::colorButtonClicked);
   connect(_ui->alphaSlider, &QAbstractSlider::valueChanged, this,
           &EnclosingCircleConfigurationWidget::alphaChanged);
-  _ui->circleColorBtn->setDialogParent(parent);
   _ui->circleColorBtn->setDialogTitle("Choose the enclosing circle color");
   _ui->circleColorBtn->setColor(circleColor);
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ProgressWidgetData</class>
- <widget class="QWidget" name="ProgressWidgetData">
+ <class>ProgressWidget</class>
+ <widget class="QWidget" name="ProgressWidget">
   <property name="geometry">
    <rect>
     <x>0</x>

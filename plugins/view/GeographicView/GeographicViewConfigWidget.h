@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -19,7 +19,7 @@
 #include <talipot/DataSet.h>
 
 namespace Ui {
-class GeographicViewConfigWidgetData;
+class GeographicViewConfigWidget;
 }
 
 namespace tlp {
@@ -27,7 +27,7 @@ class GeographicViewConfigWidget : public QWidget {
 
   Q_OBJECT
 
-  Ui::GeographicViewConfigWidgetData *_ui;
+  Ui::GeographicViewConfigWidget *_ui;
 
 public:
   enum PolyFileType { None = -1, Default = 0, CsvFile, PolyFile };

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -19,7 +19,7 @@
 #include <string>
 
 namespace Ui {
-class PathFinderConfigurationData;
+class PathFinderConfiguration;
 }
 
 class QString;
@@ -28,7 +28,7 @@ namespace tlp {
 class PathFinderConfigurationWidget : public QWidget {
   Q_OBJECT
 
-  Ui::PathFinderConfigurationData *_ui;
+  Ui::PathFinderConfiguration *_ui;
 
 public:
   PathFinderConfigurationWidget(QWidget *parent = nullptr);

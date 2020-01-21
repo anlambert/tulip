@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -22,7 +22,7 @@
 #include <talipot/Graph.h>
 
 namespace Ui {
-class ViewGraphPropertiesSelectionWidgetData;
+class ViewGraphPropertiesSelectionWidget;
 }
 
 namespace tlp {
@@ -49,7 +49,7 @@ public:
   bool configurationChanged();
 
 private:
-  Ui::ViewGraphPropertiesSelectionWidgetData *_ui;
+  Ui::ViewGraphPropertiesSelectionWidget *_ui;
   Graph *graph;
   std::vector<std::string> graphPropertiesTypesFilter;
   std::vector<std::string> lastSelectedProperties;
