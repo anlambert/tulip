@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -131,7 +131,7 @@ pair<Coord, Coord> tlp::computeBoundingRadius(const Graph *graph, const LayoutPr
   if (layout->hasNonDefaultValuatedEdges()) {
     for (auto e : graph->edges()) {
       if (selection == nullptr || selection->getEdgeValue(e)) {
-        for (const auto coord : layout->getEdgeValue(e)) {
+        for (const auto &coord : layout->getEdgeValue(e)) {
           double curRad = (coord - center).norm();
 
           if (curRad > maxRad) {

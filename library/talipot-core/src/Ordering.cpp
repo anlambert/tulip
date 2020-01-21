@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -889,7 +889,7 @@ void Ordering::selectAndUpdate(node n) {
 
   while (n2 != node_last) {
 
-    for (const Face &f_tmp : Gp->getFacesAdj(n2)) {
+    for (Face f_tmp : Gp->getFacesAdj(n2)) {
       outv.add(f_tmp.id, -1);
     }
 
@@ -958,7 +958,7 @@ void Ordering::selectAndUpdate(node n) {
   for (int i = 0; uint(i) < noeuds.size(); i++) {
     int deg = Gp->deg(noeuds[i]);
 
-    for (const Face &f2 : Gp->getFacesAdj(noeuds[i])) {
+    for (Face f2 : Gp->getFacesAdj(noeuds[i])) {
 
       if (deg == 2 && !isOuterFace.get(f2.id))
         visitedFaces.set(f2.id, true);
@@ -1024,7 +1024,7 @@ void Ordering::selectAndUpdate(node n) {
     addNode++;
     int cpt = 0;
 
-    for (const Face &f2 : Gp->getFacesAdj(n2)) {
+    for (Face f2 : Gp->getFacesAdj(n2)) {
 
       if (isOuterFace.get(f2.id))
         continue;
@@ -1155,7 +1155,7 @@ void Ordering::selectAndUpdate(Face f) {
 
   if (Gp->deg(pred) == 2) {
 
-    for (const Face &fa : Gp->getFacesAdj(pred)) {
+    for (Face fa : Gp->getFacesAdj(pred)) {
       visitedFaces.set(fa.id, true);
     }
   }
@@ -1164,7 +1164,7 @@ void Ordering::selectAndUpdate(Face f) {
 
   if (Gp->deg(n2) == 2) {
 
-    for (const Face &fa : Gp->getFacesAdj(n2)) {
+    for (Face fa : Gp->getFacesAdj(n2)) {
       visitedFaces.set(fa.id, true);
     }
   }
@@ -1188,7 +1188,7 @@ void Ordering::selectAndUpdate(Face f) {
   while (n3 != n2) {
     int cpt = 0;
 
-    for (const Face &fa : Gp->getFacesAdj(n3)) {
+    for (Face fa : Gp->getFacesAdj(n3)) {
 
       if (isOuterFace.get(fa.id))
         continue;
@@ -1234,7 +1234,7 @@ void Ordering::selectAndUpdate(Face f) {
 
   if (add_node == 0) {
 
-    for (const Face &tmp_f : Gp->getFacesAdj(n2)) {
+    for (Face tmp_f : Gp->getFacesAdj(n2)) {
 
       if (isOuterFace.get(tmp_f.id))
         continue;
@@ -1277,7 +1277,7 @@ bool Ordering::isSelectable(node n) {
     n_predCont = left.get(n.id);
     n_succCont = right.get(n.id);
 
-    for (const Face &faces : Gp->getFacesAdj(n)) {
+    for (Face faces : Gp->getFacesAdj(n)) {
 
       if (isOuterFace.get(faces.id))
         continue;
@@ -1407,7 +1407,7 @@ Ordering::Ordering(PlanarConMap *G, PluginProgress *pluginProgress, int minProgr
     // search for a face to augment, occur when no node or face has been selected
     if (!selNode && !selVisitedFace && !selFace) {
 
-      for (const Face &fac : Gp->getFaces()) {
+      for (Face fac : Gp->getFaces()) {
 
         if (isOuterFace.get((fac).id))
           continue;
@@ -1523,7 +1523,7 @@ void Ordering::init_v1(vector<node> fn) {
 void Ordering::init_outerface() {
   unsigned int max_size = 0;
 
-  for (const Face &tmp : Gp->getFaces()) {
+  for (Face tmp : Gp->getFaces()) {
 
     if (Gp->nbFacesNodes(tmp) > max_size) {
       max_size = Gp->nbFacesNodes(tmp);
@@ -1542,7 +1542,7 @@ void Ordering::init_outerface() {
 void Ordering::init_seqP() {
   seqP.setAll(0);
 
-  for (const Face &fa : Gp->getFaces()) {
+  for (Face fa : Gp->getFaces()) {
 
     if (isOuterFace.get(fa.id))
       continue;
@@ -1565,7 +1565,7 @@ void Ordering::init_outv_oute() {
   if (it_node2->hasNext()) {
     no_first = it_node2->next();
 
-    for (const Face &f : Gp->getFacesAdj(no_first)) {
+    for (Face f : Gp->getFacesAdj(no_first)) {
       outv.add(f.id, 1);
     }
   }
@@ -1579,7 +1579,7 @@ void Ordering::init_outv_oute() {
     cpt++;
     n = it_node2->next();
 
-    for (const Face &f : Gp->getFacesAdj(n)) {
+    for (Face f : Gp->getFacesAdj(n)) {
       outv.add(f.id, 1);
     }
 
@@ -1622,7 +1622,7 @@ void Ordering::init_selectableFaces() {
 
   Face derniere = Gp->getFaceContaining(v1[0], v1[1]);
 
-  for (const Face &f : Gp->getFaces()) {
+  for (Face f : Gp->getFaces()) {
 
     if (f == derniere || isOuterFace.get(f.id))
       continue;

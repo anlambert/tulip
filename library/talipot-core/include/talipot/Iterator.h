@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -225,14 +225,8 @@ inline bool iteratorEmpty(Iterator<T> *it) {
  **/
 template <typename T, class MapFunction>
 inline void iteratorMap(Iterator<T> *it, MapFunction &&mapFunction) {
-  if (sizeof(T) > sizeof(double)) {
-    for (const auto &v : it) {
-      mapFunction(v);
-    }
-  } else {
-    for (auto v : it) {
-      mapFunction(v);
-    }
+  for (auto v : it) {
+    mapFunction(v);
   }
 }
 
@@ -256,15 +250,10 @@ template <typename T, typename reduceType, class ReduceFunction>
 inline reduceType iteratorReduce(Iterator<T> *it, const reduceType &initVal,
                                  ReduceFunction reduceFunction) {
   reduceType val = initVal;
-  if (sizeof(T) > sizeof(double)) {
-    for (const auto &v : it) {
-      val = reduceFunction(val, v);
-    }
-  } else {
-    for (auto v : it) {
-      val = reduceFunction(val, v);
-    }
+  for (auto v : it) {
+    val = reduceFunction(val, v);
   }
+
   return val;
 }
 

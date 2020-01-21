@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -213,7 +213,7 @@ edge PlanarConMap::addEdgeMap(const node v, const node w, Face f, const edge e1,
     node n_tmp(id);
     vector<Face> v_faces;
 
-    for (const Face &f : getFacesAdj(n_tmp))
+    for (Face f : getFacesAdj(n_tmp))
       v_faces.push_back(f);
 
     nodesFaces[n_tmp] = v_faces;
@@ -333,7 +333,7 @@ void PlanarConMap::delEdgeMap(edge e, Face f) {
       node n_tmp(id);
       vector<Face> v_faces;
 
-      for (const Face &f : getFacesAdj(n_tmp))
+      for (Face f : getFacesAdj(n_tmp))
         v_faces.push_back(f);
 
       nodesFaces[n_tmp] = v_faces;
@@ -784,7 +784,7 @@ Face PlanarConMap::splitFace(Face f, const node v, const node w, node n) {
       node n_tmp(id);
       vector<Face> v_faces;
 
-      for (const Face &f : getFacesAdj(n_tmp))
+      for (Face f : getFacesAdj(n_tmp))
         v_faces.push_back(f);
 
       nodesFaces[n_tmp] = v_faces;
@@ -854,7 +854,7 @@ void PlanarConMap::mergeFaces(Face f, Face g) {
 //============================================================
 bool PlanarConMap::containNode(Face f, node v) {
 
-  for (const Face &itf : getFacesAdj(v)) {
+  for (Face itf : getFacesAdj(v)) {
     if (itf == f) {
       return true;
     }
@@ -911,7 +911,7 @@ Face PlanarConMap::getFaceContaining(node v, node w) {
 
 //=================================================================
 Face PlanarConMap::sameFace(node v, node n) {
-  for (const Face &f : getFacesAdj(v)) {
+  for (Face f : getFacesAdj(v)) {
     if (containNode(f, n))
       return f;
   }
@@ -922,7 +922,7 @@ Face PlanarConMap::sameFace(node v, node n) {
 ostream &operator<<(ostream &os, PlanarConMap *sp) {
   os << "Faces : " << endl << endl;
 
-  for (const Face &tmp : sp->getFaces()) {
+  for (Face tmp : sp->getFaces()) {
     os << "Face " << tmp.id << " : ";
     os << "(edges : ";
 
@@ -952,7 +952,7 @@ ostream &operator<<(ostream &os, PlanarConMap *sp) {
     os << ") and ";
     os << "(Faces : ";
 
-    for (const Face &f : sp->getFacesAdj(n)) {
+    for (Face f : sp->getFacesAdj(n)) {
       os << f.id << " ";
     }
 
