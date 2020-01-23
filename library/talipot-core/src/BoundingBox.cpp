@@ -42,21 +42,19 @@ BoundingBox::BoundingBox(const tlp::Coord &min, const tlp::Coord &max) {
 }
 
 void BoundingBox::expand(const tlp::Coord &coord) {
-  if (!isValid()) {
-    (*this)[0] = coord;
-    (*this)[1] = coord;
-  } else {
+  if (isValid()) {
     (*this)[0] = tlp::minVector((*this)[0], coord);
     (*this)[1] = tlp::maxVector((*this)[1], coord);
+  } else {
+    (*this)[0] = coord;
+    (*this)[1] = coord;
   }
 }
 
 void BoundingBox::expand(const tlp::BoundingBox &bb) {
-  if (isValid()) {
-    (*this)[0] = tlp::minVector((*this)[0], bb[0]);
-    (*this)[1] = tlp::maxVector((*this)[1], bb[1]);
-  } else {
-    *this = bb;
+  if (bb.isValid()) {
+    expand(bb[0]);
+    expand(bb[1]);
   }
 }
 
