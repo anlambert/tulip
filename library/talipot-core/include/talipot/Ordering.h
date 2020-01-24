@@ -41,14 +41,14 @@ public:
   Ordering(PlanarConMap *G, PluginProgress *pluginProgress = nullptr, int minProgress = 0,
            int deltaProgress = 0, int maxProgress = 0);
   ~Ordering();
-  //   inline void push_back(std::vector<node> nodeVector) {
-  inline size_t size() {
+  //    void push_back(std::vector<node> nodeVector) {
+  size_t size() {
     return _data.size();
   }
-  inline std::vector<node> operator[](const unsigned int i) const {
+  std::vector<node> operator[](const unsigned int i) const {
     return _data[i];
   }
-  inline std::vector<node> &operator[](const unsigned int i) {
+  std::vector<node> &operator[](const unsigned int i) {
     return _data[i];
   }
 

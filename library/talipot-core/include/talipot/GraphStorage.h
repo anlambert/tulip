@@ -52,28 +52,28 @@ public:
   /**
    * @brief Return true if n belongs to the graph
    */
-  inline bool isElement(const node n) const {
+  bool isElement(const node n) const {
     return nodeIds.isElement(n);
   }
   //=======================================================
   /**
    * @brief Return the number of nodes in the graph
    */
-  inline unsigned int numberOfNodes() const {
+  unsigned int numberOfNodes() const {
     return nodeIds.size();
   }
   //=======================================================
   /**
    * @brief Return true if e belongs to the graph
    */
-  inline bool isElement(const edge e) const {
+  bool isElement(const edge e) const {
     return edgeIds.isElement(e);
   }
   //=======================================================
   /**
    * @brief Return the number of edges in the graph
    */
-  inline unsigned int numberOfEdges() const {
+  unsigned int numberOfEdges() const {
     return edgeIds.size();
   }
   //=======================================================
@@ -113,7 +113,7 @@ public:
   /**
    * @brief return the adjacency edges of a given node
    */
-  inline const std::vector<edge> &adj(const node n) const {
+  const std::vector<edge> &adj(const node n) const {
     assert(isElement(n));
     return nodeData[n.id].edges;
   }
@@ -121,7 +121,7 @@ public:
   /**
    * @brief Return the first node of graph
    */
-  inline node getOneNode() const {
+  node getOneNode() const {
     return numberOfNodes() ? nodeIds[0] : node();
   }
   //=======================================================
@@ -130,7 +130,7 @@ public:
    * @warning: The returned iterator should be deleted by the caller to prevent memory leaks
    * @complexity: o(1)
    */
-  inline Iterator<node> *getNodes() const {
+  Iterator<node> *getNodes() const {
     return nodeIds.getElts();
   }
   //=======================================================
@@ -150,7 +150,7 @@ public:
    * @brief Return a Talipot iterator on edges of the graph
    * @warning: The returned iterator should be deleted by the caller to prevent memory leaks
    */
-  inline Iterator<edge> *getEdges() const {
+  Iterator<edge> *getEdges() const {
     return edgeIds.getElts();
   }
   //=======================================================
@@ -208,7 +208,7 @@ public:
   /**
    * @brief Return the degree of a node
    */
-  inline unsigned int deg(const node n) const {
+  unsigned int deg(const node n) const {
     assert(isElement(n));
     return nodeData[n.id].edges.size();
   }
@@ -216,7 +216,7 @@ public:
   /**
    * @brief Return the out degree of a node
    */
-  inline unsigned int outdeg(const node n) const {
+  unsigned int outdeg(const node n) const {
     assert(isElement(n));
     return nodeData[n.id].outDegree;
   }
@@ -224,7 +224,7 @@ public:
   /**
    * @brief Return the in degree of a node
    */
-  inline unsigned int indeg(const node n) const {
+  unsigned int indeg(const node n) const {
     assert(isElement(n));
     const NodeData &ctnr = nodeData[n.id];
     return ctnr.edges.size() - ctnr.outDegree;
@@ -233,35 +233,35 @@ public:
   /**
    * @brief Return the edges of the graph
    */
-  inline const std::vector<edge> &edges() const {
+  const std::vector<edge> &edges() const {
     return edgeIds;
   }
   //=======================================================
   /**
    * @brief Return the position of an edge in the edges of the graph
    */
-  inline unsigned int edgePos(const edge e) const {
+  unsigned int edgePos(const edge e) const {
     return edgeIds.getPos(e);
   }
   //=======================================================
   /**
    * @brief Return the nodes of the graph
    */
-  inline const std::vector<node> &nodes() const {
+  const std::vector<node> &nodes() const {
     return nodeIds;
   }
   //=======================================================
   /**
    * @brief Return the position of a node in the nodes of the graph
    */
-  inline unsigned int nodePos(const node n) const {
+  unsigned int nodePos(const node n) const {
     return nodeIds.getPos(n);
   }
   //=======================================================
   /**
    * @brief Return the extremities of an edge (src, target)
    */
-  inline const std::pair<node, node> &ends(const edge e) const {
+  const std::pair<node, node> &ends(const edge e) const {
     assert(isElement(e));
     return edgeEnds[e.id];
   }
@@ -269,7 +269,7 @@ public:
   /**
    * @brief return the first extremity (considered as source if the graph is directed) of an edge
    */
-  inline node source(const edge e) const {
+  node source(const edge e) const {
     assert(isElement(e));
     return edgeEnds[e.id].first;
   }
@@ -277,7 +277,7 @@ public:
   /**
    * @brief return the second extremity (considered as target if the graph is directed) of an edge
    */
-  inline node target(const edge e) const {
+  node target(const edge e) const {
     assert(isElement(e));
     return edgeEnds[e.id].second;
   }
@@ -285,7 +285,7 @@ public:
   /**
    * @brief return the opposite node of n through edge e
    */
-  inline node opposite(const edge e, const node n) const {
+  node opposite(const edge e, const node n) const {
     assert(isElement(e));
     const std::pair<node, node> &eEnds = edgeEnds[e.id];
     assert((eEnds.first == n) || (eEnds.second == n));
@@ -308,7 +308,7 @@ public:
    * and nodes.
    * \see setEnds
    */
-  inline void setSource(const edge e, const node n) {
+  void setSource(const edge e, const node n) {
     setEnds(e, n, node());
   }
   //=======================================================
@@ -319,7 +319,7 @@ public:
    * and nodes.
    * \see setEnds
    */
-  inline void setTarget(const edge e, const node n) {
+  void setTarget(const edge e, const node n) {
     setEnds(e, node(), n);
   }
   //=======================================================
@@ -441,7 +441,7 @@ public:
    * @warning: That operation modify the vector of nodes and the vector of edges
    * and thus devalidate all iterators.
    */
-  inline void sortElts() {
+  void sortElts() {
     nodeIds.sort();
     edgeIds.sort();
   }

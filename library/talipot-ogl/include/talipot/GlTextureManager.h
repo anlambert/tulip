@@ -90,13 +90,13 @@ public:
   /**
    * Clear vector of textures with error
    */
-  static inline void clearErrorVector() {
+  static void clearErrorVector() {
     texturesWithError.clear();
   }
   /**
    * Remove an entry of vector of textures with error
    */
-  static inline void removeEntryOfErrorVector(const std::string &name) {
+  static void removeEntryOfErrorVector(const std::string &name) {
     texturesWithError.erase(name);
   }
 
@@ -108,7 +108,7 @@ public:
   /**
    * Get Texture loader
    */
-  static inline GlTextureLoader *getTextureLoader() {
+  static GlTextureLoader *getTextureLoader() {
     return loader ? loader : (loader = new GlTextureLoader());
   }
 

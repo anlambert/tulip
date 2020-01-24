@@ -31,29 +31,29 @@ public:
     this->resize(graph->numberOfNodes());
   }
 
-  inline typename std::vector<TYPE>::const_reference operator[](unsigned int i) const {
+  typename std::vector<TYPE>::const_reference operator[](unsigned int i) const {
     return std::vector<TYPE>::operator[](i);
   }
 
-  inline typename std::vector<TYPE>::reference operator[](unsigned int i) {
+  typename std::vector<TYPE>::reference operator[](unsigned int i) {
     return std::vector<TYPE>::operator[](i);
   }
 
-  inline typename std::vector<TYPE>::const_reference operator[](node n) const {
+  typename std::vector<TYPE>::const_reference operator[](node n) const {
     return (*this)[graph->nodePos(n)];
   }
 
-  inline typename std::vector<TYPE>::reference operator[](node n) {
+  typename std::vector<TYPE>::reference operator[](node n) {
     return (*this)[graph->nodePos(n)];
   }
 
   // get the stored value of a node
-  inline typename std::vector<TYPE>::const_reference getNodeValue(node n) const {
+  typename std::vector<TYPE>::const_reference getNodeValue(node n) const {
     return (*this)[n];
   }
 
   // set the stored value of a node
-  inline void setNodeValue(node n, TYPE val) {
+  void setNodeValue(node n, TYPE val) {
     (*this)[n] = val;
   }
 
@@ -108,33 +108,33 @@ public:
     this->resize(graph->numberOfNodes());
   }
 
-  inline const Graph *getGraph() const {
+  const Graph *getGraph() const {
     return graph;
   }
 
-  inline bool operator[](unsigned int i) const {
+  bool operator[](unsigned int i) const {
     return static_cast<bool>(std::vector<unsigned char>::operator[](i));
   }
 
-  inline std::vector<unsigned char>::reference operator[](unsigned int i) {
+  std::vector<unsigned char>::reference operator[](unsigned int i) {
     return std::vector<unsigned char>::operator[](i);
   }
 
-  inline bool operator[](node n) const {
+  bool operator[](node n) const {
     return (*this)[graph->nodePos(n)];
   }
 
-  inline std::vector<unsigned char>::reference operator[](node n) {
+  std::vector<unsigned char>::reference operator[](node n) {
     return (*this)[graph->nodePos(n)];
   }
 
   // get the stored value of a node
-  inline bool getNodeValue(node n) const {
+  bool getNodeValue(node n) const {
     return (*this)[graph->nodePos(n)];
   }
 
   // set the stored value of a node
-  inline void setNodeValue(node n, bool val) {
+  void setNodeValue(node n, bool val) {
     (*this)[graph->nodePos(n)] = val;
   }
 
@@ -183,33 +183,33 @@ public:
     this->resize(graph->numberOfEdges());
   }
 
-  inline const Graph *getGraph() const {
+  const Graph *getGraph() const {
     return graph;
   }
 
-  inline typename std::vector<TYPE>::const_reference operator[](unsigned int i) const {
+  typename std::vector<TYPE>::const_reference operator[](unsigned int i) const {
     return std::vector<TYPE>::operator[](i);
   }
 
-  inline typename std::vector<TYPE>::reference operator[](unsigned int i) {
+  typename std::vector<TYPE>::reference operator[](unsigned int i) {
     return std::vector<TYPE>::operator[](i);
   }
 
-  inline typename std::vector<TYPE>::const_reference operator[](edge e) const {
+  typename std::vector<TYPE>::const_reference operator[](edge e) const {
     return (*this)[graph->edgePos(e)];
   }
 
-  inline typename std::vector<TYPE>::reference operator[](edge e) {
+  typename std::vector<TYPE>::reference operator[](edge e) {
     return (*this)[graph->edgePos(e)];
   }
 
   // get the stored value of a edge
-  inline typename std::vector<TYPE>::const_reference getEdgeValue(edge e) const {
+  typename std::vector<TYPE>::const_reference getEdgeValue(edge e) const {
     return (*this)[e];
   }
 
   // set the stored value of a edge
-  inline void setEdgeValue(edge e, TYPE val) {
+  void setEdgeValue(edge e, TYPE val) {
     (*this)[e] = val;
   }
 
@@ -263,29 +263,29 @@ public:
     this->resize(graph->numberOfEdges());
   }
 
-  inline bool operator[](unsigned int i) const {
+  bool operator[](unsigned int i) const {
     return static_cast<bool>(std::vector<unsigned char>::operator[](i));
   }
 
-  inline std::vector<unsigned char>::reference operator[](unsigned int i) {
+  std::vector<unsigned char>::reference operator[](unsigned int i) {
     return std::vector<unsigned char>::operator[](i);
   }
 
-  inline bool operator[](edge e) const {
+  bool operator[](edge e) const {
     return (*this)[graph->edgePos(e)];
   }
 
-  inline std::vector<unsigned char>::reference operator[](edge e) {
+  std::vector<unsigned char>::reference operator[](edge e) {
     return (*this)[graph->edgePos(e)];
   }
 
   // get the stored value of a edge
-  inline bool getEdgeValue(edge e) const {
+  bool getEdgeValue(edge e) const {
     return (*this)[graph->edgePos(e)];
   }
 
   // set the stored value of a edge
-  inline void setEdgeValue(edge e, bool val) {
+  void setEdgeValue(edge e, bool val) {
     (*this)[graph->edgePos(e)] = val;
   }
 

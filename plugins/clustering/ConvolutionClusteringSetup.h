@@ -35,10 +35,10 @@ public:
   ConvolutionClusteringSetup(ConvolutionClustering *convolPlugin, QWidget *parent = nullptr);
   ~ConvolutionClusteringSetup() override;
 
-  inline ConvolutionClustering *getPlugin() const {
+  ConvolutionClustering *getPlugin() const {
     return convolPlugin;
   }
-  inline bool getLogarithmicScale() const {
+  bool getLogarithmicScale() const {
     return useLogarithmicScale;
   }
   void abort() {

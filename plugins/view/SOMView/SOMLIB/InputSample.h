@@ -44,14 +44,14 @@ public:
   tlp::Iterator<tlp::node> *getNodes();
   tlp::Iterator<tlp::node> *getRandomNodeOrder();
 
-  inline unsigned int getSampleSize() const {
+  unsigned int getSampleSize() const {
     assert(rootGraph);
     return rootGraph->numberOfNodes();
   }
-  inline unsigned int getDimensionOfSample() const {
+  unsigned int getDimensionOfSample() const {
     return propertiesList.size();
   }
-  inline tlp::Graph *getGraph() {
+  tlp::Graph *getGraph() {
     return rootGraph;
   }
 

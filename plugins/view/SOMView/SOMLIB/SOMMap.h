@@ -102,17 +102,17 @@ public:
    */
   bool getPosForNode(tlp::node, unsigned int &x, unsigned int &y);
 
-  inline unsigned int getWidth() const {
+  unsigned int getWidth() const {
     return width;
   }
-  inline unsigned int getHeight() const {
+  unsigned int getHeight() const {
     return height;
   }
 
-  inline SOMMapConnectivity getConnectivity() {
+  SOMMapConnectivity getConnectivity() {
     return connectivity;
   }
-  inline bool getOppositeConnected() {
+  bool getOppositeConnected() {
     return oppositeConnected;
   }
 

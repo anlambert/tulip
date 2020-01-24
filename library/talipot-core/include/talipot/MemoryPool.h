@@ -62,9 +62,9 @@ public:
   MemoryPool() {}
 
 #ifndef NDEBUG
-  inline void *operator new(size_t sizeofObj) {
+  void *operator new(size_t sizeofObj) {
 #else
-  inline void *operator new(size_t) {
+  void *operator new(size_t) {
 #endif
     assert(sizeof(TYPE) == sizeofObj); // to prevent inheritance with different size of object
     TYPE *t;
@@ -72,7 +72,7 @@ public:
     return t;
   }
 
-  inline void operator delete(void *p) {
+  void operator delete(void *p) {
     _memoryChunkManager.releaseObject(p);
   }
 

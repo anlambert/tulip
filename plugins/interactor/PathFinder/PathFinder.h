@@ -62,14 +62,14 @@ public:
   /**
    * @return The name of the property used to get the weight values over the edges.
    */
-  inline std::string getWeightMetricName() const {
+  std::string getWeightMetricName() const {
     return weightMetric;
   }
 
   /**
    * @return true if the user chose not to select only one path
    */
-  inline bool isSelectAllPaths() const {
+  bool isSelectAllPaths() const {
     return selectAllPaths;
   }
 
@@ -77,7 +77,7 @@ public:
    * @return The edge orientation used when computing the path.
    * @see PathAlgorithm::EdgeOrientation
    */
-  inline PathAlgorithm::EdgeOrientation getEdgeOrientation() const {
+  PathAlgorithm::EdgeOrientation getEdgeOrientation() const {
     return edgeOrientation;
   }
 
@@ -85,7 +85,7 @@ public:
    * @return the type of path the user wants to select.
    * @see PathAlgorithm::PathType
    */
-  inline PathAlgorithm::PathType getPathsType() const {
+  PathAlgorithm::PathType getPathsType() const {
     return pathsTypes;
   }
 

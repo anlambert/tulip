@@ -1077,7 +1077,7 @@ public:
    * @brief return whether the graph is empty or not.
    * @return true if the graph has no nodes, false if not.
    */
-  virtual inline bool isEmpty() const {
+  virtual bool isEmpty() const {
     return nodes().empty();
   }
 

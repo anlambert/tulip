@@ -44,7 +44,7 @@ public:
                       double minValue, double maxValue);
   ~SOMPreviewComposite() override;
 
-  inline std::string getPropertyName() const {
+  std::string getPropertyName() const {
     return propertyName;
   }
 

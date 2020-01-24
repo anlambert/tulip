@@ -77,10 +77,10 @@ public:
     axisMaxValue = max;
   }
 
-  inline double getAxisMinValue() const {
+  double getAxisMinValue() const {
     return glQuantitativeAxis->getAxisMinValue();
   }
-  inline double getAxisMaxValue() const {
+  double getAxisMaxValue() const {
     return glQuantitativeAxis->getAxisMaxValue();
   }
 

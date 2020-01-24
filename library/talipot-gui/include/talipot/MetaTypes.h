@@ -144,7 +144,7 @@ class TLP_QT_SCOPE MetaTypes {
   MetaTypes() {}
 
   template <typename T>
-  inline static QVariant typedVariant(tlp::DataType *dm) {
+  static QVariant typedVariant(tlp::DataType *dm) {
     T result;
 
     if (dm)

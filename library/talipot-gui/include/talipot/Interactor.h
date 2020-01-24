@@ -161,7 +161,7 @@ protected:
     @brief Provides input filtering for the interactor
     @see QObject::eventFilter()
     */
-  inline bool eventFilter(QObject *obj, QEvent *ev) override {
+  bool eventFilter(QObject *obj, QEvent *ev) override {
     return QObject::eventFilter(obj, ev);
   }
 };

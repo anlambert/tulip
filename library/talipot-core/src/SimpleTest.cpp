@@ -30,7 +30,7 @@ public:
    **/
   std::unordered_map<const Graph *, bool> resultsBuffer;
 
-  inline void deleteResult(Graph *graph) {
+  void deleteResult(Graph *graph) {
     resultsBuffer.erase(graph);
     graph->removeListener(this);
   }

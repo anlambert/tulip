@@ -98,22 +98,22 @@ private:
   void moveSubtree(tlp::node fromNode, tlp::node toNode, float rightShift);
   void executeShifts(tlp::node v);
 
-  inline tlp::node getSuperGraph(tlp::node n);
+  tlp::node getSuperGraph(tlp::node n);
 
-  inline tlp::node leftmostChild(tlp::node n);
-  inline tlp::node rightmostChild(tlp::node n);
+  tlp::node leftmostChild(tlp::node n);
+  tlp::node rightmostChild(tlp::node n);
 
-  inline tlp::node leftSibling(tlp::node n);
-  inline tlp::node rightSibling(tlp::node n);
-  inline tlp::node leftMostSibling(tlp::node n);
+  tlp::node leftSibling(tlp::node n);
+  tlp::node rightSibling(tlp::node n);
+  tlp::node leftMostSibling(tlp::node n);
 
-  inline tlp::node nextRightContour(tlp::node v);
-  inline tlp::node nextLeftContour(tlp::node v);
-  inline tlp::node findCommonAncestor(tlp::node left, tlp::node right, tlp::node defaultAncestor);
+  tlp::node nextRightContour(tlp::node v);
+  tlp::node nextLeftContour(tlp::node v);
+  tlp::node findCommonAncestor(tlp::node left, tlp::node right, tlp::node defaultAncestor);
 };
 
 //====================================================================
-inline tlp::node ImprovedWalker::getSuperGraph(tlp::node n) {
+tlp::node ImprovedWalker::getSuperGraph(tlp::node n) {
   if (tree->indeg(n) < 1)
     return BADNODE;
 
@@ -121,7 +121,7 @@ inline tlp::node ImprovedWalker::getSuperGraph(tlp::node n) {
 }
 
 //====================================================================
-inline tlp::node ImprovedWalker::leftmostChild(tlp::node n) {
+tlp::node ImprovedWalker::leftmostChild(tlp::node n) {
   if (tree->outdeg(n) < 1)
     return BADNODE;
 
@@ -129,7 +129,7 @@ inline tlp::node ImprovedWalker::leftmostChild(tlp::node n) {
 }
 
 //====================================================================
-inline tlp::node ImprovedWalker::rightmostChild(tlp::node n) {
+tlp::node ImprovedWalker::rightmostChild(tlp::node n) {
   int pos;
 
   if ((pos = tree->outdeg(n)) < 1)
@@ -139,7 +139,7 @@ inline tlp::node ImprovedWalker::rightmostChild(tlp::node n) {
 }
 
 //====================================================================
-inline tlp::node ImprovedWalker::leftSibling(tlp::node n) {
+tlp::node ImprovedWalker::leftSibling(tlp::node n) {
   if (order[n] <= 1)
     return BADNODE;
   else
@@ -147,7 +147,7 @@ inline tlp::node ImprovedWalker::leftSibling(tlp::node n) {
 }
 
 //====================================================================
-inline tlp::node ImprovedWalker::rightSibling(tlp::node n) {
+tlp::node ImprovedWalker::rightSibling(tlp::node n) {
   tlp::node father = getSuperGraph(n);
 
   if (order[n] >= int(tree->outdeg(father)))
@@ -157,13 +157,13 @@ inline tlp::node ImprovedWalker::rightSibling(tlp::node n) {
 }
 
 //====================================================================
-inline tlp::node ImprovedWalker::leftMostSibling(tlp::node n) {
+tlp::node ImprovedWalker::leftMostSibling(tlp::node n) {
   tlp::node father = getSuperGraph(n);
   return leftmostChild(father);
 }
 
 //====================================================================
-inline tlp::node ImprovedWalker::nextRightContour(tlp::node n) {
+tlp::node ImprovedWalker::nextRightContour(tlp::node n) {
   if (isLeaf(tree, n))
     return thread[n];
   else
@@ -171,7 +171,7 @@ inline tlp::node ImprovedWalker::nextRightContour(tlp::node n) {
 }
 
 //====================================================================
-inline tlp::node ImprovedWalker::nextLeftContour(tlp::node n) {
+tlp::node ImprovedWalker::nextLeftContour(tlp::node n) {
   if (isLeaf(tree, n))
     return thread[n];
   else
@@ -179,8 +179,8 @@ inline tlp::node ImprovedWalker::nextLeftContour(tlp::node n) {
 }
 
 //====================================================================
-inline tlp::node ImprovedWalker::findCommonAncestor(tlp::node left, tlp::node right,
-                                                    tlp::node defaultAncestor) {
+tlp::node ImprovedWalker::findCommonAncestor(tlp::node left, tlp::node right,
+                                             tlp::node defaultAncestor) {
   if (getSuperGraph(ancestor[left]) == getSuperGraph(right) /*&& left!=right*/)
     return ancestor[left];
   else

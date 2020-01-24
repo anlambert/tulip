@@ -28,26 +28,24 @@ tlp::AbstractProperty<Tnode, Tedge, Tprop>::AbstractProperty(tlp::Graph *sg, con
 }
 //=============================================================
 template <class Tnode, class Tedge, class Tprop>
-inline typename Tnode::RealType
-tlp::AbstractProperty<Tnode, Tedge, Tprop>::getNodeDefaultValue() const {
+typename Tnode::RealType tlp::AbstractProperty<Tnode, Tedge, Tprop>::getNodeDefaultValue() const {
   return nodeDefaultValue;
 }
 //=============================================================
 template <class Tnode, class Tedge, class Tprop>
-inline typename Tedge::RealType
-tlp::AbstractProperty<Tnode, Tedge, Tprop>::getEdgeDefaultValue() const {
+typename Tedge::RealType tlp::AbstractProperty<Tnode, Tedge, Tprop>::getEdgeDefaultValue() const {
   return edgeDefaultValue;
 }
 //=============================================================
 template <class Tnode, class Tedge, class Tprop>
-inline typename tlp::StoredType<typename Tnode::RealType>::ReturnedConstValue
+typename tlp::StoredType<typename Tnode::RealType>::ReturnedConstValue
 tlp::AbstractProperty<Tnode, Tedge, Tprop>::getNodeValue(const tlp::node n) const {
   assert(n.isValid());
   return nodeProperties.get(n.id);
 }
 //=============================================================
 template <class Tnode, class Tedge, class Tprop>
-inline typename tlp::StoredType<typename Tedge::RealType>::ReturnedConstValue
+typename tlp::StoredType<typename Tedge::RealType>::ReturnedConstValue
 tlp::AbstractProperty<Tnode, Tedge, Tprop>::getEdgeValue(const tlp::edge e) const {
   assert(e.isValid());
   return edgeProperties.get(e.id);

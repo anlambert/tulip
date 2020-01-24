@@ -106,28 +106,28 @@ private:
       }
     }
 
-    inline bool operator!=(const iterator_t &it) const {
+    bool operator!=(const iterator_t &it) const {
       return ((_iteratorStatus & it._iteratorStatus) == 0) || (_it != it._it);
     }
 
-    inline const iterator_t &operator++() {
+    const iterator_t &operator++() {
       if (!_it->hasNext())
         _iteratorStatus = Finished;
       return *this;
     }
 
-    inline T operator*() const {
+    T operator*() const {
       assert(_iteratorStatus != Finished);
       return _it->next();
     }
   };
 
 public:
-  inline iterator_t begin() {
+  iterator_t begin() {
     return iterator_t(this, iterator_t::Begin);
   }
 
-  inline iterator_t end() {
+  iterator_t end() {
     return iterator_t(this);
   }
 };
@@ -136,12 +136,12 @@ public:
 // as Iterator is only accessible through pointer
 // we must have a specific definition of begin and end
 template <typename T>
-inline auto begin(Iterator<T> *it) -> decltype(it->begin()) {
+auto begin(Iterator<T> *it) -> decltype(it->begin()) {
   return it->begin();
 }
 
 template <typename T>
-inline auto end(Iterator<T> *it) -> decltype(it->end()) {
+auto end(Iterator<T> *it) -> decltype(it->end()) {
   return it->end();
 }
 #endif
@@ -158,7 +158,7 @@ inline auto end(Iterator<T> *it) -> decltype(it->end()) {
  * @return The number of iterated elements
  **/
 template <typename T>
-inline unsigned int iteratorCount(Iterator<T> *it) {
+unsigned int iteratorCount(Iterator<T> *it) {
   unsigned int count = 0;
   while (it->hasNext()) {
     ++count;
@@ -180,7 +180,7 @@ inline unsigned int iteratorCount(Iterator<T> *it) {
  * @return true if the iterator returns at least n values
  **/
 template <typename T>
-inline bool iteratorCountCheck(Iterator<T> *it, unsigned int minNbElements) {
+bool iteratorCountCheck(Iterator<T> *it, unsigned int minNbElements) {
   unsigned int count = 0;
   while (it->hasNext()) {
     ++count;
@@ -206,7 +206,7 @@ inline bool iteratorCountCheck(Iterator<T> *it, unsigned int minNbElements) {
  * @return true if the iterator is empty
  **/
 template <typename T>
-inline bool iteratorEmpty(Iterator<T> *it) {
+bool iteratorEmpty(Iterator<T> *it) {
   return !iteratorCountCheck(it, 1);
 }
 
@@ -224,7 +224,7 @@ inline bool iteratorEmpty(Iterator<T> *it) {
  *
  **/
 template <typename T, class MapFunction>
-inline void iteratorMap(Iterator<T> *it, MapFunction &&mapFunction) {
+void iteratorMap(Iterator<T> *it, MapFunction &&mapFunction) {
   for (auto v : it) {
     mapFunction(v);
   }
@@ -247,8 +247,8 @@ inline void iteratorMap(Iterator<T> *it, MapFunction &&mapFunction) {
  *
  **/
 template <typename T, typename reduceType, class ReduceFunction>
-inline reduceType iteratorReduce(Iterator<T> *it, const reduceType &initVal,
-                                 ReduceFunction reduceFunction) {
+reduceType iteratorReduce(Iterator<T> *it, const reduceType &initVal,
+                          ReduceFunction reduceFunction) {
   reduceType val = initVal;
   for (auto v : it) {
     val = reduceFunction(val, v);
@@ -269,7 +269,7 @@ inline reduceType iteratorReduce(Iterator<T> *it, const reduceType &initVal,
  * @return a std::list filled with iterated elements
  **/
 template <typename T>
-inline std::list<T> iteratorList(Iterator<T> *it) {
+std::list<T> iteratorList(Iterator<T> *it) {
   std::list<T> ret;
   while (it->hasNext()) {
     ret.push_back(it->next());
@@ -290,7 +290,7 @@ inline std::list<T> iteratorList(Iterator<T> *it) {
  * @return a std::vector filled with iterated elements
  **/
 template <typename T>
-inline std::vector<T> iteratorVector(Iterator<T> *it) {
+std::vector<T> iteratorVector(Iterator<T> *it) {
   std::vector<T> ret;
   while (it->hasNext()) {
     ret.push_back(it->next());
@@ -311,7 +311,7 @@ inline std::vector<T> iteratorVector(Iterator<T> *it) {
  * @return a std::set filled with iterated elements
  **/
 template <typename T>
-inline std::set<T> iteratorSet(Iterator<T> *it) {
+std::set<T> iteratorSet(Iterator<T> *it) {
   std::set<T> ret;
   while (it->hasNext()) {
     ret.insert(it->next());

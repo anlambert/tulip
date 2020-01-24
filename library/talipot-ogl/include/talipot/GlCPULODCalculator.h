@@ -89,14 +89,14 @@ public:
    * Set if the edge LOD must be calculated
    * \Warning If not calculated, the default edge LOD is 10.
    */
-  inline void setComputeEdgesLOD(bool state) {
+  void setComputeEdgesLOD(bool state) {
     computeEdgesLOD = state;
   }
 
   /**
    * Set if the LOD is computed for out screen entities
    */
-  inline void setComputeOutScreenLOD(bool state) {
+  void setComputeOutScreenLOD(bool state) {
     computeOutScreenLOD = state;
   }
 

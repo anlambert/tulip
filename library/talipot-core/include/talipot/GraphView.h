@@ -28,10 +28,10 @@ struct SGraphNodeData {
   unsigned int outDegree;
   unsigned int inDegree;
   SGraphNodeData() : outDegree(0), inDegree(0) {}
-  inline void outDegreeAdd(int i) {
+  void outDegreeAdd(int i) {
     outDegree += i;
   }
-  inline void inDegreeAdd(int i) {
+  void inDegreeAdd(int i) {
     inDegree += i;
   }
 };
@@ -45,7 +45,7 @@ DECL_STORED_PTR(SGraphNodeDataPtr);
  */
 class GraphView : public GraphAbstract {
 
-  inline GraphImpl *getRootImpl() const {
+  GraphImpl *getRootImpl() const {
     return static_cast<GraphImpl *>(getRoot());
   }
 
@@ -75,77 +75,77 @@ public:
     getRootImpl()->swapEdgeOrder(n, e1, e2);
   }
   //=========================================================================
-  inline bool isElement(const node n) const override {
+  bool isElement(const node n) const override {
     return _nodeData.get(n.id) != nullptr;
   }
-  inline bool isElement(const edge e) const override {
+  bool isElement(const edge e) const override {
     return _edges.isElement(e);
   }
   edge existEdge(const node source, const node target, bool directed) const override;
-  inline unsigned int numberOfNodes() const override {
+  unsigned int numberOfNodes() const override {
     return _nodes.size();
   }
-  inline unsigned int numberOfEdges() const override {
+  unsigned int numberOfEdges() const override {
     return _edges.size();
   }
   //=========================================================================
-  inline unsigned int deg(const node n) const override {
+  unsigned int deg(const node n) const override {
     assert(isElement(n));
     SGraphNodeData *nData = _nodeData.get(n.id);
     return nData->inDegree + nData->outDegree;
   }
-  inline unsigned int indeg(const node n) const override {
+  unsigned int indeg(const node n) const override {
     assert(isElement(n));
     return _nodeData.get(n.id)->inDegree;
   }
-  inline unsigned int outdeg(const node n) const override {
+  unsigned int outdeg(const node n) const override {
     assert(isElement(n));
     return _nodeData.get(n.id)->outDegree;
   }
   //=========================================================================
-  inline node source(const edge e) const override {
+  node source(const edge e) const override {
     return getRootImpl()->source(e);
   }
-  inline void setSource(const edge e, const node newSrc) override {
+  void setSource(const edge e, const node newSrc) override {
     assert(isElement(e));
     getRootImpl()->setEnds(e, newSrc, node());
   }
-  inline node target(const edge e) const override {
+  node target(const edge e) const override {
     return getRootImpl()->target(e);
   }
-  inline void setTarget(const edge e, const node newTgt) override {
+  void setTarget(const edge e, const node newTgt) override {
     assert(isElement(e));
     getRootImpl()->setEnds(e, node(), newTgt);
   }
-  inline const std::pair<node, node> &ends(const edge e) const override {
+  const std::pair<node, node> &ends(const edge e) const override {
     return getRootImpl()->ends(e);
   }
-  inline void setEnds(const edge e, const node newSrc, const node newTgt) override {
+  void setEnds(const edge e, const node newSrc, const node newTgt) override {
     assert(isElement(e));
     getRootImpl()->setEnds(e, newSrc, newTgt);
   }
-  inline node opposite(const edge e, const node n) const override {
+  node opposite(const edge e, const node n) const override {
     return getRootImpl()->opposite(e, n);
   }
-  inline void reverse(const edge e) override {
+  void reverse(const edge e) override {
     assert(isElement(e));
     getRootImpl()->reverse(e);
   }
   //=========================================================================
-  inline const std::vector<node> &nodes() const override {
+  const std::vector<node> &nodes() const override {
     return _nodes;
   }
-  inline unsigned int nodePos(const node n) const override {
+  unsigned int nodePos(const node n) const override {
     return _nodes.getPos(n);
   }
   Iterator<node> *getNodes() const override;
   Iterator<node> *getInNodes(const node) const override;
   Iterator<node> *getOutNodes(const node) const override;
   Iterator<node> *getInOutNodes(const node) const override;
-  inline const std::vector<edge> &edges() const override {
+  const std::vector<edge> &edges() const override {
     return _edges;
   }
-  inline unsigned int edgePos(const edge e) const override {
+  unsigned int edgePos(const edge e) const override {
     return _edges.getPos(e);
   }
   Iterator<edge> *getEdges() const override;
@@ -154,14 +154,14 @@ public:
   Iterator<edge> *getInOutEdges(const node) const override;
   std::vector<edge> getEdges(const node source, const node target,
                              bool directed = true) const override;
-  inline const std::vector<edge> &allEdges(const node n) const override {
+  const std::vector<edge> &allEdges(const node n) const override {
     return getRootImpl()->allEdges(n);
   }
-  inline void sortElts() override {
+  void sortElts() override {
     _nodes.sort();
     _edges.sort();
   }
-  inline Graph *getRoot() const override {
+  Graph *getRoot() const override {
     // handle root destruction (see GraphAbstract destructor)
     return id == 0 ? const_cast<GraphView *>(this) : GraphAbstract::getRoot();
   }

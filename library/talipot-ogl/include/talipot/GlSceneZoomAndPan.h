@@ -42,7 +42,7 @@ public:
    * GlSceneZoomAndPan class do that task.
    *
    */
-  inline void setNbAnimationSteps(int nbAnimationSteps) {
+  void setNbAnimationSteps(int nbAnimationSteps) {
     this->nbAnimationSteps = nbAnimationSteps;
   }
 
@@ -101,14 +101,14 @@ public:
   /**
    * Method which return the number of animation steps
    */
-  inline int getNbAnimationsStep() const {
+  int getNbAnimationsStep() const {
     return nbAnimationSteps;
   }
 
   /**
    * Method to set the number of animation steps
    */
-  inline void setNbAnimationSteps(const int nbAnimationSteps) {
+  void setNbAnimationSteps(const int nbAnimationSteps) {
     this->nbAnimationSteps = nbAnimationSteps;
   }
 

@@ -53,7 +53,7 @@ public:
   /**
    * Fill the matrix with the value of obj
    */
-  inline MATRIX &fill(Obj obj);
+  MATRIX &fill(Obj obj);
   /**
    * Compute the determinant of the matrix,
    */
@@ -69,35 +69,35 @@ public:
   /**
    * add another matrix to the current one and return "&(*this)"
    */
-  inline MATRIX &operator+=(const MATRIX &mat);
+  MATRIX &operator+=(const MATRIX &mat);
   /**
    * subtract another matrix from the current and return "&(*this)"
    */
-  inline MATRIX &operator-=(const MATRIX &mat);
+  MATRIX &operator-=(const MATRIX &mat);
   /**
    * Check equality of two Matrices
    */
-  inline bool operator==(const MATRIX &) const;
+  bool operator==(const MATRIX &) const;
   /**
    * Check non equality of two Matrices
    */
-  inline bool operator!=(const MATRIX &) const;
+  bool operator!=(const MATRIX &) const;
   /**
    * Multiply the matrix by another matrix and return "&(*this)"
    */
-  inline MATRIX &operator*=(const MATRIX &mat);
+  MATRIX &operator*=(const MATRIX &mat);
   /**
    * Multiply all elements of the matrix by obj, return "&(*this)"
    */
-  inline MATRIX &operator*=(const Obj &obj);
+  MATRIX &operator*=(const Obj &obj);
   /**
    *  Divide the matrix by another one return "&(*this)"
    */
-  inline MATRIX &operator/=(const MATRIX &mat);
+  MATRIX &operator/=(const MATRIX &mat);
   /**
    * Divide all elements of the matrix by obj, return "&(*this)"
    */
-  inline MATRIX &operator/=(const Obj &obj);
+  MATRIX &operator/=(const Obj &obj);
   /**
    * Returns the cofactor Matrix of this
    */
@@ -118,19 +118,19 @@ public:
    * Returns a new vector equal to the most influent eigenvector of the
    * matrix
    */
-  inline Vector<Obj, SIZE> powerIteration(const unsigned int nIterations) const;
+  Vector<Obj, SIZE> powerIteration(const unsigned int nIterations) const;
 
   ///@cond DOXYGEN_HIDDEN
   /**
    * Simplifies a 3x3 matrix in 2x2 matrix to be used with computeEigenVector
    */
-  inline bool simplify(Matrix<Obj, 2> &simplifiedMatrix) const;
+  bool simplify(Matrix<Obj, 2> &simplifiedMatrix) const;
 
   /**
    * Returns the EigenVector of the matrix corresponding to the EigenValue passed, with a base x
    *           /!\ This can only be used with a 2x2 matrix !!! /!\
    */
-  inline bool computeEigenVector(const float x, Vector<Obj, 3> &eigenVector) const;
+  bool computeEigenVector(const float x, Vector<Obj, 3> &eigenVector) const;
   ///@endcond
 };
 
@@ -143,36 +143,36 @@ typedef Matrix<double, 4> Mat4d;
  * Returns a new matrix equal to the sum of 2 matrices
  */
 template <typename Obj, size_t SIZE>
-inline MATRIX operator+(const MATRIX &mat1, const MATRIX &mat2);
+MATRIX operator+(const MATRIX &mat1, const MATRIX &mat2);
 /**
  * Returns a new matrix equal to the difference of 2 matrices
  */
 template <typename Obj, size_t SIZE>
-inline MATRIX operator-(const MATRIX &mat1, const MATRIX &mat2);
+MATRIX operator-(const MATRIX &mat1, const MATRIX &mat2);
 /**
  * Returns a new matrix equal to the multiplication of the matrix by
  * obj
  */
 template <typename Obj, size_t SIZE>
-inline MATRIX operator*(const MATRIX &mat, const Obj &obj);
+MATRIX operator*(const MATRIX &mat, const Obj &obj);
 /**
  * Returns a new matrix equal to the multiplication of the matrix by
  * another matrix
  */
 template <typename Obj, size_t SIZE>
-inline MATRIX operator*(const MATRIX &mat1, const MATRIX &mat2);
+MATRIX operator*(const MATRIX &mat1, const MATRIX &mat2);
 /**
  * Returns a new vector equal to the multiplication of the vector by
  * a matrix,(the vector is automatically transposed to do the multiplication)
  */
 template <typename Obj, size_t SIZE>
-inline Vector<Obj, SIZE> operator*(const Vector<Obj, SIZE> &vec, const tlp::Matrix<Obj, SIZE> &);
+Vector<Obj, SIZE> operator*(const Vector<Obj, SIZE> &vec, const tlp::Matrix<Obj, SIZE> &);
 /**
  * Returns a new vector equal to the multiplication of the matrix by
  * a vector
  */
 template <typename Obj, size_t SIZE>
-inline Vector<Obj, SIZE> operator*(const Matrix<Obj, SIZE> &, const Vector<Obj, SIZE> &vec);
+Vector<Obj, SIZE> operator*(const Matrix<Obj, SIZE> &, const Vector<Obj, SIZE> &vec);
 }
 
 #include "cxx/Matrix.cxx"

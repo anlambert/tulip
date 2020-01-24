@@ -82,14 +82,14 @@ public:
 
   ~CSVSimpleParser() override;
 
-  inline std::string fileName() const {
+  std::string fileName() const {
     return _fileName;
   }
-  inline void setFileName(const std::string &fileName) {
+  void setFileName(const std::string &fileName) {
     _fileName = fileName;
   }
 
-  inline char textDelimiter() const {
+  char textDelimiter() const {
     return _textDelimiter;
   }
 
@@ -97,15 +97,15 @@ public:
     return _decimalMark;
   }
 
-  inline void setTextDelimiter(char delimiter) {
+  void setTextDelimiter(char delimiter) {
     _textDelimiter = delimiter;
   }
 
-  inline std::string fileEncoding() const {
+  std::string fileEncoding() const {
     return _fileEncoding;
   }
 
-  inline void setFileEncoding(const std::string &fileEncoding) {
+  void setFileEncoding(const std::string &fileEncoding) {
     _fileEncoding = fileEncoding;
   }
 

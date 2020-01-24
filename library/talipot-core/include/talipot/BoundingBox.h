@@ -83,7 +83,7 @@ struct TLP_SCOPE BoundingBox : public Array<Coord, 2> {
    *
    * @return The center of the bounding box :Coord
    **/
-  inline Coord center() const {
+  Coord center() const {
     assert(isValid());
     return ((*this)[0] + (*this)[1]) / 2.f;
   }
@@ -93,7 +93,7 @@ struct TLP_SCOPE BoundingBox : public Array<Coord, 2> {
    * An assertion is raised in debug mode if the BoundingBox is not valid.
    *
    **/
-  inline float width() const {
+  float width() const {
     assert(isValid());
     return ((*this)[1][0] - (*this)[0][0]);
   }
@@ -103,7 +103,7 @@ struct TLP_SCOPE BoundingBox : public Array<Coord, 2> {
    * An assertion is raised in debug mode if the bounding box is not valid.
    *
    **/
-  inline float height() const {
+  float height() const {
     assert(isValid());
     return ((*this)[1][1] - (*this)[0][1]);
   }
@@ -113,7 +113,7 @@ struct TLP_SCOPE BoundingBox : public Array<Coord, 2> {
    * An assertion is raised in debug mode if the bounding box is not valid.
    *
    **/
-  inline float depth() const {
+  float depth() const {
     assert(isValid());
     return ((*this)[1][2] - (*this)[0][2]);
   }

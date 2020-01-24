@@ -94,11 +94,11 @@ public:
     return ":/talipot/gui/icons/tlpb32x32.png";
   }
 
-  inline tlp::node getNode(tlp::node n) {
+  tlp::node getNode(tlp::node n) {
     return tlp::node(graph->nodePos(n));
   }
 
-  inline tlp::edge getEdge(tlp::edge e) {
+  tlp::edge getEdge(tlp::edge e) {
     return tlp::edge(graph->edgePos(e));
   }
 

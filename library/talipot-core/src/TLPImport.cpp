@@ -585,10 +585,10 @@ struct TLPClusterBuilder : public TLPFalse {
     return true;
   }
   bool addStruct(const std::string &structName, TLPBuilder *&newBuilder) override;
-  inline bool addNode(int nodeId) {
+  bool addNode(int nodeId) {
     return graphBuilder->addClusterNode(nodeId);
   }
-  inline bool addEdge(int edgeId) {
+  bool addEdge(int edgeId) {
     return graphBuilder->addClusterEdge(edgeId);
   }
   bool close() override {

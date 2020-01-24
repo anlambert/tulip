@@ -1704,7 +1704,7 @@ void PythonCodeEditor::setPlainText(const QString &text) {
   updateTabWidth();
 }
 
-inline qreal PythonCodeEditor::tabWidth() const {
+qreal PythonCodeEditor::tabWidth() const {
 #if (QT_VERSION < QT_VERSION_CHECK(5, 10, 0))
   return tabStopWidth();
 #else
@@ -1712,7 +1712,7 @@ inline qreal PythonCodeEditor::tabWidth() const {
 #endif
 }
 
-inline void PythonCodeEditor::setTabWidth(qreal width) {
+void PythonCodeEditor::setTabWidth(qreal width) {
 #if (QT_VERSION < QT_VERSION_CHECK(5, 10, 0))
   setTabStopWidth(width);
 #else
@@ -1720,7 +1720,7 @@ inline void PythonCodeEditor::setTabWidth(qreal width) {
 #endif
 }
 
-inline int PythonCodeEditor::charWidth(char c) const {
+int PythonCodeEditor::charWidth(char c) const {
   if (c == '\t') {
     return textWidth("    ");
   }
@@ -1731,7 +1731,7 @@ inline int PythonCodeEditor::charWidth(char c) const {
 #endif
 }
 
-inline int PythonCodeEditor::textWidth(const QString &text) const {
+int PythonCodeEditor::textWidth(const QString &text) const {
 #if (QT_VERSION < QT_VERSION_CHECK(5, 11, 0))
   return fontMetrics().width(QString(text).replace('\t', "    "));
 #else

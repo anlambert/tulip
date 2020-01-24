@@ -113,14 +113,14 @@ public:
    * Concatenete a string collection to the current collection
    *
    */
-  inline void insert(const tlp::StringCollection &str) {
+  void insert(const tlp::StringCollection &str) {
     _data.insert(_data.end(), str._data.begin(), str._data.end());
   }
 
   /**
    * Returns true if the collection is empty.
    */
-  inline bool empty() const {
+  bool empty() const {
     return _data.empty();
   }
   /**
@@ -135,21 +135,21 @@ public:
    *
    * @param index a valid index in the collection
    */
-  inline std::string at(const size_t index) const {
+  std::string at(const size_t index) const {
     return _data.at(index);
   }
 
   /**
    * Returns the number of strings in the collection.
    */
-  inline size_t size() const {
+  size_t size() const {
     return _data.size();
   }
 
-  inline std::string operator[](const unsigned int i) const {
+  std::string operator[](const unsigned int i) const {
     return _data[i];
   }
-  inline std::string &operator[](const unsigned int i) {
+  std::string &operator[](const unsigned int i) {
     return _data[i];
   }
 };

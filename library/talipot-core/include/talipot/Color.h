@@ -20,36 +20,69 @@ namespace tlp {
 
 class TLP_SCOPE Color : public Vector<unsigned char, 4> {
 public:
-  Color(const Vector<unsigned char, 4> &);
+  Color(const Vector<unsigned char, 4> &c) : tlp::Vector<unsigned char, 4>(c) {}
 
   Color(unsigned char red = 0, unsigned char green = 0, unsigned char blue = 0,
-        unsigned char alpha = 255);
+        unsigned char alpha = 255) {
+    set(red, green, blue, alpha);
+  }
 
-  float getRGL() const;
+  float getRGL() const {
+    return (*this)[0] / 255.f;
+  }
 
-  float getGGL() const;
+  float getGGL() const {
+    return (*this)[1] / 255.f;
+  }
 
-  float getBGL() const;
+  float getBGL() const {
+    return (*this)[2] / 255.f;
+  }
 
-  float getAGL() const;
+  float getAGL() const {
+    return (*this)[3] / 255.f;
+  }
 
-  float *getGL() const;
+  float *getGL() const {
+    float *result = new float[4];
+    result[0] = getRGL();
+    result[1] = getGGL();
+    result[2] = getBGL();
+    result[3] = getAGL();
+    return result;
+  }
 
-  unsigned char getR() const;
+  unsigned char getR() const {
+    return (*this)[0];
+  }
 
-  unsigned char getG() const;
+  unsigned char getG() const {
+    return (*this)[1];
+  }
 
-  unsigned char getB() const;
+  unsigned char getB() const {
+    return (*this)[2];
+  }
 
-  unsigned char getA() const;
+  unsigned char getA() const {
+    return (*this)[3];
+  }
 
-  void setR(unsigned char red);
+  void setR(unsigned char red) {
+    (*this)[0] = red;
+  }
 
-  void setG(unsigned char green);
+  void setG(unsigned char green) {
+    (*this)[1] = green;
+  }
 
-  void setB(unsigned char blue);
+  void setB(unsigned char blue) {
+    (*this)[2] = blue;
+  }
 
-  void setA(unsigned char alpha);
+  void setA(unsigned char alpha) {
+    (*this)[3] = alpha;
+  }
 
   long getTrueColor();
 
@@ -148,61 +181,6 @@ public:
 
 TLP_SCOPE std::ostream &operator<<(std::ostream &os, const tlp::Color &);
 TLP_SCOPE std::istream &operator>>(std::istream &is, tlp::Color &);
-}
-
-inline tlp::Color::Color(const tlp::Vector<unsigned char, 4> &c)
-    : tlp::Vector<unsigned char, 4>(c) {}
-
-inline tlp::Color::Color(unsigned char red, unsigned char green, unsigned char blue,
-                         unsigned char alpha) {
-  set(red, green, blue, alpha);
-}
-
-inline unsigned char tlp::Color::getR() const {
-  return (*this)[0];
-}
-inline unsigned char tlp::Color::getG() const {
-  return (*this)[1];
-}
-inline unsigned char tlp::Color::getB() const {
-  return (*this)[2];
-}
-inline unsigned char tlp::Color::getA() const {
-  return (*this)[3];
-}
-
-inline float tlp::Color::getRGL() const {
-  return float((*this)[0] / 255.0);
-}
-inline float tlp::Color::getGGL() const {
-  return float((*this)[1] / 255.0);
-}
-inline float tlp::Color::getBGL() const {
-  return float((*this)[2] / 255.0);
-}
-inline float tlp::Color::getAGL() const {
-  return float((*this)[3] / 255.0);
-}
-inline float *tlp::Color::getGL() const {
-  float *result = new float[4];
-  result[0] = getRGL();
-  result[1] = getGGL();
-  result[2] = getBGL();
-  result[3] = getAGL();
-  return result;
-}
-
-inline void tlp::Color::setR(unsigned char red) {
-  (*this)[0] = red;
-}
-inline void tlp::Color::setG(unsigned char green) {
-  (*this)[1] = green;
-}
-inline void tlp::Color::setB(unsigned char blue) {
-  (*this)[2] = blue;
-}
-inline void tlp::Color::setA(unsigned char alpha) {
-  (*this)[3] = alpha;
 }
 
 namespace std {

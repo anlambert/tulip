@@ -99,11 +99,11 @@ public:
     return ":/talipot/gui/icons/logo32x32.png";
   }
   //====================================================
-  inline node getNode(node n) {
+  node getNode(node n) {
     return node(graph->nodePos(n));
   }
   //====================================================
-  inline edge getEdge(edge e) {
+  edge getEdge(edge e) {
     return edge(graph->edgePos(e));
   }
   //=====================================================

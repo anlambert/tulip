@@ -268,31 +268,31 @@ inline void minMaxVectors(const VECTOR &u, const VECTOR &v, VECTOR &min, VECTOR 
 }
 
 TEMPLATEVECTOR
-inline VECTOR operator*(const VECTOR &, const VECTOR &);
+VECTOR operator*(const VECTOR &, const VECTOR &);
 TEMPLATEVECTOR
-inline VECTOR operator*(const TYPE, const VECTOR &);
+VECTOR operator*(const TYPE, const VECTOR &);
 TEMPLATEVECTOR
-inline VECTOR operator*(const VECTOR &, const TYPE);
+VECTOR operator*(const VECTOR &, const TYPE);
 
 TEMPLATEVECTOR
-inline VECTOR operator+(const VECTOR &, const VECTOR &);
+VECTOR operator+(const VECTOR &, const VECTOR &);
 TEMPLATEVECTOR
-inline VECTOR operator+(const VECTOR &, const TYPE);
+VECTOR operator+(const VECTOR &, const TYPE);
 
 TEMPLATEVECTOR
-inline VECTOR operator-(const VECTOR &, const VECTOR &);
+VECTOR operator-(const VECTOR &, const VECTOR &);
 TEMPLATEVECTOR
-inline VECTOR operator-(const VECTOR &, const TYPE);
+VECTOR operator-(const VECTOR &, const TYPE);
 
 TEMPLATEVECTOR
-inline VECTOR operator/(const VECTOR &, const VECTOR &);
+VECTOR operator/(const VECTOR &, const VECTOR &);
 TEMPLATEVECTOR
-inline VECTOR operator/(const VECTOR &, const TYPE);
+VECTOR operator/(const VECTOR &, const TYPE);
 
 TEMPLATEVECTOR
-inline VECTOR operator^(const VECTOR &, const VECTOR &);
+VECTOR operator^(const VECTOR &, const VECTOR &);
 TEMPLATEVECTOR
-inline VECTOR operator-(const VECTOR &);
+VECTOR operator-(const VECTOR &);
 /**
  * @brief typedef for 2D vector of unsigned int
  */

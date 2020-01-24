@@ -313,11 +313,11 @@ public:
   SGraphIdContainer() {
     pos.setAll(UINT_MAX);
   }
-  inline bool isElement(ID_TYPE elt) const {
+  bool isElement(ID_TYPE elt) const {
     return (getPos(elt) != UINT_MAX);
   }
 
-  inline unsigned int getPos(ID_TYPE elt) const {
+  unsigned int getPos(ID_TYPE elt) const {
     return pos.get(elt);
   }
 

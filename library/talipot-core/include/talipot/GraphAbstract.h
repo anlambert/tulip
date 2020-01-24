@@ -54,14 +54,14 @@ public:
   }
   void delSubGraph(Graph *) override;
   void delAllSubGraphs(Graph *) override;
-  inline Graph *getSuperGraph() const override {
+  Graph *getSuperGraph() const override {
     return supergraph;
   }
-  inline Graph *getRoot() const override {
+  Graph *getRoot() const override {
     return root;
   }
   Iterator<Graph *> *getSubGraphs() const override;
-  inline const std::vector<Graph *> &subGraphs() const override {
+  const std::vector<Graph *> &subGraphs() const override {
     return subgraphs;
   }
   bool isSubGraph(const Graph *sg) const override;
@@ -71,7 +71,7 @@ public:
   Graph *getDescendantGraph(unsigned int id) const override;
   Graph *getDescendantGraph(const std::string &name) const override;
   Graph *getNthSubGraph(unsigned int n) const override;
-  inline unsigned int numberOfSubGraphs() const override {
+  unsigned int numberOfSubGraphs() const override {
     return subgraphs.size();
   }
   unsigned int numberOfDescendantGraphs() const override;

@@ -41,7 +41,7 @@ public:
   ~GraphImpl() override;
   void clear() override;
   //=========================================================================
-  inline bool isElement(const node n) const override {
+  bool isElement(const node n) const override {
     return storage.isElement(n);
   }
   bool isElement(const edge e) const override {
@@ -61,27 +61,27 @@ public:
   void addEdges(Iterator<edge> *edges) override;
   void delNode(const tlp::node n, bool deleteInAllGraphs = false) override;
   void delEdge(const tlp::edge e, bool deleteInAllGraphs = false) override;
-  inline void setEdgeOrder(const node n, const std::vector<edge> &v) override {
+  void setEdgeOrder(const node n, const std::vector<edge> &v) override {
     storage.setEdgeOrder(n, v);
   }
-  inline void swapEdgeOrder(const node n, const edge e1, const edge e2) override {
+  void swapEdgeOrder(const node n, const edge e1, const edge e2) override {
     storage.swapEdgeOrder(n, e1, e2);
   }
   //=========================================================================
-  inline const std::vector<node> &nodes() const override {
+  const std::vector<node> &nodes() const override {
     return storage.nodes();
   }
-  inline unsigned int nodePos(const node n) const override {
+  unsigned int nodePos(const node n) const override {
     return storage.nodePos(n);
   }
   Iterator<node> *getNodes() const override;
   Iterator<node> *getInNodes(const node) const override;
   Iterator<node> *getOutNodes(const node) const override;
   Iterator<node> *getInOutNodes(const node) const override;
-  inline const std::vector<edge> &edges() const override {
+  const std::vector<edge> &edges() const override {
     return storage.edges();
   }
-  inline unsigned int edgePos(const edge e) const override {
+  unsigned int edgePos(const edge e) const override {
     return storage.edgePos(e);
   }
   Iterator<edge> *getEdges() const override;
@@ -94,56 +94,56 @@ public:
                 const Graph *sg = nullptr, bool onlyFirst = false) const {
     return storage.getEdges(source, target, directed, edges, sg, onlyFirst);
   }
-  inline const std::vector<edge> &allEdges(const node n) const override {
+  const std::vector<edge> &allEdges(const node n) const override {
     return storage.adj(n);
   }
   //========================================================================
-  inline unsigned int deg(const node n) const override {
+  unsigned int deg(const node n) const override {
     assert(isElement(n));
     return storage.deg(n);
   }
-  inline unsigned int indeg(const node n) const override {
+  unsigned int indeg(const node n) const override {
     assert(isElement(n));
     return storage.indeg(n);
   }
-  inline unsigned int outdeg(const node n) const override {
+  unsigned int outdeg(const node n) const override {
     assert(isElement(n));
     return storage.outdeg(n);
   }
   //========================================================================
-  inline node source(const edge e) const override {
+  node source(const edge e) const override {
     assert(isElement(e));
     return storage.source(e);
   }
-  inline node target(const edge e) const override {
+  node target(const edge e) const override {
     assert(isElement(e));
     return storage.target(e);
   }
-  inline node opposite(const edge e, const node n) const override {
+  node opposite(const edge e, const node n) const override {
     assert(isElement(e));
     return storage.opposite(e, n);
   }
-  inline const std::pair<node, node> &ends(const edge e) const override {
+  const std::pair<node, node> &ends(const edge e) const override {
     return storage.ends(e);
   }
-  inline void setSource(const edge e, const node newSrc) override {
+  void setSource(const edge e, const node newSrc) override {
     assert(isElement(e));
     this->setEnds(e, newSrc, node());
   }
-  inline void setTarget(const edge e, const node newTgt) override {
+  void setTarget(const edge e, const node newTgt) override {
     assert(isElement(e));
     this->setEnds(e, node(), newTgt);
   }
   void setEnds(const edge, const node, const node) override;
   void reverse(const edge) override;
   //=======================================================================
-  inline unsigned int numberOfEdges() const override {
+  unsigned int numberOfEdges() const override {
     return storage.numberOfEdges();
   }
-  inline unsigned int numberOfNodes() const override {
+  unsigned int numberOfNodes() const override {
     return storage.numberOfNodes();
   }
-  inline void sortElts() override {
+  void sortElts() override {
     storage.sortElts();
   }
   //=======================================================================

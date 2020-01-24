@@ -15,7 +15,7 @@
 
 //======================================================
 TEMPLATEVECTOR
-inline VECTORTLP &VECTORTLP::operator*=(const TYPE scalaire) {
+VECTORTLP &VECTORTLP::operator*=(const TYPE scalaire) {
   for (size_t i = 0; i < SIZE; ++i)
     (*this)[i] *= scalaire;
 
@@ -23,7 +23,7 @@ inline VECTORTLP &VECTORTLP::operator*=(const TYPE scalaire) {
 }
 //======================================================
 TEMPLATEVECTOR
-inline VECTORTLP &VECTORTLP::operator*=(const VECTORTLP &vecto) {
+VECTORTLP &VECTORTLP::operator*=(const VECTORTLP &vecto) {
   for (size_t i = 0; i < SIZE; ++i)
     (*this)[i] *= vecto[i];
 
@@ -31,7 +31,7 @@ inline VECTORTLP &VECTORTLP::operator*=(const VECTORTLP &vecto) {
 }
 //======================================================
 TEMPLATEVECTOR
-inline VECTORTLP &VECTORTLP::operator/=(const TYPE scalaire) {
+VECTORTLP &VECTORTLP::operator/=(const TYPE scalaire) {
   for (size_t i = 0; i < SIZE; ++i)
     (*this)[i] /= scalaire;
 
@@ -39,7 +39,7 @@ inline VECTORTLP &VECTORTLP::operator/=(const TYPE scalaire) {
 }
 //======================================================
 TEMPLATEVECTOR
-inline VECTORTLP &VECTORTLP::operator/=(const VECTORTLP &vecto) {
+VECTORTLP &VECTORTLP::operator/=(const VECTORTLP &vecto) {
   for (size_t i = 0; i < SIZE; ++i) {
     (*this)[i] /= vecto[i];
   }
@@ -48,7 +48,7 @@ inline VECTORTLP &VECTORTLP::operator/=(const VECTORTLP &vecto) {
 }
 //======================================================
 TEMPLATEVECTOR
-inline VECTORTLP &VECTORTLP::operator+=(const TYPE scalaire) {
+VECTORTLP &VECTORTLP::operator+=(const TYPE scalaire) {
   for (size_t i = 0; i < SIZE; ++i)
     (*this)[i] += scalaire;
 
@@ -56,7 +56,7 @@ inline VECTORTLP &VECTORTLP::operator+=(const TYPE scalaire) {
 }
 //======================================================
 TEMPLATEVECTOR
-inline VECTORTLP &VECTORTLP::operator+=(const VECTORTLP &vecto) {
+VECTORTLP &VECTORTLP::operator+=(const VECTORTLP &vecto) {
   for (size_t i = 0; i < SIZE; ++i)
     (*this)[i] += vecto[i];
 
@@ -64,7 +64,7 @@ inline VECTORTLP &VECTORTLP::operator+=(const VECTORTLP &vecto) {
 }
 //======================================================
 TEMPLATEVECTOR
-inline VECTORTLP &VECTORTLP::operator-=(const TYPE scalaire) {
+VECTORTLP &VECTORTLP::operator-=(const TYPE scalaire) {
   for (size_t i = 0; i < SIZE; ++i)
     (*this)[i] -= scalaire;
 
@@ -72,7 +72,7 @@ inline VECTORTLP &VECTORTLP::operator-=(const TYPE scalaire) {
 }
 //======================================================
 TEMPLATEVECTOR
-inline VECTORTLP &VECTORTLP::operator-=(const VECTORTLP &vecto) {
+VECTORTLP &VECTORTLP::operator-=(const VECTORTLP &vecto) {
   for (size_t i = 0; i < SIZE; ++i)
     (*this)[i] -= vecto[i];
 
@@ -80,58 +80,58 @@ inline VECTORTLP &VECTORTLP::operator-=(const VECTORTLP &vecto) {
 }
 //======================================================
 TEMPLATEVECTOR
-inline VECTORTLP &VECTORTLP::operator^=(const VECTORTLP &v) {
+VECTORTLP &VECTORTLP::operator^=(const VECTORTLP &v) {
   (*this) = (*this) ^ v;
   return (*this);
 }
 //======================================================
 TEMPLATEVECTOR
-inline VECTORTLP tlp::operator+(const VECTORTLP &u, const VECTORTLP &v) {
+VECTORTLP tlp::operator+(const VECTORTLP &u, const VECTORTLP &v) {
   return VECTORTLP(u) += v;
 }
 //======================================================
 TEMPLATEVECTOR
-inline VECTORTLP tlp::operator+(const VECTORTLP &u, const TYPE scalaire) {
+VECTORTLP tlp::operator+(const VECTORTLP &u, const TYPE scalaire) {
   return VECTORTLP(u) += scalaire;
 }
 //======================================================
 TEMPLATEVECTOR
-inline VECTORTLP tlp::operator-(const VECTORTLP &u, const VECTORTLP &v) {
+VECTORTLP tlp::operator-(const VECTORTLP &u, const VECTORTLP &v) {
   return VECTORTLP(u) -= v;
 }
 //======================================================
 TEMPLATEVECTOR
-inline VECTORTLP tlp::operator-(const VECTORTLP &u, const TYPE scalaire) {
+VECTORTLP tlp::operator-(const VECTORTLP &u, const TYPE scalaire) {
   return VECTORTLP(u) -= scalaire;
 }
 //======================================================
 TEMPLATEVECTOR
-inline VECTORTLP tlp::operator*(const VECTORTLP &u, const VECTORTLP &v) {
+VECTORTLP tlp::operator*(const VECTORTLP &u, const VECTORTLP &v) {
   return VECTORTLP(u) *= v;
 }
 //======================================================
 TEMPLATEVECTOR
-inline VECTORTLP tlp::operator*(const VECTORTLP &u, const TYPE scalaire) {
+VECTORTLP tlp::operator*(const VECTORTLP &u, const TYPE scalaire) {
   return VECTORTLP(u) *= scalaire;
 }
 //======================================================
 TEMPLATEVECTOR
-inline VECTORTLP tlp::operator*(const TYPE scalaire, const VECTORTLP &u) {
+VECTORTLP tlp::operator*(const TYPE scalaire, const VECTORTLP &u) {
   return VECTORTLP(u) *= scalaire;
 }
 //======================================================
 TEMPLATEVECTOR
-inline VECTORTLP tlp::operator/(const VECTORTLP &u, const VECTORTLP &v) {
+VECTORTLP tlp::operator/(const VECTORTLP &u, const VECTORTLP &v) {
   return VECTORTLP(u) /= v;
 }
 //======================================================
 TEMPLATEVECTOR
-inline VECTORTLP tlp::operator/(const VECTORTLP &u, const TYPE scalaire) {
+VECTORTLP tlp::operator/(const VECTORTLP &u, const TYPE scalaire) {
   return VECTORTLP(u) /= scalaire;
 }
 //======================================================
 TEMPLATEVECTOR
-inline VECTORTLP tlp::operator^(const VECTORTLP &u, const VECTORTLP &v) {
+VECTORTLP tlp::operator^(const VECTORTLP &u, const VECTORTLP &v) {
 
   switch (SIZE) {
   case 3:
@@ -152,17 +152,17 @@ inline VECTORTLP tlp::operator^(const VECTORTLP &u, const VECTORTLP &v) {
 }
 //======================================================
 TEMPLATEVECTOR
-inline VECTORTLP tlp::operator-(const VECTORTLP &u) {
+VECTORTLP tlp::operator-(const VECTORTLP &u) {
   return VECTORTLP(u) *= static_cast<TYPE>(-1);
 }
 //======================================================
 TEMPLATEVECTOR
-inline bool VECTORTLP::operator>(const VECTORTLP &vecto) const {
+bool VECTORTLP::operator>(const VECTORTLP &vecto) const {
   return vecto < (*this);
 }
 //======================================================
 TEMPLATEVECTOR
-inline bool VECTORTLP::operator<(const VECTORTLP &v) const {
+bool VECTORTLP::operator<(const VECTORTLP &v) const {
   if (std::numeric_limits<TYPE>::is_integer) {
     return std::memcmp(this->data(), v.data(), SIZE * sizeof(TYPE)) < 0;
   }
@@ -184,12 +184,12 @@ inline bool VECTORTLP::operator<(const VECTORTLP &v) const {
 }
 //======================================================
 TEMPLATEVECTOR
-inline bool VECTORTLP::operator!=(const VECTORTLP &vecto) const {
+bool VECTORTLP::operator!=(const VECTORTLP &vecto) const {
   return (!((*this) == vecto));
 }
 //======================================================
 TEMPLATEVECTOR
-inline bool VECTORTLP::operator==(const VECTORTLP &v) const {
+bool VECTORTLP::operator==(const VECTORTLP &v) const {
   if (std::numeric_limits<TYPE>::is_integer) {
     return std::memcmp(this->data(), v.data(), SIZE * sizeof(TYPE)) == 0;
   }
@@ -207,7 +207,7 @@ inline bool VECTORTLP::operator==(const VECTORTLP &v) const {
 }
 //======================================================
 TEMPLATEVECTOR
-inline TYPE VECTORTLP::dotProduct(const VECTORTLP &v) const {
+TYPE VECTORTLP::dotProduct(const VECTORTLP &v) const {
   assert(SIZE > 0);
   OTYPE tmpO = static_cast<OTYPE>((*this)[0]) * static_cast<OTYPE>(v[0]);
 
@@ -218,7 +218,7 @@ inline TYPE VECTORTLP::dotProduct(const VECTORTLP &v) const {
 }
 //======================================================
 TEMPLATEVECTOR
-inline TYPE VECTORTLP::norm() const {
+TYPE VECTORTLP::norm() const {
   switch (SIZE) {
   case 1:
     return (*this)[0];
@@ -241,7 +241,7 @@ inline TYPE VECTORTLP::norm() const {
 }
 //======================================================
 TEMPLATEVECTOR
-inline DTYPE VECTORTLP::dist(const VECTOR &c) const {
+DTYPE VECTORTLP::dist(const VECTOR &c) const {
   switch (SIZE) {
   case 1:
     return static_cast<TYPE>(fabs((*this)[0] - c[0]));

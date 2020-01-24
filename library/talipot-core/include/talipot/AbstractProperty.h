@@ -195,7 +195,7 @@ public:
    * @param n The node to reset the value of.
    *
    **/
-  inline void erase(const node n) override {
+  void erase(const node n) override {
     setNodeValue(n, nodeDefaultValue);
   }
   //=================================================================================
@@ -206,7 +206,7 @@ public:
    * @param e The edge to reset the value of.
    *
    **/
-  inline void erase(const edge e) override {
+  void erase(const edge e) override {
     setEdgeValue(e, edgeDefaultValue);
   }
   //=================================================================================

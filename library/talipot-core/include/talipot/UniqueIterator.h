@@ -76,7 +76,7 @@ public:
     return tmp;
   }
   //================================================
-  inline bool hasNext() {
+  bool hasNext() {
     return _hasNext;
   }
   //================================================

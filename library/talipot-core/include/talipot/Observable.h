@@ -176,7 +176,7 @@ public:
    * own risk and avoid the sent of TLP_DELETE events whose management
    * is not thread safe.
    */
-  inline static void disableEventNotification() {
+  static void disableEventNotification() {
     _oDisabled = true;
   }
 
@@ -185,7 +185,7 @@ public:
    * All events sent since a previous call to enableEventNotification(),
    * are definitively lost.
    */
-  inline static void enableEventNotification() {
+  static void enableEventNotification() {
     _oDisabled = false;
   }
 
@@ -223,7 +223,7 @@ public:
    * unholdObservers().
    * @param listener The object that will receive events.
    */
-  inline void addListener(Observable &listener) const {
+  void addListener(Observable &listener) const {
     addListener(&listener);
   }
 
@@ -241,7 +241,7 @@ public:
    * The observer will no longer receive events from this object.
    * @param observer The observer to remove from this object.
    */
-  inline void removeObserver(Observable &observer) const {
+  void removeObserver(Observable &observer) const {
     removeObserver(&observer);
   }
 
@@ -259,7 +259,7 @@ public:
    * The listener will no longer receive events from this object.
    * @param listener The listener to remove from this object.
    */
-  inline void removeListener(Observable &listener) const {
+  void removeListener(Observable &listener) const {
     removeListener(&listener);
   }
 

@@ -39,10 +39,10 @@ public:
   ~GlOverviewGraphicsItem() override;
 
   void setSize(unsigned int width, unsigned int height);
-  inline unsigned int getWidth() {
+  unsigned int getWidth() {
     return width;
   }
-  inline unsigned int getHeight() {
+  unsigned int getHeight() {
     return height;
   }
 

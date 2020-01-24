@@ -60,7 +60,7 @@ public:
   /**
    * @brief Get the renderer instance.
    **/
-  inline static GlOffscreenRenderer *getInstance() {
+  static GlOffscreenRenderer *getInstance() {
     return instance;
   }
 

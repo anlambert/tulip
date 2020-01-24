@@ -125,7 +125,7 @@ public:
    * @param a measure in screen coordinates specified as an integer
    * @return the converted measure in viewport coordinates as an integer
    */
-  inline int screenToViewport(int l) {
+  int screenToViewport(int l) {
     return l * devicePixelRatio();
   }
 
@@ -134,7 +134,7 @@ public:
    * @param a measure in screen coordinates specified as a double
    * @return the converted measure in viewport coordinates as a double
    */
-  inline double screenToViewport(double l) {
+  double screenToViewport(double l) {
     return l * devicePixelRatio();
   }
 
@@ -143,7 +143,7 @@ public:
    * @param a point in screen coordinates
    * @return the converted point in viewport coordinates
    */
-  inline Coord screenToViewport(const Coord &point) {
+  Coord screenToViewport(const Coord &point) {
     qreal dpr = devicePixelRatio();
     return Coord(point.x() * dpr, point.y() * dpr);
   }
@@ -153,7 +153,7 @@ public:
    * @param a measure in viewport coordinates specified as a double
    * @return the converted measure in screen coordinates as a double
    */
-  inline double viewportToScreen(double l) {
+  double viewportToScreen(double l) {
     return l / devicePixelRatio();
   }
 
@@ -162,7 +162,7 @@ public:
    * @param a point in viewport coordinates
    * @return the converted point in screen coordinates
    */
-  inline Coord viewportToScreen(const Coord &point) {
+  Coord viewportToScreen(const Coord &point) {
     qreal dpr = devicePixelRatio();
     return Coord(point.x() / dpr, point.y() / dpr);
   }

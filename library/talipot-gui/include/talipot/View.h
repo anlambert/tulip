@@ -137,7 +137,7 @@ public:
     The list is always the same as the one given when View::setInteractors() was called.
     @see setInteractors();
     */
-  inline const QList<Interactor *> &interactors() const {
+  const QList<Interactor *> &interactors() const {
     return _interactors;
   }
 
@@ -301,7 +301,7 @@ public slots:
     Calling refresh() means that no internal data has been modified. This can happen when the view's
     panel gets resized, restored etc
     */
-  inline virtual void refresh() {
+  virtual void refresh() {
     draw();
   }
 

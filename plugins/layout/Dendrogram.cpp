@@ -163,8 +163,8 @@ void Dendrogram::shiftAllNodes(tlp::node n, float shift, OrientableLayout *oriLa
 }
 
 //====================================================================
-inline void Dendrogram::setNodePosition(tlp::node n, float x, float y, float z,
-                                        OrientableLayout *oriLayout) {
+void Dendrogram::setNodePosition(tlp::node n, float x, float y, float z,
+                                 OrientableLayout *oriLayout) {
   OrientableCoord coord = oriLayout->createCoord(x, y, z);
   oriLayout->setNodeValue(n, coord);
 }

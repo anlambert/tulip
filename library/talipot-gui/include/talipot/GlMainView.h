@@ -122,7 +122,7 @@ public:
    * @param y rotation around the Y axis in degree
    * @param z rotation around Z axis in degree
    */
-  inline void rotateCamera(int x, int y, int z) {
+  void rotateCamera(int x, int y, int z) {
     getGlMainWidget()->getScene()->rotateCamera(x, y, z);
   }
 
@@ -132,21 +132,21 @@ public:
    * @param y offset along the Y axis
    * @param z offset along the Z axis
    */
-  inline void translateCamera(int x, int y, int z) {
+  void translateCamera(int x, int y, int z) {
     getGlMainWidget()->getScene()->translateCamera(x, y, z);
   }
 
   /**
    * @brief Return the 3D world position for the given view position
    */
-  inline Coord viewToWorld(const Coord &vpos) const {
+  Coord viewToWorld(const Coord &vpos) const {
     return getGlMainWidget()->getScene()->getGraphCamera().viewportTo3DWorld(vpos);
   }
 
   /**
    * @brief Return the view position for the given 3D position
    */
-  inline Coord worldToView(const Coord &wpos) const {
+  Coord worldToView(const Coord &wpos) const {
     return getGlMainWidget()->getScene()->getGraphCamera().worldTo2DViewport(wpos);
   }
 
@@ -154,7 +154,7 @@ public:
    * @brief Zoom by step to the given (x,y) view position
    * @param step of zoom
    */
-  inline void zoomXY(int step, const int x, const int y) {
+  void zoomXY(int step, const int x, const int y) {
     getGlMainWidget()->getScene()->zoomXY(step, x, y);
   }
 
@@ -162,7 +162,7 @@ public:
    * @brief Zoom by step
    * @param step of zoom
    */
-  inline void zoom(int step) {
+  void zoom(int step) {
     getGlMainWidget()->getScene()->zoom(step);
   }
 
@@ -170,7 +170,7 @@ public:
    * @brief Zoom by factor
    * @param factor of zoom
    */
-  inline void zoomFactor(float factor) {
+  void zoomFactor(float factor) {
     getGlMainWidget()->getScene()->zoomFactor(factor);
   }
 

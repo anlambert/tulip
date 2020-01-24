@@ -351,7 +351,7 @@ private:
   QTemporaryDir *_rootDir;
   QString _projectFile;
 
-  inline const QString rootDir() const {
+  const QString rootDir() const {
     return _rootDir->path();
   }
 

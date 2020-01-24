@@ -45,12 +45,12 @@ public:
   ~FilterIterator() {
     delete _it;
   }
-  inline TYPE next() {
+  TYPE next() {
     TYPE tmp = _curVal;
     update();
     return tmp;
   }
-  inline bool hasNext() {
+  bool hasNext() {
     return _hasNext;
   }
 

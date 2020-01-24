@@ -37,7 +37,7 @@ public:
   PathHighlighter(const std::string &name);
   ~PathHighlighter() override;
 
-  inline std::string getName() const {
+  std::string getName() const {
     return this->name;
   }
   virtual void highlight(const PathFinder *parent, GlMainWidget *glMainWidget,

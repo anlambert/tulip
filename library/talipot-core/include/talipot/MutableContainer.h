@@ -115,7 +115,7 @@ private:
   void vecttohash();
   void hashtovect();
   void compress(unsigned int min, unsigned int max, unsigned int nbElements);
-  inline void vectset(const unsigned int i, typename StoredType<TYPE>::Value value);
+  void vectset(const unsigned int i, typename StoredType<TYPE>::Value value);
   IteratorValue *findAllValues(typename StoredType<TYPE>::ReturnedConstValue value,
                                bool equal = true) const;
 

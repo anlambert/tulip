@@ -79,7 +79,7 @@ class TLP_SCOPE ThreadManager {
   // create a thread dedicated to the execution of a function
   // used to iterate between begin and end indices
   template <typename runFunction>
-  static inline std::thread *launchThread(const runFunction &f, uint begin, uint end) {
+  static std::thread *launchThread(const runFunction &f, uint begin, uint end) {
     auto thrdFunction = [&](uint begin, uint end) {
       allocateThreadNumber();
       f(begin, end);
@@ -96,7 +96,7 @@ public:
   // create a thread dedicated to the execution of a function
   // with no arguments
   template <typename runFunction>
-  static inline std::thread *launchThread(const runFunction &f) {
+  static std::thread *launchThread(const runFunction &f) {
     auto thrdFunction = [&]() {
       allocateThreadNumber();
       f();
@@ -134,7 +134,7 @@ public:
    * between 0 and maxId
    */
   template <typename ThreadFunction>
-  static inline void iterate(size_t maxId, const ThreadFunction &threadFunction) {
+  static void iterate(size_t maxId, const ThreadFunction &threadFunction) {
 #ifndef TLP_NO_THREADS
     if (maxId == 0)
       return;

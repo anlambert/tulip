@@ -241,7 +241,7 @@ struct TLP_SCOPE ParameterDescriptionList {
    *
    * @return The number of parameters
    **/
-  inline unsigned int size() const {
+  unsigned int size() const {
     return parameters.size();
   }
 
@@ -250,7 +250,7 @@ struct TLP_SCOPE ParameterDescriptionList {
    *
    * @return bool true if the parameter description list is empty, false otherwise.
    **/
-  inline bool empty() const {
+  bool empty() const {
     return parameters.empty();
   }
 
