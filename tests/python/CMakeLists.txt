@@ -1,3 +1,4 @@
 UNIT_TEST(PythonGraphStructureTest test_graph_structure)
 UNIT_TEST(PythonGraphPropertiesTest test_graph_properties)
 UNIT_TEST(PythonPluginParametersTest test_plugin_registration_and_parameters)
+UNIT_TEST(PythonTalipotPluginsTest test_talipot_plugins)

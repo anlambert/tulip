@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -162,14 +162,10 @@ each subdirectory will be visited to search for plugins to load.
 
 :param pluginsDir: the root directory path to recursively search for python files (file extension: .py) or shared libraries containing the Talipot plugin (file extension : .so on linux, .dylib on mac, .dll on windows)
 :type filename: string
-:rtype: boolean
 %End
 
 %MethodCode
-  std::string oldTlpPluginsPath = tlp::TalipotPluginsPath;
-  tlp::TalipotPluginsPath = *a0;
-  tlp::PluginLibraryLoader::loadPlugins(a1);
-  tlp::TalipotPluginsPath = oldTlpPluginsPath;
+  tlp::PluginLibraryLoader::loadPluginsFromDir(*a0, a1);
   if (a2) {
     // TODO : wrap the plugin loader C++ instance and pass it over to Python
     std::string importPythonPlugins = "talipot.tlp.loadTalipotPluginsFromDir(\"";
