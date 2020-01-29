@@ -19,6 +19,7 @@
 #include <talipot/Coord.h>
 #include <talipot/Matrix.h>
 #include <talipot/Plugin.h>
+#include <talipot/MaterialDesignIcons.h>
 
 namespace tlp {
 
@@ -35,7 +36,7 @@ public:
     return EEGLYPH_CATEGORY;
   }
   std::string icon() const override {
-    return ":/talipot/gui/icons/32/plugin_glyph.png";
+    return MaterialDesignIcons::ShapePlus;
   }
 
   EdgeExtremityGlyph(const tlp::PluginContext *context);

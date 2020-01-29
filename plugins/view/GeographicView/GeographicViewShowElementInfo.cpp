@@ -17,6 +17,7 @@
 #include "GeographicViewInteractors.h"
 #include "../../utils/StandardInteractorPriority.h"
 #include "../../utils/PluginNames.h"
+#include "../../utils/InteractorIcons.h"
 
 #include <talipot/MouseInteractors.h>
 #include <talipot/NodeLinkDiagramViewInteractor.h>
@@ -70,7 +71,7 @@ public:
    * Default constructor
    */
   GeographicViewInteractorGetInformation(const tlp::PluginContext *)
-      : NodeLinkDiagramViewInteractor(":/talipot/gui/icons/i_select.png",
+      : NodeLinkDiagramViewInteractor(interactorIcon(InteractorType::GetInformation),
                                       "Get information on nodes/edges",
                                       StandardInteractorPriority::GetInformation) {}
 

@@ -60,6 +60,8 @@
 #include <talipot/AboutPage.h>
 #include <talipot/ColorScalesManager.h>
 #include <talipot/StableIterator.h>
+#include <talipot/FontIconManager.h>
+#include <talipot/MaterialDesignIcons.h>
 
 #include "ui_TalipotMainWindow.h"
 
@@ -145,6 +147,28 @@ protected:
   }
 };
 
+static QColor iconColor = Qt::white;
+static QColor menuIconColor = QColor("#404244");
+
+static QIcon getFileNewIcon() {
+  QIcon backIcon = FontIconManager::icon(MaterialDesignIcons::File, menuIconColor);
+  QIcon frontIcon =
+      FontIconManager::icon(MaterialDesignIcons::Plus, Qt::white, 0.7, 0, QPointF(0, 10));
+  return FontIconManager::stackIcons(backIcon, frontIcon);
+}
+
+static QIcon getMakeSelectionAGraphIcon() {
+  QIcon backIcon = FontIconManager::icon(MaterialDesignIcons::Select, menuIconColor);
+  QIcon frontIcon = FontIconManager::icon(MaterialDesignIcons::VectorPolyline, menuIconColor, 0.7);
+  return FontIconManager::stackIcons(backIcon, frontIcon);
+}
+
+static QIcon getReverseSelectedEdgesIcon() {
+  QIcon backIcon = FontIconManager::icon(MaterialDesignIcons::Select, menuIconColor);
+  QIcon frontIcon = FontIconManager::icon(MaterialDesignIcons::SwapHorizontal, menuIconColor, 0.8);
+  return FontIconManager::stackIcons(backIcon, frontIcon);
+}
+
 TalipotMainWindow::TalipotMainWindow()
     : _ui(new Ui::TalipotMainWindow), _graphs(new GraphHierarchiesModel(this)),
       _project(Project::newProject()), _pluginsCenter(new PluginsCenter()),
@@ -163,6 +187,91 @@ TalipotMainWindow::TalipotMainWindow()
   }
 
   setWindowTitle(_title);
+
+  _ui->developButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::LanguagePython, iconColor));
+  _ui->workspaceButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::TelevisionGuide, iconColor));
+  _ui->importButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Import, iconColor));
+  _ui->exportButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Export, iconColor));
+  _ui->csvImportButton->setIcon(FontIconManager::icon(MaterialDesignIcons::TableLarge, iconColor));
+  _ui->undoButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Reply, iconColor));
+  _ui->redoButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Share, iconColor));
+  _ui->addPanelButton->setIcon(FontIconManager::icon(MaterialDesignIcons::PlusBox, iconColor));
+  _ui->exposeModeButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::ViewGridOutline, iconColor));
+  _ui->searchButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Magnify, iconColor));
+  _ui->pythonButton->setIcon(FontIconManager::icon(MaterialDesignIcons::LanguagePython, iconColor));
+
+  _ui->actionNewProject->setIcon(getFileNewIcon());
+  _ui->actionOpen_Project->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::FileImport, menuIconColor));
+  _ui->menuOpen_recent_file->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Clock, menuIconColor));
+  _ui->actionSave_Project->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::FileExport, menuIconColor));
+  _ui->actionSave_Project_as->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::FileExport, menuIconColor));
+  _ui->actionImport->setIcon(FontIconManager::icon(MaterialDesignIcons::Import, menuIconColor));
+  _ui->actionImport_CSV->setIcon(FontIconManager::icon(MaterialDesignIcons::Table, menuIconColor));
+  _ui->actionNew_graph->setIcon(getFileNewIcon());
+  _ui->actionExit->setIcon(FontIconManager::icon(MaterialDesignIcons::CloseCircle, menuIconColor));
+
+  _ui->actionUndo->setIcon(FontIconManager::icon(MaterialDesignIcons::Reply, menuIconColor));
+  _ui->actionRedo->setIcon(FontIconManager::icon(MaterialDesignIcons::Share, menuIconColor));
+  _ui->actionCut->setIcon(FontIconManager::icon(MaterialDesignIcons::ContentCut, menuIconColor));
+  _ui->actionPaste->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::ContentPaste, menuIconColor));
+  _ui->actionCopy->setIcon(FontIconManager::icon(MaterialDesignIcons::ContentCopy, menuIconColor));
+  _ui->actionDelete->setIcon(FontIconManager::icon(MaterialDesignIcons::Delete, menuIconColor));
+  _ui->actionSelect_All->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::SelectAll, menuIconColor));
+  _ui->actionInvert_selection->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::SelectInverse, menuIconColor));
+  _ui->actionCancel_selection->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::SelectOff, menuIconColor));
+  _ui->actionGroup_elements->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Group, menuIconColor));
+  _ui->actionPreferences->setIcon(FontIconManager::icon(MaterialDesignIcons::Cog, menuIconColor));
+  _ui->actionFull_screen->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Fullscreen, menuIconColor));
+  _ui->action_Close_All->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::WindowClose, menuIconColor));
+  _ui->actionMessages_log->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Information, menuIconColor));
+  _ui->actionFind_plugins->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Magnify, menuIconColor));
+  _ui->actionAbout_us->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::InformationOutline, menuIconColor));
+  _ui->actionShowUserDocumentation->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::BookOpenVariant, menuIconColor));
+  _ui->actionShowAPIDocumentation->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::LanguageCpp, menuIconColor));
+  _ui->actionShowPythonDocumentation->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::LanguagePython, menuIconColor));
+  _ui->actionPython_IDE->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::LanguagePython, menuIconColor));
+  _ui->actionPlugins_Center->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::ArrowDownBoldBox, menuIconColor));
+  _ui->menuSelect->setIcon(FontIconManager::icon(MaterialDesignIcons::SelectAll, menuIconColor));
+  _ui->actionSelect_All_Edges->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::SelectAll, menuIconColor));
+  _ui->actionSelect_All_Nodes->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::SelectAll, menuIconColor));
+  _ui->menuDelete->setIcon(FontIconManager::icon(MaterialDesignIcons::Delete, menuIconColor));
+  _ui->actionDelete_all->setIcon(FontIconManager::icon(MaterialDesignIcons::Delete, menuIconColor));
+  _ui->actionDelete_from_the_root_graph->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Delete, menuIconColor));
+  _ui->actionClone_sub_graph->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Tournament, menuIconColor, 1.0, -90));
+  _ui->actionCreate_sub_graph->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Tournament, menuIconColor, 1.0, -90));
+  _ui->actionCreate_empty_sub_graph->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Tournament, menuIconColor, 1.0, -90));
+  _ui->actionColor_scales_management->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Palette, menuIconColor));
+  _ui->actionReverse_selected_edges->setIcon(getReverseSelectedEdgesIcon());
+  _ui->actionMake_selection_a_graph->setIcon(getMakeSelectionAGraphIcon());
 
   _pythonIDE = new PythonIDE();
   QVBoxLayout *dialogLayout = new QVBoxLayout();
@@ -403,15 +512,13 @@ TalipotMainWindow::TalipotMainWindow()
           &TalipotMainWindow::showPluginsCenter);
   connect(_ui->actionAbout_us, &QAction::triggered, this, &TalipotMainWindow::showAboutPage);
 
+  _ui->actionShowUserDocumentation->setVisible(false);
   if (QFile(tlpStringToQString(tlp::TalipotShareDir) +
-            "../doc/talipot/talipot-user/html/index.html")
+            "../doc/talipot/talipot-python/html/index.html")
           .exists()) {
-    connect(_ui->actionShowUserDocumentation, &QAction::triggered, this,
-            &TalipotMainWindow::showUserDocumentation);
     connect(_ui->actionShowPythonDocumentation, &QAction::triggered, this,
             &TalipotMainWindow::showPythonDocumentation);
   } else {
-    _ui->actionShowUserDocumentation->setVisible(false);
     _ui->actionShowPythonDocumentation->setVisible(false);
   }
 
@@ -443,7 +550,8 @@ void TalipotMainWindow::buildRecentDocumentsMenu() {
     }
 
     QAction *action = _ui->menuOpen_recent_file->addAction(
-        QIcon(":/talipot/app/icons/16/archive.png"), s, this, &TalipotMainWindow::openRecentFile);
+        FontIconManager::icon(MaterialDesignIcons::Archive, menuIconColor), s, this,
+        &TalipotMainWindow::openRecentFile);
     action->setData(s);
   }
 
@@ -454,9 +562,9 @@ void TalipotMainWindow::buildRecentDocumentsMenu() {
       continue;
     }
 
-    QAction *action =
-        _ui->menuOpen_recent_file->addAction(QIcon(":/talipot/app/icons/16/empty-file.png"), s,
-                                             this, &TalipotMainWindow::openRecentFile);
+    QAction *action = _ui->menuOpen_recent_file->addAction(
+        FontIconManager::icon(MaterialDesignIcons::File, menuIconColor), s, this,
+        &TalipotMainWindow::openRecentFile);
     action->setData(s);
   }
   _ui->menuOpen_recent_file->setEnabled(!_ui->menuOpen_recent_file->isEmpty());
@@ -505,7 +613,7 @@ void TalipotMainWindow::updateLogIconsAndCounters() {
   }
 
   logIconCounterFrame->setVisible(true);
-  logIconLabel->setPixmap(_logger->icon(logType));
+  logIconLabel->setPixmap(_logger->icon(logType).pixmap(QSize(16, 16)));
   logIconLabel->setToolTip("Click here to show/hide the message log window");
   logCounterLabel->setText(QString::number(_logger->countByType(logType)));
   logCounterLabel->setToolTip("Click here to show/hide the message log window");

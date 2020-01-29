@@ -11,16 +11,23 @@
  *
  */
 
-#include "talipot/ClearableLineEdit.h"
+#include <talipot/ClearableLineEdit.h>
+#include <talipot/MaterialDesignIcons.h>
+#include <talipot/FontIconManager.h>
 
 #include <QPaintEvent>
 #include <QPainter>
 
-QPixmap *ClearableLineEdit::CLEAR_PIXMAP = nullptr;
+using namespace std;
+using namespace tlp;
+
+unique_ptr<QPixmap> ClearableLineEdit::CLEAR_PIXMAP;
 
 void ClearableLineEdit::initPixmap() {
-  if (CLEAR_PIXMAP == nullptr) {
-    CLEAR_PIXMAP = new QPixmap(":/talipot/gui/ui/clearbutton.png");
+  if (!CLEAR_PIXMAP.get()) {
+    CLEAR_PIXMAP.reset(new QPixmap(FontIconManager::icon(MaterialDesignIcons::Backspace,
+                                                         QColor(50, 50, 50), 0.5, 0, QPointF(5, 0))
+                                       .pixmap(32, 32)));
   }
 }
 
@@ -47,7 +54,7 @@ QRect ClearableLineEdit::pixmapRect() {
 void ClearableLineEdit::mouseMoveEvent(QMouseEvent *ev) {
   QLineEdit::mouseMoveEvent(ev);
   bool oldValue = _clearButtonHovered;
-  _clearButtonHovered = pixmapRect().contains(ev->pos());
+  _clearButtonHovered = pixmapRect().translated(10, 0).contains(ev->pos());
 
   if (oldValue != _clearButtonHovered) {
     repaint();
@@ -57,9 +64,14 @@ void ClearableLineEdit::mouseMoveEvent(QMouseEvent *ev) {
 void ClearableLineEdit::mousePressEvent(QMouseEvent *ev) {
   QLineEdit::mousePressEvent(ev);
 
-  if (pixmapRect().contains(ev->pos())) {
+  if (pixmapRect().translated(10, 0).contains(ev->pos())) {
     clear();
     emit textEdited("");
     emit editingFinished();
   }
+}
+
+void ClearableLineEdit::leaveEvent(QEvent *) {
+  _clearButtonHovered = false;
+  repaint();
 }

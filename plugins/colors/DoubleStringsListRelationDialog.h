@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -19,7 +19,7 @@
 #include <talipot/Color.h>
 
 namespace Ui {
-class DoubleStringsListRelationDialogData;
+class DoubleStringsListRelationDialog;
 }
 
 namespace tlp {
@@ -28,7 +28,7 @@ class DoubleStringsListRelationDialog : public QDialog {
 
   Q_OBJECT
 
-  Ui::DoubleStringsListRelationDialogData *_ui;
+  Ui::DoubleStringsListRelationDialog *_ui;
 
 public:
   DoubleStringsListRelationDialog(const std::vector<std::string> &firstValues,

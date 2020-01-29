@@ -52,13 +52,11 @@ IF(PYTHONLIBS_FOUND)
     QTX_WRAP_UI(${LibTalipotPythonName}_UI_SRCS ${${LibTalipotPythonName}_UI})
     QTX_WRAP_CPP(${LibTalipotPythonName}_MOC_SRCS
                  ${${LibTalipotPythonName}_MOC})
-    QTX_ADD_RESOURCES(${LibTalipotPythonName}_RCC_SRCS
-                      ../resources/TalipotPython.qrc)
 
     ADD_LIBRARY(
       ${LibTalipotPythonName} SHARED
       ${${LibTalipotPythonName}_LIB_SRCS} ${${LibTalipotPythonName}_MOC_SRCS}
-      ${${LibTalipotPythonName}_UI_SRCS} ${${LibTalipotPythonName}_RCC_SRCS})
+      ${${LibTalipotPythonName}_UI_SRCS})
 
     TARGET_LINK_LIBRARIES(${LibTalipotPythonName} ${LibTalipotCoreName})
     TARGET_LINK_LIBRARIES(${LibTalipotPythonName} ${LibTalipotGUIName})

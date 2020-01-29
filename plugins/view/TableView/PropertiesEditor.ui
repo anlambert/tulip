@@ -89,10 +89,6 @@
           <property name="text">
            <string>Add new</string>
           </property>
-          <property name="icon">
-           <iconset resource="../../../library/talipot-gui/resources/TalipotGUIResource.qrc">
-            <normaloff>:/talipot/gui/icons/64/list-add.png</normaloff>:/talipot/gui/icons/64/list-add.png</iconset>
-          </property>
          </widget>
         </item>
        </layout>

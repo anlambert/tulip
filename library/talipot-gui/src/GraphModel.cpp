@@ -21,6 +21,8 @@
 #include <talipot/Graph.h>
 #include <talipot/MetaTypes.h>
 #include <talipot/TlpQtTools.h>
+#include <talipot/FontIconManager.h>
+#include <talipot/MaterialDesignIcons.h>
 
 using namespace tlp;
 
@@ -122,7 +124,8 @@ QVariant GraphModel::headerData(int section, Qt::Orientation orientation, int ro
     if (role == Qt::DisplayRole) {
       return QString(prop->getName().c_str());
     } else if (role == Qt::DecorationRole && !_graph->existLocalProperty(prop->getName())) {
-      return QIcon(":/talipot/gui/ui/inherited_properties.png");
+      return FontIconManager::icon(MaterialDesignIcons::TransferUp);
+      ;
     } else if (role == Model::PropertyRole) {
       return QVariant::fromValue<PropertyInterface *>(prop);
     } else if (role == Qt::ToolTipRole) {

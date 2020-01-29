@@ -16,10 +16,11 @@
 
 #include <talipot/TlpTools.h>
 #include <talipot/TlpQtTools.h>
+#include <talipot/IconicFont.h>
+#include <talipot/FontIconManager.h>
 
 #include <QApplication>
 #include <QPainter>
-#include <QNetworkReply>
 
 using namespace tlp;
 
@@ -27,6 +28,11 @@ PluginInformationListItem::PluginInformationListItem(const Plugin &plugin, QWidg
     : QWidget(parent), _ui(new Ui::PluginInformationListItem) {
   _ui->setupUi(this);
   QPixmap pix = QPixmap(tlpStringToQString(plugin.icon()));
+  if (IconicFont::isIconSupported(plugin.icon())) {
+    pix = FontIconManager::icon(tlpStringToQString(plugin.icon())).pixmap(QSize(32, 32));
+  } else {
+    pix = pix.scaled(32, 32);
+  }
   _ui->icon->setPixmap(pix);
   _ui->name->setText(tlpStringToQString(plugin.name()) + " " +
                      tlpStringToQString(plugin.release()));

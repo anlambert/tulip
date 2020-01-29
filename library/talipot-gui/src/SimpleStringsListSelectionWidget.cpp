@@ -16,6 +16,8 @@
 
 #include <talipot/SimpleStringsListSelectionWidget.h>
 #include <talipot/TlpQtTools.h>
+#include <talipot/FontIconManager.h>
+#include <talipot/MaterialDesignIcons.h>
 
 #include "ui_SimpleStringsListSelectionWidget.h"
 
@@ -25,10 +27,12 @@ namespace tlp {
 
 SimpleStringsListSelectionWidget::SimpleStringsListSelectionWidget(
     QWidget *parent, const unsigned int maxSelectedStringsListSize)
-    : QWidget(parent), _ui(new Ui::SimpleStringsListSelectionData()),
+    : QWidget(parent), _ui(new Ui::SimpleStringsListSelectionWidget()),
       maxSelectedStringsListSize(maxSelectedStringsListSize) {
 
   _ui->setupUi(this);
+  _ui->upButton->setIcon(FontIconManager::icon(MaterialDesignIcons::ArrowUpBold));
+  _ui->downButton->setIcon(FontIconManager::icon(MaterialDesignIcons::ArrowDownBold));
 
   if (maxSelectedStringsListSize != 0) {
     _ui->selectButton->setEnabled(false);

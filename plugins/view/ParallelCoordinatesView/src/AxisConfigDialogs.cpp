@@ -18,6 +18,8 @@
 #include <talipot/IntegerProperty.h>
 #include <talipot/DoubleProperty.h>
 #include <talipot/TlpQtTools.h>
+#include <talipot/FontIconManager.h>
+#include <talipot/MaterialDesignIcons.h>
 
 #include <QGridLayout>
 #include <QVBoxLayout>
@@ -142,10 +144,11 @@ NominalAxisConfigDialog::NominalAxisConfigDialog(NominalParallelAxis *axis)
 
   okButton = new QPushButton("OK");
   axisLabelsOrder = new ItemsListWidget(this);
-  QPushButton *up = new QPushButton(QIcon(":/talipot/gui/icons/16/go-up.png"), "");
+  QPushButton *up = new QPushButton(FontIconManager::icon(MaterialDesignIcons::ArrowUpBold), "");
   QPushButton *lexOrder = new QPushButton(QString("Lexicographic") + QChar(QChar::LineSeparator) +
                                           QString("     order"));
-  QPushButton *down = new QPushButton(QIcon(":/talipot/gui/icons/16/go-down.png"), "");
+  QPushButton *down =
+      new QPushButton(FontIconManager::icon(MaterialDesignIcons::ArrowDownBold), "");
 
   buttonsUpDownLayout->addWidget(up);
   buttonsUpDownLayout->addWidget(lexOrder);

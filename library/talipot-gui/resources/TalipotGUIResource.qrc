@@ -1,38 +1,16 @@
 <RCC>
     <qresource prefix="/talipot/gui">
-        <file>icons/i_addedge.png</file>
-        <file>icons/i_bends.png</file>
-        <file>icons/i_del.png</file>
-        <file>icons/i_invalid.png</file>
-        <file>icons/i_locked.png</file>
-        <file>icons/i_magic.png</file>
-        <file>icons/i_move.png</file>
-        <file>icons/i_select.png</file>
-        <file>icons/i_navigation.png</file>
-        <file>icons/i_selection.png</file>
-        <file>icons/i_unlocked.png</file>
-        <file>icons/i_zoom.png</file>
         <file>icons/logo32x32.png</file>
         <file>icons/json32x32.png</file>
         <file>icons/tlp32x32.png</file>
         <file>icons/tlpb32x32.png</file>
         <file>icons/talipot.ico</file>
         <file>ui/full_screen.png</file>
-        <file>ui/darkclosebutton.png</file>
-        <file>ui/blackclosebutton.png</file>
         <file>ui/grid_screen.png</file>
-        <file>ui/lightclosebutton.png</file>
-        <file>ui/whiteclosebutton.png</file>
-        <file>ui/lightdragbutton.png</file>
-        <file>ui/list_bullet_arrow.png</file>
         <file>ui/next.png</file>
         <file>ui/previous.png</file>
-        <file>ui/process-working.png</file>
         <file>ui/split_screen.png</file>
         <file>ui/split_screen_horizontal.png</file>
-        <file>icons/64/list-add.png</file>
-        <file>icons/16/link.png</file>
-        <file>icons/16/unlink.png</file>
         <file>icons/20/labels.png</file>
         <file>icons/20/labels_disabled.png</file>
         <file>icons/20/labels_enabled.png</file>
@@ -58,42 +36,17 @@
         <file>icons/20/set_edge_size.png</file>
         <file>icons/20/set_label_position.png</file>
         <file>ui/split3_screen.png</file>
-        <file>ui/inherited_properties.png</file>
-        <file>ui/clearbutton.png</file>
-        <file>icons/16/list-add.png</file>
-        <file>icons/16/list-del.png</file>
-        <file>icons/16/go-down.png</file>
-        <file>icons/16/go-up.png</file>
-        <file>icons/22/start.png</file>
-        <file>icons/16/preferences-other.png</file>
         <file>icons/32/node_link_diagram_view.png</file>
-        <file>icons/32/plugin_algorithm.png</file>
-        <file>icons/32/plugin_controller.png</file>
-        <file>icons/32/plugin_glyph.png</file>
-        <file>icons/32/plugin_interactor.png</file>
-        <file>icons/32/plugin_view.png</file>
         <file>ui/split3_2_screen.png</file>
         <file>icons/20/edge_color_interpolation.png</file>
         <file>icons/20/edge_size_interpolation.png</file>
         <file>icons/20/node_color_interpolation.png</file>
         <file>icons/20/node_size_interpolation.png</file>
-        <file>icons/eye.png</file>
-        <file>icons/eye_disabled.png</file>
-        <file>icons/eye_partially_disabled.png</file>
         <file>ui/six_screen.png</file>
         <file>icons/16/clipboard.png</file>
-        <file>icons/64/document-export.png</file>
-        <file>icons/64/document-import.png</file>
-        <file>icons/arrow_two_head.png</file>
         <file>ui/split3_3_screen.png</file>
         <file>ui/sidebar.png</file>
         <file>ui/statusbar.png</file>
-        <file>icons/icon-quote.gif</file>
-        <file>icons/screenshots.png</file>
-        <file>icons/tutorials.png</file>
-        <file>icons/32/input-output.png</file>
-        <file>icons/32/input.png</file>
-        <file>icons/32/output.png</file>
         <file>icons/20/nodes_disabled.png</file>
         <file>icons/20/nodes_enabled.png</file>
         <file>ui/menubar.png</file>
@@ -108,5 +61,8 @@
         <file>icons/svg/close-selected.svg</file>
         <file>icons/svg/close-unselected.svg</file>
         <file>icons/svg/chevron-down.svg</file>
+        <file>icons/svg/eye-outline.svg</file>
+        <file>icons/svg/eye-off-outline.svg</file>
+        <file>icons/svg/eye-off-partial-outline.svg</file>
     </qresource>
 </RCC>

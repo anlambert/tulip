@@ -30,7 +30,7 @@ namespace tlp {
 class ParallelCoordinatesInteractor : public NodeLinkDiagramViewInteractor {
 
 public:
-  ParallelCoordinatesInteractor(const QString &iconPath, const QString &text,
+  ParallelCoordinatesInteractor(const QIcon &icon, const QString &text,
                                 const unsigned int priority = 0);
   /**
    * return if this interactor is compatible with given View

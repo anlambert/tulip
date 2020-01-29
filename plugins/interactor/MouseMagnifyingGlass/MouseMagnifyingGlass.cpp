@@ -15,6 +15,7 @@
 
 #include "MouseMagnifyingGlass.h"
 #include "../../utils/PluginNames.h"
+#include "../../utils/InteractorIcons.h"
 
 #include <talipot/GlRect.h>
 #include <talipot/GlMainView.h>
@@ -37,7 +38,7 @@ using namespace std;
 using namespace tlp;
 
 MouseMagnifyingGlassInteractor::MouseMagnifyingGlassInteractor(const tlp::PluginContext *)
-    : GLInteractorComposite(QIcon(":/i_magnifying_glass.png"), "Magnifying glass") {}
+    : GLInteractorComposite(interactorIcon(InteractorType::MagnifyingGlass), "Magnifying glass") {}
 
 void MouseMagnifyingGlassInteractor::construct() {
   push_back(new MousePanNZoomNavigator());

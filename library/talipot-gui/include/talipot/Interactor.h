@@ -15,6 +15,7 @@
 #define TALIPOT_INTERACTOR_H
 
 #include <talipot/Plugin.h>
+#include <talipot/MaterialDesignIcons.h>
 
 #include <QObject>
 #include <QCursor>
@@ -65,7 +66,7 @@ public:
     return INTERACTOR_CATEGORY;
   }
   std::string icon() const override {
-    return ":/talipot/gui/icons/32/plugin_interactor.png";
+    return MaterialDesignIcons::Wrench;
   }
   /**
     @brief Checks the compatibility between the interactor and the given view (identified by its

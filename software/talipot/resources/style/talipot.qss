@@ -518,19 +518,28 @@ PlaceHolderWidget {
 }
 
 #PropertiesEditor QTableView::indicator:checked {
-  image: url(:/talipot/gui/icons/eye.png);
+  image: url(:/talipot/gui/icons/svg/eye-outline.svg);
+  width: 20px;
 }
 
 #PropertiesEditor QTableView::indicator:unchecked {
-  image: url(:/talipot/gui/icons/eye_disabled.png);
+  image: url(:/talipot/gui/icons/svg/eye-off-outline.svg);
+  width: 20px;
 }
 
 #PropertiesEditor QCheckBox::indicator:checked {
-  image: url(:/talipot/gui/icons/eye.png);
+  image: url(:/talipot/gui/icons/svg/eye-outline.svg);
+  width: 20px;
+}
+
+#PropertiesEditor QCheckBox::indicator:unchecked {
+  image: url(:/talipot/gui/icons/svg/eye-off-outline.svg);
+  width: 20px;
 }
 
 #PropertiesEditor #propsVisibilityCheck::indicator:indeterminate {
-  image: url(:/talipot/gui/icons/eye_partially_disabled.png);
+  image: url(:/talipot/gui/icons/svg/eye-off-partial-outline.svg);
+  width: 20px;
 }
 
 #PythonIDE QTabWidget {
@@ -643,6 +652,10 @@ PlaceHolderWidget {
   background: rgba(0,0,0,0);
 }
 
+#PythonIDE QWidget[pythonIDEBottomWidget="true"] QToolButton:hover {
+  background: #565656;
+}
+
 #PythonIDE QFrame[pythonToolbar="true"] QToolButton:hover {
   border-image: none;
   background: #595b5d;
@@ -653,10 +666,6 @@ PlaceHolderWidget {
 #PythonIDE QFrame[pythonToolbar="true"] QPushButton:pressed {
   border-image: none;
   background: #262829;
-}
-
-#PythonIDE QFrame[pythonToolbar="true"] QToolBar {
-	border: none;
 }
 
 #PythonIDE #line {

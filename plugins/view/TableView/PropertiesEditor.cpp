@@ -32,6 +32,8 @@
 #include <talipot/StringProperty.h>
 #include <talipot/BooleanProperty.h>
 #include <talipot/MetaTypes.h>
+#include <talipot/FontIconManager.h>
+#include <talipot/MaterialDesignIcons.h>
 
 Q_DECLARE_METATYPE(Qt::CheckState)
 
@@ -42,6 +44,7 @@ PropertiesEditor::PropertiesEditor(QWidget *parent)
       _delegate(new tlp::ItemDelegate), _sourceModel(nullptr), filteringProperties(false),
       editorParent(parent), _caseSensitiveSearch(Qt::CaseSensitive) {
   _ui->setupUi(this);
+  _ui->newButton->setIcon(FontIconManager::icon(MaterialDesignIcons::PlusBox));
   connect(_ui->newButton, &QAbstractButton::clicked, this, &PropertiesEditor::newProperty);
 }
 
@@ -171,7 +174,7 @@ void PropertiesEditor::showCustomContextMenu(const QPoint &p) {
     connect(action, &QAction::triggered, this, &PropertiesEditor::setPropsNotVisibleExcept);
     menu.addSeparator();
 
-    action = menu.addAction(QIcon(":/talipot/gui/icons/64/list-add.png"), "Add new property");
+    action = menu.addAction("Add new property");
     action->setToolTip("Display a dialog to create a new property belonging to the current graph");
     connect(action, &QAction::triggered, this, &PropertiesEditor::newProperty);
     connect(menu.addAction("Copy"), &QAction::triggered, this, &PropertiesEditor::copyProperty);

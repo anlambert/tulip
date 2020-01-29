@@ -24,12 +24,13 @@
 
 #include "../../utils/StandardInteractorPriority.h"
 #include "../../utils/PluginNames.h"
+#include "../../utils/InteractorIcons.h"
 
 namespace tlp {
 
-HistogramInteractor::HistogramInteractor(const QString &iconPath, const QString &text,
+HistogramInteractor::HistogramInteractor(const QIcon &icon, const QString &text,
                                          const unsigned int priority)
-    : NodeLinkDiagramViewInteractor(iconPath, text, priority) {}
+    : NodeLinkDiagramViewInteractor(icon, text, priority) {}
 
 bool HistogramInteractor::isCompatible(const std::string &viewName) const {
   return (viewName == ViewName::HistogramViewName);
@@ -41,7 +42,7 @@ PLUGIN(HistogramInteractorStatistics)
 PLUGIN(HistogramInteractorGetInformation)
 
 HistogramInteractorNavigation::HistogramInteractorNavigation(const PluginContext *)
-    : HistogramInteractor(":/talipot/gui/icons/i_navigation.png", "Navigate in view",
+    : HistogramInteractor(interactorIcon(InteractorType::Navigation), "Navigate in view",
                           StandardInteractorPriority::Navigation) {}
 
 void HistogramInteractorNavigation::construct() {
@@ -65,7 +66,7 @@ void HistogramInteractorNavigation::construct() {
 }
 
 HistogramInteractorMetricMapping::HistogramInteractorMetricMapping(const PluginContext *)
-    : HistogramInteractor(":/i_histo_color_mapping.png", "Metric Mapping",
+    : HistogramInteractor(QIcon(":/i_histo_color_mapping.png"), "Metric Mapping",
                           StandardInteractorPriority::ViewInteractor1) {}
 
 void HistogramInteractorMetricMapping::construct() {
@@ -141,7 +142,7 @@ void HistogramInteractorMetricMapping::construct() {
 }
 
 HistogramInteractorStatistics::HistogramInteractorStatistics(const PluginContext *)
-    : HistogramInteractor(":/i_histo_statistics.png", "Statistics",
+    : HistogramInteractor(QIcon(":/i_histo_statistics.png"), "Statistics",
                           StandardInteractorPriority::ViewInteractor2),
       histoStatsConfigWidget(nullptr), histoStatistics(nullptr) {}
 
@@ -216,7 +217,7 @@ protected:
 };
 
 HistogramInteractorGetInformation::HistogramInteractorGetInformation(const tlp::PluginContext *)
-    : NodeLinkDiagramViewInteractor(":/talipot/gui/icons/i_select.png",
+    : NodeLinkDiagramViewInteractor(interactorIcon(InteractorType::GetInformation),
                                     "Display node or edge properties",
                                     StandardInteractorPriority::GetInformation) {}
 

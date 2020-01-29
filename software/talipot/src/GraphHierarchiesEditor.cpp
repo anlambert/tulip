@@ -28,6 +28,8 @@
 #include <talipot/BooleanProperty.h>
 #include <talipot/MetaTypes.h>
 #include <talipot/GraphHierarchiesModel.h>
+#include <talipot/FontIconManager.h>
+#include <talipot/MaterialDesignIcons.h>
 
 #include "TalipotMainWindow.h"
 #include "ui_GraphHierarchiesEditor.h"
@@ -107,16 +109,45 @@ void CustomTreeView::resizeFirstColumnToContent() {
   resizeColumnToContents(0);
 }
 
+static QColor menuIconColor = QColor("#404244");
+
 GraphHierarchiesEditor::GraphHierarchiesEditor(QWidget *parent)
     : QWidget(parent), _ui(new Ui::GraphHierarchiesEditorData), _contextGraph(nullptr),
       _model(nullptr) {
   _ui->setupUi(this);
   _ui->hierarchiesTree->addAction(_ui->actionDelete_All);
   _ui->actionDelete_All->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+  _ui->actionCreate_panel->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::PlusBox, menuIconColor));
+  _ui->actionExport->setIcon(FontIconManager::icon(MaterialDesignIcons::Export, menuIconColor));
+  _ui->actionSave_to_file->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::FileExport, menuIconColor));
+  _ui->actionRename->setIcon(FontIconManager::icon(MaterialDesignIcons::RenameBox, menuIconColor));
+  _ui->actionDelete_graph->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Delete, menuIconColor));
+  _ui->actionDelete_All->setIcon(FontIconManager::icon(MaterialDesignIcons::Delete, menuIconColor));
+  _ui->actionDelete_all_nodes->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Delete, menuIconColor));
+  _ui->actionDelete_all_edges->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Delete, menuIconColor));
+  _ui->actionDelete_selection->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Delete, menuIconColor));
+  _ui->actionAdd_sub_graph->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Tournament, menuIconColor, 1.0, -90));
+  _ui->actionClone_subgraph->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Tournament, menuIconColor, 1.0, -90));
+  _ui->actionCreate_induced_sub_graph->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Tournament, menuIconColor, 1.0, -90));
+  _ui->actionClone_sibling->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Tournament, menuIconColor, 1.0, -90));
+  _ui->actionClone_sibling_with_properties->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Tournament, menuIconColor, 1.0, -90));
+  _ui->actionExpand_hierarchy->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::FileTree, menuIconColor));
 
   QToolButton *linkButton = new QToolButton();
   linkButton->setObjectName("linkButton");
-  linkButton->setIcon(QIcon(":/talipot/gui/icons/16/link.png"));
+  linkButton->setIcon(FontIconManager::icon(MaterialDesignIcons::LinkVariant, Qt::white, 0.8));
   linkButton->setToolTip("Click here to disable the synchronization with workspace active "
                          "panel.\nWhen synchronization is enabled, the graph currently "
                          "displayed\nin the active panel, becomes the current one in the Graphs "
@@ -437,13 +468,14 @@ void GraphHierarchiesEditor::saveGraphHierarchyInTlpFile() {
 
 void GraphHierarchiesEditor::toggleSynchronization(bool f) {
   if (f) {
-    _linkButton->setIcon(QIcon(":/talipot/gui/icons/16/link.png"));
+    _linkButton->setIcon(FontIconManager::icon(MaterialDesignIcons::LinkVariant, Qt::white, 0.8));
     _linkButton->setToolTip("Click here to disable the synchronization with workspace active "
                             "panel.\nWhen synchronization is enabled, the graph currently "
                             "displayed\nin the active panel, becomes the current one in the Graphs "
                             "panel.");
   } else {
-    _linkButton->setIcon(QIcon(":/talipot/gui/icons/16/unlink.png"));
+    _linkButton->setIcon(
+        FontIconManager::icon(MaterialDesignIcons::LinkVariantOff, Qt::white, 0.8));
     _linkButton->setToolTip("Click here to enable the synchronization with workspace active "
                             "panel.\nWhen synchronization is enabled, the graph currently "
                             "displayed\nin the active panel, becomes the current one in the Graphs "

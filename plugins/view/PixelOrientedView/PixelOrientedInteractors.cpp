@@ -19,14 +19,15 @@
 
 #include "../../utils/StandardInteractorPriority.h"
 #include "../../utils/PluginNames.h"
+#include "../../utils/InteractorIcons.h"
 
 using namespace std;
 
 namespace tlp {
 
-PixelOrientedInteractor::PixelOrientedInteractor(const QString &iconPath, const QString &text,
+PixelOrientedInteractor::PixelOrientedInteractor(const QIcon &icon, const QString &text,
                                                  const unsigned int priority)
-    : NodeLinkDiagramViewInteractor(iconPath, text, priority) {}
+    : NodeLinkDiagramViewInteractor(icon, text, priority) {}
 
 bool PixelOrientedInteractor::isCompatible(const std::string &viewName) const {
   return (viewName == ViewName::PixelOrientedViewName);
@@ -35,7 +36,7 @@ bool PixelOrientedInteractor::isCompatible(const std::string &viewName) const {
 PLUGIN(PixelOrientedInteractorNavigation)
 
 PixelOrientedInteractorNavigation::PixelOrientedInteractorNavigation(const PluginContext *)
-    : PixelOrientedInteractor(":/talipot/gui/icons/i_navigation.png", "Navigate in view",
+    : PixelOrientedInteractor(interactorIcon(InteractorType::Navigation), "Navigate in view",
                               StandardInteractorPriority::Navigation) {}
 
 void PixelOrientedInteractorNavigation::construct() {

@@ -810,8 +810,7 @@ void TableView::showHorizontalHeaderCustomContextMenu(const QPoint &pos) {
   QAction *action = contextMenu.addAction(tlpStringToQString(propName));
   action->setEnabled(false);
   contextMenu.addSeparator();
-  QAction *addProp =
-      contextMenu.addAction(QIcon(":/talipot/gui/icons/64/list-add.png"), "Add new property");
+  QAction *addProp = contextMenu.addAction("Add new property");
   addProp->setToolTip("Display a dialog to create a new property belonging to the current graph");
   QAction *copyProp = contextMenu.addAction("Copy");
   copyProp->setToolTip("Copy the values of \"" + action->text() +

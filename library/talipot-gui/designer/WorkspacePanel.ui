@@ -271,10 +271,6 @@ becomes the current one in the workspace active panel.</string>
         <property name="text">
          <string/>
         </property>
-        <property name="icon">
-         <iconset resource="../resources/TalipotGUIResource.qrc">
-          <normaloff>:/talipot/gui/icons/16/unlink.png</normaloff>:/talipot/gui/icons/16/unlink.png</iconset>
-        </property>
         <property name="iconSize">
          <size>
           <width>22</width>
@@ -304,9 +300,6 @@ becomes the current one in the workspace active panel.</string>
         <property name="toolTip">
          <string>Press here to begin dragging this view</string>
         </property>
-        <property name="pixmap">
-         <pixmap resource="../resources/TalipotGUIResource.qrc">:/talipot/gui/ui/lightdragbutton.png</pixmap>
-        </property>
        </widget>
       </item>
       <item>
@@ -316,10 +309,6 @@ becomes the current one in the workspace active panel.</string>
         </property>
         <property name="text">
          <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../resources/TalipotGUIResource.qrc">
-          <normaloff>:/talipot/gui/ui/lightclosebutton.png</normaloff>:/talipot/gui/ui/lightclosebutton.png</iconset>
         </property>
        </widget>
       </item>

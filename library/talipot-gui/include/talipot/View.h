@@ -25,6 +25,7 @@
 #include <talipot/Edge.h>
 #include <talipot/Observable.h>
 #include <talipot/Plugin.h>
+#include <talipot/MaterialDesignIcons.h>
 
 class QGraphicsView;
 class QGraphicsItem;
@@ -119,7 +120,7 @@ public:
     return VIEW_CATEGORY;
   }
   std::string icon() const override {
-    return ":/talipot/gui/icons/32/plugin_view.png";
+    return MaterialDesignIcons::Application;
   }
 
   /**

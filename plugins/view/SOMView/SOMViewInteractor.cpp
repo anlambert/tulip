@@ -20,6 +20,7 @@
 
 #include "../../utils/StandardInteractorPriority.h"
 #include "../../utils/PluginNames.h"
+#include "../../utils/InteractorIcons.h"
 
 using namespace std;
 using namespace tlp;
@@ -29,16 +30,16 @@ PLUGIN(SOMViewSelection)
 PLUGIN(SOMViewProperties)
 PLUGIN(SOMViewThreshold)
 
-SOMViewInteractor::SOMViewInteractor(const QString &iconPath, const QString &text,
+SOMViewInteractor::SOMViewInteractor(const QIcon &icon, const QString &text,
                                      const unsigned int priority)
-    : NodeLinkDiagramViewInteractor(iconPath, text, priority) {}
+    : NodeLinkDiagramViewInteractor(icon, text, priority) {}
 
 bool SOMViewInteractor::isCompatible(const std::string &viewName) const {
   return (viewName == ViewName::SOMViewName);
 }
 
 SOMViewNavigation::SOMViewNavigation(PluginContext *)
-    : SOMViewInteractor(":/talipot/gui/icons/i_navigation.png", "Navigate",
+    : SOMViewInteractor(interactorIcon(InteractorType::Navigation), "Navigate",
                         StandardInteractorPriority::Navigation) {}
 
 void SOMViewNavigation::construct() {
@@ -47,7 +48,7 @@ void SOMViewNavigation::construct() {
 }
 
 SOMViewSelection::SOMViewSelection(PluginContext *)
-    : SOMViewInteractor(":/talipot/gui/icons/i_selection.png", "Select",
+    : SOMViewInteractor(interactorIcon(InteractorType::Selection), "Select",
                         StandardInteractorPriority::RectangleSelection) {}
 
 void SOMViewSelection::construct() {
@@ -57,7 +58,7 @@ void SOMViewSelection::construct() {
 }
 
 SOMViewProperties::SOMViewProperties(PluginContext *)
-    : SOMViewInteractor(":/talipot/gui/icons/i_select.png", "Properties",
+    : SOMViewInteractor(interactorIcon(InteractorType::GetInformation), "Properties",
                         StandardInteractorPriority::GetInformation) {}
 
 void SOMViewProperties::construct() {
@@ -67,7 +68,7 @@ void SOMViewProperties::construct() {
 }
 
 SOMViewThreshold::SOMViewThreshold(PluginContext *)
-    : SOMViewInteractor(":/i_slider.png", "Threshold Selection",
+    : SOMViewInteractor(QIcon(":/i_slider.png"), "Threshold Selection",
                         StandardInteractorPriority::ViewInteractor1) {}
 
 void SOMViewThreshold::construct() {

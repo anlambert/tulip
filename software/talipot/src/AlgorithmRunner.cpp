@@ -34,9 +34,9 @@ protected:
   void paintEvent(QPaintEvent *event) override {
     ExpandableGroupBox::paintEvent(event);
     QPainter painter(this);
-    QPixmap px((_droppingFavorite ? ":/talipot/app/icons/16/favorite.png"
-                                  : ":/talipot/app/icons/16/favorite-empty.png"));
-    painter.drawPixmap(20, 0, px);
+    QPixmap px((_droppingFavorite ? ":/talipot/app/icons/svg/star.svg"
+                                  : ":/talipot/app/icons/svg/star-outline.svg"));
+    painter.drawPixmap(20, -2, px);
   }
 };
 
@@ -187,8 +187,10 @@ AlgorithmRunner::AlgorithmRunner(QWidget *parent)
   _storeResultAsLocalButton = new QToolButton(_ui->header);
   _storeResultAsLocalButton->setMaximumSize(23, 23);
   _storeResultAsLocalButton->setMinimumSize(23, 23);
-  _storeResultAsLocalButton->setIcon(QIcon(":/talipot/app/icons/16/hierarchy_add.png"));
+  _storeResultAsLocalButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Tournament, Qt::white, 0.7, -90));
   _storeResultAsLocalButton->setIconSize(QSize(23, 23));
+  _storeResultAsLocalButton->setStyleSheet("QToolButton::menu-indicator { image: none; }");
   _storeResultAsLocalButton->setToolTip(
       "Choose the storage policy for the result of property algorithms\nWhen they are "
       "applied to a subgraph, this result can be stored either\n- in a local subgraph "
@@ -197,13 +199,11 @@ AlgorithmRunner::AlgorithmRunner(QWidget *parent)
   _ui->header->mainFrame()->layout()->addWidget(_storeResultAsLocalButton);
   QMenu *resultMenu = new QMenu(this);
   _resultAsLocalPropAction =
-      resultMenu->addAction(QIcon(":/talipot/app/icons/16/hierarchy_add.png"),
-                            QString("Always store result in a local property of the graph"));
+      resultMenu->addAction("Always store result in a local property of the graph");
   _resultAsLocalPropAction->setIconVisibleInMenu(true);
   _resultAsLocalPropAction->setCheckable(true);
-  QAction *resultAsPredefinedPropAction = resultMenu->addAction(
-      QIcon(":/talipot/app/icons/16/no_hierarchy_add.png"),
-      QString("Store result in an existing property of the graphs hierarchy"));
+  QAction *resultAsPredefinedPropAction =
+      resultMenu->addAction("Store result in an existing property of the graphs hierarchy");
   resultAsPredefinedPropAction->setIconVisibleInMenu(true);
   resultAsPredefinedPropAction->setCheckable(true);
   QActionGroup *resultGroup = new QActionGroup(resultMenu);
@@ -330,17 +330,12 @@ bool AlgorithmRunner::eventFilter(QObject *obj, QEvent *ev) {
   if (ev->type() == QEvent::Paint) {
     if (obj == _ui->favoritesBox->widget() && _favorites.empty()) {
       QPainter painter(_ui->favoritesBox->widget());
-      QPixmap px((_ui->favoritesBox->_droppingFavorite
-                      ? ":/talipot/app/icons/32/favorite.png"
-                      : ":/talipot/app/icons/32/favorite-empty.png"));
-      painter.drawPixmap(_ui->favoritesBox->widget()->width() - px.width() - 8, 8, px);
       QFont f;
       f.setItalic(true);
       painter.setFont(f);
       painter.setBrush(QColor(107, 107, 107));
       painter.setPen(QColor(107, 107, 107));
-      painter.drawText(0, 8 + (px.height() - 12) / 2, _ui->favoritesBox->widget()->width(), 65535,
-                       /*Qt::AlignHCenter | Qt::AlignTop |*/ Qt::TextWordWrap,
+      painter.drawText(0, 20, _ui->favoritesBox->widget()->width(), 65535, Qt::TextWordWrap,
                        "Put your favorite algorithms here");
     }
   } else if ((ev->type() == QEvent::DragEnter || ev->type() == QEvent::DragMove) &&

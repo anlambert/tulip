@@ -67,10 +67,6 @@
            <height>32</height>
           </size>
          </property>
-         <property name="icon">
-          <iconset resource="../resources/TalipotGUIResource.qrc">
-           <normaloff>:/talipot/gui/icons/64/list-add.png</normaloff>:/talipot/gui/icons/64/list-add.png</iconset>
-         </property>
         </widget>
        </item>
        <item>
@@ -86,10 +82,6 @@
            <width>32</width>
            <height>32</height>
           </size>
-         </property>
-         <property name="icon">
-          <iconset resource="../resources/TalipotGUIResource.qrc">
-           <normaloff>:/talipot/gui/icons/16/list-del.png</normaloff>:/talipot/gui/icons/16/list-del.png</iconset>
          </property>
         </widget>
        </item>

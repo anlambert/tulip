@@ -16,6 +16,7 @@
 #include "FishEyeInteractor.h"
 #include "FishEyeConfigWidget.h"
 #include "../../utils/PluginNames.h"
+#include "../../utils/InteractorIcons.h"
 
 #include <QMouseEvent>
 
@@ -70,7 +71,8 @@ string fisheyeVertexProgram =
 // clang-format on
 
 FishEyeInteractor::FishEyeInteractor(const PluginContext *)
-    : GLInteractorComposite(QIcon(":/i_fisheye.png"), "Fisheye"), fisheyeConfigWidget(nullptr) {}
+    : GLInteractorComposite(interactorIcon(InteractorType::FishEye), "Fisheye"),
+      fisheyeConfigWidget(nullptr) {}
 
 void FishEyeInteractor::construct() {
   fisheyeConfigWidget = new FishEyeConfigWidget();

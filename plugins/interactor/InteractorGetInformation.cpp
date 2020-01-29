@@ -18,6 +18,7 @@
 
 #include "../utils/StandardInteractorPriority.h"
 #include "../utils/PluginNames.h"
+#include "../utils/InteractorIcons.h"
 
 using namespace tlp;
 
@@ -33,7 +34,7 @@ public:
    * Default constructor
    */
   InteractorGetInformation(const tlp::PluginContext *)
-      : NodeLinkDiagramViewInteractor(":/talipot/gui/icons/i_select.png",
+      : NodeLinkDiagramViewInteractor(interactorIcon(InteractorType::GetInformation),
                                       "Display node or edge properties",
                                       StandardInteractorPriority::GetInformation) {}
 
@@ -52,6 +53,14 @@ public:
   bool isCompatible(const std::string &viewName) const override {
     return ((viewName == NodeLinkDiagramView::viewName) ||
             (viewName == ViewName::PixelOrientedViewName));
+  }
+
+  static QIcon getInteractorIcon() {
+    QIcon backIcon = FontIconManager::icon(MaterialDesignIcons::CursorDefault, Qt::white, 0.9, 0,
+                                           QPointF(-20, 0));
+    QIcon frontIcon =
+        FontIconManager::icon(MaterialDesignIcons::Help, Qt::white, 0.6, 0, QPointF(40, -20));
+    return FontIconManager::stackIcons(backIcon, frontIcon);
   }
 };
 

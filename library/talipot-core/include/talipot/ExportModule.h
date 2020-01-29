@@ -17,6 +17,7 @@
 #include <iostream>
 #include <talipot/Plugin.h>
 #include <talipot/Algorithm.h>
+#include <talipot/MaterialDesignIcons.h>
 
 namespace tlp {
 
@@ -49,7 +50,7 @@ public:
   }
 
   std::string icon() const override {
-    return ":/talipot/gui/icons/64/document-export.png";
+    return MaterialDesignIcons::Export;
   }
 
   /**

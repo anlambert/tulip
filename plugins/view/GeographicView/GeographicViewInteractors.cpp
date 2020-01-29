@@ -22,18 +22,20 @@
 
 #include "../../utils/StandardInteractorPriority.h"
 #include "../../utils/PluginNames.h"
+#include "../../utils/InteractorIcons.h"
 
 using namespace std;
+using namespace tlp;
 
-GeographicViewInteractor::GeographicViewInteractor(const QString &iconPath, const QString &text)
-    : GLInteractorComposite(QIcon(iconPath), text) {}
+GeographicViewInteractor::GeographicViewInteractor(const QIcon &icon, const QString &text)
+    : GLInteractorComposite(icon, text) {}
 
 bool GeographicViewInteractor::isCompatible(const std::string &viewName) const {
   return (viewName == ViewName::GeographicViewName);
 }
 
 GeographicViewInteractorNavigation::GeographicViewInteractorNavigation(const PluginContext *)
-    : GeographicViewInteractor(":/talipot/gui/icons/i_navigation.png", "Navigate in view") {}
+    : GeographicViewInteractor(interactorIcon(InteractorType::Navigation), "Navigate in view") {}
 
 unsigned int GeographicViewInteractorNavigation::priority() const {
   return StandardInteractorPriority::Navigation;
@@ -48,7 +50,7 @@ QWidget *GeographicViewInteractorNavigation::configurationWidget() const {
 }
 
 GeographicViewInteractorSelection::GeographicViewInteractorSelection(const PluginContext *)
-    : GeographicViewInteractor(":/talipot/gui/icons/i_selection.png", "selection in view") {}
+    : GeographicViewInteractor(interactorIcon(InteractorType::Selection), "selection in view") {}
 
 void GeographicViewInteractorSelection::construct() {
   push_back(new GeographicViewNavigator);
@@ -71,7 +73,8 @@ PLUGIN(GeographicViewInteractorSelection)
 
 GeographicViewInteractorSelectionEditor::GeographicViewInteractorSelectionEditor(
     const PluginContext *)
-    : GeographicViewInteractor(":/talipot/gui/icons/i_move.png", "selection edition in view") {}
+    : GeographicViewInteractor(interactorIcon(InteractorType::SelectionModifier),
+                               "selection edition in view") {}
 
 void GeographicViewInteractorSelectionEditor::construct() {
   push_back(new GeographicViewNavigator);
@@ -246,7 +249,7 @@ bool GeographicViewNavigator::eventFilter(QObject *widget, QEvent *e) {
 PLUGIN(GeographicViewInteractorNavigation)
 
 GeographicViewInteractorAddEdges::GeographicViewInteractorAddEdges(const PluginContext *)
-    : NodeLinkDiagramViewInteractor(":/talipot/gui/icons/i_addedge.png", "Add nodes/edges",
+    : NodeLinkDiagramViewInteractor(interactorIcon(InteractorType::AddEdge), "Add nodes/edges",
                                     StandardInteractorPriority::AddNodesOrEdges) {}
 
 void GeographicViewInteractorAddEdges::construct() {
@@ -272,8 +275,8 @@ bool GeographicViewInteractorAddEdges::isCompatible(const std::string &viewName)
 PLUGIN(GeographicViewInteractorAddEdges)
 
 GeographicViewInteractorEditEdgeBends::GeographicViewInteractorEditEdgeBends(const PluginContext *)
-    : NodeLinkDiagramViewInteractor(":/talipot/gui/icons/i_bends", "Edit edge bends",
-                                    StandardInteractorPriority::EditEdgeBends) {}
+    : NodeLinkDiagramViewInteractor(interactorIcon(InteractorType::EditEdgeBends),
+                                    "Edit edge bends", StandardInteractorPriority::EditEdgeBends) {}
 
 void GeographicViewInteractorEditEdgeBends::construct() {
   push_back(new GeographicViewNavigator);

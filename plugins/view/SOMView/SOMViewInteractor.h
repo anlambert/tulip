@@ -21,7 +21,7 @@ namespace tlp {
 
 class SOMViewInteractor : public tlp::NodeLinkDiagramViewInteractor {
 public:
-  SOMViewInteractor(const QString &iconPath, const QString &text, const unsigned int priority = 0);
+  SOMViewInteractor(const QIcon &icon, const QString &text, const unsigned int priority = 0);
 
   bool isCompatible(const std::string &viewName) const override;
 };

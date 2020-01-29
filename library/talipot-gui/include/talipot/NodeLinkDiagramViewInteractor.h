@@ -16,6 +16,7 @@
 
 #include <talipot/GLInteractor.h>
 
+class QIcon;
 class QLabel;
 
 namespace tlp {
@@ -28,8 +29,7 @@ class TLP_QT_SCOPE NodeLinkDiagramViewInteractor : public GLInteractorComposite 
   unsigned int _priority;
 
 public:
-  NodeLinkDiagramViewInteractor(const QString &iconPath, const QString &text,
-                                unsigned int priority = 0);
+  NodeLinkDiagramViewInteractor(const QIcon &icon, const QString &text, unsigned int priority = 0);
 
   ~NodeLinkDiagramViewInteractor() override;
 

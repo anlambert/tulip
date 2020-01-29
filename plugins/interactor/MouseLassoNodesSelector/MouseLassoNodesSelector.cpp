@@ -14,6 +14,7 @@
 #include "MouseLassoNodesSelector.h"
 #include "../../utils/StandardInteractorPriority.h"
 #include "../../utils/PluginNames.h"
+#include "../../utils/InteractorIcons.h"
 
 #include <QMouseEvent>
 
@@ -29,7 +30,8 @@ using namespace std;
 using namespace tlp;
 
 MouseLassoNodesSelectorInteractor::MouseLassoNodesSelectorInteractor(const tlp::PluginContext *)
-    : NodeLinkDiagramViewInteractor(":/i_lasso.png", "Select nodes in a freehand drawn region",
+    : NodeLinkDiagramViewInteractor(interactorIcon(InteractorType::Lasso),
+                                    "Select nodes in a freehand drawn region",
                                     StandardInteractorPriority::FreeHandSelection) {}
 
 bool MouseLassoNodesSelectorInteractor::isCompatible(const std::string &viewName) const {

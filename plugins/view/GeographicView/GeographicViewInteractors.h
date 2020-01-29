@@ -25,7 +25,7 @@ using namespace tlp;
 class GeographicViewInteractor : public GLInteractorComposite {
 
 public:
-  GeographicViewInteractor(const QString &iconPath, const QString &text);
+  GeographicViewInteractor(const QIcon &icon, const QString &text);
 
   bool isCompatible(const std::string &viewName) const override;
 };

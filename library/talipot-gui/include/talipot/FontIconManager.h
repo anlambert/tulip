@@ -11,8 +11,8 @@
  *
  */
 
-#ifndef TALIPOT_FONT_ICON_ENGINE_H
-#define TALIPOT_FONT_ICON_ENGINE_H
+#ifndef TALIPOT_FONT_ICON_MANAGER_H
+#define TALIPOT_FONT_ICON_MANAGER_H
 
 #include <QIcon>
 #include <QString>
@@ -30,6 +30,8 @@ public:
                            const QColor &colorDisabled, const QColor &colorActive,
                            const QColor &colorSelected, const double scaleFactor = 1.0,
                            const double rotation = 0, const QPointF &translation = QPointF(0, 0));
+
+  static QIcon stackIcons(const QIcon &backIcon, const QIcon &frontIcon);
 };
 
-#endif // TALIPOT_FONT_ICON_ENGINE_H
+#endif // TALIPOT_FONT_ICON_MANAGER_H

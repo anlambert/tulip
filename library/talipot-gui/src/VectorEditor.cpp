@@ -15,6 +15,8 @@
 #include <talipot/ItemDelegate.h>
 #include <talipot/MetaTypes.h>
 #include <talipot/TlpQtTools.h>
+#include <talipot/FontIconManager.h>
+#include <talipot/MaterialDesignIcons.h>
 
 #include "ui_VectorEditor.h"
 
@@ -23,6 +25,8 @@ using namespace tlp;
 VectorEditor::VectorEditor(QWidget *parent)
     : QDialog(parent), _ui(new Ui::VectorEditor), _userType(0) {
   _ui->setupUi(this);
+  _ui->addButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Plus));
+  _ui->removeButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Minus));
   _ui->list->setItemDelegate(new ItemDelegate(_ui->list));
 }
 

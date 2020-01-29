@@ -26,42 +26,72 @@
 #include <QGraphicsScene>
 #include <QPixmap>
 #include <QPushButton>
+#include <QVBoxLayout>
 
 #include <talipot/View.h>
 #include <talipot/GlOffscreenRenderer.h>
+#include <talipot/FontIconManager.h>
+#include <talipot/MaterialDesignIcons.h>
 
 using namespace std;
 
 namespace tlp {
 
-class LockLabel : public QLabel {
+class LinkWidget : public QWidget {
 public:
-  LockLabel() : QLabel(), locked(true), alwaysLocked(false) {
+  LinkWidget() : QWidget(), linked(true), alwaysLinked(false) {
     installEventFilter(this);
-    setPixmap(QPixmap(":/talipot/gui/icons/i_locked.png"));
+    QLabel *topLabel = new QLabel();
+    QPixmap topPixmap = FontIconManager::icon(MaterialDesignIcons::AlphaL, QColor(50, 50, 50), 1.0,
+                                              0.0, QPointF(-1, -6))
+                            .pixmap(20, 20)
+                            .transformed(QTransform().scale(-1, -1));
+    topLabel->setPixmap(topPixmap);
+    QLabel *bottomLabel = new QLabel();
+    QPixmap bottomPixmap = FontIconManager::icon(MaterialDesignIcons::AlphaL, QColor(50, 50, 50),
+                                                 1.0, 0.0, QPointF(-1, -6))
+                               .pixmap(20, 20)
+                               .transformed(QTransform().scale(-1, 1));
+    bottomLabel->setPixmap(bottomPixmap);
+    linkLabel = new QLabel();
+    linkPixmap = FontIconManager::icon(MaterialDesignIcons::Link, QColor(50, 50, 50), 1.0, 0.0,
+                                       QPointF(0, -3))
+                     .pixmap(20, 20)
+                     .transformed(QTransform().rotate(90));
+    unlinkPixmap = FontIconManager::icon(MaterialDesignIcons::LinkOff, QColor(50, 50, 50), 1.0, 0.0,
+                                         QPointF(0, -3))
+                       .pixmap(20, 20)
+                       .transformed(QTransform().rotate(90));
+    linkLabel->setPixmap(linkPixmap);
+    QVBoxLayout *layout = new QVBoxLayout();
+    layout->setContentsMargins(0, 0, 0, 0);
+    layout->addWidget(topLabel);
+    layout->addWidget(linkLabel);
+    layout->addWidget(bottomLabel);
+    setLayout(layout);
   }
 
-  bool isLocked() const {
-    return locked || alwaysLocked;
+  bool isLinked() const {
+    return linked || alwaysLinked;
   }
 
-  void setAlwaysLocked(bool alwaysLocked) {
-    this->alwaysLocked = alwaysLocked;
+  void setAlwaysLinked(bool alwaysLinked) {
+    this->alwaysLinked = alwaysLinked;
 
-    if (alwaysLocked) {
-      setPixmap(QPixmap(":/talipot/gui/icons/i_locked.png"));
+    if (alwaysLinked) {
+      linkLabel->setPixmap(linkPixmap);
     }
   }
 
 protected:
   bool eventFilter(QObject *, QEvent *event) override {
-    if (event->type() == QEvent::MouseButtonRelease && !alwaysLocked) {
-      if (locked) {
-        setPixmap(QPixmap(":/talipot/gui/icons/i_unlocked.png"));
-        locked = false;
+    if (event->type() == QEvent::MouseButtonRelease && !alwaysLinked) {
+      if (linked) {
+        linkLabel->setPixmap(unlinkPixmap);
+        linked = false;
       } else {
-        setPixmap(QPixmap(":/talipot/gui/icons/i_locked.png"));
-        locked = true;
+        linkLabel->setPixmap(linkPixmap);
+        linked = true;
       }
 
       return true;
@@ -70,8 +100,11 @@ protected:
     return false;
   }
 
-  bool locked;
-  bool alwaysLocked;
+  bool linked;
+  bool alwaysLinked;
+  QLabel *linkLabel;
+  QPixmap linkPixmap;
+  QPixmap unlinkPixmap;
 };
 
 SnapshotDialog::SnapshotDialog(const View *v, QWidget *parent)
@@ -101,9 +134,9 @@ SnapshotDialog::SnapshotDialog(const View *v, QWidget *parent)
   ui->buttonBox->addButton(copyButton, QDialogButtonBox::ActionRole);
   connect(ui->buttonBox, &QDialogButtonBox::clicked, this, &SnapshotDialog::clicked);
 
-  lockLabel = new LockLabel();
-  ui->horizontalLayout_5->insertWidget(2, lockLabel);
-  ui->horizontalLayout_5->setAlignment(lockLabel, Qt::AlignLeft | Qt::AlignVCenter);
+  linkWidget = new LinkWidget();
+  ui->horizontalLayout_5->insertWidget(2, linkWidget);
+  ui->horizontalLayout_5->setAlignment(linkWidget, Qt::AlignLeft | Qt::AlignVCenter);
 }
 
 void SnapshotDialog::clicked(QAbstractButton *b) {
@@ -189,7 +222,7 @@ void SnapshotDialog::widthSpinBoxValueChanged(int value) {
 
   inSizeSpinBoxValueChanged = true;
 
-  if (lockLabel->isLocked()) {
+  if (linkWidget->isLinked()) {
     ui->heightSpinBox->setValue(value / ratio);
   } else {
     sizeSpinBoxValueChanged();
@@ -205,7 +238,7 @@ void SnapshotDialog::heightSpinBoxValueChanged(int value) {
 
   inSizeSpinBoxValueChanged = true;
 
-  if (lockLabel->isLocked()) {
+  if (linkWidget->isLinked()) {
     ui->widthSpinBox->setValue(value * ratio);
   } else {
     sizeSpinBoxValueChanged();
@@ -243,6 +276,6 @@ void SnapshotDialog::sizeSpinBoxValueChanged() {
 }
 
 void SnapshotDialog::setSnapshotHasViewSizeRatio(bool snapshotHasViewSizeRatio) {
-  lockLabel->setAlwaysLocked(snapshotHasViewSizeRatio);
+  linkWidget->setAlwaysLinked(snapshotHasViewSizeRatio);
 }
 }

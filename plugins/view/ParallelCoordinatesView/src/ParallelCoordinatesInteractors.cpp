@@ -27,6 +27,7 @@
 
 #include "../../utils/StandardInteractorPriority.h"
 #include "../../utils/PluginNames.h"
+#include "../../utils/InteractorIcons.h"
 
 #include <talipot/View.h>
 
@@ -35,10 +36,9 @@
 using namespace std;
 using namespace tlp;
 
-ParallelCoordinatesInteractor::ParallelCoordinatesInteractor(const QString &iconPath,
-                                                             const QString &text,
+ParallelCoordinatesInteractor::ParallelCoordinatesInteractor(const QIcon &icon, const QString &text,
                                                              const unsigned int priority)
-    : NodeLinkDiagramViewInteractor(iconPath, text, priority) {}
+    : NodeLinkDiagramViewInteractor(icon, text, priority) {}
 
 bool ParallelCoordinatesInteractor::isCompatible(const string &viewName) const {
   return (viewName == ViewName::ParallelCoordinatesViewName);
@@ -53,7 +53,7 @@ PLUGIN(InteractorShowElementInfo)
 PLUGIN(InteractorAxisSpacer)
 
 InteractorParallelCoordsSelection::InteractorParallelCoordsSelection(const tlp::PluginContext *)
-    : ParallelCoordinatesInteractor(":/talipot/gui/icons/i_selection.png", "Select elements",
+    : ParallelCoordinatesInteractor(interactorIcon(InteractorType::Selection), "Select elements",
                                     StandardInteractorPriority::RectangleSelection) {}
 
 void InteractorParallelCoordsSelection::construct() {
@@ -81,7 +81,7 @@ void InteractorParallelCoordsSelection::construct() {
 }
 
 InteractorHighLighter::InteractorHighLighter(const tlp::PluginContext *)
-    : ParallelCoordinatesInteractor(":/i_element_highlighter.png", "Highlight elements",
+    : ParallelCoordinatesInteractor(QIcon(":/i_element_highlighter.png"), "Highlight elements",
                                     StandardInteractorPriority::ViewInteractor1) {}
 
 void InteractorHighLighter::construct() {
@@ -116,7 +116,7 @@ void InteractorHighLighter::construct() {
 }
 
 InteractorAxisSwapper::InteractorAxisSwapper(const tlp::PluginContext *)
-    : ParallelCoordinatesInteractor(":/i_axis_swapper.png", "Axis swapper",
+    : ParallelCoordinatesInteractor(QIcon(":/i_axis_swapper.png"), "Axis swapper",
                                     StandardInteractorPriority::ViewInteractor2) {}
 
 void InteractorAxisSwapper::construct() {
@@ -146,7 +146,7 @@ AxisSliderOptions::~AxisSliderOptions() {
 }
 
 InteractorAxisSliders::InteractorAxisSliders(const tlp::PluginContext *)
-    : ParallelCoordinatesInteractor(":/i_axis_sliders.png", "Axis sliders",
+    : ParallelCoordinatesInteractor(QIcon(":/i_axis_sliders.png"), "Axis sliders",
                                     StandardInteractorPriority::ViewInteractor3),
       configwidget(nullptr) {}
 
@@ -194,7 +194,7 @@ QWidget *InteractorAxisSliders::configurationOptionsWidget() const {
 }
 
 InteractorBoxPlot::InteractorBoxPlot(const tlp::PluginContext *)
-    : ParallelCoordinatesInteractor(":/i_axis_boxplot.png", "Axis box plot",
+    : ParallelCoordinatesInteractor(QIcon(":/i_axis_boxplot.png"), "Axis box plot",
                                     StandardInteractorPriority::ViewInteractor4) {}
 
 void InteractorBoxPlot::construct() {
@@ -230,7 +230,7 @@ void InteractorBoxPlot::construct() {
 }
 
 InteractorShowElementInfo::InteractorShowElementInfo(const tlp::PluginContext *)
-    : ParallelCoordinatesInteractor(":/talipot/gui/icons/i_select.png",
+    : ParallelCoordinatesInteractor(interactorIcon(InteractorType::GetInformation),
                                     "Get information on nodes/edges",
                                     StandardInteractorPriority::GetInformation) {}
 
@@ -247,7 +247,8 @@ void InteractorShowElementInfo::construct() {
 }
 
 InteractorAxisSpacer::InteractorAxisSpacer(const tlp::PluginContext *)
-    : ParallelCoordinatesInteractor(":/i_axis_spacer.png", "Modify space between consecutive axis",
+    : ParallelCoordinatesInteractor(QIcon(":/i_axis_spacer.png"),
+                                    "Modify space between consecutive axis",
                                     StandardInteractorPriority::ViewInteractor5) {}
 
 void InteractorAxisSpacer::construct() {

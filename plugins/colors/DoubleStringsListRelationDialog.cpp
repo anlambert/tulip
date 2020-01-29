@@ -16,6 +16,8 @@
 
 #include <talipot/TlpQtTools.h>
 #include <talipot/ColorScale.h>
+#include <talipot/FontIconManager.h>
+#include <talipot/MaterialDesignIcons.h>
 
 #include <QScrollBar>
 
@@ -26,9 +28,13 @@ namespace tlp {
 DoubleStringsListRelationDialog::DoubleStringsListRelationDialog(
     const std::vector<std::string> &firstValues, const std::vector<Color> &secondValues,
     QWidget *parent)
-    : QDialog(parent), _ui(new Ui::DoubleStringsListRelationDialogData),
+    : QDialog(parent), _ui(new Ui::DoubleStringsListRelationDialog),
       lastNonInterpolateValues(secondValues) {
   _ui->setupUi(this);
+  _ui->upButton->setIcon(FontIconManager::icon(MaterialDesignIcons::ArrowUpBold));
+  _ui->upButtonColor->setIcon(FontIconManager::icon(MaterialDesignIcons::ArrowUpBold));
+  _ui->downButton->setIcon(FontIconManager::icon(MaterialDesignIcons::ArrowDownBold));
+  _ui->downButtonColor->setIcon(FontIconManager::icon(MaterialDesignIcons::ArrowDownBold));
 
   for (const auto &s : firstValues) {
     _ui->firstListWidget->addItem(tlpStringToQString(s));

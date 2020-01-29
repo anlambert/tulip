@@ -271,10 +271,6 @@
                <property name="text">
                 <string>...</string>
                </property>
-               <property name="icon">
-                <iconset resource="../resources/TalipotGUIResource.qrc">
-                 <normaloff>:/talipot/gui/icons/16/list-add.png</normaloff>:/talipot/gui/icons/16/list-add.png</iconset>
-               </property>
                <property name="autoRaise">
                 <bool>true</bool>
                </property>
@@ -287,10 +283,6 @@
                </property>
                <property name="text">
                 <string>...</string>
-               </property>
-               <property name="icon">
-                <iconset resource="../resources/TalipotGUIResource.qrc">
-                 <normaloff>:/talipot/gui/icons/16/list-del.png</normaloff>:/talipot/gui/icons/16/list-del.png</iconset>
                </property>
                <property name="autoRaise">
                 <bool>true</bool>

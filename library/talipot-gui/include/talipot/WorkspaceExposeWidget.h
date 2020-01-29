@@ -19,6 +19,8 @@
 
 #include <talipot/config.h>
 
+#include <memory>
+
 class QAbstractAnimation;
 
 namespace tlp {
@@ -27,7 +29,7 @@ class WorkspacePanel;
 class PreviewItem : public QGraphicsObject {
   Q_OBJECT
 
-  static QPixmap *_closeButtonPixmap;
+  static std::unique_ptr<QPixmap> _closeButtonPixmap;
   static QRect _closePixmapRect;
 
   QPixmap _pixmap;

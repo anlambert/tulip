@@ -29,7 +29,7 @@ class QLabel;
 
 namespace tlp {
 
-class LockLabel;
+class LinkWidget;
 class View;
 
 class TLP_QT_SCOPE SnapshotDialog : public QDialog {
@@ -60,7 +60,7 @@ protected:
   Ui::SnapshotDialog *ui;
   const View *view;
 
-  LockLabel *lockLabel;
+  LinkWidget *linkWidget;
 
   float ratio;
 

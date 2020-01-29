@@ -13,6 +13,8 @@
 
 #include <talipot/DoubleStringsListSelectionWidget.h>
 #include <talipot/TlpQtTools.h>
+#include <talipot/FontIconManager.h>
+#include <talipot/MaterialDesignIcons.h>
 
 #include "ui_DoubleStringsListSelectionWidget.h"
 
@@ -22,9 +24,12 @@ namespace tlp {
 
 DoubleStringsListSelectionWidget::DoubleStringsListSelectionWidget(
     QWidget *parent, const unsigned int maxSelectedStringsListSize)
-    : QWidget(parent), _ui(new Ui::DoubleStringsListSelectionData()) {
+    : QWidget(parent), _ui(new Ui::DoubleStringsListSelectionWidget()) {
   _ui->setupUi(this);
-
+  _ui->upButton->setIcon(FontIconManager::icon(MaterialDesignIcons::ArrowUpBold));
+  _ui->downButton->setIcon(FontIconManager::icon(MaterialDesignIcons::ArrowDownBold));
+  _ui->addButton->setIcon(FontIconManager::icon(MaterialDesignIcons::ArrowRightBold));
+  _ui->removeButton->setIcon(FontIconManager::icon(MaterialDesignIcons::ArrowLeftBold));
   _ui->outputList->setMaxListSize(maxSelectedStringsListSize);
   _ui->selectButton->setEnabled(maxSelectedStringsListSize == 0);
 

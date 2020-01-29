@@ -44,7 +44,7 @@ public:
 
   TalipotLogger(QWidget *parent = nullptr);
   ~TalipotLogger() override;
-  QPixmap icon(LogType logType) const;
+  QIcon icon(LogType logType) const;
   int count() const;
   int countByType(LogType logType) const;
   TalipotLogger::LogType getLastLogType() const;

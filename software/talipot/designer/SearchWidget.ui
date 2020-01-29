@@ -533,10 +533,6 @@
           <property name="text">
            <string>Search</string>
           </property>
-          <property name="icon">
-           <iconset>
-            <normaloff>:/talipot/app/icons/22/edit-find.png</normaloff>:/talipot/app/icons/22/edit-find.png</iconset>
-          </property>
           <property name="shortcut">
            <string>Return</string>
           </property>

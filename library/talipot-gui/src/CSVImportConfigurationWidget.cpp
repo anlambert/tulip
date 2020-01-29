@@ -33,6 +33,8 @@
 #include <talipot/SizeProperty.h>
 #include <talipot/StringProperty.h>
 #include <talipot/BooleanProperty.h>
+#include <talipot/FontIconManager.h>
+#include <talipot/MaterialDesignIcons.h>
 
 using namespace tlp;
 using namespace std;
@@ -124,6 +126,8 @@ void PropertyConfigurationWidget::showPropertyCreationDialog() {
   QDialog dialog(this);
   ui = new Ui_CSVPropertyDialog();
   ui->setupUi(&dialog);
+  ui->addExceptionButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Plus));
+  ui->delCurrentExceptionButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Minus));
   ui->label->setText(QString("Column #%1").arg(propertyNumber + 1));
   propertyNameValidator->setCurrentIndex(propertyNumber);
   ui->nameCB->setValidator(propertyNameValidator);
