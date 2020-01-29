@@ -19,9 +19,8 @@
 #include <QDesktopWidget>
 #include <QStandardPaths>
 #include <QFile>
-#if defined(Q_OS_MAC)
-#include <QStyleFactory>
-#endif
+#include <QStyle>
+#include <QProxyStyle>
 
 #include <CrashHandling.h>
 
@@ -46,6 +45,8 @@
 #include <talipot/PythonInterpreter.h>
 #include <talipot/GlOffscreenRenderer.h>
 #include <talipot/GlTextureManager.h>
+#include <talipot/FontIconManager.h>
+#include <talipot/MaterialDesignIcons.h>
 
 #include "TalipotMainWindow.h"
 #include "SplashScreen.h"
@@ -83,6 +84,48 @@ void usage(const QString &error) {
   exit(returnCode);
 }
 
+class TalipotProxyStyle : public QProxyStyle {
+
+public:
+  TalipotProxyStyle(const QString &key) : QProxyStyle(key) {}
+  TalipotProxyStyle(QStyle *style) : QProxyStyle(style) {}
+
+  QIcon standardIcon(QStyle::StandardPixmap standardIcon, const QStyleOption *option = nullptr,
+                     const QWidget *widget = nullptr) const override {
+    switch (standardIcon) {
+    case QStyle::SP_DialogCancelButton:
+      return FontIconManager::icon(MaterialDesignIcons::Cancel, QColor(50, 50, 50), 0.8);
+    case QStyle::SP_DialogCloseButton:
+      return FontIconManager::icon(MaterialDesignIcons::Close);
+    case QStyle::SP_DialogDiscardButton:
+      return FontIconManager::icon(MaterialDesignIcons::Cancel, QColor(50, 50, 50), 0.8);
+    case QStyle::SP_DialogNoButton:
+      return FontIconManager::icon(MaterialDesignIcons::Close);
+    case QStyle::SP_DialogOkButton:
+      return FontIconManager::icon(MaterialDesignIcons::Check);
+    case QStyle::SP_DialogSaveButton:
+      return FontIconManager::icon(MaterialDesignIcons::FileExport);
+    case QStyle::SP_DialogYesButton:
+      return FontIconManager::icon(MaterialDesignIcons::Check);
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+    case QStyle::SP_DialogYesToAllButton:
+      return FontIconManager::icon(MaterialDesignIcons::CheckAll);
+#endif
+    case QStyle::SP_MessageBoxInformation:
+      return FontIconManager::icon(MaterialDesignIcons::Information, QColor("#407fb2"));
+    case QStyle::SP_MessageBoxWarning:
+      return FontIconManager::icon(MaterialDesignIcons::Alert, QColor("#e18d2b"));
+    case QStyle::SP_MessageBoxCritical:
+      return FontIconManager::icon(MaterialDesignIcons::MinusCircle, QColor("#c42730"));
+    case QStyle::SP_MessageBoxQuestion:
+      return FontIconManager::icon(MaterialDesignIcons::HelpCircle, QColor("#934db1"));
+
+    default:
+      return QProxyStyle::standardIcon(standardIcon, option, widget);
+    }
+  }
+};
+
 int main(int argc, char **argv) {
 
   CrashHandling::installCrashHandler();
@@ -100,7 +143,9 @@ int main(int argc, char **argv) {
 #if defined(Q_OS_MAC)
   // Use Qt Fusion widgets style on MacOS as default OS theme
   // does not integrate nicely with Talipot custom stylesheet
-  talipot.setStyle(QStyleFactory::create("Fusion"));
+  talipot.setStyle(new TalipotProxyStyle("Fusion"));
+#else
+  talipot.setStyle(new TalipotProxyStyle(talipot.style()));
 #endif
 
   // Check arguments

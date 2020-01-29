@@ -25,20 +25,23 @@
 #include <talipot/WorkspacePanel.h>
 #include <talipot/Graph.h>
 #include <talipot/TlpQtTools.h>
+#include <talipot/FontIconManager.h>
+#include <talipot/MaterialDesignIcons.h>
 
 #include <cmath>
 
 using namespace tlp;
 
 // Helper classes
-QPixmap *PreviewItem::_closeButtonPixmap = nullptr;
-QRect PreviewItem::_closePixmapRect = QRect();
+std::unique_ptr<QPixmap> PreviewItem::_closeButtonPixmap;
+QRect PreviewItem::_closePixmapRect;
 
 PreviewItem::PreviewItem(const QPixmap &pixmap, WorkspacePanel *panel, QGraphicsItem *parent)
     : QGraphicsObject(parent), _pixmap(pixmap), _panel(panel), _hovered(false),
       _closeButtonHovered(false) {
-  if (_closeButtonPixmap == nullptr) {
-    _closeButtonPixmap = new QPixmap(":/talipot/gui/ui/darkclosebutton.png");
+  if (!_closeButtonPixmap.get()) {
+    _closeButtonPixmap.reset(
+        new QPixmap(FontIconManager::icon(MaterialDesignIcons::Close).pixmap(16, 16)));
     _closePixmapRect = QRect(boundingRect().width() - _closeButtonPixmap->width() - 5,
                              -0.5 * _closeButtonPixmap->height(), _closeButtonPixmap->width(),
                              _closeButtonPixmap->height());

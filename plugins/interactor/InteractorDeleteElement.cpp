@@ -14,7 +14,9 @@
 #include <talipot/MouseInteractors.h>
 #include <talipot/NodeLinkDiagramViewInteractor.h>
 #include <talipot/NodeLinkDiagramView.h>
+
 #include "../utils/StandardInteractorPriority.h"
+#include "../utils/InteractorIcons.h"
 
 using namespace tlp;
 
@@ -30,7 +32,8 @@ public:
    * Default constructor
    */
   InteractorDeleteElement(const tlp::PluginContext *)
-      : NodeLinkDiagramViewInteractor(":/talipot/gui/icons/i_del.png", "Delete nodes or edges",
+      : NodeLinkDiagramViewInteractor(interactorIcon(InteractorType::DeleteElement),
+                                      "Delete nodes or edges",
                                       StandardInteractorPriority::DeleteElement) {}
 
   /**

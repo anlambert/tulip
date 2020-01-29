@@ -25,6 +25,8 @@
 #include "highlighters/EnclosingCircleHighlighter.h"
 #include "highlighters/ZoomAndPanHighlighter.h"
 
+#include "../../utils/InteractorIcons.h"
+
 #include <QListWidget>
 #include <QDialog>
 #include <QDialogButtonBox>
@@ -38,7 +40,8 @@ using namespace std;
 PLUGIN(PathFinder)
 
 PathFinder::PathFinder(const tlp::PluginContext *)
-    : GLInteractorComposite(QIcon(":/pathfinder.png"), "Select the path(s) between two nodes"),
+    : GLInteractorComposite(interactorIcon(InteractorType::PathFinding),
+                            "Select the path(s) between two nodes"),
       weightMetric(NO_METRIC), selectAllPaths(false), edgeOrientation(DEFAULT_ORIENTATION),
       pathsTypes(DEFAULT_PATHS_TYPE), toleranceActivated(DEFAULT_TOLERANCE_ACTIVATION),
       tolerance(DEFAULT_TOLERANCE), _configurationWidget(nullptr), highlightersListWidget(nullptr),

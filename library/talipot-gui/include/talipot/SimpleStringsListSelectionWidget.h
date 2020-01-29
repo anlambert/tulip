@@ -19,7 +19,7 @@
 #include "StringsListSelectionWidgetInterface.h"
 
 namespace Ui {
-class SimpleStringsListSelectionData;
+class SimpleStringsListSelectionWidget;
 }
 
 class QListWidgetItem;
@@ -31,7 +31,7 @@ class TLP_QT_SCOPE SimpleStringsListSelectionWidget : public QWidget,
 
   Q_OBJECT
 
-  Ui::SimpleStringsListSelectionData *_ui;
+  Ui::SimpleStringsListSelectionWidget *_ui;
 
 public:
   SimpleStringsListSelectionWidget(QWidget *parent = nullptr,

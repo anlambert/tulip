@@ -14,6 +14,8 @@
 #include <talipot/MouseInteractors.h>
 #include <talipot/MouseShowElementInfo.h>
 #include <talipot/GraphElementModel.h>
+#include <talipot/MaterialDesignIcons.h>
+#include <talipot/FontIconManager.h>
 
 #include "ScatterPlot2DInteractors.h"
 #include "ScatterPlot2DViewNavigator.h"
@@ -25,14 +27,15 @@
 
 #include "../../utils/StandardInteractorPriority.h"
 #include "../../utils/PluginNames.h"
+#include "../../utils/InteractorIcons.h"
 
 using namespace std;
 
 namespace tlp {
 
-ScatterPlot2DInteractor::ScatterPlot2DInteractor(const QString &iconPath, const QString &text,
+ScatterPlot2DInteractor::ScatterPlot2DInteractor(const QIcon &icon, const QString &text,
                                                  const unsigned int priority)
-    : NodeLinkDiagramViewInteractor(iconPath, text, priority) {}
+    : NodeLinkDiagramViewInteractor(icon, text, priority) {}
 
 bool ScatterPlot2DInteractor::isCompatible(const std::string &viewName) const {
   return (viewName == ViewName::ScatterPlot2DViewName);
@@ -44,7 +47,7 @@ PLUGIN(ScatterPlot2DInteractorCorrelCoeffSelector)
 PLUGIN(ScatterPlot2DInteractorGetInformation)
 
 ScatterPlot2DInteractorNavigation::ScatterPlot2DInteractorNavigation(const tlp::PluginContext *)
-    : ScatterPlot2DInteractor(":/talipot/gui/icons/i_navigation.png", "Navigate in view",
+    : ScatterPlot2DInteractor(interactorIcon(InteractorType::Navigation), "Navigate in view",
                               StandardInteractorPriority::Navigation) {}
 
 void ScatterPlot2DInteractorNavigation::construct() {
@@ -69,7 +72,7 @@ void ScatterPlot2DInteractorNavigation::construct() {
 }
 
 ScatterPlot2DInteractorTrendLine::ScatterPlot2DInteractorTrendLine(const PluginContext *)
-    : ScatterPlot2DInteractor(":/i_scatter_trendline.png", "Trend line",
+    : ScatterPlot2DInteractor(QIcon(":/i_scatter_trendline.png"), "Trend line",
                               StandardInteractorPriority::ViewInteractor1) {}
 
 void ScatterPlot2DInteractorTrendLine::construct() {
@@ -79,7 +82,8 @@ void ScatterPlot2DInteractorTrendLine::construct() {
 
 ScatterPlot2DInteractorCorrelCoeffSelector::ScatterPlot2DInteractorCorrelCoeffSelector(
     const tlp::PluginContext *)
-    : ScatterPlot2DInteractor(":/talipot/gui/icons/i_magic.png", "Correlation Coefficient Selector",
+    : ScatterPlot2DInteractor(FontIconManager::icon(MaterialDesignIcons::AutoFix, Qt::white),
+                              "Correlation Coefficient Selector",
                               StandardInteractorPriority::ViewInteractor2),
       optionsWidget(nullptr) {}
 
@@ -148,7 +152,7 @@ protected:
 
 ScatterPlot2DInteractorGetInformation::ScatterPlot2DInteractorGetInformation(
     const tlp::PluginContext *)
-    : NodeLinkDiagramViewInteractor(":/talipot/gui/icons/i_select.png",
+    : NodeLinkDiagramViewInteractor(interactorIcon(InteractorType::GetInformation),
                                     "Display node or edge properties",
                                     StandardInteractorPriority::GetInformation) {}
 

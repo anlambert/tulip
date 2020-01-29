@@ -19,7 +19,7 @@
 #include "StringsListSelectionWidgetInterface.h"
 
 namespace Ui {
-class DoubleStringsListSelectionData;
+class DoubleStringsListSelectionWidget;
 }
 
 namespace tlp {
@@ -29,7 +29,7 @@ class TLP_QT_SCOPE DoubleStringsListSelectionWidget : public QWidget,
 
   Q_OBJECT
 
-  Ui::DoubleStringsListSelectionData *_ui;
+  Ui::DoubleStringsListSelectionWidget *_ui;
 
 public:
   DoubleStringsListSelectionWidget(QWidget *parent = nullptr,

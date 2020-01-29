@@ -18,6 +18,7 @@
 
 #include "../utils/StandardInteractorPriority.h"
 #include "../utils/PluginNames.h"
+#include "../utils/InteractorIcons.h"
 
 using namespace tlp;
 
@@ -33,7 +34,7 @@ public:
    * Default constructor
    */
   InteractorSelection(const tlp::PluginContext *)
-      : NodeLinkDiagramViewInteractor(":/talipot/gui/icons/i_selection.png",
+      : NodeLinkDiagramViewInteractor(interactorIcon(InteractorType::Selection),
                                       "Select nodes/edges in a rectangle",
                                       StandardInteractorPriority::RectangleSelection) {}
 

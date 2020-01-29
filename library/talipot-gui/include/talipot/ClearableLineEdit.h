@@ -14,12 +14,14 @@
 #ifndef TALIPOT_CLEARABLE_LINE_EDIT_H
 #define TALIPOT_CLEARABLE_LINE_EDIT_H
 
+#include <memory>
+
 #include <QLineEdit>
 
 #include <talipot/config.h>
 
 class TLP_QT_SCOPE ClearableLineEdit : public QLineEdit {
-  static QPixmap *CLEAR_PIXMAP;
+  static std::unique_ptr<QPixmap> CLEAR_PIXMAP;
 
   bool _clearButtonHovered;
   static void initPixmap();
@@ -32,6 +34,7 @@ protected:
   void paintEvent(QPaintEvent *) override;
   void mouseMoveEvent(QMouseEvent *) override;
   void mousePressEvent(QMouseEvent *) override;
+  void leaveEvent(QEvent *) override;
 };
 
 #endif // TALIPOT_CLEARABLE_LINE_EDIT_H

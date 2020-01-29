@@ -26,6 +26,10 @@
 
 #include <talipot/TlpQtTools.h>
 #include <talipot/Settings.h>
+#include <talipot/FontIconManager.h>
+#include <talipot/MaterialDesignIcons.h>
+
+using namespace tlp;
 
 TalipotLogger::TalipotLogger(QWidget *parent)
     : QDialog(parent), _logType(QtDebugMsg), _ui(new Ui::TalipotLogger), _pythonOutput(false),
@@ -34,22 +38,17 @@ TalipotLogger::TalipotLogger(QWidget *parent)
   _ui->setupUi(this);
   _ui->listWidget->installEventFilter(this);
   _ui->listWidget->setContextMenuPolicy(Qt::CustomContextMenu);
-  QPushButton *copybutton =
-      new QPushButton(QIcon(":/talipot/gui/icons/16/clipboard.png"), "&Copy selection", this);
-  copybutton->setToolTip("Copy the selected lines into the clipboard");
-  _ui->buttonBox->addButton(copybutton, QDialogButtonBox::ActionRole);
-  QPushButton *clearbutton = new QPushButton("Clear", this);
-  clearbutton->setToolTip("Remove all messages");
-  _ui->buttonBox->addButton(clearbutton, QDialogButtonBox::ActionRole);
+  _ui->copyButton->setIcon(FontIconManager::icon(MaterialDesignIcons::ContentCopy, Qt::white));
+  _ui->clearButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Broom, Qt::white));
+  _ui->closeButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Close, Qt::white));
+  _ui->copyButton->setToolTip("Copy the selected lines into the clipboard");
+  _ui->clearButton->setToolTip("Remove all messages");
+  _ui->closeButton->setToolTip("Close this window");
   connect(_ui->listWidget, &QWidget::customContextMenuRequested, this,
           &TalipotLogger::showContextMenu);
-  connect(copybutton, &QAbstractButton::clicked, this, &TalipotLogger::copy);
-  connect(clearbutton, &QAbstractButton::clicked, this, &TalipotLogger::clear);
-  _ui->buttonBox->button(QDialogButtonBox::Close)->setToolTip("Close this window");
-  QPushButton *resetb = _ui->buttonBox->button(QDialogButtonBox::Reset);
-  resetb->setToolTip("Remove all messages and close this window");
-  connect(resetb, &QAbstractButton::clicked, this, &TalipotLogger::clear);
-  connect(resetb, &QAbstractButton::clicked, this, &QWidget::hide);
+  connect(_ui->copyButton, &QAbstractButton::clicked, this, &TalipotLogger::copy);
+  connect(_ui->clearButton, &QAbstractButton::clicked, this, &TalipotLogger::clear);
+  connect(_ui->closeButton, &QAbstractButton::clicked, this, &QWidget::hide);
   connect(_ui->anchoredCB, &QAbstractButton::toggled, this, &TalipotLogger::setAnchored);
   _ui->anchoredCB->setChecked(tlp::Settings::instance().loggerAnchored());
 }
@@ -140,29 +139,27 @@ void TalipotLogger::logImpl(QtMsgType type, const QString &msg) {
   _nbLog += 1;
 }
 
-QPixmap TalipotLogger::icon(LogType logType) const {
-  QString pxUrl(":/talipot/app/icons/16/logger-");
-
+QIcon TalipotLogger::icon(LogType logType) const {
+  QIcon icon;
   switch (logType) {
   case Python:
-    return QPixmap(":/talipot/app/icons/16/python.png");
+    icon = FontIconManager::icon(MaterialDesignIcons::LanguagePython, Qt::gray);
+    break;
 
   case Info:
-    pxUrl += "info";
+    icon = FontIconManager::icon(MaterialDesignIcons::Information, QColor("#407fb2"));
     break;
 
   case Warning:
-    pxUrl += "danger";
+    icon = FontIconManager::icon(MaterialDesignIcons::Alert, QColor("#e18d2b"));
     break;
 
   case Error:
-    pxUrl += "error";
+    icon = FontIconManager::icon(MaterialDesignIcons::MinusCircle, QColor("#c42730"));
     break;
   }
 
-  pxUrl += ".png";
-
-  return pxUrl;
+  return icon;
 }
 
 void TalipotLogger::clear() {
@@ -241,19 +238,28 @@ void TalipotLogger::setGeometry(int x, int y, int w, int h) {
 void TalipotLogger::setAnchored(bool anchored) {
   _anchored = anchored;
   bool visible = isVisible();
+  QIcon icon;
+  QString tooltip;
 
   if (_anchored) {
+    icon = FontIconManager::icon(MaterialDesignIcons::WindowRestore, Qt::white);
+    tooltip = "Display the logger in a separate window";
     setAttribute(Qt::WA_X11NetWmWindowTypeDialog, false);
     setWindowFlags(Qt::Popup | Qt::FramelessWindowHint);
     setMinimumSize(size());
     setMaximumSize(size());
     emit resetLoggerPosition();
   } else {
+    icon = FontIconManager::icon(MaterialDesignIcons::DockBottom, Qt::white);
+    tooltip = "Dock the logger to the bottom of Talipot window";
     setAttribute(Qt::WA_X11NetWmWindowTypeDialog, true);
     setWindowFlags(Qt::Dialog);
     setMinimumSize(QSize(0, 0));
     setMaximumSize(QSize(16777215, 16777215));
   }
+
+  _ui->anchoredCB->setIcon(icon);
+  _ui->anchoredCB->setToolTip(tooltip);
 
   tlp::Settings::instance().setLoggerAnchored(anchored);
 

@@ -15,6 +15,7 @@
 #define TALIPOT_IMPORT_MODULE_H
 
 #include <talipot/Plugin.h>
+#include <talipot/MaterialDesignIcons.h>
 
 #include <list>
 #include <string>
@@ -80,7 +81,7 @@ public:
   }
 
   std::string icon() const override {
-    return ":/talipot/gui/icons/64/document-import.png";
+    return MaterialDesignIcons::Import;
   }
 
   /**

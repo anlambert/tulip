@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SimpleStringsListSelectionData</class>
- <widget class="QWidget" name="SimpleStringsListSelectionData">
+ <class>SimpleStringsListSelectionWidget</class>
+ <widget class="QWidget" name="SimpleStringsListSelectionWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -62,10 +62,6 @@
        <property name="text">
         <string/>
        </property>
-       <property name="icon">
-        <iconset resource="../resources/TalipotGUIResource.qrc">
-         <normaloff>:/talipot/gui/icons/16/go-up.png</normaloff>:/talipot/gui/icons/16/go-up.png</iconset>
-       </property>
       </widget>
      </item>
      <item>
@@ -85,10 +81,6 @@
       <widget class="QPushButton" name="downButton">
        <property name="text">
         <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../resources/TalipotGUIResource.qrc">
-         <normaloff>:/talipot/gui/icons/16/go-down.png</normaloff>:/talipot/gui/icons/16/go-down.png</iconset>
        </property>
       </widget>
      </item>

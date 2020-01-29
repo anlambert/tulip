@@ -29,6 +29,8 @@
 #include <talipot/Mimes.h>
 #include <talipot/GraphHierarchiesModel.h>
 #include <talipot/TlpQtTools.h>
+#include <talipot/FontIconManager.h>
+#include <talipot/MaterialDesignIcons.h>
 
 #include "ui_Workspace.h"
 
@@ -43,6 +45,8 @@ Workspace::Workspace(QWidget *parent)
       _focusedPanel(nullptr), _focusedPanelHighlighting(false), _model(nullptr),
       _autoCenterViews(false) {
   _ui->setupUi(this);
+  _ui->importButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Import, Qt::black));
+  _ui->startupButton->setIcon(FontIconManager::icon(MaterialDesignIcons::PlusBox, Qt::black));
   _ui->startupMainFrame->hide();
   _ui->workspaceContents->setCurrentWidget(_ui->startupPage);
   connect(_ui->startupButton, &QPushButton::clicked, [this] { addPanelRequest(); });

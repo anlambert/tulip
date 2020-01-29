@@ -14,12 +14,47 @@
 #include <talipot/ParameterListModel.h>
 #include <talipot/MetaTypes.h>
 #include <talipot/TlpQtTools.h>
+#include <talipot/FontIconManager.h>
+#include <talipot/MaterialDesignIcons.h>
 
 #include <QColor>
 #include <QModelIndex>
 #include <QIcon>
+#include <QPainter>
 
 namespace tlp {
+
+static QIcon bracketIcon() {
+  static QIcon icon;
+  if (icon.isNull()) {
+    QPixmap tmp = FontIconManager::icon(MaterialDesignIcons::CodeBrackets, Qt::darkGray, 1.4)
+                      .pixmap(128, 128);
+    QPainter painter(&tmp);
+    painter.fillRect(0, 0, 64, 128, Qt::white);
+    painter.end();
+    icon = tmp;
+  }
+  return icon;
+}
+
+static QIcon inputIcon() {
+  return FontIconManager::stackIcons(
+      bracketIcon(), FontIconManager::icon(MaterialDesignIcons::ArrowRightBold, QColor("#0d93f7")));
+}
+
+static QIcon outputIcon() {
+  return FontIconManager::stackIcons(
+      bracketIcon(), FontIconManager::icon(MaterialDesignIcons::ArrowLeftBold, Qt::red));
+}
+
+static QIcon inputOutputIcon() {
+  const QIcon &rightArrow = FontIconManager::icon(MaterialDesignIcons::ArrowRightBold,
+                                                  QColor("#0d93f7"), 1, 0, QPointF(0, -20));
+  const QIcon &leftArrow =
+      FontIconManager::icon(MaterialDesignIcons::ArrowLeftBold, Qt::red, 1, 0, QPointF(0, 20));
+  QIcon tmp = FontIconManager::stackIcons(bracketIcon(), rightArrow);
+  return FontIconManager::stackIcons(tmp, leftArrow);
+}
 
 ParameterListModel::ParameterListModel(const tlp::ParameterDescriptionList &params,
                                        tlp::Graph *graph, QObject *parent)
@@ -125,11 +160,11 @@ QVariant ParameterListModel::headerData(int section, Qt::Orientation orientation
       return tlp::tlpStringToQString(info.getHelp());
     } else if (role == Qt::DecorationRole) {
       if (info.getDirection() == IN_PARAM) {
-        return QIcon(":/talipot/gui/icons/32/input.png");
+        return inputIcon();
       } else if (info.getDirection() == OUT_PARAM) {
-        return QIcon(":/talipot/gui/icons/32/output.png");
+        return outputIcon();
       } else {
-        return QIcon(":/talipot/gui/icons/32/input-output.png");
+        return inputOutputIcon();
       }
     }
   }

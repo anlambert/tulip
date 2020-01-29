@@ -32,6 +32,8 @@
 #include <talipot/GlGraphComposite.h>
 #include <talipot/Gl2DRect.h>
 #include <talipot/ViewActionsManager.h>
+#include <talipot/FontIconManager.h>
+#include <talipot/MaterialDesignIcons.h>
 
 using namespace tlp;
 
@@ -187,9 +189,10 @@ void GlMainView::updateShowOverviewButton() {
   if (_showOvButton == nullptr) {
     QGraphicsProxyWidget *proxy = new QGraphicsProxyWidget();
     _showOvButton = new QPushButton();
+    _showOvButton->setMinimumSize(10, 10);
     _showOvButton->setMaximumSize(10, 10);
+    _showOvButton->setStyleSheet("border: none;");
     _showOvButton->setCheckable(true);
-    _showOvButton->setStyleSheet("QPushButton {font-family: Arial; font-size: 10pt; border:none};");
     proxy->setWidget(_showOvButton);
     addToScene(proxy);
     proxy->setZValue(10);
@@ -204,7 +207,8 @@ void GlMainView::updateShowOverviewButton() {
     _showOvButton->blockSignals(true);
 
     if (_overviewItem && _overviewItem->isVisible()) {
-      _showOvButton->setText("x");
+      _showOvButton->setIcon(
+          FontIconManager::icon(MaterialDesignIcons::Close, QColor(50, 50, 50), 0.8));
       _showOvButton->setChecked(true);
       _showOvButton->setToolTip("Hide overview display");
       _showOvButton->move(
@@ -212,7 +216,7 @@ void GlMainView::updateShowOverviewButton() {
           rect.height() - _overviewItem->getHeight() -
               ((_quickAccessBar != nullptr) ? _quickAccessBarItem->size().height() : 0));
     } else {
-      _showOvButton->setText("<");
+      _showOvButton->setIcon(FontIconManager::icon(MaterialDesignIcons::ChevronLeft));
       _showOvButton->setChecked(false);
       _showOvButton->setToolTip("Show overview display");
       _showOvButton->move(
@@ -245,13 +249,13 @@ void GlMainView::updateShowQuickAccessBarButton() {
     if (_showQabButton == nullptr) {
       QGraphicsProxyWidget *proxy = new QGraphicsProxyWidget();
       _showQabButton = new QPushButton();
+      _showQabButton->setStyleSheet("border: none;");
+      _showQabButton->setMinimumSize(10, 10);
       _showQabButton->setMaximumSize(10, 10);
       _showQabButton->setCheckable(true);
-      _showQabButton->setStyleSheet(
-          "QPushButton {font-family: Arial; font-size: 10pt; border:none};");
       proxy->setWidget(_showQabButton);
       addToScene(proxy);
-      proxy->setZValue(10);
+      proxy->setZValue(11);
       connect(_showQabButton, &QAbstractButton::toggled, this,
               &GlMainView::setQuickAccessBarVisible);
     }
@@ -261,13 +265,14 @@ void GlMainView::updateShowQuickAccessBarButton() {
     _showQabButton->blockSignals(true);
 
     if (quickAccessBarVisible()) {
-      _showQabButton->setText("x");
+      _showQabButton->setIcon(
+          FontIconManager::icon(MaterialDesignIcons::Close, QColor(50, 50, 50), 0.8));
       _showQabButton->setChecked(true);
       _showQabButton->setToolTip("Hide quick access bar");
       _showQabButton->move(0, rect.height() - _quickAccessBarItem->size().height() -
                                   _showQabButton->height());
     } else {
-      _showQabButton->setText("^");
+      _showQabButton->setIcon(FontIconManager::icon(MaterialDesignIcons::ChevronUp));
       _showQabButton->setChecked(false);
       _showQabButton->setToolTip("Show quick access bar");
       _showQabButton->move(0, rect.height() - _showQabButton->height());

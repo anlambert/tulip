@@ -18,6 +18,7 @@
 #include <string>
 #include <talipot/Plugin.h>
 #include <talipot/PluginContext.h>
+#include <talipot/MaterialDesignIcons.h>
 
 namespace tlp {
 
@@ -58,7 +59,7 @@ public:
   ~Algorithm() override {}
 
   std::string icon() const override {
-    return ":/talipot/gui/icons/32/plugin_algorithm.png";
+    return MaterialDesignIcons::Cogs;
   }
   /**
    * @brief Runs the algorithm.

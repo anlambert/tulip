@@ -18,6 +18,7 @@
 #include <talipot/Size.h>
 #include <talipot/Coord.h>
 #include <talipot/PluginContext.h>
+#include <talipot/MaterialDesignIcons.h>
 
 namespace tlp {
 
@@ -45,7 +46,7 @@ public:
     return GLYPH_CATEGORY;
   }
   std::string icon() const override {
-    return ":/talipot/gui/icons/32/plugin_glyph.png";
+    return MaterialDesignIcons::ShapePlus;
   }
 
   Glyph(const tlp::PluginContext *context);

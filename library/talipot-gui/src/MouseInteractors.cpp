@@ -27,6 +27,8 @@
 #include <talipot/QtGlSceneZoomAndPanAnimator.h>
 #include <talipot/NodeLinkDiagramView.h>
 #include <talipot/MouseInteractors.h>
+#include <talipot/MaterialDesignIcons.h>
+#include <talipot/FontIconManager.h>
 
 #include <iostream>
 
@@ -141,7 +143,8 @@ bool MouseElementDeleter::eventFilter(QObject *widget, QEvent *e) {
 
     if (e->type() == QEvent::MouseMove) {
       if (glMainWidget->pickNodesEdges(qMouseEv->x(), qMouseEv->y(), selectedEntity)) {
-        glMainWidget->setCursor(QCursor(QPixmap(":/talipot/gui/icons/i_del.png")));
+        QIcon icon = FontIconManager::icon(MaterialDesignIcons::Delete);
+        glMainWidget->setCursor(icon.pixmap(32, 32));
       } else {
         glMainWidget->setCursor(Qt::ArrowCursor);
       }

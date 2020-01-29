@@ -19,6 +19,7 @@
 
 #include "../utils/StandardInteractorPriority.h"
 #include "../utils/PluginNames.h"
+#include "../utils/InteractorIcons.h"
 
 using namespace tlp;
 
@@ -34,7 +35,7 @@ public:
    * Default constructor
    */
   InteractorAddEdge(const tlp::PluginContext *)
-      : NodeLinkDiagramViewInteractor(":/talipot/gui/icons/i_addedge.png", "Add nodes/edges",
+      : NodeLinkDiagramViewInteractor(interactorIcon(InteractorType::AddEdge), "Add nodes/edges",
                                       StandardInteractorPriority::AddNodesOrEdges) {}
 
   /**

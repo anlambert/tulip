@@ -18,6 +18,7 @@
 
 #include "../utils/StandardInteractorPriority.h"
 #include "../utils/PluginNames.h"
+#include "../utils/InteractorIcons.h"
 
 using namespace tlp;
 
@@ -33,7 +34,8 @@ public:
    * Default constructor
    */
   InteractorRectangleZoom(const tlp::PluginContext *)
-      : NodeLinkDiagramViewInteractor(":/talipot/gui/icons/i_zoom.png", "Zoom on rectangle",
+      : NodeLinkDiagramViewInteractor(interactorIcon(InteractorType::RectangleZoom),
+                                      "Zoom on rectangle",
                                       StandardInteractorPriority::ZoomOnRectangle) {}
 
   /**

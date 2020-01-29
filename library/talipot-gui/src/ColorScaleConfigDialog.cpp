@@ -26,6 +26,8 @@
 #include <talipot/ColorScalesManager.h>
 #include <talipot/TlpTools.h>
 #include <talipot/Settings.h>
+#include <talipot/FontIconManager.h>
+#include <talipot/MaterialDesignIcons.h>
 
 #include "ui_ColorScaleConfigDialog.h"
 
@@ -38,6 +40,7 @@ map<QString, vector<Color>> ColorScaleConfigDialog::talipotImageColorScales;
 ColorScaleConfigDialog::ColorScaleConfigDialog(const ColorScale &colorScale, QWidget *parent)
     : QDialog(parent), _ui(new Ui::ColorScaleDialog), colorScale(colorScale) {
   _ui->setupUi(this);
+  _ui->invertColorScaleButton->setIcon(FontIconManager::icon(MaterialDesignIcons::ArrowUpDownBold));
   _ui->colorsTable->setColumnWidth(0, _ui->colorsTable->width());
   _ui->colorsTable->horizontalHeader()->setHidden(true);
   QPalette palette;

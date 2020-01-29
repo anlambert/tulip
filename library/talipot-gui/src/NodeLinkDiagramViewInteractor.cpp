@@ -19,10 +19,9 @@
 
 using namespace tlp;
 
-NodeLinkDiagramViewInteractor::NodeLinkDiagramViewInteractor(const QString &iconPath,
-                                                             const QString &text,
+NodeLinkDiagramViewInteractor::NodeLinkDiagramViewInteractor(const QIcon &icon, const QString &text,
                                                              unsigned int priority)
-    : GLInteractorComposite(QIcon(iconPath), text), _label(new QLabel), _priority(priority) {
+    : GLInteractorComposite(icon, text), _label(new QLabel), _priority(priority) {
   _label->setWordWrap(true);
   _label->setAlignment(Qt::AlignTop);
   _label->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);

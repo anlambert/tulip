@@ -19,6 +19,7 @@
 
 #include "../utils/StandardInteractorPriority.h"
 #include "../utils/PluginNames.h"
+#include "../utils/InteractorIcons.h"
 
 using namespace tlp;
 
@@ -34,7 +35,8 @@ public:
    * Default constructor
    */
   InteractorEditEdgeBends(const tlp::PluginContext *)
-      : NodeLinkDiagramViewInteractor(":/talipot/gui/icons/i_bends.png", "Edit edge bends",
+      : NodeLinkDiagramViewInteractor(interactorIcon(InteractorType::EditEdgeBends),
+                                      "Edit edge bends",
                                       StandardInteractorPriority::EditEdgeBends) {}
 
   /**

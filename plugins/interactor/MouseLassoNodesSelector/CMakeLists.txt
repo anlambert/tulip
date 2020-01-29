@@ -9,10 +9,8 @@ INCLUDE_DIRECTORIES(
 
 SET(LIB_SRCS MouseLassoNodesSelector.cpp)
 
-QTX_ADD_RESOURCES(LIB_RCC_SRCS MouseLassoNodesSelectorResource.qrc)
+ADD_LIBRARY(MouseLassoNodesSelector-${TalipotVersion} SHARED ${LIB_SRCS})
 
-ADD_LIBRARY(MouseLassoNodesSelector-${TalipotVersion} SHARED ${LIB_SRCS}
-                                                             ${LIB_RCC_SRCS})
 TARGET_LINK_LIBRARIES(
   MouseLassoNodesSelector-${TalipotVersion} ${LibTalipotCoreName}
   ${LibTalipotOGLName} ${LibTalipotGUIName} ${OPENGL_gl_LIBRARY})

@@ -46,6 +46,8 @@
 #include <talipot/GraphHierarchiesModel.h>
 #include <talipot/Mimes.h>
 #include <talipot/MetaTypes.h>
+#include <talipot/FontIconManager.h>
+#include <talipot/MaterialDesignIcons.h>
 
 #include <talipot/PythonIDE.h>
 #include <talipot/PythonPluginCreationDialog.h>
@@ -355,6 +357,47 @@ PythonIDE::PythonIDE(QWidget *parent)
       _dontTreatFocusIn(false), _project(nullptr), _graphsModel(nullptr), _scriptStopped(false),
       _saveFilesToProject(true), _notifyProjectModified(false), _anchored(true) {
   _ui->setupUi(this);
+  _ui->newMainScriptButton->setIcon(FontIconManager::icon(MaterialDesignIcons::File, Qt::white));
+  _ui->loadMainScriptButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::FileImport, Qt::white));
+  _ui->saveMainScriptButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::FileExport, Qt::white));
+  _ui->newStringModuleButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::FilePlus, Qt::white));
+  _ui->newModuleButton->setIcon(FontIconManager::icon(MaterialDesignIcons::File, Qt::white));
+  _ui->loadModuleButton->setIcon(FontIconManager::icon(MaterialDesignIcons::FileImport, Qt::white));
+  _ui->saveModuleButton->setIcon(FontIconManager::icon(MaterialDesignIcons::FileExport, Qt::white));
+  _ui->newPluginButton->setIcon(FontIconManager::icon(MaterialDesignIcons::File, Qt::white));
+  _ui->loadPluginButton->setIcon(FontIconManager::icon(MaterialDesignIcons::FileImport, Qt::white));
+  _ui->savePluginButton->setIcon(FontIconManager::icon(MaterialDesignIcons::FileExport, Qt::white));
+  _ui->newModuleButton->setIcon(FontIconManager::icon(MaterialDesignIcons::File, Qt::white));
+  _ui->loadModuleButton->setIcon(FontIconManager::icon(MaterialDesignIcons::FileImport, Qt::white));
+  _ui->saveModuleButton->setIcon(FontIconManager::icon(MaterialDesignIcons::FileExport, Qt::white));
+  _ui->decreaseFontSizeButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::MinusCircle, Qt::black));
+  _ui->increaseFontSizeButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::PlusCircle, Qt::black));
+  _ui->runScriptButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Play, Qt::white));
+  _ui->pauseScriptButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Pause, Qt::white));
+  _ui->stopScriptButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Stop, Qt::white));
+  _ui->decreaseFontSizeButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Minus, Qt::white));
+  _ui->increaseFontSizeButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Plus, Qt::white));
+  _ui->decreaseFontSizeButton_2->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Minus, Qt::white));
+  _ui->increaseFontSizeButton_2->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Plus, Qt::white));
+  _ui->decreaseFontSizeButton_3->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Minus, Qt::white));
+  _ui->increaseFontSizeButton_3->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Plus, Qt::white));
+  _ui->registerPluginButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::DatabaseRefresh, Qt::white));
+  _ui->removePluginButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::DatabaseRemove, Qt::white));
+  useUndoToggled(_ui->useUndoCB->isChecked());
+  connect(_ui->useUndoCB, &QAbstractButton::toggled, this, &PythonIDE::useUndoToggled);
+
   _ui->tabWidget->setDrawTabBarBgGradient(true);
   _ui->tabWidget->setTextColor(QColor(200, 200, 200));
 
@@ -2220,6 +2263,21 @@ void PythonIDE::setAnchored(bool anchored) {
   disconnect(_ui->anchoredCB, &QAbstractButton::toggled, this, &PythonIDE::anchored);
   disconnect(_ui->anchoredCB_2, &QAbstractButton::toggled, this, &PythonIDE::anchored);
   disconnect(_ui->anchoredCB_3, &QAbstractButton::toggled, this, &PythonIDE::anchored);
+  QIcon icon;
+  QString tooltip;
+  if (anchored) {
+    icon = FontIconManager::icon(MaterialDesignIcons::WindowRestore, Qt::white);
+    tooltip = "Display the Python IDE in a separate window";
+  } else {
+    icon = FontIconManager::icon(MaterialDesignIcons::DockLeft, Qt::white);
+    tooltip = "Dock the Python IDE to the left of Talipot window";
+  }
+  _ui->anchoredCB->setIcon(icon);
+  _ui->anchoredCB_2->setIcon(icon);
+  _ui->anchoredCB_3->setIcon(icon);
+  _ui->anchoredCB->setToolTip(tooltip);
+  _ui->anchoredCB_2->setToolTip(tooltip);
+  _ui->anchoredCB_3->setToolTip(tooltip);
   _ui->anchoredCB->setChecked(anchored);
   _ui->anchoredCB_2->setChecked(anchored);
   _ui->anchoredCB_3->setChecked(anchored);
@@ -2241,4 +2299,16 @@ void PythonIDE::setAnchored(bool anchored) {
 
 bool PythonIDE::isAnchored() const {
   return _anchored;
+}
+
+void PythonIDE::useUndoToggled(bool useUndo) {
+  static QIcon baseIcon =
+      FontIconManager::icon(MaterialDesignIcons::Reply, Qt::white, 0.8, 0, QPoint(0, -2));
+  if (useUndo) {
+    _ui->useUndoCB->setIcon(baseIcon);
+  } else {
+    static QIcon icon = FontIconManager::stackIcons(
+        baseIcon, FontIconManager::icon(MaterialDesignIcons::WindowClose, Qt::black));
+    _ui->useUndoCB->setIcon(icon);
+  }
 }

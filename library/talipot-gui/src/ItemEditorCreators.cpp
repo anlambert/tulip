@@ -39,6 +39,7 @@
 #include <talipot/FontIconDialog.h>
 #include <talipot/FontIconManager.h>
 #include <talipot/ShapeDialog.h>
+#include <talipot/MaterialDesignIcons.h>
 
 using namespace tlp;
 
@@ -471,10 +472,10 @@ bool FileDescriptorEditorCreator::paint(QPainter *painter, const QStyleOptionVie
     icon = imageIcon;
     text = fileInfo.fileName();
   } else if (fileInfo.isFile()) {
-    icon = QApplication::style()->standardIcon(QStyle::SP_FileIcon);
+    icon = FontIconManager::icon(MaterialDesignIcons::File);
     text = fileInfo.fileName();
   } else if (fileInfo.isDir()) {
-    icon = QApplication::style()->standardIcon(QStyle::SP_DirIcon);
+    icon = FontIconManager::icon(MaterialDesignIcons::Folder);
     QDir d1 = fileInfo.dir();
     d1.cdUp();
     text = fileInfo.absoluteFilePath().remove(0, d1.absolutePath().length() - 1);

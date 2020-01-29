@@ -67,10 +67,6 @@
      <property name="text">
       <string/>
      </property>
-     <property name="icon">
-      <iconset resource="../resources/TalipotGUIResource.qrc">
-       <normaloff>:/talipot/gui/icons/20/camera-photo.png</normaloff>:/talipot/gui/icons/20/camera-photo.png</iconset>
-     </property>
      <property name="iconSize">
       <size>
        <width>16</width>

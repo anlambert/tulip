@@ -54,8 +54,7 @@ ImportWizard::ImportWizard(QWidget *parent) : QWizard(parent), _ui(new Ui::Impor
   if (Settings::instance().displayDefaultViews()) {
     importLabel += "<b>Node Link Diagram</b> and <b>Spreadsheet</b> (automatically opened) views.";
   } else {
-    importLabel += "<img src=\":/talipot/gui/icons/16/list-add.png\"/>&nbsp;<b>Add "
-                   "panel</b> button to open specific views on it.";
+    importLabel += "<b>Add panel</b> button to open specific views on it.";
   }
 
   importLabel += "<br/><br/>See <b>Edit</b> menu, then <b>Preferences</b> for more options when "

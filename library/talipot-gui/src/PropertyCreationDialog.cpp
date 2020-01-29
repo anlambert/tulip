@@ -19,6 +19,8 @@
 
 #include <talipot/Graph.h>
 #include <talipot/TlpQtTools.h>
+#include <talipot/FontIconManager.h>
+#include <talipot/MaterialDesignIcons.h>
 
 using namespace tlp;
 
@@ -64,6 +66,7 @@ void PropertyCreationDialog::initGui() {
   labels << propertyTypeToPropertyTypeLabel("vector<string>");
   ui->propertyTypeComboBox->addItems(labels);
   _createPropertyButton = ui->buttonBox->addButton("Create", QDialogButtonBox::AcceptRole);
+  _createPropertyButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Check));
   ui->errorIconLabel->setPixmap(
       QApplication::style()->standardIcon(QStyle::SP_MessageBoxWarning).pixmap(16, 16));
   connect(ui->propertyNameLineEdit, &QLineEdit::textChanged, this,

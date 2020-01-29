@@ -137,52 +137,28 @@
           <property name="text">
            <string>Algorithms</string>
           </property>
-          <property name="icon">
-           <iconset>
-            <normaloff>:/talipot/app/icons/64/plugin_algorithm.png</normaloff>:/talipot/app/icons/64/plugin_algorithm.png</iconset>
-          </property>
          </item>
          <item>
           <property name="text">
            <string>Import/Export</string>
-          </property>
-          <property name="icon">
-           <iconset>
-            <normaloff>:/talipot/app/icons/64/plugin_import_export.png</normaloff>:/talipot/app/icons/64/plugin_import_export.png</iconset>
           </property>
          </item>
          <item>
           <property name="text">
            <string>Glyphs</string>
           </property>
-          <property name="icon">
-           <iconset>
-            <normaloff>:/talipot/app/icons/64/plugin_glyph.png</normaloff>:/talipot/app/icons/64/plugin_glyph.png</iconset>
-          </property>
          </item>
          <item>
           <property name="text">
            <string>Views</string>
-          </property>
-          <property name="icon">
-           <iconset>
-            <normaloff>:/talipot/app/icons/64/plugin_view.png</normaloff>:/talipot/app/icons/64/plugin_view.png</iconset>
           </property>
          </item>
          <item>
           <property name="text">
            <string>Interactors</string>
           </property>
-          <property name="icon">
-           <iconset>
-            <normaloff>:/talipot/app/icons/64/plugin_interactor.png</normaloff>:/talipot/app/icons/64/plugin_interactor.png</iconset>
-          </property>
          </item>
          <item>
-          <property name="icon">
-           <iconset>
-            <normaloff>:/talipot/app/icons/64/plugin_controller.png</normaloff>:/talipot/app/icons/64/plugin_controller.png</iconset>
-          </property>
          </item>
          <item>
           <property name="text">
@@ -232,17 +208,6 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
-           </property>
-           <property name="text">
-            <string>&lt;body&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;img src=&quot;:/talipot/gui/ui/list_bullet_arrow.png&quot; /&gt;&lt;span style=&quot;color:#626262; font-size:large;&quot;&gt;   Manage your plugins&lt;/span&gt;&lt;/p&gt;
-
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:medium;&quot;&gt; &lt;/p&gt;
-
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot;color:#000000;&quot;&gt;Extend Talipot functionalities and stay up-to-date by browsing and downloading the latest plugins from our repositories.&lt;/span&gt;&lt;/p&gt;
-&lt;/body&gt;
-
-&lt;/html&gt;</string>
            </property>
            <property name="wordWrap">
             <bool>true</bool>
@@ -296,10 +261,6 @@
                 <property name="text">
                  <string>Algorithms</string>
                 </property>
-                <property name="icon">
-                 <iconset>
-                  <normaloff>:/talipot/app/icons/64/plugin_algorithm.png</normaloff>:/talipot/app/icons/64/plugin_algorithm.png</iconset>
-                </property>
                 <property name="iconSize">
                  <size>
                   <width>64</width>
@@ -318,10 +279,6 @@
                <widget class="QToolButton" name="browseViewsButton">
                 <property name="text">
                  <string>Views</string>
-                </property>
-                <property name="icon">
-                 <iconset>
-                  <normaloff>:/talipot/app/icons/64/plugin_view.png</normaloff>:/talipot/app/icons/64/plugin_view.png</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -342,10 +299,6 @@
                 <property name="text">
                  <string>Interactors</string>
                 </property>
-                <property name="icon">
-                 <iconset>
-                  <normaloff>:/talipot/app/icons/64/plugin_interactor.png</normaloff>:/talipot/app/icons/64/plugin_interactor.png</iconset>
-                </property>
                 <property name="iconSize">
                  <size>
                   <width>64</width>
@@ -365,10 +318,6 @@
                 <property name="text">
                  <string>Glyphs</string>
                 </property>
-                <property name="icon">
-                 <iconset>
-                  <normaloff>:/talipot/app/icons/64/plugin_glyph.png</normaloff>:/talipot/app/icons/64/plugin_glyph.png</iconset>
-                </property>
                 <property name="iconSize">
                  <size>
                   <width>64</width>
@@ -387,10 +336,6 @@
                <widget class="QToolButton" name="browseImportExportButton">
                 <property name="text">
                  <string>Import/Export</string>
-                </property>
-                <property name="icon">
-                 <iconset>
-                  <normaloff>:/talipot/app/icons/64/plugin_import_export.png</normaloff>:/talipot/app/icons/64/plugin_import_export.png</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -488,7 +433,7 @@
          <item>
           <widget class="QLabel" name="label">
            <property name="text">
-            <string>&lt;p&gt;&lt;img src=&quot;:/talipot/gui/ui/list_bullet_arrow.png&quot; /&gt;&lt;span style=&quot;color:#626262; font-size:large;&quot;&gt;   Fix plugins errors&lt;/span&gt;&lt;/p&gt;
+            <string>&lt;p&gt;&lt;span style=&quot;color:#626262; font-size:large;&quot;&gt;   Fix plugins errors&lt;/span&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;span style=&quot;color:#dc4d4f;&quot;&gt;Errors have been detected while loading plugins. Check the error log for details.&lt;/span&gt;&lt;/p&gt;</string>
            </property>

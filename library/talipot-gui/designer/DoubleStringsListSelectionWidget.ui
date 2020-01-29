@@ -1,6 +1,6 @@
 <ui version="4.0" >
- <class>DoubleStringsListSelectionData</class>
- <widget class="QWidget" name="DoubleStringsListSelectionData" >
+ <class>DoubleStringsListSelectionWidget</class>
+ <widget class="QWidget" name="DoubleStringsListSelectionWidget" >
   <property name="geometry" >
    <rect>
     <x>0</x>
@@ -47,20 +47,12 @@
        <property name="text" >
         <string/>
        </property>
-       <property name="icon" >
-        <iconset resource="TulipQtResource.qrc" >
-         <normaloff>:/right.png</normaloff>:/right.png</iconset>
-       </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="removeButton" >
        <property name="text" >
         <string/>
-       </property>
-       <property name="icon" >
-        <iconset resource="TulipQtResource.qrc" >
-         <normaloff>:/left.png</normaloff>:/left.png</iconset>
        </property>
       </widget>
      </item>
@@ -97,20 +89,12 @@
        <property name="text" >
         <string/>
        </property>
-       <property name="icon" >
-        <iconset resource="TulipQtResource.qrc" >
-         <normaloff>:/up.png</normaloff>:/up.png</iconset>
-       </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="downButton" >
        <property name="text" >
         <string/>
-       </property>
-       <property name="icon" >
-        <iconset resource="TulipQtResource.qrc" >
-         <normaloff>:/down.png</normaloff>:/down.png</iconset>
        </property>
       </widget>
      </item>
@@ -125,8 +109,5 @@
    <header>talipot/ItemsListWidget.h</header>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="TulipQtResource.qrc" />
- </resources>
  <connections/>
 </ui>

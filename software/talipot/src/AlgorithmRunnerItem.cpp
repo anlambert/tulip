@@ -37,6 +37,9 @@
 #include <talipot/ColorScalesManager.h>
 #include <talipot/StableIterator.h>
 #include <talipot/PropertyAlgorithm.h>
+#include <talipot/FontIconManager.h>
+#include <talipot/IconicFont.h>
+#include <talipot/MaterialDesignIcons.h>
 
 using namespace tlp;
 
@@ -45,18 +48,12 @@ AlgorithmRunnerItem::AlgorithmRunnerItem(QString pluginName, QWidget *parent)
       _storeResultAsLocal(true) {
   _ui->setupUi(this);
   connect(_ui->favoriteCheck, &QAbstractButton::toggled, this, &AlgorithmRunnerItem::favorized);
+  _ui->settingsButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Cog, QColor("#5c8ec8")));
+  _ui->playButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Play, Qt::green));
   const Plugin &plugin = PluginsManager::pluginInformation(QStringToTlpString(pluginName));
   // split pluginName after the second word if needed
   QStringList words = pluginName.split(' ');
-
-  if (words.size() > 3) {
-    QString name = pluginName;
-    name.replace(words[1] + ' ', words[1] + '\n');
-    _ui->playButton->setText(name);
-  } else {
-    _ui->playButton->setText(pluginName);
-  }
-
+  _ui->playButton->setText(pluginName);
   _ui->playButton->setStyleSheet("text-align: left");
   QString tooltip(QString("Apply '") + pluginName + "'");
   // initialize parameters only if needed
@@ -86,19 +83,20 @@ AlgorithmRunnerItem::AlgorithmRunnerItem(QString pluginName, QWidget *parent)
 
   setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
 
-  static QPixmap cppPix(":/talipot/app/icons/16/cpp.png");
-  static QPixmap pythonPix(":/talipot/app/icons/16/python.png");
-
+  QString iconName;
   if (plugin.programmingLanguage() == "Python") {
-    _ui->languageLabel->setPixmap(pythonPix);
-    _ui->languageLabel->setToolTip("Plugin written in Python");
+    iconName = MaterialDesignIcons::LanguagePython;
+    tooltip = "Plugin written in Python";
   } else {
-    _ui->languageLabel->setPixmap(cppPix);
-    _ui->languageLabel->setToolTip("Plugin written in C++");
+    iconName = MaterialDesignIcons::LanguageCpp;
+    tooltip = "Plugin written in C++";
   }
 
   connect(_ui->favoriteCheck, &QCheckBox::stateChanged, this,
           &AlgorithmRunnerItem::favoriteChanged);
+  QIcon icon = FontIconManager::icon(iconName, QColor(50, 50, 50), 0.6);
+  _ui->languageLabel->setPixmap(icon.pixmap(_ui->languageLabel->size()));
+  _ui->languageLabel->setToolTip(tooltip);
 }
 
 AlgorithmRunnerItem::~AlgorithmRunnerItem() {
@@ -499,7 +497,12 @@ void AlgorithmRunnerItem::mouseMoveEvent(QMouseEvent *ev) {
 
   QDrag *drag = new QDrag(this);
   const Plugin &p = PluginsManager::pluginInformation(QStringToTlpString(_pluginName).c_str());
-  QPixmap icon(QPixmap(p.icon().c_str()).scaled(64, 64));
+  QPixmap icon;
+  if (IconicFont::isIconSupported(p.icon())) {
+    icon = FontIconManager::icon(tlp::tlpStringToQString(p.icon())).pixmap(QSize(64, 64));
+  } else {
+    icon = icon.scaled(64, 64);
+  }
   QFont f;
   f.setBold(true);
   QFontMetrics metrics(f);

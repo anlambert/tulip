@@ -4,10 +4,8 @@ INCLUDE_DIRECTORIES(
 
 SET(LIB_SRCS MouseMagnifyingGlass.cpp)
 
-QTX_ADD_RESOURCES(LIB_RCC_SRCS MouseMagnifyingGlassResource.qrc)
+ADD_LIBRARY(MouseMagnifyingGlass-${TalipotVersion} SHARED ${LIB_SRCS})
 
-ADD_LIBRARY(MouseMagnifyingGlass-${TalipotVersion} SHARED ${LIB_SRCS}
-                                                          ${LIB_RCC_SRCS})
 TARGET_LINK_LIBRARIES(
   MouseMagnifyingGlass-${TalipotVersion} ${LibTalipotCoreName}
   ${LibTalipotOGLName} ${LibTalipotGUIName} ${OPENGL_gl_LIBRARY}

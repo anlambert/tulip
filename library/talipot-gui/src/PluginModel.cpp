@@ -67,8 +67,11 @@ QVariant SimplePluginListModel::data(const QModelIndex &index, int role) const {
       return tlp::tlpStringToQString(name);
     } else if (role == Qt::DecorationRole) {
       const Plugin &p = PluginsManager::pluginInformation(name);
-      QPixmap pix(tlp::tlpStringToQString(p.icon()));
-      return pix;
+      if (IconicFont::isIconSupported(p.icon())) {
+        return FontIconManager::icon(tlp::tlpStringToQString(p.icon())).pixmap(QSize(32, 32));
+      } else {
+        return QPixmap(tlp::tlpStringToQString(p.icon()));
+      }
     }
   }
 

@@ -18,6 +18,7 @@
 
 #include "../utils/StandardInteractorPriority.h"
 #include "../utils/PluginNames.h"
+#include "../utils/InteractorIcons.h"
 
 using namespace tlp;
 
@@ -33,7 +34,7 @@ public:
    * Default constructor
    */
   InteractorGetInformation(const tlp::PluginContext *)
-      : NodeLinkDiagramViewInteractor(":/talipot/gui/icons/i_select.png",
+      : NodeLinkDiagramViewInteractor(interactorIcon(InteractorType::GetInformation),
                                       "Display node or edge properties",
                                       StandardInteractorPriority::GetInformation) {}
 

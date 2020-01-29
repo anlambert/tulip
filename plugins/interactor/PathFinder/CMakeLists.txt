@@ -21,10 +21,8 @@ QTX_WRAP_UI(LIB_UI_HEADERS designer/EnclosingCircleConfiguration.ui
 QTX_WRAP_CPP(LIB_MOC_SRCS PathFinderConfigurationWidget.h PathFinder.h
              highlighters/EnclosingCircleHighlighter.h)
 
-QTX_ADD_RESOURCES(LIB_RCC_SRCS designer/resources.qrc)
-
 ADD_LIBRARY(PathFinder-${TalipotVersion} SHARED ${LIB_SRCS} ${LIB_UI_HEADERS}
-                                                ${LIB_MOC_SRCS} ${LIB_RCC_SRCS})
+                                                ${LIB_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(PathFinder-${TalipotVersion} ${LibTalipotCoreName}
                       ${LibTalipotOGLName} ${LibTalipotGUIName})

@@ -60,10 +60,6 @@ skeleton of the Talipot Python plugin to create.</string>
           <property name="text">
            <string/>
           </property>
-          <property name="icon">
-           <iconset resource="../../../software/talipot/resources/TalipotApp.qrc">
-            <normaloff>:/talipot/app/icons/16/document-open.png</normaloff>:/talipot/app/icons/16/document-open.png</iconset>
-          </property>
          </widget>
         </item>
        </layout>

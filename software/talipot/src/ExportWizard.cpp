@@ -21,9 +21,10 @@
 #include <talipot/ItemDelegate.h>
 #include <talipot/ParameterListModel.h>
 #include <talipot/ExportModule.h>
-
 #include <talipot/GraphHierarchiesModel.h>
 #include <talipot/PluginModel.h>
+#include <talipot/FontIconManager.h>
+#include <talipot/MaterialDesignIcons.h>
 
 using namespace tlp;
 using namespace std;
@@ -31,6 +32,7 @@ using namespace std;
 ExportWizard::ExportWizard(Graph *g, const QString &exportFile, QWidget *parent)
     : QWizard(parent), _ui(new Ui::ExportWizard), _graph(g) {
   _ui->setupUi(this);
+  _ui->browseButton->setIcon(FontIconManager::icon(MaterialDesignIcons::FolderOpen));
   button(QWizard::FinishButton)->setEnabled(false);
 
   PluginModel<tlp::ExportModule> *model = new PluginModel<tlp::ExportModule>(_ui->exportModules);

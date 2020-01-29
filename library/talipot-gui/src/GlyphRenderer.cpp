@@ -66,7 +66,7 @@ QPixmap GlyphRenderer::render(int glyphId) {
   }
   auto it = previews.find(glyphId);
   if (it == previews.end()) {
-    return QPixmap(":/talipot/gui/icons/i_invalid.png");
+    return QPixmap();
   }
   return it->second;
 }
@@ -129,7 +129,7 @@ QPixmap EdgeExtremityGlyphRenderer::render(int glyphId) {
   }
   auto it = previews.find(glyphId);
   if (it == previews.end()) {
-    return QPixmap(":/talipot/gui/icons/i_invalid.png");
+    return QPixmap();
   }
   return it->second;
 }

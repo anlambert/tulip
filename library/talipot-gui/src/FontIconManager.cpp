@@ -214,3 +214,10 @@ const QIcon &FontIconManager::icon(const QString &iconName, const QColor &color,
 
   return fontIconsCache[iconCacheKey];
 }
+
+QIcon FontIconManager::stackIcons(const QIcon &backIcon, const QIcon &frontIcon) {
+  QPixmap pixmap = backIcon.pixmap(QSize(128, 128));
+  QPainter painter(&pixmap);
+  painter.drawPixmap(0, 0, frontIcon.pixmap(QSize(128, 128)));
+  return QIcon(pixmap);
+}

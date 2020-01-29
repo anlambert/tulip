@@ -19,6 +19,7 @@
 
 #include "../utils/StandardInteractorPriority.h"
 #include "../utils/PluginNames.h"
+#include "../utils/InteractorIcons.h"
 
 using namespace tlp;
 
@@ -34,7 +35,7 @@ public:
    * Default constructor
    */
   InteractorSelectionModifier(const tlp::PluginContext *)
-      : NodeLinkDiagramViewInteractor(":/talipot/gui/icons/i_move.png",
+      : NodeLinkDiagramViewInteractor(interactorIcon(InteractorType::SelectionModifier),
                                       "Move/Reshape rectangle selection",
                                       StandardInteractorPriority::RectangleSelectionModifier) {}
 

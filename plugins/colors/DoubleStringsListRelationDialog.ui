@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>DoubleStringsListRelationDialogData</class>
- <widget class="QDialog" name="DoubleStringsListRelationDialogData">
+ <class>DoubleStringsListRelationDialog</class>
+ <widget class="QDialog" name="DoubleStringsListRelationDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -66,10 +66,6 @@
          <property name="text">
           <string/>
          </property>
-         <property name="icon">
-          <iconset resource="../../library/talipot-gui/resources/TalipotGUIResource.qrc">
-           <normaloff>:/talipot/gui/icons/16/go-up.png</normaloff>:/talipot/gui/icons/16/go-up.png</iconset>
-         </property>
         </widget>
        </item>
        <item>
@@ -89,10 +85,6 @@
         <widget class="QPushButton" name="downButton">
          <property name="text">
           <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../../library/talipot-gui/resources/TalipotGUIResource.qrc">
-           <normaloff>:/talipot/gui/icons/16/go-down.png</normaloff>:/talipot/gui/icons/16/go-down.png</iconset>
          </property>
         </widget>
        </item>
@@ -233,10 +225,6 @@
          <property name="text">
           <string/>
          </property>
-         <property name="icon">
-          <iconset resource="../../library/talipot-gui/resources/TalipotGUIResource.qrc">
-           <normaloff>:/talipot/gui/icons/16/go-up.png</normaloff>:/talipot/gui/icons/16/go-up.png</iconset>
-         </property>
         </widget>
        </item>
        <item>
@@ -256,10 +244,6 @@
         <widget class="QPushButton" name="downButtonColor">
          <property name="text">
           <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../../library/talipot-gui/resources/TalipotGUIResource.qrc">
-           <normaloff>:/talipot/gui/icons/16/go-down.png</normaloff>:/talipot/gui/icons/16/go-down.png</iconset>
          </property>
         </widget>
        </item>
@@ -322,7 +306,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>DoubleStringsListRelationDialogData</receiver>
+   <receiver>DoubleStringsListRelationDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -338,7 +322,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>DoubleStringsListRelationDialogData</receiver>
+   <receiver>DoubleStringsListRelationDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

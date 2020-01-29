@@ -12,6 +12,9 @@
  */
 
 #include <talipot/SimplePluginProgressWidget.h>
+#include <talipot/FontIconManager.h>
+#include <talipot/MaterialDesignIcons.h>
+
 #include "ui_SimplePluginProgressWidget.h"
 
 #include <QCloseEvent>
@@ -28,8 +31,10 @@ SimplePluginProgressWidget::SimplePluginProgressWidget(QWidget *parent, Qt::Wind
     : QWidget(parent, f), _ui(new Ui::SimplePluginProgressWidget),
       _lastUpdate(QTime::currentTime()), _state(tlp::TLP_CONTINUE) {
   _ui->setupUi(this);
-  _ui->cancelButton->setIcon(QApplication::style()->standardIcon(QStyle::SP_DialogCancelButton));
-  _ui->stopButton->setIcon(QApplication::style()->standardIcon(QStyle::SP_MediaStop));
+  _ui->cancelButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Cancel, QColor(50, 50, 50), 0.8));
+  _ui->stopButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Stop, QColor(50, 50, 50), 1.4));
   connect(_ui->cancelButton, &QAbstractButton::clicked, this,
           &SimplePluginProgressWidget::cancelClicked);
   connect(_ui->stopButton, &QAbstractButton::clicked, this,

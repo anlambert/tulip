@@ -62,7 +62,7 @@ void GlOverviewGraphicsItem::draw(bool generatePixmap) {
 
   if (!overviewBorder.parentItem()) {
 
-    // This flag is needed to don't display overview rectangle outside overview
+    // This flag is needed to not display overview rectangle outside overview
     setFlag(QGraphicsItem::ItemClipsChildrenToShape);
     overview.setFlag(QGraphicsItem::ItemClipsChildrenToShape);
     overview.setShapeMode(QGraphicsPixmapItem::BoundingRectShape);

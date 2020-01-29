@@ -24,7 +24,6 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QTabWidget>
 #include <QGraphicsSceneContextMenuEvent>
-#include <QDialogButtonBox>
 #include <QVBoxLayout>
 #include <QScrollBar>
 #include <QPropertyAnimation>
@@ -37,37 +36,10 @@
 #include <talipot/GraphHierarchiesModel.h>
 #include <talipot/Mimes.h>
 #include <talipot/TlpQtTools.h>
+#include <talipot/FontIconManager.h>
+#include <talipot/MaterialDesignIcons.h>
 
 using namespace tlp;
-
-// helper class
-class ProgressItem : public QGraphicsObject {
-  ProcessingAnimationItem *_animation;
-
-public:
-  ProgressItem(QGraphicsScene *parentScene) : QGraphicsObject() {
-    _animation = new ProcessingAnimationItem(QPixmap(":/talipot/gui/ui/process-working.png"),
-                                             QSize(64, 64), this);
-    _animation->setZValue(5);
-    parentScene->addItem(_animation);
-  }
-
-  ~ProgressItem() override {
-    delete _animation;
-  }
-
-  QRectF boundingRect() const override {
-    return QRectF();
-  }
-
-  void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) override {
-    painter->setPen(QColor(255, 255, 255));
-    painter->setBrush(QColor(255, 255, 255, 170));
-    painter->drawRect(scene()->sceneRect());
-    _animation->setOpacity(opacity());
-    _animation->setPos(scene()->width() / 2 - 16, scene()->height() / 2 - 16);
-  }
-};
 
 #ifdef WIN32
 
@@ -106,6 +78,11 @@ WorkspacePanel::WorkspacePanel(tlp::View *view, QWidget *parent)
       _interactorConfigWidget(new InteractorConfigWidget(this)), _view(nullptr),
       _overlayRect(nullptr), _viewConfigurationWidgets(nullptr), _viewConfigurationExpanded(false) {
   _ui->setupUi(this);
+  _ui->linkButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::LinkVariantOff, Qt::white, 0.8));
+  _ui->dragHandle->setPixmap(
+      FontIconManager::icon(MaterialDesignIcons::CursorMove, Qt::white).pixmap(QSize(16, 16)));
+  _ui->closeButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Close, Qt::white));
   _ui->actionClose->setShortcutContext(Qt::WidgetWithChildrenShortcut);
   _ui->interactorsFrame->installEventFilter(this);
   _ui->dragHandle->setPanel(this);
@@ -606,13 +583,15 @@ bool WorkspacePanel::isGraphSynchronized() const {
 
 void WorkspacePanel::toggleSynchronization(bool f) {
   if (f) {
-    _ui->linkButton->setIcon(QIcon(":/talipot/gui/icons/16/link.png"));
+    _ui->linkButton->setIcon(
+        FontIconManager::icon(MaterialDesignIcons::LinkVariant, Qt::white, 0.8));
     _ui->linkButton->setToolTip("Click here to disable the synchronization with the Graphs "
                                 "panel.\nWhen synchronization is enabled, the current graph of the "
                                 "Graphs panel,\nbecomes the current one in the workspace active "
                                 "panel.");
   } else {
-    _ui->linkButton->setIcon(QIcon(":/talipot/gui/icons/16/unlink.png"));
+    _ui->linkButton->setIcon(
+        FontIconManager::icon(MaterialDesignIcons::LinkVariantOff, Qt::white, 0.8));
     _ui->linkButton->setToolTip("Click here to enable the synchronization with the Graphs "
                                 "panel.\nWhen synchronization is enabled, the current graph of the "
                                 "Graphs panel,\nbecomes the current one in the workspace active "

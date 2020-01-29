@@ -12,10 +12,8 @@ QTX_WRAP_UI(LIB_UI_HEADERS NeighborhoodHighlighterConfigWidget.ui)
 QTX_WRAP_CPP(LIB_MOC_SRCS NeighborhoodHighlighterInteractor.h
              NeighborhoodHighlighterConfigWidget.h)
 
-QTX_ADD_RESOURCES(LIB_RCC_SRCS NeighborhoodHighlighterResource.qrc)
-
 ADD_LIBRARY(NeighborhoodHighlighter-${TalipotVersion} SHARED
-            ${LIB_SRCS} ${LIB_UI_HEADERS} ${LIB_MOC_SRCS} ${LIB_RCC_SRCS})
+            ${LIB_SRCS} ${LIB_UI_HEADERS} ${LIB_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
   NeighborhoodHighlighter-${TalipotVersion} ${LibTalipotCoreName}

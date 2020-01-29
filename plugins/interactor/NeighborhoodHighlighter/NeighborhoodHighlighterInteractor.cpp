@@ -37,6 +37,7 @@
 
 #include "NeighborhoodHighlighterInteractor.h"
 #include "../../utils/PluginNames.h"
+#include "../../utils/InteractorIcons.h"
 
 #include <algorithm>
 
@@ -117,7 +118,7 @@ const unsigned char maxCircleAlphaValue = 200;
 PLUGIN(NeighborhoodHighlighterInteractor)
 
 NeighborhoodHighlighterInteractor::NeighborhoodHighlighterInteractor(const PluginContext *)
-    : GLInteractorComposite(QIcon(":/i_neighborhood_highlighter.png"),
+    : GLInteractorComposite(interactorIcon(InteractorType::NeighborhoodHighlighting),
                             "Highlight node neighborhood"),
       configWidget(nullptr) {}
 

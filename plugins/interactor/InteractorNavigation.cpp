@@ -17,6 +17,7 @@
 
 #include "../utils/StandardInteractorPriority.h"
 #include "../utils/PluginNames.h"
+#include "../utils/InteractorIcons.h"
 
 using namespace tlp;
 
@@ -32,8 +33,9 @@ public:
    * Default constructor
    */
   InteractorNavigation(const tlp::PluginContext *)
-      : NodeLinkDiagramViewInteractor(":/talipot/gui/icons/i_navigation.png", "Navigate in graph",
-                                      StandardInteractorPriority::Navigation) {}
+      : NodeLinkDiagramViewInteractor(interactorIcon(InteractorType::Navigation),
+                                      "Navigate in graph", StandardInteractorPriority::Navigation) {
+  }
 
   /**
    * Construct chain of responsibility

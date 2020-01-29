@@ -103,10 +103,6 @@
          <property name="text">
           <string>Undo</string>
          </property>
-         <property name="icon">
-          <iconset resource="../resources/TalipotApp.qrc">
-           <normaloff>:/talipot/app/icons/32/undo.png</normaloff>:/talipot/app/icons/32/undo.png</iconset>
-         </property>
          <property name="iconSize">
           <size>
            <width>32</width>
@@ -134,10 +130,6 @@
          </property>
          <property name="text">
           <string>Redo</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../resources/TalipotApp.qrc">
-           <normaloff>:/talipot/app/icons/32/redo.png</normaloff>:/talipot/app/icons/32/redo.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -187,10 +179,6 @@
          <property name="text">
           <string>Workspace</string>
          </property>
-         <property name="icon">
-          <iconset resource="../resources/TalipotApp.qrc">
-           <normaloff>:/talipot/app/icons/48/desktop.png</normaloff>:/talipot/app/icons/48/desktop.png</iconset>
-         </property>
          <property name="iconSize">
           <size>
            <width>32</width>
@@ -227,10 +215,6 @@
          </property>
          <property name="text">
           <string>Python IDE</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../resources/TalipotApp.qrc">
-           <normaloff>:/talipot/app/icons/48/python.png</normaloff>:/talipot/app/icons/48/python.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -530,10 +514,6 @@
          <property name="text">
           <string>Export</string>
          </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>:/talipot/gui/icons/64/document-export.png</normaloff>:/talipot/gui/icons/64/document-export.png</iconset>
-         </property>
          <property name="iconSize">
           <size>
            <width>32</width>
@@ -562,10 +542,6 @@
          <property name="text">
           <string>CSV</string>
          </property>
-         <property name="icon">
-          <iconset resource="../resources/TalipotApp.qrc">
-           <normaloff>:/talipot/app/icons/32/spreadsheet.png</normaloff>:/talipot/app/icons/32/spreadsheet.png</iconset>
-         </property>
          <property name="iconSize">
           <size>
            <width>32</width>
@@ -593,10 +569,6 @@
          </property>
          <property name="text">
           <string>Import</string>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>:/talipot/gui/icons/64/document-import.png</normaloff>:/talipot/gui/icons/64/document-import.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -853,10 +825,6 @@
                  </property>
                  <property name="text">
                   <string>Add panel</string>
-                 </property>
-                 <property name="icon">
-                  <iconset>
-                   <normaloff>:/talipot/gui/icons/16/list-add.png</normaloff>:/talipot/gui/icons/16/list-add.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -1192,10 +1160,6 @@
      <property name="title">
       <string>&amp;Delete</string>
      </property>
-     <property name="icon">
-      <iconset>
-       <normaloff>:/talipot/gui/icons/i_del.png</normaloff>:/talipot/gui/icons/i_del.png</iconset>
-     </property>
      <addaction name="actionDelete"/>
      <addaction name="actionDelete_from_the_root_graph"/>
      <addaction name="actionDelete_all"/>
@@ -1204,17 +1168,13 @@
      <property name="title">
       <string>&amp;Select</string>
      </property>
-     <property name="icon">
-      <iconset resource="../resources/TalipotApp.qrc">
-       <normaloff>:/talipot/app/icons/16/select-all.png</normaloff>:/talipot/app/icons/16/select-all.png</iconset>
-     </property>
      <addaction name="actionSelect_All"/>
      <addaction name="actionSelect_All_Nodes"/>
      <addaction name="actionSelect_All_Edges"/>
     </widget>
     <widget class="QMenu" name="menuCreate">
      <property name="title">
-      <string>Cr&amp;eate</string>
+      <string>Cr&amp;eate Subgraph</string>
      </property>
      <addaction name="actionCreate_empty_sub_graph"/>
      <addaction name="actionCreate_sub_graph"/>
@@ -1270,10 +1230,6 @@
      <property name="title">
       <string>Open &amp;recent</string>
      </property>
-     <property name="icon">
-      <iconset resource="../resources/TalipotApp.qrc">
-       <normaloff>:/talipot/app/icons/16/document-open-recent.png</normaloff>:/talipot/app/icons/16/document-open-recent.png</iconset>
-     </property>
     </widget>
     <addaction name="actionNewProject"/>
     <addaction name="actionOpen_Project"/>
@@ -1293,10 +1249,6 @@
    <addaction name="menuHelp"/>
   </widget>
   <action name="actionNewProject">
-   <property name="icon">
-    <iconset resource="../resources/TalipotApp.qrc">
-     <normaloff>:/talipot/app/icons/16/archive-new.png</normaloff>:/talipot/app/icons/16/archive-new.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;New project</string>
    </property>
@@ -1305,10 +1257,6 @@
    </property>
   </action>
   <action name="actionSave_Project">
-   <property name="icon">
-    <iconset resource="../resources/TalipotApp.qrc">
-     <normaloff>:/talipot/app/icons/16/document-save.png</normaloff>:/talipot/app/icons/16/document-save.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Save</string>
    </property>
@@ -1317,10 +1265,6 @@
    </property>
   </action>
   <action name="actionSave_Project_as">
-   <property name="icon">
-    <iconset resource="../resources/TalipotApp.qrc">
-     <normaloff>:/talipot/app/icons/16/document-save-as.png</normaloff>:/talipot/app/icons/16/document-save-as.png</iconset>
-   </property>
    <property name="text">
     <string>Sa&amp;ve as</string>
    </property>
@@ -1329,10 +1273,6 @@
    </property>
   </action>
   <action name="actionImport">
-   <property name="icon">
-    <iconset>
-     <normaloff>:/talipot/gui/icons/64/document-import.png</normaloff>:/talipot/gui/icons/64/document-import.png</iconset>
-   </property>
    <property name="text">
     <string>I&amp;mport</string>
    </property>
@@ -1341,10 +1281,6 @@
    </property>
   </action>
   <action name="actionExit">
-   <property name="icon">
-    <iconset resource="../resources/TalipotApp.qrc">
-     <normaloff>:/talipot/app/icons/16/process-stop.png</normaloff>:/talipot/app/icons/16/process-stop.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Exit</string>
    </property>
@@ -1355,10 +1291,6 @@
   <action name="actionUndo">
    <property name="enabled">
     <bool>false</bool>
-   </property>
-   <property name="icon">
-    <iconset resource="../resources/TalipotApp.qrc">
-     <normaloff>:/talipot/app/icons/16/edit-undo.png</normaloff>:/talipot/app/icons/16/edit-undo.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Undo</string>
@@ -1371,10 +1303,6 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
-   <property name="icon">
-    <iconset resource="../resources/TalipotApp.qrc">
-     <normaloff>:/talipot/app/icons/16/edit-redo.png</normaloff>:/talipot/app/icons/16/edit-redo.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Redo</string>
    </property>
@@ -1385,10 +1313,6 @@
   <action name="actionCut">
    <property name="enabled">
     <bool>false</bool>
-   </property>
-   <property name="icon">
-    <iconset resource="../resources/TalipotApp.qrc">
-     <normaloff>:/talipot/app/icons/16/cut.png</normaloff>:/talipot/app/icons/16/cut.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Cut</string>
@@ -1401,10 +1325,6 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
-   <property name="icon">
-    <iconset resource="../resources/TalipotApp.qrc">
-     <normaloff>:/talipot/app/icons/16/copy.png</normaloff>:/talipot/app/icons/16/copy.png</iconset>
-   </property>
    <property name="text">
     <string>C&amp;opy</string>
    </property>
@@ -1415,10 +1335,6 @@
   <action name="actionPaste">
    <property name="enabled">
     <bool>false</bool>
-   </property>
-   <property name="icon">
-    <iconset resource="../resources/TalipotApp.qrc">
-     <normaloff>:/talipot/app/icons/16/paste.png</normaloff>:/talipot/app/icons/16/paste.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Paste</string>
@@ -1431,10 +1347,6 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
-   <property name="icon">
-    <iconset>
-     <normaloff>:/talipot/gui/icons/i_del.png</normaloff>:/talipot/gui/icons/i_del.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Delete selection</string>
    </property>
@@ -1445,10 +1357,6 @@
   <action name="actionSelect_All">
    <property name="enabled">
     <bool>false</bool>
-   </property>
-   <property name="icon">
-    <iconset resource="../resources/TalipotApp.qrc">
-     <normaloff>:/talipot/app/icons/16/select-all.png</normaloff>:/talipot/app/icons/16/select-all.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Select all</string>
@@ -1461,10 +1369,6 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
-   <property name="icon">
-    <iconset resource="../resources/TalipotApp.qrc">
-     <normaloff>:/talipot/app/icons/16/invert-select.png</normaloff>:/talipot/app/icons/16/invert-select.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Invert selection</string>
    </property>
@@ -1475,10 +1379,6 @@
   <action name="actionCancel_selection">
    <property name="enabled">
     <bool>false</bool>
-   </property>
-   <property name="icon">
-    <iconset resource="../resources/TalipotApp.qrc">
-     <normaloff>:/talipot/app/icons/16/cancel-select.png</normaloff>:/talipot/app/icons/16/cancel-select.png</iconset>
    </property>
    <property name="text">
     <string>Ca&amp;ncel selection</string>
@@ -1491,10 +1391,6 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
-   <property name="icon">
-    <iconset resource="../resources/TalipotApp.qrc">
-     <normaloff>:/talipot/app/icons/16/group.png</normaloff>:/talipot/app/icons/16/group.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Group elements</string>
    </property>
@@ -1506,10 +1402,6 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
-   <property name="icon">
-    <iconset resource="../resources/TalipotApp.qrc">
-     <normaloff>:/talipot/app/icons/22/hierarchy-select.png</normaloff>:/talipot/app/icons/22/hierarchy-select.png</iconset>
-   </property>
    <property name="text">
     <string>Create subgraph &amp;from selection</string>
    </property>
@@ -1518,10 +1410,6 @@
    </property>
   </action>
   <action name="actionPreferences">
-   <property name="icon">
-    <iconset resource="../resources/TalipotApp.qrc">
-     <normaloff>:/talipot/app/icons/16/preferences-other.png</normaloff>:/talipot/app/icons/16/preferences-other.png</iconset>
-   </property>
    <property name="text">
     <string>Pre&amp;ferences...</string>
    </property>
@@ -1532,10 +1420,6 @@
   <action name="actionFull_screen">
    <property name="checkable">
     <bool>true</bool>
-   </property>
-   <property name="icon">
-    <iconset resource="../resources/TalipotApp.qrc">
-     <normaloff>:/talipot/app/icons/16/full-screen.png</normaloff>:/talipot/app/icons/16/full-screen.png</iconset>
    </property>
    <property name="text">
     <string>Full &amp;Screen</string>
@@ -1557,10 +1441,6 @@
    </property>
   </action>
   <action name="actionShowDevelDocumentation">
-   <property name="icon">
-    <iconset resource="../resources/TalipotApp.qrc">
-     <normaloff>:/talipot/app/icons/16/cpp.png</normaloff>:/talipot/app/icons/16/cpp.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Developer HandBook</string>
    </property>
@@ -1569,10 +1449,6 @@
    </property>
   </action>
   <action name="actionShowPythonDocumentation">
-   <property name="icon">
-    <iconset resource="../resources/TalipotApp.qrc">
-     <normaloff>:/talipot/app/icons/16/python.png</normaloff>:/talipot/app/icons/16/python.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Python Documentation</string>
    </property>
@@ -1581,10 +1457,6 @@
    </property>
   </action>
   <action name="actionAbout_us">
-   <property name="icon">
-    <iconset resource="../resources/TalipotApp.qrc">
-     <normaloff>:/talipot/app/icons/16/logger-info.png</normaloff>:/talipot/app/icons/16/logger-info.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;About Talipot</string>
    </property>
@@ -1598,19 +1470,11 @@
    </property>
   </action>
   <action name="actionImport_CSV">
-   <property name="icon">
-    <iconset resource="../resources/TalipotApp.qrc">
-     <normaloff>:/talipot/app/icons/32/spreadsheet.png</normaloff>:/talipot/app/icons/32/spreadsheet.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Import CSV</string>
    </property>
   </action>
   <action name="actionMessages_log">
-   <property name="icon">
-    <iconset resource="../resources/TalipotApp.qrc">
-     <normaloff>:/talipot/app/icons/16/logger-info.png</normaloff>:/talipot/app/icons/16/logger-info.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Message log</string>
    </property>
@@ -1619,10 +1483,6 @@
    </property>
   </action>
   <action name="actionExport">
-   <property name="icon">
-    <iconset>
-     <normaloff>:/talipot/gui/icons/64/document-export.png</normaloff>:/talipot/gui/icons/64/document-export.png</iconset>
-   </property>
    <property name="text">
     <string>Export</string>
    </property>
@@ -1631,10 +1491,6 @@
    </property>
   </action>
   <action name="actionOpen_Project">
-   <property name="icon">
-    <iconset resource="../resources/TalipotApp.qrc">
-     <normaloff>:/talipot/app/icons/16/document-open.png</normaloff>:/talipot/app/icons/16/document-open.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Open</string>
    </property>
@@ -1643,10 +1499,6 @@
    </property>
   </action>
   <action name="actionFind_plugins">
-   <property name="icon">
-    <iconset resource="../resources/TalipotApp.qrc">
-     <normaloff>:/talipot/app/icons/32/magnifying-glass.png</normaloff>:/talipot/app/icons/32/magnifying-glass.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Find algorithms</string>
    </property>
@@ -1655,10 +1507,6 @@
    </property>
   </action>
   <action name="actionSave_graph_to_file">
-   <property name="icon">
-    <iconset resource="../resources/TalipotApp.qrc">
-     <normaloff>:/talipot/app/icons/16/document-save.png</normaloff>:/talipot/app/icons/16/document-save.png</iconset>
-   </property>
    <property name="text">
     <string>Save graph to file</string>
    </property>
@@ -1669,19 +1517,11 @@
    </property>
   </action>
   <action name="actionClone_sub_graph">
-   <property name="icon">
-    <iconset resource="../resources/TalipotApp.qrc">
-     <normaloff>:/talipot/app/icons/22/hierarchy.png</normaloff>:/talipot/app/icons/22/hierarchy.png</iconset>
-   </property>
    <property name="text">
     <string>Create c&amp;lone subgraph</string>
    </property>
   </action>
   <action name="actionNew_graph">
-   <property name="icon">
-    <iconset resource="../resources/TalipotApp.qrc">
-     <normaloff>:/talipot/app/icons/16/document-new.png</normaloff>:/talipot/app/icons/16/document-new.png</iconset>
-   </property>
    <property name="text">
     <string>New &amp;graph</string>
    </property>
@@ -1690,19 +1530,11 @@
    </property>
   </action>
   <action name="action_Close_All">
-   <property name="icon">
-    <iconset>
-     <normaloff>:/talipot/gui/icons/i_del.png</normaloff>:/talipot/gui/icons/i_del.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Close all views</string>
    </property>
   </action>
   <action name="actionColor_scales_management">
-   <property name="icon">
-    <iconset resource="../resources/TalipotApp.qrc">
-     <normaloff>:/talipot/app/icons/16/color-scale.png</normaloff>:/talipot/app/icons/16/color-scale.png</iconset>
-   </property>
    <property name="text">
     <string>Color scales &amp;management</string>
    </property>
@@ -1716,10 +1548,6 @@
    </property>
   </action>
   <action name="actionDelete_from_the_root_graph">
-   <property name="icon">
-    <iconset>
-     <normaloff>:/talipot/gui/icons/i_del.png</normaloff>:/talipot/gui/icons/i_del.png</iconset>
-   </property>
    <property name="text">
     <string>Delete selection from t&amp;he root graph</string>
    </property>
@@ -1751,10 +1579,6 @@
    </property>
   </action>
   <action name="actionPython_IDE">
-   <property name="icon">
-    <iconset resource="../resources/TalipotApp.qrc">
-     <normaloff>:/talipot/app/icons/48/python.png</normaloff>:/talipot/app/icons/48/python.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Python IDE</string>
    </property>
@@ -1763,10 +1587,6 @@
    </property>
   </action>
   <action name="actionShowAPIDocumentation">
-   <property name="icon">
-    <iconset resource="../resources/TalipotApp.qrc">
-     <normaloff>:/talipot/app/icons/16/cpp.png</normaloff>:/talipot/app/icons/16/cpp.png</iconset>
-   </property>
    <property name="text">
     <string>AP&amp;I Documentation</string>
    </property>

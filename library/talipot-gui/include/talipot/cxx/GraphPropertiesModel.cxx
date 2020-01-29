@@ -13,6 +13,8 @@
 
 #include <talipot/Graph.h>
 #include <talipot/TlpQtTools.h>
+#include <talipot/FontIconManager.h>
+#include <talipot/MaterialDesignIcons.h>
 
 namespace tlp {
 
@@ -150,7 +152,7 @@ QVariant GraphPropertiesModel<PROPTYPE>::data(const QModelIndex &index, int role
     }
   } else if (role == Qt::DecorationRole && index.column() == 0 && pi != nullptr &&
              !_graph->existLocalProperty(pi->getName())) {
-    return QIcon(":/talipot/gui/ui/inherited_properties.png");
+    return FontIconManager::icon(MaterialDesignIcons::TransferUp);
   } else if (role == Qt::FontRole) {
     QFont f;
 

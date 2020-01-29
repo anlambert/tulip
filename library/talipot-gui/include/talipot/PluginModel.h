@@ -22,6 +22,8 @@
 #include <talipot/Model.h>
 #include <talipot/TlpQtTools.h>
 #include <talipot/PluginsManager.h>
+#include <talipot/IconicFont.h>
+#include <talipot/FontIconManager.h>
 
 #include <string>
 
@@ -195,8 +197,11 @@ public:
                tlp::PluginsManager::pluginExists(tlp::QStringToTlpString(item->name))) {
       const tlp::Plugin &p =
           tlp::PluginsManager::pluginInformation(tlp::QStringToTlpString(item->name));
-      QIcon icon(tlp::tlpStringToQString(p.icon()));
-      return icon;
+      if (IconicFont::isIconSupported(p.icon())) {
+        return FontIconManager::icon(tlp::tlpStringToQString(p.icon()));
+      } else {
+        return QIcon(tlp::tlpStringToQString(p.icon()));
+      }
     }
 
     return QVariant();

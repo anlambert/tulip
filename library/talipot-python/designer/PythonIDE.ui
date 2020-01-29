@@ -147,18 +147,14 @@
              <property name="text">
               <string>New</string>
              </property>
-             <property name="icon">
-              <iconset resource="../resources/TalipotPython.qrc">
-               <normaloff>:/talipot/python/icons/doc_new.png</normaloff>:/talipot/python/icons/doc_new.png</iconset>
-             </property>
              <property name="iconSize">
               <size>
-               <width>13</width>
-               <height>13</height>
+               <width>24</width>
+               <height>24</height>
               </size>
              </property>
              <property name="toolButtonStyle">
-              <enum>Qt::ToolButtonTextUnderIcon</enum>
+              <enum>Qt::ToolButtonIconOnly</enum>
              </property>
             </widget>
            </item>
@@ -185,18 +181,14 @@
              <property name="text">
               <string>Load</string>
              </property>
-             <property name="icon">
-              <iconset resource="../resources/TalipotPython.qrc">
-               <normaloff>:/talipot/python/icons/doc_import.png</normaloff>:/talipot/python/icons/doc_import.png</iconset>
-             </property>
              <property name="iconSize">
               <size>
-               <width>13</width>
-               <height>13</height>
+               <width>24</width>
+               <height>24</height>
               </size>
              </property>
              <property name="toolButtonStyle">
-              <enum>Qt::ToolButtonTextUnderIcon</enum>
+              <enum>Qt::ToolButtonIconOnly</enum>
              </property>
             </widget>
            </item>
@@ -223,18 +215,14 @@
              <property name="text">
               <string>Save</string>
              </property>
-             <property name="icon">
-              <iconset resource="../resources/TalipotPython.qrc">
-               <normaloff>:/talipot/python/icons/doc_export.png</normaloff>:/talipot/python/icons/doc_export.png</iconset>
-             </property>
              <property name="iconSize">
               <size>
-               <width>13</width>
-               <height>13</height>
+               <width>24</width>
+               <height>24</height>
               </size>
              </property>
              <property name="toolButtonStyle">
-              <enum>Qt::ToolButtonTextUnderIcon</enum>
+              <enum>Qt::ToolButtonIconOnly</enum>
              </property>
             </widget>
            </item>
@@ -374,7 +362,7 @@
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_2">
            <property name="spacing">
-            <number>6</number>
+            <number>3</number>
            </property>
            <property name="leftMargin">
             <number>3</number>
@@ -408,18 +396,14 @@
              <property name="text">
               <string>New</string>
              </property>
-             <property name="icon">
-              <iconset resource="../resources/TalipotPython.qrc">
-               <normaloff>:/talipot/python/icons/doc_plus.png</normaloff>:/talipot/python/icons/doc_plus.png</iconset>
-             </property>
              <property name="iconSize">
               <size>
-               <width>13</width>
-               <height>13</height>
+               <width>24</width>
+               <height>24</height>
               </size>
              </property>
              <property name="toolButtonStyle">
-              <enum>Qt::ToolButtonTextUnderIcon</enum>
+              <enum>Qt::ToolButtonIconOnly</enum>
              </property>
             </widget>
            </item>
@@ -443,18 +427,14 @@
              <property name="text">
               <string>Load</string>
              </property>
-             <property name="icon">
-              <iconset resource="../resources/TalipotPython.qrc">
-               <normaloff>:/talipot/python/icons/doc_import.png</normaloff>:/talipot/python/icons/doc_import.png</iconset>
-             </property>
              <property name="iconSize">
               <size>
-               <width>13</width>
-               <height>13</height>
+               <width>24</width>
+               <height>24</height>
               </size>
              </property>
              <property name="toolButtonStyle">
-              <enum>Qt::ToolButtonTextUnderIcon</enum>
+              <enum>Qt::ToolButtonIconOnly</enum>
              </property>
             </widget>
            </item>
@@ -478,18 +458,14 @@
              <property name="text">
               <string>Save</string>
              </property>
-             <property name="icon">
-              <iconset resource="../resources/TalipotPython.qrc">
-               <normaloff>:/talipot/python/icons/doc_export.png</normaloff>:/talipot/python/icons/doc_export.png</iconset>
-             </property>
              <property name="iconSize">
               <size>
-               <width>13</width>
-               <height>13</height>
+               <width>24</width>
+               <height>24</height>
               </size>
              </property>
              <property name="toolButtonStyle">
-              <enum>Qt::ToolButtonTextUnderIcon</enum>
+              <enum>Qt::ToolButtonIconOnly</enum>
              </property>
             </widget>
            </item>
@@ -591,7 +567,7 @@
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_4">
            <property name="spacing">
-            <number>6</number>
+            <number>3</number>
            </property>
            <property name="leftMargin">
             <number>3</number>
@@ -625,18 +601,14 @@
              <property name="text">
               <string>New</string>
              </property>
-             <property name="icon">
-              <iconset resource="../resources/TalipotPython.qrc">
-               <normaloff>:/talipot/python/icons/doc_plus.png</normaloff>:/talipot/python/icons/doc_plus.png</iconset>
-             </property>
              <property name="iconSize">
               <size>
-               <width>13</width>
-               <height>13</height>
+               <width>24</width>
+               <height>24</height>
               </size>
              </property>
              <property name="toolButtonStyle">
-              <enum>Qt::ToolButtonTextUnderIcon</enum>
+              <enum>Qt::ToolButtonIconOnly</enum>
              </property>
             </widget>
            </item>
@@ -660,18 +632,14 @@
              <property name="text">
               <string>New</string>
              </property>
-             <property name="icon">
-              <iconset resource="../resources/TalipotPython.qrc">
-               <normaloff>:/talipot/python/icons/doc_new.png</normaloff>:/talipot/python/icons/doc_new.png</iconset>
-             </property>
              <property name="iconSize">
               <size>
-               <width>13</width>
-               <height>13</height>
+               <width>24</width>
+               <height>24</height>
               </size>
              </property>
              <property name="toolButtonStyle">
-              <enum>Qt::ToolButtonTextUnderIcon</enum>
+              <enum>Qt::ToolButtonIconOnly</enum>
              </property>
             </widget>
            </item>
@@ -695,18 +663,14 @@
              <property name="text">
               <string>Load</string>
              </property>
-             <property name="icon">
-              <iconset resource="../resources/TalipotPython.qrc">
-               <normaloff>:/talipot/python/icons/doc_import.png</normaloff>:/talipot/python/icons/doc_import.png</iconset>
-             </property>
              <property name="iconSize">
               <size>
-               <width>13</width>
-               <height>13</height>
+               <width>24</width>
+               <height>24</height>
               </size>
              </property>
              <property name="toolButtonStyle">
-              <enum>Qt::ToolButtonTextUnderIcon</enum>
+              <enum>Qt::ToolButtonIconOnly</enum>
              </property>
             </widget>
            </item>
@@ -730,18 +694,14 @@
              <property name="text">
               <string>Save</string>
              </property>
-             <property name="icon">
-              <iconset resource="../resources/TalipotPython.qrc">
-               <normaloff>:/talipot/python/icons/doc_export.png</normaloff>:/talipot/python/icons/doc_export.png</iconset>
-             </property>
              <property name="iconSize">
               <size>
-               <width>13</width>
-               <height>13</height>
+               <width>24</width>
+               <height>24</height>
               </size>
              </property>
              <property name="toolButtonStyle">
-              <enum>Qt::ToolButtonTextUnderIcon</enum>
+              <enum>Qt::ToolButtonIconOnly</enum>
              </property>
             </widget>
            </item>
@@ -898,16 +858,12 @@
           <string>Run script (Ctrl + Return)</string>
          </property>
          <property name="text">
-          <string>...</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../resources/TalipotPython.qrc">
-           <normaloff>:/talipot/python/icons/playback_play.png</normaloff>:/talipot/python/icons/playback_play.png</iconset>
+          <string/>
          </property>
          <property name="iconSize">
           <size>
-           <width>14</width>
-           <height>14</height>
+           <width>19</width>
+           <height>19</height>
           </size>
          </property>
         </widget>
@@ -927,16 +883,12 @@
           <string>Pause script</string>
          </property>
          <property name="text">
-          <string>...</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../resources/TalipotPython.qrc">
-           <normaloff>:/talipot/python/icons/playback_pause.png</normaloff>:/talipot/python/icons/playback_pause.png</iconset>
+          <string/>
          </property>
          <property name="iconSize">
           <size>
-           <width>14</width>
-           <height>14</height>
+           <width>19</width>
+           <height>19</height>
           </size>
          </property>
         </widget>
@@ -956,32 +908,44 @@
           <string>Stop script</string>
          </property>
          <property name="text">
-          <string>...</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../resources/TalipotPython.qrc">
-           <normaloff>:/talipot/python/icons/playback_stop.png</normaloff>:/talipot/python/icons/playback_stop.png</iconset>
+          <string/>
          </property>
          <property name="iconSize">
           <size>
-           <width>14</width>
-           <height>14</height>
+           <width>19</width>
+           <height>19</height>
           </size>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="useUndoCB">
+        <widget class="QToolButton" name="useUndoCB">
+         <property name="maximumSize">
+          <size>
+           <width>19</width>
+           <height>19</height>
+          </size>
+         </property>
          <property name="toolTip">
-          <string>If checked, current graph state will be saved before the script execution
+          <string>If checked (default), current graph state will be saved before the script execution
 and will be restored automatically if the script fails, or manually
 if the script succeeds by clicking on the 'Undo' button.
+
 If unchecked, every modification performed by the script on the graph
 can not be undone but performance of the script execution will be better
 (in particular when dealing with a large graph).</string>
          </property>
          <property name="text">
-          <string>Allow undo</string>
+          <string/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>19</width>
+           <height>19</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
          </property>
          <property name="checked">
           <bool>true</bool>
@@ -1008,12 +972,27 @@ can not be undone but performance of the script execution will be better
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="anchoredCB">
-         <property name="toolTip">
-          <string>Anchor the Python IDE window to the main Talipot window</string>
+        <widget class="QToolButton" name="anchoredCB">
+         <property name="maximumSize">
+          <size>
+           <width>19</width>
+           <height>19</height>
+          </size>
          </property>
          <property name="text">
-          <string>anchored</string>
+          <string/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>19</width>
+           <height>19</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -1039,16 +1018,12 @@ can not be undone but performance of the script execution will be better
           <string>Decrease the size of the font of the python code editors</string>
          </property>
          <property name="text">
-          <string>...</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../resources/TalipotPython.qrc">
-           <normaloff>:/talipot/python/icons/round_minus.png</normaloff>:/talipot/python/icons/round_minus.png</iconset>
+          <string/>
          </property>
          <property name="iconSize">
           <size>
-           <width>14</width>
-           <height>14</height>
+           <width>19</width>
+           <height>19</height>
           </size>
          </property>
         </widget>
@@ -1065,16 +1040,12 @@ can not be undone but performance of the script execution will be better
           <string>Increase the size of the font of the python code editors</string>
          </property>
          <property name="text">
-          <string>...</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../resources/TalipotPython.qrc">
-           <normaloff>:/talipot/python/icons/round_plus.png</normaloff>:/talipot/python/icons/round_plus.png</iconset>
+          <string/>
          </property>
          <property name="iconSize">
           <size>
-           <width>14</width>
-           <height>14</height>
+           <width>19</width>
+           <height>19</height>
           </size>
          </property>
         </widget>
@@ -1099,22 +1070,58 @@ can not be undone but performance of the script execution will be better
         <number>0</number>
        </property>
        <item>
-        <widget class="QPushButton" name="registerPluginButton">
+        <widget class="QToolButton" name="registerPluginButton">
          <property name="enabled">
           <bool>false</bool>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>19</width>
+           <height>19</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Register or update plugin in database</string>
+         </property>
          <property name="text">
-          <string>Register Plugin</string>
+          <string/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>19</width>
+           <height>19</height>
+          </size>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="removePluginButton">
+        <widget class="QToolButton" name="removePluginButton">
          <property name="enabled">
           <bool>false</bool>
          </property>
+         <property name="maximumSize">
+          <size>
+           <width>19</width>
+           <height>19</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Remove plugin from database</string>
+         </property>
          <property name="text">
-          <string>Remove Plugin</string>
+          <string/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>19</width>
+           <height>19</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -1132,12 +1139,27 @@ can not be undone but performance of the script execution will be better
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="anchoredCB_2">
-         <property name="toolTip">
-          <string>Anchor the Python IDE window to the main Tulip window</string>
+        <widget class="QToolButton" name="anchoredCB_2">
+         <property name="maximumSize">
+          <size>
+           <width>19</width>
+           <height>19</height>
+          </size>
          </property>
          <property name="text">
-          <string>anchored</string>
+          <string/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>19</width>
+           <height>19</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -1163,17 +1185,16 @@ can not be undone but performance of the script execution will be better
           <bool>false</bool>
          </property>
          <property name="text">
-          <string>...</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../resources/TalipotPython.qrc">
-           <normaloff>:/talipot/python/icons/round_minus.png</normaloff>:/talipot/python/icons/round_minus.png</iconset>
+          <string/>
          </property>
          <property name="iconSize">
           <size>
-           <width>14</width>
-           <height>14</height>
+           <width>19</width>
+           <height>19</height>
           </size>
+         </property>
+         <property name="checkable">
+          <bool>false</bool>
          </property>
          <property name="autoRaise">
           <bool>false</bool>
@@ -1189,16 +1210,12 @@ can not be undone but performance of the script execution will be better
           </size>
          </property>
          <property name="text">
-          <string>...</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../resources/TalipotPython.qrc">
-           <normaloff>:/talipot/python/icons/round_plus.png</normaloff>:/talipot/python/icons/round_plus.png</iconset>
+          <string/>
          </property>
          <property name="iconSize">
           <size>
-           <width>14</width>
-           <height>14</height>
+           <width>19</width>
+           <height>19</height>
           </size>
          </property>
         </widget>
@@ -1239,12 +1256,27 @@ can not be undone but performance of the script execution will be better
         </spacer>
        </item>
        <item>
-        <widget class="QCheckBox" name="anchoredCB_3">
-         <property name="toolTip">
-          <string>Anchor the Python IDE window to the main Tulip window</string>
+        <widget class="QToolButton" name="anchoredCB_3">
+         <property name="maximumSize">
+          <size>
+           <width>19</width>
+           <height>19</height>
+          </size>
          </property>
          <property name="text">
-          <string>anchored</string>
+          <string/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>19</width>
+           <height>19</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -1264,16 +1296,12 @@ can not be undone but performance of the script execution will be better
           </size>
          </property>
          <property name="text">
-          <string>...</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../resources/TalipotPython.qrc">
-           <normaloff>:/talipot/python/icons/round_minus.png</normaloff>:/talipot/python/icons/round_minus.png</iconset>
+          <string/>
          </property>
          <property name="iconSize">
           <size>
-           <width>14</width>
-           <height>14</height>
+           <width>19</width>
+           <height>19</height>
           </size>
          </property>
         </widget>
@@ -1287,16 +1315,12 @@ can not be undone but performance of the script execution will be better
           </size>
          </property>
          <property name="text">
-          <string>...</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../resources/TalipotPython.qrc">
-           <normaloff>:/talipot/python/icons/round_plus.png</normaloff>:/talipot/python/icons/round_plus.png</iconset>
+          <string/>
          </property>
          <property name="iconSize">
           <size>
-           <width>14</width>
-           <height>14</height>
+           <width>19</width>
+           <height>19</height>
           </size>
          </property>
         </widget>
@@ -1327,8 +1351,6 @@ can not be undone but performance of the script execution will be better
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../resources/TalipotPython.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
