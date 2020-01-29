@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -48,21 +48,21 @@ static const char *paramHelp[] = {
     "If true, a subgraph corresponding to the grid used for routing edges will be added.",
 
     // 3D_layout
-    "If true, it is assumed that the input layout is in 3D and 3D edge bundling will be performed.",
+    "If true, it is assumed that the input layout is in 3D and 3D edge bundling "
+    "will be performed. Warning: the generated grid graph will be much bigger "
+    "and the algorithm execution time will be slower compared to the 2D case.",
 
     // sphere_layout
-    "If true, it is assumed that nodes have originally been laid out on a sphere surface."
-    "Edges will be routed along the sphere surface. The 3D_layout parameter needs also to be set "
-    "to true"
-    " for that feature to work.",
+    "If true, it is assumed that nodes have originally been laid out on a sphere "
+    "surface. Edges will be routed along the sphere surface.",
 
     // long_edges
     "This parameter defines how long edges will be routed. A value less than 1.0 "
     "will promote paths outside dense regions of the input graph drawing.",
 
     // split_ratio
-    "This parameter defines the granularity of the grid that will be generated for routing edges. "
-    "The higher its value, the more precise the grid is.",
+    "This parameter defines the granularity of the grid that will be generated for "
+    "routing edges. The higher its value, the more precise the grid is.",
 
     // iterations
     "This parameter defines the number of iterations of the edge bundling process. "
@@ -70,8 +70,7 @@ static const char *paramHelp[] = {
 
     // max_thread
     "This parameter defines the number of threads to use for speeding up the edge bundling "
-    "process. "
-    "A value of 0 will use as much threads as processors on the host machine.",
+    "process. A value of 0 will use as much threads as processors on the host machine.",
 
     // edge_node_overlap
     "If true, edges can be routed on original nodes."};
@@ -227,12 +226,23 @@ bool EdgeBundling::run() {
     dataSet->get("size", size);
   }
 
+  if (sphereLayout) {
+    layout3D = true;
+  }
+
   if (!layout3D) {
-    // avoid potential crash
-    // when the layout is in 3D
-    auto lMin = layout->getMin();
-    auto lMax = layout->getMax();
-    layout3D = (lMin.z() != lMax.z()) && (lMin.y() != lMax.y()) && (lMin.x() != lMax.x());
+    // forbid edge bundling execution if the input layout is in 3D
+    // and it has not been explicitely asked to use the 3D version
+    // of the algorithm.
+    auto lMin = layout->getMin(graph);
+    auto lMax = layout->getMax(graph);
+    if (lMin.z() != lMax.z()) {
+      pluginProgress->setError("Input layout is in 3D while the default behavior "
+                               "of the algorithm is to consider the input layout in 2D. "
+                               "You can set the \"3D_layout\" parameter of the algorithm to "
+                               "true to explicitely use 3D edge bundling.");
+      return false;
+    }
   }
 
   string err;
