@@ -111,7 +111,7 @@ cd quazip-0.8.1
 md build && cd build
 cmake -G "%CMAKE_VS_GENERATOR%" -DCMAKE_INSTALL_PREFIX="C:/talipot_dependencies" -DCMAKE_PREFIX_PATH="%QT5_DIR%" -DZLIB_INCLUDE_DIRS="%QT5_DIR%/include/QtZlib" ..
 if %errorlevel% neq 0 exit /b %errorlevel%
-msbuild INSTALL.vcxproj /m /p:Configuration=Release %CLCACHE_MSBUILD_CONF%
+msbuild INSTALL.vcxproj /clp:ErrorsOnly /p:Configuration=Release %CLCACHE_MSBUILD_CONF%
 if %errorlevel% neq 0 exit /b %errorlevel%
 goto talipot_build
 
