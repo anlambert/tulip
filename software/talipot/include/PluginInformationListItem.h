@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -15,9 +15,8 @@
 #define PLUGIN_INFORMATION_LIST_ITEM_H
 
 #include <QWidget>
-#include <talipot/PluginManager.h>
+#include <talipot/Plugin.h>
 
-class QNetworkReply;
 namespace Ui {
 class PluginInformationListItemData;
 }
@@ -26,24 +25,17 @@ class PluginInformationListItem : public QWidget {
   Q_OBJECT
   Ui::PluginInformationListItemData *_ui;
 
-  tlp::PluginInformation _info;
-
 public:
-  explicit PluginInformationListItem(tlp::PluginInformation, QWidget *parent = nullptr);
+  explicit PluginInformationListItem(const tlp::Plugin &plugin, QWidget *parent = nullptr);
   ~PluginInformationListItem() override;
   QWidget *description();
 
 public slots:
   void focusOut();
   void focusIn();
-  void install();
-  void remove();
 
 signals:
   void focused();
-
-protected slots:
-  void downloadProgress(qint64, qint64);
 
 protected:
   void enterEvent(QEvent *) override;

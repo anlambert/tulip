@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -25,8 +25,8 @@
 #include <talipot/EdgeExtremityGlyph.h>
 #include <talipot/ImportModule.h>
 #include <talipot/ExportModule.h>
-#include <talipot/PluginManager.h>
 #include <talipot/Settings.h>
+#include <talipot/PluginsManager.h>
 
 #include "ui_PluginsCenter.h"
 
@@ -38,11 +38,13 @@ static const int VIEWS_ROW = 4;
 static const int INTERACTORS_ROW = 5;
 static const int ERRORS_ROW = 7;
 
+using namespace std;
 using namespace tlp;
 
 PluginsCenter::PluginsCenter(QWidget *parent)
     : QWidget(parent), _ui(new Ui::PluginsCenterData()), _currentItem(nullptr) {
   _ui->setupUi(this);
+  _ui->pluginsSideList->setCurrentRow(ALL_ROW);
 }
 
 PluginsCenter::~PluginsCenter() {
@@ -124,9 +126,8 @@ void PluginsCenter::refreshFilter() {
   QVBoxLayout *lyt = new QVBoxLayout();
 
   for (const QString &cf : _categoryFilters) {
-    for (const PluginInformation &info : PluginManager::listPlugins(
-             PluginManager::Remote | PluginManager::Local, _nameFilter, cf)) {
-      PluginInformationListItem *item = new PluginInformationListItem(info);
+    for (const Plugin &plugin : listPlugins(_nameFilter, cf)) {
+      PluginInformationListItem *item = new PluginInformationListItem(plugin);
       connect(item, SIGNAL(focused()), this, SLOT(itemFocused()));
       lyt->addWidget(item);
     }
@@ -182,4 +183,20 @@ void PluginsCenter::itemFocused() {
 
   _currentItem = static_cast<PluginInformationListItem *>(sender());
   _currentItem->focusIn();
+}
+
+vector<PluginsCenter::PluginRef> PluginsCenter::listPlugins(const QString &nameFilter,
+                                                            const QString &categoryFilter) {
+  vector<PluginsCenter::PluginRef> result;
+
+  for (const string &pluginName : PluginsManager::availablePlugins()) {
+    const Plugin &plugin = PluginsManager::pluginInformation(pluginName);
+
+    if (QString(plugin.category().c_str()).contains(categoryFilter) &&
+        QString(plugin.name().c_str()).contains(nameFilter, Qt::CaseInsensitive)) {
+      result.push_back(plugin);
+    }
+  }
+
+  return result;
 }

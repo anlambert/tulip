@@ -29,7 +29,6 @@ SET(SRCS
   NodeLinkDiagramComponent.cpp
   NodeLinkDiagramComponentInteractor.cpp
   ShapeDialog.cpp
-  PluginManager.cpp
   PropertyCreationDialog.cpp
   QtGlSceneZoomAndPanAnimator.cpp
   QuaZIPFacade.cpp

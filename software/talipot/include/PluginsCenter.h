@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -14,11 +14,15 @@
 #ifndef PLUGINS_CENTER_H
 #define PLUGINS_CENTER_H
 
+#include <talipot/Plugin.h>
 #include <talipot/Release.h>
 
 #include <QWidget>
 #include <QMap>
 #include <QNetworkReply>
+
+#include <functional>
+#include <vector>
 
 namespace Ui {
 class PluginsCenterData;
@@ -61,6 +65,10 @@ public slots:
 protected slots:
   void sideListRowChanged(int i);
   void itemFocused();
+
+private:
+  typedef std::reference_wrapper<const tlp::Plugin> PluginRef;
+  std::vector<PluginRef> listPlugins(const QString &nameFilter, const QString &categoryFilter);
 };
 
 #endif // PLUGINS_CENTER_H

@@ -100,13 +100,12 @@ TLP_QT_SCOPE QString localPluginsPath();
  @brief Sets up environment when creating an executable using Tulip libraries
  This method performs basic operations when starting a software using Tulip:
  @list
- @li It initializes the talipot library
+ @li it initializes the talipot library
  @li it checks plugins to be discarded and uninstalls them
- @li It loads plugins from the application path
+ @li it loads plugins from the application path
  @endlist
  */
-extern TLP_QT_SCOPE void initTalipotSoftware(PluginLoader *loader = nullptr,
-                                             bool removeDiscardedPlugins = false);
+extern TLP_QT_SCOPE void initTalipotSoftware(PluginLoader *loader = nullptr);
 
 /**
  * @brief redirect tlp::debug() to qDebug()

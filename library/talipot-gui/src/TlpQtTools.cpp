@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -47,7 +47,6 @@
 #include <talipot/SystemDefinition.h>
 #include <talipot/TlpTools.h>
 #include <talipot/PluginLibraryLoader.h>
-#include <talipot/PluginManager.h>
 #include <talipot/GlyphManager.h>
 #include <talipot/EdgeExtremityGlyphManager.h>
 #include <talipot/OpenGlConfigManager.h>
@@ -264,16 +263,11 @@ public:
   }
 };
 
-void initTalipotSoftware(tlp::PluginLoader *loader, bool removeDiscardedPlugins) {
+void initTalipotSoftware(tlp::PluginLoader *loader) {
 
   QLocale::setDefault(QLocale(QLocale::English));
   Settings::instance().applyProxySettings();
   Settings::instance().initSeedOfRandomSequence();
-
-  if (Settings::instance().isFirstTalipotMMRun()) {
-    Settings::instance().addRemoteLocation(PluginManager::STABLE_LOCATION);
-    Settings::instance().addRemoteLocation(PluginManager::TESTING_LOCATION);
-  }
 
   QDir::home().mkpath(tlp::localPluginsPath());
   QLocale::setDefault(QLocale(QLocale::English));
@@ -282,15 +276,6 @@ void initTalipotSoftware(tlp::PluginLoader *loader, bool removeDiscardedPlugins)
   QApplication::addLibraryPath(QApplication::applicationDirPath() + "/../");
   QApplication::addLibraryPath(QApplication::applicationDirPath() + "/../lib/");
 #endif
-
-  if (removeDiscardedPlugins) {
-    for (const QString &plugin : tlp::PluginManager::markedForRemoval()) {
-      QFile f(plugin);
-      f.remove();
-      tlp::PluginManager::unmarkForRemoval(
-          plugin); // whether or not the removal succeeded, do not try again
-    }
-  }
 
   tlp::initTalipotLib();
   initQTypeSerializers();
