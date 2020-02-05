@@ -9,19 +9,20 @@ IF(UNIX)
 ENDIF(UNIX)
 
 SET(LayoutUtils_SRCS
-  DatasetTools.cpp
-  OrientableCoord.cpp
-  OrientableLayout.cpp
-  OrientableSize.cpp
-  OrientableSizeProxy.cpp
-  Orientation.cpp
+    DatasetTools.cpp
+    OrientableCoord.cpp
+    OrientableLayout.cpp
+    OrientableSize.cpp
+    OrientableSizeProxy.cpp
+    Orientation.cpp
 )
 
 IF(NOT EMSCRIPTEN)
-SET(LayoutUtilsLibraryName LayoutUtils)
-ADD_LIBRARY(${LayoutUtilsLibraryName} STATIC ${LayoutUtils_SRCS})
+  SET(LayoutUtilsLibraryName LayoutUtils)
+  ADD_LIBRARY(${LayoutUtilsLibraryName} STATIC ${LayoutUtils_SRCS})
+  ADD_DEPENDENCIES(${LayoutUtilsLibraryName} ${LibTalipotCoreName})
 ELSE(NOT EMSCRIPTEN)
-SET(LayoutUtilsLibraryName "")
+  SET(LayoutUtilsLibraryName "")
 ENDIF(NOT EMSCRIPTEN)
 
 ##----------------------------------------------------------------------------------------------------------------------------
