@@ -11,11 +11,13 @@
  *
  */
 
-#include "HeaderFrame.h"
+#include <talipot/HeaderFrame.h>
 
 #include <QSplitter>
 
 #include "ui_HeaderFrame.h"
+
+using namespace tlp;
 
 void switchToLabel(Ui::HeaderFrame *ui, bool f = true) {
   ui->titleLabel->setVisible(f);

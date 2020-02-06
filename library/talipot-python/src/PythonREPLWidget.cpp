@@ -12,39 +12,41 @@
  */
 
 #include <talipot/PythonInterpreter.h>
-
-#include "PythonPanel.h"
-#include "ui_PythonPanel.h"
-
+#include <talipot/PythonREPLWidget.h>
 #include <talipot/GraphHierarchiesModel.h>
 #include <talipot/Mimes.h>
 #include <talipot/MetaTypes.h>
 
+#include "ui_PythonREPLWidget.h"
+
+using namespace tlp;
+
 static const QString setCurrentGraphFunction = "graph = None\n"
                                                "def setCurrentGraph(g):\n"
-                                               "	global graph\n"
-                                               "	graph = g\n";
+                                               "	  global graph\n"
+                                               "	  graph = g\n";
 
-PythonPanel::PythonPanel(QWidget *parent) : QWidget(parent), _ui(new Ui::PythonPanel) {
+PythonREPLWidget::PythonREPLWidget(QWidget *parent)
+    : QWidget(parent), _ui(new Ui::PythonREPLWidget) {
   _ui->setupUi(this);
   connect(_ui->graphCombo, &TreeViewComboBox::currentItemChanged, this,
-          &PythonPanel::graphComboIndexChanged);
+          &PythonREPLWidget::graphComboIndexChanged);
   tlp::PythonInterpreter::instance().runString(setCurrentGraphFunction);
   connect(_ui->pythonShellWidget, &tlp::PythonShellWidget::beginCurrentLinesExecution, this,
-          &PythonPanel::beginCurrentLinesExecution);
+          &PythonREPLWidget::beginCurrentLinesExecution);
   connect(_ui->pythonShellWidget, &tlp::PythonShellWidget::endCurrentLinesExecution, this,
-          &PythonPanel::endCurrentLinesExecution);
+          &PythonREPLWidget::endCurrentLinesExecution);
 }
 
-PythonPanel::~PythonPanel() {
+PythonREPLWidget::~PythonREPLWidget() {
   delete _ui;
 }
 
-void PythonPanel::setModel(tlp::GraphHierarchiesModel *model) {
+void PythonREPLWidget::setModel(tlp::GraphHierarchiesModel *model) {
   _ui->graphCombo->setModel(model);
 }
 
-void PythonPanel::graphComboIndexChanged() {
+void PythonREPLWidget::graphComboIndexChanged() {
   tlp::Graph *g = _ui->graphCombo->model()
                       ->data(_ui->graphCombo->selectedIndex(), tlp::Model::GraphRole)
                       .value<tlp::Graph *>();
@@ -52,7 +54,7 @@ void PythonPanel::graphComboIndexChanged() {
   _ui->pythonShellWidget->getAutoCompletionDb()->setGraph(g);
 }
 
-void PythonPanel::dragEnterEvent(QDragEnterEvent *dragEv) {
+void PythonREPLWidget::dragEnterEvent(QDragEnterEvent *dragEv) {
   const tlp::GraphMimeType *mimeType = dynamic_cast<const tlp::GraphMimeType *>(dragEv->mimeData());
 
   if (mimeType != nullptr) {
@@ -60,7 +62,7 @@ void PythonPanel::dragEnterEvent(QDragEnterEvent *dragEv) {
   }
 }
 
-void PythonPanel::dropEvent(QDropEvent *dropEv) {
+void PythonREPLWidget::dropEvent(QDropEvent *dropEv) {
   const tlp::GraphMimeType *mimeType = dynamic_cast<const tlp::GraphMimeType *>(dropEv->mimeData());
 
   if (mimeType != nullptr) {
@@ -77,7 +79,7 @@ void PythonPanel::dropEvent(QDropEvent *dropEv) {
   }
 }
 
-void PythonPanel::beginCurrentLinesExecution() {
+void PythonREPLWidget::beginCurrentLinesExecution() {
   tlp::Graph *g = _ui->graphCombo->model()
                       ->data(_ui->graphCombo->selectedIndex(), tlp::Model::GraphRole)
                       .value<tlp::Graph *>();
@@ -88,10 +90,14 @@ void PythonPanel::beginCurrentLinesExecution() {
   }
 }
 
-void PythonPanel::endCurrentLinesExecution() {
+void PythonREPLWidget::endCurrentLinesExecution() {
   tlp::Graph *g = _ui->graphCombo->model()
                       ->data(_ui->graphCombo->selectedIndex(), tlp::Model::GraphRole)
                       .value<tlp::Graph *>();
   // undo/redo management
   g->popIfNoUpdates();
+}
+
+PythonShellWidget *PythonREPLWidget::getEditor() {
+  return _ui->pythonShellWidget;
 }

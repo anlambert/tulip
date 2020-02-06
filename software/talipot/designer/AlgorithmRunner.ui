@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>710</height>
+    <height>485</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -33,7 +33,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="HeaderFrame" name="header" native="true">
+    <widget class="tlp::HeaderFrame" name="header" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
        <horstretch>0</horstretch>
@@ -42,6 +42,9 @@
      </property>
      <property name="title" stdset="0">
       <string>Algorithms</string>
+     </property>
+     <property name="expandable" stdset="0">
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -84,7 +87,7 @@
         <x>0</x>
         <y>0</y>
         <width>400</width>
-        <height>678</height>
+        <height>428</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -133,13 +136,38 @@
      </widget>
     </widget>
    </item>
+   <item>
+    <widget class="QFrame" name="frame">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <property name="bottomFrame" stdset="0">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>HeaderFrame</class>
+   <class>tlp::HeaderFrame</class>
    <extends>QWidget</extends>
-   <header>HeaderFrame.h</header>
+   <header location="global">talipot/HeaderFrame.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

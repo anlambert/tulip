@@ -16,7 +16,6 @@
 #include <talipot/PythonIDE.h>
 #include <talipot/PythonCodeEditor.h>
 #include <talipot/SimplePluginProgressWidget.h>
-#include "PythonPanel.h"
 
 #include "TalipotMainWindow.h"
 
@@ -176,6 +175,11 @@ TalipotMainWindow::TalipotMainWindow()
   Q_INIT_RESOURCE(TalipotApp);
   _ui->setupUi(this);
 
+  connect(_ui->graphsButton, &QAbstractButton::clicked, this,
+          &TalipotMainWindow::graphsButtonClicked);
+  connect(_ui->algorithmsButton, &QAbstractButton::clicked, this,
+          &TalipotMainWindow::algorithmsButtonClicked);
+
   _title = "Talipot ";
   QString iconPath;
 
@@ -190,18 +194,13 @@ TalipotMainWindow::TalipotMainWindow()
 
   _ui->developButton->setIcon(
       FontIconManager::icon(MaterialDesignIcons::LanguagePython, iconColor));
-  _ui->workspaceButton->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::TelevisionGuide, iconColor));
+  _ui->graphsButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Graph, iconColor));
+  _ui->algorithmsButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Cogs, iconColor));
   _ui->importButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Import, iconColor));
   _ui->exportButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Export, iconColor));
-  _ui->csvImportButton->setIcon(FontIconManager::icon(MaterialDesignIcons::TableLarge, iconColor));
   _ui->undoButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Reply, iconColor));
   _ui->redoButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Share, iconColor));
-  _ui->addPanelButton->setIcon(FontIconManager::icon(MaterialDesignIcons::PlusBox, iconColor));
-  _ui->exposeModeButton->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::ViewGridOutline, iconColor));
   _ui->searchButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Magnify, iconColor));
-  _ui->pythonButton->setIcon(FontIconManager::icon(MaterialDesignIcons::LanguagePython, iconColor));
 
   _ui->actionNewProject->setIcon(getFileNewIcon());
   _ui->actionOpen_Project->setIcon(
@@ -239,7 +238,10 @@ TalipotMainWindow::TalipotMainWindow()
       FontIconManager::icon(MaterialDesignIcons::WindowClose, menuIconColor));
   _ui->actionMessages_log->setIcon(
       FontIconManager::icon(MaterialDesignIcons::Information, menuIconColor));
-  _ui->actionFind_plugins->setIcon(
+  _ui->actionGraphs->setIcon(FontIconManager::icon(MaterialDesignIcons::Graph, menuIconColor));
+  _ui->actionAlgorithms->setIcon(FontIconManager::icon(MaterialDesignIcons::Cogs, menuIconColor));
+  _ui->actionSearch->setIcon(FontIconManager::icon(MaterialDesignIcons::Magnify, menuIconColor));
+  _ui->actionAlgorithms->setIcon(
       FontIconManager::icon(MaterialDesignIcons::Magnify, menuIconColor));
   _ui->actionAbout_us->setIcon(
       FontIconManager::icon(MaterialDesignIcons::InformationOutline, menuIconColor));
@@ -279,21 +281,12 @@ TalipotMainWindow::TalipotMainWindow()
   QVBoxLayout *dialogLayout = new QVBoxLayout();
   dialogLayout->addWidget(_pythonIDE);
   dialogLayout->setContentsMargins(0, 0, 0, 0);
-  _pythonIDEDialog = new PythonIDEDialog(nullptr, Qt::Window);
-  _pythonIDEDialog->setWindowIcon(windowIcon());
-  _pythonIDEDialog->setLayout(dialogLayout);
-  _pythonIDEDialog->resize(800, 600);
-  _pythonIDEDialog->setWindowTitle("Talipot Python IDE");
 
   currentGraphChanged(nullptr);
   // set win/Mac dependent tooltips with ctrl shortcut
-  setToolTipWithCtrlShortcut(_ui->exposeModeButton, "Toggle the Expose mode", "E");
-  setToolTipWithCtrlShortcut(_ui->searchButton, "Show/hide the graph's elements search panel", "F");
-  setToolTipWithCtrlShortcut(_ui->pythonButton,
-                             "Show/hide the Python interpreter (Read Eval Print Loop) panel",
-                             "Shift+P");
-  setToolTipWithCtrlShortcut(_ui->previousPageButton, "Show previous panel", "Shift+Left");
-  setToolTipWithCtrlShortcut(_ui->nextPageButton, "Show next panel", "Shift+Right");
+
+  setToolTipWithCtrlShortcut(_ui->searchButton, "Show/hide the graph's elements search interface",
+                             "F");
   setToolTipWithCtrlShortcut(_ui->actionNewProject, "Start a new empty Talipot project", "Shift+N");
   setToolTipWithCtrlShortcut(
       _ui->actionSave_Project,
@@ -339,13 +332,14 @@ TalipotMainWindow::TalipotMainWindow()
   setToolTipWithCtrlShortcut(_ui->actionPython_IDE, "Show the Python IDE", "Alt+P");
   setToolTipWithCtrlShortcut(_ui->actionExport, "Show the Graph exporting wizard", "E");
   setToolTipWithCtrlShortcut(_ui->actionOpen_Project, "Open a graph file", "O");
-  setToolTipWithCtrlShortcut(_ui->actionFind_plugins,
-                             "Allow to find algorithms in typing text in a search field", "Alt+H");
+  setToolTipWithCtrlShortcut(_ui->actionGraphs, "Browse graphs hierarchy", "Alt+G");
+  setToolTipWithCtrlShortcut(_ui->actionAlgorithms, "Browse and find algorithms", "Alt+H");
+  setToolTipWithCtrlShortcut(_ui->actionSearch, "Search in graph properties", "F");
   setToolTipWithCtrlShortcut(_ui->actionNew_graph, "Create a new empty graph", "N");
   // set portable tooltips
   _ui->undoButton->setToolTip("Undo the latest update of the current graph");
   _ui->redoButton->setToolTip("Redo the latest undone update of the current graph");
-  _ui->workspaceButton->setToolTip("Display the existing graph views");
+  _ui->graphsButton->setToolTip("Display the existing graph views");
   _ui->developButton->setToolTip(
       "Display the Talipot Python IDE for developing scripts and plugins to "
       "execute on the loaded graphs");
@@ -354,19 +348,9 @@ TalipotMainWindow::TalipotMainWindow()
   _ui->loggerMessageWarning->setToolTip(_ui->loggerMessageInfo->toolTip());
   _ui->loggerMessageError->setToolTip(_ui->loggerMessageInfo->toolTip());
   _ui->exportButton->setToolTip("Display the Graph exporting wizard");
-  _ui->csvImportButton->setToolTip("Import data in the current graph using a csv formatted file");
   _ui->importButton->setToolTip("Display the Graph importing wizard");
   _ui->sidebarButton->setToolTip("Hide Sidebar");
   _ui->menubarButton->setToolTip("Hide Menubar");
-  _ui->addPanelButton->setToolTip("Open a new visualization panel on the current graph");
-  _ui->singleModeButton->setToolTip("Switch to 1 panel mode");
-  _ui->splitModeButton->setToolTip("Switch to 2 panels mode");
-  _ui->splitHorizontalModeButton->setToolTip("Switch to 2 panels mode");
-  _ui->split3ModeButton->setToolTip("Switch to 2-top 1-bottom panels mode");
-  _ui->split32ModeButton->setToolTip("Switch to 1-left 2-right panels mode");
-  _ui->split33ModeButton->setToolTip("Switch to 2-left 1-right panels mode");
-  _ui->gridModeButton->setToolTip("Switch to 4 panels mode");
-  _ui->sixModeButton->setToolTip("Switch to 6 panels mode");
   _ui->menuDelete->setToolTip("Delete elements of the current graph");
   _ui->menuOpen_recent_file->setToolTip(
       "Choose a file to open among the recently opened/saved graphs or projects");
@@ -375,7 +359,7 @@ TalipotMainWindow::TalipotMainWindow()
   _ui->actionShow_Menubar->setToolTip("Show/Hide the main menu bar [Ctrl+Shift+M]");
   _ui->actionAbout_us->setToolTip("Display the 'About Talipot' information dialog [F1]");
   _ui->actionPlugins_Center->setToolTip("Display the Plugin center");
-  _ui->actionImport_CSV->setToolTip(_ui->csvImportButton->toolTip());
+  _ui->actionImport_CSV->setToolTip("Import data in the current graph using a csv formatted file");
   _ui->actionSave_graph_to_file->setToolTip("Write the current graph into a file");
   _ui->actionCreate_empty_sub_graph->setToolTip("Create an empty subgraph of the current graph");
   _ui->actionClone_sub_graph->setToolTip(
@@ -393,34 +377,8 @@ TalipotMainWindow::TalipotMainWindow()
   _ui->actionSelect_All_Nodes->setToolTip("Select all nodes of the current graph");
   _ui->actionSelect_All_Edges->setToolTip("Select all edges of the current graph");
 
-  _ui->singleModeButton->setEnabled(false);
-  _ui->singleModeButton->hide();
-  _ui->workspace->setSingleModeSwitch(_ui->singleModeButton);
   _ui->workspace->setFocusedPanelHighlighting(true);
-  _ui->splitModeButton->setEnabled(false);
-  _ui->splitModeButton->hide();
-  _ui->workspace->setSplitModeSwitch(_ui->splitModeButton);
-  _ui->splitHorizontalModeButton->setEnabled(false);
-  _ui->splitHorizontalModeButton->hide();
-  _ui->workspace->setSplitHorizontalModeSwitch(_ui->splitHorizontalModeButton);
-  _ui->split3ModeButton->setEnabled(false);
-  _ui->split3ModeButton->hide();
-  _ui->workspace->setSplit3ModeSwitch(_ui->split3ModeButton);
-  _ui->split32ModeButton->setEnabled(false);
-  _ui->split32ModeButton->hide();
-  _ui->workspace->setSplit32ModeSwitch(_ui->split32ModeButton);
-  _ui->split33ModeButton->setEnabled(false);
-  _ui->split33ModeButton->hide();
-  _ui->workspace->setSplit33ModeSwitch(_ui->split33ModeButton);
-  _ui->gridModeButton->setEnabled(false);
-  _ui->gridModeButton->hide();
-  _ui->workspace->setGridModeSwitch(_ui->gridModeButton);
-  _ui->sixModeButton->setEnabled(false);
-  _ui->sixModeButton->hide();
-  _ui->workspace->setSixModeSwitch(_ui->sixModeButton);
-  _ui->workspace->setPageCountLabel(_ui->pageCountLabel);
-  _ui->workspace->setExposeModeSwitch(_ui->exposeModeButton);
-  _ui->outputFrame->hide();
+
   _logger = new TalipotLogger(this);
   _ui->loggerFrame->installEventFilter(this);
   installEventFilter(this);
@@ -446,8 +404,8 @@ TalipotMainWindow::TalipotMainWindow()
 
   qInstallMessageHandler(talipotLogger);
 
-  connect(_ui->workspaceButton, &QAbstractButton::clicked, this,
-          &TalipotMainWindow::workspaceButtonClicked);
+  connect(_ui->graphsButton, &QAbstractButton::clicked, this,
+          &TalipotMainWindow::graphsButtonClicked);
   connect(_ui->workspace, &Workspace::addPanelRequest, this, &TalipotMainWindow::createPanel);
   connect(_ui->workspace, &Workspace::focusedPanelSynchronized, this,
           &TalipotMainWindow::focusedPanelSynchronized);
@@ -498,14 +456,14 @@ TalipotMainWindow::TalipotMainWindow()
   connect(_ui->actionCreate_empty_sub_graph, &QAction::triggered, this,
           &TalipotMainWindow::addEmptySubGraph);
   connect(_ui->actionImport_CSV, &QAction::triggered, this, &TalipotMainWindow::CSVImport);
-  connect(_ui->actionFind_plugins, &QAction::triggered, this, &TalipotMainWindow::findPlugins);
+  connect(_ui->actionAlgorithms, &QAction::triggered, this, &TalipotMainWindow::findPlugins);
   connect(_ui->actionNew_graph, &QAction::triggered, this, &TalipotMainWindow::addNewGraph);
   connect(_ui->actionNewProject, &QAction::triggered, this, &TalipotMainWindow::newProject);
   connect(_ui->actionPreferences, &QAction::triggered, this, &TalipotMainWindow::openPreferences);
-  connect(_ui->searchButton, &QAbstractButton::clicked, this, &TalipotMainWindow::setSearchOutput);
+  connect(_ui->searchButton, &QAbstractButton::clicked, this,
+          &TalipotMainWindow::searchButtonClicked);
   connect(_ui->workspace, &Workspace::importGraphRequest, [this] { importGraph(); });
   connect(_ui->action_Close_All, &QAction::triggered, _ui->workspace, &Workspace::closeAll);
-  connect(_ui->addPanelButton, &QAbstractButton::clicked, [this] { createPanel(); });
   connect(_ui->actionColor_scales_management, &QAction::triggered, this,
           &TalipotMainWindow::displayColorScalesDialog);
   connect(_ui->exportButton, &QAbstractButton::clicked, [this] { exportGraph(); });
@@ -513,6 +471,10 @@ TalipotMainWindow::TalipotMainWindow()
   connect(_ui->actionPlugins_Center, &QAction::triggered, this,
           &TalipotMainWindow::showPluginsCenter);
   connect(_ui->actionAbout_us, &QAction::triggered, this, &TalipotMainWindow::showAboutPage);
+  connect(_ui->actionGraphs, &QAction::triggered, this, &TalipotMainWindow::graphsButtonClicked);
+  connect(_ui->actionAlgorithms, &QAction::triggered, this,
+          &TalipotMainWindow::algorithmsButtonClicked);
+  connect(_ui->actionSearch, &QAction::triggered, this, &TalipotMainWindow::searchButtonClicked);
 
   _ui->actionShowUserDocumentation->setVisible(false);
   if (QFile(tlpStringToQString(tlp::TalipotShareDir) +
@@ -541,6 +503,7 @@ TalipotMainWindow::TalipotMainWindow()
   // set a default position and size that works seamlessly on all platforms
   move(0, 0);
   resize(QDesktopWidget().availableGeometry(this).size() * 0.9);
+  _ui->mainSplitter->setSizes({int(0.3 * width()), int(0.7 * width())});
 }
 
 void TalipotMainWindow::buildRecentDocumentsMenu() {
@@ -635,8 +598,6 @@ TalipotMainWindow::~TalipotMainWindow() {
     delete graph;
   }
 
-  delete _pythonIDEDialog;
-
   PythonCodeEditor::deleteStaticResources();
 
   delete _project;
@@ -646,7 +607,7 @@ TalipotMainWindow::~TalipotMainWindow() {
 bool TalipotMainWindow::terminated() {
 
   _pythonIDE->savePythonFilesAndWriteToProject(true);
-  _pythonIDEDialog->hide();
+  _pythonIDE->hide();
 
   if (_graphs->needsSaving() || isWindowModified()) {
     QString message("The project has been modified (loaded graphs or Python files opened in the "
@@ -766,13 +727,11 @@ void TalipotMainWindow::start(const QString &inputFilePath) {
   if (!rootIds.empty())
     _ui->workspace->readProject(_project, rootIds, pluginProgress);
 
-  _ui->searchPanel->setModel(_graphs);
+  _ui->searchWidget->setModel(_graphs);
 
   delete pluginProgress;
 
-  connect(_ui->pythonButton, &QAbstractButton::clicked, this, &TalipotMainWindow::setPythonPanel);
   connect(_ui->developButton, &QAbstractButton::clicked, this, &TalipotMainWindow::showPythonIDE);
-  _ui->pythonPanel->setModel(_graphs);
   _pythonIDE->setGraphsModel(_graphs);
   connect(_pythonIDE, &PythonIDE::anchoredRequest, this, &TalipotMainWindow::anchoredPythonIDE);
   tlp::PluginsManager::instance().addListener(this);
@@ -782,12 +741,13 @@ void TalipotMainWindow::start(const QString &inputFilePath) {
     open(inputFilePath);
   }
 
-  for (auto h : _ui->docksSplitter->findChildren<HeaderFrame *>()) {
-    connect(h, &HeaderFrame::expanded, this, &TalipotMainWindow::refreshDockExpandControls);
-  }
-
-  connect(_ui->sidebarButton, &QAbstractButton::clicked, this, &TalipotMainWindow::showHideSideBar);
+  connect(_ui->sidebarButton, &QAbstractButton::clicked, [this] { showHideSideBar(); });
   connect(_ui->menubarButton, &QAbstractButton::clicked, this, &TalipotMainWindow::showHideMenuBar);
+
+#if defined(Q_OS_MAC)
+  // menu bar cannot be hidden on MacOS
+  _ui->menubarButton->setEnabled(false);
+#endif
 
   // fill menu with recent documents
   buildRecentDocumentsMenu();
@@ -799,22 +759,6 @@ void TalipotMainWindow::start(const QString &inputFilePath) {
 
 tlp::GraphHierarchiesModel *TalipotMainWindow::model() const {
   return _graphs;
-}
-
-void TalipotMainWindow::refreshDockExpandControls() {
-  QList<HeaderFrame *> expandedHeaders, collapsedHeaders;
-
-  for (auto h : _ui->docksSplitter->findChildren<HeaderFrame *>()) {
-    h->expandControl()->setEnabled(true);
-
-    if (h->isExpanded())
-      expandedHeaders.push_back(h);
-    else
-      collapsedHeaders.push_back(h);
-  }
-
-  if (expandedHeaders.size() == 1)
-    expandedHeaders[0]->expandControl()->setEnabled(false);
 }
 
 void TalipotMainWindow::exportGraph(Graph *g) {
@@ -1128,7 +1072,7 @@ void TalipotMainWindow::initPythonIDE() {
   if (Settings::instance().pythonIDEAnchored()) {
     _pythonIDE->setVisible(false);
     _pythonIDE->setParent(nullptr);
-    _ui->mainSplitter->addWidget(_pythonIDE);
+    _ui->docksWidget->addWidget(_pythonIDE);
     _ui->developButton->setCheckable(true);
   }
 }
@@ -1137,20 +1081,25 @@ void TalipotMainWindow::anchoredPythonIDE(bool anchored) {
   _ui->developButton->setCheckable(anchored);
   Settings::instance().setPythonIDEAnchored(anchored);
   if (anchored) {
-    _pythonIDEDialog->hide();
+    _pythonIDE->hide();
     _pythonIDE->setParent(nullptr);
-    _ui->mainSplitter->addWidget(_pythonIDE);
-    _ui->mainSplitter->setCollapsible(1, true);
-    _ui->mainSplitter->setCollapsible(2, true);
+    _ui->docksWidget->addWidget(_pythonIDE);
+    _ui->docksWidget->setCurrentIndex(2);
+    _ui->graphsButton->setChecked(false);
+    _ui->algorithmsButton->setChecked(false);
     _ui->developButton->setChecked(anchored);
   } else {
-    _pythonIDE->setParent(nullptr);
-    _pythonIDEDialog->layout()->addWidget(_pythonIDE);
-    _pythonIDEDialog->show();
+    _ui->graphsButton->setChecked(true);
+    _ui->algorithmsButton->setChecked(false);
     _ui->developButton->setChecked(false);
+    _ui->docksWidget->setCurrentIndex(0);
+    _ui->docksWidget->removeWidget(_pythonIDE);
+    _pythonIDE->setParent(nullptr);
+    _pythonIDE->show();
     _ui->mainSplitter->setCollapsible(1, false);
   }
   _pythonIDE->setAnchored(anchored);
+  showPythonIDE();
 }
 
 void TalipotMainWindow::deleteSelectedElementsFromRootGraph() {
@@ -1445,30 +1394,21 @@ void TalipotMainWindow::currentGraphChanged(Graph *graph) {
   _ui->actionCreate_empty_sub_graph->setEnabled(enabled);
   _ui->actionClone_sub_graph->setEnabled(enabled);
   _ui->actionExport->setEnabled(enabled);
-  _ui->singleModeButton->setEnabled(enabled);
-  _ui->splitModeButton->setEnabled(enabled);
-  _ui->splitHorizontalModeButton->setEnabled(enabled);
-  _ui->split3ModeButton->setEnabled(enabled);
-  _ui->split32ModeButton->setEnabled(enabled);
-  _ui->split33ModeButton->setEnabled(enabled);
-  _ui->gridModeButton->setEnabled(enabled);
-  _ui->sixModeButton->setEnabled(enabled);
-  _ui->exposeModeButton->setEnabled(enabled);
   _ui->searchButton->setEnabled(enabled);
-  _ui->pythonButton->setEnabled(enabled);
+  _ui->algorithmsButton->setEnabled(enabled);
+  _ui->graphsButton->setEnabled(enabled);
+  _ui->undoButton->setEnabled(enabled);
+  _ui->redoButton->setEnabled(enabled);
   _ui->exportButton->setEnabled(enabled);
-  _ui->previousPageButton->setVisible(enabled);
-  _ui->pageCountLabel->setVisible(enabled);
-  _ui->nextPageButton->setVisible(enabled);
   _ui->actionSave_Project->setEnabled(enabled);
   _ui->actionSave_Project_as->setEnabled(enabled);
+  _ui->actionGraphs->setEnabled(enabled);
+  _ui->actionAlgorithms->setEnabled(enabled);
+  _ui->actionSearch->setEnabled(enabled);
 
   if (graph == nullptr) {
     _ui->workspace->switchToStartupMode();
-    _ui->exposeModeButton->setChecked(false);
     _ui->searchButton->setChecked(false);
-    _ui->pythonButton->setChecked(false);
-    setSearchOutput(false);
     _ui->actionSave_Project->setEnabled(false);
     _ui->actionSave_Project_as->setEnabled(false);
   } else {
@@ -1477,7 +1417,7 @@ void TalipotMainWindow::currentGraphChanged(Graph *graph) {
 
   if (_graphs->empty()) {
     _pythonIDE->clearPythonCodeEditors();
-    _pythonIDEDialog->hide();
+    _pythonIDE->hide();
     _ui->developButton->setEnabled(false);
     _ui->actionPython_IDE->setEnabled(false);
   } else {
@@ -1655,24 +1595,6 @@ bool TalipotMainWindow::setGlMainViewPropertiesForGraph(
   return result;
 }
 
-void TalipotMainWindow::setSearchOutput(bool f) {
-  if (f) {
-    _ui->outputFrame->setCurrentWidget(_ui->searchPanel);
-    _ui->pythonButton->setChecked(false);
-  }
-
-  _ui->outputFrame->setVisible(f);
-}
-
-void TalipotMainWindow::setPythonPanel(bool f) {
-  if (f) {
-    _ui->outputFrame->setCurrentWidget(_ui->pythonPanel);
-    _ui->searchButton->setChecked(false);
-  }
-
-  _ui->outputFrame->setVisible(f);
-}
-
 void TalipotMainWindow::openPreferences() {
   PreferencesDialog dlg(_ui->mainWidget);
   dlg.readSettings();
@@ -1729,14 +1651,16 @@ void TalipotMainWindow::treatEvent(const tlp::Event &ev) {
 
 void TalipotMainWindow::showPythonIDE() {
   if (!_pythonIDE->isAnchored()) {
-    _pythonIDEDialog->raise();
-    _pythonIDEDialog->show();
-    _pythonIDEDialog->raise();
+    _pythonIDE->show();
+    _pythonIDE->raise();
   } else {
-    _pythonIDE->setVisible(!_pythonIDE->isVisible());
-    _ui->developButton->setChecked(_pythonIDE->isVisible());
-    _ui->mainSplitter->setCollapsible(1, _pythonIDE->isVisible());
-    _ui->mainSplitter->setCollapsible(2, _pythonIDE->isVisible());
+    _ui->graphsButton->setChecked(false);
+    _ui->algorithmsButton->setChecked(false);
+    _ui->searchButton->setChecked(false);
+    _pythonIDE->setVisible(true);
+    _ui->developButton->setChecked(true);
+    showHideSideBar(true);
+    _ui->docksWidget->setCurrentIndex(3);
   }
 }
 
@@ -1755,8 +1679,8 @@ void TalipotMainWindow::showAPIDocumentation() {
                                                 "../doc/talipot/doxygen/html/index.html"));
 }
 
-void TalipotMainWindow::showHideSideBar() {
-  if (_ui->docksWidget->isVisible()) {
+void TalipotMainWindow::showHideSideBar(bool forceShow) {
+  if (_ui->docksWidget->isVisible() && !forceShow) {
     _ui->docksWidget->setVisible(false);
     _ui->sidebarButton->setToolTip("Show Sidebar");
   } else {
@@ -1795,8 +1719,37 @@ void TalipotMainWindow::showAboutPage() {
   aboutDialog.exec();
 }
 
-void TalipotMainWindow::workspaceButtonClicked() {
-  _ui->workspaceButton->setChecked(true);
+void TalipotMainWindow::graphsButtonClicked() {
+  _ui->graphsButton->setChecked(true);
+  _ui->algorithmsButton->setChecked(false);
+  _ui->searchButton->setChecked(false);
+  if (_pythonIDE->isAnchored()) {
+    _ui->developButton->setChecked(false);
+  }
+  showHideSideBar(true);
+  _ui->docksWidget->setCurrentIndex(0);
+}
+
+void TalipotMainWindow::searchButtonClicked() {
+  _ui->graphsButton->setChecked(false);
+  _ui->algorithmsButton->setChecked(false);
+  _ui->searchButton->setChecked(true);
+  if (_pythonIDE->isAnchored()) {
+    _ui->developButton->setChecked(false);
+  }
+  showHideSideBar(true);
+  _ui->docksWidget->setCurrentIndex(1);
+}
+
+void TalipotMainWindow::algorithmsButtonClicked() {
+  _ui->graphsButton->setChecked(false);
+  _ui->algorithmsButton->setChecked(true);
+  _ui->searchButton->setChecked(false);
+  if (_pythonIDE->isAnchored()) {
+    _ui->developButton->setChecked(false);
+  }
+  showHideSideBar(true);
+  _ui->docksWidget->setCurrentIndex(2);
 }
 
 void TalipotMainWindow::resetLoggerDialogPosition() {

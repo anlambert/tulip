@@ -59,6 +59,9 @@ class TLP_PYTHON_SCOPE PythonIDE : public QWidget {
 
   bool _anchored;
 
+  QByteArray _splitterState;
+  QWidget *_outputWidget;
+
   bool loadPythonPlugin(const QString &fileName, bool clear = true);
   bool loadPythonPluginFromSrcCode(const QString &moduleName, const QString &pluginSrcCode,
                                    bool clear = true);

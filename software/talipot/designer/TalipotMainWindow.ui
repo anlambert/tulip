@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1200</width>
-    <height>710</height>
+    <height>716</height>
    </rect>
   </property>
   <property name="contextMenuPolicy">
@@ -65,7 +65,7 @@
         <number>0</number>
        </property>
        <property name="topMargin">
-        <number>0</number>
+        <number>10</number>
        </property>
        <property name="rightMargin">
         <number>0</number>
@@ -74,30 +74,20 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="HeaderFrame" name="modeSwitcherHeader" native="true">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="expandable" stdset="0">
+        <widget class="QToolButton" name="undoButton">
+         <property name="enabled">
           <bool>false</bool>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QToolButton" name="undoButton">
          <property name="minimumSize">
           <size>
-           <width>75</width>
-           <height>75</height>
+           <width>60</width>
+           <height>60</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>75</width>
-           <height>75</height>
+           <width>60</width>
+           <height>60</height>
           </size>
          </property>
          <property name="text">
@@ -105,8 +95,8 @@
          </property>
          <property name="iconSize">
           <size>
-           <width>32</width>
-           <height>32</height>
+           <width>28</width>
+           <height>28</height>
           </size>
          </property>
          <property name="toolButtonStyle">
@@ -116,16 +106,19 @@
        </item>
        <item>
         <widget class="QToolButton" name="redoButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="minimumSize">
           <size>
-           <width>75</width>
-           <height>75</height>
+           <width>60</width>
+           <height>60</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>75</width>
-           <height>75</height>
+           <width>60</width>
+           <height>60</height>
           </size>
          </property>
          <property name="text">
@@ -133,8 +126,8 @@
          </property>
          <property name="iconSize">
           <size>
-           <width>32</width>
-           <height>32</height>
+           <width>28</width>
+           <height>28</height>
           </size>
          </property>
          <property name="toolButtonStyle">
@@ -163,26 +156,29 @@
         </spacer>
        </item>
        <item>
-        <widget class="QToolButton" name="workspaceButton">
+        <widget class="QToolButton" name="graphsButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="minimumSize">
           <size>
-           <width>75</width>
-           <height>75</height>
+           <width>60</width>
+           <height>60</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>75</width>
-           <height>75</height>
+           <width>60</width>
+           <height>60</height>
           </size>
          </property>
          <property name="text">
-          <string>Workspace</string>
+          <string>Graphs</string>
          </property>
          <property name="iconSize">
           <size>
-           <width>32</width>
-           <height>32</height>
+           <width>28</width>
+           <height>28</height>
           </size>
          </property>
          <property name="checkable">
@@ -197,29 +193,97 @@
         </widget>
        </item>
        <item>
+        <widget class="QToolButton" name="algorithmsButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Algorithms</string>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>28</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="searchButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Search</string>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>28</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QToolButton" name="developButton">
          <property name="enabled">
           <bool>false</bool>
          </property>
          <property name="minimumSize">
           <size>
-           <width>75</width>
-           <height>75</height>
+           <width>60</width>
+           <height>60</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>75</width>
-           <height>75</height>
+           <width>60</width>
+           <height>60</height>
           </size>
          </property>
          <property name="text">
-          <string>Python IDE</string>
+          <string>Python</string>
          </property>
          <property name="iconSize">
           <size>
-           <width>32</width>
-           <height>32</height>
+           <width>28</width>
+           <height>28</height>
           </size>
          </property>
          <property name="checkable">
@@ -245,146 +309,73 @@
        </item>
        <item>
         <widget class="QFrame" name="loggerFrame">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
+         </property>
          <property name="maximumSize">
           <size>
-           <width>75</width>
-           <height>16777215</height>
+           <width>60</width>
+           <height>36</height>
           </size>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_4">
+          <property name="spacing">
+           <number>0</number>
+          </property>
           <property name="leftMargin">
-           <number>4</number>
+           <number>0</number>
           </property>
           <property name="topMargin">
            <number>0</number>
           </property>
           <property name="rightMargin">
-           <number>4</number>
+           <number>0</number>
           </property>
           <property name="bottomMargin">
            <number>0</number>
           </property>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_10">
-            <item>
-             <widget class="QFrame" name="loggerFrameInfo">
-              <property name="maximumSize">
-               <size>
-                <width>75</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_9">
-               <property name="leftMargin">
-                <number>0</number>
-               </property>
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <property name="rightMargin">
-                <number>0</number>
-               </property>
-               <property name="bottomMargin">
-                <number>0</number>
-               </property>
-               <item>
-                <widget class="QLabel" name="loggerIconInfo">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="loggerMessageInfo">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>75</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <widget class="QFrame" name="loggerFramePython">
-              <property name="maximumSize">
-               <size>
-                <width>75</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_4">
-               <property name="leftMargin">
-                <number>0</number>
-               </property>
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <property name="rightMargin">
-                <number>0</number>
-               </property>
-               <property name="bottomMargin">
-                <number>0</number>
-               </property>
-               <item>
-                <widget class="QLabel" name="loggerIconPython">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="loggerMessagePython">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>75</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
            <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <property name="spacing">
+             <number>3</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <spacer name="horizontalSpacer_6">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Preferred</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>10</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
             <item>
              <widget class="QFrame" name="loggerFrameWarning">
               <property name="maximumSize">
                <size>
-                <width>75</width>
+                <width>16777215</width>
                 <height>16777215</height>
                </size>
               </property>
               <layout class="QHBoxLayout" name="horizontalLayout_7">
+               <property name="spacing">
+                <number>2</number>
+               </property>
                <property name="leftMargin">
                 <number>0</number>
                </property>
@@ -400,10 +391,22 @@
                <item>
                 <widget class="QLabel" name="loggerIconWarning">
                  <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16</width>
+                   <height>16</height>
+                  </size>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -413,16 +416,25 @@
                <item>
                 <widget class="QLabel" name="loggerMessageWarning">
                  <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
                  <property name="maximumSize">
                   <size>
-                   <width>75</width>
-                   <height>16777215</height>
+                   <width>16777215</width>
+                   <height>16</height>
                   </size>
+                 </property>
+                 <property name="text">
+                  <string/>
                  </property>
                 </widget>
                </item>
@@ -433,11 +445,14 @@
              <widget class="QFrame" name="loggerFrameError">
               <property name="maximumSize">
                <size>
-                <width>75</width>
+                <width>16777215</width>
                 <height>16777215</height>
                </size>
               </property>
               <layout class="QHBoxLayout" name="horizontalLayout_8">
+               <property name="spacing">
+                <number>2</number>
+               </property>
                <property name="leftMargin">
                 <number>0</number>
                </property>
@@ -453,10 +468,22 @@
                <item>
                 <widget class="QLabel" name="loggerIconError">
                  <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16</width>
+                   <height>16</height>
+                  </size>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -466,21 +493,251 @@
                <item>
                 <widget class="QLabel" name="loggerMessageError">
                  <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
                  <property name="maximumSize">
                   <size>
-                   <width>75</width>
-                   <height>16777215</height>
+                   <width>16777215</width>
+                   <height>16</height>
                   </size>
+                 </property>
+                 <property name="text">
+                  <string/>
                  </property>
                 </widget>
                </item>
               </layout>
              </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_5">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Preferred</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>10</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_10">
+            <property name="spacing">
+             <number>3</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <spacer name="horizontalSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Preferred</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QFrame" name="loggerFrameInfo">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_9">
+               <property name="spacing">
+                <number>2</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="loggerIconInfo">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16</width>
+                   <height>16</height>
+                  </size>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="loggerMessageInfo">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>16</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="scaledContents">
+                  <bool>false</bool>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QFrame" name="loggerFramePython">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_4">
+               <property name="spacing">
+                <number>2</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="loggerIconPython">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16</width>
+                   <height>16</height>
+                  </size>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="loggerMessagePython">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>16</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_4">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Preferred</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
             </item>
            </layout>
           </item>
@@ -501,14 +758,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>75</width>
-           <height>75</height>
+           <width>60</width>
+           <height>60</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>75</width>
-           <height>75</height>
+           <width>60</width>
+           <height>60</height>
           </size>
          </property>
          <property name="text">
@@ -516,36 +773,8 @@
          </property>
          <property name="iconSize">
           <size>
-           <width>32</width>
-           <height>32</height>
-          </size>
-         </property>
-         <property name="toolButtonStyle">
-          <enum>Qt::ToolButtonTextUnderIcon</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QToolButton" name="csvImportButton">
-         <property name="minimumSize">
-          <size>
-           <width>75</width>
-           <height>75</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>75</width>
-           <height>75</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>CSV</string>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>32</width>
-           <height>32</height>
+           <width>28</width>
+           <height>28</height>
           </size>
          </property>
          <property name="toolButtonStyle">
@@ -557,14 +786,14 @@
         <widget class="QToolButton" name="importButton">
          <property name="minimumSize">
           <size>
-           <width>75</width>
-           <height>75</height>
+           <width>60</width>
+           <height>60</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>75</width>
-           <height>75</height>
+           <width>60</width>
+           <height>60</height>
           </size>
          </property>
          <property name="text">
@@ -572,13 +801,104 @@
          </property>
          <property name="iconSize">
           <size>
-           <width>32</width>
-           <height>32</height>
+           <width>28</width>
+           <height>28</height>
           </size>
          </property>
          <property name="toolButtonStyle">
           <enum>Qt::ToolButtonTextUnderIcon</enum>
          </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QFrame" name="frame">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <property name="bottomFrame" stdset="0">
+          <bool>true</bool>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="sidebarButton">
+            <property name="minimumSize">
+             <size>
+              <width>21</width>
+              <height>21</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>21</width>
+              <height>21</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>:/talipot/gui/ui/sidebar.png</normaloff>:/talipot/gui/ui/sidebar.png</iconset>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="menubarButton">
+            <property name="minimumSize">
+             <size>
+              <width>21</width>
+              <height>21</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>21</width>
+              <height>21</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>:/talipot/gui/ui/menubar.png</normaloff>:/talipot/gui/ui/menubar.png</iconset>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>
@@ -610,532 +930,24 @@
        </property>
        <item>
         <widget class="QSplitter" name="mainSplitter">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
          <property name="handleWidth">
           <number>3</number>
          </property>
-         <widget class="QWidget" name="docksWidget" native="true">
-          <layout class="QVBoxLayout" name="verticalLayout_8">
-           <property name="spacing">
-            <number>0</number>
-           </property>
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QSplitter" name="docksSplitter">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="handleWidth">
-              <number>1</number>
-             </property>
-             <widget class="AlgorithmRunner" name="algorithmRunner" native="true"/>
-             <widget class="GraphHierarchiesEditor" name="graphHierarchiesEditor" native="true"/>
-            </widget>
-           </item>
-          </layout>
+         <widget class="QStackedWidget" name="docksWidget">
+          <widget class="GraphHierarchiesEditor" name="graphHierarchiesEditor"/>
+          <widget class="SearchWidget" name="searchWidget"/>
+          <widget class="AlgorithmRunner" name="algorithmRunner"/>
          </widget>
-         <widget class="QStackedWidget" name="centralWidget">
-          <property name="currentIndex">
-           <number>0</number>
-          </property>
-          <widget class="QWidget" name="centralFrame">
-           <layout class="QVBoxLayout" name="verticalLayout">
-            <property name="spacing">
-             <number>0</number>
-            </property>
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
-            <item>
-             <widget class="QFrame" name="workspaceFrame">
-              <layout class="QVBoxLayout" name="verticalLayout_3">
-               <property name="leftMargin">
-                <number>0</number>
-               </property>
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <property name="rightMargin">
-                <number>0</number>
-               </property>
-               <property name="bottomMargin">
-                <number>0</number>
-               </property>
-               <item>
-                <widget class="QSplitter" name="splitter">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="handleWidth">
-                  <number>1</number>
-                 </property>
-                 <widget class="tlp::Workspace" name="workspace" native="true">
-                  <property name="bottomFrameVisible" stdset="0">
-                   <bool>false</bool>
-                  </property>
-                 </widget>
-                 <widget class="QStackedWidget" name="outputFrame">
-                  <property name="currentIndex">
-                   <number>1</number>
-                  </property>
-                  <widget class="SearchWidget" name="searchPanel"/>
-                  <widget class="PythonPanel" name="pythonPanel"/>
-                 </widget>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <widget class="QFrame" name="bottomFrame">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>27</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>27</height>
-               </size>
-              </property>
-              <property name="bottomFrame" stdset="0">
-               <bool>true</bool>
-              </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_3">
-               <property name="leftMargin">
-                <number>5</number>
-               </property>
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <property name="rightMargin">
-                <number>0</number>
-               </property>
-               <property name="bottomMargin">
-                <number>0</number>
-               </property>
-               <item>
-                <layout class="QHBoxLayout" name="barButtonsLayout">
-                 <property name="spacing">
-                  <number>0</number>
-                 </property>
-                 <property name="leftMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="topMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="rightMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="bottomMargin">
-                  <number>0</number>
-                 </property>
-                 <item>
-                  <widget class="QPushButton" name="sidebarButton">
-                   <property name="minimumSize">
-                    <size>
-                     <width>21</width>
-                     <height>21</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>21</width>
-                     <height>21</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="icon">
-                    <iconset>
-                     <normaloff>:/talipot/gui/ui/sidebar.png</normaloff>:/talipot/gui/ui/sidebar.png</iconset>
-                   </property>
-                   <property name="flat">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="menubarButton">
-                   <property name="minimumSize">
-                    <size>
-                     <width>21</width>
-                     <height>21</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>21</width>
-                     <height>21</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="icon">
-                    <iconset>
-                     <normaloff>:/talipot/gui/ui/menubar.png</normaloff>:/talipot/gui/ui/menubar.png</iconset>
-                   </property>
-                   <property name="flat">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <widget class="QPushButton" name="addPanelButton">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>25</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Add panel</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="exposeModeButton">
-                 <property name="minimumSize">
-                  <size>
-                   <width>85</width>
-                   <height>25</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Expose</string>
-                 </property>
-                 <property name="shortcut">
-                  <string>Ctrl+E</string>
-                 </property>
-                 <property name="checkable">
-                  <bool>true</bool>
-                 </property>
-                 <property name="autoExclusive">
-                  <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="searchButton">
-                 <property name="minimumSize">
-                  <size>
-                   <width>85</width>
-                   <height>25</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Search</string>
-                 </property>
-                 <property name="shortcut">
-                  <string>Ctrl+F</string>
-                 </property>
-                 <property name="checkable">
-                  <bool>true</bool>
-                 </property>
-                 <property name="autoExclusive">
-                  <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="pythonButton">
-                 <property name="minimumSize">
-                  <size>
-                   <width>105</width>
-                   <height>25</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Python REPL</string>
-                 </property>
-                 <property name="shortcut">
-                  <string>Ctrl+Shift+P</string>
-                 </property>
-                 <property name="checkable">
-                  <bool>true</bool>
-                 </property>
-                 <property name="autoExclusive">
-                  <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>0</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
-                <widget class="QPushButton" name="previousPageButton">
-                 <property name="minimumSize">
-                  <size>
-                   <width>20</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>20</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="icon">
-                  <iconset>
-                   <normaloff>:/talipot/gui/ui/previous.png</normaloff>:/talipot/gui/ui/previous.png</iconset>
-                 </property>
-                 <property name="shortcut">
-                  <string>Shift+Left</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="pageCountLabel"/>
-               </item>
-               <item>
-                <widget class="QPushButton" name="nextPageButton">
-                 <property name="minimumSize">
-                  <size>
-                   <width>20</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>20</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="icon">
-                  <iconset>
-                   <normaloff>:/talipot/gui/ui/next.png</normaloff>:/talipot/gui/ui/next.png</iconset>
-                 </property>
-                 <property name="shortcut">
-                  <string>Shift+Right</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer_2">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>0</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
-                <widget class="QPushButton" name="singleModeButton">
-                 <property name="minimumSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="icon">
-                  <iconset>
-                   <normaloff>:/talipot/gui/ui/full_screen.png</normaloff>:/talipot/gui/ui/full_screen.png</iconset>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="splitModeButton">
-                 <property name="minimumSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="icon">
-                  <iconset>
-                   <normaloff>:/talipot/gui/ui/split_screen.png</normaloff>:/talipot/gui/ui/split_screen.png</iconset>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="splitHorizontalModeButton">
-                 <property name="minimumSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="icon">
-                  <iconset>
-                   <normaloff>:/talipot/gui/ui/split_screen_horizontal.png</normaloff>:/talipot/gui/ui/split_screen_horizontal.png</iconset>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="split3ModeButton">
-                 <property name="minimumSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="icon">
-                  <iconset>
-                   <normaloff>:/talipot/gui/ui/split3_screen.png</normaloff>:/talipot/gui/ui/split3_screen.png</iconset>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="split32ModeButton">
-                 <property name="minimumSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="icon">
-                  <iconset>
-                   <normaloff>:/talipot/gui/ui/split3_2_screen.png</normaloff>:/talipot/gui/ui/split3_2_screen.png</iconset>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="split33ModeButton">
-                 <property name="minimumSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="icon">
-                  <iconset>
-                   <normaloff>:/talipot/gui/ui/split3_3_screen.png</normaloff>:/talipot/gui/ui/split3_3_screen.png</iconset>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="gridModeButton">
-                 <property name="minimumSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="icon">
-                  <iconset>
-                   <normaloff>:/talipot/gui/ui/grid_screen.png</normaloff>:/talipot/gui/ui/grid_screen.png</iconset>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="sixModeButton">
-                 <property name="minimumSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="icon">
-                  <iconset>
-                   <normaloff>:/talipot/gui/ui/six_screen.png</normaloff>:/talipot/gui/ui/six_screen.png</iconset>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="developFrame"/>
-         </widget>
+         <widget class="tlp::Workspace" name="workspace" native="true"/>
         </widget>
        </item>
       </layout>
@@ -1208,9 +1020,11 @@
     </property>
     <addaction name="actionFull_screen"/>
     <addaction name="action_Close_All"/>
-    <addaction name="actionMessages_log"/>
+    <addaction name="actionGraphs"/>
+    <addaction name="actionAlgorithms"/>
+    <addaction name="actionSearch"/>
     <addaction name="actionPython_IDE"/>
-    <addaction name="actionFind_plugins"/>
+    <addaction name="actionMessages_log"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -1498,9 +1312,9 @@
     <string>Ctrl+O</string>
    </property>
   </action>
-  <action name="actionFind_plugins">
+  <action name="actionAlgorithms">
    <property name="text">
-    <string>&amp;Find algorithms</string>
+    <string>&amp;Algorithms</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+H</string>
@@ -1580,7 +1394,7 @@
   </action>
   <action name="actionPython_IDE">
    <property name="text">
-    <string>&amp;Python IDE</string>
+    <string>&amp;Python</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+P</string>
@@ -1605,14 +1419,24 @@
     <string>Ctrl+Shift+M</string>
    </property>
   </action>
+  <action name="actionSearch">
+   <property name="text">
+    <string>S&amp;earch</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
+   </property>
+  </action>
+  <action name="actionGraphs">
+   <property name="text">
+    <string>&amp;Graphs</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+G</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>HeaderFrame</class>
-   <extends>QWidget</extends>
-   <header>HeaderFrame.h</header>
-   <container>1</container>
-  </customwidget>
   <customwidget>
    <class>GraphHierarchiesEditor</class>
    <extends>QWidget</extends>
@@ -1651,12 +1475,6 @@
    <header>SearchWidget.h</header>
    <container>1</container>
   </customwidget>
-  <customwidget>
-   <class>PythonPanel</class>
-   <extends>QWidget</extends>
-   <header>PythonPanel.h</header>
-   <container>1</container>
-  </customwidget>
  </customwidgets>
  <resources>
   <include location="../resources/TalipotApp.qrc"/>
@@ -1666,22 +1484,6 @@
    <sender>importButton</sender>
    <signal>clicked()</signal>
    <receiver>actionImport</receiver>
-   <slot>trigger()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>37</x>
-     <y>584</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>csvImportButton</sender>
-   <signal>clicked()</signal>
-   <receiver>actionImport_CSV</receiver>
    <slot>trigger()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1706,118 +1508,6 @@
     </hint>
     <hint type="destinationlabel">
      <x>535</x>
-     <y>354</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>nextPageButton</sender>
-   <signal>clicked()</signal>
-   <receiver>workspace</receiver>
-   <slot>nextPage()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>937</x>
-     <y>698</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>974</x>
-     <y>354</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>previousPageButton</sender>
-   <signal>clicked()</signal>
-   <receiver>workspace</receiver>
-   <slot>previousPage()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>913</x>
-     <y>698</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>974</x>
-     <y>354</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>singleModeButton</sender>
-   <signal>clicked()</signal>
-   <receiver>workspace</receiver>
-   <slot>switchToSingleMode()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>961</x>
-     <y>698</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>974</x>
-     <y>354</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>split32ModeButton</sender>
-   <signal>clicked()</signal>
-   <receiver>workspace</receiver>
-   <slot>switchToSplit32Mode()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1033</x>
-     <y>698</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>974</x>
-     <y>354</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>split3ModeButton</sender>
-   <signal>clicked()</signal>
-   <receiver>workspace</receiver>
-   <slot>switchToSplit3Mode()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1009</x>
-     <y>698</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>974</x>
-     <y>354</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>splitModeButton</sender>
-   <signal>clicked()</signal>
-   <receiver>workspace</receiver>
-   <slot>switchToSplitMode()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>985</x>
-     <y>698</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>974</x>
-     <y>354</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>gridModeButton</sender>
-   <signal>clicked()</signal>
-   <receiver>workspace</receiver>
-   <slot>switchToGridMode()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1057</x>
-     <y>698</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>974</x>
      <y>354</y>
     </hint>
    </hints>
@@ -1854,89 +1544,5 @@
     </hint>
    </hints>
   </connection>
-  <connection>
-   <sender>sixModeButton</sender>
-   <signal>clicked()</signal>
-   <receiver>workspace</receiver>
-   <slot>switchToSixMode()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1057</x>
-     <y>695</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>574</x>
-     <y>343</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>split33ModeButton</sender>
-   <signal>clicked()</signal>
-   <receiver>workspace</receiver>
-   <slot>switchToSplit33Mode()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1130</x>
-     <y>680</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>639</x>
-     <y>335</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>splitHorizontalModeButton</sender>
-   <signal>clicked()</signal>
-   <receiver>workspace</receiver>
-   <slot>switchToSplitHorizontalMode()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1046</x>
-     <y>680</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>639</x>
-     <y>336</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>exportButton</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>workspace</receiver>
-   <slot>expose(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>37</x>
-     <y>518</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>639</x>
-     <y>347</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>exposeModeButton</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>workspace</receiver>
-   <slot>expose(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>272</x>
-     <y>696</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>639</x>
-     <y>347</y>
-    </hint>
-   </hints>
-  </connection>
  </connections>
- <slots>
-  <slot>setPythonOutput(bool)</slot>
-  <slot>setSearchOutput(bool)</slot>
- </slots>
 </ui>

@@ -11,8 +11,10 @@
  *
  */
 
-#ifndef HEADER_FRAME_H
-#define HEADER_FRAME_H
+#ifndef TALIPOT_HEADER_FRAME_H
+#define TALIPOT_HEADER_FRAME_H
+
+#include <talipot/config.h>
 
 #include <QWidget>
 
@@ -20,7 +22,9 @@ namespace Ui {
 class HeaderFrame;
 }
 
-class HeaderFrame : public QWidget {
+namespace tlp {
+
+class TLP_QT_SCOPE HeaderFrame : public QWidget {
   Q_OBJECT
 
   QPair<int, int> _oldHeightInfo;
@@ -68,4 +72,6 @@ protected slots:
   void setExpanded(bool e);
 };
 
-#endif // HEADER_FRAME_H
+}
+
+#endif // TALIPOT_HEADER_FRAME_H

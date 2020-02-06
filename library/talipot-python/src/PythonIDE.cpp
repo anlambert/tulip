@@ -52,6 +52,7 @@
 #include <talipot/PythonIDE.h>
 #include <talipot/PythonPluginCreationDialog.h>
 #include <talipot/PythonEditorsTabWidget.h>
+#include <talipot/PythonShellWidget.h>
 
 #include "ui_PythonIDE.h"
 
@@ -355,8 +356,14 @@ talipotplugins.registerPluginOfGroup(pluginName='%2',
 PythonIDE::PythonIDE(QWidget *parent)
     : QWidget(parent), _ui(new Ui::PythonIDE), _pythonInterpreter(&PythonInterpreter::instance()),
       _dontTreatFocusIn(false), _project(nullptr), _graphsModel(nullptr), _scriptStopped(false),
-      _saveFilesToProject(true), _notifyProjectModified(false), _anchored(true) {
+      _saveFilesToProject(true), _notifyProjectModified(false), _anchored(true),
+      _outputWidget(nullptr) {
   _ui->setupUi(this);
+
+  QString pythonVersion(PythonInterpreter::instance().getPythonVersionStr());
+  _ui->header->setTitle("Python " + pythonVersion);
+  _ui->header->setExpandable(false);
+
   _ui->newMainScriptButton->setIcon(FontIconManager::icon(MaterialDesignIcons::File, Qt::white));
   _ui->loadMainScriptButton->setIcon(
       FontIconManager::icon(MaterialDesignIcons::FileImport, Qt::white));
@@ -397,9 +404,6 @@ PythonIDE::PythonIDE(QWidget *parent)
       FontIconManager::icon(MaterialDesignIcons::DatabaseRemove, Qt::white));
   useUndoToggled(_ui->useUndoCB->isChecked());
   connect(_ui->useUndoCB, &QAbstractButton::toggled, this, &PythonIDE::useUndoToggled);
-
-  _ui->tabWidget->setDrawTabBarBgGradient(true);
-  _ui->tabWidget->setTextColor(QColor(200, 200, 200));
 
   _ui->mainScriptsTabWidget->clear();
   _ui->modulesTabWidget->clear();
@@ -497,6 +501,9 @@ PythonIDE::PythonIDE(QWidget *parent)
   connect(_ui->anchoredCB, &QAbstractButton::toggled, this, &PythonIDE::anchored);
   connect(_ui->anchoredCB_2, &QAbstractButton::toggled, this, &PythonIDE::anchored);
   connect(_ui->anchoredCB_3, &QAbstractButton::toggled, this, &PythonIDE::anchored);
+
+  connect(_ui->splitter, &QSplitter::splitterMoved,
+          [this] { _splitterState = _ui->splitter->saveState(); });
 
   APIDataBase::instance().loadApiFile(tlpStringToQString(tlp::TalipotShareDir) +
                                       "/apiFiles/talipot.api");
@@ -735,7 +742,17 @@ void PythonIDE::newPythonPlugin() {
 }
 
 void PythonIDE::currentTabChanged(int index) {
-  _ui->stackedWidget->setCurrentIndex(index);
+  _ui->stackedWidget->setCurrentIndex(min(index, 2));
+  if (index == 3) {
+    _splitterState = _ui->splitter->saveState();
+    int size = 0;
+    for (auto s : _ui->splitter->sizes()) {
+      size += s;
+    }
+    _ui->splitter->setSizes({size, 0});
+  } else {
+    _ui->splitter->restoreState(_splitterState);
+  }
 }
 
 static bool checkAndGetPluginInfoFromSrcCode(const QString &pluginCode, QString &pluginName,
@@ -1197,12 +1214,14 @@ void PythonIDE::decreaseFontSize() {
   _ui->mainScriptsTabWidget->decreaseFontSize();
   _ui->pluginsTabWidget->decreaseFontSize();
   _ui->modulesTabWidget->decreaseFontSize();
+  _ui->replWidget->getEditor()->zoomOut();
 }
 
 void PythonIDE::increaseFontSize() {
   _ui->mainScriptsTabWidget->increaseFontSize();
   _ui->pluginsTabWidget->increaseFontSize();
   _ui->modulesTabWidget->increaseFontSize();
+  _ui->replWidget->getEditor()->zoomIn();
 }
 
 QString PythonIDE::readProjectFile(const QString &filePath) {
@@ -1786,6 +1805,7 @@ void PythonIDE::saveAllScripts() {
 void PythonIDE::setGraphsModel(tlp::GraphHierarchiesModel *model) {
   _graphsModel = model;
   _ui->graphComboBox->setModel(model);
+  _ui->replWidget->setModel(model);
 }
 
 void PythonIDE::dragEnterEvent(QDragEnterEvent *dragEv) {

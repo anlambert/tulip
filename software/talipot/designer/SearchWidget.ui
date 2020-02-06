@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>650</width>
-    <height>208</height>
+    <width>400</width>
+    <height>595</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,9 +19,9 @@
   <property name="acceptDrops">
    <bool>true</bool>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
-    <number>0</number>
+    <number>6</number>
    </property>
    <property name="leftMargin">
     <number>0</number>
@@ -36,7 +36,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="HeaderFrame" name="headerFrame" native="true">
+    <widget class="tlp::HeaderFrame" name="headerFrame" native="true">
      <property name="expandable" stdset="0">
       <bool>false</bool>
      </property>
@@ -46,476 +46,554 @@
     </widget>
    </item>
    <item>
-    <widget class="QFrame" name="searchFrame">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
+    <widget class="QWidget" name="widget" native="true">
+     <layout class="QVBoxLayout" name="verticalLayout">
       <property name="spacing">
        <number>12</number>
       </property>
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <item>
-       <widget class="QWidget" name="widget" native="true">
-        <layout class="QVBoxLayout" name="verticalLayout_4">
-         <property name="spacing">
-          <number>12</number>
-         </property>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
-           <item>
-            <widget class="QLabel" name="graphLabel">
-             <property name="toolTip">
-              <string>Choose the graph on which the search will be performed</string>
-             </property>
-             <property name="statusTip">
-              <string>Choose the graph on which the search will be performed</string>
-             </property>
-             <property name="text">
-              <string>Graph:</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="TreeViewComboBox" name="graphCombo">
-             <property name="maximumSize">
-              <size>
-               <width>350</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Choose the graph on which the search will be performed</string>
-             </property>
-             <property name="statusTip">
-              <string>Choose the graph on which the search will be performed</string>
-             </property>
-             <property name="sizeAdjustPolicy">
-              <enum>QComboBox::AdjustToContents</enum>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="scopeLabel">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="toolTip">
-              <string>Choose the element type on which the search will be performed</string>
-             </property>
-             <property name="statusTip">
-              <string>Choose the element type on which the search will be performed</string>
-             </property>
-             <property name="text">
-              <string>Scope:</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QComboBox" name="scopeCombo">
-             <property name="maximumSize">
-              <size>
-               <width>350</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Choose the element type on which the search will be performed</string>
-             </property>
-             <property name="statusTip">
-              <string>Choose the element type on which the search will be performed</string>
-             </property>
-             <property name="sizeAdjustPolicy">
-              <enum>QComboBox::AdjustToContents</enum>
-             </property>
-             <item>
-              <property name="text">
-               <string>Nodes &amp; Edges</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Nodes only</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Edges only</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item>
-            <spacer name="horizontalSpacer_2">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_5">
-           <item>
-            <widget class="QLabel" name="label">
-             <property name="text">
-              <string>Selection mode:</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QComboBox" name="selectionModeCombo">
-             <property name="maximumSize">
-              <size>
-               <width>350</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Choose &amp;quot;Do not modify selection&amp;quot; to only count the number of nodes/edges found.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="sizeAdjustPolicy">
-              <enum>QComboBox::AdjustToContents</enum>
-             </property>
-             <item>
-              <property name="text">
-               <string>Replace current selection</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Add to current selection</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Remove from current selection</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string extracomment="ffsfdfdf">Do not modify selection</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="resultsStorageLabel">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="toolTip">
-              <string>Choose graph property into which the found elements will be added</string>
-             </property>
-             <property name="statusTip">
-              <string>Choose graph property into which the found elements will be added</string>
-             </property>
-             <property name="text">
-              <string>Store results in:</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QComboBox" name="resultsStorageCombo">
-             <property name="maximumSize">
-              <size>
-               <width>350</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Choose the graph property into which the found elements will be added</string>
-             </property>
-             <property name="statusTip">
-              <string>Choose the graph property into which the found elements will be added</string>
-             </property>
-             <property name="sizeAdjustPolicy">
-              <enum>QComboBox::AdjustToContents</enum>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QCheckBox" name="caseSensitivityCheck">
-             <property name="toolTip">
-              <string>Indicate if strings comparison will be case sensitive</string>
-             </property>
-             <property name="statusTip">
-              <string>Indicate if strings comparison will be case sensitive</string>
-             </property>
-             <property name="text">
-              <string>Case sensitive</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="horizontalSpacer_3">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_2">
-           <item>
-            <widget class="QLabel" name="searchTermsLabel">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Search for:</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_4">
-             <item>
-              <widget class="QComboBox" name="searchTermACombo">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>350</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="toolTip">
-                <string>Choose the property for which the search will performed</string>
-               </property>
-               <property name="statusTip">
-                <string>Choose the property for which the search will performed</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="operatorCombo">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>350</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="toolTip">
-                <string>Choose the comparion operator of the search</string>
-               </property>
-               <property name="statusTip">
-                <string>Choose the comparion operator of the search</string>
-               </property>
-               <item>
-                <property name="text">
-                 <string>=</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>≠</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>&gt;</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>≥</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>&lt;</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>≤</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>starts with</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>ends with</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>contains</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>matches (RegExp)</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="searchTermBCombo">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>350</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="toolTip">
-                <string>Choose the value involved in the search comparison</string>
-               </property>
-               <property name="statusTip">
-                <string>Choose the value involved in the search comparison</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QTableWidget" name="tableWidget">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>30</height>
-                </size>
-               </property>
-               <property name="frameShape">
-                <enum>QFrame::NoFrame</enum>
-               </property>
-               <property name="frameShadow">
-                <enum>QFrame::Plain</enum>
-               </property>
-               <property name="lineWidth">
-                <number>1</number>
-               </property>
-               <property name="midLineWidth">
-                <number>1</number>
-               </property>
-               <property name="showGrid">
-                <bool>true</bool>
-               </property>
-               <property name="cornerButtonEnabled">
-                <bool>false</bool>
-               </property>
-               <attribute name="horizontalHeaderVisible">
-                <bool>false</bool>
-               </attribute>
-               <attribute name="horizontalHeaderStretchLastSection">
-                <bool>true</bool>
-               </attribute>
-               <attribute name="verticalHeaderVisible">
-                <bool>false</bool>
-               </attribute>
-               <row>
-                <property name="text">
-                 <string>New Row</string>
-                </property>
-               </row>
-               <column>
-                <property name="text">
-                 <string>New Column</string>
-                </property>
-               </column>
-               <item row="0" column="0">
-                <property name="text">
-                 <string/>
-                </property>
-               </item>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <spacer name="horizontalSpacer_4">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </widget>
-      </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
-        <property name="spacing">
-         <number>12</number>
-        </property>
-        <property name="leftMargin">
-         <number>6</number>
-        </property>
-        <property name="topMargin">
-         <number>6</number>
-        </property>
-        <property name="rightMargin">
-         <number>6</number>
-        </property>
-        <property name="bottomMargin">
-         <number>6</number>
-        </property>
+        <item>
+         <widget class="QLabel" name="graphLabel">
+          <property name="toolTip">
+           <string>Choose the graph on which the search will be performed</string>
+          </property>
+          <property name="statusTip">
+           <string>Choose the graph on which the search will be performed</string>
+          </property>
+          <property name="text">
+           <string>Graph:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="TreeViewComboBox" name="graphCombo">
+          <property name="maximumSize">
+           <size>
+            <width>350</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Choose the graph on which the search will be performed</string>
+          </property>
+          <property name="statusTip">
+           <string>Choose the graph on which the search will be performed</string>
+          </property>
+          <property name="sizeAdjustPolicy">
+           <enum>QComboBox::AdjustToContents</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QLabel" name="scopeLabel">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="toolTip">
+           <string>Choose the element type on which the search will be performed</string>
+          </property>
+          <property name="statusTip">
+           <string>Choose the element type on which the search will be performed</string>
+          </property>
+          <property name="text">
+           <string>Scope:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="scopeCombo">
+          <property name="maximumSize">
+           <size>
+            <width>350</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Choose the element type on which the search will be performed</string>
+          </property>
+          <property name="statusTip">
+           <string>Choose the element type on which the search will be performed</string>
+          </property>
+          <property name="sizeAdjustPolicy">
+           <enum>QComboBox::AdjustToContents</enum>
+          </property>
+          <item>
+           <property name="text">
+            <string>Nodes &amp; Edges</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Nodes only</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Edges only</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Selection mode:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="selectionModeCombo">
+          <property name="maximumSize">
+           <size>
+            <width>350</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Choose &amp;quot;Do not modify selection&amp;quot; to only count the number of nodes/edges found.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="sizeAdjustPolicy">
+           <enum>QComboBox::AdjustToContents</enum>
+          </property>
+          <item>
+           <property name="text">
+            <string>Replace current selection</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Add to current selection</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Remove from current selection</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string extracomment="ffsfdfdf">Do not modify selection</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <item>
+         <widget class="QLabel" name="resultsStorageLabel">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="toolTip">
+           <string>Choose graph property into which the found elements will be added</string>
+          </property>
+          <property name="statusTip">
+           <string>Choose graph property into which the found elements will be added</string>
+          </property>
+          <property name="text">
+           <string>Store results in:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="resultsStorageCombo">
+          <property name="maximumSize">
+           <size>
+            <width>350</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Choose the graph property into which the found elements will be added</string>
+          </property>
+          <property name="statusTip">
+           <string>Choose the graph property into which the found elements will be added</string>
+          </property>
+          <property name="sizeAdjustPolicy">
+           <enum>QComboBox::AdjustToContents</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_6">
+        <item>
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Options:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="caseSensitivityCheck">
+          <property name="toolTip">
+           <string>Indicate if strings comparison will be case sensitive</string>
+          </property>
+          <property name="statusTip">
+           <string>Indicate if strings comparison will be case sensitive</string>
+          </property>
+          <property name="text">
+           <string>match case</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_6">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <widget class="QLabel" name="searchTermsLabel">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Search for:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="searchTermACombo">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>350</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Choose the property for which the search will performed</string>
+          </property>
+          <property name="statusTip">
+           <string>Choose the property for which the search will performed</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_7">
+        <item>
+         <spacer name="horizontalSpacer_8">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>80</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QComboBox" name="operatorCombo">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>350</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Choose the comparion operator of the search</string>
+          </property>
+          <property name="statusTip">
+           <string>Choose the comparion operator of the search</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>=</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>≠</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>&gt;</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>≥</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>&lt;</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>≤</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>starts with</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>ends with</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>contains</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>matches</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_9">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_9">
+        <item>
+         <spacer name="horizontalSpacer_10">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>80</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QComboBox" name="searchTermBCombo">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>350</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Choose the value involved in the search comparison</string>
+          </property>
+          <property name="statusTip">
+           <string>Choose the value involved in the search comparison</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="tableWidget">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="lineWidth">
+           <number>1</number>
+          </property>
+          <property name="midLineWidth">
+           <number>1</number>
+          </property>
+          <property name="showGrid">
+           <bool>true</bool>
+          </property>
+          <property name="cornerButtonEnabled">
+           <bool>false</bool>
+          </property>
+          <attribute name="horizontalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="horizontalHeaderStretchLastSection">
+           <bool>true</bool>
+          </attribute>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <row>
+           <property name="text">
+            <string>New Row</string>
+           </property>
+          </row>
+          <column>
+           <property name="text">
+            <string>New Column</string>
+           </property>
+          </column>
+          <item row="0" column="0">
+           <property name="text">
+            <string/>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_11">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_8">
         <item>
          <widget class="QPushButton" name="searchButton">
           <property name="minimumSize">
@@ -540,19 +618,13 @@
         </item>
         <item>
          <widget class="QLabel" name="resultsCountLabel">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading</set>
+          <property name="text">
+           <string/>
           </property>
          </widget>
         </item>
         <item>
-         <spacer name="horizontalSpacer">
+         <spacer name="horizontalSpacer_7">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -566,29 +638,54 @@
         </item>
        </layout>
       </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>167</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
      </layout>
     </widget>
    </item>
    <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
+    <widget class="QFrame" name="frame">
+     <property name="minimumSize">
       <size>
-       <width>20</width>
-       <height>2</height>
+       <width>0</width>
+       <height>25</height>
       </size>
      </property>
-    </spacer>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <property name="bottomFrame" stdset="0">
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>HeaderFrame</class>
+   <class>tlp::HeaderFrame</class>
    <extends>QWidget</extends>
-   <header>HeaderFrame.h</header>
+   <header location="global">talipot/HeaderFrame.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

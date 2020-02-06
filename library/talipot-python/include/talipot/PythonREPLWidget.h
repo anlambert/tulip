@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -11,28 +11,31 @@
  *
  */
 
-#ifndef PYTHON_PANEL_H
-#define PYTHON_PANEL_H
+#ifndef TALIPOT_PYTHON_REPL_WIDGET_H
+#define TALIPOT_PYTHON_REPL_WIDGET_H
+
+#include <talipot/config.h>
 
 #include <QWidget>
 
 namespace Ui {
-class PythonPanel;
+class PythonREPLWidget;
 }
 
 namespace tlp {
 class GraphHierarchiesModel;
-}
+class PythonShellWidget;
 
-class PythonPanel : public QWidget {
+class TLP_PYTHON_SCOPE PythonREPLWidget : public QWidget {
 
   Q_OBJECT
-  Ui::PythonPanel *_ui;
+  Ui::PythonREPLWidget *_ui;
 
 public:
-  explicit PythonPanel(QWidget *parent = nullptr);
-  ~PythonPanel() override;
+  explicit PythonREPLWidget(QWidget *parent = nullptr);
+  ~PythonREPLWidget() override;
   void setModel(tlp::GraphHierarchiesModel *model);
+  PythonShellWidget *getEditor();
 
 protected:
   void dragEnterEvent(QDragEnterEvent *) override;
@@ -44,5 +47,5 @@ private slots:
   void beginCurrentLinesExecution();
   void endCurrentLinesExecution();
 };
-
-#endif // PYTHON_PANEL_H
+}
+#endif // TALIPOT_PYTHON_REPL_WIDGET_H

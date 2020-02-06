@@ -214,47 +214,10 @@ QAbstractItemView {
   font: bold;
 }
 
-#PythonPanel QWidget,
-#PythonPanel QScrollArea,
-#PythonPanel QFrame {
+#PythonREPLWidget QWidget,
+#PythonREPLWidget QScrollArea,
+#PythonREPLWidget QFrame {
   background: white;
-}
-
-#PythonPanel QTabWidget:pane {
-  border: 0px;
-}
-
-#PythonPanel QTabBar::tab {
-  color: #333;
-  border: 1px solid #000;
-  border-bottom: none;
-  padding: 2px;
-  background: qradialgradient(cx: 0.3, cy: -0.4,
-                              fx: 0.3, fy: -0.4,
-                              radius: 1.35,
-                              stop: 0 #fff,
-                              stop: 1 #888);
-  min-width: 60px;
-}
-
-#PythonPanel QTabBar::tab:hover {
-  background: qradialgradient(cx: 0.3, cy: -0.4,
-                              fx: 0.3, fy: -0.4,
-                              radius: 1.35,
-                              stop: 0 #fff,
-                              stop: 1 #bbb);
-}
-
-#PythonPanel QTabBar::tab:selected {
-  background: qlineargradient(x1: 0, y1: 0,
-                              x2: 0, y2: 1,
-                              stop: 0 #efefef,
-                              stop: 1 #eeeeee);
-  color: #3c3c3c;
-}
-
-#PythonPanel #tabWidget QTabWidget::pane {
-  border-top: none;
 }
 
 #PreferencesDialog {
@@ -688,7 +651,8 @@ PlaceHolderWidget {
   background: white;
 }
 
-#PythonIDE #graphLabel {
+#PythonIDE #graphLabel,
+#PythonIDE #graphComboTitle {
   color: white;
   font: bold;
   border-color: transparent;
