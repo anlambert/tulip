@@ -5,11 +5,9 @@ SET(SRCS
     src/ExpandableGroupBox.cpp
     src/ExportWizard.cpp
     src/GraphHierarchiesEditor.cpp
-    src/HeaderFrame.cpp
     src/ImportWizard.cpp
     src/PanelSelectionWizard.cpp
     src/PreferencesDialog.cpp
-    src/PythonPanel.cpp
     src/PluginErrorReport.cpp
     src/PluginInformationListItem.cpp
     src/PluginsCenter.cpp
@@ -29,13 +27,11 @@ QTX_WRAP_CPP(
   include/ExpandableGroupBox.h
   include/ExportWizard.h
   include/GraphHierarchiesEditor.h
-  include/HeaderFrame.h
   include/ImportWizard.h
   include/PanelSelectionWizard.h
   include/PluginInformationListItem.h
   include/PluginsCenter.h
   include/PreferencesDialog.h
-  include/PythonPanel.h
   include/SearchWidget.h
   include/TalipotLogger.h
   include/TalipotMainWindow.h)
@@ -45,14 +41,12 @@ QTX_WRAP_UI(
   designer/AlgorithmRunner.ui
   designer/AlgorithmRunnerItem.ui
   designer/GraphHierarchiesEditor.ui
-  designer/HeaderFrame.ui
   designer/ImportWizard.ui
   designer/ExportWizard.ui
   designer/PanelSelectionWizard.ui
   designer/PluginInformationListItem.ui
   designer/PluginsCenter.ui
   designer/PreferencesDialog.ui
-  designer/PythonPanel.ui
   designer/SearchWidget.ui
   designer/TalipotLogger.ui
   designer/TalipotMainWindow.ui)

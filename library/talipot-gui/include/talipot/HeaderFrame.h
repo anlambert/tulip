@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -11,8 +11,10 @@
  *
  */
 
-#ifndef HEADER_FRAME_H
-#define HEADER_FRAME_H
+#ifndef TALIPOT_HEADER_FRAME_H
+#define TALIPOT_HEADER_FRAME_H
+
+#include <talipot/config.h>
 
 #include <QWidget>
 
@@ -20,7 +22,9 @@ namespace Ui {
 class HeaderFrame;
 }
 
-class HeaderFrame : public QWidget {
+namespace tlp {
+
+class TLP_QT_SCOPE HeaderFrame : public QWidget {
   Q_OBJECT
 
   QPair<int, int> _oldHeightInfo;
@@ -67,4 +71,6 @@ protected slots:
   void setExpanded(bool e);
 };
 
-#endif // HEADER_FRAME_H
+}
+
+#endif // TALIPOT_HEADER_FRAME_H

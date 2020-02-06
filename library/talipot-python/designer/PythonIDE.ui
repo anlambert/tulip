@@ -42,6 +42,9 @@
     <number>0</number>
    </property>
    <item>
+    <widget class="tlp::HeaderFrame" name="header" native="true"/>
+   </item>
+   <item>
     <widget class="QSplitter" name="splitter">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -52,7 +55,7 @@
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
-     <widget class="PythonTabWidget" name="tabWidget">
+     <widget class="QTabWidget" name="tabWidget">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
         <horstretch>0</horstretch>
@@ -755,6 +758,31 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="replTab">
+       <attribute name="title">
+        <string>REPL</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_7">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="tlp::PythonREPLWidget" name="replWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
      </widget>
      <widget class="QWidget" name="layoutWidget">
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -814,13 +842,13 @@
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>27</height>
+       <height>25</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>27</height>
+       <height>25</height>
       </size>
      </property>
      <property name="currentIndex">
@@ -1339,15 +1367,21 @@ can not be undone but performance of the script execution will be better
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>PythonTabWidget</class>
-   <extends>QTabWidget</extends>
-   <header location="global">talipot/PythonTabWidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>tlp::PythonEditorsTabWidget</class>
    <extends>QTabWidget</extends>
    <header location="global">talipot/PythonEditorsTabWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>tlp::HeaderFrame</class>
+   <extends>QWidget</extends>
+   <header location="global">talipot/HeaderFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>tlp::PythonREPLWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">talipot/PythonREPLWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

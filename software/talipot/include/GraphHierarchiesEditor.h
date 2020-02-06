@@ -43,6 +43,7 @@ public:
 public slots:
 
   void resizeFirstColumnToContent();
+  void resizeFirstColumnToContentImpl();
 
 protected:
   int sizeHintForColumn(int col) const override;

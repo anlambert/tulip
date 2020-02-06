@@ -16,6 +16,7 @@ SET(SRCS
     GlMainWidget.cpp
     GlOffscreenRenderer.cpp
     GraphPropertiesSelectionWidget.cpp
+    HeaderFrame.cpp
     ItemsListWidget.cpp
     MouseBoxZoomer.cpp
     MouseEdgeBendEditor.cpp
@@ -160,7 +161,8 @@ QTX_WRAP_UI(
   ../designer/VectorEditor.ui
   ../designer/Workspace.ui
   ../designer/WorkspacePanel.ui
-  ../designer/InteractorConfigWidget.ui)
+  ../designer/InteractorConfigWidget.ui
+  ../designer/HeaderFrame.ui)
 
 QTX_WRAP_CPP(
   MOC_SRCS
@@ -190,6 +192,7 @@ QTX_WRAP_CPP(
   ../include/talipot/GraphHierarchiesModel.h
   ../include/talipot/GraphNeedsSavingObserver.h
   ../include/talipot/GraphTableItemDelegate.h
+  ../include/talipot/HeaderFrame.h
   ../include/talipot/Interactor.h
   ../include/talipot/InteractorComposite.h
   ../include/talipot/ItemsListWidget.h
@@ -248,7 +251,6 @@ ADD_LIBRARY(${LibTalipotGUIName} SHARED ${SRCS} ${MOC_SRCS} ${RCC_SRCS}
 TARGET_LINK_LIBRARIES(
   ${LibTalipotGUIName} ${QT_LIBRARIES} ${LibTalipotCoreName}
   ${LibTalipotOGLName} ${QUAZIP_LIBRARIES})
-
 
 TARGET_LINK_LIBRARIES(${LibTalipotGUIName} talipot-gui-python)
 

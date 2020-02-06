@@ -56,7 +56,7 @@ class TalipotMainWindow : public QMainWindow,
 
   friend tlp::Singleton<TalipotMainWindow>;
 
-  Ui::TalipotMainWindowData *_ui;
+  Ui::TalipotMainWindow *_ui;
   tlp::GraphHierarchiesModel *_graphs;
   tlp::ColorScaleConfigDialog *_colorScalesDialog;
   tlp::Project *_project;
@@ -134,8 +134,6 @@ public slots:
   bool
   setGlMainViewPropertiesForGraph(tlp::Graph *g,
                                   const std::map<std::string, tlp::PropertyInterface *> &propsMap);
-  void setSearchOutput(bool);
-  void setPythonPanel(bool);
   void openPreferences();
 
   void setAutoCenterPanelsOnDraw(bool f);
@@ -150,7 +148,6 @@ public slots:
 
 protected slots:
   void currentGraphChanged(tlp::Graph *graph);
-  void refreshDockExpandControls();
   void panelFocused(tlp::View *);
   void focusedPanelGraphSet(tlp::Graph *);
   void focusedPanelSynchronized();
@@ -180,8 +177,10 @@ protected slots:
   void newProject();
   void openRecentFile();
   void changeSynchronization(bool);
-  void showHideSideBar();
-  void workspaceButtonClicked();
+  void showHideSideBar(bool forceShow = false);
+  void graphsButtonClicked();
+  void algorithmsButtonClicked();
+  void searchButtonClicked();
   void resetLoggerDialogPosition();
   void showHideLogger();
   void showHideMenuBar();

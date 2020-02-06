@@ -29,16 +29,17 @@ IF(PYTHONLIBS_FOUND)
         TalipotUtilsModule.cpp
         APIDataBase.cpp
         AutoCompletionDataBase.cpp
-        PythonTabWidget.cpp
         ConsoleHandlers.h
         PythonEditorsTabWidget.cpp
         PythonCppTypesConverter.cpp
         PythonIDE.cpp
-        PythonPluginCreationDialog.cpp)
+        PythonPluginCreationDialog.cpp
+        PythonREPLWidget.cpp)
 
     SET(${LibTalipotPythonName}_UI
         ../designer/FindReplaceDialog.ui
-        ../designer/PythonPluginCreationDialog.ui ../designer/PythonIDE.ui)
+        ../designer/PythonPluginCreationDialog.ui ../designer/PythonIDE.ui
+        ../designer/PythonREPLWidget.ui)
 
     SET(${LibTalipotPythonName}_MOC
         ConsoleHandlers.h
@@ -47,7 +48,8 @@ IF(PYTHONLIBS_FOUND)
         ../include/talipot/PythonEditorsTabWidget.h
         ../include/talipot/PythonInterpreter.h
         ../include/talipot/PythonIDE.h
-        ../include/talipot/PythonPluginCreationDialog.h)
+        ../include/talipot/PythonPluginCreationDialog.h
+        ../include/talipot/PythonREPLWidget.h)
 
     QTX_WRAP_UI(${LibTalipotPythonName}_UI_SRCS ${${LibTalipotPythonName}_UI})
     QTX_WRAP_CPP(${LibTalipotPythonName}_MOC_SRCS

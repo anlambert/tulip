@@ -45,14 +45,33 @@ Workspace::Workspace(QWidget *parent)
       _focusedPanel(nullptr), _focusedPanelHighlighting(false), _model(nullptr),
       _autoCenterViews(false) {
   _ui->setupUi(this);
+  _ui->nextPageButton->setVisible(false);
+  _ui->previousPageButton->setVisible(false);
   _ui->importButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Import, Qt::black));
   _ui->startupButton->setIcon(FontIconManager::icon(MaterialDesignIcons::PlusBox, Qt::black));
+  _ui->addPanelButton->setIcon(FontIconManager::icon(MaterialDesignIcons::PlusBox, Qt::white));
+  _ui->exposeButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::ViewGridOutline, Qt::white));
   _ui->startupMainFrame->hide();
   _ui->workspaceContents->setCurrentWidget(_ui->startupPage);
+  connect(_ui->addPanelButton, &QAbstractButton::clicked, [this] { addPanelRequest(); });
   connect(_ui->startupButton, &QPushButton::clicked, [this] { addPanelRequest(); });
   connect(_ui->importButton, &QAbstractButton::clicked, this, &Workspace::importGraphRequest);
   connect(_ui->exposeMode, &WorkspaceExposeWidget::exposeFinished, this,
           &Workspace::hideExposeMode);
+
+  setToolTipWithCtrlShortcut(_ui->exposeButton, "Toggle the Expose mode", "E");
+
+  setToolTipWithCtrlShortcut(_ui->previousPageButton, "Show previous panel", "Shift+Left");
+  setToolTipWithCtrlShortcut(_ui->nextPageButton, "Show next panel", "Shift+Right");
+  _ui->singleModeButton->setToolTip("Switch to 1 panel mode");
+  _ui->splitModeButton->setToolTip("Switch to 2 panels mode");
+  _ui->splitHorizontalModeButton->setToolTip("Switch to 2 panels mode");
+  _ui->split3ModeButton->setToolTip("Switch to 2-top 1-bottom panels mode");
+  _ui->split32ModeButton->setToolTip("Switch to 1-left 2-right panels mode");
+  _ui->split33ModeButton->setToolTip("Switch to 2-left 1-right panels mode");
+  _ui->gridModeButton->setToolTip("Switch to 4 panels mode");
+  _ui->sixModeButton->setToolTip("Switch to 6 panels mode");
 
   // This map allows us to know how much slots we have for each mode and which widget corresponds to
   // those slots
@@ -362,8 +381,11 @@ void Workspace::updateAvailableModes() {
   }
 
   bool enableNavigation = !_panels.empty();
+  _ui->nextPageButton->setVisible(enableNavigation);
+  _ui->previousPageButton->setVisible(enableNavigation);
   _ui->nextPageButton->setEnabled(enableNavigation);
   _ui->previousPageButton->setEnabled(enableNavigation);
+  _ui->addPanelButton->setEnabled(enableNavigation);
   _ui->exposeButton->setEnabled(enableNavigation);
 }
 
@@ -388,7 +410,7 @@ void Workspace::updatePanels() {
     _currentPanelIndex = _panels.size() - currentSlotsCount();
   }
 
-  //   Fill up slots according to the current index until there is no panel to show
+  // Fill up slots according to the current index until there is no panel to show
   int i = _currentPanelIndex;
 
   for (auto slt : currentModeSlots()) {

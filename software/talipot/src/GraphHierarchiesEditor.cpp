@@ -24,6 +24,7 @@
 #include <QSortFilterProxyModel>
 #include <QMessageBox>
 #include <QMainWindow>
+#include <QTimer>
 
 #include <talipot/BooleanProperty.h>
 #include <talipot/MetaTypes.h>
@@ -106,6 +107,10 @@ void CustomTreeView::setAllHierarchyVisible(const QModelIndex &index, bool visib
 }
 
 void CustomTreeView::resizeFirstColumnToContent() {
+  QTimer::singleShot(100, this, &CustomTreeView::resizeFirstColumnToContentImpl);
+}
+
+void CustomTreeView::resizeFirstColumnToContentImpl() {
   resizeColumnToContents(0);
 }
 
