@@ -215,7 +215,6 @@ Some predefined constants are available for code readability (shapes are defined
 Below is the exhaustive list of the constants for nodes shapes:
 
     * :const:`tlp.NodeShape.Billboard`
-    * :const:`tlp.NodeShape.ChristmasTree`
     * :const:`tlp.NodeShape.Circle`
     * :const:`tlp.NodeShape.Cone`
     * :const:`tlp.NodeShape.Cross`

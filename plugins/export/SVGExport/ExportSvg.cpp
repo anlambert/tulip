@@ -563,9 +563,6 @@ bool ExportSvg::addShape(const tlp::NodeShape::NodeShapes &type, const Coord &co
       addBorder(bordercolor, borderwidth);
   } break;
 
-  case NodeShape::ChristmasTree:
-    iconName = FontAwesome::Solid::Tree;
-
   case NodeShape::Icon: {
     addWebFontFromIconName(iconName);
 
