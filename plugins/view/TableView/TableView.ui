@@ -368,20 +368,19 @@ border-right: 1px solid #C9C9C9;</string>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="matchPropertyButton">
+            <widget class="QComboBox" name="matchPropertyCombo">
              <property name="toolTip">
               <string>Only show the rows (nodes or edges) whose
 the chosen column value contains the given pattern</string>
              </property>
-             <property name="layoutDirection">
-              <enum>Qt::RightToLeft</enum>
+             <property name="currentText">
+              <string/>
              </property>
-             <property name="text">
-              <string>Any</string>
+             <property name="insertPolicy">
+              <enum>QComboBox::InsertAlphabetically</enum>
              </property>
-             <property name="icon">
-              <iconset>
-               <normaloff>:/talipot/gui/ui/combobox_arrow.png</normaloff>:/talipot/gui/ui/combobox_arrow.png</iconset>
+             <property name="sizeAdjustPolicy">
+              <enum>QComboBox::AdjustToContents</enum>
              </property>
             </widget>
            </item>

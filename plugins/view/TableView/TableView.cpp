@@ -31,7 +31,11 @@
 #include <QGraphicsItem>
 #include <QGraphicsProxyWidget>
 
+#include <algorithm>
+
 using namespace tlp;
+
+const QString anyProperty = "Any property";
 
 TableView::TableView(tlp::PluginContext *)
     : ViewWidget(), _ui(new Ui::TableViewWidget), propertiesEditor(nullptr), _model(nullptr),
@@ -163,9 +167,6 @@ void TableView::setupWidget() {
           &TableView::readSettings);
   connect(_ui->filteringPropertyCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), this,
           &TableView::readSettings);
-  // use a push button instead of a combobox (see matchPropertyCombo)
-  // waiting for a fix for combobox in QGraphicsItem
-  connect(_ui->matchPropertyButton, &QAbstractButton::pressed, this, &TableView::setMatchProperty);
   // columns/properties filtering
   filteringColumns = false;
   connect(_ui->columnsFilterEdit, &QLineEdit::textChanged, this, &TableView::setColumnsFilter);
@@ -199,10 +200,13 @@ void TableView::graphChanged(tlp::Graph *g) {
   _ui->table->horizontalHeader()->show();
   _ui->table->verticalHeader()->show();
 
+  _ui->matchPropertyCombo->clear();
+  _ui->matchPropertyCombo->addItem(anyProperty);
   // Show all the properties
   if (_model != nullptr) {
     for (int i = 0; i < _model->columnCount(); ++i) {
       QString propName = _model->headerData(i, Qt::Horizontal, Qt::DisplayRole).toString();
+      _ui->matchPropertyCombo->addItem(propName);
       // a property is visible only if it was previously visible
       bool checked = !visibleProperties.isEmpty() ? visibleProperties.contains(propName) : true;
 
@@ -311,9 +315,17 @@ void TableView::setPropertyVisible(PropertyInterface *pi, bool v) {
     }
   }
 
-  if (_ui->matchPropertyButton->text() == propName)
+  if (_ui->matchPropertyCombo->currentText() == propName) {
     // set to Any
-    _ui->matchPropertyButton->setText("Any");
+    _ui->matchPropertyCombo->setCurrentText(anyProperty);
+  }
+
+  if (!v) {
+    _ui->matchPropertyCombo->removeItem(_ui->matchPropertyCombo->findText(propName));
+  } else if (_ui->matchPropertyCombo->findText(propName) == -1) {
+    _ui->matchPropertyCombo->addItem(propName);
+    _ui->matchPropertyCombo->model()->sort(0);
+  }
 
   // Hide table if no more column is displayed
   bool visible = false;
@@ -327,66 +339,6 @@ void TableView::setPropertyVisible(PropertyInterface *pi, bool v) {
 
   _ui->table->horizontalHeader()->setVisible(visible);
   _ui->table->verticalHeader()->setVisible(visible);
-}
-
-void TableView::setMatchProperty() {
-  QVector<QString> props;
-
-  for (auto pi : propertiesEditor->visibleProperties()) {
-    QString propName = tlpStringToQString(pi->getName());
-    int i = 0;
-
-    for (; i < props.size(); ++i) {
-      if (props[i] > propName)
-        break;
-    }
-
-    props.insert(i, propName);
-  }
-
-  QMenu menu;
-  QAction *action = menu.addAction("-- Any --");
-  menu.setActiveAction(action);
-
-  for (const QString &prop : props) {
-    if (_ui->matchPropertyButton->text() == prop) {
-      action = menu.addAction(prop);
-      menu.setActiveAction(action);
-    } else
-      menu.addAction(prop);
-  }
-
-  QPalette palette = QComboBox().palette();
-
-  // set a combo like stylesheet
-  menu.setStyleSheet(QString("QMenu::item {border-image: none; border-width: 4; padding: 0px 6px; "
-                             "font-size: 12px; color: %1; background-color: %2;} "
-                             "QMenu::item:selected {color: %3; background-color: %4}")
-                         .arg(palette.color(QPalette::Active, QPalette::Text).name())
-                         .arg(palette.color(QPalette::Active, QPalette::Base).name())
-                         .arg(palette.color(QPalette::Active, QPalette::HighlightedText).name())
-                         .arg(palette.color(QPalette::Active, QPalette::Highlight).name()));
-
-  // compute a combo like position
-  // to popup the menu
-  QWidget *pViewport = QApplication::widgetAt(QCursor::pos());
-  QWidget *pView = pViewport->parentWidget();
-  QGraphicsView *pGraphicsView = static_cast<QGraphicsView *>(pView);
-  QGraphicsItem *pGraphicsItem =
-      pGraphicsView->items(pViewport->mapFromGlobal(QCursor::pos())).first();
-  QPoint popupPos = pGraphicsView->mapToGlobal(pGraphicsView->mapFromScene(
-      pGraphicsItem->mapToScene(static_cast<QGraphicsProxyWidget *>(pGraphicsItem)
-                                    ->subWidgetRect(_ui->matchPropertyButton)
-                                    .bottomLeft())));
-
-  action = menu.exec(popupPos);
-
-  if (action) {
-    if (action->text() == "-- Any --")
-      _ui->matchPropertyButton->setText("Any");
-    else
-      _ui->matchPropertyButton->setText(action->text());
-  }
 }
 
 void TableView::setColumnsFilterCase() {
@@ -425,15 +377,16 @@ void TableView::filterChanged() {
 
   Graph *g = graph();
 
-  if (_ui->matchPropertyButton->text() == "Any") {
+  if (_ui->matchPropertyCombo->currentText() == anyProperty) {
     for (int i = 0; i < _model->columnCount(); ++i) {
       if (!_ui->table->horizontalHeader()->isSectionHidden(i))
         props +=
             _model->headerData(i, Qt::Horizontal, Model::PropertyRole).value<PropertyInterface *>();
     }
-  } else
+  } else {
     // a visible column
-    props += g->getProperty(QStringToTlpString(_ui->matchPropertyButton->text()));
+    props += g->getProperty(QStringToTlpString(_ui->matchPropertyCombo->currentText()));
+  }
 
   sortModel->setProperties(props);
   sortModel->setFilterRegExp(

@@ -456,7 +456,10 @@ void PropertiesEditor::delProperties() {
 }
 
 bool PropertiesEditor::renameProperty(PropertyInterface *prop) {
-  return RenamePropertyDialog::renameProperty(prop, getMainWindow());
+  emit propertyVisibilityChanged(prop, false);
+  bool renamed = RenamePropertyDialog::renameProperty(prop, getMainWindow());
+  emit propertyVisibilityChanged(prop, true);
+  return renamed;
 }
 
 void PropertiesEditor::toLabels() {
