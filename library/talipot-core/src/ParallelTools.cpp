@@ -64,31 +64,10 @@ struct OpenMPDefaultOptions {
   OpenMPDefaultOptions() {
     int num_threads = omp_get_num_procs();
     auto num_threads_ptr = getenv("OMP_NUM_THREADS");
-    if (num_threads_ptr)
+    if (num_threads_ptr) {
       num_threads = atoi(num_threads_ptr);
+    }
     omp_set_num_threads(num_threads);
-
-#ifdef _LINUX
-    // OMP_NESTED=TRUE
-    // must be used with care (especially on MacOSX)
-    // because it may lead to really poor performances
-    // in comparison with a mono thread execution
-    bool nested = true;
-#else
-    bool nested = false;
-#endif
-    auto nested_ptr = getenv("OMP_NESTED");
-    if (nested_ptr)
-      // use env variable value (TRUE or FALSE)
-      nested = (nested_ptr[0] == 'T');
-    omp_set_nested(nested);
-
-    bool dynamic = false;
-    auto dynamic_ptr = getenv("OMP_DYNAMIC");
-    if (dynamic_ptr)
-      // use env variable value (TRUE or FALSE)
-      dynamic = (dynamic_ptr[0] == 'T');
-    omp_set_dynamic(dynamic);
   }
 };
 
@@ -158,7 +137,7 @@ void ThreadManager::allocateThreadNumber() {
   // exclusive access to tNumManager
   tNumMtx.lock();
   // 0 is reserved for main thread
-  auto num = tNumManager.get() + 1;
+  auto num = tNumManager.add() + 1;
   auto tNum = std::this_thread::get_id();
   tNumMap[tNum] = num;
   tNumMtx.unlock();
