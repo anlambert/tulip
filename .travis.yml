@@ -480,9 +480,9 @@ jobs:
         - sudo port -N install clang-9.0
         - sudo port -N install ccache
         - sudo port -N install ninja
-        - sudo port -N install qt511-qtbase
-        - sudo port -N install qt511-qttools
-        - sudo port -N install qt511-qtwebkit
+        - sudo port -N install qt513-qtbase
+        - sudo port -N install qt513-qttools
+        - sudo port -N install qt513-qtwebkit
         - sudo port -N install quazip
         - sudo port -N install freetype
         - sudo port -N install glew
