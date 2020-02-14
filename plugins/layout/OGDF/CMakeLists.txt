@@ -10,7 +10,6 @@ OGDFVisibility.cpp
 OGDFKamadaKawai.cpp
 OGDFCircular.cpp
 OGDFBalloon.cpp
-OGDFDavidsonHarel.cpp
 OGDFMMMExampleNoTwistLayout.cpp
 OGDFTree.cpp
 OGDFMMMExampleFastLayout.cpp
