@@ -1,7 +1,7 @@
 # OGDF (library only) CMake configuration
 
 # cache configuration
-option(BUILD_SHARED_LIBS "Whether to build shared libraries instead of static ones." OFF)
+option(BUILD_SHARED_LIBS "Whether to build shared libraries instead of static ones." ON)
 set(OGDF_MEMORY_MANAGER "POOL_TS" CACHE STRING "Memory manager to be used.")
 set_property(CACHE OGDF_MEMORY_MANAGER PROPERTY STRINGS POOL_TS POOL_NTS MALLOC_TS)
 set(OGDF_DEBUG_MODE "REGULAR" CACHE STRING "Whether to use (heavy) OGDF assertions in debug mode.")
@@ -62,19 +62,19 @@ mark_as_advanced(OGDF_EXTRA_CXX_FLAGS_RELEASE)
 file(GLOB_RECURSE ogdf_headers include/ogdf/*.h)
 file(GLOB_RECURSE ogdf_sources src/ogdf/*.cpp)
 set(ogdf_sources "${ogdf_sources};${ogdf_headers}")
-add_library(OGDF "${ogdf_sources}")
-target_link_libraries(OGDF PUBLIC COIN)
+add_library(${OGDFLibrary} "${ogdf_sources}")
+target_link_libraries(${OGDFLibrary} PUBLIC COIN)
 group_files(ogdf_sources "ogdf")
-target_compile_features(OGDF PUBLIC cxx_range_for)
+target_compile_features(${OGDFLibrary} PUBLIC cxx_range_for)
 
-target_include_directories(OGDF PUBLIC # for the autogen header
+target_include_directories(${OGDFLibrary} PUBLIC # for the autogen header
   $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>
   $<INSTALL_INTERFACE:include>)
-target_include_directories(OGDF PUBLIC # for the general include files
+target_include_directories(${OGDFLibrary} PUBLIC # for the general include files
   $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 if(COIN_EXTERNAL_SOLVER_INCLUDE_DIRECTORIES)
-  target_include_directories(OGDF SYSTEM PUBLIC ${COIN_EXTERNAL_SOLVER_INCLUDE_DIRECTORIES})
+  target_include_directories(${OGDFLibrary} SYSTEM PUBLIC ${COIN_EXTERNAL_SOLVER_INCLUDE_DIRECTORIES})
 endif()
 
 function (add_ogdf_extra_flags TARGET_NAME)
@@ -95,11 +95,11 @@ function (add_ogdf_extra_flags TARGET_NAME)
   set_property(TARGET ${TARGET_NAME} APPEND_STRING PROPERTY COMPILE_FLAGS " ${extra_flags} ")
 endfunction()
 
-add_ogdf_extra_flags(OGDF)
+add_ogdf_extra_flags(${OGDFLibrary})
 
 # set OGDF_INSTALL for shared libraries
 if(BUILD_SHARED_LIBS)
-  target_compile_definitions(OGDF PRIVATE OGDF_INSTALL)
+  target_compile_definitions(${OGDFLibrary} PRIVATE OGDF_INSTALL)
 endif()
 
 # autogen header variables for debug mode
@@ -145,45 +145,54 @@ if(has_linux_cpu_macros)
 endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-  target_link_libraries(OGDF PUBLIC pthread)
+  target_link_libraries(${OGDFLibrary} PUBLIC pthread)
 endif()
 
 # add stack trace settings
 if(BACKWARD_HAS_DW)
-  target_include_directories(OGDF SYSTEM PUBLIC ${LIBDW_INCLUDE_DIR})
+  target_include_directories(${OGDFLibrary} SYSTEM PUBLIC ${LIBDW_INCLUDE_DIR})
 elseif(BACKWARD_HAS_BFD)
-  target_include_directories(OGDF SYSTEM PUBLIC ${LIBBFD_INCLUDE_DIR} ${LIBDL_INCLUDE_DIR})
+  target_include_directories(${OGDFLibrary} SYSTEM PUBLIC ${LIBBFD_INCLUDE_DIR} ${LIBDL_INCLUDE_DIR})
 elseif(BACKWARD_HAS_UNWIND)
-  target_include_directories(OGDF SYSTEM PUBLIC ${LIBUNWIND_INCLUDE_DIR})
+  target_include_directories(${OGDFLibrary} SYSTEM PUBLIC ${LIBUNWIND_INCLUDE_DIR})
 endif()
 if(SHOW_STACKTRACE)
   if(BACKWARD_HAS_DW)
-    target_link_libraries(OGDF PUBLIC ${LIBDW_LIBRARY})
+    target_link_libraries(${OGDFLibrary} PUBLIC ${LIBDW_LIBRARY})
   elseif(BACKWARD_HAS_BFD)
-    target_link_libraries(OGDF PUBLIC ${LIBBFD_LIBRARY} ${LIBDL_LIBRARY})
+    target_link_libraries(${OGDFLibrary} PUBLIC ${LIBBFD_LIBRARY} ${LIBDL_LIBRARY})
   elseif(BACKWARD_HAS_UNWIND)
-    target_link_libraries(OGDF PUBLIC ${LIBUNWIND_LIBRARY})
+    target_link_libraries(${OGDFLibrary} PUBLIC ${LIBUNWIND_LIBRARY})
   endif()
 endif()
 
-# installation
-set(OGDF_INSTALL_LIBRARY_DIR "lib/${CMAKE_LIBRARY_ARCHITECTURE}" CACHE PATH "Installation path of OGDF library")
-set(OGDF_INSTALL_INCLUDE_DIR "include" CACHE PATH "Installation path of OGDF header files (creates subdirectory)")
-set(OGDF_INSTALL_CMAKE_DIR "lib/${CMAKE_LIBRARY_ARCHITECTURE}/cmake/OGDF/" CACHE PATH "Installation path of OGDF files for CMake")
-mark_as_advanced(OGDF_INSTALL_LIBRARY_DIR OGDF_INSTALL_INCLUDE_DIR OGDF_INSTALL_CMAKE_DIR)
-configure_file(cmake/ogdf-config.cmake "${PROJECT_BINARY_DIR}/ogdf-config.cmake" @ONLY)
-install(TARGETS OGDF
-  EXPORT OgdfTargets
-  LIBRARY DESTINATION "${OGDF_INSTALL_LIBRARY_DIR}"
-  ARCHIVE DESTINATION "${OGDF_INSTALL_LIBRARY_DIR}"
-  INCLUDES DESTINATION "${COIN_INSTALL_INCLUDE_DIR}"
-  PUBLIC_HEADER DESTINATION "${OGDF_INSTALL_INCLUDE_DIR}")
-install(DIRECTORY "${PROJECT_BINARY_DIR}/include/ogdf" include/ogdf
-  DESTINATION "${OGDF_INSTALL_INCLUDE_DIR}"
-  FILES_MATCHING
-    PATTERN "*.h"
-    PATTERN "*.hpp"
-    PATTERN "*.inc")
-install(EXPORT OgdfTargets DESTINATION "${OGDF_INSTALL_CMAKE_DIR}")
-install(FILES "${PROJECT_BINARY_DIR}/ogdf-config.cmake" DESTINATION "${OGDF_INSTALL_CMAKE_DIR}")
-export(EXPORT OgdfTargets)
+# # installation
+# set(OGDF_INSTALL_LIBRARY_DIR "lib/${CMAKE_LIBRARY_ARCHITECTURE}" CACHE PATH "Installation path of OGDF library")
+# set(OGDF_INSTALL_INCLUDE_DIR "include" CACHE PATH "Installation path of OGDF header files (creates subdirectory)")
+# set(OGDF_INSTALL_CMAKE_DIR "lib/${CMAKE_LIBRARY_ARCHITECTURE}/cmake/OGDF/" CACHE PATH "Installation path of OGDF files for CMake")
+# mark_as_advanced(OGDF_INSTALL_LIBRARY_DIR OGDF_INSTALL_INCLUDE_DIR OGDF_INSTALL_CMAKE_DIR)
+# configure_file(cmake/ogdf-config.cmake "${PROJECT_BINARY_DIR}/ogdf-config.cmake" @ONLY)
+# install(TARGETS OGDF
+#   EXPORT OgdfTargets
+#   LIBRARY DESTINATION "${OGDF_INSTALL_LIBRARY_DIR}"
+#   ARCHIVE DESTINATION "${OGDF_INSTALL_LIBRARY_DIR}"
+#   INCLUDES DESTINATION "${COIN_INSTALL_INCLUDE_DIR}"
+#   PUBLIC_HEADER DESTINATION "${OGDF_INSTALL_INCLUDE_DIR}")
+# install(DIRECTORY "${PROJECT_BINARY_DIR}/include/ogdf" include/ogdf
+#   DESTINATION "${OGDF_INSTALL_INCLUDE_DIR}"
+#   FILES_MATCHING
+#     PATTERN "*.h"
+#     PATTERN "*.hpp"
+#     PATTERN "*.inc")
+# install(EXPORT OgdfTargets DESTINATION "${OGDF_INSTALL_CMAKE_DIR}")
+# install(FILES "${PROJECT_BINARY_DIR}/ogdf-config.cmake" DESTINATION "${OGDF_INSTALL_CMAKE_DIR}")
+# export(EXPORT OgdfTargets)
+
+INSTALL(TARGETS ${OGDFLibrary}
+        RUNTIME DESTINATION ${TalipotBinInstallDir}
+        LIBRARY DESTINATION ${TalipotLibInstallDir}
+        ARCHIVE DESTINATION ${TalipotLibInstallDir})
+
+IF(TALIPOT_ACTIVATE_PYTHON_WHEEL_TARGET)
+  TALIPOT_COPY_TARGET_LIBRARY_POST_BUILD(${OGDFLibrary} ${TALIPOT_PYTHON_NATIVE_FOLDER} wheel)
+ENDIF(TALIPOT_ACTIVATE_PYTHON_WHEEL_TARGET)
