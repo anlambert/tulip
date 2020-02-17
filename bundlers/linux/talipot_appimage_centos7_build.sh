@@ -9,7 +9,7 @@ yum -y update
 
 # install base build system
 yum -y install epel-release
-yum -y install xz cmake tar gzip make wget ccache
+yum -y install xz cmake3 tar gzip make wget ccache
 
 # install GCC
 yum -y install gcc gcc-c++
@@ -50,7 +50,7 @@ else
   RUN_TESTS=OFF
 fi
 
-cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PWD/install -DPYTHON_EXECUTABLE=/usr/bin/python3.6 -DTALIPOT_USE_CCACHE=$CCACHE -DTALIPOT_BUILD_FOR_APPIMAGE=ON -DTALIPOT_BUILD_TESTS=$RUN_TESTS -DOpenMP_C_FLAGS=-fopenmp -DOpenMP_CXX_FLAGS=-fopenmp ..
+cmake3 -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PWD/install -DPYTHON_EXECUTABLE=/usr/bin/python3.6 -DTALIPOT_USE_CCACHE=$CCACHE -DTALIPOT_BUILD_FOR_APPIMAGE=ON -DTALIPOT_BUILD_TESTS=$RUN_TESTS -DOpenMP_C_FLAGS=-fopenmp -DOpenMP_CXX_FLAGS=-fopenmp ..
 make -j4 install
 
 # run unit tests
