@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -16,53 +16,6 @@
 #include "talipot2ogdf/OGDFLayoutPluginBase.h"
 
 #include <talipot/StringCollection.h>
-
-// comments below have been extracted from OGDF/src/tree/TreeLayout.cpp
-/** \addtogroup layout */
-
-/**
- * Linear time layout algorithm for trees (TreeLayout)
- * based on Walker's algorithm
- *
- * \author Christoph Buchheim
- *
- * \par License:
- * This is part of the Open Graph Drawing Framework (OGDF).
- *
- * Copyright (C). All rights reserved.
- * See README.txt in the root directory of the OGDF installation for details.
- *
- * \par
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * Version 2 or 3 as published by the Free Software Foundation
- * and appearing in the files LICENSE_GPL_v2.txt and
- * LICENSE_GPL_v3.txt included in the packaging of this file.
- *
- * \par
- * In addition, as a special exception, you have permission to link
- * this software with the libraries of the COIN-OR Osi project
- * (http://www.coin-or.org/projects/Osi.xml), all libraries required
- * by Osi, and all LP-solver libraries directly supported by the
- * COIN-OR Osi project, and distribute executables, as long as
- * you follow the requirements of the GNU General Public License
- * in regard to all of the software in the executable aside from these
- * third-party libraries.
- *
- * \par
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * \par
- * You should have received a copy of the GNU General Public
- * License along with this program; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
- * Boston, MA 02110-1301, USA.
- *
- * \see  http://www.gnu.org/copyleft/gpl.html
- ***************************************************************/
 
 #define ELT_ORIENTATION "Orientation"
 #define ELT_ORIENTATIONLIST "topToBottom;bottomToTop;leftToRight;rightToLeft"
@@ -160,24 +113,24 @@ public:
         if (sc.getCurrent() == ELT_TOPTOBOTTOM) {
           // because of an ununderstanding fix
           // in thirdparty/OGDF/src/ogdf/tree/TreeLayout.cpp
-          tree->orientation(ogdf::bottomToTop);
+          tree->orientation(ogdf::Orientation::bottomToTop);
         } else if (sc.getCurrent() == ELT_BOTTOMTOTOP) {
           // same as above
-          tree->orientation(ogdf::topToBottom);
+          tree->orientation(ogdf::Orientation::topToBottom);
         } else if (sc.getCurrent() == ELT_LEFTTORIGHT) {
-          tree->orientation(ogdf::leftToRight);
+          tree->orientation(ogdf::Orientation::leftToRight);
         } else {
-          tree->orientation(ogdf::rightToLeft);
+          tree->orientation(ogdf::Orientation::rightToLeft);
         }
       }
 
       if (dataSet->get(ELT_ROOTSELECTION, sc)) {
         if (sc.getCurrent() == ELT_ROOTSOURCE) {
-          tree->rootSelection(ogdf::TreeLayout::rootIsSource);
+          tree->rootSelection(ogdf::TreeLayout::RootSelectionType::Source);
         } else if (sc.getCurrent() == ELT_ROOTSINK) {
-          tree->rootSelection(ogdf::TreeLayout::rootIsSink);
+          tree->rootSelection(ogdf::TreeLayout::RootSelectionType::Sink);
         } else {
-          tree->rootSelection(ogdf::TreeLayout::rootByCoord);
+          tree->rootSelection(ogdf::TreeLayout::RootSelectionType::ByCoord);
         }
       }
     }

@@ -11,21 +11,16 @@ SET(PLUGINS_SRCS
     OGDFKamadaKawai.cpp
     OGDFCircular.cpp
     OGDFBalloon.cpp
-    OGDFMMMExampleNoTwistLayout.cpp
     OGDFTree.cpp
-    OGDFMMMExampleFastLayout.cpp
     OGDFGemFrick.cpp
     OGDFStressMajorization.cpp
     OGDFSugiyama.cpp
     OGDFDominance.cpp
-    OGDFMMMExampleNiceLayout.cpp
     OGDFPlanarizationGrid.cpp
     OGDFBertaultLayout.cpp
     OGDFPivotMDS.cpp
     OGDFTileToRowsPacking.cpp
     OGDFPlanarizationLayout.cpp)
-
-TALIPOT_SET_CXX_FLAGS("-DOGDF_DLL")
 
 DISABLE_COMPILER_WARNINGS()
 

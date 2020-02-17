@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -11,13 +11,8 @@
  *
  */
 
-///@cond DOXYGEN_HIDDEN
-
 #ifndef TALIPOT_TALIPOT_TO_OGDF_H
 #define TALIPOT_TALIPOT_TO_OGDF_H
-
-#include <ogdf/basic/GraphAttributes.h>
-#include <ogdf/fileformats/GmlParser.h>
 
 #include <talipot/config.h>
 #include <talipot/Graph.h>
@@ -25,6 +20,8 @@
 #include <talipot/StringProperty.h>
 #include <talipot/NumericProperty.h>
 #include <talipot/StaticProperty.h>
+
+#include <ogdf/basic/GraphAttributes.h>
 
 #include <exception>
 #include <string>
@@ -43,8 +40,6 @@ class SizeProperty;
 class TLP_OGDF_SCOPE TalipotToOGDF {
 public:
   TalipotToOGDF(tlp::Graph *g, bool importEdgeBends = true);
-
-  void saveToGML(const char *fileName);
 
   tlp::Graph &getTlp();
   ogdf::GraphAttributes &getOGDFGraphAttr();
@@ -70,4 +65,3 @@ private:
 };
 
 #endif // TALIPOT_TALIPOT_TO_OGDF_H
-///@endcond

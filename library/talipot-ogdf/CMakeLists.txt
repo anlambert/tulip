@@ -1,7 +1,6 @@
 INCLUDE_DIRECTORIES(${TalipotCoreBuildInclude} ${TalipotCoreInclude}
                     ${OGDFInclude})
 
-TALIPOT_SET_CXX_FLAGS("-DOGDF_DLL")
 IF(WIN32)
   TALIPOT_SET_CXX_FLAGS("-DDLL_TALIPOT_OGDF")
 ENDIF(WIN32)
@@ -12,7 +11,8 @@ SET(TalipotToOGDF_SRCS TalipotToOGDF.cpp OGDFLayoutPluginBase.cpp)
 
 ADD_LIBRARY(${LibTalipotOGDFName} SHARED ${TalipotToOGDF_SRCS})
 
-TARGET_LINK_LIBRARIES(${LibTalipotOGDFName} ${LibTalipotCoreName} ${OGDFLibrary})
+TARGET_LINK_LIBRARIES(${LibTalipotOGDFName} ${LibTalipotCoreName}
+                      ${OGDFLibrary})
 
 INSTALL(
   TARGETS ${LibTalipotOGDFName}
