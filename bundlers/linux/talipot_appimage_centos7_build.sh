@@ -11,8 +11,9 @@ yum -y update
 yum -y install epel-release
 yum -y install xz cmake3 tar gzip make wget ccache
 
-# install GCC
-yum -y install gcc gcc-c++
+# install GCC 8
+yum -y install centos-release-scl
+yum -y install devtoolset-8-gcc devtoolset-8-gcc-c++
 
 # install talipot deps
 yum -y install zlib-devel qhull-devel yajl-devel binutils-devel
@@ -50,7 +51,17 @@ else
   RUN_TESTS=OFF
 fi
 
-cmake3 -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PWD/install -DPYTHON_EXECUTABLE=/usr/bin/python3.6 -DTALIPOT_USE_CCACHE=$CCACHE -DTALIPOT_BUILD_FOR_APPIMAGE=ON -DTALIPOT_BUILD_TESTS=$RUN_TESTS -DOpenMP_C_FLAGS=-fopenmp -DOpenMP_CXX_FLAGS=-fopenmp ..
+cmake3 -DCMAKE_BUILD_TYPE=Release \
+       -DCMAKE_C_COMPILER=/opt/rh/devtoolset-8/root/usr/bin/gcc \
+       -DCMAKE_CXX_COMPILER=/opt/rh/devtoolset-8/root/usr/bin/g++ \
+       -DCMAKE_INSTALL_PREFIX=$PWD/install \
+       -DPYTHON_EXECUTABLE=/usr/bin/python3.6 \
+       -DTALIPOT_USE_CCACHE=$CCACHE \
+       -DTALIPOT_BUILD_FOR_APPIMAGE=ON \
+       -DTALIPOT_BUILD_TESTS=$RUN_TESTS \
+       -DOpenMP_C_FLAGS=-fopenmp \
+       -DOpenMP_CXX_FLAGS=-fopenmp ..
+
 make -j4 install
 
 # run unit tests
