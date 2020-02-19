@@ -13,8 +13,7 @@
 
 #include <ogdf/energybased/GEMLayout.h>
 
-#include "talipot2ogdf/OGDFLayoutPluginBase.h"
-
+#include <talipot/OGDFLayoutPluginBase.h>
 #include <talipot/StringCollection.h>
 
 #define ELT_ATTRACTIONFORMULA "Attraction formula"
@@ -60,7 +59,7 @@ static const char *paramHelp[] = {
     // pageRatio
     "The page ratio used for packing connected components."};
 
-class OGDFGemFrick : public OGDFLayoutPluginBase {
+class OGDFGemFrick : public tlp::OGDFLayoutPluginBase {
 
 public:
   PLUGININFORMATION("GEM Frick (OGDF)", "Christoph Buchheim", "15/11/2007",
@@ -70,8 +69,6 @@ public:
                     "Computer Science (1995).",
                     "1.1", "Force Directed")
   OGDFGemFrick(const tlp::PluginContext *context);
-  ~OGDFGemFrick() override;
-
   void beforeCall() override;
 };
 
@@ -87,13 +84,12 @@ OGDFGemFrick::OGDFGemFrick(const tlp::PluginContext *context)
   addInParameter<double>("oscillation angle", paramHelp[7], "1.57079633");
   addInParameter<double>("rotation sensitivity", paramHelp[8], "0.01");
   addInParameter<double>("oscillation sensitivity", paramHelp[9], "0.3");
-  addInParameter<StringCollection>(ELT_ATTRACTIONFORMULA, paramHelp[10], ELT_ATTRACTIONFORMULALIST,
-                                   true, "Fruchterman/Reingold <br> GEM");
+  addInParameter<tlp::StringCollection>(ELT_ATTRACTIONFORMULA, paramHelp[10],
+                                        ELT_ATTRACTIONFORMULALIST, true,
+                                        "Fruchterman/Reingold <br> GEM");
   addInParameter<double>("minDistCC", paramHelp[11], "20");
   addInParameter<double>("pageRatio", paramHelp[12], "1.0");
 }
-
-OGDFGemFrick::~OGDFGemFrick() {}
 
 void OGDFGemFrick::beforeCall() {
   ogdf::GEMLayout *gem = static_cast<ogdf::GEMLayout *>(ogdfLayoutAlgo);
@@ -101,7 +97,7 @@ void OGDFGemFrick::beforeCall() {
   if (dataSet != nullptr) {
     int ival = 0;
     double dval = 0;
-    StringCollection sc;
+    tlp::StringCollection sc;
 
     if (dataSet->get("number of rounds", ival)) {
       gem->numberOfRounds(ival);

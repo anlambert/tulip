@@ -21,8 +21,7 @@
 #include <ogdf/planarity/EmbedderOptimalFlexDraw.h>
 #include <ogdf/planarity/SimpleEmbedder.h>
 
-#include "talipot2ogdf/OGDFLayoutPluginBase.h"
-
+#include <talipot/OGDFLayoutPluginBase.h>
 #include <talipot/StringCollection.h>
 
 #define ELT_EMBEDDER "Embedder"
@@ -61,7 +60,7 @@ static const char *paramHelp[] = {
     "The result of the crossing minimization step is a planar graph, in which crossings are "
     "replaced by dummy nodes. The embedder then computes a planar embedding of this planar graph."};
 
-class OGDFPlanarizationLayout : public OGDFLayoutPluginBase {
+class OGDFPlanarizationLayout : public tlp::OGDFLayoutPluginBase {
 
 public:
   PLUGININFORMATION("Planarization Layout (OGDF)", "Carsten Gutwenger", "12/11/2007",
@@ -69,18 +68,16 @@ public:
   OGDFPlanarizationLayout(const tlp::PluginContext *context)
       : OGDFLayoutPluginBase(context, new ogdf::PlanarizationLayout()) {
     addInParameter<double>("page ratio", paramHelp[0], "1.1");
-    addInParameter<StringCollection>(ELT_EMBEDDER, paramHelp[1], ELT_EMBEDDER_LIST, true,
-                                     embedderValuesDescription);
+    addInParameter<tlp::StringCollection>(ELT_EMBEDDER, paramHelp[1], ELT_EMBEDDER_LIST, true,
+                                          embedderValuesDescription);
   }
-
-  ~OGDFPlanarizationLayout() override {}
 
   void beforeCall() override {
     ogdf::PlanarizationLayout *pl = static_cast<ogdf::PlanarizationLayout *>(ogdfLayoutAlgo);
 
     if (dataSet != nullptr) {
       double dval = 0;
-      StringCollection sc;
+      tlp::StringCollection sc;
 
       if (dataSet->get("page ratio", dval))
         pl->pageRatio(dval);

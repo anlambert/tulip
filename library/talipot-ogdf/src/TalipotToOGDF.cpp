@@ -1,0 +1,140 @@
+/**
+ *
+ * Copyright (C) 2019-2020  The Talipot developers
+ *
+ * Talipot is a fork of Tulip, created by David Auber
+ * and the Tulip development Team from LaBRI, University of Bordeaux
+ *
+ * See the AUTHORS file at the top-level directory of this distribution
+ * License: GNU General Public License version 3, or any later version
+ * See top-level LICENSE file for more information
+ *
+ */
+
+#include <talipot/TalipotToOGDF.h>
+#include <talipot/PropertyTypes.h>
+#include <talipot/LayoutProperty.h>
+#include <talipot/SizeProperty.h>
+#include <talipot/NumericProperty.h>
+
+#include <ogdf/basic/geometry.h>
+
+using namespace std;
+using namespace tlp;
+
+TalipotToOGDF::TalipotToOGDF(Graph *g, bool importEdgeBends) : talipotGraph(g) {
+
+  // needed to initialize some ogdfAttributes fields
+  long attributes =
+      // x, y, width, height fields
+      ogdf::GraphAttributes::nodeGraphics |
+      // bends field
+      ogdf::GraphAttributes::edgeGraphics |
+      // doubleWeight field
+      ogdf::GraphAttributes::edgeDoubleWeight |
+      // weight field
+      ogdf::GraphAttributes::nodeWeight |
+      // z coordinate
+      ogdf::GraphAttributes::threeD;
+
+  ogdfGraphAttributes = ogdf::GraphAttributes(ogdfGraph, attributes);
+
+  SizeProperty *sizeProp = talipotGraph->getSizeProperty("viewSize");
+  LayoutProperty *layoutProp = talipotGraph->getLayoutProperty("viewLayout");
+
+  for (auto nTlp : talipotGraph->nodes()) {
+    ogdf::node nOGDF = ogdfGraph.newNode();
+    ogdfNodes[nTlp] = nOGDF;
+    const Coord &c = layoutProp->getNodeValue(nTlp);
+    ogdfGraphAttributes.x(nOGDF) = c.getX();
+    ogdfGraphAttributes.y(nOGDF) = c.getY();
+    ogdfGraphAttributes.z(nOGDF) = c.getZ();
+    const Size &s = sizeProp->getNodeValue(nTlp);
+    ogdfGraphAttributes.width(nOGDF) = s.getW();
+    ogdfGraphAttributes.height(nOGDF) = s.getH();
+  }
+
+  for (auto eTlp : talipotGraph->edges()) {
+    pair<node, node> ends = talipotGraph->ends(eTlp);
+    ogdf::edge eOGDF = ogdfGraph.newEdge(ogdfNodes[ends.first], ogdfNodes[ends.second]);
+    ogdfEdges[eTlp] = eOGDF;
+
+    if (importEdgeBends) {
+
+      const vector<Coord> &v = layoutProp->getEdgeValue(eTlp);
+      ogdf::DPolyline bends;
+
+      for (const auto &coord : v) {
+        bends.pushBack(ogdf::DPoint(coord.getX(), coord.getY()));
+      }
+
+      ogdfGraphAttributes.bends(eOGDF) = bends;
+    }
+
+    ogdfGraphAttributes.doubleWeight(eOGDF) = 1.0;
+  }
+}
+
+Coord TalipotToOGDF::getNodeCoordFromOGDFGraphAttr(node nTlp) {
+  ogdf::node n = ogdfNodes[nTlp];
+
+  double x = ogdfGraphAttributes.x(n);
+  double y = ogdfGraphAttributes.y(n);
+  double z = ogdfGraphAttributes.z(n);
+
+  return Coord(x, y, z);
+}
+
+vector<Coord> TalipotToOGDF::getEdgeCoordFromOGDFGraphAttr(edge eTlp) {
+  ogdf::edge e = ogdfEdges[eTlp];
+  ogdf::DPolyline line = ogdfGraphAttributes.bends(e);
+  vector<Coord> v;
+
+  for (ogdf::ListIterator<ogdf::DPoint> p = line.begin(); p.valid(); ++p) {
+    v.push_back(Coord((*p).m_x, (*p).m_y, 0.));
+  }
+
+  return v;
+}
+
+void TalipotToOGDF::copyTlpNumericPropertyToOGDFEdgeLength(NumericProperty *metric) {
+  if (!metric)
+    return;
+
+  for (auto eTlp : talipotGraph->edges()) {
+    ogdfGraphAttributes.doubleWeight(ogdfEdges[eTlp]) = metric->getEdgeDoubleValue(eTlp);
+  }
+}
+
+void TalipotToOGDF::copyTlpNodeSizeToOGDF(SizeProperty *size) {
+  if (!size)
+    return;
+
+  for (auto nTlp : talipotGraph->nodes()) {
+    const Size &s = size->getNodeValue(nTlp);
+    ogdf::node nOGDF = ogdfNodes[nTlp];
+    ogdfGraphAttributes.width(nOGDF) = s.getW();
+    ogdfGraphAttributes.height(nOGDF) = s.getH();
+  }
+
+  for (auto eTlp : talipotGraph->edges()) {
+    pair<node, node> ends = talipotGraph->ends(eTlp);
+    ogdf::node srcOGDF = ogdfNodes[ends.first];
+    const Size &sSrc = size->getNodeValue(ends.first);
+    ogdf::node tgtOGDF = ogdfNodes[ends.second];
+    const Size &sTgt = size->getNodeValue(ends.second);
+
+    ogdf::edge eOGDF = ogdfEdges[eTlp];
+    ogdfGraphAttributes.doubleWeight(eOGDF) =
+        ogdfGraphAttributes.doubleWeight(eOGDF) + sSrc.getW() / 2. + sTgt.getW() / 2. - 1.;
+  }
+}
+
+void TalipotToOGDF::copyTlpNumericPropertyToOGDFNodeWeight(NumericProperty *metric) {
+  if (!metric)
+    return;
+
+  for (auto nTlp : talipotGraph->nodes()) {
+    ogdfGraphAttributes.weight(ogdfNodes[nTlp]) = int(metric->getNodeDoubleValue(nTlp));
+  }
+}

@@ -13,7 +13,7 @@
 
 #include <ogdf/misclayout/BertaultLayout.h>
 
-#include "talipot2ogdf/OGDFLayoutPluginBase.h"
+#include <talipot/OGDFLayoutPluginBase.h>
 
 static const char *paramHelp[] = {
     // impred
@@ -26,7 +26,7 @@ static const char *paramHelp[] = {
     // reqlength
     "The required edge length."};
 
-class OGDFBertaultLayout : public OGDFLayoutPluginBase {
+class OGDFBertaultLayout : public tlp::OGDFLayoutPluginBase {
 
 public:
   PLUGININFORMATION("Bertault (OGDF)", "Smit Sanghavi", "29/05/2015",
@@ -39,7 +39,6 @@ public:
     addInParameter<int>("iterno", paramHelp[1], "20", false);
     addInParameter<double>("reqlength", paramHelp[2], "0.0", false);
   }
-  ~OGDFBertaultLayout() override {}
 
   void beforeCall() override {
     ogdf::BertaultLayout *bertault = static_cast<ogdf::BertaultLayout *>(ogdfLayoutAlgo);

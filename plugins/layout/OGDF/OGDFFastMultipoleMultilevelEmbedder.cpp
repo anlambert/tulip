@@ -15,9 +15,8 @@
 #include <ogdf/packing/ComponentSplitterLayout.h>
 #include <ogdf/basic/simple_graph_alg.h>
 
-#include <talipot/ConnectedTest.h>
-
-#include "talipot2ogdf/OGDFLayoutPluginBase.h"
+#include <talipot/SimpleTest.h>
+#include <talipot/OGDFLayoutPluginBase.h>
 
 static const char *paramHelp[] = {
     // number of threads
@@ -26,7 +25,7 @@ static const char *paramHelp[] = {
     // multilevel nodes bound
     "The bound for the number of nodes in a multilevel step."};
 
-class OGDFFastMultipoleMultiLevelEmbedder : public OGDFLayoutPluginBase {
+class OGDFFastMultipoleMultiLevelEmbedder : public tlp::OGDFLayoutPluginBase {
 
 public:
   PLUGININFORMATION("Fast Multipole Multilevel Embedder (OGDF)", "Martin Gronemann", "12/11/2007",
@@ -45,7 +44,13 @@ public:
     csl->setLayoutModule(fmme);
   }
 
-  ~OGDFFastMultipoleMultiLevelEmbedder() override {}
+  bool check(std::string &err) override {
+    if (!tlp::SimpleTest::isSimple(graph)) {
+      err = "The graph must be simple";
+      return false;
+    }
+    return true;
+  }
 
   void beforeCall() override {
 

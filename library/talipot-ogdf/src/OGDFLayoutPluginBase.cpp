@@ -11,18 +11,24 @@
  *
  */
 
-#include "talipot2ogdf/OGDFLayoutPluginBase.h"
+#include <talipot/OGDFLayoutPluginBase.h>
+#include <talipot/LayoutProperty.h>
+#include <talipot/SizeProperty.h>
 
 #include <ogdf/basic/basic.h>
+#include <ogdf/basic/Graph_d.h>
+#include <ogdf/basic/GraphAttributes.h>
+#include <ogdf/basic/LayoutModule.h>
 
 #include <vector>
 #include <talipot/DrawingTools.h>
 
 using namespace std;
+using namespace tlp;
 
-OGDFLayoutPluginBase::OGDFLayoutPluginBase(const tlp::PluginContext *context,
+OGDFLayoutPluginBase::OGDFLayoutPluginBase(const PluginContext *context,
                                            ogdf::LayoutModule *ogdfLayoutAlgo)
-    : tlp::LayoutAlgorithm(context), tlpToOGDF(nullptr), ogdfLayoutAlgo(ogdfLayoutAlgo) {
+    : LayoutAlgorithm(context), tlpToOGDF(nullptr), ogdfLayoutAlgo(ogdfLayoutAlgo) {
   // convert Tulip Graph to OGDF Graph including attributes
   if (graph)
     tlpToOGDF = new TalipotToOGDF(graph, false);
@@ -93,21 +99,15 @@ bool OGDFLayoutPluginBase::run() {
 
   // retrieve nodes coordinates computed by the OGDF Layout Algorithm
   // and store them in the Tulip Layout Property
-  const std::vector<tlp::node> &nodes = graph->nodes();
-  unsigned int nbElts = nodes.size();
-
-  for (unsigned int i = 0; i < nbElts; ++i) {
-    tlp::Coord nodeCoord = tlpToOGDF->getNodeCoordFromOGDFGraphAttr(i);
-    result->setNodeValue(nodes[i], nodeCoord);
+  for (auto n : graph->nodes()) {
+    Coord nodeCoord = tlpToOGDF->getNodeCoordFromOGDFGraphAttr(n);
+    result->setNodeValue(n, nodeCoord);
   }
 
   // same operation as above but with edges
-  const std::vector<tlp::edge> &edges = graph->edges();
-  nbElts = edges.size();
-
-  for (unsigned int i = 0; i < nbElts; ++i) {
-    vector<tlp::Coord> edgeCoord = tlpToOGDF->getEdgeCoordFromOGDFGraphAttr(i);
-    result->setEdgeValue(edges[i], edgeCoord);
+  for (auto e : graph->edges()) {
+    vector<Coord> edgeCoord = tlpToOGDF->getEdgeCoordFromOGDFGraphAttr(e);
+    result->setEdgeValue(e, edgeCoord);
   }
 
   afterCall();
@@ -121,22 +121,21 @@ void OGDFLayoutPluginBase::callOGDFLayoutAlgorithm(ogdf::GraphAttributes &gAttri
 
 void OGDFLayoutPluginBase::transposeLayoutVertically() {
 
-  const vector<tlp::node> &nodes = graph->nodes();
-  const vector<tlp::edge> &edges = graph->edges();
+  const vector<node> &nodes = graph->nodes();
+  const vector<edge> &edges = graph->edges();
 
-  tlp::BoundingBox graphBB =
-      tlp::computeBoundingBox(nodes, edges, result, graph->getSizeProperty("viewSize"),
-                              graph->getDoubleProperty("viewRotation"));
+  BoundingBox graphBB = computeBoundingBox(nodes, edges, result, graph->getSizeProperty("viewSize"),
+                                           graph->getDoubleProperty("viewRotation"));
   float midY = (graphBB[0][1] + graphBB[1][1]) / 2.f;
 
   for (auto n : nodes) {
-    tlp::Coord nodeCoord = result->getNodeValue(n);
+    Coord nodeCoord = result->getNodeValue(n);
     nodeCoord[1] = midY - (nodeCoord[1] - midY);
     result->setNodeValue(n, nodeCoord);
   }
 
   for (auto e : edges) {
-    std::vector<tlp::Coord> bends = result->getEdgeValue(e);
+    std::vector<Coord> bends = result->getEdgeValue(e);
 
     if (bends.size()) {
       for (size_t i = 0; i < bends.size(); ++i) {

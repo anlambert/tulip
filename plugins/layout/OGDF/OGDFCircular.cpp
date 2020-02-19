@@ -13,7 +13,7 @@
 
 #include <ogdf/misclayout/CircularLayout.h>
 
-#include "talipot2ogdf/OGDFLayoutPluginBase.h"
+#include <talipot/OGDFLayoutPluginBase.h>
 
 static const char *paramHelp[] = {
     // minDistCircle
@@ -31,7 +31,7 @@ static const char *paramHelp[] = {
     // pageRatio
     "The page ratio used for packing connected components."};
 
-class OGDFCircular : public OGDFLayoutPluginBase {
+class OGDFCircular : public tlp::OGDFLayoutPluginBase {
 
 public:
   PLUGININFORMATION("Circular (OGDF)", "Carsten Gutwenger", "13/11/2007",
@@ -44,7 +44,6 @@ public:
     addInParameter<double>("minDistCC", paramHelp[3], "20.0", false);
     addInParameter<double>("pageRatio", paramHelp[4], "1.0", false);
   }
-  ~OGDFCircular() override {}
 
   void beforeCall() override {
     ogdf::CircularLayout *circular = static_cast<ogdf::CircularLayout *>(ogdfLayoutAlgo);

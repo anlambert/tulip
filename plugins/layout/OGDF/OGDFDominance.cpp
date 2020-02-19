@@ -12,8 +12,11 @@
  */
 
 #include <ogdf/upward/DominanceLayout.h>
-#include "talipot2ogdf/OGDFLayoutPluginBase.h"
+
+#include <talipot/OGDFLayoutPluginBase.h>
 #include <talipot/ConnectedTest.h>
+
+using namespace std;
 
 static const char *paramHelp[] = {
     // minimum grid distance
@@ -22,7 +25,7 @@ static const char *paramHelp[] = {
     // transpose
     "If true, transpose the layout vertically."};
 
-class OGDFDominance : public OGDFLayoutPluginBase {
+class OGDFDominance : public tlp::OGDFLayoutPluginBase {
 
 public:
   PLUGININFORMATION(
@@ -34,7 +37,6 @@ public:
     addInParameter<int>("minimum grid distance", paramHelp[0], "1");
     addInParameter<bool>("transpose", paramHelp[1], "false");
   }
-  ~OGDFDominance() override {}
 
   bool check(string &error) override {
     if (!tlp::ConnectedTest::isConnected(graph)) {

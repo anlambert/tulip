@@ -14,7 +14,7 @@
 #include <ogdf/upward/VisibilityLayout.h>
 #include <ogdf/packing/ComponentSplitterLayout.h>
 
-#include "talipot2ogdf/OGDFLayoutPluginBase.h"
+#include <talipot/OGDFLayoutPluginBase.h>
 
 static const char *paramHelp[] = {
     // minimum grid distance
@@ -23,7 +23,7 @@ static const char *paramHelp[] = {
     // transpose
     "If true, transpose the layout vertically."};
 
-class OGDFVisibility : public OGDFLayoutPluginBase {
+class OGDFVisibility : public tlp::OGDFLayoutPluginBase {
 
 public:
   PLUGININFORMATION("Visibility (OGDF)", "Hoi-Ming Wong", "12/11/2007",
@@ -40,8 +40,6 @@ public:
     // ComponentSplitterLayout takes ownership of the VisibilityLayout instance
     csl->setLayoutModule(visibility);
   }
-
-  ~OGDFVisibility() override {}
 
   void beforeCall() override {
 

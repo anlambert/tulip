@@ -11,11 +11,12 @@
  *
  */
 
+#include <talipot/SimpleTest.h>
+#include <talipot/OGDFLayoutPluginBase.h>
+
 #include <ogdf/energybased/FastMultipoleEmbedder.h>
 #include <ogdf/packing/ComponentSplitterLayout.h>
 #include <ogdf/basic/simple_graph_alg.h>
-
-#include "talipot2ogdf/OGDFLayoutPluginBase.h"
 
 static const char *paramHelp[] = {
     // number of iterations
@@ -36,7 +37,7 @@ static const char *paramHelp[] = {
     // number of threads
     "The number of threads to use during the computation of the layout."};
 
-class OGDFFastMultipoleEmbedder : public OGDFLayoutPluginBase {
+class OGDFFastMultipoleEmbedder : public tlp::OGDFLayoutPluginBase {
 
 public:
   PLUGININFORMATION("Fast Multipole Embedder (OGDF)", "Martin Gronemann", "12/11/2007",
@@ -59,7 +60,13 @@ public:
     csl->setLayoutModule(fme);
   }
 
-  ~OGDFFastMultipoleEmbedder() override {}
+  bool check(std::string &err) override {
+    if (!tlp::SimpleTest::isSimple(graph)) {
+      err = "The graph must be simple";
+      return false;
+    }
+    return true;
+  }
 
   void beforeCall() override {
 
