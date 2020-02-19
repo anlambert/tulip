@@ -11,24 +11,23 @@
  *
  */
 
-///@cond DOXYGEN_HIDDEN
-
 #ifndef TALIPOT_OGDF_LAYOUT_PLUGIN_BASE_H
 #define TALIPOT_OGDF_LAYOUT_PLUGIN_BASE_H
 
 #include <talipot/config.h>
-#include <talipot/PluginHeaders.h>
 #include <talipot/PropertyAlgorithm.h>
+#include <talipot/TalipotToOGDF.h>
 
-#include <ogdf/basic/Graph_d.h>
-#include <ogdf/basic/GraphAttributes.h>
-#include <ogdf/basic/LayoutModule.h>
+namespace ogdf {
+class LayoutModule;
+class GraphAttributes;
+}
 
-#include "TalipotToOGDF.h"
+namespace tlp {
 
-class TLP_OGDF_SCOPE OGDFLayoutPluginBase : public tlp::LayoutAlgorithm {
+class TLP_OGDF_SCOPE OGDFLayoutPluginBase : public LayoutAlgorithm {
 public:
-  OGDFLayoutPluginBase(const tlp::PluginContext *context, LayoutModule *ogdfLayoutAlgo);
+  OGDFLayoutPluginBase(const PluginContext *context, ogdf::LayoutModule *ogdfLayoutAlgo);
   ~OGDFLayoutPluginBase() override;
 
   bool run() override;
@@ -43,6 +42,5 @@ protected:
   TalipotToOGDF *tlpToOGDF;
   ogdf::LayoutModule *ogdfLayoutAlgo;
 };
-
+}
 #endif // TALIPOT_OGDF_LAYOUT_PLUGIN_BASE_H
-       ///@endcond

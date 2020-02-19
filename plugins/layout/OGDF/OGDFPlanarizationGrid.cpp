@@ -13,15 +13,14 @@
 
 #include <ogdf/planarity/PlanarizationGridLayout.h>
 
-#include "talipot2ogdf/OGDFLayoutPluginBase.h"
-
+#include <talipot/OGDFLayoutPluginBase.h>
 #include <talipot/StringCollection.h>
 
 static const char *paramHelp[] = {
     // page ratio
     "Sets the option pageRatio."};
 
-class OGDFPlanarizationGrid : public OGDFLayoutPluginBase {
+class OGDFPlanarizationGrid : public tlp::OGDFLayoutPluginBase {
 
 public:
   PLUGININFORMATION("Planarization Grid (OGDF)", "Carsten Gutwenger", "12/11/2007",
@@ -35,8 +34,6 @@ public:
       : OGDFLayoutPluginBase(context, new ogdf::PlanarizationGridLayout()) {
     addInParameter<double>("page ratio", paramHelp[0], "1.1");
   }
-
-  ~OGDFPlanarizationGrid() override {}
 
   void beforeCall() override {
     ogdf::PlanarizationGridLayout *pgl =

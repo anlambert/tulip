@@ -13,13 +13,14 @@
 
 #include <ogdf/upward/UpwardPlanarizationLayout.h>
 #include <ogdf/packing/ComponentSplitterLayout.h>
-#include "talipot2ogdf/OGDFLayoutPluginBase.h"
+
+#include <talipot/OGDFLayoutPluginBase.h>
 
 static const char *paramHelp[] = {
     // transpose
     "If true, transpose the layout vertically."};
 
-class OGDFUpwardPlanarization : public OGDFLayoutPluginBase {
+class OGDFUpwardPlanarization : public tlp::OGDFLayoutPluginBase {
 
 public:
   PLUGININFORMATION("Upward Planarization (OGDF)", "Hoi-Ming Wong", "12/11/2007",
@@ -34,8 +35,6 @@ public:
         static_cast<ogdf::ComponentSplitterLayout *>(ogdfLayoutAlgo);
     csl->setLayoutModule(new ogdf::UpwardPlanarizationLayout());
   }
-
-  ~OGDFUpwardPlanarization() override {}
 
   void afterCall() override {
     if (dataSet != nullptr) {

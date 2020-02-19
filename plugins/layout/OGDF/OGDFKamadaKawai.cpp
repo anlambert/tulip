@@ -13,7 +13,7 @@
 
 #include <ogdf/energybased/SpringEmbedderKK.h>
 
-#include "talipot2ogdf/OGDFLayoutPluginBase.h"
+#include <talipot/OGDFLayoutPluginBase.h>
 
 static const char *paramHelp[] = {
     // stop tolerance
@@ -40,7 +40,7 @@ static const char *paramHelp[] = {
     // local iterations
     "The number of local iterations."};
 
-class OGDFKamadaKawai : public OGDFLayoutPluginBase {
+class OGDFKamadaKawai : public tlp::OGDFLayoutPluginBase {
 
 public:
   PLUGININFORMATION("Kamada Kawai (OGDF)", "Karsten Klein", "12/11/2007",
@@ -58,7 +58,6 @@ public:
     addInParameter<int>("global iterations", paramHelp[5], "50");
     addInParameter<int>("local iterations", paramHelp[6], "50");
   }
-  ~OGDFKamadaKawai() override {}
 
   void beforeCall() override {
     ogdf::SpringEmbedderKK *kamada = static_cast<ogdf::SpringEmbedderKK *>(ogdfLayoutAlgo);

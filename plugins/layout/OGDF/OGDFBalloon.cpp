@@ -14,13 +14,13 @@
 #include <ogdf/misclayout/BalloonLayout.h>
 #include <ogdf/packing/ComponentSplitterLayout.h>
 
-#include "talipot2ogdf/OGDFLayoutPluginBase.h"
+#include <talipot/OGDFLayoutPluginBase.h>
 
 static const char *paramHelp[] = {
     // Even angles
     "Subtrees may be assigned even angles or angles depending on their size."};
 
-class OGDFBalloon : public OGDFLayoutPluginBase {
+class OGDFBalloon : public tlp::OGDFLayoutPluginBase {
 
 public:
   PLUGININFORMATION("Balloon (OGDF)", "Karsten Klein", "13/11/2007",
@@ -38,7 +38,6 @@ public:
     // ComponentSplitterLayout takes ownership of the BalloonLayout instance
     csl->setLayoutModule(balloon);
   }
-  ~OGDFBalloon() override {}
 
   void beforeCall() override {
 

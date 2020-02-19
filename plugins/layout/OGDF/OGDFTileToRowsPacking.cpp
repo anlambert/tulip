@@ -13,15 +13,15 @@
 
 #include <ogdf/packing/ComponentSplitterLayout.h>
 
-#include "talipot2ogdf/OGDFLayoutPluginBase.h"
+#include <talipot/OGDFLayoutPluginBase.h>
 
 class SameLayout : public ogdf::LayoutModule {
 
 public:
-  void call(GraphAttributes &GA) override {}
+  void call(ogdf::GraphAttributes &GA) override {}
 };
 
-class OGDFTileToRowsPacking : public OGDFLayoutPluginBase {
+class OGDFTileToRowsPacking : public tlp::OGDFLayoutPluginBase {
 
 public:
   PLUGININFORMATION("Tile To Rows Packing (OGDF)", "Carsten Gutwenger", "12/11/2007",

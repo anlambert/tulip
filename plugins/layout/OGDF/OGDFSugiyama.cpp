@@ -28,8 +28,7 @@
 #include <ogdf/layered/OptimalHierarchyLayout.h>
 
 #include <talipot/StringCollection.h>
-
-#include "talipot2ogdf/OGDFLayoutPluginBase.h"
+#include <talipot/OGDFLayoutPluginBase.h>
 
 #define ELT_RANKING "Ranking"
 #define ELT_RANKINGLIST "LongestPathRanking;OptimalRanking;CoffmanGrahamRanking"
@@ -136,9 +135,14 @@ static const char *hierarchyLayoutValuesDescription =
     "Brandes and Boris Koepf)</i><br>"
     "OptimalHierarchyLayout <i>(The LP-based hierarchy layout algorithm)</i>";
 
-class OGDFSugiyama : public OGDFLayoutPluginBase {
+class OGDFSugiyama : public tlp::OGDFLayoutPluginBase {
 
 public:
+  PLUGININFORMATION("Sugiyama (OGDF)", "Carsten Gutwenger", "12/11/2007",
+                    "Implements the classical layout algorithm by Sugiyama, Tagawa, and Toda. It "
+                    "is a layer-based approach for producing upward drawings.",
+                    "1.7", "Hierarchical")
+
   OGDFSugiyama(const tlp::PluginContext *context)
       : OGDFLayoutPluginBase(context, new ogdf::SugiyamaLayout()) {
     addInParameter<int>("fails", paramHelp[0], "4");
@@ -152,21 +156,15 @@ public:
     addInParameter<double>("pageRatio", paramHelp[8], "1.0");
     addInParameter<bool>("alignBaseClasses", paramHelp[9], "false");
     addInParameter<bool>("alignSiblings", paramHelp[10], "false");
-    addInParameter<StringCollection>(ELT_RANKING, paramHelp[11], ELT_RANKINGLIST, true,
-                                     eltRankingValuesDescription);
-    addInParameter<StringCollection>(ELT_TWOLAYERCROSS, paramHelp[12], ELT_TWOLAYERCROSSLIST, true,
-                                     twoLayerCrossValuesDescription);
-    addInParameter<StringCollection>(ELT_HIERARCHYLAYOUT, paramHelp[13], ELT_HIERARCHYLAYOUTLIST,
-                                     true, hierarchyLayoutValuesDescription);
+    addInParameter<tlp::StringCollection>(ELT_RANKING, paramHelp[11], ELT_RANKINGLIST, true,
+                                          eltRankingValuesDescription);
+    addInParameter<tlp::StringCollection>(ELT_TWOLAYERCROSS, paramHelp[12], ELT_TWOLAYERCROSSLIST,
+                                          true, twoLayerCrossValuesDescription);
+    addInParameter<tlp::StringCollection>(ELT_HIERARCHYLAYOUT, paramHelp[13],
+                                          ELT_HIERARCHYLAYOUTLIST, true,
+                                          hierarchyLayoutValuesDescription);
     addInParameter<bool>("transpose vertically", paramHelp[14], "true");
   }
-
-  ~OGDFSugiyama() override {}
-
-  PLUGININFORMATION("Sugiyama (OGDF)", "Carsten Gutwenger", "12/11/2007",
-                    "Implements the classical layout algorithm by Sugiyama, Tagawa, and Toda. It "
-                    "is a layer-based approach for producing upward drawings.",
-                    "1.7", "Hierarchical")
 
   void beforeCall() override {
     ogdf::SugiyamaLayout *sugiyama = static_cast<ogdf::SugiyamaLayout *>(ogdfLayoutAlgo);
@@ -175,7 +173,7 @@ public:
       int ival = 0;
       double dval = 0;
       bool bval = false;
-      StringCollection sc;
+      tlp::StringCollection sc;
 
       if (dataSet->get("fails", ival))
         sugiyama->fails(ival);
@@ -239,7 +237,7 @@ public:
         dataSet->get("fixed layer distance", fixedLayerDistance);
 
         if (sc.getCurrent() == ELT_FASTHIERARCHY) {
-          ogdf::FastHierarchyLayout *fhl = new FastHierarchyLayout();
+          ogdf::FastHierarchyLayout *fhl = new ogdf::FastHierarchyLayout();
           fhl->nodeDistance(nodeDistance);
           fhl->layerDistance(layerDistance);
           fhl->fixedLayerDistance(fixedLayerDistance);

@@ -14,7 +14,7 @@
 #include <ogdf/energybased/PivotMDS.h>
 #include <ogdf/packing/ComponentSplitterLayout.h>
 
-#include "talipot2ogdf/OGDFLayoutPluginBase.h"
+#include <talipot/OGDFLayoutPluginBase.h>
 
 static const char *paramHelp[] = {
     // number of pivots
@@ -28,7 +28,7 @@ static const char *paramHelp[] = {
     "Sets the desired distance between adjacent nodes. If the new value is smaller or equal 0 the "
     "default value (100) is used."};
 
-class OGDFPivotMDS : public OGDFLayoutPluginBase {
+class OGDFPivotMDS : public tlp::OGDFLayoutPluginBase {
 
 public:
   PLUGININFORMATION("Pivot MDS (OGDF)", "Mark Ortmann", "29/05/2015",
@@ -47,7 +47,6 @@ public:
         static_cast<ogdf::ComponentSplitterLayout *>(ogdfLayoutAlgo);
     csl->setLayoutModule(pivotMds);
   }
-  ~OGDFPivotMDS() override {}
 
   void beforeCall() override {
 

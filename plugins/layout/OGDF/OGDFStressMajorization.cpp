@@ -13,10 +13,10 @@
 
 #include <ogdf/energybased/StressMinimization.h>
 
-#include "talipot2ogdf/OGDFLayoutPluginBase.h"
-
+#include <talipot/OGDFLayoutPluginBase.h>
 #include <talipot/StringCollection.h>
 #include <talipot/NumericProperty.h>
+#include <talipot/DoubleProperty.h>
 
 static const char *paramHelp[] = {
     // terminationCriterion
@@ -51,7 +51,7 @@ static const char *paramHelp[] = {
 
 };
 
-class OGDFStressMajorization : public OGDFLayoutPluginBase {
+class OGDFStressMajorization : public tlp::OGDFLayoutPluginBase {
 
 public:
   PLUGININFORMATION("Stress Majorization (OGDF)", "Karsten Klein", "12/11/2007",
@@ -60,9 +60,9 @@ public:
                     "2.0", "Force Directed")
   OGDFStressMajorization(const tlp::PluginContext *context)
       : OGDFLayoutPluginBase(context, new ogdf::StressMinimization()) {
-    addInParameter<StringCollection>("terminationCriterion", paramHelp[0],
-                                     "None;PositionDifference;Stress", true,
-                                     "None <br> PositionDifference <br> Stress");
+    addInParameter<tlp::StringCollection>("terminationCriterion", paramHelp[0],
+                                          "None;PositionDifference;Stress", true,
+                                          "None <br> PositionDifference <br> Stress");
     addInParameter<bool>("fixXCoordinates", paramHelp[1], "false");
     addInParameter<bool>("fixYCoordinates", paramHelp[2], "false");
     addInParameter<bool>("hasInitialLayout", paramHelp[3], "false");
@@ -73,8 +73,6 @@ public:
     addInParameter<tlp::NumericProperty *>("edgeCostsProperty", paramHelp[8], "viewMetric");
   }
 
-  ~OGDFStressMajorization() override {}
-
   void beforeCall() override {
     ogdf::StressMinimization *stressm = static_cast<ogdf::StressMinimization *>(ogdfLayoutAlgo);
 
@@ -82,7 +80,7 @@ public:
       double dval = 0;
       int ival = 0;
       bool bval = false;
-      StringCollection sc;
+      tlp::StringCollection sc;
       tlp::NumericProperty *edgeCosts = graph->getDoubleProperty("viewMetric");
 
       if (dataSet->get("terminationCriterion", sc)) {
