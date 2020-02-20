@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -99,11 +99,8 @@ AboutPage::AboutPage(QWidget *parent) : QWidget(parent), _ui(new Ui::AboutPageDa
   }
 
   _ui->dependenciesInfo->setText(talipotDependenciesInfo);
-  connect(_ui->aboutQt, SIGNAL(clicked()), qApp, SLOT(aboutQt()));
-  connect(_ui->dependenciesInfo, SIGNAL(linkActivated(const QString &)), this,
-          SLOT(openUrlInBrowser(const QString &)));
-  connect(_ui->TalipotLabel, SIGNAL(linkActivated(const QString &)), this,
-          SLOT(openUrlInBrowser(const QString &)));
+  connect(_ui->dependenciesInfo, &QLabel::linkActivated, this, &AboutPage::openUrlInBrowser);
+  connect(_ui->TalipotLabel, &QLabel::linkActivated, this, &AboutPage::openUrlInBrowser);
 
   QFile authorsFile(tlpStringToQString(TalipotShareDir + "AUTHORS"));
   QFile licenseFile(tlpStringToQString(TalipotShareDir + "LICENSE"));
