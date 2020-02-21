@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -197,11 +197,10 @@ void ColorScaleSlider::draw(float lod, Camera *camera) {
   label->draw(lod, camera);
 }
 
-void ColorScaleSlider::update(std::set<Observable *>::iterator, std::set<Observable *>::iterator) {
+void ColorScaleSlider::treatEvents(const std::vector<Event> &) {
   float xPos = linkedScale->getPosition().getX() + currentShift * linkedScale->getSize().getW();
   setColor(linkedScale->getGlColorScale()->getColorAtPos(Coord(xPos, 0, 0)));
 }
-void ColorScaleSlider::observableDestroyed(Observable *) {}
 
 SliderBar::SliderBar(ColorScaleSlider *left, ColorScaleSlider *right, const string &textureName)
     : GlEntity(), left(left), right(right), texture(textureName), isVisible(false) {}

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -172,12 +172,9 @@ SOMPropertiesWidget::SizeMappingType SOMPropertiesWidget::getSizeMapping() const
     return RealNodeSizeMapping;
 }
 
-void SOMPropertiesWidget::update(std::set<tlp::Observable *>::iterator,
-                                 std::set<tlp::Observable *>::iterator) {
+void SOMPropertiesWidget::treatEvents(const std::vector<Event> &) {
   view->updateDefaultColorProperty();
 }
-
-void SOMPropertiesWidget::observableDestroyed(tlp::Observable *) {}
 
 void SOMPropertiesWidget::animationCheckBoxClicked() {
   _ui->animationStepsSpinBox->setEnabled(_ui->animationCheckBox->isChecked());

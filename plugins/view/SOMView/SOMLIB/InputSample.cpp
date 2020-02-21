@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -193,16 +193,17 @@ void InputSample::clearPropertiesObs() {
   }
 }
 
-void InputSample::update(std::set<Observable *>::iterator begin,
-                         std::set<Observable *>::iterator end) {
+void InputSample::treatEvents(const std::vector<Event> &events) {
+
   bool updated = false;
 
   // A property has been updated clear the cache
-  for (auto it = begin; it != end; ++it) {
+  for (auto event : events) {
+
     unsigned int propNum = 0;
 
     for (auto prop : propertiesList) {
-      if ((*it) == prop) {
+      if (event.type() == Event::TLP_MODIFICATION && event.sender() == prop) {
         // mWeightTab.setAll(DynamicVector<double> ());
         mWeightTab.clear();
 
