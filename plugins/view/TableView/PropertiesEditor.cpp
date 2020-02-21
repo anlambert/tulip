@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -42,7 +42,7 @@ PropertiesEditor::PropertiesEditor(QWidget *parent)
       _delegate(new tlp::ItemDelegate), _sourceModel(nullptr), filteringProperties(false),
       editorParent(parent), _caseSensitiveSearch(Qt::CaseSensitive) {
   _ui->setupUi(this);
-  connect(_ui->newButton, SIGNAL(clicked()), this, SLOT(newProperty()));
+  connect(_ui->newButton, &QAbstractButton::clicked, this, &PropertiesEditor::newProperty);
 }
 
 PropertiesEditor::~PropertiesEditor() {
@@ -65,15 +65,14 @@ void PropertiesEditor::setGraph(tlp::Graph *g) {
   model->setFilterCaseSensitivity(Qt::CaseInsensitive);
   // the 3 signal-to-slot connections below ensure the propagation
   // of the displayed properties filtering
-  connect(_ui->propertiesFilterEdit, SIGNAL(textChanged(QString)), this,
-          SLOT(setPropertiesFilter(QString)));
-  connect(model, SIGNAL(rowsAboutToBeRemoved(const QModelIndex &, int, int)), this,
-          SLOT(displayedPropertiesRemoved(const QModelIndex &, int, int)));
-  connect(model, SIGNAL(rowsInserted(const QModelIndex &, int, int)), this,
-          SLOT(displayedPropertiesInserted(const QModelIndex &, int, int)));
+  connect(_ui->propertiesFilterEdit, &QLineEdit::textChanged, this,
+          &PropertiesEditor::setPropertiesFilter);
+  connect(model, &QAbstractItemModel::rowsAboutToBeRemoved, this,
+          &PropertiesEditor::displayedPropertiesRemoved);
+  connect(model, &QAbstractItemModel::rowsInserted, this,
+          &PropertiesEditor::displayedPropertiesInserted);
   _ui->tableView->setModel(model);
-  connect(_sourceModel, SIGNAL(checkStateChanged(QModelIndex, Qt::CheckState)), this,
-          SLOT(checkStateChanged(QModelIndex, Qt::CheckState)));
+  connect(_sourceModel, &Model::checkStateChanged, this, &PropertiesEditor::checkStateChanged);
   _ui->tableView->resizeColumnsToContents();
   _ui->tableView->sortByColumn(0, Qt::AscendingOrder);
   _ui->visualPropertiesCheck->setChecked(true);
@@ -149,10 +148,10 @@ void PropertiesEditor::showCustomContextMenu(const QPoint &p) {
     if (enabled) {
       action = menu.addAction("Delete highlighted properties");
       action->setToolTip("Delete the highlighted properties");
-      connect(action, SIGNAL(triggered()), this, SLOT(delProperties()));
+      connect(action, &QAction::triggered, this, &PropertiesEditor::delProperties);
       action = menu.addAction("Hide all other properties");
       action->setToolTip("Show only the columns corresponding to the highlighted properties");
-      connect(action, SIGNAL(triggered()), this, SLOT(setPropsNotVisibleExcept()));
+      connect(action, &QAction::triggered, this, &PropertiesEditor::setPropsNotVisibleExcept);
     }
 
     menu.exec(QCursor::pos());
@@ -168,13 +167,13 @@ void PropertiesEditor::showCustomContextMenu(const QPoint &p) {
     menu.addSeparator();
     action = menu.addAction("Hide all other properties");
     action->setToolTip("Show only the column corresponding to this property");
-    connect(action, SIGNAL(triggered()), this, SLOT(setPropsNotVisibleExcept()));
+    connect(action, &QAction::triggered, this, &PropertiesEditor::setPropsNotVisibleExcept);
     menu.addSeparator();
 
     action = menu.addAction(QIcon(":/talipot/gui/icons/64/list-add.png"), "Add new property");
     action->setToolTip("Display a dialog to create a new property belonging to the current graph");
-    connect(action, SIGNAL(triggered()), this, SLOT(newProperty()));
-    connect(menu.addAction("Copy"), SIGNAL(triggered()), this, SLOT(copyProperty()));
+    connect(action, &QAction::triggered, this, &PropertiesEditor::newProperty);
+    connect(menu.addAction("Copy"), &QAction::triggered, this, &PropertiesEditor::copyProperty);
 
     bool enabled = true;
     const std::string &propName = _contextProperty->getName();
@@ -188,7 +187,7 @@ void PropertiesEditor::showCustomContextMenu(const QPoint &p) {
     if (enabled) {
       action = menu.addAction("Delete");
       action->setToolTip("Delete the property \"" + tlpStringToQString(propName) + '"');
-      connect(action, SIGNAL(triggered()), this, SLOT(delProperty()));
+      connect(action, &QAction::triggered, this, &PropertiesEditor::delProperty);
     }
 
     QAction *rename = nullptr;
@@ -229,27 +228,27 @@ void PropertiesEditor::showCustomContextMenu(const QPoint &p) {
       action = subMenu->addAction("All elements" + OF_GRAPH);
       action->setToolTip("Set the values of the current property as labels of all elements" +
                          OF_GRAPH);
-      connect(action, SIGNAL(triggered()), this, SLOT(toLabels()));
+      connect(action, &QAction::triggered, [this] { toLabels(); });
       action = subMenu->addAction("All nodes" + OF_GRAPH);
       action->setToolTip("Set the values of the current property as labels of the nodes" +
                          OF_GRAPH);
-      connect(action, SIGNAL(triggered()), this, SLOT(toNodesLabels()));
+      connect(action, &QAction::triggered, this, &PropertiesEditor::toNodesLabels);
       action = subMenu->addAction("All edges" + OF_GRAPH);
       action->setToolTip("Set the values of the current property as labels of the edges" +
                          OF_GRAPH);
-      connect(action, SIGNAL(triggered()), this, SLOT(toEdgesLabels()));
+      connect(action, &QAction::triggered, this, &PropertiesEditor::toEdgesLabels);
       action = subMenu->addAction("All selected elements" + OF_GRAPH);
       action->setToolTip(
           "Set the values of the current property as labels of the selected elements" + OF_GRAPH);
-      connect(action, SIGNAL(triggered()), this, SLOT(toSelectedLabels()));
+      connect(action, &QAction::triggered, this, &PropertiesEditor::toSelectedLabels);
       action = subMenu->addAction("Selected nodes" + OF_GRAPH);
       action->setToolTip("Set the values of the current property as labels of the selected nodes" +
                          OF_GRAPH);
-      connect(action, SIGNAL(triggered()), this, SLOT(toSelectedNodesLabels()));
+      connect(action, &QAction::triggered, this, &PropertiesEditor::toSelectedNodesLabels);
       action = subMenu->addAction("Selected edges" + OF_GRAPH);
       action->setToolTip("Set the values of the current property as labels of the selected edges" +
                          OF_GRAPH);
-      connect(action, SIGNAL(triggered()), this, SLOT(toSelectedEdgesLabels()));
+      connect(action, &QAction::triggered, this, &PropertiesEditor::toSelectedEdgesLabels);
     }
 
     QAction *action = menu.exec(QCursor::pos());

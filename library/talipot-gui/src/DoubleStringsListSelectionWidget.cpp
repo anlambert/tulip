@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -117,12 +117,18 @@ void DoubleStringsListSelectionWidget::unselectAllStrings() {
 }
 
 void DoubleStringsListSelectionWidget::qtWidgetsConnection() {
-  connect(_ui->addButton, SIGNAL(clicked()), this, SLOT(pressButtonAdd()));
-  connect(_ui->removeButton, SIGNAL(clicked()), this, SLOT(pressButtonRem()));
-  connect(_ui->upButton, SIGNAL(clicked()), this, SLOT(pressButtonUp()));
-  connect(_ui->downButton, SIGNAL(clicked()), this, SLOT(pressButtonDown()));
-  connect(_ui->selectButton, SIGNAL(clicked()), this, SLOT(pressButtonSelectAll()));
-  connect(_ui->unselectButton, SIGNAL(clicked()), this, SLOT(pressButtonUnselectAll()));
+  connect(_ui->addButton, &QAbstractButton::clicked, this,
+          &DoubleStringsListSelectionWidget::pressButtonAdd);
+  connect(_ui->removeButton, &QAbstractButton::clicked, this,
+          &DoubleStringsListSelectionWidget::pressButtonRem);
+  connect(_ui->upButton, &QAbstractButton::clicked, this,
+          &DoubleStringsListSelectionWidget::pressButtonUp);
+  connect(_ui->downButton, &QAbstractButton::clicked, this,
+          &DoubleStringsListSelectionWidget::pressButtonDown);
+  connect(_ui->selectButton, &QAbstractButton::clicked, this,
+          &DoubleStringsListSelectionWidget::pressButtonSelectAll);
+  connect(_ui->unselectButton, &QAbstractButton::clicked, this,
+          &DoubleStringsListSelectionWidget::pressButtonUnselectAll);
 }
 
 void DoubleStringsListSelectionWidget::pressButtonAdd() {

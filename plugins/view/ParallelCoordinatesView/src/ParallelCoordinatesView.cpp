@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -99,7 +99,8 @@ ParallelCoordinatesView::~ParallelCoordinatesView() {
 
 QuickAccessBar *ParallelCoordinatesView::getQuickAccessBarImpl() {
   auto _bar = new ParallelCoordinatesViewQuickAccessBar(drawConfigWidget);
-  connect(_bar, SIGNAL(settingsChanged()), this, SLOT(applySettings()));
+  connect(_bar, &ParallelCoordinatesViewQuickAccessBar::settingsChanged, this,
+          &ParallelCoordinatesView::applySettings);
   return _bar;
 }
 
@@ -547,13 +548,14 @@ void ParallelCoordinatesView::buildContextMenu() {
   viewSetupMenu = new QMenu("View setup");
   viewSetupMenu->addAction("Layout type")->setEnabled(false);
   QActionGroup *layoutActionGroup = new QActionGroup(this);
-  classicLayout = viewSetupMenu->addAction("Classic layout", this, SLOT(centerSetupAndDrawView()));
+  classicLayout = viewSetupMenu->addAction("Classic layout", this,
+                                           &ParallelCoordinatesView::centerSetupAndDrawView);
   classicLayout->setToolTip("Use parallel axis layout");
   classicLayout->setCheckable(true);
   classicLayout->setChecked(true);
   layoutActionGroup->addAction(classicLayout);
-  circularLayout =
-      viewSetupMenu->addAction("Circular layout", this, SLOT(centerSetupAndDrawView()));
+  circularLayout = viewSetupMenu->addAction("Circular layout", this,
+                                            &ParallelCoordinatesView::centerSetupAndDrawView);
   circularLayout->setToolTip(
       "In the circular layout, the axis are laid out regularly as the radius of a circle");
   circularLayout->setCheckable(true);
@@ -562,20 +564,21 @@ void ParallelCoordinatesView::buildContextMenu() {
 
   viewSetupMenu->addAction("Lines type")->setEnabled(false);
   QActionGroup *lineTypeActionGroup = new QActionGroup(this);
-  straightLinesType = viewSetupMenu->addAction("Polyline", this, SLOT(setupAndDrawView()));
+  straightLinesType =
+      viewSetupMenu->addAction("Polyline", this, &ParallelCoordinatesView::setupAndDrawView);
   straightLinesType->setToolTip(
       "Draw a polyline joining the consecutive coordinates belonging to the same graph element");
   straightLinesType->setCheckable(true);
   straightLinesType->setChecked(true);
   lineTypeActionGroup->addAction(straightLinesType);
-  catmullRomSplineLinesType =
-      viewSetupMenu->addAction("Catmull-Rom spline", this, SLOT(setupAndDrawView()));
+  catmullRomSplineLinesType = viewSetupMenu->addAction("Catmull-Rom spline", this,
+                                                       &ParallelCoordinatesView::setupAndDrawView);
   catmullRomSplineLinesType->setToolTip("Draw a Catmull-Rom spline joining the consecutive "
                                         "coordinates belonging to the same graph element");
   catmullRomSplineLinesType->setCheckable(true);
   lineTypeActionGroup->addAction(catmullRomSplineLinesType);
-  cubicBSplineInterpolationLinesType =
-      viewSetupMenu->addAction("Cubic B-spline interpolation", this, SLOT(setupAndDrawView()));
+  cubicBSplineInterpolationLinesType = viewSetupMenu->addAction(
+      "Cubic B-spline interpolation", this, &ParallelCoordinatesView::setupAndDrawView);
   cubicBSplineInterpolationLinesType->setToolTip(
       "Draw a cubic B-spline joining the consecutive coordinates belonging to the same "
       "graph element");
@@ -585,12 +588,14 @@ void ParallelCoordinatesView::buildContextMenu() {
 
   viewSetupMenu->addAction("Lines thickness")->setEnabled(false);
   QActionGroup *lineActionGroup = new QActionGroup(this);
-  thickLines = viewSetupMenu->addAction("Map to viewSize", this, SLOT(setupAndDrawView()));
+  thickLines =
+      viewSetupMenu->addAction("Map to viewSize", this, &ParallelCoordinatesView::setupAndDrawView);
   thickLines->setToolTip("The lines thickness is computed according the viewSize property values");
   thickLines->setCheckable(true);
   thickLines->setChecked(true);
   lineActionGroup->addAction(thickLines);
-  thinLines = viewSetupMenu->addAction("Thin lines", this, SLOT(setupAndDrawView()));
+  thinLines =
+      viewSetupMenu->addAction("Thin lines", this, &ParallelCoordinatesView::setupAndDrawView);
   thinLines->setToolTip(
       "The thickness is thin and the same for all the  curves representing the graph elements");
   thinLines->setCheckable(true);
@@ -598,33 +603,34 @@ void ParallelCoordinatesView::buildContextMenu() {
   axisMenuSeparator = new QAction(nullptr);
   axisMenuSeparator->setSeparator(true);
   axisConfiguration = new QAction("Axis configuration", nullptr);
-  connect(axisConfiguration, SIGNAL(triggered()), this, SLOT(axisConfigurationSlot()));
+  connect(axisConfiguration, &QAction::triggered, this,
+          &ParallelCoordinatesView::axisConfigurationSlot);
   removeAxisAction = new QAction("Remove axis", nullptr);
-  connect(removeAxisAction, SIGNAL(triggered()), this, SLOT(removeAxisSlot()));
+  connect(removeAxisAction, &QAction::triggered, this, &ParallelCoordinatesView::removeAxisSlot);
   highlightMenuSeparator = new QAction(nullptr);
   highlightMenuSeparator->setSeparator(true);
   selectHighlightedElements = new QAction("Select highlighted elements", nullptr);
   selectHighlightedElements->setToolTip(
       "Select the graph elements corresponding to the currently highlighted curves");
-  connect(selectHighlightedElements, SIGNAL(triggered()), this,
-          SLOT(selectHighlightedElementsSlot()));
+  connect(selectHighlightedElements, &QAction::triggered, this,
+          &ParallelCoordinatesView::selectHighlightedElementsSlot);
   addSelectHighlightedElements = new QAction("Add highlighted elements to selection", nullptr);
   addSelectHighlightedElements->setToolTip(
       "Add the graph elements corresponding to the currently highlighted curves to the "
       "current selection");
-  connect(addSelectHighlightedElements, SIGNAL(triggered()), this,
-          SLOT(addSelectHighlightedElementsSlot()));
+  connect(addSelectHighlightedElements, &QAction::triggered, this,
+          &ParallelCoordinatesView::addSelectHighlightedElementsSlot);
   removeSelectHighlightedElements =
       new QAction("Remove highlighted elements to selection", nullptr);
   removeSelectHighlightedElements->setToolTip(
       "Remove the graph elements corresponding to the currently highlighted curves from "
       "the current selection");
-  connect(removeSelectHighlightedElements, SIGNAL(triggered()), this,
-          SLOT(removeSelectHighlightedElementsSlot()));
+  connect(removeSelectHighlightedElements, &QAction::triggered, this,
+          &ParallelCoordinatesView::removeSelectHighlightedElementsSlot);
   resetHightlightedElements = new QAction("Reset highlighting of elements", nullptr);
   resetHightlightedElements->setToolTip("Unhighlight all the elements");
-  connect(resetHightlightedElements, SIGNAL(triggered()), this,
-          SLOT(resetHightlightedElementsSlot()));
+  connect(resetHightlightedElements, &QAction::triggered, this,
+          &ParallelCoordinatesView::resetHighlightedElementsSlot);
 }
 
 void ParallelCoordinatesView::fillContextMenu(QMenu *menu, const QPointF &point) {
@@ -683,7 +689,7 @@ void ParallelCoordinatesView::removeSelectHighlightedElementsSlot() {
   Observable::unholdObservers();
 }
 
-void ParallelCoordinatesView::resetHightlightedElementsSlot() {
+void ParallelCoordinatesView::resetHighlightedElementsSlot() {
   Observable::holdObservers();
   graphProxy->unsetHighlightedElts();
   parallelCoordsDrawing->resetAxisSlidersPosition();

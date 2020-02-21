@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -24,7 +24,7 @@ using namespace tlp;
 
 ChooseColorButton::ChooseColorButton(QWidget *parent)
     : QPushButton(parent), _color(Qt::black), _dialogParent(parent) {
-  connect(this, SIGNAL(clicked()), this, SLOT(chooseColor()));
+  connect(this, &QAbstractButton::clicked, this, &ChooseColorButton::chooseColor);
   setFocusPolicy(Qt::WheelFocus);
 }
 

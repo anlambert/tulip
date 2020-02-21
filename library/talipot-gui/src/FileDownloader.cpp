@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -18,8 +18,7 @@
 using namespace tlp;
 
 FileDownloader::FileDownloader() : QObject() {
-  connect(&_webCtrl, SIGNAL(finished(QNetworkReply *)), this,
-          SLOT(fileDownloaded(QNetworkReply *)));
+  connect(&_webCtrl, &QNetworkAccessManager::finished, this, &FileDownloader::fileDownloaded);
 }
 
 void FileDownloader::fileDownloaded(QNetworkReply *pReply) {
@@ -32,7 +31,7 @@ const QByteArray &FileDownloader::download(const QUrl &url) {
   QNetworkRequest request(url);
   _webCtrl.get(request);
   QEventLoop loop;
-  connect(this, SIGNAL(downloaded()), &loop, SLOT(quit()));
+  connect(this, &FileDownloader::downloaded, &loop, &QEventLoop::quit);
   loop.exec();
   return _downloadedData;
 }

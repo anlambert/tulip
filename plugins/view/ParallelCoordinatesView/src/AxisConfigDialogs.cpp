@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -111,7 +111,7 @@ QuantitativeAxisConfigDialog::QuantitativeAxisConfigDialog(QuantitativeParallelA
   dialogLayout->addLayout(okButtonLayout);
 
   setLayout(dialogLayout);
-  connect(okButton, SIGNAL(clicked()), this, SLOT(close()));
+  connect(okButton, &QAbstractButton::clicked, this, &QWidget::close);
 
   resize(300, 100);
 }
@@ -170,10 +170,10 @@ NominalAxisConfigDialog::NominalAxisConfigDialog(NominalParallelAxis *axis)
 
   setLayout(dialogLayout);
 
-  connect(okButton, SIGNAL(clicked()), this, SLOT(close()));
-  connect(up, SIGNAL(clicked()), this, SLOT(pressButtonUp()));
-  connect(down, SIGNAL(clicked()), this, SLOT(pressButtonDown()));
-  connect(lexOrder, SIGNAL(clicked()), this, SLOT(pressButtonLexOrder()));
+  connect(okButton, &QAbstractButton::clicked, this, &QWidget::close);
+  connect(up, &QAbstractButton::clicked, this, &NominalAxisConfigDialog::pressButtonUp);
+  connect(down, &QAbstractButton::clicked, this, &NominalAxisConfigDialog::pressButtonDown);
+  connect(lexOrder, &QAbstractButton::clicked, this, &NominalAxisConfigDialog::pressButtonLexOrder);
 }
 
 void NominalAxisConfigDialog::closeEvent(QCloseEvent *) {

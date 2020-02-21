@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -159,7 +159,8 @@ NeighborhoodHighlighter::NeighborhoodHighlighter(
       centralNodeLocked(false), circleLayoutSet(false), neighborhoodDist(1),
       circleAlphaValue(maxCircleAlphaValue) {
   configWidget = neighborhoodHighlighter.configWidget;
-  connect(configWidget, SIGNAL(updateNeighborhoodGraph()), this, SLOT(updateNeighborhoodGraph()));
+  connect(configWidget, &NeighborhoodHighlighterConfigWidget::updateNeighborhoodGraph, this,
+          &NeighborhoodHighlighter::updateNeighborhoodGraph);
 }
 
 NeighborhoodHighlighter::~NeighborhoodHighlighter() {
@@ -605,7 +606,8 @@ void NeighborhoodHighlighter::morphCircleAlpha(unsigned char startA, unsigned en
   nbAnimSteps = nbAnimationSteps;
   QTimeLine timeLine(500);
   timeLine.setFrameRange(0, nbAnimSteps);
-  connect(&timeLine, SIGNAL(frameChanged(int)), this, SLOT(morphCircleAlphaAnimStep(int)));
+  connect(&timeLine, &QTimeLine::frameChanged, this,
+          &NeighborhoodHighlighter::morphCircleAlphaAnimStep);
   timeLine.start();
 
   while (timeLine.state() != QTimeLine::NotRunning) {

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -19,11 +19,12 @@ namespace tlp {
 SizeScaleConfigDialog::SizeScaleConfigDialog(QWidget *d)
     : QDialog(d), _ui(new Ui::SizeScaleConfigDialogData) {
   _ui->setupUi(this);
-  connect(_ui->minSizeSpinBox, SIGNAL(valueChanged(double)), this,
-          SLOT(minSizeValueChanged(double)));
-  connect(_ui->maxSizeSpinBox, SIGNAL(valueChanged(double)), this,
-          SLOT(maxSizeValueChanged(double)));
-  connect(_ui->viewSizeRB, SIGNAL(toggled(bool)), this, SLOT(viewSizeRadioButtonToggled(bool)));
+  connect(_ui->minSizeSpinBox, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this,
+          &SizeScaleConfigDialog::minSizeValueChanged);
+  connect(_ui->maxSizeSpinBox, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this,
+          &SizeScaleConfigDialog::maxSizeValueChanged);
+  connect(_ui->viewSizeRB, &QAbstractButton::toggled, this,
+          &SizeScaleConfigDialog::viewSizeRadioButtonToggled);
 }
 
 SizeScaleConfigDialog::~SizeScaleConfigDialog() {

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -68,10 +68,12 @@ void GeographicView::setupUi() {
   geoViewGraphicsView = new GeographicViewGraphicsView(this, new QGraphicsScene());
 
   geoViewConfigWidget = new GeographicViewConfigWidget();
-  connect(geoViewConfigWidget, SIGNAL(mapToPolygonSignal()), this, SLOT(mapToPolygon()));
+  connect(geoViewConfigWidget, &GeographicViewConfigWidget::mapToPolygonSignal, this,
+          &GeographicView::mapToPolygon);
 
   geolocalisationConfigWidget = new GeolocalisationConfigWidget();
-  connect(geolocalisationConfigWidget, SIGNAL(computeGeoLayout()), this, SLOT(computeGeoLayout()));
+  connect(geolocalisationConfigWidget, &GeolocalisationConfigWidget::computeGeoLayout, this,
+          &GeographicView::computeGeoLayout);
 
   sceneConfigurationWidget = new SceneConfigWidget();
   sceneConfigurationWidget->setGlMainWidget(geoViewGraphicsView->getGlMainWidget());
@@ -80,19 +82,20 @@ void GeographicView::setupUi() {
   sceneLayersConfigurationWidget->setGlMainWidget(geoViewGraphicsView->getGlMainWidget());
 
   centerViewAction = new QAction("Center view", this);
-  connect(centerViewAction, SIGNAL(triggered()), this, SLOT(centerView()));
+  connect(centerViewAction, &QAction::triggered, [this] { centerView(); });
 
   activateTooltipAndUrlManager(geoViewGraphicsView->getGlMainWidget());
   _viewActionsManager = new ViewActionsManager(this, geoViewGraphicsView->getGlMainWidget(), true);
 }
 
-void GeographicView::viewTypeChanged(QString viewTypeName) {
+void GeographicView::viewTypeChanged(const QString &viewTypeName) {
   QComboBox *comboBox = geoViewGraphicsView->getViewTypeComboBox();
 
   if (comboBox == nullptr)
     return;
 
-  disconnect(comboBox, SIGNAL(currentIndexChanged(QString)), this, SLOT(viewTypeChanged(QString)));
+  disconnect(comboBox, QOverload<const QString &>::of(&QComboBox::currentIndexChanged), this,
+             &GeographicView::viewTypeChanged);
 
   _viewType = getViewTypeFromName(viewTypeName);
 
@@ -102,17 +105,18 @@ void GeographicView::viewTypeChanged(QString viewTypeName) {
   comboBox->insertItem(0, viewTypeName);
   comboBox->setCurrentIndex(0);
 
-  connect(comboBox, SIGNAL(currentIndexChanged(QString)), this, SLOT(viewTypeChanged(QString)));
+  connect(comboBox, QOverload<const QString &>::of(&QComboBox::currentIndexChanged), this,
+          &GeographicView::viewTypeChanged);
 }
 
 void GeographicView::fillContextMenu(QMenu *menu, const QPointF &pf) {
   _viewActionsManager->fillContextMenu(menu);
   QAction *action = menu->addAction("Zoom +");
   action->setToolTip("Increase zoom level");
-  connect(action, SIGNAL(triggered()), this, SLOT(zoomIn()));
+  connect(action, &QAction::triggered, this, &GeographicView::zoomIn);
   action = menu->addAction("Zoom -");
   action->setToolTip("Increase zoom level");
-  connect(action, SIGNAL(triggered()), this, SLOT(zoomOut()));
+  connect(action, &QAction::triggered, this, &GeographicView::zoomOut);
   menu->addSeparator();
   menu->addAction("Augmented display")->setEnabled(false);
   menu->addSeparator();
@@ -194,7 +198,7 @@ void GeographicView::setState(const DataSet &dataSet) {
     dataSet.get("mapCenterLongitude", mapCenterLongitudeInit);
     dataSet.get("mapZoom", mapZoomInit);
 
-    QTimer::singleShot(1500, this, SLOT(initMap()));
+    QTimer::singleShot(1500, this, &GeographicView::initMap);
   }
 }
 

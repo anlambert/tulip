@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -160,7 +160,7 @@ void WorkspaceExposeWidget::setData(const QVector<WorkspacePanel *> &panels,
     scene()->addItem(item);
     _items << item;
     item->installEventFilter(this);
-    connect(item, SIGNAL(opened()), this, SLOT(itemOpened()));
+    connect(item, &PreviewItem::opened, this, &WorkspaceExposeWidget::itemOpened);
   }
 
   _currentPanelIndex = currentPanelIndex;
@@ -220,10 +220,11 @@ void WorkspaceExposeWidget::updatePositions(bool resetScenePos) {
   _positionAnimation = group;
 
   if (resetScenePos) {
-    connect(group, SIGNAL(finished()), this, SLOT(resetSceneRect()));
+    connect(group, &QAbstractAnimation::finished, this, &WorkspaceExposeWidget::resetSceneRect);
   }
 
-  connect(group, SIGNAL(finished()), this, SLOT(updatePositionsAnimationFinished()));
+  connect(group, &QAbstractAnimation::finished, this,
+          &WorkspaceExposeWidget::updatePositionsAnimationFinished);
   group->start(QAbstractAnimation::DeleteWhenStopped);
 }
 

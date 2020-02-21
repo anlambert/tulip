@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -11,7 +11,7 @@
  *
  */
 
-#include "talipot/TreeViewComboBox.h"
+#include <talipot/TreeViewComboBox.h>
 
 #include <QHeaderView>
 #include <QStyledItemDelegate>
@@ -44,13 +44,13 @@ TreeViewComboBox::TreeViewComboBox(QWidget *parent)
   _treeView->setItemsExpandable(true);
   setView(_treeView);
   view()->viewport()->installEventFilter(this);
-  connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentIndexChanged()));
+  connect(this, QOverload<int>::of(&QComboBox::currentIndexChanged), this,
+          &TreeViewComboBox::currentIndexChanged);
 }
 
 void TreeViewComboBox::setModel(QAbstractItemModel *model) {
   QComboBox::setModel(model);
-  connect(model, SIGNAL(rowsRemoved(const QModelIndex &, int, int)), this,
-          SLOT(rowsRemoved(const QModelIndex &, int, int)));
+  connect(model, &QAbstractItemModel::rowsRemoved, this, &TreeViewComboBox::rowsRemoved);
 
   for (int i = 1; i < model->columnCount(); ++i)
     _treeView->hideColumn(i);

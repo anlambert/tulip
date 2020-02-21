@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -27,7 +27,7 @@ ViewActionsManager::ViewActionsManager(View *view, GlMainWidget *widget, bool ke
   // to enable their keyboard shortcut
   _forceRedrawAction = new QAction("Force redraw", widget);
   setToolTipWithCtrlShortcut(_forceRedrawAction, "Redraw the current view", "Shift+R");
-  connect(_forceRedrawAction, SIGNAL(triggered()), this, SLOT(redraw()));
+  connect(_forceRedrawAction, &QAction::triggered, this, &ViewActionsManager::redraw);
   _forceRedrawAction->setShortcut(QKeySequence("Ctrl+Shift+R"));
   _forceRedrawAction->setShortcutContext(Qt::WidgetWithChildrenShortcut);
   _view->graphicsView()->addAction(_forceRedrawAction);
@@ -35,7 +35,7 @@ ViewActionsManager::ViewActionsManager(View *view, GlMainWidget *widget, bool ke
   _centerViewAction = new QAction("Center view", widget);
   setToolTipWithCtrlShortcut(_centerViewAction,
                              "Make the view to fully display and center its contents", "Shif+C");
-  connect(_centerViewAction, SIGNAL(triggered()), this, SLOT(centerView()));
+  connect(_centerViewAction, &QAction::triggered, this, &ViewActionsManager::centerView);
   _centerViewAction->setShortcut(QKeySequence("Ctrl+Shift+C"));
   _centerViewAction->setShortcutContext(Qt::WidgetWithChildrenShortcut);
   _view->graphicsView()->addAction(_centerViewAction);
@@ -43,7 +43,7 @@ ViewActionsManager::ViewActionsManager(View *view, GlMainWidget *widget, bool ke
   _snapshotAction = new QAction("Take a snapshot", widget);
   setToolTipWithCtrlShortcut(
       _snapshotAction, "Show a dialog to save a snapshot of the current view display", "Shift+P");
-  connect(_snapshotAction, SIGNAL(triggered()), this, SLOT(openSnapshotDialog()));
+  connect(_snapshotAction, &QAction::triggered, this, &ViewActionsManager::openSnapshotDialog);
   _snapshotAction->setShortcut(QKeySequence("Ctrl+Shift+P"));
   _snapshotAction->setShortcutContext(Qt::WidgetWithChildrenShortcut);
   _view->graphicsView()->addAction(_snapshotAction);
@@ -85,7 +85,7 @@ void ViewActionsManager::fillContextMenu(QMenu *menu) {
   action->setToolTip("Improve rendering quality");
   action->setCheckable(true);
   action->setChecked(OpenGlConfigManager::antiAliasing());
-  connect(action, SIGNAL(triggered(bool)), this, SLOT(setAntiAliasing(bool)));
+  connect(action, &QAction::triggered, this, &ViewActionsManager::setAntiAliasing);
 
   if (_advAntiAliasingAction)
     menu->addAction(_advAntiAliasingAction);

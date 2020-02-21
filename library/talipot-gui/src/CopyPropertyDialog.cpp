@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -45,8 +45,10 @@ CopyPropertyDialog::CopyPropertyDialog(QWidget *parent)
 
   ui->errorIconLabel->setPixmap(
       QApplication::style()->standardIcon(QStyle::SP_MessageBoxWarning).pixmap(16, 16));
-  connect(ui->newPropertyNameLineEdit, SIGNAL(textChanged(QString)), this, SLOT(checkValidity()));
-  connect(ui->buttonGroup, SIGNAL(buttonClicked(int)), this, SLOT(checkValidity()));
+  connect(ui->newPropertyNameLineEdit, &QLineEdit::textChanged, this,
+          &CopyPropertyDialog::checkValidity);
+  connect(ui->buttonGroup, QOverload<int>::of(&QButtonGroup::buttonClicked), this,
+          &CopyPropertyDialog::checkValidity);
   checkValidity();
 }
 

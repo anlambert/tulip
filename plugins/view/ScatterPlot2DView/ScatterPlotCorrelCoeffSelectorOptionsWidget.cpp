@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -35,9 +35,12 @@ ScatterPlotCorrelCoeffSelectorOptionsWidget::ScatterPlotCorrelCoeffSelectorOptio
   setButtonColor(_ui->oneColorButton, Color(0, 255, 0, 150));
   updateColorScale();
 
-  connect(_ui->minusOneColorButton, SIGNAL(clicked()), this, SLOT(updateColorScale()));
-  connect(_ui->zeroColorButton, SIGNAL(clicked()), this, SLOT(updateColorScale()));
-  connect(_ui->oneColorButton, SIGNAL(clicked()), this, SLOT(updateColorScale()));
+  connect(_ui->minusOneColorButton, &QAbstractButton::clicked, this,
+          &ScatterPlotCorrelCoeffSelectorOptionsWidget::updateColorScale);
+  connect(_ui->zeroColorButton, &QAbstractButton::clicked, this,
+          &ScatterPlotCorrelCoeffSelectorOptionsWidget::updateColorScale);
+  connect(_ui->oneColorButton, &QAbstractButton::clicked, this,
+          &ScatterPlotCorrelCoeffSelectorOptionsWidget::updateColorScale);
 }
 
 ScatterPlotCorrelCoeffSelectorOptionsWidget::~ScatterPlotCorrelCoeffSelectorOptionsWidget() {

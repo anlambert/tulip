@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -29,10 +29,10 @@ CaptionItem::CaptionItem(View *view)
     : view(view), _graph(nullptr), _metricProperty(nullptr), _colorProperty(nullptr),
       _sizeProperty(nullptr), _backupColorProperty(nullptr), _backupBorderColorProperty(nullptr) {
   _captionGraphicsItem = new CaptionGraphicsItem(view);
-  connect(_captionGraphicsItem, SIGNAL(filterChanged(float, float)), this,
-          SLOT(applyNewFilter(float, float)));
-  connect(_captionGraphicsItem, SIGNAL(selectedPropertyChanged(std::string)), this,
-          SLOT(selectedPropertyChanged(std::string)));
+  connect(_captionGraphicsItem, &CaptionGraphicsItem::filterChanged, this,
+          &CaptionItem::applyNewFilter);
+  connect(_captionGraphicsItem, &CaptionGraphicsItem::selectedPropertyChanged, this,
+          &CaptionItem::selectedPropertyChanged);
 }
 
 CaptionItem::~CaptionItem() {

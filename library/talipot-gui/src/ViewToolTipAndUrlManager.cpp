@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -56,8 +56,8 @@ void ViewToolTipAndUrlManager::fillContextMenu(QMenu *menu, node n) {
     return;
 
   menu->addSeparator();
-  QAction *action =
-      menu->addAction("Open " + tlpStringToQString(_contextMenuUrl), this, SLOT(openUrl()));
+  QAction *action = menu->addAction("Open " + tlpStringToQString(_contextMenuUrl), this,
+                                    &ViewToolTipAndUrlManager::openUrl);
   action->setToolTip(action->text().append(" in the default browser"));
 }
 
@@ -74,8 +74,8 @@ void ViewToolTipAndUrlManager::fillContextMenu(QMenu *menu, edge e) {
 
   menu->addSeparator();
 
-  QAction *action =
-      menu->addAction("Open " + tlpStringToQString(_contextMenuUrl), this, SLOT(openUrl()));
+  QAction *action = menu->addAction("Open " + tlpStringToQString(_contextMenuUrl), this,
+                                    &ViewToolTipAndUrlManager::openUrl);
   action->setToolTip(action->text().append(" in the default browser"));
 }
 
@@ -92,7 +92,7 @@ void ViewToolTipAndUrlManager::fillContextMenu(QMenu *menu) {
                      "information about the graph element located under the pointer");
   action->setCheckable(true);
   action->setChecked(_tooltips);
-  connect(action, SIGNAL(triggered(bool)), this, SLOT(displayToolTips(bool)));
+  connect(action, &QAction::triggered, this, &ViewToolTipAndUrlManager::displayToolTips);
 
   // add submenu to manage the url property choice
   QMenu *urlPropMenu;
@@ -108,7 +108,7 @@ void ViewToolTipAndUrlManager::fillContextMenu(QMenu *menu) {
 
   QActionGroup *urlPropGroup = new QActionGroup(urlPropMenu);
   urlPropGroup->setExclusive(true);
-  connect(urlPropMenu, SIGNAL(triggered(QAction *)), this, SLOT(setUrlProp(QAction *)));
+  connect(urlPropMenu, &QMenu::triggered, this, &ViewToolTipAndUrlManager::setUrlProp);
   action = urlPropMenu->addAction(" None ");
   action->setCheckable(true);
   urlPropGroup->addAction(action);

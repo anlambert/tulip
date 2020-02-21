@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -32,21 +32,29 @@ using namespace std;
 CSVGraphMappingConfigurationWidget::CSVGraphMappingConfigurationWidget(QWidget *parent)
     : QWidget(parent), graph(nullptr), ui(new Ui::CSVGraphMappingConfigurationWidget) {
   ui->setupUi(this);
-  connect(ui->mappingConfigurationStackedWidget, SIGNAL(currentChanged(int)), this,
-          SIGNAL(mappingChanged()));
-  connect(ui->nodeColumnsButton, SIGNAL(pressed()), this, SLOT(selectNodeColumns()));
-  connect(ui->nodePropertiesButton, SIGNAL(pressed()), this, SLOT(selectNodeProperties()));
-  connect(ui->edgeColumnsButton, SIGNAL(pressed()), this, SLOT(selectEdgeColumns()));
-  connect(ui->edgePropertiesButton, SIGNAL(pressed()), this, SLOT(selectEdgeProperties()));
-  connect(ui->srcColumnsButton, SIGNAL(pressed()), this, SLOT(selectSrcColumns()));
-  connect(ui->tgtColumnsButton, SIGNAL(pressed()), this, SLOT(selectTgtColumns()));
-  connect(ui->srcPropertiesButton, SIGNAL(pressed()), this, SLOT(selectSrcProperties()));
-  connect(ui->tgtPropertiesButton, SIGNAL(pressed()), this, SLOT(selectTgtProperties()));
+  connect(ui->mappingConfigurationStackedWidget, &QStackedWidget::currentChanged, this,
+          &CSVGraphMappingConfigurationWidget::mappingChanged);
+  connect(ui->nodeColumnsButton, &QAbstractButton::pressed, this,
+          &CSVGraphMappingConfigurationWidget::selectNodeColumns);
+  connect(ui->nodePropertiesButton, &QAbstractButton::pressed, this,
+          &CSVGraphMappingConfigurationWidget::selectNodeProperties);
+  connect(ui->edgeColumnsButton, &QAbstractButton::pressed, this,
+          &CSVGraphMappingConfigurationWidget::selectEdgeColumns);
+  connect(ui->edgePropertiesButton, &QAbstractButton::pressed, this,
+          &CSVGraphMappingConfigurationWidget::selectEdgeProperties);
+  connect(ui->srcColumnsButton, &QAbstractButton::pressed, this,
+          &CSVGraphMappingConfigurationWidget::selectSrcColumns);
+  connect(ui->tgtColumnsButton, &QAbstractButton::pressed, this,
+          &CSVGraphMappingConfigurationWidget::selectTgtColumns);
+  connect(ui->srcPropertiesButton, &QAbstractButton::pressed, this,
+          &CSVGraphMappingConfigurationWidget::selectSrcProperties);
+  connect(ui->tgtPropertiesButton, &QAbstractButton::pressed, this,
+          &CSVGraphMappingConfigurationWidget::selectTgtProperties);
 
-  connect(ui->newPropertyOnNodesButton, SIGNAL(clicked(bool)), this, SLOT(createNewProperty()),
-          Qt::QueuedConnection);
-  connect(ui->newPropertyOnEdgesButton, SIGNAL(clicked(bool)), this, SLOT(createNewProperty()),
-          Qt::QueuedConnection);
+  connect(ui->newPropertyOnNodesButton, &QAbstractButton::clicked, this,
+          &CSVGraphMappingConfigurationWidget::createNewProperty, Qt::QueuedConnection);
+  connect(ui->newPropertyOnEdgesButton, &QAbstractButton::clicked, this,
+          &CSVGraphMappingConfigurationWidget::createNewProperty, Qt::QueuedConnection);
 }
 
 CSVGraphMappingConfigurationWidget::~CSVGraphMappingConfigurationWidget() {

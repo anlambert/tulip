@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -127,7 +127,8 @@ void GlMainView::assignNewGlMainWidget(GlMainWidget *glMainWidget, bool deleteOl
   }
 
   _sceneLayersConfigurationWidget->setGlMainWidget(_glMainWidget);
-  connect(_sceneLayersConfigurationWidget, SIGNAL(drawNeeded()), this, SIGNAL(drawNeeded()));
+  connect(_sceneLayersConfigurationWidget, &SceneLayersConfigWidget::drawNeeded, this,
+          &View::drawNeeded);
 
   setCentralWidget(_glMainWidget, deleteOldGlMainWidget);
   GlMainWidgetGraphicsItem *glMainWidgetGraphicsItem =
@@ -136,7 +137,8 @@ void GlMainView::assignNewGlMainWidget(GlMainWidget *glMainWidget, bool deleteOl
   _sceneConfigurationWidget = new SceneConfigWidget();
   _sceneConfigurationWidget->setGlMainWidget(_glMainWidget);
 
-  connect(glMainWidgetGraphicsItem, SIGNAL(widgetPainted(bool)), this, SLOT(glMainViewDrawn(bool)));
+  connect(glMainWidgetGraphicsItem, &GlMainWidgetGraphicsItem::widgetPainted, this,
+          &GlMainView::glMainViewDrawn);
   // Tooltip events and url management
   if (_needTooltipAndUrlManager)
     activateTooltipAndUrlManager(_glMainWidget);
@@ -186,7 +188,7 @@ void GlMainView::updateShowOverviewButton() {
     proxy->setWidget(_showOvButton);
     addToScene(proxy);
     proxy->setZValue(10);
-    connect(_showOvButton, SIGNAL(toggled(bool)), this, SLOT(setOverviewVisible(bool)));
+    connect(_showOvButton, &QAbstractButton::toggled, this, &GlMainView::setOverviewVisible);
   }
 
   _showOvButton->setVisible(_overviewPosition == OVERVIEW_BOTTOM_RIGHT);
@@ -245,7 +247,8 @@ void GlMainView::updateShowQuickAccessBarButton() {
       proxy->setWidget(_showQabButton);
       addToScene(proxy);
       proxy->setZValue(10);
-      connect(_showQabButton, SIGNAL(toggled(bool)), this, SLOT(setQuickAccessBarVisible(bool)));
+      connect(_showQabButton, &QAbstractButton::toggled, this,
+              &GlMainView::setQuickAccessBarVisible);
     }
 
     QRectF rect(QPoint(0, 0), graphicsView()->size());
@@ -283,9 +286,10 @@ void GlMainView::setQuickAccessBarVisible(bool visible) {
     needQuickAccessBar = true;
     _quickAccessBarItem = new QGraphicsProxyWidget();
     _quickAccessBar = getQuickAccessBarImpl();
-    connect(_quickAccessBar, SIGNAL(settingsChanged()), _sceneConfigurationWidget,
-            SLOT(resetChanges()));
-    connect(_sceneConfigurationWidget, SIGNAL(settingsApplied()), _quickAccessBar, SLOT(reset()));
+    connect(_quickAccessBar, &QuickAccessBar::settingsChanged, _sceneConfigurationWidget,
+            &SceneConfigWidget::resetChanges);
+    connect(_sceneConfigurationWidget, &SceneConfigWidget::settingsApplied, _quickAccessBar,
+            &QuickAccessBar::reset);
 
     _quickAccessBar->setGlMainView(this);
     _quickAccessBarItem->setWidget(_quickAccessBar);
@@ -362,20 +366,20 @@ void GlMainView::fillContextMenu(QMenu *menu, const QPointF &pf) {
   viewOrtho->setToolTip("Enable to switch between true perspective and orthogonal");
   viewOrtho->setCheckable(true);
   viewOrtho->setChecked(_glMainWidget->getScene()->isViewOrtho());
-  connect(viewOrtho, SIGNAL(triggered(bool)), this, SLOT(setViewOrtho(bool)));
+  connect(viewOrtho, &QAction::triggered, this, &GlMainView::setViewOrtho);
 
   menu->addSeparator();
   menu->addAction("Augmented display")->setEnabled(false);
   menu->addSeparator();
 
-  QAction *a = menu->addAction("Show overview", this, SLOT(setOverviewVisible(bool)));
+  QAction *a = menu->addAction("Show overview", this, &GlMainView::setOverviewVisible);
   a->setToolTip("Show/hide the overview in a corner of the view");
   a->setCheckable(true);
   a->setChecked(overviewVisible());
 
   if (needQuickAccessBar) {
     QAction *quickbarAction =
-        menu->addAction("Show quick access bar", this, SLOT(setQuickAccessBarVisible(bool)));
+        menu->addAction("Show quick access bar", this, &GlMainView::setQuickAccessBarVisible);
     quickbarAction->setToolTip("Show/hide the quick access bar");
     quickbarAction->setCheckable(true);
     quickbarAction->setChecked(quickAccessBarVisible());

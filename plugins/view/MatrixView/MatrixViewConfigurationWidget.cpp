@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -25,17 +25,20 @@ namespace tlp {
 MatrixViewConfigurationWidget::MatrixViewConfigurationWidget(QWidget *parent)
     : QWidget(parent), _ui(new Ui::MatrixViewConfigurationWidget()), _modifyingMetricList(false) {
   _ui->setupUi(this);
-  connect(_ui->orderingMetricCombo, SIGNAL(currentIndexChanged(int)), this,
-          SLOT(orderingMetricComboIndexChanged(int)));
-  connect(_ui->backgroundColorBtn, SIGNAL(colorChanged(QColor)), this,
-          SIGNAL(changeBackgroundColor(QColor)));
-  connect(_ui->gridDisplayCombo, SIGNAL(currentIndexChanged(int)), this,
-          SIGNAL(setGridDisplayMode()));
-  connect(_ui->showedgesbox, SIGNAL(clicked(bool)), this, SIGNAL(showEdges(bool)));
-  connect(_ui->enableColorInterpolationCBox, SIGNAL(clicked(bool)), this,
-          SIGNAL(enableEdgeColorInterpolation(bool)));
-  connect(_ui->orientedCBox, SIGNAL(clicked(bool)), this, SIGNAL(updateOriented(bool)));
-  connect(_ui->ascendingOrderCBox, SIGNAL(toggled(bool)), this, SLOT(orderingDirectionChanged()));
+  connect(_ui->orderingMetricCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), this,
+          &MatrixViewConfigurationWidget::orderingMetricComboIndexChanged);
+  connect(_ui->backgroundColorBtn, &ChooseColorButton::colorChanged, this,
+          &MatrixViewConfigurationWidget::changeBackgroundColor);
+  connect(_ui->gridDisplayCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), this,
+          &MatrixViewConfigurationWidget::setGridDisplayMode);
+  connect(_ui->showedgesbox, &QAbstractButton::clicked, this,
+          &MatrixViewConfigurationWidget::showEdges);
+  connect(_ui->enableColorInterpolationCBox, &QAbstractButton::clicked, this,
+          &MatrixViewConfigurationWidget::enableEdgeColorInterpolation);
+  connect(_ui->orientedCBox, &QAbstractButton::clicked, this,
+          &MatrixViewConfigurationWidget::updateOriented);
+  connect(_ui->ascendingOrderCBox, &QAbstractButton::toggled, this,
+          &MatrixViewConfigurationWidget::orderingDirectionChanged);
 
   _ui->backgroundColorBtn->setDialogParent(getMainWindow());
 }

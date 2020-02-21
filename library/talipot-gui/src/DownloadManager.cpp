@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -37,7 +37,7 @@ DownloadManager *DownloadManager::getInstance() {
 }
 
 DownloadManager::DownloadManager() {
-  connect(this, SIGNAL(finished(QNetworkReply *)), SLOT(downloadFinished(QNetworkReply *)));
+  connect(this, &QNetworkAccessManager::finished, this, &DownloadManager::downloadFinished);
 }
 
 QNetworkReply *DownloadManager::downloadPlugin(const QUrl &url, const QString &destination) {

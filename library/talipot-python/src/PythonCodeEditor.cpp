@@ -243,19 +243,21 @@ FindReplaceDialog::FindReplaceDialog(QPlainTextEdit *editor)
     : QDialog(editor), _ui(new Ui::FindReplaceDialogData), _editor(editor) {
   _ui->setupUi(this);
   _editor->installEventFilter(this);
-  connect(_ui->findButton, SIGNAL(clicked()), this, SLOT(doFind()));
-  connect(_ui->replaceButton, SIGNAL(clicked()), this, SLOT(doReplace()));
-  connect(_ui->replaceFindButton, SIGNAL(clicked()), this, SLOT(doReplaceFind()));
-  connect(_ui->replaceAllButton, SIGNAL(clicked()), this, SLOT(doReplaceAll()));
-  connect(_ui->closeButton, SIGNAL(clicked()), this, SLOT(hide()));
-  connect(_ui->forwardRB, SIGNAL(toggled(bool)), this, SLOT(setResetSearch()));
-  connect(_ui->backwardRB, SIGNAL(toggled(bool)), this, SLOT(setResetSearch()));
-  connect(_ui->regexpCB, SIGNAL(toggled(bool)), this, SLOT(setResetSearch()));
-  connect(_ui->regexpCB, SIGNAL(toggled(bool)), this, SLOT(regexpToggled(bool)));
-  connect(_ui->wholeWordCB, SIGNAL(toggled(bool)), this, SLOT(setResetSearch()));
-  connect(_ui->wrapSearchCB, SIGNAL(toggled(bool)), this, SLOT(setResetSearch()));
-  connect(_ui->caseSensitiveCB, SIGNAL(toggled(bool)), this, SLOT(setResetSearch()));
-  connect(_ui->textToFind, SIGNAL(textChanged(const QString &)), this, SLOT(textToFindChanged()));
+  connect(_ui->findButton, &QAbstractButton::clicked, this, &FindReplaceDialog::doFind);
+  connect(_ui->replaceButton, &QAbstractButton::clicked, this, &FindReplaceDialog::doReplace);
+  connect(_ui->replaceFindButton, &QAbstractButton::clicked, this,
+          &FindReplaceDialog::doReplaceFind);
+  connect(_ui->replaceAllButton, &QAbstractButton::clicked, this, &FindReplaceDialog::doReplaceAll);
+  connect(_ui->closeButton, &QAbstractButton::clicked, this, &QWidget::hide);
+  connect(_ui->forwardRB, &QAbstractButton::toggled, this, &FindReplaceDialog::setResetSearch);
+  connect(_ui->backwardRB, &QAbstractButton::toggled, this, &FindReplaceDialog::setResetSearch);
+  connect(_ui->regexpCB, &QAbstractButton::toggled, this, &FindReplaceDialog::setResetSearch);
+  connect(_ui->regexpCB, &QAbstractButton::toggled, this, &FindReplaceDialog::regexpToggled);
+  connect(_ui->wholeWordCB, &QAbstractButton::toggled, this, &FindReplaceDialog::setResetSearch);
+  connect(_ui->wrapSearchCB, &QAbstractButton::toggled, this, &FindReplaceDialog::setResetSearch);
+  connect(_ui->caseSensitiveCB, &QAbstractButton::toggled, this,
+          &FindReplaceDialog::setResetSearch);
+  connect(_ui->textToFind, &QLineEdit::textChanged, this, &FindReplaceDialog::textToFindChanged);
 }
 
 FindReplaceDialog::~FindReplaceDialog() {
@@ -494,15 +496,17 @@ PythonCodeEditor::PythonCodeEditor(QWidget *parent)
 
   _findReplaceDialog = new FindReplaceDialog(this);
 
-  connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(updateLineNumberAreaWidth()));
-  connect(this, SIGNAL(updateRequest(const QRect &, int)), this,
-          SLOT(updateLineNumberArea(const QRect &, int)));
-  connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(resetExtraSelections()));
-  connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(highlightCurrentLine()));
-  connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(highlightErrors()));
-  connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(matchParens()));
-  connect(this, SIGNAL(textChanged()), this, SLOT(updateAutoCompletionList()));
-  connect(this, SIGNAL(selectionChanged()), this, SLOT(highlightSelection()));
+  connect(this, &QPlainTextEdit::blockCountChanged, this,
+          &PythonCodeEditor::updateLineNumberAreaWidth);
+  connect(this, &QPlainTextEdit::updateRequest, this, &PythonCodeEditor::updateLineNumberArea);
+  connect(this, &QPlainTextEdit::cursorPositionChanged, this,
+          &PythonCodeEditor::resetExtraSelections);
+  connect(this, &QPlainTextEdit::cursorPositionChanged, this,
+          &PythonCodeEditor::highlightCurrentLine);
+  connect(this, &QPlainTextEdit::cursorPositionChanged, this, &PythonCodeEditor::highlightErrors);
+  connect(this, &QPlainTextEdit::cursorPositionChanged, this, &PythonCodeEditor::matchParens);
+  connect(this, &QPlainTextEdit::textChanged, [this] { updateAutoCompletionList(); });
+  connect(this, &QPlainTextEdit::selectionChanged, this, &PythonCodeEditor::highlightSelection);
 
   _shellWidget = false;
   _moduleEditor = false;

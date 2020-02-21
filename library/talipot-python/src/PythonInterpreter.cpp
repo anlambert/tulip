@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -414,9 +414,8 @@ PythonInterpreter *PythonInterpreter::getInstance() {
 void PythonInterpreter::initConsoleOutput() {
   consoleOuputHandler = new ConsoleOutputHandler();
   consoleOuputEmitter = new ConsoleOutputEmitter();
-  QObject::connect(
-      consoleOuputEmitter, SIGNAL(consoleOutput(QAbstractScrollArea *, const QString &, bool)),
-      consoleOuputHandler, SLOT(writeToConsole(QAbstractScrollArea *, const QString &, bool)));
+  QObject::connect(consoleOuputEmitter, &ConsoleOutputEmitter::consoleOutput, consoleOuputHandler,
+                   &ConsoleOutputHandler::writeToConsole);
 }
 
 bool PythonInterpreter::interpreterInit() {

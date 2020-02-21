@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -21,14 +21,16 @@ PathFinderConfigurationWidget::PathFinderConfigurationWidget(QWidget *parent)
     : QWidget(parent), _ui(new Ui::PathFinderConfigurationData) {
   _ui->setupUi(this);
 
-  connect(_ui->weightCombo, SIGNAL(activated(const QString &)), this,
-          SIGNAL(setWeightMetric(const QString &)));
-  connect(_ui->edgeOrientationCombo, SIGNAL(activated(const QString &)), this,
-          SIGNAL(setEdgeOrientation(const QString &)));
-  connect(_ui->pathsTypeCombo, SIGNAL(activated(const QString &)), this,
-          SIGNAL(setPathsType(const QString &)));
-  connect(_ui->toleranceCheck, SIGNAL(clicked(bool)), this, SIGNAL(activateTolerance(bool)));
-  connect(_ui->toleranceSpin, SIGNAL(valueChanged(int)), this, SIGNAL(setTolerance(int)));
+  connect(_ui->weightCombo, QOverload<const QString &>::of(&QComboBox::activated), this,
+          &PathFinderConfigurationWidget::setWeightMetric);
+  connect(_ui->edgeOrientationCombo, QOverload<const QString &>::of(&QComboBox::activated), this,
+          &PathFinderConfigurationWidget::setEdgeOrientation);
+  connect(_ui->pathsTypeCombo, QOverload<const QString &>::of(&QComboBox::activated), this,
+          &PathFinderConfigurationWidget::setPathsType);
+  connect(_ui->toleranceCheck, &QAbstractButton::clicked, this,
+          &PathFinderConfigurationWidget::activateTolerance);
+  connect(_ui->toleranceSpin, QOverload<int>::of(&QSpinBox::valueChanged), this,
+          &PathFinderConfigurationWidget::setTolerance);
 }
 
 PathFinderConfigurationWidget::~PathFinderConfigurationWidget() {

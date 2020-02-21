@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -94,7 +94,7 @@ tlp::View *ViewsManager::addView(const std::string &viewName, tlp::Graph *graph,
     panel->setGraphsModel(model);
     panel->viewGraphSet(graph);
 
-    connect(view, SIGNAL(drawNeeded()), view, SLOT(draw()));
+    connect(view, &View::drawNeeded, view, &View::draw);
 
     openedViews.push_back(view);
     viewToPanel[view] = panel;
@@ -104,7 +104,7 @@ tlp::View *ViewsManager::addView(const std::string &viewName, tlp::Graph *graph,
     QApplication::processEvents();
   }
 
-  connect(view, SIGNAL(destroyed(QObject *)), this, SLOT(viewDestroyed(QObject *)));
+  connect(view, &QObject::destroyed, this, &ViewsManager::viewDestroyed);
 
   return view;
 }

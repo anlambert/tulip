@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -43,7 +43,7 @@ AlgorithmRunnerItem::AlgorithmRunnerItem(QString pluginName, QWidget *parent)
     : QWidget(parent), _ui(new Ui::AlgorithmRunnerItem), _pluginName(pluginName), _graph(nullptr),
       _storeResultAsLocal(true) {
   _ui->setupUi(this);
-  connect(_ui->favoriteCheck, SIGNAL(toggled(bool)), this, SIGNAL(favorized(bool)));
+  connect(_ui->favoriteCheck, &QAbstractButton::toggled, this, &AlgorithmRunnerItem::favorized);
   const Plugin &plugin = PluginsManager::pluginInformation(QStringToTlpString(pluginName));
   // split pluginName after the second word if needed
   QStringList words = pluginName.split(' ');
@@ -94,7 +94,8 @@ AlgorithmRunnerItem::AlgorithmRunnerItem(QString pluginName, QWidget *parent)
     _ui->languageLabel->setToolTip("Plugin written in C++");
   }
 
-  connect(_ui->favoriteCheck, SIGNAL(stateChanged(int)), this, SLOT(favoriteChanged(int)));
+  connect(_ui->favoriteCheck, &QCheckBox::stateChanged, this,
+          &AlgorithmRunnerItem::favoriteChanged);
 }
 
 AlgorithmRunnerItem::~AlgorithmRunnerItem() {
@@ -504,7 +505,7 @@ void AlgorithmRunnerItem::mouseMoveEvent(QMouseEvent *ev) {
   initModel();
   AlgorithmMimeType *mimeData = new AlgorithmMimeType(
       name(), static_cast<ParameterListModel *>(_ui->parameters->model())->parametersValues());
-  connect(mimeData, SIGNAL(mimeRun(tlp::Graph *)), this, SLOT(run(tlp::Graph *)));
+  connect(mimeData, &AlgorithmMimeType::mimeRun, this, &AlgorithmRunnerItem::run);
   drag->setMimeData(mimeData);
   drag->exec(Qt::CopyAction | Qt::MoveAction);
 }

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -22,7 +22,7 @@ using namespace tlp;
 TextureFileDialog::TextureFileDialog(QWidget *parent)
     : QDialog(parent), ui(new Ui::TextureFileDialogData()) {
   ui->setupUi(this);
-  connect(ui->chooseFileOrDirButton, SIGNAL(clicked()), this, SLOT(browse()));
+  connect(ui->chooseFileOrDirButton, &QAbstractButton::clicked, this, &TextureFileDialog::browse);
 }
 
 TextureFileDialog::~TextureFileDialog() {

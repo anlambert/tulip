@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -28,8 +28,10 @@ HistoOptionsWidget::HistoOptionsWidget(QWidget *parent)
   _ui->backColorButton->setDialogParent(getMainWindow());
   _ui->backColorButton->setDialogTitle("Choose the background color");
   setBackgroundColor(Color(255, 255, 255));
-  connect(_ui->useXScaleCheckBox, SIGNAL(toggled(bool)), this, SLOT(pressXScaleCheckBox(bool)));
-  connect(_ui->useYScaleCheckBox, SIGNAL(toggled(bool)), this, SLOT(pressYScaleCheckBox(bool)));
+  connect(_ui->useXScaleCheckBox, &QAbstractButton::toggled, this,
+          &HistoOptionsWidget::pressXScaleCheckBox);
+  connect(_ui->useYScaleCheckBox, &QAbstractButton::toggled, this,
+          &HistoOptionsWidget::pressYScaleCheckBox);
 }
 
 HistoOptionsWidget::~HistoOptionsWidget() {

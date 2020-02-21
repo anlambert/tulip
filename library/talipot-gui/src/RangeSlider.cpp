@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -11,7 +11,8 @@
  *
  */
 
-#include "talipot/RangeSlider.h"
+#include <talipot/RangeSlider.h>
+
 #include <QKeyEvent>
 #include <QMouseEvent>
 #include <QApplication>
@@ -24,8 +25,8 @@ RangeSlider::RangeSlider(QWidget *parent)
       lastPressed(NoHandle), mainControl(LowerHandle), lowerPressed(QStyle::SC_None),
       upperPressed(QStyle::SC_None), movement(FreeMovement), firstMovement(false),
       blockTracking(false) {
-  connect(this, SIGNAL(rangeChanged(int, int)), this, SLOT(updateRange(int, int)));
-  connect(this, SIGNAL(sliderReleased()), this, SLOT(movePressedHandle()));
+  connect(this, &RangeSlider::rangeChanged, this, &RangeSlider::updateRange);
+  connect(this, &QAbstractSlider::sliderReleased, this, &RangeSlider::movePressedHandle);
 }
 
 RangeSlider::RangeSlider(Qt::Orientation orientation, QWidget *parent)
@@ -33,8 +34,8 @@ RangeSlider::RangeSlider(Qt::Orientation orientation, QWidget *parent)
       position(0), lastPressed(NoHandle), mainControl(LowerHandle), lowerPressed(QStyle::SC_None),
       upperPressed(QStyle::SC_None), movement(FreeMovement), firstMovement(false),
       blockTracking(false) {
-  connect(this, SIGNAL(rangeChanged(int, int)), this, SLOT(updateRange(int, int)));
-  connect(this, SIGNAL(sliderReleased()), this, SLOT(movePressedHandle()));
+  connect(this, &RangeSlider::rangeChanged, this, &RangeSlider::updateRange);
+  connect(this, &QAbstractSlider::sliderReleased, this, &RangeSlider::movePressedHandle);
 }
 
 void RangeSlider::initStyleOption(QStyleOptionSlider *option, RangeHandle handle) const {

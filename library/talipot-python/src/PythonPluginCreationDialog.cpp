@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -26,7 +26,8 @@ PythonPluginCreationDialog::PythonPluginCreationDialog(QWidget *parent)
     : QDialog(parent), _ui(new Ui::PythonPluginCreationDialog) {
   _ui->setupUi(this);
 
-  connect(_ui->browseButton, SIGNAL(clicked()), this, SLOT(selectPluginSourceFile()));
+  connect(_ui->browseButton, &QAbstractButton::clicked, this,
+          &PythonPluginCreationDialog::selectPluginSourceFile);
   QDate currentDate = QDate::currentDate();
   _ui->date->setText(currentDate.toString("dd/MM/yyyy"));
 }

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -110,8 +110,8 @@ WorkspacePanel::WorkspacePanel(tlp::View *view, QWidget *parent)
   _ui->interactorsFrame->installEventFilter(this);
   _ui->dragHandle->setPanel(this);
   _ui->graphCombo->installEventFilter(this);
-  connect(_ui->linkButton, SIGNAL(toggled(bool)), this, SLOT(toggleSynchronization(bool)));
-  connect(_ui->closeButton, SIGNAL(clicked()), this, SLOT(close()));
+  connect(_ui->linkButton, &QAbstractButton::toggled, this, &WorkspacePanel::toggleSynchronization);
+  connect(_ui->closeButton, &QAbstractButton::clicked, this, &QWidget::close);
   setView(view);
   setAttribute(Qt::WA_DeleteOnClose);
   setAutoFillBackground(true);
@@ -125,7 +125,7 @@ WorkspacePanel::~WorkspacePanel() {
   _ui = nullptr;
 
   if (_view != nullptr) {
-    disconnect(_view, SIGNAL(destroyed()), this, SLOT(viewDestroyed()));
+    disconnect(_view, &QObject::destroyed, this, &WorkspacePanel::viewDestroyed);
     _interactorConfigWidget->clearWidgets();
     delete _view;
     // same as above
@@ -134,7 +134,7 @@ WorkspacePanel::~WorkspacePanel() {
 }
 void WorkspacePanel::viewDestroyed() {
   if (_view != nullptr) {
-    disconnect(_view, SIGNAL(destroyed()), this, SLOT(viewDestroyed()));
+    disconnect(_view, &QObject::destroyed, this, &WorkspacePanel::viewDestroyed);
     _interactorConfigWidget->clearWidgets();
     _view = nullptr;
   }
@@ -155,9 +155,9 @@ void WorkspacePanel::setView(tlp::View *view) {
   _ui->currentInteractorButton->setChecked(false);
 
   if (_view != nullptr) {
-    disconnect(_view, SIGNAL(destroyed()), this, SLOT(viewDestroyed()));
-    disconnect(_view, SIGNAL(graphSet(tlp::Graph *)), this, SLOT(viewGraphSet(tlp::Graph *)));
-    disconnect(_view, SIGNAL(drawNeeded()), this, SIGNAL(drawNeeded()));
+    disconnect(_view, &QObject::destroyed, this, &WorkspacePanel::viewDestroyed);
+    disconnect(_view, &View::graphSet, this, &WorkspacePanel::viewGraphSet);
+    disconnect(_view, &View::drawNeeded, this, &WorkspacePanel::drawNeeded);
     delete _view->graphicsView();
   }
 
@@ -182,10 +182,10 @@ void WorkspacePanel::setView(tlp::View *view) {
   if (!compatibleInteractors.empty())
     setCurrentInteractor(compatibleInteractors[0]);
 
-  connect(_view, SIGNAL(destroyed()), this, SLOT(viewDestroyed()));
-  connect(_view, SIGNAL(graphSet(tlp::Graph *)), this, SLOT(viewGraphSet(tlp::Graph *)));
-  connect(_view, SIGNAL(drawNeeded()), this, SIGNAL(drawNeeded()));
-  connect(_view, SIGNAL(interactorsChanged()), this, SLOT(refreshInteractorsToolbar()));
+  connect(_view, &QObject::destroyed, this, &WorkspacePanel::viewDestroyed);
+  connect(_view, &View::graphSet, this, &WorkspacePanel::viewGraphSet);
+  connect(_view, &View::drawNeeded, this, &WorkspacePanel::drawNeeded);
+  connect(_view, &View::interactorsChanged, this, &WorkspacePanel::refreshInteractorsToolbar);
   _view->graphicsView()->scene()->installEventFilter(this);
 
   if (!_view->configurationWidgets().empty()) {
@@ -195,8 +195,8 @@ void WorkspacePanel::setView(tlp::View *view) {
     QTabWidget *viewConfigurationTabs = new QTabWidget();
 #endif
     viewConfigurationTabs->setTabsClosable(true);
-    connect(viewConfigurationTabs, SIGNAL(tabCloseRequested(int)), this,
-            SLOT(hideConfigurationTab()));
+    connect(viewConfigurationTabs, &QTabWidget::tabCloseRequested, this,
+            &WorkspacePanel::hideConfigurationTab);
     viewConfigurationTabs->setTabPosition(QTabWidget::West);
     viewConfigurationTabs->setStyleSheet(_view->configurationWidgetsStyleSheet());
     viewConfigurationTabs->findChild<QTabBar *>()->installEventFilter(this);
@@ -386,9 +386,9 @@ void WorkspacePanel::refreshInteractorsToolbar() {
       button->setToolTip(i->action()->text());
       interactorsLayout->addWidget(button);
       button->setEnabled(i->action()->isEnabled());
-      connect(button, SIGNAL(clicked()), i->action(), SLOT(trigger()));
-      connect(i->action(), SIGNAL(triggered()), this, SLOT(interactorActionTriggered()));
-      connect(i->action(), SIGNAL(changed()), this, SLOT(actionChanged()));
+      connect(button, &QAbstractButton::clicked, i->action(), &QAction::trigger);
+      connect(i->action(), &QAction::triggered, this, &WorkspacePanel::interactorActionTriggered);
+      connect(i->action(), &QAction::changed, this, &WorkspacePanel::actionChanged);
       _actionTriggers[i->action()] = button;
     }
 
@@ -425,7 +425,8 @@ void WorkspacePanel::resetInteractorsScrollButtonsVisibility() {
 
 void WorkspacePanel::setGraphsModel(tlp::GraphHierarchiesModel *model) {
   _ui->graphCombo->setModel(model);
-  connect(_ui->graphCombo, SIGNAL(currentItemChanged()), this, SLOT(graphComboIndexChanged()));
+  connect(_ui->graphCombo, &TreeViewComboBox::currentItemChanged, this,
+          &WorkspacePanel::graphComboIndexChanged);
 }
 
 void WorkspacePanel::viewGraphSet(tlp::Graph *g) {

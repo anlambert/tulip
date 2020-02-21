@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -34,8 +34,8 @@ CaptionGraphicsItem::CaptionGraphicsItem(View *view) : _view(view) {
 
   _rondedRectItem = new CaptionGraphicsBackgroundItem(QRect(QPoint(0, 0), QSize(130, 260)));
   _rondedRectItem->setBrush(QBrush(QColor(255, 255, 255, 180)));
-  connect(_rondedRectItem, SIGNAL(filterChanged(float, float)), this,
-          SLOT(filterChangedSlot(float, float)));
+  connect(_rondedRectItem, &CaptionGraphicsBackgroundItem::filterChanged, this,
+          &CaptionGraphicsItem::filterChangedSlot);
 
   _confPropertySelectionWidget = new QPushButton();
   _confPropertySelectionWidget->resize(QSize(120, 25));
@@ -44,8 +44,8 @@ CaptionGraphicsItem::CaptionGraphicsItem(View *view) : _view(view) {
   _confPropertySelectionItem->setPos(5, 230);
   _confPropertySelectionItem->setZValue(2);
   _nodesEdgesTextItem = new QGraphicsSimpleTextItem(_rondedRectItem);
-  connect(_confPropertySelectionWidget, SIGNAL(clicked()), this,
-          SLOT(selectPropertyButtonClicked()));
+  connect(_confPropertySelectionWidget, &QAbstractButton::clicked, this,
+          &CaptionGraphicsItem::selectPropertyButtonClicked);
 }
 
 void CaptionGraphicsItem::loadConfiguration() {
@@ -131,7 +131,8 @@ void CaptionGraphicsItem::selectPropertyButtonClicked() {
     if (_view->graph()->getProperty(piName)->getTypename() != "double")
       continue;
 
-    QAction *action = menu.addAction(piName.c_str(), this, SLOT(propertySelectedSlot()));
+    QAction *action =
+        menu.addAction(piName.c_str(), this, &CaptionGraphicsItem::propertySelectedSlot);
 
     if (_confPropertySelectionWidget->text() == QString(piName.c_str()))
       menu.setActiveAction(action);

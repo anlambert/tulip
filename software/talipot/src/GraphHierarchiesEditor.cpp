@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -36,8 +36,8 @@ using namespace tlp;
 
 CustomTreeView::CustomTreeView(QWidget *parent) : QTreeView(parent) {
   header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-  connect(this, SIGNAL(collapsed(const QModelIndex &)), this, SLOT(resizeFirstColumnToContent()));
-  connect(this, SIGNAL(expanded(const QModelIndex &)), this, SLOT(resizeFirstColumnToContent()));
+  connect(this, &QTreeView::collapsed, this, &CustomTreeView::resizeFirstColumnToContent);
+  connect(this, &QTreeView::expanded, this, &CustomTreeView::resizeFirstColumnToContent);
 }
 
 int CustomTreeView::sizeHintForColumn(int col) const {
@@ -70,16 +70,14 @@ void CustomTreeView::scrollContentsBy(int dx, int dy) {
 
 void CustomTreeView::setModel(QAbstractItemModel *m) {
   if (model()) {
-    disconnect(model(), SIGNAL(rowsInserted(const QModelIndex &, int, int)), this,
-               SLOT(resizeFirstColumnToContent()));
-    disconnect(model(), SIGNAL(rowsRemoved(const QModelIndex &, int, int)), this,
-               SLOT(resizeFirstColumnToContent()));
+    disconnect(model(), &QAbstractItemModel::rowsInserted, this,
+               &CustomTreeView::resizeFirstColumnToContent);
+    disconnect(model(), &QAbstractItemModel::rowsRemoved, this,
+               &CustomTreeView::resizeFirstColumnToContent);
   }
 
-  connect(m, SIGNAL(rowsInserted(const QModelIndex &, int, int)), this,
-          SLOT(resizeFirstColumnToContent()));
-  connect(m, SIGNAL(rowsRemoved(const QModelIndex &, int, int)), this,
-          SLOT(resizeFirstColumnToContent()));
+  connect(m, &QAbstractItemModel::rowsInserted, this, &CustomTreeView::resizeFirstColumnToContent);
+  connect(m, &QAbstractItemModel::rowsRemoved, this, &CustomTreeView::resizeFirstColumnToContent);
   QTreeView::setModel(m);
   resizeFirstColumnToContent();
 }
@@ -127,11 +125,12 @@ GraphHierarchiesEditor::GraphHierarchiesEditor(QWidget *parent)
   linkButton->setChecked(true);
   _ui->header->insertWidget(linkButton);
   _linkButton = linkButton;
-  connect(linkButton, SIGNAL(toggled(bool)), this, SLOT(toggleSynchronization(bool)));
+  connect(linkButton, &QAbstractButton::toggled, this,
+          &GraphHierarchiesEditor::toggleSynchronization);
   _ui->hierarchiesTree->installEventFilter(this);
 
-  connect(_ui->hierarchiesTree, SIGNAL(clicked(const QModelIndex &)), this,
-          SLOT(clicked(const QModelIndex &)));
+  connect(_ui->hierarchiesTree, &QAbstractItemView::clicked, this,
+          &GraphHierarchiesEditor::clicked);
 }
 
 bool GraphHierarchiesEditor::synchronized() const {
@@ -146,9 +145,8 @@ void GraphHierarchiesEditor::setModel(tlp::GraphHierarchiesModel *model) {
   _ui->hierarchiesTree->setModel(proxyModel);
   _ui->hierarchiesTree->header()->resizeSection(0, 100);
   _ui->hierarchiesTree->header()->setSectionResizeMode(0, QHeaderView::Interactive);
-  connect(_ui->hierarchiesTree->selectionModel(),
-          SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this,
-          SLOT(currentChanged(const QModelIndex &, const QModelIndex &)));
+  connect(_ui->hierarchiesTree->selectionModel(), &QItemSelectionModel::currentChanged, this,
+          &GraphHierarchiesEditor::currentChanged);
 }
 
 GraphHierarchiesEditor::~GraphHierarchiesEditor() {
@@ -226,13 +224,11 @@ void GraphHierarchiesEditor::currentChanged(const QModelIndex &index, const QMod
       return;
 
     _contextGraph = index.data(tlp::Model::GraphRole).value<tlp::Graph *>();
-    disconnect(_ui->hierarchiesTree->selectionModel(),
-               SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this,
-               SLOT(currentChanged(const QModelIndex &, const QModelIndex &)));
+    disconnect(_ui->hierarchiesTree->selectionModel(), &QItemSelectionModel::currentChanged, this,
+               &GraphHierarchiesEditor::currentChanged);
     _model->setCurrentGraph(_contextGraph);
-    connect(_ui->hierarchiesTree->selectionModel(),
-            SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this,
-            SLOT(currentChanged(const QModelIndex &, const QModelIndex &)));
+    connect(_ui->hierarchiesTree->selectionModel(), &QItemSelectionModel::currentChanged, this,
+            &GraphHierarchiesEditor::currentChanged);
     _contextGraph = nullptr;
   }
 }

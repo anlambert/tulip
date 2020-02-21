@@ -36,9 +36,12 @@ Vec3fEditor::Vec3fEditor(QWidget *parent, bool editSize)
   ui->ySP->setRange(-FLT_MAX, FLT_MAX);
   ui->zSP->setRange(-FLT_MAX, FLT_MAX);
   setVec3f(Vec3f());
-  connect(ui->xSP, SIGNAL(valueChanged(double)), this, SLOT(vecUpdated()));
-  connect(ui->ySP, SIGNAL(valueChanged(double)), this, SLOT(vecUpdated()));
-  connect(ui->zSP, SIGNAL(valueChanged(double)), this, SLOT(vecUpdated()));
+  connect(ui->xSP, QOverload<double>::of(&ScientificDoubleSpinBox::valueChanged), this,
+          &Vec3fEditor::vecUpdated);
+  connect(ui->ySP, QOverload<double>::of(&ScientificDoubleSpinBox::valueChanged), this,
+          &Vec3fEditor::vecUpdated);
+  connect(ui->zSP, QOverload<double>::of(&ScientificDoubleSpinBox::valueChanged), this,
+          &Vec3fEditor::vecUpdated);
   setModal(true);
 }
 

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -26,9 +26,9 @@ HeaderFrame::HeaderFrame(QWidget *parent)
     : QWidget(parent), _ui(new Ui::HeaderFrameData), _expanded(true) {
   _ui->setupUi(this);
   switchToLabel(_ui);
-  connect(_ui->menusCombo, SIGNAL(currentIndexChanged(QString)), this,
-          SIGNAL(menuChanged(QString)));
-  connect(_ui->expandButton, SIGNAL(toggled(bool)), this, SLOT(setExpanded(bool)));
+  connect(_ui->menusCombo, QOverload<const QString &>::of(&QComboBox::currentIndexChanged), this,
+          &HeaderFrame::menuChanged);
+  connect(_ui->expandButton, &QAbstractButton::toggled, this, &HeaderFrame::setExpanded);
 }
 
 HeaderFrame::~HeaderFrame() {

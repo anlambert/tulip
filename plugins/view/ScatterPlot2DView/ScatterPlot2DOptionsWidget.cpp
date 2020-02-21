@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -38,15 +38,20 @@ ScatterPlot2DOptionsWidget::ScatterPlot2DOptionsWidget(QWidget *parent)
   setButtonColor(_ui->zeroColorButton, Color(255, 255, 255));
   setButtonColor(_ui->oneColorButton, Color(0, 255, 0));
   updateColorScale();
-  connect(_ui->minusOneColorButton, SIGNAL(clicked()), this, SLOT(updateColorScale()));
-  connect(_ui->zeroColorButton, SIGNAL(clicked()), this, SLOT(updateColorScale()));
-  connect(_ui->oneColorButton, SIGNAL(clicked()), this, SLOT(updateColorScale()));
-  connect(_ui->minSizeSpinBox, SIGNAL(valueChanged(int)), this,
-          SLOT(minSizeSpinBoxValueChanged(int)));
-  connect(_ui->maxSizeSpinBox, SIGNAL(valueChanged(int)), this,
-          SLOT(maxSizeSpinBoxValueChanged(int)));
-  connect(_ui->useXScaleCheckBox, SIGNAL(toggled(bool)), this, SLOT(pressXScaleCheckBox(bool)));
-  connect(_ui->useYScaleCheckBox, SIGNAL(toggled(bool)), this, SLOT(pressYScaleCheckBox(bool)));
+  connect(_ui->minusOneColorButton, &QAbstractButton::clicked, this,
+          &ScatterPlot2DOptionsWidget::updateColorScale);
+  connect(_ui->zeroColorButton, &QAbstractButton::clicked, this,
+          &ScatterPlot2DOptionsWidget::updateColorScale);
+  connect(_ui->oneColorButton, &QAbstractButton::clicked, this,
+          &ScatterPlot2DOptionsWidget::updateColorScale);
+  connect(_ui->minSizeSpinBox, QOverload<int>::of(&QSpinBox::valueChanged), this,
+          &ScatterPlot2DOptionsWidget::minSizeSpinBoxValueChanged);
+  connect(_ui->maxSizeSpinBox, QOverload<int>::of(&QSpinBox::valueChanged), this,
+          &ScatterPlot2DOptionsWidget::maxSizeSpinBoxValueChanged);
+  connect(_ui->useXScaleCheckBox, &QAbstractButton::toggled, this,
+          &ScatterPlot2DOptionsWidget::pressXScaleCheckBox);
+  connect(_ui->useYScaleCheckBox, &QAbstractButton::toggled, this,
+          &ScatterPlot2DOptionsWidget::pressYScaleCheckBox);
 }
 
 ScatterPlot2DOptionsWidget::~ScatterPlot2DOptionsWidget() {

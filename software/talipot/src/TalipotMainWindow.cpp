@@ -327,8 +327,9 @@ TalipotMainWindow::TalipotMainWindow()
   installEventFilter(this);
   setAcceptDrops(true);
 
-  connect(_logger, SIGNAL(cleared()), this, SLOT(logCleared()));
-  connect(_logger, SIGNAL(resetLoggerPosition()), this, SLOT(resetLoggerDialogPosition()));
+  connect(_logger, &TalipotLogger::cleared, this, &TalipotMainWindow::logCleared);
+  connect(_logger, &TalipotLogger::resetLoggerPosition, this,
+          &TalipotMainWindow::resetLoggerDialogPosition);
 
   _colorScalesDialog = new ColorScaleConfigDialog(ColorScalesManager::getLatestColorScale(), this);
 
@@ -346,74 +347,81 @@ TalipotMainWindow::TalipotMainWindow()
 
   qInstallMessageHandler(talipotLogger);
 
-  connect(_ui->workspaceButton, SIGNAL(clicked()), this, SLOT(workspaceButtonClicked()));
-  connect(_ui->workspace, SIGNAL(addPanelRequest(tlp::Graph *)), this,
-          SLOT(createPanel(tlp::Graph *)));
-  connect(_ui->workspace, SIGNAL(focusedPanelSynchronized()), this,
-          SLOT(focusedPanelSynchronized()));
-  connect(_graphs, SIGNAL(currentGraphChanged(tlp::Graph *)), this,
-          SLOT(currentGraphChanged(tlp::Graph *)));
-  connect(_graphs, SIGNAL(currentGraphChanged(tlp::Graph *)), _ui->algorithmRunner,
-          SLOT(setGraph(tlp::Graph *)));
-  connect(_ui->graphHierarchiesEditor, SIGNAL(changeSynchronization(bool)), this,
-          SLOT(changeSynchronization(bool)));
+  connect(_ui->workspaceButton, &QAbstractButton::clicked, this,
+          &TalipotMainWindow::workspaceButtonClicked);
+  connect(_ui->workspace, &Workspace::addPanelRequest, this, &TalipotMainWindow::createPanel);
+  connect(_ui->workspace, &Workspace::focusedPanelSynchronized, this,
+          &TalipotMainWindow::focusedPanelSynchronized);
+  connect(_graphs, &GraphHierarchiesModel::currentGraphChanged, this,
+          &TalipotMainWindow::currentGraphChanged);
+  connect(_graphs, &GraphHierarchiesModel::currentGraphChanged, _ui->algorithmRunner,
+          &AlgorithmRunner::setGraph);
+  connect(_ui->graphHierarchiesEditor, &GraphHierarchiesEditor::changeSynchronization, this,
+          &TalipotMainWindow::changeSynchronization);
 
   // Connect actions
-  connect(_ui->actionMessages_log, SIGNAL(triggered()), this, SLOT(showLogger()));
-  connect(_ui->actionPython_IDE, SIGNAL(triggered()), this, SLOT(showPythonIDE()));
-  connect(_ui->actionFull_screen, SIGNAL(triggered(bool)), this, SLOT(showFullScreen(bool)));
-  connect(_ui->actionImport, SIGNAL(triggered()), this, SLOT(importGraph()));
-  connect(_ui->actionExport, SIGNAL(triggered()), this, SLOT(exportGraph()));
-  connect(_ui->actionSave_graph_to_file, SIGNAL(triggered()), this,
-          SLOT(saveGraphHierarchyInTlpFile()));
-  connect(_ui->workspace, SIGNAL(panelFocused(tlp::View *)), this, SLOT(panelFocused(tlp::View *)));
-  connect(_ui->actionSave_Project, SIGNAL(triggered()), this, SLOT(save()));
-  connect(_ui->actionSave_Project_as, SIGNAL(triggered()), this, SLOT(saveAs()));
-  connect(_ui->actionOpen_Project, SIGNAL(triggered()), this, SLOT(open()));
-  connect(_ui->actionDelete, SIGNAL(triggered()), this, SLOT(deleteSelectedElements()));
-  connect(_ui->actionDelete_from_the_root_graph, SIGNAL(triggered()), this,
-          SLOT(deleteSelectedElementsFromRootGraph()));
-  connect(_ui->actionDelete_all, SIGNAL(triggered()), this, SLOT(clearGraph()));
-  connect(_ui->actionInvert_selection, SIGNAL(triggered()), this, SLOT(invertSelection()));
-  connect(_ui->actionCancel_selection, SIGNAL(triggered()), this, SLOT(cancelSelection()));
-  connect(_ui->actionReverse_selected_edges, SIGNAL(triggered()), this,
-          SLOT(reverseSelectedEdges()));
-  connect(_ui->actionMake_selection_a_graph, SIGNAL(triggered()), this, SLOT(make_graph()));
-  connect(_ui->actionSelect_All, SIGNAL(triggered()), this, SLOT(selectAll()));
-  connect(_ui->actionSelect_All_Nodes, SIGNAL(triggered()), this, SLOT(selectAllNodes()));
-  connect(_ui->actionSelect_All_Edges, SIGNAL(triggered()), this, SLOT(selectAllEdges()));
-  connect(_ui->actionUndo, SIGNAL(triggered()), this, SLOT(undo()));
-  connect(_ui->actionRedo, SIGNAL(triggered()), this, SLOT(redo()));
-  connect(_ui->actionCut, SIGNAL(triggered()), this, SLOT(cut()));
-  connect(_ui->actionPaste, SIGNAL(triggered()), this, SLOT(paste()));
-  connect(_ui->actionCopy, SIGNAL(triggered()), this, SLOT(copy()));
-  connect(_ui->actionGroup_elements, SIGNAL(triggered()), this, SLOT(group()));
-  connect(_ui->actionCreate_sub_graph, SIGNAL(triggered()), this, SLOT(createSubGraph()));
-  connect(_ui->actionClone_sub_graph, SIGNAL(triggered()), this, SLOT(cloneSubGraph()));
-  connect(_ui->actionCreate_empty_sub_graph, SIGNAL(triggered()), this, SLOT(addEmptySubGraph()));
-  connect(_ui->actionImport_CSV, SIGNAL(triggered()), this, SLOT(CSVImport()));
-  connect(_ui->actionFind_plugins, SIGNAL(triggered()), this, SLOT(findPlugins()));
-  connect(_ui->actionNew_graph, SIGNAL(triggered()), this, SLOT(addNewGraph()));
-  connect(_ui->actionNewProject, SIGNAL(triggered()), this, SLOT(newProject()));
-  connect(_ui->actionPreferences, SIGNAL(triggered()), this, SLOT(openPreferences()));
-  connect(_ui->searchButton, SIGNAL(clicked(bool)), this, SLOT(setSearchOutput(bool)));
-  connect(_ui->workspace, SIGNAL(importGraphRequest()), this, SLOT(importGraph()));
-  connect(_ui->action_Close_All, SIGNAL(triggered()), _ui->workspace, SLOT(closeAll()));
-  connect(_ui->addPanelButton, SIGNAL(clicked()), this, SLOT(createPanel()));
-  connect(_ui->actionColor_scales_management, SIGNAL(triggered()), this,
-          SLOT(displayColorScalesDialog()));
-  connect(_ui->exportButton, SIGNAL(clicked()), this, SLOT(exportGraph()));
+  connect(_ui->actionMessages_log, &QAction::triggered, this, &TalipotMainWindow::showLogger);
+  connect(_ui->actionPython_IDE, &QAction::triggered, this, &TalipotMainWindow::showPythonIDE);
+  connect(_ui->actionFull_screen, &QAction::triggered, this, &TalipotMainWindow::showFullScreen);
+  connect(_ui->actionImport, &QAction::triggered, [this] { importGraph(); });
+  connect(_ui->actionExport, &QAction::triggered, [this] { exportGraph(); });
+  connect(_ui->actionSave_graph_to_file, &QAction::triggered,
+          [this] { saveGraphHierarchyInTlpFile(); });
+  connect(_ui->workspace, &Workspace::panelFocused, this, &TalipotMainWindow::panelFocused);
+  connect(_ui->actionSave_Project, &QAction::triggered, this, &TalipotMainWindow::save);
+  connect(_ui->actionSave_Project_as, &QAction::triggered, [this] { saveAs(); });
+  connect(_ui->actionOpen_Project, &QAction::triggered, [this] { open(); });
+  connect(_ui->actionDelete, &QAction::triggered, this, &TalipotMainWindow::deleteSelectedElements);
+  connect(_ui->actionDelete_from_the_root_graph, &QAction::triggered, this,
+          &TalipotMainWindow::deleteSelectedElementsFromRootGraph);
+  connect(_ui->actionDelete_all, &QAction::triggered, this, &TalipotMainWindow::clearGraph);
+  connect(_ui->actionInvert_selection, &QAction::triggered, this,
+          &TalipotMainWindow::invertSelection);
+  connect(_ui->actionCancel_selection, &QAction::triggered, this,
+          &TalipotMainWindow::cancelSelection);
+  connect(_ui->actionReverse_selected_edges, &QAction::triggered, this,
+          &TalipotMainWindow::reverseSelectedEdges);
+  connect(_ui->actionMake_selection_a_graph, &QAction::triggered, this,
+          &TalipotMainWindow::make_graph);
+  connect(_ui->actionSelect_All, &QAction::triggered, [this] { selectAll(); });
+  connect(_ui->actionSelect_All_Nodes, &QAction::triggered, this,
+          &TalipotMainWindow::selectAllNodes);
+  connect(_ui->actionSelect_All_Edges, &QAction::triggered, this,
+          &TalipotMainWindow::selectAllEdges);
+  connect(_ui->actionUndo, &QAction::triggered, this, &TalipotMainWindow::undo);
+  connect(_ui->actionRedo, &QAction::triggered, this, &TalipotMainWindow::redo);
+  connect(_ui->actionCut, &QAction::triggered, this, &TalipotMainWindow::cut);
+  connect(_ui->actionPaste, &QAction::triggered, this, &TalipotMainWindow::paste);
+  connect(_ui->actionCopy, &QAction::triggered, [this] { copy(); });
+  connect(_ui->actionGroup_elements, &QAction::triggered, this, &TalipotMainWindow::group);
+  connect(_ui->actionCreate_sub_graph, &QAction::triggered, [this] { createSubGraph(); });
+  connect(_ui->actionClone_sub_graph, &QAction::triggered, this, &TalipotMainWindow::cloneSubGraph);
+  connect(_ui->actionCreate_empty_sub_graph, &QAction::triggered, this,
+          &TalipotMainWindow::addEmptySubGraph);
+  connect(_ui->actionImport_CSV, &QAction::triggered, this, &TalipotMainWindow::CSVImport);
+  connect(_ui->actionFind_plugins, &QAction::triggered, this, &TalipotMainWindow::findPlugins);
+  connect(_ui->actionNew_graph, &QAction::triggered, this, &TalipotMainWindow::addNewGraph);
+  connect(_ui->actionNewProject, &QAction::triggered, this, &TalipotMainWindow::newProject);
+  connect(_ui->actionPreferences, &QAction::triggered, this, &TalipotMainWindow::openPreferences);
+  connect(_ui->searchButton, &QAbstractButton::clicked, this, &TalipotMainWindow::setSearchOutput);
+  connect(_ui->workspace, &Workspace::importGraphRequest, [this] { importGraph(); });
+  connect(_ui->action_Close_All, &QAction::triggered, _ui->workspace, &Workspace::closeAll);
+  connect(_ui->addPanelButton, &QAbstractButton::clicked, [this] { createPanel(); });
+  connect(_ui->actionColor_scales_management, &QAction::triggered, this,
+          &TalipotMainWindow::displayColorScalesDialog);
+  connect(_ui->exportButton, &QAbstractButton::clicked, [this] { exportGraph(); });
 
-  connect(_ui->actionPlugins_Center, SIGNAL(triggered()), this, SLOT(showPluginsCenter()));
-  connect(_ui->actionAbout_us, SIGNAL(triggered()), this, SLOT(showAboutPage()));
+  connect(_ui->actionPlugins_Center, &QAction::triggered, this,
+          &TalipotMainWindow::showPluginsCenter);
+  connect(_ui->actionAbout_us, &QAction::triggered, this, &TalipotMainWindow::showAboutPage);
 
   if (QFile(tlpStringToQString(tlp::TalipotShareDir) +
             "../doc/talipot/talipot-user/html/index.html")
           .exists()) {
-    connect(_ui->actionShowUserDocumentation, SIGNAL(triggered()), this,
-            SLOT(showUserDocumentation()));
-    connect(_ui->actionShowPythonDocumentation, SIGNAL(triggered()), this,
-            SLOT(showPythonDocumentation()));
+    connect(_ui->actionShowUserDocumentation, &QAction::triggered, this,
+            &TalipotMainWindow::showUserDocumentation);
+    connect(_ui->actionShowPythonDocumentation, &QAction::triggered, this,
+            &TalipotMainWindow::showPythonDocumentation);
   } else {
     _ui->actionShowUserDocumentation->setVisible(false);
     _ui->actionShowPythonDocumentation->setVisible(false);
@@ -421,8 +429,8 @@ TalipotMainWindow::TalipotMainWindow()
 
   if (QFile(tlpStringToQString(tlp::TalipotShareDir) + "../doc/talipot/doxygen/html/index.html")
           .exists()) {
-    connect(_ui->actionShowAPIDocumentation, SIGNAL(triggered()), this,
-            SLOT(showAPIDocumentation()));
+    connect(_ui->actionShowAPIDocumentation, &QAction::triggered, this,
+            &TalipotMainWindow::showAPIDocumentation);
   } else {
     _ui->actionShowAPIDocumentation->setVisible(false);
   }
@@ -446,7 +454,7 @@ void TalipotMainWindow::buildRecentDocumentsMenu() {
       continue;
 
     QAction *action = _ui->menuOpen_recent_file->addAction(
-        QIcon(":/talipot/app/icons/16/archive.png"), s, this, SLOT(openRecentFile()));
+        QIcon(":/talipot/app/icons/16/archive.png"), s, this, &TalipotMainWindow::openRecentFile);
     action->setData(s);
   }
 
@@ -456,8 +464,9 @@ void TalipotMainWindow::buildRecentDocumentsMenu() {
     if (!QFileInfo(s).exists() || !talipotCanOpenFile(s))
       continue;
 
-    QAction *action = _ui->menuOpen_recent_file->addAction(
-        QIcon(":/talipot/app/icons/16/empty-file.png"), s, this, SLOT(openRecentFile()));
+    QAction *action =
+        _ui->menuOpen_recent_file->addAction(QIcon(":/talipot/app/icons/16/empty-file.png"), s,
+                                             this, &TalipotMainWindow::openRecentFile);
     action->setData(s);
   }
   _ui->menuOpen_recent_file->setEnabled(!_ui->menuOpen_recent_file->isEmpty());
@@ -660,24 +669,24 @@ void TalipotMainWindow::start(const QString &inputFilePath) {
 
   delete pluginProgress;
 
-  connect(_ui->pythonButton, SIGNAL(clicked(bool)), this, SLOT(setPythonPanel(bool)));
-  connect(_ui->developButton, SIGNAL(clicked()), this, SLOT(showPythonIDE()));
+  connect(_ui->pythonButton, &QAbstractButton::clicked, this, &TalipotMainWindow::setPythonPanel);
+  connect(_ui->developButton, &QAbstractButton::clicked, this, &TalipotMainWindow::showPythonIDE);
   _pythonPanel->setModel(_graphs);
   _pythonIDE->setGraphsModel(_graphs);
-  connect(_pythonIDE, SIGNAL(anchoredRequest(bool)), this, SLOT(anchoredPythonIDE(bool)));
+  connect(_pythonIDE, &PythonIDE::anchoredRequest, this, &TalipotMainWindow::anchoredPythonIDE);
   tlp::PluginsManager::instance()->addListener(this);
-  QTimer::singleShot(100, this, SLOT(initPythonIDE()));
+  QTimer::singleShot(100, this, &TalipotMainWindow::initPythonIDE);
 
   if (!inputFilePath.isEmpty() && QFileInfo(inputFilePath).exists()) {
     open(inputFilePath);
   }
 
   for (auto h : _ui->docksSplitter->findChildren<HeaderFrame *>()) {
-    connect(h, SIGNAL(expanded(bool)), this, SLOT(refreshDockExpandControls()));
+    connect(h, &HeaderFrame::expanded, this, &TalipotMainWindow::refreshDockExpandControls);
   }
 
-  connect(_ui->sidebarButton, SIGNAL(clicked()), this, SLOT(showHideSideBar()));
-  connect(_ui->menubarButton, SIGNAL(clicked()), this, SLOT(showHideMenuBar()));
+  connect(_ui->sidebarButton, &QAbstractButton::clicked, this, &TalipotMainWindow::showHideSideBar);
+  connect(_ui->menubarButton, &QAbstractButton::clicked, this, &TalipotMainWindow::showHideMenuBar);
 
   // fill menu with recent documents
   buildRecentDocumentsMenu();
@@ -865,12 +874,12 @@ void TalipotMainWindow::createPanel(tlp::Graph *g) {
 }
 
 void TalipotMainWindow::panelFocused(tlp::View *view) {
-  disconnect(this, SLOT(focusedPanelGraphSet(tlp::Graph *)));
+  disconnect(view, &View::graphSet, this, &TalipotMainWindow::focusedPanelGraphSet);
 
   if (!_ui->graphHierarchiesEditor->synchronized())
     return;
 
-  connect(view, SIGNAL(graphSet(tlp::Graph *)), this, SLOT(focusedPanelGraphSet(tlp::Graph *)));
+  connect(view, &View::graphSet, this, &TalipotMainWindow::focusedPanelGraphSet);
   focusedPanelGraphSet(view->graph());
 }
 
@@ -990,7 +999,7 @@ void TalipotMainWindow::openProjectFile(const QString &path) {
   if (_project->openProjectFile(path, prg)) {
     QMap<QString, tlp::Graph *> rootIds = _graphs->readProject(_project, prg);
     _ui->workspace->readProject(_project, rootIds, prg);
-    QTimer::singleShot(100, this, SLOT(initPythonIDE()));
+    QTimer::singleShot(100, this, &TalipotMainWindow::initPythonIDE);
   } else {
     QMessageBox::critical(this,
                           QString("Error while loading project ").append(_project->projectFile()),

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -68,8 +68,8 @@ void AlgorithmRunner::buildTreeUi(QWidget *w, PluginModel<tlp::Algorithm> *model
       buildTreeUi(groupBox->widget(), model, index);
     } else {
       AlgorithmRunnerItem *item = new AlgorithmRunnerItem(name);
-      QObject::connect(this, SIGNAL(setStoreResultAsLocal(bool)), item,
-                       SLOT(setStoreResultAsLocal(bool)));
+      QObject::connect(this, QOverload<bool>::of(&AlgorithmRunner::setStoreResultAsLocal), item,
+                       &AlgorithmRunnerItem::setStoreResultAsLocal);
       w->layout()->addWidget(item);
     }
   }
@@ -124,9 +124,9 @@ void AlgorithmRunner::insertItem(QWidget *w, const QString &name) {
   }
 
   AlgorithmRunnerItem *item = new AlgorithmRunnerItem(name);
-  QObject::connect(this, SIGNAL(setStoreResultAsLocal(bool)), item,
-                   SLOT(setStoreResultAsLocal(bool)));
-  QObject::connect(item, SIGNAL(favorized(bool)), this, SLOT(favorized(bool)));
+  QObject::connect(this, QOverload<bool>::of(&AlgorithmRunner::setStoreResultAsLocal), item,
+                   &AlgorithmRunnerItem::setStoreResultAsLocal);
+  QObject::connect(item, &AlgorithmRunnerItem::favorized, this, &AlgorithmRunner::favorized);
   QVBoxLayout *groupLayout = static_cast<QVBoxLayout *>(groupBox->widget()->layout());
   int index = 0;
 
@@ -211,7 +211,8 @@ AlgorithmRunner::AlgorithmRunner(QWidget *parent)
   _resultAsLocalPropAction->setChecked(true);
   _storeResultAsLocalButton->setMenu(resultMenu);
   _storeResultAsLocalButton->setPopupMode(QToolButton::InstantPopup);
-  connect(resultMenu, SIGNAL(triggered(QAction *)), this, SLOT(setStoreResultAsLocal(QAction *)));
+  connect(resultMenu, &QMenu::triggered, this,
+          QOverload<QAction *>::of(&AlgorithmRunner::setStoreResultAsLocal));
 
   PluginModel<tlp::Algorithm> model;
   buildTreeUi(_ui->contents, &model, QModelIndex(), true);
@@ -219,14 +220,14 @@ AlgorithmRunner::AlgorithmRunner(QWidget *parent)
       new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
 
   for (auto i : findChildren<AlgorithmRunnerItem *>()) {
-    connect(i, SIGNAL(favorized(bool)), this, SLOT(favorized(bool)));
+    connect(i, &AlgorithmRunnerItem::favorized, this, &AlgorithmRunner::favorized);
   }
 
   for (const QString &a : Settings::instance().favoriteAlgorithms()) {
     addFavorite(a);
   }
 
-  connect(_ui->header, SIGNAL(expanded(bool)), this, SLOT(expanded(bool)));
+  connect(_ui->header, &HeaderFrame::expanded, this, &AlgorithmRunner::expanded);
 }
 
 AlgorithmRunner::~AlgorithmRunner() {
@@ -427,7 +428,7 @@ void AlgorithmRunner::addFavorite(const QString &algName, const DataSet &data) {
 
   item->setAcceptDrops(true);
 
-  connect(item, SIGNAL(favorized(bool)), this, SLOT(favorized(bool)));
+  connect(item, &AlgorithmRunnerItem::favorized, this, &AlgorithmRunner::favorized);
 
   for (auto i : findChildren<AlgorithmRunnerItem *>()) {
     if (i != item && i->name() == algName)

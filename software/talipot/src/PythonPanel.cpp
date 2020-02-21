@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -27,12 +27,13 @@ static const QString setCurrentGraphFunction = "graph = None\n"
 
 PythonPanel::PythonPanel(QWidget *parent) : QWidget(parent), _ui(new Ui::PythonPanel) {
   _ui->setupUi(this);
-  connect(_ui->graphCombo, SIGNAL(currentItemChanged()), this, SLOT(graphComboIndexChanged()));
+  connect(_ui->graphCombo, &TreeViewComboBox::currentItemChanged, this,
+          &PythonPanel::graphComboIndexChanged);
   tlp::PythonInterpreter::getInstance()->runString(setCurrentGraphFunction);
-  connect(_ui->pythonShellWidget, SIGNAL(beginCurrentLinesExecution()), this,
-          SLOT(beginCurrentLinesExecution()));
-  connect(_ui->pythonShellWidget, SIGNAL(endCurrentLinesExecution()), this,
-          SLOT(endCurrentLinesExecution()));
+  connect(_ui->pythonShellWidget, &tlp::PythonShellWidget::beginCurrentLinesExecution, this,
+          &PythonPanel::beginCurrentLinesExecution);
+  connect(_ui->pythonShellWidget, &tlp::PythonShellWidget::endCurrentLinesExecution, this,
+          &PythonPanel::endCurrentLinesExecution);
 }
 
 PythonPanel::~PythonPanel() {

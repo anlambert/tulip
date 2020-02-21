@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -51,7 +51,7 @@ void InteractorComposite::setLastTarget(QObject *target) {
   _lastTarget = target;
 
   if (_lastTarget)
-    connect(_lastTarget, SIGNAL(destroyed()), this, SLOT(lastTargetDestroyed()));
+    connect(_lastTarget, &QObject::destroyed, this, &InteractorComposite::lastTargetDestroyed);
 }
 
 void InteractorComposite::lastTargetDestroyed() {
