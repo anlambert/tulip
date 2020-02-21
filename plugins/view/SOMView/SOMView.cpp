@@ -944,9 +944,6 @@ void SOMView::refreshPreviews() {
     delete maskedColor;
 }
 
-void SOMView::update(std::set<Observable *>::iterator, std::set<Observable *>::iterator) {}
-void SOMView::observableDestroyed(Observable *) {}
-
 void SOMView::setMask(const std::set<node> &maskSet) {
   if (!mask)
     mask = new BooleanProperty(som);

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -84,8 +84,7 @@ public:
   }
   void colorDataAccordingToHighlightedElts();
 
-  void update(std::set<Observable *>::iterator begin, std::set<Observable *>::iterator end);
-  void observableDestroyed(Observable *) {}
+  void treatEvents(const std::vector<Event> &) override;
 
   template <typename Proxytype>
   Proxytype *getLocalProperty(const std::string &name) {

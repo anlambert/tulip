@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -83,10 +83,6 @@ public:
   void createPicture(const std::string &pictureName, int width, int height);
 
   bool createPicture(const std::string &pictureName, int width, int height, bool center);
-
-  void update(std::set<tlp::Observable *>::iterator begin,
-              std::set<tlp::Observable *>::iterator end);
-  void observableDestroyed(tlp::Observable *);
 
   bool eventFilter(QObject *, QEvent *) override;
 

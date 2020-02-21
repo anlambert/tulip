@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -74,10 +74,8 @@ public:
   SizeMappingType getSizeMapping() const;
   QList<QWidget *> configurationWidgets() const;
 
-  void update(std::set<tlp::Observable *>::iterator begin,
-              std::set<tlp::Observable *>::iterator end);
+  void treatEvents(const std::vector<Event> &) override;
 
-  void observableDestroyed(tlp::Observable *);
   /**
    * @brief Return true if using namiation during switching to preview.
    */
