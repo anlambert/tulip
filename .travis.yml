@@ -1,8 +1,8 @@
 # Talipot continuous integration on Linux and Mac OS platforms through TravisCI.
 # Two type of builds can be performed:
 #  - a "legacy" Talipot build (Linux only) using :
-#     * default system compiler (GCC 5.4)
-#     * Qt 5.5
+#     * default system compiler (GCC 7.5)
+#     * Qt 5.9
 #     * Python 2.7
 #  - a "modern" Talipot build using:
 #     * recent compiler (GCC 9 on Linux, clang 9.0 from MacPorts or Homebrew on Mac OS)
@@ -26,7 +26,7 @@ jobs:
     - stage: Talipot core build (Linux)
     # legacy Talipot core build on Linux
       os: linux
-      dist: xenial
+      dist: bionic
       compiler: gcc
       cache: ccache
       addons:
@@ -120,7 +120,7 @@ jobs:
     - stage: Talipot complete build (Linux)
       # legacy Talipot complete build on Linux, we also build the documentation in this one
       os: linux
-      dist: xenial
+      dist: bionic
       compiler: gcc
       cache: ccache
       services:
