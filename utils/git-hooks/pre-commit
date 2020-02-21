@@ -1,3 +1,4 @@
 #!/bin/bash
 
 bash .git/hooks/pre-commit-clang-format
+bash .git/hooks/pre-commit-license-years
