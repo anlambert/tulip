@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -41,10 +41,9 @@ FontIconDialog::FontIconDialog(QWidget *parent) : QDialog(parent), _ui(new Ui::F
               "span><span style=\" font-size:8pt;\"> (v%2)</span></p></body></html>")
           .arg(FontAwesome::getVersion().c_str())
           .arg(MaterialDesignIcons::getVersion().c_str()));
-  connect(_ui->iconNameFilterLineEdit, SIGNAL(textChanged(const QString &)), this,
-          SLOT(updateIconList()));
-  connect(_ui->iconsCreditLabel, SIGNAL(linkActivated(const QString &)), this,
-          SLOT(openUrlInBrowser(const QString &)));
+  connect(_ui->iconNameFilterLineEdit, &QLineEdit::textChanged, this,
+          &FontIconDialog::updateIconList);
+  connect(_ui->iconsCreditLabel, &QLabel::linkActivated, this, &FontIconDialog::openUrlInBrowser);
 
   updateIconList();
 }

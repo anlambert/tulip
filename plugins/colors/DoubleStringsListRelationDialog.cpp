@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -40,16 +40,20 @@ DoubleStringsListRelationDialog::DoubleStringsListRelationDialog(
     _ui->secondListWidget->addItem(item);
   }
 
-  connect(_ui->upButton, SIGNAL(clicked()), this, SLOT(upButtonClicked()));
-  connect(_ui->downButton, SIGNAL(clicked()), this, SLOT(downButtonClicked()));
-  connect(_ui->upButtonColor, SIGNAL(clicked()), this, SLOT(upButtonColorClicked()));
-  connect(_ui->downButtonColor, SIGNAL(clicked()), this, SLOT(downButtonColorClicked()));
-  connect(_ui->firstListWidget->verticalScrollBar(), SIGNAL(valueChanged(int)), this,
-          SLOT(scrollBarValueChanged(int)));
-  connect(_ui->secondListWidget->verticalScrollBar(), SIGNAL(valueChanged(int)), this,
-          SLOT(scrollBarValueChanged(int)));
-  connect(_ui->interpolateColorsCheckBox, SIGNAL(stateChanged(int)), this,
-          SLOT(interpolateCheckBoxChange(int)));
+  connect(_ui->upButton, &QAbstractButton::clicked, this,
+          &DoubleStringsListRelationDialog::upButtonClicked);
+  connect(_ui->downButton, &QAbstractButton::clicked, this,
+          &DoubleStringsListRelationDialog::downButtonClicked);
+  connect(_ui->upButtonColor, &QAbstractButton::clicked, this,
+          &DoubleStringsListRelationDialog::upButtonColorClicked);
+  connect(_ui->downButtonColor, &QAbstractButton::clicked, this,
+          &DoubleStringsListRelationDialog::downButtonColorClicked);
+  connect(_ui->firstListWidget->verticalScrollBar(), &QAbstractSlider::valueChanged, this,
+          &DoubleStringsListRelationDialog::scrollBarValueChanged);
+  connect(_ui->secondListWidget->verticalScrollBar(), &QAbstractSlider::valueChanged, this,
+          &DoubleStringsListRelationDialog::scrollBarValueChanged);
+  connect(_ui->interpolateColorsCheckBox, &QCheckBox::stateChanged, this,
+          &DoubleStringsListRelationDialog::interpolateCheckBoxChange);
 }
 
 DoubleStringsListRelationDialog::~DoubleStringsListRelationDialog() {

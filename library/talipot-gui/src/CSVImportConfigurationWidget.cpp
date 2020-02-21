@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -50,7 +50,8 @@ PropertyConfigurationWidget::PropertyConfigurationWidget(
   propertyEditButton->setEnabled(propertyNameIsEditable);
   propertyEditButton->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
   layout()->addWidget(propertyEditButton);
-  connect(propertyEditButton, SIGNAL(released()), this, SLOT(showPropertyCreationDialog()));
+  connect(propertyEditButton, &QAbstractButton::released, this,
+          &PropertyConfigurationWidget::showPropertyCreationDialog);
   layout()->setAlignment(propertyEditButton, Qt::AlignHCenter);
 
   setPropertyType(propertyType);
@@ -160,7 +161,8 @@ void PropertyConfigurationWidget::showPropertyCreationDialog() {
   ui->nameCB->addItem(tlpStringToQString(_name));
   ui->nameCB->setCurrentIndex(0);
   typeCBChanged(ui->typeCB->currentText());
-  connect(ui->typeCB, SIGNAL(currentIndexChanged(QString)), this, SLOT(typeCBChanged(QString)));
+  connect(ui->typeCB, QOverload<const QString &>::of(&QComboBox::currentIndexChanged), this,
+          &PropertyConfigurationWidget::typeCBChanged);
 
   if (_valueSeparator) {
     index = ui->separatorCB->findText(QString(QChar(_valueSeparator)));
@@ -169,8 +171,10 @@ void PropertyConfigurationWidget::showPropertyCreationDialog() {
   }
 
   ui->exceptionTableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-  connect(ui->addExceptionButton, SIGNAL(released()), this, SLOT(addException()));
-  connect(ui->delCurrentExceptionButton, SIGNAL(released()), this, SLOT(delCurrentException()));
+  connect(ui->addExceptionButton, &QToolButton::released, this,
+          &PropertyConfigurationWidget::addException);
+  connect(ui->delCurrentExceptionButton, &QAbstractButton::released, this,
+          &PropertyConfigurationWidget::delCurrentException);
 
   if (dialog.exec() == QDialog::Accepted) {
     _name = QStringToTlpString(ui->nameCB->currentText());
@@ -191,7 +195,7 @@ CSVTableHeader::CSVTableHeader(QWidget *parent,
                                std::vector<PropertyConfigurationWidget *> &propertyWidgets)
     : QHeaderView(Qt::Horizontal, parent), widgets(propertyWidgets) {
   setSectionsClickable(true);
-  connect(this, SIGNAL(sectionPressed(int)), this, SLOT(checkBoxPressed(int)));
+  connect(this, &QHeaderView::sectionPressed, this, &CSVTableHeader::checkBoxPressed);
 }
 
 void CSVTableHeader::paintSection(QPainter *painter, const QRect &rect, int logicalIndex) const {
@@ -288,12 +292,12 @@ CSVImportConfigurationWidget::CSVImportConfigurationWidget(QWidget *parent)
   ui->setupUi(this);
 
   // Import line number change
-  connect(ui->useFirstLineAsPropertyNamecheckBox, SIGNAL(clicked(bool)), this,
-          SLOT(useFirstLineAsHeaderUpdated()));
-  connect(ui->limitPreviewLineNumberCheckBox, SIGNAL(clicked(bool)), this,
-          SLOT(filterPreviewLineNumber(bool)));
-  connect(ui->previewLineNumberSpinBox, SIGNAL(valueChanged(int)), this,
-          SLOT(previewLineNumberChanged(int)));
+  connect(ui->useFirstLineAsPropertyNamecheckBox, &QAbstractButton::clicked, this,
+          &CSVImportConfigurationWidget::useFirstLineAsHeaderUpdated);
+  connect(ui->limitPreviewLineNumberCheckBox, &QAbstractButton::clicked, this,
+          &CSVImportConfigurationWidget::filterPreviewLineNumber);
+  connect(ui->previewLineNumberSpinBox, QOverload<int>::of(&QSpinBox::valueChanged), this,
+          &CSVImportConfigurationWidget::previewLineNumberChanged);
 
   // Init the preview line number with the right value.
   if (ui->limitPreviewLineNumberCheckBox->isChecked()) {
@@ -603,8 +607,8 @@ PropertyConfigurationWidget *CSVImportConfigurationWidget::createPropertyConfigu
   PropertyConfigurationWidget *propertyConfigurationWidget = new PropertyConfigurationWidget(
       propertyNumber, propertyName, isEditable, propertyType, validator, parent);
   propertyConfigurationWidget->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
-  connect(propertyConfigurationWidget, SIGNAL(stateChange(bool)), this,
-          SLOT(propertyStateChanged(bool)));
+  connect(propertyConfigurationWidget, &PropertyConfigurationWidget::stateChange, this,
+          &CSVImportConfigurationWidget::propertyStateChanged);
   propertyConfigurationWidget->installEventFilter(this);
 
   // rebuild typenameToProps if needed

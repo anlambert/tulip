@@ -40,16 +40,16 @@ TalipotLogger::TalipotLogger(QWidget *parent)
   QPushButton *clearbutton = new QPushButton("Clear", this);
   clearbutton->setToolTip("Remove all messages");
   _ui->buttonBox->addButton(clearbutton, QDialogButtonBox::ActionRole);
-  connect(_ui->listWidget, SIGNAL(customContextMenuRequested(QPoint)), this,
-          SLOT(showContextMenu(QPoint)));
-  connect(copybutton, SIGNAL(clicked()), this, SLOT(copy()));
-  connect(clearbutton, SIGNAL(clicked()), this, SLOT(clear()));
+  connect(_ui->listWidget, &QWidget::customContextMenuRequested, this,
+          &TalipotLogger::showContextMenu);
+  connect(copybutton, &QAbstractButton::clicked, this, &TalipotLogger::copy);
+  connect(clearbutton, &QAbstractButton::clicked, this, &TalipotLogger::clear);
   _ui->buttonBox->button(QDialogButtonBox::Close)->setToolTip("Close this window");
   QPushButton *resetb = _ui->buttonBox->button(QDialogButtonBox::Reset);
   resetb->setToolTip("Remove all messages and close this window");
-  connect(resetb, SIGNAL(clicked()), this, SLOT(clear()));
-  connect(resetb, SIGNAL(clicked()), this, SLOT(hide()));
-  connect(_ui->anchoredCB, SIGNAL(toggled(bool)), this, SLOT(setAnchored(bool)));
+  connect(resetb, &QAbstractButton::clicked, this, &TalipotLogger::clear);
+  connect(resetb, &QAbstractButton::clicked, this, &QWidget::hide);
+  connect(_ui->anchoredCB, &QAbstractButton::toggled, this, &TalipotLogger::setAnchored);
   _ui->anchoredCB->setChecked(tlp::Settings::instance().loggerAnchored());
 }
 
@@ -179,9 +179,9 @@ void TalipotLogger::copy() {
 
 void TalipotLogger::showContextMenu(const QPoint &pos) {
   QMenu m;
-  QAction *clear = m.addAction("Clear content", this, SLOT(clear()));
-  QAction *copy = m.addAction("Copy", this, SLOT(copy()), QKeySequence::Copy);
-  m.addAction("Close", this, SLOT(close()), QKeySequence::Close);
+  QAction *clear = m.addAction("Clear content", this, &TalipotLogger::clear);
+  QAction *copy = m.addAction("Copy", this, &TalipotLogger::copy, QKeySequence::Copy);
+  m.addAction("Close", this, &QWidget::close, QKeySequence::Close);
   copy->setEnabled(_ui->listWidget->count() != 0);
   clear->setEnabled(_ui->listWidget->count() != 0);
   m.exec(_ui->listWidget->mapToGlobal(pos));

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -30,8 +30,10 @@ SimplePluginProgressWidget::SimplePluginProgressWidget(QWidget *parent, Qt::Wind
   _ui->setupUi(this);
   _ui->cancelButton->setIcon(QApplication::style()->standardIcon(QStyle::SP_DialogCancelButton));
   _ui->stopButton->setIcon(QApplication::style()->standardIcon(QStyle::SP_MediaStop));
-  connect(_ui->cancelButton, SIGNAL(clicked()), this, SLOT(cancelClicked()));
-  connect(_ui->stopButton, SIGNAL(clicked()), this, SLOT(stopClicked()));
+  connect(_ui->cancelButton, &QAbstractButton::clicked, this,
+          &SimplePluginProgressWidget::cancelClicked);
+  connect(_ui->stopButton, &QAbstractButton::clicked, this,
+          &SimplePluginProgressWidget::stopClicked);
 }
 
 SimplePluginProgressWidget::~SimplePluginProgressWidget() {

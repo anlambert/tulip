@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -29,8 +29,8 @@ ScrollPopupButton::ScrollPopupButton(QWidget *parent) : QPushButton(parent) {
   _slider->setStyleSheet("QSlider { background-color: white; border: 1px solid #C9C9C9 }");
   _slider->setFocusPolicy(Qt::StrongFocus);
   _slider->installEventFilter(this);
-  connect(this, SIGNAL(clicked()), this, SLOT(showPopup()));
-  connect(_slider, SIGNAL(valueChanged(int)), this, SIGNAL(valueChanged(int)));
+  connect(this, &QAbstractButton::clicked, this, &ScrollPopupButton::showPopup);
+  connect(_slider, &QAbstractSlider::valueChanged, this, &ScrollPopupButton::valueChanged);
 }
 
 void ScrollPopupButton::showPopup() {

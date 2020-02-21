@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -309,18 +309,24 @@ void QuickAccessBarImpl::showHideCaption(CaptionItem::CaptionType captionType) {
     _captions[3]->captionGraphicsItem()->setVisible(false);
 
     for (size_t i = 0; i < 4; i++) {
-      connect(_captions[i]->captionGraphicsItem(), SIGNAL(interactionsActivated()),
-              _captions[(i + 1) % 4]->captionGraphicsItem(), SLOT(removeInteractions()));
-      connect(_captions[i]->captionGraphicsItem(), SIGNAL(interactionsActivated()),
-              _captions[(i + 2) % 4]->captionGraphicsItem(), SLOT(removeInteractions()));
-      connect(_captions[i]->captionGraphicsItem(), SIGNAL(interactionsActivated()),
-              _captions[(i + 3) % 4]->captionGraphicsItem(), SLOT(removeInteractions()));
-      connect(_captions[i], SIGNAL(filtering(bool)), _captions[(i + 1) % 4],
-              SLOT(removeObservation(bool)));
-      connect(_captions[i], SIGNAL(filtering(bool)), _captions[(i + 2) % 4],
-              SLOT(removeObservation(bool)));
-      connect(_captions[i], SIGNAL(filtering(bool)), _captions[(i + 3) % 4],
-              SLOT(removeObservation(bool)));
+      connect(_captions[i]->captionGraphicsItem(),
+              &CaptionGraphicsBackgroundItem::interactionsActivated,
+              _captions[(i + 1) % 4]->captionGraphicsItem(),
+              &CaptionGraphicsBackgroundItem::removeInteractions);
+      connect(_captions[i]->captionGraphicsItem(),
+              &CaptionGraphicsBackgroundItem::interactionsActivated,
+              _captions[(i + 2) % 4]->captionGraphicsItem(),
+              &CaptionGraphicsBackgroundItem::removeInteractions);
+      connect(_captions[i]->captionGraphicsItem(),
+              &CaptionGraphicsBackgroundItem::interactionsActivated,
+              _captions[(i + 3) % 4]->captionGraphicsItem(),
+              &CaptionGraphicsBackgroundItem::removeInteractions);
+      connect(_captions[i], &CaptionItem::filtering, _captions[(i + 1) % 4],
+              &CaptionItem::removeObservation);
+      connect(_captions[i], &CaptionItem::filtering, _captions[(i + 2) % 4],
+              &CaptionItem::removeObservation);
+      connect(_captions[i], &CaptionItem::filtering, _captions[(i + 3) % 4],
+              &CaptionItem::removeObservation);
     }
   }
 

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -21,7 +21,8 @@ namespace tlp {
 HistoStatsConfigWidget::HistoStatsConfigWidget(QWidget *parent)
     : QWidget(parent), _ui(new Ui::HistoStatsConfigWidget) {
   _ui->setupUi(this);
-  connect(_ui->applyButton, SIGNAL(clicked()), this, SIGNAL(computeAndDrawInteractor()));
+  connect(_ui->applyButton, &QAbstractButton::clicked, this,
+          &HistoStatsConfigWidget::computeAndDrawInteractor);
 }
 
 HistoStatsConfigWidget::~HistoStatsConfigWidget() {

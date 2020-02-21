@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -91,14 +91,15 @@ SnapshotDialog::SnapshotDialog(const View *v, QWidget *parent)
   ui->widthSpinBox->setValue(view->centralItem()->scene()->sceneRect().width());
   ui->heightSpinBox->setValue(view->centralItem()->scene()->sceneRect().height());
 
-  connect(ui->widthSpinBox, SIGNAL(valueChanged(int)), this, SLOT(widthSpinBoxValueChanged(int)));
-  connect(ui->heightSpinBox, SIGNAL(valueChanged(int)), this, SLOT(heightSpinBoxValueChanged(int)));
+  connect(ui->widthSpinBox, QOverload<int>::of(&QSpinBox::valueChanged), this,
+          &SnapshotDialog::widthSpinBoxValueChanged);
+  connect(ui->heightSpinBox, QOverload<int>::of(&QSpinBox::valueChanged), this,
+          &SnapshotDialog::heightSpinBoxValueChanged);
 
   QPushButton *copyButton = ui->buttonBox->button(QDialogButtonBox::Apply);
   copyButton->setText("&Copy to clipboard");
   ui->buttonBox->addButton(copyButton, QDialogButtonBox::ActionRole);
-  connect(ui->buttonBox, SIGNAL(clicked(QAbstractButton *)), this,
-          SLOT(clicked(QAbstractButton *)));
+  connect(ui->buttonBox, &QDialogButtonBox::clicked, this, &SnapshotDialog::clicked);
 
   lockLabel = new LockLabel();
   ui->horizontalLayout_5->insertWidget(2, lockLabel);

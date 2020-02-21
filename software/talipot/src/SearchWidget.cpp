@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -167,9 +167,10 @@ SearchWidget::SearchWidget(QWidget *parent)
       new GraphPropertiesModel<PropertyInterface>(nullptr, false, _ui->searchTermACombo));
   _ui->searchTermBCombo->setModel(new GraphPropertiesModel<PropertyInterface>(
       "Custom value", nullptr, false, _ui->searchTermBCombo));
-  connect(_ui->graphCombo, SIGNAL(currentItemChanged()), this, SLOT(graphIndexChanged()));
-  connect(_ui->selectionModeCombo, SIGNAL(currentIndexChanged(int)), this,
-          SLOT(selectionModeChanged(int)));
+  connect(_ui->graphCombo, &TreeViewComboBox::currentItemChanged, this,
+          &SearchWidget::graphIndexChanged);
+  connect(_ui->selectionModeCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), this,
+          &SearchWidget::selectionModeChanged);
 }
 
 SearchWidget::~SearchWidget() {

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -32,11 +32,14 @@ EnclosingCircleConfigurationWidget::EnclosingCircleConfigurationWidget(Color &ci
                                                                        QWidget *parent)
     : QWidget(parent), _ui(new Ui::EnclosingCircleConfigurationData) {
   _ui->setupUi(this);
-  connect(_ui->solidColorRadio, SIGNAL(clicked(bool)), this, SIGNAL(solidColorRadioChecked(bool)));
-  connect(_ui->inverseColorRadio, SIGNAL(clicked(bool)), this,
-          SIGNAL(inverseColorRadioChecked(bool)));
-  connect(_ui->circleColorBtn, SIGNAL(clicked()), this, SIGNAL(colorButtonClicked()));
-  connect(_ui->alphaSlider, SIGNAL(valueChanged(int)), this, SIGNAL(alphaChanged(int)));
+  connect(_ui->solidColorRadio, &QAbstractButton::clicked, this,
+          &EnclosingCircleConfigurationWidget::solidColorRadioChecked);
+  connect(_ui->inverseColorRadio, &QAbstractButton::clicked, this,
+          &EnclosingCircleConfigurationWidget::inverseColorRadioChecked);
+  connect(_ui->circleColorBtn, &QAbstractButton::clicked, this,
+          &EnclosingCircleConfigurationWidget::colorButtonClicked);
+  connect(_ui->alphaSlider, &QAbstractSlider::valueChanged, this,
+          &EnclosingCircleConfigurationWidget::alphaChanged);
   _ui->circleColorBtn->setDialogParent(parent);
   _ui->circleColorBtn->setDialogTitle("Choose the enclosing circle color");
   _ui->circleColorBtn->setColor(circleColor);
@@ -135,12 +138,14 @@ QWidget *EnclosingCircleHighlighter::getConfigurationWidget() {
     configurationWidget->solidColorRadioCheck(true);
 
   configurationWidget->alphaSliderSetValue(alpha);
-  connect(configurationWidget, SIGNAL(solidColorRadioChecked(bool)), this,
-          SLOT(solidColorRadioChecked(bool)));
-  connect(configurationWidget, SIGNAL(inverseColorRadioChecked(bool)), this,
-          SLOT(inverseColorRadioChecked(bool)));
-  connect(configurationWidget, SIGNAL(colorButtonClicked()), this, SLOT(colorButtonClicked()));
-  connect(configurationWidget, SIGNAL(alphaChanged(int)), this, SLOT(alphaChanged(int)));
+  connect(configurationWidget, &EnclosingCircleConfigurationWidget::solidColorRadioChecked, this,
+          &EnclosingCircleHighlighter::solidColorRadioChecked);
+  connect(configurationWidget, &EnclosingCircleConfigurationWidget::inverseColorRadioChecked, this,
+          &EnclosingCircleHighlighter::inverseColorRadioChecked);
+  connect(configurationWidget, &EnclosingCircleConfigurationWidget::colorButtonClicked, this,
+          &EnclosingCircleHighlighter::colorButtonClicked);
+  connect(configurationWidget, &EnclosingCircleConfigurationWidget::alphaChanged, this,
+          &EnclosingCircleHighlighter::alphaChanged);
   return configurationWidget;
 }
 

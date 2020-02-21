@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -384,58 +384,58 @@ void NodeLinkDiagramComponent::fillContextMenu(QMenu *menu, const QPointF &point
     QAction *action;
 
     if (isNode) {
-      action = selectMenu->addAction("node", this, SLOT(selectItem()));
+      action = selectMenu->addAction("node", [this] { selectItem(); });
       action->setToolTip("Select the node #" + sId);
-      action = selectMenu->addAction("predecessor nodes", this, SLOT(selectInNodes()));
+      action = selectMenu->addAction("predecessor nodes", [this] { selectInNodes(); });
       action->setToolTip("Select the predecessors of node #" + sId);
-      action = selectMenu->addAction("successor nodes", this, SLOT(selectOutNodes()));
+      action = selectMenu->addAction("successor nodes", [this] { selectOutNodes(); });
       action->setToolTip("Select the sucessors of node #" + sId);
-      action = selectMenu->addAction("input edges", this, SLOT(selectInEdges()));
+      action = selectMenu->addAction("input edges", [this] { selectInEdges(); });
       action->setToolTip("Select the input edges of node #" + sId);
-      action = selectMenu->addAction("output edges", this, SLOT(selectOutEdges()));
+      action = selectMenu->addAction("output edges", [this] { selectOutEdges(); });
       action->setToolTip("Select the output edges of node #" + sId);
-      action = selectMenu->addAction("node and all its neighbour nodes (including edges)", this,
-                                     SLOT(selectNodeAndAllNeighbourNodesAndEdges()));
+      action = selectMenu->addAction("node and all its neighbour nodes (including edges)",
+                                     [this] { selectNodeAndAllNeighbourNodesAndEdges(); });
       action->setToolTip("Select the node #" + sId + " and its neighbours and adjacent edges");
     } else {
-      action = selectMenu->addAction("edge", this, SLOT(selectItem()));
+      action = selectMenu->addAction("edge", [this] { selectItem(); });
       action->setToolTip("Select the edge #" + sId);
-      action = selectMenu->addAction("edge extremities", this, SLOT(selectExtremities()));
+      action = selectMenu->addAction("edge extremities", [this] { selectExtremities(); });
       action->setToolTip("Select the source and target nodes of edge #" + sId);
       action =
-          selectMenu->addAction("edge and its extremities", this, SLOT(selectEdgeAndExtremities()));
+          selectMenu->addAction("edge and its extremities", [this] { selectEdgeAndExtremities(); });
       action->setToolTip("Select the edge #" + sId + " and its source and target nodes");
     }
 
     QMenu *addToSelectionMenu = menu->addMenu("Add to selection");
 
     if (isNode) {
-      action = addToSelectionMenu->addAction("node", this, SLOT(addItemToSelection()));
+      action = addToSelectionMenu->addAction("node", [this] { addItemToSelection(); });
       action->setToolTip("Add the node #" + sId + " to the current selection");
       action =
-          addToSelectionMenu->addAction("predecessor nodes", this, SLOT(addInNodesToSelection()));
+          addToSelectionMenu->addAction("predecessor nodes", [this] { addInNodesToSelection(); });
       action->setToolTip("Add the predecessors of node #" + sId + " to the current selection");
       action =
-          addToSelectionMenu->addAction("successor nodes", this, SLOT(addOutNodesToSelection()));
+          addToSelectionMenu->addAction("successor nodes", [this] { addOutNodesToSelection(); });
       action->setToolTip("Add the sucessors of node #" + sId + " to the current selection");
-      action = addToSelectionMenu->addAction("input edges", this, SLOT(addInEdgesToSelection()));
+      action = addToSelectionMenu->addAction("input edges", [this] { addInEdgesToSelection(); });
       action->setToolTip("Add the input edges of node #" + sId + " to the current selection");
-      action = addToSelectionMenu->addAction("output edges", this, SLOT(addOutEdgesToSelection()));
+      action = addToSelectionMenu->addAction("output edges", [this] { addOutEdgesToSelection(); });
       action->setToolTip("Add the output edges of node #" + sId + " to the current selection");
       action = addToSelectionMenu->addAction(
-          tr("node and all its neighbour nodes (including edges)"), this,
-          SLOT(addNodeAndAllNeighbourNodesAndEdgesToSelection()));
+          tr("node and all its neighbour nodes (including edges)"),
+          [this] { addNodeAndAllNeighbourNodesAndEdgesToSelection(); });
       action->setToolTip("Add the node #" + sId +
                          "and its neighbours and adjacent edges to the current selection");
     } else {
-      action = addToSelectionMenu->addAction("edge", this, SLOT(addItemToSelection()));
+      action = addToSelectionMenu->addAction("edge", [this] { addItemToSelection(); });
       action->setToolTip("Add the edge #" + sId + " to the current selection");
-      action = addToSelectionMenu->addAction("edge extremities", this,
-                                             SLOT(addExtremitiesToSelection()));
+      action = addToSelectionMenu->addAction("edge extremities",
+                                             [this] { addExtremitiesToSelection(); });
       action->setToolTip("Add the source and target nodes of edge #" + sId +
                          " to the current selection");
-      action = addToSelectionMenu->addAction("edge and its extremities", this,
-                                             SLOT(addEdgeAndExtremitiesToSelection()));
+      action = addToSelectionMenu->addAction("edge and its extremities",
+                                             [this] { addEdgeAndExtremitiesToSelection(); });
       action->setToolTip("Add the edge #" + sId +
                          "and its  source and target nodes to the current selection");
     }
@@ -443,31 +443,31 @@ void NodeLinkDiagramComponent::fillContextMenu(QMenu *menu, const QPointF &point
     QMenu *removeFromSelectionMenu = menu->addMenu("Remove from selection");
 
     if (isNode) {
-      action = removeFromSelectionMenu->addAction("node", this, SLOT(removeItemFromSelection()));
+      action = removeFromSelectionMenu->addAction("node", [this] { removeItemFromSelection(); });
       action->setToolTip("Remove the node #" + sId + " from the current selection");
-      action = removeFromSelectionMenu->addAction("predecessor nodes", this,
-                                                  SLOT(removeInNodesFromSelection()));
+      action = removeFromSelectionMenu->addAction("predecessor nodes",
+                                                  [this] { removeInNodesFromSelection(); });
       action->setToolTip("Remove the predecessors of node #" + sId + " from the current selection");
-      action = removeFromSelectionMenu->addAction("successor nodes", this,
-                                                  SLOT(removeOutNodesFromSelection()));
+      action = removeFromSelectionMenu->addAction("successor nodes",
+                                                  [this] { removeOutNodesFromSelection(); });
       action->setToolTip("Remove the sucessors of node #" + sId + " from the current selection");
-      action = removeFromSelectionMenu->addAction("input edges", this,
-                                                  SLOT(removeInEdgesFromSelection()));
+      action = removeFromSelectionMenu->addAction("input edges",
+                                                  [this] { removeInEdgesFromSelection(); });
       action->setToolTip("Remove the input edges of node #" + sId + " from the current selection");
-      action = removeFromSelectionMenu->addAction("output edges", this,
-                                                  SLOT(removeOutEdgesFromSelection()));
+      action = removeFromSelectionMenu->addAction("output edges",
+                                                  [this] { removeOutEdgesFromSelection(); });
       action->setToolTip("Remove the output edges of node #" + sId + " from the current selection");
       action = removeFromSelectionMenu->addAction(
-          tr("node and all its neighbour nodes (including edges)"), this,
-          SLOT(removeNodeAndAllNeighbourNodesAndEdgesFromSelection()));
+          tr("node and all its neighbour nodes (including edges)"),
+          [this] { removeNodeAndAllNeighbourNodesAndEdgesFromSelection(); });
     } else {
-      action = removeFromSelectionMenu->addAction("edge", this, SLOT(removeItemFromSelection()));
+      action = removeFromSelectionMenu->addAction("edge", [this] { removeItemFromSelection(); });
       action->setToolTip("Remove the edge #" + sId + " from the current selection");
-      action = removeFromSelectionMenu->addAction("edge extremities", this,
-                                                  SLOT(removeExtremitiesFromSelection()));
+      action = removeFromSelectionMenu->addAction("edge extremities",
+                                                  [this] { removeExtremitiesFromSelection(); });
       action->setToolTip("Remove the extremities of edge #" + sId + " from the current selection");
-      action = removeFromSelectionMenu->addAction("edge and its extremities", this,
-                                                  SLOT(removeEdgeAndExtremitiesFromSelection()));
+      action = removeFromSelectionMenu->addAction(
+          "edge and its extremities", [this] { removeEdgeAndExtremitiesFromSelection(); });
       action->setToolTip("Remove the edge #" + sId +
                          " and its extremities from the current selection");
     }
@@ -475,29 +475,29 @@ void NodeLinkDiagramComponent::fillContextMenu(QMenu *menu, const QPointF &point
     QMenu *toggleMenu = menu->addMenu("Toggle selection of");
 
     if (isNode) {
-      action = toggleMenu->addAction("node", this, SLOT(addRemoveItemToSelection()));
+      action = toggleMenu->addAction("node", [this] { addRemoveItemToSelection(); });
       action->setToolTip("Invert the selection of the node #" + sId);
       action =
-          toggleMenu->addAction("predecessor nodes", this, SLOT(addRemoveInNodesToSelection()));
+          toggleMenu->addAction("predecessor nodes", [this] { addRemoveInNodesToSelection(); });
       action->setToolTip("Invert the selection of the predecessors of the node #" + sId);
-      action = toggleMenu->addAction("successor nodes", this, SLOT(addRemoveOutNodesToSelection()));
+      action = toggleMenu->addAction("successor nodes", [this] { addRemoveOutNodesToSelection(); });
       action->setToolTip("Invert the selection of the successors of the node #" + sId);
-      action = toggleMenu->addAction("input edges", this, SLOT(addRemoveInEdgesToSelection()));
+      action = toggleMenu->addAction("input edges", [this] { addRemoveInEdgesToSelection(); });
       action->setToolTip("Invert the selection of the input edges of the node #" + sId);
-      action = toggleMenu->addAction("output edges", this, SLOT(addRemoveOutEdgesToSelection()));
+      action = toggleMenu->addAction("output edges", [this] { addRemoveOutEdgesToSelection(); });
       action->setToolTip("Invert the selection of the output edges of the node #" + sId);
-      action = toggleMenu->addAction("node and all its neighbour nodes (including edges)", this,
-                                     SLOT(addRemoveNodeAndAllNeighbourNodesAndEdges()));
+      action = toggleMenu->addAction("node and all its neighbour nodes (including edges)",
+                                     [this] { addRemoveNodeAndAllNeighbourNodesAndEdges(); });
       action->setToolTip("Invert the selection of the node #" + sId +
                          "and its neighbours and adjacent edges");
     } else {
-      action = toggleMenu->addAction("edge", this, SLOT(addRemoveItemToSelection()));
+      action = toggleMenu->addAction("edge", [this] { addRemoveItemToSelection(); });
       action->setToolTip("Invert the selection of the edge #" + sId);
       action =
-          toggleMenu->addAction("edge extremities", this, SLOT(addRemoveExtremitiesToSelection()));
+          toggleMenu->addAction("edge extremities", [this] { addRemoveExtremitiesToSelection(); });
       action->setToolTip("Invert the selection of the source and target nodes of the edge #" + sId);
-      action = toggleMenu->addAction("edge and its extremities", this,
-                                     SLOT(addRemoveEdgeAndExtremitiesToSelection()));
+      action = toggleMenu->addAction("edge and its extremities",
+                                     [this] { addRemoveEdgeAndExtremitiesToSelection(); });
       action->setToolTip("Invert the selection of the edge #" + sId +
                          " and its source and target nodes");
     }
@@ -506,26 +506,26 @@ void NodeLinkDiagramComponent::fillContextMenu(QMenu *menu, const QPointF &point
       return s + (isNode ? " node #" : " edge #") + sId;
     };
 
-    action = menu->addAction("Delete", this, SLOT(deleteItem()));
+    action = menu->addAction("Delete", [this] { deleteItem(); });
     action->setToolTip(genEltToolTip("Delete the"));
 
     QMenu *updateMenu = menu->addMenu("Edit");
-    action = updateMenu->addAction("Color", this, SLOT(editColor()));
+    action = updateMenu->addAction("Color", [this] { editColor(); });
     action->setToolTip(genEltToolTip("Display a dialog to update the color of the"));
-    action = updateMenu->addAction("Label", this, SLOT(editLabel()));
+    action = updateMenu->addAction("Label", [this] { editLabel(); });
     action->setToolTip(genEltToolTip("Display a dialog to update the label of the"));
-    action = updateMenu->addAction("Shape", this, SLOT(editShape()));
+    action = updateMenu->addAction("Shape", [this] { editShape(); });
     action->setToolTip(genEltToolTip("Display a dialog to update the shape of the"));
-    action = updateMenu->addAction("Size", this, SLOT(editSize()));
+    action = updateMenu->addAction("Size", [this] { editSize(); });
     action->setToolTip(genEltToolTip("Display a dialog to update the size of the"));
 
     if (isNode) {
       Graph *metaGraph = graph()->getNodeMetaInfo(node(entity.getComplexEntityId()));
 
       if (metaGraph) {
-        action = menu->addAction("Go inside", this, SLOT(goInsideItem()));
+        action = menu->addAction("Go inside", [this] { goInsideItem(); });
         action->setToolTip("Display the subgraph represented by the meta-node #" + sId);
-        menu->addAction("Ungroup", this, SLOT(ungroupItem()));
+        menu->addAction("Ungroup", [this] { ungroupItem(); });
         action->setToolTip("Replace the meta-node #" + sId + " by the subgraph it represents");
       }
 
@@ -544,8 +544,8 @@ void NodeLinkDiagramComponent::fillContextMenu(QMenu *menu, const QPointF &point
                            ->getGlGraphComposite()
                            ->getRenderingParametersPointer()
                            ->isElementZOrdered());
-    connect(action, SIGNAL(triggered(bool)), this, SLOT(setZOrdering(bool)));
-    action = menu->addAction("Grid display parameters", this, SLOT(showGridControl()));
+    connect(action, &QAction::triggered, this, &NodeLinkDiagramComponent::setZOrdering);
+    action = menu->addAction("Grid display parameters", [this] { showGridControl(); });
     action->setToolTip("Display the grid setup wizard");
   }
 }

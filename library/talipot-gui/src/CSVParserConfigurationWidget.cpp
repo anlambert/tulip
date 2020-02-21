@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -35,25 +35,30 @@ CSVParserConfigurationWidget::CSVParserConfigurationWidget(QWidget *parent)
   // Set the default encoding to UTF8
   ui->encodingComboBox->setCurrentIndex(ui->encodingComboBox->findText(QString("UTF-8")));
 
-  connect(ui->encodingComboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(parserChanged()));
+  connect(ui->encodingComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this,
+          &CSVParserConfigurationWidget::parserChanged);
 
   // Invert rows and column
-  connect(ui->switchRowColumnCheckBox, SIGNAL(stateChanged(int)), this, SIGNAL(parserChanged()));
+  connect(ui->switchRowColumnCheckBox, &QCheckBox::stateChanged, this,
+          &CSVParserConfigurationWidget::parserChanged);
   // Ignore first lines
-  connect(ui->ignoreFirstLinesCheckBox, SIGNAL(stateChanged(int)), this,
-          SLOT(ignoreFirstLines(int)));
-  connect(ui->ignoreFirstLinesCheckBox, SIGNAL(stateChanged(int)), this, SIGNAL(parserChanged()));
-  connect(ui->nbOfIgnoredLinesSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(parserChanged()));
+  connect(ui->ignoreFirstLinesCheckBox, &QCheckBox::stateChanged, this,
+          &CSVParserConfigurationWidget::ignoreFirstLines);
+  connect(ui->ignoreFirstLinesCheckBox, &QCheckBox::stateChanged, this,
+          &CSVParserConfigurationWidget::parserChanged);
+  connect(ui->nbOfIgnoredLinesSpinBox, QOverload<int>::of(&QSpinBox::valueChanged), this,
+          &CSVParserConfigurationWidget::parserChanged);
 
   // Separator and text delimiters.
-  connect(ui->separatorComboBox, SIGNAL(currentIndexChanged(int)), this,
-          SLOT(changeSeparator(int)));
-  connect(ui->textDelimiterComboBox, SIGNAL(currentIndexChanged(int)), this,
-          SIGNAL(parserChanged()));
-  connect(ui->mergesep, SIGNAL(stateChanged(int)), this, SIGNAL(parserChanged()));
-  connect(ui->othersep, SIGNAL(textEdited(const QString &)), this, SIGNAL(parserChanged()));
-  connect(ui->fileChooserPushButton, SIGNAL(clicked(bool)), this,
-          SLOT(changeFileNameButtonPressed()));
+  connect(ui->separatorComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this,
+          &CSVParserConfigurationWidget::changeSeparator);
+  connect(ui->textDelimiterComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this,
+          &CSVParserConfigurationWidget::parserChanged);
+  connect(ui->mergesep, &QCheckBox::stateChanged, this,
+          &CSVParserConfigurationWidget::parserChanged);
+  connect(ui->othersep, &QLineEdit::textEdited, this, &CSVParserConfigurationWidget::parserChanged);
+  connect(ui->fileChooserPushButton, &QAbstractButton::clicked, this,
+          &CSVParserConfigurationWidget::changeFileNameButtonPressed);
 }
 
 void CSVParserConfigurationWidget::initWithLastOpenedFile() {

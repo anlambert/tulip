@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -171,26 +171,26 @@ void SOMView::initGlMainViews() {
 void SOMView::initMenu() {
 
   hideMappingAction = new QAction(QString("Hide Mapping"), this);
-  connect(hideMappingAction, SIGNAL(triggered()), this, SLOT(hideMapping()));
+  connect(hideMappingAction, &QAction::triggered, this, &SOMView::hideMapping);
 
   showMappingAction = new QAction(QString("Show Mapping"), this);
-  connect(showMappingAction, SIGNAL(triggered()), this, SLOT(showMapping()));
+  connect(showMappingAction, &QAction::triggered, this, &SOMView::showMapping);
 
   computeMappingAction = new QAction(QString("Compute Mapping"), this);
-  connect(computeMappingAction, SIGNAL(triggered()), this, SLOT(computeMapping()));
+  connect(computeMappingAction, &QAction::triggered, this, &SOMView::computeMapping);
 
   updateNodesColorAction = new QAction(QString("Update nodes color"), this);
-  connect(updateNodesColorAction, SIGNAL(triggered()), this, SLOT(updateNodeColorMapping()));
+  connect(updateNodesColorAction, &QAction::triggered, [this] { updateNodeColorMapping(); });
 
   addSelectionToMaskAction = new QAction(QString("Copy Selection to mask"), this);
-  connect(addSelectionToMaskAction, SIGNAL(triggered()), this, SLOT(copySelectionToMask()));
+  connect(addSelectionToMaskAction, &QAction::triggered, this, &SOMView::copySelectionToMask);
 
   clearMaskAction = new QAction(QString("Clear mask"), this);
-  connect(clearMaskAction, SIGNAL(triggered()), this, SLOT(clearMask()));
+  connect(clearMaskAction, &QAction::triggered, this, &SOMView::clearMask);
   invertMaskAction = new QAction(QString("Invert the mask"), this);
-  connect(invertMaskAction, SIGNAL(triggered()), this, SLOT(invertMask()));
+  connect(invertMaskAction, &QAction::triggered, this, &SOMView::invertMask);
   selectNodesInMaskAction = new QAction(QString("Select nodes in mask"), this);
-  connect(selectNodesInMaskAction, SIGNAL(triggered()), this, SLOT(selectAllNodesInMask()));
+  connect(selectNodesInMaskAction, &QAction::triggered, this, &SOMView::selectAllNodesInMask);
 }
 
 void SOMView::setState(const DataSet &dataSet) {

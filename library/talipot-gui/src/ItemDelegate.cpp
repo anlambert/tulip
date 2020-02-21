@@ -229,8 +229,8 @@ bool ItemDelegate::eventFilter(QObject *object, QEvent *event) {
       _currentMonitoredCombo = static_cast<QComboBox *>(object);
       _currentMonitoredChild->installEventFilter(this);
       _currentMonitoredCombo->removeEventFilter(this);
-      connect(_currentMonitoredCombo, SIGNAL(currentIndexChanged(int)), this,
-              SLOT(comboDataChanged()));
+      connect(_currentMonitoredCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), this,
+              &ItemDelegate::comboDataChanged);
     }
   } else if (object == _currentMonitoredChild && event->type() == QEvent::Hide) {
     _currentMonitoredChild->removeEventFilter(this);
@@ -303,8 +303,8 @@ QVariant ItemDelegate::showEditorDialog(tlp::ElementType elType, tlp::PropertyIn
         new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok, Qt::Horizontal);
     layout->addWidget(buttonBox);
     QWidget::setTabOrder(w, buttonBox);
-    QObject::connect(buttonBox, SIGNAL(accepted()), dlg, SLOT(accept()));
-    QObject::connect(buttonBox, SIGNAL(rejected()), dlg, SLOT(reject()));
+    QObject::connect(buttonBox, &QDialogButtonBox::accepted, dlg, &QDialog::accept);
+    QObject::connect(buttonBox, &QDialogButtonBox::rejected, dlg, &QDialog::reject);
   }
 
   QVariant result;

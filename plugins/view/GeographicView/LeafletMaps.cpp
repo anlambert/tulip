@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -178,13 +178,13 @@ LeafletMaps::LeafletMaps(QWidget *parent) : QWebEngineView(parent), init(false) 
 #else
   frame = page();
   mapRefresher = new MapRefresher;
-  connect(mapRefresher, SIGNAL(refreshMapSignal()), this, SIGNAL(refreshMap()));
+  connect(mapRefresher, &MapRefresher::refreshMapSignal, this, &LeafletMaps::refreshMap);
   QWebChannel *channel = new QWebChannel(frame);
   frame->setWebChannel(channel);
   channel->registerObject(QStringLiteral("leafletMapsQObject"), mapRefresher);
 #endif
   frame->setHtml(content);
-  QTimer::singleShot(500, this, SLOT(triggerLoading()));
+  QTimer::singleShot(500, this, &LeafletMaps::triggerLoading);
 }
 
 LeafletMaps::~LeafletMaps() {
@@ -219,7 +219,7 @@ bool LeafletMaps::mapLoaded() {
 
 void LeafletMaps::triggerLoading() {
   if (!pageLoaded()) {
-    QTimer::singleShot(500, this, SLOT(triggerLoading()));
+    QTimer::singleShot(500, this, &LeafletMaps::triggerLoading);
   }
 #ifdef QT_HAS_WEBKIT
   frame->addToJavaScriptWindowObject("leafletMapsQObject", this);

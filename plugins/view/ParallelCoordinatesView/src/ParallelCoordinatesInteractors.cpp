@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -138,7 +138,7 @@ void InteractorAxisSwapper::construct() {
 AxisSliderOptions::AxisSliderOptions(QWidget *parent)
     : QWidget(parent), _ui(new Ui::AxisSlidersOptions) {
   _ui->setupUi(this);
-  connect(_ui->resetButton, SIGNAL(clicked()), this, SIGNAL(resetSliders()));
+  connect(_ui->resetButton, &QAbstractButton::clicked, this, &AxisSliderOptions::resetSliders);
 }
 
 AxisSliderOptions::~AxisSliderOptions() {
@@ -181,7 +181,9 @@ void InteractorAxisSliders::construct() {
       "dimensions.</p>" +
       "</body>" + "</html>");
   configwidget = new AxisSliderOptions();
-  connect(configwidget, SIGNAL(resetSliders()), view(), SLOT(resetHightlightedElementsSlot()));
+  connect(configwidget, &AxisSliderOptions::resetSliders,
+          static_cast<ParallelCoordinatesView *>(view()),
+          &ParallelCoordinatesView::resetHighlightedElementsSlot);
 
   push_back(new ParallelCoordsAxisSliders);
   push_back(new MousePanNZoomNavigator);

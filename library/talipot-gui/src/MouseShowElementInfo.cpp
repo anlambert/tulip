@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -41,10 +41,11 @@ MouseShowElementInfo::MouseShowElementInfo(const bool showVisualPropButton)
   _informationWidgetItem->setVisible(false);
 
   if (showVisualPropButton)
-    connect(_ui->displayTalipotProp, SIGNAL(toggled(bool)), this, SLOT(showVisualProp(bool)));
+    connect(_ui->displayTalipotProp, &QAbstractButton::toggled, this,
+            &MouseShowElementInfo::showVisualProp);
   else
     _ui->displayTalipotProp->hide();
-  connect(_ui->closeButton, SIGNAL(clicked()), this, SLOT(hideInfos()));
+  connect(_ui->closeButton, &QAbstractButton::clicked, this, &MouseShowElementInfo::hideInfos);
 }
 
 MouseShowElementInfo::~MouseShowElementInfo() {
@@ -166,7 +167,7 @@ bool MouseShowElementInfo::eventFilter(QObject *widget, QEvent *e) {
             _informationWidgetItem->setVisible(true);
             QPropertyAnimation *animation =
                 new QPropertyAnimation(_informationWidgetItem, "opacity");
-            connect(animation, SIGNAL(finished()), animation, SLOT(deleteLater()));
+            connect(animation, &QAbstractAnimation::finished, animation, &QObject::deleteLater);
             animation->setDuration(100);
             animation->setStartValue(0.);
             animation->setEndValue(1);
@@ -198,7 +199,7 @@ void MouseShowElementInfo::viewChanged(View *view) {
   ViewWidget *viewWidget = dynamic_cast<ViewWidget *>(view);
   assert(viewWidget);
   _view = viewWidget;
-  connect(_view, SIGNAL(graphSet(tlp::Graph *)), _informationWidgetItem, SLOT(close()));
+  connect(_view, &View::graphSet, _informationWidgetItem, &QGraphicsWidget::close);
   _view->graphicsView()->scene()->addItem(_informationWidgetItem);
 }
 

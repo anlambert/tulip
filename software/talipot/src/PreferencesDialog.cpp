@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -29,14 +29,15 @@ PreferencesDialog::PreferencesDialog(QWidget *parent)
     : QDialog(parent), _ui(new Ui::PreferencesDialog) {
   _ui->setupUi(this);
   _ui->graphDefaultsTable->setItemDelegate(new tlp::ItemDelegate(_ui->graphDefaultsTable));
-  connect(_ui->graphDefaultsTable, SIGNAL(cellChanged(int, int)), this,
-          SLOT(cellChanged(int, int)));
+  connect(_ui->graphDefaultsTable, &QTableWidget::cellChanged, this,
+          &PreferencesDialog::cellChanged);
   _ui->graphDefaultsTable->setContextMenuPolicy(Qt::CustomContextMenu);
-  connect(_ui->graphDefaultsTable, SIGNAL(customContextMenuRequested(const QPoint &)), this,
-          SLOT(showGraphDefaultsContextMenu(const QPoint &)));
-  connect(_ui->randomSeedCheck, SIGNAL(stateChanged(int)), this, SLOT(randomSeedCheckChanged(int)));
-  connect(_ui->resetAllDrawingDefaultsButton, SIGNAL(released()), this,
-          SLOT(resetToTalipotDefaults()));
+  connect(_ui->graphDefaultsTable, &QWidget::customContextMenuRequested, this,
+          &PreferencesDialog::showGraphDefaultsContextMenu);
+  connect(_ui->randomSeedCheck, &QCheckBox::stateChanged, this,
+          &PreferencesDialog::randomSeedCheckChanged);
+  connect(_ui->resetAllDrawingDefaultsButton, &QAbstractButton::released,
+          [this] { resetToTalipotDefaults(); });
 
   // disable edition for title items (in column 0)
   for (int i = 0; i < _ui->graphDefaultsTable->rowCount(); ++i) {

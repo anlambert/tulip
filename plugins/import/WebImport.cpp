@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -100,10 +100,10 @@ void HttpContext::request(const std::string &url, bool head) {
 
   if (head) {
     reply = DownloadManager::getInstance()->head(request);
-    connect(reply, SIGNAL(finished()), this, SLOT(headerReceived()));
+    connect(reply, &QNetworkReply::finished, this, &HttpContext::headerReceived);
   } else {
     reply = DownloadManager::getInstance()->get(request);
-    connect(reply, SIGNAL(finished()), this, SLOT(finished()));
+    connect(reply, &QNetworkReply::finished, this, &HttpContext::finished);
   }
 }
 
@@ -177,7 +177,7 @@ void HttpContext::timeout() {
 }
 
 void HttpContext::setTimer(QTimer *timer) {
-  connect(timer, SIGNAL(timeout()), SLOT(timeout()));
+  connect(timer, &QTimer::timeout, this, &HttpContext::timeout);
 }
 
 UrlElement::UrlElement() : http_prefix("http://"), data(""), context(nullptr) {}

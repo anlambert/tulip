@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -32,14 +32,14 @@ CaptionGraphicsBackgroundItem::CaptionGraphicsBackgroundItem(const QRect &rect)
   _rangeSelector1Item->setPos(_captionContentPos + QPoint(5, -30));
   _rangeSelector1Item->setVisible(false);
   _rangeSelector1Item->setParentItem(this);
-  connect(_rangeSelector1Item, SIGNAL(circleMoved()), this, SLOT(updateCaption()));
+  connect(_rangeSelector1Item, &SelectionArrowItem::circleMoved, [this] { updateCaption(); });
 
   // Range selector 2
   _rangeSelector2Item = new SelectionArrowItem(1, _captionContentPos);
   _rangeSelector2Item->setPos(_captionContentPos + QPoint(5, 130));
   _rangeSelector2Item->setVisible(false);
   _rangeSelector2Item->setParentItem(this);
-  connect(_rangeSelector2Item, SIGNAL(circleMoved()), this, SLOT(updateCaption()));
+  connect(_rangeSelector2Item, &SelectionArrowItem::circleMoved, [this] { updateCaption(); });
 
   // Range selector text 1
   _rangeSelector1TextItem = new SelectionTextItem();
@@ -89,8 +89,8 @@ CaptionGraphicsBackgroundItem::CaptionGraphicsBackgroundItem(const QRect &rect)
   _middleCaptionRectItem =
       new MovableRectItem(QRect(_captionContentPos, QSize(30, 160)), QRect(0, 0, 1, 1),
                           _rangeSelector1Item, _rangeSelector2Item);
-  connect(_middleCaptionRectItem, SIGNAL(moved(float, float)), this,
-          SLOT(updateCaption(float, float)));
+  connect(_middleCaptionRectItem, QOverload<float, float>::of(&MovableRectItem::moved), this,
+          QOverload<float, float>::of(&CaptionGraphicsBackgroundItem::updateCaption));
   _middleCaptionRectItem->setParentItem(this);
 
   // Size caption Items
@@ -105,8 +105,8 @@ CaptionGraphicsBackgroundItem::CaptionGraphicsBackgroundItem(const QRect &rect)
   _sizeCaptionPathItem =
       new MovablePathItem(QRect(0, 0, 1, 1), _topSizeCaptionPathItem, _bottomSizeCaptionPathItem,
                           _rangeSelector1Item, _rangeSelector2Item);
-  connect(_sizeCaptionPathItem, SIGNAL(moved(float, float)), this,
-          SLOT(updateCaption(float, float)));
+  connect(_sizeCaptionPathItem, QOverload<float, float>::of(&MovablePathItem::moved), this,
+          QOverload<float, float>::of(&CaptionGraphicsBackgroundItem::updateCaption));
   _sizeCaptionPathItem->setBrush(QBrush(QColor(200, 200, 200, 255)));
   _sizeCaptionPathItem->setParentItem(this);
   _sizeCaptionPathItem->setPos(_captionContentPos);

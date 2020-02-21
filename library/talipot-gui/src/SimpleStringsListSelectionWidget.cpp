@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -44,12 +44,16 @@ SimpleStringsListSelectionWidget::~SimpleStringsListSelectionWidget() {
 }
 
 void SimpleStringsListSelectionWidget::qtWidgetsConnection() {
-  connect(_ui->listWidget, SIGNAL(itemClicked(QListWidgetItem *)), this,
-          SLOT(listItemClicked(QListWidgetItem *)));
-  connect(_ui->upButton, SIGNAL(clicked()), this, SLOT(pressButtonUp()));
-  connect(_ui->downButton, SIGNAL(clicked()), this, SLOT(pressButtonDown()));
-  connect(_ui->selectButton, SIGNAL(clicked()), this, SLOT(pressButtonSelectAll()));
-  connect(_ui->unselectButton, SIGNAL(clicked()), this, SLOT(pressButtonUnselectAll()));
+  connect(_ui->listWidget, &QListWidget::itemClicked, this,
+          &SimpleStringsListSelectionWidget::listItemClicked);
+  connect(_ui->upButton, &QAbstractButton::clicked, this,
+          &SimpleStringsListSelectionWidget::pressButtonUp);
+  connect(_ui->downButton, &QAbstractButton::clicked, this,
+          &SimpleStringsListSelectionWidget::pressButtonDown);
+  connect(_ui->selectButton, &QAbstractButton::clicked, this,
+          &SimpleStringsListSelectionWidget::pressButtonSelectAll);
+  connect(_ui->unselectButton, &QAbstractButton::clicked, this,
+          &SimpleStringsListSelectionWidget::pressButtonUnselectAll);
 }
 
 void SimpleStringsListSelectionWidget::setUnselectedStringsList(

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -48,11 +48,14 @@ static vector<string> getGraphPropertiesListAccordingToType(Graph *graph, const 
 GeolocalisationConfigWidget::GeolocalisationConfigWidget(QWidget *parent)
     : QWidget(parent), _ui(new Ui::GeolocalisationConfigWidgetData) {
   _ui->setupUi(this);
-  connect(_ui->addressLocRB, SIGNAL(toggled(bool)), this, SLOT(enableDisableComboBoxes()));
-  connect(_ui->latLngRB, SIGNAL(toggled(bool)), this, SLOT(enableDisableComboBoxes()));
-  connect(_ui->genLayoutButton, SIGNAL(clicked()), this, SIGNAL(computeGeoLayout()));
-  connect(_ui->createLatLngPropsCB, SIGNAL(clicked(bool)), _ui->resetLatLngValuesCB,
-          SLOT(setEnabled(bool)));
+  connect(_ui->addressLocRB, &QAbstractButton::toggled, this,
+          &GeolocalisationConfigWidget::enableDisableComboBoxes);
+  connect(_ui->latLngRB, &QAbstractButton::toggled, this,
+          &GeolocalisationConfigWidget::enableDisableComboBoxes);
+  connect(_ui->genLayoutButton, &QAbstractButton::clicked, this,
+          &GeolocalisationConfigWidget::computeGeoLayout);
+  connect(_ui->createLatLngPropsCB, &QAbstractButton::clicked, _ui->resetLatLngValuesCB,
+          &QWidget::setEnabled);
 }
 
 GeolocalisationConfigWidget::~GeolocalisationConfigWidget() {

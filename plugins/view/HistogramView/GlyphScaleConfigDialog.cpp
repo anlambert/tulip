@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -41,8 +41,8 @@ GlyphScaleConfigDialog::GlyphScaleConfigDialog(QWidget *parent)
     _ui->tableWidget->setCellWidget(i, 0, glyphNameComboBox);
   }
 
-  connect(_ui->nbGlyphsSpinBox, SIGNAL(valueChanged(int)), this,
-          SLOT(nbGlyphsSpinBoxValueChanged(int)));
+  connect(_ui->nbGlyphsSpinBox, QOverload<int>::of(&QSpinBox::valueChanged), this,
+          &GlyphScaleConfigDialog::nbGlyphsSpinBoxValueChanged);
 }
 
 GlyphScaleConfigDialog::~GlyphScaleConfigDialog() {

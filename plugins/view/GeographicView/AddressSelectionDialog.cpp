@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -19,7 +19,7 @@ namespace tlp {
 AddressSelectionDialog::AddressSelectionDialog(QWidget *parent)
     : QDialog(parent), _ui(new Ui::AddressSelectionDialogData) {
   _ui->setupUi(this);
-  connect(_ui->okButton, SIGNAL(clicked()), this, SLOT(accept()));
+  connect(_ui->okButton, &QAbstractButton::clicked, this, &QDialog::accept);
 }
 
 AddressSelectionDialog::~AddressSelectionDialog() {

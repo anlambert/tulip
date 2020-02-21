@@ -128,7 +128,7 @@ void PluginsCenter::refreshFilter() {
   for (const QString &cf : _categoryFilters) {
     for (const Plugin &plugin : listPlugins(_nameFilter, cf)) {
       PluginInformationListItem *item = new PluginInformationListItem(plugin);
-      connect(item, SIGNAL(focused()), this, SLOT(itemFocused()));
+      connect(item, &PluginInformationListItem::focused, this, &PluginsCenter::itemFocused);
       lyt->addWidget(item);
     }
   }

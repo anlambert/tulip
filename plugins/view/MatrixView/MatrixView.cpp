@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -47,7 +47,7 @@ MatrixView::~MatrixView() {
 
 QuickAccessBar *MatrixView::getQuickAccessBarImpl() {
   _bar = new MatrixViewQuickAccessBar(_configurationWidget);
-  connect(_bar, SIGNAL(settingsChanged()), this, SLOT(applySettings()));
+  connect(_bar, &MatrixViewQuickAccessBar::settingsChanged, this, &MatrixView::applySettings);
   return _bar;
 }
 
@@ -59,15 +59,18 @@ void MatrixView::setState(const DataSet &ds) {
 
   if (!_configurationWidget) {
     _configurationWidget = new MatrixViewConfigurationWidget();
-    connect(_configurationWidget, SIGNAL(changeBackgroundColor(QColor)), this,
-            SLOT(setBackgroundColor(QColor)));
-    connect(_configurationWidget, SIGNAL(metricSelected(std::string)), this,
-            SLOT(setOrderingMetric(std::string)));
-    connect(_configurationWidget, SIGNAL(setGridDisplayMode()), this, SLOT(setGridDisplayMode()));
-    connect(_configurationWidget, SIGNAL(showEdges(bool)), this, SLOT(showEdges(bool)));
-    connect(_configurationWidget, SIGNAL(enableEdgeColorInterpolation(bool)), this,
-            SLOT(enableEdgeColorInterpolation(bool)));
-    connect(_configurationWidget, SIGNAL(updateOriented(bool)), this, SLOT(setOriented(bool)));
+    connect(_configurationWidget, &MatrixViewConfigurationWidget::changeBackgroundColor, this,
+            &MatrixView::setBackgroundColor);
+    connect(_configurationWidget, &MatrixViewConfigurationWidget::metricSelected, this,
+            &MatrixView::setOrderingMetric);
+    connect(_configurationWidget, &MatrixViewConfigurationWidget::setGridDisplayMode, this,
+            &MatrixView::setGridDisplayMode);
+    connect(_configurationWidget, &MatrixViewConfigurationWidget::showEdges, this,
+            &MatrixView::showEdges);
+    connect(_configurationWidget, &MatrixViewConfigurationWidget::enableEdgeColorInterpolation,
+            this, &MatrixView::enableEdgeColorInterpolation);
+    connect(_configurationWidget, &MatrixViewConfigurationWidget::updateOriented, this,
+            &MatrixView::setOriented);
   }
 
   _configurationWidget->setGraph(graph());
@@ -226,11 +229,11 @@ void MatrixView::fillContextMenu(QMenu *menu, const QPointF &point) {
       return s + (isNode ? " node #" : " edge #") + sId;
     };
 
-    QAction *action = menu->addAction("Toggle selection", this, SLOT(addRemoveItemToSelection()));
+    QAction *action = menu->addAction("Toggle selection", [this] { addRemoveItemToSelection(); });
     action->setToolTip(genEltToolTip("Invert the selection of the"));
-    action = menu->addAction("Select", this, SLOT(selectItem()));
+    action = menu->addAction("Select", this, &MatrixView::selectItem);
     action->setToolTip(genEltToolTip("Select the"));
-    action = menu->addAction("Delete", this, SLOT(deleteItem()));
+    action = menu->addAction("Delete", this, &MatrixView::deleteItem);
     action->setToolTip(genEltToolTip("Delete the"));
   }
 }

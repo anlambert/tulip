@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -30,7 +30,8 @@ SceneConfigWidget::SceneConfigWidget(QWidget *parent)
     : QWidget(parent), _ui(new Ui::SceneConfigWidget), _glMainWidget(nullptr), _resetting(false) {
   _ui->setupUi(this);
 
-  connect(_ui->dynamicFontSizeRB, SIGNAL(toggled(bool)), this, SLOT(dynamicFontRBToggled(bool)));
+  connect(_ui->dynamicFontSizeRB, &QAbstractButton::toggled, this,
+          &SceneConfigWidget::dynamicFontRBToggled);
   _ui->selectionColorButton->setDialogTitle("Choose the color of selected nodes or edges");
   _ui->backgroundColorButton->setDialogTitle("Choose the background color");
 
@@ -52,18 +53,18 @@ SceneConfigWidget::~SceneConfigWidget() {
 
 void SceneConfigWidget::setGlMainWidget(tlp::GlMainWidget *glMainWidget) {
   if (_glMainWidget != nullptr) {
-    disconnect(_glMainWidget, SIGNAL(graphChanged()), this, SLOT(resetChanges()));
-    disconnect(_glMainWidget, SIGNAL(viewDrawn(GlMainWidget *, bool)), this, SLOT(resetChanges()));
+    disconnect(_glMainWidget, &GlMainWidget::graphChanged, this, &SceneConfigWidget::resetChanges);
+    disconnect(_glMainWidget, &GlMainWidget::viewDrawn, this, &SceneConfigWidget::resetChanges);
   }
 
   _glMainWidget = glMainWidget;
 
   if (_glMainWidget != nullptr) {
-    connect(_glMainWidget, SIGNAL(graphChanged()), this, SLOT(resetChanges()));
+    connect(_glMainWidget, &GlMainWidget::graphChanged, this, &SceneConfigWidget::resetChanges);
     // we assume that if an outside action causes an update of one
     // of the rendering parameters managed in this widget, necessarily
     // a call to _glMainWidget->draw will follow
-    connect(_glMainWidget, SIGNAL(viewDrawn(GlMainWidget *, bool)), this, SLOT(resetChanges()));
+    connect(_glMainWidget, &GlMainWidget::viewDrawn, this, &SceneConfigWidget::resetChanges);
   }
 
   resetChanges();

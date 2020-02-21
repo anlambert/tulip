@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -121,17 +121,18 @@ void PathFinder::construct() {
   if (hlLayout)
     hlLayout->addWidget(configureHighlighterBtn);
 
-  connect(configureHighlighterBtn, SIGNAL(clicked(bool)), this,
-          SLOT(configureHighlighterButtonPressed()));
-  connect(_configurationWidget, SIGNAL(setWeightMetric(const QString &)), this,
-          SLOT(setWeightMetric(const QString &)));
-  connect(_configurationWidget, SIGNAL(setEdgeOrientation(const QString &)), this,
-          SLOT(setEdgeOrientation(const QString &)));
-  connect(_configurationWidget, SIGNAL(setPathsType(const QString &)), this,
-          SLOT(setPathsType(const QString &)));
-  connect(_configurationWidget, SIGNAL(activateTolerance(bool)), this,
-          SLOT(activateTolerance(bool)));
-  connect(_configurationWidget, SIGNAL(setTolerance(int)), this, SLOT(setTolerance(int)));
+  connect(configureHighlighterBtn, &QAbstractButton::clicked, this,
+          &PathFinder::configureHighlighterButtonPressed);
+  connect(_configurationWidget, &PathFinderConfigurationWidget::setWeightMetric, this,
+          &PathFinder::setWeightMetric);
+  connect(_configurationWidget, &PathFinderConfigurationWidget::setEdgeOrientation, this,
+          &PathFinder::setEdgeOrientation);
+  connect(_configurationWidget, &PathFinderConfigurationWidget::setPathsType, this,
+          &PathFinder::setPathsType);
+  connect(_configurationWidget, &PathFinderConfigurationWidget::activateTolerance, this,
+          &PathFinder::activateTolerance);
+  connect(_configurationWidget, &PathFinderConfigurationWidget::setTolerance, this,
+          &PathFinder::setTolerance);
 }
 
 QWidget *PathFinder::configurationWidget() const {
@@ -243,8 +244,8 @@ void PathFinder::configureHighlighterButtonPressed() {
 
     verticalLayout->addWidget(buttonBox);
 
-    connect(buttonBox, SIGNAL(accepted()), dialog, SLOT(accept()));
-    connect(buttonBox, SIGNAL(rejected()), dialog, SLOT(reject()));
+    connect(buttonBox, &QDialogButtonBox::accepted, dialog, &QDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, dialog, &QDialog::reject);
 
     mainLayout->addWidget(hler->getConfigurationWidget());
     dialog->setWindowTitle(tlpStringToQString(hler->getName()));

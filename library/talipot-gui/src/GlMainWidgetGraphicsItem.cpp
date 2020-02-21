@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -39,10 +39,10 @@ GlMainWidgetGraphicsItem::GlMainWidgetGraphicsItem(GlMainWidget *glMainWidget, i
   setHandlesChildEvents(false);
   setAcceptDrops(true);
 
-  connect(glMainWidget, SIGNAL(viewDrawn(GlMainWidget *, bool)), this,
-          SLOT(glMainWidgetDraw(GlMainWidget *, bool)));
-  connect(glMainWidget, SIGNAL(viewRedrawn(GlMainWidget *)), this,
-          SLOT(glMainWidgetRedraw(GlMainWidget *)));
+  connect(glMainWidget, &GlMainWidget::viewDrawn, this,
+          &GlMainWidgetGraphicsItem::glMainWidgetDraw);
+  connect(glMainWidget, &GlMainWidget::viewRedrawn, this,
+          &GlMainWidgetGraphicsItem::glMainWidgetRedraw);
 
   resize(width, height);
   glMainWidget->installEventFilter(this);
@@ -51,16 +51,16 @@ GlMainWidgetGraphicsItem::GlMainWidgetGraphicsItem(GlMainWidget *glMainWidget, i
 
 void GlMainWidgetGraphicsItem::setGlMainWidget(GlMainWidget *glmw) {
   if (glmw) {
-    disconnect(glMainWidget, SIGNAL(viewDrawn(GlMainWidget *, bool)), this,
-               SLOT(glMainWidgetDraw(GlMainWidget *, bool)));
-    disconnect(glMainWidget, SIGNAL(viewRedrawn(GlMainWidget *)), this,
-               SLOT(glMainWidgetRedraw(GlMainWidget *)));
+    disconnect(glMainWidget, &GlMainWidget::viewDrawn, this,
+               &GlMainWidgetGraphicsItem::glMainWidgetDraw);
+    disconnect(glMainWidget, &GlMainWidget::viewRedrawn, this,
+               &GlMainWidgetGraphicsItem::glMainWidgetRedraw);
     glMainWidget->removeEventFilter(this);
     glMainWidget = glmw;
-    connect(glMainWidget, SIGNAL(viewDrawn(GlMainWidget *, bool)), this,
-            SLOT(glMainWidgetDraw(GlMainWidget *, bool)));
-    connect(glMainWidget, SIGNAL(viewRedrawn(GlMainWidget *)), this,
-            SLOT(glMainWidgetRedraw(GlMainWidget *)));
+    connect(glMainWidget, &GlMainWidget::viewDrawn, this,
+            &GlMainWidgetGraphicsItem::glMainWidgetDraw);
+    connect(glMainWidget, &GlMainWidget::viewRedrawn, this,
+            &GlMainWidgetGraphicsItem::glMainWidgetRedraw);
     glMainWidget->installEventFilter(this);
   }
 }

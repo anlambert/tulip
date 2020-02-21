@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -40,7 +40,8 @@ CSVParsingConfigurationQWizardPage::CSVParsingConfigurationQWizardPage(QWidget *
   previewTableWidget->horizontalHeader()->setVisible(false);
   previewTableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
   previewTableWidget->verticalHeader()->setVisible(false);
-  connect(parserConfigurationWidget, SIGNAL(parserChanged()), this, SLOT(parserChanged()));
+  connect(parserConfigurationWidget, &CSVParserConfigurationWidget::parserChanged, this,
+          &CSVParsingConfigurationQWizardPage::parserChanged);
   QLabel *noteWidget = new QLabel(this);
   noteWidget->setWordWrap(true);
   noteWidget->setText(" <em>Note: several (node and/or edge) import operations using the same "
@@ -123,8 +124,8 @@ CSVGraphMappingConfigurationQWizardPage::CSVGraphMappingConfigurationQWizardPage
       graphMappingConfigurationWidget(new CSVGraphMappingConfigurationWidget()) {
   setLayout(new QVBoxLayout());
   layout()->addWidget(graphMappingConfigurationWidget);
-  connect(graphMappingConfigurationWidget, SIGNAL(mappingChanged()), this,
-          SIGNAL(completeChanged()));
+  connect(graphMappingConfigurationWidget, &CSVGraphMappingConfigurationWidget::mappingChanged,
+          this, &QWizardPage::completeChanged);
 }
 
 bool CSVGraphMappingConfigurationQWizardPage::isComplete() const {

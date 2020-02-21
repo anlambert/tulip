@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -96,7 +96,8 @@ GeographicViewShowElementInfo::GeographicViewShowElementInfo() : _editor(nullptr
   _informationWidget->installEventFilter(this);
   ui.setupUi(_informationWidget);
   ui.displayTalipotProp->hide();
-  connect(ui.closeButton, SIGNAL(clicked()), this, SLOT(hideInfos()));
+  connect(ui.closeButton, &QAbstractButton::clicked, this,
+          &GeographicViewShowElementInfo::hideInfos);
   tableView()->setItemDelegate(new ItemDelegate(tableView()));
   _informationWidgetItem = new QGraphicsProxyWidget();
   _informationWidgetItem->setWidget(_informationWidget);
@@ -276,6 +277,6 @@ void GeographicViewShowElementInfo::viewChanged(View *view) {
 
   GeographicView *geoView = static_cast<GeographicView *>(view);
   _view = geoView;
-  connect(_view, SIGNAL(graphSet(tlp::Graph *)), _informationWidgetItem, SLOT(close()));
+  connect(_view, &View::graphSet, _informationWidgetItem, &QGraphicsWidget::close);
   _view->getGeographicViewGraphicsView()->scene()->addItem(_informationWidgetItem);
 }

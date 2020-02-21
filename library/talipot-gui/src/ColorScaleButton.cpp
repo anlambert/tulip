@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -43,7 +43,7 @@ void ColorScaleButton::paintScale(QPainter *painter, const QRect &baseRect,
 
 ColorScaleButton::ColorScaleButton(ColorScale colorScale, QWidget *parent)
     : QPushButton(parent), _colorScale(colorScale), dlg(nullptr) {
-  connect(this, SIGNAL(clicked()), this, SLOT(editColorScale()));
+  connect(this, &QPushButton::clicked, [this] { editColorScale(); });
 }
 
 const ColorScale &ColorScaleButton::colorScale() const {

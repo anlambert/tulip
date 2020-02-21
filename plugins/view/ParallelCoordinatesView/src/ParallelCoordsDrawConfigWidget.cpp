@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -31,12 +31,14 @@ ParallelCoordsDrawConfigWidget::ParallelCoordsDrawConfigWidget(QWidget *parent)
       _ui(new Ui::ParallelCoordsDrawConfigWidgetData) {
   _ui->setupUi(this);
   setBackgroundColor(Color(255, 255, 255));
-  connect(_ui->browseButton, SIGNAL(clicked()), this, SLOT(pressButtonBrowse()));
-  connect(_ui->userTexture, SIGNAL(toggled(bool)), this, SLOT(userTextureRbToggled(bool)));
-  connect(_ui->minAxisPointSize, SIGNAL(valueChanged(int)), this,
-          SLOT(minAxisPointSizeValueChanged(int)));
-  connect(_ui->maxAxisPointSize, SIGNAL(valueChanged(int)), this,
-          SLOT(maxAxisPointSizeValueChanged(int)));
+  connect(_ui->browseButton, &QAbstractButton::clicked, this,
+          &ParallelCoordsDrawConfigWidget::pressButtonBrowse);
+  connect(_ui->userTexture, &QAbstractButton::toggled, this,
+          &ParallelCoordsDrawConfigWidget::userTextureRbToggled);
+  connect(_ui->minAxisPointSize, QOverload<int>::of(&QSpinBox::valueChanged), this,
+          &ParallelCoordsDrawConfigWidget::minAxisPointSizeValueChanged);
+  connect(_ui->maxAxisPointSize, QOverload<int>::of(&QSpinBox::valueChanged), this,
+          &ParallelCoordsDrawConfigWidget::maxAxisPointSizeValueChanged);
 
   _ui->bgColorButton->setDialogParent(getMainWindow());
 }

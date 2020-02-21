@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -45,9 +45,10 @@ Workspace::Workspace(QWidget *parent)
   _ui->setupUi(this);
   _ui->startupMainFrame->hide();
   _ui->workspaceContents->setCurrentWidget(_ui->startupPage);
-  connect(_ui->startupButton, SIGNAL(clicked()), this, SIGNAL(addPanelRequest()));
-  connect(_ui->importButton, SIGNAL(clicked()), this, SIGNAL(importGraphRequest()));
-  connect(_ui->exposeMode, SIGNAL(exposeFinished()), this, SLOT(hideExposeMode()));
+  connect(_ui->startupButton, &QPushButton::clicked, [this] { addPanelRequest(); });
+  connect(_ui->importButton, &QAbstractButton::clicked, this, &Workspace::importGraphRequest);
+  connect(_ui->exposeMode, &WorkspaceExposeWidget::exposeFinished, this,
+          &Workspace::hideExposeMode);
 
   // This map allows us to know how much slots we have for each mode and which widget corresponds to
   // those slots
@@ -88,7 +89,7 @@ Workspace::Workspace(QWidget *parent)
 
 Workspace::~Workspace() {
   for (auto p : _panels) {
-    disconnect(p, SIGNAL(destroyed(QObject *)), this, SLOT(panelDestroyed(QObject *)));
+    disconnect(p, &QObject::destroyed, this, &Workspace::panelDestroyed);
     delete p;
   }
 
@@ -97,7 +98,8 @@ Workspace::~Workspace() {
 
 void Workspace::setModel(tlp::GraphHierarchiesModel *model) {
   if (_model != nullptr) {
-    disconnect(_model, SIGNAL(currentGraphChanged(tlp::Graph *)), this, SLOT(updateStartupMode()));
+    disconnect(_model, &GraphHierarchiesModel::currentGraphChanged, this,
+               &Workspace::updateStartupMode);
   }
 
   _model = model;
@@ -106,7 +108,8 @@ void Workspace::setModel(tlp::GraphHierarchiesModel *model) {
     for (auto panel : _panels)
       panel->setGraphsModel(_model);
 
-    connect(_model, SIGNAL(currentGraphChanged(tlp::Graph *)), this, SLOT(updateStartupMode()));
+    connect(_model, &GraphHierarchiesModel::currentGraphChanged, this,
+            &Workspace::updateStartupMode);
   }
 }
 
@@ -170,10 +173,9 @@ int Workspace::addPanel(tlp::View *view) {
     panel->setGraphsModel(_model);
 
   panel->setWindowTitle(panelTitle(panel));
-  connect(panel, SIGNAL(drawNeeded()), this, SLOT(viewNeedsDraw()));
-  connect(panel, SIGNAL(swapWithPanels(WorkspacePanel *)), this,
-          SLOT(swapPanelsRequested(WorkspacePanel *)));
-  connect(panel, SIGNAL(destroyed(QObject *)), this, SLOT(panelDestroyed(QObject *)));
+  connect(panel, &WorkspacePanel::drawNeeded, this, &Workspace::viewNeedsDraw);
+  connect(panel, &WorkspacePanel::swapWithPanels, this, &Workspace::swapPanelsRequested);
+  connect(panel, &QObject::destroyed, this, &Workspace::panelDestroyed);
   view->graphicsView()->installEventFilter(this);
 
   // Add it to the list
@@ -194,7 +196,7 @@ int Workspace::addPanel(tlp::View *view) {
   setFocusedPanel(panel);
   // Slightly delay view content centering as the panel widget
   // can take some time to get correctly resized in the workspace
-  QTimer::singleShot(100, view, SLOT(centerView()));
+  QTimer::singleShot(100, [view] { view->centerView(); });
   return _panels.size() - 1;
 }
 
@@ -786,13 +788,13 @@ void Workspace::setFocusedPanel(WorkspacePanel *panel) {
     if (_focusedPanelHighlighting)
       _focusedPanel->setHighlightMode(false);
 
-    disconnect(_focusedPanel, SIGNAL(changeGraphSynchronization(bool)), this,
-               SLOT(changeFocusedPanelSynchronization(bool)));
+    disconnect(_focusedPanel, &WorkspacePanel::changeGraphSynchronization, this,
+               &Workspace::changeFocusedPanelSynchronization);
   }
 
   _focusedPanel = panel;
-  connect(_focusedPanel, SIGNAL(changeGraphSynchronization(bool)), this,
-          SLOT(changeFocusedPanelSynchronization(bool)));
+  connect(_focusedPanel, &WorkspacePanel::changeGraphSynchronization, this,
+          &Workspace::changeFocusedPanelSynchronization);
 
   if (_focusedPanelHighlighting)
     _focusedPanel->setHighlightMode(true);

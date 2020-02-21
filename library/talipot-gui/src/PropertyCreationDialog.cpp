@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -65,7 +65,8 @@ void PropertyCreationDialog::initGui() {
   _createPropertyButton = ui->buttonBox->addButton("Create", QDialogButtonBox::AcceptRole);
   ui->errorIconLabel->setPixmap(
       QApplication::style()->standardIcon(QStyle::SP_MessageBoxWarning).pixmap(16, 16));
-  connect(ui->propertyNameLineEdit, SIGNAL(textChanged(QString)), this, SLOT(checkValidity()));
+  connect(ui->propertyNameLineEdit, &QLineEdit::textChanged, this,
+          &PropertyCreationDialog::checkValidity);
   checkValidity();
 }
 

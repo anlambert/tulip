@@ -381,72 +381,84 @@ PythonIDE::PythonIDE(QWidget *parent)
   _moduleEditorsWidget = _ui->tabWidget->widget(2);
   _moduleControlWidget = _ui->stackedWidget->widget(2);
 
-  connect(_pythonInterpreter, SIGNAL(scriptExecutionPaused()), this, SLOT(currentScriptPaused()));
+  connect(_pythonInterpreter, &PythonInterpreter::scriptExecutionPaused, this,
+          &PythonIDE::currentScriptPaused);
   _pythonInterpreter->runString(utilityFunctions);
 
-  connect(_ui->tabWidget, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
+  connect(_ui->tabWidget, &QTabWidget::currentChanged, this, &PythonIDE::currentTabChanged);
 
-  connect(_ui->newModuleButton, SIGNAL(clicked()), this, SLOT(newFileModule()));
-  connect(_ui->newStringModuleButton, SIGNAL(clicked()), this, SLOT(newStringModule()));
-  connect(_ui->loadModuleButton, SIGNAL(clicked()), this, SLOT(loadModule()));
-  connect(_ui->saveModuleButton, SIGNAL(clicked()), this, SLOT(saveModule()));
-  connect(_ui->newPluginButton, SIGNAL(clicked()), this, SLOT(newPythonPlugin()));
-  connect(_ui->loadPluginButton, SIGNAL(clicked()), this, SLOT(loadPythonPlugin()));
-  connect(_ui->savePluginButton, SIGNAL(clicked()), this, SLOT(savePythonPlugin()));
-  connect(_ui->registerPluginButton, SIGNAL(clicked()), this, SLOT(registerPythonPlugin()));
-  connect(_ui->removePluginButton, SIGNAL(clicked()), this, SLOT(removePythonPlugin()));
-  connect(_ui->consoleWidget, SIGNAL(anchorClicked(const QUrl &)), this,
-          SLOT(scrollToEditorLine(const QUrl &)));
-  connect(_ui->decreaseFontSizeButton, SIGNAL(clicked()), this, SLOT(decreaseFontSize()));
-  connect(_ui->increaseFontSizeButton, SIGNAL(clicked()), this, SLOT(increaseFontSize()));
-  connect(_ui->decreaseFontSizeButton_2, SIGNAL(clicked()), this, SLOT(decreaseFontSize()));
-  connect(_ui->increaseFontSizeButton_2, SIGNAL(clicked()), this, SLOT(increaseFontSize()));
-  connect(_ui->decreaseFontSizeButton_3, SIGNAL(clicked()), this, SLOT(decreaseFontSize()));
-  connect(_ui->increaseFontSizeButton_3, SIGNAL(clicked()), this, SLOT(increaseFontSize()));
+  connect(_ui->newModuleButton, &QAbstractButton::clicked, this, &PythonIDE::newFileModule);
+  connect(_ui->newStringModuleButton, &QAbstractButton::clicked, this, &PythonIDE::newStringModule);
+  connect(_ui->loadMainScriptButton, &QAbstractButton::clicked, this,
+          QOverload<>::of(&PythonIDE::loadScript));
+  connect(_ui->saveMainScriptButton, &QAbstractButton::clicked, this,
+          QOverload<>::of(&PythonIDE::saveScript));
+  connect(_ui->newPluginButton, &QAbstractButton::clicked, this, &PythonIDE::newPythonPlugin);
+  connect(_ui->loadPluginButton, &QAbstractButton::clicked, this,
+          QOverload<>::of(&PythonIDE::loadPythonPlugin));
+  connect(_ui->savePluginButton, &QAbstractButton::clicked, this,
+          QOverload<>::of(&PythonIDE::savePythonPlugin));
+  connect(_ui->registerPluginButton, &QAbstractButton::clicked, this,
+          &PythonIDE::registerPythonPlugin);
+  connect(_ui->removePluginButton, &QAbstractButton::clicked, this, &PythonIDE::removePythonPlugin);
+  connect(_ui->consoleWidget, &QTextBrowser::anchorClicked, this, &PythonIDE::scrollToEditorLine);
+  connect(_ui->decreaseFontSizeButton, &QAbstractButton::clicked, this,
+          &PythonIDE::decreaseFontSize);
+  connect(_ui->increaseFontSizeButton, &QAbstractButton::clicked, this,
+          &PythonIDE::increaseFontSize);
+  connect(_ui->decreaseFontSizeButton_2, &QAbstractButton::clicked, this,
+          &PythonIDE::decreaseFontSize);
+  connect(_ui->increaseFontSizeButton_2, &QAbstractButton::clicked, this,
+          &PythonIDE::increaseFontSize);
+  connect(_ui->decreaseFontSizeButton_3, &QAbstractButton::clicked, this,
+          &PythonIDE::decreaseFontSize);
+  connect(_ui->increaseFontSizeButton_3, &QAbstractButton::clicked, this,
+          &PythonIDE::increaseFontSize);
 
-  connect(_ui->mainScriptsTabWidget, SIGNAL(fileSaved(int)), this, SLOT(scriptSaved(int)));
-  connect(_ui->modulesTabWidget, SIGNAL(fileSaved(int)), this, SLOT(moduleSaved(int)));
-  connect(_ui->pluginsTabWidget, SIGNAL(fileSaved(int)), this, SLOT(pluginSaved(int)));
+  connect(_ui->mainScriptsTabWidget, &PythonEditorsTabWidget::fileSaved, this,
+          &PythonIDE::scriptSaved);
+  connect(_ui->modulesTabWidget, &PythonEditorsTabWidget::fileSaved, this, &PythonIDE::moduleSaved);
+  connect(_ui->pluginsTabWidget, &PythonEditorsTabWidget::fileSaved, this, &PythonIDE::pluginSaved);
 
-  connect(_ui->runScriptButton, SIGNAL(clicked()), this, SLOT(executeCurrentScript()));
-  connect(_ui->pauseScriptButton, SIGNAL(clicked()), this, SLOT(pauseCurrentScript()));
-  connect(_ui->stopScriptButton, SIGNAL(clicked()), this, SLOT(stopCurrentScript()));
-  connect(_ui->newMainScriptButton, SIGNAL(clicked()), this, SLOT(newScript()));
-  connect(_ui->loadMainScriptButton, SIGNAL(clicked()), this, SLOT(loadScript()));
-  connect(_ui->saveMainScriptButton, SIGNAL(clicked()), this, SLOT(saveScript()));
-  connect(_ui->graphComboBox, SIGNAL(currentItemChanged()), this,
-          SLOT(graphComboBoxIndexChanged()));
+  connect(_ui->runScriptButton, &QAbstractButton::clicked, this, &PythonIDE::executeCurrentScript);
+  connect(_ui->pauseScriptButton, &QAbstractButton::clicked, this, &PythonIDE::pauseCurrentScript);
+  connect(_ui->stopScriptButton, &QAbstractButton::clicked, this, &PythonIDE::stopCurrentScript);
+  connect(_ui->newMainScriptButton, &QAbstractButton::clicked, this, &PythonIDE::newScript);
+  connect(_ui->loadMainScriptButton, &QAbstractButton::clicked, this,
+          QOverload<>::of(&PythonIDE::loadScript));
+  connect(_ui->saveMainScriptButton, &QAbstractButton::clicked, this,
+          QOverload<>::of(&PythonIDE::saveScript));
+  connect(_ui->graphComboBox, &TreeViewComboBox::currentItemChanged, this,
+          &PythonIDE::graphComboBoxIndexChanged);
 
-  connect(_ui->modulesTabWidget, SIGNAL(filesReloaded()), _ui->mainScriptsTabWidget,
-          SLOT(reloadCodeInEditorsIfNeeded()));
-  connect(_ui->modulesTabWidget, SIGNAL(filesReloaded()), _ui->pluginsTabWidget,
-          SLOT(reloadCodeInEditorsIfNeeded()));
-  connect(_ui->mainScriptsTabWidget, SIGNAL(filesReloaded()), _ui->modulesTabWidget,
-          SLOT(reloadCodeInEditorsIfNeeded()));
-  connect(_ui->mainScriptsTabWidget, SIGNAL(filesReloaded()), _ui->pluginsTabWidget,
-          SLOT(reloadCodeInEditorsIfNeeded()));
-  connect(_ui->pluginsTabWidget, SIGNAL(filesReloaded()), _ui->modulesTabWidget,
-          SLOT(reloadCodeInEditorsIfNeeded()));
-  connect(_ui->pluginsTabWidget, SIGNAL(filesReloaded()), _ui->mainScriptsTabWidget,
-          SLOT(reloadCodeInEditorsIfNeeded()));
+  connect(_ui->modulesTabWidget, &PythonEditorsTabWidget::filesReloaded, _ui->mainScriptsTabWidget,
+          &PythonEditorsTabWidget::reloadCodeInEditorsIfNeeded);
+  connect(_ui->modulesTabWidget, &PythonEditorsTabWidget::filesReloaded, _ui->pluginsTabWidget,
+          &PythonEditorsTabWidget::reloadCodeInEditorsIfNeeded);
+  connect(_ui->mainScriptsTabWidget, &PythonEditorsTabWidget::filesReloaded, _ui->modulesTabWidget,
+          &PythonEditorsTabWidget::reloadCodeInEditorsIfNeeded);
+  connect(_ui->mainScriptsTabWidget, &PythonEditorsTabWidget::filesReloaded, _ui->pluginsTabWidget,
+          &PythonEditorsTabWidget::reloadCodeInEditorsIfNeeded);
+  connect(_ui->pluginsTabWidget, &PythonEditorsTabWidget::filesReloaded, _ui->modulesTabWidget,
+          &PythonEditorsTabWidget::reloadCodeInEditorsIfNeeded);
+  connect(_ui->pluginsTabWidget, &PythonEditorsTabWidget::filesReloaded, _ui->mainScriptsTabWidget,
+          &PythonEditorsTabWidget::reloadCodeInEditorsIfNeeded);
 
-  connect(_ui->modulesTabWidget, SIGNAL(tabAboutToBeDeleted(int)), this,
-          SLOT(closeModuleTabRequested(int)));
-  connect(_ui->mainScriptsTabWidget, SIGNAL(tabAboutToBeDeleted(int)), this,
-          SLOT(closeScriptTabRequested(int)));
-  connect(_ui->pluginsTabWidget, SIGNAL(tabAboutToBeDeleted(int)), this,
-          SLOT(closePluginTabRequested(int)));
+  connect(_ui->modulesTabWidget, &PythonEditorsTabWidget::tabAboutToBeDeleted, this,
+          &PythonIDE::closeModuleTabRequested);
+  connect(_ui->mainScriptsTabWidget, &PythonEditorsTabWidget::tabAboutToBeDeleted, this,
+          &PythonIDE::closeScriptTabRequested);
+  connect(_ui->pluginsTabWidget, &PythonEditorsTabWidget::tabAboutToBeDeleted, this,
+          &PythonIDE::closePluginTabRequested);
 
-  connect(_ui->modulesTabWidget->tabBar(), SIGNAL(tabMoved(int, int)), this,
-          SLOT(saveAllModules()));
-  connect(_ui->mainScriptsTabWidget->tabBar(), SIGNAL(tabMoved(int, int)), this,
-          SLOT(saveAllScripts()));
-  connect(_ui->pluginsTabWidget->tabBar(), SIGNAL(tabMoved(int, int)), this,
-          SLOT(saveAllPlugins()));
+  connect(_ui->modulesTabWidget->tabBar(), &QTabBar::tabMoved, this, &PythonIDE::saveAllModules);
+  connect(_ui->mainScriptsTabWidget->tabBar(), &QTabBar::tabMoved, this,
+          &PythonIDE::saveAllScripts);
+  connect(_ui->pluginsTabWidget->tabBar(), &QTabBar::tabMoved, this, &PythonIDE::saveAllPlugins);
 
-  connect(_ui->anchoredCB, SIGNAL(toggled(bool)), this, SLOT(anchored(bool)));
-  connect(_ui->anchoredCB_2, SIGNAL(toggled(bool)), this, SLOT(anchored(bool)));
-  connect(_ui->anchoredCB_3, SIGNAL(toggled(bool)), this, SLOT(anchored(bool)));
+  connect(_ui->anchoredCB, &QAbstractButton::toggled, this, &PythonIDE::anchored);
+  connect(_ui->anchoredCB_2, &QAbstractButton::toggled, this, &PythonIDE::anchored);
+  connect(_ui->anchoredCB_3, &QAbstractButton::toggled, this, &PythonIDE::anchored);
 
   APIDataBase::getInstance()->loadApiFile(tlpStringToQString(tlp::TalipotShareDir) +
                                           "/apiFiles/talipot.api");
@@ -2191,15 +2203,15 @@ void PythonIDE::anchored(bool anchored) {
 
 void PythonIDE::setAnchored(bool anchored) {
   _anchored = anchored;
-  disconnect(_ui->anchoredCB, SIGNAL(toggled(bool)), this, SLOT(anchored(bool)));
-  disconnect(_ui->anchoredCB_2, SIGNAL(toggled(bool)), this, SLOT(anchored(bool)));
-  disconnect(_ui->anchoredCB_3, SIGNAL(toggled(bool)), this, SLOT(anchored(bool)));
+  disconnect(_ui->anchoredCB, &QAbstractButton::toggled, this, &PythonIDE::anchored);
+  disconnect(_ui->anchoredCB_2, &QAbstractButton::toggled, this, &PythonIDE::anchored);
+  disconnect(_ui->anchoredCB_3, &QAbstractButton::toggled, this, &PythonIDE::anchored);
   _ui->anchoredCB->setChecked(anchored);
   _ui->anchoredCB_2->setChecked(anchored);
   _ui->anchoredCB_3->setChecked(anchored);
-  connect(_ui->anchoredCB, SIGNAL(toggled(bool)), this, SLOT(anchored(bool)));
-  connect(_ui->anchoredCB_2, SIGNAL(toggled(bool)), this, SLOT(anchored(bool)));
-  connect(_ui->anchoredCB_3, SIGNAL(toggled(bool)), this, SLOT(anchored(bool)));
+  connect(_ui->anchoredCB, &QAbstractButton::toggled, this, &PythonIDE::anchored);
+  connect(_ui->anchoredCB_2, &QAbstractButton::toggled, this, &PythonIDE::anchored);
+  connect(_ui->anchoredCB_3, &QAbstractButton::toggled, this, &PythonIDE::anchored);
   for (int i = _ui->mainScriptsTabWidget->count() - 1; i >= 0; --i) {
     _ui->mainScriptsTabWidget->getEditor(i)->resetFindReplaceDialog();
   }

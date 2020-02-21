@@ -127,7 +127,8 @@ static int qtInputHook() {
     if (app && app->thread() == QThread::currentThread()) {
 #if defined(Q_OS_WIN32) || defined(Q_OS_WIN)
         QTimer timer;
-        QObject::connect(&timer, SIGNAL(timeout()), app, SLOT(quit()));
+        QMetaObject::Connection connection;
+        connection = QObject::connect(&timer, &QTimer::timeout, app, &QCoreApplication::quit);
 
         while (!_kbhit()) {
             timer.start(35);
@@ -135,12 +136,13 @@ static int qtInputHook() {
             timer.stop();
         }
 
-        QObject::disconnect(&timer, SIGNAL(timeout()), app, SLOT(quit()));
+        QObject::disconnect(connection);
 #else
         QSocketNotifier notifier(0, QSocketNotifier::Read, 0);
-        QObject::connect(&notifier, SIGNAL(activated(int)), app, SLOT(quit()));
+        QMetaObject::Connection connection;
+        connection = QObject::connect(&notifier, &QSocketNotifier::activated, app, &QCoreApplication::quit);
         QCoreApplication::exec();
-        QObject::disconnect(&notifier, SIGNAL(activated(int)), app, SLOT(quit()));
+        QObject::disconnect(connection);
 #endif
     }
 

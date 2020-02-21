@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -390,12 +390,14 @@ GeographicViewGraphicsView::GeographicViewGraphicsView(GeographicView *geoView,
   leafletMaps->setProgressWidget(progressWidget);
   leafletMaps->setAdresseSelectionDialog(addressSelectionDialog, addressSelectionProxy);
 
-  connect(leafletMaps, SIGNAL(currentZoomChanged()), _geoView, SLOT(currentZoomChanged()));
+  connect(leafletMaps, &LeafletMaps::currentZoomChanged, _geoView,
+          &GeographicView::currentZoomChanged);
 #ifdef QT_HAS_WEBENGINE
   tId = 0;
-  connect(leafletMaps, SIGNAL(refreshMap()), this, SLOT(queueMapRefresh()));
+  connect(leafletMaps, &LeafletMaps::refreshMap, this,
+          &GeographicViewGraphicsView::queueMapRefresh);
 #else
-  connect(leafletMaps, SIGNAL(refreshMap()), this, SLOT(refreshMap()));
+  connect(leafletMaps, &LeafletMaps::refreshMap, this, &GeographicViewGraphicsView::refreshMap);
 #endif
   _placeholderItem = new QGraphicsRectItem(0, 0, 1, 1);
   _placeholderItem->setBrush(Qt::transparent);
@@ -446,15 +448,15 @@ GeographicViewGraphicsView::GeographicViewGraphicsView(GeographicView *geoView,
   comboBoxProxy->setPos(20, 20);
   comboBoxProxy->setZValue(1);
 
-  connect(viewTypeComboBox, SIGNAL(currentIndexChanged(QString)), _geoView,
-          SLOT(viewTypeChanged(QString)));
+  connect(viewTypeComboBox, QOverload<const QString &>::of(&QComboBox::currentIndexChanged),
+          _geoView, &GeographicView::viewTypeChanged);
 
   // 2 push buttons
   // zoom +
   zoomInButton = new QPushButton(QIcon(":/talipot/view/geographic/zoom+.png"), "");
   zoomInButton->setFixedSize(29, 27);
   zoomInButton->setContentsMargins(0, 0, 0, 0);
-  connect(zoomInButton, SIGNAL(pressed()), _geoView, SLOT(zoomIn()));
+  connect(zoomInButton, &QAbstractButton::pressed, _geoView, &GeographicView::zoomIn);
   QGraphicsProxyWidget *buttonProxy = scene()->addWidget(zoomInButton);
   buttonProxy->setParentItem(_placeholderItem);
   buttonProxy->setPos(20, 50);
@@ -463,7 +465,7 @@ GeographicViewGraphicsView::GeographicViewGraphicsView(GeographicView *geoView,
   zoomOutButton = new QPushButton(QIcon(":/talipot/view/geographic/zoom-.png"), "");
   zoomOutButton->setFixedSize(29, 27);
   zoomOutButton->setContentsMargins(0, 0, 0, 0);
-  connect(zoomOutButton, SIGNAL(pressed()), _geoView, SLOT(zoomOut()));
+  connect(zoomOutButton, &QAbstractButton::pressed, _geoView, &GeographicView::zoomOut);
   buttonProxy = scene()->addWidget(zoomOutButton);
   buttonProxy->setParentItem(_placeholderItem);
   buttonProxy->setPos(20, 76);

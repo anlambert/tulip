@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -138,38 +138,40 @@ void TableView::setupWidget() {
   propertiesEditor =
       new PropertiesEditor(static_cast<QGraphicsProxyWidget *>(centralItem())->widget());
 
-  connect(propertiesEditor, SIGNAL(propertyVisibilityChanged(tlp::PropertyInterface *, bool)), this,
-          SLOT(setPropertyVisible(tlp::PropertyInterface *, bool)));
-  connect(propertiesEditor, SIGNAL(mapToGraphSelection()), this, SLOT(mapToGraphSelection()));
+  connect(propertiesEditor, &PropertiesEditor::propertyVisibilityChanged, this,
+          &TableView::setPropertyVisible);
+  connect(propertiesEditor, &PropertiesEditor::mapToGraphSelection, this,
+          &TableView::mapToGraphSelection);
 
   _ui->table->setItemDelegate(new GraphTableItemDelegate(_ui->table));
   _ui->table->horizontalHeader()->setSectionsMovable(true);
   _ui->table->horizontalHeader()->setContextMenuPolicy(Qt::CustomContextMenu);
-  connect(_ui->table->horizontalHeader(), SIGNAL(customContextMenuRequested(const QPoint &)), this,
-          SLOT(showHorizontalHeaderCustomContextMenu(const QPoint &)));
-  connect(_ui->table, SIGNAL(customContextMenuRequested(const QPoint &)),
-          SLOT(showCustomContextMenu(const QPoint &)));
-  connect(_ui->zoomSpinBox, SIGNAL(valueChanged(int)), this, SLOT(setZoomLevel(int)));
+  connect(_ui->table->horizontalHeader(), &QWidget::customContextMenuRequested, this,
+          &TableView::showHorizontalHeaderCustomContextMenu);
+  connect(_ui->table, &QWidget::customContextMenuRequested, this,
+          &TableView::showCustomContextMenu);
+  connect(_ui->zoomSpinBox, QOverload<int>::of(&QSpinBox::valueChanged), this,
+          &TableView::setZoomLevel);
   minFontSize = _ui->table->font().pointSize();
-  connect(_ui->filterEdit, SIGNAL(returnPressed()), this, SLOT(filterChanged()));
-  connect(_ui->filtercase, SIGNAL(stateChanged(int)), this, SLOT(filterChanged()));
+  connect(_ui->filterEdit, &QLineEdit::returnPressed, this, &TableView::filterChanged);
+  connect(_ui->filtercase, &QCheckBox::stateChanged, this, &TableView::filterChanged);
 
   _ui->eltTypeCombo->addItem("Nodes");
   _ui->eltTypeCombo->addItem("Edges");
   _ui->eltTypeCombo->setCurrentIndex(0);
-  connect(_ui->eltTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(readSettings()));
-  connect(_ui->filteringPropertyCombo, SIGNAL(currentIndexChanged(int)), this,
-          SLOT(readSettings()));
+  connect(_ui->eltTypeCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), this,
+          &TableView::readSettings);
+  connect(_ui->filteringPropertyCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), this,
+          &TableView::readSettings);
   // use a push button instead of a combobox (see matchPropertyCombo)
   // waiting for a fix for combobox in QGraphicsItem
-  connect(_ui->matchPropertyButton, SIGNAL(pressed()), this, SLOT(setMatchProperty()));
+  connect(_ui->matchPropertyButton, &QAbstractButton::pressed, this, &TableView::setMatchProperty);
   // columns/properties filtering
   filteringColumns = false;
-  connect(_ui->columnsFilterEdit, SIGNAL(textChanged(QString)), this,
-          SLOT(setColumnsFilter(QString)));
-  connect(_ui->columnsfiltercase, SIGNAL(stateChanged(int)), this, SLOT(setColumnsFilterCase()));
-  connect(propertiesEditor->getPropertiesFilterEdit(), SIGNAL(textChanged(QString)), this,
-          SLOT(setPropertiesFilter(QString)));
+  connect(_ui->columnsFilterEdit, &QLineEdit::textChanged, this, &TableView::setColumnsFilter);
+  connect(_ui->columnsfiltercase, &QCheckBox::stateChanged, this, &TableView::setColumnsFilterCase);
+  connect(propertiesEditor->getPropertiesFilterEdit(), &QLineEdit::textChanged, this,
+          &TableView::setPropertiesFilter);
 }
 
 QList<QWidget *> TableView::configurationWidgets() const {
@@ -249,10 +251,8 @@ void TableView::readSettings() {
     GraphSortFilterProxyModel *sortModel = new GraphSortFilterProxyModel(_ui->table);
     sortModel->setSourceModel(_model);
     _ui->table->setModel(sortModel);
-    connect(_model, SIGNAL(columnsInserted(QModelIndex, int, int)), this,
-            SLOT(columnsInserted(QModelIndex, int, int)));
-    connect(_model, SIGNAL(dataChanged(const QModelIndex &, const QModelIndex &)), this,
-            SLOT(dataChanged(const QModelIndex &, const QModelIndex &)));
+    connect(_model, &QAbstractItemModel::columnsInserted, this, &TableView::columnsInserted);
+    connect(_model, &QAbstractItemModel::dataChanged, this, &TableView::dataChanged);
     filterChanged();
   }
 

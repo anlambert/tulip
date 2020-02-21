@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -34,7 +34,8 @@ QtGlSceneZoomAndPanAnimator::QtGlSceneZoomAndPanAnimator(
 void QtGlSceneZoomAndPanAnimator::animateZoomAndPan() {
   QTimeLine timeLine(animationDurationMsec);
   timeLine.setFrameRange(0, nbAnimationSteps);
-  connect(&timeLine, SIGNAL(frameChanged(int)), this, SLOT(zoomAndPanAnimStepSlot(int)));
+  connect(&timeLine, &QTimeLine::frameChanged, this,
+          &QtGlSceneZoomAndPanAnimator::zoomAndPanAnimStepSlot);
 
   if (doZoomAndPan || (additionalAnimation != nullptr)) {
     timeLine.start();

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -38,13 +38,13 @@ ExportWizard::ExportWizard(Graph *g, const QString &exportFile, QWidget *parent)
   _ui->exportModules->setModel(model);
   _ui->exportModules->setRootIndex(model->index(0, 0));
   _ui->exportModules->expandAll();
-  connect(_ui->exportModules->selectionModel(), SIGNAL(currentChanged(QModelIndex, QModelIndex)),
-          this, SLOT(algorithmSelected(QModelIndex)));
+  connect(_ui->exportModules->selectionModel(), &QItemSelectionModel::currentChanged, this,
+          &ExportWizard::algorithmSelected);
 
   _ui->parametersList->setItemDelegate(new ItemDelegate(_ui->parametersList));
   _ui->parametersList->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
-  connect(_ui->exportModules, SIGNAL(doubleClicked(QModelIndex)), button(QWizard::FinishButton),
-          SLOT(click()));
+  connect(_ui->exportModules, &QAbstractItemView::doubleClicked, button(QWizard::FinishButton),
+          &QAbstractButton::click);
 
   // display OK instead of Finish
   setButtonText(QWizard::FinishButton, "OK");

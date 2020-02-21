@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -20,7 +20,7 @@ using namespace tlp;
 
 PythonEditorsTabWidget::PythonEditorsTabWidget(QWidget *parent)
     : QTabWidget(parent), _fontZoom(0), _dontTreatFocusIn(false) {
-  connect(this, SIGNAL(tabCloseRequested(int)), this, SLOT(closeTabRequested(int)));
+  connect(this, &QTabWidget::tabCloseRequested, this, &PythonEditorsTabWidget::closeTabRequested);
 }
 
 int PythonEditorsTabWidget::addEditor(const QString &fileName) {
@@ -35,7 +35,8 @@ int PythonEditorsTabWidget::addEditor(const QString &fileName) {
   codeEditor->analyseScriptCode(true);
   codeEditor->setFocus(Qt::ActiveWindowFocusReason);
   codeEditor->installEventFilter(this);
-  connect(codeEditor, SIGNAL(textChanged()), this, SLOT(scriptTextChanged()));
+  connect(codeEditor, &QPlainTextEdit::textChanged, this,
+          &PythonEditorsTabWidget::scriptTextChanged);
   int idx = addTab(codeEditor, fileInfo.fileName());
   setTabToolTip(idx, fileInfo.exists() ? fileInfo.absoluteFilePath() : fileInfo.fileName());
   setCurrentIndex(idx);

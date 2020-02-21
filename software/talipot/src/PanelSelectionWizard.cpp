@@ -28,7 +28,7 @@ using namespace std;
 PanelSelectionWizard::PanelSelectionWizard(GraphHierarchiesModel *model, QWidget *parent)
     : QWizard(parent), _ui(new Ui::PanelSelectionWizard), _model(model), _view(nullptr) {
   _ui->setupUi(this);
-  connect(this, SIGNAL(currentIdChanged(int)), this, SLOT(pageChanged(int)));
+  connect(this, &QWizard::currentIdChanged, this, &PanelSelectionWizard::pageChanged);
   _ui->graphCombo->setModel(_model);
   _ui->graphCombo->selectIndex(_model->indexOf(_model->currentGraph()));
 
@@ -40,10 +40,10 @@ PanelSelectionWizard::PanelSelectionWizard(GraphHierarchiesModel *model, QWidget
   _ui->panelList->setModel(
       new SimplePluginListModel(QList<string>::fromStdList(plugins), _ui->panelList));
 #endif
-  connect(_ui->panelList->selectionModel(), SIGNAL(currentChanged(QModelIndex, QModelIndex)), this,
-          SLOT(panelSelected(QModelIndex)));
-  connect(_ui->panelList, SIGNAL(doubleClicked(QModelIndex)), button(QWizard::FinishButton),
-          SLOT(click()));
+  connect(_ui->panelList->selectionModel(), &QItemSelectionModel::currentChanged, this,
+          &PanelSelectionWizard::panelSelected);
+  connect(_ui->panelList, &QAbstractItemView::doubleClicked, button(QWizard::FinishButton),
+          &QAbstractButton::click);
   _ui->panelList->setCurrentIndex(_ui->panelList->model()->index(0, 0));
 }
 

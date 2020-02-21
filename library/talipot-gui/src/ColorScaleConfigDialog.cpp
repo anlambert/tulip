@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -46,27 +46,35 @@ ColorScaleConfigDialog::ColorScaleConfigDialog(const ColorScale &colorScale, QWi
   _ui->userGradientPreview->setPalette(palette);
   _ui->savedGradientPreview->setAutoFillBackground(true);
   _ui->userGradientPreview->setAutoFillBackground(true);
-  connect(_ui->savedColorScalesList,
-          SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)), this,
-          SLOT(displaySavedGradientPreview()));
-  connect(_ui->savedColorScalesList, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this,
-          SLOT(reeditSaveColorScale(QListWidgetItem *)));
-  connect(_ui->nbColors, SIGNAL(valueChanged(int)), this, SLOT(nbColorsValueChanged(int)));
-  connect(_ui->colorsTable, SIGNAL(itemDoubleClicked(QTableWidgetItem *)), this,
-          SLOT(colorTableItemDoubleClicked(QTableWidgetItem *)));
-  connect(_ui->tabWidget, SIGNAL(currentChanged(int)), this, SLOT(displaySavedGradientPreview()));
-  connect(_ui->tabWidget, SIGNAL(currentChanged(int)), this, SLOT(displayUserGradientPreview()));
-  connect(_ui->gradientCB, SIGNAL(clicked()), this, SLOT(displayUserGradientPreview()));
-  connect(_ui->saveColorScaleButton, SIGNAL(clicked()), this, SLOT(saveCurrentColorScale()));
-  connect(_ui->deleteColorScaleButton, SIGNAL(clicked()), this, SLOT(deleteSavedColorScale()));
-  connect(_ui->importFromImgButton, SIGNAL(clicked()), this, SLOT(importColorScaleFromImageFile()));
-  connect(_ui->importFromPredefinedCSButton, SIGNAL(clicked()), this,
-          SLOT(importColorScaleFromColorScaleFile()));
-  connect(_ui->invertColorScaleButton, SIGNAL(clicked()), this, SLOT(invertEditedColorScale()));
-  connect(_ui->globalAlphaCB, SIGNAL(toggled(bool)), _ui->globalAlphaSB, SLOT(setEnabled(bool)));
-  connect(_ui->globalAlphaCB, SIGNAL(toggled(bool)), this, SLOT(applyGlobalAlphaToColorScale()));
-  connect(_ui->globalAlphaSB, SIGNAL(valueChanged(int)), this,
-          SLOT(applyGlobalAlphaToColorScale()));
+  connect(_ui->savedColorScalesList, &QListWidget::currentItemChanged, this,
+          &ColorScaleConfigDialog::displaySavedGradientPreview);
+  connect(_ui->savedColorScalesList, &QListWidget::itemDoubleClicked, this,
+          &ColorScaleConfigDialog::reeditSaveColorScale);
+  connect(_ui->nbColors, QOverload<int>::of(&QSpinBox::valueChanged), this,
+          &ColorScaleConfigDialog::nbColorsValueChanged);
+  connect(_ui->colorsTable, &QTableWidget::itemDoubleClicked, this,
+          &ColorScaleConfigDialog::colorTableItemDoubleClicked);
+  connect(_ui->tabWidget, &QTabWidget::currentChanged, this,
+          &ColorScaleConfigDialog::displaySavedGradientPreview);
+  connect(_ui->tabWidget, &QTabWidget::currentChanged, this,
+          &ColorScaleConfigDialog::displayUserGradientPreview);
+  connect(_ui->gradientCB, &QAbstractButton::clicked, this,
+          &ColorScaleConfigDialog::displayUserGradientPreview);
+  connect(_ui->saveColorScaleButton, &QAbstractButton::clicked, this,
+          &ColorScaleConfigDialog::saveCurrentColorScale);
+  connect(_ui->deleteColorScaleButton, &QAbstractButton::clicked, this,
+          &ColorScaleConfigDialog::deleteSavedColorScale);
+  connect(_ui->importFromImgButton, &QAbstractButton::clicked, this,
+          &ColorScaleConfigDialog::importColorScaleFromImageFile);
+  connect(_ui->importFromPredefinedCSButton, &QAbstractButton::clicked, this,
+          &ColorScaleConfigDialog::importColorScaleFromColorScaleFile);
+  connect(_ui->invertColorScaleButton, &QAbstractButton::clicked, this,
+          &ColorScaleConfigDialog::invertEditedColorScale);
+  connect(_ui->globalAlphaCB, &QAbstractButton::toggled, _ui->globalAlphaSB, &QWidget::setEnabled);
+  connect(_ui->globalAlphaCB, &QAbstractButton::toggled, this,
+          &ColorScaleConfigDialog::applyGlobalAlphaToColorScale);
+  connect(_ui->globalAlphaSB, QOverload<int>::of(&QSpinBox::valueChanged), this,
+          &ColorScaleConfigDialog::applyGlobalAlphaToColorScale);
 
   if (talipotImageColorScales.empty()) {
     loadImageColorScales();
@@ -462,7 +470,8 @@ void ColorScaleConfigDialog::setColorScale(const ColorScale &colorScale) {
       }
     }
 
-    disconnect(_ui->nbColors, SIGNAL(valueChanged(int)), this, SLOT(nbColorsValueChanged(int)));
+    disconnect(_ui->nbColors, QOverload<int>::of(&QSpinBox::valueChanged), this,
+               &ColorScaleConfigDialog::nbColorsValueChanged);
 
     _ui->colorsTable->clear();
     _ui->colorsTable->setRowCount(0);
@@ -499,7 +508,8 @@ void ColorScaleConfigDialog::setColorScale(const ColorScale &colorScale) {
       }
     }
 
-    connect(_ui->nbColors, SIGNAL(valueChanged(int)), this, SLOT(nbColorsValueChanged(int)));
+    connect(_ui->nbColors, QOverload<int>::of(&QSpinBox::valueChanged), this,
+            &ColorScaleConfigDialog::nbColorsValueChanged);
     _ui->tabWidget->setCurrentIndex(0);
     applyGlobalAlphaToColorScale();
   } else
