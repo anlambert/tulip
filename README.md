@@ -65,7 +65,7 @@ The following dependencies are required to build Talipot:
   [Microsoft Visual Studio](https://www.visualstudio.com/) >= 2013
   * [FreeType](https://www.freetype.org)
   * [zlib](http://zlib.net)
-  * [Qt](https://www.qt.io) >= 5.5.0
+  * [Qt](https://www.qt.io) >= 5.7.0
   * [OpenGL](https://www.opengl.org) >= 2.0
   * [GLEW](http://glew.sourceforge.net/) >= 1.4
   * [Qhull](http://www.qhull.org/)

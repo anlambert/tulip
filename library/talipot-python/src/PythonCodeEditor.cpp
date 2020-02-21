@@ -1249,12 +1249,7 @@ void PythonCodeEditor::updateAutoCompletionListPosition() {
   }
 
   if (mapToGlobal(QPoint(0, bottom + _autoCompletionList->height())).y() >
-#if (QT_VERSION < QT_VERSION_CHECK(5, 6, 0))
-      QApplication::desktop()->screenGeometry().height()
-#else
-      QApplication::primaryScreen()->geometry().height()
-#endif
-  )
+      QApplication::primaryScreen()->geometry().height())
     _autoCompletionList->move(mapToGlobal(QPoint(pos, top - _autoCompletionList->height())));
   else
     _autoCompletionList->move(mapToGlobal(QPoint(pos, bottom)));
