@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -32,7 +32,7 @@ namespace tlp {
 
 ScatterPlot2DInteractor::ScatterPlot2DInteractor(const QString &iconPath, const QString &text,
                                                  const unsigned int priority)
-    : NodeLinkDiagramComponentInteractor(iconPath, text, priority) {}
+    : NodeLinkDiagramViewInteractor(iconPath, text, priority) {}
 
 bool ScatterPlot2DInteractor::isCompatible(const std::string &viewName) const {
   return (viewName == ViewName::ScatterPlot2DViewName);
@@ -148,9 +148,9 @@ protected:
 
 ScatterPlot2DInteractorGetInformation::ScatterPlot2DInteractorGetInformation(
     const tlp::PluginContext *)
-    : NodeLinkDiagramComponentInteractor(":/talipot/gui/icons/i_select.png",
-                                         "Display node or edge properties",
-                                         StandardInteractorPriority::GetInformation) {}
+    : NodeLinkDiagramViewInteractor(":/talipot/gui/icons/i_select.png",
+                                    "Display node or edge properties",
+                                    StandardInteractorPriority::GetInformation) {}
 
 void ScatterPlot2DInteractorGetInformation::construct() {
   setConfigurationWidgetText(QString("<h3>Display node or edge properties</h3>") +

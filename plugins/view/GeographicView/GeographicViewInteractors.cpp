@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -242,8 +242,8 @@ bool GeographicViewNavigator::eventFilter(QObject *widget, QEvent *e) {
 PLUGIN(GeographicViewInteractorNavigation)
 
 GeographicViewInteractorAddEdges::GeographicViewInteractorAddEdges(const PluginContext *)
-    : NodeLinkDiagramComponentInteractor(":/talipot/gui/icons/i_addedge.png", "Add nodes/edges",
-                                         StandardInteractorPriority::AddNodesOrEdges) {}
+    : NodeLinkDiagramViewInteractor(":/talipot/gui/icons/i_addedge.png", "Add nodes/edges",
+                                    StandardInteractorPriority::AddNodesOrEdges) {}
 
 void GeographicViewInteractorAddEdges::construct() {
   setConfigurationWidgetText("<h3>Add nodes/edges</h3>To add a node: <b>Mouse left</b> click "
@@ -268,8 +268,8 @@ bool GeographicViewInteractorAddEdges::isCompatible(const std::string &viewName)
 PLUGIN(GeographicViewInteractorAddEdges)
 
 GeographicViewInteractorEditEdgeBends::GeographicViewInteractorEditEdgeBends(const PluginContext *)
-    : NodeLinkDiagramComponentInteractor(":/talipot/gui/icons/i_bends", "Edit edge bends",
-                                         StandardInteractorPriority::EditEdgeBends) {}
+    : NodeLinkDiagramViewInteractor(":/talipot/gui/icons/i_bends", "Edit edge bends",
+                                    StandardInteractorPriority::EditEdgeBends) {}
 
 void GeographicViewInteractorEditEdgeBends::construct() {
   push_back(new GeographicViewNavigator);

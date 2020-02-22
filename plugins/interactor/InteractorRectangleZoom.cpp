@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -12,9 +12,9 @@
  */
 
 #include <talipot/MouseInteractors.h>
-#include <talipot/NodeLinkDiagramComponentInteractor.h>
+#include <talipot/NodeLinkDiagramViewInteractor.h>
 #include <talipot/MouseBoxZoomer.h>
-#include <talipot/NodeLinkDiagramComponent.h>
+#include <talipot/NodeLinkDiagramView.h>
 
 #include "../utils/StandardInteractorPriority.h"
 #include "../utils/PluginNames.h"
@@ -24,7 +24,7 @@ using namespace tlp;
 /** \brief Interactor to do a rectangle zoom
  *
  */
-class InteractorRectangleZoom : public NodeLinkDiagramComponentInteractor {
+class InteractorRectangleZoom : public NodeLinkDiagramViewInteractor {
 
 public:
   PLUGININFORMATION("InteractorRectangleZoom", "Tulip Team", "01/04/2009",
@@ -33,8 +33,8 @@ public:
    * Default constructor
    */
   InteractorRectangleZoom(const tlp::PluginContext *)
-      : NodeLinkDiagramComponentInteractor(":/talipot/gui/icons/i_zoom.png", "Zoom on rectangle",
-                                           StandardInteractorPriority::ZoomOnRectangle) {}
+      : NodeLinkDiagramViewInteractor(":/talipot/gui/icons/i_zoom.png", "Zoom on rectangle",
+                                      StandardInteractorPriority::ZoomOnRectangle) {}
 
   /**
    * Construct chain of responsibility
@@ -53,7 +53,7 @@ public:
   }
 
   bool isCompatible(const std::string &viewName) const override {
-    return ((viewName == NodeLinkDiagramComponent::viewName) ||
+    return ((viewName == NodeLinkDiagramView::viewName) ||
             (viewName == ViewName::HistogramViewName) || (viewName == ViewName::MatrixViewName) ||
             (viewName == ViewName::ParallelCoordinatesViewName) ||
             (viewName == ViewName::PixelOrientedViewName) ||

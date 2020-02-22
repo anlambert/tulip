@@ -26,8 +26,8 @@ SET(SRCS
   MouseSelectionEditor.cpp
   MouseSelector.cpp
   MouseShowElementInfo.cpp
-  NodeLinkDiagramComponent.cpp
-  NodeLinkDiagramComponentInteractor.cpp
+  NodeLinkDiagramView.cpp
+  NodeLinkDiagramViewInteractor.cpp
   ShapeDialog.cpp
   PropertyCreationDialog.cpp
   QtGlSceneZoomAndPanAnimator.cpp
@@ -185,7 +185,7 @@ QTX_WRAP_CPP(MOC_SRCS
   ../include/talipot/Interactor.h
   ../include/talipot/InteractorComposite.h
   ../include/talipot/ItemsListWidget.h
-  ../include/talipot/NodeLinkDiagramComponent.h
+  ../include/talipot/NodeLinkDiagramView.h
   ../include/talipot/PlaceHolderWidget.h
   ../include/talipot/ProcessingAnimationItem.h
   ../include/talipot/PropertyCreationDialog.h

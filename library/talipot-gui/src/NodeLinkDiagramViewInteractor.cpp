@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -11,35 +11,35 @@
  *
  */
 
-#include <talipot/NodeLinkDiagramComponentInteractor.h>
-#include <talipot/NodeLinkDiagramComponent.h>
+#include <talipot/NodeLinkDiagramViewInteractor.h>
+#include <talipot/NodeLinkDiagramView.h>
 
 #include <QLabel>
 #include <QIcon>
 
 using namespace tlp;
 
-NodeLinkDiagramComponentInteractor::NodeLinkDiagramComponentInteractor(const QString &iconPath,
-                                                                       const QString &text,
-                                                                       unsigned int priority)
+NodeLinkDiagramViewInteractor::NodeLinkDiagramViewInteractor(const QString &iconPath,
+                                                             const QString &text,
+                                                             unsigned int priority)
     : GLInteractorComposite(QIcon(iconPath), text), _label(new QLabel), _priority(priority) {
   _label->setWordWrap(true);
   _label->setAlignment(Qt::AlignTop);
   _label->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
 
-NodeLinkDiagramComponentInteractor::~NodeLinkDiagramComponentInteractor() {
+NodeLinkDiagramViewInteractor::~NodeLinkDiagramViewInteractor() {
   delete _label;
 }
 
-void NodeLinkDiagramComponentInteractor::setConfigurationWidgetText(const QString &text) {
+void NodeLinkDiagramViewInteractor::setConfigurationWidgetText(const QString &text) {
   _label->setText(text);
 }
 
-QLabel *NodeLinkDiagramComponentInteractor::configurationDocWidget() const {
+QLabel *NodeLinkDiagramViewInteractor::configurationDocWidget() const {
   return _label->text().isEmpty() ? nullptr : _label;
 }
 
-unsigned int NodeLinkDiagramComponentInteractor::priority() const {
+unsigned int NodeLinkDiagramViewInteractor::priority() const {
   return _priority;
 }

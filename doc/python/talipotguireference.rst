@@ -52,10 +52,10 @@ tlpgui.GlMainView
 .. autoclass:: talipotgui::tlpgui.GlMainView
         :members:
 
-tlpgui.NodeLinkDiagramComponent
+tlpgui.NodeLinkDiagramView
 --------------------------------
 
-.. autoclass:: talipotgui::tlpgui.NodeLinkDiagramComponent
+.. autoclass:: talipotgui::tlpgui.NodeLinkDiagramView
         :members:
 
 tlpgui.GlGraphRenderingParameters

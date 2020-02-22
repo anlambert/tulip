@@ -19,7 +19,7 @@
 #include "../../utils/PluginNames.h"
 
 #include <talipot/MouseInteractors.h>
-#include <talipot/NodeLinkDiagramComponentInteractor.h>
+#include <talipot/NodeLinkDiagramViewInteractor.h>
 #include <talipot/ItemDelegate.h>
 #include <talipot/GraphElementModel.h>
 #include <talipot/GlEntityItemModel.h>
@@ -60,7 +60,7 @@ public:
   }
 };
 
-class GeographicViewInteractorGetInformation : public NodeLinkDiagramComponentInteractor {
+class GeographicViewInteractorGetInformation : public NodeLinkDiagramViewInteractor {
 
 public:
   PLUGININFORMATION("GeographicViewInteractorGetInformation", "Tulip Team", "06/2012",
@@ -69,9 +69,9 @@ public:
    * Default constructor
    */
   GeographicViewInteractorGetInformation(const tlp::PluginContext *)
-      : NodeLinkDiagramComponentInteractor(":/talipot/gui/icons/i_select.png",
-                                           "Get information on nodes/edges",
-                                           StandardInteractorPriority::GetInformation) {}
+      : NodeLinkDiagramViewInteractor(":/talipot/gui/icons/i_select.png",
+                                      "Get information on nodes/edges",
+                                      StandardInteractorPriority::GetInformation) {}
 
   /**
    * Construct chain of responsibility

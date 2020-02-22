@@ -36,20 +36,20 @@
 #include <talipot/GlCompositeHierarchyManager.h>
 #include <talipot/TlpTools.h>
 #include <talipot/TlpQtTools.h>
-#include <talipot/NodeLinkDiagramComponent.h>
+#include <talipot/NodeLinkDiagramView.h>
 #include <talipot/GraphModel.h>
 #include <talipot/NumericProperty.h>
 
 using namespace tlp;
 using namespace std;
 
-const string NodeLinkDiagramComponent::viewName("Node Link Diagram view");
+const string NodeLinkDiagramView::viewName("Node Link Diagram");
 
-NodeLinkDiagramComponent::NodeLinkDiagramComponent(const tlp::PluginContext *)
+NodeLinkDiagramView::NodeLinkDiagramView(const tlp::PluginContext *)
     : GlMainView(true), _grid(nullptr), _gridOptions(nullptr), manager(nullptr), _hasHulls(false),
       grid_ui(nullptr) {}
 
-NodeLinkDiagramComponent::~NodeLinkDiagramComponent() {
+NodeLinkDiagramView::~NodeLinkDiagramView() {
   if (grid_ui)
     delete grid_ui->tableView->itemDelegate();
 
@@ -57,7 +57,7 @@ NodeLinkDiagramComponent::~NodeLinkDiagramComponent() {
   delete manager;
 }
 
-void NodeLinkDiagramComponent::updateGrid() {
+void NodeLinkDiagramView::updateGrid() {
   delete _grid;
   _grid = nullptr;
 
@@ -108,12 +108,12 @@ void NodeLinkDiagramComponent::updateGrid() {
                                                                "Node Link Diagram Component grid");
 }
 
-void NodeLinkDiagramComponent::draw() {
+void NodeLinkDiagramView::draw() {
   updateGrid();
   GlMainView::draw();
 }
 
-void NodeLinkDiagramComponent::setState(const tlp::DataSet &data) {
+void NodeLinkDiagramView::setState(const tlp::DataSet &data) {
   ParameterDescriptionList gridParameters;
   gridParameters.add<StringCollection>("Grid mode", "", "No grid;Space divisions;Fixed size", true);
   gridParameters.add<Size>("Grid size", "", "(1,1,1)", false);
@@ -146,7 +146,7 @@ void NodeLinkDiagramComponent::setState(const tlp::DataSet &data) {
     overviewItem()->setLayerVisible("Foreground", false);
 }
 
-void NodeLinkDiagramComponent::graphChanged(tlp::Graph *graph) {
+void NodeLinkDiagramView::graphChanged(tlp::Graph *graph) {
   GlGraphComposite *composite = getGlMainWidget()->getScene()->getGlGraphComposite();
   Graph *oldGraph = composite ? composite->getGraph() : nullptr;
   loadGraphOnScene(graph);
@@ -160,7 +160,7 @@ void NodeLinkDiagramComponent::graphChanged(tlp::Graph *graph) {
   drawOverview();
 }
 
-tlp::DataSet NodeLinkDiagramComponent::state() const {
+tlp::DataSet NodeLinkDiagramView::state() const {
   DataSet data = sceneData();
   data.set("keepScenePointOfViewOnSubgraphChanging",
            getGlMainWidget()->keepScenePointOfViewOnSubgraphChanging());
@@ -168,7 +168,7 @@ tlp::DataSet NodeLinkDiagramComponent::state() const {
   return data;
 }
 
-void NodeLinkDiagramComponent::initRenderingParameters(GlGraphRenderingParameters *rp) {
+void NodeLinkDiagramView::initRenderingParameters(GlGraphRenderingParameters *rp) {
   rp->setViewNodeLabel(true);
   rp->setEdgeColorInterpolate(false);
   rp->setNodesStencil(0x0002);
@@ -176,7 +176,7 @@ void NodeLinkDiagramComponent::initRenderingParameters(GlGraphRenderingParameter
 }
 
 //==================================================
-void NodeLinkDiagramComponent::createScene(Graph *graph, DataSet dataSet) {
+void NodeLinkDiagramView::createScene(Graph *graph, DataSet dataSet) {
   if (manager) {
     delete manager;
     manager = nullptr;
@@ -254,7 +254,7 @@ void NodeLinkDiagramComponent::createScene(Graph *graph, DataSet dataSet) {
   // getGlMainWidget()->emitGraphChanged();
 }
 //==================================================
-DataSet NodeLinkDiagramComponent::sceneData() const {
+DataSet NodeLinkDiagramView::sceneData() const {
   GlScene *scene = getGlMainWidget()->getScene();
   DataSet outDataSet = GlMainView::state();
   outDataSet.set("Display", scene->getGlGraphComposite()->getRenderingParameters().getParameters());
@@ -276,7 +276,7 @@ DataSet NodeLinkDiagramComponent::sceneData() const {
   return outDataSet;
 }
 //==================================================
-void NodeLinkDiagramComponent::loadGraphOnScene(Graph *graph) {
+void NodeLinkDiagramView::loadGraphOnScene(Graph *graph) {
   GlScene *scene = getGlMainWidget()->getScene();
 
   if (!scene->getLayer("Main")) {
@@ -323,7 +323,7 @@ void NodeLinkDiagramComponent::loadGraphOnScene(Graph *graph) {
   getGlMainWidget()->emitGraphChanged();
 }
 
-void NodeLinkDiagramComponent::registerTriggers() {
+void NodeLinkDiagramView::registerTriggers() {
   clearRedrawTriggers();
 
   if (graph() == nullptr)
@@ -338,7 +338,7 @@ void NodeLinkDiagramComponent::registerTriggers() {
   }
 }
 
-void NodeLinkDiagramComponent::setZOrdering(bool f) {
+void NodeLinkDiagramView::setZOrdering(bool f) {
   getGlMainWidget()
       ->getScene()
       ->getGlGraphComposite()
@@ -347,7 +347,7 @@ void NodeLinkDiagramComponent::setZOrdering(bool f) {
   centerView();
 }
 
-void NodeLinkDiagramComponent::showGridControl() {
+void NodeLinkDiagramView::showGridControl() {
   if (_gridOptions->exec() == QDialog::Rejected)
     return;
 
@@ -355,7 +355,7 @@ void NodeLinkDiagramComponent::showGridControl() {
   emit drawNeeded();
 }
 
-void NodeLinkDiagramComponent::requestChangeGraph(Graph *graph) {
+void NodeLinkDiagramView::requestChangeGraph(Graph *graph) {
   this->loadGraphOnScene(graph);
   registerTriggers();
   emit graphSet(graph);
@@ -363,7 +363,7 @@ void NodeLinkDiagramComponent::requestChangeGraph(Graph *graph) {
   draw();
 }
 
-void NodeLinkDiagramComponent::fillContextMenu(QMenu *menu, const QPointF &point) {
+void NodeLinkDiagramView::fillContextMenu(QMenu *menu, const QPointF &point) {
 
   // Check if a node/edge is under the mouse pointer
   bool result;
@@ -544,14 +544,14 @@ void NodeLinkDiagramComponent::fillContextMenu(QMenu *menu, const QPointF &point
                            ->getGlGraphComposite()
                            ->getRenderingParametersPointer()
                            ->isElementZOrdered());
-    connect(action, &QAction::triggered, this, &NodeLinkDiagramComponent::setZOrdering);
+    connect(action, &QAction::triggered, this, &NodeLinkDiagramView::setZOrdering);
     action = menu->addAction("Grid display parameters", [this] { showGridControl(); });
     action->setToolTip("Display the grid setup wizard");
   }
 }
 
-void NodeLinkDiagramComponent::addRemoveItemToSelection(bool pushGraph, bool toggleSelection,
-                                                        bool selectValue, bool resetSelection) {
+void NodeLinkDiagramView::addRemoveItemToSelection(bool pushGraph, bool toggleSelection,
+                                                   bool selectValue, bool resetSelection) {
   BooleanProperty *elementSelected = graph()->getBooleanProperty("viewSelection");
 
   if (pushGraph) {
@@ -572,8 +572,8 @@ void NodeLinkDiagramComponent::addRemoveItemToSelection(bool pushGraph, bool tog
         edge(itemId), toggleSelection ? !elementSelected->getEdgeValue(edge(itemId)) : selectValue);
 }
 
-void NodeLinkDiagramComponent::addRemoveInNodesToSelection(bool pushGraph, bool toggleSelection,
-                                                           bool selectValue, bool resetSelection) {
+void NodeLinkDiagramView::addRemoveInNodesToSelection(bool pushGraph, bool toggleSelection,
+                                                      bool selectValue, bool resetSelection) {
   BooleanProperty *elementSelected = graph()->getBooleanProperty("viewSelection");
 
   if (pushGraph) {
@@ -595,8 +595,8 @@ void NodeLinkDiagramComponent::addRemoveInNodesToSelection(bool pushGraph, bool 
   }
 }
 
-void NodeLinkDiagramComponent::addRemoveOutNodesToSelection(bool pushGraph, bool toggleSelection,
-                                                            bool selectValue, bool resetSelection) {
+void NodeLinkDiagramView::addRemoveOutNodesToSelection(bool pushGraph, bool toggleSelection,
+                                                       bool selectValue, bool resetSelection) {
   BooleanProperty *elementSelected = graph()->getBooleanProperty("viewSelection");
 
   if (pushGraph) {
@@ -618,8 +618,8 @@ void NodeLinkDiagramComponent::addRemoveOutNodesToSelection(bool pushGraph, bool
   }
 }
 
-void NodeLinkDiagramComponent::addRemoveInEdgesToSelection(bool pushGraph, bool toggleSelection,
-                                                           bool selectValue, bool resetSelection) {
+void NodeLinkDiagramView::addRemoveInEdgesToSelection(bool pushGraph, bool toggleSelection,
+                                                      bool selectValue, bool resetSelection) {
   BooleanProperty *elementSelected = graph()->getBooleanProperty("viewSelection");
 
   if (pushGraph) {
@@ -637,8 +637,8 @@ void NodeLinkDiagramComponent::addRemoveInEdgesToSelection(bool pushGraph, bool 
   }
 }
 
-void NodeLinkDiagramComponent::addRemoveOutEdgesToSelection(bool pushGraph, bool toggleSelection,
-                                                            bool selectValue, bool resetSelection) {
+void NodeLinkDiagramView::addRemoveOutEdgesToSelection(bool pushGraph, bool toggleSelection,
+                                                       bool selectValue, bool resetSelection) {
   BooleanProperty *elementSelected = graph()->getBooleanProperty("viewSelection");
 
   if (pushGraph) {
@@ -656,9 +656,9 @@ void NodeLinkDiagramComponent::addRemoveOutEdgesToSelection(bool pushGraph, bool
   }
 }
 
-void NodeLinkDiagramComponent::addRemoveNodeAndAllNeighbourNodesAndEdges(bool toggleSelection,
-                                                                         bool selectValue,
-                                                                         bool resetSelection) {
+void NodeLinkDiagramView::addRemoveNodeAndAllNeighbourNodesAndEdges(bool toggleSelection,
+                                                                    bool selectValue,
+                                                                    bool resetSelection) {
   graph()->push();
   addRemoveItemToSelection(false, toggleSelection, selectValue, resetSelection);
   addRemoveInEdgesToSelection(false, toggleSelection, selectValue);
@@ -667,9 +667,8 @@ void NodeLinkDiagramComponent::addRemoveNodeAndAllNeighbourNodesAndEdges(bool to
   addRemoveOutNodesToSelection(false, toggleSelection, selectValue);
 }
 
-void NodeLinkDiagramComponent::addRemoveExtremitiesToSelection(bool pushGraph, bool toggleSelection,
-                                                               bool selectValue,
-                                                               bool resetSelection) {
+void NodeLinkDiagramView::addRemoveExtremitiesToSelection(bool pushGraph, bool toggleSelection,
+                                                          bool selectValue, bool resetSelection) {
   BooleanProperty *elementSelected = graph()->getBooleanProperty("viewSelection");
 
   if (pushGraph) {
@@ -692,111 +691,111 @@ void NodeLinkDiagramComponent::addRemoveExtremitiesToSelection(bool pushGraph, b
   }
 }
 
-void NodeLinkDiagramComponent::addRemoveEdgeAndExtremitiesToSelection(bool toggleSelection,
-                                                                      bool selectValue,
-                                                                      bool resetSelection) {
+void NodeLinkDiagramView::addRemoveEdgeAndExtremitiesToSelection(bool toggleSelection,
+                                                                 bool selectValue,
+                                                                 bool resetSelection) {
   graph()->push();
   addRemoveItemToSelection(false, toggleSelection, selectValue, resetSelection);
   addRemoveExtremitiesToSelection(false, toggleSelection, selectValue);
 }
 
-void NodeLinkDiagramComponent::selectItem() {
+void NodeLinkDiagramView::selectItem() {
   addRemoveItemToSelection(true, false, true, true);
 }
 
-void NodeLinkDiagramComponent::selectInNodes(bool pushGraph) {
+void NodeLinkDiagramView::selectInNodes(bool pushGraph) {
   addRemoveInNodesToSelection(pushGraph, false, true, true);
 }
 
-void NodeLinkDiagramComponent::selectOutNodes(bool pushGraph) {
+void NodeLinkDiagramView::selectOutNodes(bool pushGraph) {
   addRemoveOutNodesToSelection(pushGraph, false, true, true);
 }
 
-void NodeLinkDiagramComponent::selectInEdges(bool pushGraph) {
+void NodeLinkDiagramView::selectInEdges(bool pushGraph) {
   addRemoveInEdgesToSelection(pushGraph, false, true, true);
 }
 
-void NodeLinkDiagramComponent::selectOutEdges(bool pushGraph) {
+void NodeLinkDiagramView::selectOutEdges(bool pushGraph) {
   addRemoveOutEdgesToSelection(pushGraph, false, true, true);
 }
 
-void NodeLinkDiagramComponent::selectNodeAndAllNeighbourNodesAndEdges() {
+void NodeLinkDiagramView::selectNodeAndAllNeighbourNodesAndEdges() {
   addRemoveNodeAndAllNeighbourNodesAndEdges(false, true, true);
 }
 
-void NodeLinkDiagramComponent::selectExtremities(bool pushGraph) {
+void NodeLinkDiagramView::selectExtremities(bool pushGraph) {
   addRemoveExtremitiesToSelection(pushGraph, false, true, true);
 }
 
-void NodeLinkDiagramComponent::selectEdgeAndExtremities() {
+void NodeLinkDiagramView::selectEdgeAndExtremities() {
   addRemoveEdgeAndExtremitiesToSelection(false, true, true);
 }
 
-void NodeLinkDiagramComponent::addItemToSelection() {
+void NodeLinkDiagramView::addItemToSelection() {
   addRemoveItemToSelection(true, false, true);
 }
 
-void NodeLinkDiagramComponent::addInNodesToSelection(bool pushGraph) {
+void NodeLinkDiagramView::addInNodesToSelection(bool pushGraph) {
   addRemoveInNodesToSelection(pushGraph, false, true);
 }
 
-void NodeLinkDiagramComponent::addOutNodesToSelection(bool pushGraph) {
+void NodeLinkDiagramView::addOutNodesToSelection(bool pushGraph) {
   addRemoveOutNodesToSelection(pushGraph, false, true);
 }
 
-void NodeLinkDiagramComponent::addInEdgesToSelection(bool pushGraph) {
+void NodeLinkDiagramView::addInEdgesToSelection(bool pushGraph) {
   addRemoveInEdgesToSelection(pushGraph, false, true);
 }
 
-void NodeLinkDiagramComponent::addOutEdgesToSelection(bool pushGraph) {
+void NodeLinkDiagramView::addOutEdgesToSelection(bool pushGraph) {
   addRemoveOutEdgesToSelection(pushGraph, false, true);
 }
 
-void NodeLinkDiagramComponent::addNodeAndAllNeighbourNodesAndEdgesToSelection() {
+void NodeLinkDiagramView::addNodeAndAllNeighbourNodesAndEdgesToSelection() {
   addRemoveNodeAndAllNeighbourNodesAndEdges(false, true);
 }
 
-void NodeLinkDiagramComponent::addExtremitiesToSelection(bool pushGraph) {
+void NodeLinkDiagramView::addExtremitiesToSelection(bool pushGraph) {
   addRemoveExtremitiesToSelection(pushGraph, false, true);
 }
 
-void NodeLinkDiagramComponent::addEdgeAndExtremitiesToSelection() {
+void NodeLinkDiagramView::addEdgeAndExtremitiesToSelection() {
   addRemoveEdgeAndExtremitiesToSelection(false, true);
 }
 
-void NodeLinkDiagramComponent::removeItemFromSelection() {
+void NodeLinkDiagramView::removeItemFromSelection() {
   addRemoveItemToSelection(true, false, false);
 }
 
-void NodeLinkDiagramComponent::removeInNodesFromSelection(bool pushGraph) {
+void NodeLinkDiagramView::removeInNodesFromSelection(bool pushGraph) {
   addRemoveInNodesToSelection(pushGraph, false, false);
 }
 
-void NodeLinkDiagramComponent::removeOutNodesFromSelection(bool pushGraph) {
+void NodeLinkDiagramView::removeOutNodesFromSelection(bool pushGraph) {
   addRemoveOutNodesToSelection(pushGraph, false, false);
 }
 
-void NodeLinkDiagramComponent::removeInEdgesFromSelection(bool pushGraph) {
+void NodeLinkDiagramView::removeInEdgesFromSelection(bool pushGraph) {
   addRemoveInEdgesToSelection(pushGraph, false, false);
 }
 
-void NodeLinkDiagramComponent::removeOutEdgesFromSelection(bool pushGraph) {
+void NodeLinkDiagramView::removeOutEdgesFromSelection(bool pushGraph) {
   addRemoveOutEdgesToSelection(pushGraph, false, false);
 }
 
-void NodeLinkDiagramComponent::removeNodeAndAllNeighbourNodesAndEdgesFromSelection() {
+void NodeLinkDiagramView::removeNodeAndAllNeighbourNodesAndEdgesFromSelection() {
   addRemoveNodeAndAllNeighbourNodesAndEdges(false, false);
 }
 
-void NodeLinkDiagramComponent::removeExtremitiesFromSelection(bool pushGraph) {
+void NodeLinkDiagramView::removeExtremitiesFromSelection(bool pushGraph) {
   addRemoveExtremitiesToSelection(pushGraph, false, false);
 }
 
-void NodeLinkDiagramComponent::removeEdgeAndExtremitiesFromSelection() {
+void NodeLinkDiagramView::removeEdgeAndExtremitiesFromSelection() {
   addRemoveEdgeAndExtremitiesToSelection(false, false);
 }
 
-void NodeLinkDiagramComponent::deleteItem() {
+void NodeLinkDiagramView::deleteItem() {
   graph()->push();
 
   if (isNode)
@@ -805,7 +804,7 @@ void NodeLinkDiagramComponent::deleteItem() {
     graph()->delEdge(edge(itemId));
 }
 
-void NodeLinkDiagramComponent::editValue(PropertyInterface *pi) {
+void NodeLinkDiagramView::editValue(PropertyInterface *pi) {
   ItemDelegate tid(getGlMainWidget());
   QVariant val = ItemDelegate::showEditorDialog(isNode ? NODE : EDGE, pi, graph(), &tid,
                                                 getGlMainWidget(), itemId);
@@ -824,26 +823,26 @@ void NodeLinkDiagramComponent::editValue(PropertyInterface *pi) {
   graph()->popIfNoUpdates();
 }
 
-void NodeLinkDiagramComponent::editColor() {
+void NodeLinkDiagramView::editColor() {
   editValue(
       getGlMainWidget()->getScene()->getGlGraphComposite()->getInputData()->getElementColor());
 }
 
-void NodeLinkDiagramComponent::editLabel() {
+void NodeLinkDiagramView::editLabel() {
   editValue(
       getGlMainWidget()->getScene()->getGlGraphComposite()->getInputData()->getElementLabel());
 }
 
-void NodeLinkDiagramComponent::editShape() {
+void NodeLinkDiagramView::editShape() {
   editValue(
       getGlMainWidget()->getScene()->getGlGraphComposite()->getInputData()->getElementShape());
 }
 
-void NodeLinkDiagramComponent::editSize() {
+void NodeLinkDiagramView::editSize() {
   editValue(getGlMainWidget()->getScene()->getGlGraphComposite()->getInputData()->getElementSize());
 }
 
-const Camera &NodeLinkDiagramComponent::goInsideItem(node meta) {
+const Camera &NodeLinkDiagramView::goInsideItem(node meta) {
   Graph *metaGraph = graph()->getNodeMetaInfo(meta);
   Size size = getGlMainWidget()
                   ->getScene()
@@ -870,16 +869,16 @@ const Camera &NodeLinkDiagramComponent::goInsideItem(node meta) {
   return getGlMainWidget()->getScene()->getLayer("Main")->getCamera();
 }
 
-void NodeLinkDiagramComponent::goInsideItem() {
+void NodeLinkDiagramView::goInsideItem() {
   goInsideItem(node(itemId));
 }
 
-void NodeLinkDiagramComponent::ungroupItem() {
+void NodeLinkDiagramView::ungroupItem() {
   graph()->push();
   graph()->openMetaNode(node(itemId));
 }
 
-void NodeLinkDiagramComponent::useHulls(bool hasHulls) {
+void NodeLinkDiagramView::useHulls(bool hasHulls) {
   if (manager && (hasHulls == _hasHulls))
     return;
 
@@ -901,8 +900,8 @@ void NodeLinkDiagramComponent::useHulls(bool hasHulls) {
   }
 }
 
-bool NodeLinkDiagramComponent::hasHulls() const {
+bool NodeLinkDiagramView::hasHulls() const {
   return _hasHulls;
 }
 
-PLUGIN(NodeLinkDiagramComponent)
+PLUGIN(NodeLinkDiagramView)

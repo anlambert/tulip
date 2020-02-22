@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -41,7 +41,7 @@ class TableView : public tlp::ViewWidget {
   int minFontSize;
 
 public:
-  PLUGININFORMATION("Spreadsheet view", "Tulip Team", "04/17/2012", "Spreadsheet view for raw data",
+  PLUGININFORMATION("Spreadsheet", "Tulip Team", "04/17/2012", "Spreadsheet view for raw data",
                     "4.0", "")
 
   TableView(tlp::PluginContext *);

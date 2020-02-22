@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -26,7 +26,7 @@ namespace tlp {
 
 PixelOrientedInteractor::PixelOrientedInteractor(const QString &iconPath, const QString &text,
                                                  const unsigned int priority)
-    : NodeLinkDiagramComponentInteractor(iconPath, text, priority) {}
+    : NodeLinkDiagramViewInteractor(iconPath, text, priority) {}
 
 bool PixelOrientedInteractor::isCompatible(const std::string &viewName) const {
   return (viewName == ViewName::PixelOrientedViewName);

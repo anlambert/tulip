@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -25,7 +25,7 @@
 #include <talipot/GlBoundingBoxSceneVisitor.h>
 #include <talipot/GlShaderProgram.h>
 #include <talipot/GlMainWidget.h>
-#include <talipot/NodeLinkDiagramComponent.h>
+#include <talipot/NodeLinkDiagramView.h>
 
 using namespace std;
 using namespace tlp;
@@ -81,7 +81,7 @@ void FishEyeInteractor::construct() {
 }
 
 bool FishEyeInteractor::isCompatible(const std::string &viewName) const {
-  return ((viewName == NodeLinkDiagramComponent::viewName) ||
+  return ((viewName == NodeLinkDiagramView::viewName) ||
           (viewName == ViewName::HistogramViewName) || (viewName == ViewName::MatrixViewName) ||
           (viewName == ViewName::ParallelCoordinatesViewName) ||
           (viewName == ViewName::PixelOrientedViewName) ||

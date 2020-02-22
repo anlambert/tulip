@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -12,10 +12,10 @@
  */
 
 #include <talipot/MouseInteractors.h>
-#include <talipot/NodeLinkDiagramComponentInteractor.h>
+#include <talipot/NodeLinkDiagramViewInteractor.h>
 #include <talipot/MouseSelector.h>
 #include <talipot/MouseSelectionEditor.h>
-#include <talipot/NodeLinkDiagramComponent.h>
+#include <talipot/NodeLinkDiagramView.h>
 
 #include "../utils/StandardInteractorPriority.h"
 #include "../utils/PluginNames.h"
@@ -25,7 +25,7 @@ using namespace tlp;
 /** \brief Interactor to move/reshape
  *
  */
-class InteractorSelectionModifier : public NodeLinkDiagramComponentInteractor {
+class InteractorSelectionModifier : public NodeLinkDiagramViewInteractor {
 
 public:
   PLUGININFORMATION("InteractorSelectionModifier", "Tulip Team", "01/04/2009",
@@ -34,10 +34,9 @@ public:
    * Default constructor
    */
   InteractorSelectionModifier(const tlp::PluginContext *)
-      : NodeLinkDiagramComponentInteractor(":/talipot/gui/icons/i_move.png",
-                                           "Move/Reshape rectangle selection",
-                                           StandardInteractorPriority::RectangleSelectionModifier) {
-  }
+      : NodeLinkDiagramViewInteractor(":/talipot/gui/icons/i_move.png",
+                                      "Move/Reshape rectangle selection",
+                                      StandardInteractorPriority::RectangleSelectionModifier) {}
 
   /**
    * Construct chain of responsibility
@@ -70,7 +69,7 @@ public:
   }
 
   bool isCompatible(const std::string &viewName) const override {
-    return (viewName == NodeLinkDiagramComponent::viewName);
+    return (viewName == NodeLinkDiagramView::viewName);
   }
 };
 

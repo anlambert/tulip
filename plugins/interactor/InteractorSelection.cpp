@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -12,9 +12,9 @@
  */
 
 #include <talipot/MouseInteractors.h>
-#include <talipot/NodeLinkDiagramComponentInteractor.h>
+#include <talipot/NodeLinkDiagramViewInteractor.h>
 #include <talipot/MouseSelector.h>
-#include <talipot/NodeLinkDiagramComponent.h>
+#include <talipot/NodeLinkDiagramView.h>
 
 #include "../utils/StandardInteractorPriority.h"
 #include "../utils/PluginNames.h"
@@ -24,7 +24,7 @@ using namespace tlp;
 /** \brief Interactor to select par of the graph
  *
  */
-class InteractorSelection : public NodeLinkDiagramComponentInteractor {
+class InteractorSelection : public NodeLinkDiagramViewInteractor {
 
 public:
   PLUGININFORMATION("InteractorSelection", "Tulip Team", "01/04/2009", "Selection Interactor",
@@ -33,9 +33,9 @@ public:
    * Default constructor
    */
   InteractorSelection(const tlp::PluginContext *)
-      : NodeLinkDiagramComponentInteractor(":/talipot/gui/icons/i_selection.png",
-                                           "Select nodes/edges in a rectangle",
-                                           StandardInteractorPriority::RectangleSelection) {}
+      : NodeLinkDiagramViewInteractor(":/talipot/gui/icons/i_selection.png",
+                                      "Select nodes/edges in a rectangle",
+                                      StandardInteractorPriority::RectangleSelection) {}
 
   /**
    * Construct chain of responsibility
@@ -61,7 +61,7 @@ public:
   }
 
   bool isCompatible(const std::string &viewName) const override {
-    return ((viewName == NodeLinkDiagramComponent::viewName) ||
+    return ((viewName == NodeLinkDiagramView::viewName) ||
             (viewName == ViewName::HistogramViewName) || (viewName == ViewName::MatrixViewName) ||
             (viewName == ViewName::PixelOrientedViewName) ||
             (viewName == ViewName::ScatterPlot2DViewName));

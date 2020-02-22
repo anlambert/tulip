@@ -16,9 +16,9 @@
 %End
 
 namespace tlp {
-class NodeLinkDiagramComponent : tlp::GlMainView  /NoDefaultCtors/ {
+class NodeLinkDiagramView : tlp::GlMainView  /NoDefaultCtors/ {
 %TypeHeaderCode
-#include <talipot/NodeLinkDiagramComponent.h>
+#include <talipot/NodeLinkDiagramView.h>
 #include <talipot/GlGraphComposite.h>
 %End
 
@@ -31,14 +31,14 @@ That class represents the main type of view offered by Talipot : a node link dia
 
 public:
 
-  NodeLinkDiagramComponent(const tlp::PluginContext* context = NULL);
-  virtual ~NodeLinkDiagramComponent();
+  NodeLinkDiagramView(const tlp::PluginContext* context = NULL);
+  virtual ~NodeLinkDiagramView();
 
 // =======================================================================================
 
     tlp::GlGraphInputData *getInputData();
 %Docstring
-tlpgui.NodeLinkDiagramComponent.getInputData()
+tlpgui.NodeLinkDiagramView.getInputData()
 
 Returns the current rendering input data for the node link diagram view.
 
@@ -53,7 +53,7 @@ Returns the current rendering input data for the node link diagram view.
 
     tlp::GlGraphRenderingParameters getRenderingParameters();
 %Docstring
-tlpgui.NodeLinkDiagramComponent.getRenderingParameters()
+tlpgui.NodeLinkDiagramView.getRenderingParameters()
 
 Returns a copy of the current rendering parameters for the node link diagram view.
 
@@ -68,7 +68,7 @@ Returns a copy of the current rendering parameters for the node link diagram vie
 
     void setRenderingParameters(const tlp::GlGraphRenderingParameters &parameters);
 %Docstring
-tlpgui.NodeLinkDiagramComponent.setRenderingParameters(parameters)
+tlpgui.NodeLinkDiagramView.setRenderingParameters(parameters)
 
 Sets the rendering parameters for the node link diagram view.
 
@@ -88,7 +88,7 @@ protected :
 
     void setQuickAccessBarVisible(bool);
 %Docstring
-tlpgui.NodeLinkDiagramComponent.setQuickAccessBarVisible(state)
+tlpgui.NodeLinkDiagramView.setQuickAccessBarVisible(state)
 
 Sets the visibility state of the quick access bar.
 
@@ -100,7 +100,7 @@ Sets the visibility state of the quick access bar.
 
     bool quickAccessBarVisible() const;
 %Docstring
-tlpgui.NodeLinkDiagramComponent.quickAccessBarVisible()
+tlpgui.NodeLinkDiagramView.quickAccessBarVisible()
 
 Returns the visibility state of the quick access bar.
 

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -17,7 +17,7 @@
 #include <talipot/GLInteractor.h>
 #include <talipot/MouseInteractors.h>
 #include "GeographicView.h"
-#include <talipot/NodeLinkDiagramComponentInteractor.h>
+#include <talipot/NodeLinkDiagramViewInteractor.h>
 #include <QCursor>
 
 using namespace tlp;
@@ -99,7 +99,7 @@ public:
   unsigned int priority() const override;
 };
 
-class GeographicViewInteractorAddEdges : public NodeLinkDiagramComponentInteractor {
+class GeographicViewInteractorAddEdges : public NodeLinkDiagramViewInteractor {
 
 public:
   PLUGININFORMATION("InteractorAddEdgesGeographicView", "Tulip Team", "02/06/2017",
@@ -114,7 +114,7 @@ public:
   bool isCompatible(const std::string &viewName) const override;
 };
 
-class GeographicViewInteractorEditEdgeBends : public NodeLinkDiagramComponentInteractor {
+class GeographicViewInteractorEditEdgeBends : public NodeLinkDiagramViewInteractor {
 
 public:
   PLUGININFORMATION("InteractorEditEdgeBendsGeographicView", "Tulip Team", "02/06/2017",

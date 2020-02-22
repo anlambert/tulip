@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -12,8 +12,8 @@
  */
 
 #include <talipot/MouseInteractors.h>
-#include <talipot/NodeLinkDiagramComponentInteractor.h>
-#include <talipot/NodeLinkDiagramComponent.h>
+#include <talipot/NodeLinkDiagramViewInteractor.h>
+#include <talipot/NodeLinkDiagramView.h>
 #include "../utils/StandardInteractorPriority.h"
 
 using namespace tlp;
@@ -21,7 +21,7 @@ using namespace tlp;
 /** \brief Interactor to delete an element
  *
  */
-class InteractorDeleteElement : public NodeLinkDiagramComponentInteractor {
+class InteractorDeleteElement : public NodeLinkDiagramViewInteractor {
 
 public:
   PLUGININFORMATION("InteractorDeleteElement", "Tulip Team", "01/04/2009",
@@ -30,8 +30,8 @@ public:
    * Default constructor
    */
   InteractorDeleteElement(const tlp::PluginContext *)
-      : NodeLinkDiagramComponentInteractor(":/talipot/gui/icons/i_del.png", "Delete nodes or edges",
-                                           StandardInteractorPriority::DeleteElement) {}
+      : NodeLinkDiagramViewInteractor(":/talipot/gui/icons/i_del.png", "Delete nodes or edges",
+                                      StandardInteractorPriority::DeleteElement) {}
 
   /**
    * Construct chain of responsibility
@@ -45,7 +45,7 @@ public:
   }
 
   bool isCompatible(const std::string &viewName) const override {
-    return (viewName == NodeLinkDiagramComponent::viewName);
+    return (viewName == NodeLinkDiagramView::viewName);
   }
 };
 

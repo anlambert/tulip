@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -14,7 +14,7 @@
 #ifndef MATRIX_VIEW_H
 #define MATRIX_VIEW_H
 
-#include <talipot/NodeLinkDiagramComponent.h>
+#include <talipot/NodeLinkDiagramView.h>
 #include <set>
 #include "MatrixViewConfigurationWidget.h"
 
@@ -49,7 +49,7 @@ class PropertyValuesDispatcher;
  * diagonal.
  * If the graph is undirected, the adjacency matrix is symmetric.
  */
-class MatrixView : public NodeLinkDiagramComponent {
+class MatrixView : public NodeLinkDiagramView {
   Q_OBJECT
 
   MatrixViewQuickAccessBar *_bar;

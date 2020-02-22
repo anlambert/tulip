@@ -16,7 +16,7 @@
 #include <talipot/MouseInteractors.h>
 #include <talipot/View.h>
 #include <talipot/StringsListSelectionWidget.h>
-#include <talipot/NodeLinkDiagramComponent.h>
+#include <talipot/NodeLinkDiagramView.h>
 #include <talipot/Graph.h>
 #include <talipot/TlpQtTools.h>
 
@@ -57,7 +57,7 @@ PathFinder::~PathFinder() {
 }
 
 bool PathFinder::isCompatible(const std::string &viewName) const {
-  return (viewName == NodeLinkDiagramComponent::viewName);
+  return (viewName == NodeLinkDiagramView::viewName);
 }
 
 void PathFinder::construct() {

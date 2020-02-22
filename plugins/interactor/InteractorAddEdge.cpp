@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -14,8 +14,8 @@
 #include <talipot/MouseInteractors.h>
 #include <talipot/MouseNodeBuilder.h>
 #include <talipot/MouseEdgeBuilder.h>
-#include <talipot/NodeLinkDiagramComponentInteractor.h>
-#include <talipot/NodeLinkDiagramComponent.h>
+#include <talipot/NodeLinkDiagramViewInteractor.h>
+#include <talipot/NodeLinkDiagramView.h>
 
 #include "../utils/StandardInteractorPriority.h"
 #include "../utils/PluginNames.h"
@@ -25,7 +25,7 @@ using namespace tlp;
 /** \brief Interactor to add edges
  *
  */
-class InteractorAddEdge : public NodeLinkDiagramComponentInteractor {
+class InteractorAddEdge : public NodeLinkDiagramViewInteractor {
 
 public:
   PLUGININFORMATION("InteractorAddEdge", "Tulip Team", "01/04/2009", "Add nodes/edges Interactor",
@@ -34,8 +34,8 @@ public:
    * Default constructor
    */
   InteractorAddEdge(const tlp::PluginContext *)
-      : NodeLinkDiagramComponentInteractor(":/talipot/gui/icons/i_addedge.png", "Add nodes/edges",
-                                           StandardInteractorPriority::AddNodesOrEdges) {}
+      : NodeLinkDiagramViewInteractor(":/talipot/gui/icons/i_addedge.png", "Add nodes/edges",
+                                      StandardInteractorPriority::AddNodesOrEdges) {}
 
   /**
    * Construct chain of responsibility
@@ -57,7 +57,7 @@ public:
   }
 
   bool isCompatible(const std::string &viewName) const override {
-    return (viewName == NodeLinkDiagramComponent::viewName);
+    return (viewName == NodeLinkDiagramView::viewName);
   }
 };
 

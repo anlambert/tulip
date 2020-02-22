@@ -1312,13 +1312,6 @@ void PythonIDE::setProject(tlp::Project *project) {
           QString data(doc.readElementText());
           xmlFile->close();
           delete xmlFile;
-
-          if (viewName == "Python Script view") {
-            DataSet dataSet;
-            std::istringstream iss(QStringToTlpString(data));
-            DataSet::read(iss, dataSet);
-            loadScriptsAndModulesFromPythonScriptViewDataSet(dataSet);
-          }
         }
       }
     }

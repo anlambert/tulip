@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -22,7 +22,7 @@
 
 namespace tlp {
 class GlMainWidget;
-class NodeLinkDiagramComponent;
+class NodeLinkDiagramView;
 
 /** An interactor class allowing to zoom and pan using the mouse wheel.
  */
@@ -61,7 +61,7 @@ private:
   QCursor oldCursor;
 
 public:
-  MouseNKeysNavigator() : currentSpecInteractorComponent(nullptr), nldc(nullptr) {}
+  MouseNKeysNavigator() : currentSpecInteractorComponent(nullptr), nldv(nullptr) {}
   ~MouseNKeysNavigator() override {}
   bool eventFilter(QObject *, QEvent *) override;
   void clear() override;
@@ -69,7 +69,7 @@ public:
 
 private:
   // member below are to manage meta node navigation
-  tlp::NodeLinkDiagramComponent *nldc;
+  tlp::NodeLinkDiagramView *nldv;
   std::vector<tlp::Graph *> graphHierarchy;
   std::vector<tlp::Camera> cameraHierarchy;
   std::vector<tlp::node> nodeHierarchy;

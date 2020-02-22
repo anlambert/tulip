@@ -20,7 +20,7 @@ class GlGraphRenderingParameters {
 
 %Docstring
 That class holds all the rendering parameters for a Talipot OpenGL graph drawing.
-Use :meth:`talipotgui.tlpgui.NodeLinkDiagramComponent.getRenderingParameters` to get an instance on a such object.
+Use :meth:`talipotgui.tlpgui.NodeLinkDiagramView.getRenderingParameters` to get an instance on a such object.
 %End
 
 public:

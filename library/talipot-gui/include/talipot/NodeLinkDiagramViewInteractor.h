@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -11,8 +11,8 @@
  *
  */
 
-#ifndef TALIPOT_NODE_LINK_DIAGRAM_COMPONENT_INTERACTOR_H
-#define TALIPOT_NODE_LINK_DIAGRAM_COMPONENT_INTERACTOR_H
+#ifndef TALIPOT_NODE_LINK_DIAGRAM_VIEW_INTERACTOR_H
+#define TALIPOT_NODE_LINK_DIAGRAM_VIEW_INTERACTOR_H
 
 #include <talipot/GLInteractor.h>
 
@@ -20,18 +20,18 @@ class QLabel;
 
 namespace tlp {
 
-/** @brief Interactor abstract class for NodeLinkDiagramComponent
+/** @brief Interactor abstract class for NodeLinkDiagramView
  *
  */
-class TLP_QT_SCOPE NodeLinkDiagramComponentInteractor : public GLInteractorComposite {
+class TLP_QT_SCOPE NodeLinkDiagramViewInteractor : public GLInteractorComposite {
   QLabel *_label;
   unsigned int _priority;
 
 public:
-  NodeLinkDiagramComponentInteractor(const QString &iconPath, const QString &text,
-                                     unsigned int priority = 0);
+  NodeLinkDiagramViewInteractor(const QString &iconPath, const QString &text,
+                                unsigned int priority = 0);
 
-  ~NodeLinkDiagramComponentInteractor() override;
+  ~NodeLinkDiagramViewInteractor() override;
 
   void setConfigurationWidgetText(const QString &text);
 
@@ -41,4 +41,4 @@ public:
 };
 }
 
-#endif // TALIPOT_NODE_LINK_DIAGRAM_COMPONENT_INTERACTOR_H
+#endif // TALIPOT_NODE_LINK_DIAGRAM_VIEW_INTERACTOR_H

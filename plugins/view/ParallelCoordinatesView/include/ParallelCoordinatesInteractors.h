@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -14,7 +14,7 @@
 #ifndef PARALLEL_COORDINATES_INTERACTORS_H
 #define PARALLEL_COORDINATES_INTERACTORS_H
 
-#include <talipot/NodeLinkDiagramComponentInteractor.h>
+#include <talipot/NodeLinkDiagramViewInteractor.h>
 
 #include <QWidget>
 
@@ -27,7 +27,7 @@ namespace tlp {
 /** \brief Interactor abstract class for ParallelCoordinates
  *
  */
-class ParallelCoordinatesInteractor : public NodeLinkDiagramComponentInteractor {
+class ParallelCoordinatesInteractor : public NodeLinkDiagramViewInteractor {
 
 public:
   ParallelCoordinatesInteractor(const QString &iconPath, const QString &text,

@@ -199,7 +199,7 @@ public:
   If you don't implement this function your plugin won't be displayed in interactors tool bar
   */
   bool isCompatible(const std::string &viewName) const {
-    return (viewName == "Node Link Diagram view");
+    return (viewName == "Node Link Diagram");
   }
 
   /*

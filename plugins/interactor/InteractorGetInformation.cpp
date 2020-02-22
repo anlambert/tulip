@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -13,8 +13,8 @@
 
 #include <talipot/MouseInteractors.h>
 #include <talipot/MouseShowElementInfo.h>
-#include <talipot/NodeLinkDiagramComponentInteractor.h>
-#include <talipot/NodeLinkDiagramComponent.h>
+#include <talipot/NodeLinkDiagramViewInteractor.h>
+#include <talipot/NodeLinkDiagramView.h>
 
 #include "../utils/StandardInteractorPriority.h"
 #include "../utils/PluginNames.h"
@@ -24,7 +24,7 @@ using namespace tlp;
 /** \brief Interactor to get information about an element of the graph
  *
  */
-class InteractorGetInformation : public NodeLinkDiagramComponentInteractor {
+class InteractorGetInformation : public NodeLinkDiagramViewInteractor {
 
 public:
   PLUGININFORMATION("InteractorGetInformation", "Tulip Team", "01/04/2009",
@@ -33,9 +33,9 @@ public:
    * Default constructor
    */
   InteractorGetInformation(const tlp::PluginContext *)
-      : NodeLinkDiagramComponentInteractor(":/talipot/gui/icons/i_select.png",
-                                           "Display node or edge properties",
-                                           StandardInteractorPriority::GetInformation) {}
+      : NodeLinkDiagramViewInteractor(":/talipot/gui/icons/i_select.png",
+                                      "Display node or edge properties",
+                                      StandardInteractorPriority::GetInformation) {}
 
   /**
    * Construct chain of responsibility
@@ -50,7 +50,7 @@ public:
   }
 
   bool isCompatible(const std::string &viewName) const override {
-    return ((viewName == NodeLinkDiagramComponent::viewName) ||
+    return ((viewName == NodeLinkDiagramView::viewName) ||
             (viewName == ViewName::PixelOrientedViewName));
   }
 };

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -14,7 +14,7 @@
 #ifndef MOUSE_LASSO_NODES_SELECTOR_H
 #define MOUSE_LASSO_NODES_SELECTOR_H
 
-#include <talipot/NodeLinkDiagramComponentInteractor.h>
+#include <talipot/NodeLinkDiagramViewInteractor.h>
 #include <talipot/GlMainWidget.h>
 
 #include <vector>
@@ -30,7 +30,7 @@ namespace tlp {
  * all nodes under that polygon and edges connecting these nodes will be selected.
  */
 class MouseLassoNodesSelectorInteractor
-    : public NodeLinkDiagramComponentInteractor { /* GLInteractorComposite*/
+    : public NodeLinkDiagramViewInteractor { /* GLInteractorComposite*/
 
 public:
   PLUGININFORMATION("MouseLassoNodesSelectorInteractor", "Antoine Lambert", "19/06/2009",

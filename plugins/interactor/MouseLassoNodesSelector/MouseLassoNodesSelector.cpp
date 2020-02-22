@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -23,17 +23,17 @@
 #include <talipot/GlMainView.h>
 #include <talipot/GlGraphComposite.h>
 #include <talipot/GlNode.h>
-#include <talipot/NodeLinkDiagramComponent.h>
+#include <talipot/NodeLinkDiagramView.h>
 
 using namespace std;
 using namespace tlp;
 
 MouseLassoNodesSelectorInteractor::MouseLassoNodesSelectorInteractor(const tlp::PluginContext *)
-    : NodeLinkDiagramComponentInteractor(":/i_lasso.png", "Select nodes in a freehand drawn region",
-                                         StandardInteractorPriority::FreeHandSelection) {}
+    : NodeLinkDiagramViewInteractor(":/i_lasso.png", "Select nodes in a freehand drawn region",
+                                    StandardInteractorPriority::FreeHandSelection) {}
 
 bool MouseLassoNodesSelectorInteractor::isCompatible(const std::string &viewName) const {
-  return ((viewName == NodeLinkDiagramComponent::viewName) ||
+  return ((viewName == NodeLinkDiagramView::viewName) ||
           (viewName == ViewName::ScatterPlot2DViewName) ||
           (viewName == ViewName::HistogramViewName) ||
           (viewName == ViewName::PixelOrientedViewName) || (viewName == ViewName::MatrixViewName) ||

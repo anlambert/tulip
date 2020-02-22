@@ -44,7 +44,7 @@ namespace tlp {
 /** \file
  *  \brief Geographic View
 
- * This view plugin allows to visualize a geolocated Tulip graph on top of maps.
+ * This view plugin allows to visualize a geolocated Talipot graph on top of maps.
  * If geographic properties are attached to graph nodes (address or latitude/longitude), this
  * plugin uses them to layout the nodes on the map.
  *
@@ -59,7 +59,7 @@ class GeographicView : public View {
 
   PLUGININFORMATION(
       ViewName::GeographicViewName, "Antoine Lambert and Morgan Mathiaut", "06/2012",
-      "<p>The Geographic view allows to visualize a geolocated Tulip graph on top of "
+      "<p>The Geographic view allows to visualize a geolocated Talipot graph on top of "
       "maps or projected on a globe.</p>"
       "<p>If geographic properties are attached to graph nodes (address or "
       "latitude/longitude), they are used to layout the nodes on the maps or on the globe.</p>"

@@ -21,7 +21,7 @@
 #include <talipot/GlComplexPolygon.h>
 #include <talipot/TlpQtTools.h>
 #include <talipot/OpenGlConfigManager.h>
-#include <talipot/NodeLinkDiagramComponent.h>
+#include <talipot/NodeLinkDiagramView.h>
 #include <talipot/GlOffscreenRenderer.h>
 
 #include <QMenu>
@@ -184,8 +184,8 @@ void GeographicView::setState(const DataSet &dataSet) {
       rp.setElementOrderingProperty(dynamic_cast<tlp::NumericProperty *>(graph()->getProperty(s)));
     }
   } else
-    // same default initialization as NodeLinkDiagramComponent
-    NodeLinkDiagramComponent::initRenderingParameters(&rp);
+    // same default initialization as NodeLinkDiagramView
+    NodeLinkDiagramView::initRenderingParameters(&rp);
 
   graphComposite->setRenderingParameters(rp);
   sceneConfigurationWidget->resetChanges();

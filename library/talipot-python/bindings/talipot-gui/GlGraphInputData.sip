@@ -24,7 +24,7 @@ That class defines all the visual properties used to render a graph (layout, col
 By default, Talipot creates a pool of default properties whose name is prefixed by "view".
 Through the use of that class, you can set other properties as rendering input data.
 
-Use :meth:`talipotgui.tlpgui.NodeLinkDiagramComponent.getInputData` to get an instance on a such object.
+Use :meth:`talipotgui.tlpgui.NodeLinkDiagramView.getInputData` to get an instance on a such object.
 %End
 
      public:

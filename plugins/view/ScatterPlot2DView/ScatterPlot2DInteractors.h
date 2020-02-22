@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -14,14 +14,14 @@
 #ifndef SCATTER_PLOT2D_INTERACTORS_H
 #define SCATTER_PLOT2D_INTERACTORS_H
 
-#include <talipot/NodeLinkDiagramComponentInteractor.h>
+#include <talipot/NodeLinkDiagramViewInteractor.h>
 #include "../../utils/PluginNames.h"
 
 namespace tlp {
 
 class ScatterPlotCorrelCoeffSelectorOptionsWidget;
 
-class ScatterPlot2DInteractor : public NodeLinkDiagramComponentInteractor {
+class ScatterPlot2DInteractor : public NodeLinkDiagramViewInteractor {
 
 public:
   ScatterPlot2DInteractor(const QString &iconPath, const QString &text,
@@ -72,7 +72,7 @@ private:
 /**
  *  \brief interactor to get information about an element of the graph
  */
-class ScatterPlot2DInteractorGetInformation : public NodeLinkDiagramComponentInteractor {
+class ScatterPlot2DInteractorGetInformation : public NodeLinkDiagramViewInteractor {
 public:
   PLUGININFORMATION("ScatterPlot2DInteractorGetInformation", "Tulip Team", "18/06/2015",
                     "Get Information Interactor", "1.0", "Information")

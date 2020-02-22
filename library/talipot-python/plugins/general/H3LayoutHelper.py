@@ -1,4 +1,4 @@
-# Copyright (C) 2019  The Talipot developers
+# Copyright (C) 2019-2020  The Talipot developers
 #
 # Talipot is a fork of Tulip, created by David Auber
 # and the Tulip development Team from LaBRI, University of Bordeaux
@@ -59,7 +59,7 @@ class H3LayoutHelper(tlp.Algorithm):
 
         if talipotGuiOk:
             for v in tlpgui.getViewsOfGraph(self.graph):
-                if isinstance(v, tlpgui.NodeLinkDiagramComponent):
+                if isinstance(v, tlpgui.NodeLinkDiagramView):
                     rp = v.getRenderingParameters()
                     rp.setEdge3D(True)
                     rp.setViewArrow(True)

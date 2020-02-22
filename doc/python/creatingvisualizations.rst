@@ -211,7 +211,7 @@ visual attributes on graph elements and finally it creates a node link diagram v
     viewColor.setAllNodeValue(tlp.Color.Red)
 
     # Create a Node Link Diagram view without displaying it
-    nodeLinkView = tlpgui.createView("Node Link Diagram view", graph, {}, False)
+    nodeLinkView = tlpgui.createView("Node Link Diagram", graph, {}, False)
 
     renderingParams = nodeLinkView.getRenderingParameters()
 

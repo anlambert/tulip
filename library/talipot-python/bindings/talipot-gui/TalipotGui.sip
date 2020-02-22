@@ -59,7 +59,7 @@ tlpgui.getOpenedViewsWithName(viewName)
 Returns a list of the views named viewName currently opened. To get the names of
 the available views, use function :func:`tlpgui.getAvailableViews`.
 
-:param viewName: the view name (e.g. "Node Link Diagram view")
+:param viewName: the view name (e.g. "Node Link Diagram")
 :type viewName: string
 :rtype: list of :class:`tlpgui.View`
 %End
@@ -111,14 +111,14 @@ Returns an instance of the newly created view.
 
 // =========================================================================================
 
-tlp::NodeLinkDiagramComponent *createNodeLinkDiagramView(tlp::Graph *graph, tlp::DataSet dataSet = tlp::DataSet(), bool show = true);
+tlp::NodeLinkDiagramView *createNodeLinkDiagramView(tlp::Graph *graph, tlp::DataSet dataSet = tlp::DataSet(), bool show = true);
 %Docstring
 tlpgui.createNodeLinkDiagramView(graph, dataSet={}, show=True)
 
 Convenient function for creating the principal view offered by Talipot : a node link diagram.
 Its call is equivalent to::
 
-    nodeLinkView = tlp.createView("Node Link Diagram view", graph)
+    nodeLinkView = tlp.createView("Node Link Diagram", graph)
 
 :param graph: the graph to visualize
 :type graph: :class:`talipot.tlp.Graph`
@@ -126,11 +126,11 @@ Its call is equivalent to::
 :type dataSet: :class:`talipot.tlp.DataSet`
 :param show: show the view if :const:`True`
 :type show: boolean
-:rtype: :class:`tlpgui.NodeLinkDiagramComponent`
+:rtype: :class:`tlpgui.NodeLinkDiagramView`
 %End
 
 %MethodCode
-    sipRes = static_cast<tlp::NodeLinkDiagramComponent *>(tvm.addView("Node Link Diagram view", a0, *a1, a2));
+    sipRes = static_cast<tlp::NodeLinkDiagramView *>(tvm.addView("Node Link Diagram", a0, *a1, a2));
 %End
 
 // =========================================================================================

@@ -32,7 +32,7 @@
 #include <talipot/QtGlSceneZoomAndPanAnimator.h>
 #include <talipot/GlNode.h>
 #include <talipot/GlEdge.h>
-#include <talipot/NodeLinkDiagramComponent.h>
+#include <talipot/NodeLinkDiagramView.h>
 #include <talipot/GlLayer.h>
 
 #include "NeighborhoodHighlighterInteractor.h"
@@ -126,7 +126,7 @@ NeighborhoodHighlighterInteractor::~NeighborhoodHighlighterInteractor() {
 }
 
 bool NeighborhoodHighlighterInteractor::isCompatible(const std::string &viewName) const {
-  return ((viewName == NodeLinkDiagramComponent::viewName) ||
+  return ((viewName == NodeLinkDiagramView::viewName) ||
           (viewName == ViewName::HistogramViewName)
           // Interactor does not work
           //||(viewName==ViewName::MatrixViewName)

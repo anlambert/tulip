@@ -168,7 +168,7 @@ namespace tlp {
 %Include GlMainView.sip
 %Include GlGraphRenderingParameters.sip
 %Include GlGraphInputData.sip
-%Include NodeLinkDiagramComponent.sip
+%Include NodeLinkDiagramView.sip
 %Include TalipotGui.sip
 %Include ColorScalesManager.sip
 

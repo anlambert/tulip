@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -13,8 +13,8 @@
 
 ///@cond DOXYGEN_HIDDEN
 
-#ifndef TALIPOT_NODE_LINK_DIAGRAM_COMPONENT_H
-#define TALIPOT_NODE_LINK_DIAGRAM_COMPONENT_H
+#ifndef TALIPOT_NODE_LINK_DIAGRAM_VIEW_H
+#define TALIPOT_NODE_LINK_DIAGRAM_VIEW_H
 
 #include <talipot/GlMainView.h>
 #include <talipot/Camera.h>
@@ -33,7 +33,7 @@ class GlGraphRenderingParameters;
 class PropertyInterface;
 class StringProperty;
 
-class TLP_QT_SCOPE NodeLinkDiagramComponent : public tlp::GlMainView {
+class TLP_QT_SCOPE NodeLinkDiagramView : public tlp::GlMainView {
   Q_OBJECT
 
   GlGrid *_grid;
@@ -48,7 +48,7 @@ class TLP_QT_SCOPE NodeLinkDiagramComponent : public tlp::GlMainView {
 
 public:
   static const std::string viewName;
-  PLUGININFORMATION(NodeLinkDiagramComponent::viewName, "Tulip Team", "16/04/2008",
+  PLUGININFORMATION(NodeLinkDiagramView::viewName, "Tulip Team", "16/04/2008",
                     "The Node Link Diagram view is the standard representation of relational data, "
                     "where entities are represented as nodes, and their relation as edges.<br>"
                     "This view allows you to change the glyph used to represent nodes (e.g. "
@@ -56,8 +56,8 @@ public:
                     "direction of the relationship.",
                     "1.0", "relational")
 
-  NodeLinkDiagramComponent(const tlp::PluginContext *context = nullptr);
-  ~NodeLinkDiagramComponent() override;
+  NodeLinkDiagramView(const tlp::PluginContext *context = nullptr);
+  ~NodeLinkDiagramView() override;
   std::string icon() const override {
     return ":/talipot/gui/icons/32/node_link_diagram_view.png";
   }
@@ -145,6 +145,6 @@ protected:
 };
 }
 
-#endif // TALIPOT_NODE_LINK_DIAGRAM_COMPONENT_H
+#endif // TALIPOT_NODE_LINK_DIAGRAM_VIEW_H
 
 ///@endcond

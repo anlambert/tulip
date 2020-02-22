@@ -12,7 +12,7 @@
  */
 
 %ModuleHeaderCode
-#include <talipot/NodeLinkDiagramComponent.h>
+#include <talipot/NodeLinkDiagramView.h>
 #include <talipot/GlMainView.h>
 #include <talipot/View.h>
 #include <QPixmap>
@@ -30,8 +30,8 @@ class View  : tlp::Plugin /Abstract/ {
 %End
 
 %ConvertToSubClassCode
-   if (dynamic_cast<tlp::NodeLinkDiagramComponent*>(sipCpp)) {
-        sipType = sipFindType("tlp::NodeLinkDiagramComponent");
+   if (dynamic_cast<tlp::NodeLinkDiagramView*>(sipCpp)) {
+        sipType = sipFindType("tlp::NodeLinkDiagramView");
    } else if (dynamic_cast<tlp::GlMainView*>(sipCpp)) {
         sipType = sipFindType("tlp::GlMainView");
    } else {

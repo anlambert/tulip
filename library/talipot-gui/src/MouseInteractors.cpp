@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -25,7 +25,7 @@
 #include <talipot/GlBoundingBoxSceneVisitor.h>
 #include <talipot/DrawingTools.h>
 #include <talipot/QtGlSceneZoomAndPanAnimator.h>
-#include <talipot/NodeLinkDiagramComponent.h>
+#include <talipot/NodeLinkDiagramView.h>
 #include <talipot/MouseInteractors.h>
 
 #include <iostream>
@@ -373,17 +373,17 @@ bool MouseNKeysNavigator::eventFilter(QObject *widget, QEvent *e) {
       if (find) {
         Graph *metaGraph = graph->getNodeMetaInfo(metaNode);
 
-        if (metaGraph && nldc) {
+        if (metaGraph && nldv) {
           graphHierarchy.push_back(graph);
           nodeHierarchy.push_back(metaNode);
-          cameraHierarchy.push_back(nldc->goInsideItem(metaNode));
+          cameraHierarchy.push_back(nldv->goInsideItem(metaNode));
         }
       } else // no double click on a metanode. Do not block event.
         return false;
 
       return true;
     } else {
-      if (!graphHierarchy.empty() && nldc) {
+      if (!graphHierarchy.empty() && nldv) {
         Graph *oldGraph = graphHierarchy.back();
         graphHierarchy.pop_back();
         Camera camera = cameraHierarchy.back();
@@ -401,7 +401,7 @@ bool MouseNKeysNavigator::eventFilter(QObject *widget, QEvent *e) {
 
         Observable::unholdObservers();
 
-        nldc->requestChangeGraph(oldGraph);
+        nldv->requestChangeGraph(oldGraph);
         glmainwidget->getScene()->getLayer("Main")->getCamera().setCenter(camera.getCenter());
         glmainwidget->getScene()->getLayer("Main")->getCamera().setEyes(camera.getEyes());
         glmainwidget->getScene()->getLayer("Main")->getCamera().setSceneRadius(
@@ -416,7 +416,7 @@ bool MouseNKeysNavigator::eventFilter(QObject *widget, QEvent *e) {
         glmainwidget->getScene()->getLayer("Main")->acceptVisitor(&visitor);
         BoundingBox boundingBox(visitor.getBoundingBox());
 
-        MyQtGlSceneZoomAndPanAnimator navigator(glmainwidget, nldc, boundingBox, oldGraph, n,
+        MyQtGlSceneZoomAndPanAnimator navigator(glmainwidget, nldv, boundingBox, oldGraph, n,
                                                 alphaOrigin);
         navigator.animateZoomAndPan();
 
@@ -550,7 +550,7 @@ bool MouseNKeysNavigator::eventFilter(QObject *widget, QEvent *e) {
 }
 
 void MouseNKeysNavigator::viewChanged(View *view) {
-  nldc = static_cast<NodeLinkDiagramComponent *>(view);
+  nldv = static_cast<NodeLinkDiagramView *>(view);
 }
 
 void MouseNKeysNavigator::clear() {}

@@ -38,7 +38,7 @@ using namespace tlp;
 ParallelCoordinatesInteractor::ParallelCoordinatesInteractor(const QString &iconPath,
                                                              const QString &text,
                                                              const unsigned int priority)
-    : NodeLinkDiagramComponentInteractor(iconPath, text, priority) {}
+    : NodeLinkDiagramViewInteractor(iconPath, text, priority) {}
 
 bool ParallelCoordinatesInteractor::isCompatible(const string &viewName) const {
   return (viewName == ViewName::ParallelCoordinatesViewName);

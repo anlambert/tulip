@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -17,13 +17,13 @@
 namespace tlp {
 namespace ViewName {
 
-const static char GeographicViewName[] = "Geographic view";
-const static char HistogramViewName[] = "Histogram view";
-const static char MatrixViewName[] = "Adjacency Matrix view";
-const static char ParallelCoordinatesViewName[] = "Parallel Coordinates view";
-const static char PixelOrientedViewName[] = "Pixel Oriented view";
-const static char ScatterPlot2DViewName[] = "Scatter Plot 2D view";
-const static char SOMViewName[] = "Self Organizing Map view";
+const static char GeographicViewName[] = "Geographic";
+const static char HistogramViewName[] = "Histogram";
+const static char MatrixViewName[] = "Adjacency Matrix";
+const static char ParallelCoordinatesViewName[] = "Parallel Coordinates";
+const static char PixelOrientedViewName[] = "Pixel Oriented";
+const static char ScatterPlot2DViewName[] = "Scatter Plot 2D";
+const static char SOMViewName[] = "Self Organizing Map";
 } // namespace ViewName
 
 namespace SelectionAlgorithm {

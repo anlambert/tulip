@@ -35,7 +35,7 @@ using namespace std;
 namespace tlp {
 
 MatrixView::MatrixView(const PluginContext *)
-    : NodeLinkDiagramComponent(), _bar(nullptr), _matrixGraph(nullptr),
+    : NodeLinkDiagramView(), _bar(nullptr), _matrixGraph(nullptr),
       _graphEntitiesToDisplayedNodes(nullptr), _displayedNodesToGraphEntities(nullptr),
       _displayedEdgesToGraphEdges(nullptr), _displayedNodesAreNodes(nullptr), _dispatcher(nullptr),
       _configurationWidget(nullptr), _mustUpdateSizes(false), _mustUpdateLayout(false),

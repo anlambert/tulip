@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -14,12 +14,12 @@
 #ifndef SOM_VIEW_INTERACTOR_H
 #define SOM_VIEW_INTERACTOR_H
 
-#include <talipot/NodeLinkDiagramComponentInteractor.h>
+#include <talipot/NodeLinkDiagramViewInteractor.h>
 #include "../../utils/PluginNames.h"
 
 namespace tlp {
 
-class SOMViewInteractor : public tlp::NodeLinkDiagramComponentInteractor {
+class SOMViewInteractor : public tlp::NodeLinkDiagramViewInteractor {
 public:
   SOMViewInteractor(const QString &iconPath, const QString &text, const unsigned int priority = 0);
 

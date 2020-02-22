@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -14,7 +14,7 @@
 #ifndef HISTOGRAM_INTERACTORS_H
 #define HISTOGRAM_INTERACTORS_H
 
-#include <talipot/NodeLinkDiagramComponentInteractor.h>
+#include <talipot/NodeLinkDiagramViewInteractor.h>
 #include "../../utils/PluginNames.h"
 
 using namespace std;
@@ -24,7 +24,7 @@ namespace tlp {
 class HistogramStatistics;
 class HistoStatsConfigWidget;
 
-class HistogramInteractor : public NodeLinkDiagramComponentInteractor {
+class HistogramInteractor : public NodeLinkDiagramViewInteractor {
 
 public:
   HistogramInteractor(const QString &iconPath, const QString &text,
@@ -76,7 +76,7 @@ private:
 /**
  *  \brief interactor to get information about an element of the graph
  */
-class HistogramInteractorGetInformation : public NodeLinkDiagramComponentInteractor {
+class HistogramInteractorGetInformation : public NodeLinkDiagramViewInteractor {
 public:
   PLUGININFORMATION("HistogramInteractorGetInformation", "Tulip Team", "18/06/2015",
                     "Get Information Interactor", "1.0", "Information")
