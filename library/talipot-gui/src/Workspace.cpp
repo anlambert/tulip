@@ -666,6 +666,14 @@ void Workspace::readProject(Project *project, QMap<QString, Graph *> rootIds,
         xmlFile->close();
         delete xmlFile;
 
+        // backward compatibility with old view names
+        if (viewName.endsWith(" view")) {
+          viewName = viewName.mid(0, viewName.length() - 5);
+        }
+        if (viewName == "Adjacency Matrix") {
+          viewName = "Matrix";
+        }
+
         View *view = PluginsManager::getPluginObject<View>(QStringToTlpString(viewName));
 
         if (view == nullptr)
