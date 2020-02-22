@@ -19,7 +19,7 @@ namespace ViewName {
 
 const static char GeographicViewName[] = "Geographic";
 const static char HistogramViewName[] = "Histogram";
-const static char MatrixViewName[] = "Adjacency Matrix";
+const static char MatrixViewName[] = "Matrix";
 const static char ParallelCoordinatesViewName[] = "Parallel Coordinates";
 const static char PixelOrientedViewName[] = "Pixel Oriented";
 const static char ScatterPlot2DViewName[] = "Scatter Plot 2D";
