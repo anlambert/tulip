@@ -256,10 +256,6 @@ jobs:
         - docker
 
       before_install:
-        - echo 'DOCKER_OPTS="-H tcp://127.0.0.1:2375 -H unix:///var/run/docker.sock
-            -s devicemapper"' | sudo tee /etc/default/docker > /dev/null
-        - sudo service docker restart
-        - sleep 5
         - sudo docker pull ${DOCKER_IMAGE}
         - sudo docker create -v $HOME/ccache:/ccache --name ccache ${DOCKER_IMAGE}
 
@@ -273,7 +269,7 @@ jobs:
           let DEV_VERSION+=1
           echo current wheel dev version = $DEV_VERSION
           sudo docker run --rm=true -e CCACHE_DIR=/ccache --volumes-from ccache \
-            --cap-add SYS_ADMIN -v `pwd`:/talipot:rw ${DOCKER_IMAGE} /bin/bash -c \
+            -v `pwd`:/talipot:rw ${DOCKER_IMAGE} /bin/bash -c \
             "bash -xe /talipot/bundlers/linux/talipot_python_wheels_manylinux_build.sh \
               dev$DEV_VERSION $TEST_PYPI_API_TOKEN $TRAVIS_BRANCH"
 
@@ -294,7 +290,7 @@ jobs:
       # Talipot x86_64 AppImage build on CentOS 7
       if: commit_message !~ /\[ci-macos-only\]$/
       os: linux
-      dist: trusty
+      dist: bionic
       cache:
         directories:
           - $HOME/ccache
@@ -306,25 +302,16 @@ jobs:
 
       services:
         - docker
+        - xvfb
 
       before_install:
-        - echo 'DOCKER_OPTS="-H tcp://127.0.0.1:2375 -H unix:///var/run/docker.sock -s devicemapper"' | sudo tee /etc/default/docker > /dev/null
-        - sudo service docker restart
-        - sleep 5
         - sudo docker pull ${DOCKER_IMAGE}
         - sudo docker create -v $HOME/ccache:/ccache --name ccache ${DOCKER_IMAGE}
-
-      before_script:
-        - export DISPLAY=:99.0
-        - sh -e /etc/init.d/xvfb start
-        - sleep 3
 
       script:
         - sudo docker run
             --rm=true
             -e CCACHE_DIR=/ccache --volumes-from ccache
-            --cap-add SYS_ADMIN
-            --device /dev/fuse:/dev/fuse:mrw
             -v `pwd`:/talipot:rw -e DISPLAY=$DISPLAY
             -v /tmp/.X11-unix:/tmp/.X11-unix
             ${DOCKER_IMAGE}
