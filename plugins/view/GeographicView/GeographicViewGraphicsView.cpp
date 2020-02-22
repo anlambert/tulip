@@ -1278,12 +1278,10 @@ void GeographicViewGraphicsView::updateMapTexture() {
   int width = leafletMaps->geometry().width();
   int height = leafletMaps->geometry().height();
 
-#ifdef QT_HAS_WEBENGINE
   QImage image(width, height, QImage::Format_RGB32);
   QPainter painter(&image);
   leafletMaps->render(&painter);
   painter.end();
-#endif
 
   GlOffscreenRenderer::getInstance()->makeOpenGLContextCurrent();
 
@@ -1296,11 +1294,7 @@ void GeographicViewGraphicsView::updateMapTexture() {
   renderFbo->bind();
   QOpenGLPaintDevice device(width, height);
   QPainter fboPainter(&device);
-#ifdef QT_HAS_WEBENGINE
   fboPainter.drawImage(QRect(0, 0, width, height), image);
-#else
-  leafletMaps->render(&fboPainter);
-#endif
   fboPainter.end();
   renderFbo->release();
 }
