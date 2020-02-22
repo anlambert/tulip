@@ -340,6 +340,7 @@ jobs:
         user: "anlambert"
         key:
           secure: "${BINTRAY_API_KEY}"
+
   #=============================================================================================
     # # Talipot thirdparty build stage on Mac OS 10.12
     # - stage: Talipot thirdparty build (Mac OS)
