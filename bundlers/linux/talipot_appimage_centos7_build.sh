@@ -78,5 +78,5 @@ chmod a+x appimagetool-$(uname -p).AppImage
 
 # finally build the portable app
 TALIPOT_APPIMAGE=Talipot-$(sh talipot-config --version)-$(uname -p).AppImage
-./appimagetool-$(uname -p).AppImage Talipot.AppDir Talipot-$(sh talipot-config --version)-$(uname -p).AppImage $TALIPOT_APPIMAGE
+./appimagetool-$(uname -p).AppImage --appimage-extract-and-run Talipot.AppDir Talipot-$(sh talipot-config --version)-$(uname -p).AppImage $TALIPOT_APPIMAGE
 chmod +x $TALIPOT_APPIMAGE
