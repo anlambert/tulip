@@ -24,6 +24,7 @@ jobs:
   #=============================================================================================
     # Talipot core build stage on Linux
     - stage: Talipot core build (Linux)
+      if: commit_message !~ /\[ci-macos-only\]$/
     # legacy Talipot core build on Linux
       os: linux
       dist: bionic
@@ -67,6 +68,7 @@ jobs:
     #-------------------------------------------------------------------------------------------
     # modern Talipot core build on Linux
     -
+      if: commit_message !~ /\[ci-macos-only\]$/
       os: linux
       dist: bionic
       compiler: gcc
@@ -119,6 +121,7 @@ jobs:
     # Talipot complete build stage on Linux
     - stage: Talipot complete build (Linux)
       # legacy Talipot complete build on Linux, we also build the documentation in this one
+      if: commit_message !~ /\[ci-macos-only\]$/
       os: linux
       dist: bionic
       compiler: gcc
@@ -172,6 +175,7 @@ jobs:
     #-------------------------------------------------------------------------------------------
     # modern Talipot complete build on Linux
     -
+      if: commit_message !~ /\[ci-macos-only\]$/
       os: linux
       dist: bionic
       compiler: gcc
@@ -231,6 +235,7 @@ jobs:
   #==============================================================================================================================================================
     # Talipot-Python wheel build on manylinux2010
     - stage: Talipot-Python wheels build (manylinux2010)
+      if: commit_message !~ /\[ci-macos-only\]$/
       os: linux
       dist: bionic
       addons:
@@ -287,6 +292,7 @@ jobs:
     # Talipot AppImage build on CentOS
     - stage: Talipot AppImage build (CentOS)
       # Talipot x86_64 AppImage build on CentOS 7
+      if: commit_message !~ /\[ci-macos-only\]$/
       os: linux
       dist: trusty
       cache:
