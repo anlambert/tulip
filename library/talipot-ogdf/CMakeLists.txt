@@ -16,15 +16,14 @@ TARGET_LINK_LIBRARIES(${LibTalipotOGDFName} ${LibTalipotCoreName})
 TARGET_LINK_LIBRARIES(${LibTalipotOGDFName} ${OGDFLibrary})
 
 INSTALL(TARGETS ${LibTalipotOGDFName}
-       RUNTIME DESTINATION ${TalipotBinInstallDir} COMPONENT talipot_ogdf
-       LIBRARY DESTINATION ${TalipotLibInstallDir} COMPONENT talipot_ogdf
-       ARCHIVE DESTINATION ${TalipotLibInstallDir} COMPONENT talipot_ogdf)
+       RUNTIME DESTINATION ${TalipotBinInstallDir}
+       LIBRARY DESTINATION ${TalipotLibInstallDir}
+       ARCHIVE DESTINATION ${TalipotLibInstallDir})
 
 INSTALL(FILES
   talipot2ogdf/OGDFLayoutPluginBase.h
   talipot2ogdf/TalipotToOGDF.h
-DESTINATION ${TalipotIncludeInstallDir}/talipot2ogdf/
-COMPONENT talipot_ogdf_dev)
+DESTINATION ${TalipotIncludeInstallDir}/talipot2ogdf/)
 
 IF(TALIPOT_ACTIVATE_PYTHON_WHEEL_TARGET)
   TALIPOT_COPY_TARGET_LIBRARY_POST_BUILD(${LibTalipotOGDFName} ${TALIPOT_PYTHON_NATIVE_FOLDER} wheel)

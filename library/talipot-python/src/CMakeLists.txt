@@ -61,9 +61,9 @@ TARGET_LINK_LIBRARIES(${LibTalipotPythonName} ${QT_LIBRARIES})
 TARGET_LINK_LIBRARIES(${LibTalipotPythonName} ${PYTHON_LIBRARY})
 
 INSTALL(TARGETS ${LibTalipotPythonName}
-  RUNTIME DESTINATION ${TalipotBinInstallDir} COMPONENT talipot_python
-  LIBRARY DESTINATION ${TalipotLibInstallDir} COMPONENT talipot_python
-  ARCHIVE DESTINATION ${TalipotLibInstallDir} COMPONENT talipot_python)
+  RUNTIME DESTINATION ${TalipotBinInstallDir}
+  LIBRARY DESTINATION ${TalipotLibInstallDir}
+  ARCHIVE DESTINATION ${TalipotLibInstallDir})
 
 ENDIF(SIP_OK)
 ENDIF(PYTHONLIBS_FOUND)

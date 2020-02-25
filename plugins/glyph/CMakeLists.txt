@@ -33,5 +33,4 @@ INSTALL(FILES radialGradientTexture.png
               bottomShadowTexture.png
               leftBottomShadowTexture.png
               rightBottomShadowTexture.png
-        DESTINATION ${TalipotBitmapInstallDir}
-        COMPONENT talipot_plugins)
+        DESTINATION ${TalipotBitmapInstallDir})

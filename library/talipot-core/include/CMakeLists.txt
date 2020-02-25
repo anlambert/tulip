@@ -84,9 +84,7 @@ INSTALL(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/talipot/Release.h
   talipot/FontAwesomeConstants.h
   talipot/MaterialDesignIconsConstants.h
-DESTINATION ${TalipotIncludeInstallDir}/talipot/
-COMPONENT talipot_core_dev
-)
+DESTINATION ${TalipotIncludeInstallDir}/talipot/)
 
 INSTALL(FILES
   talipot/cxx/AbstractProperty.cxx
@@ -98,6 +96,4 @@ INSTALL(FILES
   talipot/cxx/minmaxproperty.cxx
   talipot/cxx/MutableContainer.cxx
   talipot/cxx/Vector.cxx
-DESTINATION ${TalipotIncludeInstallDir}/talipot/cxx/
-COMPONENT talipot_core_dev
-)
+DESTINATION ${TalipotIncludeInstallDir}/talipot/cxx/)

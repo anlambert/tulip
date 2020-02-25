@@ -185,7 +185,7 @@ IF(NOT TALIPOT_BUILD_CORE_ONLY)
                      COMMAND ${SIP_EXE} -n ${SIP_MODULE} -I ${CMAKE_CURRENT_BINARY_DIR} -I ${CMAKE_CURRENT_SOURCE_DIR} -a ${CMAKE_CURRENT_BINARY_DIR}/talipot.api ${CMAKE_CURRENT_SOURCE_DIR}/Module.sip
                      COMMENT "Generating API file for Talipot Python bindings"
                      VERBATIM)
-  INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/talipot.api DESTINATION ${TalipotShareInstallDir}/apiFiles COMPONENT talipot_python)
+  INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/talipot.api DESTINATION ${TalipotShareInstallDir}/apiFiles)
 ENDIF(NOT TALIPOT_BUILD_CORE_ONLY)
 
 SET_DIRECTORY_PROPERTIES(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "talipot.api;sipAPI_talipot.h;talipot_module;BooleanProperty.sip;ColorProperty.sip;DoubleProperty.sip;IntegerProperty.sip;LayoutProperty.sip;SizeProperty.sip;StringProperty.sip")

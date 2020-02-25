@@ -6,5 +6,4 @@ INSTALL(FILES arrowSprite.png
               cylinderTexture.png
               halfCylinderTexture.png
               roundTexture.png
-        DESTINATION ${TalipotBitmapInstallDir}
-        COMPONENT talipot_textures)
+        DESTINATION ${TalipotBitmapInstallDir})

@@ -20,6 +20,4 @@ INSTALL(FILES
   talipot/Project.h
   talipot/View.h
   talipot/ViewWidget.h
-DESTINATION ${TalipotIncludeInstallDir}/talipot/
-COMPONENT talipot_gui_dev
-)
+DESTINATION ${TalipotIncludeInstallDir}/talipot/)

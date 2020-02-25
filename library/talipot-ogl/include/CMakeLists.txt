@@ -48,6 +48,4 @@ INSTALL(FILES
   talipot/OcclusionTest.h
   talipot/OpenGlConfigManager.h
   talipot/OpenGlIncludes.h
-DESTINATION ${TalipotIncludeInstallDir}/talipot/
-COMPONENT talipot_ogl_dev
-)
+DESTINATION ${TalipotIncludeInstallDir}/talipot/)

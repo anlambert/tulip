@@ -4,5 +4,4 @@ INSTALL(FILES
         Python-3.6.api
         Python-3.7.api
         Python-3.8.api
-        DESTINATION ${TalipotShareInstallDir}/apiFiles
-        COMPONENT talipot_python)
+        DESTINATION ${TalipotShareInstallDir}/apiFiles)

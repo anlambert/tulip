@@ -89,6 +89,6 @@ ADD_CUSTOM_COMMAND(TARGET ${LibTalipotGUIPythonBindingsName}
                    COMMENT "Generating API file for Talipot GUI Python bindings"
                    VERBATIM)
 
-INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/talipotgui.api DESTINATION ${TalipotShareInstallDir}/apiFiles COMPONENT talipot_python)
+INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/talipotgui.api DESTINATION ${TalipotShareInstallDir}/apiFiles)
 
 SET_DIRECTORY_PROPERTIES(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "talipotgui.api;sipAPI_talipotgui.h;talipotgui_module")

@@ -233,9 +233,9 @@ TARGET_LINK_LIBRARIES(${LibTalipotGUIName} talipot-gui-python)
 TARGET_LINK_LIBRARIES(${LibTalipotGUIName} talipot-about-page-utils)
 
 INSTALL(TARGETS ${LibTalipotGUIName}
-  RUNTIME DESTINATION ${TalipotBinInstallDir} COMPONENT talipot_gui
-  LIBRARY DESTINATION ${TalipotLibInstallDir} COMPONENT talipot_gui
-  ARCHIVE DESTINATION ${TalipotLibInstallDir} COMPONENT talipot_gui)
+  RUNTIME DESTINATION ${TalipotBinInstallDir}
+  LIBRARY DESTINATION ${TalipotLibInstallDir}
+  ARCHIVE DESTINATION ${TalipotLibInstallDir})
 
 INSTALL(FILES ../resources/icons/talipot.ico DESTINATION ${TalipotBitmapInstallDir})
 INSTALL(FILES ../resources/icons/talipot-file-icon.ico DESTINATION ${TalipotBitmapInstallDir})

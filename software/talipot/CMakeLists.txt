@@ -96,9 +96,9 @@ TARGET_LINK_LIBRARIES(talipot crash_handling ${LibTalipotCoreName} ${LibTalipotO
                                ${LibTalipotGUIName} ${LibTalipotPythonName} ${QT_LIBRARIES})
 
 INSTALL(TARGETS talipot
-  RUNTIME DESTINATION ${TalipotBinInstallDir} COMPONENT talipot_app
-  LIBRARY DESTINATION ${TalipotLibInstallDir} COMPONENT talipot_app
-  ARCHIVE DESTINATION ${TalipotLibInstallDir} COMPONENT talipot_app)
+  RUNTIME DESTINATION ${TalipotBinInstallDir}
+  LIBRARY DESTINATION ${TalipotLibInstallDir}
+  ARCHIVE DESTINATION ${TalipotLibInstallDir})
 
 IF(WIN32)
 
@@ -107,9 +107,9 @@ IF(NOT MSYS2_PYTHON)
   TARGET_LINK_LIBRARIES(getpythonhome ${LibTalipotCoreName} ${LibTalipotOGLName} ${LibTalipotGUIName} ${QT_LIBRARIES})
 
   INSTALL(TARGETS getpythonhome
-    RUNTIME DESTINATION ${TalipotBinInstallDir} COMPONENT talipot_app
-    LIBRARY DESTINATION ${TalipotLibInstallDir} COMPONENT talipot_app
-    ARCHIVE DESTINATION ${TalipotLibInstallDir} COMPONENT talipot_app)
+    RUNTIME DESTINATION ${TalipotBinInstallDir}
+    LIBRARY DESTINATION ${TalipotLibInstallDir}
+    ARCHIVE DESTINATION ${TalipotLibInstallDir})
 
   INSTALL(FILES src/talipot.bat DESTINATION ${TalipotBinInstallDir})
 ENDIF(NOT MSYS2_PYTHON)

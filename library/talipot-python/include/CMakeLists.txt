@@ -8,6 +8,4 @@ INSTALL(FILES
   talipot/PythonEditorsTabWidget.h
   talipot/PythonCppTypesConverter.h
   talipot/PythonIDE.h
-DESTINATION ${TalipotIncludeInstallDir}/talipot/
-COMPONENT talipot_python
-)
+DESTINATION ${TalipotIncludeInstallDir}/talipot/)

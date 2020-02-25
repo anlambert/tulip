@@ -77,6 +77,6 @@ TARGET_LINK_LIBRARIES(${LibTalipotOGLName} ${FTGLLibrary} ${GLEW_LIBRARY}
                       ${FREETYPE_LIBRARY} ${Tess2Library})
 
 INSTALL(TARGETS ${LibTalipotOGLName}
-  RUNTIME DESTINATION ${TalipotBinInstallDir} COMPONENT talipot_ogl
-  LIBRARY DESTINATION ${TalipotLibInstallDir} COMPONENT talipot_ogl
-  ARCHIVE DESTINATION ${TalipotLibInstallDir} COMPONENT talipot_ogl)
+  RUNTIME DESTINATION ${TalipotBinInstallDir}
+  LIBRARY DESTINATION ${TalipotLibInstallDir}
+  ARCHIVE DESTINATION ${TalipotLibInstallDir})
