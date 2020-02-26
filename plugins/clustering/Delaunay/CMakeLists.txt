@@ -1,4 +1,5 @@
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR} ${TalipotCoreBuildInclude} ${TalipotCoreInclude})
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR} ${TalipotCoreBuildInclude}
+                    ${TalipotCoreInclude})
 
 ADD_LIBRARY(Delaunay-${TalipotVersion} SHARED DelaunayTriangulation.cpp)
 TARGET_LINK_LIBRARIES(Delaunay-${TalipotVersion} ${LibTalipotCoreName})

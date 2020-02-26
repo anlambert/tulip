@@ -1,5 +1,8 @@
 INCLUDE_DIRECTORIES(BEFORE ${TalipotCoreBuildInclude})
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR}  ${CMAKE_CURRENT_SOURCE_DIR} ${OPENGL_INCLUDE_DIR} ${TalipotCoreInclude} ${TalipotOGLInclude} ${TalipotGUIInclude})
+
+INCLUDE_DIRECTORIES(
+  ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR} ${OPENGL_INCLUDE_DIR}
+  ${TalipotCoreInclude} ${TalipotOGLInclude} ${TalipotGUIInclude})
 
 SET(LIB_SRCS
     PathFinder.cpp
@@ -10,25 +13,21 @@ SET(LIB_SRCS
     PathFinding/DFS/DFS.cpp
     highlighters/EnclosingCircleHighlighter.cpp
     highlighters/PathHighlighter.cpp
-    highlighters/ZoomAndPanHighlighter.cpp
-)
+    highlighters/ZoomAndPanHighlighter.cpp)
 
-QTX_WRAP_UI(LIB_UI_HEADERS
-    designer/EnclosingCircleConfiguration.ui
-    designer/PathFinderConfiguration.ui
-)
+QTX_WRAP_UI(LIB_UI_HEADERS designer/EnclosingCircleConfiguration.ui
+            designer/PathFinderConfiguration.ui)
 
-QTX_WRAP_CPP(LIB_MOC_SRCS
-      PathFinderConfigurationWidget.h
-      PathFinder.h
-      highlighters/EnclosingCircleHighlighter.h
-)
+QTX_WRAP_CPP(LIB_MOC_SRCS PathFinderConfigurationWidget.h PathFinder.h
+             highlighters/EnclosingCircleHighlighter.h)
 
-QTX_ADD_RESOURCES(LIB_RCC_SRCS
-	designer/resources.qrc
-)
+QTX_ADD_RESOURCES(LIB_RCC_SRCS designer/resources.qrc)
 
-ADD_LIBRARY(PathFinder-${TalipotVersion} SHARED ${LIB_SRCS} ${LIB_UI_HEADERS} ${LIB_MOC_SRCS} ${LIB_RCC_SRCS})
-TARGET_LINK_LIBRARIES(PathFinder-${TalipotVersion} ${LibTalipotCoreName} ${LibTalipotOGLName} ${LibTalipotGUIName})
+ADD_LIBRARY(PathFinder-${TalipotVersion} SHARED ${LIB_SRCS} ${LIB_UI_HEADERS}
+                                                ${LIB_MOC_SRCS} ${LIB_RCC_SRCS})
 
-TALIPOT_INSTALL_PLUGIN(PathFinder-${TalipotVersion} ${TalipotInteractorPluginsInstallDir})
+TARGET_LINK_LIBRARIES(PathFinder-${TalipotVersion} ${LibTalipotCoreName}
+                      ${LibTalipotOGLName} ${LibTalipotGUIName})
+
+TALIPOT_INSTALL_PLUGIN(PathFinder-${TalipotVersion}
+                       ${TalipotInteractorPluginsInstallDir})

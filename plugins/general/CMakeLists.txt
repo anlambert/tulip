@@ -1,4 +1,3 @@
 ADD_SUBDIRECTORY(CurveEdges)
 ADD_SUBDIRECTORY(ReverseEdges)
 ADD_SUBDIRECTORY(EdgeBundling)
-

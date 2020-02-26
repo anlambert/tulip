@@ -7,20 +7,20 @@ FIND_PACKAGE(PythonInterp REQUIRED)
 
 IF(PYTHONLIBS_FOUND AND PYTHONINTERP_FOUND)
 
-INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_DIR} ${PYTHON_INCLUDE_PATH} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
+  INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_DIR} ${PYTHON_INCLUDE_PATH}
+                      ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 
-SET(sip_SRCS
-    export.c
-    extracts.c
-    gencode.c
-    heap.c
-    lexer.c
-    main.c
-    parser.c
-    transform.c
-    type_hints.c
-)
+  SET(sip_SRCS
+      export.c
+      extracts.c
+      gencode.c
+      heap.c
+      lexer.c
+      main.c
+      parser.c
+      transform.c
+      type_hints.c)
 
-ADD_EXECUTABLE(sip ${sip_SRCS})
+  ADD_EXECUTABLE(sip ${sip_SRCS})
 
 ENDIF(PYTHONLIBS_FOUND AND PYTHONINTERP_FOUND)

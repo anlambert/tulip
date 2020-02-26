@@ -1,4 +1,5 @@
-INCLUDE_DIRECTORIES(${TalipotCoreBuildInclude} ${TalipotCoreInclude} ${OGDFInclude})
+INCLUDE_DIRECTORIES(${TalipotCoreBuildInclude} ${TalipotCoreInclude}
+                    ${OGDFInclude})
 
 TALIPOT_SET_CXX_FLAGS("-DOGDF_DLL")
 IF(WIN32)
@@ -7,24 +8,22 @@ ENDIF(WIN32)
 
 DISABLE_COMPILER_WARNINGS()
 
-SET(TalipotToOGDF_SRCS
-  TalipotToOGDF.cpp
-  OGDFLayoutPluginBase.cpp)
+SET(TalipotToOGDF_SRCS TalipotToOGDF.cpp OGDFLayoutPluginBase.cpp)
 
 ADD_LIBRARY(${LibTalipotOGDFName} SHARED ${TalipotToOGDF_SRCS})
-TARGET_LINK_LIBRARIES(${LibTalipotOGDFName} ${LibTalipotCoreName})
-TARGET_LINK_LIBRARIES(${LibTalipotOGDFName} ${OGDFLibrary})
 
-INSTALL(TARGETS ${LibTalipotOGDFName}
-       RUNTIME DESTINATION ${TalipotBinInstallDir}
-       LIBRARY DESTINATION ${TalipotLibInstallDir}
-       ARCHIVE DESTINATION ${TalipotLibInstallDir})
+TARGET_LINK_LIBRARIES(${LibTalipotOGDFName} ${LibTalipotCoreName} ${OGDFLibrary})
 
-INSTALL(FILES
-  talipot2ogdf/OGDFLayoutPluginBase.h
-  talipot2ogdf/TalipotToOGDF.h
-DESTINATION ${TalipotIncludeInstallDir}/talipot2ogdf/)
+INSTALL(
+  TARGETS ${LibTalipotOGDFName}
+  RUNTIME DESTINATION ${TalipotBinInstallDir}
+  LIBRARY DESTINATION ${TalipotLibInstallDir}
+  ARCHIVE DESTINATION ${TalipotLibInstallDir})
+
+INSTALL(FILES talipot2ogdf/OGDFLayoutPluginBase.h talipot2ogdf/TalipotToOGDF.h
+        DESTINATION ${TalipotIncludeInstallDir}/talipot2ogdf/)
 
 IF(TALIPOT_ACTIVATE_PYTHON_WHEEL_TARGET)
-  TALIPOT_COPY_TARGET_LIBRARY_POST_BUILD(${LibTalipotOGDFName} ${TALIPOT_PYTHON_NATIVE_FOLDER} wheel)
+  TALIPOT_COPY_TARGET_LIBRARY_POST_BUILD(${LibTalipotOGDFName}
+                                         ${TALIPOT_PYTHON_NATIVE_FOLDER} wheel)
 ENDIF(TALIPOT_ACTIVATE_PYTHON_WHEEL_TARGET)

@@ -3,7 +3,8 @@ SET(VERSION_MAJOR 3)
 SET(VERSION_MINOR 0)
 SET(FTGL_SOVERSION 1)
 
-ADD_DEFINITIONS(-DPACKAGE_VERSION="${VERSION_SERIES}.${VERSION_MAJOR}.${VERSION_MINOR}")
+ADD_DEFINITIONS(
+  -DPACKAGE_VERSION="${VERSION_SERIES}.${VERSION_MAJOR}.${VERSION_MINOR}")
 
 IF(WIN32)
   ADD_DEFINITIONS(-D_USE_MATH_DEFINES)
@@ -36,8 +37,7 @@ SET(ftgl_SRCS
     FTVector.h
     FTVectoriser.cpp
     FTVectoriser.h
-    FTUnicode.h
-)
+    FTUnicode.h)
 
 SET(ftgl_headers
     FTGL/ftgl.h
@@ -62,8 +62,7 @@ SET(ftgl_headers
     FTGL/FTGLTextureFont.h
     FTGL/FTGLTriangleExtractorFont.h
     FTGL/FTLayout.h
-    FTGL/FTSimpleLayout.h
-)
+    FTGL/FTSimpleLayout.h)
 
 SET(ftglyph_SRCS
     FTGlyph/FTGlyph.cpp
@@ -84,8 +83,7 @@ SET(ftglyph_SRCS
     FTGlyph/FTTextureGlyph.cpp
     FTGlyph/FTTextureGlyphImpl.h
     FTGlyph/FTTriangleExtractorGlyph.cpp
-    FTGlyph/FTTriangleExtractorGlyphImpl.h
-)
+    FTGlyph/FTTriangleExtractorGlyphImpl.h)
 
 SET(ftfont_SRCS
     FTFont/FTFont.cpp
@@ -106,32 +104,34 @@ SET(ftfont_SRCS
     FTFont/FTTextureFont.cpp
     FTFont/FTTextureFontImpl.h
     FTFont/FTTriangleExtractorFont.cpp
-    FTFont/FTTriangleExtractorFontImpl.h
-)
+    FTFont/FTTriangleExtractorFontImpl.h)
 
 SET(ftlayout_SRCS
-    FTLayout/FTLayout.cpp
-    FTLayout/FTLayoutImpl.h
-    FTLayout/FTLayoutGlue.cpp
-    FTLayout/FTSimpleLayout.cpp
-    FTLayout/FTSimpleLayoutImpl.h
-)
+    FTLayout/FTLayout.cpp FTLayout/FTLayoutImpl.h FTLayout/FTLayoutGlue.cpp
+    FTLayout/FTSimpleLayout.cpp FTLayout/FTSimpleLayoutImpl.h)
 
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR} ${Tess2Include} ${FREETYPE_INCLUDE_DIRS} ${GLEW_INCLUDE_DIR})
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR} ${Tess2Include}
+                    ${FREETYPE_INCLUDE_DIRS} ${GLEW_INCLUDE_DIR})
 
-ADD_LIBRARY(${FTGLLibrary} SHARED ${ftgl_SRCS} ${ftgl_headers_SRCS} ${ftglyph_SRCS} ${ftfont_SRCS} ${ftlayout_SRCS})
-TARGET_LINK_LIBRARIES(${FTGLLibrary} ${OPENGL_gl_LIBRARY} ${FREETYPE_LIBRARY} ${Tess2Library} ${GLEW_LIBRARY})
-# Prevent link issues with MSVC when freetype is dynamically linked
-# against zlib
+ADD_LIBRARY(
+  ${FTGLLibrary} SHARED ${ftgl_SRCS} ${ftgl_headers_SRCS} ${ftglyph_SRCS}
+                        ${ftfont_SRCS} ${ftlayout_SRCS})
+
+TARGET_LINK_LIBRARIES(${FTGLLibrary} ${OPENGL_gl_LIBRARY} ${FREETYPE_LIBRARY}
+                      ${Tess2Library} ${GLEW_LIBRARY})
+
+# Prevent link issues with MSVC when freetype is dynamically linked against zlib
 IF(MSVC)
   TARGET_LINK_LIBRARIES(${FTGLLibrary} ${ZLIB_LIBRARY})
 ENDIF(MSVC)
 
-SET_TARGET_PROPERTIES(${FTGLLibrary} PROPERTIES
-  SOVERSION ${FTGL_SOVERSION}
-  VERSION ${VERSION_SERIES}.${VERSION_MAJOR}.${VERSION_MINOR})
+SET_TARGET_PROPERTIES(
+  ${FTGLLibrary}
+  PROPERTIES SOVERSION ${FTGL_SOVERSION}
+             VERSION ${VERSION_SERIES}.${VERSION_MAJOR}.${VERSION_MINOR})
 
-INSTALL(TARGETS ${FTGLLibrary}
-       RUNTIME DESTINATION ${TalipotBinInstallDir}
-       LIBRARY DESTINATION ${TalipotLibInstallDir}
-       ARCHIVE DESTINATION ${TalipotLibInstallDir})
+INSTALL(
+  TARGETS ${FTGLLibrary}
+  RUNTIME DESTINATION ${TalipotBinInstallDir}
+  LIBRARY DESTINATION ${TalipotLibInstallDir}
+  ARCHIVE DESTINATION ${TalipotLibInstallDir})

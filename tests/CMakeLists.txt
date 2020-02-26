@@ -11,30 +11,37 @@ MACRO(UNIT_TEST)
   ENDFOREACH()
   # this is a cpp[unit] test
   IF(TEST_SRCS)
-    INCLUDE_DIRECTORIES(${TalipotCoreBuildInclude} ${TalipotCoreInclude} ${CppUnit_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR}/tests/include)
+    INCLUDE_DIRECTORIES(
+      ${TalipotCoreBuildInclude} ${TalipotCoreInclude} ${CppUnit_INCLUDE_DIRS}
+      ${CMAKE_SOURCE_DIR}/tests/include)
     LINK_DIRECTORIES(${CppUnit_LIBRARY_DIRS})
     ADD_EXECUTABLE(${TEST_NAME} ${TEST_SRCS})
     ADD_DEPENDENCIES(runTests ${TEST_NAME})
-    TARGET_LINK_LIBRARIES(${TEST_NAME} ${LibTalipotCoreName} ${CppUnit_LIBRARIES})
+    TARGET_LINK_LIBRARIES(${TEST_NAME} ${LibTalipotCoreName}
+                          ${CppUnit_LIBRARIES})
     ADD_TEST(NAME ${TEST_NAME} COMMAND ${TEST_NAME} ${TEST_NAME})
-  # otherwise this is a Python test
+    # otherwise this is a Python test
   ELSE()
     SET(PYTHON_TEST_MODULE ${ARGV1})
-    ADD_TEST(NAME ${TEST_NAME} COMMAND ${PYTHON_EXECUTABLE} -m unittest ${PYTHON_TEST_MODULE})
+    ADD_TEST(NAME ${TEST_NAME} COMMAND ${PYTHON_EXECUTABLE} -m unittest
+                                       ${PYTHON_TEST_MODULE})
   ENDIF()
-  # In order to run the tests on windows, we need to add the paths of the dll depencencies (cppunit, tulip, gzstream, yajl)
-  # in the PATH environment variable
+  # In order to run the tests on windows, we need to add the paths of the dll
+  # depencencies (cppunit, tulip, gzstream, yajl) in the PATH environment
+  # variable
   IF(WIN32)
     IF(MINGW)
       STRING(REGEX MATCH ".*dll\\.a" IMPORT_LIBRARY ${CppUnit_LIBRARIES})
       STRING(REGEX MATCH ".*dll" DLL_LIBRARY ${CppUnit_LIBRARIES})
       IF(IMPORT_LIBRARY)
-        TALIPOT_GET_DLL_NAME_FROM_IMPORT_LIBRARY(${CppUnit_LIBRARIES} CppUnitDllName)
+        TALIPOT_GET_DLL_NAME_FROM_IMPORT_LIBRARY(${CppUnit_LIBRARIES}
+                                                 CppUnitDllName)
       ELSEIF(DLL_LIBRARY)
         GET_FILENAME_COMPONENT(CppUnitDllName ${CppUnit_LIBRARIES} NAME)
       ENDIF()
     ELSE(MINGW)
-      TALIPOT_GET_DLL_NAME_FROM_IMPORT_LIBRARY(${CppUnit_LIBRARIES} CppUnitDllName)
+      TALIPOT_GET_DLL_NAME_FROM_IMPORT_LIBRARY(${CppUnit_LIBRARIES}
+                                               CppUnitDllName)
     ENDIF(MINGW)
     IF(CppUnitDllName)
       TALIPOT_FIND_EXTERNAL_LIB(${CppUnitDllName} CppUnitDllPath)
@@ -42,16 +49,24 @@ MACRO(UNIT_TEST)
         GET_FILENAME_COMPONENT(CppUnitDllDir ${CppUnitDllPath} DIRECTORY)
       ENDIF(CppUnitDllPath)
     ENDIF()
-    SET(NEWPATH "${CppUnitDllDir};${CMAKE_LIBRARY_PATH};${QT_BINARY_DIR};${PYTHON_HOME_PATH};${CMAKE_BINARY_DIR}/thirdparty/gzstream/;${CMAKE_BINARY_DIR}/thirdparty/yajl/src;${CMAKE_BINARY_DIR}/thirdparty/quazip;${CMAKE_BINARY_DIR}/thirdparty/ftgl")
-    SET(NEWPATH "${NEWPATH};${CMAKE_BINARY_DIR}/library/talipot-core/src;${CMAKE_BINARY_DIR}/library/talipot-ogl/src;${CMAKE_BINARY_DIR}/library/talipot-gui/src;$ENV{PATH}")
-    SET(NEWPATH "${NEWPATH};${CMAKE_BINARY_DIR}/thirdparty/libtess2;${CMAKE_BINARY_DIR}/thirdparty/OGDF;${CMAKE_BINARY_DIR}/library/talipot-ogdf;${CMAKE_BINARY_DIR}/library/talipot-python/src;$ENV{PATH}")
+    SET(NEWPATH
+        "${CppUnitDllDir};${CMAKE_LIBRARY_PATH};${QT_BINARY_DIR};${PYTHON_HOME_PATH};${CMAKE_BINARY_DIR}/thirdparty/gzstream/;${CMAKE_BINARY_DIR}/thirdparty/yajl/src;${CMAKE_BINARY_DIR}/thirdparty/quazip;${CMAKE_BINARY_DIR}/thirdparty/ftgl"
+    )
+    SET(NEWPATH
+        "${NEWPATH};${CMAKE_BINARY_DIR}/library/talipot-core/src;${CMAKE_BINARY_DIR}/library/talipot-ogl/src;${CMAKE_BINARY_DIR}/library/talipot-gui/src;$ENV{PATH}"
+    )
+    SET(NEWPATH
+        "${NEWPATH};${CMAKE_BINARY_DIR}/thirdparty/libtess2;${CMAKE_BINARY_DIR}/thirdparty/OGDF;${CMAKE_BINARY_DIR}/library/talipot-ogdf;${CMAKE_BINARY_DIR}/library/talipot-python/src;$ENV{PATH}"
+    )
     STRING(REPLACE "\\;" ";" NEWPATH "${NEWPATH}")
     STRING(REPLACE ";" "\\;" NEWPATH "${NEWPATH}")
   ELSE(WIN32)
     SET(NEWPATH "$ENV{PATH}")
   ENDIF(WIN32)
   # add Talipot modules path to PYTHONPATH in order to run the Python tests
-  SET(PYTHONPATH "${CMAKE_CURRENT_SOURCE_DIR};${CMAKE_SOURCE_DIR}/library/talipot-python/modules/;${TALIPOT_PYTHON_ROOT_FOLDER};${TALIPOTGUI_PYTHON_ROOT_FOLDER};${CMAKE_BINARY_DIR}/thirdparty/sip-${SIP_VERSION_STR}/siplib")
+  SET(PYTHONPATH
+      "${CMAKE_CURRENT_SOURCE_DIR};${CMAKE_SOURCE_DIR}/library/talipot-python/modules/;${TALIPOT_PYTHON_ROOT_FOLDER};${TALIPOTGUI_PYTHON_ROOT_FOLDER};${CMAKE_BINARY_DIR}/thirdparty/sip-${SIP_VERSION_STR}/siplib"
+  )
   IF(WIN32)
     STRING(REPLACE "\\;" ";" PYTHONPATH "${PYTHONPATH}")
     STRING(REPLACE ";" "\\;" PYTHONPATH "${PYTHONPATH}")
@@ -59,7 +74,12 @@ MACRO(UNIT_TEST)
     STRING(REPLACE ";" ":" PYTHONPATH "${PYTHONPATH}")
   ENDIF(WIN32)
   # set tests environment
-  SET_TESTS_PROPERTIES(${TEST_NAME} PROPERTIES ENVIRONMENT "TALIPOT_BUILD_DIR=${CMAKE_BINARY_DIR};PYTHONPATH=${PYTHONPATH};PATH=${NEWPATH}")
+  SET_TESTS_PROPERTIES(
+    ${TEST_NAME}
+    PROPERTIES
+      ENVIRONMENT
+      "TALIPOT_BUILD_DIR=${CMAKE_BINARY_DIR};PYTHONPATH=${PYTHONPATH};PATH=${NEWPATH}"
+  )
 ENDMACRO(UNIT_TEST)
 
 ADD_SUBDIRECTORY(library)

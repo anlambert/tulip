@@ -1,1 +1,2 @@
-CONFIGURE_FILE("TalipotPackagesToBintray.json.in" "TalipotPackagesToBintray.json" @ONLY)
+CONFIGURE_FILE("TalipotPackagesToBintray.json.in"
+               "TalipotPackagesToBintray.json" @ONLY)

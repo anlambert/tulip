@@ -1,9 +1,13 @@
-INCLUDE_DIRECTORIES(${TalipotCoreBuildInclude} ${TalipotCoreInclude} ${TalipotOGLInclude} ${GLEW_INCLUDE_DIR} ${FTGLInclude} ${FREETYPE_INCLUDE_DIRS})
+INCLUDE_DIRECTORIES(
+  ${TalipotCoreBuildInclude} ${TalipotCoreInclude} ${TalipotOGLInclude}
+  ${GLEW_INCLUDE_DIR} ${FTGLInclude} ${FREETYPE_INCLUDE_DIRS})
 
 MACRO(GLYPH name source)
   ADD_LIBRARY(${name}-${TalipotVersion} SHARED ${source})
-  TARGET_LINK_LIBRARIES(${name}-${TalipotVersion} ${LibTalipotCoreName} ${LibTalipotOGLName})
-  TALIPOT_INSTALL_PLUGIN(${name}-${TalipotVersion} ${TalipotGlyphPluginsInstallDir})
+  TARGET_LINK_LIBRARIES(${name}-${TalipotVersion} ${LibTalipotCoreName}
+                        ${LibTalipotOGLName})
+  TALIPOT_INSTALL_PLUGIN(${name}-${TalipotVersion}
+                         ${TalipotGlyphPluginsInstallDir})
 ENDMACRO(GLYPH)
 
 GLYPH(Cone cone.cpp)
@@ -29,8 +33,6 @@ GLYPH(FontIcon fonticon.cpp)
 
 TARGET_LINK_LIBRARIES(FontIcon-${TalipotVersion} ${FTGLLibrary})
 
-INSTALL(FILES radialGradientTexture.png
-              bottomShadowTexture.png
-              leftBottomShadowTexture.png
-              rightBottomShadowTexture.png
+INSTALL(FILES radialGradientTexture.png bottomShadowTexture.png
+              leftBottomShadowTexture.png rightBottomShadowTexture.png
         DESTINATION ${TalipotBitmapInstallDir})

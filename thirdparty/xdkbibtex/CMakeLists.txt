@@ -7,19 +7,20 @@ ENDIF(UNIX)
 DISABLE_COMPILER_WARNINGS()
 
 SET(XDKBIBTEX_SRCS
-  base.C
-  entry.C
-  file.C
-  formatter.C
-  value.C
-  parsedbibfile.C
-  author.C
-  bibcommandlexer.cpp
-  bibcommandparser.cpp
-  bibfilelexer.cpp
-  bibfileparser.cpp
-  valuelexer.cpp
-  valueparser.cpp)
+    base.C
+    entry.C
+    file.C
+    formatter.C
+    value.C
+    parsedbibfile.C
+    author.C
+    bibcommandlexer.cpp
+    bibcommandparser.cpp
+    bibfilelexer.cpp
+    bibfileparser.cpp
+    valuelexer.cpp
+    valueparser.cpp)
 
 ADD_LIBRARY(xdkbibtex STATIC ${XDKBIBTEX_SRCS})
+
 TARGET_LINK_LIBRARIES(xdkbibtex antlr)

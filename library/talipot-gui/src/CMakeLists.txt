@@ -1,130 +1,138 @@
-
 SET(SRCS
-  InteractorConfigWidget.cpp
-  ColorScaleConfigDialog.cpp
-  CopyPropertyDialog.cpp
-  CSVGraphImport.cpp
-  CSVGraphMappingConfigurationWidget.cpp
-  CSVImportConfigurationWidget.cpp
-  CSVImportWizard.cpp
-  CSVParserConfigurationWidget.cpp
-  CSVParser.cpp
-  DoubleStringsListSelectionWidget.cpp
-  DownloadManager.cpp
-  DragHandle.cpp
-  GlCompositeHierarchyManager.cpp
-  GlMainView.cpp
-  GlMainWidget.cpp
-  GlOffscreenRenderer.cpp
-  GraphPropertiesSelectionWidget.cpp
-  ItemsListWidget.cpp
-  MouseBoxZoomer.cpp
-  MouseEdgeBendEditor.cpp
-  MouseEdgeBuilder.cpp
-  MouseInteractors.cpp
-  MouseNodeBuilder.cpp
-  MouseSelectionEditor.cpp
-  MouseSelector.cpp
-  MouseShowElementInfo.cpp
-  NodeLinkDiagramView.cpp
-  NodeLinkDiagramViewInteractor.cpp
-  ShapeDialog.cpp
-  PropertyCreationDialog.cpp
-  QtGlSceneZoomAndPanAnimator.cpp
-  QuaZIPFacade.cpp
-  RenamePropertyDialog.cpp
-  SimplePluginProgressWidget.cpp
-  SimpleStringsListSelectionWidget.cpp
-  RangeSlider.cpp
-  StringsListSelectionWidget.cpp
-  StringsListSelectionDialog.cpp
-  TextureFileDialog.cpp
-  TlpQtTools.cpp
-  Project.cpp
-  Settings.cpp
-  ParameterListModel.cpp
-  ItemDelegate.cpp
-  MetaTypes.cpp
-  ItemEditorCreators.cpp
-  ColorButton.cpp
-  Model.cpp
-  ColorScaleButton.cpp
-  View.cpp
-  GlMainWidgetGraphicsItem.cpp
-  ViewWidget.cpp
-  InteractorComposite.cpp
-  GLInteractor.cpp
-  WorkspacePanel.cpp
-  Interactor.cpp
-  ProcessingAnimationItem.cpp
-  Workspace.cpp
-  PlaceHolderWidget.cpp
-  GraphHierarchiesModel.cpp
-  Vec3fEditor.cpp
-  GlOverviewGraphicsItem.cpp
-  SceneConfigWidget.cpp
-  QuickAccessBar.cpp
-  Font.cpp
-  FontDialog.cpp
-  ScrollPopupButton.cpp
-  WorkspaceExposeWidget.cpp
-  GraphTableItemDelegate.cpp
-  StringEditor.cpp
-  VectorEditor.cpp
-  GlyphRenderer.cpp
-  ClearableLineEdit.cpp
-  CaptionItem.cpp
-  CaptionGraphicsItem.cpp
-  CaptionGraphicsSubItems.cpp
-  GraphModel.cpp
-  GraphElementModel.cpp
-  SnapshotDialog.cpp
-  Mimes.cpp
-  SceneLayersModel.cpp
-  SceneLayersConfigWidget.cpp
-  TreeViewComboBox.cpp
-  GlEntityItemModel.cpp
-  PluginModel.cpp
-  GraphNeedsSavingObserver.cpp
-  FileDownloader.cpp
-  ColorScalesManager.cpp
-  ScientificDoubleSpinBox.cpp
-  AboutPage.cpp
-  FontIconDialog.cpp
-  FontIconManager.cpp
-  ViewActionsManager.cpp
-  ViewToolTipAndUrlManager.cpp
-)
+    InteractorConfigWidget.cpp
+    ColorScaleConfigDialog.cpp
+    CopyPropertyDialog.cpp
+    CSVGraphImport.cpp
+    CSVGraphMappingConfigurationWidget.cpp
+    CSVImportConfigurationWidget.cpp
+    CSVImportWizard.cpp
+    CSVParserConfigurationWidget.cpp
+    CSVParser.cpp
+    DoubleStringsListSelectionWidget.cpp
+    DownloadManager.cpp
+    DragHandle.cpp
+    GlCompositeHierarchyManager.cpp
+    GlMainView.cpp
+    GlMainWidget.cpp
+    GlOffscreenRenderer.cpp
+    GraphPropertiesSelectionWidget.cpp
+    ItemsListWidget.cpp
+    MouseBoxZoomer.cpp
+    MouseEdgeBendEditor.cpp
+    MouseEdgeBuilder.cpp
+    MouseInteractors.cpp
+    MouseNodeBuilder.cpp
+    MouseSelectionEditor.cpp
+    MouseSelector.cpp
+    MouseShowElementInfo.cpp
+    NodeLinkDiagramView.cpp
+    NodeLinkDiagramViewInteractor.cpp
+    ShapeDialog.cpp
+    PropertyCreationDialog.cpp
+    QtGlSceneZoomAndPanAnimator.cpp
+    QuaZIPFacade.cpp
+    RenamePropertyDialog.cpp
+    SimplePluginProgressWidget.cpp
+    SimpleStringsListSelectionWidget.cpp
+    RangeSlider.cpp
+    StringsListSelectionWidget.cpp
+    StringsListSelectionDialog.cpp
+    TextureFileDialog.cpp
+    TlpQtTools.cpp
+    Project.cpp
+    Settings.cpp
+    ParameterListModel.cpp
+    ItemDelegate.cpp
+    MetaTypes.cpp
+    ItemEditorCreators.cpp
+    ColorButton.cpp
+    Model.cpp
+    ColorScaleButton.cpp
+    View.cpp
+    GlMainWidgetGraphicsItem.cpp
+    ViewWidget.cpp
+    InteractorComposite.cpp
+    GLInteractor.cpp
+    WorkspacePanel.cpp
+    Interactor.cpp
+    ProcessingAnimationItem.cpp
+    Workspace.cpp
+    PlaceHolderWidget.cpp
+    GraphHierarchiesModel.cpp
+    Vec3fEditor.cpp
+    GlOverviewGraphicsItem.cpp
+    SceneConfigWidget.cpp
+    QuickAccessBar.cpp
+    Font.cpp
+    FontDialog.cpp
+    ScrollPopupButton.cpp
+    WorkspaceExposeWidget.cpp
+    GraphTableItemDelegate.cpp
+    StringEditor.cpp
+    VectorEditor.cpp
+    GlyphRenderer.cpp
+    ClearableLineEdit.cpp
+    CaptionItem.cpp
+    CaptionGraphicsItem.cpp
+    CaptionGraphicsSubItems.cpp
+    GraphModel.cpp
+    GraphElementModel.cpp
+    SnapshotDialog.cpp
+    Mimes.cpp
+    SceneLayersModel.cpp
+    SceneLayersConfigWidget.cpp
+    TreeViewComboBox.cpp
+    GlEntityItemModel.cpp
+    PluginModel.cpp
+    GraphNeedsSavingObserver.cpp
+    FileDownloader.cpp
+    ColorScalesManager.cpp
+    ScientificDoubleSpinBox.cpp
+    AboutPage.cpp
+    FontIconDialog.cpp
+    FontIconManager.cpp
+    ViewActionsManager.cpp
+    ViewToolTipAndUrlManager.cpp)
 
 QTX_SET_INCLUDES_AND_DEFINITIONS()
 
-ADD_DEFINITIONS(-DQT_DLL)
-ADD_DEFINITIONS(-DQT_THREAD_SUPPORT)
+ADD_DEFINITIONS(-DQT_DLL -DQT_THREAD_SUPPORT)
 
 SET(PYTHON_PART_SRCS PythonVersionChecker.cpp)
-SET(TLPGUI_PYTHON_COMPILE_DEFINITIONS TLP_PYTHON="${PYTHON_VERSION}" SIP_VERSION="${SIP_VERSION_STR}")
+SET(TLPGUI_PYTHON_COMPILE_DEFINITIONS TLP_PYTHON="${PYTHON_VERSION}"
+                                      SIP_VERSION="${SIP_VERSION_STR}")
 IF(MSYS2_PYTHON)
-  SET(TLPGUI_PYTHON_COMPILE_DEFINITIONS ${TLPGUI_PYTHON_COMPILE_DEFINITIONS} MSYS2_PYTHON=1 PYTHON_HOME_PATH="${PYTHON_HOME_PATH}/../")
+  SET(TLPGUI_PYTHON_COMPILE_DEFINITIONS
+      ${TLPGUI_PYTHON_COMPILE_DEFINITIONS} MSYS2_PYTHON=1
+      PYTHON_HOME_PATH="${PYTHON_HOME_PATH}/../")
 ENDIF(MSYS2_PYTHON)
-SET_SOURCE_FILES_PROPERTIES(PythonVersionChecker.cpp
-                            PROPERTIES COMPILE_DEFINITIONS "${TLPGUI_PYTHON_COMPILE_DEFINITIONS}")
-SET_SOURCE_FILES_PROPERTIES(AboutPageUtils.cpp
-                            PROPERTIES COMPILE_DEFINITIONS "${TLPGUI_PYTHON_COMPILE_DEFINITIONS}")
+
+SET_SOURCE_FILES_PROPERTIES(
+  PythonVersionChecker.cpp PROPERTIES COMPILE_DEFINITIONS
+                                      "${TLPGUI_PYTHON_COMPILE_DEFINITIONS}")
+SET_SOURCE_FILES_PROPERTIES(
+  AboutPageUtils.cpp PROPERTIES COMPILE_DEFINITIONS
+                                "${TLPGUI_PYTHON_COMPILE_DEFINITIONS}")
+
 ADD_LIBRARY(talipot-gui-python STATIC ${PYTHON_PART_SRCS})
+
 TARGET_LINK_LIBRARIES(talipot-gui-python ${QT_LIBRARIES})
+
 IF(UNIX)
-  SET_TARGET_PROPERTIES(talipot-gui-python
-                        PROPERTIES COMPILE_OPTIONS "-fPIC")
+  SET_TARGET_PROPERTIES(talipot-gui-python PROPERTIES COMPILE_OPTIONS "-fPIC")
 ENDIF(UNIX)
 
 ADD_LIBRARY(talipot-about-page-utils STATIC AboutPageUtils.cpp)
+
 TARGET_LINK_LIBRARIES(talipot-about-page-utils ${QT_LIBRARIES})
+
 IF(UNIX)
-  SET_TARGET_PROPERTIES(talipot-about-page-utils
-                        PROPERTIES COMPILE_OPTIONS "-fPIC")
+  SET_TARGET_PROPERTIES(talipot-about-page-utils PROPERTIES COMPILE_OPTIONS
+                                                            "-fPIC")
 ENDIF(UNIX)
 
-QTX_WRAP_UI(UI_HEADERS
+QTX_WRAP_UI(
+  UI_HEADERS
   ../designer/AboutPage.ui
   ../designer/ColorScaleConfigDialog.ui
   ../designer/Vec3fEditor.ui
@@ -152,10 +160,10 @@ QTX_WRAP_UI(UI_HEADERS
   ../designer/VectorEditor.ui
   ../designer/Workspace.ui
   ../designer/WorkspacePanel.ui
-  ../designer/InteractorConfigWidget.ui
-)
+  ../designer/InteractorConfigWidget.ui)
 
-QTX_WRAP_CPP(MOC_SRCS
+QTX_WRAP_CPP(
+  MOC_SRCS
   ../include/talipot/AboutPage.h
   ../include/talipot/CaptionGraphicsItem.h
   ../include/talipot/CaptionGraphicsSubItems.h
@@ -219,23 +227,41 @@ QTX_WRAP_CPP(MOC_SRCS
   ../include/talipot/FontIconDialog.h
   ../include/talipot/ShapeDialog.h
   ../include/talipot/ViewActionsManager.h
-  ../include/talipot/ViewToolTipAndUrlManager.h
-)
+  ../include/talipot/ViewToolTipAndUrlManager.h)
 
 QTX_ADD_RESOURCES(RCC_SRCS ../resources/TalipotGUIResource.qrc)
 
-INCLUDE_DIRECTORIES(${TalipotGUIBuildInclude} ${TalipotCoreBuildInclude} ${TalipotCoreInclude} ${TalipotOGLInclude} ${TalipotGUIInclude} ${CMAKE_CURRENT_BINARY_DIR} ${ZLIB_INCLUDE_DIR} ${GLEW_INCLUDE_DIR} ${QUAZIP_INCLUDE_DIRS})
-ADD_LIBRARY(${LibTalipotGUIName} SHARED ${SRCS} ${MOC_SRCS} ${RCC_SRCS} ${UI_HEADERS})
-TARGET_LINK_LIBRARIES(${LibTalipotGUIName} ${QT_LIBRARIES} ${LibTalipotCoreName} ${LibTalipotOGLName} ${QUAZIP_LIBRARIES})
-TARGET_LINK_LIBRARIES(${LibTalipotGUIName} talipot-gui-python)
+INCLUDE_DIRECTORIES(
+  ${TalipotGUIBuildInclude}
+  ${TalipotCoreBuildInclude}
+  ${TalipotCoreInclude}
+  ${TalipotOGLInclude}
+  ${TalipotGUIInclude}
+  ${CMAKE_CURRENT_BINARY_DIR}
+  ${ZLIB_INCLUDE_DIR}
+  ${GLEW_INCLUDE_DIR}
+  ${QUAZIP_INCLUDE_DIRS})
 
+ADD_LIBRARY(${LibTalipotGUIName} SHARED ${SRCS} ${MOC_SRCS} ${RCC_SRCS}
+                                        ${UI_HEADERS})
+
+TARGET_LINK_LIBRARIES(
+  ${LibTalipotGUIName} ${QT_LIBRARIES} ${LibTalipotCoreName}
+  ${LibTalipotOGLName} ${QUAZIP_LIBRARIES})
+
+
+TARGET_LINK_LIBRARIES(${LibTalipotGUIName} talipot-gui-python)
 
 TARGET_LINK_LIBRARIES(${LibTalipotGUIName} talipot-about-page-utils)
 
-INSTALL(TARGETS ${LibTalipotGUIName}
+INSTALL(
+  TARGETS ${LibTalipotGUIName}
   RUNTIME DESTINATION ${TalipotBinInstallDir}
   LIBRARY DESTINATION ${TalipotLibInstallDir}
   ARCHIVE DESTINATION ${TalipotLibInstallDir})
 
-INSTALL(FILES ../resources/icons/talipot.ico DESTINATION ${TalipotBitmapInstallDir})
-INSTALL(FILES ../resources/icons/talipot-file-icon.ico DESTINATION ${TalipotBitmapInstallDir})
+INSTALL(FILES ../resources/icons/talipot.ico
+        DESTINATION ${TalipotBitmapInstallDir})
+
+INSTALL(FILES ../resources/icons/talipot-file-icon.ico
+        DESTINATION ${TalipotBitmapInstallDir})

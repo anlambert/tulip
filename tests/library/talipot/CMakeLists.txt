@@ -1,16 +1,16 @@
 ADD_LIBRARY(testPlugin SHARED TestPlugin.cpp)
-SET_TARGET_PROPERTIES(testPlugin
-   PROPERTIES
-   PREFIX "")
+SET_TARGET_PROPERTIES(testPlugin PROPERTIES PREFIX "")
 TARGET_LINK_LIBRARIES(testPlugin ${LibTalipotCoreName})
 
 ADD_LIBRARY(testPlugin2 SHARED TestPlugin2.cpp)
-SET_TARGET_PROPERTIES(testPlugin2
-   PROPERTIES
-   PREFIX "")
+SET_TARGET_PROPERTIES(testPlugin2 PROPERTIES PREFIX "")
 TARGET_LINK_LIBRARIES(testPlugin2 ${LibTalipotCoreName})
 
-ADD_CUSTOM_TARGET(copyTestData ALL ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/DATA ${CMAKE_CURRENT_BINARY_DIR}/DATA VERBATIM)
+ADD_CUSTOM_TARGET(
+  copyTestData ALL
+  ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/DATA
+  ${CMAKE_CURRENT_BINARY_DIR}/DATA
+  VERBATIM)
 
 # disable MSVC warning 'potential divide by 0' for DoublePropertyTest
 IF(MSVC)
@@ -19,7 +19,8 @@ ENDIF(MSVC)
 
 UNIT_TEST(ImportExportTest ImportExportTest.cpp talipotlibtest.cpp)
 UNIT_TEST(ExistEdgeTest ExistEdgeTest.cpp talipotlibtest.cpp)
-UNIT_TEST(ExtendedClusterOperationTest ExtendedClusterOperationTest.cpp talipotlibtest.cpp)
+UNIT_TEST(ExtendedClusterOperationTest ExtendedClusterOperationTest.cpp
+          talipotlibtest.cpp)
 UNIT_TEST(VectorTest VectorTest.cpp talipotlibtest.cpp)
 UNIT_TEST(MatrixTest MatrixTest.cpp talipotlibtest.cpp)
 UNIT_TEST(TestAlgorithmTest TestAlgorithmTest.cpp talipotlibtest.cpp)
@@ -33,9 +34,12 @@ UNIT_TEST(ObservablePropertyTest ObservablePropertyTest.cpp talipotlibtest.cpp)
 UNIT_TEST(MutableContainerTest MutableContainerTest.cpp talipotlibtest.cpp)
 UNIT_TEST(ObservableGraphTest ObservableGraphTest.cpp talipotlibtest.cpp)
 UNIT_TEST(PushPopTest PushPopTest.cpp talipotlibtest.cpp)
-UNIT_TEST(IntegerPropertyMinMaxSubgraphTest IntegerPropertyMinMaxSubgraphTest.cpp talipotlibtest.cpp)
-UNIT_TEST(IntegerPropertyMinMaxUptodateTest IntegerPropertyMinMaxUptodateTest.cpp talipotlibtest.cpp)
-UNIT_TEST(PropertiesMinMaxAfterAddNodeTest PropertiesMinMaxAfterAddNodeTest.cpp talipotlibtest.cpp)
+UNIT_TEST(IntegerPropertyMinMaxSubgraphTest
+          IntegerPropertyMinMaxSubgraphTest.cpp talipotlibtest.cpp)
+UNIT_TEST(IntegerPropertyMinMaxUptodateTest
+          IntegerPropertyMinMaxUptodateTest.cpp talipotlibtest.cpp)
+UNIT_TEST(PropertiesMinMaxAfterAddNodeTest PropertiesMinMaxAfterAddNodeTest.cpp
+          talipotlibtest.cpp)
 UNIT_TEST(IsMetaEdgeTest IsMetaEdgeTest.cpp talipotlibtest.cpp)
 UNIT_TEST(StringPropertyTest StringPropertyTest.cpp talipotlibtest.cpp)
 UNIT_TEST(DoublePropertyTest DoublePropertyTest.cpp talipotlibtest.cpp)

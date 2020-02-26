@@ -1,22 +1,20 @@
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR} ${TalipotCoreBuildInclude} ${TalipotCoreInclude} ${TalipotOGLInclude} ${TalipotGUIInclude} ${GLEW_INCLUDE_DIR})
+INCLUDE_DIRECTORIES(
+  ${CMAKE_CURRENT_BINARY_DIR} ${TalipotCoreBuildInclude} ${TalipotCoreInclude}
+  ${TalipotOGLInclude} ${TalipotGUIInclude} ${GLEW_INCLUDE_DIR})
 
-SET(LIB_SRCS
-    FishEyeInteractor.cpp
-    FishEyeConfigWidget.cpp
-)
+SET(LIB_SRCS FishEyeInteractor.cpp FishEyeConfigWidget.cpp)
 
-QTX_WRAP_UI(LIB_UI_HEADERS
-    FishEyeConfigWidget.ui
-)
+QTX_WRAP_UI(LIB_UI_HEADERS FishEyeConfigWidget.ui)
 
-QTX_WRAP_CPP(LIB_MOC_SRCS
-)
+QTX_WRAP_CPP(LIB_MOC_SRCS)
 
-QTX_ADD_RESOURCES(LIB_RCC_SRCS
-    FishEyeInteractorResource.qrc
-)
+QTX_ADD_RESOURCES(LIB_RCC_SRCS FishEyeInteractorResource.qrc)
 
-ADD_LIBRARY(FishEyeInteractor-${TalipotVersion} SHARED ${LIB_SRCS} ${LIB_UI_HEADERS} ${LIB_MOC_SRCS} ${LIB_RCC_SRCS})
-TARGET_LINK_LIBRARIES(FishEyeInteractor-${TalipotVersion} ${LibTalipotCoreName} ${LibTalipotOGLName} ${LibTalipotGUIName})
+ADD_LIBRARY(FishEyeInteractor-${TalipotVersion} SHARED
+            ${LIB_SRCS} ${LIB_UI_HEADERS} ${LIB_MOC_SRCS} ${LIB_RCC_SRCS})
 
-TALIPOT_INSTALL_PLUGIN(FishEyeInteractor-${TalipotVersion} ${TalipotInteractorPluginsInstallDir})
+TARGET_LINK_LIBRARIES(FishEyeInteractor-${TalipotVersion} ${LibTalipotCoreName}
+                      ${LibTalipotOGLName} ${LibTalipotGUIName})
+
+TALIPOT_INSTALL_PLUGIN(FishEyeInteractor-${TalipotVersion}
+                       ${TalipotInteractorPluginsInstallDir})

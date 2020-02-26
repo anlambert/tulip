@@ -1,27 +1,25 @@
-
 INCLUDE_DIRECTORIES(BEFORE ${TalipotCoreBuildInclude})
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR} ${OPENGL_INCLUDE_DIR} ${TalipotCoreInclude} ${TalipotOGLInclude} ${TalipotGUIInclude})
 
-SET(LIB_SRCS
-  NeighborhoodHighlighterConfigWidget.cpp
-  NeighborhoodHighlighterInteractor.cpp
-  NodeNeighborhoodView.cpp
-)
+INCLUDE_DIRECTORIES(
+  ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR} ${OPENGL_INCLUDE_DIR}
+  ${TalipotCoreInclude} ${TalipotOGLInclude} ${TalipotGUIInclude})
 
-QTX_WRAP_UI(LIB_UI_HEADERS
-NeighborhoodHighlighterConfigWidget.ui
-)
+SET(LIB_SRCS NeighborhoodHighlighterConfigWidget.cpp
+             NeighborhoodHighlighterInteractor.cpp NodeNeighborhoodView.cpp)
 
-QTX_WRAP_CPP(LIB_MOC_SRCS
-NeighborhoodHighlighterInteractor.h
-NeighborhoodHighlighterConfigWidget.h
-)
+QTX_WRAP_UI(LIB_UI_HEADERS NeighborhoodHighlighterConfigWidget.ui)
 
-QTX_ADD_RESOURCES(LIB_RCC_SRCS
-NeighborhoodHighlighterResource.qrc
-)
+QTX_WRAP_CPP(LIB_MOC_SRCS NeighborhoodHighlighterInteractor.h
+             NeighborhoodHighlighterConfigWidget.h)
 
-ADD_LIBRARY(NeighborhoodHighlighter-${TalipotVersion} SHARED ${LIB_SRCS} ${LIB_UI_HEADERS} ${LIB_MOC_SRCS} ${LIB_RCC_SRCS})
-TARGET_LINK_LIBRARIES(NeighborhoodHighlighter-${TalipotVersion} ${LibTalipotCoreName} ${LibTalipotOGLName} ${LibTalipotGUIName} ${OPENGL_gl_LIBRARY})
+QTX_ADD_RESOURCES(LIB_RCC_SRCS NeighborhoodHighlighterResource.qrc)
 
-TALIPOT_INSTALL_PLUGIN(NeighborhoodHighlighter-${TalipotVersion} ${TalipotInteractorPluginsInstallDir})
+ADD_LIBRARY(NeighborhoodHighlighter-${TalipotVersion} SHARED
+            ${LIB_SRCS} ${LIB_UI_HEADERS} ${LIB_MOC_SRCS} ${LIB_RCC_SRCS})
+
+TARGET_LINK_LIBRARIES(
+  NeighborhoodHighlighter-${TalipotVersion} ${LibTalipotCoreName}
+  ${LibTalipotOGLName} ${LibTalipotGUIName} ${OPENGL_gl_LIBRARY})
+
+TALIPOT_INSTALL_PLUGIN(NeighborhoodHighlighter-${TalipotVersion}
+                       ${TalipotInteractorPluginsInstallDir})

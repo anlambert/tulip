@@ -1,4 +1,11 @@
-INCLUDE_DIRECTORIES(${TalipotCoreBuildInclude} ${TalipotCoreInclude} ${TalipotOGLInclude} ${TalipotGUIInclude} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR} ${GLEW_INCLUDE_DIR})
+INCLUDE_DIRECTORIES(
+  ${TalipotCoreBuildInclude}
+  ${TalipotCoreInclude}
+  ${TalipotOGLInclude}
+  ${TalipotGUIInclude}
+  ${CMAKE_CURRENT_BINARY_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  ${GLEW_INCLUDE_DIR})
 
 SET(LIB_SRCS
     PixelOrientedView.cpp
@@ -22,24 +29,28 @@ SET(LIB_SRCS
     POLIB/NodeColorMapping.cpp
     POLIB/NodeMetricSorter.cpp
     POLIB/UniformDeformationScreen.cpp
-    POLIB/ZOrderLayout.cpp
-)
+    POLIB/ZOrderLayout.cpp)
 
-QTX_WRAP_UI(LIB_UI_HEADERS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../utils/ViewGraphPropertiesSelectionWidget.ui
-    PixelOrientedOptionsWidget.ui
-)
+QTX_WRAP_UI(
+  LIB_UI_HEADERS
+  ${CMAKE_CURRENT_SOURCE_DIR}/../utils/ViewGraphPropertiesSelectionWidget.ui
+  PixelOrientedOptionsWidget.ui)
 
-QTX_WRAP_CPP(LIB_MOC_SRCS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../utils/ViewGraphPropertiesSelectionWidget.h
-    PixelOrientedView.h
-    PixelOrientedOptionsWidget.h
-    PixelOrientedViewQuickAccessBar.h
-)
+QTX_WRAP_CPP(
+  LIB_MOC_SRCS
+  ${CMAKE_CURRENT_SOURCE_DIR}/../utils/ViewGraphPropertiesSelectionWidget.h
+  PixelOrientedView.h
+  PixelOrientedOptionsWidget.h
+  PixelOrientedViewQuickAccessBar.h)
 
 QTX_ADD_RESOURCES(RCC_SRCS PixelOrientedView.qrc)
 
-ADD_LIBRARY(PixelOrientedView-${TalipotVersion} SHARED ${LIB_SRCS} ${LIB_UI_HEADERS} ${LIB_MOC_SRCS} ${RCC_SRCS})
-TARGET_LINK_LIBRARIES(PixelOrientedView-${TalipotVersion} ${LibTalipotCoreName} ${LibTalipotOGLName} ${LibTalipotGUIName} ${OPENGL_gl_LIBRARY})
+ADD_LIBRARY(PixelOrientedView-${TalipotVersion} SHARED
+            ${LIB_SRCS} ${LIB_UI_HEADERS} ${LIB_MOC_SRCS} ${RCC_SRCS})
 
-TALIPOT_INSTALL_PLUGIN(PixelOrientedView-${TalipotVersion} ${TalipotViewPluginsInstallDir})
+TARGET_LINK_LIBRARIES(
+  PixelOrientedView-${TalipotVersion} ${LibTalipotCoreName}
+  ${LibTalipotOGLName} ${LibTalipotGUIName} ${OPENGL_gl_LIBRARY})
+
+TALIPOT_INSTALL_PLUGIN(PixelOrientedView-${TalipotVersion}
+                       ${TalipotViewPluginsInstallDir})

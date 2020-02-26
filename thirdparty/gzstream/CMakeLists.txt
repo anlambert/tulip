@@ -1,7 +1,4 @@
-SET(gzstream_SRCS
-    gzstream.cpp
-    gzstream.h
-)
+SET(gzstream_SRCS gzstream.cpp gzstream.h)
 
 INCLUDE_DIRECTORIES(${ZLIB_INCLUDE_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -10,15 +7,18 @@ IF(MSVC)
 ENDIF(MSVC)
 
 ADD_LIBRARY(${GZStreamLibrary} SHARED ${gzstream_SRCS})
-SET_TARGET_PROPERTIES(${GZStreamLibrary} PROPERTIES
-                      SOVERSION 0)
+
+SET_TARGET_PROPERTIES(${GZStreamLibrary} PROPERTIES SOVERSION 0)
+
 TARGET_LINK_LIBRARIES(${GZStreamLibrary} ${ZLIB_LIBRARY})
 
-INSTALL(TARGETS ${GZStreamLibrary}
-       RUNTIME DESTINATION ${TalipotBinInstallDir}
-       LIBRARY DESTINATION ${TalipotLibInstallDir}
-       ARCHIVE DESTINATION ${TalipotLibInstallDir})
+INSTALL(
+  TARGETS ${GZStreamLibrary}
+  RUNTIME DESTINATION ${TalipotBinInstallDir}
+  LIBRARY DESTINATION ${TalipotLibInstallDir}
+  ARCHIVE DESTINATION ${TalipotLibInstallDir})
 
 IF(TALIPOT_ACTIVATE_PYTHON_WHEEL_TARGET)
-  TALIPOT_COPY_TARGET_LIBRARY_POST_BUILD(${GZStreamLibrary} ${TALIPOT_PYTHON_NATIVE_FOLDER} wheel)
+  TALIPOT_COPY_TARGET_LIBRARY_POST_BUILD(${GZStreamLibrary}
+                                         ${TALIPOT_PYTHON_NATIVE_FOLDER} wheel)
 ENDIF(TALIPOT_ACTIVATE_PYTHON_WHEEL_TARGET)

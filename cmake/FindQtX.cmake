@@ -1,5 +1,5 @@
-# If CMake does not automatically find Qt5 , the root directory
-# of the Qt5 installation must be provided in the CMAKE_PREFIX_PATH variable.
+# If CMake does not automatically find Qt5 , the root directory of the Qt5
+# installation must be provided in the CMAKE_PREFIX_PATH variable.
 
 # Unset related CMake variables in order to change the Qt5 version (by modifying
 # the root Qt5 directory through the CMAKE_PREFIX_PATH variable) without having
@@ -46,28 +46,32 @@ UNSET(Qt5WebChannel_DIR CACHE)
 SET(QT_HAS_WEBKIT FALSE)
 SET(QT_HAS_WEBENGINE FALSE)
 
-# Macro used to workaround a small issue with QtWebkit components on MSYS2:
-# when compiling in RelWithDebInfo mode, Qt debug libraries are selected instead
-# of the release one (this should only happen when compiling in Debug mode)
+# Macro used to workaround a small issue with QtWebkit components on MSYS2: when
+# compiling in RelWithDebInfo mode, Qt debug libraries are selected instead of
+# the release one (this should only happen when compiling in Debug mode)
 MACRO(SETUP_QT_LIBRARIES QtModule LIBRARIES)
   IF(MINGW)
-    GET_TARGET_PROPERTY(Qt5${QtModule}_INCLUDE_DIRS Qt5::${QtModule} INTERFACE_INCLUDE_DIRECTORIES)
+    GET_TARGET_PROPERTY(Qt5${QtModule}_INCLUDE_DIRS Qt5::${QtModule}
+                        INTERFACE_INCLUDE_DIRECTORIES)
     IF(CMAKE_DEBUG_MODE)
-      GET_TARGET_PROPERTY(Qt5${QtModule}_LIBRARIES Qt5::${QtModule} LOCATION_DEBUG)
+      GET_TARGET_PROPERTY(Qt5${QtModule}_LIBRARIES Qt5::${QtModule}
+                          LOCATION_DEBUG)
     ELSE(CMAKE_DEBUG_MODE)
-      GET_TARGET_PROPERTY(Qt5${QtModule}_LIBRARIES Qt5::${QtModule} LOCATION_RELEASE)
+      GET_TARGET_PROPERTY(Qt5${QtModule}_LIBRARIES Qt5::${QtModule}
+                          LOCATION_RELEASE)
     ENDIF(CMAKE_DEBUG_MODE)
   ENDIF(MINGW)
-  SET(${LIBRARIES} ${${LIBRARIES}} ${Qt5${QtModule}_LIBRARIES} ${Qt5${QtModule}_LIBRARIES})
+  SET(${LIBRARIES} ${${LIBRARIES}} ${Qt5${QtModule}_LIBRARIES}
+                   ${Qt5${QtModule}_LIBRARIES})
 ENDMACRO(SETUP_QT_LIBRARIES)
 
 FIND_PACKAGE(Qt5Widgets 5.7 REQUIRED)
 FIND_PACKAGE(Qt5Network 5.7 REQUIRED)
 
 STRING(REGEX MATCH "[0-9]\\.[0-9]+" QT_VERSION "${Qt5Widgets_VERSION_STRING}")
-# Qt5Widgets_VERSION_STRING has been deprecated in favor of Qt5Widgets_VERSION since
-# a few releases of Qt5 and seems to have been removed in some Linux distributions
-# (experienced on KDE Neon Developer edition that now uses Qt 5.9)
+# Qt5Widgets_VERSION_STRING has been deprecated in favor of Qt5Widgets_VERSION
+# since a few releases of Qt5 and seems to have been removed in some Linux
+# distributions (experienced on KDE Neon Developer edition that now uses Qt 5.9)
 IF(NOT QT_VERSION MATCHES "[0-9]\\.[0-9]+")
   STRING(REGEX MATCH "[0-9]\\.[0-9]+" QT_VERSION "${Qt5Widgets_VERSION}")
 ENDIF(NOT QT_VERSION MATCHES "[0-9]\\.[0-9]+")
@@ -76,7 +80,9 @@ IF(NOT "${QT_VERSION}" STREQUAL "${LAST_FOUND_QT_VERSION}")
   MESSAGE(STATUS "Found Qt5 (version ${QT_VERSION})")
 ENDIF(NOT "${QT_VERSION}" STREQUAL "${LAST_FOUND_QT_VERSION}")
 
-SET(LAST_FOUND_QT_VERSION "${QT_VERSION}" CACHE INTERNAL "")
+SET(LAST_FOUND_QT_VERSION
+    "${QT_VERSION}"
+    CACHE INTERNAL "")
 
 IF(WIN32)
   GET_TARGET_PROPERTY(QtCore_location Qt5::Core LOCATION)
@@ -85,7 +91,7 @@ IF(WIN32)
   # Standard Qt5 installation
   IF(EXISTS ${QT_BINARY_DIR}/../plugins)
     SET(QT_PLUGINS_DIR ${QT_BINARY_DIR}/../plugins)
-  # MSYS2 special case
+    # MSYS2 special case
   ELSEIF(EXISTS ${QT_BINARY_DIR}/../share/qt5/plugins)
     SET(QT_PLUGINS_DIR ${QT_BINARY_DIR}/../share/qt5/plugins)
   ENDIF()
@@ -117,10 +123,10 @@ SET(QT_LIBRARIES ${Qt5Widgets_LIBRARIES} ${Qt5Network_LIBRARIES})
 
 GET_FILENAME_COMPONENT(QT_CMAKE_DIR "${Qt5Core_DIR}" DIRECTORY)
 
-# On Apple platform, we need to link against Qt5DBus and Qt5PrintSupport
-# when using the official Qt5 bundle provided by qt.io (dylibs dependencies side effect).
-# However, those modules are not necessarily present when using Qt5 from
-# Homebrew or MacPorts, so handle those special cases here.
+# On Apple platform, we need to link against Qt5DBus and Qt5PrintSupport when
+# using the official Qt5 bundle provided by qt.io (dylibs dependencies side
+# effect). However, those modules are not necessarily present when using Qt5
+# from Homebrew or MacPorts, so handle those special cases here.
 IF(APPLE)
   SET(QT_DBUS_CMAKE_DIR "${QT_CMAKE_DIR}/Qt5DBus")
   SET(QT_PRINTSUPPORT_CMAKE_DIR "${QT_CMAKE_DIR}/Qt5PrintSupport")
@@ -128,7 +134,8 @@ IF(APPLE)
     FIND_PACKAGE(Qt5DBus 5.5)
     FIND_PACKAGE(Qt5PrintSupport 5.5)
     IF(${Qt5DBus_FOUND} AND ${Qt5PrintSupport_FOUND})
-      SET(QT_LIBRARIES ${QT_LIBRARIES} ${Qt5PrintSupport_LIBRARIES} ${Qt5DBus_LIBRARIES})
+      SET(QT_LIBRARIES ${QT_LIBRARIES} ${Qt5PrintSupport_LIBRARIES}
+                       ${Qt5DBus_LIBRARIES})
     ENDIF(${Qt5DBus_FOUND} AND ${Qt5PrintSupport_FOUND})
   ENDIF(EXISTS ${QT_DBUS_CMAKE_DIR} AND EXISTS ${QT_PRINTSUPPORT_CMAKE_DIR})
 ENDIF(APPLE)
@@ -147,8 +154,8 @@ IF(EXISTS ${QT_WEBKIT_WIDGETS_CMAKE_DIR})
   ENDIF(${Qt5WebKit_FOUND} AND ${Qt5WebKitWidgets_FOUND})
 ENDIF(EXISTS ${QT_WEBKIT_WIDGETS_CMAKE_DIR})
 
-# If Qt5 is not bundled with WebKit then check if its installation
-# provides WebEngine (new web module since Qt 5.4) and setup its use.
+# If Qt5 is not bundled with WebKit then check if its installation provides
+# WebEngine (new web module since Qt 5.4) and setup its use.
 SET(QT_WEBENGINE_WIDGETS_CMAKE_DIR "${QT_CMAKE_DIR}/Qt5WebEngineWidgets")
 IF(NOT QT_HAS_WEBKIT AND EXISTS ${QT_WEBENGINE_WIDGETS_CMAKE_DIR})
   FIND_PACKAGE(Qt5WebEngineWidgets 5.5)
@@ -156,7 +163,8 @@ IF(NOT QT_HAS_WEBKIT AND EXISTS ${QT_WEBENGINE_WIDGETS_CMAKE_DIR})
   IF(${Qt5WebEngineWidgets_FOUND} AND ${Qt5WebChannel_FOUND})
     SET(QT_HAS_WEBENGINE TRUE)
     SET(QT_WEB_COMPONENT "QtWebEngine")
-    SET(QT_WEB_LIBRARIES ${Qt5WebEngineWidgets_LIBRARIES} ${Qt5WebChannel_LIBRARIES})
+    SET(QT_WEB_LIBRARIES ${Qt5WebEngineWidgets_LIBRARIES}
+                         ${Qt5WebChannel_LIBRARIES})
   ENDIF(${Qt5WebEngineWidgets_FOUND} AND ${Qt5WebChannel_FOUND})
 ENDIF(NOT QT_HAS_WEBKIT AND EXISTS ${QT_WEBENGINE_WIDGETS_CMAKE_DIR})
 
@@ -164,7 +172,9 @@ IF(NOT "${QT_WEB_COMPONENT}" STREQUAL "${LAST_FOUND_QT_WEB_COMPONENT}")
   MESSAGE(STATUS "Found ${QT_WEB_COMPONENT}")
 ENDIF(NOT "${QT_WEB_COMPONENT}" STREQUAL "${LAST_FOUND_QT_WEB_COMPONENT}")
 
-SET(LAST_FOUND_QT_WEB_COMPONENT "${QT_WEB_COMPONENT}" CACHE INTERNAL "")
+SET(LAST_FOUND_QT_WEB_COMPONENT
+    "${QT_WEB_COMPONENT}"
+    CACHE INTERNAL "")
 
 MACRO(QTX_SET_INCLUDES_AND_DEFINITIONS)
   INCLUDE_DIRECTORIES(${Qt5Widgets_INCLUDE_DIRS})
@@ -203,8 +213,9 @@ MACRO(QTX_ADD_RESOURCES outfiles)
   QT5_ADD_RESOURCES(${outfiles} ${ARGN})
 ENDMACRO()
 
-# With MinGW, remove the -fPIC compiler option as it is not needed and
-# generates a lot of warnings
+# With MinGW, remove the -fPIC compiler option as it is not needed and generates
+# a lot of warnings
 IF(MINGW)
-  STRING(REPLACE "-fPIC" "" Qt5Widgets_EXECUTABLE_COMPILE_FLAGS "${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
+  STRING(REPLACE "-fPIC" "" Qt5Widgets_EXECUTABLE_COMPILE_FLAGS
+                 "${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
 ENDIF(MINGW)

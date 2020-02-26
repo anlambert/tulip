@@ -1,6 +1,4 @@
-SET(LIB_SRCS
-    CrashHandling.cpp
-    StackWalker.cpp)
+SET(LIB_SRCS CrashHandling.cpp StackWalker.cpp)
 
 IF(NOT MSVC AND NOT BSD)
 
@@ -9,11 +7,13 @@ IF(NOT MSVC AND NOT BSD)
     IF(MINGW)
 
       # ensure correct bfd header file is selected with MSYS2
-      SET(CMAKE_INCLUDE_PATH ${MINGW_INCLUDE_PATH}/binutils ${CMAKE_INCLUDE_PATH})
+      SET(CMAKE_INCLUDE_PATH ${MINGW_INCLUDE_PATH}/binutils
+                             ${CMAKE_INCLUDE_PATH})
       # ensure correct binutils libraries are selected with MSYS2
       SET(CMAKE_LIBRARY_PATH ${MINGW_LIB_PATH}/binutils ${CMAKE_LIBRARY_PATH})
       # ensure correct iberty header file is selected with MSYS2
-      SET(CMAKE_INCLUDE_PATH ${MINGW_INCLUDE_PATH}/libiberty ${CMAKE_INCLUDE_PATH})
+      SET(CMAKE_INCLUDE_PATH ${MINGW_INCLUDE_PATH}/libiberty
+                             ${CMAKE_INCLUDE_PATH})
 
     ENDIF(MINGW)
 
@@ -30,7 +30,9 @@ IF(NOT MSVC AND NOT BSD)
 
     ELSE(BFD_FOUND)
 
-      MESSAGE("Install GNU binutils development package to get a detailed stack trace when Talipot crashes.")
+      MESSAGE(
+        "Install GNU binutils development package to get a detailed stack trace when Talipot crashes."
+      )
 
     ENDIF(BFD_FOUND)
 

@@ -3,19 +3,23 @@ MACRO(UNIT_PLUGINS_TEST)
   ADD_DEPENDENCIES(${ARGV0} ${TALIPOT_PLUGIN_TARGETS})
 ENDMACRO(UNIT_PLUGINS_TEST)
 
-SET(TALIPOT_PLUGINS_TESTS_SRCS
-  BasicPluginsTest.cpp
-  BasicMetricTest.cpp
-  BasicLayoutTest.cpp
-  pluginstest.cpp)
+SET(TALIPOT_PLUGINS_TESTS_SRCS BasicPluginsTest.cpp BasicMetricTest.cpp
+                               BasicLayoutTest.cpp pluginstest.cpp)
 
-SET_SOURCE_FILES_PROPERTIES(pluginsloadingtest.cpp
-                            PROPERTIES COMPILE_DEFINITIONS TALIPOT_PLUGINS_DIR="${CMAKE_BINARY_DIR}/plugins")
+SET_SOURCE_FILES_PROPERTIES(
+  pluginsloadingtest.cpp
+  PROPERTIES COMPILE_DEFINITIONS
+             TALIPOT_PLUGINS_DIR="${CMAKE_BINARY_DIR}/plugins")
 
-SET_SOURCE_FILES_PROPERTIES(pluginstest.cpp
-                            PROPERTIES COMPILE_DEFINITIONS TALIPOT_BUILD_DIR="${CMAKE_BINARY_DIR}")
+SET_SOURCE_FILES_PROPERTIES(
+  pluginstest.cpp PROPERTIES COMPILE_DEFINITIONS
+                             TALIPOT_BUILD_DIR="${CMAKE_BINARY_DIR}")
 
-ADD_CUSTOM_TARGET(copy_data ALL ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/data ${CMAKE_CURRENT_BINARY_DIR}/data VERBATIM)
+ADD_CUSTOM_TARGET(
+  copy_data ALL
+  ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/data
+  ${CMAKE_CURRENT_BINARY_DIR}/data
+  VERBATIM)
 
 UNIT_PLUGINS_TEST(TalipotPluginsTestSuite ${TALIPOT_PLUGINS_TESTS_SRCS})
 SET_TESTS_PROPERTIES(TalipotPluginsTestSuite PROPERTIES DEPENDS copy_data)

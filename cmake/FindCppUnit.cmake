@@ -1,10 +1,8 @@
 # Find CppUnit includes and library
 #
-# This module defines
-#  CppUnit_INCLUDE_DIRS
-#  CppUnit_LIBRARIES, the libraries to link against to use CppUnit.
-#  CppUnit_LIBRARY_DIRS, the location of the libraries
-#  CppUnit_FOUND, If false, do not try to use CppUnit
+# This module defines CppUnit_INCLUDE_DIRS CppUnit_LIBRARIES, the libraries to
+# link against to use CppUnit. CppUnit_LIBRARY_DIRS, the location of the
+# libraries CppUnit_FOUND, If false, do not try to use CppUnit
 #
 # Copyright © 2007, Matt Williams
 #
@@ -12,23 +10,16 @@
 
 IF(WIN32) # Windows
   SET(CppUnit_INCLUDE_SEARCH_DIRS
-        ${CppUnit_LIBRARY_SEARCH_DIRS}
-        ${CMAKE_INCLUDE_PATH}
-        /usr/include/
-        /usr/local/
-        /opt/include/
-  )
+      ${CppUnit_LIBRARY_SEARCH_DIRS} ${CMAKE_INCLUDE_PATH} /usr/include/
+      /usr/local/ /opt/include/)
   SET(CppUnit_LIBRARY_SEARCH_DIRS
-        ${CppUnit_LIBRARY_SEARCH_DIRS}
-        ${CMAKE_LIBRARY_PATH}
-        /usr/lib
-        /usr/local/lib
-        /opt/lib
-  )
+      ${CppUnit_LIBRARY_SEARCH_DIRS} ${CMAKE_LIBRARY_PATH} /usr/lib
+      /usr/local/lib /opt/lib)
   FIND_PATH(CppUnit_INCLUDE_DIRS cppunit/Test.h ${CppUnit_INCLUDE_SEARCH_DIRS})
   IF(MSVC)
     # prefer the cppunit dll with Visual Studio
-    FIND_LIBRARY(CppUnit_LIBRARIES cppunit_dll PATHS ${CppUnit_LIBRARY_SEARCH_DIRS})
+    FIND_LIBRARY(CppUnit_LIBRARIES cppunit_dll
+                 PATHS ${CppUnit_LIBRARY_SEARCH_DIRS})
   ELSE(MSVC)
     FIND_LIBRARY(CppUnit_LIBRARIES cppunit PATHS ${CppUnit_LIBRARY_SEARCH_DIRS})
   ENDIF(MSVC)
@@ -37,7 +28,9 @@ ELSE(WIN32) # Unix
   PKG_SEARCH_MODULE(CppUnit cppunit)
   SET(CppUnit_INCLUDE_DIRS ${CppUnit_INCLUDE_DIRS})
   SET(CppUnit_LIBRARY_DIRS ${CppUnit_LIBDIR})
-  SET(CppUnit_LIBRARIES ${CppUnit_LIBRARIES} CACHE STRING "")
+  SET(CppUnit_LIBRARIES
+      ${CppUnit_LIBRARIES}
+      CACHE STRING "")
 ENDIF(WIN32)
 
 SET(CppUnit_INCLUDE_DIRS ${CppUnit_INCLUDE_DIRS})

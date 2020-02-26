@@ -1,9 +1,10 @@
-# - Find Iberty
+# FindIberty
+#
 # This module finds libiberty.
 #
 # It sets the following variables:
-#  IBERTY_INCLUDE_DIR
-#  IBERTY_LIBRARY
+#   IBERTY_INCLUDE_DIR
+#   IBERTY_LIBRARY
 
 FIND_PATH(IBERTY_INCLUDE_DIR NAMES libiberty.h)
 FIND_LIBRARY(IBERTY_LIBRARY NAMES iberty)
@@ -11,9 +12,6 @@ FIND_LIBRARY(IBERTY_LIBRARY NAMES iberty)
 MARK_AS_ADVANCED(IBERTY_INCLUDE_DIR IBERTY_LIBRARY)
 
 IF(IBERTY_INCLUDE_DIR AND IBERTY_LIBRARY)
-
-  #MESSAGE(STATUS "Found iberty header file: ${IBERTY_INCLUDE_DIR}/libiberty.h")
-  #MESSAGE(STATUS "Found iberty library: ${IBERTY_LIBRARY}")
 
   SET(IBERTY_FOUND TRUE)
 
