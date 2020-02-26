@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -203,7 +203,11 @@ BfdWrapper::BfdWrapper(const char *dsoName)
   isDynamic = false;
   symbolTable = slurp_symtab(abfd, isMini, &nSymbols, &symbolSize, &isDynamic);
 
+#ifdef bfd_get_section_flags
   if ((bfd_get_section_flags(abfd, textSection) & SEC_ALLOC) == 0) {
+#else
+  if ((bfd_section_flags(textSection) & SEC_ALLOC) == 0) {
+#endif
     cerr << "SEC_ALLOC flag not set on .text section (whatever that means) in "
          << bfd_get_filename(abfd) << endl;
     free(symbolTable);
@@ -277,7 +281,11 @@ pair<const char *, unsigned int> BfdWrapper::getFileAndLineForAddress(const char
         unsigned int lineno = 0;
 
         bfd_vma textSection_vma = bfd_get_section_vma(abfd, textSection);
+#ifdef bfd_section_size
         bfd_size_type textSection_size = bfd_section_size(abfd, textSection);
+#else
+        bfd_size_type textSection_size = bfd_section_size(textSection);
+#endif
 
         if (!INRANGE(static_cast<int64_t>(textSection_vma) <=, unrelocatedAddr,
                      <= static_cast<int64_t>(textSection_vma + textSection_size))) {
@@ -324,7 +332,11 @@ pair<const char *, unsigned int> BfdWrapper::getFileAndLineForAddress(const int6
   unsigned int lineno = 0;
 
   int64_t symbolOffset = runtimeAddr - GetModuleBase(runtimeAddr) - 0x1000 - 1;
+#ifdef bfd_section_size
   bfd_size_type textSection_size = bfd_section_size(abfd, textSection);
+#else
+  bfd_size_type textSection_size = bfd_section_size(textSection);
+#endif
 
   if (!INRANGE(static_cast<int64_t>(0) <=, symbolOffset,
                <= static_cast<int64_t>(textSection_size))) {
@@ -352,7 +364,11 @@ const char *BfdWrapper::getFunctionForAddress(const int64_t runtimeAddr) {
     return funcName;
 
   int64_t symbolOffset = runtimeAddr - GetModuleBase(runtimeAddr) - 0x1000 - 1;
+#ifdef bfd_section_size
   bfd_size_type textSection_size = bfd_section_size(abfd, textSection);
+#else
+  bfd_size_type textSection_size = bfd_section_size(textSection);
+#endif
 
   if (!INRANGE(static_cast<int64_t>(0) <=, symbolOffset,
                <= static_cast<int64_t>(textSection_size))) {
