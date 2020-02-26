@@ -128,5 +128,5 @@ rem finally run Talipot tests
 ctest --force-new-ctest-process --output-on-failure --build-config "Release"
 
 if "%TALIPOT_BUILD_CORE_ONLY%" == "0" (
-  msbuild bundle.vcxproj /m /p:Configuration=Release %CLCACHE_MSBUILD_CONF%
+  msbuild bundlers/win/bundle.vcxproj /m /p:Configuration=Release %CLCACHE_MSBUILD_CONF%
 )
