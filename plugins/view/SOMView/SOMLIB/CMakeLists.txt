@@ -1,11 +1,11 @@
 SET(LIB_SRCS
-     DiffusionRateFunction.cpp
-     DiffusionRateFunctionSimple.cpp
-     DifusionRateFunctionGaussian.cpp
-     InputSample.cpp
-     SOMAlgorithm.cpp
-     SOMMap.cpp
-     TimeDecreasingFunctionSimple.cpp)
+    DiffusionRateFunction.cpp
+    DiffusionRateFunctionSimple.cpp
+    DiffusionRateFunctionGaussian.cpp
+    InputSample.cpp
+    SOMAlgorithm.cpp
+    SOMMap.cpp
+    TimeDecreasingFunctionSimple.cpp)
 
 INCLUDE_DIRECTORIES(${TalipotCoreBuildInclude} ${TalipotCoreInclude}
                     ${TalipotOGLInclude} ${CMAKE_CURRENT_SOURCE_DIR})

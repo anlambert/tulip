@@ -562,7 +562,7 @@ sensitive</string>
   <customwidget>
    <class>NavigableTableView</class>
    <extends>QTableView</extends>
-   <header>navigabletableview.h</header>
+   <header>NavigableTableView.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

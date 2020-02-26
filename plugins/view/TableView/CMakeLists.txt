@@ -2,11 +2,11 @@ INCLUDE_DIRECTORIES(
   ${TalipotCoreBuildInclude} ${TalipotCoreInclude} ${TalipotOGLInclude}
   ${TalipotGUIInclude} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
 
-SET(LIB_SRCS TableView.cpp PropertiesEditor.cpp navigabletableview.cpp)
+SET(LIB_SRCS TableView.cpp PropertiesEditor.cpp NavigableTableView.cpp)
 
 QTX_WRAP_UI(UI_SRCS TableView.ui PropertiesEditor.ui)
 
-QTX_WRAP_CPP(MOC_SRCS TableView.h PropertiesEditor.h navigabletableview.h)
+QTX_WRAP_CPP(MOC_SRCS TableView.h PropertiesEditor.h NavigableTableView.h)
 
 QTX_ADD_RESOURCES(RCC_SRCS TableView.qrc)
 
