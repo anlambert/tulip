@@ -1,6 +1,6 @@
 CXX = @CMAKE_CXX_COMPILER@
 CXXFLAGS = $(shell talipot-config --cxxflags --plugincxxflags)
-LDFLAGS = $(shell talipot-config --lib_talipot --pluginldflags)
+LDFLAGS = $(shell talipot-config --libs --pluginldflags)
 
 PLUGIN_NAME = TestPlugins
 TALIPOT_VERSION = $(shell talipot-config --version)

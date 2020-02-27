@@ -15,7 +15,6 @@ libextension=$(echo @CMAKE_SHARED_LIBRARY_SUFFIX@ | cut -d'.' -f 2)
 plugincxxflags="-fPIC -DPIC"
 pluginldflags=-shared
 pluginpath=@libdir@/talipot
-quaziplib=@QUAZIP_LIBRARIES@
 if [ "@CMAKE_DEBUG_MODE@" = "FALSE" ]; then
   ndebugflag=-DNDEBUG
 fi
@@ -53,11 +52,6 @@ if [ $WINDOWS -eq 0 ] ; then
   fi
 fi
 
-# check QUAZIP_LIBRARIES
-if [ "@QUAZIP_FOUND@" = "FALSE" ]; then
-   quaziplib=${libdir}lib${quaziplib}.${libextension}
-fi
-
 usage()
 {
     cat <<EOF
@@ -65,18 +59,12 @@ Usage: talipot-config [OPTIONS]
 Options:
 	--version (return the current version of Talipot)
 	--libs (return the whole Talipot libs)
-	--lib_talipot (return the Talipot core lib)
-	--lib_ogl (return the Talipot OpenGL lib)
 	--cxxflags (return the Talipot needed cxx flags)
-	--glincludes (return the OpenGL includes)
-	--gllibs (return the OpenGL libs)
 	--plugincxxflags (return the Talipot plugin cxx flags)
 	--pluginextension (return the plugin file extension)
 	--pluginldflags (return the plugin loader flags)
-        --pluginpath (return the path for installation of Talipot plugins)
-        --qtincludes (return the Qt includes)
-        --qtlibs (return the Qt libs needed by Talipot)
-        --sharepath (return the path where share data are installed)
+  --pluginpath (return the path for installation of Talipot plugins)
+  --sharepath (return the path where share data are installed)
 
 EOF
     exit $1
@@ -98,22 +86,10 @@ while test $# -gt 0; do
       OUTPUT=`echo ${OUTPUT} @VERSION@`
       ;;
     --cxxflags)
-      OUTPUT=`echo ${OUTPUT} @CMAKE_CXX_FLAGS@ @OPENMP_CXX_FLAGS@ ${ndebugflag} -I${includedir} @QT_CPPFLAGS@`
-      ;;
-    --glincludes)
-      OUTPUT=`echo ${OUTPUT} @GL_INCLUDES@`
-      ;;
-    --gllibs)
-      OUTPUT=`echo ${OUTPUT} @GL_LDFLAGS@ @LIB_GL@`
+      OUTPUT=`echo ${OUTPUT} @CMAKE_CXX_FLAGS@ @OPENMP_CXX_FLAGS@ ${ndebugflag} -I${includedir}`
       ;;
     --libs)
-      OUTPUT=`echo ${OUTPUT} ${libdir}/libtalipot-core-${libversion}.${libextension} ${libdir}/lib@GZStreamLibrary@.${libextension} ${libdir}/libtalipot-ogl-${libversion}.${libextension} ${libdir}/lib@FTGLLibrary@.${libextension} ${libdir}/libtalipot-gui-${libversion}.${libextension} ${quaziplib} @CMAKE_SHARED_LINKER_FLAGS@ @OPENMP_CXX_FLAGS@`
-      ;;
-    --lib_talipot)
-      OUTPUT=`echo ${OUTPUT} ${libdir}/libtalipot-core-${libversion}.${libextension} ${libdir}/lib@GZStreamLibrary@.${libextension} @CMAKE_SHARED_LINKER_FLAGS@ @OPENMP_CXX_FLAGS@`
-      ;;
-    --lib_ogl)
-      OUTPUT=`echo ${OUTPUT} ${libdir}/libtalipot-ogl-${libversion}.${libextension}  ${libdir}/lib@FTGLLibrary@.${libextension}`
+      OUTPUT=`echo ${OUTPUT} ${libdir}/libtalipot-core-${libversion}.${libextension} @CMAKE_SHARED_LINKER_FLAGS@ @OPENMP_CXX_FLAGS@`
       ;;
     --plugincxxflags)
       OUTPUT=`echo ${OUTPUT} ${plugincxxflags}`
@@ -126,12 +102,6 @@ while test $# -gt 0; do
       ;;
     --pluginpath)
       OUTPUT=`echo ${OUTPUT} ${pluginpath}`
-      ;;
-    --qtlibs)
-      OUTPUT=`echo ${OUTPUT} @QT_LDFLAGS@ @LIB_QT@`
-      ;;
-    --qtincludes)
-      OUTPUT=`echo ${OUTPUT} -I@QT_INCLUDE_DIR@`
       ;;
     --sharepath)
       OUTPUT=`echo ${OUTPUT} ${sharedir}`
