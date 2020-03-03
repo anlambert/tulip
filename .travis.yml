@@ -325,8 +325,7 @@ jobs:
           branch: master
         file: "build/deploy/TalipotPackagesToBintray.json"
         user: "anlambert"
-        key:
-          secure: "${BINTRAY_API_KEY}"
+        key: "${BINTRAY_API_KEY}"
   #=============================================================================================
     # # Talipot thirdparty build stage on Mac OS 10.12
     # - stage: Talipot thirdparty build (Mac OS)
@@ -530,8 +529,7 @@ jobs:
           branch: master
         file: "build/deploy/TalipotPackagesToBintray.json"
         user: "anlambert"
-        key:
-          secure: "${BINTRAY_API_KEY}"
+        key: "${BINTRAY_API_KEY}"
     #-------------------------------------------------------------------------------------------
     # Talipot complete build on Mac OS (Homebrew)
     -
