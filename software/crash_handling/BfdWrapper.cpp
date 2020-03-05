@@ -280,7 +280,12 @@ pair<const char *, unsigned int> BfdWrapper::getFileAndLineForAddress(const char
         const char *fileName = nullptr;
         unsigned int lineno = 0;
 
+#ifdef bfd_get_section_vma
         bfd_vma textSection_vma = bfd_get_section_vma(abfd, textSection);
+#else
+        bfd_vma textSection_vma = bfd_section_vma(textSection);
+#endif
+
 #ifdef bfd_section_size
         bfd_size_type textSection_size = bfd_section_size(abfd, textSection);
 #else
