@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -17,7 +17,6 @@
 
 #include <utf8.h>
 
-#include <algorithm>
 #include <unordered_map>
 
 using namespace std;
@@ -73,7 +72,7 @@ string MaterialDesignIcons::getIconFamily(const string &) {
 string MaterialDesignIcons::getIconUtf8String(const string &iconName) {
   initIconCodePoints();
   string iconString;
-  utf8::append(iconCodePoint[iconName.c_str()], back_inserter(iconString));
+  utf8::append(static_cast<char32_t>(iconCodePoint[iconName.c_str()]), iconString);
   return iconString;
 }
 }

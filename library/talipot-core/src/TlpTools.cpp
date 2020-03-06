@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -28,6 +28,8 @@
 #ifdef _WIN32
 #include <windows.h>
 #include <utf8.h>
+#include <codecvt>
+#include <locale>
 #ifdef _MSC_VER
 #include <dbghelp.h>
 #endif
@@ -307,11 +309,18 @@ std::string tlp::demangleClassName(const char *className, bool) {
 
 #endif // __EMSCRIPTEN__
 
+#ifdef _WIN32
+static std::wstring u16stringToWstring(const std::u16string &s) {
+  static std::wstring_convert<std::codecvt_utf16<wchar_t, 0x10ffff, little_endian>, wchar_t> conv;
+  return conv.from_bytes(reinterpret_cast<const char *>(&s[0]),
+                         reinterpret_cast<const char *>(&s[0] + s.size()));
+}
+#endif
+
 //=========================================================
 std::istream *tlp::getIgzstream(const std::string &name, int open_mode) {
 #if defined(WIN32) && ZLIB_VERNUM >= 0x1270
-  std::wstring utf16name;
-  utf8::utf8to16(name.begin(), name.end(), std::back_inserter(utf16name));
+  std::wstring utf16name = u16stringToWstring(utf8::utf8to16(name));
   return new igzstream(utf16name.c_str(), open_mode);
 #else
   return new igzstream(name.c_str(), open_mode);
@@ -320,8 +329,7 @@ std::istream *tlp::getIgzstream(const std::string &name, int open_mode) {
 
 std::ostream *tlp::getOgzstream(const std::string &name, int open_mode) {
 #if defined(WIN32) && ZLIB_VERNUM >= 0x1270
-  std::wstring utf16name;
-  utf8::utf8to16(name.begin(), name.end(), std::back_inserter(utf16name));
+  std::wstring utf16name = u16stringToWstring(utf8::utf8to16(name));
   return new ogzstream(utf16name.c_str(), open_mode);
 #else
   return new ogzstream(name.c_str(), open_mode);
@@ -393,8 +401,7 @@ int tlp::statPath(const std::string &pathname, tlp_stat_t *buf) {
 #ifndef WIN32
   return stat(pathname.c_str(), buf);
 #else
-  std::wstring utf16pathname;
-  utf8::utf8to16(pathname.begin(), pathname.end(), std::back_inserter(utf16pathname));
+  std::wstring utf16pathname = u16stringToWstring(utf8::utf8to16(pathname));
   return _wstat(utf16pathname.c_str(), buf);
 #endif
 }
@@ -498,8 +505,7 @@ std::istream *tlp::getInputFileStream(const std::string &filename, std::ios_base
 #else
   // On Windows, the path name (possibly containing non ascii characters) has to be converted to
   // UTF-16 in order to open a stream
-  std::wstring utf16filename;
-  utf8::utf8to16(filename.begin(), filename.end(), std::back_inserter(utf16filename));
+  std::wstring utf16filename = u16stringToWstring(utf8::utf8to16(filename));
 #ifdef __GLIBCXX__
   // With MinGW, it's a little bit tricky to get an input stream
   return new wifilestream(utf16filename, mode);
@@ -523,8 +529,7 @@ std::ostream *tlp::getOutputFileStream(const std::string &filename,
 #else
   // On Windows, the path name (possibly containing non ascii characters) has to be converted to
   // UTF-16 in order to open a stream
-  std::wstring utf16filename;
-  utf8::utf8to16(filename.begin(), filename.end(), std::back_inserter(utf16filename));
+  std::wstring utf16filename = u16stringToWstring(utf8::utf8to16(filename));
 #ifdef __GLIBCXX__
   // With MinGW, it's a little bit tricky to get an output stream
   return new wofilestream(utf16filename, open_mode);
