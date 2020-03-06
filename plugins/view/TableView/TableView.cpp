@@ -216,6 +216,7 @@ void TableView::graphChanged(tlp::Graph *g) {
 
   previousGraph = g;
   isNewGraph = false;
+  setColumnsFilterCase();
 }
 
 void TableView::graphDeleted(Graph *ancestor) {

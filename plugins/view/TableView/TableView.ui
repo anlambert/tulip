@@ -339,7 +339,7 @@ the chosen column value contains the given pattern</string>
              </property>
              <property name="minimumSize">
               <size>
-               <width>120</width>
+               <width>200</width>
                <height>24</height>
               </size>
              </property>
@@ -356,7 +356,7 @@ border-left: 1px solid #C9C9C9;
 border-right: 1px solid #C9C9C9;</string>
              </property>
              <property name="placeholderText">
-              <string>give a pattern (regular expression)</string>
+              <string>regular expression</string>
              </property>
             </widget>
            </item>
@@ -400,7 +400,7 @@ the chosen column value contains the given pattern</string>
             <widget class="QCheckBox" name="filtercase">
              <property name="font">
               <font>
-               <pointsize>8</pointsize>
+               <pointsize>10</pointsize>
                <weight>50</weight>
                <italic>false</italic>
                <bold>false</bold>
@@ -410,11 +410,10 @@ the chosen column value contains the given pattern</string>
               <string>indicates if the match is case sensitive or not</string>
              </property>
              <property name="text">
-              <string>case
-sensitive</string>
+              <string>match case</string>
              </property>
              <property name="checked">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
             </widget>
            </item>
@@ -482,7 +481,7 @@ border-left: 1px solid #C9C9C9;
 border-right: 1px solid #C9C9C9;</string>
              </property>
              <property name="placeholderText">
-              <string>give a pattern (regular expression)</string>
+              <string>regular expression</string>
              </property>
             </widget>
            </item>
@@ -490,18 +489,17 @@ border-right: 1px solid #C9C9C9;</string>
             <widget class="QCheckBox" name="columnsfiltercase">
              <property name="font">
               <font>
-               <pointsize>8</pointsize>
+               <pointsize>10</pointsize>
               </font>
              </property>
              <property name="toolTip">
               <string>indicates if the match is case sensitive or not</string>
              </property>
              <property name="text">
-              <string>case
-sensitive</string>
+              <string>match case</string>
              </property>
              <property name="checked">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
             </widget>
            </item>

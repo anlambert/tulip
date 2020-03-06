@@ -251,7 +251,7 @@ color: black;
 border-bottom: 1px solid #C9C9C9;</string>
           </property>
           <property name="placeholderText">
-           <string>give a pattern</string>
+           <string>regular expression</string>
           </property>
          </widget>
         </item>
