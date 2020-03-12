@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -50,6 +50,14 @@ void ImportExportTest::testgridImportExport() {
   Graph *original = createSimpleGraph();
 
   importExportGraph(original);
+
+  delete original;
+}
+
+void ImportExportTest::testgridImportExportNonAsciiPath() {
+  Graph *original = createSimpleGraph();
+
+  importExportGraph(original, "graph_export_éà");
 
   delete original;
 }
@@ -426,9 +434,7 @@ void ImportExportTest::testMetaGraphImportExport() {
   delete graph;
 }
 
-void ImportExportTest::importExportGraph(tlp::Graph *original) {
-
-  const string exportFilename = "graph_export";
+void ImportExportTest::importExportGraph(tlp::Graph *original, const string &exportFilename) {
 
   exportGraph(original, exportAlgorithm, exportFilename);
 

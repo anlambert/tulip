@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -26,6 +26,7 @@ public:
   ImportExportTest(const std::string &importAlgorithm, const std::string &exportAlgorithm);
   void setUp() override;
   void testgridImportExport();
+  void testgridImportExportNonAsciiPath();
   void testSubGraphsImportExport();
   void testAttributes();
   void testNanInfValuesImportExport();
@@ -34,7 +35,7 @@ public:
 protected:
   void updateIdProperty(tlp::Graph *graph) const;
   tlp::Graph *createSimpleGraph() const;
-  void importExportGraph(tlp::Graph *original);
+  void importExportGraph(tlp::Graph *original, const std::string &exportFilename = "graph_export");
   void exportGraph(tlp::Graph *graph, const std::string &exportPluginName,
                    const std::string &filename);
   tlp::Graph *importGraph(const std::string &importPluginName, const std::string &filename);
@@ -50,6 +51,7 @@ protected:
 class TlpImportExportTest : public ImportExportTest {
   CPPUNIT_TEST_SUITE(TlpImportExportTest);
   CPPUNIT_TEST(testgridImportExport);
+  CPPUNIT_TEST(testgridImportExportNonAsciiPath);
   CPPUNIT_TEST(testAttributes);
   CPPUNIT_TEST(testSubGraphsImportExport);
   CPPUNIT_TEST(testNanInfValuesImportExport);
@@ -63,6 +65,7 @@ public:
 class TlpBImportExportTest : public ImportExportTest {
   CPPUNIT_TEST_SUITE(TlpBImportExportTest);
   CPPUNIT_TEST(testgridImportExport);
+  CPPUNIT_TEST(testgridImportExportNonAsciiPath);
   CPPUNIT_TEST(testAttributes);
   CPPUNIT_TEST(testSubGraphsImportExport);
   CPPUNIT_TEST(testNanInfValuesImportExport);
@@ -76,6 +79,7 @@ public:
 class JsonImportExportTest : public ImportExportTest {
   CPPUNIT_TEST_SUITE(JsonImportExportTest);
   CPPUNIT_TEST(testgridImportExport);
+  CPPUNIT_TEST(testgridImportExportNonAsciiPath);
   CPPUNIT_TEST(testAttributes);
   CPPUNIT_TEST(testSubGraphsImportExport);
   CPPUNIT_TEST(testNanInfValuesImportExport);
