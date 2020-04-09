@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -541,8 +541,6 @@ private:
   bool clearStencilBufferAtDraw;
 
 public:
-  ///@cond DOXYGEN_HIDDEN
-
   /**
    * @brief You don't have to call this function
    * This function is automatically call when a GlGraphComposite is added in a layer in the scene
@@ -569,8 +567,6 @@ public:
    */
   void notifyModifyEntity(GlEntity *entity);
   void notifyDeletedEntity(GlEntity *entity);
-
-  ///@endcond
 };
 }
 

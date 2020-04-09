@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -205,8 +205,6 @@ public:
    */
   void setWithXML(const std::string &inString, unsigned int &currentPosition);
 
-  ///@cond DOXYGEN_HIDDEN
-
   /**
    * This function is automatically call when a GlGraphComposite is added in this layer
    * You don't have to call this function
@@ -223,8 +221,6 @@ public:
    * function used by visitors to visit this layer
    */
   void acceptVisitor(GlSceneVisitor *visitor);
-
-  ///@endcond
 
 protected:
   /**

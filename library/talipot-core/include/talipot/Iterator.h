@@ -24,11 +24,9 @@
 
 namespace tlp {
 
-///@cond DOXYGEN_HIDDEN
 extern TLP_SCOPE void incrNumIterators();
 extern TLP_SCOPE void decrNumIterators();
 extern TLP_SCOPE int getNumIterators();
-///@endcond
 
 /**
  * @brief Interface for Talipot iterators.
@@ -132,7 +130,6 @@ public:
   }
 };
 
-#ifndef DOXYGEN_NOTFOR_DEVEL
 // as Iterator is only accessible through pointer
 // we must have a specific definition of begin and end
 template <typename T>
@@ -144,7 +141,6 @@ template <typename T>
 auto end(Iterator<T> *it) -> decltype(it->end()) {
   return it->end();
 }
-#endif
 
 /**
  * @brief Counts the number of iterated elements

@@ -11,8 +11,6 @@
  *
  */
 
-///@cond DOXYGEN_HIDDEN
-
 #ifndef TALIPOT_NODE_LINK_DIAGRAM_VIEW_H
 #define TALIPOT_NODE_LINK_DIAGRAM_VIEW_H
 
@@ -146,5 +144,3 @@ protected:
 }
 
 #endif // TALIPOT_NODE_LINK_DIAGRAM_VIEW_H
-
-///@endcond

@@ -11,8 +11,6 @@
  *
  */
 
-///@cond DOXYGEN_HIDDEN
-
 #ifndef TALIPOT_COORD_EDITOR_H
 #define TALIPOT_COORD_EDITOR_H
 
@@ -59,4 +57,3 @@ private slots:
 }
 
 #endif // TALIPOT_COORD_EDITOR_H
-///@endcond

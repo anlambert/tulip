@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -26,7 +26,6 @@
 namespace tlp {
 class Graph;
 
-///@cond DOXYGEN_HIDDEN
 struct LessThan {
   LessThan(const tlp::NumericProperty *m) : metric(m) {}
   const tlp::NumericProperty *metric;
@@ -79,7 +78,6 @@ private:
   const tlp::NumericProperty *metric;
   const Graph *sg;
 };
-///@endcond
 
 /**
  * @brief This Iterator sorts the nodes in a sequence based on their values in a NumericProperty.

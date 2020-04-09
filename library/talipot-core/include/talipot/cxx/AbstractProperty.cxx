@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -233,7 +233,6 @@ int tlp::AbstractProperty<Tnode, Tedge, Tprop>::compare(const edge e1, const edg
 // define template iterator class to iterate over graph elts
 // belonging to a given graph instance
 // used by the two methods below
-///@cond DOXYGEN_HIDDEN
 template <typename ELT_TYPE>
 class GraphEltIterator : public tlp::Iterator<ELT_TYPE> {
 public:
@@ -271,7 +270,6 @@ private:
   ELT_TYPE curElt;
   bool _hasnext;
 };
-///@endcond
 
 //============================================================
 template <class Tnode, class Tedge, class Tprop>

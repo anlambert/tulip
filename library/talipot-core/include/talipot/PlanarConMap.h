@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -10,8 +10,6 @@
  * See top-level LICENSE file for more information
  *
  */
-
-///@cond DOXYGEN_HIDDEN
 
 #ifndef TALIPOT_PLANAR_CON_MAP_H
 #define TALIPOT_PLANAR_CON_MAP_H
@@ -185,5 +183,3 @@ TLP_SCOPE PlanarConMap *computePlanarConMap(Graph *graph);
 TLP_SCOPE std::ostream &operator<<(std::ostream &, tlp::PlanarConMap *);
 
 #endif // TALIPOT_PLANAR_CON_MAP_H
-
-///@endcond

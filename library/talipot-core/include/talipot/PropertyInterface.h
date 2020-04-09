@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -140,7 +140,6 @@ public:
    */
   bool rename(const std::string &newName);
   /**
-   * @cond DOXYGEN_HIDDEN
    * @brief Gets the graph on which this property has been defined.
    * This is an internal function and its behavior can change.
    * DO NOT USE UNLESS YOU KNOW WHAT YOU ARE DOING.
@@ -161,7 +160,6 @@ public:
    * This is due to the inheritance system of the properties.
    *
    * @return The Graph this property is local to.
-   * @endcond
    */
   tlp::Graph *getGraph() const {
     return graph;
@@ -676,7 +674,6 @@ protected:
 // hashmap).
 //================================================================================
 
-///@cond DOXYGEN_HIDDEN
 namespace std {
 template <>
 struct TLP_SCOPE hash<const tlp::PropertyInterface *> {
@@ -691,6 +688,5 @@ struct TLP_SCOPE hash<tlp::PropertyInterface *> {
   }
 };
 } // namespace std
-///@endcond
 
 #endif // TALIPOT_PROPERTY_INTERFACE_H

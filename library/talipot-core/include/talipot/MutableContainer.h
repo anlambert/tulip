@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -28,7 +28,6 @@
 
 namespace tlp {
 
-///@cond DOXYGEN_HIDDEN
 //===================================================================
 // we first define an interface
 // to make easier the iteration on values
@@ -39,7 +38,6 @@ public:
   ~IteratorValue() override {}
   virtual unsigned int nextValue(DataMem &) = 0;
 };
-///@endcond
 //===================================================================
 template <typename TYPE>
 class MutableContainer {
@@ -179,7 +177,6 @@ private:
   typename std::deque<typename StoredType<TYPE>::Value>::const_iterator it;
 };
 
-///@cond DOXYGEN_HIDDEN
 // one for hash storage
 template <typename TYPE>
 class IteratorHash : public IteratorValue {
@@ -221,11 +218,8 @@ private:
   std::unordered_map<unsigned int, typename StoredType<TYPE>::Value> *hData;
   typename std::unordered_map<unsigned int, typename StoredType<TYPE>::Value>::const_iterator it;
 };
-///@endcond
 }
 
-///@cond DOXYGEN_HIDDEN
 #include "cxx/MutableContainer.cxx"
-///@endcond
 
 #endif // TALIPOT_MUTABLE_CONTAINER_H

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -32,8 +32,6 @@ namespace tlp {
  */
 class TLP_GL_SCOPE GlAbstractPolygon : public GlEntity {
 public:
-  ///@cond DOXYGEN_HIDDEN
-
   /**
    * Constructor
    */
@@ -95,14 +93,10 @@ public:
    */
   void setFillColor(unsigned int i, const Color &color);
 
-  ///@endcond
-
   /**
    * @brief Set color used to filling the whole polygon
    */
   void setFillColor(const Color &color);
-
-  ///@cond DOXYGEN_HIDDEN
 
   /**
    * Get the ith color used to outlining the polygon
@@ -113,8 +107,6 @@ public:
    * Set the ith color used to outlining the polygon
    */
   void setOutlineColor(unsigned int i, const Color &color);
-
-  ///@endcond
 
   /**
    * @brief Set the color used to outlining the whole polygon
@@ -140,8 +132,6 @@ public:
    * @brief Set the outline size
    */
   void setOutlineSize(float size);
-
-  ///@cond DOXYGEN_HIDDEN
 
   /**
    * Get the lod outline value, below this lod value outline will not be displayed
@@ -188,11 +178,7 @@ public:
    */
   void setWithXML(const std::string &outString, unsigned int &currentPosition) override;
 
-  ///@endcond
-
 protected:
-  ///@cond DOXYGEN_HIDDEN
-
   /**
    * set Coords of the polygon
    */
@@ -222,8 +208,6 @@ protected:
    * Clear previously generated VBO
    */
   virtual void clearGenerated();
-
-  ///@endcond
 
   PolygonMode polygonMode;
   std::vector<Coord> points;

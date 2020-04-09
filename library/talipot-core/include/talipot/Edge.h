@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -105,7 +105,6 @@ static std::function<unsigned int(tlp::edge)> edgeToId = [](tlp::edge e) { retur
 struct TLP_SCOPE __tlp_vector_edge : public std::vector<tlp::edge> {};
 #endif
 
-///@cond DOXYGEN_HIDDEN
 // these three functions allow to use tlp::edge as a key in a hash-based data structure (e.g.
 // hashmap).
 namespace std {
@@ -128,6 +127,5 @@ struct less<tlp::edge> {
   }
 };
 } // namespace std
-///@endcond
 
 #endif // TALIPOT_EDGE_H

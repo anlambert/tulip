@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -10,8 +10,6 @@
  * See top-level LICENSE file for more information
  *
  */
-
-///@cond DOXYGEN_HIDDEN
 
 #ifndef TALIPOT_CIRCLE_H
 #define TALIPOT_CIRCLE_H
@@ -131,4 +129,3 @@ typedef Circle<int, double> Circlei;
 
 #include "cxx/Circle.cxx"
 #endif // TALIPOT_CIRCLE_H
-///@endcond

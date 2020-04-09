@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -27,7 +27,6 @@ namespace tlp {
 
 class Graph;
 
-///@cond DOXYGEN_HIDDEN
 // basic interface to embed a data of any type
 struct TLP_SCOPE DataMem {
   DataMem() {}
@@ -42,7 +41,6 @@ struct TypedValueContainer : public DataMem {
   TypedValueContainer(const TYPE &val) : value(val) {}
   ~TypedValueContainer() override {}
 };
-///@endcond
 
 /**
  * @ingroup Structures
@@ -80,7 +78,6 @@ struct TLP_SCOPE DataType : public DataMem {
   void *value;
 };
 
-///@cond DOXYGEN_HIDDEN
 // template class to embed value of known type
 template <typename T>
 struct TypedData : public DataType {
@@ -166,7 +163,6 @@ public:
   std::unordered_map<std::string, DataTypeSerializer *> tnTodts;
   std::unordered_map<std::string, DataTypeSerializer *> otnTodts;
 };
-///@endcond
 
 /**
  * @ingroup Structures

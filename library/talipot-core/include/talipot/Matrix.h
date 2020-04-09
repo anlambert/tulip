@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -10,8 +10,6 @@
  * See top-level LICENSE file for more information
  *
  */
-
-///@cond DOXYGEN_HIDDEN
 
 //@TLPGEOLICENCE#
 
@@ -120,7 +118,6 @@ public:
    */
   Vector<Obj, SIZE> powerIteration(const unsigned int nIterations) const;
 
-  ///@cond DOXYGEN_HIDDEN
   /**
    * Simplifies a 3x3 matrix in 2x2 matrix to be used with computeEigenVector
    */
@@ -131,7 +128,6 @@ public:
    *           /!\ This can only be used with a 2x2 matrix !!! /!\
    */
   bool computeEigenVector(const float x, Vector<Obj, 3> &eigenVector) const;
-  ///@endcond
 };
 
 typedef Matrix<float, 3> Mat3f;
@@ -177,4 +173,3 @@ Vector<Obj, SIZE> operator*(const Matrix<Obj, SIZE> &, const Vector<Obj, SIZE> &
 
 #include "cxx/Matrix.cxx"
 #endif // TALIPOT_MATRIX_H
-///@endcond

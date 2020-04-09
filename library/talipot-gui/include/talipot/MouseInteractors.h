@@ -11,8 +11,6 @@
  *
  */
 
-///@cond DOXYGEN_HIDDEN
-
 #ifndef TALIPOT_MOUSE_INTERACTORS_H
 #define TALIPOT_MOUSE_INTERACTORS_H
 
@@ -77,4 +75,3 @@ private:
 };
 }
 #endif // TALIPOT_MOUSE_INTERACTORS_H
-///@endcond

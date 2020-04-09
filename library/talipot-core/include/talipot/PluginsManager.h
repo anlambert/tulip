@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -27,7 +27,6 @@
 namespace tlp {
 class PluginContext;
 
-///@cond DOXYGEN_HIDDEN
 /**
  * @ingroup Plugins
  * @brief The base class for plugin factories.
@@ -40,7 +39,6 @@ class FactoryInterface {
 public:
   virtual tlp::Plugin *createPluginObject(tlp::PluginContext *context) = 0;
 };
-///@endcond
 
 /**
  * @ingroup Plugins
@@ -214,7 +212,6 @@ public:
 
   void sendPluginRemovedEvent(const std::string &pluginName);
 
-  ///@cond DOXYGEN_HIDDEN
 private:
   PluginsManager() {}
 
@@ -262,10 +259,8 @@ private:
    *the minor.
    **/
   static std::string getPluginRelease(const std::string &name);
-  ///@endcond
 };
 
-///@cond DOXYGEN_HIDDEN
 class TLP_SCOPE PluginEvent : public Event {
 public:
   enum PluginEventType { TLP_ADD_PLUGIN = 0, TLP_REMOVE_PLUGIN = 1 };
@@ -287,7 +282,6 @@ protected:
   PluginEventType evtType;
   std::string pluginName;
 };
-///@endcond
 }
 
 #endif // TALIPOT_PLUGIN_LISTER_H

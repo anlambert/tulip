@@ -11,8 +11,6 @@
  *
  */
 
-///@cond DOXYGEN_HIDDEN
-
 #ifndef TALIPOT_ITEM_EDITOR_CREATORS_H
 #define TALIPOT_ITEM_EDITOR_CREATORS_H
 
@@ -314,4 +312,3 @@ inline QString &truncateText(QString &text, const QString &trailingChars = " ...
 #include "cxx/ItemEditorCreators.cxx"
 
 #endif // TALIPOT_ITEM_EDITOR_CREATORS_H
-///@endcond

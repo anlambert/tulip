@@ -14,8 +14,6 @@
 #ifndef PARALLEL_COORDINATES_VIEW_H
 #define PARALLEL_COORDINATES_VIEW_H
 
-#ifndef DOXYGEN_NOTFOR_DEVEL
-
 #include <talipot/OpenGlIncludes.h>
 
 #include "ParallelCoordinatesDrawing.h"
@@ -237,7 +235,5 @@ private:
   bool needDraw;
 };
 }
-
-#endif // DOXYGEN_NOTFOR_DEVEL
 
 #endif // PARALLEL_COORDINATES_VIEW_H

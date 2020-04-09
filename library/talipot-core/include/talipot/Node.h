@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -105,7 +105,6 @@ static std::function<unsigned int(tlp::node)> nodeToId = [](tlp::node n) { retur
 struct TLP_SCOPE __tlp_vector_node : public std::vector<tlp::node> {};
 #endif
 
-///@cond DOXYGEN_HIDDEN
 // these three functions allow to use tlp::node as a key in a hash-based data structure (e.g.
 // hashmap).
 namespace std {
@@ -128,6 +127,5 @@ struct less<tlp::node> {
   }
 };
 }
-///@endcond
 
 #endif // TALIPOT_NODE_H

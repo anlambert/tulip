@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -525,7 +525,6 @@ private:
   NumericProperty *_elementOrderingProperty;
 };
 
-///@cond DOXYGEN_HIDDEN
 /** \brief Class to get the default selection color
  */
 class TLP_GL_SCOPE GlDefaultSelectionColorManager {
@@ -537,8 +536,6 @@ public:
 private:
   static GlDefaultSelectionColorManager *manager;
 };
-
-///@endcond
 
 }
 

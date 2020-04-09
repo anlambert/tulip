@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -11,12 +11,9 @@
  *
  */
 
-///@cond DOXYGEN_HIDDEN
-
 #ifndef TALIPOT_GL_TOOLS_H
 #define TALIPOT_GL_TOOLS_H
 
-#ifndef DOXYGEN_NOTFOR_DEVEL
 #include <talipot/config.h>
 #include <talipot/Color.h>
 #include <talipot/Coord.h>
@@ -83,6 +80,4 @@ TLP_GL_SCOPE std::vector<Coord> computeNormals(const std::vector<Coord> &vertice
                                                const std::vector<unsigned int> &facesIndices);
 }
 
-#endif // DOXYGEN_NOTFOR_DEVEL
 #endif // TALIPOT_GL_TOOLS_H
-///@endcond

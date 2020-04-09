@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -14,8 +14,6 @@
 // original code is written in Python and is taken from
 // https://jdreaver.com/posts/2014-07-28-scientific-notation-spin-box-pyside.html
 // see also https://gist.github.com/jdreaver/0be2e44981159d0854f5
-
-///@cond DOXYGEN_HIDDEN
 
 #ifndef TALIPOT_SCIENTIFIC_DOUBLE_SPIN_BOX_H
 #define TALIPOT_SCIENTIFIC_DOUBLE_SPIN_BOX_H
@@ -63,5 +61,3 @@ public:
 }
 
 #endif // TALIPOT_SCIENTIFIC_DOUBLE_SPIN_BOX_H
-
-///@endcond

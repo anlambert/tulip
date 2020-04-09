@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -11,12 +11,8 @@
  *
  */
 
-///@cond DOXYGEN_HIDDEN
-
 #ifndef TALIPOT_CURVES_H
 #define TALIPOT_CURVES_H
-
-#ifndef DOXYGEN_NOTFOR_DEVEL
 
 #include <talipot/OpenGlIncludes.h>
 
@@ -85,6 +81,4 @@ TLP_GL_SCOPE void buildCurvePoints(const std::vector<Coord> &vertices,
                                    const std::vector<float> &sizes, const Coord &startN,
                                    const Coord &endN, std::vector<Coord> &result);
 }
-#endif // DOXYGEN_NOTFOR_DEVEL
 #endif // TALIPOT_CURVES_H
-///@endcond

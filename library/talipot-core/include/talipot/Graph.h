@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -414,10 +414,8 @@ public:
   virtual Graph *getRoot() const = 0;
 
   /**
-   * @cond DOXYGEN_HIDDEN
    * @brief Sets the parent of a graph.
    * @warning ONLY USE IF YOU KNOW EXACTLY WHAT YOU ARE DOING.
-   * @endcond
    */
   virtual void setSuperGraph(Graph *) = 0;
 
@@ -1968,7 +1966,6 @@ public:
    */
   void openMetaNode(node n, bool updateProperties = true);
 
-  ///@cond DOXYGEN_HIDDEN
 protected:
   virtual DataSet &getNonConstAttributes() = 0;
   // designed to reassign an id to a previously deleted elt
@@ -2076,7 +2073,6 @@ protected:
 
   unsigned int id;
   std::unordered_map<std::string, tlp::PropertyInterface *> circularCalls;
-  ///@endcond
 };
 
 /**

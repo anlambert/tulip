@@ -11,8 +11,6 @@
  *
  */
 
-///@cond DOXYGEN_HIDDEN
-
 #ifndef TALIPOT_TREE_VIEW_COMBO_BOX_H
 #define TALIPOT_TREE_VIEW_COMBO_BOX_H
 
@@ -50,4 +48,3 @@ signals:
 };
 
 #endif // TALIPOT_TREE_VIEW_COMBO_BOX_H
-///@endcond

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -123,8 +123,6 @@ public:
    */
   void setWithXML(const std::string &inString, unsigned int &currentPosition) override;
 
-  ///@cond DOXYGEN_HIDDEN
-
   /**
    * Function used to visit composite's children
    */
@@ -172,8 +170,6 @@ public:
    * define
    */
   void draw(float, Camera *) override {}
-
-  ///@endcond
 
 protected:
   std::map<std::string, GlEntity *> elements;

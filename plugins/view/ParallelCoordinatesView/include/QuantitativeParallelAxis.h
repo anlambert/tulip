@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -13,8 +13,6 @@
 
 #ifndef QUANTITATIVE_PARALLEL_AXIS_H
 #define QUANTITATIVE_PARALLEL_AXIS_H
-
-#ifndef DOXYGEN_NOTFOR_DEVEL
 
 #include "ParallelAxis.h"
 
@@ -159,7 +157,5 @@ private:
   bool integerScale;
 };
 }
-
-#endif // DOXYGEN_NOTFOR_DEVEL
 
 #endif // QUANTITATIVE_PARALLEL_AXIS_H

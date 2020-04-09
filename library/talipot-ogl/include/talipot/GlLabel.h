@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -99,8 +99,6 @@ public:
     return centerPosition;
   }
 
-  ///@cond DOXYGEN_HIDDEN
-
   /**
    * @brief Set the translation used after rotation of the label
    */
@@ -114,8 +112,6 @@ public:
   const Coord &getTranslationAfterRotation() const {
     return translationAfterRotation;
   }
-
-  ///@endcond
 
   /**
    * @brief Set the alignment of the label : LabelPosition::Center, LabelPosition::Top,
@@ -259,14 +255,12 @@ public:
    */
   void setFontNameSizeAndColor(const std::string &name, const int &size, const Color &color);
 
-  ///@cond DOXYGEN_HIDDEN
   /**
    * @brief This parameters is not used
    */
   void setRenderingMode(int mode) {
     renderingMode = mode;
   }
-  ///@endcond
 
   /**
    * @brief Set the occlusion tester

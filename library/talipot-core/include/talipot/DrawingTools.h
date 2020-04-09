@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -10,8 +10,6 @@
  * See top-level LICENSE file for more information
  *
  */
-
-///@cond DOXYGEN_HIDDEN
 
 #ifndef TALIPOT_DRAWING_TOOLS_H
 #define TALIPOT_DRAWING_TOOLS_H
@@ -162,4 +160,3 @@ TLP_SCOPE std::vector<tlp::Coord> computeRegularPolygon(unsigned int numberOfSid
 }
 
 #endif // TALIPOT_DRAWING_TOOLS_H
-///@endcond

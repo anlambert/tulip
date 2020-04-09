@@ -14,8 +14,6 @@
 #ifndef PARALLEL_COORDINATES_GRAPH_PROXY_H
 #define PARALLEL_COORDINATES_GRAPH_PROXY_H
 
-#ifndef DOXYGEN_NOTFOR_DEVEL
-
 #include <talipot/GraphDecorator.h>
 #include <talipot/Size.h>
 #include <talipot/StableIterator.h>
@@ -161,7 +159,5 @@ private:
 };
 
 }
-
-#endif // DOXYGEN_NOTFOR_DEVEL
 
 #endif // PARALLEL_COORDINATES_GRAPH_PROXY_H

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -99,8 +99,6 @@ public:
     return inputData.getGraph();
   }
 
-  ///@cond DOXYGEN_HIDDEN
-
   /**
    * Function used to visit composite's children
    */
@@ -144,8 +142,6 @@ public:
    */
   void setRenderer(tlp::GlGraphRenderer *);
 
-  ///@endcond
-
   /**
    * @brief Function to export data in outString (in XML format)
    */
@@ -157,11 +153,7 @@ public:
   void setWithXML(const std::string &inString, unsigned int &currentPosition) override;
 
 protected:
-  ///@cond DOXYGEN_HIDDEN
-
   void treatEvent(const Event &evt) override;
-
-  ///@endcond
 
   GlGraphRenderingParameters parameters;
   GlGraphInputData inputData;

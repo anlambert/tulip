@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -227,8 +227,6 @@ public:
    */
   virtual void setWithXML(const std::string &inString, unsigned int &currentPosition);
 
-  ///@cond DOXYGEN_HIDDEN
-
   /**
    * Get the modelview matrix
    */
@@ -290,8 +288,6 @@ public:
    * @brief Set the scene radius
    */
   void setSceneRadius(double sceneRadius, const BoundingBox sceneBoundingBox = BoundingBox());
-
-  ///@endcond
 
 private:
   bool matrixCoherent;
