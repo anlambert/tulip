@@ -330,8 +330,8 @@ class %2(%3):
   if (pluginGroup.isEmpty()) {
     pluginSkeleton +=
         QString(R"(
-talipotplugins.registerPlugin(pluginClassName='%1',
-                              pluginName='%2',
+talipotplugins.registerPlugin(pluginName='%2',
+                              pluginClassName='%1',
                               author='%3',
                               date='%4',
                               info='%5',
@@ -340,8 +340,8 @@ talipotplugins.registerPlugin(pluginClassName='%1',
             .arg(pluginClassName, pluginName, pluginAuthor, pluginDate, pluginInfo, pluginRelease);
   } else {
     pluginSkeleton += QString(R"(
-talipotplugins.registerPluginOfGroup(pluginClassName='%1',
-                                     pluginName='%2',
+talipotplugins.registerPluginOfGroup(pluginName='%2',
+                                     pluginClassName='%1',
                                      author='%3',
                                      date='%4',
                                      info='%5',
@@ -739,6 +739,13 @@ static bool checkAndGetPluginInfoFromSrcCode(const QString &pluginCode, QString 
       pos = rx.indexIn(pluginCode, pos + rx.matchedLength());
     }
 
+    rx.setPattern("^.*pluginName=['\"]([^,]+)['\"],.*$");
+
+    if (rx.indexIn(pluginCode) != -1) {
+      pluginName = rx.cap(1);
+      return true;
+    }
+
     rx.setPattern("^.*registerPlugin.*\\(.*['\"]([^,]+)['\"],.*$");
 
     if (rx.indexIn(pluginCode) != -1) {
@@ -998,12 +1005,12 @@ void PythonIDE::registerPythonPlugin(bool clear) {
       _pythonInterpreter->reloadModule(moduleName);
     }
 
-    _ui->pluginStatusLabel->setText("Plugin has been successfully registered.");
+    _ui->pluginStatusLabel->setText("Plugin successfully registered");
     _editedPluginsClassName[pluginFile] = pluginClassName;
     _editedPluginsType[pluginFile] = pluginType;
     _editedPluginsName[pluginFile] = pluginName;
   } else {
-    _ui->pluginStatusLabel->setText("Plugin registration has failed.");
+    _ui->pluginStatusLabel->setText("Plugin registration failed");
     indicateErrors();
   }
 
@@ -1021,9 +1028,9 @@ void PythonIDE::removePythonPlugin() {
 
   if (tlp::PluginsManager::pluginExists(QStringToTlpString(pluginName))) {
     tlp::PluginsManager::removePlugin(QStringToTlpString(pluginName));
-    _ui->pluginStatusLabel->setText("Plugin has been successfully removed.");
+    _ui->pluginStatusLabel->setText("Plugin successfully removed");
   } else {
-    _ui->pluginStatusLabel->setText("Plugin is not registered in the plugin database.");
+    _ui->pluginStatusLabel->setText("Plugin not registered in database");
   }
 }
 
