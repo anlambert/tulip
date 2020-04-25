@@ -66,8 +66,6 @@ ColorScaleConfigDialog::ColorScaleConfigDialog(const ColorScale &colorScale, QWi
           &ColorScaleConfigDialog::deleteSavedColorScale);
   connect(_ui->importFromImgButton, &QAbstractButton::clicked, this,
           &ColorScaleConfigDialog::importColorScaleFromImageFile);
-  connect(_ui->importFromPredefinedCSButton, &QAbstractButton::clicked, this,
-          &ColorScaleConfigDialog::importColorScaleFromColorScaleFile);
   connect(_ui->invertColorScaleButton, &QAbstractButton::clicked, this,
           &ColorScaleConfigDialog::invertEditedColorScale);
   connect(_ui->globalAlphaCB, &QAbstractButton::toggled, _ui->globalAlphaSB, &QWidget::setEnabled);
@@ -206,10 +204,6 @@ void ColorScaleConfigDialog::importColorScaleFromFile(const QString &currentDir)
     setColorScale(scaleTmp);
     displayUserGradientPreview();
   }
-}
-
-void ColorScaleConfigDialog::importColorScaleFromColorScaleFile() {
-  importColorScaleFromFile(QString((tlp::TalipotBitmapDir + '/' + "colorscales").c_str()));
 }
 
 void ColorScaleConfigDialog::importColorScaleFromImageFile() {

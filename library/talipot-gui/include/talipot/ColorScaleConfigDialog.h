@@ -56,7 +56,6 @@ private slots:
   void deleteSavedColorScale();
   void reeditSaveColorScale(QListWidgetItem *savedColorScaleItem);
   void importColorScaleFromImageFile();
-  void importColorScaleFromColorScaleFile();
   void invertEditedColorScale();
   void applyGlobalAlphaToColorScale();
 
