@@ -36,6 +36,7 @@
 #include <talipot/MetaTypes.h>
 #include <talipot/ColorScalesManager.h>
 #include <talipot/StableIterator.h>
+#include <talipot/PropertyAlgorithm.h>
 
 using namespace tlp;
 

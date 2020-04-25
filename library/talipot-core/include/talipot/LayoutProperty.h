@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -17,7 +17,6 @@
 #include <talipot/PropertyTypes.h>
 #include <talipot/Observable.h>
 #include <talipot/AbstractProperty.h>
-#include <talipot/PropertyAlgorithm.h>
 #include <talipot/MinMaxProperty.h>
 
 namespace tlp {

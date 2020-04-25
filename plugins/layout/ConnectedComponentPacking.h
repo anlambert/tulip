@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -14,7 +14,7 @@
 #ifndef CONNECTED_COMPONENT_PACKING_H
 #define CONNECTED_COMPONENT_PACKING_H
 
-#include <talipot/LayoutProperty.h>
+#include <talipot/PropertyAlgorithm.h>
 
 class ConnectedComponentPacking : public tlp::LayoutAlgorithm {
 public:

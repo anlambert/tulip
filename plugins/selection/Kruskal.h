@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -15,6 +15,7 @@
 #define KRUSKAL_H
 
 #include <talipot/BooleanProperty.h>
+#include <talipot/PropertyAlgorithm.h>
 
 /** \addtogroup selection */
 

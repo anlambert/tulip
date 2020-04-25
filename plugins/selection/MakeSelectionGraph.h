@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -15,7 +15,9 @@
 #define MAKE_SELECTION_GRAPH_H
 
 #include <talipot/BooleanProperty.h>
+#include <talipot/PropertyAlgorithm.h>
 #include <talipot/GraphTest.h>
+
 #include "../utils/PluginNames.h"
 
 /** \addtogroup selection */
