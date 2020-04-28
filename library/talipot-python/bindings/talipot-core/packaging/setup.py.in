@@ -166,7 +166,7 @@ setup(
         'talipot': talipot_native_libs + ['plugins/color/*',
                                       'plugins/general/*',
                                       'plugins/import/*',
-                                      'plugins/layout/*',
+                                      'plugins/layout/H3Layout.py',
                                       'plugins/layout/h3/*'],
     },
 
