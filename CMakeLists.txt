@@ -15,10 +15,8 @@ IF(POLICY CMP0042)
   CMAKE_POLICY(SET CMP0042 NEW)
 ENDIF(POLICY CMP0042)
 
-# Ensure CMAKE_BUILD_WITH_INSTALL_RPATH is still honored with CMake >= 3.9 This
-# is needed in order to build talipot-python wheels on MacOS
 IF(POLICY CMP0068)
-  CMAKE_POLICY(SET CMP0068 OLD)
+  CMAKE_POLICY(SET CMP0068 NEW)
 ENDIF(POLICY CMP0068)
 
 # FindOpenGL prefers GLVND by default when available

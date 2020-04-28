@@ -1,9 +1,7 @@
-# QUAZIP_FOUND - QuaZip library was found
-# QUAZIP_INCLUDE_DIR - Path to QuaZip include dir
-# QUAZIP_INCLUDE_DIRS - Path to QuaZip and zlib include dir
-#   (combined from QUAZIP_INCLUDE_DIR + ZLIB_INCLUDE_DIR)
-# QUAZIP_LIBRARIES - List of QuaZip libraries
-# QUAZIP_ZLIB_INCLUDE_DIR - The include dir of zlib headers
+# QUAZIP_FOUND - QuaZip library was found QUAZIP_INCLUDE_DIR - Path to QuaZip
+# include dir QUAZIP_INCLUDE_DIRS - Path to QuaZip and zlib include dir
+# (combined from QUAZIP_INCLUDE_DIR + ZLIB_INCLUDE_DIR) QUAZIP_LIBRARIES - List
+# of QuaZip libraries QUAZIP_ZLIB_INCLUDE_DIR - The include dir of zlib headers
 
 # Unset related CMake variables in order to change the lib version without
 # having to delete the current CMake cache
@@ -46,5 +44,5 @@ ENDIF(WIN32)
 INCLUDE(FindPackageHandleStandardArgs)
 SET(QUAZIP_INCLUDE_DIRS ${QUAZIP_INCLUDE_DIR} ${QUAZIP_ZLIB_INCLUDE_DIR})
 FIND_PACKAGE_HANDLE_STANDARD_ARGS(
-  QUAZIP DEFAULT_MSG QUAZIP_LIBRARIES QUAZIP_INCLUDE_DIR
+  QuaZip DEFAULT_MSG QUAZIP_LIBRARIES QUAZIP_INCLUDE_DIR
   QUAZIP_ZLIB_INCLUDE_DIR QUAZIP_INCLUDE_DIRS)
