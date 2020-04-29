@@ -60,14 +60,6 @@ public:
     csl->setLayoutModule(fme);
   }
 
-  bool check(std::string &err) override {
-    if (!tlp::SimpleTest::isSimple(graph)) {
-      err = "The graph must be simple";
-      return false;
-    }
-    return true;
-  }
-
   void beforeCall() override {
 
     if (dataSet != nullptr) {
@@ -95,7 +87,7 @@ public:
     }
 
     // ensure the input graph is simple as the layout failed in non multi-threaded mode otherwise
-    ogdf::makeSimple(tlpToOGDF->getOGDFGraph());
+    tlpToOGDF->makeOGDFGraphSimple();
   }
 
 private:

@@ -16,6 +16,7 @@
 #include <talipot/LayoutProperty.h>
 #include <talipot/SizeProperty.h>
 #include <talipot/NumericProperty.h>
+#include <talipot/SimpleTest.h>
 
 #include <ogdf/basic/geometry.h>
 
@@ -86,14 +87,16 @@ Coord TalipotToOGDF::getNodeCoordFromOGDFGraphAttr(node nTlp) {
 }
 
 vector<Coord> TalipotToOGDF::getEdgeCoordFromOGDFGraphAttr(edge eTlp) {
-  ogdf::edge e = ogdfEdges[eTlp];
-  ogdf::DPolyline line = ogdfGraphAttributes.bends(e);
   vector<Coord> v;
+  if (ogdfEdges.find(eTlp) != ogdfEdges.end()) {
 
-  for (ogdf::ListIterator<ogdf::DPoint> p = line.begin(); p.valid(); ++p) {
-    v.push_back(Coord((*p).m_x, (*p).m_y, 0.));
+    ogdf::edge e = ogdfEdges[eTlp];
+    ogdf::DPolyline line = ogdfGraphAttributes.bends(e);
+
+    for (ogdf::ListIterator<ogdf::DPoint> p = line.begin(); p.valid(); ++p) {
+      v.push_back(Coord((*p).m_x, (*p).m_y, 0.));
+    }
   }
-
   return v;
 }
 
@@ -136,5 +139,21 @@ void TalipotToOGDF::copyTlpNumericPropertyToOGDFNodeWeight(NumericProperty *metr
 
   for (auto nTlp : talipotGraph->nodes()) {
     ogdfGraphAttributes.weight(ogdfNodes[nTlp]) = int(metric->getNodeDoubleValue(nTlp));
+  }
+}
+
+void TalipotToOGDF::makeOGDFGraphSimple() {
+  vector<edge> loops, multiEdges;
+  SimpleTest::simpleTest(talipotGraph, &multiEdges, &loops);
+
+  for (auto e : loops) {
+    ogdfGraph.delEdge(ogdfEdges[e]);
+    ogdfEdges.erase(e);
+  }
+  for (auto e : multiEdges) {
+    auto ends = talipotGraph->ends(e);
+    auto ee = talipotGraph->existEdge(ends.first, ends.second, false);
+    ogdfGraph.delEdge(ogdfEdges[e]);
+    ogdfEdges[e] = ogdfEdges[ee];
   }
 }

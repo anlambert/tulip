@@ -51,6 +51,8 @@ public:
     return ogdfEdges[eTlp];
   }
 
+  void makeOGDFGraphSimple();
+
   Coord getNodeCoordFromOGDFGraphAttr(node n);
   std::vector<Coord> getEdgeCoordFromOGDFGraphAttr(edge e);
 
