@@ -153,7 +153,10 @@ void TalipotToOGDF::makeOGDFGraphSimple() {
   for (auto e : multiEdges) {
     auto ends = talipotGraph->ends(e);
     auto ee = talipotGraph->existEdge(ends.first, ends.second, false);
-    ogdfGraph.delEdge(ogdfEdges[e]);
-    ogdfEdges[e] = ogdfEdges[ee];
+    // an edge can be a loop and a multiple one
+    if (ogdfEdges.find(e) != ogdfEdges.end()) {
+      ogdfGraph.delEdge(ogdfEdges[e]);
+      ogdfEdges[e] = ogdfEdges[ee];
+    }
   }
 }
