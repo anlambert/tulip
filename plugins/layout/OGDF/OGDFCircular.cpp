@@ -66,6 +66,9 @@ public:
       if (dataSet->get("pageRatio", val))
         circular->pageRatio(val);
     }
+
+    // graph must be simple or the layout algorithm crashes otherwise
+    tlpToOGDF->makeOGDFGraphSimple();
   }
 };
 
