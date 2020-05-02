@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -15,6 +15,8 @@
 #include <talipot/Graph.h>
 #include <talipot/MemoryPool.h>
 #include <talipot/MutableContainer.h>
+
+#include <algorithm>
 
 using namespace tlp;
 
@@ -261,17 +263,18 @@ Iterator<node> *GraphStorage::getOutNodes(const node n) const {
  * @brief Reconnect the edge e to have the new given ends
  */
 void GraphStorage::setEnds(const edge e, const node newSrc, const node newTgt) {
+
   assert(isElement(e));
   std::pair<node, node> &eEnds = edgeEnds[e.id];
   node src = eEnds.first;
   node tgt = eEnds.second;
 
   // nothing to do if same ends
-  if (src == newSrc && tgt == newTgt)
+  if (src == newSrc && tgt == newTgt) {
     return;
+  }
 
   node nSrc = newSrc;
-  node nTgt = newTgt;
 
   if (newSrc.isValid() && src != newSrc) {
     assert(isElement(newSrc));
@@ -282,16 +285,20 @@ void GraphStorage::setEnds(const edge e, const node newSrc, const node newTgt) {
     nCtnr.outDegree += 1;
     nCtnr.edges.push_back(e);
     removeFromNodeData(sCtnr, e);
-  } else
+  } else {
     nSrc = src;
+  }
 
   if (newTgt.isValid() && tgt != newTgt) {
     assert(isElement(newTgt));
     eEnds.second = newTgt;
     nodeData[newTgt.id].edges.push_back(e);
-    removeFromNodeData(nodeData[tgt.id], e);
-  } else
-    nTgt = tgt;
+    if (tgt != nSrc) {
+      // remove edge from node data only if previous target
+      // does not become the new source
+      removeFromNodeData(nodeData[tgt.id], e);
+    }
+  }
 }
 //=======================================================
 /**
@@ -570,16 +577,7 @@ void GraphStorage::delAllNodes() {
  * @brief remove an edge from a NodeData
  */
 void GraphStorage::removeFromNodeData(NodeData &c, const edge e) {
-  std::vector<edge> &edges = c.edges;
-  unsigned int nbEdges = edges.size();
-
-  for (unsigned int i = 0; i < nbEdges; ++i)
-    if ((e == edges[i]) && (i != nbEdges - 1)) {
-      memmove(&edges[i], &edges[i + 1], (nbEdges - i - 1) * sizeof(edge));
-      break;
-    }
-
-  edges.pop_back();
+  c.edges.erase(std::remove(c.edges.begin(), c.edges.end(), e), c.edges.end());
 }
 //=======================================================
 /**
