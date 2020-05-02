@@ -1339,17 +1339,17 @@ void PushPopTest::testAddDelLoopsOneByOne() {
   graph->push();
   graph->addEdge(n2, n2);
   graph->addEdge(n2, n2);
-  CPPUNIT_ASSERT_EQUAL(graph->deg(n2), 5u);
-  CPPUNIT_ASSERT_EQUAL(graph->indeg(n2), 3u);
-  CPPUNIT_ASSERT_EQUAL(graph->outdeg(n2), 2u);
+  CPPUNIT_ASSERT_EQUAL(5u, graph->deg(n2));
+  CPPUNIT_ASSERT_EQUAL(3u, graph->indeg(n2));
+  CPPUNIT_ASSERT_EQUAL(2u, graph->outdeg(n2));
   graph->pop();
-  CPPUNIT_ASSERT_EQUAL(graph->deg(n2), 1u);
-  CPPUNIT_ASSERT_EQUAL(graph->indeg(n2), 1u);
-  CPPUNIT_ASSERT_EQUAL(graph->outdeg(n2), 0u);
+  CPPUNIT_ASSERT_EQUAL(1u, graph->deg(n2));
+  CPPUNIT_ASSERT_EQUAL(1u, graph->indeg(n2));
+  CPPUNIT_ASSERT_EQUAL(0u, graph->outdeg(n2));
   graph->unpop();
-  CPPUNIT_ASSERT_EQUAL(graph->deg(n2), 5u);
-  CPPUNIT_ASSERT_EQUAL(graph->indeg(n2), 3u);
-  CPPUNIT_ASSERT_EQUAL(graph->outdeg(n2), 2u);
+  CPPUNIT_ASSERT_EQUAL(5u, graph->deg(n2));
+  CPPUNIT_ASSERT_EQUAL(3u, graph->indeg(n2));
+  CPPUNIT_ASSERT_EQUAL(2u, graph->outdeg(n2));
 }
 
 void PushPopTest::testAddDelLoopsBatch() {
@@ -1357,15 +1357,15 @@ void PushPopTest::testAddDelLoopsBatch() {
   node n2 = graph->addNode();
   graph->push();
   graph->addEdges({{n, n2}, {n, n2}, {n2, n2}, {n2, n2}});
-  CPPUNIT_ASSERT_EQUAL(graph->deg(n2), 6u);
-  CPPUNIT_ASSERT_EQUAL(graph->indeg(n2), 4u);
-  CPPUNIT_ASSERT_EQUAL(graph->outdeg(n2), 2u);
+  CPPUNIT_ASSERT_EQUAL(6u, graph->deg(n2));
+  CPPUNIT_ASSERT_EQUAL(4u, graph->indeg(n2));
+  CPPUNIT_ASSERT_EQUAL(2u, graph->outdeg(n2));
   graph->pop();
-  CPPUNIT_ASSERT_EQUAL(graph->deg(n2), 0u);
-  CPPUNIT_ASSERT_EQUAL(graph->indeg(n2), 0u);
-  CPPUNIT_ASSERT_EQUAL(graph->outdeg(n2), 0u);
+  CPPUNIT_ASSERT_EQUAL(0u, graph->deg(n2));
+  CPPUNIT_ASSERT_EQUAL(0u, graph->indeg(n2));
+  CPPUNIT_ASSERT_EQUAL(0u, graph->outdeg(n2));
   graph->unpop();
-  CPPUNIT_ASSERT_EQUAL(graph->deg(n2), 6u);
-  CPPUNIT_ASSERT_EQUAL(graph->indeg(n2), 4u);
-  CPPUNIT_ASSERT_EQUAL(graph->outdeg(n2), 2u);
+  CPPUNIT_ASSERT_EQUAL(6u, graph->deg(n2));
+  CPPUNIT_ASSERT_EQUAL(4u, graph->indeg(n2));
+  CPPUNIT_ASSERT_EQUAL(2u, graph->outdeg(n2));
 }
