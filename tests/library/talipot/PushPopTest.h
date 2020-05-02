@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -38,6 +38,8 @@ class PushPopTest : public CppUnit::TestFixture {
   CPPUNIT_TEST(testObserveDelProps);
   CPPUNIT_TEST(testAddSubgraphProp);
   CPPUNIT_TEST(testMetaNode);
+  CPPUNIT_TEST(testAddDelLoopsOneByOne);
+  CPPUNIT_TEST(testAddDelLoopsBatch);
 
   CPPUNIT_TEST_SUITE_END();
 
@@ -65,6 +67,8 @@ public:
   void testObserveDelProps();
   void testAddSubgraphProp();
   void testMetaNode();
+  void testAddDelLoopsOneByOne();
+  void testAddDelLoopsBatch();
 };
 
 #endif // PUSH_POP_TEST_H

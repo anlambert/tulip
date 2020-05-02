@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -210,6 +210,10 @@ void GraphUpdatesRecorder::recordEdgeContainer(
       // it must be at the last adj position
       auto &adj = containers[n];
       auto size = adj.size() - 1;
+      if (g->opposite(e, n) == n) {
+        // handle loop special case
+        size -= 1;
+      }
       assert(e == adj[size]);
       adj.resize(size);
     }
@@ -226,18 +230,13 @@ void GraphUpdatesRecorder::recordEdgeContainer(
     // so we look (in reverse order because they must be at the end)
     // for the elts of adj that are in the last edges added and remove them
     unsigned int adjAdded = 0;
-    unsigned int lastAdded = gEdges.size();
-    for (unsigned int i = adj.size() - 1; i > 0; --i) {
-      edge e = adj[i];
-      while (nbAdded) {
-        --nbAdded;
-        if (e == gEdges[--lastAdded]) {
-          ++adjAdded;
-          break;
-        }
-      }
-      if (nbAdded == 0)
+    for (auto e : reversed(adj)) {
+      if (std::find(gEdges.begin() + (gEdges.size() - nbAdded - 1), gEdges.end(), e) !=
+          gEdges.end()) {
+        ++adjAdded;
+      } else {
         break;
+      }
     }
     assert(adjAdded);
     adj.resize(adj.size() - adjAdded);

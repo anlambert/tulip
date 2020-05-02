@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -1330,4 +1330,42 @@ void PushPopTest::testDeletePushPopFalse() {
 
   // same thing for the two deleted properties
   CPPUNIT_ASSERT_EQUAL(size_t(4), delObserver.deletedProperties.size());
+}
+
+void PushPopTest::testAddDelLoopsOneByOne() {
+  node n = graph->addNode();
+  node n2 = graph->addNode();
+  graph->addEdge(n, n2);
+  graph->push();
+  graph->addEdge(n2, n2);
+  graph->addEdge(n2, n2);
+  CPPUNIT_ASSERT_EQUAL(graph->deg(n2), 5u);
+  CPPUNIT_ASSERT_EQUAL(graph->indeg(n2), 3u);
+  CPPUNIT_ASSERT_EQUAL(graph->outdeg(n2), 2u);
+  graph->pop();
+  CPPUNIT_ASSERT_EQUAL(graph->deg(n2), 1u);
+  CPPUNIT_ASSERT_EQUAL(graph->indeg(n2), 1u);
+  CPPUNIT_ASSERT_EQUAL(graph->outdeg(n2), 0u);
+  graph->unpop();
+  CPPUNIT_ASSERT_EQUAL(graph->deg(n2), 5u);
+  CPPUNIT_ASSERT_EQUAL(graph->indeg(n2), 3u);
+  CPPUNIT_ASSERT_EQUAL(graph->outdeg(n2), 2u);
+}
+
+void PushPopTest::testAddDelLoopsBatch() {
+  node n = graph->addNode();
+  node n2 = graph->addNode();
+  graph->push();
+  graph->addEdges({{n, n2}, {n, n2}, {n2, n2}, {n2, n2}});
+  CPPUNIT_ASSERT_EQUAL(graph->deg(n2), 6u);
+  CPPUNIT_ASSERT_EQUAL(graph->indeg(n2), 4u);
+  CPPUNIT_ASSERT_EQUAL(graph->outdeg(n2), 2u);
+  graph->pop();
+  CPPUNIT_ASSERT_EQUAL(graph->deg(n2), 0u);
+  CPPUNIT_ASSERT_EQUAL(graph->indeg(n2), 0u);
+  CPPUNIT_ASSERT_EQUAL(graph->outdeg(n2), 0u);
+  graph->unpop();
+  CPPUNIT_ASSERT_EQUAL(graph->deg(n2), 6u);
+  CPPUNIT_ASSERT_EQUAL(graph->indeg(n2), 4u);
+  CPPUNIT_ASSERT_EQUAL(graph->outdeg(n2), 2u);
 }
