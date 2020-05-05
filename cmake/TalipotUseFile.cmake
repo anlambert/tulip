@@ -1,4 +1,4 @@
-# inclusion header guard
+# Inclusion header guard
 IF(TalipotUseFile_included)
   RETURN()
 ENDIF(TalipotUseFile_included)
@@ -7,18 +7,32 @@ SET(TalipotUseFile_included TRUE)
 # ========================================================
 # Build type detection
 # ========================================================
-
 IF(CMAKE_BUILD_TYPE MATCHES "[Dd][Ee][Bb][Uu][Gg]")
   SET(CMAKE_DEBUG_MODE TRUE)
 ELSE(CMAKE_BUILD_TYPE MATCHES "[Dd][Ee][Bb][Uu][Gg]")
   SET(CMAKE_DEBUG_MODE FALSE)
 ENDIF(CMAKE_BUILD_TYPE MATCHES "[Dd][Ee][Bb][Uu][Gg]")
 
-# ------------------------------------------------------------------------------
-# -----------------
-# Toolchains options
-# ------------------------------------------------------------------------------
-# -----------------
+# ========================================================
+# Check processor architecture
+# ========================================================
+STRING(COMPARE EQUAL "${CMAKE_SIZEOF_VOID_P}" "8" X86_64)
+
+# ========================================================
+# Consider *BSD as Linux
+# ========================================================
+STRING(COMPARE EQUAL "${CMAKE_SYSTEM_NAME}" "Linux" LINUX)
+IF(NOT LINUX)
+  STRING(FIND "${CMAKE_SYSTEM_NAME}" "BSD" BSD_POS)
+  IF(BSD_POS GREATER -1)
+    SET(LINUX TRUE)
+    SET(BSD TRUE)
+  ENDIF()
+ENDIF(NOT LINUX)
+
+# ========================================================
+# Toolchains options and defintions
+# ========================================================
 MACRO(TALIPOT_SET_CXX_FLAGS flag)
   STRING(FIND "${CMAKE_CXX_FLAGS}" "${flag}" FLAG_POS)
   IF(${FLAG_POS} EQUAL -1)
@@ -61,9 +75,37 @@ ENDMACRO(
   concat
   force)
 
-MACRO(TALIPOT_SET_COMPILER_OPTIONS)
+MACRO(TALIPOT_SET_COMPILER_OPTIONS_AND_DEFINITIONS)
 
-  STRING(COMPARE EQUAL "${CMAKE_SIZEOF_VOID_P}" "8" X64)
+  # ========================================================
+  # Operating system preprocessor macros
+  # ========================================================
+  IF(LINUX)
+    ADD_DEFINITIONS("-D_LINUX")
+  ENDIF(LINUX)
+  IF(WIN32)
+    ADD_DEFINITIONS("-D_WIN32")
+    # ensure WIN32 is defined (as it is not the case when compiling with MinGW
+    # and C++11 standard activated)
+    ADD_DEFINITIONS("-DWIN32")
+    # ensure math defines (e.g. M_PI) are available (as they have been dropped
+    # from C++11 standard)
+    ADD_DEFINITIONS("-D_USE_MATH_DEFINES")
+  ENDIF(WIN32)
+  IF(APPLE)
+    ADD_DEFINITIONS("-D__APPLE__")
+  ENDIF(APPLE)
+
+  # ========================================================
+  # AppImage build
+  # ========================================================
+  IF(TALIPOT_BUILD_FOR_APPIMAGE)
+    ADD_DEFINITIONS("-DAPPIMAGE_BUILD")
+  ENDIF(TALIPOT_BUILD_FOR_APPIMAGE)
+
+  IF(X86_64)
+    TALIPOT_SET_CXX_FLAGS("-DX86_64")
+  ENDIF(X86_64)
 
   # When CMake policy CMP0025
   # (https://cmake.org/cmake/help/v3.0/policy/CMP0025.html) is set to NEW,
@@ -237,7 +279,7 @@ MACRO(TALIPOT_SET_COMPILER_OPTIONS)
           "${CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO} /SUBSYSTEM:windows /ENTRY:mainCRTStartup"
       )
 
-      IF(X64)
+      IF(X86_64)
         TALIPOT_SET_CXX_FLAGS("/bigobj")
         SET(CMAKE_SHARED_LINKER_FLAGS
             "${CMAKE_SHARED_LINKER_FLAGS}  /STACK:10000000 /MACHINE:X64")
@@ -245,14 +287,14 @@ MACRO(TALIPOT_SET_COMPILER_OPTIONS)
             "${CMAKE_EXE_LINKER_FLAGS}  /STACK:10000000 /MACHINE:X64")
         SET(CMAKE_MODULE_LINKER_FLAGS
             "${CMAKE_MODULE_LINKER_FLAGS}  /STACK:10000000 /MACHINE:X64")
-      ELSE(X64)
+      ELSE(X86_64)
         TALIPOT_SET_CXX_FLAGS("/arch:SSE2")
         SET(CMAKE_SHARED_LINKER_FLAGS
             "${CMAKE_SHARED_LINKER_FLAGS} /MACHINE:X86")
         SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /MACHINE:X86")
         SET(CMAKE_MODULE_LINKER_FLAGS
             "${CMAKE_MODULE_LINKER_FLAGS} /MACHINE:X86")
-      ENDIF(X64)
+      ENDIF(X86_64)
 
     ENDIF(MSVC)
 
@@ -379,11 +421,11 @@ MACRO(TALIPOT_SET_COMPILER_OPTIONS)
     ADD_DEFINITIONS(-DGL_SILENCE_DEPRECATION)
   ENDIF(APPLE)
 
-ENDMACRO(TALIPOT_SET_COMPILER_OPTIONS)
+ENDMACRO(TALIPOT_SET_COMPILER_OPTIONS_AND_DEFINITIONS)
 
 # for backward compatibility with Talipot < 5.1 for external projects
 MACRO(SET_COMPILER_OPTIONS)
-  TALIPOT_SET_COMPILER_OPTIONS()
+  TALIPOT_SET_COMPILER_OPTIONS_AND_DEFINITIONS()
 ENDMACRO(SET_COMPILER_OPTIONS)
 
 # Plugin server generation

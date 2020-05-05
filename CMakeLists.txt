@@ -43,7 +43,7 @@ ENDIF(NOT MSVC)
 PROJECT(talipot)
 
 # ========================================================
-# Talipot CMake macros
+# Talipot CMake variables and macros
 # ========================================================
 INCLUDE(cmake/TalipotUseFile.cmake)
 
@@ -62,55 +62,13 @@ IF(NOT MSVC AND "${CMAKE_BUILD_TYPE}" STREQUAL "")
 ENDIF(NOT MSVC AND "${CMAKE_BUILD_TYPE}" STREQUAL "")
 
 # ========================================================
-# Check processor architecture
+# Compiler-specific options and definitions
 # ========================================================
-STRING(COMPARE EQUAL "${CMAKE_SIZEOF_VOID_P}" "8" X86_64)
-IF(X86_64)
-  TALIPOT_SET_CXX_FLAGS("-DX86_64")
-ENDIF(X86_64)
-
-# ========================================================
-# Consider *BSD as Linux
-# ========================================================
-STRING(COMPARE EQUAL "${CMAKE_SYSTEM_NAME}" "Linux" LINUX)
-IF(NOT LINUX)
-  STRING(FIND "${CMAKE_SYSTEM_NAME}" "BSD" BSD_POS)
-  IF(BSD_POS GREATER -1)
-    SET(LINUX TRUE)
-    SET(BSD TRUE)
-  ENDIF()
-ENDIF(NOT LINUX)
-
-# ========================================================
-# Operating system preprocessor macros
-# ========================================================
-IF(LINUX)
-  ADD_DEFINITIONS("-D_LINUX")
-ENDIF(LINUX)
-IF(WIN32)
-  ADD_DEFINITIONS("-D_WIN32")
-  # ensure WIN32 is defined (as it is not the case when compiling with MinGW and
-  # C++11 standard activated)
-  ADD_DEFINITIONS("-DWIN32")
-  # ensure math defines (e.g. M_PI) are available (as they have been dropped
-  # from C++11 standard)
-  ADD_DEFINITIONS("-D_USE_MATH_DEFINES")
-ENDIF(WIN32)
-IF(APPLE)
-  ADD_DEFINITIONS("-D__APPLE__")
-ENDIF(APPLE)
-
-# ========================================================
-# AppImage build
-# ========================================================
-IF(TALIPOT_BUILD_FOR_APPIMAGE)
-  ADD_DEFINITIONS("-DAPPIMAGE_BUILD")
-ENDIF(TALIPOT_BUILD_FOR_APPIMAGE)
+TALIPOT_SET_COMPILER_OPTIONS_AND_DEFINITIONS()
 
 # ========================================================
 # Install paths
 # ========================================================
-
 INCLUDE(GNUInstallDirs)
 
 SET(TalipotLibInstallDir ${CMAKE_INSTALL_LIBDIR})
@@ -186,12 +144,6 @@ SET(TalipotLibs ${LibTalipotCoreName} ${LibTalipotOGLName} ${LibTalipotGUIName}
 # Current year (used in documentation config files)
 # ========================================================
 STRING(TIMESTAMP CurrentYear "%Y")
-
-# ========================================================
-# Compiler-specific options
-# ========================================================
-
-TALIPOT_SET_COMPILER_OPTIONS()
 
 # ========================================================
 # CORE ONLY this used to have a minimal build of Talipot without any of the
