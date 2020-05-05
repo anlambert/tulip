@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -59,7 +59,7 @@ struct GMLTokenParser {
     while ((!stop) && (endOfStream = bool(is.get(ch)))) {
       curChar++;
 
-      if (strGet)
+      if (strGet) {
         switch (ch) {
         case 13:
           break;
@@ -97,22 +97,24 @@ struct GMLTokenParser {
           val.str += ch;
           break;
         }
-      else
+      } else {
         switch (ch) {
         case 13:
           break;
 
         case ' ':
 
-          if (started)
+          if (started) {
             stop = true;
+          }
 
           break;
 
         case '\t':
 
-          if (started)
+          if (started) {
             stop = true;
+          }
 
           break;
 
@@ -120,16 +122,17 @@ struct GMLTokenParser {
           curChar = 0;
           curLine++;
 
-          if (started)
+          if (started) {
             stop = true;
+          }
 
           break;
 
         case '[':
 
-          if (!started)
+          if (!started) {
             return OPENTOKEN;
-          else {
+          } else {
             is.unget();
             stop = true;
           }
@@ -138,9 +141,9 @@ struct GMLTokenParser {
 
         case ']':
 
-          if (!started)
+          if (!started) {
             return CLOSETOKEN;
-          else {
+          } else {
             is.unget();
             stop = true;
           }
@@ -153,8 +156,9 @@ struct GMLTokenParser {
           if (started) {
             is.unget();
             stop = true;
-          } else
+          } else {
             started = true;
+          }
 
           break;
 
@@ -163,10 +167,12 @@ struct GMLTokenParser {
           started = true;
           break;
         }
+      }
     }
 
-    if (!started && !endOfStream)
+    if (!started && !endOfStream) {
       return ENDOFSTREAM;
+    }
 
     char *endPtr = nullptr;
     long resultl = strtol(val.str.c_str(), &endPtr, 10);
@@ -194,8 +200,9 @@ struct GMLTokenParser {
       return BOOLTOKEN;
     }
 
-    if (started)
+    if (started) {
       return STRINGTOKEN;
+    }
 
     return ERRORINFILE;
   }
@@ -382,9 +389,9 @@ struct GMLParser {
 
       case CLOSETOKEN:
 
-        if (builderStack.front()->close())
+        if (builderStack.front()->close()) {
           delete builderStack.front();
-        else {
+        } else {
           std::cerr << "Error parsing stream line :" << tokenParser.curLine
                     << " char : " << tokenParser.curChar << std::endl;
           return false;

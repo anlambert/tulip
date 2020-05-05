@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -31,8 +31,9 @@ GraphType::RealType GraphType::defaultValue() {
 }
 
 void GraphType::write(ostream &oss, const RealType &v) {
-  if (v)
+  if (v) {
     oss << v->getId();
+  }
 }
 
 void GraphType::writeb(ostream &oss, const RealType &v) {
@@ -44,10 +45,11 @@ bool GraphType::read(istream &iss, RealType &v) {
   uintptr_t lv = 0;
   bool ok = bool(iss >> lv);
 
-  if (ok)
+  if (ok) {
     v = reinterpret_cast<RealType>(lv);
-  else
+  } else {
     v = nullptr;
+  }
 
   return ok;
 }
@@ -80,8 +82,9 @@ void EdgeSetType::writeb(ostream &oss, const RealType &v) {
   oss.write(reinterpret_cast<const char *>(&vSize), sizeof(vSize));
 
   // loop to write the edges
-  for (auto e : v)
+  for (auto e : v) {
     oss.write(reinterpret_cast<const char *>(&(e.id)), sizeof(unsigned int));
+  }
 }
 
 bool EdgeSetType::read(istream &is, RealType &v) {
@@ -94,28 +97,34 @@ bool EdgeSetType::read(istream &is, RealType &v) {
   }
 
   // for compatibility with older version (3.0)
-  if (!ok)
+  if (!ok) {
     return true;
+  }
 
-  if (c != '(')
+  if (c != '(') {
     return false;
+  }
 
   edge e;
 
   for (;;) {
-    if (!(is >> c))
+    if (!(is >> c)) {
       return false;
+    }
 
-    if (isspace(c))
+    if (isspace(c)) {
       continue;
+    }
 
-    if (c == ')')
+    if (c == ')') {
       return true;
+    }
 
     is.unget();
 
-    if (!(is >> e.id))
+    if (!(is >> e.id)) {
       return false;
+    }
 
     v.insert(e);
   }
@@ -127,8 +136,9 @@ bool EdgeSetType::readb(istream &iss, RealType &s) {
   unsigned int size;
 
   // get the set size
-  if (!bool(iss.read(reinterpret_cast<char *>(&size), sizeof(unsigned int))))
+  if (!bool(iss.read(reinterpret_cast<char *>(&size), sizeof(unsigned int)))) {
     return false;
+  }
 
   // use a vector to get the edges
   vector<edge> v;
@@ -136,8 +146,9 @@ bool EdgeSetType::readb(istream &iss, RealType &s) {
   edge *data = v.data();
 
   // get the edges in one read
-  if (!bool(iss.read(reinterpret_cast<char *>(v.data()), size * sizeof(unsigned int))))
+  if (!bool(iss.read(reinterpret_cast<char *>(v.data()), size * sizeof(unsigned int)))) {
     return false;
+  }
 
   // insert edges in the set
   while (size) {
@@ -170,26 +181,30 @@ bool DoubleType::read(istream &iss, double &v) {
   if (c == '-' || c == '+') {
     sign = c;
 
-    if (!(iss >> c))
+    if (!(iss >> c)) {
       return false;
+    }
   }
 
   if (c == 'i') {
     // should be inf
-    if (!(iss >> c) || (c != 'n') || !(iss >> c) || (c != 'f'))
+    if (!(iss >> c) || (c != 'n') || !(iss >> c) || (c != 'f')) {
       return false;
+    }
 
-    if (sign == '-')
+    if (sign == '-') {
       v = -numeric_limits<double>::infinity();
-    else
+    } else {
       v = numeric_limits<double>::infinity();
+    }
 
     return true;
   } else {
     if (c == 'n') {
       // should be nan
-      if (!(iss >> c) || (c != 'a') || !(iss >> c) || (c != 'n'))
+      if (!(iss >> c) || (c != 'a') || !(iss >> c) || (c != 'n')) {
         return false;
+      }
 
       v = std::numeric_limits<double>::quiet_NaN();
 
@@ -197,8 +212,9 @@ bool DoubleType::read(istream &iss, double &v) {
     } else {
       iss.unget();
 
-      if (sign)
+      if (sign) {
         iss.unget();
+      }
     }
   }
 
@@ -226,34 +242,39 @@ bool FloatType::read(istream &iss, float &v) {
   if (c == '-' || c == '+') {
     sign = c;
 
-    if (!(iss >> c))
+    if (!(iss >> c)) {
       return false;
+    }
   }
 
   if (c == 'i') {
     // should be inf
-    if (!(iss >> c) || (c != 'n') || !(iss >> c) || (c != 'f'))
+    if (!(iss >> c) || (c != 'n') || !(iss >> c) || (c != 'f')) {
       return false;
+    }
 
-    if (sign == '-')
+    if (sign == '-') {
       v = -numeric_limits<float>::infinity();
-    else
+    } else {
       v = numeric_limits<float>::infinity();
+    }
 
     return true;
   } else {
     if (c == 'n') {
       // should be nan
-      if (!(iss >> c) || (c != 'a') || !(iss >> c) || (c != 'n'))
+      if (!(iss >> c) || (c != 'a') || !(iss >> c) || (c != 'n')) {
         return false;
+      }
 
       v = std::numeric_limits<float>::quiet_NaN();
       return true;
     } else {
       iss.unget();
 
-      if (sign)
+      if (sign) {
         iss.unget();
+      }
     }
   }
 
@@ -297,10 +318,11 @@ bool BooleanType::defaultValue() {
 }
 
 void BooleanType::write(ostream &os, const RealType &v) {
-  if (v)
+  if (v) {
     os << "true";
-  else
+  } else {
     os << "false";
+  }
 }
 
 bool BooleanType::read(istream &is, RealType &v, bool untilEnd) {
@@ -325,27 +347,32 @@ bool BooleanType::read(istream &is, RealType &v, bool untilEnd) {
   } else if (c == '0') {
     s.append("0");
     v = false;
-  } else
+  } else {
     return false;
+  }
 
   for (unsigned int i = 1; i < s.size(); ++i) {
-    if (!(is >> c))
+    if (!(is >> c)) {
       return false;
+    }
 
     c = ::tolower(c);
 
-    if (c != s[i])
+    if (c != s[i]) {
       return false;
+    }
   }
 
   if (untilEnd) {
     // check if there is only space char until the end
     for (;;) {
-      if (!(is >> c))
+      if (!(is >> c)) {
         return true;
+      }
 
-      if (!isspace(c))
+      if (!isspace(c)) {
         return false;
+      }
     }
   }
 
@@ -362,8 +389,9 @@ void BooleanVectorType::write(ostream &os, const RealType &v) {
   os << '(';
 
   for (unsigned int i = 0; i < v.size(); i++) {
-    if (i)
+    if (i) {
       os << ", ";
+    }
 
     os << (v[i] ? "true" : "false");
   }
@@ -401,32 +429,39 @@ bool BooleanVectorType::read(istream &is, RealType &v, char openChar, char sepCh
   }
 
   if (openChar) {
-    if (c != openChar)
+    if (c != openChar) {
       return false;
-  } else
+    }
+  } else {
     is.unget();
+  }
 
   for (;;) {
-    if (!(is >> c))
+    if (!(is >> c)) {
       return !closeChar;
+    }
 
-    if (isspace(c))
+    if (isspace(c)) {
       continue;
+    }
 
     if (c == closeChar) {
       return true;
     }
 
     if (c == sepChar) {
-      if (firstVal)
+      if (firstVal) {
         return false;
-    } else
+      }
+    } else {
       is.unget();
+    }
 
     bool val;
 
-    if (!BooleanType::read(is, val))
+    if (!BooleanType::read(is, val)) {
       return false;
+    }
 
     v.push_back(val);
     firstVal = false;
@@ -440,8 +475,9 @@ bool BooleanVectorType::read(const std::vector<std::string> &vs, RealType &v) {
   for (const std::string &s : vs) {
     bool val;
     std::istringstream is(s);
-    if (!BooleanType::read(is, val))
+    if (!BooleanType::read(is, val)) {
       return false;
+    }
 
     v.push_back(val);
   }
@@ -461,33 +497,40 @@ bool BooleanVectorType::tokenize(const std::string &s, std::vector<std::string> 
   }
 
   if (openChar) {
-    if (c != openChar)
+    if (c != openChar) {
       return false;
-  } else
+    }
+  } else {
     is.unget();
+  }
 
   for (;;) {
-    if (!(is >> c))
+    if (!(is >> c)) {
       return !closeChar;
+    }
 
-    if (isspace(c))
+    if (isspace(c)) {
       continue;
+    }
 
     if (c == closeChar) {
       return true;
     }
 
     if (c == sepChar) {
-      if (firstVal)
+      if (firstVal) {
         return false;
-    } else
+      }
+    } else {
       is.unget();
+    }
 
     bool val;
 
     auto pos = is.tellg();
-    if (!BooleanType::read(is, val))
+    if (!BooleanType::read(is, val)) {
       return false;
+    }
 
     v.push_back(s.substr(pos, is.tellg() - pos));
     firstVal = false;
@@ -498,8 +541,9 @@ bool BooleanVectorType::readb(istream &iss, RealType &v) {
   unsigned int vSize = v.size();
 
   // read the size of the vector
-  if (!iss.read(reinterpret_cast<char *>(&vSize), sizeof(vSize)))
+  if (!iss.read(reinterpret_cast<char *>(&vSize), sizeof(vSize))) {
     return false;
+  }
 
   vector<char> vc;
   vc.resize(vSize);
@@ -507,8 +551,9 @@ bool BooleanVectorType::readb(istream &iss, RealType &v) {
   // loop to write boolean as char
   char *data = vc.data();
 
-  if (!bool(iss.read(data, vSize)))
+  if (!bool(iss.read(data, vSize))) {
     return false;
+  }
 
   v.resize(vSize);
 
@@ -542,17 +587,21 @@ bool LineType::read(istream &is, RealType &v, char openChar, char sepChar, char 
   }
 
   if (openChar) {
-    if (c != openChar)
+    if (c != openChar) {
       return false;
-  } else
+    }
+  } else {
     is.unget();
+  }
 
   for (;;) {
-    if (!(is >> c))
+    if (!(is >> c)) {
       return !closeChar;
+    }
 
-    if (isspace(c))
+    if (isspace(c)) {
       continue;
+    }
 
     if (c == closeChar) {
       if (dbqFound) {
@@ -560,21 +609,24 @@ bool LineType::read(istream &is, RealType &v, char openChar, char sepChar, char 
         while ((is >> c) && isspace(c)) {
         }
 
-        if (c != '"')
+        if (c != '"') {
           return false;
+        }
       }
 
       return openChar;
     }
 
     if (c == sepChar) {
-      if (firstVal)
+      if (firstVal) {
         return false;
+      }
 
       Coord val;
 
-      if (!PointType::read(is, val))
+      if (!PointType::read(is, val)) {
         return false;
+      }
 
       v.push_back(val);
     } else {
@@ -582,8 +634,9 @@ bool LineType::read(istream &is, RealType &v, char openChar, char sepChar, char 
       is.unget();
       Coord val;
 
-      if (!PointType::read(is, val))
+      if (!PointType::read(is, val)) {
         return false;
+      }
 
       v.push_back(val);
       firstVal = false;
@@ -611,23 +664,26 @@ bool PointType::read(istream &is, RealType &v) {
   while ((ok = bool(is >> c)) && isspace(c)) {
   }
 
-  if (!ok)
+  if (!ok) {
     return false;
+  }
 
   bool dbqFound = false;
 
-  if (c == '"')
+  if (c == '"') {
     // open double quotes found
     dbqFound = true;
-  else
+  } else {
     is.unget();
+  }
 
   // skip spaces
   while (bool(is >> c) && isspace(c)) {
   }
 
-  if (c != '(')
+  if (c != '(') {
     return false;
+  }
 
   for (unsigned int i = 0; i < 3; ++i) {
     if (i > 0) {
@@ -635,31 +691,35 @@ bool PointType::read(istream &is, RealType &v) {
       while ((ok = bool(is >> c)) && isspace(c)) {
       }
 
-      if (!ok || c != ',')
+      if (!ok || c != ',') {
         return false;
+      }
     }
 
     // skip spaces
     while ((ok = bool(is >> c)) && isspace(c)) {
     }
 
-    if (!ok)
+    if (!ok) {
       return false;
+    }
 
     is.unget();
 
     bool done = FloatType::read(is, v[i]);
 
-    if (!done)
+    if (!done) {
       return false;
+    }
   }
 
   // skip spaces
   while ((ok = bool(is >> c)) && isspace(c)) {
   }
 
-  if (!ok && c != ')')
+  if (!ok && c != ')') {
     return false;
+  }
 
   if (dbqFound) {
     // look for the close double quote
@@ -695,16 +755,18 @@ bool SizeType::read(istream &is, RealType &v) {
   while ((ok = bool(is >> c)) && isspace(c)) {
   }
 
-  if (!ok)
+  if (!ok) {
     return false;
+  }
 
   bool dbqFound = false;
 
-  if (c == '"')
+  if (c == '"') {
     // open double quotes found
     dbqFound = true;
-  else
+  } else {
     is.unget();
+  }
 
   ok = bool(is >> v);
 
@@ -712,8 +774,9 @@ bool SizeType::read(istream &is, RealType &v) {
     // look for the close double quote
     ok = bool(is >> c);
 
-    if (c != '"')
+    if (c != '"') {
       return false;
+    }
   }
 
   return ok;
@@ -734,20 +797,23 @@ string StringType::defaultValue() {
 }
 
 void StringType::write(ostream &os, const RealType &v, char openCloseChar) {
-  if (openCloseChar)
+  if (openCloseChar) {
     os << openCloseChar;
+  }
 
   for (char *str = const_cast<char *>(v.c_str()); *str; ++str) {
     char c = *str;
 
-    if (c == '\\' || c == '"')
+    if (c == '\\' || c == '"') {
       os << '\\';
+    }
 
     os << c;
   }
 
-  if (openCloseChar)
+  if (openCloseChar) {
     os << openCloseChar;
+  }
 }
 
 void StringType::writeb(ostream &os, const RealType &str) {
@@ -774,19 +840,22 @@ bool StringType::read(istream &is, RealType &v, char openChar, char closeChar) {
   // in the string to extract
   is.unsetf(ios_base::skipws);
 
-  if (openChar && c != openChar)
+  if (openChar && c != openChar) {
     return false;
+  }
 
-  if (!openChar)
+  if (!openChar) {
     is.unget();
+  }
 
   bool bslashFound = false;
   string str;
 
   for (;;) {
     if (!(is >> c)) {
-      if (!openChar || !closeChar)
+      if (!openChar || !closeChar) {
         break;
+      }
 
       return false;
     }
@@ -795,11 +864,12 @@ bool StringType::read(istream &is, RealType &v, char openChar, char closeChar) {
       str.push_back(c);
       bslashFound = false;
     } else {
-      if (c == '\\')
+      if (c == '\\') {
         bslashFound = true;
-      else {
-        if (closeChar && c == closeChar)
+      } else {
+        if (closeChar && c == closeChar) {
           break;
+        }
 
         str.push_back(c);
       }
@@ -809,8 +879,9 @@ bool StringType::read(istream &is, RealType &v, char openChar, char closeChar) {
   // remove trailing space chars
   std::size_t found = str.find_last_not_of(" \t\f\v\n\r");
 
-  if (found != std::string::npos)
+  if (found != std::string::npos) {
     str.erase(found + 1);
+  }
 
   v = str;
   return true;
@@ -820,8 +891,9 @@ bool StringType::readb(istream &iss, RealType &str) {
   // read size of str
   unsigned int size;
 
-  if (!bool(iss.read(reinterpret_cast<char *>(&size), sizeof(size))))
+  if (!bool(iss.read(reinterpret_cast<char *>(&size), sizeof(size)))) {
     return false;
+  }
 
   // then read chars
   str.resize(size);
@@ -838,8 +910,9 @@ void StringVectorType::write(ostream &os, const RealType &v) {
   os << '(';
 
   for (unsigned int i = 0; i < v.size(); i++) {
-    if (i)
+    if (i) {
       os << ", ";
+    }
 
     StringType::write(os, v[i]);
   }
@@ -853,8 +926,9 @@ void StringVectorType::writeb(ostream &os, const RealType &v) {
   os.write(reinterpret_cast<const char *>(&size), sizeof(size));
 
   // loop to write strings
-  for (unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i) {
     StringType::writeb(os, v[i]);
+  }
 }
 
 bool StringVectorType::read(istream &is, RealType &v, char openChar, char sepChar, char closeChar) {
@@ -866,32 +940,38 @@ bool StringVectorType::read(istream &is, RealType &v, char openChar, char sepCha
   }
 
   if (openChar) {
-    if (c != openChar)
+    if (c != openChar) {
       return false;
-  } else
+    }
+  } else {
     is.unget();
+  }
 
   is.unsetf(ios_base::skipws);
   bool firstVal = true;
   bool sepFound = false;
 
   for (;;) {
-    if (!(is >> c))
+    if (!(is >> c)) {
       return (!sepFound && !closeChar);
+    }
 
-    if (isspace(c))
+    if (isspace(c)) {
       continue;
+    }
 
     if (c == closeChar) {
-      if (!closeChar || sepFound)
+      if (!closeChar || sepFound) {
         return false;
+      }
 
       return true;
     }
 
     if (c == sepChar) {
-      if (sepFound)
+      if (sepFound) {
         return false;
+      }
 
       sepFound = true;
     } else {
@@ -899,19 +979,22 @@ bool StringVectorType::read(istream &is, RealType &v, char openChar, char sepCha
         string str;
         is.unget();
 
-        if (!(openChar ? StringType::read(is, str) : StringType::read(is, str, '\0', sepChar)))
+        if (!(openChar ? StringType::read(is, str) : StringType::read(is, str, '\0', sepChar))) {
           return false;
+        }
 
         v.push_back(str);
 
-        if (!openChar)
+        if (!openChar) {
           // last read char was sepChar
           is.unget();
+        }
 
         firstVal = false;
         sepFound = false;
-      } else
+      } else {
         return false;
+      }
     }
   }
 }
@@ -920,15 +1003,17 @@ bool StringVectorType::readb(istream &iss, RealType &v) {
   // read size of vector
   unsigned int size;
 
-  if (!bool(iss.read(reinterpret_cast<char *>(&size), sizeof(size))))
+  if (!bool(iss.read(reinterpret_cast<char *>(&size), sizeof(size)))) {
     return false;
+  }
 
   v.resize(size);
 
   // loop to read strings
   for (unsigned int i = 0; i < size; ++i) {
-    if (!StringType::readb(iss, v[i]))
+    if (!StringType::readb(iss, v[i])) {
       return false;
+    }
   }
 
   return true;
@@ -961,11 +1046,12 @@ bool ColorType::read(istream &is, RealType &v) {
 
   bool dbqFound = false;
 
-  if (c == '"')
+  if (c == '"') {
     // open double quotes found
     dbqFound = true;
-  else
+  } else {
     is.unget();
+  }
 
   ok = bool(is >> v);
 
@@ -973,8 +1059,9 @@ bool ColorType::read(istream &is, RealType &v) {
     // look for the close double quote
     ok = bool(is >> c);
 
-    if (c != '"')
+    if (c != '"') {
       return false;
+    }
   }
 
   return ok;
@@ -1140,8 +1227,9 @@ struct StringCollectionSerializer : public TypedDataSerializer<StringCollection>
     std::vector<std::string> values = sc.getValues();
 
     for (unsigned int i = 0; i < values.size(); ++i) {
-      if (i)
+      if (i) {
         os << ';';
+      }
 
       StringType::write(os, values[i], 0);
     }
@@ -1156,14 +1244,16 @@ struct StringCollectionSerializer : public TypedDataSerializer<StringCollection>
     while ((is >> c) && isspace(c)) {
     }
 
-    if (c != '"')
+    if (c != '"') {
       return false;
+    }
 
     string str;
 
     for (;;) {
-      if (!(is >> c))
+      if (!(is >> c)) {
         return false;
+      }
 
       if (c == '"') {
         sc.push_back(str);
@@ -1173,8 +1263,9 @@ struct StringCollectionSerializer : public TypedDataSerializer<StringCollection>
       if (c == ';') {
         sc.push_back(str);
         str.clear();
-      } else
+      } else {
         str.push_back(c);
+      }
     }
   }
 

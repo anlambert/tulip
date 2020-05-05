@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -95,16 +95,17 @@ void MCLClustering::power(node n) {
           node tgt = g.target(e2);
           edge ne = g.existEdge(n, tgt, true);
 
-          if (ne.isValid())
+          if (ne.isValid()) {
             outW[ne] += v2;
-          else {
+          } else {
             std::unordered_map<node, double>::iterator it = newTargets.find(tgt);
 
-            if (it != newTargets.end())
+            if (it != newTargets.end()) {
               // newTargets[tgt] += v2;
               it->second += v2;
-            else
+            } else {
               newTargets[tgt] = v2;
+            }
           }
         }
       }
@@ -128,8 +129,9 @@ struct pvectCmp {
 void MCLClustering::prune(node n) {
   unsigned int outdeg = g.outdeg(n);
 
-  if (outdeg == 0)
+  if (outdeg == 0) {
     return;
+  }
 
   // we use a specific vector to hold out edges needed info
   // in order to
@@ -148,8 +150,9 @@ void MCLClustering::prune(node n) {
   for (unsigned int i = 0; i < outdeg; ++i) {
     pair<double, edge> p = pvect[i];
 
-    if (p.first < t || inW[p.second] < epsilon)
+    if (p.first < t || inW[p.second] < epsilon) {
       g.delEdge(p.second);
+    }
   }
 }
 //=================================================
@@ -216,8 +219,9 @@ bool MCLClustering::inflate(double r, unsigned int k, node n, bool equal
   for (unsigned int i = 0; i < sz; ++i) {
     pair<double, edge> &p = pvect[i];
 
-    if (p.second.isValid())
+    if (p.second.isValid()) {
       sum += p.first;
+    }
   }
 
   if (sum > 0.) {
@@ -230,9 +234,10 @@ bool MCLClustering::inflate(double r, unsigned int k, node n, bool equal
       if (e.isValid()) {
         double outVal = outW[e] = p.first * oos;
 
-        if (equal && (fabs(outVal - inW[e]) > epsilon))
+        if (equal && (fabs(outVal - inW[e]) > epsilon)) {
           // more iteration needed
           equal = false;
+        }
       }
     }
   } else {
@@ -244,9 +249,10 @@ bool MCLClustering::inflate(double r, unsigned int k, node n, bool equal
       if (e.isValid()) {
         double outVal = outW[e] = ood;
 
-        if (equal && (fabs(outVal - inW[e]) > epsilon))
+        if (equal && (fabs(outVal - inW[e]) > epsilon)) {
           // more iteration needed
           equal = false;
+        }
       }
     }
   }
@@ -278,8 +284,9 @@ struct DegreeSort {
   bool operator()(node a, node b) {
     unsigned int da = g.deg(a), db = g.deg(b);
 
-    if (da == db)
+    if (da == db) {
       return a.id > b.id;
+    }
 
     return da > db;
   }
@@ -339,8 +346,9 @@ bool MCLClustering::run() {
         double eVal = inW[e];
         sum += eVal;
 
-        if (eVal > tmpVal)
+        if (eVal > tmpVal) {
           tmpVal = eVal;
+        }
       }
       sum += (inW[tmp] = tmpVal);
     } else {
@@ -349,8 +357,9 @@ bool MCLClustering::run() {
     }
 
     double oos = 1. / sum;
-    for (auto e : g.getOutEdges(n))
+    for (auto e : g.getOutEdges(n)) {
       inW[e] *= oos;
+    }
   }
 
   // output for mcl
@@ -370,8 +379,9 @@ bool MCLClustering::run() {
       power(n);
 
       // comment the next line to have exact MCL
-      if (inflate(_r, _k, n, equal /*, false*/) == false)
+      if (inflate(_r, _k, n, equal /*, false*/) == false) {
         equal = false;
+      }
     }
 
     /* exact MCL should inflate after because we share the same graphs tructure,
@@ -387,8 +397,9 @@ bool MCLClustering::run() {
 
     inW.swap(outW);
 
-    if (equal)
+    if (equal) {
       break;
+    }
 
     outW.setAll(0.);
   }

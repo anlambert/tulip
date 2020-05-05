@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -81,15 +81,17 @@ void GlAbstractPolygon::setOutlineSize(float size) {
 }
 //=====================================================
 Color GlAbstractPolygon::getFillColor(unsigned int i) {
-  if (fillColors.size() < i)
+  if (fillColors.size() < i) {
     fillColors.resize(i, fillColors.back());
+  }
 
   return fillColors[i];
 }
 //=====================================================
 void GlAbstractPolygon::setFillColor(unsigned int i, const Color &color) {
-  if (fillColors.size() < i)
+  if (fillColors.size() < i) {
     fillColors.resize(i, fillColors.back());
+  }
 
   fillColors[i] = color;
   clearGenerated();
@@ -101,15 +103,17 @@ void GlAbstractPolygon::setFillColor(const Color &color) {
 }
 //=====================================================
 Color GlAbstractPolygon::getOutlineColor(unsigned int i) {
-  if (outlineColors.size() < i)
+  if (outlineColors.size() < i) {
     outlineColors.resize(i, outlineColors.back());
+  }
 
   return outlineColors[i];
 }
 //=====================================================
 void GlAbstractPolygon::setOutlineColor(unsigned int i, const Color &color) {
-  if (outlineColors.size() < i)
+  if (outlineColors.size() < i) {
     outlineColors.resize(i, outlineColors.back());
+  }
 
   outlineColors[i] = color;
   clearGenerated();
@@ -166,22 +170,25 @@ void GlAbstractPolygon::draw(float lod, Camera *) {
           }
         }
 
-        if (!find)
+        if (!find) {
           normalPoints.push_back(points[i]);
+        }
       }
 
       assert(normalPoints.size() == 3);
 
-      if (normalPoints.size() != 3)
+      if (normalPoints.size() != 3) {
         return;
+      }
 
       // Ok we have a valid filled polygon
       normal = normalPoints[0] - normalPoints[1];
       normal ^= (normalPoints[2] - normalPoints[1]);
       normal /= normal.norm();
 
-      if (normal[2] < 0)
+      if (normal[2] < 0) {
         normal = Coord(-normal[0], -normal[1], -normal[2]);
+      }
     }
 
     size_t size = points.size();
@@ -199,15 +206,17 @@ void GlAbstractPolygon::draw(float lod, Camera *) {
       normalArray.resize(size, normal);
       assert(!fillColors.empty());
 
-      if (fillColors.size() != 1)
+      if (fillColors.size() != 1) {
         fillColors.resize(size, fillColors.back());
+      }
     }
 
     if (outlined) {
       assert(outlineColors.size());
 
-      if (outlineColors.size() != 1)
+      if (outlineColors.size() != 1) {
         outlineColors.resize(size, outlineColors.back());
+      }
     }
 
     // Compute texture coord array and indice array
@@ -216,12 +225,13 @@ void GlAbstractPolygon::draw(float lod, Camera *) {
         texArray[i * 2] =
             (points[i][0] - boundingBox[0][0]) / (boundingBox[1][0] - boundingBox[0][0]);
 
-        if (!invertYTexture)
+        if (!invertYTexture) {
           texArray[i * 2 + 1] =
               (points[i][1] - boundingBox[0][1]) / (boundingBox[1][1] - boundingBox[0][1]);
-        else
+        } else {
           texArray[i * 2 + 1] =
               1 - (points[i][1] - boundingBox[0][1]) / (boundingBox[1][1] - boundingBox[0][1]);
+        }
       }
 
       indices[i] = i;
@@ -503,10 +513,11 @@ void GlAbstractPolygon::clearGenerated() {
   texArray = nullptr;
   normalArray.clear();
 
-  if (generated)
+  if (generated) {
     if (OpenGlConfigManager::hasVertexBufferObject()) {
       glDeleteBuffers(7, buffers);
     }
+  }
 
   generated = false;
 }

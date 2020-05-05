@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -117,14 +117,16 @@ bool InteractorConfigWidget::setWidgets(Interactor *interactor) {
     if (DocWidget != nullptr) {
       _ui->scrollAreaDoc->setWidget(DocWidget);
       _ui->tabWidget->setTabEnabled(0, true); // in case it was previously set to false
-    } else
+    } else {
       _ui->tabWidget->setTabEnabled(0, false);
+    }
 
     if (OptionsWidget != nullptr) {
       _ui->scrollAreaOptions->setWidget(OptionsWidget);
       _ui->tabWidget->setTabEnabled(1, true); // in case it was previously set to false
-    } else
+    } else {
       _ui->tabWidget->setTabEnabled(1, false);
+    }
 
     _interactor = interactor;
   }
@@ -134,7 +136,8 @@ bool InteractorConfigWidget::setWidgets(Interactor *interactor) {
 void InteractorConfigWidget::showEvent(QShowEvent *ev) {
   QDialog::showEvent(ev);
 
-  if (parentWidget())
+  if (parentWidget()) {
     move(parentWidget()->window()->frameGeometry().topLeft() +
          parentWidget()->window()->rect().center() - rect().center());
+  }
 }

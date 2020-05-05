@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -79,11 +79,13 @@ bool MouseBoxZoomer::eventFilter(QObject *widget, QEvent *e) {
       }
 
       if (started) {
-        if ((qMouseEv->x() > 0) && (qMouseEv->x() < glw->width()))
+        if ((qMouseEv->x() > 0) && (qMouseEv->x() < glw->width())) {
           w = qMouseEv->x() - x;
+        }
 
-        if ((qMouseEv->y() > 0) && (qMouseEv->y() < glw->height()))
+        if ((qMouseEv->y() > 0) && (qMouseEv->y() < glw->height())) {
           h = y - (glw->height() - qMouseEv->y());
+        }
 
         glw->redraw();
         return true;
@@ -142,8 +144,9 @@ bool MouseBoxZoomer::eventFilter(QObject *widget, QEvent *e) {
 }
 //=====================================================================
 bool MouseBoxZoomer::draw(GlMainWidget *glw) {
-  if (!started)
+  if (!started) {
     return false;
+  }
 
   if (glw->getScene()->getGlGraphComposite()->getInputData()->getGraph() != graph) {
     graph = nullptr;

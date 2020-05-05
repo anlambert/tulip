@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -135,10 +135,11 @@ bool GlTextureLoader::loadTexture(const string &filename, GlTexture &texture) {
 }
 //====================================================================
 GlTexture GlTextureManager::getTextureInfo(const string &filename) {
-  if (texturesMap.find(filename) != texturesMap.end())
+  if (texturesMap.find(filename) != texturesMap.end()) {
     return (texturesMap)[filename];
-  else
+  } else {
     return GlTexture();
+  }
 }
 //====================================================================
 bool GlTextureManager::existsTexture(const string &filename) {
@@ -148,13 +149,15 @@ bool GlTextureManager::existsTexture(const string &filename) {
 bool GlTextureManager::loadTexture(const string &filename) {
   glEnable(GL_TEXTURE_2D);
 
-  if (texturesMap.find(filename) != texturesMap.end())
+  if (texturesMap.find(filename) != texturesMap.end()) {
     return true;
+  }
 
   GlTexture texture;
 
-  if (!getTextureLoader()->loadTexture(filename, texture))
+  if (!getTextureLoader()->loadTexture(filename, texture)) {
     return false;
+  }
 
   (texturesMap)[filename] = texture;
   return true;
@@ -191,15 +194,17 @@ void GlTextureManager::beginNewTexture(const string &) {
 }
 //====================================================================
 bool GlTextureManager::activateTexture(const string &filename) {
-  if (texturesWithError.count(filename) != 0)
+  if (texturesWithError.count(filename) != 0) {
     return false;
+  }
 
   bool loadOk = true;
 
-  if (texturesMap.find(filename) == texturesMap.end())
+  if (texturesMap.find(filename) == texturesMap.end()) {
     loadOk = loadTexture(filename);
-  else
+  } else {
     glEnable(GL_TEXTURE_2D);
+  }
 
   if (!loadOk) {
     texturesWithError.insert(filename);

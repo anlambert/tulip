@@ -91,12 +91,14 @@ void PropertyConfigurationWidget::typeCBChanged(const QString &type) {
   ui->separatorCB->setEnabled(enabled);
   // update ui->nameCB
   int nbItems = ui->nameCB->count();
-  for (int i = 1; i < nbItems; ++i)
+  for (int i = 1; i < nbItems; ++i) {
     ui->nameCB->removeItem(1);
+  }
   const std::set<std::string> &props =
       CSVImportConfigurationWidget::getPropsForTypename(propertyTypeLabelToPropertyType(type));
-  for (const std::string &prop : props)
+  for (const std::string &prop : props) {
     ui->nameCB->addItem(tlpStringToQString(prop));
+  }
 }
 
 void PropertyConfigurationWidget::addException() {
@@ -113,8 +115,9 @@ void PropertyConfigurationWidget::addException() {
 void PropertyConfigurationWidget::delCurrentException() {
   QTableWidget *w = ui->exceptionTableWidget;
   auto row = w->currentRow();
-  if (row > -1)
+  if (row > -1) {
     w->removeRow(row);
+  }
 }
 
 void PropertyConfigurationWidget::showPropertyCreationDialog() {
@@ -166,8 +169,9 @@ void PropertyConfigurationWidget::showPropertyCreationDialog() {
 
   if (_valueSeparator) {
     index = ui->separatorCB->findText(QString(QChar(_valueSeparator)));
-    if (index != -1)
+    if (index != -1) {
       ui->separatorCB->setCurrentIndex(index);
+    }
   }
 
   ui->exceptionTableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -250,16 +254,18 @@ bool CSVTableWidget::line(unsigned int row, const vector<string> &lineTokens) {
 
   if ((row < firstLineIndex) || // Wait for the first line index
                                 // If the maximum line number is reached ignore the token.
-      (static_cast<unsigned>(rowCount()) >= maxLineNumber))
+      (static_cast<unsigned>(rowCount()) >= maxLineNumber)) {
     return true;
+  }
 
   if (checkCommentsLines) {
-    if (lineTokens[0][0] == '#')
+    if (lineTokens[0][0] == '#') {
       ++nbCommentsLines;
-    else if (lineTokens[0].substr(0, 2) == "//")
+    } else if (lineTokens[0].substr(0, 2) == "//") {
       ++nbCommentsLines;
-    else
+    } else {
       checkCommentsLines = false;
+    }
   }
 
   // Add a new row in the table
@@ -380,23 +386,25 @@ bool CSVImportConfigurationWidget::begin() {
     // (see line method below)
     ui->previewTableWidget->insertRow(0);
     ui->previewTableWidget->setRowHeight(0, 50);
-  } else
+  } else {
     ui->previewTableWidget->setRowCount(1);
+  }
   return true;
 }
 
 bool CSVImportConfigurationWidget::line(unsigned int row, const vector<string> &lineTokens) {
   ui->previewTableWidget->line(row, lineTokens);
 
-  if (keepPropertyWidgets)
+  if (keepPropertyWidgets) {
     return true;
+  }
 
   // Wait for the first row
   if (row >= getFirstLineIndex()) {
     if (useFirstLineAsPropertyName()) {
-      if (row == getFirstLineIndex())
+      if (row == getFirstLineIndex()) {
         headerColumnCount = columnCount();
-      else if (lineTokens.size() > headerColumnCount) {
+      } else if (lineTokens.size() > headerColumnCount) {
         if (QMessageBox::warning(
                 this, "Invalid number of row fields",
                 QString(
@@ -404,8 +412,9 @@ bool CSVImportConfigurationWidget::line(unsigned int row, const vector<string> &
                     .arg(row + 1)
                     .arg(lineTokens.size())
                     .arg(headerColumnCount),
-                QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok) == QMessageBox::Cancel)
+                QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok) == QMessageBox::Cancel) {
           return false;
+        }
       }
     }
 
@@ -448,8 +457,9 @@ bool CSVImportConfigurationWidget::end(unsigned int rowNumber, unsigned int) {
 }
 
 void CSVImportConfigurationWidget::setMaxPreviewLineNumber(unsigned int lineNumber) {
-  if (useFirstLineAsPropertyName())
+  if (useFirstLineAsPropertyName()) {
     ++lineNumber;
+  }
   ui->previewTableWidget->setMaxPreviewLineNumber(lineNumber);
 }
 
@@ -568,8 +578,9 @@ void CSVImportConfigurationWidget::updateLineNumbers(bool resetValues) {
   }
 
   // Reset all the values of the spinbox.
-  if (resetValues)
+  if (resetValues) {
     ui->toLineSpinBox->setValue(rowNumber);
+  }
 
   // Reset min/max values
   ui->toLineSpinBox->setMaximum(rowNumber);
@@ -681,8 +692,9 @@ QValidator::State PropertyNameValidator::validate(QString &input, int &) const {
   // Only the property at the current index can have this name
   for (auto widget : widgets) {
     if ((widget->getPropertyName().compare(input) == 0) &&
-        (currentIndex != widget->getPropertyNumber()))
+        (currentIndex != widget->getPropertyNumber())) {
       return QValidator::Invalid;
+    }
   }
 
   return QValidator::Acceptable;
@@ -706,23 +718,26 @@ const string &CSVImportConfigurationWidget::combinePropertyDataType(const string
     return newType;
   } else if (previousType == newType) {
     return newType;
-  } else if (newType.empty())
+  } else if (newType.empty()) {
     return previousType;
-  // If both types are numeric return the more generic numeric type : double
-  else if (previousType == BooleanProperty::propertyTypename &&
-           (newType == DoubleProperty::propertyTypename ||
-            newType == IntegerProperty::propertyTypename))
+    // If both types are numeric return the more generic numeric type : double
+  } else if (previousType == BooleanProperty::propertyTypename &&
+             (newType == DoubleProperty::propertyTypename ||
+              newType == IntegerProperty::propertyTypename)) {
     return newType;
-  else if (previousType == IntegerProperty::propertyTypename) {
-    if (newType == DoubleProperty::propertyTypename)
+  } else if (previousType == IntegerProperty::propertyTypename) {
+    if (newType == DoubleProperty::propertyTypename) {
       return DoubleProperty::propertyTypename;
+    }
 
-    if (newType == BooleanProperty::propertyTypename)
+    if (newType == BooleanProperty::propertyTypename) {
       return IntegerProperty::propertyTypename;
+    }
   } else if (previousType == DoubleProperty::propertyTypename &&
              (newType == BooleanProperty::propertyTypename ||
-              newType == IntegerProperty::propertyTypename))
+              newType == IntegerProperty::propertyTypename)) {
     return DoubleProperty::propertyTypename;
+  }
 
   return StringProperty::propertyTypename;
 }
@@ -733,11 +748,13 @@ static const std::string emptyString;
 const string &CSVImportConfigurationWidget::guessDataType(const string &data) const {
   char *ptr = const_cast<char *>(data.c_str());
 
-  while (isspace(*ptr))
+  while (isspace(*ptr)) {
     ++ptr;
+  }
 
-  if (!*ptr)
+  if (!*ptr) {
     return emptyString;
+  }
 
   bool b;
 
@@ -752,14 +769,16 @@ const string &CSVImportConfigurationWidget::guessDataType(const string &data) co
   str.toInt(&ok);
 
   // The type is int
-  if (ok)
+  if (ok) {
     return IntegerProperty::propertyTypename;
+  }
 
   if (parser->decimalMark() == ',') {
     QLocale c(QLocale::French);
     c.toDouble(str, &ok);
-  } else
+  } else {
     str.toDouble(&ok);
+  }
 
   // The type is double
   if (ok) {

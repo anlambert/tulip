@@ -48,14 +48,17 @@ public:
       int ival = 20;
       double val = 0;
 
-      if (dataSet->get("impred", bval))
+      if (dataSet->get("impred", bval)) {
         bertault->setImpred(bval);
+      }
 
-      if (dataSet->get("iterno", ival))
+      if (dataSet->get("iterno", ival)) {
         bertault->iterno(ival);
+      }
 
-      if (dataSet->get("reqlength", val))
+      if (dataSet->get("reqlength", val)) {
         bertault->reqlength(val);
+      }
     }
   }
 };

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -142,8 +142,9 @@ unsigned int Observable::getScheduled(tlp::node n) {
 Observable *Observable::getObject(node n) {
   assert(_oAlive[n]);
 
-  if (!_oAlive[n])
+  if (!_oAlive[n]) {
     throw ObservableException("That object has been deleted it is no more accessible");
+  }
 
   return _oPointer[n];
 }
@@ -159,9 +160,10 @@ const tlp::VectorGraph &Observable::getObservableGraph() {
 Event::Event(const Observable &sender, EventType type) : _sender(sender._n), _type(type) {
   assert(_type != TLP_DELETE);
 
-  if (_type == TLP_DELETE)
+  if (_type == TLP_DELETE) {
     throw ObservableException("It is forbidden to create a delete events, DeleteEvents are "
                               "autmotically generated at the observable destruction");
+  }
 }
 //----------------------------------
 Event::~Event() {}
@@ -215,11 +217,13 @@ Observable &Observable::operator=(const Observable &) {
 }
 //----------------------------------
 Observable::~Observable() {
-  if (ObservationGraph::_oGraphDestroyed || _n.isValid() == false)
+  if (ObservationGraph::_oGraphDestroyed || _n.isValid() == false) {
     return;
+  }
 
-  if (!deleteMsgSent)
+  if (!deleteMsgSent) {
     observableDeleted();
+  }
 
   TLP_GLOBALLY_LOCK_SECTION(ObservableGraphUpdate) {
     assert(_oAlive[_n]);
@@ -279,8 +283,9 @@ void Observable::unholdObservers() {
 
     --_oHoldCounter;
     {
-      if (_oHoldCounter > 0 || _oDelayedEvents.empty())
+      if (_oHoldCounter > 0 || _oDelayedEvents.empty()) {
         return;
+      }
 
       ++_oUnholding;
       ++_oHoldCounter; /** rehold the observer to buffer message sent during unholding */
@@ -354,8 +359,9 @@ void Observable::addOnlooker(const Observable &obs, OBSERVABLEEDGETYPE type) con
     // check for an existing link
     edge link;
 
-    if (isBound() && obs.isBound())
+    if (isBound() && obs.isBound()) {
       link = ObservationGraph::_oGraph.existEdge(obs._n, _n);
+    }
 
     if (!link.isValid()) {
       // add new link
@@ -401,8 +407,9 @@ void Observable::observableDeleted() {
 }
 //----------------------------------------
 void Observable::sendEvent(const Event &message) {
-  if ((_oDisabled && message._type != Event::TLP_DELETE) || !isBound())
+  if ((_oDisabled && message._type != Event::TLP_DELETE) || !isBound()) {
     return;
+  }
 
   // cerr << "send event " << _oPointer[_n] << " " << message.type() << " indeg " <<
   // ObservationGraph::_oGraph.indeg(_n) << " outdeg: " << ObservationGraph::_oGraph.outdeg(_n) <<
@@ -542,16 +549,19 @@ void Observable::sendEvent(const Event &message) {
 #endif
   --_oNotifying;
 
-  if (!observerTonotify.empty() || !listenerTonotify.empty() || message.type() == Event::TLP_DELETE)
+  if (!observerTonotify.empty() || !listenerTonotify.empty() ||
+      message.type() == Event::TLP_DELETE) {
     updateObserverGraph();
+  }
 }
 //----------------------------------------
 void Observable::updateObserverGraph() {
   if (_oNotifying == 0 && _oUnholding == 0 && _oHoldCounter == 0) {
     TLP_GLOBALLY_LOCK_SECTION(ObservableGraphUpdate) {
       for (auto toDel : _oDelayedDelNode) {
-        if (_oEventsToTreat[toDel] == 0)
+        if (_oEventsToTreat[toDel] == 0) {
           ObservationGraph::_oGraph.delNode(toDel);
+        }
       }
     }
     TLP_GLOBALLY_UNLOCK_SECTION(ObservableGraphUpdate);
@@ -561,8 +571,9 @@ void Observable::updateObserverGraph() {
 //----------------------------------------
 void Observable::removeOnlooker(const Observable &obs, OBSERVABLEEDGETYPE type) const {
   // nothing to do if one of the observables is unbound
-  if (!isBound() || !obs.isBound())
+  if (!isBound() || !obs.isBound()) {
     return;
+  }
 
   TLP_GLOBALLY_LOCK_SECTION(ObservableGraphUpdate) {
     assert(_oAlive[_n]);
@@ -577,8 +588,9 @@ void Observable::removeOnlooker(const Observable &obs, OBSERVABLEEDGETYPE type) 
       _oType[link] = _oType[link] &
                      ~type; // bitwise operation to remove the bit  for the given type on the edge
 
-      if (_oType[link] == 0)
+      if (_oType[link] == 0) {
         ObservationGraph::_oGraph.delEdge(link);
+      }
     }
   }
   TLP_GLOBALLY_UNLOCK_SECTION(ObservableGraphUpdate);
@@ -595,8 +607,9 @@ void Observable::removeListener(Observable *const listener) const {
 }
 //----------------------------------------
 bool Observable::hasOnlookers() const {
-  if (!isBound())
+  if (!isBound()) {
     return false;
+  }
 
   assert(_oAlive[_n]);
 
@@ -608,25 +621,29 @@ bool Observable::hasOnlookers() const {
 }
 //----------------------------------------
 unsigned int Observable::countListeners() const {
-  if (!hasOnlookers())
+  if (!hasOnlookers()) {
     return 0;
+  }
 
   unsigned int count = 0;
   for (auto e : ObservationGraph::_oGraph.star(_n)) {
-    if (_n == ObservationGraph::_oGraph.target(e) && (_oType[e] & LISTENER))
+    if (_n == ObservationGraph::_oGraph.target(e) && (_oType[e] & LISTENER)) {
       ++count;
+    }
   }
   return count;
 }
 //----------------------------------------
 unsigned int Observable::countObservers() const {
-  if (!hasOnlookers())
+  if (!hasOnlookers()) {
     return 0;
+  }
 
   unsigned int count = 0;
   for (auto e : ObservationGraph::_oGraph.star(_n)) {
-    if (_n == ObservationGraph::_oGraph.target(e) && (_oType[e] & OBSERVER))
+    if (_n == ObservationGraph::_oGraph.target(e) && (_oType[e] & OBSERVER)) {
       ++count;
+    }
   }
   return count;
 }

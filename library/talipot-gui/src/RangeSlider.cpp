@@ -39,8 +39,9 @@ RangeSlider::RangeSlider(Qt::Orientation orientation, QWidget *parent)
 }
 
 void RangeSlider::initStyleOption(QStyleOptionSlider *option, RangeHandle handle) const {
-  if (!option)
+  if (!option) {
     return;
+  }
 
   option->initFrom(this);
   option->subControls = QStyle::SC_None;
@@ -59,8 +60,9 @@ void RangeSlider::initStyleOption(QStyleOptionSlider *option, RangeHandle handle
   option->singleStep = singleStep();
   option->pageStep = pageStep();
 
-  if (orientation() == Qt::Horizontal)
+  if (orientation() == Qt::Horizontal) {
     option->state |= QStyle::State_Horizontal;
+  }
 }
 
 int RangeSlider::pixelPosToRangeValue(int pos) const {
@@ -102,8 +104,9 @@ void RangeSlider::handleMousePress(const QPoint &pos, QStyle::SubControl &contro
     setSliderDown(true);
   }
 
-  if (control != oldControl)
+  if (control != oldControl) {
     update(sr);
+  }
 }
 
 void RangeSlider::setupPainter(QPainter *painter, Qt::Orientation orientation, qreal x1, qreal y1,
@@ -114,10 +117,11 @@ void RangeSlider::setupPainter(QPainter *painter, Qt::Orientation orientation, q
   gradient.setColorAt(1, highlight.lighter(108));
   painter->setBrush(gradient);
 
-  if (orientation == Qt::Horizontal)
+  if (orientation == Qt::Horizontal) {
     painter->setPen(QPen(highlight.darker(130), 0));
-  else
+  } else {
     painter->setPen(QPen(highlight.darker(150), 0));
+  }
 }
 
 void RangeSlider::drawRange(QStylePainter *painter, const QRect &rect) const {
@@ -127,20 +131,22 @@ void RangeSlider::drawRange(QStylePainter *painter, const QRect &rect) const {
   // area
   QRect groove = style()->subControlRect(QStyle::CC_Slider, &opt, QStyle::SC_SliderGroove, this);
 
-  if (opt.orientation == Qt::Horizontal)
+  if (opt.orientation == Qt::Horizontal) {
     groove.adjust(0, 0, -1, 0);
-  else
+  } else {
     groove.adjust(0, 0, 0, -1);
+  }
 
   // pen & brush
   painter->setPen(QPen(palette().color(QPalette::Dark).lighter(110), 0));
 
-  if (opt.orientation == Qt::Horizontal)
+  if (opt.orientation == Qt::Horizontal) {
     setupPainter(painter, opt.orientation, groove.center().x(), groove.top(), groove.center().x(),
                  groove.bottom());
-  else
+  } else {
     setupPainter(painter, opt.orientation, groove.left(), groove.center().y(), groove.right(),
                  groove.center().y());
+  }
 
   // draw groove
   painter->drawRect(rect.intersected(groove));
@@ -194,22 +200,25 @@ void RangeSlider::triggerAction(QAbstractSlider::SliderAction action, bool main)
   case QAbstractSlider::SliderToMinimum:
     value = min;
 
-    if ((main && mainControl == UpperHandle) || (!main && altControl == UpperHandle))
+    if ((main && mainControl == UpperHandle) || (!main && altControl == UpperHandle)) {
       up = true;
+    }
 
     break;
 
   case QAbstractSlider::SliderToMaximum:
     value = max;
 
-    if ((main && mainControl == UpperHandle) || (!main && altControl == UpperHandle))
+    if ((main && mainControl == UpperHandle) || (!main && altControl == UpperHandle)) {
       up = true;
+    }
 
     break;
 
   case QAbstractSlider::SliderMove:
-    if ((main && mainControl == UpperHandle) || (!main && altControl == UpperHandle))
+    if ((main && mainControl == UpperHandle) || (!main && altControl == UpperHandle)) {
       up = true;
+    }
 
   case QAbstractSlider::SliderNoAction:
     no = true;
@@ -221,10 +230,11 @@ void RangeSlider::triggerAction(QAbstractSlider::SliderAction action, bool main)
   }
 
   if (!no && !up) {
-    if (movement == NoCrossing)
+    if (movement == NoCrossing) {
       value = qMin(value, upper);
-    else if (movement == NoOverlapping)
+    } else if (movement == NoOverlapping) {
       value = qMin(value, upper - 1);
+    }
 
     if (movement == FreeMovement && value > upper) {
       swapControls();
@@ -233,10 +243,11 @@ void RangeSlider::triggerAction(QAbstractSlider::SliderAction action, bool main)
       setLowerPosition(value);
     }
   } else if (!no) {
-    if (movement == NoCrossing)
+    if (movement == NoCrossing) {
       value = qMax(value, lower);
-    else if (movement == NoOverlapping)
+    } else if (movement == NoOverlapping) {
       value = qMax(value, lower + 1);
+    }
 
     if (movement == FreeMovement && value < lower) {
       swapControls();
@@ -339,11 +350,13 @@ void RangeSlider::setLowerPosition(int low) {
   if (lowerPos != low) {
     lowerPos = low;
 
-    if (!hasTracking())
+    if (!hasTracking()) {
       update();
+    }
 
-    if (isSliderDown())
+    if (isSliderDown()) {
       emit lowerPositionChanged(low);
+    }
 
     if (hasTracking() && !blockTracking) {
       bool main = (mainControl == LowerHandle);
@@ -360,11 +373,13 @@ void RangeSlider::setUpperPosition(int upp) {
   if (upperPos != upp) {
     upperPos = upp;
 
-    if (!hasTracking())
+    if (!hasTracking()) {
       update();
+    }
 
-    if (isSliderDown())
+    if (isSliderDown()) {
       emit upperPositionChanged(upp);
+    }
 
     if (hasTracking() && !blockTracking) {
       bool main = (mainControl == UpperHandle);
@@ -418,8 +433,9 @@ void RangeSlider::keyPressEvent(QKeyEvent *event) {
     break;
   }
 
-  if (action)
+  if (action) {
     triggerAction(action, main);
+  }
 }
 
 /*!
@@ -433,8 +449,9 @@ void RangeSlider::mousePressEvent(QMouseEvent *event) {
 
   handleMousePress(event->pos(), upperPressed, upper, UpperHandle);
 
-  if (upperPressed != QStyle::SC_SliderHandle)
+  if (upperPressed != QStyle::SC_SliderHandle) {
     handleMousePress(event->pos(), lowerPressed, lower, LowerHandle);
+  }
 
   firstMovement = true;
   event->accept();
@@ -475,10 +492,11 @@ void RangeSlider::mouseMoveEvent(QMouseEvent *event) {
   }
 
   if (lowerPressed == QStyle::SC_SliderHandle) {
-    if (movement == NoCrossing)
+    if (movement == NoCrossing) {
       newPosition = qMin(newPosition, upperValue());
-    else if (movement == NoOverlapping)
+    } else if (movement == NoOverlapping) {
       newPosition = qMin(newPosition, upperValue() - 1);
+    }
 
     if (movement == FreeMovement && newPosition > upper) {
       swapControls();
@@ -487,10 +505,11 @@ void RangeSlider::mouseMoveEvent(QMouseEvent *event) {
       setLowerPosition(newPosition);
     }
   } else if (upperPressed == QStyle::SC_SliderHandle) {
-    if (movement == NoCrossing)
+    if (movement == NoCrossing) {
       newPosition = qMax(newPosition, lowerValue());
-    else if (movement == NoOverlapping)
+    } else if (movement == NoOverlapping) {
       newPosition = qMax(newPosition, lowerValue() + 1);
+    }
 
     if (movement == FreeMovement && newPosition < lower) {
       swapControls();
@@ -542,10 +561,11 @@ void RangeSlider::paintEvent(QPaintEvent *) {
   const QPoint c = QRect(lr.center(), ur.center()).center();
   QRect spanRect;
 
-  if (orientation() == Qt::Horizontal)
+  if (orientation() == Qt::Horizontal) {
     spanRect = QRect(QPoint(minv, c.y() - 2), QPoint(maxv, c.y() + 1));
-  else
+  } else {
     spanRect = QRect(QPoint(c.x() - 2, minv), QPoint(c.x() + 1, maxv));
+  }
 
   drawRange(&painter, spanRect);
 

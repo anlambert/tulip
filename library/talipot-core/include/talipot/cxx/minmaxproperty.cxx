@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -32,8 +32,9 @@ tlp::MinMaxProperty<nodeType, edgeType, propType>::getNodeMin(const tlp::Graph *
   unsigned int graphID = graph->getId();
   auto it = minMaxNode.find(graphID);
 
-  if (it == minMaxNode.end())
+  if (it == minMaxNode.end()) {
     return computeMinMaxNode(graph).first;
+  }
 
   return it->second.first;
 }
@@ -48,8 +49,9 @@ tlp::MinMaxProperty<nodeType, edgeType, propType>::getNodeMax(const tlp::Graph *
   unsigned int graphID = graph->getId();
   auto it = minMaxNode.find(graphID);
 
-  if (it == minMaxNode.end())
+  if (it == minMaxNode.end()) {
     return computeMinMaxNode(graph).second;
+  }
 
   return it->second.second;
 }
@@ -64,8 +66,9 @@ tlp::MinMaxProperty<nodeType, edgeType, propType>::getEdgeMin(const tlp::Graph *
   unsigned int graphID = graph->getId();
   auto it = minMaxEdge.find(graphID);
 
-  if (it == minMaxEdge.end())
+  if (it == minMaxEdge.end()) {
     return computeMinMaxEdge(graph).first;
+  }
 
   return it->second.first;
 }
@@ -80,8 +83,9 @@ tlp::MinMaxProperty<nodeType, edgeType, propType>::getEdgeMax(const tlp::Graph *
   unsigned int graphID = graph->getId();
   auto it = minMaxEdge.find(graphID);
 
-  if (it == minMaxEdge.end())
+  if (it == minMaxEdge.end()) {
     return computeMinMaxEdge(graph).second;
+  }
 
   return it->second.second;
 }
@@ -109,8 +113,9 @@ tlp::MinMaxProperty<nodeType, edgeType, propType>::computeMinMaxNode(const Graph
     }
   }
 
-  if (maxN2 < minN2)
+  if (maxN2 < minN2) {
     maxN2 = minN2 = AbstractProperty<nodeType, edgeType, propType>::nodeDefaultValue;
+  }
 
   unsigned int sgi = graph->getId();
 
@@ -135,16 +140,19 @@ tlp::MinMaxProperty<nodeType, edgeType, propType>::computeMinMaxEdge(const Graph
     for (auto ite : graph->edges()) {
       typename edgeType::RealType tmp = this->getEdgeValue(ite);
 
-      if (tmp > maxE2)
+      if (tmp > maxE2) {
         maxE2 = tmp;
+      }
 
-      if (tmp < minE2)
+      if (tmp < minE2) {
         minE2 = tmp;
+      }
     }
   }
 
-  if (maxE2 < minE2)
+  if (maxE2 < minE2) {
     maxE2 = minE2 = AbstractProperty<nodeType, edgeType, propType>::edgeDefaultValue;
+  }
 
   unsigned int sgi = graph->getId();
 
@@ -184,8 +192,9 @@ void tlp::MinMaxProperty<nodeType, edgeType, propType>::removeListenersAndClearN
       Graph *g = (propType::graph->getId() == gi) ? (needGraphListener ? nullptr : propType::graph)
                                                   : propType::graph->getDescendantGraph(gi);
 
-      if (g)
+      if (g) {
         g->removeListener(this);
+      }
     }
   }
 
@@ -217,8 +226,9 @@ void tlp::MinMaxProperty<nodeType, edgeType, propType>::removeListenersAndClearE
       Graph *g = (propType::graph->getId() == gi) ? (needGraphListener ? nullptr : propType::graph)
                                                   : propType::graph->getDescendantGraph(gi);
 
-      if (g)
+      if (g) {
         g->removeListener(this);
+      }
     }
   }
 
@@ -325,9 +335,10 @@ void tlp::MinMaxProperty<nodeType, edgeType, propType>::treatEvent(const tlp::Ev
           minMaxNode.erase(it);
 
           if ((minMaxEdge.find(sgi) == minMaxEdge.end()) &&
-              (!needGraphListener || (graph != propType::graph)))
+              (!needGraphListener || (graph != propType::graph))) {
             // graph observation is no longer needed
             graph->removeListener(this);
+          }
         }
       }
 
@@ -350,9 +361,10 @@ void tlp::MinMaxProperty<nodeType, edgeType, propType>::treatEvent(const tlp::Ev
           minMaxEdge.erase(it);
 
           if ((minMaxNode.find(sgi) == minMaxNode.end()) &&
-              (!needGraphListener || (graph != propType::graph)))
+              (!needGraphListener || (graph != propType::graph))) {
             // graph observation is no longer needed
             graph->removeListener(this);
+          }
         }
       }
 

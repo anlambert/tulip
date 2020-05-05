@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -44,9 +44,10 @@ void SuperGraphTest::build(unsigned int nbNodes, unsigned int edgeRatio) {
 
   unsigned int NB_EDGES = EDGE_RATIO * NB_ADD;
 
-  for (unsigned int i = 0; i < NB_EDGES; ++i)
+  for (unsigned int i = 0; i < NB_EDGES; ++i) {
     graph->addEdge(nodes[randomUnsignedInteger(NB_ADD - 1)],
                    nodes[randomUnsignedInteger(NB_ADD - 1)]);
+  }
 }
 //==========================================================
 void SuperGraphTest::testIterators() {
@@ -56,14 +57,16 @@ void SuperGraphTest::testIterators() {
   unsigned int NB_NODES = 100;
   unsigned int EDGE_RATIO = 100;
 
-  for (unsigned int i = 0; i < NB_NODES; ++i)
+  for (unsigned int i = 0; i < NB_NODES; ++i) {
     nodes.push_back(graph->addNode());
+  }
 
   unsigned int NB_EDGES = EDGE_RATIO * NB_NODES;
 
-  for (unsigned int i = 0; i < NB_EDGES; ++i)
+  for (unsigned int i = 0; i < NB_EDGES; ++i) {
     edges.push_back(graph->addEdge(nodes[randomUnsignedInteger(NB_NODES - 1)],
                                    nodes[randomUnsignedInteger(NB_NODES - 1)]));
+  }
 
   {
     unsigned int i = 0;
@@ -311,8 +314,9 @@ void SuperGraphTest::testAddDel() {
 
   for (unsigned int i = 0; i < NB_ADD; ++i) {
 
-    for (auto e : graph->getInOutEdges(nodes[i]))
+    for (auto e : graph->getInOutEdges(nodes[i])) {
       CPPUNIT_ASSERT(graph->isElement(e));
+    }
 
     graph->delNode(nodes[i]);
     CPPUNIT_ASSERT(!graph->isElement(nodes[i]));
@@ -335,13 +339,15 @@ void SuperGraphTest::testOrderEdgeAndSwap() {
   vector<edge> edges;
   unsigned int NB_NODES = 1000;
 
-  for (unsigned int i = 0; i < NB_NODES; ++i)
+  for (unsigned int i = 0; i < NB_NODES; ++i) {
     nodes.push_back(graph->addNode());
+  }
 
   unsigned int NB_EDGES = NB_NODES - 1;
 
-  for (unsigned int i = 0; i < NB_EDGES; ++i)
+  for (unsigned int i = 0; i < NB_EDGES; ++i) {
     edges.push_back(graph->addEdge(nodes[0], nodes[i + 1]));
+  }
 
   {
     unsigned int i = 0;
@@ -636,23 +642,27 @@ void SuperGraphTest::testPropertiesIteration() {
   }
 
   for (const string &str : graph->getProperties()) {
-    if (str.size() == 2)
+    if (str.size() == 2) {
       CPPUNIT_ASSERT(propList1.find(str) != propList1.end());
+    }
   }
 
   for (const string &str : g2->getProperties()) {
-    if (str.size() == 2)
+    if (str.size() == 2) {
       CPPUNIT_ASSERT(propList1.find(str) != propList1.end());
+    }
   }
 
   for (const string &str : g1->getLocalProperties()) {
-    if (str.size() == 2)
+    if (str.size() == 2) {
       CPPUNIT_ASSERT(propList1.find(str) != propList1.end());
+    }
   }
 
   for (const string &str : g4->getInheritedProperties()) {
-    if (str.size() == 2)
+    if (str.size() == 2) {
       CPPUNIT_ASSERT(propList1.find(str) != propList1.end());
+    }
   }
 
   for (const string &str : propList2) {
@@ -661,33 +671,38 @@ void SuperGraphTest::testPropertiesIteration() {
   }
 
   for (const string &str : graph->getProperties()) {
-    if (str.size() == 2)
+    if (str.size() == 2) {
       CPPUNIT_ASSERT(propList1.find(str) != propList1.end() &&
                      propList2.find(str) == propList2.end());
+    }
   }
 
   for (const string &str : g1->getProperties()) {
-    if (str.size() == 2)
+    if (str.size() == 2) {
       CPPUNIT_ASSERT(propList1.find(str) != propList1.end() &&
                      propList2.find(str) == propList2.end());
+    }
   }
 
   for (const string &str : g2->getProperties()) {
-    if (str.size() == 2)
+    if (str.size() == 2) {
       CPPUNIT_ASSERT(propList1.find(str) != propList1.end() ||
                      propList2.find(str) != propList2.end());
+    }
   }
 
   for (const string &str : g3->getProperties()) {
-    if (str.size() == 2)
+    if (str.size() == 2) {
       CPPUNIT_ASSERT(propList1.find(str) != propList1.end() ||
                      propList2.find(str) != propList2.end());
+    }
   }
 
   for (const string &str : g4->getProperties()) {
-    if (str.size() == 2)
+    if (str.size() == 2) {
       CPPUNIT_ASSERT(propList1.find(str) != propList1.end() ||
                      propList2.find(str) != propList2.end());
+    }
   }
 
   graph->clear();

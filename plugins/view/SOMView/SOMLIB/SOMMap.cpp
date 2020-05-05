@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -110,8 +110,9 @@ const DynamicVector<double> SOMMap::getWeight(const tlp::node &n) const {
 
   if (it != nodeToNodeVec.end()) {
     return (*it).second;
-  } else
+  } else {
     return DynamicVector<double>();
+  }
 }
 
 void SOMMap::setWeight(tlp::node n, const DynamicVector<double> &weight) {
@@ -133,8 +134,9 @@ void SOMMap::registerModification(const vector<string> &propertiesToListen) {
       DoubleProperty *property = new DoubleProperty(this);
       addLocalProperty(strProp, property);
       properties.push_back(property);
-    } else
+    } else {
       properties.push_back(getProperty(strProp));
+    }
   }
 
   // Store all the value from the DynamicVectors in the properties
@@ -160,8 +162,9 @@ tlp::node SOMMap::getNodeAt(unsigned int pos) {
 }
 tlp::node SOMMap::getNodeAt(unsigned int x, unsigned int y) {
   // assert(x<width && y < height);
-  if (x >= width || y >= height)
+  if (x >= width || y >= height) {
     return node();
+  }
 
   unsigned int currenty = 0;
   unsigned int currentx = 0;
@@ -184,8 +187,9 @@ tlp::node SOMMap::getNodeAt(unsigned int x, unsigned int y) {
 
 bool SOMMap::getPosForNode(tlp::node n, unsigned int &x, unsigned int &y) {
   // assert(n.isValid() && graph_component->isElement(n));
-  if (!n.isValid() || !graph_component->isElement(n))
+  if (!n.isValid() || !graph_component->isElement(n)) {
     return false;
+  }
 
   x = n.id % width;
   y = n.id / width;

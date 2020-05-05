@@ -53,8 +53,9 @@ AlgorithmRunnerItem::AlgorithmRunnerItem(QString pluginName, QWidget *parent)
     QString name = pluginName;
     name.replace(words[1] + ' ', words[1] + '\n');
     _ui->playButton->setText(name);
-  } else
+  } else {
     _ui->playButton->setText(pluginName);
+  }
 
   _ui->playButton->setStyleSheet("text-align: left");
   QString tooltip(QString("Apply '") + pluginName + "'");
@@ -74,13 +75,14 @@ AlgorithmRunnerItem::AlgorithmRunnerItem(QString pluginName, QWidget *parent)
   std::string info = plugin.info();
 
   // show info in tooltip only if it contains more than one word
-  if (info.find(' ') != std::string::npos)
+  if (info.find(' ') != std::string::npos) {
     _ui->playButton->setToolTip(
         QString("<table><tr><td>%1:</td></tr><tr><td><i>%2</i></td></tr></table>")
             .arg(tooltip)
             .arg(tlp::tlpStringToQString(info)));
-  else
+  } else {
     _ui->playButton->setToolTip(tooltip);
+  }
 
   setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
 
@@ -120,8 +122,9 @@ void AlgorithmRunnerItem::setGraph(Graph *g) {
     _ui->parameters->setModel(nullptr);
   }
 
-  if (_ui->parameters->isVisible())
+  if (_ui->parameters->isVisible()) {
     initModel();
+  }
 }
 
 void AlgorithmRunnerItem::setData(const DataSet &data) {
@@ -162,8 +165,9 @@ void asLocal(QVariant var, DataSet &data, Graph *g) {
 }
 
 static void copyToLocal(DataSet &data, Graph *g) {
-  if (!data.exists("result"))
+  if (!data.exists("result")) {
     return;
+  }
 
   DataType *d = data.getData("result");
   QVariant var = MetaTypes::dataTypeToQvariant(d, "");
@@ -203,8 +207,9 @@ public:
       for (const auto &outPropParam : outPropParams) {
         const std::string &outPropName = outPropParam.dest->getName();
 
-        if (outPropParam.tmp && !outPropName.empty())
+        if (outPropParam.tmp && !outPropName.empty()) {
           outPropsMap[outPropName] = outPropParam.dest;
+        }
       }
 
       // restore initial properties
@@ -218,8 +223,9 @@ public:
       for (const auto &outPropParam : outPropParams) {
         const std::string &outPropName = outPropParam.dest->getName();
 
-        if (outPropParam.tmp && !outPropName.empty())
+        if (outPropParam.tmp && !outPropName.empty()) {
           outPropsMap[outPropName] = outPropParam.tmp;
+        }
       }
 
       inited = true;
@@ -227,9 +233,10 @@ public:
       if (!outPropsMap.empty() &&
           // set temporary properties as drawing properties
           (TalipotMainWindow::getInstance()->setGlMainViewPropertiesForGraph(graph, outPropsMap) ==
-           false))
+           false)) {
         // clear map if there is nothing to do
         outPropsMap.clear();
+      }
     }
 
     // draw with temporary computed properties
@@ -244,8 +251,9 @@ public:
 void AlgorithmRunnerItem::run(Graph *g) {
   initModel();
 
-  if (g == nullptr)
+  if (g == nullptr) {
     g = _graph;
+  }
 
   if (g == nullptr) {
     qCritical() << QStringToTlpString(name()) << ": No graph selected";
@@ -274,8 +282,9 @@ void AlgorithmRunnerItem::run(Graph *g) {
         if (prop != nullptr) {
           PropertyInterface *localProp = g->getProperty(prop->getName());
 
-          if (prop != localProp)
+          if (prop != localProp) {
             dataSet.set(desc.getName(), localProp);
+          }
         }
       }
     }
@@ -283,8 +292,9 @@ void AlgorithmRunnerItem::run(Graph *g) {
 
   g->push();
 
-  if (_storeResultAsLocal)
+  if (_storeResultAsLocal) {
     copyToLocal(dataSet, g);
+  }
 
   std::vector<std::string> outNonPropertyParams;
   // use temporary output properties
@@ -295,8 +305,9 @@ void AlgorithmRunnerItem::run(Graph *g) {
 
     // forget non property out param
     if (!DataType::isTalipotProperty(typeName)) {
-      if (desc.getDirection() != IN_PARAM)
+      if (desc.getDirection() != IN_PARAM) {
         outNonPropertyParams.push_back(desc.getName());
+      }
 
       continue;
     }
@@ -357,9 +368,10 @@ void AlgorithmRunnerItem::run(Graph *g) {
         outPropParam.tmp->setAllEdgeDataMemValue(edgeData);
         delete nodeData;
         delete edgeData;
-      } else
+      } else {
         // inout property
         outPropParam.tmp->copy(outPropParam.dest);
+      }
     }
   }
 
@@ -368,10 +380,11 @@ void AlgorithmRunnerItem::run(Graph *g) {
   progress->setTitle(algorithm);
 
   // set preview handler if needed
-  if (!outPropertyParams.empty())
+  if (!outPropertyParams.empty()) {
     progress->setPreviewHandler(new AlgorithmPreviewHandler(g, outPropertyParams));
-  else
+  } else {
     progress->showPreview(false);
+  }
 
   // take time before run
   QTime start = QTime::currentTime();
@@ -380,8 +393,9 @@ void AlgorithmRunnerItem::run(Graph *g) {
   // get spent time
   int spentTime = start.msecsTo(QTime::currentTime());
 
-  if (!outPropertyParams.empty())
+  if (!outPropertyParams.empty()) {
     progress->setPreviewHandler(nullptr);
+  }
 
   if (!result) {
     if (progress->state() == TLP_CANCEL && errorMessage.empty()) {
@@ -426,8 +440,9 @@ void AlgorithmRunnerItem::run(Graph *g) {
       std::stringstream log;
       log << algorithm.c_str() << " - " << dataSet.toString().c_str();
 
-      if (Settings::instance().logPluginCall() == Settings::LogCallWithExecutionTime)
+      if (Settings::instance().logPluginCall() == Settings::LogCallWithExecutionTime) {
         log << ": " << spentTime << "ms";
+      }
 
       qDebug() << log.str().c_str();
     }
@@ -454,8 +469,9 @@ void AlgorithmRunnerItem::run(Graph *g) {
     model->setParametersValues(originalDataSet);
   }
 
-  while (Observable::observersHoldCounter() > 0)
+  while (Observable::observersHoldCounter() > 0) {
     Observable::unholdObservers();
+  }
 
   g->popIfNoUpdates();
 
@@ -469,8 +485,9 @@ void AlgorithmRunnerItem::setStoreResultAsLocal(bool m) {
 }
 
 void AlgorithmRunnerItem::mousePressEvent(QMouseEvent *ev) {
-  if (ev->button() == Qt::LeftButton)
+  if (ev->button() == Qt::LeftButton) {
     _dragStartPosition = ev->pos();
+  }
 }
 
 void AlgorithmRunnerItem::mouseMoveEvent(QMouseEvent *ev) {
@@ -519,12 +536,14 @@ void AlgorithmRunnerItem::afterRun(Graph *g, const tlp::DataSet &dataSet) {
       LayoutProperty *prop = nullptr;
       dataSet.get<LayoutProperty *>("result", prop);
 
-      if (prop)
+      if (prop) {
         prop->perfectAspectRatio(g);
+      }
     }
 
-    if (Settings::instance().isAutomaticCentering())
+    if (Settings::instance().isAutomaticCentering()) {
       TalipotMainWindow::getInstance()->centerPanelsForGraph(g);
+    }
   } else if (Settings::instance().isAutomaticCentering() &&
              PluginsManager::pluginExists<Algorithm>(stdName) &&
              !PluginsManager::pluginExists<PropertyAlgorithm>(stdName) &&
@@ -563,10 +582,11 @@ void AlgorithmRunnerItem::afterRun(Graph *g, const tlp::DataSet &dataSet) {
         tlp::DataSet data;
         ColorScale cs;
 
-        if (colorMappingModel)
+        if (colorMappingModel) {
           colorMappingModel->parametersValues().get<ColorScale>("color scale", cs);
-        else
+        } else {
           cs = ColorScalesManager::getLatestColorScale();
+        }
 
         data.set<ColorScale>("color scale", cs);
         g->applyPropertyAlgorithm("Color Mapping", color, errMsg, &data);
@@ -598,8 +618,9 @@ void AlgorithmRunnerItem::favoriteChanged(int state) {
 }
 
 tlp::DataSet AlgorithmRunnerItem::data() const {
-  if (_ui->parameters->model() == nullptr)
+  if (_ui->parameters->model() == nullptr) {
     return DataSet();
+  }
 
   return static_cast<ParameterListModel *>(_ui->parameters->model())->parametersValues();
 }
@@ -607,8 +628,9 @@ tlp::DataSet AlgorithmRunnerItem::data() const {
 ParameterListModel *AlgorithmRunnerItem::colorMappingModel = nullptr;
 
 void AlgorithmRunnerItem::initModel() {
-  if (_ui->parameters->model() != nullptr)
+  if (_ui->parameters->model() != nullptr) {
     return;
+  }
 
   ParameterListModel *model =
       new ParameterListModel(PluginsManager::getPluginParameters(QStringToTlpString(_pluginName)),
@@ -624,8 +646,9 @@ void AlgorithmRunnerItem::initModel() {
   _ui->parameters->setModel(model);
   int h = 10;
 
-  for (int i = 0; i < model->rowCount(); ++i)
+  for (int i = 0; i < model->rowCount(); ++i) {
     h += _ui->parameters->rowHeight(i);
+  }
 
   _ui->parameters->setMinimumSize(_ui->parameters->minimumSize().width(), h);
   _ui->parameters->setMaximumSize(_ui->parameters->maximumSize().width(), h);

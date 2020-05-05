@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -35,8 +35,9 @@ void GraphModel::setGraph(Graph *g) {
   if (_graph != nullptr) {
     _graph->removeListener(this);
     _graph->removeObserver(this);
-    for (PropertyInterface *pi : _graph->getObjectProperties())
+    for (PropertyInterface *pi : _graph->getObjectProperties()) {
       pi->removeListener(this);
+    }
   }
 
   _graph = g;
@@ -49,8 +50,9 @@ void GraphModel::setGraph(Graph *g) {
     for (PropertyInterface *pi : _graph->getObjectProperties()) {
 #ifdef NDEBUG
 
-      if (pi->getName() == "viewMetaGraph")
+      if (pi->getName() == "viewMetaGraph") {
         continue;
+      }
 
 #endif
       _properties.push_back(pi);
@@ -65,15 +67,17 @@ Graph *GraphModel::graph() const {
 }
 
 int GraphModel::rowCount(const QModelIndex &parent) const {
-  if (_graph == nullptr || parent.isValid())
+  if (_graph == nullptr || parent.isValid()) {
     return 0;
+  }
 
   return _elements.size();
 }
 
 int GraphModel::columnCount(const QModelIndex &parent) const {
-  if (_graph == nullptr || parent.isValid())
+  if (_graph == nullptr || parent.isValid()) {
     return 0;
+  }
 
   return _properties.size();
 }
@@ -96,28 +100,32 @@ Qt::ItemFlags GraphModel::flags(const QModelIndex &index) const {
 }
 
 QVariant GraphModel::headerData(int section, Qt::Orientation orientation, int role) const {
-  if (_graph == nullptr)
+  if (_graph == nullptr) {
     return QVariant();
+  }
 
   if (orientation == Qt::Vertical) {
-    if (section > _elements.size() || section < 0)
+    if (section > _elements.size() || section < 0) {
       return QVariant();
+    }
 
-    if (role == Qt::DisplayRole)
+    if (role == Qt::DisplayRole) {
       return _elements[section];
+    }
   } else {
-    if (section > _properties.size() || section < 0)
+    if (section > _properties.size() || section < 0) {
       return QVariant();
+    }
 
     PropertyInterface *prop = _properties[section];
 
-    if (role == Qt::DisplayRole)
+    if (role == Qt::DisplayRole) {
       return QString(prop->getName().c_str());
-    else if (role == Qt::DecorationRole && !_graph->existLocalProperty(prop->getName()))
+    } else if (role == Qt::DecorationRole && !_graph->existLocalProperty(prop->getName())) {
       return QIcon(":/talipot/gui/ui/inherited_properties.png");
-    else if (role == Model::PropertyRole)
+    } else if (role == Model::PropertyRole) {
       return QVariant::fromValue<PropertyInterface *>(prop);
-    else if (role == Qt::ToolTipRole) {
+    } else if (role == Qt::ToolTipRole) {
       return QString(_graph->existLocalProperty(prop->getName()) ? "local " : "inherited ")
           .append("property \"")
           .append(tlpStringToQString(prop->getName()))
@@ -137,28 +145,30 @@ QVariant GraphModel::headerData(int section, Qt::Orientation orientation, int ro
 }
 
 QModelIndex GraphModel::index(int row, int column, const QModelIndex &parent) const {
-  if (parent.isValid() || _graph == nullptr || column < 0 || column >= _properties.size())
+  if (parent.isValid() || _graph == nullptr || column < 0 || column >= _properties.size()) {
     return QModelIndex();
+  }
 
   PropertyInterface *prop = _properties[column];
   return createIndex(row, column, prop);
 }
 
 QVariant GraphModel::data(const QModelIndex &index, int role) const {
-  if (role == Qt::DisplayRole)
+  if (role == Qt::DisplayRole) {
     return value(_elements[index.row()], static_cast<PropertyInterface *>(index.internalPointer()));
-  else if (role == PropertyRole)
+  } else if (role == PropertyRole) {
     return QVariant::fromValue<PropertyInterface *>(
         static_cast<PropertyInterface *>(index.internalPointer()));
-  else if (role == GraphRole)
+  } else if (role == GraphRole) {
     return QVariant::fromValue<Graph *>(_graph);
-  else if (role == IsNodeRole)
+  } else if (role == IsNodeRole) {
     return isNode();
-  else if (role == StringRole)
+  } else if (role == StringRole) {
     return stringValue(_elements[index.row()],
                        static_cast<PropertyInterface *>(index.internalPointer()));
-  else if (role == ElementIdRole)
+  } else if (role == ElementIdRole) {
     return _elements[index.row()];
+  }
 
   return QVariant();
 }
@@ -186,8 +196,9 @@ void GraphModel::treatEvent(const Event &ev) {
         graphEv->getType() == GraphEvent::TLP_ADD_LOCAL_PROPERTY) {
 #ifdef NDEBUG
 
-      if (graphEv->getPropertyName() == "viewMetaGraph")
+      if (graphEv->getPropertyName() == "viewMetaGraph") {
         return;
+      }
 
 #endif
       // insert in respect with alphabetic order
@@ -195,8 +206,9 @@ void GraphModel::treatEvent(const Event &ev) {
       int pos = 0;
 
       for (; pos < _properties.size(); ++pos) {
-        if (propName < _properties[pos]->getName())
+        if (propName < _properties[pos]->getName()) {
           break;
+        }
       }
 
       beginInsertColumns(QModelIndex(), pos, pos);
@@ -209,8 +221,9 @@ void GraphModel::treatEvent(const Event &ev) {
                graphEv->getType() == GraphEvent::TLP_BEFORE_DEL_LOCAL_PROPERTY) {
 #ifdef NDEBUG
 
-      if (graphEv->getPropertyName() == "viewMetaGraph")
+      if (graphEv->getPropertyName() == "viewMetaGraph") {
         return;
+      }
 
 #endif
       PropertyInterface *prop = _graph->getProperty(graphEv->getPropertyName());
@@ -227,18 +240,21 @@ void GraphModel::treatEvent(const Event &ev) {
       int insertCol = 0;
 
       for (insertCol = 0; insertCol < _properties.size(); ++insertCol) {
-        if ((prop != _properties[insertCol]) && (propName < _properties[insertCol]->getName()))
+        if ((prop != _properties[insertCol]) && (propName < _properties[insertCol]->getName())) {
           break;
+        }
       }
 
-      if (insertCol == col + 1)
+      if (insertCol == col + 1) {
         return;
+      }
 
       beginMoveColumns(QModelIndex(), col, col, QModelIndex(), insertCol);
       _properties.remove(col);
 
-      if (col < insertCol)
+      if (col < insertCol) {
         --insertCol;
+      }
 
       _properties.insert(insertCol, prop);
       endMoveColumns();
@@ -285,28 +301,33 @@ QVariant GraphModel::nodeValue(unsigned int id, PropertyInterface *prop) {
   node n(id);
 
   if (dynamic_cast<IntegerProperty *>(prop) != nullptr) {
-    if (prop->getName() == "viewShape")
+    if (prop->getName() == "viewShape") {
       return QVariant::fromValue<NodeShape::NodeShapes>(static_cast<NodeShape::NodeShapes>(
           static_cast<IntegerProperty *>(prop)->getNodeValue(n)));
+    }
 
-    if (prop->getName() == "viewLabelPosition")
+    if (prop->getName() == "viewLabelPosition") {
       return QVariant::fromValue<LabelPosition::LabelPositions>(
           static_cast<LabelPosition::LabelPositions>(
               static_cast<IntegerProperty *>(prop)->getNodeValue(n)));
+    }
 
     return QVariant::fromValue<int>(static_cast<IntegerProperty *>(prop)->getNodeValue(n));
   } else if (dynamic_cast<StringProperty *>(prop) != nullptr) {
-    if (prop->getName() == "viewFont")
+    if (prop->getName() == "viewFont") {
       return QVariant::fromValue<Font>(
           Font::fromFile(tlpStringToQString(static_cast<StringProperty *>(prop)->getNodeValue(n))));
+    }
 
-    if (prop->getName() == "viewIcon")
+    if (prop->getName() == "viewIcon") {
       return QVariant::fromValue<FontIcon>(
           FontIcon(tlpStringToQString(static_cast<StringProperty *>(prop)->getNodeValue(n))));
+    }
 
-    if (prop->getName() == "viewTexture")
+    if (prop->getName() == "viewTexture") {
       return QVariant::fromValue<TextureFile>(
           TextureFile(tlpStringToQString(static_cast<StringProperty *>(prop)->getNodeValue(n))));
+    }
 
     return QVariant::fromValue<QString>(
         tlpStringToQString(static_cast<StringProperty *>(prop)->getNodeValue(n)));
@@ -328,28 +349,33 @@ QVariant GraphModel::nodeValue(unsigned int id, PropertyInterface *prop) {
       static_cast<PROP *>(prop)->getNodeDefaultValue())
 QVariant GraphModel::nodeDefaultValue(PropertyInterface *prop) {
   if (dynamic_cast<IntegerProperty *>(prop) != nullptr) {
-    if (prop->getName() == "viewShape")
+    if (prop->getName() == "viewShape") {
       return QVariant::fromValue<NodeShape::NodeShapes>(static_cast<NodeShape::NodeShapes>(
           static_cast<IntegerProperty *>(prop)->getNodeDefaultValue()));
+    }
 
-    if (prop->getName() == "viewLabelPosition")
+    if (prop->getName() == "viewLabelPosition") {
       return QVariant::fromValue<LabelPosition::LabelPositions>(
           static_cast<LabelPosition::LabelPositions>(
               static_cast<IntegerProperty *>(prop)->getNodeDefaultValue()));
+    }
 
     return QVariant::fromValue<int>(static_cast<IntegerProperty *>(prop)->getNodeDefaultValue());
   } else if (dynamic_cast<StringProperty *>(prop) != nullptr) {
-    if (prop->getName() == "viewFont")
+    if (prop->getName() == "viewFont") {
       return QVariant::fromValue<Font>(Font::fromFile(
           tlpStringToQString(static_cast<StringProperty *>(prop)->getNodeDefaultValue())));
+    }
 
-    if (prop->getName() == "viewIcon")
+    if (prop->getName() == "viewIcon") {
       return QVariant::fromValue<FontIcon>(
           FontIcon(tlpStringToQString(static_cast<StringProperty *>(prop)->getNodeDefaultValue())));
+    }
 
-    if (prop->getName() == "viewTexture")
+    if (prop->getName() == "viewTexture") {
       return QVariant::fromValue<TextureFile>(TextureFile(
           tlpStringToQString(static_cast<StringProperty *>(prop)->getNodeDefaultValue())));
+    }
 
     return QVariant::fromValue<QString>(
         tlpStringToQString(static_cast<StringProperty *>(prop)->getNodeDefaultValue()));
@@ -413,25 +439,27 @@ bool GraphModel::setNodeValue(unsigned int id, PropertyInterface *prop, QVariant
   node n(id);
 
   if (dynamic_cast<IntegerProperty *>(prop) != nullptr) {
-    if (prop->getName() == "viewShape")
+    if (prop->getName() == "viewShape") {
       static_cast<IntegerProperty *>(prop)->setNodeValue(n, v.value<NodeShape::NodeShapes>());
-    else if (prop->getName() == "viewLabelPosition")
+    } else if (prop->getName() == "viewLabelPosition") {
       static_cast<IntegerProperty *>(prop)->setNodeValue(n,
                                                          v.value<LabelPosition::LabelPositions>());
-    else
+    } else {
       static_cast<IntegerProperty *>(prop)->setNodeValue(n, v.value<int>());
+    }
   } else if (dynamic_cast<StringProperty *>(prop) != nullptr) {
-    if (prop->getName() == "viewFont")
+    if (prop->getName() == "viewFont") {
       static_cast<StringProperty *>(prop)->setNodeValue(
           n, QStringToTlpString(v.value<Font>().fontFile()));
-    else if (prop->getName() == "viewIcon")
+    } else if (prop->getName() == "viewIcon") {
       static_cast<StringProperty *>(prop)->setNodeValue(
           n, QStringToTlpString(v.value<FontIcon>().iconName));
-    else if (prop->getName() == "viewTexture")
+    } else if (prop->getName() == "viewTexture") {
       static_cast<StringProperty *>(prop)->setNodeValue(
           n, QStringToTlpString(v.value<TextureFile>().texturePath));
-    else
+    } else {
       static_cast<StringProperty *>(prop)->setNodeValue(n, QStringToTlpString(v.value<QString>()));
+    }
   } else if (dynamic_cast<BooleanVectorProperty *>(prop) != nullptr) {
     QVector<bool> vb = v.value<QVector<bool>>();
     static_cast<BooleanVectorProperty *>(prop)->setNodeValue(
@@ -450,26 +478,28 @@ bool GraphModel::setNodeValue(unsigned int id, PropertyInterface *prop, QVariant
 bool GraphModel::setNodeDefaultValue(PropertyInterface *prop, QVariant v) {
 
   if (dynamic_cast<IntegerProperty *>(prop) != nullptr) {
-    if (prop->getName() == "viewShape")
+    if (prop->getName() == "viewShape") {
       static_cast<IntegerProperty *>(prop)->setNodeDefaultValue(v.value<NodeShape::NodeShapes>());
-    else if (prop->getName() == "viewLabelPosition")
+    } else if (prop->getName() == "viewLabelPosition") {
       static_cast<IntegerProperty *>(prop)->setNodeDefaultValue(
           v.value<LabelPosition::LabelPositions>());
-    else
+    } else {
       static_cast<IntegerProperty *>(prop)->setNodeDefaultValue(v.value<int>());
+    }
   } else if (dynamic_cast<StringProperty *>(prop) != nullptr) {
-    if (prop->getName() == "viewFont")
+    if (prop->getName() == "viewFont") {
       static_cast<StringProperty *>(prop)->setNodeDefaultValue(
           QStringToTlpString(v.value<Font>().fontFile()));
-    else if (prop->getName() == "viewIcon")
+    } else if (prop->getName() == "viewIcon") {
       static_cast<StringProperty *>(prop)->setNodeDefaultValue(
           QStringToTlpString(v.value<FontIcon>().iconName));
-    else if (prop->getName() == "viewTexture")
+    } else if (prop->getName() == "viewTexture") {
       static_cast<StringProperty *>(prop)->setNodeDefaultValue(
           QStringToTlpString(v.value<TextureFile>().texturePath));
-    else
+    } else {
       static_cast<StringProperty *>(prop)->setNodeDefaultValue(
           QStringToTlpString(v.value<QString>()));
+    }
   } else if (dynamic_cast<BooleanVectorProperty *>(prop) != nullptr) {
     QVector<bool> vb = v.value<QVector<bool>>();
     static_cast<BooleanVectorProperty *>(prop)->setNodeDefaultValue(
@@ -489,38 +519,45 @@ QVariant GraphModel::edgeValue(unsigned int id, PropertyInterface *prop) {
   edge e(id);
 
   if (dynamic_cast<IntegerProperty *>(prop) != nullptr) {
-    if (prop->getName() == "viewShape")
+    if (prop->getName() == "viewShape") {
       return QVariant::fromValue<EdgeShape::EdgeShapes>(static_cast<EdgeShape::EdgeShapes>(
           static_cast<IntegerProperty *>(prop)->getEdgeValue(e)));
+    }
 
-    if (prop->getName() == "viewTgtAnchorShape")
+    if (prop->getName() == "viewTgtAnchorShape") {
       return QVariant::fromValue<EdgeExtremityShape::EdgeExtremityShapes>(
           static_cast<EdgeExtremityShape::EdgeExtremityShapes>(
               static_cast<IntegerProperty *>(prop)->getEdgeValue(e)));
+    }
 
-    if (prop->getName() == "viewSrcAnchorShape")
+    if (prop->getName() == "viewSrcAnchorShape") {
       return QVariant::fromValue<EdgeExtremityShape::EdgeExtremityShapes>(
           static_cast<EdgeExtremityShape::EdgeExtremityShapes>(
               static_cast<IntegerProperty *>(prop)->getEdgeValue(e)));
+    }
 
-    if (prop->getName() == "viewLabelPosition")
+    if (prop->getName() == "viewLabelPosition") {
       return QVariant::fromValue<LabelPosition::LabelPositions>(
           static_cast<LabelPosition::LabelPositions>(
               static_cast<IntegerProperty *>(prop)->getEdgeValue(e)));
+    }
 
     return QVariant::fromValue<int>(static_cast<IntegerProperty *>(prop)->getEdgeValue(e));
   } else if (dynamic_cast<StringProperty *>(prop) != nullptr) {
-    if (prop->getName() == "viewFont")
+    if (prop->getName() == "viewFont") {
       return QVariant::fromValue<Font>(
           Font::fromFile(tlpStringToQString(static_cast<StringProperty *>(prop)->getEdgeValue(e))));
+    }
 
-    if (prop->getName() == "viewIcon")
+    if (prop->getName() == "viewIcon") {
       return QVariant::fromValue<FontIcon>(
           FontIcon(tlpStringToQString(static_cast<StringProperty *>(prop)->getEdgeValue(e))));
+    }
 
-    if (prop->getName() == "viewTexture")
+    if (prop->getName() == "viewTexture") {
       return QVariant::fromValue<TextureFile>(
           TextureFile(tlpStringToQString(static_cast<StringProperty *>(prop)->getEdgeValue(e))));
+    }
 
     return QVariant::fromValue<QString>(
         tlpStringToQString(static_cast<StringProperty *>(prop)->getEdgeValue(e)));
@@ -542,38 +579,45 @@ QVariant GraphModel::edgeValue(unsigned int id, PropertyInterface *prop) {
       static_cast<PROP *>(prop)->getEdgeDefaultValue())
 QVariant GraphModel::edgeDefaultValue(PropertyInterface *prop) {
   if (dynamic_cast<IntegerProperty *>(prop) != nullptr) {
-    if (prop->getName() == "viewShape")
+    if (prop->getName() == "viewShape") {
       return QVariant::fromValue<EdgeShape::EdgeShapes>(static_cast<EdgeShape::EdgeShapes>(
           static_cast<IntegerProperty *>(prop)->getEdgeDefaultValue()));
+    }
 
-    if (prop->getName() == "viewTgtAnchorShape")
+    if (prop->getName() == "viewTgtAnchorShape") {
       return QVariant::fromValue<EdgeExtremityShape::EdgeExtremityShapes>(
           static_cast<EdgeExtremityShape::EdgeExtremityShapes>(
               static_cast<IntegerProperty *>(prop)->getEdgeDefaultValue()));
+    }
 
-    if (prop->getName() == "viewSrcAnchorShape")
+    if (prop->getName() == "viewSrcAnchorShape") {
       return QVariant::fromValue<EdgeExtremityShape::EdgeExtremityShapes>(
           static_cast<EdgeExtremityShape::EdgeExtremityShapes>(
               static_cast<IntegerProperty *>(prop)->getEdgeDefaultValue()));
+    }
 
-    if (prop->getName() == "viewLabelPosition")
+    if (prop->getName() == "viewLabelPosition") {
       return QVariant::fromValue<LabelPosition::LabelPositions>(
           static_cast<LabelPosition::LabelPositions>(
               static_cast<IntegerProperty *>(prop)->getEdgeDefaultValue()));
+    }
 
     return QVariant::fromValue<int>(static_cast<IntegerProperty *>(prop)->getEdgeDefaultValue());
   } else if (dynamic_cast<StringProperty *>(prop) != nullptr) {
-    if (prop->getName() == "viewFont")
+    if (prop->getName() == "viewFont") {
       return QVariant::fromValue<Font>(
           Font::fromFile(static_cast<StringProperty *>(prop)->getEdgeDefaultValue().c_str()));
+    }
 
-    if (prop->getName() == "viewIcon")
+    if (prop->getName() == "viewIcon") {
       return QVariant::fromValue<FontIcon>(
           FontIcon(tlpStringToQString(static_cast<StringProperty *>(prop)->getEdgeDefaultValue())));
+    }
 
-    if (prop->getName() == "viewTexture")
+    if (prop->getName() == "viewTexture") {
       return QVariant::fromValue<TextureFile>(TextureFile(
           tlpStringToQString(static_cast<StringProperty *>(prop)->getEdgeDefaultValue())));
+    }
 
     return QVariant::fromValue<QString>(
         tlpStringToQString(static_cast<StringProperty *>(prop)->getEdgeDefaultValue()));
@@ -597,35 +641,37 @@ bool GraphModel::setEdgeValue(unsigned int id, PropertyInterface *prop, QVariant
   edge e(id);
 
   if (dynamic_cast<IntegerProperty *>(prop) != nullptr) {
-    if (prop->getName() == "viewShape")
+    if (prop->getName() == "viewShape") {
       static_cast<IntegerProperty *>(prop)->setEdgeValue(e, v.value<EdgeShape::EdgeShapes>());
 
-    else if (prop->getName() == "viewTgtAnchorShape")
+    } else if (prop->getName() == "viewTgtAnchorShape") {
       static_cast<IntegerProperty *>(prop)->setEdgeValue(
           e, v.value<EdgeExtremityShape::EdgeExtremityShapes>());
 
-    else if (prop->getName() == "viewSrcAnchorShape")
+    } else if (prop->getName() == "viewSrcAnchorShape") {
       static_cast<IntegerProperty *>(prop)->setEdgeValue(
           e, v.value<EdgeExtremityShape::EdgeExtremityShapes>());
 
-    else if (prop->getName() == "viewLabelPosition")
+    } else if (prop->getName() == "viewLabelPosition") {
       static_cast<IntegerProperty *>(prop)->setEdgeValue(e,
                                                          v.value<LabelPosition::LabelPositions>());
 
-    else
+    } else {
       static_cast<IntegerProperty *>(prop)->setEdgeValue(e, v.value<int>());
+    }
   } else if (dynamic_cast<StringProperty *>(prop) != nullptr) {
-    if (prop->getName() == "viewFont")
+    if (prop->getName() == "viewFont") {
       static_cast<StringProperty *>(prop)->setEdgeValue(
           e, QStringToTlpString(v.value<Font>().fontFile()));
-    else if (prop->getName() == "viewIcon")
+    } else if (prop->getName() == "viewIcon") {
       static_cast<StringProperty *>(prop)->setEdgeValue(
           e, QStringToTlpString(v.value<FontIcon>().iconName));
-    else if (prop->getName() == "viewTexture")
+    } else if (prop->getName() == "viewTexture") {
       static_cast<StringProperty *>(prop)->setEdgeValue(
           e, QStringToTlpString(v.value<TextureFile>().texturePath));
-    else
+    } else {
       static_cast<StringProperty *>(prop)->setEdgeValue(e, QStringToTlpString(v.value<QString>()));
+    }
   } else if (dynamic_cast<BooleanVectorProperty *>(prop) != nullptr) {
     QVector<bool> vb = v.value<QVector<bool>>();
     static_cast<BooleanVectorProperty *>(prop)->setEdgeValue(
@@ -644,36 +690,38 @@ bool GraphModel::setEdgeValue(unsigned int id, PropertyInterface *prop, QVariant
 bool GraphModel::setEdgeDefaultValue(PropertyInterface *prop, QVariant v) {
 
   if (dynamic_cast<IntegerProperty *>(prop) != nullptr) {
-    if (prop->getName() == "viewShape")
+    if (prop->getName() == "viewShape") {
       static_cast<IntegerProperty *>(prop)->setEdgeDefaultValue(v.value<EdgeShape::EdgeShapes>());
 
-    else if (prop->getName() == "viewTgtAnchorShape")
+    } else if (prop->getName() == "viewTgtAnchorShape") {
       static_cast<IntegerProperty *>(prop)->setEdgeDefaultValue(
           v.value<EdgeExtremityShape::EdgeExtremityShapes>());
 
-    else if (prop->getName() == "viewSrcAnchorShape")
+    } else if (prop->getName() == "viewSrcAnchorShape") {
       static_cast<IntegerProperty *>(prop)->setEdgeDefaultValue(
           v.value<EdgeExtremityShape::EdgeExtremityShapes>());
 
-    else if (prop->getName() == "viewLabelPosition")
+    } else if (prop->getName() == "viewLabelPosition") {
       static_cast<IntegerProperty *>(prop)->setEdgeDefaultValue(
           v.value<LabelPosition::LabelPositions>());
 
-    else
+    } else {
       static_cast<IntegerProperty *>(prop)->setEdgeDefaultValue(v.value<int>());
+    }
   } else if (dynamic_cast<StringProperty *>(prop) != nullptr) {
-    if (prop->getName() == "viewFont")
+    if (prop->getName() == "viewFont") {
       static_cast<StringProperty *>(prop)->setEdgeDefaultValue(
           QStringToTlpString(v.value<Font>().fontFile()));
-    else if (prop->getName() == "viewIcon")
+    } else if (prop->getName() == "viewIcon") {
       static_cast<StringProperty *>(prop)->setEdgeDefaultValue(
           QStringToTlpString(v.value<FontIcon>().iconName));
-    else if (prop->getName() == "viewTexture")
+    } else if (prop->getName() == "viewTexture") {
       static_cast<StringProperty *>(prop)->setEdgeDefaultValue(
           QStringToTlpString(v.value<TextureFile>().texturePath));
-    else
+    } else {
       static_cast<StringProperty *>(prop)->setEdgeDefaultValue(
           QStringToTlpString(v.value<QString>()));
+    }
   } else if (dynamic_cast<BooleanVectorProperty *>(prop) != nullptr) {
     QVector<bool> vb = v.value<QVector<bool>>();
     static_cast<BooleanVectorProperty *>(prop)->setEdgeDefaultValue(
@@ -746,13 +794,15 @@ bool NodesGraphModel::lessThan(unsigned int a, unsigned int b, PropertyInterface
 void NodesGraphModel::setGraph(Graph *g) {
   GraphModel::setGraph(g);
 
-  if (graph() == nullptr)
+  if (graph() == nullptr) {
     return;
+  }
 
   _elements.resize(graph()->numberOfNodes());
   int i = 0;
-  for (auto n : graph()->nodes())
+  for (auto n : graph()->nodes()) {
     _elements[i++] = n.id;
+  }
   // we ensure the ids are ascendingly sorted
   // to ease the display of nodes/edges
   std::sort(_elements.begin(), _elements.end());
@@ -789,13 +839,15 @@ QString EdgesGraphModel::stringValue(unsigned int id, PropertyInterface *pi) con
 void EdgesGraphModel::setGraph(Graph *g) {
   GraphModel::setGraph(g);
 
-  if (graph() == nullptr)
+  if (graph() == nullptr) {
     return;
+  }
 
   _elements.resize(graph()->numberOfEdges());
   int i = 0;
-  for (auto e : graph()->edges())
+  for (auto e : graph()->edges()) {
     _elements[i++] = e.id;
+  }
   // reset();
 }
 
@@ -835,49 +887,57 @@ void GraphSortFilterProxyModel::setProperties(QVector<PropertyInterface *> prope
 bool GraphSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &) const {
   GraphModel *graphModel = static_cast<GraphModel *>(sourceModel());
 
-  if (graphModel->graph() == nullptr)
+  if (graphModel->graph() == nullptr) {
     return true;
+  }
 
   unsigned int id = graphModel->elementAt(sourceRow);
 
   bool selected = true;
 
   if (_filterProperty != nullptr) {
-    if (graphModel->isNode())
+    if (graphModel->isNode()) {
       selected = _filterProperty->getNodeValue(node(id));
-    else
+    } else {
       selected = _filterProperty->getEdgeValue(edge(id));
+    }
   }
 
-  if (!selected)
+  if (!selected) {
     return false;
+  }
 
-  if (filterRegExp().isEmpty())
+  if (filterRegExp().isEmpty()) {
     return true;
+  }
 
   for (auto pi : _properties) {
-    if (graphModel->stringValue(id, pi).contains(filterRegExp()))
+    if (graphModel->stringValue(id, pi).contains(filterRegExp())) {
       return true;
+    }
   }
 
   return false;
 }
 
 void GraphSortFilterProxyModel::setFilterProperty(BooleanProperty *prop) {
-  if (_filterProperty != nullptr)
+  if (_filterProperty != nullptr) {
     _filterProperty->removeListener(this);
+  }
 
   _filterProperty = prop;
 
-  if (_filterProperty != nullptr)
+  if (_filterProperty != nullptr) {
     _filterProperty->addListener(this);
+  }
 
   invalidateFilter();
 }
 
 void GraphSortFilterProxyModel::treatEvent(const Event &e) {
-  if (e.sender() == _filterProperty)
+  if (e.sender() == _filterProperty) {
     invalidateFilter();
+  }
 }
 
 BooleanProperty *GraphSortFilterProxyModel::filterProperty() const {
@@ -889,8 +949,9 @@ void GraphModel::addRemoveRowsSequence(QVector<unsigned int> &rowsSequence, bool
     beginInsertRows(QModelIndex(), _elements.size(), _elements.size() + rowsSequence.size() - 1);
 
     std::sort(rowsSequence.begin(), rowsSequence.end());
-    for (auto id : rowsSequence)
+    for (auto id : rowsSequence) {
       _elements.push_back(id);
+    }
 
     endInsertRows();
   } else {
@@ -944,8 +1005,9 @@ void GraphModel::treatEvents(const std::vector<tlp::Event> &) {
         // same place on undo (graph->pop())
         unsigned int idx = _elements.size();
 
-        while (idx && _elements[idx - 1] > id)
+        while (idx && _elements[idx - 1] > id) {
           --idx;
+        }
 
         beginInsertRows(QModelIndex(), idx, idx);
         _elements.insert(idx, id);

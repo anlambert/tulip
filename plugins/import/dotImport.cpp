@@ -88,8 +88,9 @@ public:
 #endif
 
     if (!fd) {
-      if (pluginProgress)
+      if (pluginProgress) {
         pluginProgress->setError(strerror(errno));
+      }
 
       return false;
     }

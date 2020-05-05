@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -112,8 +112,9 @@ public:
   }
 
   void bfsComputeLayerRadii(float lSpacing, float nSpacing, SizeProperty *) {
-    if (bfs.size() < 2)
+    if (bfs.size() < 2) {
       return;
+    }
 
     float lRadius = 0, lSpacingMax = 0;
     lRadii.push_back(0);
@@ -125,13 +126,15 @@ public:
       // check if there is enough space for nodes of layer i + 1
       float mRadius = (bfs[i + 1].size() * (nRadii[i + 1] + nSpacing)) / float(2 * M_PI);
 
-      if (mRadius > lRadius)
+      if (mRadius > lRadius) {
         lRadius = mRadius;
+      }
 
       lRadii.push_back(lRadius);
 
-      if ((lRadius - lRadiusPrev) > lSpacingMax)
+      if ((lRadius - lRadiusPrev) > lSpacingMax) {
         lSpacingMax = lRadius - lRadiusPrev;
+      }
     }
 
     ++nbLayers;
@@ -207,8 +210,9 @@ public:
           double nAngle = 2 * atan(sizes->getNodeValue(n).getW() / (2. * lRadii[depth]));
 
           // check if it is not greater than the sum
-          if (nAngle > cAngle)
+          if (nAngle > cAngle) {
             cAngle = nAngle;
+          }
         }
 
         // gives the greater of the two computed angular spreads
@@ -300,8 +304,9 @@ public:
           double nAngle = (startAngle + endAngle) / 2.0;
           result->setNodeValue(
               n, Coord(lRadii[depth] * float(cos(nAngle)), lRadii[depth] * float(sin(nAngle)), 0));
-        } else
+        } else {
           result->setNodeValue(n, Coord(0, 0, 0));
+        }
 
         visited.set(n.id, true);
       }
@@ -336,8 +341,9 @@ public:
   }
 
   bool run() override {
-    if (pluginProgress)
+    if (pluginProgress) {
       pluginProgress->showPreview(false);
+    }
 
     tree = TreeTest::computeTree(graph, pluginProgress);
 
@@ -349,8 +355,9 @@ public:
     float nSpacing, lSpacing;
     SizeProperty *sizes;
 
-    if (!getNodeSizePropertyParameter(dataSet, sizes))
+    if (!getNodeSizePropertyParameter(dataSet, sizes)) {
       sizes = graph->getSizeProperty("viewSize");
+    }
 
     getSpacingParameters(dataSet, nSpacing, lSpacing);
 

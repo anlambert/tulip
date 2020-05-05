@@ -202,8 +202,9 @@ void ScatterPlot2DView::setState(const DataSet &dataSet) {
 
       edgeAsNodeGraphSelection->addListener(this);
       edgeAsNodeGraph->getIntegerProperty("viewShape")->setAllNodeValue(NodeShape::Circle);
-    } else
+    } else {
       edgeAsNodeGraph = nullptr;
+    }
 
     initGlWidget(scatterPlotGraph);
     detailedScatterPlot = nullptr;
@@ -226,29 +227,35 @@ void ScatterPlot2DView::setState(const DataSet &dataSet) {
 
   bool showedges = false, showlabels = false, scalelabels = false;
 
-  if (dataSet.get("display graph edges", showedges))
+  if (dataSet.get("display graph edges", showedges)) {
     optionsWidget->setDisplayGraphEdges(showedges);
+  }
 
-  if (dataSet.get("display node labels", showlabels))
+  if (dataSet.get("display node labels", showlabels)) {
     optionsWidget->setDisplayNodeLabels(showlabels);
+  }
 
-  if (dataSet.get("scale labels", scalelabels))
+  if (dataSet.get("scale labels", scalelabels)) {
     optionsWidget->setDisplayScaleLabels(scalelabels);
+  }
 
   Color backgroundColor;
 
-  if (dataSet.get("background color", backgroundColor))
+  if (dataSet.get("background color", backgroundColor)) {
     optionsWidget->setBackgroundColor(backgroundColor);
+  }
 
   int minSizeMap = 0;
 
-  if (dataSet.get("min Size Mapping", minSizeMap))
+  if (dataSet.get("min Size Mapping", minSizeMap)) {
     optionsWidget->setMinSizeMapping(float(minSizeMap));
+  }
 
   int maxSizeMap = 0;
 
-  if (dataSet.get("max Size Mapping", maxSizeMap))
+  if (dataSet.get("max Size Mapping", maxSizeMap)) {
     optionsWidget->setMaxSizeMapping(float(maxSizeMap));
+  }
 
   optionsWidget->configurationChanged();
 
@@ -291,8 +298,9 @@ void ScatterPlot2DView::setState(const DataSet &dataSet) {
   propertiesSelectionWidget->setDataLocation(dataLocation);
   viewConfigurationChanged();
 
-  if (overviewVisible())
+  if (overviewVisible()) {
     drawOverview(true);
+  }
 
   string detailScatterPlotX = "";
   string detailScatterPlotY = "";
@@ -322,8 +330,9 @@ void ScatterPlot2DView::setState(const DataSet &dataSet) {
   if (dataSet.get<bool>("quickAccessBarVisible", quickAccessBarVisible)) {
     needQuickAccessBar = true;
     setQuickAccessBarVisible(quickAccessBarVisible);
-  } else // display quickaccessbar
+  } else { // display quickaccessbar
     setQuickAccessBarVisible(true);
+  }
 
   GlMainView::setState(dataSet);
 }
@@ -358,8 +367,9 @@ DataSet ScatterPlot2DView::state() const {
   dataSet.set("detailed scatterplot y dim", detailedScatterPlotPropertyName.second);
   dataSet.set("Nodes/Edges", static_cast<unsigned>(dataLocation));
 
-  if (needQuickAccessBar)
+  if (needQuickAccessBar) {
     dataSet.set("quickAccessBarVisible", quickAccessBarVisible());
+  }
 
   return dataSet;
 }
@@ -520,8 +530,9 @@ void ScatterPlot2DView::buildScatterPlotsMatrix() {
         if (it != scatterPlotsMap.end() && it->second) {
           scatterOverview = (it->second);
 
-          if (!scatterOverview)
+          if (!scatterOverview) {
             continue;
+          }
 
           scatterOverview->setDataLocation(dataLocation);
           scatterOverview->setBLCorner(overviewBlCorner);
@@ -564,8 +575,9 @@ void ScatterPlot2DView::buildScatterPlotsMatrix() {
     detailedScatterPlot = scatterPlotsMap[detailedScatterPlotPropertyName];
   }
 
-  if (center)
+  if (center) {
     centerView();
+  }
 }
 
 void ScatterPlot2DView::addEmptyViewLabel() {
@@ -650,16 +662,18 @@ void ScatterPlot2DView::draw() {
     getGlMainWidget()->getScene()->centerScene();
     getGlMainWidget()->draw();
 
-    if (quickAccessBarVisible())
+    if (quickAccessBarVisible()) {
       _quickAccessBar->setEnabled(false);
+    }
 
     return;
   } else {
     removeEmptyViewLabel();
   }
 
-  if (quickAccessBarVisible())
+  if (quickAccessBarVisible()) {
     _quickAccessBar->setEnabled(true);
+  }
 
   computeNodeSizes();
   buildScatterPlotsMatrix();
@@ -714,8 +728,9 @@ void ScatterPlot2DView::centerView(bool) {
 void ScatterPlot2DView::applySettings() {
   if (propertiesSelectionWidget->configurationChanged() || optionsWidget->configurationChanged()) {
     viewConfigurationChanged();
-    if (quickAccessBarVisible())
+    if (quickAccessBarVisible()) {
       _quickAccessBar->reset();
+    }
   }
 }
 
@@ -784,8 +799,9 @@ void ScatterPlot2DView::destroyOverviews() {
 
 void ScatterPlot2DView::generateScatterPlots() {
 
-  if (selectedGraphProperties.empty())
+  if (selectedGraphProperties.empty()) {
     return;
+  }
 
   GlLabel *coeffLabel = nullptr;
 
@@ -826,8 +842,9 @@ void ScatterPlot2DView::generateScatterPlots() {
       ScatterPlot2D *overview =
           scatterPlotsMap[make_pair(selectedGraphProperties[i], selectedGraphProperties[j])];
 
-      if (!overview)
+      if (!overview) {
         continue;
+      }
 
       overview->generateOverview();
       scatterPlotsGenMap[make_pair(selectedGraphProperties[i], selectedGraphProperties[j])] = true;
@@ -836,8 +853,9 @@ void ScatterPlot2DView::generateScatterPlots() {
       progressBar->progress(currentStep, nbOverviews);
 
       // needed to display progressBar
-      if ((i + 1) * (j + 1) % 10 == 0)
+      if ((i + 1) * (j + 1) % 10 == 0) {
         getGlMainWidget()->draw();
+      }
 
       QApplication::processEvents();
     }
@@ -911,8 +929,9 @@ void ScatterPlot2DView::switchFromMatrixToDetailView(ScatterPlot2D *scatterPlot,
   optionsWidget->setInitYAxisScale(detailedScatterPlot->getInitYAxisScale());
   optionsWidget->configurationChanged();
 
-  if (recenter)
+  if (recenter) {
     centerView();
+  }
 }
 
 void ScatterPlot2DView::switchFromDetailViewToMatrixView() {
@@ -966,8 +985,9 @@ std::vector<ScatterPlot2D *> ScatterPlot2DView::getSelectedScatterPlots() const 
     // a scatter plot is selected if non null
     // and if the property on the x axis is before the property on the y axis
     // in the selectedGraphProperties vector
-    if (!it.second)
+    if (!it.second) {
       continue;
+    }
 
     // properties on x and y axis
     const string &xProp = it.first.first;
@@ -985,16 +1005,18 @@ std::vector<ScatterPlot2D *> ScatterPlot2DView::getSelectedScatterPlots() const 
       }
 
       if (prop == yProp) {
-        if (xPos != -1)
+        if (xPos != -1) {
           valid = true;
+        }
 
         break;
       }
       ++i;
     }
 
-    if (valid)
+    if (valid) {
       ret.push_back(it.second);
+    }
   }
 
   return ret;
@@ -1021,30 +1043,37 @@ void ScatterPlot2DView::treatEvent(const Event &message) {
   const GraphEvent *graphEvent = dynamic_cast<const GraphEvent *>(&message);
 
   if (graphEvent) {
-    if (graphEvent->getType() == GraphEvent::TLP_ADD_EDGE)
+    if (graphEvent->getType() == GraphEvent::TLP_ADD_EDGE) {
       addEdge(graphEvent->getGraph(), graphEvent->getEdge());
+    }
 
-    if (graphEvent->getType() == GraphEvent::TLP_DEL_NODE)
+    if (graphEvent->getType() == GraphEvent::TLP_DEL_NODE) {
       delNode(graphEvent->getGraph(), graphEvent->getNode());
+    }
 
-    if (graphEvent->getType() == GraphEvent::TLP_DEL_EDGE)
+    if (graphEvent->getType() == GraphEvent::TLP_DEL_EDGE) {
       delEdge(graphEvent->getGraph(), graphEvent->getEdge());
+    }
   }
 
   const PropertyEvent *propertyEvent = dynamic_cast<const PropertyEvent *>(&message);
 
   if (propertyEvent) {
-    if (propertyEvent->getType() == PropertyEvent::TLP_AFTER_SET_NODE_VALUE)
+    if (propertyEvent->getType() == PropertyEvent::TLP_AFTER_SET_NODE_VALUE) {
       afterSetNodeValue(propertyEvent->getProperty(), propertyEvent->getNode());
+    }
 
-    if (propertyEvent->getType() == PropertyEvent::TLP_AFTER_SET_EDGE_VALUE)
+    if (propertyEvent->getType() == PropertyEvent::TLP_AFTER_SET_EDGE_VALUE) {
       afterSetEdgeValue(propertyEvent->getProperty(), propertyEvent->getEdge());
+    }
 
-    if (propertyEvent->getType() == PropertyEvent::TLP_AFTER_SET_ALL_NODE_VALUE)
+    if (propertyEvent->getType() == PropertyEvent::TLP_AFTER_SET_ALL_NODE_VALUE) {
       afterSetAllNodeValue(propertyEvent->getProperty());
+    }
 
-    if (propertyEvent->getType() == PropertyEvent::TLP_AFTER_SET_ALL_EDGE_VALUE)
+    if (propertyEvent->getType() == PropertyEvent::TLP_AFTER_SET_ALL_EDGE_VALUE) {
       afterSetAllEdgeValue(propertyEvent->getProperty());
+    }
   }
 }
 
@@ -1060,8 +1089,9 @@ void ScatterPlot2DView::afterSetNodeValue(PropertyInterface *p, const node n) {
 }
 
 void ScatterPlot2DView::afterSetEdgeValue(PropertyInterface *p, const edge e) {
-  if (edgeToNode.find(e) == edgeToNode.end())
+  if (edgeToNode.find(e) == edgeToNode.end()) {
     return;
+  }
 
   if (p->getName() == "viewColor") {
     ColorProperty *edgeAsNodeGraphColors = edgeAsNodeGraph->getColorProperty("viewColor");
@@ -1077,8 +1107,9 @@ void ScatterPlot2DView::afterSetEdgeValue(PropertyInterface *p, const edge e) {
     BooleanProperty *viewSelection = static_cast<BooleanProperty *>(p);
     edgeAsNodeGraphSelection->removeListener(this);
 
-    if (edgeAsNodeGraphSelection->getNodeValue(edgeToNode[e]) != viewSelection->getEdgeValue(e))
+    if (edgeAsNodeGraphSelection->getNodeValue(edgeToNode[e]) != viewSelection->getEdgeValue(e)) {
       edgeAsNodeGraphSelection->setNodeValue(edgeToNode[e], viewSelection->getEdgeValue(e));
+    }
 
     edgeAsNodeGraphSelection->addListener(this);
   }
@@ -1129,8 +1160,9 @@ void ScatterPlot2DView::delEdge(Graph *, const edge e) {
 }
 
 unsigned int ScatterPlot2DView::getMappedId(unsigned int id) {
-  if (dataLocation == EDGE)
+  if (dataLocation == EDGE) {
     return nodeToEdge[node(id)].id;
+  }
 
   return id;
 }

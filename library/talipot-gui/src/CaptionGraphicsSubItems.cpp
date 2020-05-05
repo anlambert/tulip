@@ -196,13 +196,15 @@ void CaptionGraphicsBackgroundItem::generateSizeCaption(
 void CaptionGraphicsBackgroundItem::updateSelectionText(float begin, float end) {
   QString text1 = QString::number(_minValue + (1 - begin) * (_maxValue - _minValue));
 
-  if (text1.length() > 5)
+  if (text1.length() > 5) {
     text1 = text1.left(5);
+  }
 
   QString text2 = QString::number(_minValue + (1 - end) * (_maxValue - _minValue));
 
-  if (text2.length() > 5)
+  if (text2.length() > 5) {
     text2 = text2.left(5);
+  }
 
   if (_rangeSelector1Item->pos().y() > _rangeSelector2Item->pos().y()) {
     _rangeSelector1TextItem->setPlainText(text2);
@@ -294,13 +296,15 @@ void CaptionGraphicsBackgroundItem::removeInteractions() {
 
 void CaptionGraphicsBackgroundItem::activateInteractions(bool activate) {
 
-  if (activate == _interactionsActivated)
+  if (activate == _interactionsActivated) {
     return;
+  }
 
-  if (activate)
+  if (activate) {
     emit interactionsActivated();
-  else
+  } else {
     emit interactionsRemoved();
+  }
 
   if (activate == false && activate != _interactionsActivated) {
     _endBackup = (_rangeSelector1Item->pos().y() - _captionContentPos.y() + 30) / 160.;
@@ -315,18 +319,20 @@ void CaptionGraphicsBackgroundItem::activateInteractions(bool activate) {
 
   _interactionsActivated = activate;
 
-  if (activate)
+  if (activate) {
     _captionContentPos = QPoint(10, 20);
-  else
+  } else {
     _captionContentPos = QPoint(50, 20);
+  }
 
   _rangeSelector1Item->setVisible(activate);
   _rangeSelector2Item->setVisible(activate);
 
-  if (useStoredBeginEnd)
+  if (useStoredBeginEnd) {
     updateCaption(_beginBackup, _endBackup);
-  else
+  } else {
     updateCaption(0., 1.);
+  }
 }
 
 void CaptionGraphicsBackgroundItem::configurationIconPressedSlot() {
@@ -357,11 +363,13 @@ bool SelectionArrowItem::sceneEvent(QEvent *event) {
     QGraphicsSceneMouseEvent *e = static_cast<QGraphicsSceneMouseEvent *>(event);
     qreal diffPosY = e->pos().y() - e->lastPos().y();
 
-    if (pos().y() + diffPosY > initPos.y() + 130)
+    if (pos().y() + diffPosY > initPos.y() + 130) {
       diffPosY = initPos.y() + 130 - pos().y();
+    }
 
-    if (pos().y() + diffPosY < initPos.y() - 30)
+    if (pos().y() + diffPosY < initPos.y() - 30) {
       diffPosY = initPos.y() - 30 - pos().y();
+    }
 
     moveBy(0, diffPosY);
 
@@ -385,11 +393,13 @@ bool MovableRectItem::sceneEvent(QEvent *event) {
     QGraphicsSceneMouseEvent *e = static_cast<QGraphicsSceneMouseEvent *>(event);
     qreal diffPosY = e->pos().y() - e->lastPos().y();
 
-    if (_currentRect.bottom() * 160 + diffPosY > 160)
+    if (_currentRect.bottom() * 160 + diffPosY > 160) {
       diffPosY = 160 - _currentRect.bottom() * 160;
+    }
 
-    if (_currentRect.top() * 160 + diffPosY < 0)
+    if (_currentRect.top() * 160 + diffPosY < 0) {
       diffPosY = -_currentRect.top() * 160;
+    }
 
     _currentRect.translate(0, diffPosY / 160.);
 
@@ -433,8 +443,9 @@ float computeToto(float y, float x1, float x2, float y1, float y2) {
 }
 
 void MovablePathItem::updatePath() {
-  if (_metricToSizeFilteredList.empty())
+  if (_metricToSizeFilteredList.empty()) {
     return;
+  }
 
   vector<QPainterPath> paths;
   paths.resize(3);
@@ -537,11 +548,13 @@ bool MovablePathItem::sceneEvent(QEvent *event) {
     QGraphicsSceneMouseEvent *e = static_cast<QGraphicsSceneMouseEvent *>(event);
     qreal diffPosY = e->pos().y() - e->lastPos().y();
 
-    if (_currentRect.bottom() * 160 + diffPosY > 160)
+    if (_currentRect.bottom() * 160 + diffPosY > 160) {
       diffPosY = 160 - _currentRect.bottom() * 160;
+    }
 
-    if (_currentRect.top() * 160 + diffPosY < 0)
+    if (_currentRect.top() * 160 + diffPosY < 0) {
       diffPosY = -_currentRect.top() * 160;
+    }
 
     updatePath();
     _currentRect.translate(0, diffPosY / 160.);

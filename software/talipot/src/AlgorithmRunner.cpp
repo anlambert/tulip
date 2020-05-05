@@ -90,8 +90,9 @@ void AlgorithmRunner::insertItem(QWidget *w, const QString &name) {
     }
   }
 
-  if (categoryBox == nullptr)
+  if (categoryBox == nullptr) {
     return;
+  }
 
   if (!group.isEmpty()) {
     for (auto box : categoryBox->findChildren<ExpandableGroupBox *>()) {
@@ -258,10 +259,11 @@ void AlgorithmRunner::refreshPluginsList() {
 void AlgorithmRunner::favorized(bool f) {
   AlgorithmRunnerItem *item = static_cast<AlgorithmRunnerItem *>(sender());
 
-  if (f)
+  if (f) {
     addFavorite(item->name(), item->data());
-  else
+  } else {
     removeFavorite(item->name());
+  }
 }
 
 // A not recursive implementation of QObject::findChildren
@@ -359,8 +361,9 @@ bool AlgorithmRunner::eventFilter(QObject *obj, QEvent *ev) {
     QDropEvent *dropEv = static_cast<QDropEvent *>(ev);
     const AlgorithmMimeType *mime = dynamic_cast<const AlgorithmMimeType *>(dropEv->mimeData());
 
-    if (mime != nullptr)
+    if (mime != nullptr) {
       addFavorite(mime->algorithm(), mime->params());
+    }
 
     _ui->favoritesBox->_droppingFavorite = false;
     _ui->favoritesBox->repaint();
@@ -386,13 +389,15 @@ void AlgorithmRunner::removeFavorite(const QString &algName) {
 
   Settings::instance().removeFavoriteAlgorithm(algName);
 
-  if (_favorites.isEmpty())
+  if (_favorites.isEmpty()) {
     _ui->favoritesBox->widget()->setMinimumHeight(45);
+  }
 }
 
 void AlgorithmRunner::addFavorite(const QString &algName, const DataSet &data) {
-  if (!PluginsManager::pluginExists(QStringToTlpString(algName)))
+  if (!PluginsManager::pluginExists(QStringToTlpString(algName))) {
     return;
+  }
 
   Settings::instance().addFavoriteAlgorithm(algName);
 

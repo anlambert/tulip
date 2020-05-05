@@ -45,10 +45,11 @@ void ScrollPopupButton::hidePopup() {
 }
 
 void ScrollPopupButton::setPopupVisible(bool f) {
-  if (f)
+  if (f) {
     showPopup();
-  else
+  } else {
     hidePopup();
+  }
 }
 
 void ScrollPopupButton::setValue(int v) {

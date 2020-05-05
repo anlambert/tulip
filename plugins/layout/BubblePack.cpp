@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -61,8 +61,9 @@ double BubblePack::computeRelativePosition(tlp::node n,
   centralNodeSize[2] = 0.; // remove z-coordinates because the drawing is 2D
   double sizeFather = std::max(centralNodeSize[0], centralNodeSize[1]) / 2.;
 
-  if (sizeFather < 1E-5)
+  if (sizeFather < 1E-5) {
     sizeFather = 0.1;
+  }
 
   unsigned int outdeg = tree->outdeg(n);
 
@@ -94,8 +95,9 @@ double BubblePack::computeRelativePosition(tlp::node n,
   {
     std::vector<unsigned> index(outdeg);
 
-    for (unsigned int i = 0; i < outdeg; ++i)
+    for (unsigned int i = 0; i < outdeg; ++i) {
       index[i] = i;
+    }
 
     sort(index.begin(), index.end(), lessRadius(realCircleRadius));
 
@@ -111,10 +113,11 @@ double BubblePack::computeRelativePosition(tlp::node n,
         double crad = radius + curRad + 0.01;
         double calpha;
 
-        if (sens)
+        if (sens) {
           calpha = alpha + radius / crad;
-        else
+        } else {
           calpha = alpha - radius / crad;
+        }
 
         Circled tmp(crad * cos(calpha), crad * sin(calpha), radius);
         bool reject = false;
@@ -135,19 +138,21 @@ double BubblePack::computeRelativePosition(tlp::node n,
 
         double newalpha;
 
-        if (sens)
+        if (sens) {
           newalpha = alpha + 2.2 * radius / crad;
-        else
+        } else {
           newalpha = alpha - 2.2 * radius / crad;
+        }
 
         Vec2f v0(crad * cos(calpha), crad * sin(calpha));
         Vec2f v1(crad * cos(newalpha), crad * sin(newalpha));
 
         while (v0.dist(v1) < radius) {
-          if (sens)
+          if (sens) {
             newalpha += 0.01;
-          else
+          } else {
             newalpha -= 0.01;
+          }
 
           v1 = Vec2f(crad * cos(newalpha), crad * sin(newalpha));
         }
@@ -263,8 +268,9 @@ BubblePack::BubblePack(const tlp::PluginContext *context) : LayoutAlgorithm(cont
 BubblePack::~BubblePack() {}
 
 bool BubblePack::run() {
-  if (pluginProgress)
+  if (pluginProgress) {
     pluginProgress->showPreview(false);
+  }
 
   if (!ConnectedTest::isConnected(graph)) {
     // for each component draw
@@ -281,8 +287,9 @@ bool BubblePack::run() {
       tmp->delSubGraph(graph);
       // restore current graph
       graph = tmp;
-      if (pluginProgress && pluginProgress->state() != TLP_CONTINUE)
+      if (pluginProgress && pluginProgress->state() != TLP_CONTINUE) {
         return pluginProgress->state() != TLP_CANCEL;
+      }
     }
 
     // call connected component packing
@@ -304,8 +311,9 @@ bool BubblePack::run() {
     }
   }
 
-  if (dataSet == nullptr || !dataSet->get("complexity", nAlgo))
+  if (dataSet == nullptr || !dataSet->get("complexity", nAlgo)) {
     nAlgo = true;
+  }
 
   result->setAllEdgeValue(vector<Coord>(0));
 

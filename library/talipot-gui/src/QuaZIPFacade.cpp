@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -30,8 +30,9 @@ void copy(QIODevice &in, QIODevice &out) {
   char buffer[40960];
   int cnt;
 
-  while ((cnt = in.read(buffer, 40960)))
+  while ((cnt = in.read(buffer, 40960))) {
     out.write(buffer, cnt);
+  }
 
   in.close();
   out.close();
@@ -62,13 +63,15 @@ bool zipDirContent(QDir &currentDir, QuaZip &archive, const QString &archivePath
       newFileInfo.externalAttr = 0x81fd0000;
       QFile inFile(info.absoluteFilePath());
 
-      if (!outFile.open(QIODevice::WriteOnly, newFileInfo) || !inFile.open(QIODevice::ReadOnly))
+      if (!outFile.open(QIODevice::WriteOnly, newFileInfo) || !inFile.open(QIODevice::ReadOnly)) {
         return false;
+      }
 
       copy(inFile, outFile);
 
-      if (outFile.getZipError() != UNZ_OK)
+      if (outFile.getZipError() != UNZ_OK) {
         return false;
+      }
     }
   }
 
@@ -79,15 +82,17 @@ bool QuaZIPFacade::zipDir(const QString &rootPath, const QString &archivePath,
                           tlp::PluginProgress *progress) {
   QFileInfo rootInfo(rootPath);
 
-  if (!rootInfo.exists() || !rootInfo.isDir())
+  if (!rootInfo.exists() || !rootInfo.isDir()) {
     return false;
+  }
 
   QDir rootDir(rootPath);
 
   QuaZip archive(archivePath);
 
-  if (!archive.open(QuaZip::mdCreate))
+  if (!archive.open(QuaZip::mdCreate)) {
     return false;
+  }
 
   bool deleteProgress = false;
 
@@ -99,8 +104,9 @@ bool QuaZIPFacade::zipDir(const QString &rootPath, const QString &archivePath,
   bool result = zipDirContent(rootDir, archive, "", progress);
   archive.close();
 
-  if (deleteProgress)
+  if (deleteProgress) {
     delete progress;
+  }
 
   return result;
 }
@@ -167,8 +173,9 @@ bool QuaZIPFacade::unzip(const QString &rootPath, const QString &archivePath,
     copy(inFile, outFile);
   }
 
-  if (deleteProgress)
+  if (deleteProgress) {
     delete progress;
+  }
 
   return true;
 }

@@ -468,10 +468,11 @@ public:
    */
   template <typename Compare>
   void sortEdges(Compare cmp, bool stable = false) {
-    if (stable)
+    if (stable) {
       stable_sort(_edges.begin(), _edges.end(), cmp);
-    else
+    } else {
       sort(_edges.begin(), _edges.end(), cmp);
+    }
 
     // recompute indices of edges
     _edges.reIndex();
@@ -492,10 +493,11 @@ public:
    */
   template <typename Compare>
   void sortNodes(Compare cmp, bool stable = false) {
-    if (stable)
+    if (stable) {
       stable_sort(_nodes.begin(), _nodes.end(), cmp);
-    else
+    } else {
       sort(_nodes.begin(), _nodes.end(), cmp);
+    }
 
     // recompute indices of nodes
     _nodes.reIndex();

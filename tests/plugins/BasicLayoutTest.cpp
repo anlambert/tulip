@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -36,15 +36,17 @@ bool BasicLayoutTest::computeProperty(const std::string &algorithm, const std::s
   initializeGraph(graphType);
   bool deleteProp = prop == nullptr;
 
-  if (prop == nullptr)
+  if (prop == nullptr) {
     prop = new PropType(graph);
+  }
 
   string errorMsg;
   DataSet ds;
   bool result = graph->applyPropertyAlgorithm(algorithm, prop, errorMsg);
 
-  if (deleteProp)
+  if (deleteProp) {
     delete prop;
+  }
 
   return result;
 }

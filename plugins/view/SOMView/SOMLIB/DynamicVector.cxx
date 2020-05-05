@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -16,8 +16,9 @@
 template <class T>
 DynamicVector<T> &DynamicVector<T>::operator=(const DynamicVector<T> &vec) {
   if (this != &vec) {
-    if (size != 0)
+    if (size != 0) {
       delete[] array;
+    }
 
     size = vec.size;
     array = new T[size];
@@ -45,8 +46,9 @@ T &DynamicVector<T>::operator[](const unsigned int i) {
 //======================================================
 template <class T>
 DynamicVector<T> &DynamicVector<T>::operator*=(const T &scalaire) {
-  for (unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i) {
     DynamicVector<T>::array[i] *= scalaire;
+  }
 
   return (*this);
 }
@@ -55,8 +57,9 @@ template <class T>
 DynamicVector<T> &DynamicVector<T>::operator*=(const DynamicVector<T> &vecto) {
   assert(vecto.size == size);
 
-  for (unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i) {
     DynamicVector<T>::array[i] *= vecto[i];
+  }
 
   return (*this);
 }
@@ -65,8 +68,9 @@ template <class T>
 DynamicVector<T> &DynamicVector<T>::operator/=(const T &scalaire) {
   assert(scalaire != 0);
 
-  for (unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i) {
     DynamicVector<T>::array[i] /= scalaire;
+  }
 
   return (*this);
 }
@@ -85,8 +89,9 @@ DynamicVector<T> &DynamicVector<T>::operator/=(const DynamicVector<T> &vecto) {
 //======================================================
 template <class T>
 DynamicVector<T> &DynamicVector<T>::operator+=(const T &scalaire) {
-  for (unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i) {
     DynamicVector<T>::array[i] += scalaire;
+  }
 
   return (*this);
 }
@@ -95,8 +100,9 @@ template <class T>
 DynamicVector<T> &DynamicVector<T>::operator+=(const DynamicVector<T> &vecto) {
   assert(vecto.size == size);
 
-  for (unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i) {
     DynamicVector<T>::array[i] += vecto[i];
+  }
 
   return (*this);
 }
@@ -104,8 +110,9 @@ DynamicVector<T> &DynamicVector<T>::operator+=(const DynamicVector<T> &vecto) {
 template <class T>
 DynamicVector<T> &DynamicVector<T>::operator-=(const T &scalaire) {
 
-  for (unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i) {
     DynamicVector<T>::array[i] -= scalaire;
+  }
 
   return (*this);
 }
@@ -114,8 +121,9 @@ template <class T>
 DynamicVector<T> &DynamicVector<T>::operator-=(const DynamicVector<T> &vecto) {
   assert(vecto.size == size);
 
-  for (unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i) {
     DynamicVector<T>::array[i] -= vecto[i];
+  }
 
   return (*this);
 }
@@ -190,9 +198,11 @@ DynamicVector<T> DynamicVector<T>::operator^(const DynamicVector<T> &v) const {
 //======================================================
 template <class T>
 bool DynamicVector<T>::operator!=(const DynamicVector<T> &vecto) const {
-  for (unsigned int i = 0; i < size; ++i)
-    if (array[i] != vecto[i])
+  for (unsigned int i = 0; i < size; ++i) {
+    if (array[i] != vecto[i]) {
       return true;
+    }
+  }
 
   return false;
 }
@@ -215,16 +225,18 @@ T DynamicVector<T>::dotProduct(const DynamicVector<T> &v) const {
   assert(size > 0);
   T tmpO = DynamicVector<T>::array[0] * v[0];
 
-  for (unsigned int i = 1; i < size; ++i)
+  for (unsigned int i = 1; i < size; ++i) {
     tmpO += DynamicVector<T>::array[i] * v[i];
+  }
 
   return tmpO;
 }
 //======================================================
 template <class T>
 DynamicVector<T> &DynamicVector<T>::fill(const T &scalaire) {
-  for (unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i) {
     DynamicVector<T>::array[i] = scalaire;
+  }
 
   return (*this);
 }
@@ -249,8 +261,9 @@ T DynamicVector<T>::norm() const {
   default:
     T tmp = 0;
 
-    for (unsigned int i = 0; i < size; ++i)
+    for (unsigned int i = 0; i < size; ++i) {
       tmp += DynamicVector<T>::array[i] * DynamicVector<T>::array[i];
+    }
 
     return (sqrt(tmp));
     break;
@@ -282,9 +295,10 @@ T DynamicVector<T>::dist(const DynamicVector<T> &c) const {
   default:
     T tmp = 0;
 
-    for (unsigned int i = 0; i < size; ++i)
+    for (unsigned int i = 0; i < size; ++i) {
       tmp += (DynamicVector<T>::array[i] - c.DynamicVector<T>::array[i]) *
              (DynamicVector<T>::array[i] - c.DynamicVector<T>::array[i]);
+    }
 
     return (sqrt(tmp));
     break;
@@ -296,8 +310,9 @@ std::ostream &operator<<(std::ostream &os, const DynamicVector<T> &a) {
   os << "(";
 
   for (unsigned int i = 0; i < a.getSize(); ++i) {
-    if (i > 0)
+    if (i > 0) {
       os << ",";
+    }
 
     os << a[i];
   }

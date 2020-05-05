@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -139,9 +139,9 @@ public:
       dataSet->get("min size", min);
       dataSet->get("max size", max);
       // for compatibility with old parameter type
-      if (dataSet->getTypeName(MAPPING_TYPE) == dataSet->getTypeName<bool>())
+      if (dataSet->getTypeName(MAPPING_TYPE) == dataSet->getTypeName<bool>()) {
         dataSet->get(MAPPING_TYPE, linearType);
-      else {
+      } else {
         dataSet->get(MAPPING_TYPE, mapping);
         linearType = mapping.getCurrent() == LINEAR_MAPPING;
       }
@@ -161,10 +161,11 @@ public:
       return false;
     }
 
-    if (targetType.getCurrent() == NODES_TARGET)
+    if (targetType.getCurrent() == NODES_TARGET) {
       range = entryMetric->getNodeDoubleMax(graph) - entryMetric->getNodeDoubleMin(graph);
-    else
+    } else {
       range = entryMetric->getEdgeDoubleMax(graph) - entryMetric->getEdgeDoubleMin(graph);
+    }
 
     if (range == 0) {
       errorMsg = rangeMetricErrorMsg;
@@ -212,14 +213,17 @@ public:
           sizos = min + (entryMetric->getNodeDoubleValue(n) - shift) * (max - min) / range;
         }
 
-        if (xaxis)
+        if (xaxis) {
           nodeSize[n][0] = float(sizos);
+        }
 
-        if (yaxis)
+        if (yaxis) {
           nodeSize[n][1] = float(sizos);
+        }
 
-        if (zaxis)
+        if (zaxis) {
           nodeSize[n][2] = float(sizos);
+        }
       });
       nodeSize.copyToProperty(result);
     } else {
@@ -235,8 +239,9 @@ public:
       edgeSize.copyToProperty(result);
     }
 
-    if (!linearType)
+    if (!linearType) {
       delete tmp;
+    }
 
     return true;
   }

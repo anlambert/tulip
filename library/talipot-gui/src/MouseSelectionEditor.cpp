@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -270,8 +270,9 @@ bool MouseSelectionEditor::eventFilter(QObject *widget, QEvent *e) {
 
       mode = COORD_AND_SIZE;
 
-      if (qMouseEv->modifiers() & Qt::ShiftModifier)
+      if (qMouseEv->modifiers() & Qt::ShiftModifier) {
         mode = COORD;
+      }
 
       if (qMouseEv->modifiers() &
 #if defined(__APPLE__)
@@ -395,8 +396,9 @@ bool MouseSelectionEditor::compute(GlMainWidget *glMainWidget) {
       }
     }
 
-    if (!layerInScene)
+    if (!layerInScene) {
       glMainWidget->getScene()->addExistingLayerAfter(layer, "Main");
+    }
 
     composite->addGlEntity(&centerRect, "CenterRectangle");
     composite->addGlEntity(&_controls[0], "left");
@@ -452,8 +454,9 @@ void MouseSelectionEditor::initEdition() {
 }
 //========================================================================================
 void MouseSelectionEditor::undoEdition() {
-  if (operation == NONE)
+  if (operation == NONE) {
     return;
+  }
 
   _graph->pop();
   operation = NONE;
@@ -619,12 +622,13 @@ void MouseSelectionEditor::mMouseRotate(double newX, double newY, GlMainWidget *
     _layout->translate(center, _selection->getNodesEqualTo(true, _graph),
                        _selection->getEdgesEqualTo(true, _graph));
 
-    if (yAngle > xAngle)
+    if (yAngle > xAngle) {
       _layout->rotateY(yAngle, _selection->getNodesEqualTo(true, _graph),
                        _selection->getEdgesEqualTo(true, _graph));
-    else
+    } else {
       _layout->rotateX(xAngle, _selection->getNodesEqualTo(true, _graph),
                        _selection->getEdgesEqualTo(true, _graph));
+    }
 
     center *= -1.;
     _layout->translate(center, _selection->getNodesEqualTo(true, _graph),
@@ -692,27 +696,31 @@ void MouseSelectionEditor::mAlign(EditOperation operation, GlMainWidget *) {
       case ALIGN_TOP:
       case ALIGN_RIGHT:
 
-        if (valueMax > max)
+        if (valueMax > max) {
           max = valueMax;
+        }
 
         break;
 
       case ALIGN_BOTTOM:
       case ALIGN_LEFT:
 
-        if (valueMin < min)
+        if (valueMin < min) {
           min = valueMin;
+        }
 
         break;
 
       case ALIGN_HORIZONTALLY:
       case ALIGN_VERTICALLY:
 
-        if (valueMax > max)
+        if (valueMax > max) {
           max = valueMax;
+        }
 
-        if (valueMin < min)
+        if (valueMin < min) {
           min = valueMin;
+        }
 
         break;
 
@@ -776,18 +784,21 @@ void MouseSelectionEditor::mAlign(EditOperation operation, GlMainWidget *) {
 //========================================================================================
 bool MouseSelectionEditor::computeFFD(GlMainWidget *glMainWidget) {
   if (!glMainWidget->getScene()->getGlGraphComposite() ||
-      !glMainWidget->getScene()->getGlGraphComposite()->getInputData()->getGraph())
+      !glMainWidget->getScene()->getGlGraphComposite()->getInputData()->getGraph()) {
     return false;
+  }
 
   // We calculate the bounding box for the selection :
   initProxies(glMainWidget);
   BoundingBox boundingBox = tlp::computeBoundingBox(_graph, _layout, _sizes, _rotation, _selection);
 
-  if (!boundingBox.isValid())
+  if (!boundingBox.isValid()) {
     return false;
+  }
 
-  if (operation == NONE)
+  if (operation == NONE) {
     glMainWidget->setCursor(QCursor(Qt::PointingHandCursor));
+  }
 
   Coord min2D, max2D;
   _layoutCenter = boundingBox.center();
@@ -851,11 +862,13 @@ bool MouseSelectionEditor::computeFFD(GlMainWidget *glMainWidget) {
   int x = int(max2D[0] - min2D[0]) / 2 + 1; // (+1) because selection use glLineWidth=3 thus
   int y = int(max2D[1] - min2D[1]) / 2 + 1; // the rectangle can be too small.
 
-  if (x < 20)
+  if (x < 20) {
     x = 18;
+  }
 
-  if (y < 20)
+  if (y < 20) {
     y = 18;
+  }
 
   Coord positions[8];
 

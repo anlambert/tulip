@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -45,8 +45,9 @@ static const char *paramHelp[] = {
 
 namespace {
 bool tokenize(const string &str, vector<string> &tokens, const string &delimiters) {
-  if (str.empty())
+  if (str.empty()) {
     return true;
+  }
 
   tokens.clear();
   // Skip delimiters at beginning.
@@ -70,25 +71,28 @@ bool tokenize(const string &str, vector<string> &tokens, const string &delimiter
           token.push_back(c);
           bslashFound = false;
         } else {
-          if (c == '\\')
+          if (c == '\\') {
             bslashFound = true;
-          else {
-            if (c == '"')
+          } else {
+            if (c == '"') {
               break;
+            }
 
             token.push_back(c);
           }
         }
       }
 
-      if (pos == size)
+      if (pos == size) {
         return false;
+      }
 
       tokens.push_back(token);
       ++pos;
-    } else
+    } else {
       // Found a token, add it to the vector.
       tokens.push_back(str.substr(lastPos, pos - lastPos));
+    }
 
     // Skip delimiters.  Note the "not_of"
     lastPos = str.find_first_not_of(delimiters, pos);
@@ -177,16 +181,19 @@ public:
 
   bool treatLine(string &str) {
     // empty line or comment line found
-    if (str.empty() || str[0] == '%')
+    if (str.empty() || str[0] == '%') {
       return true;
+    }
 
     vector<string> tokens;
 
-    if (!tokenize(str, tokens, " \r\t"))
+    if (!tokenize(str, tokens, " \r\t")) {
       return false;
+    }
 
-    if (tokens.empty())
+    if (tokens.empty()) {
       return true;
+    }
 
     unsigned int nbTokens = tokens.size();
     char c = tokens[0][0];
@@ -218,11 +225,13 @@ public:
         }
 
         // next token is the number of vertices
-        if (nbTokens < 2)
+        if (nbTokens < 2) {
           return false;
+        }
 
-        if (!getUnsignedInt(nbNodes, tokens[1]))
+        if (!getUnsignedInt(nbNodes, tokens[1])) {
           return false;
+        }
 
         // add nodes
         graph->addNodes(nbNodes);
@@ -248,8 +257,9 @@ public:
 
       if (tokens[0] == "*Partition" || tokens[0] == "*partition") {
 
-        if (nbTokens < 2)
+        if (nbTokens < 2) {
           return false;
+        }
 
         expectedLine = NET_PARTITION;
         curNodeId = 0;
@@ -264,8 +274,9 @@ public:
       if (tokens[0] == "*Vector" || tokens[0] == "*vector" || tokens[0] == "*Permutation" ||
           tokens[0] == "*permutation") {
 
-        if (nbTokens < 2)
+        if (nbTokens < 2) {
           return false;
+        }
 
         expectedLine = NET_VECTOR;
         curNodeId = 0;
@@ -283,8 +294,9 @@ public:
       return false;
     }
 
-    if (expectedLine == NET_UNKNOWN)
+    if (expectedLine == NET_UNKNOWN) {
       return false;
+    }
 
     const vector<node> &nodes = graph->nodes();
 
@@ -332,11 +344,13 @@ public:
     // first token is always the # of a vertex
     unsigned int first;
 
-    if (!getUnsignedInt(first, tokens[0]))
+    if (!getUnsignedInt(first, tokens[0])) {
       return false;
+    }
 
-    if (first > nbNodes)
+    if (first > nbNodes) {
       return false;
+    }
 
     /* in NET format vertex # begins to 1
        but nodes index begins to 0 */
@@ -346,14 +360,16 @@ public:
       node n = nodes[first];
 
       // next token must be the label of the node
-      if (nbTokens == 1)
+      if (nbTokens == 1) {
         return false;
+      }
 
       labels->setNodeValue(n, tokens[1]);
 
       // check if node coordinates are present
-      if (nbTokens == 2)
+      if (nbTokens == 2) {
         return true;
+      }
 
       // get coordinates if any
       unsigned int i = 2;
@@ -370,8 +386,9 @@ public:
 
             // we have y check for z
             if (nbTokens > 4) {
-              if (getFloat(coord[2], tokens[4]))
+              if (getFloat(coord[2], tokens[4])) {
                 ++i;
+              }
             }
           }
         }
@@ -387,8 +404,9 @@ public:
           // next token must be a float
           float x_fact;
 
-          if ((nbTokens == i + 1) || !getFloat(x_fact, tokens[i + 1]))
+          if ((nbTokens == i + 1) || !getFloat(x_fact, tokens[i + 1])) {
             return false;
+          }
 
           nSize[0] *= x_fact;
           ++i;
@@ -399,8 +417,9 @@ public:
           // next token must be a float
           float y_fact;
 
-          if ((nbTokens == i + 1) || !getFloat(y_fact, tokens[i + 1]))
+          if ((nbTokens == i + 1) || !getFloat(y_fact, tokens[i + 1])) {
             return false;
+          }
 
           nSize[1] *= y_fact;
           ++i;
@@ -416,8 +435,9 @@ public:
     }
 
     /* we expect to find the edge's target */
-    if (nbTokens < 2)
+    if (nbTokens < 2) {
       return false;
+    }
 
     // loop on edges list
     unsigned int i = 1;
@@ -426,8 +446,9 @@ public:
       // next token is the index of the edge's target
       unsigned int second;
 
-      if (!getUnsignedInt(second, tokens[i]) || second > nodes.size())
+      if (!getUnsignedInt(second, tokens[i]) || second > nodes.size()) {
         return false;
+      }
 
       /* in NET format vertex # begins to 1
       but nodes index begins to 0 */
@@ -439,13 +460,15 @@ public:
           // if it exists the next token is the edge weight
           double weight;
 
-          if (!getDouble(weight, tokens[2]))
+          if (!getDouble(weight, tokens[2])) {
             return false;
+          }
 
           // negative weight is for dot line
           // so ensure weight is positive
-          if (weight < 0.0)
+          if (weight < 0.0) {
             weight = -weight;
+          }
 
           // set weight
           weights->setEdgeValue(e, weight);
@@ -454,16 +477,18 @@ public:
           for (first = 3; first < nbTokens; first += 2) {
             if (tokens[first] == "l") {
               // next token is the label
-              if (nbTokens == first)
+              if (nbTokens == first) {
                 return false;
+              }
 
               labels->setEdgeValue(e, tokens[first]);
               break;
             }
           }
-        } else
+        } else {
           // default edge weight is 1
           weights->setEdgeValue(e, 1.0);
+        }
 
         return true;
       }
@@ -499,8 +524,9 @@ public:
     stringstream errors;
     size_t lineNumber = 0;
 
-    if (pluginProgress)
+    if (pluginProgress) {
       pluginProgress->showPreview(false);
+    }
 
     nbNodes = 0;
 

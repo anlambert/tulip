@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -29,8 +29,9 @@ ReverseEdges::ReverseEdges(tlp::PluginContext *context) : Algorithm(context) {
 bool ReverseEdges::run() {
   BooleanProperty *selection = nullptr;
 
-  if (dataSet)
+  if (dataSet) {
     dataSet->get<BooleanProperty *>("selection", selection);
+  }
 
   Iterator<edge> *ite = selection ? selection->getEdgesEqualTo(true) : graph->getEdges();
 
@@ -41,8 +42,9 @@ bool ReverseEdges::run() {
     if ((++step % 100) == 0) {
       ProgressState state = pluginProgress->progress(step, max_step);
 
-      if (state != TLP_CONTINUE)
+      if (state != TLP_CONTINUE) {
         return state != TLP_CANCEL;
+      }
     }
 
     graph->reverse(e);

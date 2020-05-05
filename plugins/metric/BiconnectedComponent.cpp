@@ -94,15 +94,17 @@ static void bicoTestAndLabeling(const Graph &graph, node v, MutableContainer<int
         dfsParams.ite = graph.getInOutEdges(w);
         dfsLevels.push(dfsParams);
         lowpt.set(w.id, dfsnum.get(w.id));
-      } else
+      } else {
         lowpt.set(v.id, std::min(lowpt.get(v.id), dfsnum.get(w.id)));
+      }
     } else {
       delete it;
       dfsLevels.pop();
       node opp = dfsParams.opp;
 
-      if (opp.isValid())
+      if (opp.isValid()) {
         lowpt.set(opp.id, std::min(lowpt.get(opp.id), lowpt.get(v.id)));
+      }
 
       if (father.get(v.id).isValid() && (lowpt.get(v.id) == dfsnum.get(father.get(v.id).id))) {
         node w;
@@ -115,8 +117,9 @@ static void bicoTestAndLabeling(const Graph &graph, node v, MutableContainer<int
           while (it->hasNext()) {
             edge e = it->next();
 
-            if (dfsnum.get(w.id) > dfsnum.get(graph.opposite(e, w).id))
+            if (dfsnum.get(w.id) > dfsnum.get(graph.opposite(e, w).id)) {
               compnum.set(e.id, count2);
+            }
           }
 
           delete it;
@@ -201,8 +204,9 @@ public:
       maxVal = std::max(val, maxVal);
     }
 
-    if (dataSet != nullptr)
+    if (dataSet != nullptr) {
       dataSet->set("#biconnected components", uint(maxVal + 1));
+    }
 
     return true;
   }

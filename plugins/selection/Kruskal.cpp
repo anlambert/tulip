@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -51,8 +51,9 @@ bool Kruskal::run() {
     dataSet->get("edge weight", edgeWeight);
   }
 
-  if (edgeWeight == nullptr)
+  if (edgeWeight == nullptr) {
     edgeWeight = graph->getDoubleProperty("viewMetric");
+  }
 
   selectMinimumSpanningTree(graph, result, edgeWeight, pluginProgress);
 

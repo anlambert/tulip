@@ -145,8 +145,9 @@ class TLP_QT_SCOPE MetaTypes {
   static QVariant typedVariant(tlp::DataType *dm) {
     T result;
 
-    if (dm)
+    if (dm) {
       result = *(static_cast<T *>(dm->value));
+    }
 
     return QVariant::fromValue<T>(result);
   }

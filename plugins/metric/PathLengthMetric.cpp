@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -48,13 +48,15 @@ struct dfsStruct {
   }*/
 //=======================================================================
 double PathLengthMetric::getNodeValue(tlp::node current, tlp::DoubleProperty *leafMetric) {
-  if (graph->outdeg(current) == 0)
+  if (graph->outdeg(current) == 0) {
     return 0.0;
+  }
 
   double value = result->getNodeValue(current);
 
-  if (value > 0.1)
+  if (value > 0.1) {
     return value;
+  }
 
   // dfs loop
   stack<dfsStruct> dfsLevels;
@@ -69,9 +71,9 @@ double PathLengthMetric::getNodeValue(tlp::node current, tlp::DoubleProperty *le
       value = result->getNodeValue(neighbour);
 
       // compute result
-      if (value > 0.1)
+      if (value > 0.1) {
         res += value;
-      else {
+      } else {
         outNodes = graph->getOutNodes(neighbour);
 
         if (outNodes->hasNext()) {
@@ -91,9 +93,10 @@ double PathLengthMetric::getNodeValue(tlp::node current, tlp::DoubleProperty *le
       }
     }
 
-    if (outNodes->hasNext())
+    if (outNodes->hasNext()) {
       // new dfsParams has been pushed on stack
       continue;
+    }
 
     res += leafMetric->getNodeValue(current);
     // save current result
@@ -102,8 +105,9 @@ double PathLengthMetric::getNodeValue(tlp::node current, tlp::DoubleProperty *le
     delete outNodes;
     dfsLevels.pop();
 
-    if (dfsLevels.empty())
+    if (dfsLevels.empty()) {
       break;
+    }
 
     // get dfsParams on top of dfsLevels
     dfsParams = dfsLevels.top();
@@ -128,15 +132,16 @@ bool PathLengthMetric::run() {
     return false;
   }
 
-  for (auto n : graph->nodes())
+  for (auto n : graph->nodes()) {
     getNodeValue(n, &leafMetric);
+  }
   return true;
 }
 //=======================================
 bool PathLengthMetric::check(std::string &erreurMsg) {
-  if (AcyclicTest::isAcyclic(graph))
+  if (AcyclicTest::isAcyclic(graph)) {
     return true;
-  else {
+  } else {
     erreurMsg = "The graph must be acyclic.";
     return false;
   }

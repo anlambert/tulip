@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -323,8 +323,9 @@ void RoundedBox::draw(node n, float lod) {
 
   if (roundedBoxShader == nullptr || !roundedBoxShader->isLinked() ||
       !roundedBoxOutlineShader->isLinked() || GlShaderProgram::getCurrentActiveShader()) {
-    if (roundedSquare == nullptr)
+    if (roundedSquare == nullptr) {
       initRoundedSquare();
+    }
 
     GlPolygon *polygon = roundedSquare;
 
@@ -338,9 +339,10 @@ void RoundedBox::draw(node n, float lod) {
     polygon->setTextureName(texture);
     polygon->draw(lod, nullptr);
 
-    if (polygon != roundedSquare)
+    if (polygon != roundedSquare) {
       // because createRoundedRect() creates a new GlPolygon
       delete polygon;
+    }
   } else {
 
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -397,10 +399,11 @@ void RoundedBox::draw(node n, float lod) {
 Coord RoundedBox::getAnchor(const Coord &v) const {
   float fmax = std::max(fabsf(v.x()), fabsf(v.y()));
 
-  if (fmax > 0.0f)
+  if (fmax > 0.0f) {
     return v * (0.5f / fmax);
-  else
+  } else {
     return v;
+  }
 }
 
 PLUGIN(RoundedBox)

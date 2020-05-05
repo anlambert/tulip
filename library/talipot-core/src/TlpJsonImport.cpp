@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -322,8 +322,9 @@ public:
             } else {
               _currentProperty->setAllNodeStringValue(value);
             }
-          } else
+          } else {
             _currentProperty->setAllNodeStringValue(value);
+          }
 
           _parsingPropertyDefaultNodeValue = false;
         }
@@ -341,10 +342,12 @@ public:
               string dValue(value);
               dValue.replace(pos2, TulipBitmapDirSym.size(), TalipotBitmapDir);
               _currentProperty->setAllEdgeStringValue(dValue);
-            } else
+            } else {
               _currentProperty->setAllEdgeStringValue(value);
-          } else
+            }
+          } else {
             _currentProperty->setAllEdgeStringValue(value);
+          }
 
           _parsingPropertyDefaultEdgeValue = false;
         }
@@ -374,10 +377,12 @@ public:
               string nValue(value);
               nValue.replace(pos2, TulipBitmapDirSym.size(), TalipotBitmapDir);
               _currentProperty->setNodeStringValue(n, nValue);
-            } else
+            } else {
               _currentProperty->setNodeStringValue(n, value);
-          } else
+            }
+          } else {
             _currentProperty->setNodeStringValue(n, value);
+          }
         }
 
         if (_parsingPropertyEdgeValues) {

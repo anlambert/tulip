@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -41,20 +41,23 @@ bool DFS::searchPaths(node src) {
 }
 
 bool DFS::computeSearchPaths(node src, BooleanProperty *visitable, DoubleProperty *dists) {
-  if (!visitable->getNodeValue(src))
+  if (!visitable->getNodeValue(src)) {
+    return false;
+  }
+
+  if (dists->getNodeValue(src) != DBL_MAX && currentDist + dists->getNodeValue(src) > maxDist) {
+    return false;
+  }
+
+  if (currentDist > maxDist) {
     return false;
 
-  if (dists->getNodeValue(src) != DBL_MAX && currentDist + dists->getNodeValue(src) > maxDist)
-    return false;
-
-  if (currentDist > maxDist)
-    return false;
-
-  else if (src == tgt || result->getNodeValue(src)) {
+  } else if (src == tgt || result->getNodeValue(src)) {
     double distLeft(0);
 
-    if (result->getNodeValue(src))
+    if (result->getNodeValue(src)) {
       distLeft = dists->getNodeValue(src);
+    }
 
     node nd(src);
 

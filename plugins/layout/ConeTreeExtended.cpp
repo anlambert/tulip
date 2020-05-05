@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -33,8 +33,9 @@ float minRadius(float radius1, float alpha1, float radius2, float alpha2) {
 }
 //===============================================================
 void ConeTreeExtended::computeLayerSize(tlp::node n, unsigned int level) {
-  if (levelSize.size() < level + 1)
+  if (levelSize.size() < level + 1) {
     levelSize.push_back(0);
+  }
 
   levelSize[level] = std::max(levelSize[level], nodeSize->getNodeValue(n)[1]);
   for (auto i : tree->getOutNodes(n)) {
@@ -111,8 +112,9 @@ double ConeTreeExtended::treePlace3D(tlp::node n, std::unordered_map<tlp::node, 
     }
   }
 
-  if (newRadius == 0)
+  if (newRadius == 0) {
     newRadius = float(radius);
+  }
 
   // compute Circle Hull
   vector<Circlef> circles(subCircleRadius.size());
@@ -183,8 +185,9 @@ bool ConeTreeExtended::run() {
     spaceBetweenLevels = std::max(spaceBetweenLevels, 0.f);
   }
 
-  if (!nodeSize)
+  if (!nodeSize) {
     nodeSize = graph->getSizeProperty("viewSize");
+  }
 
   //=========================================================
   // rotate size if needed
@@ -199,8 +202,9 @@ bool ConeTreeExtended::run() {
   //===========================================================
   result->setAllEdgeValue(vector<Coord>(0));
 
-  if (pluginProgress)
+  if (pluginProgress) {
     pluginProgress->showPreview(false);
+  }
 
   tree = TreeTest::computeTree(graph, pluginProgress);
 

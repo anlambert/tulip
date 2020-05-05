@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -147,18 +147,27 @@ private:
   void removeEmptyViewLabel();
 
   void setLayoutUpdateNeeded() {
-    if (detailedHistogram)
-      detailedHistogram->setLayoutUpdateNeeded();
+    if (detailedHistogram) {
+      {
+        detailedHistogram->setLayoutUpdateNeeded();
+      }
+    }
   }
 
   void setSizesUpdateNeeded() {
-    if (detailedHistogram)
-      detailedHistogram->setSizesUpdateNeeded();
+    if (detailedHistogram) {
+      {
+        detailedHistogram->setSizesUpdateNeeded();
+      }
+    }
   }
 
   void setUpdateNeeded() {
-    if (detailedHistogram)
-      detailedHistogram->setUpdateNeeded();
+    if (detailedHistogram) {
+      {
+        detailedHistogram->setUpdateNeeded();
+      }
+    }
   }
 
   ViewGraphPropertiesSelectionWidget *propertiesSelectionWidget;

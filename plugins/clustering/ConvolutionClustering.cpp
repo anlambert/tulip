@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -31,20 +31,22 @@ ConvolutionClustering::ConvolutionClustering(PluginContext *context)
 double g(int k, double width, double amplitude) {
   double slope = amplitude / width;
 
-  if ((k <= -width) || (k >= width))
+  if ((k <= -width) || (k >= width)) {
     return 0;
-  else {
-    if (k < 0)
+  } else {
+    if (k < 0) {
       return k * slope + amplitude; // partie croissante du signal triangulaire
-    else
+    } else {
       return -k * slope + amplitude; // partie décroissante du signal triangulaire
+    }
   }
 }
 //================================================================================
 int getInterval(int d, const vector<int> &ranges) {
   for (unsigned int i = 0; i < ranges.size() - 1; ++i) {
-    if ((d >= ranges[i]) && (d < ranges[i + 1]))
+    if ((d >= ranges[i]) && (d < ranges[i + 1])) {
       return i;
+    }
   }
 
   return ranges.size() - 2;
@@ -82,8 +84,9 @@ list<int> ConvolutionClustering::getLocalMinimum() {
         if (int(i) - local < width / 2) {
           localMinimum.pop_back();
           localMinimum.push_back((i + local) / 2);
-        } else
+        } else {
           localMinimum.push_back(i);
+        }
       }
 
       slopeSens = newSlopeSens;
@@ -102,14 +105,16 @@ void ConvolutionClustering::autoSetParameter() {
   for (auto itn : graph->nodes()) {
     double tmp = metric->getNodeDoubleValue(itn);
 
-    if (histo.find(tmp) == histo.end())
+    if (histo.find(tmp) == histo.end()) {
       histo[tmp] = 1;
-    else
+    } else {
       histo[tmp] += 1;
+    }
   }
 
-  if (histo.empty())
+  if (histo.empty()) {
     return;
+  }
 
   //===============================================================================
   // Find good step for discretization
@@ -125,21 +130,24 @@ void ConvolutionClustering::autoSetParameter() {
     double delta = itMap->first - lastValue;
     deltaSum += delta;
 
-    if (delta > deltaXMax)
+    if (delta > deltaXMax) {
       deltaXMax = delta;
-    else if (delta < deltaXMin || deltaXMin < 0)
+    } else if (delta < deltaXMin || deltaXMin < 0) {
       deltaXMin = delta;
+    }
 
     lastValue = (*itMap).first;
   }
 
   histosize = int((metric->getNodeDoubleMax() - metric->getNodeDoubleMin()) / deltaXMin);
 
-  if (histosize > 16384)
+  if (histosize > 16384) {
     histosize = 16384; // histosize = histosize <? 16384;
+  }
 
-  if (histosize < 64)
+  if (histosize < 64) {
     histosize = 64; // histosize = histosize >? 64;
+  }
 
   //===============================================================================
   // Find good with for the convolution function
@@ -187,10 +195,11 @@ vector<double> *ConvolutionClustering::getHistogram() {
   for (auto n : graph->nodes()) {
     int tmp = int((metric->getNodeDoubleValue(n) - minVal) * histosize / maxMinRange);
 
-    if (histogramOfValues.find(tmp) == histogramOfValues.end())
+    if (histogramOfValues.find(tmp) == histogramOfValues.end()) {
       histogramOfValues[tmp] = 1;
-    else
+    } else {
       histogramOfValues[tmp] += 1;
+    }
   }
 
   // Apply the convolution on the histogram of values
@@ -198,16 +207,18 @@ vector<double> *ConvolutionClustering::getHistogram() {
   smoothHistogram.clear();
   smoothHistogram.resize(histosize);
 
-  for (int pos = 0; pos < histosize; ++pos)
+  for (int pos = 0; pos < histosize; ++pos) {
     smoothHistogram[pos] = 0;
+  }
 
   for (const auto &itMap : histogramOfValues) {
     double value = itMap.second;
     int index = itMap.first;
 
     for (int i = -width; i <= width; ++i) {
-      if ((index + i) >= 0 && (index + i) < histosize)
+      if ((index + i) >= 0 && (index + i) < histosize) {
         smoothHistogram[index + i] += value * g(i, width, 1);
+      }
     }
   }
 
@@ -227,11 +238,13 @@ void ConvolutionClustering::getClusters(const std::vector<int> &ranges) {
 bool ConvolutionClustering::run() {
   histosize = 128;
 
-  if (dataSet != nullptr)
+  if (dataSet != nullptr) {
     dataSet->get("metric", metric);
+  }
 
-  if (metric == nullptr)
+  if (metric == nullptr) {
     metric = graph->getDoubleProperty("viewMetric");
+  }
 
   autoSetParameter();
   getHistogram();
@@ -257,11 +270,13 @@ bool ConvolutionClustering::run() {
 }
 
 bool ConvolutionClustering::check(std::string &errorMsg) {
-  if (dataSet != nullptr)
+  if (dataSet != nullptr) {
     dataSet->get("metric", metric);
+  }
 
-  if (metric == nullptr)
+  if (metric == nullptr) {
     metric = graph->getDoubleProperty("viewMetric");
+  }
 
   if (metric->getNodeDoubleMax() == metric->getNodeDoubleMin()) {
     errorMsg = "All metric values are the same";

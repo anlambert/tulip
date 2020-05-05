@@ -30,8 +30,9 @@ OGDFLayoutPluginBase::OGDFLayoutPluginBase(const PluginContext *context,
                                            ogdf::LayoutModule *ogdfLayoutAlgo)
     : LayoutAlgorithm(context), tlpToOGDF(nullptr), ogdfLayoutAlgo(ogdfLayoutAlgo) {
   // convert Tulip Graph to OGDF Graph including attributes
-  if (graph)
+  if (graph) {
     tlpToOGDF = new TalipotToOGDF(graph, false);
+  }
 }
 
 OGDFLayoutPluginBase::~OGDFLayoutPluginBase() {

@@ -110,8 +110,9 @@ std::vector<std::string> InputSample::getListenedProperties() {
 node InputSample::getNodeNumber(unsigned int i) {
   if (rootGraph && rootGraph->numberOfNodes() > i) {
     return rootGraph->nodes()[i];
-  } else
+  } else {
     return node();
+  }
 }
 
 unsigned int InputSample::getNumberForNode(tlp::node no) {
@@ -141,15 +142,17 @@ void InputSample::buildNodeVector(node n) {
 }
 
 double InputSample::normalize(double val, unsigned propNum) {
-  if (propNum < meanProperties.size() && propNum < sdProperties.size())
+  if (propNum < meanProperties.size() && propNum < sdProperties.size()) {
     return (val - meanProperties[propNum]) / sdProperties[propNum];
+  }
 
   return val;
 }
 
 double InputSample::unnormalize(double val, unsigned propNum) {
-  if (propNum < meanProperties.size() && propNum < sdProperties.size())
+  if (propNum < meanProperties.size() && propNum < sdProperties.size()) {
     return val * sdProperties[propNum] + meanProperties[propNum];
+  }
 
   return val;
 }
@@ -174,12 +177,14 @@ const DynamicVector<double> &InputSample::getWeight(tlp::node n) {
 }
 
 void InputSample::initGraphObs() {
-  if (rootGraph)
+  if (rootGraph) {
     rootGraph->addListener(this);
+  }
 }
 void InputSample::clearGraphObs() {
-  if (rootGraph)
+  if (rootGraph) {
     rootGraph->removeListener(this);
+  }
 }
 
 void InputSample::initPropertiesObs() {
@@ -215,8 +220,9 @@ void InputSample::treatEvents(const std::vector<Event> &events) {
         updated = true;
 
         // notify observers
-        if (hasOnlookers())
+        if (hasOnlookers()) {
           sendEvent(Event(*this, Event::TLP_MODIFICATION));
+        }
 
         break;
       }
@@ -224,8 +230,9 @@ void InputSample::treatEvents(const std::vector<Event> &events) {
       propNum++;
     }
 
-    if (updated)
+    if (updated) {
       break;
+    }
   }
 }
 
@@ -240,8 +247,9 @@ void InputSample::addNode(Graph *, const node n) {
   }
 
   // notify observers
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(Event(*this, Event::TLP_MODIFICATION));
+  }
 }
 void InputSample::delNode(Graph *, const node n) {
   if (usingNormalizedValues) {
@@ -258,8 +266,9 @@ void InputSample::delNode(Graph *, const node n) {
   }
 
   // notify observers
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(Event(*this, Event::TLP_MODIFICATION));
+  }
 }
 void InputSample::delLocalProperty(Graph *, const std::string &propName) {
   unsigned int i = 0;
@@ -274,8 +283,9 @@ void InputSample::delLocalProperty(Graph *, const std::string &propName) {
       mWeightTab.clear();
 
       // notify observers
-      if (hasOnlookers())
+      if (hasOnlookers()) {
         sendEvent(Event(*this, Event::TLP_MODIFICATION));
+      }
 
       break;
     }
@@ -283,10 +293,11 @@ void InputSample::delLocalProperty(Graph *, const std::string &propName) {
 }
 
 tlp::Iterator<tlp::node> *InputSample::getNodes() {
-  if (rootGraph)
+  if (rootGraph) {
     return rootGraph->getNodes();
-  else
+  } else {
     return nullptr;
+  }
 }
 
 tlp::Iterator<tlp::node> *InputSample::getRandomNodeOrder() {
@@ -295,8 +306,9 @@ tlp::Iterator<tlp::node> *InputSample::getRandomNodeOrder() {
     random_shuffle(randomVector.begin(), randomVector.end());
 
     return stlIterator(randomVector);
-  } else
+  } else {
     return nullptr;
+  }
 }
 
 void InputSample::updateMeanValue(unsigned int propNum) {
@@ -319,8 +331,9 @@ void InputSample::updateSDValue(unsigned int propNum) {
 
   NumericProperty *property = propertiesList[propNum];
   double sd = 0.0;
-  for (auto n : rootGraph->nodes())
+  for (auto n : rootGraph->nodes()) {
     sd += pow(property->getNodeDoubleValue(n) - meanProperties[propNum], 2.0);
+  }
 
   if (sd <= 0.0) {
     sdProperties[propNum] = 1.0;
@@ -349,8 +362,9 @@ void InputSample::updateAllSDValues() {
 double InputSample::getMeanProperty(const std::string &propertyName) {
   unsigned int i = findIndexForProperty(propertyName);
 
-  if (i < meanProperties.size())
+  if (i < meanProperties.size()) {
     return meanProperties[i];
+  }
 
   return 0.0;
 }
@@ -358,8 +372,9 @@ double InputSample::getMeanProperty(const std::string &propertyName) {
 double InputSample::getSDProperty(const std::string &propertyName) {
   unsigned int i = findIndexForProperty(propertyName);
 
-  if (i < sdProperties.size())
+  if (i < sdProperties.size()) {
     return sdProperties[i];
+  }
 
   return 1.0;
 }
@@ -369,8 +384,9 @@ bool InputSample::isUsingNormalizedValues() const {
 }
 
 void InputSample::setUsingNormalizedValues(bool norm) {
-  if (norm != usingNormalizedValues)
+  if (norm != usingNormalizedValues) {
     mWeightTab.clear();
+  }
 
   usingNormalizedValues = norm;
 

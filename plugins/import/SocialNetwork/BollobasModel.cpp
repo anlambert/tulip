@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -80,8 +80,9 @@ struct BollobasModel : public ImportModule {
       }
 
       if (v % 100 == 0) {
-        if (pluginProgress->progress(v, n * (d + 1)) != TLP_CONTINUE)
+        if (pluginProgress->progress(v, n * (d + 1)) != TLP_CONTINUE) {
           return pluginProgress->state() != TLP_CANCEL;
+        }
       }
     }
 
@@ -93,8 +94,9 @@ struct BollobasModel : public ImportModule {
       graph->addEdge(nodes[M[2 * i]], nodes[M[2 * i + 1]]);
 
       if (i % 100 == 0) {
-        if (pluginProgress->progress(i, n * (d + 1)) != TLP_CONTINUE)
+        if (pluginProgress->progress(i, n * (d + 1)) != TLP_CONTINUE) {
           return pluginProgress->state() != TLP_CANCEL;
+        }
       }
     }
 

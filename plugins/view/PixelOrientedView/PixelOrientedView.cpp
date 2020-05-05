@@ -108,8 +108,9 @@ void PixelOrientedView::initGlWidget() {
         static_cast<GlGraphComposite *>(mainLayer->findGlEntity("graph"));
     Graph *theGraph = lastGraphComposite->getInputData()->getGraph();
 
-    if (theGraph)
+    if (theGraph) {
       theGraph->removeListener(lastGraphComposite);
+    }
   }
 
   if (overviewsComposite != nullptr) {
@@ -267,8 +268,9 @@ void PixelOrientedView::setState(const DataSet &dataSet) {
   if (dataSet.get<bool>("quickAccessBarVisible", quickAccessBarVisible)) {
     needQuickAccessBar = true;
     setQuickAccessBarVisible(quickAccessBarVisible);
-  } else // display quickaccessbar
+  } else { // display quickaccessbar
     setQuickAccessBarVisible(true);
+  }
 
   draw();
   center = false;
@@ -305,8 +307,9 @@ DataSet PixelOrientedView::state() const {
   dataSet.set("detail overview  name", detailOverviewPropertyName);
   dataSet.set("background color", optionsWidget->getBackgroundColor());
 
-  if (needQuickAccessBar)
+  if (needQuickAccessBar) {
     dataSet.set("quickAccessBarVisible", quickAccessBarVisible());
+  }
 
   return dataSet;
 }
@@ -359,8 +362,9 @@ void PixelOrientedView::initPixelView() {
 
   selectedGraphProperties = propertiesSelectionWidget->getSelectedGraphProperties();
 
-  if (selectedGraphProperties.empty())
+  if (selectedGraphProperties.empty()) {
     return;
+  }
 
   float squareRoot = sqrt(float(selectedGraphProperties.size()));
   const unsigned int N =
@@ -494,12 +498,13 @@ void PixelOrientedView::draw() {
     unsigned int lastNbDimensionsSelected = selectedGraphProperties.size();
     destroyOverviewsIfNeeded();
 
-    if (pixelOrientedGraph->numberOfNodes() >= 2) // We stop the creation of pixel overviews if we
-                                                  // have less than 2 nodes as we need at least two
-                                                  // to compute sizes for overview
+    if (pixelOrientedGraph->numberOfNodes() >= 2) { // We stop the creation of pixel overviews if we
+      // have less than 2 nodes as we need at least two
+      // to compute sizes for overview
       initPixelView();
-    else
+    } else {
       selectedGraphProperties.clear();
+    }
 
     if (selectedGraphProperties.empty()) {
       if (!smallMultiplesView) {
@@ -508,15 +513,17 @@ void PixelOrientedView::draw() {
 
       removeEmptyViewLabel();
       addEmptyViewLabel();
-      if (quickAccessBarVisible())
+      if (quickAccessBarVisible()) {
         _quickAccessBar->setEnabled(false);
+      }
       scene->centerScene();
       glw->draw();
       return;
     } else {
       removeEmptyViewLabel();
-      if (quickAccessBarVisible())
+      if (quickAccessBarVisible()) {
         _quickAccessBar->setEnabled(true);
+      }
     }
 
     if (lastNbDimensionsSelected != selectedGraphProperties.size()) {

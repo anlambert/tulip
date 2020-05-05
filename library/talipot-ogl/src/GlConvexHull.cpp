@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -55,12 +55,13 @@ void GlConvexHull::draw(float, Camera *) {
 
   if (_filled) {
 
-    if (_points.size() == 3)
+    if (_points.size() == 3) {
       glBegin(GL_TRIANGLES);
-    else if (_points.size() == 4)
+    } else if (_points.size() == 4) {
       glBegin(GL_QUADS);
-    else
+    } else {
       glBegin(GL_POLYGON);
+    }
 
     for (unsigned int i = 0; i < _points.size(); ++i) {
       if (i < _fillColors.size()) {
@@ -119,8 +120,9 @@ ConvexHullItem *GlConvexHull::buildConvexHullsFromHierarchy(Graph *graph,
     convexHullItem->name = s.str();
   }
 
-  if (root == nullptr)
+  if (root == nullptr) {
     root = graph;
+  }
 
   if (fColors.size() == 0) {
     // use default colors
@@ -202,16 +204,18 @@ ConvexHullItem *GlConvexHull::buildConvexHullsFromHierarchy(Graph *graph,
         // add 10%
         float hl;
 
-        if (hh / 10. < hw / 10.)
+        if (hh / 10. < hw / 10.) {
           hl = hh / 10.;
-        else
+        } else {
           hl = hw / 10.;
+        }
 
         hh += hl;
         hw += hl;
 
-        if (bendsl > hl)
+        if (bendsl > hl) {
           bendsl = hl;
+        }
 
         // add points of rotated bounding box
         float cosA = cos(alpha);

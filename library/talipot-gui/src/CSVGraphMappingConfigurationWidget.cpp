@@ -86,8 +86,9 @@ void CSVGraphMappingConfigurationWidget::updateWidget(tlp::Graph *graph,
         tgtColumn = i;
         tgtColumnIds.push_back(i);
       }
-    } else
+    } else {
       columns.push_back("");
+    }
   }
 
   // Init mapping widgets.
@@ -219,8 +220,9 @@ void CSVGraphMappingConfigurationWidget::selectProperties(const QString &title,
       QString buttonName;
 
       for (unsigned int i = 0; i < selProperties.size(); ++i) {
-        if (i)
+        if (i) {
           buttonName.append(", ");
+        }
 
         buttonName.append(tlpStringToQString(selProperties[i]));
       }
@@ -255,8 +257,9 @@ void CSVGraphMappingConfigurationWidget::selectColumns(const QString &title,
   vector<string> selColumns;
 
   for (unsigned int i = 0; i < columns.size(); ++i) {
-    if (!columns[i].empty())
+    if (!columns[i].empty()) {
       tmpColumns.push_back(columns[i]);
+    }
   }
 
   for (unsigned int i = 0; i < columnIds.size(); ++i) {
@@ -278,8 +281,9 @@ void CSVGraphMappingConfigurationWidget::selectColumns(const QString &title,
       QString buttonName;
 
       for (unsigned int i = 0; i < selColumns.size(); ++i) {
-        if (i)
+        if (i) {
           buttonName.append(", ");
+        }
 
         buttonName.append(tlpStringToQString(selColumns[i]));
 

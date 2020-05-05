@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -68,10 +68,11 @@ public:
     string newStr;
 
     for (unsigned int i = 0; i < tmp.length(); i++) {
-      if (tmp[i] == '\"')
+      if (tmp[i] == '\"') {
         newStr += "\\\"";
-      else
+      } else {
         newStr += tmp[i];
+      }
     }
 
     return newStr;

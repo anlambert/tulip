@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -85,17 +85,20 @@ public:
       if (conn == 6) {
         layout->setNodeValue(
             current, Coord(i * 2 * h + shift + i * spacing, iRow * (1.0 - hHeight + spacing), 0));
-      } else
+      } else {
         layout->setNodeValue(current, Coord(i * (1.0 + spacing), iRow * (1.0 + spacing), 0));
+      }
 
-      if (previous.isValid())
+      if (previous.isValid()) {
         ends.push_back(pair<node, node>(previous, current));
+      }
 
       previous = current;
     }
 
-    if (isTore)
+    if (isTore) {
       ends.push_back(pair<node, node>(current, nodes[iBegin]));
+    }
   }
 
   void connectRow(const vector<node> &nodes, vector<pair<node, node>> &ends, unsigned int row1,
@@ -124,15 +127,17 @@ public:
         // In this case row1 must be even in order to ensure right connectivity in the hexagonal
         // grid.
         if (row1 % 2 == 0) {
-          if (i < width - 1)
+          if (i < width - 1) {
             ends.push_back(pair<node, node>(nodes[row1Begin + i], nodes[row2Begin + i + 1]));
-          else if (isTore)
+          } else if (isTore) {
             ends.push_back(pair<node, node>(nodes[row1Begin + i], nodes[row2Begin]));
+          }
         } else {
-          if (i > 0)
+          if (i > 0) {
             ends.push_back(pair<node, node>(nodes[row1Begin + i], nodes[row2Begin + i - 1]));
-          else if (isTore)
+          } else if (isTore) {
             ends.push_back(pair<node, node>(nodes[row1Begin + i], nodes[row2Begin + width - 1]));
+          }
         }
       }
     }
@@ -155,45 +160,50 @@ public:
     }
 
     if (width == 0) {
-      if (pluginProgress)
+      if (pluginProgress) {
         pluginProgress->setError(string("Error: width cannot be null"));
+      }
 
       return false;
     }
 
     if (height == 0) {
-      if (pluginProgress)
+      if (pluginProgress) {
         pluginProgress->setError(string("Error: height cannot be null"));
+      }
 
       return false;
     }
 
     if (spacing < 0.0) {
-      if (pluginProgress)
+      if (pluginProgress) {
         pluginProgress->setError(string("Error: spacing must be strictly positive"));
+      }
 
       return false;
     }
 
-    if (connectivity.getCurrentString().compare("4") == 0)
+    if (connectivity.getCurrentString().compare("4") == 0) {
       conn = 4;
-    else if (connectivity.getCurrentString().compare("6") == 0) {
+    } else if (connectivity.getCurrentString().compare("6") == 0) {
       conn = 6;
 
       if (isTore && height % 2 == 1) {
-        if (pluginProgress)
+        if (pluginProgress) {
           pluginProgress->setError(
               "Error : cannot connect opposite nodes in an hexagonal grid with odd height");
-        else
+        } else {
           tlp::warning()
               << __PRETTY_FUNCTION__ << ":" << __LINE__
               << " Error : cannot connect opposite nodes in an hexagonal grid with odd height"
               << std::endl;
+        }
 
         return false;
       }
-    } else
+    } else {
       conn = 8;
+    }
 
     // graph is predimensioned according the parameters
     graph->addNodes(height * width);
@@ -201,8 +211,9 @@ public:
     // compute nb edges
     unsigned int nbEdges = height * (width - 1);
 
-    if (isTore)
+    if (isTore) {
       nbEdges += height;
+    }
 
     // add the between rows connections to the in rows connections
     nbEdges += width * (height - 1);
@@ -211,16 +222,18 @@ public:
     if (conn >= 6) {
       nbEdges += (height - 1) * (width - 1);
 
-      if (isTore)
+      if (isTore) {
         nbEdges += height - 1;
+      }
     }
 
     // more between row connections
     if (conn == 8) {
       nbEdges += (height - 1) * (width - 1);
 
-      if (isTore)
+      if (isTore) {
         nbEdges += height - 1;
+      }
     }
 
     vector<pair<node, node>> ends;

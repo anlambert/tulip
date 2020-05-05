@@ -51,11 +51,12 @@ ImportWizard::ImportWizard(QWidget *parent) : QWizard(parent), _ui(new Ui::Impor
                       "needed.<br/>Click <b>Ok</b> to import your graph, then visualize it using "
                       "the ");
 
-  if (Settings::instance().displayDefaultViews())
+  if (Settings::instance().displayDefaultViews()) {
     importLabel += "<b>Node Link Diagram</b> and <b>Spreadsheet</b> (automatically opened) views.";
-  else
+  } else {
     importLabel += "<img src=\":/talipot/gui/icons/16/list-add.png\"/>&nbsp;<b>Add "
                    "panel</b> button to open specific views on it.";
+  }
 
   importLabel += "<br/><br/>See <b>Edit</b> menu, then <b>Preferences</b> for more options when "
                  "importing a graph.</p></body></html>";
@@ -85,10 +86,12 @@ void ImportWizard::algorithmSelected(const QModelIndex &index) {
     parametersText += "&nbsp;<font size=-2>[" + alg + "]</font>";
     std::string group = PluginsManager::pluginInformation(algs).group();
 
-    if (!group.empty())
+    if (!group.empty()) {
       categoryText += "&nbsp;<font size=-2>[" + tlpStringToQString(group) + "]</font>";
-  } else
+    }
+  } else {
     categoryText += "&nbsp;<font size=-2>[" + alg + "]</font>";
+  }
 
   _ui->categoryLabel->setText(categoryText);
   _ui->parametersLabel->setText(parametersText);
@@ -100,8 +103,9 @@ void ImportWizard::algorithmSelected(const QModelIndex &index) {
 }
 
 QString ImportWizard::algorithm() const {
-  if (_ui->importModules->selectionModel()->hasSelection())
+  if (_ui->importModules->selectionModel()->hasSelection()) {
     return _ui->importModules->selectionModel()->selectedIndexes()[0].data().toString();
+  }
 
   return "";
 }
@@ -109,8 +113,9 @@ QString ImportWizard::algorithm() const {
 tlp::DataSet ImportWizard::parameters() const {
   ParameterListModel *model = dynamic_cast<ParameterListModel *>(_ui->parametersList->model());
 
-  if (model == nullptr)
+  if (model == nullptr) {
     return DataSet();
+  }
 
   return model->parametersValues();
 }

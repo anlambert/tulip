@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -26,11 +26,13 @@ unsigned int SquareLayout::unproject(const Vec2i &point) const {
   int x = point[0] + _width / 2;
   int y = point[1] + _width / 2;
 
-  if (x > int(_width))
+  if (x > int(_width)) {
     return UINT_MAX;
+  }
 
-  if (y > int(_width))
+  if (y > int(_width)) {
     return UINT_MAX;
+  }
 
   return uint(y) * _width + uint(x);
 }

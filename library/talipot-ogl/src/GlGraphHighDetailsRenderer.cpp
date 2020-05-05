@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -106,13 +106,15 @@ struct entityWithDistanceCompare {
 
     // if e1 is further from the viewer than e2,
     // e1 must be drawn before e2
-    if (e1.distance > e2.distance)
+    if (e1.distance > e2.distance) {
       return true;
+    }
 
     // if e2 is further from the viewer than e1,
     // e2 must be drawn before e2
-    if (e1.distance < e2.distance)
+    if (e1.distance < e2.distance) {
       return false;
+    }
 
     return (e2.entity->boundingBox.width() >= e1.entity->boundingBox.width());
   }
@@ -160,8 +162,9 @@ GlGraphHighDetailsRenderer::GlGraphHighDetailsRenderer(const GlGraphInputData *i
 }
 //===================================================================
 GlGraphHighDetailsRenderer::~GlGraphHighDetailsRenderer() {
-  if (lodCalculator)
+  if (lodCalculator) {
     lodCalculator->setAttachedLODCalculator(nullptr);
+  }
 
   delete lodCalculator;
 
@@ -257,15 +260,17 @@ void GlGraphHighDetailsRenderer::draw(float, Camera *camera) {
     // draw nodes and metanodes
     for (auto &it : layersLODVector[0].nodesLODVector) {
 
-      if ((it.lod <= 0) || (filteringProperty && filteringProperty->getNodeValue(node(it.id))))
+      if ((it.lod <= 0) || (filteringProperty && filteringProperty->getNodeValue(node(it.id)))) {
         continue;
+      }
 
       if (displayNodes ||
           ((displayMetaNodes || displayMetaNodesLabel) && graph->isMetaNode(node(it.id)))) {
         if (!metric) {
           if (selectionDrawActivate) {
-            if ((selectionType & RenderingNodes) == 0)
+            if ((selectionType & RenderingNodes) == 0) {
               continue;
+            }
 
             (*selectionIdMap)[*selectionCurrentId] =
                 SelectedEntity(graph, it.id, SelectedEntity::NODE_SELECTED);
@@ -279,8 +284,9 @@ void GlGraphHighDetailsRenderer::draw(float, Camera *camera) {
           nodesMetricOrdered.push_back({node(it.id), it.lod});
         }
 
-        if (renderOnlyOneNode)
+        if (renderOnlyOneNode) {
           break;
+        }
       }
     }
 
@@ -296,8 +302,9 @@ void GlGraphHighDetailsRenderer::draw(float, Camera *camera) {
 
       for (auto &it : nodesMetricOrdered) {
         if (selectionDrawActivate) {
-          if ((selectionType & RenderingNodes) == 0)
+          if ((selectionType & RenderingNodes) == 0) {
             continue;
+          }
 
           (*selectionIdMap)[*selectionCurrentId] =
               SelectedEntity(graph, it.first.id, SelectedEntity::NODE_SELECTED);
@@ -316,13 +323,15 @@ void GlGraphHighDetailsRenderer::draw(float, Camera *camera) {
       for (auto &it : layersLODVector[0].edgesLODVector) {
 
         if ((it.lod <= 0) || (filteringProperty && filteringProperty->getEdgeValue(edge(it.id))) ||
-            !displayEdges)
+            !displayEdges) {
           continue;
+        }
 
         if (!metric) {
           if (selectionDrawActivate) {
-            if ((selectionType & RenderingEdges) == 0)
+            if ((selectionType & RenderingEdges) == 0) {
               continue;
+            }
 
             (*selectionIdMap)[*selectionCurrentId] =
                 SelectedEntity(graph, it.id, SelectedEntity::EDGE_SELECTED);
@@ -349,8 +358,9 @@ void GlGraphHighDetailsRenderer::draw(float, Camera *camera) {
 
         for (auto &it : edgesMetricOrdered) {
           if (selectionDrawActivate) {
-            if ((selectionType & RenderingEdges) == 0)
+            if ((selectionType & RenderingEdges) == 0) {
               continue;
+            }
 
             (*selectionIdMap)[*selectionCurrentId] =
                 SelectedEntity(graph, it.first.id, SelectedEntity::EDGE_SELECTED);
@@ -373,8 +383,9 @@ void GlGraphHighDetailsRenderer::draw(float, Camera *camera) {
       // Collect complex entities
       for (auto &it : layersLODVector[0].nodesLODVector) {
 
-        if ((it.lod < 0) || (filteringProperty && filteringProperty->getNodeValue(node(it.id))))
+        if ((it.lod < 0) || (filteringProperty && filteringProperty->getNodeValue(node(it.id)))) {
           continue;
+        }
 
         BoundingBox &bb = it.boundingBox;
         Coord middle = (bb[1] + bb[0]) / 2.f;
@@ -388,8 +399,9 @@ void GlGraphHighDetailsRenderer::draw(float, Camera *camera) {
 
     if (!selectionDrawActivate || ((selectionType & RenderingEdges) != 0)) {
       for (auto &it : layersLODVector[0].edgesLODVector) {
-        if ((it.lod < 0) || (filteringProperty && filteringProperty->getEdgeValue(edge(it.id))))
+        if ((it.lod < 0) || (filteringProperty && filteringProperty->getEdgeValue(edge(it.id)))) {
           continue;
+        }
 
         BoundingBox &bb = it.boundingBox;
         Coord middle = (bb[0] + bb[1]) / 2.f;
@@ -418,8 +430,9 @@ void GlGraphHighDetailsRenderer::draw(float, Camera *camera) {
           }
 
           if (selectionDrawActivate) {
-            if ((selectionType & RenderingNodes) == 0)
+            if ((selectionType & RenderingNodes) == 0) {
               continue;
+            }
 
             (*selectionIdMap)[*selectionCurrentId] =
                 SelectedEntity(graph, entity->id, SelectedEntity::NODE_SELECTED);
@@ -430,13 +443,15 @@ void GlGraphHighDetailsRenderer::draw(float, Camera *camera) {
           GlNode glNode(node(entity->id), graph);
           glNode.draw(entity->lod, inputData, camera);
 
-          if (renderOnlyOneNode)
+          if (renderOnlyOneNode) {
             break;
+          }
         }
 
       } else {
-        if (!displayEdges)
+        if (!displayEdges) {
           continue;
+        }
 
         // All opaque elements have been drawn, turn the depth buffer read-only
         // in order for a transparent object to not occlude another transparent object
@@ -445,8 +460,9 @@ void GlGraphHighDetailsRenderer::draw(float, Camera *camera) {
         }
 
         if (selectionDrawActivate) {
-          if ((selectionType & RenderingEdges) == 0)
+          if ((selectionType & RenderingEdges) == 0) {
             continue;
+          }
 
           (*selectionIdMap)[*selectionCurrentId] =
               SelectedEntity(graph, entity->id, SelectedEntity::EDGE_SELECTED);
@@ -485,8 +501,9 @@ void GlGraphHighDetailsRenderer::draw(float, Camera *camera) {
   OcclusionTest occlusionTest;
   bool labelDensityAtZero = true;
 
-  if (inputData->parameters->getLabelsDensity() != -100)
+  if (inputData->parameters->getLabelsDensity() != -100) {
     labelDensityAtZero = false;
+  }
 
   if (!labelDensityAtZero) {
     glPushAttrib(GL_ALL_ATTRIB_BITS);
@@ -570,11 +587,13 @@ void GlGraphHighDetailsRenderer::drawLabelsForComplexEntities(bool drawSelected,
       float lod = it.lod;
 
       if ((lod < 0 && !viewOutScreenLabel) ||
-          (lod < 10 && inputData->renderingParameters()->isLabelScaled()))
+          (lod < 10 && inputData->renderingParameters()->isLabelScaled())) {
         continue;
+      }
 
-      if (viewOutScreenLabel && lod < 0)
+      if (viewOutScreenLabel && lod < 0) {
         lod = -lod;
+      }
 
       node n(it.id);
 
@@ -615,8 +634,9 @@ void GlGraphHighDetailsRenderer::drawLabelsForComplexEntities(bool drawSelected,
 
     vector<pair<edge, float>> edgesMetricOrdered;
     for (auto &it : layerLODUnit.edgesLODVector) {
-      if (it.lod < 5)
+      if (it.lod < 5) {
         continue;
+      }
 
       edge e(it.id);
 

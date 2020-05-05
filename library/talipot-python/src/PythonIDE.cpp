@@ -218,12 +218,7 @@ static QString getTalipotPythonPluginSkeleton(const QString &pluginClassName,
   QString pluginSkeleton;
 
   QString pluginPaths = PythonInterpreter::pythonPluginsPathHome;
-#if defined(__APPLE__)
-  if (!PythonInterpreter::pythonPluginsPath.contains(".app/Contents/"))
-#elif defined(_LINUX)
-  if (!PythonInterpreter::pythonPluginsPath.startsWith("/tmp/.mount"))
-#endif
-    pluginPaths += "\n# or " + PythonInterpreter::pythonPluginsPath;
+  pluginPaths += "\n# or " + PythonInterpreter::pythonPluginsPath;
 
   pluginSkeleton = QString(R"(
 # When the plugin development is finished, you can copy the associated
@@ -519,8 +514,9 @@ void PythonIDE::loadModule() {
 bool PythonIDE::loadModule(const QString &fileName) {
   QFile file(fileName);
 
-  if (!file.exists())
+  if (!file.exists()) {
     return false;
+  }
 
   QFileInfo fileInfo(file);
 
@@ -538,10 +534,11 @@ void PythonIDE::saveModule(int tabIdx) {
     QString moduleNameExt = _ui->modulesTabWidget->tabText(tabIdx);
     QString moduleName;
 
-    if (moduleNameExt[moduleNameExt.size() - 1] == '*')
+    if (moduleNameExt[moduleNameExt.size() - 1] == '*') {
       moduleName = moduleNameExt.mid(0, moduleNameExt.size() - 4);
-    else
+    } else {
       moduleName = moduleNameExt.mid(0, moduleNameExt.size() - 3);
+    }
 
     // workaround a Qt5 bug on linux
     moduleName = moduleName.replace("&", "");
@@ -572,16 +569,19 @@ void PythonIDE::newFileModule() {
   QString fileName =
       QFileDialog::getSaveFileName(this, tr("Set module filename"), "", "Python script (*.py)");
 
-  if (fileName.isEmpty())
+  if (fileName.isEmpty()) {
     return;
+  }
 
-  if (!fileName.endsWith(".py"))
+  if (!fileName.endsWith(".py")) {
     fileName += ".py";
+  }
 
   QFile file(fileName);
 
-  if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+  if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
     return;
+  }
 
   file.close();
 
@@ -599,8 +599,9 @@ void PythonIDE::newStringModule() {
                                              "module name :", QLineEdit::Normal, "", &ok);
 
   if (ok && !moduleName.isEmpty()) {
-    if (!moduleName.endsWith(".py"))
+    if (!moduleName.endsWith(".py")) {
       moduleName += ".py";
+    }
 
     int editorId = addModuleEditor(moduleName);
     saveModule(editorId);
@@ -610,8 +611,9 @@ void PythonIDE::newStringModule() {
 void PythonIDE::saveModule() {
   int curModule = _ui->modulesTabWidget->currentIndex();
 
-  if (curModule == -1)
+  if (curModule == -1) {
     return;
+  }
 
   saveModule(curModule);
 }
@@ -630,10 +632,11 @@ bool PythonIDE::reloadAllModules() const {
     QString moduleNameExt = _ui->modulesTabWidget->tabText(i);
     QString moduleName;
 
-    if (moduleNameExt[moduleNameExt.size() - 1] == '*')
+    if (moduleNameExt[moduleNameExt.size() - 1] == '*') {
       moduleName = moduleNameExt.mid(0, moduleNameExt.size() - 4);
-    else
+    } else {
       moduleName = moduleNameExt.mid(0, moduleNameExt.size() - 3);
+    }
 
     // workaround a Qt5 bug on linux
     moduleName = moduleName.replace("&", "");
@@ -659,8 +662,9 @@ void PythonIDE::newPythonPlugin() {
   if (pluginCreationDialog.exec() == QDialog::Accepted) {
     QFile file(pluginCreationDialog.getPluginFileName());
 
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
       return;
+    }
 
     QFileInfo fileInfo(file);
     QString modulePath(fileInfo.absolutePath());
@@ -771,8 +775,9 @@ bool PythonIDE::loadPythonPlugin(const QString &fileName, bool clear) {
 
   QFile file(fileName);
 
-  if (!file.exists())
+  if (!file.exists()) {
     return false;
+  }
 
   QFileInfo fileInfo(file);
   QString modulePath(fileInfo.absolutePath());
@@ -897,10 +902,11 @@ void PythonIDE::savePythonPlugin(int tabIdx) {
     QString moduleNameExt = _ui->pluginsTabWidget->tabText(tabIdx);
     QString moduleName;
 
-    if (moduleNameExt[moduleNameExt.size() - 1] == '*')
+    if (moduleNameExt[moduleNameExt.size() - 1] == '*') {
       moduleName = moduleNameExt.mid(0, moduleNameExt.size() - 4);
-    else
+    } else {
       moduleName = moduleNameExt.mid(0, moduleNameExt.size() - 3);
+    }
 
     // workaround a Qt5 bug on linux
     moduleName = moduleName.replace("&", "");
@@ -927,8 +933,9 @@ void PythonIDE::saveAllPlugins() {
 void PythonIDE::registerPythonPlugin(bool clear) {
   int tabIdx = _ui->pluginsTabWidget->currentIndex();
 
-  if (tabIdx == -1)
+  if (tabIdx == -1) {
     return;
+  }
 
   QString pluginFile = getPluginEditor(tabIdx)->getFileName();
 
@@ -938,10 +945,11 @@ void PythonIDE::registerPythonPlugin(bool clear) {
   moduleNameExt = moduleNameExt.mid(moduleNameExt.lastIndexOf("]") + 2);
   QString moduleName;
 
-  if (moduleNameExt[moduleNameExt.size() - 1] == '*')
+  if (moduleNameExt[moduleNameExt.size() - 1] == '*') {
     moduleName = moduleNameExt.mid(0, moduleNameExt.size() - 4);
-  else
+  } else {
     moduleName = moduleNameExt.mid(0, moduleNameExt.size() - 3);
+  }
 
   moduleName = moduleName.replace(".py", "");
 
@@ -1021,8 +1029,9 @@ void PythonIDE::removePythonPlugin() {
 
   int tabIdx = _ui->pluginsTabWidget->currentIndex();
 
-  if (tabIdx == -1)
+  if (tabIdx == -1) {
     return;
+  }
 
   QString pluginName = _editedPluginsName[getCurrentPluginEditor()->getFileName()];
 
@@ -1673,12 +1682,14 @@ void PythonIDE::saveScript(int tabIdx, bool clear, bool showFileDialog) {
 
       fileName =
           QFileDialog::getSaveFileName(this, tr("Save main script"), dir, "Python script (*.py)");
-    } else
+    } else {
       fileName = mainScriptFileName;
+    }
 
     if (!fileName.isEmpty()) {
-      if (!fileName.endsWith(".py"))
+      if (!fileName.endsWith(".py")) {
         fileName += ".py";
+      }
 
       QFile file(fileName);
       QFileInfo fileInfo(file);
@@ -1750,8 +1761,9 @@ void PythonIDE::dropEvent(QDropEvent *dropEv) {
         static_cast<tlp::GraphHierarchiesModel *>(_ui->graphComboBox->model());
     QModelIndex graphIndex = model->indexOf(mimeType->graph());
 
-    if (graphIndex == _ui->graphComboBox->selectedIndex())
+    if (graphIndex == _ui->graphComboBox->selectedIndex()) {
       return;
+    }
 
     _ui->graphComboBox->selectIndex(graphIndex);
     dropEv->accept();
@@ -1849,8 +1861,9 @@ void PythonIDE::executeCurrentScript() {
 
   _pythonInterpreter->resetConsoleWidget();
 
-  if (Observable::observersHoldCounter() > 0)
+  if (Observable::observersHoldCounter() > 0) {
     Observable::unholdObservers();
+  }
 
   // some external modules (like numpy) overrides the SIGINT handler at import
   // reinstall the default one, otherwise Talipot can not be interrupted by hitting Ctrl-C in a
@@ -1872,8 +1885,9 @@ bool PythonIDE::closeEditorTabRequested(PythonEditorsTabWidget *tabWidget, int i
   // workaround a Qt5 bug on linux
   curTabText = curTabText.replace("&", "");
 
-  if (curTabText.isEmpty())
+  if (curTabText.isEmpty()) {
     return true;
+  }
 
   PythonCodeEditor *editor = tabWidget->getEditor(idx);
   QString fileName = editor->getFileName();

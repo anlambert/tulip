@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -155,18 +155,21 @@ void Histogram::computeHistogram() {
   initXAxisScale = make_pair(min, max);
 
   if (xAxisScaleDefined) {
-    if (min > xAxisScale.first)
+    if (min > xAxisScale.first) {
       min = xAxisScale.first;
+    }
 
-    if (max < xAxisScale.second)
+    if (max < xAxisScale.second) {
       max = xAxisScale.second;
+    }
   }
 
   xAxisScale.first = min;
   xAxisScale.second = max;
 
-  if (min == max)
+  if (min == max) {
     max += 1;
+  }
 
   binWidth = (max - min) / nbHistogramBins;
 
@@ -357,11 +360,13 @@ void Histogram::createAxis() {
   initYAxisScale = make_pair(minAxisValue, maxAxisValue);
 
   if (yAxisScaleDefined) {
-    if (yAxisScale.first < double(minAxisValue))
+    if (yAxisScale.first < double(minAxisValue)) {
       minAxisValue = uint(yAxisScale.first);
+    }
 
-    if (yAxisScale.second > double(maxAxisValue))
+    if (yAxisScale.second > double(maxAxisValue)) {
       maxAxisValue = uint(yAxisScale.second);
+    }
   }
 
   yAxisScale.first = minAxisValue;
@@ -369,8 +374,9 @@ void Histogram::createAxis() {
 
   yAxisIncrementStep = maxAxisValue / 10;
 
-  if (yAxisIncrementStep < 1)
+  if (yAxisIncrementStep < 1) {
     yAxisIncrementStep = 1;
+  }
 
   if (lastCumulHisto != cumulativeFreqHisto) {
     unsigned int n;
@@ -387,8 +393,9 @@ void Histogram::createAxis() {
 
     yAxisIncrementStep = (yAxisIncrementStep * maxAxisValue) / n;
 
-    if (lastCumulHisto)
+    if (lastCumulHisto) {
       ++yAxisIncrementStep;
+    }
   }
 
   yAxis = new GlQuantitativeAxis((dataLocation == NODE ? "number of nodes" : "number of edges"),
@@ -423,12 +430,14 @@ void Histogram::createAxis() {
       if (axisMax != LLONG_MIN) {
         long long incrementStep = static_cast<long long>((max - min) / nbXGraduations);
 
-        if (incrementStep < 1)
+        if (incrementStep < 1) {
           incrementStep = 1;
+        }
 
         xAxis->setAxisParameters(axisMin, axisMax, incrementStep, GlAxis::LEFT_OR_BELOW, true);
-      } else
+      } else {
         xAxis->setAxisParameters(min, max, nbXGraduations, GlAxis::LEFT_OR_BELOW, true);
+      }
     } else {
       xAxis->setAxisParameters(min, max, nbXGraduations, GlAxis::LEFT_OR_BELOW, true);
     }
@@ -576,14 +585,17 @@ void Histogram::updateSizes() {
 
 void Histogram::update() {
 
-  if (!updateNeeded)
+  if (!updateNeeded) {
     return;
+  }
 
-  if (layoutUpdateNeeded)
+  if (layoutUpdateNeeded) {
     updateLayout();
+  }
 
-  if (sizesUpdateNeeded)
+  if (sizesUpdateNeeded) {
     updateSizes();
+  }
 
   ostringstream oss;
   edgeAsNodeGraph->getSizeProperty("viewSize")->setAllNodeValue(Size(refSize, refSize, refSize));

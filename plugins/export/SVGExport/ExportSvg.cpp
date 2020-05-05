@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -273,8 +273,9 @@ void ExportSvg::addWebFontFromIconName(const string &iconName) {
     _base64fontAdded.insert(fontFile);
 
     QFile file(tlpStringToQString(fontFile));
-    if (!file.open(QIODevice::ReadOnly))
+    if (!file.open(QIODevice::ReadOnly)) {
       tlp::warning() << "Cannot open " << fontFile << endl;
+    }
 
     QByteArray byteArray(file.readAll());
     file.close();
@@ -382,8 +383,9 @@ bool ExportSvg::addShape(const tlp::NodeShape::NodeShapes &type, const Coord &co
     addColor(color);
     _res.writeAttribute("filter", "url(#fglow1)");
 
-    if (borderwidth > 0)
+    if (borderwidth > 0) {
       addBorder(bordercolor, borderwidth);
+    }
 
     break;
 
@@ -398,8 +400,9 @@ bool ExportSvg::addShape(const tlp::NodeShape::NodeShapes &type, const Coord &co
     _res.writeAttribute("ry", QString::number(h));
     addColor(color);
 
-    if (borderwidth > 0)
+    if (borderwidth > 0) {
       addBorder(bordercolor, borderwidth);
+    }
 
     break;
 
@@ -408,10 +411,11 @@ bool ExportSvg::addShape(const tlp::NodeShape::NodeShapes &type, const Coord &co
     _res.writeAttribute("points", list_points_rect);
     _res.writeAttribute("fill", "none");
 
-    if (borderwidth == 0)
+    if (borderwidth == 0) {
       addBorder(tlp::Color::Black, 0.02);
-    else
+    } else {
       addBorder(bordercolor, borderwidth);
+    }
 
     _res.writeEndElement();
     break;
@@ -422,8 +426,9 @@ bool ExportSvg::addShape(const tlp::NodeShape::NodeShapes &type, const Coord &co
                                       "," + ydstr);
     addColor(color);
 
-    if (borderwidth > 0)
+    if (borderwidth > 0) {
       addBorder(bordercolor, borderwidth);
+    }
 
     break;
 
@@ -436,8 +441,9 @@ bool ExportSvg::addShape(const tlp::NodeShape::NodeShapes &type, const Coord &co
                                       QString::number(xg) + "," + QString::number(yg));
     addColor(color);
 
-    if (borderwidth > 0)
+    if (borderwidth > 0) {
       addBorder(bordercolor, borderwidth);
+    }
 
     break;
 
@@ -450,8 +456,9 @@ bool ExportSvg::addShape(const tlp::NodeShape::NodeShapes &type, const Coord &co
                                       QString::number(yn));
     addColor(color);
 
-    if (borderwidth > 0)
+    if (borderwidth > 0) {
       addBorder(bordercolor, borderwidth);
+    }
 
     break;
 
@@ -462,8 +469,9 @@ bool ExportSvg::addShape(const tlp::NodeShape::NodeShapes &type, const Coord &co
                                       QString::number(xp) + "," + QString::number(y));
     addColor(color);
 
-    if (borderwidth > 0)
+    if (borderwidth > 0) {
       addBorder(bordercolor, borderwidth);
+    }
 
     break;
 
@@ -474,8 +482,9 @@ bool ExportSvg::addShape(const tlp::NodeShape::NodeShapes &type, const Coord &co
     _res.writeAttribute("points", list_points_rect);
     addColor(color);
 
-    if (borderwidth > 0)
+    if (borderwidth > 0) {
       addBorder(bordercolor, borderwidth);
+    }
 
     break;
 
@@ -495,8 +504,9 @@ bool ExportSvg::addShape(const tlp::NodeShape::NodeShapes &type, const Coord &co
 
     addColor(color);
 
-    if (borderwidth > 0)
+    if (borderwidth > 0) {
       addBorder(bordercolor, borderwidth);
+    }
 
     break;
 
@@ -559,8 +569,9 @@ bool ExportSvg::addShape(const tlp::NodeShape::NodeShapes &type, const Coord &co
                                       QString::number(xj) + "," + QString::number(yj));
     addColor(color);
 
-    if (borderwidth > 0)
+    if (borderwidth > 0) {
       addBorder(bordercolor, borderwidth);
+    }
   } break;
 
   case NodeShape::Icon: {
@@ -577,8 +588,9 @@ bool ExportSvg::addShape(const tlp::NodeShape::NodeShapes &type, const Coord &co
     _res.writeAttribute("text-anchor", "middle");
     addColor(color);
 
-    if (borderwidth > 0)
+    if (borderwidth > 0) {
       addBorder(bordercolor, borderwidth);
+    }
 
     _res.writeCharacters("");
     _res.device()->write("&"); // do not escape the character
@@ -597,8 +609,9 @@ bool ExportSvg::addShape(const tlp::NodeShape::NodeShapes &type, const Coord &co
     _res.writeAttribute("ry", QString::number(h));
     addColor(color);
 
-    if (borderwidth > 0)
+    if (borderwidth > 0) {
       addBorder(bordercolor, borderwidth);
+    }
 
     break;
   }
@@ -732,11 +745,13 @@ bool ExportSvg::createEdge(const tlp::EdgeShape::EdgeShapes &type, const vector<
   _res.writeAttribute("stroke-opacity", qcolorA);
   _res.writeAttribute("stroke", color);
 
-  if (src_anchor_shape_type != EdgeExtremityShape::None)
+  if (src_anchor_shape_type != EdgeExtremityShape::None) {
     _res.writeAttribute("marker-start", "url(#Msrc" + QString::number(id_src_shape) + ")");
+  }
 
-  if (tgt_anchor_shape_type != EdgeExtremityShape::None)
+  if (tgt_anchor_shape_type != EdgeExtremityShape::None) {
     _res.writeAttribute("marker-end", "url(#Mtgt" + QString::number(id_tgt_shape) + ")");
+  }
 
   _res.writeEndElement(); // path
   return !_res.hasError();
@@ -749,8 +764,9 @@ bool ExportSvg::exportEdgeExtremity(
     const tlp::Color &color, const unsigned int id_src_gradient, const unsigned int id_tgt_gradient,
     const string &iconName) {
   if (src_anchor_shape_type != EdgeExtremityShape::None) {
-    if (src_anchor_shape_type == EdgeExtremityShape::GlowSphere)
+    if (src_anchor_shape_type == EdgeExtremityShape::GlowSphere) {
       addGlowEffect();
+    }
 
     // Writing the context
     _res.writeStartElement("defs");
@@ -840,8 +856,9 @@ bool ExportSvg::exportEdgeExtremity(
   }
 
   if (tgt_anchor_shape_type != EdgeExtremityShape::None) {
-    if (tgt_anchor_shape_type == EdgeExtremityShape::GlowSphere)
+    if (tgt_anchor_shape_type == EdgeExtremityShape::GlowSphere) {
       addGlowEffect();
+    }
 
     // Writing the context
     _res.writeStartElement("defs");

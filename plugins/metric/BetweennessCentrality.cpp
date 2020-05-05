@@ -100,8 +100,9 @@ public:
     }
 
     // Metric is 0 in this case
-    if (graph->numberOfNodes() <= 2)
+    if (graph->numberOfNodes() <= 2) {
       return true;
+    }
 
     // Edges weights should be positive
     if (weight && weight->getEdgeDoubleMin() <= 0) {
@@ -117,17 +118,19 @@ public:
 
     for (auto s : graph->nodes()) {
 
-      if (((++count % 50) == 0) && (pluginProgress->progress(count, nbNodes) != TLP_CONTINUE))
+      if (((++count % 50) == 0) && (pluginProgress->progress(count, nbNodes) != TLP_CONTINUE)) {
         break;
+      }
 
       stack<node> S;
       unordered_map<node, list<node>> P;
       MutableContainer<int> sigma;
 
-      if (weight)
+      if (weight) {
         computeDijkstra(s, directed, weight, S, P, sigma);
-      else
+      } else {
         computeBFS(s, directed, S, P, sigma);
+      }
 
       MutableContainer<double> delta;
       delta.setAll(0.0);
@@ -144,20 +147,23 @@ public:
 
           if (e.isValid()) {
             result->setEdgeValue(e, result->getEdgeValue(e) + vd);
-            if (weight)
+            if (weight) {
               avg_path_length += vd * weight->getEdgeDoubleValue(e);
-            else
+            } else {
               avg_path_length += vd;
+            }
           }
         }
 
-        if (w != s)
+        if (w != s) {
           result->setNodeValue(w, result->getNodeValue(w) + wD);
+        }
       }
     }
 
-    if (pluginProgress->state() != TLP_CONTINUE)
+    if (pluginProgress->state() != TLP_CONTINUE) {
       return pluginProgress->state() != TLP_CANCEL;
+    }
 
     // Normalization
     if (norm || !directed) {
@@ -167,22 +173,26 @@ public:
       for (auto s : graph->nodes()) {
 
         // In the undirected case, the metric must be divided by two, then
-        if (norm)
+        if (norm) {
           result->setNodeValue(s, result->getNodeValue(s) * nNormFactor);
+        }
 
-        if (!directed)
+        if (!directed) {
           result->setNodeValue(s, result->getNodeValue(s) * 0.5);
+        }
       }
 
       const double eNormFactor = 4.0 / (n * n);
 
       for (auto e : graph->edges()) {
 
-        if (norm)
+        if (norm) {
           result->setEdgeValue(e, result->getEdgeValue(e) * eNormFactor);
+        }
 
-        if (!directed)
+        if (!directed) {
           result->setEdgeValue(e, result->getEdgeValue(e) * 0.5);
+        }
       }
     }
     avg_path_length /= (nbNodes * (nbNodes - 1.));

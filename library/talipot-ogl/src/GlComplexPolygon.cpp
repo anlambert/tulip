@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -442,8 +442,9 @@ void GlComplexPolygon::draw(float, Camera *) {
   glEnable(GL_COLOR_MATERIAL);
 
   if (!textureName.empty()) {
-    if (GlTextureManager::activateTexture(textureName))
+    if (GlTextureManager::activateTexture(textureName)) {
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    }
   }
 
   glNormal3f(0.0f, 0.0f, 1.0f);
@@ -466,8 +467,9 @@ void GlComplexPolygon::draw(float, Camera *) {
   if (outlined) {
     float lineWidth = outlineSize;
 
-    if (lineWidth < 1e-6f)
+    if (lineWidth < 1e-6f) {
       lineWidth = 1e-6f;
+    }
 
     glLineWidth(lineWidth);
     setMaterial(outlineColor);

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -45,8 +45,9 @@ bool InducedSubGraphSelection::run() {
     dataSet->get("Use edges", useEdges);
   }
 
-  if (entrySelection == nullptr)
+  if (entrySelection == nullptr) {
     entrySelection = graph->getBooleanProperty("viewSelection");
+  }
 
   // as the input selection property and the result property can be the same one,
   // if needed, use a stable iterator to keep a copy of the input selected nodes as all values

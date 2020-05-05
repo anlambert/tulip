@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -42,8 +42,9 @@ void DragHandle::mouseMoveEvent(QMouseEvent *ev) {
   assert(_panel != nullptr);
 
   if (!_panel || !_pressed ||
-      (ev->pos() - _clickPosition).manhattanLength() < QApplication::startDragDistance())
+      (ev->pos() - _clickPosition).manhattanLength() < QApplication::startDragDistance()) {
     return;
+  }
 
   QDrag *drag = new QDrag(_panel);
   PanelMimeType *mimedata = new PanelMimeType();

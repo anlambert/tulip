@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -67,11 +67,13 @@ bool GeographicViewConfigWidget::useSharedSizeProperty() const {
 GeographicViewConfigWidget::PolyFileType GeographicViewConfigWidget::polyFileType() const {
   _ui->mapToPolygon->setEnabled(false);
 
-  if (_ui->useDefaultShape->isChecked())
+  if (_ui->useDefaultShape->isChecked()) {
     return Default;
+  }
 
-  if (_ui->useCsvFile->isChecked())
+  if (_ui->useCsvFile->isChecked()) {
     return CsvFile;
+  }
 
   if (_ui->usePolyFile->isChecked()) {
     _ui->mapToPolygon->setEnabled(true);
@@ -84,11 +86,13 @@ GeographicViewConfigWidget::PolyFileType GeographicViewConfigWidget::polyFileTyp
 void GeographicViewConfigWidget::setPolyFileType(PolyFileType &fileType) {
   _ui->mapToPolygon->setEnabled(false);
 
-  if (fileType == Default)
+  if (fileType == Default) {
     _ui->useDefaultShape->setChecked(true);
+  }
 
-  if (fileType == CsvFile)
+  if (fileType == CsvFile) {
     _ui->useCsvFile->setChecked(true);
+  }
 
   if (fileType == PolyFile) {
     _ui->usePolyFile->setChecked(true);
@@ -190,18 +194,22 @@ void GeographicViewConfigWidget::setState(const DataSet &dataSet) {
 
   bool useShared = false;
 
-  if (dataSet.get("useSharedLayout", useShared))
+  if (dataSet.get("useSharedLayout", useShared)) {
     _ui->layoutCheckBox->setChecked(useShared);
+  }
 
-  if (dataSet.get("useSharedSize", useShared))
+  if (dataSet.get("useSharedSize", useShared)) {
     _ui->sizeCheckBox->setChecked(useShared);
+  }
 
-  if (dataSet.get("useSharedShape", useShared))
+  if (dataSet.get("useSharedShape", useShared)) {
     _ui->shapeCheckBox->setChecked(useShared);
+  }
 
   string customTileLayerUrl;
-  if (dataSet.get("customTileLayerUrl", customTileLayerUrl))
+  if (dataSet.get("customTileLayerUrl", customTileLayerUrl)) {
     _ui->customTileLayerUrl->setText(tlpStringToQString(customTileLayerUrl));
+  }
 }
 
 DataSet GeographicViewConfigWidget::state() const {

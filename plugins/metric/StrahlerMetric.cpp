@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -25,8 +25,9 @@ namespace std {
 struct couple {
   int p, r;
   bool operator==(const couple d) {
-    if ((p == d.p) && (r == d.r))
+    if ((p == d.p) && (r == d.r)) {
       return true;
+    }
 
     return false;
   }
@@ -35,8 +36,9 @@ struct couple {
 template <>
 struct equal_to<couple> {
   bool operator()(const couple c, const couple d) {
-    if ((c.r == d.r) && (c.p == d.p))
+    if ((c.r == d.r) && (c.p == d.p)) {
       return true;
+    }
 
     return false;
   }
@@ -152,8 +154,9 @@ Strahler StrahlerMetric::topSortStrahler(tlp::node n, int &curPref,
     if (tmpDbl > available) {
       additional += tmpDbl - available;
       available = tmpDbl - 1;
-    } else
+    } else {
       available -= 1;
+    }
   }
 
   result.strahler = additional;
@@ -204,8 +207,9 @@ bool StrahlerMetric::run() {
 
   unsigned int i = 0;
 
-  if (pluginProgress)
+  if (pluginProgress) {
     pluginProgress->showPreview(false);
+  }
 
   for (auto n : graph->nodes()) {
     tofree[n] = 0;
@@ -216,8 +220,9 @@ bool StrahlerMetric::run() {
 
     if (allNodes) {
       if (pluginProgress && ((++i % 100) == 0) &&
-          (pluginProgress->progress(i, graph->numberOfNodes()) != TLP_CONTINUE))
+          (pluginProgress->progress(i, graph->numberOfNodes()) != TLP_CONTINUE)) {
         break;
+      }
 
       switch (computationTypes.getCurrent()) {
       case ALL:
@@ -243,8 +248,9 @@ bool StrahlerMetric::run() {
     }
   }
 
-  if (pluginProgress->state() != TLP_CONTINUE)
+  if (pluginProgress->state() != TLP_CONTINUE) {
     return pluginProgress->state() != TLP_CANCEL;
+  }
 
   if (!allNodes) {
 

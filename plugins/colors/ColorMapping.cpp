@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -125,14 +125,17 @@ public:
   ~ColorMapping() override {}
   //=========================================================
   Color getColor(double value, double range) {
-    if (range == 0)
+    if (range == 0) {
       range = 1;
+    }
 
-    if (value < 0)
+    if (value < 0) {
       value = 0;
+    }
 
-    if (value > range)
+    if (value > range) {
       value = range;
+    }
 
     return colorScale.getColorAtPos(value / range);
   }
@@ -174,18 +177,21 @@ public:
 
       if (overrideMinInput && overrideMaxInput) {
         /// check for impossible values
-        if (minInput > maxInput)
+        if (minInput > maxInput) {
           minInput = maxInput;
+        }
 
-        if (maxInput < minInput)
+        if (maxInput < minInput) {
           maxInput = minInput;
+        }
       }
     }
 
-    if (metric == nullptr)
+    if (metric == nullptr) {
       metricS = graph->getDoubleProperty("viewMetric");
-    else
+    } else {
       metricS = dynamic_cast<NumericProperty *>(metric);
+    }
 
     if (eltTypes.getCurrent() != ENUMERATED_ELT) {
       if (eltTypes.getCurrent() == LINEAR_ELT || eltTypes.getCurrent() == LOGARITHMIC_ELT) {
@@ -217,8 +223,9 @@ public:
           }
 
           if ((iter % 100 == 0) && (pluginProgress->progress(iter, maxIter) != TLP_CONTINUE)) {
-            if (eltTypes.getCurrent() == UNIFORM_ELT)
+            if (eltTypes.getCurrent() == UNIFORM_ELT) {
               delete entryMetric;
+            }
 
             return pluginProgress->state() != TLP_CANCEL;
           }
@@ -249,8 +256,9 @@ public:
           }
 
           if ((iter % 100 == 0) && (pluginProgress->progress(iter, maxIter) != TLP_CONTINUE)) {
-            if (eltTypes.getCurrent() == UNIFORM_ELT)
+            if (eltTypes.getCurrent() == UNIFORM_ELT) {
               delete entryMetric;
+            }
 
             return pluginProgress->state() != TLP_CANCEL;
           }
@@ -259,8 +267,9 @@ public:
         }
       }
 
-      if (eltTypes.getCurrent() == UNIFORM_ELT)
+      if (eltTypes.getCurrent() == UNIFORM_ELT) {
         delete entryMetric;
+      }
     } else {
       unsigned int maxIter = (targetType.getCurrent() == NODES_TARGET) ? graph->numberOfNodes()
                                                                        : graph->numberOfEdges();
@@ -297,15 +306,17 @@ public:
       dataSet->get(ELT_TYPE, eltTypes);
       dataSet->get(TARGET_TYPE, targetType);
 
-      if (!dataSet->get("color scale", colorScale))
+      if (!dataSet->get("color scale", colorScale)) {
         dataSet->get("colorScale", colorScale);
+      }
 
       dataSet->get("maximum value", maxInput);
       dataSet->get("minimum value", minInput);
     }
 
-    if (metric == nullptr)
+    if (metric == nullptr) {
       metric = graph->getDoubleProperty("viewMetric");
+    }
 
     if (eltTypes.getCurrent() == ENUMERATED_ELT) {
 #ifndef TALIPOT_BUILD_CORE_ONLY
@@ -315,8 +326,9 @@ public:
         for (auto n : graph->nodes()) {
           std::string tmp = metric->getNodeStringValue(n);
 
-          if (mapMetricElements.count(tmp) == 0)
+          if (mapMetricElements.count(tmp) == 0) {
             mapMetricElements[tmp] = std::vector<unsigned int>();
+          }
 
           mapMetricElements[tmp].push_back(n.id);
         }
@@ -325,8 +337,9 @@ public:
         for (auto e : graph->edges()) {
           std::string tmp = metric->getEdgeStringValue(e);
 
-          if (mapMetricElements.count(tmp) == 0)
+          if (mapMetricElements.count(tmp) == 0) {
             mapMetricElements[tmp] = std::vector<unsigned int>();
+          }
 
           mapMetricElements[tmp].push_back(e.id);
         }

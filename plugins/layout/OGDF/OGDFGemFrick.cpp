@@ -143,11 +143,13 @@ void OGDFGemFrick::beforeCall() {
       gem->attractionFormula(sc.getCurrent() + 1);
     }
 
-    if (dataSet->get("minDistCC", dval))
+    if (dataSet->get("minDistCC", dval)) {
       gem->minDistCC(dval);
+    }
 
-    if (dataSet->get("pageRatio", dval))
+    if (dataSet->get("pageRatio", dval)) {
       gem->pageRatio(dval);
+    }
   }
 }
 

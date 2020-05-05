@@ -73,8 +73,9 @@ void DoubleStringsListRelationDialog::getResult(
 void DoubleStringsListRelationDialog::upButtonClicked() {
   int currentRow = _ui->firstListWidget->currentRow();
 
-  if (currentRow == 0)
+  if (currentRow == 0) {
     return;
+  }
 
   QListWidgetItem *item = _ui->firstListWidget->takeItem(currentRow);
   _ui->firstListWidget->insertItem(currentRow - 1, item);
@@ -84,8 +85,9 @@ void DoubleStringsListRelationDialog::upButtonClicked() {
 void DoubleStringsListRelationDialog::downButtonClicked() {
   int currentRow = _ui->firstListWidget->currentRow();
 
-  if (currentRow == _ui->firstListWidget->count() + 1)
+  if (currentRow == _ui->firstListWidget->count() + 1) {
     return;
+  }
 
   QListWidgetItem *item = _ui->firstListWidget->takeItem(currentRow);
   _ui->firstListWidget->insertItem(currentRow + 1, item);
@@ -95,8 +97,9 @@ void DoubleStringsListRelationDialog::downButtonClicked() {
 void DoubleStringsListRelationDialog::upButtonColorClicked() {
   int currentRow = _ui->secondListWidget->currentRow();
 
-  if (currentRow == 0)
+  if (currentRow == 0) {
     return;
+  }
 
   QListWidgetItem *item = _ui->secondListWidget->takeItem(currentRow);
   _ui->secondListWidget->insertItem(currentRow - 1, item);
@@ -106,8 +109,9 @@ void DoubleStringsListRelationDialog::upButtonColorClicked() {
 void DoubleStringsListRelationDialog::downButtonColorClicked() {
   int currentRow = _ui->secondListWidget->currentRow();
 
-  if (currentRow == _ui->secondListWidget->count() + 1)
+  if (currentRow == _ui->secondListWidget->count() + 1) {
     return;
+  }
 
   QListWidgetItem *item = _ui->secondListWidget->takeItem(currentRow);
   _ui->secondListWidget->insertItem(currentRow + 1, item);
@@ -115,11 +119,13 @@ void DoubleStringsListRelationDialog::downButtonColorClicked() {
 }
 
 void DoubleStringsListRelationDialog::scrollBarValueChanged(int value) {
-  if (_ui->firstListWidget->verticalScrollBar()->value() != value)
+  if (_ui->firstListWidget->verticalScrollBar()->value() != value) {
     _ui->firstListWidget->verticalScrollBar()->setSliderPosition(value);
+  }
 
-  if (_ui->secondListWidget->verticalScrollBar()->value() != value)
+  if (_ui->secondListWidget->verticalScrollBar()->value() != value) {
     _ui->secondListWidget->verticalScrollBar()->setSliderPosition(value);
+  }
 }
 
 void DoubleStringsListRelationDialog::interpolateCheckBoxChange(int state) {

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -32,8 +32,9 @@ bool tlp::RenamePropertyDialog::renameProperty(tlp::PropertyInterface *prop, QWi
         parent, "Renaming property '" + tlp::tlpStringToQString(prop->getName()) + "'",
         "New name: ", QLineEdit::Normal, tlpStringToQString(prop->getName()), &valid);
 
-    if (!valid)
+    if (!valid) {
       return false;
+    }
 
     // Check if parameters are valid.
     std::string propertyName = tlp::QStringToTlpString(pName);
@@ -52,10 +53,11 @@ bool tlp::RenamePropertyDialog::renameProperty(tlp::PropertyInterface *prop, QWi
       valid = prop->rename(propertyName);
     }
 
-    if (!valid)
+    if (!valid) {
       QMessageBox::critical(parent, "Error when renaming property", errorMsg);
-    else
+    } else {
       return true;
+    }
   }
 
   return false;

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -27,10 +27,11 @@ ParameterListModel::ParameterListModel(const tlp::ParameterDescriptionList &para
   std::vector<ParameterDescription> outParams;
   // first add in parameters
   for (const ParameterDescription &param : params.getParameters()) {
-    if (param.getDirection() != OUT_PARAM)
+    if (param.getDirection() != OUT_PARAM) {
       _params.push_back(param);
-    else
+    } else {
       outParams.push_back(param);
+    }
   }
 
   // then add out parameters
@@ -59,25 +60,28 @@ int ParameterListModel::columnCount(const QModelIndex &) const {
 }
 
 QVariant ParameterListModel::data(const QModelIndex &index, int role) const {
-  if (role == GraphRole)
+  if (role == GraphRole) {
     return QVariant::fromValue<tlp::Graph *>(_graph);
+  }
 
   const ParameterDescription &info = _params[index.row()];
 
-  if (role == Qt::ToolTipRole)
+  if (role == Qt::ToolTipRole) {
     return tlp::tlpStringToQString(info.getHelp());
-  else if (role == Qt::WhatsThisRole)
+  } else if (role == Qt::WhatsThisRole) {
     return tlp::tlpStringToQString(info.getHelp());
-  else if (role == Qt::BackgroundRole) {
-    if (info.isMandatory())
+  } else if (role == Qt::BackgroundRole) {
+    if (info.isMandatory()) {
       return QColor(255, 255, 222);
-    else
+    } else {
       return QColor(222, 255, 222);
+    }
   } else if (role == Qt::DisplayRole) {
     tlp::DataType *dataType = _data.getData(info.getName());
 
-    if (!dataType)
+    if (!dataType) {
       return info.getTypeName().c_str();
+    }
 
     QVariant result = MetaTypes::dataTypeToQvariant(dataType, info.getName());
     delete dataType;
@@ -92,10 +96,11 @@ QVariant ParameterListModel::data(const QModelIndex &index, int role) const {
 QVariant ParameterListModel::headerData(int section, Qt::Orientation orientation, int role) const {
 
   if (orientation == Qt::Horizontal && role == Qt::DisplayRole) {
-    if (section == 0)
+    if (section == 0) {
       return "Name";
-    else
+    } else {
       return "Value";
+    }
   }
 
   if (orientation == Qt::Vertical) {
@@ -105,15 +110,17 @@ QVariant ParameterListModel::headerData(int section, Qt::Orientation orientation
       // remove prefix if any
       size_t pos = info.getName().find("::");
 
-      if (pos != std::string::npos)
+      if (pos != std::string::npos) {
         return tlp::tlpStringToQString(info.getName().c_str() + pos + 2);
+      }
 
       return tlp::tlpStringToQString(info.getName().c_str());
     } else if (role == Qt::BackgroundRole) {
-      if (info.isMandatory())
+      if (info.isMandatory()) {
         return QColor(255, 255, 222);
-      else
+      } else {
         return QColor(222, 255, 222);
+      }
     } else if (role == Qt::ToolTipRole) {
       return tlp::tlpStringToQString(info.getHelp());
     } else if (role == Qt::DecorationRole) {
@@ -136,10 +143,12 @@ Qt::ItemFlags ParameterListModel::flags(const QModelIndex &index) const {
   bool editable = info.isEditable();
 
   if (index.column() == 0) {
-    if (editable)
+    if (editable) {
       result |= Qt::ItemIsEditable;
-  } else if (!editable)
+    }
+  } else if (!editable) {
     result ^= Qt::ItemIsEditable;
+  }
 
   return result;
 }
@@ -150,8 +159,9 @@ bool ParameterListModel::setData(const QModelIndex &index, const QVariant &value
 
     DataType *dataType = MetaTypes::qVariantToDataType(value);
 
-    if (dataType)
+    if (dataType) {
       _data.setData(info.getName(), dataType);
+    }
 
     return (dataType != nullptr);
   }

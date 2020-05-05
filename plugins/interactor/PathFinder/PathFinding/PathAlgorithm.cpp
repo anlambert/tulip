@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -99,9 +99,9 @@ bool PathAlgorithm::computePath(Graph *graph, PathType pathType, EdgeOrientation
 
     double pathLength;
 
-    if (tolerance == DBL_MAX)
+    if (tolerance == DBL_MAX) {
       pathLength = DBL_MAX;
-    else {
+    } else {
       pathLength = computePathLength(result, eWeights);
       pathLength *= tolerance;
     }
@@ -115,7 +115,8 @@ bool PathAlgorithm::computePath(Graph *graph, PathType pathType, EdgeOrientation
       retVal = d.searchPaths(src);
     }
   }
-  if (!retVal)
+  if (!retVal) {
     graph->pop();
+  }
   return retVal;
 }

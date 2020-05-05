@@ -120,8 +120,9 @@ void PluginsCenter::setNameFilter(const QString &filter) {
 void PluginsCenter::refreshFilter() {
   _currentItem = nullptr;
 
-  if (_categoryFilters.isEmpty())
+  if (_categoryFilters.isEmpty()) {
     _categoryFilters.push_back("");
+  }
 
   QVBoxLayout *lyt = new QVBoxLayout();
 

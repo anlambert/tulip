@@ -73,8 +73,9 @@ void CSVParsingConfigurationQWizardPage::parserChanged() {
     parser->parse(previewTableWidget, &progress);
     unsigned int nbCommentsLines = previewTableWidget->getNbCommentsLines();
 
-    if (nbCommentsLines)
+    if (nbCommentsLines) {
       parserConfigurationWidget->setNbIgnoredLines(nbCommentsLines);
+    }
   } else {
     previewTableWidget->setEnabled(false);
   }

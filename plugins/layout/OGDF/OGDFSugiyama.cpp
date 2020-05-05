@@ -175,37 +175,46 @@ public:
       bool bval = false;
       tlp::StringCollection sc;
 
-      if (dataSet->get("fails", ival))
+      if (dataSet->get("fails", ival)) {
         sugiyama->fails(ival);
+      }
 
-      if (dataSet->get("runs", ival))
+      if (dataSet->get("runs", ival)) {
         sugiyama->runs(ival);
+      }
 
-      if (dataSet->get("arrangeCCS", bval))
+      if (dataSet->get("arrangeCCS", bval)) {
         sugiyama->arrangeCCs(bval);
+      }
 
-      if (dataSet->get("minDistCC", dval))
+      if (dataSet->get("minDistCC", dval)) {
         sugiyama->minDistCC(dval);
+      }
 
-      if (dataSet->get("pageRatio", dval))
+      if (dataSet->get("pageRatio", dval)) {
         sugiyama->pageRatio(dval);
+      }
 
-      if (dataSet->get("alignBaseClasses", bval))
+      if (dataSet->get("alignBaseClasses", bval)) {
         sugiyama->alignBaseClasses(bval);
+      }
 
-      if (dataSet->get("alignSiblings", bval))
+      if (dataSet->get("alignSiblings", bval)) {
         sugiyama->alignSiblings(bval);
+      }
 
-      if (dataSet->get("transpose", bval))
+      if (dataSet->get("transpose", bval)) {
         sugiyama->transpose(bval);
+      }
 
       if (dataSet->get(ELT_RANKING, sc)) {
         if (sc.getCurrent() == ELT_LONGESTPATHRANKING) {
           sugiyama->setRanking(new ogdf::LongestPathRanking());
         } else if (sc.getCurrent() == ELT_OPTIMALRANKING) {
           sugiyama->setRanking(new ogdf::OptimalRanking());
-        } else
+        } else {
           sugiyama->setRanking(new ogdf::CoffmanGrahamRanking());
+        }
       }
 
       if (dataSet->get(ELT_TWOLAYERCROSS, sc)) {
@@ -260,10 +269,11 @@ public:
   void callOGDFLayoutAlgorithm(ogdf::GraphAttributes &gAttributes) override {
     ogdf::SugiyamaLayout *sugiyama = static_cast<ogdf::SugiyamaLayout *>(ogdfLayoutAlgo);
 
-    if (sugiyama->alignBaseClasses() || sugiyama->alignSiblings())
+    if (sugiyama->alignBaseClasses() || sugiyama->alignSiblings()) {
       sugiyama->callUML(gAttributes);
-    else
+    } else {
       ogdfLayoutAlgo->call(gAttributes);
+    }
   }
 
   void afterCall() override {

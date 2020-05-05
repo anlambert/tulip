@@ -89,14 +89,16 @@ void EnclosingCircleHighlighter::highlight(const PathFinder *, GlMainWidget *glM
     Circlef c;
     minDepth = min(minDepth, layout->getNodeValue(n).getZ());
 
-    if (getNodeEnclosingCircle(c, inputData, n))
+    if (getNodeEnclosingCircle(c, inputData, n)) {
       circles.push_back(c);
+    }
   }
   for (auto e : selection->getEdgesEqualTo(true)) {
     Circlef c;
 
-    if (getEdgeEnclosingCircle(c, inputData, e))
+    if (getEdgeEnclosingCircle(c, inputData, e)) {
       circles.push_back(c);
+    }
   }
   Circlef enclosing(enclosingCircle<float>(circles));
 
@@ -134,8 +136,9 @@ QWidget *EnclosingCircleHighlighter::getConfigurationWidget() {
   if (inversedColor) {
     configurationWidget->inverseColorRadioCheck(true);
     configurationWidget->circleColorBtnDisabled(true);
-  } else
+  } else {
     configurationWidget->solidColorRadioCheck(true);
+  }
 
   configurationWidget->alphaSliderSetValue(alpha);
   connect(configurationWidget, &EnclosingCircleConfigurationWidget::solidColorRadioChecked, this,

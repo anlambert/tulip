@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -149,8 +149,9 @@ string OpenGlConfigManager::getOpenGLVendor() {
 }
 
 bool OpenGlConfigManager::isExtensionSupported(const string &extensionName) {
-  if (!_glewIsInit)
+  if (!_glewIsInit) {
     return false;
+  }
 
   bool supported = false;
   TLP_LOCK_SECTION(OpenGlConfigManagerExtensionSupported) {
@@ -159,8 +160,9 @@ bool OpenGlConfigManager::isExtensionSupported(const string &extensionName) {
       supported = _checkedExtensions[extensionName] =
           (glewIsSupported(extensionName.c_str()) == GL_TRUE &&
            glewGetExtension(extensionName.c_str()) == GL_TRUE);
-    } else
+    } else {
       supported = it->second;
+    }
   }
   TLP_UNLOCK_SECTION(OpenGlConfigManagerExtensionSupported);
   return supported;
@@ -183,8 +185,9 @@ void OpenGlConfigManager::deactivateAntiAliasing() {
 int OpenGlConfigManager::maxNumberOfSamples() {
   static int maxSamples = -1;
 
-  if (maxSamples < 0)
+  if (maxSamples < 0) {
     glGetIntegerv(GL_MAX_SAMPLES, &maxSamples);
+  }
 
   return maxSamples / 4;
 }

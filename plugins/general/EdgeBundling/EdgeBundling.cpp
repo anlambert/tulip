@@ -96,8 +96,9 @@ public:
   bool operator()(const node a, const node b) const { // sort in deceresing order;
     double da, db;
 
-    if ((da = dist->getNodeValue(a)) == (db = dist->getNodeValue(b)))
+    if ((da = dist->getNodeValue(a)) == (db = dist->getNodeValue(b))) {
       return a.id > b.id;
+    }
 
     return da > db;
   }
@@ -106,8 +107,9 @@ NodeStaticProperty<double> *SortNodes::dist = nullptr;
 //============================================
 void updateLayout(node src, edge e, Graph *graph, LayoutProperty *layout,
                   const vector<node> &nBends, bool layout3D) {
-  if (nBends.size() < 3)
+  if (nBends.size() < 3) {
     return;
+  }
 
   // if source and target nodes are at the same position, don't set bends to avoid visual artifacts
   // when rendering the graph
@@ -127,15 +129,17 @@ void updateLayout(node src, edge e, Graph *graph, LayoutProperty *layout,
   for (unsigned int j = 0; j < bends.size(); ++j) {
     const Coord &coord = layout->getNodeValue(nBends[i]);
 
-    if (!layout3D)
+    if (!layout3D) {
       (bends[j] = coord)[2] = 0;
-    else
+    } else {
       bends[j] = coord;
+    }
 
-    if (sens)
+    if (sens) {
       ++i;
-    else
+    } else {
       --i;
+    }
   }
 
   TLP_LOCK_SECTION(LAYOUT) {
@@ -152,10 +156,11 @@ void EdgeBundling::fixEdgeType(EdgeStaticProperty<unsigned int> &ntype) {
     } else {
       auto ends = graph->ends(e);
 
-      if (oriGraph->isElement(ends.first) || oriGraph->isElement(ends.second))
+      if (oriGraph->isElement(ends.first) || oriGraph->isElement(ends.second)) {
         ntype[i] = 2;
-      else
+      } else {
         ntype[i] = 0;
+      }
     }
   });
 }
@@ -166,8 +171,9 @@ static void computeDik(Dijkstra &dijkstra, const Graph *const vertexCoverGraph,
   set<node> focus;
 
   if (optimizatioLevel > 0) {
-    for (auto ni : vertexCoverGraph->getInOutNodes(n))
+    for (auto ni : vertexCoverGraph->getInOutNodes(n)) {
       focus.insert(ni);
+    }
   }
 
   dijkstra.initDijkstra(oriGraph, n, mWeights, focus);
@@ -185,18 +191,20 @@ void EdgeBundling::computeDistance(node n, unsigned int i) {
     double dist = (nPos - layout->getNodeValue(n2)).norm();
     maxDist += dist;
   }
-  if (i != UINT_MAX)
+  if (i != UINT_MAX) {
     (*SortNodes::dist)[i] = maxDist;
-  else
+  } else {
     (*SortNodes::dist)[n] = maxDist;
+  }
 }
 //============================================
 
 bool EdgeBundling::run() {
 
   // no edges => do nothing
-  if (graph->numberOfEdges() == 0)
+  if (graph->numberOfEdges() == 0) {
     return true;
+  }
 
   optimizationLevel = 3;
   maxThread = 0;
@@ -266,8 +274,9 @@ bool EdgeBundling::run() {
       unsigned int sz = edges.size();
       while (sz) {
         auto e = edges[--sz];
-        if (oriGraph->isElement(e))
+        if (oriGraph->isElement(e)) {
           continue;
+        }
 
         graph->delEdge(e);
       }
@@ -298,10 +307,10 @@ bool EdgeBundling::run() {
         std::unordered_map<std::string, std::pair<node, unsigned int>>::iterator it =
             clusters.find(key);
 
-        if (it == clusters.end())
+        if (it == clusters.end()) {
           // register the first node at position represented by key
           clusters[key] = std::make_pair(n, UINT_MAX);
-        else {
+        } else {
           std::pair<node, unsigned int> &infos = it->second;
 
           if (infos.second == UINT_MAX) {
@@ -352,8 +361,9 @@ bool EdgeBundling::run() {
     unsigned int sz = nodes.size();
     while (sz) {
       auto n = nodes[--sz];
-      if (oriGraph->isElement(n))
+      if (oriGraph->isElement(n)) {
         continue;
+      }
 
       const Coord &c = layout->getNodeValue(n);
 
@@ -413,8 +423,9 @@ bool EdgeBundling::run() {
     // we can use a basic iteration instead of a stable one
     for (auto n : gridGraph->getOutNodes(rep)) {
       for (size_t j = 0; j < samePositionNodes[i].size(); ++j) {
-        if (samePositionNodes[i][j] == rep)
+        if (samePositionNodes[i][j] == rep) {
           continue;
+        }
 
         tlp::edge e = gridGraph->addEdge(samePositionNodes[i][j], n);
         ntype.addEdgeValue(e, 2);
@@ -433,8 +444,9 @@ bool EdgeBundling::run() {
     double abNorm = (a - b).norm();
     double initialWeight = pow(abNorm, longEdges);
 
-    if (ntype[i] == 2 && !edgeNodeOverlap)
+    if (ntype[i] == 2 && !edgeNodeOverlap) {
       initialWeight = abNorm;
+    }
 
     mWeights[i] = mWeightsInit[i] = initialWeight;
   });
@@ -463,8 +475,9 @@ bool EdgeBundling::run() {
     computeDistances();
     set<node, SortNodes> orderedNodes;
     {
-      for (auto n : vertexCoverGraph->nodes())
+      for (auto n : vertexCoverGraph->nodes()) {
         orderedNodes.insert(n);
+      }
     }
 
     while (vertexCoverGraph->isEmpty() == false) {
@@ -507,8 +520,9 @@ bool EdgeBundling::run() {
 
             if ((optimizationLevel == 3) &&
                 (toTreatByThreads.size() < ThreadManager::getNumberOfThreads())) {
-              for (auto tmp : vertexCoverGraph->getInOutNodes(n))
+              for (auto tmp : vertexCoverGraph->getInOutNodes(n)) {
                 blockNodes.insert(tmp);
+              }
             }
           }
         }
@@ -517,15 +531,17 @@ bool EdgeBundling::run() {
           toDelete.push_back(n);
         }
 
-        if (toTreatByThreads.size() >= ThreadManager::getNumberOfThreads())
+        if (toTreatByThreads.size() >= ThreadManager::getNumberOfThreads()) {
           break;
+        }
       }
 
-      if (optimizationLevel > 1)
+      if (optimizationLevel > 1) {
         for (unsigned int i = 0; i < toDelete.size(); i++) {
           orderedNodes.erase(toDelete[i]);
           vertexCoverGraph->delNode(toDelete[i]);
         }
+      }
 
       forceEdgeTest = false;
 
@@ -536,10 +552,11 @@ bool EdgeBundling::run() {
           node n = toTreatByThreads[j];
           Dijkstra dijkstra;
 
-          if (edgeNodeOverlap)
+          if (edgeNodeOverlap) {
             computeDik(dijkstra, vertexCoverGraph, nullptr, n, mWeights, optimizationLevel);
-          else
+          } else {
             computeDik(dijkstra, vertexCoverGraph, oriGraph, n, mWeights, optimizationLevel);
+          }
 
           // for each edge of n compute the shortest paths in the grid
           for (auto e : vertexCoverGraph->getInOutEdges(n)) {
@@ -549,8 +566,9 @@ bool EdgeBundling::run() {
               bool stop = false;
               // when we are not using coloration edge can be treated two times
               TLP_LOCK_SECTION(EDGETREATED) {
-                if (edgeTreated.get(e.id))
+                if (edgeTreated.get(e.id)) {
                   stop = true;
+                }
 
                 edgeTreated.set(e.id, true);
               }
@@ -569,10 +587,11 @@ bool EdgeBundling::run() {
           node n = toTreatByThreads[j];
           Dijkstra dijkstra;
 
-          if (edgeNodeOverlap)
+          if (edgeNodeOverlap) {
             computeDik(dijkstra, vertexCoverGraph, nullptr, n, mWeights, optimizationLevel);
-          else
+          } else {
             computeDik(dijkstra, vertexCoverGraph, oriGraph, n, mWeights, optimizationLevel);
+          }
 
           // for each edge of n compute the shortest paths in the grid
           for (auto e : vertexCoverGraph->getInOutEdges(n)) {
@@ -580,15 +599,17 @@ bool EdgeBundling::run() {
               bool stop = false;
               // when we are not using colration edge can be treated two times
               TLP_LOCK_SECTION(EDGETREATED) {
-                if (edgeTreated.get(e.id))
+                if (edgeTreated.get(e.id)) {
                   stop = true;
+                }
 
                 edgeTreated.set(e.id, true);
               }
               TLP_UNLOCK_SECTION(EDGETREATED);
 
-              if (stop)
+              if (stop) {
                 continue;
+              }
             }
 
             {
@@ -596,8 +617,9 @@ bool EdgeBundling::run() {
               vector<node> tmpV;
               dijkstra.searchPath(graph->opposite(e, n), tmpV);
 
-              if (!layout3D)
+              if (!layout3D) {
                 tmpV = BendsTools::bendsSimplification(tmpV, layout);
+              }
 
               updateLayout(n, e, graph, layout, tmpV, layout3D);
             }
@@ -635,10 +657,11 @@ bool EdgeBundling::run() {
           // double avgdepth = weightFactor * depth.getEdgeValue(e) + 1.;
           double avgdepth = depth.getEdgeValue(e);
 
-          if (avgdepth > 0)
+          if (avgdepth > 0) {
             mWeights[ePos] = mWeightsInit[ePos] / (log(avgdepth) + 1);
-          else
+          } else {
             mWeights[ePos] = mWeightsInit[ePos];
+          }
         }
       });
     }
@@ -648,9 +671,9 @@ bool EdgeBundling::run() {
   for (size_t i = 0; i < removedEdges.size(); ++i) {
     auto eEnds = graph->ends(removedEdges[i]);
 
-    if (eEnds.first == eEnds.second)
+    if (eEnds.first == eEnds.second) {
       oriGraph->addEdge(removedEdges[i]);
-    else {
+    } else {
       tlp::edge origEdge = oriGraph->existEdge(eEnds.first, eEnds.second);
 
       if (origEdge.isValid()) {
@@ -679,8 +702,9 @@ bool EdgeBundling::run() {
     unsigned int sz = nodes.size();
     while (sz) {
       auto n = nodes[--sz];
-      if (!oriGraph->isElement(n))
+      if (!oriGraph->isElement(n)) {
         graph->delNode(n, true);
+      }
     }
     graph->delAllSubGraphs(oriGraph);
     graph->delAllSubGraphs(gridGraph);

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -36,8 +36,9 @@ void IntegerProperty::clone_handler(
 }
 //=================================================================================
 PropertyInterface *IntegerProperty::clonePrototype(Graph *g, const std::string &n) const {
-  if (!g)
+  if (!g) {
     return nullptr;
+  }
 
   // allow to get an unregistered property (empty name)
   IntegerProperty *p = n.empty() ? new IntegerProperty(g) : g->getLocalIntegerProperty(n);
@@ -81,8 +82,9 @@ int IntegerProperty::compare(const edge e1, const edge e2) const {
 }
 //=================================================================================
 PropertyInterface *IntegerVectorProperty::clonePrototype(Graph *g, const std::string &n) const {
-  if (!g)
+  if (!g) {
     return nullptr;
+  }
 
   // allow to get an unregistered property (empty name)
   IntegerVectorProperty *p =

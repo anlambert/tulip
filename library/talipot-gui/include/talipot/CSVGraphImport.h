@@ -86,8 +86,9 @@ public:
   // look for a specific exception defined for token
   Action getActionForToken(const std::string &token) {
     for (const Exception &exception : _exceptions) {
-      if (exception.value == token)
+      if (exception.value == token) {
         return exception.action;
+      }
     }
     return Action::ASSIGN_VALUE;
   }

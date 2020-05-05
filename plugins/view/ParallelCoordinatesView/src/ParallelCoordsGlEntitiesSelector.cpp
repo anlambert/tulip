@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -50,11 +50,13 @@ bool ParallelCoordsGlEntitiesSelector::eventFilter(QObject *widget, QEvent *e) {
     QMouseEvent *qMouseEv = static_cast<QMouseEvent *>(e);
 
     if (qMouseEv->buttons() & Qt::LeftButton && started) {
-      if ((qMouseEv->x() > 0) && (qMouseEv->x() < glMainWidget->width()))
+      if ((qMouseEv->x() > 0) && (qMouseEv->x() < glMainWidget->width())) {
         w = qMouseEv->x() - x;
+      }
 
-      if ((qMouseEv->y() > 0) && (qMouseEv->y() < glMainWidget->height()))
+      if ((qMouseEv->y() > 0) && (qMouseEv->y() < glMainWidget->height())) {
         h = qMouseEv->y() - y;
+      }
 
       parallelView->refresh();
       return true;

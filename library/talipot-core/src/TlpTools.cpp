@@ -135,30 +135,34 @@ char *getTalipotLibDir(char *buf) {
 static void checkDirectory(std::string dir, bool tlpDirSet, bool throwEx) {
   // remove ending / separator if any
   // bug detected on Windows
-  if (dir[dir.length() - 1] == '/')
+  if (dir[dir.length() - 1] == '/') {
     dir.erase(dir.length() - 1);
+  }
 
   tlp_stat_t infoEntry;
 
   if (statPath(dir, &infoEntry) != 0) {
     std::stringstream ess;
     ess << "Error - " << dir << ":" << std::endl << strerror(errno) << std::endl;
-    if (tlpDirSet)
+    if (tlpDirSet) {
       ess << std::endl << "Check your TLP_DIR environment variable";
-    if (throwEx)
+    }
+    if (throwEx) {
       throw Exception(ess.str());
-    else if ( // output only if not in a python installed wheel
+    } else if ( // output only if not in a python installed wheel
         (dir.find("/talipot/native/") == string::npos) &&
         // and not building talipot-core bindings
-        (dir.find("library/talipot-core/src") == string::npos))
+        (dir.find("library/talipot-core/src") == string::npos)) {
       tlp::error() << ess.str();
+    }
   }
 }
 
 //=========================================================
 void tlp::initTalipotLib(const char *appDirPath) {
-  if (!TalipotShareDir.empty()) // already initialized
+  if (!TalipotShareDir.empty()) { // already initialized
     return;
+  }
 
   char *getEnvTlp;
   string::size_type pos;
@@ -184,8 +188,9 @@ void tlp::initTalipotLib(const char *appDirPath) {
       // if no appDirPath is provided, retrieve dynamically the Talipot lib dir
       curDir = getTalipotLibDir(buf);
     }
-  } else
+  } else {
     curDir = string(getEnvTlp);
+  }
 
 #ifdef _WIN32
   // ensure it is a unix-style path
@@ -199,8 +204,9 @@ void tlp::initTalipotLib(const char *appDirPath) {
 #endif
 
   // ensure it is '/' terminated
-  if (curDir[curDir.length() - 1] != '/')
+  if (curDir[curDir.length() - 1] != '/') {
     curDir += '/';
+  }
 
   // check that TalipotLibDir exists
   bool tlpDirSet = (getEnvTlp != nullptr);
@@ -223,8 +229,9 @@ void tlp::initTalipotLib(const char *appDirPath) {
 
 #endif
     curDir = TalipotLibDir + "talipot" + PATH_DELIMITER + curDir;
-  } else
+  } else {
     curDir = TalipotLibDir + "talipot";
+  }
   TalipotPluginsPath = curDir;
 
   // one dir up to initialize the share dir
@@ -275,8 +282,9 @@ std::string tlp::demangleClassName(const char *className, bool hideTlp) {
   abi::__cxa_demangle(className, demangleBuffer, &length, &status);
 
   // skip tlp::
-  if (hideTlp && strstr(demangleBuffer, "tlp::") == demangleBuffer)
+  if (hideTlp && strstr(demangleBuffer, "tlp::") == demangleBuffer) {
     return std::string(demangleBuffer + 5);
+  }
 
   return std::string(demangleBuffer);
 }

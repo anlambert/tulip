@@ -114,8 +114,9 @@ public:
    * Set Texture loader
    */
   static void setTextureLoader(GlTextureLoader *texLoader) {
-    if (loader)
+    if (loader) {
       delete loader;
+    }
 
     loader = texLoader;
   }

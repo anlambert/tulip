@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -33,16 +33,19 @@ Dendrogram::~Dendrogram() {}
 //====================================================================
 void Dendrogram::computeLevelHeights(tlp::Graph *tree, tlp::node n, unsigned int depth,
                                      OrientableSizeProxy *oriSize) {
-  if (levelHeights.size() == depth)
+  if (levelHeights.size() == depth) {
     levelHeights.push_back(0);
+  }
 
   float nodeHeight = oriSize->getNodeValue(n).getH();
 
-  if (nodeHeight > levelHeights[depth])
+  if (nodeHeight > levelHeights[depth]) {
     levelHeights[depth] = nodeHeight;
+  }
 
-  for (auto on : tree->getOutNodes(n))
+  for (auto on : tree->getOutNodes(n)) {
     computeLevelHeights(tree, on, depth + 1, oriSize);
+  }
 }
 //====================================================================
 bool Dendrogram::run() {
@@ -50,14 +53,16 @@ bool Dendrogram::run() {
   OrientableLayout oriLayout(result, mask);
   SizeProperty *size;
 
-  if (!getNodeSizePropertyParameter(dataSet, size))
+  if (!getNodeSizePropertyParameter(dataSet, size)) {
     size = graph->getSizeProperty("viewSize");
+  }
 
   OrientableSizeProxy oriSize(size, mask);
   getSpacingParameters(dataSet, nodeSpacing, spacing);
 
-  if (pluginProgress)
+  if (pluginProgress) {
     pluginProgress->showPreview(false);
+  }
 
   tree = TreeTest::computeTree(graph, pluginProgress);
 
@@ -74,8 +79,9 @@ bool Dendrogram::run() {
   for (unsigned int i = 0; i < levelHeights.size() - 1; ++i) {
     float minLayerSpacing = (levelHeights[i] + levelHeights[i + 1]) / 2;
 
-    if (minLayerSpacing + nodeSpacing > spacing)
+    if (minLayerSpacing + nodeSpacing > spacing) {
       spacing = minLayerSpacing + nodeSpacing;
+    }
   }
 
   setAllNodesCoordX(root, 0.f, &oriLayout, &oriSize);
@@ -99,17 +105,19 @@ float Dendrogram::setAllNodesCoordX(tlp::node n, float rightMargin, OrientableLa
 
   const float nodeWidth = oriSize->getNodeValue(n).getW() + nodeSpacing;
 
-  if (isLeaf(tree, n))
+  if (isLeaf(tree, n)) {
     leftMargin = rightMargin + nodeWidth;
+  }
 
   const float freeRange = leftMargin - rightMargin;
 
   float posX;
 
-  if (isLeaf(tree, n))
+  if (isLeaf(tree, n)) {
     posX = freeRange / 2.f + rightMargin;
-  else
+  } else {
     posX = computeFatherXPosition(n, oriLayout);
+  }
 
   const float rightOverflow = max(rightMargin - (posX - nodeWidth / 2.f), 0.f);
   const float leftOverflow = max((posX + nodeWidth / 2.f) - leftMargin, 0.f);
@@ -158,8 +166,9 @@ void Dendrogram::shiftAllNodes(tlp::node n, float shift, OrientableLayout *oriLa
   coord.setX(coordX + shift);
   oriLayout->setNodeValue(n, coord);
 
-  for (auto on : tree->getOutNodes(n))
+  for (auto on : tree->getOutNodes(n)) {
     shiftAllNodes(on, shift, oriLayout);
+  }
 }
 
 //====================================================================
@@ -186,6 +195,7 @@ void Dendrogram::setCoordY(tlp::node n, float &maxYLeaf, OrientableLayout *oriLa
     }
   }
 
-  for (auto on : tree->getOutNodes(n))
+  for (auto on : tree->getOutNodes(n)) {
     setCoordY(on, maxYLeaf, oriLayout, oriSize);
+  }
 }

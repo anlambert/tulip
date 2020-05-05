@@ -42,8 +42,9 @@ public:
     if (dataSet != nullptr) {
       double dval = 0;
 
-      if (dataSet->get("page ratio", dval))
+      if (dataSet->get("page ratio", dval)) {
         pgl->pageRatio(dval);
+      }
     }
   }
 };

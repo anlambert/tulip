@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -43,48 +43,59 @@ int BmdList<TYPE>::size() {
 template <typename TYPE>
 tlp::BmdLink<TYPE> *BmdList<TYPE>::nextItem(tlp::BmdLink<TYPE> *p, tlp::BmdLink<TYPE> *predP) {
   if (p != nullptr) {
-    if (p == tail)
+    if (p == tail) {
       return nullptr;
+    }
 
-    if (p == head)
+    if (p == head) {
       predP = nullptr;
+    }
 
-    if (p->prev() != predP)
+    if (p->prev() != predP) {
       return p->prev();
-    else
+    } else {
       return p->succ();
-  } else
+    }
+  } else {
     return nullptr;
+  }
 }
 //=================================================================
 template <typename TYPE>
 tlp::BmdLink<TYPE> *tlp::BmdList<TYPE>::predItem(tlp::BmdLink<TYPE> *p, tlp::BmdLink<TYPE> *succP) {
   if (p != nullptr) {
-    if (p == head)
+    if (p == head) {
       return nullptr;
+    }
 
-    if (p == tail)
+    if (p == tail) {
       succP = nullptr;
+    }
 
-    if (p->succ() != succP)
+    if (p->succ() != succP) {
       return p->succ();
-    else
+    } else {
       return p->prev();
-  } else
+    }
+  } else {
     return nullptr;
+  }
 }
 //=================================================================
 template <typename TYPE>
 tlp::BmdLink<TYPE> *tlp::BmdList<TYPE>::cyclicPred(tlp::BmdLink<TYPE> *it,
                                                    tlp::BmdLink<TYPE> *succIt) {
-  if (it == nullptr)
+  if (it == nullptr) {
     return nullptr;
+  }
 
-  if (it == head)
+  if (it == head) {
     return tail;
+  }
 
-  if (it == tail)
+  if (it == tail) {
     succIt = nullptr;
+  }
 
   return predItem(it, succIt);
 }
@@ -92,14 +103,17 @@ tlp::BmdLink<TYPE> *tlp::BmdList<TYPE>::cyclicPred(tlp::BmdLink<TYPE> *it,
 template <typename TYPE>
 tlp::BmdLink<TYPE> *tlp::BmdList<TYPE>::cyclicSucc(tlp::BmdLink<TYPE> *it,
                                                    tlp::BmdLink<TYPE> *predIt) {
-  if (it == nullptr)
+  if (it == nullptr) {
     return nullptr;
+  }
 
-  if (it == tail)
+  if (it == tail) {
     return head;
+  }
 
-  if (it == head)
+  if (it == head) {
     predIt = nullptr;
+  }
 
   return nextItem(it, predIt);
 }
@@ -109,12 +123,14 @@ tlp::BmdLink<TYPE> *tlp::BmdList<TYPE>::push(const TYPE &data) {
   count++;
 
   if (head != nullptr) {
-    if (head->suc != nullptr)
+    if (head->suc != nullptr) {
       head = head->pre = new tlp::BmdLink<TYPE>(data, nullptr, head);
-    else
+    } else {
       head = head->suc = new tlp::BmdLink<TYPE>(data, nullptr, head);
-  } else
+    }
+  } else {
     head = tail = new tlp::BmdLink<TYPE>(data, nullptr, nullptr);
+  }
 
   return head;
 }
@@ -124,10 +140,11 @@ tlp::BmdLink<TYPE> *tlp::BmdList<TYPE>::append(const TYPE &data) {
   count++;
 
   if (tail != nullptr) {
-    if (tail->pre != nullptr)
+    if (tail->pre != nullptr) {
       tail = tail->suc = new tlp::BmdLink<TYPE>(data, tail, nullptr);
-    else
+    } else {
       tail = tail->pre = new tlp::BmdLink<TYPE>(data, tail, nullptr);
+    }
 
   } else {
     tail = head = new tlp::BmdLink<TYPE>(data, nullptr, nullptr);
@@ -140,25 +157,29 @@ template <typename TYPE>
 TYPE tlp::BmdList<TYPE>::delItem(tlp::BmdLink<TYPE> *it) {
   assert(it != nullptr);
 
-  if (it == head)
+  if (it == head) {
     return pop();
+  }
 
-  if (it == tail)
+  if (it == tail) {
     return popBack();
+  }
 
   tlp::BmdLink<TYPE> *p = predItem(it, nullptr);
   tlp::BmdLink<TYPE> *s = nextItem(it, p);
   TYPE x = it->data;
 
-  if (p->pre == it)
+  if (p->pre == it) {
     p->pre = s;
-  else
+  } else {
     p->suc = s;
+  }
 
-  if (s->suc == it)
+  if (s->suc == it) {
     s->suc = p;
-  else
+  } else {
     s->pre = p;
+  }
 
   count--;
   delete it;
@@ -172,12 +193,14 @@ TYPE tlp::BmdList<TYPE>::pop() {
   head = nextItem(head, nullptr);
 
   if (head) {
-    if (head->suc == x)
+    if (head->suc == x) {
       head->suc = nullptr;
-    else
+    } else {
       head->pre = nullptr;
-  } else
+    }
+  } else {
     tail = nullptr;
+  }
 
   TYPE p = x->data;
   delete x;
@@ -192,12 +215,14 @@ TYPE tlp::BmdList<TYPE>::popBack() {
   tail = predItem(tail, nullptr);
 
   if (tail) {
-    if (tail->pre == x)
+    if (tail->pre == x) {
       tail->pre = nullptr;
-    else
+    } else {
       tail->suc = nullptr;
-  } else
+    }
+  } else {
     head = nullptr;
+  }
 
   TYPE p = x->data;
   delete x;
@@ -218,16 +243,18 @@ void tlp::BmdList<TYPE>::conc(tlp::BmdList<TYPE> &l) {
     head = l.head;
     tail = l.tail;
   } else {
-    if (tail->pre == nullptr)
+    if (tail->pre == nullptr) {
       tail->pre = l.head;
-    else
+    } else {
       tail->suc = l.head;
+    }
 
     if (l.head) {
-      if (l.head->suc == nullptr)
+      if (l.head->suc == nullptr) {
         l.head->suc = tail;
-      else
+      } else {
         l.head->pre = tail;
+      }
 
       tail = l.tail;
     }
@@ -240,8 +267,9 @@ void tlp::BmdList<TYPE>::conc(tlp::BmdList<TYPE> &l) {
 //=================================================================
 template <typename TYPE>
 void tlp::BmdList<TYPE>::clear() {
-  if (head == nullptr)
+  if (head == nullptr) {
     return;
+  }
 
   tlp::BmdLink<TYPE> *it = head;
   tlp::BmdLink<TYPE> *p = head;
@@ -250,8 +278,9 @@ void tlp::BmdList<TYPE>::clear() {
     tlp::BmdLink<TYPE> *x = it;
     it = nextItem(it, p);
 
-    if (p != x)
+    if (p != x) {
       delete p;
+    }
 
     p = x;
   }

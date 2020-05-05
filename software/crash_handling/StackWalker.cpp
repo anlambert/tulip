@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -157,8 +157,9 @@ void StackWalkerGCC::printCallStack(std::ostream &os, unsigned int maxDepth) {
   int size = backtrace(array, MAX_BACKTRACE_SIZE);
   char **messages = backtrace_symbols(array, size);
 
-  if (messages == nullptr || size < 2)
+  if (messages == nullptr || size < 2) {
     return;
+  }
 
   std::ostringstream oss;
   oss << callerAddress;
@@ -203,8 +204,9 @@ void StackWalkerGCC::printCallStack(std::ostream &os, unsigned int maxDepth) {
 
 #endif
 
-  if (i == size)
+  if (i == size) {
     i = 0;
+  }
 
   int offset = i;
 
@@ -212,8 +214,9 @@ void StackWalkerGCC::printCallStack(std::ostream &os, unsigned int maxDepth) {
     char *mangled_name = nullptr, *runtime_offset = nullptr, *offset_end = nullptr,
          *runtime_addr = nullptr, *runtime_addr_end = nullptr, *dsoName = nullptr;
 
-    if (uint(i) > maxDepth)
+    if (uint(i) > maxDepth) {
       return;
+    }
 
     for (char *p = messages[i]; *p; ++p) {
       if (*p == '(' && !mangled_name) {
@@ -231,11 +234,13 @@ void StackWalkerGCC::printCallStack(std::ostream &os, unsigned int maxDepth) {
 
     dsoName = messages[i];
 
-    if (mangled_name)
+    if (mangled_name) {
       *mangled_name++ = '\0';
+    }
 
-    if (runtime_offset)
+    if (runtime_offset) {
       *runtime_offset++ = '\0';
+    }
 
     *offset_end++ = '\0';
     *runtime_addr++ = '\0';
@@ -252,8 +257,9 @@ void StackWalkerGCC::printCallStack(std::ostream &os, unsigned int maxDepth) {
       int64_t runtimeAddr = static_cast<int64_t>(strtoll(runtime_addr, &end, 16));
       int64_t runtimeOffset = static_cast<int64_t>(strtoll(runtime_offset, &end, 0));
 
-      if (runtimeAddr == 1 && i == (size - 1))
+      if (runtimeAddr == 1 && i == (size - 1)) {
         break;
+      }
 
       std::pair<const char *, unsigned int> info = std::make_pair("", 0);
 

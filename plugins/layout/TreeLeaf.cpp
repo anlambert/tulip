@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -28,16 +28,19 @@ static const char *paramHelp[] = {
 
 void TreeLeaf::computeLevelHeights(tlp::Graph *tree, tlp::node n, unsigned int depth,
                                    OrientableSizeProxy *oriSize) {
-  if (levelHeights.size() == depth)
+  if (levelHeights.size() == depth) {
     levelHeights.push_back(0);
+  }
 
   float nodeHeight = oriSize->getNodeValue(n).getH();
 
-  if (nodeHeight > levelHeights[depth])
+  if (nodeHeight > levelHeights[depth]) {
     levelHeights[depth] = nodeHeight;
+  }
 
-  for (auto on : tree->getOutNodes(n))
+  for (auto on : tree->getOutNodes(n)) {
     computeLevelHeights(tree, on, depth + 1, oriSize);
+  }
 }
 
 float TreeLeaf::dfsPlacement(tlp::Graph *tree, tlp::node n, float x, float y, unsigned int depth,
@@ -67,8 +70,9 @@ float TreeLeaf::dfsPlacement(tlp::Graph *tree, tlp::node n, float x, float y, un
     minX = x;
     maxX = x = dfsPlacement(tree, itn, x, y + layerSpacing, depth + 1, oriLayout, oriSize);
 
-    if (minX + nodeWidth > maxX)
+    if (minX + nodeWidth > maxX) {
       maxX = minX + nodeWidth;
+    }
   }
 
   for (; itN->hasNext();) {
@@ -76,11 +80,13 @@ float TreeLeaf::dfsPlacement(tlp::Graph *tree, tlp::node n, float x, float y, un
     x += nodeSpacing;
     x = dfsPlacement(tree, itn, x, y + layerSpacing, depth + 1, oriLayout, oriSize);
 
-    if (x > maxX)
+    if (x > maxX) {
       maxX = x;
+    }
 
-    if (x < minX)
+    if (x < minX) {
       minX = x;
+    }
   }
 
   delete itN;
@@ -103,19 +109,22 @@ bool TreeLeaf::run() {
   OrientableLayout oriLayout(result, mask);
   SizeProperty *size;
 
-  if (!getNodeSizePropertyParameter(dataSet, size))
+  if (!getNodeSizePropertyParameter(dataSet, size)) {
     size = graph->getSizeProperty("viewSize");
+  }
 
   uniformLayerDistance = true;
 
-  if (dataSet != nullptr)
+  if (dataSet != nullptr) {
     dataSet->get("uniform layer spacing", uniformLayerDistance);
+  }
 
   OrientableSizeProxy oriSize(size, mask);
   getSpacingParameters(dataSet, nodeSpacing, minLayerSpacing);
 
-  if (pluginProgress)
+  if (pluginProgress) {
     pluginProgress->showPreview(false);
+  }
 
   Graph *tree = TreeTest::computeTree(graph, pluginProgress);
 
@@ -126,9 +135,10 @@ bool TreeLeaf::run() {
 
   node root = tree->getSource();
 
-  if (!root.isValid())
+  if (!root.isValid()) {
     // graph is empty
     return true;
+  }
 
   computeLevelHeights(tree, root, 0, &oriSize);
 
@@ -138,8 +148,9 @@ bool TreeLeaf::run() {
     for (unsigned int i = 0; i < levelHeights.size() - 1; ++i) {
       float layerSpacing = (levelHeights[i] + levelHeights[i + 1]) / 2 + nodeSpacing;
 
-      if (layerSpacing > minLayerSpacing)
+      if (layerSpacing > minLayerSpacing) {
         minLayerSpacing = layerSpacing;
+      }
     }
   }
 

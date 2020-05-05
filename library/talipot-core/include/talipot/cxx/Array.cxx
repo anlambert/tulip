@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -17,8 +17,9 @@ std::ostream &tlp::operator<<(std::ostream &os, const tlp::Array<T, N> &a) {
   os << "(";
 
   for (unsigned int i = 0; i < N; ++i) {
-    if (i > 0)
+    if (i > 0) {
       os << ",";
+    }
 
     os << a[i];
   }

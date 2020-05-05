@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -34,8 +34,9 @@ GlLayer::GlLayer(const std::string &name, Camera *camera, bool workingLayer)
 }
 
 GlLayer::~GlLayer() {
-  if (!sharedCamera)
+  if (!sharedCamera) {
     delete camera;
+  }
 
   composite.removeLayerParent(this);
 }
@@ -49,8 +50,9 @@ void GlLayer::setCamera(Camera *camera) {
   Camera *oldCamera = this->camera;
   this->camera = camera;
 
-  if (!sharedCamera)
+  if (!sharedCamera) {
     delete oldCamera;
+  }
 
   sharedCamera = false;
 }
@@ -59,8 +61,9 @@ void GlLayer::setSharedCamera(Camera *camera) {
   Camera *oldCamera = this->camera;
   this->camera = camera;
 
-  if (!sharedCamera)
+  if (!sharedCamera) {
     delete oldCamera;
+  }
 
   sharedCamera = true;
 }
@@ -69,20 +72,23 @@ void GlLayer::set2DMode() {
   Camera *oldCamera = this->camera;
   this->camera = new Camera(oldCamera->getScene(), false);
 
-  if (!sharedCamera)
+  if (!sharedCamera) {
     delete oldCamera;
+  }
 
   sharedCamera = false;
 }
 
 void GlLayer::setVisible(bool visible) {
-  if (composite.isVisible() == visible)
+  if (composite.isVisible() == visible) {
     return;
+  }
 
   composite.setVisible(visible);
 
-  if (scene)
+  if (scene) {
     scene->notifyModifyLayer(this->name, this);
+  }
 }
 
 void GlLayer::acceptVisitor(GlSceneVisitor *visitor) {
@@ -95,8 +101,9 @@ void GlLayer::acceptVisitor(GlSceneVisitor *visitor) {
 void GlLayer::addGlEntity(GlEntity *entity, const std::string &name) {
   composite.addGlEntity(entity, name);
 
-  if (scene)
+  if (scene) {
     scene->notifyModifyLayer(this->name, this);
+  }
 }
 
 void GlLayer::addGraph(tlp::Graph *graph, const string &name) {
@@ -107,15 +114,17 @@ void GlLayer::addGraph(tlp::Graph *graph, const string &name) {
 void GlLayer::deleteGlEntity(const std::string &key) {
   composite.deleteGlEntity(key);
 
-  if (scene)
+  if (scene) {
     scene->notifyModifyLayer(this->name, this);
+  }
 }
 
 void GlLayer::deleteGlEntity(GlEntity *entity) {
   composite.deleteGlEntity(entity);
 
-  if (scene)
+  if (scene) {
     scene->notifyModifyLayer(this->name, this);
+  }
 }
 
 GlEntity *GlLayer::findGlEntity(const std::string &key) {

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -66,8 +66,9 @@ public:
   void addNodeValue(node n, TYPE val) {
     unsigned int nPos = graph->nodePos(n);
 
-    if (nPos + 1 > this->size())
+    if (nPos + 1 > this->size()) {
       this->resize(nPos + 1);
+    }
 
     (*this)[nPos] = val;
   }
@@ -91,8 +92,9 @@ public:
     const std::vector<node> &nodes = graph->nodes();
     unsigned int nbNodes = nodes.size();
 
-    for (unsigned int i = 0; i < nbNodes; ++i)
+    for (unsigned int i = 0; i < nbNodes; ++i) {
       prop->setNodeValue(nodes[i], (*this)[i]);
+    }
   }
 };
 
@@ -147,8 +149,9 @@ public:
   void addNodeValue(node n, bool val) {
     unsigned int nPos = graph->nodePos(n);
 
-    if (nPos + 1 > this->size())
+    if (nPos + 1 > this->size()) {
       this->resize(nPos + 1);
+    }
 
     (*this)[nPos] = val;
   }
@@ -166,8 +169,9 @@ public:
     const std::vector<node> &nodes = graph->nodes();
     unsigned int nbNodes = nodes.size();
 
-    for (unsigned int i = 0; i < nbNodes; ++i)
+    for (unsigned int i = 0; i < nbNodes; ++i) {
       prop->setNodeValue(nodes[i], (*this)[i]);
+    }
   }
 };
 
@@ -221,8 +225,9 @@ public:
   void addEdgeValue(edge e, TYPE val) {
     unsigned int ePos = graph->edgePos(e);
 
-    if (ePos + 1 > this->size())
+    if (ePos + 1 > this->size()) {
       this->resize(ePos + 1);
+    }
 
     (*this)[ePos] = val;
   }
@@ -246,8 +251,9 @@ public:
     const std::vector<edge> &edges = graph->edges();
     unsigned int nbEdges = edges.size();
 
-    for (unsigned int i = 0; i < nbEdges; ++i)
+    for (unsigned int i = 0; i < nbEdges; ++i) {
       prop->setEdgeValue(edges[i], (*this)[i]);
+    }
   }
 };
 
@@ -298,8 +304,9 @@ public:
   void addEdgeValue(edge e, bool val) {
     unsigned int ePos = graph->edgePos(e);
 
-    if (ePos + 1 > this->size())
+    if (ePos + 1 > this->size()) {
       this->resize(ePos + 1);
+    }
 
     (*this)[ePos] = val;
   }
@@ -317,8 +324,9 @@ public:
     const std::vector<edge> &edges = graph->edges();
     unsigned int nbEdges = edges.size();
 
-    for (unsigned int i = 0; i < nbEdges; ++i)
+    for (unsigned int i = 0; i < nbEdges; ++i) {
       prop->setEdgeValue(edges[i], (*this)[i]);
+    }
   }
 };
 }

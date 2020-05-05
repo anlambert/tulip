@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -46,15 +46,17 @@ void SimpleTestListener::treatEvent(const Event &evt) {
     switch (gEvt->getType()) {
     case GraphEvent::TLP_ADD_EDGE:
 
-      if (resultsBuffer[graph])
+      if (resultsBuffer[graph]) {
         deleteResult(graph);
+      }
 
       break;
 
     case GraphEvent::TLP_DEL_EDGE:
 
-      if (!resultsBuffer[graph])
+      if (!resultsBuffer[graph]) {
         deleteResult(graph);
+      }
 
       break;
 
@@ -69,8 +71,9 @@ void SimpleTestListener::treatEvent(const Event &evt) {
 
     Graph *graph = static_cast<Graph *>(evt.sender());
 
-    if (evt.type() == Event::TLP_DELETE)
+    if (evt.type() == Event::TLP_DELETE) {
       deleteResult(graph);
+    }
   }
 }
 //=================================================================
@@ -86,16 +89,18 @@ bool SimpleTest::isSimple(const tlp::Graph *graph, const bool directed) {
   }
 
   auto it = instance->resultsBuffer.find(graph);
-  if (it != instance->resultsBuffer.end())
+  if (it != instance->resultsBuffer.end()) {
     return it->second;
+  }
 
   graph->addListener(instance);
   return instance->resultsBuffer[graph] = simpleTest(graph, nullptr, nullptr, directed);
 }
 //**********************************************************************
 void SimpleTest::makeSimple(Graph *graph, vector<edge> &removed, const bool directed) {
-  if (SimpleTest::isSimple(graph, directed))
+  if (SimpleTest::isSimple(graph, directed)) {
     return;
+  }
 
   SimpleTest::simpleTest(graph, &removed, &removed, directed);
 
@@ -126,8 +131,9 @@ bool SimpleTest::simpleTest(const tlp::Graph *graph, vector<edge> *multipleEdges
       // check if edge has already been visited
       // Take care that in makeSimple (see above) we assume that edges
       // are only processed once
-      if (visited.get(e.id))
+      if (visited.get(e.id)) {
         continue;
+      }
 
       // mark edge as already visited
       visited.set(e.id, true);
@@ -156,16 +162,19 @@ bool SimpleTest::simpleTest(const tlp::Graph *graph, vector<edge> *multipleEdges
         if (multipleEdges != nullptr) {
           // e is not added in multipleEdges
           // if it is already a loop and loops == multipleEdges
-          if (vDiff || !loopFound)
+          if (vDiff || !loopFound) {
             multipleEdges->push_back(e);
+          }
           result = false;
         }
-      } else
+      } else {
         targeted.set(target.id, true);
+      }
     }
 
-    if (!computeAll && !result)
+    if (!computeAll && !result) {
       break;
+    }
   }
 
   return result;

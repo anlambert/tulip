@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -35,15 +35,17 @@ GlEntityItemModel::GlEntityItemModel(GlEntityItemEditor *itemEditor, QObject *pa
 GlEntityItemModel::~GlEntityItemModel() {}
 
 int GlEntityItemModel::rowCount(const QModelIndex &parent) const {
-  if (parent.isValid())
+  if (parent.isValid()) {
     return 0;
+  }
 
   return editor->propertiesNames().size();
 }
 
 int GlEntityItemModel::columnCount(const QModelIndex &parent) const {
-  if (parent.isValid())
+  if (parent.isValid()) {
     return 0;
+  }
 
   return 1;
 }
@@ -54,10 +56,11 @@ QModelIndex GlEntityItemModel::parent(const QModelIndex &) const {
 
 QVariant GlEntityItemModel::headerData(int section, Qt::Orientation orientation, int role) const {
   if (orientation == Qt::Horizontal) {
-    if (role == Qt::DisplayRole || role == Qt::ToolTipRole)
+    if (role == Qt::DisplayRole || role == Qt::ToolTipRole) {
       return headerText();
-    else if (role == Qt::TextAlignmentRole)
+    } else if (role == Qt::TextAlignmentRole) {
       return Qt::AlignCenter;
+    }
   } else if (role == Qt::DisplayRole) {
     return editor->propertiesNames()[section];
   }
@@ -73,8 +76,9 @@ QVariant GlEntityItemModel::headerData(int section, Qt::Orientation orientation,
 }
 
 QModelIndex GlEntityItemModel::index(int row, int column, const QModelIndex &parent) const {
-  if (!hasIndex(row, column, parent))
+  if (!hasIndex(row, column, parent)) {
     return QModelIndex();
+  }
 
   return QAbstractItemModel::createIndex(row, column, static_cast<void *>(nullptr));
 }

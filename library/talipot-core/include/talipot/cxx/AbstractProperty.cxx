@@ -55,16 +55,19 @@ template <class Tnode, class Tedge, class Tprop>
 tlp::Iterator<tlp::node> *tlp::AbstractProperty<Tnode, Tedge, Tprop>::getNodesEqualTo(
     typename tlp::StoredType<typename Tnode::RealType>::ReturnedConstValue val,
     const Graph *sg) const {
-  if (sg == nullptr)
+  if (sg == nullptr) {
     sg = this->graph;
+  }
 
   tlp::Iterator<unsigned int> *it = nullptr;
 
-  if (sg == this->graph)
+  if (sg == this->graph) {
     it = nodeProperties.findAll(val);
+  }
 
-  if (it == nullptr)
+  if (it == nullptr) {
     return new tlp::SGraphNodeIterator<typename Tnode::RealType>(sg, nodeProperties, val);
+  }
 
   return tlp::conversionIterator<tlp::node>(it, idToNode);
 }
@@ -73,16 +76,19 @@ template <class Tnode, class Tedge, class Tprop>
 tlp::Iterator<tlp::edge> *tlp::AbstractProperty<Tnode, Tedge, Tprop>::getEdgesEqualTo(
     typename tlp::StoredType<typename Tedge::RealType>::ReturnedConstValue val,
     const Graph *sg) const {
-  if (sg == nullptr)
+  if (sg == nullptr) {
     sg = this->graph;
+  }
 
   tlp::Iterator<unsigned int> *it = nullptr;
 
-  if (sg == this->graph)
+  if (sg == this->graph) {
     it = edgeProperties.findAll(val);
+  }
 
-  if (it == nullptr)
+  if (it == nullptr) {
     return new tlp::SGraphEdgeIterator<typename Tedge::RealType>(sg, edgeProperties, val);
+  }
 
   return tlp::conversionIterator<tlp::edge>(it, idToEdge);
 }
@@ -243,8 +249,9 @@ public:
       curElt = it->next();
 
       while (!(_hasnext = (!graph || graph->isElement(curElt)))) {
-        if (!it->hasNext())
+        if (!it->hasNext()) {
           break;
+        }
 
         curElt = it->next();
       }
@@ -278,11 +285,12 @@ tlp::AbstractProperty<Tnode, Tedge, Tprop>::getNonDefaultValuatedNodes(const Gra
   tlp::Iterator<tlp::node> *it =
       conversionIterator<tlp::node>(nodeProperties.findAll(nodeDefaultValue, false), idToNode);
 
-  if (Tprop::name.empty())
+  if (Tprop::name.empty()) {
     // we always need to check that nodes belong to graph
     // for non registered properties, because deleted nodes are not erased
     // from them
     return new GraphEltIterator<tlp::node>(g != nullptr ? g : Tprop::graph, it);
+  }
 
   return ((g == nullptr) || (g == Tprop::graph)) ? it : new GraphEltIterator<tlp::node>(g, it);
 }
@@ -350,11 +358,12 @@ tlp::AbstractProperty<Tnode, Tedge, Tprop>::getNonDefaultValuatedEdges(const Gra
   tlp::Iterator<tlp::edge> *it =
       conversionIterator<tlp::edge>(edgeProperties.findAll(edgeDefaultValue, false), idToEdge);
 
-  if (Tprop::name.empty())
+  if (Tprop::name.empty()) {
     // we always need to check that edges belong to graph
     // for non registered properties, because deleted edges are not erased
     // from them
     return new GraphEltIterator<tlp::edge>(g != nullptr ? g : Tprop::graph, it);
+  }
 
   return ((g == nullptr) || (g == Tprop::graph)) ? it : new GraphEltIterator<tlp::edge>(g, it);
 }
@@ -432,8 +441,9 @@ template <typename vectType, typename eltType, typename propType>
 bool tlp::AbstractVectorProperty<vectType, eltType, propType>::setNodeStringValueAsVector(
     const node n, const std::vector<std::string> &vs) {
   typename vectType::RealType v;
-  if (!vectType::read(vs, v))
+  if (!vectType::read(vs, v)) {
     return false;
+  }
 
   this->setNodeValue(n, v);
   return true;
@@ -445,8 +455,9 @@ bool tlp::AbstractVectorProperty<vectType, eltType, propType>::setNodeStringValu
   typename vectType::RealType v;
   std::istringstream iss(s);
 
-  if (!vectType::read(iss, v, openChar, sepChar, closeChar))
+  if (!vectType::read(iss, v, openChar, sepChar, closeChar)) {
     return false;
+  }
 
   this->setNodeValue(n, v);
   return true;
@@ -456,8 +467,9 @@ template <typename vectType, typename eltType, typename propType>
 bool tlp::AbstractVectorProperty<vectType, eltType, propType>::setEdgeStringValueAsVector(
     const edge e, const std::vector<std::string> &vs) {
   typename vectType::RealType v;
-  if (!vectType::read(vs, v))
+  if (!vectType::read(vs, v)) {
     return false;
+  }
 
   this->setEdgeValue(e, v);
   return true;
@@ -469,8 +481,9 @@ bool tlp::AbstractVectorProperty<vectType, eltType, propType>::setEdgeStringValu
   typename vectType::RealType v;
   std::istringstream iss(s);
 
-  if (!vectType::read(iss, v, openChar, sepChar, closeChar))
+  if (!vectType::read(iss, v, openChar, sepChar, closeChar)) {
     return false;
+  }
 
   this->setEdgeValue(e, v);
   return true;
@@ -487,9 +500,9 @@ void tlp::AbstractVectorProperty<vectType, eltType, propType>::setNodeEltValue(
   assert(vect.size() > i);
   this->propType::notifyBeforeSetNodeValue(n);
 
-  if (isNotDefault)
+  if (isNotDefault) {
     vect[i] = v;
-  else {
+  } else {
     typename vectType::RealType tmp(vect);
     tmp[i] = v;
     AbstractProperty<vectType, vectType, propType>::nodeProperties.set(n.id, tmp);
@@ -518,9 +531,9 @@ void tlp::AbstractVectorProperty<vectType, eltType, propType>::pushBackNodeEltVa
       AbstractProperty<vectType, vectType, propType>::nodeProperties.get(n, isNotDefault);
   this->propType::notifyBeforeSetNodeValue(n);
 
-  if (isNotDefault)
+  if (isNotDefault) {
     vect.push_back(v);
-  else {
+  } else {
     typename vectType::RealType tmp(vect);
     tmp.push_back(v);
     AbstractProperty<vectType, vectType, propType>::nodeProperties.set(n, tmp);
@@ -565,9 +578,9 @@ void tlp::AbstractVectorProperty<vectType, eltType, propType>::setEdgeEltValue(
   assert(vect.size() > i);
   this->propType::notifyBeforeSetEdgeValue(e);
 
-  if (isNotDefault)
+  if (isNotDefault) {
     vect[i] = v;
-  else {
+  } else {
     typename vectType::RealType tmp(vect);
     tmp[i] = v;
     AbstractProperty<vectType, vectType, propType>::edgeProperties.set(e, tmp);
@@ -595,9 +608,9 @@ void tlp::AbstractVectorProperty<vectType, eltType, propType>::pushBackEdgeEltVa
       AbstractProperty<vectType, vectType, propType>::edgeProperties.get(e, isNotDefault);
   this->propType::notifyBeforeSetEdgeValue(e);
 
-  if (isNotDefault)
+  if (isNotDefault) {
     vect.push_back(v);
-  else {
+  } else {
     typename vectType::RealType tmp(vect);
     tmp.push_back(v);
     AbstractProperty<vectType, vectType, propType>::edgeProperties.set(e, tmp);

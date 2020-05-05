@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -142,8 +142,9 @@ void GlCompositeHierarchyManager::treatEvent(const Event &evt) {
 
     case GraphEvent::TLP_BEFORE_DEL_LOCAL_PROPERTY: {
       auto propertyName = gEvt->getPropertyName();
-      if (propertyName == _layout->getName())
+      if (propertyName == _layout->getName()) {
         _layout = nullptr;
+      }
 
       break;
     }
@@ -200,8 +201,9 @@ void GlCompositeHierarchyManager::treatEvent(const Event &evt) {
     if (graph == _graph) {
       _graph = nullptr;
       _graphsComposites.clear();
-    } else
+    } else {
       _graphsComposites.erase(graph);
+    }
   }
 }
 
@@ -219,8 +221,9 @@ void GlCompositeHierarchyManager::setGraph(tlp::Graph *graph) {
   // TODO here we could rebuild only if the graph is not in the composites map
   this->_graph = graph;
   //    deleteComposite();
-  if (_isVisible)
+  if (_isVisible) {
     this->createComposite();
+  }
 }
 
 void GlCompositeHierarchyManager::createComposite() {
@@ -250,8 +253,9 @@ void GlCompositeHierarchyManager::createComposite() {
 }
 
 void GlCompositeHierarchyManager::setVisible(bool visible) {
-  if (_isVisible == visible)
+  if (_isVisible == visible) {
     return;
+  }
 
   this->_isVisible = visible;
   _composite->setVisible(visible);

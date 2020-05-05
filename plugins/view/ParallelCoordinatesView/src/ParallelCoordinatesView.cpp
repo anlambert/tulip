@@ -329,8 +329,9 @@ void ParallelCoordinatesView::setState(const DataSet &dataSet) {
   if (dataSet.get<bool>("quickAccessBarVisible", quickAccessBarVisible)) {
     needQuickAccessBar = true;
     setQuickAccessBarVisible(quickAccessBarVisible);
-  } else
+  } else {
     setQuickAccessBarVisible(true);
+  }
 
   setupAndDrawView();
 }
@@ -372,16 +373,17 @@ DataSet ParallelCoordinatesView::state() const {
   dataSet.set("lastViewWindowWidth", getGlMainWidget()->width());
   dataSet.set("lastViewWindowHeight", getGlMainWidget()->height());
 
-  if (needQuickAccessBar)
+  if (needQuickAccessBar) {
     dataSet.set("quickAccessBarVisible", quickAccessBarVisible());
+  }
 
   return dataSet;
 }
 
 void ParallelCoordinatesView::graphChanged(tlp::Graph *) {
-  if (isConstruct)
+  if (isConstruct) {
     setState(DataSet());
-  else if (quickAccessBarVisible()) {
+  } else if (quickAccessBarVisible()) {
     _quickAccessBar->setEnabled(false);
   }
 }
@@ -445,8 +447,9 @@ void ParallelCoordinatesView::removeEmptyViewLabel() {
     mainLayer->deleteGlEntity(noDimsLabel2);
     delete noDimsLabel2;
 
-    if (parallelCoordsDrawing)
+    if (parallelCoordsDrawing) {
       mainLayer->addGlEntity(parallelCoordsDrawing, "Parallel Coordinates");
+    }
 
     mainLayer->addGlEntity(glGraphComposite, "graph");
   }
@@ -458,15 +461,17 @@ void ParallelCoordinatesView::draw() {
       removeEmptyViewLabel();
       addEmptyViewLabel();
       toggleInteractors(false);
-      if (quickAccessBarVisible())
+      if (quickAccessBarVisible()) {
         _quickAccessBar->setEnabled(false);
+      }
       getGlMainWidget()->getScene()->centerScene();
       getGlMainWidget()->draw();
       return;
     } else {
       removeEmptyViewLabel();
-      if (quickAccessBarVisible())
+      if (quickAccessBarVisible()) {
         _quickAccessBar->setEnabled(true);
+      }
       toggleInteractors(true);
       if (graphProxy->getDataCount() > PROGRESS_BAR_DISPLAY_NB_DATA_THRESHOLD) {
         updateWithProgressBar();
@@ -496,10 +501,11 @@ void ParallelCoordinatesView::draw() {
 }
 
 void ParallelCoordinatesView::refresh() {
-  if (!needDraw)
+  if (!needDraw) {
     getGlMainWidget()->redraw();
-  else
+  } else {
     draw();
+  }
 }
 
 void ParallelCoordinatesView::init() {
@@ -511,12 +517,14 @@ bool ParallelCoordinatesView::eventFilter(QObject *obj, QEvent *event) {
     QKeyEvent *keyEvent = dynamic_cast<QKeyEvent *>(event);
 
     if ((keyEvent->key() == Qt::Key_R) && (keyEvent->modifiers() & Qt::ControlModifier) != 0 &&
-        (keyEvent->modifiers() & Qt::ShiftModifier) != 0)
+        (keyEvent->modifiers() & Qt::ShiftModifier) != 0) {
       emit drawNeeded();
+    }
 
     if ((keyEvent->key() == Qt::Key_C) && (keyEvent->modifiers() & Qt::ControlModifier) != 0 &&
-        (keyEvent->modifiers() & Qt::ShiftModifier) != 0)
+        (keyEvent->modifiers() & Qt::ShiftModifier) != 0) {
       centerView();
+    }
   }
 
   if (graphProxy != nullptr && graphProxy->graphColorsModified()) {
@@ -703,8 +711,9 @@ void ParallelCoordinatesView::centerSetupAndDrawView() {
 }
 
 void ParallelCoordinatesView::setupAndDrawView() {
-  if (!graphProxy)
+  if (!graphProxy) {
     return;
+  }
 
   if (graph()) {
     GlScene *scene = getGlMainWidget()->getScene();
@@ -804,8 +813,9 @@ void ParallelCoordinatesView::setDataUnderPointerSelectFlag(const int x, const i
   mapGlEntitiesInRegionToData(dataUnderPointer, x, y);
 
   for (auto i : dataUnderPointer) {
-    if (!graphProxy->highlightedEltsSet() || graphProxy->isDataHighlighted(i))
+    if (!graphProxy->highlightedEltsSet() || graphProxy->isDataHighlighted(i)) {
       graphProxy->setDataSelected(i, selectFlag);
+    }
   }
 }
 
@@ -817,8 +827,9 @@ void ParallelCoordinatesView::setDataInRegionSelectFlag(const int x, const int y
   mapGlEntitiesInRegionToData(dataUnderPointer, x, y, width, height);
 
   for (auto i : dataUnderPointer) {
-    if (!graphProxy->highlightedEltsSet() || graphProxy->isDataHighlighted(i))
+    if (!graphProxy->highlightedEltsSet() || graphProxy->isDataHighlighted(i)) {
       graphProxy->setDataSelected(i, selectFlag);
+    }
   }
 }
 
@@ -831,8 +842,9 @@ void ParallelCoordinatesView::deleteDataUnderPointer(const int x, const int y) {
   mapGlEntitiesInRegionToData(dataUnderPointer, x, y);
 
   for (auto i : dataUnderPointer) {
-    if (!graphProxy->highlightedEltsSet() || graphProxy->isDataHighlighted(i))
+    if (!graphProxy->highlightedEltsSet() || graphProxy->isDataHighlighted(i)) {
       graphProxy->deleteData(i);
+    }
   }
 }
 
@@ -1001,7 +1013,8 @@ void ParallelCoordinatesView::registerTriggers() {
 }
 
 void ParallelCoordinatesView::applySettings() {
-  if (dataConfigWidget->configurationChanged() || drawConfigWidget->configurationChanged())
+  if (dataConfigWidget->configurationChanged() || drawConfigWidget->configurationChanged()) {
     setupAndDrawView();
+  }
 }
 }

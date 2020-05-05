@@ -65,21 +65,24 @@ GlComposite *readPolyFile(QString fileName) {
   while (!file.atEnd()) {
     line = file.readLine();
 
-    if (line.isEmpty() || line == "\n")
+    if (line.isEmpty() || line == "\n") {
       continue;
+    }
 
     line.toUInt(&ok);
 
     if (ok) {
-      if (!currentVector.empty())
+      if (!currentVector.empty()) {
         datas.push_back(currentVector);
+      }
 
       currentVector = vector<Coord>();
       continue;
     }
 
-    if (line == "END\n")
+    if (line == "END\n") {
       continue;
+    }
 
     QStringList strList = line.split(" ");
 
@@ -106,8 +109,9 @@ GlComposite *readPolyFile(QString fileName) {
 
       if (!polygonName.empty()) {
 
-        if (!currentVector.empty())
+        if (!currentVector.empty()) {
           datas.push_back(currentVector);
+        }
 
         if (!datas.empty()) {
 
@@ -122,25 +126,29 @@ GlComposite *readPolyFile(QString fileName) {
       continue;
     }
 
-    if (lat == 90.)
+    if (lat == 90.) {
       lat = 89.999f;
+    }
 
     double mercatorLatitude = lat * 2. / 360. * M_PI;
     mercatorLatitude = sin(abs(mercatorLatitude));
     mercatorLatitude = log((1. + mercatorLatitude) / (1. - mercatorLatitude)) / 2.;
 
-    if (lat < 0)
+    if (lat < 0) {
       mercatorLatitude = 0. - mercatorLatitude;
+    }
 
-    if (mercatorLatitude * 360. / M_PI < -360)
+    if (mercatorLatitude * 360. / M_PI < -360) {
       mercatorLatitude = -M_PI;
+    }
 
     currentVector.push_back(Coord(lng * 2., mercatorLatitude * 360. / M_PI, 0));
   }
 
   if (!polygonName.empty()) {
-    if (!currentVector.empty())
+    if (!currentVector.empty()) {
       datas.push_back(currentVector);
+    }
 
     composite->addGlEntity(new GlComplexPolygon(datas, Color(0, 0, 0, 50), Color(0, 0, 0, 255)),
                            polygonName);
@@ -155,8 +163,9 @@ GlComposite *readCsvFile(QString fileName) {
 
   QFile file(fileName);
 
-  if (!file.open(QIODevice::ReadOnly))
+  if (!file.open(QIODevice::ReadOnly)) {
     return nullptr;
+  }
 
   vector<vector<Coord>> datas;
   vector<Coord> currentVector;
@@ -167,16 +176,18 @@ GlComposite *readCsvFile(QString fileName) {
     QStringList strList = line.split("\t");
 
     if (strList.size() != 3) {
-      if (!currentVector.empty())
+      if (!currentVector.empty()) {
         datas.push_back(currentVector);
+      }
 
       currentVector.clear();
       continue;
     }
 
     if (strList[0].toInt() != lastIndex) {
-      if (!currentVector.empty())
+      if (!currentVector.empty()) {
         datas.push_back(currentVector);
+      }
 
       lastIndex = strList[0].toInt();
       currentVector.clear();
@@ -186,15 +197,17 @@ GlComposite *readCsvFile(QString fileName) {
     mercatorLatitude = sin(abs(mercatorLatitude));
     mercatorLatitude = log((1. + mercatorLatitude) / (1. - mercatorLatitude)) / 2.;
 
-    if (strList[1].toDouble() < 0)
+    if (strList[1].toDouble() < 0) {
       mercatorLatitude = 0. - mercatorLatitude;
+    }
 
     currentVector.push_back(
         Coord((strList[2].toDouble()) * 360. / M_PI, mercatorLatitude * 360. / M_PI, 0));
   }
 
-  if (datas.empty())
+  if (datas.empty()) {
     return nullptr;
+  }
 
   composite->addGlEntity(new GlComplexPolygon(datas, Color(0, 0, 0, 50), Color(0, 0, 0, 255)),
                          "polygon");
@@ -220,21 +233,24 @@ void simplifyPolyFile(QString fileName, float definition) {
   while (!file.atEnd()) {
     QString line(file.readLine());
 
-    if (line.isEmpty() || line == "\n")
+    if (line.isEmpty() || line == "\n") {
       continue;
+    }
 
     line.toUInt(&ok);
 
     if (ok) {
-      if (!currentVector.empty())
+      if (!currentVector.empty()) {
         datas.push_back(currentVector);
+      }
 
       currentVector.clear();
       continue;
     }
 
-    if (line == "END\n")
+    if (line == "END\n") {
       continue;
+    }
 
     QStringList strList = line.split(" ");
 
@@ -261,8 +277,9 @@ void simplifyPolyFile(QString fileName, float definition) {
 
       if (!polygonName.empty()) {
 
-        if (!currentVector.empty())
+        if (!currentVector.empty()) {
           datas.push_back(currentVector);
+        }
 
         if (!datas.empty()) {
 
@@ -280,15 +297,17 @@ void simplifyPolyFile(QString fileName, float definition) {
     mercatorLatitude = sin(abs(mercatorLatitude));
     mercatorLatitude = log((1. + mercatorLatitude) / (1. - mercatorLatitude)) / 2.;
 
-    if (lat < 0)
+    if (lat < 0) {
       mercatorLatitude = 0. - mercatorLatitude;
+    }
 
     currentVector.push_back(Coord(lng, lat, 0));
   }
 
   if (!polygonName.empty()) {
-    if (!currentVector.empty())
+    if (!currentVector.empty()) {
       datas.push_back(currentVector);
+    }
 
     clearPolygons[polygonName] = datas;
   }
@@ -329,8 +348,9 @@ void simplifyPolyFile(QString fileName, float definition) {
               out << (*lastCoord)[0] << " " << (*lastCoord)[1] << "\n";
             }
           } else {
-            if (simplifiedCoord.count(c) == 0)
+            if (simplifiedCoord.count(c) == 0) {
               simplifiedCoord[c] = *lastCoord;
+            }
           }
         }
       }
@@ -347,8 +367,9 @@ double latitudeToMercator(double latitude) {
   mercatorLatitude = sin(abs(mercatorLatitude));
   mercatorLatitude = log((1. + mercatorLatitude) / (1. - mercatorLatitude)) / 2.;
 
-  if (latitude < 0)
+  if (latitude < 0) {
     return -mercatorLatitude / M_PI * 360.;
+  }
 
   return mercatorLatitude / M_PI * 360.;
 }
@@ -524,14 +545,17 @@ void GeographicViewGraphicsView::cleanup() {
     GlScene *scene = glMainWidget->getScene();
     scene->clearLayersList();
 
-    if (geoLayout != graph->getLayoutProperty("viewLayout"))
+    if (geoLayout != graph->getLayoutProperty("viewLayout")) {
       delete geoLayout;
+    }
 
-    if (geoViewSize != graph->getSizeProperty("viewSize"))
+    if (geoViewSize != graph->getSizeProperty("viewSize")) {
       delete geoViewSize;
+    }
 
-    if (geoViewShape != graph->getIntegerProperty("viewShape"))
+    if (geoViewShape != graph->getIntegerProperty("viewShape")) {
       delete geoViewShape;
+    }
 
     // those entities have been deleted by the prior call to GlScene::clearLayersList,
     // so reset the pointers to nullptr value
@@ -653,8 +677,9 @@ void GeographicViewGraphicsView::loadPolyFile(QString fileName) {
 void GeographicViewGraphicsView::mapToPolygon() {
   GlComposite *composite = polygonEntity;
 
-  if (!composite)
+  if (!composite) {
     return;
+  }
 
   const map<string, GlEntity *> entities = composite->getGlEntities();
 
@@ -760,8 +785,9 @@ void GeographicViewGraphicsView::createLayoutWithAddresses(const string &address
 
       string addr = removeQuotesIfAny(addressProperty->getNodeValue(n));
 
-      if (addr.empty())
+      if (addr.empty()) {
         continue;
+      }
 
       progressWidget->setComment("Retrieving latitude and longitude for address : \n" +
                                  tlpStringToQString(addr));
@@ -1104,16 +1130,18 @@ void GeographicViewGraphicsView::switchViewType() {
 
   GlLayer *layer = glMainWidget->getScene()->getLayer("Main");
 
-  if (geoLayout == graph->getLayoutProperty("viewLayout") && geoLayoutComputed)
+  if (geoLayout == graph->getLayoutProperty("viewLayout") && geoLayoutComputed) {
     graph->push();
+  }
 
   Observable::holdObservers();
 
   leafletMaps->setVisible(enableLeafletMap);
   backgroundLayer->setVisible(enableLeafletMap);
 
-  if (polygonEntity)
+  if (polygonEntity) {
     polygonEntity->setVisible(enablePolygon);
+  }
 
   layer->setCamera(new Camera(glMainWidget->getScene()));
 
@@ -1186,10 +1214,11 @@ void GeographicViewGraphicsView::switchViewType() {
           float lambda = tmp[1];
           float theta;
 
-          if (lambda <= M_PI)
+          if (lambda <= M_PI) {
             theta = lambda;
-          else
+          } else {
             theta = lambda + 2. * M_PI;
+          }
 
           float phi = M_PI / 2.0 - tmp[0];
 
@@ -1215,10 +1244,11 @@ void GeographicViewGraphicsView::switchViewType() {
           float lambda = tmp[1];
           float theta;
 
-          if (lambda <= M_PI)
+          if (lambda <= M_PI) {
             theta = lambda;
-          else
+          } else {
             theta = lambda + 2. * M_PI;
+          }
 
           float phi = M_PI / 2.0 - tmp[0];
 
@@ -1254,8 +1284,9 @@ void GeographicViewGraphicsView::switchViewType() {
     }
   }
 
-  if (planisphereEntity)
+  if (planisphereEntity) {
     planisphereEntity->setVisible(enablePlanisphere);
+  }
 
   glMainWidget->getScene()->getGlGraphComposite()->getRenderingParametersPointer()->setEdge3D(
       viewType == GeographicView::Globe);

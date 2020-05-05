@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -34,10 +34,11 @@ GlGraphInputData::GlGraphInputData(Graph *graph, GlGraphRenderingParameters *par
 
   EdgeExtremityGlyphManager::initGlyphList(&this->graph, this, extremityGlyphs);
 
-  if (renderer)
+  if (renderer) {
     _metaNodeRenderer = renderer;
-  else
+  } else {
     _metaNodeRenderer = new GlMetaNodeRenderer(this);
+  }
 
   _glVertexArrayManager = new GlVertexArrayManager(this);
   _glGlyphRenderer = new GlGlyphRenderer(this);
@@ -45,8 +46,9 @@ GlGraphInputData::GlGraphInputData(Graph *graph, GlGraphRenderingParameters *par
 
 void GlGraphInputData::setMetaNodeRenderer(GlMetaNodeRenderer *renderer,
                                            bool deleteOldMetaNodeRenderer) {
-  if (deleteOldMetaNodeRenderer)
+  if (deleteOldMetaNodeRenderer) {
     delete _metaNodeRenderer;
+  }
 
   _metaNodeRenderer = renderer;
 }
@@ -162,8 +164,9 @@ bool GlGraphInputData::setProperty(const std::string &name, PropertyInterface *p
   auto it = _propertiesNameMap.find(name);
   bool result = it != _propertiesNameMap.end();
 
-  if (result)
+  if (result) {
     setProperty(it->second, property);
+  }
 
   return result;
 }
@@ -173,12 +176,14 @@ bool GlGraphInputData::installProperties(
   bool result = false;
 
   for (const auto &pmIt : propsMap) {
-    if (setProperty(pmIt.first, pmIt.second))
+    if (setProperty(pmIt.first, pmIt.second)) {
       result = true;
+    }
   }
 
-  if (result)
+  if (result) {
     getGlVertexArrayManager()->setHaveToComputeAll(true);
+  }
 
   return result;
 }

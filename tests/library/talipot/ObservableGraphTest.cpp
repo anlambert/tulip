@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -374,8 +374,9 @@ public:
           addListener(obs);
           observer = nullptr;
           ObservableGraphTest::setGraph(nullptr);
-        } else
+        } else {
           destroy(graph);
+        }
       }
     }
   }
@@ -409,8 +410,9 @@ public:
     if (gEvt) {
       Graph *graph = gEvt->getGraph();
 
-      if (gEvt->getType() == GraphEvent::TLP_BEFORE_DEL_INHERITED_PROPERTY)
+      if (gEvt->getType() == GraphEvent::TLP_BEFORE_DEL_INHERITED_PROPERTY) {
         delInheritedProperty(graph, gEvt->getPropertyName());
+      }
     }
   }
 };
@@ -480,10 +482,11 @@ void ObservableGraphTest::testAddDel() {
       CPPUNIT_ASSERT_EQUAL(graph, graphs[0]);
       CPPUNIT_ASSERT_EQUAL(graph, graphs[1]);
 
-      if (i == 0)
+      if (i == 0) {
         CPPUNIT_ASSERT_EQUAL(edges[NB_NODES - 1], gObserver->getObservedEdge());
-      else
+      } else {
         CPPUNIT_ASSERT_EQUAL(edges[i], gObserver->getObservedEdge());
+      }
     } else {
       CPPUNIT_ASSERT_EQUAL(graph, gObserver->getObservedGraph());
     }

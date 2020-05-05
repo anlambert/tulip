@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -22,8 +22,9 @@ using namespace tlp;
  * Adds to "el" the edges in path from w1 to w2, upward in T0.
  */
 bool PlanarityTestImpl::listEdgesUpwardT0(node n1, node n2) {
-  if (n1 == n2)
+  if (n1 == n2) {
     return true;
+  }
 
   node u = n1;
 
@@ -100,19 +101,22 @@ void PlanarityTestImpl::addPartOfBc(Graph *sG, node cNode, node n1, node n2, nod
     node source = sG->source(e);
 
     if (source == n1) {
-      if (flag)
+      if (flag) {
         side = 1;
-      else
+      } else {
         side = 2;
+      }
     }
 
-    if (source == n2 || source == n3)
+    if (source == n2 || source == n3) {
       flag = !flag;
+    }
 
-    if (flag)
+    if (flag) {
       el1.push_back(e);
-    else
+    } else {
       el2.push_back(e);
+    }
   }
 
   assert(side != 0);
@@ -127,14 +131,17 @@ void PlanarityTestImpl::addPartOfBc(Graph *sG, node cNode, node n1, node n2, nod
 }
 //=================================================================
 void PlanarityTestImpl::sortByLabelB(node &n1, node &n2, node &n3) {
-  if (labelB.get(n2.id) < labelB.get(n1.id))
+  if (labelB.get(n2.id) < labelB.get(n1.id)) {
     swapNode(n1, n2);
+  }
 
-  if (labelB.get(n3.id) < labelB.get(n1.id))
+  if (labelB.get(n3.id) < labelB.get(n1.id)) {
     swapNode(n1, n3);
+  }
 
-  if (labelB.get(n3.id) < labelB.get(n2.id))
+  if (labelB.get(n3.id) < labelB.get(n2.id)) {
     swapNode(n2, n3);
+  }
 }
 //=================================================================
 void PlanarityTestImpl::obstrEdgesPNode(Graph *sG, node p, node u) {
@@ -152,26 +159,32 @@ void PlanarityTestImpl::calcInfo3Terminals(node &t1, node &t2, node &t3, int &co
   min = std::min(min, labelB.get(t2.id));
   min = std::min(min, labelB.get(t3.id));
 
-  if (min == labelB.get(t1.id))
+  if (min == labelB.get(t1.id)) {
     countMin++;
+  }
 
-  if (min == labelB.get(t2.id))
+  if (min == labelB.get(t2.id)) {
     countMin++;
+  }
 
-  if (min == labelB.get(t3.id))
+  if (min == labelB.get(t3.id)) {
     countMin++;
+  }
 
   cNode = q = NULL_NODE;
   node w1 = t1, w2 = t2, w3 = t3;
 
-  if (isCNode(t1))
+  if (isCNode(t1)) {
     w1 = parent.get(t1.id);
+  }
 
-  if (isCNode(t2))
+  if (isCNode(t2)) {
     w2 = parent.get(t2.id);
+  }
 
-  if (isCNode(t3))
+  if (isCNode(t3)) {
     w3 = parent.get(t3.id);
+  }
 
   assert(!(isCNode(w1) || isCNode(w2) || isCNode(w3)));
 
@@ -179,14 +192,17 @@ void PlanarityTestImpl::calcInfo3Terminals(node &t1, node &t2, node &t3, int &co
   node m2 = lcaBetween(w1, w3, parent);
   node m3 = lcaBetween(w2, w3, parent);
 
-  if (isCNode(m1))
+  if (isCNode(m1)) {
     m1 = activeCNodeOf(true, m1);
+  }
 
-  if (isCNode(m2))
+  if (isCNode(m2)) {
     m2 = activeCNodeOf(true, m2);
+  }
 
-  if (isCNode(m3))
+  if (isCNode(m3)) {
     m3 = activeCNodeOf(true, m3);
+  }
 
   if (isCNode(m1) && m1 == m2 && m2 == m3) {
     cNode = m1;
@@ -194,20 +210,24 @@ void PlanarityTestImpl::calcInfo3Terminals(node &t1, node &t2, node &t3, int &co
     node u2 = lastPNode(w2, cNode);
     node u3 = lastPNode(w3, cNode);
 
-    if (u1 == t1)
+    if (u1 == t1) {
       countF++;
+    }
 
-    if (u2 == t2)
+    if (u2 == t2) {
       countF++;
+    }
 
-    if (u3 == t3)
+    if (u3 == t3) {
       countF++;
+    }
   }
 
-  if (countF == 3)
+  if (countF == 3) {
     return;
-  else
+  } else {
     cNode = NULL_NODE;
+  }
 
   node q1 = lcaBetween(w1, w2, p0);
   node q2 = lcaBetween(w1, w3, p0);
@@ -229,11 +249,13 @@ void PlanarityTestImpl::calcInfo3Terminals(node &t1, node &t2, node &t3, int &co
 
   // is min a terminal node?
   if (min == dfsPosNum.get(t1.id) || min == dfsPosNum.get(t2.id) || min == dfsPosNum.get(t3.id)) {
-    if (dfsPosNum.get(k2.id) == min)
+    if (dfsPosNum.get(k2.id) == min) {
       swapNode(k1, k2);
+    }
 
-    if (dfsPosNum.get(k3.id) == min)
+    if (dfsPosNum.get(k3.id) == min) {
       swapNode(k1, k3);
+    }
 
     assert(dfsPosNum.get(k1.id) == min);
     cNode = activeCNodeOf(true, k1); // dfspos_num[k1] == min;
@@ -241,13 +263,14 @@ void PlanarityTestImpl::calcInfo3Terminals(node &t1, node &t2, node &t3, int &co
     max = std::max(max, dfsPosNum.get(q2.id));
     max = std::max(max, dfsPosNum.get(q3.id));
 
-    if (max >= dfsPosNum.get(parent.get(cNode.id).id))
+    if (max >= dfsPosNum.get(parent.get(cNode.id).id)) {
       q = parent.get(cNode.id);
-    else if (activeCNodeOf(true, k2) != cNode) {
+    } else if (activeCNodeOf(true, k2) != cNode) {
       q = lastPNode(k2, cNode);
       swapNode(k2, k3);
-    } else
+    } else {
       q = lastPNode(k3, cNode);
+    }
 
     t1 = k1;
     t2 = k2;
@@ -264,8 +287,9 @@ void PlanarityTestImpl::calcInfo3Terminals(node &t1, node &t2, node &t3, int &co
  * - if parent_cnode != nil then t3 == nil.
  */
 void PlanarityTestImpl::obstructionEdgesT0(Graph *sG, node w, node t1, node t2, node t3, node v) {
-  if (t3 == NULL_NODE)
+  if (t3 == NULL_NODE) {
     t3 = v;
+  }
 
   node w1 = t1, w2 = t2, w3 = t3;
   sortByLabelB(w1, w2, w3);
@@ -276,14 +300,17 @@ void PlanarityTestImpl::obstructionEdgesT0(Graph *sG, node w, node t1, node t2, 
   w2 = t2;
   w3 = t3;
 
-  if (isCNode(w1))
+  if (isCNode(w1)) {
     w1 = parent.get(w1.id);
+  }
 
-  if (isCNode(w2))
+  if (isCNode(w2)) {
     w2 = parent.get(w2.id);
+  }
 
-  if (isCNode(w3))
+  if (isCNode(w3)) {
     w3 = parent.get(w3.id);
+  }
 
   node m1 = lcaBetween(w1, w2, p0);
   node m2 = lcaBetween(w1, w3, p0);
@@ -308,9 +335,9 @@ void PlanarityTestImpl::obstructionEdgesT0(Graph *sG, node w, node t1, node t2, 
 
   obstrEdgesTerminal(sG, w, t1, nodeWithDfsPos.get(max));
 
-  if (t3 != v)
+  if (t3 != v) {
     obstrEdgesTerminal(sG, w, t3, nodeWithDfsPos.get(max));
-  else {
+  } else {
     node u = w;
 
     if (lcaBetween(v, nodeWithDfsPos.get(min), p0) == nodeWithDfsPos.get(min)) {
@@ -337,8 +364,9 @@ void PlanarityTestImpl::obstructionEdgesT0(Graph *sG, node w, node t1, node t2, 
 //  */
 void PlanarityTestImpl::obstructionEdgesCountMin1(Graph *sG, node n, node cNode, node t1, node t2,
                                                   node t3) {
-  if (t3 == NULL_NODE)
+  if (t3 == NULL_NODE) {
     t3 = parent.get(cNode.id);
+  }
 
   sortByLabelB(t1, t2, t3);
   assert(listEdgesUpwardT0(n, nodeWithDfsPos.get(labelB.get(t3.id))));
@@ -348,15 +376,17 @@ void PlanarityTestImpl::obstructionEdgesCountMin1(Graph *sG, node n, node cNode,
   assert(e.isValid());
   obstructionEdges.push_back(e);
 
-  if (t2 != parent.get(cNode.id))
+  if (t2 != parent.get(cNode.id)) {
     obstrEdgesTerminal(sG, n, t2, t2);
-  else
+  } else {
     obstrEdgesPNode(sG, parent.get(cNode.id), n);
+  }
 
-  if (t3 != parent.get(cNode.id))
+  if (t3 != parent.get(cNode.id)) {
     obstrEdgesTerminal(sG, n, t3, t3);
-  else
+  } else {
     obstrEdgesPNode(sG, parent.get(cNode.id), n);
+  }
 }
 // //=================================================================
 // /*
@@ -374,8 +404,9 @@ void PlanarityTestImpl::obstructionEdgesCountMin23(Graph *sG, node n, node cNode
                                                    node t3, node q, node v) {
   node n1 = t1, n2 = t2, n3 = t3;
 
-  if (t3 == NULL_NODE)
+  if (t3 == NULL_NODE) {
     n3 = v;
+  }
 
   sortByLabelB(n1, n2, n3);
 
@@ -384,10 +415,11 @@ void PlanarityTestImpl::obstructionEdgesCountMin23(Graph *sG, node n, node cNode
 
   n2 = lastPNode(t2, cNode);
 
-  if (n2 != q)
+  if (n2 != q) {
     addPartOfBc(sG, cNode, q, t1, n2);
-  else
+  } else {
     addPartOfBc(sG, cNode, q, t1, parent.get(cNode.id));
+  }
 
   obstrEdgesTerminal(sG, n, t1, t1);
   obstrEdgesTerminal(sG, n, t2, n2);
@@ -412,8 +444,9 @@ void PlanarityTestImpl::obstructionEdgesCountMin23(Graph *sG, node n, node cNode
 // */
 void PlanarityTestImpl::obstructionEdgesK5(Graph *sG, node w, node cNode, node t1, node t2,
                                            node t3) {
-  if (t3 == NULL_NODE)
+  if (t3 == NULL_NODE) {
     t3 = parent.get(cNode.id);
+  }
 
   int max = labelB.get(t1.id);
   max = std::max(max, labelB.get(t2.id));
@@ -423,10 +456,11 @@ void PlanarityTestImpl::obstructionEdgesK5(Graph *sG, node w, node cNode, node t
   obstrEdgesTerminal(sG, w, t1, t1);
   obstrEdgesTerminal(sG, w, t2, t2);
 
-  if (t3 != parent.get(cNode.id))
+  if (t3 != parent.get(cNode.id)) {
     obstrEdgesTerminal(sG, w, t3, t3);
-  else
+  } else {
     obstrEdgesPNode(sG, parent.get(cNode.id), w);
+  }
 }
 // //=================================================================
 void PlanarityTestImpl::obstructionEdgesPossibleObstrConfirmed(Graph *sG, node w, node t, node v) {
@@ -438,17 +472,20 @@ void PlanarityTestImpl::obstructionEdgesPossibleObstrConfirmed(Graph *sG, node w
   node jr = obstructionNodes.front();
   obstructionNodes.pop_front();
 
-  if (labelB.get(jl.id) > dfsPosNum.get(w.id))
+  if (labelB.get(jl.id) > dfsPosNum.get(w.id)) {
     nodeLabelB.set(jl.id, neighborWTerminal.get(t.id));
+  }
 
-  if (labelB.get(jr.id) > dfsPosNum.get(w.id))
+  if (labelB.get(jr.id) > dfsPosNum.get(w.id)) {
     nodeLabelB.set(jr.id, neighborWTerminal.get(t.id));
+  }
 
   node w1 = nodeWithDfsPos.get(labelB.get(v.id));
   node w2 = nodeWithDfsPos.get(labelB.get(f.id));
 
-  if (dfsPosNum.get(w2.id) < dfsPosNum.get(w1.id))
+  if (dfsPosNum.get(w2.id) < dfsPosNum.get(w1.id)) {
     swapNode(w1, w2);
+  }
 
   assert(listEdgesUpwardT0(w, w2));
   assert(listEdgesUpwardT0(nodeLabelB.get(f.id), f));
@@ -494,35 +531,39 @@ void PlanarityTestImpl::obstructionEdgesCNodeCounter(Graph *sG, node cNode, node
   bool flag = false;
   node f = NULL_NODE, t12 = NULL_NODE, t22 = NULL_NODE;
 
-  if (t1 != NULL_NODE && t1 != cNode)
+  if (t1 != NULL_NODE && t1 != cNode) {
     t12 = lastPNode(t1, cNode);
+  }
 
-  if (t2 != NULL_NODE && t2 != cNode)
+  if (t2 != NULL_NODE && t2 != cNode) {
     t22 = lastPNode(t2, cNode);
+  }
 
   BmdListIt<node> it(RBC[cNode]);
 
   while (it.hasNext()) {
     node v = it.next();
 
-    if (v == jl || v == jr)
+    if (v == jl || v == jr) {
       flag = true;
-    else if (flag && (v == t12 || v == t22 || labelB.get(v.id) == dfsPosNum.get(w.id))) {
+    } else if (flag && (v == t12 || v == t22 || labelB.get(v.id) == dfsPosNum.get(w.id))) {
       f = v;
       break;
     }
   }
 
-  if (f == t12)
+  if (f == t12) {
     nodeLabelB.set(f.id, neighborWTerminal.get(t1.id));
-  else if (f == t22)
+  } else if (f == t22) {
     nodeLabelB.set(f.id, neighborWTerminal.get(t2.id));
+  }
 
   node w1 = nodeWithDfsPos.get(labelB.get(jl.id));
   node w2 = nodeWithDfsPos.get(labelB.get(jr.id));
 
-  if (dfsPosNum.get(w2.id) < dfsPosNum.get(w1.id))
+  if (dfsPosNum.get(w2.id) < dfsPosNum.get(w1.id)) {
     swapNode(w1, w2);
+  }
 
   assert(listEdgesUpwardT0(parent.get(cNode.id), w2));
   assert(listEdgesUpwardT0(nodeLabelB.get(f.id), f));

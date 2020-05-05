@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -126,8 +126,9 @@ void Window::draw(node n, float lod) {
   ColorProperty *colorBorder = glGraphInputData->getElementBorderColor();
   string textureName = glGraphInputData->getElementTexture()->getNodeValue(n);
 
-  if (!textureName.empty())
+  if (!textureName.empty()) {
     textureName = glGraphInputData->parameters->getTexturePath() + textureName;
+  }
 
   _border.setColor(colorBorder->getNodeValue(n));
   _titleRec.setColor(colorBorder->getNodeValue(n));
@@ -142,10 +143,11 @@ void Window::draw(node n, float lod) {
 Coord Window::getAnchor(const Coord &v) const {
   float fmax = std::max(fabsf(v.x()), fabsf(v.y()));
 
-  if (fmax > 0.0f)
+  if (fmax > 0.0f) {
     return v * (0.5f / fmax);
-  else
+  } else {
     return v;
+  }
 }
 
 } // end of namespace tlp

@@ -158,14 +158,16 @@ void SnapshotDialog::accept() {
 #endif
   );
 
-  if (fileName.isEmpty())
+  if (fileName.isEmpty()) {
     return;
+  }
 
   // force file extension
   QString selectedExtension = QString('.') + selectedFilter.section(' ', 0, 0);
 
-  if (!fileName.endsWith(selectedExtension))
+  if (!fileName.endsWith(selectedExtension)) {
     fileName += selectedExtension;
+  }
 
   this->setEnabled(false);
 
@@ -181,8 +183,9 @@ void SnapshotDialog::accept() {
 }
 
 void SnapshotDialog::widthSpinBoxValueChanged(int value) {
-  if (inSizeSpinBoxValueChanged)
+  if (inSizeSpinBoxValueChanged) {
     return;
+  }
 
   inSizeSpinBoxValueChanged = true;
 
@@ -196,8 +199,9 @@ void SnapshotDialog::widthSpinBoxValueChanged(int value) {
 }
 
 void SnapshotDialog::heightSpinBoxValueChanged(int value) {
-  if (inSizeSpinBoxValueChanged)
+  if (inSizeSpinBoxValueChanged) {
     return;
+  }
 
   inSizeSpinBoxValueChanged = true;
 

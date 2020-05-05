@@ -214,8 +214,9 @@ void GlMainWidgetGraphicsItem::dropEvent(QGraphicsSceneDragDropEvent *event) {
 }
 
 bool GlMainWidgetGraphicsItem::eventFilter(QObject *, QEvent *evt) {
-  if (evt->type() == QEvent::CursorChange)
+  if (evt->type() == QEvent::CursorChange) {
     setCursor(glMainWidget->cursor());
+  }
 
 // There is a bug with Qt5 on windows that leads to an incorrect viewport size of 160x160
 // when initializing a Tulip OpenGL view.

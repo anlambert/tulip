@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -54,8 +54,9 @@ OctTree::OctTree(tlp::node _node, Coord _position, Coord _minPos, Coord _maxPos,
   */
   // if (_node != nullptr)
   // {
-  if (!firstNode)
+  if (!firstNode) {
     this->weight = linLogWeight->getNodeValue(_node);
+  }
 
   // }else{
   //   std::cerr<<"assert: creating a an octtree with a null node\n";
@@ -70,8 +71,9 @@ OctTree::~OctTree() {
   if (_children != nullptr) {
 
     for (unsigned int i = 0; i < MAX_CHILDREN; ++i) {
-      if (_children[i] != nullptr)
+      if (_children[i] != nullptr) {
         delete _children[i];
+      }
 
       _children[i] = nullptr;
     }
@@ -180,8 +182,9 @@ void OctTree::addNode2(tlp::node newNode, Coord newPos, unsigned int depth) {
     if (childCount == 0 || _children == nullptr) {
       _children = new OctTree *[MAX_CHILDREN];
 
-      for (unsigned int i = 0; i < MAX_CHILDREN; ++i)
+      for (unsigned int i = 0; i < MAX_CHILDREN; ++i) {
         _children[i] = nullptr;
+      }
     }
 
     _children[childCount++] = new OctTree(newNode, newPos, newPos, newPos, linLogWeight, false);
@@ -201,8 +204,9 @@ void OctTree::addNode2(tlp::node newNode, Coord newPos, unsigned int depth) {
   if (childCount == 0 || _children == nullptr) {
     _children = new OctTree *[MAX_CHILDREN];
 
-    for (unsigned int i = 0; i < MAX_CHILDREN; ++i)
+    for (unsigned int i = 0; i < MAX_CHILDREN; ++i) {
       _children[i] = nullptr;
+    }
   }
 
   // si la place est vide
@@ -239,7 +243,6 @@ void OctTree::printTree(unsigned int depth) {
 
   for (unsigned int i = 0; i < depth; ++i) {
     std::cerr << "\t";
-    ;
   }
 
   std::cerr << "[d(" << depth << "),w(" << weight << "),n(" << node.id << "),l(" << isLeaf << "),p("
@@ -253,14 +256,17 @@ void OctTree::printTree(unsigned int depth) {
         std::cerr << "O,";
       }
     }
-
-    for (unsigned int i = 0; i < MAX_CHILDREN; ++i)
-      if (_children[i] != nullptr)
-        if (depth < MAX_DEPTH)
-          _children[i]->printTree(depth + 1);
   }
 
-  std::cerr << "]\n";
+  for (unsigned int i = 0; i < MAX_CHILDREN; ++i) {
+    if (_children[i] != nullptr) {
+      if (depth < MAX_DEPTH) {
+        _children[i]->printTree(depth + 1);
+      }
+    }
+
+    std::cerr << "]\n";
+  }
 }
 
 /**
@@ -353,7 +359,8 @@ void OctTree::removeNode(tlp::node oldNode, Coord oldPos, unsigned int depth) {
                 }
           */
           else if ((_children[childIndex])->node.id != oldNode.id) {
-            // std::cerr<<"this tree node is different from the searched one: "<<oldNode.id<<" and
+            // std::cerr<<"this tree node is different from the searched one: "<<oldNode.id<<"
+            // and
             // "<<(_children[childIndex])->node.id<<"\n";
             childIndex++;
           } else {

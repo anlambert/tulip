@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -57,15 +57,17 @@ string CSVImportParameters::getColumnDataType(unsigned int column) const {
 }
 
 char CSVImportParameters::getColumnMultiValueSeparator(unsigned int column) const {
-  if (column < columns.size())
+  if (column < columns.size()) {
     return columns[column]->getMultiValueSeparator();
+  }
   return 0;
 }
 
 CSVColumn::Action CSVImportParameters::getColumnActionForToken(unsigned int column,
                                                                const std::string &token) const {
-  if (column < columns.size())
+  if (column < columns.size()) {
     return columns[column]->getActionForToken(token);
+  }
   return CSVColumn::Action::SKIP_ROW;
 }
 
@@ -101,8 +103,9 @@ void AbstractCSVToGraphDataMapping::init(unsigned int) {
     for (auto n : graph->nodes()) {
       string key;
 
-      for (unsigned int i = 0; i < keyProperties.size(); ++i)
+      for (unsigned int i = 0; i < keyProperties.size(); ++i) {
         key.append(keyProperties[i]->getNodeStringValue(n));
+      }
 
       valueToId[key] = n.id;
     }
@@ -110,8 +113,9 @@ void AbstractCSVToGraphDataMapping::init(unsigned int) {
     for (auto e : graph->edges()) {
       string key;
 
-      for (unsigned int i = 0; i < keyProperties.size(); ++i)
+      for (unsigned int i = 0; i < keyProperties.size(); ++i) {
         key.append(keyProperties[i]->getEdgeStringValue(e));
+      }
 
       valueToId[key] = e.id;
     }
@@ -154,11 +158,13 @@ AbstractCSVToGraphDataMapping::getElementsForRow(const vector<vector<string>> &t
       }
 
       results[0] = id;
-    } else
+    } else {
       // Use the last found id.
       results[0] = valueToId[key];
-  } else
+    }
+  } else {
     results[0] = UINT_MAX;
+  }
 
   return pair<ElementType, vector<unsigned int>>(type, results);
 }
@@ -195,8 +201,9 @@ unsigned int CSVToGraphNodeIdMapping::buildIndexForRow(unsigned int, const vecto
   if (createMissingNodes && keys.size() == keyProperties.size()) {
     node newNode = graph->addNode();
 
-    for (unsigned int i = 0; i < keys.size(); ++i)
+    for (unsigned int i = 0; i < keys.size(); ++i) {
       keyProperties[i]->setNodeStringValue(newNode, keys[i]);
+    }
 
     return newNode.id;
   } else {
@@ -237,16 +244,18 @@ void CSVToGraphEdgeSrcTgtMapping::init(unsigned int rowNumber) {
   for (auto n : graph->nodes()) {
     string key;
 
-    for (unsigned int i = 0; i < srcProperties.size(); ++i)
+    for (unsigned int i = 0; i < srcProperties.size(); ++i) {
       key.append(srcProperties[i]->getNodeStringValue(n));
+    }
 
     srcValueToId[key] = n.id;
 
     if (!sameSrcTgtProperties) {
       key.clear();
 
-      for (unsigned int i = 0; i < tgtProperties.size(); ++i)
+      for (unsigned int i = 0; i < tgtProperties.size(); ++i) {
         key.append(tgtProperties[i]->getNodeStringValue(n));
+      }
 
       tgtValueToId[key] = n.id;
     }
@@ -290,8 +299,9 @@ CSVToGraphEdgeSrcTgtMapping::getElementsForRow(const vector<vector<string>> &tok
       if (keyTokens.empty()) {
         keyTokens.resize(currentTokens.size());
 
-        for (unsigned int j = 0; j < currentTokens.size(); ++j)
+        for (unsigned int j = 0; j < currentTokens.size(); ++j) {
           keyTokens[j].push_back(currentTokens[j]);
+        }
       } else {
         vector<vector<string>> previousTokens(keyTokens);
         keyTokens.clear();
@@ -311,8 +321,9 @@ CSVToGraphEdgeSrcTgtMapping::getElementsForRow(const vector<vector<string>> &tok
       // we can have several source entities
       string key;
 
-      for (unsigned int j = 0; j < keyTokens[i].size(); ++j)
+      for (unsigned int j = 0; j < keyTokens[i].size(); ++j) {
         key.append(keyTokens[i][j]);
+      }
 
       std::unordered_map<string, unsigned int>::iterator it = srcValueToId.find(key);
 
@@ -323,8 +334,9 @@ CSVToGraphEdgeSrcTgtMapping::getElementsForRow(const vector<vector<string>> &tok
         node src = graph->addNode();
         srcs.push_back(src);
 
-        for (unsigned int j = 0; j < keyTokens[i].size(); ++j)
+        for (unsigned int j = 0; j < keyTokens[i].size(); ++j) {
           srcProperties[j]->setNodeStringValue(src, keyTokens[i][j]);
+        }
 
         srcValueToId[key] = src.id;
       }
@@ -349,8 +361,9 @@ CSVToGraphEdgeSrcTgtMapping::getElementsForRow(const vector<vector<string>> &tok
       if (keyTokens.empty()) {
         keyTokens.resize(currentTokens.size());
 
-        for (unsigned int j = 0; j < currentTokens.size(); ++j)
+        for (unsigned int j = 0; j < currentTokens.size(); ++j) {
           keyTokens[j].push_back(currentTokens[j]);
+        }
       } else {
         vector<vector<string>> previousTokens(keyTokens);
         keyTokens.clear();
@@ -373,8 +386,9 @@ CSVToGraphEdgeSrcTgtMapping::getElementsForRow(const vector<vector<string>> &tok
       // we can have several target entities
       string key;
 
-      for (unsigned int j = 0; j < keyTokens[i].size(); ++j)
+      for (unsigned int j = 0; j < keyTokens[i].size(); ++j) {
         key.append(keyTokens[i][j]);
+      }
 
       std::unordered_map<string, unsigned int>::iterator it = valueToId.find(key);
 
@@ -385,8 +399,9 @@ CSVToGraphEdgeSrcTgtMapping::getElementsForRow(const vector<vector<string>> &tok
         node tgt = graph->addNode();
         tgts.push_back(tgt);
 
-        for (unsigned int j = 0; j < keyTokens[i].size(); ++j)
+        for (unsigned int j = 0; j < keyTokens[i].size(); ++j) {
           tgtProperties[j]->setNodeStringValue(tgt, keyTokens[i][j]);
+        }
 
         valueToId[key] = tgt.id;
       }
@@ -418,8 +433,9 @@ CSVImportColumnToGraphPropertyMappingProxy::generateApproximateProperty(const st
   unsigned int nb = 1;
   while (true) {
     nameBuf << name << '_' << setfill('0') << setw(2) << nb;
-    if (!graph->existProperty(nameBuf.str()))
+    if (!graph->existProperty(nameBuf.str())) {
       return graph->getProperty(nameBuf.str(), type);
+    }
     nameBuf.seekp(0);
     ++nb;
   }
@@ -574,17 +590,20 @@ bool CSVGraphImport::line(unsigned int row, const vector<string> &lineTokens) {
             if (tokAction == CSVColumn::Action::SKIP_ROW) {
               action = tokAction;
               break;
-            } else if (tokAction != CSVColumn::Action::ASSIGN_VALUE)
+            } else if (tokAction != CSVColumn::Action::ASSIGN_VALUE) {
               action = tokAction;
+            }
           }
         } else {
           action = importParameters.getColumnActionForToken(column, token);
           tokens[column].push_back(token);
         }
-        if (action == CSVColumn::Action::SKIP_ROW)
+        if (action == CSVColumn::Action::SKIP_ROW) {
           return true;
-        if (action == CSVColumn::Action::ASSIGN_NO_VALUE)
+        }
+        if (action == CSVColumn::Action::ASSIGN_NO_VALUE) {
           tokens[column].clear();
+        }
       }
     }
   }
@@ -601,8 +620,9 @@ bool CSVGraphImport::line(unsigned int row, const vector<string> &lineTokens) {
       bool isVectorProperty = (property->getTypename().find("vector") == 0);
       if (elements.first == NODE) {
         for (size_t i = 0; i < elements.second.size(); ++i) {
-          if (elements.second[i] == UINT_MAX)
+          if (elements.second[i] == UINT_MAX) {
             continue;
+          }
 
           if (!(isVectorProperty
                     ? static_cast<VectorPropertyInterface *>(property)->setNodeStringValueAsVector(

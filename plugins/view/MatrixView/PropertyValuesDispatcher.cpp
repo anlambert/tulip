@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -44,11 +44,13 @@ PropertyValuesDispatcher::PropertyValuesDispatcher(
   assert(displayedNodesToGraphEntities);
 
   Observable::holdObservers();
-  for (const string &s : source->getProperties())
+  for (const string &s : source->getProperties()) {
     addLocalProperty(source, s);
+  }
 
-  for (const string &s : target->getProperties())
+  for (const string &s : target->getProperties()) {
     addLocalProperty(target, s);
+  }
 
   Observable::unholdObservers();
 
@@ -58,8 +60,9 @@ PropertyValuesDispatcher::PropertyValuesDispatcher(
 
 void PropertyValuesDispatcher::afterSetNodeValue(tlp::PropertyInterface *sourceProp,
                                                  const tlp::node n) {
-  if (_modifying)
+  if (_modifying) {
     return;
+  }
 
   _modifying = true;
 
@@ -68,8 +71,9 @@ void PropertyValuesDispatcher::afterSetNodeValue(tlp::PropertyInterface *sourceP
     std::string strVal = sourceProp->getNodeStringValue(n);
     const vector<int> &vect = _graphEntitiesToDisplayedNodes->getNodeValue(n);
 
-    for (auto id : vect)
+    for (auto id : vect) {
       targetProp->setNodeStringValue(node(id), strVal);
+    }
   } else if (sourceProp->getGraph()->getRoot() == _target->getRoot()) {
     PropertyInterface *targetProp = _source->getProperty(sourceProp->getName());
     unsigned int id = _displayedNodesToGraphEntities->getNodeValue(n);
@@ -82,8 +86,9 @@ void PropertyValuesDispatcher::afterSetNodeValue(tlp::PropertyInterface *sourceP
       for (auto oid : vect) {
         node n1(oid);
 
-        if (n1 != n)
+        if (n1 != n) {
           sourceProp->setNodeStringValue(n1, sourceProp->getNodeStringValue(n));
+        }
       }
     } else {
       targetProp->setEdgeStringValue(edge(id), sourceProp->getNodeStringValue(n));
@@ -94,8 +99,9 @@ void PropertyValuesDispatcher::afterSetNodeValue(tlp::PropertyInterface *sourceP
       for (auto oid : vect) {
         node n1(oid);
 
-        if (n1 != n)
+        if (n1 != n) {
           sourceProp->setNodeStringValue(n1, sourceProp->getNodeStringValue(n));
+        }
       }
     }
   }
@@ -105,8 +111,9 @@ void PropertyValuesDispatcher::afterSetNodeValue(tlp::PropertyInterface *sourceP
 
 void PropertyValuesDispatcher::afterSetEdgeValue(tlp::PropertyInterface *sourceProp,
                                                  const tlp::edge e) {
-  if (_modifying)
+  if (_modifying) {
     return;
+  }
 
   _modifying = true;
 
@@ -115,15 +122,17 @@ void PropertyValuesDispatcher::afterSetEdgeValue(tlp::PropertyInterface *sourceP
     std::string strVal = sourceProp->getEdgeStringValue(e);
     const vector<int> &vect = _graphEntitiesToDisplayedNodes->getEdgeValue(e);
 
-    for (auto id : vect)
+    for (auto id : vect) {
       targetProp->setNodeStringValue(node(id), strVal);
+    }
 
     edge ee = _edgesMap[e];
 
     // corresponding edge may not exist if e
     // has been added after the build of the MatrixView
-    if (ee.isValid())
+    if (ee.isValid()) {
       targetProp->setEdgeStringValue(_edgesMap[e], sourceProp->getEdgeStringValue(e));
+    }
   } else if (sourceProp->getGraph()->getRoot() == _target->getRoot()) {
     PropertyInterface *targetProp = _source->getProperty(sourceProp->getName());
     unsigned int id = _displayedEdgesToGraphEdges->getEdgeValue(e);
@@ -132,8 +141,9 @@ void PropertyValuesDispatcher::afterSetEdgeValue(tlp::PropertyInterface *sourceP
 
     const vector<int> &vect = _graphEntitiesToDisplayedNodes->getEdgeValue(edge(id));
 
-    for (auto oid : vect)
+    for (auto oid : vect) {
       sourceProp->setNodeStringValue(node(oid), strVal);
+    }
   }
 
   _modifying = false;
@@ -143,8 +153,9 @@ void PropertyValuesDispatcher::afterSetAllNodeValue(tlp::PropertyInterface *sour
   if (sourceProp->getGraph()->getRoot() == _source->getRoot()) {
     PropertyInterface *targetProp = _target->getProperty(sourceProp->getName());
     string val = sourceProp->getNodeDefaultStringValue();
-    for (auto n : _displayedNodesAreNodes->getNodesEqualTo(true))
+    for (auto n : _displayedNodesAreNodes->getNodesEqualTo(true)) {
       targetProp->setNodeStringValue(n, val);
+    }
   } else if (sourceProp->getGraph()->getRoot() == _target->getRoot()) {
     PropertyInterface *targetProp = _source->getProperty(sourceProp->getName());
     targetProp->setAllNodeStringValue(sourceProp->getNodeDefaultStringValue());
@@ -156,8 +167,9 @@ void PropertyValuesDispatcher::afterSetAllEdgeValue(tlp::PropertyInterface *sour
   if (sourceProp->getGraph()->getRoot() == _source->getRoot()) {
     PropertyInterface *targetProp = _target->getProperty(sourceProp->getName());
     string val = sourceProp->getEdgeDefaultStringValue();
-    for (auto n : _displayedNodesAreNodes->getNodesEqualTo(false))
+    for (auto n : _displayedNodesAreNodes->getNodesEqualTo(false)) {
       targetProp->setNodeStringValue(n, val);
+    }
   } else if (sourceProp->getGraph()->getRoot() == _target->getRoot()) {
     PropertyInterface *targetProp = _source->getProperty(sourceProp->getName());
     targetProp->setAllEdgeStringValue(sourceProp->getNodeDefaultStringValue());
@@ -171,11 +183,13 @@ void PropertyValuesDispatcher::addLocalProperty(tlp::Graph *g, const std::string
     PropertyInterface *sourceProp = g->getProperty(name);
     afterSetAllNodeValue(sourceProp);
     afterSetAllEdgeValue(sourceProp);
-    for (auto n : sourceProp->getNonDefaultValuatedNodes())
+    for (auto n : sourceProp->getNonDefaultValuatedNodes()) {
       afterSetNodeValue(sourceProp, n);
+    }
 
-    for (auto e : sourceProp->getNonDefaultValuatedEdges())
+    for (auto e : sourceProp->getNonDefaultValuatedEdges()) {
       afterSetEdgeValue(sourceProp, e);
+    }
     Observable::unholdObservers();
 
     sourceProp->addListener(this);
@@ -187,8 +201,9 @@ void PropertyValuesDispatcher::treatEvent(const tlp::Event &evt) {
     const GraphEvent *gEvt = dynamic_cast<const GraphEvent *>(&evt);
     Graph *graph = gEvt->getGraph();
 
-    if (gEvt->getType() == GraphEvent::TLP_ADD_LOCAL_PROPERTY)
+    if (gEvt->getType() == GraphEvent::TLP_ADD_LOCAL_PROPERTY) {
       addLocalProperty(graph, gEvt->getPropertyName());
+    }
   } else {
     const PropertyEvent *propEvt = dynamic_cast<const PropertyEvent *>(&evt);
 

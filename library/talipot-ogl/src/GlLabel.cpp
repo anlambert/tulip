@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -76,11 +76,12 @@ static void initFont(std::string &fontName, FTGLPolygonFont *&font, FTOutlineFon
     fontName = TalipotBitmapDir + "font.ttf";
     font = getPolygonFont(fontName);
 
-    if (font->Error() == 0) // no error
+    if (font->Error() == 0) { // no error
       borderFont = getOutlineFont(fontName);
-    else
+    } else {
       tlp::error() << "Error when loading font file (" << fontName << ") for rendering labels"
                    << endl;
+    }
 
     fontSize = 20;
   }
@@ -128,8 +129,9 @@ void GlLabel::setText(const string &text) {
 
   this->text = text;
 
-  if (font->Error())
+  if (font->Error()) {
     return;
+  }
 
   if (font->FaceSize() != uint(fontSize)) {
     font->FaceSize(fontSize);
@@ -168,8 +170,9 @@ void GlLabel::setText(const string &text) {
     } else {
       font->BBox(it->c_str(), x1, y1, z1, x2, y2, z2);
 
-      if (x2 - x1 > textBoundingBox[1][0])
+      if (x2 - x1 > textBoundingBox[1][0]) {
         textBoundingBox[1][0] = (x2 - x1);
+      }
 
       textBoundingBox[0][1] -= fontSize + SpaceBetweenLine;
     }
@@ -177,11 +180,12 @@ void GlLabel::setText(const string &text) {
 }
 //============================================================
 BoundingBox GlLabel::getBoundingBox() {
-  if (!leftAlign)
+  if (!leftAlign) {
     return BoundingBox(centerPosition - size / 2.f, centerPosition + size / 2.f);
-  else
+  } else {
     return BoundingBox(centerPosition - Coord(0, size[1] / 2.f, 0),
                        centerPosition + Coord(size[0], size[1] / 2.f, 0));
+  }
 }
 //============================================================
 void GlLabel::setBoldFont() {
@@ -195,8 +199,9 @@ void GlLabel::setPlainFont() {
 }
 //============================================================
 void GlLabel::setFontName(const std::string &name) {
-  if (fontName == name || name.empty())
+  if (fontName == name || name.empty()) {
     return;
+  }
 
   fontName = name;
 
@@ -204,10 +209,11 @@ void GlLabel::setFontName(const std::string &name) {
   borderFont = getOutlineFont(fontName);
 
   if (font->Error() || borderFont->Error()) {
-    if (fontName.empty())
+    if (fontName.empty()) {
       tlp::warning() << "Error in font loading: no font name" << endl;
-    else
+    } else {
       tlp::warning() << "Error in font loading: " << fontName << " cannot be loaded" << endl;
+    }
 
     font = getPolygonFont((TalipotBitmapDir + "font.ttf"));
     borderFont = getOutlineFont((TalipotBitmapDir + "font.ttf"));
@@ -235,8 +241,9 @@ float GlLabel::getHeightAfterScale() {
   div_h = size[1] / h;
 
   if (div_h * w > size[0]) {
-    if (div_w < 4)
+    if (div_w < 4) {
       return size[1] * (div_w / 4.);
+    }
   }
 
   return size[1];
@@ -244,8 +251,9 @@ float GlLabel::getHeightAfterScale() {
 //============================================================
 void GlLabel::draw(float, Camera *camera) {
 
-  if (fontSize <= 0 || font->Error())
+  if (fontSize <= 0 || font->Error()) {
     return;
+  }
 
   bool computeLOD = false;
 
@@ -280,10 +288,11 @@ void GlLabel::draw(float, Camera *camera) {
 
   glPushAttrib(GL_ALL_ATTRIB_BITS);
 
-  if (depthTestEnabled)
+  if (depthTestEnabled) {
     glEnable(GL_DEPTH_TEST);
-  else
+  } else {
     glDisable(GL_DEPTH_TEST);
+  }
 
   glPolygonMode(GL_FRONT, GL_FILL);
   glDisable(GL_LIGHTING);
@@ -294,8 +303,9 @@ void GlLabel::draw(float, Camera *camera) {
   float h = textBoundingBox[1][1] - textBoundingBox[0][1];
 
   // avoid a division by zero for strings with only space chars
-  if (h == 0)
+  if (h == 0) {
     h = 1;
+  }
 
   // Compute scale of the text if text is scaled to a size
   float div_w, div_h;
@@ -306,8 +316,9 @@ void GlLabel::draw(float, Camera *camera) {
   float multiLineH = h;
 
   // Here the 4.5 magic number is the size of space between two lines
-  if (textVector.size() > 1)
+  if (textVector.size() > 1) {
     multiLineH = (h - (textVector.size() - 1) * 4.5) / textVector.size();
+  }
 
   // We compute the size of the text on the viewport
   viewportH = (multiLineH * lod) / 2.f;
@@ -450,14 +461,17 @@ void GlLabel::draw(float, Camera *camera) {
   // Translation and rotation
   glTranslatef(centerPosition[0], centerPosition[1], centerPosition[2]);
 
-  if (xRot != 0.)
+  if (xRot != 0.) {
     glRotatef(xRot, 1., 0., 0.);
+  }
 
-  if (yRot != 0.)
+  if (yRot != 0.) {
     glRotatef(yRot, 0., 1., 0.);
+  }
 
-  if (zRot != 0.)
+  if (zRot != 0.) {
     glRotatef(zRot, 0., 0., 1.);
+  }
 
   glTranslatef(translationAfterRotation[0], translationAfterRotation[1],
                translationAfterRotation[2]);
@@ -598,8 +612,9 @@ void GlLabel::draw(float, Camera *camera) {
   glScalef(scaleToApply, scaleToApply, 1);
   viewportH *= scaleToApply;
 
-  if (viewportH < 0)
+  if (viewportH < 0) {
     viewportH = -viewportH;
+  }
 
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -632,10 +647,11 @@ void GlLabel::draw(float, Camera *camera) {
 
     glLineWidth(viewportH);
 
-    if (outlineColor.getA() == 0 || outlineSize == 0)
+    if (outlineColor.getA() == 0 || outlineSize == 0) {
       setMaterial(Color(color[0], color[1], color[2], color[3]));
-    else
+    } else {
       setMaterial(Color(outlineColor[0], outlineColor[1], outlineColor[2], outlineColor[3]));
+    }
 
     glBegin(GL_LINES);
     glVertex3f(-w / 2. + wAlign, hAlign, 0);
@@ -704,15 +720,17 @@ void GlLabel::draw(float, Camera *camera) {
                     -textBoundingBox[1][1] + (textBoundingBox[1][1] - textBoundingBox[0][1]) / 2. +
                         yShift + (textBoundingBox[1][1] - textBoundingBox[0][1]) * yShiftFactor);
 
-      if (!textureName.empty())
+      if (!textureName.empty()) {
         GlTextureManager::activateTexture(textureName);
+      }
 
       setMaterial(color);
 
       font->Render(text.c_str(), -1, shift);
 
-      if (!textureName.empty())
+      if (!textureName.empty()) {
         GlTextureManager::deactivateTexture();
+      }
 
       if (outlineSize > 0) {
         if (!useLOD || viewportH > 25) {

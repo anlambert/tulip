@@ -70,16 +70,18 @@ PythonCodeEditor *PythonEditorsTabWidget::getEditor(int editorIdx) const {
 
 void PythonEditorsTabWidget::scriptTextChanged() {
 
-  if (QObject::sender() != widget(currentIndex()))
+  if (QObject::sender() != widget(currentIndex())) {
     return;
+  }
 
   QString curTabText = tabText(currentIndex());
 
   // workaround a Qt5 bug on linux
   curTabText = curTabText.replace("&", "");
 
-  if (curTabText.isEmpty())
+  if (curTabText.isEmpty()) {
     return;
+  }
 
   if (curTabText[curTabText.size() - 1] != '*') {
     curTabText += "*";
@@ -131,8 +133,9 @@ bool PythonEditorsTabWidget::eventFilter(QObject *obj, QEvent *event) {
         } else {
           // when there is no file associated to the Python module, its content will then be saved
           // in the project file (.tlpx) currently loaded in Talipot
-          if (moduleFile[moduleFile.size() - 1] == '*')
+          if (moduleFile[moduleFile.size() - 1] == '*') {
             moduleFile = moduleFile.mid(0, moduleFile.size() - 1);
+          }
 
           setTabText(currentIndex(), moduleFile);
           emit fileSaved(currentIndex());
@@ -156,8 +159,9 @@ void PythonEditorsTabWidget::reloadCodeInEditorsIfNeeded() {
     emitSignal = reloadCodeInEditorIfNeeded(i) || emitSignal;
   }
 
-  if (emitSignal)
+  if (emitSignal) {
     emit filesReloaded();
+  }
 }
 
 bool PythonEditorsTabWidget::reloadCodeInEditorIfNeeded(int index) {
@@ -193,10 +197,11 @@ void PythonEditorsTabWidget::saveEditorContentToFile(int editorIdx) {
 
     if (!moduleNameExt.contains("no file")) {
 
-      if (moduleNameExt[moduleNameExt.size() - 1] == '*')
+      if (moduleNameExt[moduleNameExt.size() - 1] == '*') {
         moduleName = moduleNameExt.mid(0, moduleNameExt.size() - 4);
-      else
+      } else {
         moduleName = moduleNameExt.mid(0, moduleNameExt.size() - 3);
+      }
 
       // workaround a Qt5 bug on linux
       moduleName = moduleName.replace("&", "");

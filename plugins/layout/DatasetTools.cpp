@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -64,10 +64,11 @@ void getSpacingParameters(DataSet *dataSet, float &nodeSpacing, float &layerSpac
 }
 //====================================================================
 void addNodeSizePropertyParameter(LayoutAlgorithm *pLayout, bool inout) {
-  if (inout)
+  if (inout) {
     pLayout->addInOutParameter<SizeProperty>("node size", paramHelp[4], "viewSize");
-  else
+  } else {
     pLayout->addInParameter<SizeProperty>("node size", paramHelp[4], "viewSize");
+  }
 }
 
 bool getNodeSizePropertyParameter(DataSet *dataSet, SizeProperty *&sizes) {
@@ -98,8 +99,9 @@ orientationType getMask(DataSet *dataSet) {
       std::string currentString = dataSetOrientation.getCurrentString();
 
       for (current = 0; current < 4; ++current) {
-        if (currentString == orientation.at(current))
+        if (currentString == orientation.at(current)) {
           break;
+        }
       }
     }
   }

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -39,8 +39,9 @@ GlGraphComposite::GlGraphComposite(Graph *graph, GlGraphRenderer *graphRenderer)
     graph->getRoot()->getGraphProperty("viewMetaGraph")->addListener(this);
 
     for (auto n : graph->nodes()) {
-      if (graph->getNodeMetaInfo(n))
+      if (graph->getNodeMetaInfo(n)) {
         metaNodes.insert(n);
+      }
     }
   }
 }
@@ -57,8 +58,9 @@ GlGraphComposite::GlGraphComposite(Graph *graph, GlScene *scene)
     graph->getRoot()->getGraphProperty("viewMetaGraph")->addListener(this);
 
     for (auto n : graph->nodes()) {
-      if (graph->getNodeMetaInfo(n))
+      if (graph->getNodeMetaInfo(n)) {
         metaNodes.insert(n);
+      }
     }
   }
 }
@@ -72,8 +74,9 @@ void GlGraphComposite::acceptVisitor(GlSceneVisitor *visitor) {
   graphRenderer->visitGraph(&bbVisitor);
   boundingBox = bbVisitor.getBoundingBox();
 
-  if (visitor && boundingBox.isValid())
+  if (visitor && boundingBox.isValid()) {
     visitor->visit(this);
+  }
 }
 
 void GlGraphComposite::acceptVisitorOnGraph(GlSceneVisitor *visitor) {

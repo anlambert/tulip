@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -303,16 +303,18 @@ node GraphDecorator::addNode() {
 void GraphDecorator::addNodes(unsigned int nb) {
   graph_component->addNodes(nb);
 
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_ADD_NODES, nb));
+  }
 }
 
 //============================================================
 void GraphDecorator::addNodes(unsigned int nb, std::vector<node> &addedNodes) {
   graph_component->addNodes(nb, addedNodes);
 
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_ADD_NODES, nb));
+  }
 }
 
 //============================================================
@@ -346,8 +348,9 @@ edge GraphDecorator::addEdge(const node n, const node n2) {
 void GraphDecorator::addEdges(const std::vector<std::pair<node, node>> &edges) {
   graph_component->addEdges(edges);
 
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_ADD_EDGES, edges.size()));
+  }
 }
 
 //============================================================
@@ -355,8 +358,9 @@ void GraphDecorator::addEdges(const std::vector<std::pair<node, node>> &edges,
                               std::vector<edge> &addedEdges) {
   graph_component->addEdges(edges, addedEdges);
 
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_ADD_EDGES, edges.size()));
+  }
 }
 
 //============================================================

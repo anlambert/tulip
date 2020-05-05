@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -119,8 +119,9 @@ void PythonShellWidget::keyPressEvent(QKeyEvent *e) {
         removeSelectedText();
         insert(_currentPs + _history[_currentHistoryPos]);
 
-        if (_currentHistoryPos != 0)
+        if (_currentHistoryPos != 0) {
           --_currentHistoryPos;
+        }
       }
     } else {
       setCursorPosition(lines() - 1, lineLength(lines() - 1));
@@ -204,8 +205,9 @@ void PythonShellWidget::keyPressEvent(QKeyEvent *e) {
 }
 
 void PythonShellWidget::executeCurrentLines() {
-  if (_currentCodeLines.isEmpty())
+  if (_currentCodeLines.isEmpty()) {
     return;
+  }
 
   emit beginCurrentLinesExecution();
 
@@ -232,8 +234,9 @@ void PythonShellWidget::showEvent(QShowEvent *) {
 }
 
 void PythonShellWidget::updateAutoCompletionList(bool) {
-  if (!_autoCompletionList->isVisible())
+  if (!_autoCompletionList->isVisible()) {
     return;
+  }
 
   _autoCompletionList->clear();
 
@@ -269,8 +272,9 @@ void PythonShellWidget::updateAutoCompletionList(bool) {
       for (int i = 0; i < dynamicAutoCompletionList.size(); ++i) {
         QString entry = dynamicAutoCompletionList[i];
 
-        if (_autoCompletionList->findItems(entry, Qt::MatchExactly).empty())
+        if (_autoCompletionList->findItems(entry, Qt::MatchExactly).empty()) {
           _autoCompletionList->addItem(entry);
+        }
       }
     }
 
@@ -282,8 +286,9 @@ void PythonShellWidget::updateAutoCompletionList(bool) {
         for (int i = 0; i < dynamicAutoCompletionList.size(); ++i) {
           QString entry = dynamicAutoCompletionList[i];
 
-          if (_autoCompletionList->findItems(entry, Qt::MatchExactly).empty())
+          if (_autoCompletionList->findItems(entry, Qt::MatchExactly).empty()) {
             _autoCompletionList->addItem(entry);
+          }
         }
       }
     }
@@ -295,8 +300,9 @@ void PythonShellWidget::updateAutoCompletionList(bool) {
     _autoCompletionList->sortItems();
   }
 
-  if (_autoCompletionList->count() == 0)
+  if (_autoCompletionList->count() == 0) {
     _autoCompletionList->hide();
-  else
+  } else {
     _autoCompletionList->setCurrentRow(0);
+  }
 }

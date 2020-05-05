@@ -464,12 +464,13 @@ void ImportExportTest::exportGraph(tlp::Graph *graph, const std::string &exportP
 
   if ((filename.rfind(".gz") == (filename.length() - 3)) ||
       (filename.rfind(".tlpz") == (filename.length() - 5)) ||
-      (filename.rfind(".tlpbz") == (filename.length() - 6)))
+      (filename.rfind(".tlpbz") == (filename.length() - 6))) {
     os = tlp::getOgzstream(filename);
-  else if (exportPluginName != "TLPB Export")
+  } else if (exportPluginName != "TLPB Export") {
     os = tlp::getOutputFileStream(filename);
-  else
+  } else {
     os = tlp::getOutputFileStream(filename, ios::out | ios::binary);
+  }
 
   DataSet set;
   tlp::exportGraph(graph, *os, exportPluginName, set);

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -39,8 +39,9 @@ GlSphere::GlSphere(const Coord &position, float radius, const string &textureFil
 }
 
 GlSphere::~GlSphere() {
-  if (!buffers.empty())
+  if (!buffers.empty()) {
     glDeleteBuffers(3, &buffers[0]);
+  }
 }
 
 void GlSphere::generateBuffers(int space) {
@@ -64,8 +65,9 @@ void GlSphere::generateBuffers(int space) {
       indices[n + 2] = n + 2;
       indices[n + 3] = n + 3;
 
-      if (n)
+      if (n) {
         indices[verticesCount * 2 - n] = n + verticesCount;
+      }
 
       indices[verticesCount * 2 - n - 1] = n + verticesCount + 1;
       indices[verticesCount * 2 - n - 2] = n + verticesCount + 2;
@@ -177,8 +179,9 @@ void GlSphere::draw(float, Camera *) {
   glDisableClientState(GL_VERTEX_ARRAY);
   glDisableClientState(GL_NORMAL_ARRAY);
 
-  if (!textureFile.empty())
+  if (!textureFile.empty()) {
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+  }
 
   glBindBuffer(GL_ARRAY_BUFFER, 0);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);

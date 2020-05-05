@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -48,8 +48,9 @@ void OutputPanelButton::paintEvent(QPaintEvent *event) {
   p.setPen(Qt::white);
   p.drawText((20 - numberWidth) / 2, baseLine, QString::number(_number));
 
-  if (!isChecked())
+  if (!isChecked()) {
     p.setPen(Qt::black);
+  }
 
 #ifdef __APPLE__ // On MacOS: force the baseLine to 2 to get the text drawn in the button
   baseLine = 2;

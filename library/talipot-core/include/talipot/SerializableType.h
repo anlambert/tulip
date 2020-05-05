@@ -66,45 +66,54 @@ class TLP_SCOPE SerializableVectorType : public TypeInterface<std::vector<ELT_TY
     }
 
     if (openChar) {
-      if (c != openChar)
+      if (c != openChar) {
         return false;
-    } else
+      }
+    } else {
       is.unget();
+    }
 
     for (;;) {
-      if (!(is >> c))
+      if (!(is >> c)) {
         return (!sepFound && !closeChar);
+      }
 
-      if (isspace(c))
+      if (isspace(c)) {
         continue;
+      }
 
       if (c == closeChar) {
-        if (!openChar || sepFound)
+        if (!openChar || sepFound) {
           return false;
+        }
 
         return true;
       }
 
       if (c == sepChar) {
-        if (firstVal || sepFound)
+        if (firstVal || sepFound) {
           return false;
+        }
 
         sepFound = true;
       } else {
         if (firstVal || sepFound) {
-          if (openParen && c != '(')
+          if (openParen && c != '(') {
             return false;
+          }
 
           is.unget();
 
-          if (!ELT_READER::read(is, val))
+          if (!ELT_READER::read(is, val)) {
             return false;
+          }
 
           v.push_back(val);
           firstVal = false;
           sepFound = false;
-        } else
+        } else {
           return false;
+        }
       }
     }
   }
@@ -112,8 +121,9 @@ class TLP_SCOPE SerializableVectorType : public TypeInterface<std::vector<ELT_TY
     os << '(';
 
     for (unsigned int i = 0; i < v.size(); i++) {
-      if (i)
+      if (i) {
         os << ", ";
+      }
 
       os << v[i];
     }
@@ -153,8 +163,9 @@ public:
     for (const std::string &s : vs) {
       ELT_TYPE val;
       std::istringstream is(s);
-      if (!ELT_READER::read(is, val))
+      if (!ELT_READER::read(is, val)) {
         return false;
+      }
 
       v.push_back(val);
     }
@@ -175,47 +186,56 @@ public:
     }
 
     if (openChar) {
-      if (c != openChar)
+      if (c != openChar) {
         return false;
-    } else
+      }
+    } else {
       is.unget();
+    }
 
     for (;;) {
-      if (!(is >> c))
+      if (!(is >> c)) {
         return (!sepFound && !closeChar);
+      }
 
-      if (isspace(c))
+      if (isspace(c)) {
         continue;
+      }
 
       if (c == closeChar) {
-        if (!openChar || sepFound)
+        if (!openChar || sepFound) {
           return false;
+        }
 
         return true;
       }
 
       if (c == sepChar) {
-        if (firstVal || sepFound)
+        if (firstVal || sepFound) {
           return false;
+        }
 
         sepFound = true;
       } else {
         if (firstVal || sepFound) {
-          if (openParen && c != '(')
+          if (openParen && c != '(') {
             return false;
+          }
 
           is.unget();
 
           auto pos = is.tellg();
-          if (!ELT_READER::read(is, val))
+          if (!ELT_READER::read(is, val)) {
             return false;
+          }
 
           v.push_back(s.substr(pos, is.tellg() - pos)),
 
               firstVal = false;
           sepFound = false;
-        } else
+        } else {
           return false;
+        }
       }
     }
   }

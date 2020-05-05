@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -131,20 +131,24 @@ namespace tlp {
 VectorGraph::VectorGraph() {}
 //=======================================================
 VectorGraph::~VectorGraph() {
-  for (auto values : _nodeValues)
+  for (auto values : _nodeValues) {
     delete values;
+  }
 
-  for (auto values : _edgeValues)
+  for (auto values : _edgeValues) {
     delete values;
+  }
 }
 //=======================================================
 void VectorGraph::clear() {
   delAllNodes();
-  for (auto values : _nodeValues)
+  for (auto values : _nodeValues) {
     delete values;
+  }
 
-  for (auto values : _edgeValues)
+  for (auto values : _edgeValues) {
     delete values;
+  }
 
   _nodeValues.clear();
   _edgeValues.clear();
@@ -161,22 +165,26 @@ edge VectorGraph::existEdge(const node src, const node tgt, bool directed) const
     const std::vector<node> &adjn = tgtData._adjn;
 
     for (size_t i = 0; i < tgtDeg; ++i) {
-      if (directed && !adjt[i] && adjn[i] == src)
+      if (directed && !adjt[i] && adjn[i] == src) {
         return tgtData._adje[i];
+      }
 
-      if (!directed && adjn[i] == src)
+      if (!directed && adjn[i] == src) {
         return tgtData._adje[i];
+      }
     }
   } else {
     const std::vector<bool> &adjt = srcData._adjt;
     const std::vector<node> &adjn = srcData._adjn;
 
     for (size_t i = 0; i < srcDeg; ++i) {
-      if (directed && adjt[i] && adjn[i] == tgt)
+      if (directed && adjt[i] && adjn[i] == tgt) {
         return srcData._adje[i];
+      }
 
-      if (!directed && adjn[i] == tgt)
+      if (!directed && adjn[i] == tgt) {
         return srcData._adje[i];
+      }
     }
   }
 
@@ -193,20 +201,23 @@ void VectorGraph::setEdgeOrder(const node n, const std::vector<edge> &v) {
 }
 //=======================================================
 void VectorGraph::swapEdgeOrder(const node n, const edge e1, const edge e2) {
-  if (e1 == e2)
+  if (e1 == e2) {
     return; // we can't swap loops in our model
+  }
 
   unsigned int e1i, e2i;
 
-  if (source(e1) == n)
+  if (source(e1) == n) {
     e1i = _eData[e1]._endsPos.first;
-  else
+  } else {
     e1i = _eData[e1]._endsPos.second;
+  }
 
-  if (source(e2) == n)
+  if (source(e2) == n) {
     e2i = _eData[e2]._endsPos.first;
-  else
+  } else {
     e2i = _eData[e2]._endsPos.second;
+  }
 
   edge tmpe = _nData[n]._adje[e1i];
   _nData[n]._adje[e1i] = _nData[n]._adje[e2i];
@@ -218,29 +229,33 @@ void VectorGraph::swapEdgeOrder(const node n, const edge e1, const edge e2) {
   _nData[n]._adjt[e1i] = _nData[n]._adjt[e2i];
   _nData[n]._adjt[e2i] = tmpt;
 
-  if (source(e1) == n)
+  if (source(e1) == n) {
     _eData[e1]._endsPos.first = e2i;
-  else
+  } else {
     _eData[e1]._endsPos.second = e2i;
+  }
 
-  if (source(e2) == n)
+  if (source(e2) == n) {
     _eData[e2]._endsPos.first = e1i;
-  else
+  } else {
     _eData[e2]._endsPos.second = e1i;
+  }
 }
 //=======================================================
 void VectorGraph::reserveNodes(const size_t nbNodes) {
   _nodes.reserve(nbNodes);
   _nData.reserve(nbNodes);
-  for (auto values : _nodeValues)
+  for (auto values : _nodeValues) {
     values->reserve(nbNodes);
+  }
 }
 //=======================================================
 void VectorGraph::reserveEdges(const size_t nbEdges) {
   _edges.reserve(nbEdges);
   _eData.reserve(nbEdges);
-  for (auto values : _edgeValues)
+  for (auto values : _edgeValues) {
     values->reserve(nbEdges);
+  }
 }
 //=======================================================
 void VectorGraph::reserveAdj(const size_t nbEdges) {
@@ -293,8 +308,9 @@ node VectorGraph::addNode() {
   if (newNode.id == _nData.size()) {
     _nData.push_back(_iNodes());
     addNodeToValues(newNode);
-  } else
+  } else {
     _nData[newNode].clear();
+  }
 
   return newNode;
 }
@@ -317,8 +333,9 @@ void VectorGraph::addNodes(unsigned int nb, std::vector<node> *addedNodes) {
     nb -= _nodes.size() - sz;
   }
 
-  for (unsigned int i = 0; i < nb; ++i)
+  for (unsigned int i = 0; i < nb; ++i) {
     _nData[_nodes[first + i]].clear();
+  }
 }
 //=======================================================
 void VectorGraph::delNode(const node n) {
@@ -327,8 +344,9 @@ void VectorGraph::delNode(const node n) {
   _nData[n].clear();
   _nodes.free(n);
 
-  if (_nodes.empty())
+  if (_nodes.empty()) {
     _nData.resize(0);
+  }
 
   // integrityTest();
 }
@@ -341,10 +359,11 @@ void VectorGraph::addEdgeInternal(const edge newEdge, const node src, const node
 
   _iNodes &tgtData = _nData[tgt];
 
-  if (src != tgt)
+  if (src != tgt) {
     eData._endsPos.second = tgtData._adje.size();
-  else
+  } else {
     eData._endsPos.second = srcData._adje.size() + 1;
+  }
 
   srcData.addEdge(true, tgt, newEdge);
   tgtData.addEdge(false, src, newEdge);
@@ -372,8 +391,9 @@ void VectorGraph::addEdges(const std::vector<std::pair<node, node>> &ends,
                            std::vector<edge> *addedEdges) {
   unsigned int nb = ends.size();
 
-  if (nb == 0)
+  if (nb == 0) {
     return;
+  }
 
   if (addedEdges) {
     addedEdges->clear();
@@ -389,8 +409,9 @@ void VectorGraph::addEdges(const std::vector<std::pair<node, node>> &ends,
     addEdgeToValues(edge(_edges.size() - 1));
   }
 
-  for (unsigned int i = 0; i < nb; ++i)
+  for (unsigned int i = 0; i < nb; ++i) {
     addEdgeInternal(_edges[first + i], ends[i].first, ends[i].second);
+  }
 }
 
 //=======================================================
@@ -401,8 +422,9 @@ void VectorGraph::delEdge(const edge e) {
   node ptgt = _eData[e]._ends.second;
   partialDelEdge(psrc, e);
 
-  if (psrc != ptgt)
+  if (psrc != ptgt) {
     partialDelEdge(ptgt, e);
+  }
 
   // remove the edge in the edge vector
   removeEdge(e);
@@ -426,8 +448,9 @@ void VectorGraph::delEdges(const node n) {
       if (opp != n) { // not a loop
         partialDelEdge(opp, e);
 
-        if (adjt[i] == false)
+        if (adjt[i] == false) {
           _nData[opp]._outdeg -= 1;
+        }
       }
 
       removeEdge(e);
@@ -459,9 +482,9 @@ node VectorGraph::opposite(const edge e, const node n) const {
 
   const pair<node, node> &endsE = _eData[e]._ends;
 
-  if (endsE.first == n)
+  if (endsE.first == n) {
     return endsE.second;
-  else {
+  } else {
     assert(endsE.second == n);
     return endsE.first;
   }
@@ -504,17 +527,19 @@ void VectorGraph::setEnds(const edge e, const node src, const node tgt) {
 
   partialDelEdge(psrc, e);
 
-  if (psrc != ptgt)
+  if (psrc != ptgt) {
     partialDelEdge(ptgt, e);
+  }
 
   eData._ends = pair<node, node>(src, tgt);
   eData._endsPos.first = srcData._adje.size();
   _iNodes &tgtData = _nData[tgt];
 
-  if (src != tgt)
+  if (src != tgt) {
     eData._endsPos.second = tgtData._adje.size();
-  else // loop
+  } else { // loop
     eData._endsPos.second = srcData._adje.size() + 1;
+  }
 
   srcData.addEdge(true, tgt, e);
   tgtData.addEdge(false, src, e);
@@ -546,12 +571,14 @@ void VectorGraph::swap(const edge a, const edge b) {
 //=======================================================
 void VectorGraph::dump() const {
   tlp::debug() << "nodes : ";
-  for (auto n : nodes())
+  for (auto n : nodes()) {
     tlp::debug() << n.id << " ";
+  }
   tlp::debug() << endl;
   tlp::debug() << "edges: ";
-  for (auto e : edges())
+  for (auto e : edges()) {
     tlp::debug() << "e_" << e.id << "(" << source(e).id << "," << target(e).id << ") ";
+  }
   tlp::debug() << endl;
 
   for (auto n : nodes()) {
@@ -567,11 +594,13 @@ void VectorGraph::dump() const {
 void VectorGraph::integrityTest() {
   double sumDeg = 0;
 
-  for (unsigned int i = 0; i < numberOfNodes(); ++i)
+  for (unsigned int i = 0; i < numberOfNodes(); ++i) {
     testCond("nodesId in array :", _nodes.getPos(_nodes[i]) == i);
+  }
 
-  for (unsigned int i = 0; i < numberOfEdges(); ++i)
+  for (unsigned int i = 0; i < numberOfEdges(); ++i) {
     testCond("edgesId in array :", _edges.getPos(_edges[i]) == i);
+  }
 
   set<edge> edgeFound;
   set<node> nodeFound;
@@ -589,10 +618,11 @@ void VectorGraph::integrityTest() {
     for (unsigned int j = 0; j < _nData[n]._adjn.size(); ++j) {
       testCond("opposite", opposite(_nData[n]._adje[j], _nodes[i]) == _nData[n]._adjn[j]);
 
-      if (!_nData[n]._adjt[j])
+      if (!_nData[n]._adjt[j]) {
         ++_indeg;
-      else
+      } else {
         ++_outdeg;
+      }
 
       edgeFound.insert(_nData[n]._adje[j]);
       nodeFound.insert(_nData[n]._adjn[j]);
@@ -636,34 +666,39 @@ void VectorGraph::testCond(string str, bool b) {
 }
 //=======================================================
 void VectorGraph::addNodeToValues(node n) {
-  for (auto values : _nodeValues)
+  for (auto values : _nodeValues) {
     values->addElement(n.id);
+  }
 }
 //=======================================================
 void VectorGraph::addEdgeToValues(edge e) {
-  for (auto values : _edgeValues)
+  for (auto values : _edgeValues) {
     values->addElement(e.id);
+  }
 }
 //=======================================================
 void VectorGraph::removeEdge(edge e) {
   if (_edges.isElement(e)) {
     _edges.free(e);
 
-    if (_edges.empty())
+    if (_edges.empty()) {
       _eData.resize(0);
+    }
   }
 }
 //=======================================================
 void VectorGraph::moveEdge(node n, unsigned int a, unsigned int b) {
-  if (a == b)
+  if (a == b) {
     return;
+  }
 
   edge moved = _nData[n]._adje[a];
 
-  if (_nData[n]._adjt[a]) // if true in edges -> target
+  if (_nData[n]._adjt[a]) { // if true in edges -> target
     _eData[moved]._endsPos.first = b;
-  else
+  } else {
     _eData[moved]._endsPos.second = b;
+  }
 
   _nData[n]._adje[b] = _nData[n]._adje[a];
   _nData[n]._adjn[b] = _nData[n]._adjn[a];
@@ -686,10 +721,11 @@ void VectorGraph::partialDelEdge(node n, edge e) {
     } else {
       unsigned int i;
 
-      if (_eData[e]._ends.first == n)
+      if (_eData[e]._ends.first == n) {
         i = _eData[e]._endsPos.first;
-      else
+      } else {
         i = _eData[e]._endsPos.second;
+      }
 
       moveEdge(n, endP, i);
     }

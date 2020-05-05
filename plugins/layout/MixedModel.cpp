@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -79,15 +79,18 @@ bool MixedModel::run() {
     dataSet->get("y node-node spacing", spacing);
     dataSet->get("x node-node and edge-node spacing", edgeNodeSpacing);
     // "shape property" was previously called "node shape"
-    if (!dataSet->get("node shape", shapeResult))
+    if (!dataSet->get("node shape", shapeResult)) {
       dataSet->get("shape property", shapeResult);
+    }
   }
 
-  if (sizeResult == nullptr)
+  if (sizeResult == nullptr) {
     sizeResult = graph->getSizeProperty("viewSize");
+  }
 
-  if (shapeResult == nullptr)
+  if (shapeResult == nullptr) {
     shapeResult = graph->getLocalIntegerProperty("viewShape");
+  }
 
   //=========================================================
   // rotate size if necessary
@@ -103,16 +106,18 @@ bool MixedModel::run() {
   vector<edge> edge_planar;
 
   // give some empirical feedback of what we are doing 0,1 %
-  if (pluginProgress->progress(1, 1000) != TLP_CONTINUE)
+  if (pluginProgress->progress(1, 1000) != TLP_CONTINUE) {
     return pluginProgress->state() != TLP_CANCEL;
+  }
 
   // compute the connected components's subgraphs
   std::vector<std::vector<node>> components;
   ConnectedTest::computeConnectedComponents(graph, components);
 
   for (unsigned int i = 0; i < components.size(); ++i) {
-    if (pluginProgress->progress(2, 1000) != TLP_CONTINUE)
+    if (pluginProgress->progress(2, 1000) != TLP_CONTINUE) {
       return pluginProgress->state() != TLP_CANCEL;
+    }
     std::vector<node> &nodes = components[i];
 
     //====================================================
@@ -128,8 +133,9 @@ bool MixedModel::run() {
       const Coord &c2 = sizeResult->getNodeValue(n2);
       result->setNodeValue(n2, Coord(spacing + c.getX() / 2 + c2.getX() / 2, 0, 0));
 
-      for (auto e : graph->getEdges(n, n2, false))
+      for (auto e : graph->getEdges(n, n2, false)) {
         edge_planar.push_back(e);
+      }
 
       if (nodes.size() == 3) {
         node n3 = nodes[2];
@@ -157,10 +163,12 @@ bool MixedModel::run() {
           result->setEdgeValue(e, bends);
         }
 
-        for (auto e : graph->getEdges(n, n3, false))
+        for (auto e : graph->getEdges(n, n3, false)) {
           edge_planar.push_back(e);
-        for (auto e : graph->getEdges(n2, n3, false))
+        }
+        for (auto e : graph->getEdges(n2, n3, false)) {
           edge_planar.push_back(e);
+        }
       }
 
       continue;
@@ -185,8 +193,9 @@ bool MixedModel::run() {
           G->addNode(eEnds.second);
           G->addEdge(e);
           edge_planar.push_back(e);
-        } else
+        } else {
           unplanar_edges.push_back(e);
+        }
       }
 
       //===================================================
@@ -205,20 +214,23 @@ bool MixedModel::run() {
       delete graphMap;
     } else {
       G = currentGraph->addCloneSubGraph();
-      for (auto e : currentGraph->edges())
+      for (auto e : currentGraph->edges()) {
         edge_planar.push_back(e);
+      }
     }
 
     //===============================================
 
     // give some empirical feedback of what we are doing 0,5%
-    if (pluginProgress->progress(5, 1000) != TLP_CONTINUE)
+    if (pluginProgress->progress(5, 1000) != TLP_CONTINUE) {
       return pluginProgress->state() != TLP_CANCEL;
+    }
 
     vector<edge> added_edges;
 
-    if (!BiconnectedTest::isBiconnected(G))
+    if (!BiconnectedTest::isBiconnected(G)) {
       BiconnectedTest::makeBiconnected(G, added_edges);
+    }
 
     assert(BiconnectedTest::isBiconnected(G));
     carte = computePlanarConMap(G);
@@ -226,8 +238,9 @@ bool MixedModel::run() {
     assert(BiconnectedTest::isBiconnected(carte));
 
     // give some empirical feedback of what we are doing (5%)
-    if (pluginProgress->progress(5, 100) != TLP_CONTINUE)
+    if (pluginProgress->progress(5, 100) != TLP_CONTINUE) {
       return pluginProgress->state() != TLP_CANCEL;
+    }
 
     InPoints.clear();
     OutPoints.clear();
@@ -247,8 +260,9 @@ bool MixedModel::run() {
     initPartition();
 
     // give some empirical feedback of what we are doing (10%)
-    if (pluginProgress->progress(10, 100) != TLP_CONTINUE)
+    if (pluginProgress->progress(10, 100) != TLP_CONTINUE) {
       return pluginProgress->state() != TLP_CANCEL;
+    }
 
     assignInOutPoints();
 
@@ -276,8 +290,9 @@ bool MixedModel::run() {
     DataSet tmp;
     tmp.set("coordinates", result);
     graph->applyPropertyAlgorithm("Connected Component Packing", result, err, &tmp, pluginProgress);
-    if (pluginProgress->state() != TLP_CONTINUE)
+    if (pluginProgress->state() != TLP_CONTINUE) {
       return pluginProgress->state() != TLP_CANCEL;
+    }
   }
 
   // rotate layout and size
@@ -364,29 +379,37 @@ void MixedModel::placeNodesEdges() {
         c = Coord(cs.getX(), ct.getY(), 0);
       }
 
-      if (ct.getX() >= maxX)
+      if (ct.getX() >= maxX) {
         maxX = ct.getX();
+      }
 
-      if (cs.getX() >= maxX)
+      if (cs.getX() >= maxX) {
         maxX = cs.getX();
+      }
 
-      if (ct.getY() >= maxY)
+      if (ct.getY() >= maxY) {
         maxY = ct.getY();
+      }
 
-      if (cs.getY() >= maxY)
+      if (cs.getY() >= maxY) {
         maxY = cs.getY();
+      }
 
-      if ((cs != NodeCoords[src]) && (cs != ct))
+      if ((cs != NodeCoords[src]) && (cs != ct)) {
         bends.push_back(cs);
+      }
 
-      if ((c != cs) && (c != ct))
+      if ((c != cs) && (c != ct)) {
         bends.push_back(c);
+      }
 
-      if ((ct != NodeCoords[tgt]) && (ct != cs))
+      if ((ct != NodeCoords[tgt]) && (ct != cs)) {
         bends.push_back(ct);
+      }
 
-      if (!bends.empty())
+      if (!bends.empty()) {
         result->setEdgeValue(e, bends);
+      }
     }
 
     // rs == rt, même partition donc pas de points intermédiaire à  calculer
@@ -418,12 +441,15 @@ void MixedModel::placeNodesEdges() {
 void MixedModel::initPartition() {
   V = tlp::computeCanonicalOrdering(carte, &dummy, pluginProgress);
 
-  if (pluginProgress->state() == TLP_CANCEL)
+  if (pluginProgress->state() == TLP_CANCEL) {
     return;
+  }
 
-  for (unsigned int i = 0; i < V.size(); ++i)
-    for (unsigned int j = 0; j < V[i].size(); ++j)
+  for (unsigned int i = 0; i < V.size(); ++i) {
+    for (unsigned int j = 0; j < V[i].size(); ++j) {
       rank[V[i][j]] = i;
+    }
+  }
 }
 
 //====================================================
@@ -437,8 +463,9 @@ void MixedModel::assignInOutPoints() { // on considère qu'il n'y a pas d'arc do
   for (unsigned int k = 0; k < V.size(); ++k) {
     // give pluginProgress feedback
     if (pluginProgress->progress(minProgress + (deltaProgress * k) / V.size(), 1000) !=
-        TLP_CONTINUE)
+        TLP_CONTINUE) {
       return;
+    }
 
     unsigned int p = V[k].size();
 
@@ -502,8 +529,9 @@ void MixedModel::assignInOutPoints() { // on considère qu'il n'y a pas d'arc do
             pred = 'i';
             listOfEdgesOUT.insert(listOfEdgesOUT.begin(), tmp.begin(), tmp.end());
             tmp.clear();
-          } else if (pred == 'p')
+          } else if (pred == 'p') {
             pred = 'i';
+          }
 
           tmp.push_back(e);
         }
@@ -516,8 +544,9 @@ void MixedModel::assignInOutPoints() { // on considère qu'il n'y a pas d'arc do
             pred = 'o';
             listOfEdgesIN.insert(listOfEdgesIN.begin(), tmp.begin(), tmp.end());
             tmp.clear();
-          } else if (pred == 'p')
+          } else if (pred == 'p') {
             pred = 'o';
+          }
 
           tmp.push_back(e);
         }
@@ -531,8 +560,9 @@ void MixedModel::assignInOutPoints() { // on considère qu'il n'y a pas d'arc do
               pred = 'i';
               listOfEdgesOUT.insert(listOfEdgesOUT.begin(), tmp.begin(), tmp.end());
               tmp.clear();
-            } else if (pred == 'p')
+            } else if (pred == 'p') {
               pred = 'i';
+            }
 
             tmp.push_back(e);
           }
@@ -546,18 +576,20 @@ void MixedModel::assignInOutPoints() { // on considère qu'il n'y a pas d'arc do
               pred = 'i';
               listOfEdgesOUT.insert(listOfEdgesOUT.begin(), tmp.begin(), tmp.end());
               tmp.clear();
-            } else if (pred == 'p')
+            } else if (pred == 'p') {
               pred = 'i';
+            }
 
             tmp.push_back(e);
           }
         }
       }
 
-      if (pred == 'o')
+      if (pred == 'o') {
         listOfEdgesOUT.insert(listOfEdgesOUT.begin(), tmp.begin(), tmp.end());
-      else if (pred == 'i')
+      } else if (pred == 'i') {
         listOfEdgesIN.insert(listOfEdgesIN.begin(), tmp.begin(), tmp.end());
+      }
 
       if (k != 0) {
         if (i == 0) {
@@ -616,8 +648,9 @@ void MixedModel::assignInOutPoints() { // on considère qu'il n'y a pas d'arc do
 
       int outMoins = (0 >= outPlus ? 0 : outPlus);
 
-      if (dtmp != float(outPlus))
+      if (dtmp != float(outPlus)) {
         ++outPlus; // valeur entière supérieure
+      }
 
       if (nbIn >= 2) {
         dl = 1;
@@ -752,14 +785,17 @@ void MixedModel::assignInOutPoints() { // on considère qu'il n'y a pas d'arc do
       float ftmp = (nbIn - 3.f) / 2.f;
       int in_r = in_l;
 
-      if (0 > in_l)
+      if (0 > in_l) {
         in_l = 0;
+      }
 
-      if (ftmp != float(in_r))
+      if (ftmp != float(in_r)) {
         ++in_r;
+      }
 
-      if (0 > in_r)
+      if (0 > in_r) {
         in_r = 0;
+      }
 
       inr[v] = in_r;
       inl[v] = in_l;
@@ -792,22 +828,24 @@ void MixedModel::assignInOutPoints() { // on considère qu'il n'y a pas d'arc do
 
         assert(j == nbIn);
       } else {
-        for (unsigned int j = 0; j < nbIn; ++j)
+        for (unsigned int j = 0; j < nbIn; ++j) {
           InPoints[listOfEdgesIN[j]].push_back(Coord());
+        }
       }
 
       EdgesIN[v] = listOfEdgesIN;
       unsigned s = listOfEdgesOUT.size();
       EdgesOUT[v] = vector<edge>(s);
 
-      for (unsigned int i = 0; i < s; ++i)
+      for (unsigned int i = 0; i < s; ++i) {
         EdgesOUT[v][s - (i + 1)] = listOfEdgesOUT[i];
+      }
     }
 
     // mise à jour du contour
-    if (k == 0)
+    if (k == 0) {
       C = V[0];
-    else {
+    } else {
       C.erase(il + 1, ir);
       ir = find(C.begin(), C.end(), nr);
       C.insert(ir, V[k].begin(), V[k].end());
@@ -842,11 +880,12 @@ void MixedModel::computeCoords() {
     Coord c = nodeSize.get((V[0][i]).id);
     float x;
 
-    if (i == 0)
+    if (i == 0) {
       x = (out_l < double(c.getX() / 2.f)) ? (c.getX() / 2.f) : float(out_l);
-    else
+    } else {
       x = float(out_r_moins1) +
           ((out_l < double(c.getX() / 2.f)) ? (c.getX() / 2.f) : float(out_l)) + spacing;
+    }
 
     NodeCoords[v] = Coord(x, 0, 0); // y(vi) = 0
     out_r_moins1 = (out_r < (c.getX() / 2.) ? (c.getX() / 2.) : out_r);
@@ -875,8 +914,9 @@ void MixedModel::computeCoords() {
       float y = NodeCoords[(*i)].getY() + co2.getY() / 2.f; // recherche max des y(ci) dans
                                                             // [cl...cr]
 
-      if (max_y < y)
+      if (max_y < y) {
         max_y = y;
+      }
 
       // compute x-coords [cl+1.. cr] temporarily
       somme += NodeCoords[(*i)].getX();
@@ -891,8 +931,9 @@ void MixedModel::computeCoords() {
       co = nodeSize.get((V[k][i]).id);
       int taille_tmp = int((inr[V[k][i]] < co.getY() / 2.) ? co.getY() / 2. : inr[V[k][i]]);
 
-      if (taille_tmp > max_y_taille)
+      if (taille_tmp > max_y_taille) {
         max_y_taille = taille_tmp;
+      }
     }
 
     for (unsigned int i = 0; i < p; ++i) {
@@ -930,28 +971,32 @@ void MixedModel::computeCoords() {
                                                         : out_l) +
           dxl;
 
-      if (tmp >= ftmp)
+      if (tmp >= ftmp) {
         NodeCoords[Z0].setX(tmp);
-      else
+      } else {
         NodeCoords[Z0].setX(ftmp);
+      }
 
       float delta = NodeCoords[Z0].getX() - (dxt + NodeCoords[(*it)].getX());
 
-      if (delta > 0)
-        for (vector<node>::iterator i = it; i != ir + 1; ++i)
+      if (delta > 0) {
+        for (vector<node>::iterator i = it; i != ir + 1; ++i) {
           NodeCoords[(*i)].setX(NodeCoords[(*i)].getX() + delta);
-      else
+        }
+      } else {
         delta = 0;
+      }
 
       tmp = NodeCoords[(*ir)].getX() + delta - NodeCoords[Z0].getX();
       ftmp = ((out_r < (nodeSize.get(Z0.id)).getX() / 2.f) ? (nodeSize.get(Z0.id)).getX() / 2.f
                                                            : out_r) -
              dxr;
 
-      if (tmp >= ftmp)
+      if (tmp >= ftmp) {
         NodeCoords[(*ir)].setX(tmp);
-      else
+      } else {
         NodeCoords[(*ir)].setX(ftmp);
+      }
 
       float xZ0 = NodeCoords[Z0].getX();
 
@@ -970,10 +1015,11 @@ void MixedModel::computeCoords() {
         Coord co2 = nodeSize.get((V[k][i]).id);
         double x;
 
-        if (i == 0)
+        if (i == 0) {
           x = ((out_l < co2.getX() / 2.) ? co2.getX() / 2. : out_l) + dxl;
-        else
+        } else {
           x = out_r_moins1 + ((out_l < co2.getX() / 2.) ? co2.getX() / 2. : out_l) + 1;
+        }
 
         NodeCoords[V[k][i]].setX(float(x));
         somme += float(x);
@@ -988,10 +1034,11 @@ void MixedModel::computeCoords() {
       float xtmp = NodeCoords[cr].getX();
       double x;
 
-      if (tmp > xtmp - somme)
+      if (tmp > xtmp - somme) {
         x = tmp;
-      else
+      } else {
         x = xtmp - somme;
+      }
 
       NodeCoords[cr].setX(float(x));
 
@@ -1021,9 +1068,11 @@ void MixedModel::computeCoords() {
     for (unsigned int i = 0; i < p; ++i) {
       node v = V[k][i];
 
-      if (find(C.begin(), C.end(), v) == C.end())
-        if (father.find(v) != father.end())
+      if (find(C.begin(), C.end(), v) == C.end()) {
+        if (father.find(v) != father.end()) {
           NodeCoords[v].setX(NodeCoords[v].getX() + NodeCoords[father[v]].getX());
+        }
+      }
     }
   }
 }

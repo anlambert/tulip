@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -45,11 +45,13 @@ Coord Glyph::getAnchor(const Coord &nodeCenter, const Coord &from, const Size &s
                        const double zRotation) const {
   Coord anchor = from - nodeCenter;
 
-  if (anchor.getX() == 0.0f && anchor.getY() == 0.0f)
+  if (anchor.getX() == 0.0f && anchor.getY() == 0.0f) {
     return nodeCenter;
+  }
 
-  if (scale.getW() == 0.0f || scale.getH() == 0.0f)
+  if (scale.getW() == 0.0f || scale.getH() == 0.0f) {
     return nodeCenter;
+  }
 
   if (zRotation != 0) {
     // unrotate
@@ -63,10 +65,11 @@ Coord Glyph::getAnchor(const Coord &nodeCenter, const Coord &from, const Size &s
   anchor.setX(anchor.getX() / scale.getW());
   anchor.setY(anchor.getY() / scale.getH());
 
-  if (scale.getD() != 0.0f)
+  if (scale.getD() != 0.0f) {
     anchor.setZ(anchor.getZ() / scale.getD());
-  else
+  } else {
     anchor.setZ(0.0f);
+  }
 
   anchor = getAnchor(anchor);
 

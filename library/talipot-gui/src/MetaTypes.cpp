@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -33,11 +33,13 @@ void QStringListType::write(std::ostream &oss, const RealType &t) {
 bool QStringListType::read(std::istream &iss, RealType &t) {
   StringVectorType::RealType stdVect;
 
-  if (!StringVectorType::read(iss, stdVect))
+  if (!StringVectorType::read(iss, stdVect)) {
     return false;
+  }
 
-  for (unsigned int i = 0; i < stdVect.size(); ++i)
+  for (unsigned int i = 0; i < stdVect.size(); ++i) {
     t.push_back(tlp::tlpStringToQString(stdVect[i]));
+  }
 
   return true;
 }
@@ -49,8 +51,9 @@ void QStringType::write(std::ostream &oss, const QString &t) {
 bool QStringType::read(std::istream &iss, QString &t) {
   std::string s;
 
-  if (!StringType::read(iss, s))
+  if (!StringType::read(iss, s)) {
     return false;
+  }
 
   t = tlp::tlpStringToQString(s);
   return true;
@@ -127,9 +130,10 @@ tlp::DataType *MetaTypes::qVariantToDataType(const QVariant &v) {
     return new TypedData<std::string>(new std::string(QStringToTlpString(desc.absolutePath)));
   }
 
-  if (v.userType() == qMetaTypeId<FontIcon>())
+  if (v.userType() == qMetaTypeId<FontIcon>()) {
     return new TypedData<std::string>(
         new std::string(QStringToTlpString(v.value<FontIcon>().iconName)));
+  }
 
   return nullptr;
 }
@@ -171,8 +175,9 @@ QVariant MetaTypes::dataTypeToQvariant(tlp::DataType *dm, const std::string &par
   if (type.compare(typeid(tlp::BooleanVectorType::RealType).name()) == 0) {
     tlp::BooleanVectorType::RealType result;
 
-    if (dm)
+    if (dm) {
       result = *(static_cast<tlp::BooleanVectorType::RealType *>(dm->value));
+    }
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
     return QVariant::fromValue<QVector<bool>>(QVector<bool>(result.begin(), result.end()));
 #else

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -57,28 +57,32 @@ void TreeTestListener::treatEvent(const Event &evt) {
 
     Graph *graph = static_cast<Graph *>(evt.sender());
 
-    if (evt.type() == Event::TLP_DELETE)
+    if (evt.type() == Event::TLP_DELETE) {
       resultsBuffer.erase(graph);
+    }
   }
 }
 //=================================================================
 static TreeTestListener instance;
 //====================================================================
 static bool treeTest(const Graph *graph) {
-  if (graph->numberOfEdges() != graph->numberOfNodes() - 1)
+  if (graph->numberOfEdges() != graph->numberOfNodes() - 1) {
     return false;
+  }
 
   bool rootNodeFound = false;
 
   for (auto tmp : graph->nodes()) {
-    if (graph->indeg(tmp) > 1)
+    if (graph->indeg(tmp) > 1) {
       return false;
+    }
 
     if (graph->indeg(tmp) == 0) {
-      if (rootNodeFound)
+      if (rootNodeFound) {
         return false;
-      else
+      } else {
         rootNodeFound = true;
+      }
     }
   }
 
@@ -87,8 +91,9 @@ static bool treeTest(const Graph *graph) {
 //====================================================================
 bool TreeTest::isTree(const tlp::Graph *graph) {
   auto it = instance.resultsBuffer.find(graph);
-  if (it != instance.resultsBuffer.end())
+  if (it != instance.resultsBuffer.end()) {
     return it->second;
+  }
 
   graph->addListener(instance);
   return instance.resultsBuffer[graph] = treeTest(graph);
@@ -112,8 +117,9 @@ struct dfsFreeTreeStruct {
   dfsFreeTreeStruct(node root = node(), node from = node(), Iterator<node> *it = nullptr)
       : curRoot(root), cameFrom(from), neighbours(it) {}
   ~dfsFreeTreeStruct() {
-    if (neighbours)
+    if (neighbours) {
       delete neighbours;
+    }
   }
 };
 
@@ -206,8 +212,9 @@ static void makeRootedTree(Graph *graph, node curRoot, vector<edge> *reversedEdg
           if (graph->target(curEdge) == curRoot) {
             graph->reverse(curEdge);
 
-            if (reversedEdges)
+            if (reversedEdges) {
               reversedEdges->push_back(curEdge);
+            }
           }
 
           // go deeper in the dfs traversal
@@ -250,8 +257,9 @@ static Graph *computeTreeInternal(Graph *graph, Graph *rGraph, bool isConnected,
                                   PluginProgress *pluginProgress,
                                   vector<edge> *reversedEdges = nullptr) {
   // nothing todo if the graph is already
-  if (TreeTest::isTree(graph))
+  if (TreeTest::isTree(graph)) {
     return graph;
+  }
 
   // if needed, create a clone of the graph
   // as a working copy
@@ -290,8 +298,9 @@ static Graph *computeTreeInternal(Graph *graph, Graph *rGraph, bool isConnected,
     BooleanProperty treeSelection(gClone);
     selectSpanningTree(gClone, &treeSelection, pluginProgress);
 
-    if (pluginProgress && pluginProgress->state() != TLP_CONTINUE)
+    if (pluginProgress && pluginProgress->state() != TLP_CONTINUE) {
       return nullptr;
+    }
 
     return computeTreeInternal(gClone->addSubGraph(&treeSelection), rGraph, true, pluginProgress,
                                reversedEdges);
@@ -313,8 +322,9 @@ static Graph *computeTreeInternal(Graph *graph, Graph *rGraph, bool isConnected,
 
   // connected components subgraphs loop
   for (Graph *gConn : rGraph->subGraphs()) {
-    if (gConn == tree)
+    if (gConn == tree) {
       continue;
+    }
 
     // compute a tree for each subgraph
     // add each element of that tree
@@ -323,14 +333,16 @@ static Graph *computeTreeInternal(Graph *graph, Graph *rGraph, bool isConnected,
     // subtree root
     Graph *sTree = computeTreeInternal(gConn, rGraph, true, pluginProgress, reversedEdges);
 
-    if (pluginProgress && pluginProgress->state() != TLP_CONTINUE)
+    if (pluginProgress && pluginProgress->state() != TLP_CONTINUE) {
       return nullptr;
+    }
 
     for (auto n : sTree->nodes()) {
       tree->addNode(n);
 
-      if (sTree->indeg(n) == 0)
+      if (sTree->indeg(n) == 0) {
         tree->addEdge(root, n);
+      }
     }
     tree->addEdges(sTree->edges());
   }
@@ -345,8 +357,9 @@ Graph *TreeTest::computeTree(tlp::Graph *graph, PluginProgress *pluginProgress) 
 
 // this one revert the updates due to tree computation
 void TreeTest::cleanComputedTree(tlp::Graph *graph, tlp::Graph *tree) {
-  if (graph == tree)
+  if (graph == tree) {
     return;
+  }
 
   // get the subgraph clone
   Graph *sg = tree;
@@ -365,8 +378,9 @@ void TreeTest::cleanComputedTree(tlp::Graph *graph, tlp::Graph *tree) {
   sg->getAttribute<node>(CLONE_ROOT, root);
 
   // delete it if needed
-  if (root.isValid())
+  if (root.isValid()) {
     rg->delNode(root);
+  }
 
   // delete the reversed edges if any
   vector<edge> *reversedEdges = nullptr;

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -22,8 +22,9 @@ void GLInteractorComposite::draw(tlp::GlMainWidget *w) {
   for (auto i : _components) {
     GLInteractorComponent *cmp = dynamic_cast<GLInteractorComponent *>(i);
 
-    if (cmp != nullptr)
+    if (cmp != nullptr) {
       cmp->draw(w);
+    }
   }
 }
 
@@ -31,7 +32,8 @@ void GLInteractorComposite::compute(tlp::GlMainWidget *w) {
   for (auto i : _components) {
     GLInteractorComponent *cmp = dynamic_cast<GLInteractorComponent *>(i);
 
-    if (cmp != nullptr)
+    if (cmp != nullptr) {
       cmp->compute(w);
+    }
   }
 }

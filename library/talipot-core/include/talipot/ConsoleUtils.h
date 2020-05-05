@@ -270,11 +270,12 @@ static void escapeAnsiCode(std::ostream &os, const std::string &ansiCode,
 #ifndef WIN32
 
   if ((&os == &std::cout && !stdOutNoAnsiEscapes && isatty(fileno(stdout))) ||
-      (&os == &std::cerr && !stdErrNoAnsiEscapes && isatty(fileno(stderr))))
+      (&os == &std::cerr && !stdErrNoAnsiEscapes && isatty(fileno(stderr)))) {
 #else
-  if ((&os == &std::cout && !stdOutNoAnsiEscapes) || (&os == &std::cerr && !stdErrNoAnsiEscapes))
+  if ((&os == &std::cout && !stdOutNoAnsiEscapes) || (&os == &std::cerr && !stdErrNoAnsiEscapes)) {
 #endif
     os << "\x1b[" << ansiCode << endEscape;
+  }
 }
 
 /*
@@ -372,17 +373,21 @@ inline std::ostream &operator<<(std::ostream &s, const TextBgColorSetup &tbgcs) 
 }
 
 inline void setEffects(std::ostream &s, const int &effect) {
-  if (effect & NORMAL)
+  if (effect & NORMAL) {
     escapeAnsiCode(s, "0");
+  }
 
-  if (effect & BOLD)
+  if (effect & BOLD) {
     escapeAnsiCode(s, "1");
+  }
 
-  if (effect & UNDERLINED)
+  if (effect & UNDERLINED) {
     escapeAnsiCode(s, "4");
+  }
 
-  if (effect & BLINK)
+  if (effect & BLINK) {
     escapeAnsiCode(s, "5");
+  }
 }
 
 inline std::ostream &operator<<(std::ostream &s, const TextEffectSetup &tes) {

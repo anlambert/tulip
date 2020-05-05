@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -36,8 +36,9 @@ double StrengthMetric::e(std::unordered_set<tlp::node> &U, std::unordered_set<tl
 
   for (auto n : *A) {
     for (auto n2 : graph->getInOutNodes(n)) {
-      if (B->find(n2) != B->end())
+      if (B->find(n2) != B->end()) {
         result += 1.0;
+      }
     }
   }
 
@@ -49,8 +50,9 @@ double StrengthMetric::e(const std::unordered_set<tlp::node> &U) {
 
   for (auto u : U) {
     for (auto n : graph->getInOutNodes(u)) {
-      if (U.find(n) != U.end())
+      if (U.find(n) != U.end()) {
         result += 1.0;
+      }
     }
   }
 
@@ -58,15 +60,17 @@ double StrengthMetric::e(const std::unordered_set<tlp::node> &U) {
 }
 //=============================================================
 double StrengthMetric::s(std::unordered_set<tlp::node> &U, std::unordered_set<tlp::node> &V) {
-  if ((U.empty()) || (V.empty()))
+  if ((U.empty()) || (V.empty())) {
     return 0;
+  }
 
   return (e(U, V) / double(U.size() * V.size()));
 }
 //=============================================================
 double StrengthMetric::s(const std::unordered_set<tlp::node> &U) {
-  if (U.size() < 2)
+  if (U.size() < 2) {
     return 0.0;
+  }
 
   return (e(U)) * 2.0 / double(U.size() * (U.size() - 1));
 }
@@ -79,21 +83,25 @@ double StrengthMetric::getEdgeValue(const tlp::edge ee) {
 
   // Compute Nu
   for (auto n : graph->getInOutNodes(u)) {
-    if (n != v)
+    if (n != v) {
       Nu.insert(n);
+    }
   }
 
-  if (Nu.empty())
+  if (Nu.empty()) {
     return 0;
+  }
 
   // Compute Nv
   for (auto n : graph->getInOutNodes(v)) {
-    if (n != u)
+    if (n != u) {
       Nv.insert(n);
+    }
   }
 
-  if (Nv.empty())
+  if (Nv.empty()) {
     return 0;
+  }
 
   // Compute Wuv, choose the minimum set to minimize operation
   std::unordered_set<node> *A, *B;
@@ -107,8 +115,9 @@ double StrengthMetric::getEdgeValue(const tlp::edge ee) {
   }
 
   for (auto na : *A) {
-    if (B->find(na) != B->end())
+    if (B->find(na) != B->end()) {
       Wuv.insert(na);
+    }
   }
 
   std::unordered_set<node> &Mu = Nu;
@@ -133,18 +142,20 @@ double StrengthMetric::getEdgeValue(const tlp::edge ee) {
   double norm = norm3 + norm4;
   double gamma = gamma3 + gamma4;
 
-  if (norm > 1E-5)
+  if (norm > 1E-5) {
     gamma /= norm;
-  else
+  } else {
     gamma = 0;
+  }
 
   return gamma;
 }
 //=============================================================
 double StrengthMetric::getNodeValue(const tlp::node n) {
   //  tlp::warning() << __PRETTY_FUNCTION__ << endl;
-  if (graph->deg(n) == 0)
+  if (graph->deg(n) == 0) {
     return 0;
+  }
 
   double res = 0;
 
@@ -158,8 +169,9 @@ double StrengthMetric::getNodeValue(const tlp::node n) {
 bool StrengthMetric::run() {
   unsigned int steps = 0, maxSteps = graph->numberOfEdges();
 
-  if (maxSteps < 10)
+  if (maxSteps < 10) {
     maxSteps = 10;
+  }
 
   pluginProgress->showPreview(false);
   pluginProgress->setComment("Computing Strength metric on edges...");
@@ -168,24 +180,27 @@ bool StrengthMetric::run() {
     result->setEdgeValue(e, getEdgeValue(e));
 
     if ((++steps % (maxSteps / 10)) == 0) {
-      if (pluginProgress->progress(steps, maxSteps) != TLP_CONTINUE)
+      if (pluginProgress->progress(steps, maxSteps) != TLP_CONTINUE) {
         return pluginProgress->state() != TLP_CANCEL;
+      }
     }
   }
 
   steps = 0;
   maxSteps = graph->numberOfNodes();
 
-  if (maxSteps < 10)
+  if (maxSteps < 10) {
     maxSteps = 10;
+  }
 
   pluginProgress->setComment("Computing Strength metric on nodes...");
   for (auto n : graph->nodes()) {
     result->setNodeValue(n, getNodeValue(n));
 
     if ((++steps % (maxSteps / 10)) == 0) {
-      if (pluginProgress->progress(steps, maxSteps) != TLP_CONTINUE)
+      if (pluginProgress->progress(steps, maxSteps) != TLP_CONTINUE) {
         return pluginProgress->state() != TLP_CANCEL;
+      }
     }
   }
 

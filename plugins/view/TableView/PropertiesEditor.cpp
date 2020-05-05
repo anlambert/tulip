@@ -120,8 +120,9 @@ void PropertiesEditor::showCustomContextMenu(const QPoint &p) {
     _contextPropertyList += sidx.data(Model::PropertyRole).value<PropertyInterface *>();
   }
 
-  if (_contextProperty == nullptr)
+  if (_contextProperty == nullptr) {
     return;
+  }
 
   QString pname = tlpStringToQString(_contextProperty->getName());
 
@@ -180,8 +181,9 @@ void PropertiesEditor::showCustomContextMenu(const QPoint &p) {
 
     if (isReservedPropertyName(propName.c_str())) {
       // Enable deletion of reserved properties when on a subgraph and that properties are local
-      if (_graph == _graph->getRoot() || !_graph->existLocalProperty(propName))
+      if (_graph == _graph->getRoot() || !_graph->existLocalProperty(propName)) {
         enabled = false;
+      }
     }
 
     if (enabled) {
@@ -263,30 +265,38 @@ void PropertiesEditor::showCustomContextMenu(const QPoint &p) {
 
       _graph->push();
 
-      if (action == nodesSetAll)
+      if (action == nodesSetAll) {
         result = setAllValues(_contextProperty, true, false);
+      }
 
-      if (action == nodesSetAllGraph)
+      if (action == nodesSetAllGraph) {
         result = setAllValues(_contextProperty, true, false, true);
+      }
 
-      if (action == edgesSetAll)
+      if (action == edgesSetAll) {
         result = setAllValues(_contextProperty, false, false);
+      }
 
-      if (action == edgesSetAllGraph)
+      if (action == edgesSetAllGraph) {
         result = setAllValues(_contextProperty, false, false, true);
+      }
 
-      if (action == selectedNodesSetAll)
+      if (action == selectedNodesSetAll) {
         result = setAllValues(_contextProperty, true, true);
+      }
 
-      if (action == selectedEdgesSetAll)
+      if (action == selectedEdgesSetAll) {
         result = setAllValues(_contextProperty, false, true);
+      }
 
-      if (action == rename)
+      if (action == rename) {
         result = renameProperty(_contextProperty);
+      }
 
-      if (!result)
+      if (!result) {
         // edition cancelled
         _graph->pop();
+      }
     }
   }
 
@@ -294,8 +304,9 @@ void PropertiesEditor::showCustomContextMenu(const QPoint &p) {
 }
 
 void PropertiesEditor::setPropsVisibility(int state) {
-  if (state == Qt::PartiallyChecked)
+  if (state == Qt::PartiallyChecked) {
     return;
+  }
 
   _ui->propsVisibilityCheck->setTristate(false);
 
@@ -309,18 +320,20 @@ void PropertiesEditor::setPropsVisibility(int state) {
   bool showVisualP = _ui->visualPropertiesCheck->isChecked();
 
   for (int i = 0; i < _sourceModel->rowCount(); ++i) {
-    if (_sourceModel->index(i, 0).data().toString().indexOf("view") == 0)
+    if (_sourceModel->index(i, 0).data().toString().indexOf("view") == 0) {
       setPropertyChecked(i, showVisualP);
-    else
+    } else {
       _sourceModel->setData(_sourceModel->index(i, 0), state, Qt::CheckStateRole);
+    }
   }
 }
 
 void PropertiesEditor::setPropsNotVisibleExcept() {
   std::set<std::string> ctxPropNames;
 
-  for (auto pi : _contextPropertyList)
+  for (auto pi : _contextPropertyList) {
     ctxPropNames.insert(pi->getName());
+  }
 
   for (int i = 0; i < _sourceModel->rowCount(); ++i) {
     setPropertyChecked(i, ctxPropNames.count(QStringToTlpString(
@@ -339,8 +352,9 @@ void PropertiesEditor::showVisualProperties(bool f) {
 
   // ensure all visual properties are shown/hidden
   for (int i = 0; i < _sourceModel->rowCount(); ++i) {
-    if (_sourceModel->index(i, 0).data().toString().indexOf("view") == 0)
+    if (_sourceModel->index(i, 0).data().toString().indexOf("view") == 0) {
       setPropertyChecked(i, f);
+    }
   }
 }
 
@@ -354,8 +368,9 @@ void PropertiesEditor::displayedPropertiesInserted(const QModelIndex &parent, in
     PropertyInterface *pi =
         _sourceModel->data(sIndex, Model::PropertyRole).value<PropertyInterface *>();
 
-    if (filteringProperties == false)
+    if (filteringProperties == false) {
       _sourceModel->setData(sIndex, Qt::Checked, Qt::CheckStateRole);
+    }
 
     emit propertyVisibilityChanged(pi, _sourceModel->data(sIndex, Qt::CheckStateRole).toInt() !=
                                            Qt::Unchecked);
@@ -381,8 +396,9 @@ bool PropertiesEditor::setAllValues(PropertyInterface *prop, bool nodes, bool se
       nodes ? NODE : EDGE, prop, _graph, static_cast<ItemDelegate *>(_delegate), editorParent);
 
   // Check if edition has been cancelled
-  if (!val.isValid())
+  if (!val.isValid()) {
     return false;
+  }
 
   if (selectedOnly) {
     BooleanProperty *selection = _graph->getBooleanProperty("viewSelection");
@@ -399,10 +415,11 @@ bool PropertiesEditor::setAllValues(PropertyInterface *prop, bool nodes, bool se
   } else {
     Observable::holdObservers();
 
-    if (nodes)
+    if (nodes) {
       GraphModel::setAllNodeValue(prop, val, graphOnly ? _graph : nullptr);
-    else
+    } else {
       GraphModel::setAllEdgeValue(prop, val, graphOnly ? _graph : nullptr);
+    }
 
     Observable::unholdObservers();
   }
@@ -415,8 +432,9 @@ void PropertiesEditor::setDefaultValue(tlp::PropertyInterface *prop, bool nodes)
       nodes ? NODE : EDGE, prop, _graph, static_cast<ItemDelegate *>(_delegate), editorParent);
 
   // Check if edition has been cancelled
-  if (!val.isValid())
+  if (!val.isValid()) {
     return;
+  }
 
   if (nodes) {
     GraphModel::setNodeDefaultValue(prop, val);
@@ -428,9 +446,11 @@ void PropertiesEditor::setDefaultValue(tlp::PropertyInterface *prop, bool nodes)
 void PropertiesEditor::copyProperty() {
   _graph->push();
 
-  if (CopyPropertyDialog::copyProperty(_graph, _contextProperty, true, getMainWindow()) == nullptr)
+  if (CopyPropertyDialog::copyProperty(_graph, _contextProperty, true, getMainWindow()) ==
+      nullptr) {
     // copy has been cancelled
     _graph->pop();
+  }
 }
 
 void PropertiesEditor::newProperty() {
@@ -438,9 +458,10 @@ void PropertiesEditor::newProperty() {
 
   if (PropertyCreationDialog::createNewProperty(_graph, getMainWindow(),
                                                 _contextProperty ? _contextProperty->getTypename()
-                                                                 : std::string()) == nullptr)
+                                                                 : std::string()) == nullptr) {
     // creation has been cancelled
     _graph->pop();
+  }
 }
 
 void PropertiesEditor::delProperty() {
@@ -451,8 +472,9 @@ void PropertiesEditor::delProperty() {
 void PropertiesEditor::delProperties() {
   _graph->push();
 
-  for (auto pi : _contextPropertyList)
+  for (auto pi : _contextPropertyList) {
     pi->getGraph()->delLocalProperty(pi->getName());
+  }
 }
 
 bool PropertiesEditor::renameProperty(PropertyInterface *prop) {
@@ -499,8 +521,9 @@ void PropertiesEditor::toLabels(PropertyInterface *prop, bool nodes, bool edges,
   data.set("edges", edges);
   data.set("input", prop);
 
-  if (selectedOnly)
+  if (selectedOnly) {
     data.set("selection", _graph->getBooleanProperty("viewSelection"));
+  }
 
   std::string msg;
   // _graph->push() must be done outside of this method
@@ -516,8 +539,9 @@ void PropertiesEditor::checkStateChanged(QModelIndex index, Qt::CheckState state
 }
 
 QSet<PropertyInterface *> PropertiesEditor::visibleProperties() const {
-  if (_sourceModel != nullptr)
+  if (_sourceModel != nullptr) {
     return _sourceModel->checkedProperties();
+  }
 
   return QSet<tlp::PropertyInterface *>();
 }
@@ -530,9 +554,10 @@ void PropertiesEditor::setPropertyChecked(int index, bool state) {
 void PropertiesEditor::setPropertyChecked(const QString &pName, bool state) {
   int index = _sourceModel->rowOf(pName);
 
-  if (index != -1)
+  if (index != -1) {
     _sourceModel->setData(_sourceModel->index(index, 0), state ? Qt::Checked : Qt::Unchecked,
                           Qt::CheckStateRole);
+  }
 }
 
 PropertyInterface *PropertiesEditor::contextProperty() const {

@@ -137,8 +137,9 @@ int WorkspaceExposeWidget::currentPanelIndex() const {
 QVector<WorkspacePanel *> WorkspaceExposeWidget::panels() const {
   QVector<WorkspacePanel *> result;
 
-  for (auto item : _items)
+  for (auto item : _items) {
     result << item->panel();
+  }
 
   return result;
 }
@@ -247,10 +248,11 @@ bool WorkspaceExposeWidget::eventFilter(QObject *obj, QEvent *ev) {
       item->panel()->close();
       item->deleteLater();
 
-      if (_items.empty())
+      if (_items.empty()) {
         finish();
-      else
+      } else {
         updatePositions();
+      }
     } else {
       _selectedItem = item;
       _selectedItem->setZValue(1);
@@ -273,11 +275,13 @@ bool WorkspaceExposeWidget::eventFilter(QObject *obj, QEvent *ev) {
       if (index != _items.indexOf(item)) {
         _items.removeOne(item);
 
-        if (index < 0)
+        if (index < 0) {
           index = 0;
+        }
 
-        if (index > _items.size())
+        if (index > _items.size()) {
           index = _items.size();
+        }
 
         _items.insert(index, item);
         updatePositions(false);

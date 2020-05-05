@@ -135,8 +135,9 @@ int tracefunc(PyObject *, PyFrameObject *, int what, PyObject *) {
     }
 
     while (scriptPaused) {
-      if (processQtEvents)
+      if (processQtEvents) {
         QApplication::processEvents();
+      }
 
       ss.sleep(30);
     }
@@ -474,8 +475,9 @@ bool PythonInterpreter::functionExists(const QString &moduleName, const QString 
 }
 
 bool PythonInterpreter::runString(const QString &pythonCode, const QString &scriptFilePath) {
-  if (!scriptFilePath.isEmpty())
+  if (!scriptFilePath.isEmpty()) {
     mainScriptFileName = scriptFilePath;
+  }
 
   int ret = 0;
   holdGIL();
@@ -488,8 +490,9 @@ bool PythonInterpreter::runString(const QString &pythonCode, const QString &scri
 
   releaseGIL();
 
-  if (!scriptFilePath.isEmpty())
+  if (!scriptFilePath.isEmpty()) {
     mainScriptFileName = "";
+  }
 
   return ret != -1;
 }
@@ -602,8 +605,9 @@ void PythonInterpreter::addModuleSearchPath(const QString &path, const bool befo
 bool PythonInterpreter::runGraphScript(const QString &module, const QString &function,
                                        tlp::Graph *graph, const QString &scriptFilePath) {
 
-  if (!scriptFilePath.isEmpty())
+  if (!scriptFilePath.isEmpty()) {
     mainScriptFileName = scriptFilePath;
+  }
 
   timer.start();
 
@@ -695,8 +699,9 @@ bool PythonInterpreter::runGraphScript(const QString &module, const QString &fun
 
   releaseGIL();
 
-  if (!scriptFilePath.isEmpty())
+  if (!scriptFilePath.isEmpty()) {
     mainScriptFileName = "";
+  }
 
   return ret;
 }
@@ -829,8 +834,9 @@ QVector<QString> PythonInterpreter::getGlobalDictEntries(const QString &prefixFi
 
 QString PythonInterpreter::getVariableType(const QString &varName) {
   // avoid any function call
-  if (varName.contains('('))
+  if (varName.contains('(')) {
     return "";
+  }
 
   setOutputEnabled(false);
   setErrorOutputEnabled(false);
@@ -839,10 +845,11 @@ QString PythonInterpreter::getVariableType(const QString &varName) {
   setOutputEnabled(true);
   setErrorOutputEnabled(true);
 
-  if (ok)
+  if (ok) {
     return consoleOuputString.mid(0, consoleOuputString.size() - 1);
-  else
+  } else {
     return "";
+  }
 }
 
 QVector<QString> PythonInterpreter::getObjectDictEntries(const QString &objectName,
@@ -952,13 +959,15 @@ QVector<QString> PythonInterpreter::getBaseTypesForType(const QString &typeName)
 }
 
 void PythonInterpreter::holdGIL() {
-  if (!_wasInit)
+  if (!_wasInit) {
     gilState = PyGILState_Ensure();
+  }
 }
 
 void PythonInterpreter::releaseGIL() {
-  if (!_wasInit)
+  if (!_wasInit) {
     PyGILState_Release(gilState);
+  }
 }
 
 QString PythonInterpreter::getStandardOutput() const {

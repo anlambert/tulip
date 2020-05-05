@@ -166,10 +166,11 @@ tlp::ColorScale *SOMPropertiesWidget::getPropertyColorScale(const std::string &)
 }
 
 SOMPropertiesWidget::SizeMappingType SOMPropertiesWidget::getSizeMapping() const {
-  if (noNodeSizeMappingRadioButton->isChecked())
+  if (noNodeSizeMappingRadioButton->isChecked()) {
     return NoSizeMapping;
-  else
+  } else {
     return RealNodeSizeMapping;
+  }
 }
 
 void SOMPropertiesWidget::treatEvents(const std::vector<Event> &) {

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -33,8 +33,9 @@ unsigned int getDist(Graph *g, node n1, node n2) {
 
     for (auto v : g->getInOutNodes(current)) {
 
-      if (alreadyTreated.get(v.id))
+      if (alreadyTreated.get(v.id)) {
         continue;
+      }
 
       alreadyTreated.set(v.id, true);
       nextNodes.push_back(v);

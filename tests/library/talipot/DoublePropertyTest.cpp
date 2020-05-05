@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -349,24 +349,31 @@ void DoublePropertyTest::testStaticDoublePropertyCopyFrom() {
   auto prop = graph->getLocalDoubleProperty(doublePropertyName);
   NodeStaticProperty<double> nStaticProp(graph);
   nStaticProp.copyFromProperty(prop);
-  for (auto n : graph->nodes())
+  for (auto n : graph->nodes()) {
     CPPUNIT_ASSERT(nStaticProp[n] == prop->getNodeValue(n));
+  }
   nStaticProp.setAll(1.1);
-  for (auto n : graph->nodes())
+  for (auto n : graph->nodes()) {
     CPPUNIT_ASSERT(nStaticProp[n] == 1.1);
+  }
   nStaticProp.copyFromNumericProperty(prop);
-  for (auto n : graph->nodes())
+  for (auto n : graph->nodes()) {
     CPPUNIT_ASSERT(nStaticProp[n] == prop->getNodeValue(n));
-  for (auto e : graph->edges())
+  }
+  for (auto e : graph->edges()) {
     prop->setEdgeValue(e, tlp::randomDouble());
+  }
   EdgeStaticProperty<double> eStaticProp(graph);
   eStaticProp.copyFromProperty(prop);
-  for (auto e : graph->edges())
+  for (auto e : graph->edges()) {
     CPPUNIT_ASSERT(eStaticProp[e] == prop->getEdgeValue(e));
+  }
   eStaticProp.setAll(1.1);
-  for (auto e : graph->edges())
+  for (auto e : graph->edges()) {
     CPPUNIT_ASSERT(eStaticProp[e] == 1.1);
+  }
   eStaticProp.copyFromNumericProperty(prop);
-  for (auto e : graph->edges())
+  for (auto e : graph->edges()) {
     CPPUNIT_ASSERT(eStaticProp[e] == prop->getEdgeValue(e));
+  }
 }

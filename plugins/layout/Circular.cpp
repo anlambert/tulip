@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -56,15 +56,17 @@ static void dfs(node n, const Graph *sg, deque<node> &st, vector<node> &maxCycle
       nbCalls = 0;
     }
 
-    if (pluginProgress->state() != TLP_CONTINUE)
+    if (pluginProgress->state() != TLP_CONTINUE) {
       return;
+    }
   }
 
   if (flag.get(n.id)) {
     vector<node> cycle(extractCycle(n, st));
 
-    if (cycle.size() > maxCycle.size())
+    if (cycle.size() > maxCycle.size()) {
       maxCycle.swap(cycle);
+    }
 
     return;
   }
@@ -95,8 +97,9 @@ static vector<node> findMaxCycle(Graph *graph, PluginProgress *pluginProgress) {
 
     dfs(sg->getOneNode(), sg, st, res, flag, nbCalls, pluginProgress);
 
-    if (max.size() < res.size())
+    if (max.size() < res.size()) {
       max.swap(res);
+    }
 
     graph->delAllSubGraphs(sg);
   }
@@ -114,16 +117,17 @@ bool Circular::run() {
   bool searchCycle = false;
 
   if (!getNodeSizePropertyParameter(dataSet, nodeSize)) {
-    if (graph->existProperty("viewSize"))
+    if (graph->existProperty("viewSize")) {
       nodeSize = graph->getSizeProperty("viewSize");
-    else {
+    } else {
       nodeSize = graph->getSizeProperty("viewSize");
       nodeSize->setAllNodeValue(Size(1.0, 1.0, 1.0));
     }
   }
 
-  if (dataSet != nullptr)
+  if (dataSet != nullptr) {
     dataSet->get("search cycle", searchCycle);
+  }
 
   // compute the sum of radii and the max radius of the graph
   double sumOfRad = 0;
@@ -159,12 +163,11 @@ bool Circular::run() {
       angleAdjust = true;
     } // end if
 
-    // tlp::warning() << "*************************" << endl;
-
     vector<node> cycleOrdering;
 
-    if (searchCycle)
+    if (searchCycle) {
       cycleOrdering = findMaxCycle(graph, pluginProgress);
+    }
 
     vector<node> dfsOrdering;
     tlp::dfs(graph, dfsOrdering);
@@ -172,12 +175,15 @@ bool Circular::run() {
     MutableContainer<bool> inCir;
     inCir.setAll(false);
 
-    for (unsigned int i = 0; i < cycleOrdering.size(); ++i)
+    for (unsigned int i = 0; i < cycleOrdering.size(); ++i) {
       inCir.set(cycleOrdering[i].id, true);
+    }
 
-    for (unsigned int i = 0; i < dfsOrdering.size(); ++i)
-      if (!inCir.get(dfsOrdering[i].id))
+    for (unsigned int i = 0; i < dfsOrdering.size(); ++i) {
+      if (!inCir.get(dfsOrdering[i].id)) {
         cycleOrdering.push_back(dfsOrdering[i]);
+      }
+    }
 
     for (auto n : cycleOrdering) {
       // compute the radius to ensure non overlap.  If adjustment to

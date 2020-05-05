@@ -71,14 +71,17 @@ bool intersection(const tlp::Circle<Obj, OTYPE> &c1, const tlp::Circle<Obj, OTYP
   double r1 = c1.radius;
   double r2 = c2.radius;
 
-  if (c1 == c2)
+  if (c1 == c2) {
     return false;
+  }
 
-  if (d > (r1 + r2))
+  if (d > (r1 + r2)) {
     return false; // outside
+  }
 
-  if (d < fabs(r1 - r2))
+  if (d < fabs(r1 - r2)) {
     return false; // inside
+  }
 
   double a = ((r1 * r1) - (r2 * r2) + (d * d)) / (2.0 * d);
   Vec2d c1c2(c2 - c1);

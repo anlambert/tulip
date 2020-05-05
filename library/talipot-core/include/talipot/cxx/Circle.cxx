@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -22,10 +22,11 @@ tlp::Circle<Obj, OTYPE> &tlp::Circle<Obj, OTYPE>::merge(const tlp::Circle<Obj, O
   double norm = c12.norm();
 
   if (norm < 0.0000001) {
-    if (radius < c.radius)
+    if (radius < c.radius) {
       return (*this) = c;
-    else
+    } else {
       return *this;
+    }
   }
 
   double dx = c12[0] / norm;
@@ -37,10 +38,11 @@ tlp::Circle<Obj, OTYPE> &tlp::Circle<Obj, OTYPE>::merge(const tlp::Circle<Obj, O
   Obj tmpDist = p1.dist(p2) / 2.;
 
   if ((tmpDist < radius) || (tmpDist < c.radius)) {
-    if (radius > c.radius)
+    if (radius > c.radius) {
       return *this;
-    else
+    } else {
       return (*this) = c;
+    }
   } else {
     p1 += p2;
     p1 /= 2.;
@@ -63,8 +65,9 @@ tlp::Circle<Obj, OTYPE> tlp::enclosingCircle(const tlp::Circle<Obj, OTYPE> &c1,
   Vector<Obj, 2, OTYPE> dir = c2 - c1;
   Obj n = dir.norm();
 
-  if (n == 0)
+  if (n == 0) {
     return Circle<Obj, OTYPE>(c1, std::max(c1.radius, c2.radius));
+  }
 
   dir /= n;
   Vector<Obj, 2, OTYPE> ext1 = c1 - dir * c1.radius;
@@ -93,8 +96,9 @@ tlp::lazyEnclosingCircle(const std::vector<tlp::Circle<Obj, OTYPE>> &circles) {
   tlp::Circle<Obj, OTYPE> result(center, radius);
 
   // compute circle hull
-  for (const auto &c : circles)
+  for (const auto &c : circles) {
     result.merge(c);
+  }
 
   return result;
 }
@@ -195,8 +199,9 @@ tlp::Circle<Obj, OTYPE> tlp::enclosingCircle(const std::vector<tlp::Circle<Obj, 
                    tmp * tmp);
       Obj v = d - b;
 
-      if (v < 0)
+      if (v < 0) {
         return tlp::Circle<Obj, OTYPE>(0, 0, 0);
+      }
 
       Obj aa = -2 * a3 * b2 * b2 * a1 - 2 * a2 * b3 * b3 * a1 - 2 * a1 * a1 * b3 * b2 +
                a3 * a3 * b2 * b2 + a2 * a2 * b3 * b3 - r1 * r1 * b3 * b3 - r1 * r1 * b2 * b2 +
@@ -310,8 +315,9 @@ tlp::Circle<Obj, OTYPE> tlp::enclosingCircle(const std::vector<tlp::Circle<Obj, 
       first = 0;
       last = circlesSet.size() - 1;
 
-      for (unsigned i = 0; i < circlesSet.size(); ++i)
+      for (unsigned i = 0; i < circlesSet.size(); ++i) {
         enclosedCircles[i] = i;
+      }
 
       for (unsigned i = circlesSet.size(); i > 0;) {
         unsigned idx = tlp::randomUnsignedInteger(i - 1);

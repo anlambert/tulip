@@ -54,8 +54,9 @@ void GraphStorage::reserveEdges(const size_t nb) {
 void GraphStorage::reserveAdj(const node n, const size_t nb) {
   std::vector<edge> &nEdges = nodeData[n.id].edges;
 
-  if (nEdges.size() < nb)
+  if (nEdges.size() < nb) {
     nEdges.resize(nb);
+  }
 }
 //=======================================================
 /**
@@ -121,8 +122,9 @@ struct IOEdgeContainerIterator : public Iterator<edge>,
       // or IO_OUT which is define to 1
       node curNode = io_type != IO_IN ? edges[curEdge.id].first : edges[curEdge.id].second;
 
-      if (curNode != n)
+      if (curNode != n) {
         continue;
+      }
 
       curNode = io_type != IO_IN ? edges[curEdge.id].second : edges[curEdge.id].first;
 
@@ -176,10 +178,11 @@ struct IONodesIterator : public Iterator<node>, public MemoryPool<IONodesIterato
   IONodesIterator(node n, std::vector<edge> &nEdges,
                   const std::vector<std::pair<node, node>> &edges)
       : n(n), edges(edges) {
-    if (io_type == IO_INOUT)
+    if (io_type == IO_INOUT) {
       it = stlIterator(nEdges);
-    else
+    } else {
       it = new IOEdgeContainerIterator<io_type>(n, nEdges, edges);
+    }
   }
 
   ~IONodesIterator() override {
@@ -196,12 +199,14 @@ struct IONodesIterator : public Iterator<node>, public MemoryPool<IONodesIterato
     const std::pair<node, node> &ends = edges[it->next()];
 
     // out nodes
-    if (io_type == IO_OUT)
+    if (io_type == IO_OUT) {
       return ends.second;
+    }
 
     // in nodes
-    if (io_type == IO_IN)
+    if (io_type == IO_IN) {
       return ends.first;
+    }
 
     // inout nodes
     return (ends.first == n) ? ends.second : ends.first;
@@ -228,8 +233,9 @@ bool GraphStorage::getEdges(const node src, const node tgt, bool directed,
           (!sg || sg->isElement(e))) {
         vEdges.push_back(e);
 
-        if (onlyFirst)
+        if (onlyFirst) {
           return true;
+        }
       }
     }
 
@@ -319,8 +325,9 @@ void GraphStorage::reverse(const edge e) {
  *  \brief Set the ordering of edges around n according to their order in v.
  */
 void GraphStorage::setEdgeOrder(const node n, const std::vector<edge> &v) {
-  if (v.empty())
+  if (v.empty()) {
     return;
+  }
 
   MutableContainer<int> isEle;
   isEle.setAll(0);
@@ -347,21 +354,25 @@ void GraphStorage::setEdgeOrder(const node n, const std::vector<edge> &v) {
  * @complexity o(1)
  */
 void GraphStorage::swapEdgeOrder(const node n, const edge e1, const edge e2) {
-  if (e1 == e2)
+  if (e1 == e2) {
     return;
+  }
 
   std::vector<edge> &adjacency = nodeData[n.id].edges;
   unsigned int e1Pos = UINT_MAX, e2Pos = UINT_MAX;
 
   for (unsigned int i = 0; i < deg(n); ++i) {
-    if (adjacency[i] == e1)
+    if (adjacency[i] == e1) {
       e1Pos = i;
+    }
 
-    if (adjacency[i] == e2)
+    if (adjacency[i] == e2) {
       e2Pos = i;
+    }
 
-    if (e1Pos != UINT_MAX && e2Pos != UINT_MAX)
+    if (e1Pos != UINT_MAX && e2Pos != UINT_MAX) {
       break;
+    }
   }
 
   assert(e1Pos != UINT_MAX && e2Pos != UINT_MAX);
@@ -373,9 +384,9 @@ void GraphStorage::swapEdgeOrder(const node n, const edge e1, const edge e2) {
  * @brief restore the given node in the structure and return it
  */
 void GraphStorage::restoreNode(const node n) {
-  if (n.id >= nodeData.size())
+  if (n.id >= nodeData.size()) {
     nodeData.resize(n.id + 1);
-  else {
+  } else {
     NodeData &nData = nodeData[n.id];
     // clear edge infos
     nData.edges.clear();
@@ -400,8 +411,9 @@ node GraphStorage::addNode() {
  * and return them in addedNodes
  */
 void GraphStorage::addNodes(unsigned int nb, std::vector<node> *addedNodes) {
-  if (nb == 0)
+  if (nb == 0) {
     return;
+  }
 
   if (addedNodes) {
     addedNodes->clear();
@@ -435,8 +447,9 @@ void GraphStorage::removeFromNodes(const node n) {
   // push in free pool
   nodeIds.free(n);
 
-  if (nodeIds.empty())
+  if (nodeIds.empty()) {
     nodeData.resize(0);
+  }
 }
 //=======================================================
 /**
@@ -454,16 +467,19 @@ void GraphStorage::delNode(const node n) {
     node tgt = iEnds.second;
 
     if (src != tgt) {
-      if (src != n)
+      if (src != n) {
         nodeData[src.id].outDegree -= 1;
+      }
 
       removeFromEdges(e, n);
-    } else
+    } else {
       loops.push_back(e);
+    }
   }
 
-  for (auto e : loops)
+  for (auto e : loops) {
     removeFromEdges(e, n);
+  }
 
   removeFromNodes(n);
 }
@@ -490,8 +506,9 @@ void GraphStorage::restoreEdge(const node src, const node tgt, const edge e) {
 edge GraphStorage::addEdge(const node src, const node tgt) {
   edge e(edgeIds.add());
 
-  if (e.id == edgeEnds.size())
+  if (e.id == edgeEnds.size()) {
     edgeEnds.resize(e.id + 1);
+  }
 
   std::pair<node, node> &ends = edgeEnds[e.id];
   ends.first = src;
@@ -512,8 +529,9 @@ void GraphStorage::addEdges(const std::vector<std::pair<node, node>> &ends,
                             std::vector<edge> *addedEdges) {
   unsigned int nb = ends.size();
 
-  if (nb == 0)
+  if (nb == 0) {
     return;
+  }
 
   if (addedEdges) {
     addedEdges->clear();
@@ -524,8 +542,9 @@ void GraphStorage::addEdges(const std::vector<std::pair<node, node>> &ends,
 
   unsigned int sz = edgeEnds.size();
 
-  if (sz < edgeIds.size())
+  if (sz < edgeIds.size()) {
     edgeEnds.resize(edgeIds.size());
+  }
 
   for (unsigned int i = 0; i < nb; ++i) {
     node src = ends[i].first;
@@ -591,12 +610,14 @@ void GraphStorage::removeFromEdges(const edge e, node end) {
   // remove from source's edges
   node n = eEnds.first;
 
-  if (n != end)
+  if (n != end) {
     removeFromNodeData(nodeData[n.id], e);
+  }
 
   // remove from target's edges
   n = eEnds.second;
 
-  if (n != end)
+  if (n != end) {
     removeFromNodeData(nodeData[n.id], e);
+  }
 }

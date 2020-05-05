@@ -153,8 +153,9 @@ bool LinkCommunities::run() {
     for (auto e : graph->getInOutEdges(n)) {
       double val = result->getEdgeValue(e);
 
-      if (val)
+      if (val) {
         around.insert(val);
+      }
     }
     result->setNodeValue(n, around.size());
   }
@@ -200,11 +201,12 @@ void LinkCommunities::computeSimilarities(const std::vector<edge> &edges) {
       edge e = dual(i);
       similarity[e] = getSimilarity(e, edges);
     });
-  } else
+  } else {
     TLP_PARALLEL_MAP_INDICES(dual.numberOfEdges(), [&](unsigned int i) {
       edge e = dual(i);
       similarity[e] = getWeightedSimilarity(e, edges);
     });
+  }
 }
 //==============================================================================================================
 double LinkCommunities::getSimilarity(edge ee, const std::vector<edge> &edges) {
@@ -218,27 +220,32 @@ double LinkCommunities::getSimilarity(edge ee, const std::vector<edge> &edges) {
   node n2 = (e2Ends.first != key) ? e2Ends.first : e2Ends.second;
   unsigned int wuv = 0, m = 0;
   for (auto n : graph->getInOutNodes(n1)) {
-    if (graph->existEdge(n2, n, true).isValid())
+    if (graph->existEdge(n2, n, true).isValid()) {
       wuv += 1;
+    }
 
-    if (graph->existEdge(n, n2, true).isValid())
+    if (graph->existEdge(n, n2, true).isValid()) {
       wuv += 1;
+    }
 
     m += 1.0;
   }
 
   for (auto n : graph->getInOutNodes(n2)) {
-    if (!graph->existEdge(n1, n, false).isValid())
+    if (!graph->existEdge(n1, n, false).isValid()) {
       m += 1;
+    }
   }
 
-  if (graph->existEdge(n1, n2, false).isValid())
+  if (graph->existEdge(n1, n2, false).isValid()) {
     wuv += 2;
+  }
 
-  if (m > 0)
+  if (m > 0) {
     return wuv / double(m);
-  else
+  } else {
     return 0.0;
+  }
 }
 //==============================================================================================================
 double LinkCommunities::getWeightedSimilarity(tlp::edge ee, const std::vector<edge> &edges) {
@@ -265,13 +272,15 @@ double LinkCommunities::getWeightedSimilarity(tlp::edge ee, const std::vector<ed
     node n = graph->source(e);
     edge me = graph->existEdge(n2, n, true);
 
-    if (me.isValid())
+    if (me.isValid()) {
       a1a2 += val * metric->getEdgeDoubleValue(me);
+    }
 
     me = graph->existEdge(n, n2, true);
 
-    if (me.isValid())
+    if (me.isValid()) {
       a1a2 += val * metric->getEdgeDoubleValue(me);
+    }
 
     a1 += val;
     a11 += val * val;
@@ -282,13 +291,15 @@ double LinkCommunities::getWeightedSimilarity(tlp::edge ee, const std::vector<ed
     node n = graph->target(e);
     edge me = graph->existEdge(n2, n, true);
 
-    if (me.isValid())
+    if (me.isValid()) {
       a1a2 += val * metric->getEdgeDoubleValue(me);
+    }
 
     me = graph->existEdge(n, n2, true);
 
-    if (me.isValid())
+    if (me.isValid()) {
       a1a2 += val * metric->getEdgeDoubleValue(me);
+    }
 
     a1 += val;
     a11 += val * val;
@@ -306,15 +317,17 @@ double LinkCommunities::getWeightedSimilarity(tlp::edge ee, const std::vector<ed
 
   edge e = graph->existEdge(n1, n2, false);
 
-  if (e.isValid())
+  if (e.isValid()) {
     a1a2 += metric->getEdgeDoubleValue(e) * (a1 + a2);
+  }
 
   double m = a11 + a22 - a1a2;
 
-  if (m < 0.0)
+  if (m < 0.0) {
     return 0.0;
-  else
+  } else {
     return a1a2 / m;
+  }
 }
 //==============================================================================================================
 // define a lock to protect allocation/free of dn_visited
@@ -469,10 +482,11 @@ double LinkCommunities::findBestThreshold(unsigned int numberOfSteps,
   for (unsigned int i = 0; i < sz; ++i) {
     double value = similarity[dual(i)];
 
-    if (value < min)
+    if (value < min) {
       min = value;
-    else if (value > max)
+    } else if (value > max) {
       max = value;
+    }
   }
 
   double deltaThreshold = (max - min) / double(numberOfSteps);

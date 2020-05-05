@@ -67,26 +67,33 @@ public:
       int ival = 0;
       bool bval = false;
 
-      if (dataSet->get("stop tolerance", dval))
+      if (dataSet->get("stop tolerance", dval)) {
         kamada->setStopTolerance(dval);
+      }
 
-      if (dataSet->get("use layout", bval))
+      if (dataSet->get("use layout", bval)) {
         kamada->setUseLayout(bval);
+      }
 
-      if (dataSet->get("zero length", dval))
+      if (dataSet->get("zero length", dval)) {
         kamada->setZeroLength(dval);
+      }
 
-      if (dataSet->get("edge length", dval))
+      if (dataSet->get("edge length", dval)) {
         kamada->setDesLength(dval);
+      }
 
-      if (dataSet->get("compute max iterations", bval))
+      if (dataSet->get("compute max iterations", bval)) {
         kamada->computeMaxIterations(bval);
+      }
 
-      if (dataSet->get("global iterations", ival))
+      if (dataSet->get("global iterations", ival)) {
         kamada->setMaxGlobalIterations(ival);
+      }
 
-      if (dataSet->get("local iterations", ival))
+      if (dataSet->get("local iterations", ival)) {
         kamada->setMaxLocalIterations(ival);
+      }
     }
   }
 };

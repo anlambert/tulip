@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -331,8 +331,9 @@ void computeCatmullRomPoints(const vector<Coord> &controlPoints, vector<Coord> &
                              const bool closedCurve, const unsigned int nbCurvePoints,
                              const float alpha) {
   // assert(controlPoints.size() > 2);
-  if (controlPoints.size() <= 2)
+  if (controlPoints.size() <= 2) {
     return;
+  }
 
   vector<float> globalParameter;
   vector<Coord> controlPointsCp(controlPoints);

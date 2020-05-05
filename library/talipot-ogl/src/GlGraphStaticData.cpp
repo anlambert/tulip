@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -49,17 +49,21 @@ string GlGraphStaticData::edgeShapeName(int id) {
 }
 
 int GlGraphStaticData::edgeShapeId(const string &name) {
-  if (name == edgeShapeName(EdgeShape::Polyline))
+  if (name == edgeShapeName(EdgeShape::Polyline)) {
     return EdgeShape::Polyline;
+  }
 
-  if (name == edgeShapeName(EdgeShape::BezierCurve))
+  if (name == edgeShapeName(EdgeShape::BezierCurve)) {
     return EdgeShape::BezierCurve;
+  }
 
-  if (name == edgeShapeName(EdgeShape::CatmullRomCurve))
+  if (name == edgeShapeName(EdgeShape::CatmullRomCurve)) {
     return EdgeShape::CatmullRomCurve;
+  }
 
-  if (name == edgeShapeName(EdgeShape::CubicBSplineCurve))
+  if (name == edgeShapeName(EdgeShape::CubicBSplineCurve)) {
     return EdgeShape::CubicBSplineCurve;
+  }
 
   tlp::warning() << __PRETTY_FUNCTION__ << endl;
   tlp::warning() << "Invalid edge shape name" << endl;
@@ -67,16 +71,18 @@ int GlGraphStaticData::edgeShapeId(const string &name) {
 }
 
 string GlGraphStaticData::labelPositionName(int id) {
-  if (id > -1 && id < 5)
+  if (id > -1 && id < 5) {
     return labelPositionNames[id];
+  }
 
   return string("invalid label position id");
 }
 
 int GlGraphStaticData::labelPositionId(const string &name) {
   for (int i = 0; i < 5; i++) {
-    if (name == labelPositionNames[i])
+    if (name == labelPositionNames[i]) {
       return i;
+    }
   }
 
   tlp::warning() << __PRETTY_FUNCTION__ << endl;

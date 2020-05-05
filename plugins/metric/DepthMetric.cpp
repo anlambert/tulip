@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -43,13 +43,15 @@ struct dfsDepthStruct {
 };
 //=================================================
 double DepthMetric::getNodeValue(tlp::node current) {
-  if (graph->outdeg(current) == 0)
+  if (graph->outdeg(current) == 0) {
     return 0.0;
+  }
 
   double value = result->getNodeValue(current);
 
-  if (value > 0.0)
+  if (value > 0.0) {
     return value;
+  }
 
   // dfs loop
   stack<dfsDepthStruct> dfsLevels;
@@ -66,11 +68,11 @@ double DepthMetric::getNodeValue(tlp::node current) {
       value = result->getNodeValue(neighbour);
 
       // compute max
-      if (value > 0.0)
+      if (value > 0.0) {
         // since depth value of neighbour is already computed
         // update maxDepth if needed
         maxDepth = std::max(maxDepth, value + edgeValue);
-      else {
+      } else {
         // we need to compute depth value for neighbour
         outEdges = graph->getOutEdges(neighbour);
 
@@ -99,9 +101,10 @@ double DepthMetric::getNodeValue(tlp::node current) {
       }
     }
 
-    if (outEdges->hasNext())
+    if (outEdges->hasNext()) {
       // new dfsParams has been pushed on stack
       continue;
+    }
 
     // save current maxDepth
     result->setNodeValue(current, maxDepth);
@@ -109,8 +112,9 @@ double DepthMetric::getNodeValue(tlp::node current) {
     delete dfsLevels.top().outEdges;
     dfsLevels.pop();
 
-    if (dfsLevels.empty())
+    if (dfsLevels.empty()) {
       break;
+    }
 
     // get dfsParams on top of dfsLevels
     dfsParams = dfsLevels.top();

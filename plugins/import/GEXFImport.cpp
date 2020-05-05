@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -212,8 +212,9 @@ public:
       xmlReader.readNext();
 
       // must be a node
-      if (xmlReader.isStartElement() && xmlReader.name() == "node")
+      if (xmlReader.isStartElement() && xmlReader.name() == "node") {
         parseNode(xmlReader, g);
+      }
     }
   }
 
@@ -223,8 +224,9 @@ public:
       xmlReader.readNext();
 
       // must be an edge
-      if (xmlReader.isStartElement() && xmlReader.name() == "edge")
+      if (xmlReader.isStartElement() && xmlReader.name() == "edge") {
         parseEdge(xmlReader);
+      }
     }
   }
 
@@ -238,8 +240,9 @@ public:
       // create a fake meta node
       pn = graph->addNode();
       nodesMap[pid] = pn;
-    } else
+    } else {
       pn = nodesMap[pid];
+    }
 
     Graph *sg = nodeToSubgraph.get(pn.id);
 
@@ -268,8 +271,9 @@ public:
       n = g->addNode();
       // save mapping between gexf node id and created Talipot node
       nodesMap[nodeId] = n;
-    } else
+    } else {
       n = nodesMap[nodeId];
+    }
 
     // parse node label
     if (xmlReader.attributes().hasAttribute("label")) {
@@ -281,11 +285,12 @@ public:
     if (xmlReader.attributes().hasAttribute("pid")) {
       string pid = QStringToTlpString(xmlReader.attributes().value("pid").toString());
 
-      if (g == graph)
+      if (g == graph) {
         g = addInParent(n, pid);
-      else
+      } else {
         cerr << "multiple parents are not supported: " << pid.c_str()
              << " will be not added as parent of " << nodeId.c_str() << endl;
+      }
     }
 
     xmlReader.readNext();
@@ -362,9 +367,10 @@ public:
 
             if (g == graph) {
               g = addInParent(n, pid);
-            } else
+            } else {
               cerr << "multiple parents are not supported: " << pid.c_str()
                    << " will be not added as parent of " << nodeId.c_str() << endl;
+            }
           }
         }
       }
@@ -426,8 +432,9 @@ public:
     // iterate on each subgraph of graph
     // and add missing nodes
     for (Graph *sg : stableIterator(graph->getSubGraphs())) {
-      if (!quotientGraph)
+      if (!quotientGraph) {
         quotientGraph = graph->addCloneSubGraph("quotient graph");
+      }
 
       // iterate on nodes
       for (auto n : stableIterator(sg->getNodes())) {
@@ -457,8 +464,9 @@ public:
       for (auto n : sg->nodes()) {
         // add its out edges
         for (auto e : graph->getOutEdges(n)) {
-          if (sg->isElement(graph->target(e)))
+          if (sg->isElement(graph->target(e))) {
             sg->addEdge(e);
+          }
         }
       }
     }
@@ -483,8 +491,9 @@ public:
           // of the pointed subgraph
           string label = viewLabel->getNodeValue(n);
 
-          if (!label.empty())
+          if (!label.empty()) {
             msg->setName(label);
+          }
 
           // set meta node properties values to the ones
           // of the fake meta node
@@ -493,8 +502,9 @@ public:
           }
 
           // add it to quotient graph if needed
-          if (sg != quotientGraph)
+          if (sg != quotientGraph) {
             quotientGraph->addNode(mn);
+          }
 
           // replace n by mn
           for (auto e : graph->getInOutEdges(n)) {
@@ -503,13 +513,15 @@ public:
             if (eEnds.first == n) {
               graph->setEnds(e, mn, eEnds.second);
 
-              if ((sg != quotientGraph) && quotientGraph->isElement(eEnds.second))
+              if ((sg != quotientGraph) && quotientGraph->isElement(eEnds.second)) {
                 quotientGraph->addEdge(e);
+              }
             } else {
               graph->setEnds(e, eEnds.first, mn);
 
-              if ((sg != quotientGraph) && quotientGraph->isElement(eEnds.first))
+              if ((sg != quotientGraph) && quotientGraph->isElement(eEnds.first)) {
                 quotientGraph->addEdge(e);
+              }
             }
           }
           // remove fake meta node

@@ -129,8 +129,9 @@ bool MouseElementDeleter::eventFilter(QObject *widget, QEvent *e) {
   if (qMouseEv != nullptr) {
     SelectedEntity selectedEntity;
 
-    if (glMainWidget == nullptr)
+    if (glMainWidget == nullptr) {
       glMainWidget = static_cast<GlMainWidget *>(widget);
+    }
 
     if (e->type() == QEvent::MouseMove) {
       if (glMainWidget->pickNodesEdges(qMouseEv->x(), qMouseEv->y(), selectedEntity)) {
@@ -159,8 +160,9 @@ bool MouseElementDeleter::eventFilter(QObject *widget, QEvent *e) {
 }
 
 void MouseElementDeleter::clear() {
-  if (glMainWidget)
+  if (glMainWidget) {
     glMainWidget->setCursor(QCursor());
+  }
 }
 //===============================================================
 class MouseRotXRotY : public InteractorComponent {
@@ -186,16 +188,19 @@ bool MouseRotXRotY::eventFilter(QObject *widget, QEvent *e) {
     deltaX = qMouseEv->x() - x;
     deltaY = qMouseEv->y() - y;
 
-    if (abs(deltaX) > abs(deltaY))
+    if (abs(deltaX) > abs(deltaY)) {
       deltaY = 0;
-    else
+    } else {
       deltaX = 0;
+    }
 
-    if (deltaY != 0)
+    if (deltaY != 0) {
       glMainWidget->getScene()->rotateCamera(glMainWidget->screenToViewport(deltaY), 0, 0);
+    }
 
-    if (deltaX != 0)
+    if (deltaX != 0) {
       glMainWidget->getScene()->rotateCamera(0, glMainWidget->screenToViewport(deltaX), 0);
+    }
 
     x = qMouseEv->x();
     y = qMouseEv->y();
@@ -288,13 +293,15 @@ bool MouseMove::eventFilter(QObject *widget, QEvent *e) {
     QMouseEvent *qMouseEv = static_cast<QMouseEvent *>(e);
     GlMainWidget *glMainWidget = static_cast<GlMainWidget *>(widget);
 
-    if (qMouseEv->x() != x)
+    if (qMouseEv->x() != x) {
       glMainWidget->getScene()->translateCamera(glMainWidget->screenToViewport(qMouseEv->x() - x),
                                                 0, 0);
+    }
 
-    if (qMouseEv->y() != y)
+    if (qMouseEv->y() != y) {
       glMainWidget->getScene()->translateCamera(
           0, glMainWidget->screenToViewport(y - qMouseEv->y()), 0);
+    }
 
     x = qMouseEv->x();
     y = qMouseEv->y();
@@ -345,8 +352,9 @@ bool MouseNKeysNavigator::eventFilter(QObject *widget, QEvent *e) {
   }
 
   if (currentSpecInteractorComponent) {
-    if (currentSpecInteractorComponent->eventFilter(widget, e))
+    if (currentSpecInteractorComponent->eventFilter(widget, e)) {
       return true;
+    }
   }
 
   GlMainWidget *glmainwidget = static_cast<GlMainWidget *>(widget);
@@ -378,8 +386,9 @@ bool MouseNKeysNavigator::eventFilter(QObject *widget, QEvent *e) {
           nodeHierarchy.push_back(metaNode);
           cameraHierarchy.push_back(nldv->goInsideItem(metaNode));
         }
-      } else // no double click on a metanode. Do not block event.
+      } else { // no double click on a metanode. Do not block event.
         return false;
+      }
 
       return true;
     } else {
@@ -442,9 +451,9 @@ bool MouseNKeysNavigator::eventFilter(QObject *widget, QEvent *e) {
 #endif
       )
         currentMouse = new MouseZoomRotZ();
-      else if (qMouseEv->modifiers() & Qt::ShiftModifier)
+      else if (qMouseEv->modifiers() & Qt::ShiftModifier) {
         currentMouse = new MouseRotXRotY();
-      else {
+      } else {
         currentMouse = new MouseMove();
         glmainwidget->setCursor(QCursor(Qt::ClosedHandCursor));
       }

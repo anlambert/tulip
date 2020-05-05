@@ -166,8 +166,9 @@ public:
   static bool read(const std::vector<std::string> &vs, RealType &v) {
     v.clear();
     v.reserve(vs.size());
-    for (const std::string &s : vs)
+    for (const std::string &s : vs) {
       v.push_back(s);
+    }
 
     return true;
   }
@@ -228,10 +229,11 @@ struct KnownTypeSerializer : public TypedDataSerializer<typename T::RealType> {
     bool result = true;
     typename T::RealType val;
 
-    if (value.empty())
+    if (value.empty()) {
       val = T::defaultValue();
-    else
+    } else {
       result = T::fromString(val, value);
+    }
 
     ds.set(prop, val);
     return result;

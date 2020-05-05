@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -127,8 +127,9 @@ bool GlVertexArrayManager::haveToCompute() {
 
   // The layout property in the input data has changed => need to recompute layout.
   if (layoutProperty != inputData->getElementLayout()) {
-    if (layoutProperty && layoutObserverActivated)
+    if (layoutProperty && layoutObserverActivated) {
       layoutProperty->removeListener(this);
+    }
 
     layoutProperty = inputData->getElementLayout();
     layoutProperty->addListener(this);
@@ -138,8 +139,9 @@ bool GlVertexArrayManager::haveToCompute() {
 
   // Size property changed
   if (sizeProperty != inputData->getElementSize()) {
-    if (sizeProperty && layoutObserverActivated)
+    if (sizeProperty && layoutObserverActivated) {
       sizeProperty->removeListener(this);
+    }
 
     sizeProperty = inputData->getElementSize();
     sizeProperty->addListener(this);
@@ -149,8 +151,9 @@ bool GlVertexArrayManager::haveToCompute() {
 
   // Shape property changed
   if (shapeProperty != inputData->getElementShape()) {
-    if (shapeProperty && layoutObserverActivated)
+    if (shapeProperty && layoutObserverActivated) {
       shapeProperty->removeListener(this);
+    }
 
     shapeProperty = inputData->getElementShape();
     shapeProperty->addListener(this);
@@ -160,8 +163,9 @@ bool GlVertexArrayManager::haveToCompute() {
 
   // Rotation property changed
   if (rotationProperty != inputData->getElementRotation()) {
-    if (rotationProperty && layoutObserverActivated)
+    if (rotationProperty && layoutObserverActivated) {
       rotationProperty->removeListener(this);
+    }
 
     rotationProperty = inputData->getElementRotation();
     rotationProperty->addListener(this);
@@ -171,8 +175,9 @@ bool GlVertexArrayManager::haveToCompute() {
 
   // Color property changed
   if (colorProperty != inputData->getElementColor()) {
-    if (colorProperty && colorObserverActivated)
+    if (colorProperty && colorObserverActivated) {
       colorProperty->removeListener(this);
+    }
 
     colorProperty = inputData->getElementColor();
     colorProperty->addListener(this);
@@ -182,8 +187,9 @@ bool GlVertexArrayManager::haveToCompute() {
 
   // Color property changed
   if (borderColorProperty != inputData->getElementBorderColor()) {
-    if (borderColorProperty && colorObserverActivated)
+    if (borderColorProperty && colorObserverActivated) {
       borderColorProperty->removeListener(this);
+    }
 
     borderColorProperty = inputData->getElementBorderColor();
     borderColorProperty->addListener(this);
@@ -193,8 +199,9 @@ bool GlVertexArrayManager::haveToCompute() {
 
   // Border width property changed
   if (borderWidthProperty != inputData->getElementBorderWidth()) {
-    if (borderWidthProperty && colorObserverActivated)
+    if (borderWidthProperty && colorObserverActivated) {
       borderWidthProperty->removeListener(this);
+    }
 
     borderWidthProperty = inputData->getElementBorderWidth();
     borderWidthProperty->addListener(this);
@@ -203,8 +210,9 @@ bool GlVertexArrayManager::haveToCompute() {
   }
 
   if (srcAnchorShapeProperty != inputData->getElementSrcAnchorShape()) {
-    if (srcAnchorShapeProperty && layoutObserverActivated)
+    if (srcAnchorShapeProperty && layoutObserverActivated) {
       srcAnchorShapeProperty->removeListener(this);
+    }
 
     srcAnchorShapeProperty = inputData->getElementSrcAnchorShape();
     srcAnchorShapeProperty->addListener(this);
@@ -213,8 +221,9 @@ bool GlVertexArrayManager::haveToCompute() {
   }
 
   if (tgtAnchorShapeProperty != inputData->getElementTgtAnchorShape()) {
-    if (tgtAnchorShapeProperty && layoutObserverActivated)
+    if (tgtAnchorShapeProperty && layoutObserverActivated) {
       tgtAnchorShapeProperty->removeListener(this);
+    }
 
     tgtAnchorShapeProperty = inputData->getElementTgtAnchorShape();
     tgtAnchorShapeProperty->addListener(this);
@@ -223,8 +232,9 @@ bool GlVertexArrayManager::haveToCompute() {
   }
 
   if (srcAnchorSizeProperty != inputData->getElementSrcAnchorSize()) {
-    if (srcAnchorSizeProperty && layoutObserverActivated)
+    if (srcAnchorSizeProperty && layoutObserverActivated) {
       srcAnchorSizeProperty->removeListener(this);
+    }
 
     srcAnchorSizeProperty = inputData->getElementSrcAnchorSize();
     srcAnchorSizeProperty->addListener(this);
@@ -233,8 +243,9 @@ bool GlVertexArrayManager::haveToCompute() {
   }
 
   if (tgtAnchorSizeProperty != inputData->getElementTgtAnchorSize()) {
-    if (tgtAnchorSizeProperty && layoutObserverActivated)
+    if (tgtAnchorSizeProperty && layoutObserverActivated) {
       tgtAnchorSizeProperty->removeListener(this);
+    }
 
     tgtAnchorSizeProperty = inputData->getElementTgtAnchorSize();
     tgtAnchorSizeProperty->addListener(this);
@@ -251,8 +262,9 @@ void GlVertexArrayManager::setHaveToComputeAll(bool compute) {
     clearData();
   }
 
-  if (!compute)
+  if (!compute) {
     initObservers();
+  }
 
   toComputeAll = compute;
   toComputeLayout = compute;
@@ -308,8 +320,9 @@ void GlVertexArrayManager::reserveMemoryForGraphElts(unsigned int nbNodes, unsig
 }
 
 void GlVertexArrayManager::beginRendering() {
-  if (!activated)
+  if (!activated) {
     return;
+  }
 
   isBegin = true;
 
@@ -329,8 +342,9 @@ void GlVertexArrayManager::beginRendering() {
 }
 
 void GlVertexArrayManager::endRendering() {
-  if (!isBegin)
+  if (!isBegin) {
     return;
+  }
 
   isBegin = false;
 
@@ -732,8 +746,9 @@ void GlVertexArrayManager::endOfVisit() {
   // with the infos collected during the visit of edges
   for (auto &eInfos : edgeInfosVector) {
     auto &vertices = eInfos.lineVertices;
-    if (vertices.empty())
+    if (vertices.empty()) {
       continue;
+    }
     if (toComputeLayout) {
       // update lines global vectors
       eInfos.linesIndex = linesCoordsArray.size();
@@ -748,13 +763,14 @@ void GlVertexArrayManager::endOfVisit() {
       linesColorsArray.insert(linesColorsArray.end(), lcolors.begin(), lcolors.end());
 
       auto &qcolors = eInfos.quadColors;
-      if (colorInterpolate)
+      if (colorInterpolate) {
         for (size_t i = 0; i < qcolors.size(); ++i) {
           quadsColorsArray.push_back(qcolors[i]);
           quadsColorsArray.push_back(qcolors[i]);
         }
-      else
+      } else {
         quadsColorsArray.insert(quadsColorsArray.end(), 2 * qcolors.size(), eInfos.edgeColor);
+      }
       quadsOutlineColorsArray.insert(quadsOutlineColorsArray.end(), 2 * qcolors.size(),
                                      eInfos.borderColor);
     }
@@ -767,8 +783,9 @@ void GlVertexArrayManager::activateLineEdgeDisplay(GlEdge *glEdge, bool selected
   const edgeInfos &eInfos = edgeInfosVector[ePos];
   unsigned int nbLines = eInfos.lineVertices.size();
 
-  if (nbLines == 0)
+  if (nbLines == 0) {
     return;
+  }
 
   unsigned int beginIndex = eInfos.linesIndex;
   unsigned int endIndex = beginIndex + nbLines - 1;
@@ -790,8 +807,9 @@ void GlVertexArrayManager::activateQuadEdgeDisplay(GlEdge *glEdge, bool selected
   edgeInfos &eInfos = edgeInfosVector[ePos];
   const unsigned int nbQuads = eInfos.quadVertices.size();
 
-  if (nbQuads == 0)
+  if (nbQuads == 0) {
     return;
+  }
 
   const unsigned int beginIndex = eInfos.quadsIndex;
   const unsigned int endIndex = beginIndex + nbQuads - 2;
@@ -835,8 +853,9 @@ void GlVertexArrayManager::activateQuadEdgeDisplay(GlEdge *glEdge, bool selected
 void GlVertexArrayManager::activatePointEdgeDisplay(GlEdge *glEdge, bool selected) {
   unsigned int ePos = graph->edgePos(glEdge->e);
 
-  if (edgeInfosVector[ePos].lineVertices.empty())
+  if (edgeInfosVector[ePos].lineVertices.empty()) {
     return;
+  }
 
   ePos += graph->numberOfNodes();
 
@@ -865,17 +884,21 @@ void GlVertexArrayManager::propertyValueChanged(PropertyInterface *property) {
     setHaveToComputeLayout(true);
     clearLayoutData();
 
-    if (layoutProperty)
+    if (layoutProperty) {
       layoutProperty->removeListener(this);
+    }
 
-    if (sizeProperty)
+    if (sizeProperty) {
       sizeProperty->removeListener(this);
+    }
 
-    if (shapeProperty)
+    if (shapeProperty) {
       shapeProperty->removeListener(this);
+    }
 
-    if (rotationProperty)
+    if (rotationProperty) {
       rotationProperty->removeListener(this);
+    }
 
     layoutObserverActivated = false;
   }
@@ -885,11 +908,13 @@ void GlVertexArrayManager::propertyValueChanged(PropertyInterface *property) {
     setHaveToComputeColor(true);
     clearColorData();
 
-    if (colorProperty)
+    if (colorProperty) {
       colorProperty->removeListener(this);
+    }
 
-    if (borderColorProperty)
+    if (borderColorProperty) {
       borderColorProperty->removeListener(this);
+    }
 
     colorObserverActivated = false;
   }
@@ -929,8 +954,9 @@ void GlVertexArrayManager::clearData() {
 }
 
 void GlVertexArrayManager::initObservers() {
-  if (!graph)
+  if (!graph) {
     return;
+  }
 
   if (!graphObserverActivated) {
     graph->addListener(this);
@@ -965,42 +991,53 @@ void GlVertexArrayManager::clearObservers(PropertyInterface *deletedProperty) {
   }
 
   if (layoutObserverActivated) {
-    if (deletedProperty != layoutProperty)
+    if (deletedProperty != layoutProperty) {
       layoutProperty->removeListener(this);
+    }
 
-    if (deletedProperty != sizeProperty)
+    if (deletedProperty != sizeProperty) {
       sizeProperty->removeListener(this);
+    }
 
-    if (deletedProperty != shapeProperty)
+    if (deletedProperty != shapeProperty) {
       shapeProperty->removeListener(this);
+    }
 
-    if (deletedProperty != rotationProperty)
+    if (deletedProperty != rotationProperty) {
       rotationProperty->removeListener(this);
+    }
 
-    if (deletedProperty != srcAnchorShapeProperty)
+    if (deletedProperty != srcAnchorShapeProperty) {
       srcAnchorShapeProperty->removeListener(this);
+    }
 
-    if (deletedProperty != tgtAnchorShapeProperty)
+    if (deletedProperty != tgtAnchorShapeProperty) {
       tgtAnchorShapeProperty->removeListener(this);
+    }
 
-    if (deletedProperty != srcAnchorSizeProperty)
+    if (deletedProperty != srcAnchorSizeProperty) {
       srcAnchorSizeProperty->removeListener(this);
+    }
 
-    if (deletedProperty != tgtAnchorSizeProperty)
+    if (deletedProperty != tgtAnchorSizeProperty) {
       tgtAnchorSizeProperty->removeListener(this);
+    }
 
     layoutObserverActivated = false;
   }
 
   if (colorObserverActivated) {
-    if (deletedProperty != colorProperty)
+    if (deletedProperty != colorProperty) {
       colorProperty->removeListener(this);
+    }
 
-    if (deletedProperty != borderColorProperty)
+    if (deletedProperty != borderColorProperty) {
       borderColorProperty->removeListener(this);
+    }
 
-    if (deletedProperty != borderWidthProperty)
+    if (deletedProperty != borderWidthProperty) {
       borderWidthProperty->removeListener(this);
+    }
 
     colorObserverActivated = false;
   }
@@ -1072,8 +1109,9 @@ void GlVertexArrayManager::treatEvent(const Event &evt) {
     PropertyInterface *property = nullptr;
     const PropertyEvent *propertyEvent = dynamic_cast<const PropertyEvent *>(&evt);
 
-    if (propertyEvent)
+    if (propertyEvent) {
       property = propertyEvent->getProperty();
+    }
 
     clearData();
     clearObservers(property);

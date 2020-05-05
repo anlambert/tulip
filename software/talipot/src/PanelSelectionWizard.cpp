@@ -85,8 +85,9 @@ void PanelSelectionWizard::clearView() {
   _view = nullptr;
 
   for (auto id : pageIds()) {
-    if (id == startId() || id == currentId())
+    if (id == startId() || id == currentId()) {
       continue;
+    }
 
     QWizardPage *p = page(id);
     removePage(id);

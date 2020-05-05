@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -37,10 +37,11 @@ void VectorEditor::setVector(const QVector<QVariant> &d, int userType) {
   for (const QVariant &v : d) {
     QListWidgetItem *i = new QListWidgetItem();
 
-    if (_userType == qMetaTypeId<std::string>())
+    if (_userType == qMetaTypeId<std::string>()) {
       i->setData(Qt::DisplayRole, QVariant::fromValue(tlpStringToQString(v.value<std::string>())));
-    else
+    } else {
       i->setData(Qt::DisplayRole, v);
+    }
 
     i->setFlags(i->flags() | Qt::ItemIsEditable);
     _ui->list->addItem(i);
@@ -57,8 +58,9 @@ void VectorEditor::add() {
     // workaround to indicate there is a new string to edit
     // because the height of the line if very small with an empty string
     i->setData(Qt::DisplayRole, QVariant::fromValue(QString("edit this string")));
-  } else
+  } else {
     i->setData(Qt::DisplayRole, QVariant(_userType, static_cast<const void *>(nullptr)));
+  }
 
   // needed for color
   i->setSizeHint(QSize(i->sizeHint().width(), 15));
@@ -68,8 +70,9 @@ void VectorEditor::add() {
 }
 
 void VectorEditor::remove() {
-  for (auto i : _ui->list->selectedItems())
+  for (auto i : _ui->list->selectedItems()) {
     delete i;
+  }
 
   _ui->countLabel->setText(QString::number(_ui->list->model()->rowCount()));
 }

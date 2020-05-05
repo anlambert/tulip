@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -70,8 +70,9 @@ void NodeNeighborhoodView::getNeighbors(node n, unsigned int dist, bool noRecurs
 
         for (const auto &it : nodesTokeep) {
           for (auto n : it.second) {
-            if (count++ > nbNodes)
+            if (count++ > nbNodes) {
               break;
+            }
 
             graphViewNodes.push_back(n);
             nodesAtDist[currentDist].push_back(n);
@@ -88,8 +89,9 @@ void NodeNeighborhoodView::getNeighbors(node n, unsigned int dist, bool noRecurs
             find(graphViewNodes.begin(), graphViewNodes.end(), eEnds.second) ==
                 graphViewNodes.end()) {
           it = graphViewEdges.erase(it);
-        } else
+        } else {
           ++it;
+        }
       }
     }
   } else {
@@ -210,9 +212,11 @@ bool NodeNeighborhoodView::isElement(const node n) const {
 unsigned int NodeNeighborhoodView::nodePos(const node n) const {
   auto nbNodes = graphViewNodes.size();
 
-  for (unsigned int i = 0; i < nbNodes; ++i)
-    if (graphViewNodes[i] == n)
+  for (unsigned int i = 0; i < nbNodes; ++i) {
+    if (graphViewNodes[i] == n) {
       return i;
+    }
+  }
 
   return UINT_MAX;
 }
@@ -224,9 +228,11 @@ bool NodeNeighborhoodView::isElement(const edge e) const {
 unsigned int NodeNeighborhoodView::edgePos(const edge e) const {
   auto nbEdges = graphViewEdges.size();
 
-  for (unsigned int i = 0; i < nbEdges; ++i)
-    if (graphViewEdges[i] == e)
+  for (unsigned int i = 0; i < nbEdges; ++i) {
+    if (graphViewEdges[i] == e) {
       return i;
+    }
+  }
 
   return UINT_MAX;
 }

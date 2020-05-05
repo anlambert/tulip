@@ -2120,10 +2120,11 @@ public:
   GraphEvent(const Graph &g, GraphEventType graphEvtType, unsigned int id,
              Event::EventType evtType = Event::TLP_MODIFICATION)
       : Event(g, evtType), evtType(graphEvtType) {
-    if (graphEvtType == TLP_ADD_NODES || graphEvtType == TLP_ADD_EDGES)
+    if (graphEvtType == TLP_ADD_NODES || graphEvtType == TLP_ADD_EDGES) {
       info.nbElts = id;
-    else
+    } else {
       info.eltId = id;
+    }
 
     vectInfos.addedNodes = nullptr;
   }

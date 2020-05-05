@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -102,46 +102,52 @@ public:
     }
 
     if (nbNodes == 0) {
-      if (pluginProgress)
+      if (pluginProgress) {
         pluginProgress->setError(string("Error: the number of nodes cannot be null"));
+      }
 
       return false;
     }
 
     double density_g = (2. * nbEdges) / double(nbNodes * (nbNodes - 1));
-    if (directed)
+    if (directed) {
       density_g /= 2.;
+    }
 
     if (density_g > 1) {
-      if (directed)
+      if (directed) {
         pluginProgress->setError(string("Error: For ") + std::to_string(nbNodes) +
                                  string(" nodes, the maximum number of edges is ") +
                                  std::to_string(nbNodes * (nbNodes - 1)));
-      else
+      } else {
         pluginProgress->setError(string("Error: For ") + std::to_string(nbNodes) +
                                  string(" nodes, the maximum number of edges is ") +
                                  std::to_string(nbNodes * (nbNodes - 1) / 2));
+      }
       return false;
     }
 
     unsigned int nb_disctint_pairs_needed = nbEdges;
     if (density_g > MAX_DENSITY_FOR_LINEAR) {
-      if (directed)
+      if (directed) {
         nb_disctint_pairs_needed = nbNodes * (nbNodes - 1) - nbEdges;
-      else
+      } else {
         nb_disctint_pairs_needed = nbNodes * (nbNodes - 1) / 2 - nbEdges;
+      }
     }
 
     edgeS_comp comp_e(directed);
     set<edgeS, edgeS_comp> myGraph(comp_e);
 
-    if (pluginProgress)
+    if (pluginProgress) {
       pluginProgress->showPreview(false);
+    }
 
     while (myGraph.size() < nb_disctint_pairs_needed) {
       if (myGraph.size() % nbNodes == 1 &&
-          (pluginProgress->progress(myGraph.size(), nb_disctint_pairs_needed) != TLP_CONTINUE))
+          (pluginProgress->progress(myGraph.size(), nb_disctint_pairs_needed) != TLP_CONTINUE)) {
         return pluginProgress->state() != TLP_CANCEL;
+      }
 
       edgeS tmp;
       tmp.source = randomUnsignedInteger(nbNodes - 1);
@@ -152,8 +158,9 @@ public:
         tmp.target = randomUnsignedInteger(nbNodes - 1);
       }
 
-      if ((myGraph.find(tmp) == myGraph.end()) && (myGraph.size() < nbEdges))
+      if ((myGraph.find(tmp) == myGraph.end()) && (myGraph.size() < nbEdges)) {
         myGraph.insert(tmp);
+      }
     }
 
     graph->addNodes(nbNodes);
@@ -165,8 +172,9 @@ public:
     if (density_g > MAX_DENSITY_FOR_LINEAR) {
       for (unsigned i = 0; i < nodes.size(); ++i) {
         unsigned min_j = 0;
-        if (!directed)
+        if (!directed) {
           min_j = i + 1;
+        }
         for (unsigned j = min_j; j < nodes.size(); ++j) {
           if (i != j && myGraph.find(edgeS(i, j)) == myGraph.end()) {
             graph->addEdge(nodes[i], nodes[j]);

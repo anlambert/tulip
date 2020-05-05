@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -114,9 +114,9 @@ list<LR> *TreeReingoldAndTilfordExtended::mergeLRList(std::list<LR> *L, std::lis
       (*itL) = tmp;
     } else {
       if (iL == 0) {
-        if (iL + min >= itL->size) // block
+        if (iL + min >= itL->size) { // block
           (*itL) = tmp;
-        else {
+        } else {
           L->insert(itL, tmp);
           itL->size -= min;
           iL = -min;
@@ -243,8 +243,9 @@ list<LR> *TreeReingoldAndTilfordExtended::TreePlace(tlp::node n,
       } else {
         list<double>::iterator itI = childPos.begin();
 
-        for (; itI != childPos.end(); ++itI)
+        for (; itI != childPos.end(); ++itI) {
           (*itI) -= decal;
+        }
 
         childPos.push_back(tmpL);
         delete leftTree;
@@ -282,8 +283,9 @@ void TreeReingoldAndTilfordExtended::TreeLevelSizing(tlp::node n,
     if (maxSize[level] < sizes->getNodeValue(n).getH()) {
       maxSize[level] = sizes->getNodeValue(n).getH();
     }
-  } else
+  } else {
     maxSize[level] = sizes->getNodeValue(n).getH();
+  }
 
   if (useLength) {
     for (edge ite : tree->getOutEdges(n)) {
@@ -303,10 +305,11 @@ void TreeReingoldAndTilfordExtended::calcLayout(tlp::node n,
                                                 unordered_map<int, double> &maxLevelSize) {
   Coord tmpCoord;
 
-  if (!compactLayout)
+  if (!compactLayout) {
     tmpCoord.set(float(x + (*p)[n]), -float(y), 0);
-  else
+  } else {
     tmpCoord.set(float(x + (*p)[n]), -float(y + maxLevelSize[level] / 2.f), 0);
+  }
 
   result->setNodeValue(n, tmpCoord);
 
@@ -318,10 +321,11 @@ void TreeReingoldAndTilfordExtended::calcLayout(tlp::node n,
       int tmp = lengthMetric->getEdgeValue(ite);
 
       while (tmp > 0) {
-        if (!compactLayout)
+        if (!compactLayout) {
           decalY += spacing;
-        else
+        } else {
           decalY += maxLevelSize[decalLevel] + spacing;
+        }
 
         decalLevel++;
         tmp--;
@@ -331,10 +335,11 @@ void TreeReingoldAndTilfordExtended::calcLayout(tlp::node n,
     }
   } else {
     for (auto itn : tree->getOutNodes(n)) {
-      if (!compactLayout)
+      if (!compactLayout) {
         calcLayout(itn, p, x + (*p)[n], y + spacing, level + 1, maxLevelSize);
-      else
+      } else {
         calcLayout(itn, p, x + (*p)[n], y + maxLevelSize[level] + spacing, level + 1, maxLevelSize);
+      }
     }
   }
 }
@@ -344,8 +349,9 @@ bool TreeReingoldAndTilfordExtended::run() {
 
   result->setAllEdgeValue(vector<Coord>(0));
 
-  if (!getNodeSizePropertyParameter(dataSet, sizes))
+  if (!getNodeSizePropertyParameter(dataSet, sizes)) {
     sizes = graph->getSizeProperty("viewSize");
+  }
 
   getSpacingParameters(dataSet, nodeSpacing, spacing);
   orientation = "horizontal";
@@ -365,8 +371,9 @@ bool TreeReingoldAndTilfordExtended::run() {
       orientation = tmp.getCurrentString();
     }
 
-    if (!dataSet->get("compact layout", compactLayout))
+    if (!dataSet->get("compact layout", compactLayout)) {
       compactLayout = true;
+    }
   }
 
   bool deleteLenghtMetric = false;
@@ -392,16 +399,18 @@ bool TreeReingoldAndTilfordExtended::run() {
 
   //===========================================================
 
-  if (pluginProgress)
+  if (pluginProgress) {
     pluginProgress->showPreview(false);
+  }
 
   tree = TreeTest::computeTree(graph, pluginProgress);
 
   if (pluginProgress && pluginProgress->state() != TLP_CONTINUE) {
     TreeTest::cleanComputedTree(graph, tree);
 
-    if (deleteLenghtMetric)
+    if (deleteLenghtMetric) {
       delete lengthMetric;
+    }
 
     return pluginProgress->state() != TLP_CANCEL;
   }
@@ -419,8 +428,9 @@ bool TreeReingoldAndTilfordExtended::run() {
     for (unsigned int i = 0; i < maxSizeLevel.size() - 1; ++i) {
       float minLayerSpacing = float((maxSizeLevel[i] + maxSizeLevel[i + 1]) / 2);
 
-      if (minLayerSpacing + nodeSpacing > spacing)
+      if (minLayerSpacing + nodeSpacing > spacing) {
         spacing = minLayerSpacing + spacing;
+      }
     }
   }
 
@@ -463,11 +473,13 @@ bool TreeReingoldAndTilfordExtended::run() {
 
   TreeTest::cleanComputedTree(graph, tree);
 
-  if (boundingCircles)
+  if (boundingCircles) {
     delete sizes;
+  }
 
-  if (deleteLenghtMetric)
+  if (deleteLenghtMetric) {
     delete lengthMetric;
+  }
 
   return true;
 }

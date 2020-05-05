@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -28,8 +28,9 @@ SOMMapElement::SOMMapElement(tlp::Coord position, tlp::Size size, SOMMap *map,
     : som(map), position(position), size(size) {
   buildMainComposite(position, size, map);
 
-  if (colorProperty)
+  if (colorProperty) {
     updateColors(colorProperty);
+  }
 
   computeNodeAreaSize();
 }
@@ -44,8 +45,9 @@ void SOMMapElement::setData(SOMMap *map, tlp::ColorProperty *colorProperty) {
   nodesMap.clear();
   buildMainComposite(position, size, som);
 
-  if (colorProperty)
+  if (colorProperty) {
     updateColors(colorProperty);
+  }
 
   computeNodeAreaSize();
 }
@@ -147,10 +149,11 @@ tlp::Coord SOMMapElement::getTopLeftPositionForElement(unsigned int x, unsigned 
     float h = r / 2;
     float ri = cos(DEGTORAD(30)) * r;
 
-    if (y % 2 == 0)
+    if (y % 2 == 0) {
       pos.setX(x * ri * 2);
-    else
+    } else {
       pos.setX(ri * (x * 2 + 1));
+    }
 
     float ys = ((y + 1) * ((2 * r) - h)) - r;
 

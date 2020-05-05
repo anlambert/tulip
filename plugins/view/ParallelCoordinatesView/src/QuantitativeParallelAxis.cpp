@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -75,8 +75,9 @@ void QuantitativeParallelAxis::setAxisLabels() {
     long long max = static_cast<long long>(axisMaxValue);
     unsigned long long incrementStep = (max - min) / DEFAULT_NB_AXIS_GRAD;
 
-    if (incrementStep < 1)
+    if (incrementStep < 1) {
       incrementStep = 1;
+    }
 
     glQuantitativeAxis->setAxisParameters(min, max, incrementStep, GlAxis::RIGHT_OR_ABOVE, true);
     integerScale = true;

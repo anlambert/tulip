@@ -33,22 +33,25 @@ void NavigableTableView::keyPressEvent(QKeyEvent *event) {
 }
 
 int NavigableTableView::sizeHintForRow(int row) const {
-  if (!model())
+  if (!model()) {
     return -1;
+  }
 
   ensurePolished();
   int left = qMax(0, horizontalHeader()->visualIndexAt(0));
   int right = horizontalHeader()->visualIndexAt(viewport()->width());
 
-  if (right < 0)
+  if (right < 0) {
     right = model()->columnCount();
+  }
 
   int hint = 0;
 
   for (int column = left; column <= right; ++column) {
 
-    if (horizontalHeader()->isSectionHidden(column))
+    if (horizontalHeader()->isSectionHidden(column)) {
       continue;
+    }
 
     QModelIndex index = model()->index(row, column);
     hint = qMax(hint, itemDelegate(index)->sizeHint(viewOptions(), index).height());
@@ -58,8 +61,9 @@ int NavigableTableView::sizeHintForRow(int row) const {
 }
 
 int NavigableTableView::sizeHintForColumn(int col) const {
-  if (!model())
+  if (!model()) {
     return -1;
+  }
 
   ensurePolished();
   int top = qMax(0, verticalHeader()->visualIndexAt(0));
@@ -88,8 +92,9 @@ void NavigableTableView::paintEvent(QPaintEvent *event) {
 
 void NavigableTableView::resizeTableRows() {
 
-  if (!model())
+  if (!model()) {
     return;
+  }
 
   int top = qMax(0, verticalHeader()->visualIndexAt(0));
   int bottom = verticalHeader()->visualIndexAt(viewport()->height());
@@ -103,12 +108,15 @@ void NavigableTableView::resizeTableRows() {
   int left = qMax(0, horizontalHeader()->visualIndexAt(0));
   int right = horizontalHeader()->visualIndexAt(viewport()->width());
 
-  if (right < 0)
+  if (right < 0) {
     right = model()->columnCount();
+  }
 
-  for (int i = top; i <= bottom; ++i)
+  for (int i = top; i <= bottom; ++i) {
     resizeRowToContents(i);
+  }
 
-  for (int i = left; i <= right; ++i)
+  for (int i = left; i <= right; ++i) {
     resizeColumnToContents(i);
+  }
 }

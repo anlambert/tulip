@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -84,14 +84,16 @@ static QSet<QString> getParametersListForPlugin(const QString &pluginName,
       QString paramName = "\"" + param + "\" (" + getPythonTypeName(pd.getTypeName().c_str()) + ")";
       paramName.replace("\n", "\\n");
 
-      if (paramName.startsWith(prefix))
+      if (paramName.startsWith(prefix)) {
         ret.insert(paramName);
+      }
 
       paramName = "'" + param + "' (" + getPythonTypeName(pd.getTypeName().c_str()) + ")";
       paramName.replace("\n", "\\n");
 
-      if (paramName.startsWith(prefix))
+      if (paramName.startsWith(prefix)) {
         ret.insert(paramName);
+      }
     }
   }
 
@@ -114,8 +116,9 @@ static QSet<QString> getStringCollectionEntriesForPlugin(const QString &pluginNa
     for (size_t i = 0; i < sc.size(); ++i) {
       QString entry = "\"" + tlpStringToQString(sc[i]) + "\"";
 
-      if (entry.startsWith(prefix))
+      if (entry.startsWith(prefix)) {
         ret.insert(entry);
+      }
     }
   }
 
@@ -330,8 +333,9 @@ void AutoCompletionDataBase::analyseCurrentScriptCode(const QString &code, const
       }
     }
 
-    if (line.isEmpty() || line.startsWith("#"))
+    if (line.isEmpty() || line.startsWith("#")) {
       continue;
+    }
 
     if (!(origLine.startsWith("\t") || origLine.startsWith(" "))) {
       currentClassName = "";
@@ -805,8 +809,9 @@ QString AutoCompletionDataBase::findTypeForExpr(const QString &expr,
 
       ++i;
 
-      if (currentType.isEmpty())
+      if (currentType.isEmpty()) {
         break;
+      }
     }
   }
 
@@ -847,13 +852,15 @@ static QSet<QString> getAllSubGraphsNamesFromRoot(Graph *root, const QString &pr
   for (Graph *sg : root->subGraphs()) {
     QString sgName = "\"" + tlpStringToQString(sg->getName()) + "\"";
 
-    if (sgName.startsWith(prefix))
+    if (sgName.startsWith(prefix)) {
       ret.insert(sgName);
+    }
 
     sgName = "'" + tlpStringToQString(sg->getName()) + "'";
 
-    if (sgName.startsWith(prefix))
+    if (sgName.startsWith(prefix)) {
       ret.insert(sgName);
+    }
   }
   for (Graph *sg : root->subGraphs()) {
     ret += getAllSubGraphsNamesFromRoot(sg, prefix);
@@ -975,13 +982,15 @@ static QSet<QString> getAllGraphsAttributesFromRoot(Graph *rootGraph, const QStr
   for (const pair<string, DataType *> &entry : rootGraph->getAttributes().getValues()) {
     QString attrName = "\"" + tlpStringToQString(entry.first) + "\"";
 
-    if (attrName.startsWith(prefix))
+    if (attrName.startsWith(prefix)) {
       ret.insert(attrName);
+    }
 
     attrName = "'" + tlpStringToQString(entry.first) + "'";
 
-    if (attrName.startsWith(prefix))
+    if (attrName.startsWith(prefix)) {
       ret.insert(attrName);
+    }
   }
 
   for (Graph *sg : rootGraph->subGraphs()) {
@@ -1312,21 +1321,24 @@ QSet<QString> AutoCompletionDataBase::getAllDictForType(const QString &type, con
     baseType.replace("_talipotgui", "tlpgui");
     baseType.replace("_talipot", "tlp");
 
-    if (baseType != type)
+    if (baseType != type) {
       ret += getAllDictForType(baseType, prefix, false);
+    }
   }
 
   if (_classContents.find(type) != _classContents.end()) {
     for (const QString &entry : _classContents[type]) {
-      if (entry.toLower().startsWith(prefix.toLower()))
+      if (entry.toLower().startsWith(prefix.toLower())) {
         ret.insert(entry);
+      }
     }
   }
 
   if (_classBases.find(type) != _classBases.end()) {
     for (const QString &baseType : _classBases[type]) {
-      if (baseType != type)
+      if (baseType != type) {
         ret += getAllDictForType(baseType, prefix, false);
+      }
     }
   }
 
@@ -1480,14 +1492,16 @@ AutoCompletionDataBase::getParamTypesForMethodOrFunction(const QString &type,
     baseType.replace("_talipotgui", "tlpgui");
     baseType.replace("_talipot", "tlp");
 
-    if (baseType != type)
+    if (baseType != type) {
       ret += getParamTypesForMethodOrFunction(baseType, funcName);
+    }
   }
 
   if (_classBases.find(type) != _classBases.end()) {
     for (const QString &baseType : _classBases[type]) {
-      if (baseType != type)
+      if (baseType != type) {
         ret += getParamTypesForMethodOrFunction(baseType, funcName);
+      }
     }
   }
 
@@ -1507,8 +1521,9 @@ QString AutoCompletionDataBase::getReturnTypeForMethodOrFunction(const QString &
       baseType.replace("_talipot", "tlpgui");
       baseType.replace("_talipot", "tlp");
 
-      if (baseType != type)
+      if (baseType != type) {
         ret = getReturnTypeForMethodOrFunction(baseType, funcName);
+      }
 
       if (!ret.isEmpty()) {
         break;
@@ -1519,8 +1534,9 @@ QString AutoCompletionDataBase::getReturnTypeForMethodOrFunction(const QString &
   if (ret.isEmpty()) {
     if (_classBases.find(type) != _classBases.end()) {
       for (const QString &baseType : _classBases[type]) {
-        if (baseType != type)
+        if (baseType != type) {
           ret = getReturnTypeForMethodOrFunction(baseType, funcName);
+        }
 
         if (!ret.isEmpty()) {
           break;

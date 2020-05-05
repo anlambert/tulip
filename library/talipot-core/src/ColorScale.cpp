@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -135,10 +135,11 @@ void ColorScale::setColorMap(const map<float, Color> &newColorMap) {
 
   // insert all values in [0, 1]
   for (const auto &it : newColorMap) {
-    if (it.first < 0.f || it.first > 1.f)
+    if (it.first < 0.f || it.first > 1.f) {
       continue;
-    else
+    } else {
       colorMap[it.first] = it.second;
+    }
   }
 
   if (!colorMap.empty()) {
@@ -180,14 +181,16 @@ void ColorScale::setColorMapTransparency(unsigned char alpha) {
 }
 
 bool ColorScale::operator==(const std::vector<Color> &colors) const {
-  if (colorMap.size() != colors.size())
+  if (colorMap.size() != colors.size()) {
     return false;
+  }
 
   unsigned int i = 0;
 
   for (const auto &it : colorMap) {
-    if (it.second != colors[i++])
+    if (it.second != colors[i++]) {
       return false;
+    }
   }
 
   return true;

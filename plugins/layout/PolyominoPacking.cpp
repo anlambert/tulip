@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -180,41 +180,47 @@ bool PolyominoPacking::run() {
     polyominos.push_back(Polyomino(&ccNodes, ccBB));
 
     if (pluginProgress &&
-        (pluginProgress->progress(i + 1, connectedComponents.size()) != TLP_CONTINUE))
+        (pluginProgress->progress(i + 1, connectedComponents.size()) != TLP_CONTINUE)) {
       return pluginProgress->state() != TLP_CANCEL;
+    }
   }
 
   gridStepSize = computeGridStep();
 
-  if (gridStepSize <= 0)
+  if (gridStepSize <= 0) {
     return true;
+  }
 
   if (pluginProgress) {
     pluginProgress->setComment("Generating polyominos ...");
-    if (pluginProgress->progress(0, polyominos.size()) != TLP_CONTINUE)
+    if (pluginProgress->progress(0, polyominos.size()) != TLP_CONTINUE) {
       return pluginProgress->state() != TLP_CANCEL;
+    }
   }
 
   for (size_t i = 0; i < polyominos.size(); ++i) {
     genPolyomino(polyominos[i], layout, size);
 
-    if (pluginProgress && (pluginProgress->progress(i + 1, polyominos.size()) != TLP_CONTINUE))
+    if (pluginProgress && (pluginProgress->progress(i + 1, polyominos.size()) != TLP_CONTINUE)) {
       return pluginProgress->state() != TLP_CANCEL;
+    }
   }
 
   std::sort(polyominos.begin(), polyominos.end(), polyPerimOrdering());
 
   if (pluginProgress) {
     pluginProgress->setComment("Packing polyominos ...");
-    if (pluginProgress->progress(0, polyominos.size()) != TLP_CONTINUE)
+    if (pluginProgress->progress(0, polyominos.size()) != TLP_CONTINUE) {
       return pluginProgress->state() != TLP_CANCEL;
+    }
   }
 
   for (size_t i = 0; i < polyominos.size(); ++i) {
     placePolyomino(i, polyominos[i]);
 
-    if (pluginProgress && (pluginProgress->progress(i + 1, polyominos.size()) != TLP_CONTINUE))
+    if (pluginProgress && (pluginProgress->progress(i + 1, polyominos.size()) != TLP_CONTINUE)) {
       return pluginProgress->state() != TLP_CANCEL;
+    }
   }
 
   for (size_t i = 0; i < polyominos.size(); ++i) {
@@ -267,8 +273,9 @@ int PolyominoPacking::computeGridStep() {
   double l1 = (-b + r) / (2 * a);
   int root = int(l1);
 
-  if (root == 0)
+  if (root == 0) {
     root = 1;
+  }
 
   return root;
 }
@@ -358,9 +365,9 @@ void PolyominoPacking::fillEdge(edge e, const Vec2i &p, std::vector<Vec2i> &cell
   std::vector<Coord> newBends;
   auto eShape = shape->getEdgeValue(e);
 
-  if (eShape == EdgeShape::Polyline)
+  if (eShape == EdgeShape::Polyline) {
     newBends = bends;
-  else {
+  } else {
     vector<Coord> controlPoints;
     controlPoints.push_back(srcCoord);
     controlPoints.insert(controlPoints.end(), bends.begin(), bends.end());
@@ -368,10 +375,11 @@ void PolyominoPacking::fillEdge(edge e, const Vec2i &p, std::vector<Vec2i> &cell
     if (eShape == EdgeShape::BezierCurve) {
       computeBezierPoints(controlPoints, newBends, 20);
     } else if (eShape == EdgeShape::CubicBSplineCurve) {
-      if (controlPoints.size() > 3)
+      if (controlPoints.size() > 3) {
         computeOpenUniformBsplinePoints(controlPoints, newBends, 3, 20);
-      else
+      } else {
         newBends = controlPoints;
+      }
     } else if (eShape == EdgeShape::CatmullRomCurve) {
       computeCatmullRomPoints(controlPoints, newBends, false, 20);
     }
@@ -418,8 +426,9 @@ void PolyominoPacking::fillLine(const Coord &p, const Coord &q, std::vector<Vec2
       cell[1] = y;
       cells.push_back(cell);
 
-      if (x == x2)
+      if (x == x2) {
         return;
+      }
 
       if (d >= 0) {
         y += sy;
@@ -438,8 +447,9 @@ void PolyominoPacking::fillLine(const Coord &p, const Coord &q, std::vector<Vec2
       cell[1] = y;
       cells.push_back(cell);
 
-      if (y == y2)
+      if (y == y2) {
         return;
+      }
 
       if (d >= 0) {
         x += sx;
@@ -461,8 +471,9 @@ bool PolyominoPacking::polyominoFits(Polyomino &poly, int x, int y) {
     cell[0] += x;
     cell[1] += y;
 
-    if (pointsSet.find(cell) != pointsSet.end())
+    if (pointsSet.find(cell) != pointsSet.end()) {
       return false;
+    }
   }
 
   Vec2i LL = vec3fToVec2i(ccBB[0]);
@@ -489,12 +500,14 @@ void PolyominoPacking::placePolyomino(int i, Polyomino &poly) {
     W = grid(ccBB[1][0] - ccBB[0][0] + 2 * margin, gridStepSize);
     H = grid(ccBB[1][1] - ccBB[0][1] + 2 * margin, gridStepSize);
 
-    if (polyominoFits(poly, -W / 2, -H / 2))
+    if (polyominoFits(poly, -W / 2, -H / 2)) {
       return;
+    }
   }
 
-  if (polyominoFits(poly, 0, 0))
+  if (polyominoFits(poly, 0, 0)) {
     return;
+  }
 
   W = ceil(ccBB[1][0] - ccBB[0][0]);
   H = ceil(ccBB[1][1] - ccBB[0][1]);
@@ -504,50 +517,70 @@ void PolyominoPacking::placePolyomino(int i, Polyomino &poly) {
       x = 0;
       y = -bnd;
 
-      for (; x < bnd; ++x)
-        if (polyominoFits(poly, x, y))
+      for (; x < bnd; ++x) {
+        if (polyominoFits(poly, x, y)) {
           return;
+        }
+      }
 
-      for (; y < bnd; ++y)
-        if (polyominoFits(poly, x, y))
+      for (; y < bnd; ++y) {
+        if (polyominoFits(poly, x, y)) {
           return;
+        }
+      }
 
-      for (; x > -bnd; --x)
-        if (polyominoFits(poly, x, y))
+      for (; x > -bnd; --x) {
+        if (polyominoFits(poly, x, y)) {
           return;
+        }
+      }
 
-      for (; y > -bnd; --y)
-        if (polyominoFits(poly, x, y))
+      for (; y > -bnd; --y) {
+        if (polyominoFits(poly, x, y)) {
           return;
+        }
+      }
 
-      for (; x < 0; ++x)
-        if (polyominoFits(poly, x, y))
+      for (; x < 0; ++x) {
+        if (polyominoFits(poly, x, y)) {
           return;
+        }
+      }
     }
   } else {
     for (int bnd = 1;; bnd += bndIncrement) {
       y = 0;
       x = -bnd;
 
-      for (; y > -bnd; --y)
-        if (polyominoFits(poly, x, y))
+      for (; y > -bnd; --y) {
+        if (polyominoFits(poly, x, y)) {
           return;
+        }
+      }
 
-      for (; x < bnd; ++x)
-        if (polyominoFits(poly, x, y))
+      for (; x < bnd; ++x) {
+        if (polyominoFits(poly, x, y)) {
           return;
+        }
+      }
 
-      for (; y < bnd; ++y)
-        if (polyominoFits(poly, x, y))
+      for (; y < bnd; ++y) {
+        if (polyominoFits(poly, x, y)) {
           return;
+        }
+      }
 
-      for (; x > -bnd; --x)
-        if (polyominoFits(poly, x, y))
+      for (; x > -bnd; --x) {
+        if (polyominoFits(poly, x, y)) {
           return;
+        }
+      }
 
-      for (; y > 0; --y)
-        if (polyominoFits(poly, x, y))
+      for (; y > 0; --y) {
+        if (polyominoFits(poly, x, y)) {
           return;
+        }
+      }
     }
   }
 }

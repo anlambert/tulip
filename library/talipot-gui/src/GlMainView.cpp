@@ -84,8 +84,9 @@ void GlMainView::setState(const tlp::DataSet &data) {
 
   bool overviewVisible = true;
 
-  if (data.get<bool>("overviewVisible", overviewVisible))
+  if (data.get<bool>("overviewVisible", overviewVisible)) {
     setOverviewVisible(overviewVisible);
+  }
 
   bool quickAccessBarVisible = true;
 
@@ -99,8 +100,9 @@ tlp::DataSet GlMainView::state() const {
   DataSet data = View::state();
   data.set("overviewVisible", overviewVisible());
 
-  if (needQuickAccessBar)
+  if (needQuickAccessBar) {
     data.set("quickAccessBarVisible", quickAccessBarVisible());
+  }
 
   return data;
 }
@@ -140,8 +142,9 @@ void GlMainView::assignNewGlMainWidget(GlMainWidget *glMainWidget, bool deleteOl
   connect(glMainWidgetGraphicsItem, &GlMainWidgetGraphicsItem::widgetPainted, this,
           &GlMainView::glMainViewDrawn);
   // Tooltip events and url management
-  if (_needTooltipAndUrlManager)
+  if (_needTooltipAndUrlManager) {
     activateTooltipAndUrlManager(_glMainWidget);
+  }
 }
 
 GlOverviewGraphicsItem *GlMainView::overviewItem() const {
@@ -165,13 +168,15 @@ void GlMainView::centerView(bool graphChanged) {
   // to ensure the scene will not be drawn under the configuration tabs title
   getGlMainWidget()->centerScene(graphChanged, (gvWidth - 50) / gvWidth);
 
-  if (_overviewItem && _overviewItem->isVisible())
+  if (_overviewItem && _overviewItem->isVisible()) {
     drawOverview(graphChanged);
+  }
 }
 
 void GlMainView::glMainViewDrawn(bool graphChanged) {
-  if (_overviewItem && _overviewItem->isVisible())
+  if (_overviewItem && _overviewItem->isVisible()) {
     drawOverview(graphChanged);
+  }
 }
 
 QList<QWidget *> GlMainView::configurationWidgets() const {
@@ -314,32 +319,35 @@ void GlMainView::sceneRectChanged(const QRectF &rect) {
 
   if (_overviewItem != nullptr) {
     // put overview in the bottom right corner
-    if (_overviewPosition == OVERVIEW_BOTTOM_RIGHT)
+    if (_overviewPosition == OVERVIEW_BOTTOM_RIGHT) {
       _overviewItem->setPos(
           rect.width() - _overviewItem->getWidth() - 1,
           rect.height() - _overviewItem->getHeight() -
               ((_quickAccessBarItem != nullptr) ? _quickAccessBarItem->size().height() : 0));
-    else if (_overviewPosition == OVERVIEW_BOTTOM_LEFT)
+    } else if (_overviewPosition == OVERVIEW_BOTTOM_LEFT) {
       _overviewItem->setPos(
           0, rect.height() - _overviewItem->getHeight() -
                  ((_quickAccessBarItem != nullptr) ? _quickAccessBarItem->size().height() : 0));
-    else if (_overviewPosition == OVERVIEW_TOP_LEFT)
+    } else if (_overviewPosition == OVERVIEW_TOP_LEFT) {
       _overviewItem->setPos(0, 0);
-    else if (_overviewPosition == OVERVIEW_TOP_RIGHT)
+    } else if (_overviewPosition == OVERVIEW_TOP_RIGHT) {
       _overviewItem->setPos(rect.width() - _overviewItem->getWidth() - 1, 0);
+    }
 
     updateShowOverviewButton();
   }
 }
 
 QPixmap GlMainView::snapshot(const QSize &outputSize) const {
-  if (_glMainWidget == nullptr)
+  if (_glMainWidget == nullptr) {
     return QPixmap();
+  }
 
   QSize realSize = outputSize;
 
-  if (!realSize.isValid())
+  if (!realSize.isValid()) {
     realSize = _glMainWidget->size();
+  }
 
   return QPixmap::fromImage(
       _glMainWidget->createPicture(realSize.width(), realSize.height(), false));
@@ -463,9 +471,9 @@ bool GlMainView::pickNodeEdge(const int x, const int y, node &n, edge &e, bool p
 
 void GlMainView::zoomAndPanAnimation(const tlp::BoundingBox &boundingBox, const double duration) {
   BoundingBox bb;
-  if (bb.isValid())
+  if (bb.isValid()) {
     bb = boundingBox;
-  else {
+  } else {
     auto scene = getGlMainWidget()->getScene();
     GlGraphInputData *inputData = scene->getGlGraphComposite()->getInputData();
     GlBoundingBoxSceneVisitor bbVisitor(inputData);

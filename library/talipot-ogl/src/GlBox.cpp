@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -147,11 +147,13 @@ GlBox::GlBox(const Coord &position, const Size &size, const Color &fillColor,
              float outlineSize)
     : position(position), size(size), filled(filled), outlined(outlined), textureName(textureName),
       outlineSize(outlineSize), newCubeCoordArrays(nullptr), generated(false) {
-  if (filled)
+  if (filled) {
     fillColors.push_back(fillColor);
+  }
 
-  if (outlined)
+  if (outlined) {
     outlineColors.push_back(outlineColor);
+  }
 
   boundingBox.expand(position - size / 2.f);
   boundingBox.expand(position + size / 2.f);
@@ -383,8 +385,9 @@ void GlBox::clearGenerated() {
   newCubeCoordArrays = nullptr;
 
   if (OpenGlConfigManager::hasVertexBufferObject()) {
-    if (generated)
+    if (generated) {
       glDeleteBuffers(5, buffers);
+    }
   }
 
   generated = false;
@@ -398,8 +401,9 @@ void GlBox::draw(const Color &fillColor, const Color &outlineColor, float outlin
   box.setTextureName(textureFile);
   box.setFillColor(fillColor);
   box.setOutlineColor(outlineColor);
-  if (outlineWidth < 1e-6)
+  if (outlineWidth < 1e-6) {
     outlineWidth = 1e-6;
+  }
   box.setOutlineSize(outlineWidth);
 
   box.draw(lod, nullptr);
@@ -409,10 +413,11 @@ void GlBox::draw(const Color &fillColor, const Color &outlineColor, float outlin
 Coord GlBox::getAnchor(const Coord &v) {
   float fmax = std::max(std::max(fabsf(v.x()), fabsf(v.y())), fabsf(v.z()));
 
-  if (fmax > 0.0f)
+  if (fmax > 0.0f) {
     return v * (0.5f / fmax);
-  else
+  } else {
     return v;
+  }
 }
 
 }

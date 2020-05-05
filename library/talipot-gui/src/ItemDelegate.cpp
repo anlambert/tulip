@@ -86,15 +86,17 @@ ItemDelegate::ItemDelegate(QObject *parent)
 }
 
 ItemDelegate::~ItemDelegate() {
-  for (auto v : _creators.values())
+  for (auto v : _creators.values()) {
     delete v;
+  }
 }
 
 void ItemDelegate::unregisterCreator(tlp::ItemEditorCreator *c) {
   int k = _creators.key(c, INT_MIN);
 
-  if (k != INT_MIN)
+  if (k != INT_MIN) {
     _creators.remove(k);
+  }
 }
 
 tlp::ItemEditorCreator *ItemDelegate::creator(int typeId) const {
@@ -117,8 +119,9 @@ QWidget *ItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem 
 }
 
 QString ItemDelegate::displayText(const QVariant &value, const QLocale &locale) const {
-  if (value.type() == QVariant::String)
+  if (value.type() == QVariant::String) {
     return value.toString();
+  }
 
   ItemEditorCreator *c = creator(value.userType());
 
@@ -152,19 +155,20 @@ void ItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
                          const QModelIndex &index) const {
   QVariant bgColor = index.data(Qt::BackgroundRole), fgColor = index.data(Qt::ForegroundRole);
 
-  if (bgColor.isValid() && bgColor.type() == QVariant::Color)
+  if (bgColor.isValid() && bgColor.type() == QVariant::Color) {
     painter->setBrush(bgColor.value<QColor>());
-  else {
+  } else {
     QTableView *tv = static_cast<QTableView *>(parent());
     painter->setBrush((tv && tv->alternatingRowColors() && (index.row() % 2))
                           ? option.palette.alternateBase()
                           : option.palette.base());
   }
 
-  if (fgColor.isValid() && fgColor.type() == QVariant::Color)
+  if (fgColor.isValid() && fgColor.type() == QVariant::Color) {
     painter->setPen(fgColor.value<QColor>());
-  else
+  } else {
     painter->setPen(option.palette.windowText().color());
+  }
 
   painter->fillRect(option.rect, painter->brush());
 
@@ -182,11 +186,13 @@ void ItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
 
   ItemEditorCreator *c = creator(v.userType());
 
-  if (c == nullptr)
+  if (c == nullptr) {
     return;
+  }
 
-  if (c->paint(painter, option, v, index) == false)
+  if (c->paint(painter, option, v, index) == false) {
     QStyledItemDelegate::paint(painter, option, index);
+  }
 }
 
 void ItemDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const {
@@ -195,13 +201,15 @@ void ItemDelegate::setEditorData(QWidget *editor, const QModelIndex &index) cons
   bool isMandatory = true;
   QVariant mandatoryVar = index.data(Model::MandatoryRole);
 
-  if (mandatoryVar.isValid())
+  if (mandatoryVar.isValid()) {
     isMandatory = mandatoryVar.value<bool>();
+  }
 
   ItemEditorCreator *c = creator(data.userType());
 
-  if (!c)
+  if (!c) {
     return;
+  }
 
   c->setEditorData(editor, data, isMandatory, g);
 }
@@ -212,8 +220,9 @@ void ItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
   tlp::Graph *g = index.data(Model::GraphRole).value<tlp::Graph *>();
   ItemEditorCreator *c = creator(data.userType());
 
-  if (!c)
+  if (!c) {
     return;
+  }
 
   model->setData(index, c->editorData(editor, g));
 }
@@ -256,17 +265,19 @@ QVariant ItemDelegate::showEditorDialog(tlp::ElementType elType, tlp::PropertyIn
   if (elType == tlp::NODE) {
     node n(id);
 
-    if ((valid = n.isValid()))
+    if ((valid = n.isValid())) {
       value = GraphModel::nodeValue(id, pi);
-    else
+    } else {
       value = GraphModel::nodeDefaultValue(pi);
+    }
   } else {
     edge e(id);
 
-    if ((valid = e.isValid()))
+    if ((valid = e.isValid())) {
       value = GraphModel::edgeValue(id, pi);
-    else
+    } else {
       value = GraphModel::edgeDefaultValue(pi);
+    }
   }
 
   ItemEditorCreator *creator = delegate->creator(value.userType());
@@ -309,8 +320,9 @@ QVariant ItemDelegate::showEditorDialog(tlp::ElementType elType, tlp::PropertyIn
 
   QVariant result;
 
-  if (dlg->exec() == QDialog::Accepted)
+  if (dlg->exec() == QDialog::Accepted) {
     result = creator->editorData(w, g);
+  }
 
   delete dlg;
   return result;

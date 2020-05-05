@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -62,8 +62,9 @@ struct GMLGraphBuilder : public GMLTrue {
   }
   edge addEdge(int idSource, int idTarget) {
     // return and invalid edge if one of the two nodes does not exits
-    if (_graph->isElement(nodeIndex[idSource]) && _graph->isElement(nodeIndex[idTarget]))
+    if (_graph->isElement(nodeIndex[idSource]) && _graph->isElement(nodeIndex[idTarget])) {
       return _graph->addEdge(nodeIndex[idSource], nodeIndex[idTarget]);
+    }
 
     return edge();
   }
@@ -173,43 +174,49 @@ struct GMLNodeBuilder : public GMLBuilder {
     if (st == ID) {
       bool result = graphBuilder->addNode(id);
 
-      if (result)
+      if (result) {
         idSet = id;
-      else
+      } else {
         return false;
+      }
     } else {
-      if (idSet != -1)
+      if (idSet != -1) {
         graphBuilder->setNodeValue(idSet, st, id);
-      else
+      } else {
         nodeAttributeError();
+      }
     }
 
     return true;
   }
   bool addDouble(const string &st, const double real) override {
-    if (idSet != -1)
+    if (idSet != -1) {
       graphBuilder->setNodeValue(idSet, st, real);
-    else
+    } else {
       nodeAttributeError();
+    }
 
     return true;
   }
   bool addString(const string &st, const string &str) override {
     if (idSet != -1) {
-      if (st == LABEL)
+      if (st == LABEL) {
         graphBuilder->setNodeValue(idSet, "viewLabel", str);
-      else
+      } else {
         graphBuilder->setNodeValue(idSet, st, str);
-    } else
+      }
+    } else {
       nodeAttributeError();
+    }
 
     return true;
   }
   bool addBool(const string &st, const bool boolean) override {
-    if (idSet != -1)
+    if (idSet != -1) {
       graphBuilder->setNodeValue(idSet, st, boolean);
-    else
+    } else {
       nodeAttributeError();
+    }
 
     return true;
   }
@@ -240,44 +247,56 @@ struct GMLNodeGraphicsBuilder : public GMLTrue {
         color(Color(0, 0, 0, 255)) {}
 
   bool addInt(const string &st, const int integer) override {
-    if (st == "x")
+    if (st == "x") {
       coord.setX(integer);
+    }
 
-    if (st == "y")
+    if (st == "y") {
       coord.setY(integer);
+    }
 
-    if (st == "z")
+    if (st == "z") {
       coord.setZ(integer);
+    }
 
-    if (st == "w")
+    if (st == "w") {
       size.setW(integer);
+    }
 
-    if (st == "h")
+    if (st == "h") {
       size.setH(integer);
+    }
 
-    if (st == "d")
+    if (st == "d") {
       size.setD(integer);
+    }
 
     return true;
   }
   bool addDouble(const string &st, const double real) override {
-    if (st == "x")
+    if (st == "x") {
       coord.setX(real);
+    }
 
-    if (st == "y")
+    if (st == "y") {
       coord.setY(real);
+    }
 
-    if (st == "z")
+    if (st == "z") {
       coord.setZ(real);
+    }
 
-    if (st == "w")
+    if (st == "w") {
       size.setW(real);
+    }
 
-    if (st == "h")
+    if (st == "h") {
       size.setH(real);
+    }
 
-    if (st == "d")
+    if (st == "d") {
       size.setD(real);
+    }
 
     return true;
   }
@@ -290,17 +309,19 @@ struct GMLNodeGraphicsBuilder : public GMLTrue {
         for (int i = 0; i < 3; i++, c_str++) {
           unsigned char value = 0;
 
-          if (isdigit(*c_str))
+          if (isdigit(*c_str)) {
             value += (*c_str - '0') * 16;
-          else
+          } else {
             value += ((tolower(*c_str) - 'a') + 10) * 16;
+          }
 
           c_str++;
 
-          if (isdigit(*c_str))
+          if (isdigit(*c_str)) {
             value += *c_str - '0';
-          else
+          } else {
             value += (tolower(*c_str) - 'a') + 10;
+          }
 
           switch (i) {
           case 0:
@@ -335,10 +356,11 @@ bool GMLNodeBuilder::addStruct(const string &structName, GMLBuilder *&newBuilder
     return true;
   }
 
-  if (structName == GRAPHICS)
+  if (structName == GRAPHICS) {
     newBuilder = new GMLNodeGraphicsBuilder(this);
-  else
+  } else {
     newBuilder = new GMLTrue();
+  }
 
   return true;
 }
@@ -354,11 +376,13 @@ struct GMLEdgeBuilder : public GMLTrue {
   bool addInt(const string &st, const int id) override {
     bool result = true;
 
-    if (st == SOURCE)
+    if (st == SOURCE) {
       source = id;
+    }
 
-    if (st == TARGET)
+    if (st == TARGET) {
       target = id;
+    }
 
     if ((!edgeOk) && (source != -1) && (target != -1)) {
       edgeOk = true;
@@ -366,35 +390,39 @@ struct GMLEdgeBuilder : public GMLTrue {
     }
 
     if ((st != SOURCE) && (st != TARGET)) {
-      if (edgeOk && curEdge.isValid())
+      if (edgeOk && curEdge.isValid()) {
         result = graphBuilder->setEdgeValue(curEdge, st, id);
-      else
+      } else {
         edgeAttributeError();
+      }
     }
 
     return result;
   }
   bool addDouble(const string &st, const double real) override {
-    if (edgeOk)
+    if (edgeOk) {
       graphBuilder->setEdgeValue(curEdge, st, real);
-    else
+    } else {
       edgeAttributeError();
+    }
 
     return true;
   }
   bool addString(const string &st, const string &str) override {
-    if (edgeOk)
+    if (edgeOk) {
       graphBuilder->setEdgeValue(curEdge, st, str);
-    else
+    } else {
       edgeAttributeError();
+    }
 
     return true;
   }
   bool addBool(const string &st, const bool boolean) override {
-    if (edgeOk)
+    if (edgeOk) {
       graphBuilder->setEdgeValue(curEdge, st, boolean);
-    else
+    } else {
       edgeAttributeError();
+    }
 
     return true;
   }
@@ -448,26 +476,32 @@ struct GMLEdgeGraphicsLinePointBuilder : public GMLTrue {
   GMLEdgeGraphicsLinePointBuilder(GMLEdgeGraphicsLineBuilder *edgeGraphicsLineBuilder)
       : edgeGraphicsLineBuilder(edgeGraphicsLineBuilder), coord(0, 0, 0) {}
   bool addInt(const string &st, const int integer) override {
-    if (st == "x")
+    if (st == "x") {
       coord.setX(integer);
+    }
 
-    if (st == "y")
+    if (st == "y") {
       coord.setY(integer);
+    }
 
-    if (st == "z")
+    if (st == "z") {
       coord.setZ(integer);
+    }
 
     return true;
   }
   bool addDouble(const string &st, const double real) override {
-    if (st == "x")
+    if (st == "x") {
       coord.setX(real);
+    }
 
-    if (st == "y")
+    if (st == "y") {
       coord.setY(real);
+    }
 
-    if (st == "z")
+    if (st == "z") {
       coord.setZ(real);
+    }
 
     return true;
   }
@@ -478,19 +512,21 @@ struct GMLEdgeGraphicsLinePointBuilder : public GMLTrue {
 };
 //=================================================================================
 bool GMLEdgeGraphicsLineBuilder::addStruct(const string &structName, GMLBuilder *&newBuilder) {
-  if (structName == POINT)
+  if (structName == POINT) {
     newBuilder = new GMLEdgeGraphicsLinePointBuilder(this);
-  else
+  } else {
     newBuilder = new GMLTrue();
+  }
 
   return true;
 }
 //=================================================================================
 bool GMLEdgeGraphicsBuilder::addStruct(const string &structName, GMLBuilder *&newBuilder) {
-  if (structName == LINE)
+  if (structName == LINE) {
     newBuilder = new GMLEdgeGraphicsLineBuilder(this);
-  else
+  } else {
     newBuilder = new GMLTrue();
+  }
 
   return true;
 }
@@ -502,10 +538,11 @@ bool GMLEdgeBuilder::addStruct(const string &structName, GMLBuilder *&newBuilder
     return true;
   }
 
-  if (structName == GRAPHICS)
+  if (structName == GRAPHICS) {
     newBuilder = new GMLEdgeGraphicsBuilder(this);
-  else
+  } else {
     newBuilder = new GMLTrue();
+  }
 
   return true;
 }
@@ -517,8 +554,9 @@ bool GMLGraphBuilder::addStruct(const string &structName, GMLBuilder *&newBuilde
     newBuilder = new GMLNodeBuilder(this);
   } else if (structName == EDGE) {
     newBuilder = new GMLEdgeBuilder(this);
-  } else
+  } else {
     newBuilder = new GMLTrue();
+  }
 
   return true;
 }
@@ -555,8 +593,9 @@ public:
   bool importGraph() override {
     string filename;
 
-    if (!dataSet->get<string>("file::filename", filename))
+    if (!dataSet->get<string>("file::filename", filename)) {
       return false;
+    }
 
     tlp_stat_t infoEntry;
     int result = statPath(filename, &infoEntry);

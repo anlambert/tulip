@@ -70,8 +70,9 @@ static asymbol **slurp_symtab(bfd *abfd, bool useMini, long *nSymbols, unsigned 
       return symbol_table;
     }
 
-    if (storage_needed != 0)
+    if (storage_needed != 0) {
       symbol_table = reinterpret_cast<asymbol **>(malloc(storage_needed));
+    }
 
     *nSymbols = bfd_canonicalize_symtab(abfd, symbol_table);
 
@@ -82,8 +83,9 @@ static asymbol **slurp_symtab(bfd *abfd, bool useMini, long *nSymbols, unsigned 
     }
   }
 
-  if (*nSymbols == 0)
+  if (*nSymbols == 0) {
     cerr << "No symbols in " << bfd_get_filename(abfd) << endl;
+  }
 
   return symbol_table;
 }
@@ -115,10 +117,11 @@ static void tokenize(const string &str, vector<string> &tokens, const string &de
   while (string::npos != pos || string::npos != lastPos) {
     tokens.push_back(str.substr(lastPos, pos - lastPos));
 
-    if (pos != string::npos)
+    if (pos != string::npos) {
       lastPos = pos + 1;
-    else
+    } else {
       lastPos = string::npos;
+    }
 
     pos = str.find_first_of(delimiters, lastPos);
   }
@@ -242,8 +245,9 @@ pair<const char *, unsigned int> BfdWrapper::getFileAndLineForAddress(const char
                                                                       const int64_t runtimeOffset) {
   pair<const char *, unsigned int> ret = make_pair("", 0);
 
-  if (!abfd || !isMini || symbolSize == 0)
+  if (!abfd || !isMini || symbolSize == 0) {
     return ret;
+  }
 
   bfd_byte *from = reinterpret_cast<bfd_byte *>(symbolTable);
   bfd_byte *fromend = from + nSymbols * symbolSize;
@@ -273,8 +277,9 @@ pair<const char *, unsigned int> BfdWrapper::getFileAndLineForAddress(const char
         int64_t relocatedAddr = runtimeAddr;
         int64_t unrelocatedAddr = relocatedAddr;
 
-        if (relocationOffset != -1)
+        if (relocationOffset != -1) {
           unrelocatedAddr -= relocationOffset;
+        }
 
         const char *funcName = nullptr;
         const char *fileName = nullptr;

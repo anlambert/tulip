@@ -45,9 +45,10 @@ AboutPage::AboutPage(QWidget *parent) : QWidget(parent), _ui(new Ui::AboutPageDa
   title += TALIPOT_VERSION;
   QString git_rev(getTalipotGitRevision());
 
-  if (!git_rev.isEmpty())
+  if (!git_rev.isEmpty()) {
     title += "<br/>(Git commit: <a href=\"" + TalipotRepoUrl + "/commit/" + git_rev + "\">" +
              git_rev.mid(0, 7) + "</a>)";
+  }
 
   _ui->logolabel->setPixmap(QPixmap(tlpStringToQString(TalipotBitmapDir + "/logo.png")));
   _ui->TalipotLabel->setText(

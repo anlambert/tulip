@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -226,8 +226,9 @@ void PythonCodeHighlighter::highlightBlock(const QString &text) {
     } else if (expr.indexOf(".") != -1) {
       QString type = expr.mid(0, expr.lastIndexOf("."));
 
-      if (!APIDataBase::getInstance()->getFullTypeName(type).isEmpty())
+      if (!APIDataBase::getInstance()->getFullTypeName(type).isEmpty()) {
         type = APIDataBase::getInstance()->getFullTypeName(type);
+      }
 
       QString entry = expr.mid(expr.lastIndexOf(".") + 1);
 
@@ -247,8 +248,9 @@ void PythonCodeHighlighter::highlightBlock(const QString &text) {
   // highlight multi-line strings
   bool isInMultilne = highlightMultilineString(text, triSingleQuote, 1, _quotationFormat);
 
-  if (!isInMultilne)
+  if (!isInMultilne) {
     highlightMultilineString(text, triDoubleQuote, 2, _quotationFormat);
+  }
 
   QRegExp commentRegexp("#[^\n]*");
   index = commentRegexp.indexIn(text);
@@ -275,8 +277,9 @@ void PythonCodeHighlighter::highlightBlock(const QString &text) {
     if (nbQuotes % 2 == 0 && nbDblQuotes % 2 == 0) {
       if (previousBlockState() <= 0 ||
           (previousBlockState() == 1 && triSingleQuote.indexIn(text) < index) ||
-          (previousBlockState() == 2 && triDoubleQuote.indexIn(text) < index))
+          (previousBlockState() == 2 && triDoubleQuote.indexIn(text) < index)) {
         setFormat(index, length, _commentFormat);
+      }
     }
 
     index = commentRegexp.indexIn(text, index + length);

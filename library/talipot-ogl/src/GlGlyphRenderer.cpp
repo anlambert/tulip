@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -114,8 +114,9 @@ void GlGlyphRenderer::addEdgeExtremityGlyphRendering(EdgeExtremityGlyph *glyph, 
 
 void GlGlyphRenderer::endRendering() {
 
-  if (!_renderingStarted)
+  if (!_renderingStarted) {
     return;
+  }
 
   if (!_selectionBox) {
     _selectionBox = new GlBox(Coord(0, 0, 0), Size(1, 1, 1), Color(0, 0, 255, 255),

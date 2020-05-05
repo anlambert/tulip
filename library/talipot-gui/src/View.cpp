@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -61,8 +61,9 @@ void View::toggleInteractors(const bool activate,
 void View::setInteractors(const QList<tlp::Interactor *> &inters) {
   _interactors = inters;
 
-  for (auto i : inters)
+  for (auto i : inters) {
     i->setView(this);
+  }
 
   interactorsInstalled(inters);
 }
@@ -73,8 +74,9 @@ void View::setCurrentInteractor(tlp::Interactor *i) {
   if (_currentInteractor) {
     _currentInteractor->uninstall();
 
-    if (graphicsView() != nullptr)
+    if (graphicsView() != nullptr) {
       graphicsView()->setCursor(QCursor()); // Force reset cursor when interactor is changed
+    }
   }
 
   _currentInteractor = i;
@@ -84,8 +86,9 @@ void View::setCurrentInteractor(tlp::Interactor *i) {
   refresh();
 }
 void View::currentInteractorChanged(tlp::Interactor *i) {
-  if (i)
+  if (i) {
     i->install(graphicsView());
+  }
 }
 
 void View::activateTooltipAndUrlManager(QWidget *w) {
@@ -94,18 +97,21 @@ void View::activateTooltipAndUrlManager(QWidget *w) {
 }
 
 void View::fillContextMenu(QMenu *menu, const QPointF &) {
-  if (_tturlManager)
+  if (_tturlManager) {
     _tturlManager->fillContextMenu(menu);
+  }
 }
 
 void View::fillContextMenu(QMenu *menu, node n) {
-  if (_tturlManager)
+  if (_tturlManager) {
     _tturlManager->fillContextMenu(menu, n);
+  }
 }
 
 void View::fillContextMenu(QMenu *menu, edge e) {
-  if (_tturlManager)
+  if (_tturlManager) {
     _tturlManager->fillContextMenu(menu, e);
+  }
 }
 
 void View::showContextMenu(const QPoint &point, const QPointF &scenePoint) {
@@ -126,14 +132,16 @@ void View::showContextMenu(const QPoint &point, const QPointF &scenePoint) {
 
 DataSet View::state() const {
   DataSet data;
-  if (_tturlManager)
+  if (_tturlManager) {
     _tturlManager->state(data);
+  }
   return data;
 }
 
 void View::setState(const DataSet &dataSet) {
-  if (_tturlManager)
+  if (_tturlManager) {
     _tturlManager->setState(dataSet);
+  }
 }
 
 void View::undoCallback() {
@@ -144,29 +152,33 @@ Graph *View::graph() const {
   return _graph;
 }
 void View::setGraph(tlp::Graph *g) {
-  if (_graph != nullptr)
+  if (_graph != nullptr) {
     _graph->removeListener(this);
+  }
 
   bool center = false;
 
   if (g != _graph) {
-    if (g == nullptr)
+    if (g == nullptr) {
       center = true;
-    else if (_graph != nullptr && g->getRoot() != _graph->getRoot())
+    } else if (_graph != nullptr && g->getRoot() != _graph->getRoot()) {
       center = true;
+    }
   }
 
   _graph = g;
 
   graphChanged(g);
 
-  if (_graph != nullptr)
+  if (_graph != nullptr) {
     _graph->addListener(this);
+  }
 
   emit graphSet(g);
 
-  if (center)
+  if (center) {
     centerView();
+  }
 }
 
 void View::treatEvent(const Event &ev) {
@@ -177,10 +189,11 @@ void View::treatEvent(const Event &ev) {
     Graph *old = _graph;
 #endif // NDEBUG
 
-    if (_graph->getRoot() == _graph)
+    if (_graph->getRoot() == _graph) {
       graphDeleted(nullptr);
-    else
+    } else {
       graphDeleted(_graph->getSuperGraph());
+    }
 
 #ifndef NDEBUG
 
@@ -226,8 +239,9 @@ QSet<tlp::Observable *> View::triggers() const {
 }
 
 void View::removeRedrawTrigger(tlp::Observable *obs) {
-  if (_triggers.remove(obs))
+  if (_triggers.remove(obs)) {
     obs->removeObserver(this);
+  }
 }
 
 void View::emitDrawNeededSignal() {
@@ -235,8 +249,9 @@ void View::emitDrawNeededSignal() {
 }
 
 void View::addRedrawTrigger(tlp::Observable *obs) {
-  if (_triggers.contains(obs) || obs == nullptr)
+  if (_triggers.contains(obs) || obs == nullptr) {
     return;
+  }
 
   _triggers.insert(obs);
   obs->addObserver(this);
@@ -263,8 +278,9 @@ QGraphicsItem *View::centralItem() const {
 }
 
 void View::clearRedrawTriggers() {
-  for (auto t : triggers())
+  for (auto t : triggers()) {
     removeRedrawTrigger(t);
+  }
 }
 
 void View::applySettings() {}

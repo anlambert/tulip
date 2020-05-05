@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -37,8 +37,9 @@ static const char *paramHelp[] = {
 class RandomTree : public ImportModule {
 
   bool buildNode(node n, unsigned int sizeM) {
-    if (graph->numberOfNodes() >= sizeM - 1)
+    if (graph->numberOfNodes() >= sizeM - 1) {
       return false;
+    }
 
     bool result = true;
     int randNumber = randomInteger(RAND_MAX);
@@ -78,25 +79,29 @@ public:
     bool needLayout = false;
 
     if (dataSet != nullptr) {
-      if (!dataSet->get("Minimum size", minSize))
+      if (!dataSet->get("Minimum size", minSize)) {
         dataSet->get("minsize", minSize); // keep old name for backward compatibility
+      }
 
-      if (!dataSet->get("Maximum size", maxSize))
+      if (!dataSet->get("Maximum size", maxSize)) {
         dataSet->get("maxsize", maxSize); // keep old name for backward compatibility
+      }
 
       dataSet->get("tree layout", needLayout);
     }
 
     if (maxSize < 1) {
-      if (pluginProgress)
+      if (pluginProgress) {
         pluginProgress->setError("Error: maximum size must be a strictly positive integer");
+      }
 
       return false;
     }
 
     if (maxSize < minSize) {
-      if (pluginProgress)
+      if (pluginProgress) {
         pluginProgress->setError("Error: maximum size must be greater than minimum size");
+      }
 
       return false;
     }
@@ -105,20 +110,23 @@ public:
     int i = 0;
 
     while (ok) {
-      if (pluginProgress->progress(i % 100, 100) != TLP_CONTINUE)
+      if (pluginProgress->progress(i % 100, 100) != TLP_CONTINUE) {
         break;
+      }
 
       ++i;
       graph->clear();
       node n = graph->addNode();
       ok = !buildNode(n, maxSize);
 
-      if (graph->numberOfNodes() < minSize)
+      if (graph->numberOfNodes() < minSize) {
         ok = true;
+      }
     }
 
-    if (pluginProgress->progress(100, 100) == TLP_CANCEL)
+    if (pluginProgress->progress(100, 100) == TLP_CANCEL) {
       return false;
+    }
 
     if (needLayout) {
       // apply Tree Leaf

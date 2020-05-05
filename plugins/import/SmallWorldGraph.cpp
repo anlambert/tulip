@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -66,15 +66,17 @@ public:
     }
 
     if (nbNodes == 0) {
-      if (pluginProgress)
+      if (pluginProgress) {
         pluginProgress->setError(string("Error: the number of nodes cannot be null"));
+      }
 
       return false;
     }
 
     if (avgDegree == 0) {
-      if (pluginProgress)
+      if (pluginProgress) {
         pluginProgress->setError(string("Error: the average degree cannot be null"));
+      }
 
       return false;
     }
@@ -110,9 +112,9 @@ public:
           // minSize = std::min(distance, minSize);
 
           // newSize->setAllNodeValue(Size(minSize/2.0, minSize/2.0, 1));
-          if (distance < maxDistance)
+          if (distance < maxDistance) {
             graph->addEdge(nodes[i], nodes[j]);
-          else if (!longEdge && enableLongEdge) {
+          } else if (!longEdge && enableLongEdge) {
             double distrand = randomDouble();
 
             if (distrand < 1.0 / (2.0 + double(nbNodes - i - 1))) {
@@ -123,8 +125,9 @@ public:
         }
       }
 
-      if (((i % 100) == 0) && (pluginProgress->progress(i, nbNodes - 1) != TLP_CONTINUE))
+      if (((i % 100) == 0) && (pluginProgress->progress(i, nbNodes - 1) != TLP_CONTINUE)) {
         break;
+      }
     }
 
     return pluginProgress->state() != TLP_CANCEL;

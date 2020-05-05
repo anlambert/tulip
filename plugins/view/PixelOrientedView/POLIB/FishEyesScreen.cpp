@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -70,11 +70,13 @@ double FishEyesScreen::getRadius() {
 void FishEyesScreen::setHeight(double h) {
   k = h;
 
-  if (k <= 0.1)
+  if (k <= 0.1) {
     k = 0.1;
+  }
 
-  if (k > 8)
+  if (k > 8) {
     k = 8.0;
+  }
 }
 void FishEyesScreen::setCenter(double x, double y) {
   fisheyesCenter[0] = x;
@@ -103,8 +105,9 @@ Vec2f FishEyesScreen::unproject(const Vec2f &p) const {
     dir /= rho_s;
     double rho = unprojectRho(rho_s, R, k);
 
-    if (fabs(rho - rho_s) < 1E-6)
+    if (fabs(rho - rho_s) < 1E-6) {
       return p;
+    }
 
     dir *= rho;
   }

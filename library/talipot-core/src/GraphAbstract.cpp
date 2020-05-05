@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -33,8 +33,9 @@ GraphAbstract::GraphAbstract(Graph *supergraph, unsigned int sgId)
       root((supergraph == this) ? this : supergraph->getRoot()), subGraphToKeep(nullptr),
       metaGraphProperty(nullptr) {
   // get id
-  if (supergraph != this)
+  if (supergraph != this) {
     id = static_cast<GraphImpl *>(getRoot())->getSubGraphId(sgId);
+  }
 
   propertyContainer = new PropertyManager(this);
 }
@@ -47,9 +48,10 @@ GraphAbstract::~GraphAbstract() {
     // in a push context, a 'deleted' graph (see delSubGraph)
     // may still have a non empty list of subgraphs
     if (sg->getSuperGraph() == this) {
-      if (id == 0)
+      if (id == 0) {
         // indicates root destruction (see below)
         sg->id = 0;
+      }
 
       delete sg;
     }
@@ -57,8 +59,9 @@ GraphAbstract::~GraphAbstract() {
 
   delete propertyContainer;
 
-  if (id != 0)
+  if (id != 0) {
     static_cast<GraphImpl *>(getRoot())->freeSubGraphId(id);
+  }
 }
 //=========================================================================
 void GraphAbstract::clear() {
@@ -87,8 +90,9 @@ Graph *GraphAbstract::addSubGraph(unsigned int id, BooleanProperty *selection,
                                   const std::string &name) {
   Graph *tmp = new GraphView(this, selection, id);
 
-  if (!name.empty())
+  if (!name.empty()) {
     tmp->setAttribute("name", name);
+  }
 
   notifyBeforeAddSubGraph(tmp);
   subgraphs.push_back(tmp);
@@ -98,8 +102,9 @@ Graph *GraphAbstract::addSubGraph(unsigned int id, BooleanProperty *selection,
 //=========================================================================
 Graph *GraphAbstract::getNthSubGraph(unsigned int n) const {
 
-  if (n >= subgraphs.size())
+  if (n >= subgraphs.size()) {
     return nullptr;
+  }
 
   return subgraphs[n];
 }
@@ -178,9 +183,10 @@ void GraphAbstract::delAllSubGraphs() {
 }
 //=========================================================================
 void GraphAbstract::delAllSubGraphs(Graph *toRemove) {
-  if (this != toRemove->getSuperGraph() || this == toRemove)
+  if (this != toRemove->getSuperGraph() || this == toRemove) {
     // this==toRemove : root graph
     return;
+  }
 
   static_cast<GraphAbstract *>(toRemove)->delAllSubGraphs();
 
@@ -204,12 +210,14 @@ bool GraphAbstract::isSubGraph(const Graph *sg) const {
 }
 //=========================================================================
 bool GraphAbstract::isDescendantGraph(const Graph *g) const {
-  if (isSubGraph(g))
+  if (isSubGraph(g)) {
     return true;
+  }
 
   for (auto sg : subgraphs) {
-    if (sg->isDescendantGraph(g))
+    if (sg->isDescendantGraph(g)) {
       return true;
+    }
   }
 
   return false;
@@ -217,8 +225,9 @@ bool GraphAbstract::isDescendantGraph(const Graph *g) const {
 //=========================================================================
 Graph *GraphAbstract::getSubGraph(unsigned int sgId) const {
   for (auto sg : subgraphs) {
-    if (sg->getId() == sgId)
+    if (sg->getId() == sgId) {
       return sg;
+    }
   }
 
   return nullptr;
@@ -226,8 +235,9 @@ Graph *GraphAbstract::getSubGraph(unsigned int sgId) const {
 //=========================================================================
 Graph *GraphAbstract::getSubGraph(const std::string &name) const {
   for (auto sg : subgraphs) {
-    if (sg->getName() == name)
+    if (sg->getName() == name) {
       return sg;
+    }
   }
 
   return nullptr;
@@ -236,12 +246,14 @@ Graph *GraphAbstract::getSubGraph(const std::string &name) const {
 Graph *GraphAbstract::getDescendantGraph(unsigned int sgId) const {
   Graph *sg = getSubGraph(sgId);
 
-  if (sg)
+  if (sg) {
     return sg;
+  }
 
   for (auto sg : subgraphs) {
-    if ((sg = sg->getDescendantGraph(sgId)))
+    if ((sg = sg->getDescendantGraph(sgId))) {
       return sg;
+    }
   }
 
   return nullptr;
@@ -250,12 +262,14 @@ Graph *GraphAbstract::getDescendantGraph(unsigned int sgId) const {
 Graph *GraphAbstract::getDescendantGraph(const string &name) const {
   Graph *sg = getSubGraph(name);
 
-  if (sg)
+  if (sg) {
     return sg;
+  }
 
   for (auto sg : subgraphs) {
-    if ((sg = sg->getDescendantGraph(name)))
+    if ((sg = sg->getDescendantGraph(name))) {
       return sg;
+    }
   }
 
   return nullptr;
@@ -269,8 +283,9 @@ node GraphAbstract::getOneNode() const {
 node GraphAbstract::getRandomNode() const {
   const std::vector<node> &vNodes = nodes();
 
-  if (!vNodes.empty())
+  if (!vNodes.empty()) {
     return vNodes[randomUnsignedInteger(vNodes.size() - 1)];
+  }
 
   return node();
 }
@@ -283,8 +298,9 @@ edge GraphAbstract::getOneEdge() const {
 edge GraphAbstract::getRandomEdge() const {
   const std::vector<edge> &vEdges = edges();
 
-  if (!vEdges.empty())
+  if (!vEdges.empty()) {
     return vEdges[randomUnsignedInteger(vEdges.size() - 1)];
+  }
 
   return edge();
 }
@@ -369,35 +385,41 @@ bool GraphAbstract::renameLocalProperty(PropertyInterface *prop, const std::stri
 }
 //=========================================================================
 void GraphAbstract::notifyAddInheritedProperty(const std::string &propName) {
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_ADD_INHERITED_PROPERTY, propName));
+  }
 }
 void GraphAbstract::notifyBeforeAddInheritedProperty(const std::string &propName) {
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_BEFORE_ADD_INHERITED_PROPERTY, propName));
+  }
 }
 //=========================================================================
 void GraphAbstract::notifyBeforeDelInheritedProperty(const std::string &propName) {
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_BEFORE_DEL_INHERITED_PROPERTY, propName,
                          Event::TLP_INFORMATION));
+  }
 }
 //=========================================================================
 void GraphAbstract::notifyAfterDelInheritedProperty(const std::string &name) {
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_AFTER_DEL_INHERITED_PROPERTY, name));
+  }
 }
 //=========================================================================
 void GraphAbstract::notifyBeforeRenameLocalProperty(PropertyInterface *prop,
                                                     const std::string &newName) {
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_BEFORE_RENAME_LOCAL_PROPERTY, prop, newName));
+  }
 }
 //=========================================================================
 void GraphAbstract::notifyAfterRenameLocalProperty(PropertyInterface *prop,
                                                    const std::string &oldName) {
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_AFTER_RENAME_LOCAL_PROPERTY, prop, oldName));
+  }
 }
 //=========================================================================
 Iterator<std::string> *GraphAbstract::getLocalProperties() const {
@@ -437,8 +459,9 @@ bool GraphAbstract::isMetaEdge(const edge e) const {
 }
 //=========================================================================
 Graph *GraphAbstract::getNodeMetaInfo(const node n) const {
-  if (metaGraphProperty)
+  if (metaGraphProperty) {
     return metaGraphProperty->getNodeValue(n);
+  }
 
   return nullptr;
 }
@@ -447,10 +470,11 @@ Graph *GraphAbstract::getNodeMetaInfo(const node n) const {
 static set<edge> noReferencedEdges;
 //=========================================================================
 const set<edge> &GraphAbstract::getReferencedEdges(const edge e) const {
-  if (metaGraphProperty)
+  if (metaGraphProperty) {
     return metaGraphProperty->getReferencedEdges(e);
-  else
+  } else {
     return noReferencedEdges;
+  }
 }
 
 Iterator<edge> *GraphAbstract::getEdgeMetaInfo(const edge e) const {
@@ -458,8 +482,9 @@ Iterator<edge> *GraphAbstract::getEdgeMetaInfo(const edge e) const {
 }
 
 GraphProperty *GraphAbstract::getMetaGraphProperty() {
-  if (metaGraphProperty)
+  if (metaGraphProperty) {
     return metaGraphProperty;
+  }
 
   return metaGraphProperty = getRoot()->getGraphProperty(metaGraphPropertyName);
 }

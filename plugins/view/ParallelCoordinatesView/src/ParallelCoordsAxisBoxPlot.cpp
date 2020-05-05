@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -355,8 +355,9 @@ void ParallelCoordsAxisBoxPlot::buildGlAxisPlot(vector<ParallelAxis *> currentAx
       QuantitativeParallelAxis *quantitativeAxis =
           static_cast<QuantitativeParallelAxis *>(currentAxis[i]);
 
-      if (quantitativeAxis->getMedianStringValue() != "KO")
+      if (quantitativeAxis->getMedianStringValue() != "KO") {
         axisBoxPlotMap[quantitativeAxis] = new GlAxisBoxPlot(quantitativeAxis, lightBlue, darkBlue);
+      }
     }
   }
 }
@@ -372,8 +373,9 @@ bool ParallelCoordsAxisBoxPlot::eventFilter(QObject *widget, QEvent *e) {
 
   GlMainWidget *glWidget = static_cast<GlMainWidget *>(widget);
 
-  if (!glWidget)
+  if (!glWidget) {
     return false;
+  }
 
   initOrUpdateBoxPlots();
 
@@ -409,9 +411,10 @@ bool ParallelCoordsAxisBoxPlot::eventFilter(QObject *widget, QEvent *e) {
       Observable::holdObservers();
 
       if (axisBoxPlotMap.find(static_cast<QuantitativeParallelAxis *>(selectedAxis)) !=
-          axisBoxPlotMap.end())
+          axisBoxPlotMap.end()) {
         parallelView->highlightDataInAxisBoxPlotRange(
             static_cast<QuantitativeParallelAxis *>(selectedAxis));
+      }
 
       Observable::unholdObservers();
       selectedAxis = nullptr;

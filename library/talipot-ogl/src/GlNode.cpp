@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -96,8 +96,9 @@ void GlNode::draw(float lod, const GlGraphInputData *data, Camera *camera) {
 
   // less than four pixel on screen, we use points instead of glyphs
   if (lod < LOD_MIN_TRESHOLD) {
-    if (lod < 1)
+    if (lod < 1) {
       lod = 1;
+    }
 
     if (data->getGlVertexArrayManager()->renderingIsBegin()) {
       data->getGlVertexArrayManager()->activatePointNodeDisplay(this, selected);
@@ -117,15 +118,17 @@ void GlNode::draw(float lod, const GlGraphInputData *data, Camera *camera) {
     return;
   }
 
-  if (!data->parameters->isDisplayNodes())
+  if (!data->parameters->isDisplayNodes()) {
     return;
+  }
 
   // If node size in z is equal to 0 we have to scale with FLT_EPSILON to preserve normal
   // (because if we do a scale of (x,y,0) and if we have a normal like (0,0,1) the new normal after
   // scale will be (0,0,0) and we will have light problem)
   Size nodeSize = size;
-  if (nodeSize[2] == 0)
+  if (nodeSize[2] == 0) {
     nodeSize[2] = FLT_EPSILON;
+  }
 
   auto *glyphObj = data->glyphs.get(glyph);
   // Some glyphs can not benefit from the shader rendering optimization
@@ -164,8 +167,9 @@ void GlNode::drawLabel(bool drawSelect, OcclusionTest *test, const GlGraphInputD
                        float lod) {
   init(data);
 
-  if (drawSelect != selected)
+  if (drawSelect != selected) {
     return;
+  }
 
   drawLabel(test, data, lod);
 }
@@ -178,8 +182,9 @@ void GlNode::drawLabel(OcclusionTest *test, const GlGraphInputData *data, float 
                        Camera *camera) {
   init(data);
   // If glyph cannot render label: return
-  if (data->glyphs.get(glyph)->renderLabel())
+  if (data->glyphs.get(glyph)->renderLabel()) {
     return;
+  }
 
   // Color of the label : selected or not
   const Color &fontColor = selected ? data->parameters->getSelectionColor()
@@ -189,27 +194,32 @@ void GlNode::drawLabel(OcclusionTest *test, const GlGraphInputData *data, float 
   float fontBorderWidth = data->getElementLabelBorderWidth()->getNodeValue(n);
 
   // If we have transparent label : return
-  if (fontColor.getA() == 0 && (fontBorderColor.getA() == 0 || fontBorderWidth == 0))
+  if (fontColor.getA() == 0 && (fontBorderColor.getA() == 0 || fontBorderWidth == 0)) {
     return;
+  }
 
   // Node text
   const string &tmp = data->getElementLabel()->getNodeValue(n);
 
-  if (tmp.length() < 1)
+  if (tmp.length() < 1) {
     return;
+  }
 
-  if (selected)
+  if (selected) {
     label->setStencil(data->parameters->getSelectedNodesStencil());
-  else
+  } else {
     label->setStencil(data->parameters->getNodesLabelStencil());
+  }
 
   int fontSize = data->getElementFontSize()->getNodeValue(n);
 
-  if (fontSize <= 0)
+  if (fontSize <= 0) {
     return;
+  }
 
-  if (selected)
+  if (selected) {
     fontSize += 2;
+  }
 
   int labelPos = data->getElementLabelPosition()->getNodeValue(n);
 
@@ -236,10 +246,11 @@ void GlNode::drawLabel(OcclusionTest *test, const GlGraphInputData *data, float 
   label->setOcclusionTester(test);
   label->setBillboarded(data->parameters->getLabelsAreBillboarded());
 
-  if (includeBB[1][2] != 0 && !data->parameters->getLabelsAreBillboarded())
+  if (includeBB[1][2] != 0 && !data->parameters->getLabelsAreBillboarded()) {
     label->setPosition(Coord(coord[0], coord[1], coord[2] + size[2] / 2.));
-  else
+  } else {
     label->setPosition(Coord(coord[0], coord[1], coord[2]));
+  }
 
   label->drawWithStencil(lod, camera);
 }

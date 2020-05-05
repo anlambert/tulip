@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -38,8 +38,9 @@ void VectorTest::testInternalOperation() {
   vect1 += 3;
   CPPUNIT_ASSERT(vect1 != vect2);
 
-  for (size_t i = 0; i < SIZE; ++i)
+  for (size_t i = 0; i < SIZE; ++i) {
     CPPUNIT_ASSERT_EQUAL(double(i + 3), vect1[i]);
+  }
 
   vect1 -= 3;
   CPPUNIT_ASSERT_EQUAL(vect2, vect1);

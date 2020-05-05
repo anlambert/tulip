@@ -50,8 +50,9 @@ NodeLinkDiagramView::NodeLinkDiagramView(const tlp::PluginContext *)
       grid_ui(nullptr) {}
 
 NodeLinkDiagramView::~NodeLinkDiagramView() {
-  if (grid_ui)
+  if (grid_ui) {
     delete grid_ui->tableView->itemDelegate();
+  }
 
   delete grid_ui;
   delete manager;
@@ -61,8 +62,9 @@ void NodeLinkDiagramView::updateGrid() {
   delete _grid;
   _grid = nullptr;
 
-  if (_gridOptions == nullptr)
+  if (_gridOptions == nullptr) {
     return;
+  }
 
   DataSet gridData =
       static_cast<ParameterListModel *>(_gridOptions->findChild<QTableView *>()->model())
@@ -71,8 +73,9 @@ void NodeLinkDiagramView::updateGrid() {
   gridData.get<StringCollection>("Grid mode", gridMode);
   int mode = gridMode.getCurrent();
 
-  if (mode == 0)
+  if (mode == 0) {
     return;
+  }
 
   Coord margins;
   Size gridSize;
@@ -94,8 +97,9 @@ void NodeLinkDiagramView::updateGrid() {
   Coord topRight = Coord(graphBB[1] + margins);
 
   if (mode == 1) {
-    for (int i = 0; i < 3; ++i)
+    for (int i = 0; i < 3; ++i) {
       gridSize[i] = abs(topRight[i] - bottomLeft[i]) / gridSize[i];
+    }
   }
 
   bool displays[3];
@@ -138,12 +142,14 @@ void NodeLinkDiagramView::setState(const tlp::DataSet &data) {
   data.get<bool>("keepScenePointOfViewOnSubgraphChanging", keepSPOV);
   getGlMainWidget()->setKeepScenePointOfViewOnSubgraphChanging(keepSPOV);
 
-  if (!data.empty())
+  if (!data.empty()) {
     createScene(graph(), data);
+  }
   registerTriggers();
 
-  if (overviewItem())
+  if (overviewItem()) {
     overviewItem()->setLayerVisible("Foreground", false);
+  }
 }
 
 void NodeLinkDiagramView::graphChanged(tlp::Graph *graph) {
@@ -153,8 +159,9 @@ void NodeLinkDiagramView::graphChanged(tlp::Graph *graph) {
   registerTriggers();
 
   if (oldGraph == nullptr || graph == nullptr || (oldGraph->getRoot() != graph->getRoot()) ||
-      getGlMainWidget()->keepScenePointOfViewOnSubgraphChanging() == false)
+      getGlMainWidget()->keepScenePointOfViewOnSubgraphChanging() == false) {
     centerView();
+  }
 
   emit drawNeeded();
   drawOverview();
@@ -284,8 +291,9 @@ void NodeLinkDiagramView::loadGraphOnScene(Graph *graph) {
     return;
   }
 
-  if (_hasHulls)
+  if (_hasHulls) {
     manager->setGraph(graph);
+  }
 
   GlGraphComposite *oldGraphComposite =
       static_cast<GlGraphComposite *>(scene->getLayer("Main")->findGlEntity("graph"));
@@ -326,8 +334,9 @@ void NodeLinkDiagramView::loadGraphOnScene(Graph *graph) {
 void NodeLinkDiagramView::registerTriggers() {
   clearRedrawTriggers();
 
-  if (graph() == nullptr)
+  if (graph() == nullptr) {
     return;
+  }
 
   addRedrawTrigger(getGlMainWidget()->getScene()->getGlGraphComposite()->getGraph());
   std::set<tlp::PropertyInterface *> properties =
@@ -348,8 +357,9 @@ void NodeLinkDiagramView::setZOrdering(bool f) {
 }
 
 void NodeLinkDiagramView::showGridControl() {
-  if (_gridOptions->exec() == QDialog::Rejected)
+  if (_gridOptions->exec() == QDialog::Rejected) {
     return;
+  }
 
   updateGrid();
   emit drawNeeded();
@@ -530,8 +540,9 @@ void NodeLinkDiagramView::fillContextMenu(QMenu *menu, const QPointF &point) {
       }
 
       View::fillContextMenu(menu, node(entity.getComplexEntityId()));
-    } else
+    } else {
       View::fillContextMenu(menu, edge(entity.getComplexEntityId()));
+    }
   } else {
     GlMainView::fillContextMenu(menu, point);
 
@@ -564,12 +575,13 @@ void NodeLinkDiagramView::addRemoveItemToSelection(bool pushGraph, bool toggleSe
   }
 
   // selection add/remove graph item
-  if (isNode)
+  if (isNode) {
     elementSelected->setNodeValue(
         node(itemId), toggleSelection ? !elementSelected->getNodeValue(node(itemId)) : selectValue);
-  else
+  } else {
     elementSelected->setEdgeValue(
         edge(itemId), toggleSelection ? !elementSelected->getEdgeValue(edge(itemId)) : selectValue);
+  }
 }
 
 void NodeLinkDiagramView::addRemoveInNodesToSelection(bool pushGraph, bool toggleSelection,
@@ -798,10 +810,11 @@ void NodeLinkDiagramView::removeEdgeAndExtremitiesFromSelection() {
 void NodeLinkDiagramView::deleteItem() {
   graph()->push();
 
-  if (isNode)
+  if (isNode) {
     graph()->delNode(node(itemId));
-  else
+  } else {
     graph()->delEdge(edge(itemId));
+  }
 }
 
 void NodeLinkDiagramView::editValue(PropertyInterface *pi) {
@@ -810,15 +823,17 @@ void NodeLinkDiagramView::editValue(PropertyInterface *pi) {
                                                 getGlMainWidget(), itemId);
 
   // Check if edition has been cancelled
-  if (!val.isValid())
+  if (!val.isValid()) {
     return;
+  }
 
   graph()->push();
 
-  if (isNode)
+  if (isNode) {
     GraphModel::setNodeValue(itemId, pi, val);
-  else
+  } else {
     GraphModel::setEdgeValue(itemId, pi, val);
+  }
 
   graph()->popIfNoUpdates();
 }
@@ -879,8 +894,9 @@ void NodeLinkDiagramView::ungroupItem() {
 }
 
 void NodeLinkDiagramView::useHulls(bool hasHulls) {
-  if (manager && (hasHulls == _hasHulls))
+  if (manager && (hasHulls == _hasHulls)) {
     return;
+  }
 
   _hasHulls = hasHulls;
 

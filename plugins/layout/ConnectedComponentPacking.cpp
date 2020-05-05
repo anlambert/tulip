@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -60,21 +60,26 @@ bool ConnectedComponentPacking::run() {
     dataSet->get("rotation", rotation);
     StringCollection complexityCol;
 
-    if (dataSet->get("complexity", complexityCol))
+    if (dataSet->get("complexity", complexityCol)) {
       complexity = complexityCol.getCurrentString();
+    }
   }
 
-  if (layout == nullptr)
+  if (layout == nullptr) {
     layout = graph->getLayoutProperty("viewLayout");
+  }
 
-  if (size == nullptr)
+  if (size == nullptr) {
     size = graph->getSizeProperty("viewSize");
+  }
 
-  if (rotation == nullptr)
+  if (rotation == nullptr) {
     rotation = graph->getDoubleProperty("viewRotation");
+  }
 
-  if (complexity == "none")
+  if (complexity == "none") {
     complexity = "auto";
+  }
 
   // compute the connected components
   std::vector<std::vector<node>> ccNodes;
@@ -127,13 +132,15 @@ bool ConnectedComponentPacking::run() {
       complexity = "n2";
     } else if (rectangles.size() < 5000) {
       complexity = "nlogn";
-    } else
+    } else {
       complexity = "n";
+    }
   }
 
   vector<Rectangle<float>> rectanglesBackup(rectangles);
-  if (!RectanglePackingLimitRectangles(rectangles, complexity.c_str(), pluginProgress))
+  if (!RectanglePackingLimitRectangles(rectangles, complexity.c_str(), pluginProgress)) {
     return pluginProgress ? pluginProgress->state() != TLP_CANCEL : false;
+  }
 
   for (auto n : graph->nodes()) {
     result->setNodeValue(n, layout->getNodeValue(n));

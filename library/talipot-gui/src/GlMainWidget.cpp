@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -210,27 +210,31 @@ void GlMainWidget::draw(bool graphChanged) {
 }
 //==================================================
 void GlMainWidget::computeInteractors() {
-  if (!view)
+  if (!view) {
     return;
+  }
 
   GLInteractorComposite *interactor =
       dynamic_cast<GLInteractorComposite *>(view->currentInteractor());
 
-  if (interactor == nullptr)
+  if (interactor == nullptr) {
     return;
+  }
 
   interactor->compute(this);
 }
 //==================================================
 void GlMainWidget::drawInteractors() {
-  if (!view)
+  if (!view) {
     return;
+  }
 
   GLInteractorComposite *interactor =
       dynamic_cast<GLInteractorComposite *>(view->currentInteractor());
 
-  if (!interactor)
+  if (!interactor) {
     return;
+  }
 
   interactor->draw(this);
 }
@@ -336,11 +340,13 @@ void GlMainWidget::getTextureRealSize(int width, int height, int &textureRealWid
   textureRealWidth = 1;
   textureRealHeight = 1;
 
-  while (textureRealWidth <= width)
+  while (textureRealWidth <= width) {
     textureRealWidth *= 2;
+  }
 
-  while (textureRealHeight <= height)
+  while (textureRealHeight <= height) {
     textureRealHeight *= 2;
+  }
 
   if (textureRealWidth > 4096) {
     textureRealHeight = textureRealHeight / (textureRealWidth / 8192);
@@ -380,15 +386,17 @@ QImage GlMainWidget::createPicture(int width, int height, bool center, QImage::F
 
     if (center) {
       for (const auto &it : layersList) {
-        if (!it.second->useSharedCamera())
+        if (!it.second->useSharedCamera()) {
           oldCameras.push_back(it.second->getCamera());
+        }
       }
     }
 
     scene.setViewport(0, 0, width, height);
 
-    if (center)
+    if (center) {
       scene.adjustSceneToSize(width, height);
+    }
 
     computeInteractors();
     scene.draw();
@@ -437,8 +445,9 @@ void GlMainWidget::centerScene(bool graphChanged, float zf) {
   makeCurrent();
   scene.centerScene();
 
-  if (zf != 1)
+  if (zf != 1) {
     scene.zoomFactor(zf);
+  }
 
   draw(graphChanged);
 }

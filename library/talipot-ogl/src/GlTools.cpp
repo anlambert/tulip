@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -165,11 +165,13 @@ GLfloat projectSize(const BoundingBox &bb, const MatrixGL &projectionMatrix,
   MatrixGL translate;
   translate.fill(0);
 
-  for (unsigned int i = 0; i < 4; ++i)
+  for (unsigned int i = 0; i < 4; ++i) {
     translate[i][i] = 1;
+  }
 
-  for (unsigned int i = 0; i < 3; ++i)
+  for (unsigned int i = 0; i < 3; ++i) {
     translate[3][i] = bb[0][i] + bbSize[i] / 2;
+  }
 
   MatrixGL tmp(translate * modelviewMatrix);
 
@@ -258,13 +260,15 @@ float calculateAABBSize(const BoundingBox &bb, const Coord &eye,
   assert(pos <= 42);
 
   // If pos==0 : camera are inside the entity so we return a arbitrary lod
-  if (pos == 0)
+  if (pos == 0) {
     return 10.;
+  }
 
   num = hullVertexTable[pos][0];
 
-  if (num == 0)
+  if (num == 0) {
     return -1;
+  }
 
   for (int i = 0; i < num; i++) {
     dst[i] = projectPoint(src[int(hullVertexTable[pos][i + 1])], transformMatrix, globalViewport);
@@ -288,17 +292,21 @@ float calculateAABBSize(const BoundingBox &bb, const Coord &eye,
       bbBox[1] = dst[i][1];
       bbBox[3] = dst[i][1];
     } else {
-      if (dst[i][0] < bbBox[0])
+      if (dst[i][0] < bbBox[0]) {
         bbBox[0] = dst[i][0];
+      }
 
-      if (dst[i][0] > bbBox[2])
+      if (dst[i][0] > bbBox[2]) {
         bbBox[2] = dst[i][0];
+      }
 
-      if (dst[i][1] < bbBox[1])
+      if (dst[i][1] < bbBox[1]) {
         bbBox[1] = dst[i][1];
+      }
 
-      if (dst[i][1] > bbBox[3])
+      if (dst[i][1] > bbBox[3]) {
         bbBox[3] = dst[i][1];
+      }
     }
 
     if (bbBox[0] < currentViewport[0] + currentViewport[2] && bbBox[2] > currentViewport[0] &&

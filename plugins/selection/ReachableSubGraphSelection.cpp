@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -64,11 +64,12 @@ bool ReachableSubGraphSelection::run() {
     // Get the edge orientation
     bool found(false);
 
-    if (dataSet->get("edge direction", edgeDirectionCollecion))
+    if (dataSet->get("edge direction", edgeDirectionCollecion)) {
       found = true;
-    else
+    } else {
       found = dataSet->get("edges direction", edgeDirectionCollecion); // former buggy parameter
-                                                                       // name
+    }
+    // name
 
     if (found) {
       if (edgeDirectionCollecion.getCurrentString() == edgesDirectionLabels[0]) {
@@ -99,8 +100,9 @@ bool ReachableSubGraphSelection::run() {
     }
 
     // keep startingnodes for compatibility
-    if (!dataSet->get("starting nodes", startNodes))
+    if (!dataSet->get("starting nodes", startNodes)) {
       dataSet->get("startingnodes", startNodes);
+    }
   }
 
   unsigned num_nodes = 0, num_edges = 0;

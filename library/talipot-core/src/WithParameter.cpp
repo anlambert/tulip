@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -134,8 +134,9 @@ Iterator<ParameterDescription> *ParameterDescriptionList::getParameters() const 
 
 ParameterDescription *ParameterDescriptionList::getParameter(const string &name) {
   for (unsigned int i = 0; i < parameters.size(); ++i) {
-    if (name == parameters[i].getName())
+    if (name == parameters[i].getName()) {
       return &parameters[i];
+    }
   }
 
 #ifndef NDEBUG
@@ -181,9 +182,10 @@ void ParameterDescriptionList::buildDefaultDataSet(DataSet &dataSet, Graph *g) c
     if (dts) {
       bool result = dts->setData(dataSet, name, defaultValue);
 
-      if (!result)
+      if (!result) {
         tlp::error() << "Unable to parse \"" << defaultValue.c_str()
                      << "\" as a default value for parameter \"" << name.c_str() << "\"" << endl;
+      }
 
       assert(result);
       continue;
@@ -212,9 +214,9 @@ void ParameterDescriptionList::buildDefaultDataSet(DataSet &dataSet, Graph *g) c
     CHECK_PROPERTY(tlp::ColorVectorProperty);
 
     if (type.compare(typeid(NumericProperty *).name()) == 0) {
-      if (!g || defaultValue.empty())
+      if (!g || defaultValue.empty()) {
         dataSet.set(name, static_cast<NumericProperty *>(nullptr));
-      else {
+      } else {
         PropertyInterface *prop = g->getProperty(defaultValue);
 
         if (!dynamic_cast<NumericProperty *>(prop)) {
@@ -230,15 +232,16 @@ void ParameterDescriptionList::buildDefaultDataSet(DataSet &dataSet, Graph *g) c
     }
 
     if (type.compare(typeid(PropertyInterface *).name()) == 0) {
-      if (!g || defaultValue.empty())
+      if (!g || defaultValue.empty()) {
         dataSet.set(name, static_cast<PropertyInterface *>(nullptr));
-      else {
+      } else {
         if (!g->existProperty(defaultValue)) {
           tlp::error() << "Property '" << defaultValue.c_str() << "' not found for parameter '"
                        << name.c_str() << endl;
           dataSet.set(name, static_cast<PropertyInterface *>(nullptr));
-        } else
+        } else {
           dataSet.set(name, g->getProperty(defaultValue));
+        }
       }
     }
   }
@@ -246,55 +249,71 @@ void ParameterDescriptionList::buildDefaultDataSet(DataSet &dataSet, Graph *g) c
 
 bool WithParameter::inputRequired() const {
   for (const ParameterDescription &param : parameters.getParameters()) {
-    if (param.getDirection() != OUT_PARAM)
+    if (param.getDirection() != OUT_PARAM) {
       return true;
+    }
 
     const string &type = param.getTypeName();
 
-    if (type.compare(typeid(tlp::BooleanProperty).name()) == 0)
+    if (type.compare(typeid(tlp::BooleanProperty).name()) == 0) {
       return true;
+    }
 
-    if (type.compare(typeid(tlp::ColorProperty).name()) == 0)
+    if (type.compare(typeid(tlp::ColorProperty).name()) == 0) {
       return true;
+    }
 
-    if (type.compare(typeid(tlp::DoubleProperty).name()) == 0)
+    if (type.compare(typeid(tlp::DoubleProperty).name()) == 0) {
       return true;
+    }
 
-    if (type.compare(typeid(tlp::IntegerProperty).name()) == 0)
+    if (type.compare(typeid(tlp::IntegerProperty).name()) == 0) {
       return true;
+    }
 
-    if (type.compare(typeid(tlp::LayoutProperty).name()) == 0)
+    if (type.compare(typeid(tlp::LayoutProperty).name()) == 0) {
       return true;
+    }
 
-    if (type.compare(typeid(tlp::SizeProperty).name()) == 0)
+    if (type.compare(typeid(tlp::SizeProperty).name()) == 0) {
       return true;
+    }
 
-    if (type.compare(typeid(tlp::StringProperty).name()) == 0)
+    if (type.compare(typeid(tlp::StringProperty).name()) == 0) {
       return true;
+    }
 
-    if (type.compare(typeid(tlp::BooleanVectorProperty).name()) == 0)
+    if (type.compare(typeid(tlp::BooleanVectorProperty).name()) == 0) {
       return true;
+    }
 
-    if (type.compare(typeid(tlp::ColorVectorProperty).name()) == 0)
+    if (type.compare(typeid(tlp::ColorVectorProperty).name()) == 0) {
       return true;
+    }
 
-    if (type.compare(typeid(tlp::DoubleVectorProperty).name()) == 0)
+    if (type.compare(typeid(tlp::DoubleVectorProperty).name()) == 0) {
       return true;
+    }
 
-    if (type.compare(typeid(tlp::IntegerVectorProperty).name()) == 0)
+    if (type.compare(typeid(tlp::IntegerVectorProperty).name()) == 0) {
       return true;
+    }
 
-    if (type.compare(typeid(tlp::CoordVectorProperty).name()) == 0)
+    if (type.compare(typeid(tlp::CoordVectorProperty).name()) == 0) {
       return true;
+    }
 
-    if (type.compare(typeid(tlp::SizeProperty).name()) == 0)
+    if (type.compare(typeid(tlp::SizeProperty).name()) == 0) {
       return true;
+    }
 
-    if (type.compare(typeid(tlp::StringProperty).name()) == 0)
+    if (type.compare(typeid(tlp::StringProperty).name()) == 0) {
       return true;
+    }
 
-    if (type.compare(typeid(tlp::PropertyInterface *).name()) == 0)
+    if (type.compare(typeid(tlp::PropertyInterface *).name()) == 0) {
       return true;
+    }
   }
   return false;
 }

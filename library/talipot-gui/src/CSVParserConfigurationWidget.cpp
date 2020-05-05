@@ -100,10 +100,11 @@ void CSVParserConfigurationWidget::fillEncodingComboBox() {
 
 void CSVParserConfigurationWidget::changeSeparator(int index) {
   if (ui->separatorComboBox->itemText(index) == "Other") {
-    if (!ui->othersep->isEnabled())
+    if (!ui->othersep->isEnabled()) {
       ui->othersep->setEnabled(true);
-    else if (!ui->othersep->text().isEmpty())
+    } else if (!ui->othersep->text().isEmpty()) {
       emit(parserChanged());
+    }
   } else {
     ui->othersep->setEnabled(false);
     emit(parserChanged());
@@ -215,6 +216,7 @@ int CSVParserConfigurationWidget::getFirstLineIndex() const {
 }
 
 void CSVParserConfigurationWidget::setNbIgnoredLines(int nb) {
-  if (!ui->ignoreFirstLinesCheckBox->isChecked())
+  if (!ui->ignoreFirstLinesCheckBox->isChecked()) {
     ui->nbOfIgnoredLinesSpinBox->setValue(nb);
+  }
 }

@@ -86,8 +86,9 @@ class PluginModel : public tlp::Model {
       for (const QString &group : pluginTree[cat].keys()) {
         TreeItem *groupItem = catItem;
 
-        if ((!group.isEmpty()) && (pluginTree[cat].keys().size() > 1))
+        if ((!group.isEmpty()) && (pluginTree[cat].keys().size() > 1)) {
           groupItem = catItem->addChild(group);
+        }
 
         // sort in case insensitive alphabetic order
         std::sort(pluginTree[cat][group].begin(), pluginTree[cat][group].end(), QStringCaseCmp);
@@ -97,10 +98,11 @@ class PluginModel : public tlp::Model {
           std::string info = plugin.info();
 
           // set info only if they contain more than one word
-          if (info.find(' ') != std::string::npos)
+          if (info.find(' ') != std::string::npos) {
             groupItem->addChild(alg, tlp::tlpStringToQString(info));
-          else
+          } else {
             groupItem->addChild(alg);
+          }
         }
       }
     }
@@ -131,8 +133,9 @@ public:
   int rowCount(const QModelIndex &parent = QModelIndex()) const override {
     TreeItem *item = _root;
 
-    if (parent.isValid())
+    if (parent.isValid()) {
       item = static_cast<TreeItem *>(parent.internalPointer());
+    }
 
     return item->children.size();
   }
@@ -142,13 +145,15 @@ public:
   }
 
   QModelIndex parent(const QModelIndex &child) const override {
-    if (!child.isValid())
+    if (!child.isValid()) {
       return QModelIndex();
+    }
 
     TreeItem *childItem = static_cast<TreeItem *>(child.internalPointer());
 
-    if (childItem->parent == _root)
+    if (childItem->parent == _root) {
       return QModelIndex();
+    }
 
     QList<int> indexes = indexHierarchy(childItem->parent);
     int row = indexes[indexes.size() - 1];
@@ -162,8 +167,9 @@ public:
       parentItem = static_cast<TreeItem *>(parent.internalPointer());
     }
 
-    if (row >= parentItem->children.size())
+    if (row >= parentItem->children.size()) {
       return QModelIndex();
+    }
 
     return createIndex(row, column, parentItem->children[row]);
   }
@@ -171,15 +177,16 @@ public:
   QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override {
     TreeItem *item = static_cast<TreeItem *>(index.internalPointer());
 
-    if (role == Qt::DisplayRole)
+    if (role == Qt::DisplayRole) {
       return item->name;
-    else if (role == Qt::ToolTipRole) {
-      if (item->info.isEmpty())
+    } else if (role == Qt::ToolTipRole) {
+      if (item->info.isEmpty()) {
         return item->name;
-      else
+      } else {
         return QString("<table><tr><td>%1</td></tr><tr><td><i>%2</i></td></tr></table>")
             .arg(item->name + ":")
             .arg(item->info);
+      }
     } else if (role == Qt::FontRole && !index.parent().parent().isValid()) {
       QFont f;
       f.setBold(true);
@@ -201,8 +208,9 @@ public:
     if (index.isValid()) {
       TreeItem *item = static_cast<TreeItem *>(index.internalPointer());
 
-      if (!PluginsManager::pluginExists<PLUGIN>(tlp::QStringToTlpString(item->name)))
+      if (!PluginsManager::pluginExists<PLUGIN>(tlp::QStringToTlpString(item->name))) {
         result = Qt::ItemIsEnabled;
+      }
     }
 
     return result;

@@ -138,10 +138,11 @@ NodeFaceIterator::NodeFaceIterator(PlanarConMap *m, const Face face) : i(0) {
   pair<node, node> e1Ends = m->ends(e1);
   const pair<node, node> &e2Ends = m->ends(e2);
 
-  if (e1Ends.first == e2Ends.first || e1Ends.first == e2Ends.second)
+  if (e1Ends.first == e2Ends.first || e1Ends.first == e2Ends.second) {
     prev = e1Ends.first;
-  else
+  } else {
     prev = e1Ends.second;
+  }
 
   nodes.push_back(prev);
 

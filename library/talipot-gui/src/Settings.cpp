@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -99,8 +99,9 @@ void Settings::checkRecentDocuments() {
   QList<QVariant> recentDocumentsValue = value(TS_RecentDocuments).toList();
 
   for (const QVariant &doc : recentDocumentsValue) {
-    if (!QFileInfo(doc.toString()).exists())
+    if (!QFileInfo(doc.toString()).exists()) {
       recentDocumentsValue.removeAll(doc);
+    }
   }
 
   setValue(TS_RecentDocuments, recentDocumentsValue);
@@ -109,13 +110,15 @@ void Settings::checkRecentDocuments() {
 void Settings::addToRecentDocuments(const QString &name) {
   QList<QVariant> recentDocumentsValue = value(TS_RecentDocuments).toList();
 
-  if (recentDocumentsValue.contains(name))
+  if (recentDocumentsValue.contains(name)) {
     recentDocumentsValue.removeAll(name);
+  }
 
   recentDocumentsValue.push_front(name);
 
-  while (recentDocumentsValue.size() > 5)
+  while (recentDocumentsValue.size() > 5) {
     recentDocumentsValue.pop_back();
+  }
 
   setValue(TS_RecentDocuments, recentDocumentsValue);
 }
@@ -327,8 +330,9 @@ void Settings::applyProxySettings() {
       proxy.setPassword(proxyPassword());
     }
     QNetworkProxy::setApplicationProxy(proxy);
-  } else
+  } else {
     QNetworkProxyFactory::setUseSystemConfiguration(true);
+  }
 }
 
 bool Settings::isFirstRun() const {

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -68,8 +68,9 @@ static double unprojectRho(double rho_s, double R, double k, double) {
   //    double rho = rho_s;
   if (rho_s < R) {
     return rho_s * R / (R * k + R - rho_s * k);
-  } else
+  } else {
     return rho_s;
+  }
 
   //    if (rho_s <  3.*R) {
   //      double t = ty3(rho, R);
@@ -79,10 +80,11 @@ static double unprojectRho(double rho_s, double R, double k, double) {
 }
 //==============================================================
 static double projectRho(double rho, double R, double k, double) {
-  if (rho < R)
+  if (rho < R) {
     return (k + 1) * rho / (k * rho / R + 1);
-  else
+  } else {
     return rho;
+  }
 
   /*
   double rhos = rho;
@@ -108,11 +110,13 @@ void FishEyesScreenFurnas::setRadius(double r) {
 void FishEyesScreenFurnas::setHeight(double h) {
   k = h;
 
-  if (k <= 0.1)
+  if (k <= 0.1) {
     k = 0.1;
+  }
 
-  if (k > 8)
+  if (k > 8) {
     k = 8.0;
+  }
 }
 void FishEyesScreenFurnas::setCenter(double x, double y) {
   fisheyesCenter[0] = x;
@@ -141,8 +145,9 @@ Vec2f FishEyesScreenFurnas::unproject(const Vec2f &p) const {
     dir /= rho_s;
     double rho = unprojectRho(rho_s, R, k, l);
 
-    if (fabs(rho - rho_s) < 1E-6)
+    if (fabs(rho - rho_s) < 1E-6) {
       return p;
+    }
 
     dir *= rho;
   }

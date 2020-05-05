@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -106,8 +106,9 @@ std::ostream &tlp::operator<<(std::ostream &os, const tlp::Color &a) {
   os << "(";
 
   for (unsigned int i = 0; i < SIZE; ++i) {
-    if (i > 0)
+    if (i > 0) {
       os << ",";
+    }
 
     os << uint(a[i]);
   }
@@ -206,24 +207,28 @@ void RGBtoHSV(unsigned char r, unsigned char g, unsigned char b, int &h, int &s,
 
   delta = theMax - theMin;
 
-  if ((theMax != 0) && (delta != 0))
+  if ((theMax != 0) && (delta != 0)) {
     s = 255 * delta / theMax; // s
-  else {
+  } else {
     // r=g=b = 0    // s = 0, v is undefined
     s = 0;
     h = -1;
     return;
   }
 
-  if (r == theMax)
+  if (r == theMax) {
     h = int(60 * (g - b) / float(delta)); // between yellow & magenta
-  else if (g == theMax)
+  } else if (g == theMax) {
     h = int(60 * (2.0f + (b - r) / float(delta))); // between cyan & yellow
-  else
+  } else {
     h = int(60 * (4.0f + (r - g) / float(delta))); // between magenta & cyan
 
-  if (h < 0)
+}
+
+  if (h < 0) {
     h += 360;
+
+}
 }
 
 void HSVtoRGB(int h, int s, int v, unsigned char &r, unsigned char &g, unsigned char &b) {
@@ -231,15 +236,19 @@ void HSVtoRGB(int h, int s, int v, unsigned char &r, unsigned char &g, unsigned 
   int p, q, t;
   float f, sf = s / 255.0;
 
-  if (v < 0)
+  if (v < 0) {
     v = 0;
-  else if (v > 255)
+  } else if (v > 255) {
     v = 255;
 
-  if (s < 0)
+}
+
+  if (s < 0) {
     s = 0;
-  else if (s > 255)
+  } else if (s > 255) {
     s = 255;
+
+}
 
   //   h %= 360;
   //   if (h<0) h+=360;

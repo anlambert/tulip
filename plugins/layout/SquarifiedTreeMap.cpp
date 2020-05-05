@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -69,8 +69,9 @@ bool SquarifiedTreeMap::check(std::string &errorMsg) {
 
   metric = nullptr;
 
-  if (dataSet != nullptr)
+  if (dataSet != nullptr) {
     dataSet->get("metric", metric);
+  }
 
   if (!metric && graph->existProperty("viewMetric")) {
     metric = graph->getDoubleProperty("viewMetric");
@@ -104,17 +105,20 @@ bool SquarifiedTreeMap::run() {
     dataSet->get("Node Shape", glyphResult);
   }
 
-  if (sizeResult == nullptr)
+  if (sizeResult == nullptr) {
     sizeResult = graph->getSizeProperty("viewSize");
+  }
 
-  if (glyphResult == nullptr)
+  if (glyphResult == nullptr) {
     glyphResult = graph->getLocalIntegerProperty("viewShape");
+  }
 
   {
     // change the glyph of all internal nodes to be a window
     for (auto n : graph->nodes()) {
-      if (graph->outdeg(n) != 0)
+      if (graph->outdeg(n) != 0) {
         glyphResult->setNodeValue(n, NodeShape::Window);
+      }
     }
   }
 
@@ -159,8 +163,9 @@ void SquarifiedTreeMap::layoutRow(const std::vector<tlp::node> &row, const int d
   assert(!row.empty());
   double rowArea = 0;
 
-  for (auto n : row)
+  for (auto n : row) {
     rowArea += nodesSize.get(n.id);
+  }
 
   double sum = 0;
   Vec2d dist = rectArea[1] - rectArea[0];
@@ -314,10 +319,11 @@ void SquarifiedTreeMap::squarify(const std::vector<tlp::node> &toTreat, const tl
 
   Rectd rowRec(rectArea); // The rectangle for that row
 
-  if (rectArea.width() > rectArea.height())
+  if (rectArea.width() > rectArea.height()) {
     rowRec[1][0] -= (unTreatedSurface / surface) * dist[0];
-  else
+  } else {
     rowRec[0][1] += (unTreatedSurface / surface) * dist[1];
+  }
 
   assert(rowRec.isValid());
 
@@ -326,10 +332,11 @@ void SquarifiedTreeMap::squarify(const std::vector<tlp::node> &toTreat, const tl
   if (!unTreated.empty()) {
     Rectd subRec(rectArea); // the rectangle of unTreated nodes
 
-    if (rectArea.width() > rectArea.height())
+    if (rectArea.width() > rectArea.height()) {
       subRec[0][0] = rowRec[1][0];
-    else
+    } else {
       subRec[1][1] = rowRec[0][1];
+    }
 
     assert(subRec.isValid());
     squarify(unTreated, subRec, depth);

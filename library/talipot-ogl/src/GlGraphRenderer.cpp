@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -34,22 +34,27 @@ GlGraphRenderer::GlGraphRenderer(const GlGraphInputData *inputData)
 void GlGraphRenderer::visitGraph(GlSceneVisitor *visitor, bool visitHiddenEntities) {
   Graph *graph = inputData->getGraph();
 
-  if (!graph)
+  if (!graph) {
     return;
+  }
 
   unsigned int nbNodes = graph->numberOfNodes();
   unsigned int nbEdges = graph->numberOfEdges();
   if (!visitHiddenEntities && !inputData->parameters->isViewMetaLabel()) {
-    if (!inputData->parameters->isDisplayNodes() && !inputData->parameters->isViewNodeLabel())
+    if (!inputData->parameters->isDisplayNodes() && !inputData->parameters->isViewNodeLabel()) {
       nbNodes = 0;
-    if (!inputData->parameters->isDisplayEdges() && !inputData->parameters->isViewEdgeLabel())
+    }
+    if (!inputData->parameters->isDisplayEdges() && !inputData->parameters->isViewEdgeLabel()) {
       nbEdges = 0;
+    }
   }
   visitor->reserveMemoryForGraphElts(nbNodes, nbEdges);
-  if (nbNodes)
+  if (nbNodes) {
     visitNodes(graph, visitor);
-  if (nbEdges)
+  }
+  if (nbEdges) {
     visitEdges(graph, visitor);
+  }
   visitor->endOfVisit();
 }
 
@@ -72,9 +77,10 @@ void GlGraphRenderer::visitEdges(Graph *graph, GlSceneVisitor *visitor) {
     visitor->visit(&glEdge);
   };
 
-  if (visitor->isThreadSafe())
+  if (visitor->isThreadSafe()) {
     TLP_PARALLEL_MAP_EDGES(graph, visitEdge);
-  else
+  } else {
     TLP_MAP_EDGES(graph, visitEdge);
+  }
 }
 }

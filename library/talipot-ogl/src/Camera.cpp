@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -68,8 +68,9 @@ void Camera::move(float speed) {
   center += move;
   matrixCoherent = false;
 
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(Event(*this, Event::TLP_MODIFICATION));
+  }
 }
 //====================================================
 void Camera::rotate(float angle, float x, float y, float z) {
@@ -119,8 +120,9 @@ void Camera::rotate(float angle, float x, float y, float z) {
   up = vNewUp;
   matrixCoherent = false;
 
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(Event(*this, Event::TLP_MODIFICATION));
+  }
 }
 //====================================================
 void Camera::strafeLeftRight(float speed) {
@@ -130,8 +132,9 @@ void Camera::strafeLeftRight(float speed) {
   eyes += strafeVector;
   matrixCoherent = false;
 
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(Event(*this, Event::TLP_MODIFICATION));
+  }
 }
 //====================================================
 void Camera::strafeUpDown(float speed) {
@@ -141,8 +144,9 @@ void Camera::strafeUpDown(float speed) {
   eyes += strafeVector;
   matrixCoherent = false;
 
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(Event(*this, Event::TLP_MODIFICATION));
+  }
 }
 //====================================================
 void Camera::initGl() {
@@ -190,8 +194,9 @@ void Camera::initLight() {
 void Camera::initProjection(const Vec4i &viewport, bool reset) {
   glMatrixMode(GL_PROJECTION);
 
-  if (reset)
+  if (reset) {
     glLoadIdentity();
+  }
 
   double _near;
   double _far;
@@ -216,20 +221,22 @@ void Camera::initProjection(const Vec4i &viewport, bool reset) {
     float ratio = double(viewport[2]) / double(viewport[3]);
 
     if (scene->isViewOrtho()) {
-      if (ratio > 1)
+      if (ratio > 1) {
         glOrtho(-ratio * sceneRadius / 2.0 / zoomFactor, ratio * sceneRadius / 2.0 / zoomFactor,
                 -sceneRadius / 2.0 / zoomFactor, sceneRadius / 2.0 / zoomFactor, _near, _far);
-      else
+      } else {
         glOrtho(-sceneRadius / 2.0 / zoomFactor, sceneRadius / 2.0 / zoomFactor,
                 1. / ratio * -sceneRadius / 2.0 / zoomFactor,
                 1. / ratio * sceneRadius / 2.0 / zoomFactor, _near, _far);
+      }
     } else {
-      if (ratio > 1)
+      if (ratio > 1) {
         glFrustum(-ratio / 2.0 / zoomFactor, ratio / 2.0 / zoomFactor, -0.5 / zoomFactor,
                   0.5 / zoomFactor, 1.0, sceneRadius * 2.0);
-      else
+      } else {
         glFrustum(-0.5 / zoomFactor, 0.5 / zoomFactor, -1.0 / (ratio / 0.5 * zoomFactor),
                   1.0 / (ratio / 0.5 * zoomFactor), 1.0, sceneRadius * 2.0);
+      }
     }
 
     glEnable(GL_DEPTH_TEST);
@@ -308,43 +315,49 @@ void Camera::setSceneRadius(double sceneRadius, const BoundingBox sceneBoundingB
   this->sceneBoundingBox = sceneBoundingBox;
   matrixCoherent = false;
 
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(Event(*this, Event::TLP_MODIFICATION));
+  }
 }
 //====================================================
 void Camera::setZoomFactor(double zoomFactor) {
-  if (zoomFactor > 1E10)
+  if (zoomFactor > 1E10) {
     return;
+  }
 
   this->zoomFactor = zoomFactor;
   matrixCoherent = false;
 
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(Event(*this, Event::TLP_MODIFICATION));
+  }
 }
 //====================================================
 void Camera::setEyes(const Coord &eyes) {
   this->eyes = eyes;
   matrixCoherent = false;
 
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(Event(*this, Event::TLP_MODIFICATION));
+  }
 }
 //====================================================
 void Camera::setCenter(const Coord &center) {
   this->center = center;
   matrixCoherent = false;
 
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(Event(*this, Event::TLP_MODIFICATION));
+  }
 }
 //====================================================
 void Camera::setUp(const Coord &up) {
   this->up = up;
   matrixCoherent = false;
 
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(Event(*this, Event::TLP_MODIFICATION));
+  }
 }
 //====================================================
 void Camera::getProjAndMVMatrix(const Vec4i &viewport, Matrix<float, 4> &projectionMatrix,

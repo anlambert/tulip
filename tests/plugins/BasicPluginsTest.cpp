@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -49,15 +49,17 @@ bool BasicPluginsTest::computeProperty(const std::string &algorithm, const std::
   initializeGraph(graphType);
   bool deleteProp = (prop == nullptr);
 
-  if (prop == nullptr)
+  if (prop == nullptr) {
     prop = new PropType(graph);
+  }
 
   string errorMsg;
   DataSet ds;
   bool result = graph->applyPropertyAlgorithm(algorithm, prop, errorMsg);
 
-  if (deleteProp)
+  if (deleteProp) {
     delete prop;
+  }
 
   return result;
 }
@@ -413,9 +415,10 @@ void BasicPluginsTest::testEqualValueClustering() {
 
   unsigned int NB_EDGES = EDGE_RATIO * NB_ADD;
 
-  for (unsigned int i = 0; i < NB_EDGES; ++i)
+  for (unsigned int i = 0; i < NB_EDGES; ++i) {
     graph->addEdge(nodes[randomUnsignedInteger(NB_ADD - 1)],
                    nodes[randomUnsignedInteger(NB_ADD - 1)]);
+  }
 
   // check dcall to computeEqualValueClustering
   result = graph->applyAlgorithm(algorithmName, errorMsg, &ds);

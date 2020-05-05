@@ -61,15 +61,17 @@ double EccentricityMetric::compute(unsigned int nPos) {
   distance.setAll(0);
   double val = tlp::maxDistance(graph, nPos, distance, weight, directed ? DIRECTED : UNDIRECTED);
 
-  if (!allPaths)
+  if (!allPaths) {
     return val;
+  }
 
   double nbAcc = 0.;
   val = 0.;
   unsigned int nbNodes = graph->numberOfNodes();
   double max_d_acc = nbNodes + 0.;
-  if (weight)
+  if (weight) {
     max_d_acc = nbNodes * weight->getEdgeDoubleMax();
+  }
 
   for (unsigned int i = 0; i < nbNodes; ++i) {
     double d = distance[i];
@@ -77,18 +79,21 @@ double EccentricityMetric::compute(unsigned int nPos) {
     if (d < max_d_acc) {
       nbAcc += 1.;
 
-      if (i != nPos)
+      if (i != nPos) {
         val += d;
+      }
     }
   }
 
-  if (nbAcc < 2.0)
+  if (nbAcc < 2.0) {
     return 0.0;
+  }
 
-  if (norm)
+  if (norm) {
     val = 1.0 / val;
-  else
+  } else {
     val /= (nbAcc - 1.0);
+  }
 
   return val;
 }
@@ -118,8 +123,9 @@ bool EccentricityMetric::run() {
   double diameter = 1.0;
   std::atomic<bool> stopfor(false);
   TLP_PARALLEL_MAP_INDICES(nbNodes, [&](unsigned int i) {
-    if (stopfor.load())
+    if (stopfor.load()) {
       return;
+    }
 
     if (ThreadManager::getThreadNumber() == 0) {
       if (pluginProgress->progress(i, nbNodes / ThreadManager::getNumberOfThreads()) !=
@@ -132,25 +138,29 @@ bool EccentricityMetric::run() {
 
     if (!allPaths && norm) {
       TLP_LOCK_SECTION(DIAMETER) {
-        if (diameter < res[i])
+        if (diameter < res[i]) {
           diameter = res[i];
+        }
       }
       TLP_UNLOCK_SECTION(DIAMETER);
     }
   });
 
-  if (pluginProgress->state() != TLP_CONTINUE)
+  if (pluginProgress->state() != TLP_CONTINUE) {
     return pluginProgress->state() != TLP_CANCEL;
+  }
 
   TLP_MAP_NODES_AND_INDICES(graph, [&](const node n, unsigned int i) {
-    if (!allPaths && norm)
+    if (!allPaths && norm) {
       result->setNodeValue(n, res[i] / diameter);
-    else
+    } else {
       result->setNodeValue(n, res[i]);
+    }
   });
 
-  if (dataSet != nullptr)
+  if (dataSet != nullptr) {
     dataSet->set("graph diameter", (!allPaths && norm) ? diameter : double(-1));
+  }
 
   return pluginProgress->state() != TLP_CANCEL;
 }

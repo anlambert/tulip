@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -177,8 +177,9 @@ public:
       unsigned int nbElts = nodes.size();
       std::vector<unsigned int> pos(nbElts);
 
-      for (unsigned int i = 0; i < nbElts; ++i)
+      for (unsigned int i = 0; i < nbElts; ++i) {
         pos[i] = graph->nodePos(nodes[i]);
+      }
 
       std::sort(pos.begin(), pos.end());
       writeInterval(NodesIDsToken, pos);
@@ -186,8 +187,9 @@ public:
       const std::vector<edge> &edges = g->edges();
       pos.resize(nbElts = edges.size());
 
-      for (unsigned int i = 0; i < nbElts; ++i)
+      for (unsigned int i = 0; i < nbElts; ++i) {
         pos[i] = graph->edgePos(edges[i]);
+      }
 
       std::sort(pos.begin(), pos.end());
       writeInterval(EdgesIDsToken, pos);
@@ -220,8 +222,9 @@ public:
       if (writingPathViewProperty && !TalipotBitmapDir.empty()) {
         size_t pos = dsValue.find(TalipotBitmapDir);
 
-        if (pos != string::npos)
+        if (pos != string::npos) {
           dsValue.replace(pos, TalipotBitmapDir.size(), "TalipotBitmapDir/");
+        }
       }
 
       _writer.writeString(dsValue);
@@ -232,8 +235,9 @@ public:
       if (writingPathViewProperty && !TalipotBitmapDir.empty()) {
         size_t pos = dsValue.find(TalipotBitmapDir);
 
-        if (pos != string::npos)
+        if (pos != string::npos) {
           dsValue.replace(pos, TalipotBitmapDir.size(), "TalipotBitmapDir/");
+        }
       }
 
       _writer.writeString(dsValue);
@@ -251,8 +255,9 @@ public:
 
             // we must check if the pointed subgraph
             // is a descendant of the currently exported graph
-            if (!graph->getDescendantGraph(id))
+            if (!graph->getDescendantGraph(id)) {
               continue;
+            }
           }
 
           stringstream temp;
@@ -262,8 +267,9 @@ public:
           if (writingPathViewProperty && !TalipotBitmapDir.empty()) {
             size_t pos = sValue.find(TalipotBitmapDir);
 
-            if (pos != string::npos)
+            if (pos != string::npos) {
               sValue.replace(pos, TalipotBitmapDir.size(), "TalipotBitmapDir/");
+            }
           }
 
           _writer.writeString(sValue);
@@ -304,8 +310,9 @@ public:
             if (writingPathViewProperty && !TalipotBitmapDir.empty()) {
               size_t pos = sValue.find(TalipotBitmapDir);
 
-              if (pos != string::npos)
+              if (pos != string::npos) {
                 sValue.replace(pos, TalipotBitmapDir.size(), "TalipotBitmapDir/");
+              }
             }
           }
 

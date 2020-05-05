@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -44,33 +44,38 @@ public:
 //===================================================================
 template <typename Obj, size_t SIZE>
 MATRIX::Matrix(const std::vector<std::vector<Obj>> &covarianceMatrix) {
-  for (size_t i = 0; i < SIZE; i++)
-    for (size_t j = 0; j < SIZE; j++)
+  for (size_t i = 0; i < SIZE; i++) {
+    for (size_t j = 0; j < SIZE; j++) {
       (*this)[i][j] =
           covarianceMatrix[i][j] / (sqrt(covarianceMatrix[i][i] * covarianceMatrix[j][j]));
+    }
+  }
 }
 
 //===================================================================
 template <typename Obj, size_t SIZE>
 MATRIX &MATRIX::fill(Obj obj) {
-  for (size_t i = 0; i < SIZE; ++i)
+  for (size_t i = 0; i < SIZE; ++i) {
     (*this)[i].fill(obj);
+  }
 
   return (*this);
 }
 //======================================================
 template <typename Obj, size_t SIZE>
 MATRIX &MATRIX::operator+=(const MATRIX &mat) {
-  for (size_t i = 0; i < SIZE; ++i)
+  for (size_t i = 0; i < SIZE; ++i) {
     (*this)[i] += mat[i];
+  }
 
   return (*this);
 }
 //======================================================
 template <typename Obj, size_t SIZE>
 MATRIX &MATRIX::operator-=(const MATRIX &mat) {
-  for (size_t i = 0; i < SIZE; ++i)
+  for (size_t i = 0; i < SIZE; ++i) {
     (*this)[i] -= mat[i];
+  }
 
   return (*this);
 }
@@ -78,8 +83,9 @@ MATRIX &MATRIX::operator-=(const MATRIX &mat) {
 template <typename Obj, size_t SIZE>
 bool MATRIX::operator==(const MATRIX &mat) const {
   for (size_t i = 0; i < SIZE; ++i) {
-    if (((*this)[i] != mat[i]))
+    if (((*this)[i] != mat[i])) {
       return false;
+    }
   }
 
   return true;
@@ -88,8 +94,9 @@ bool MATRIX::operator==(const MATRIX &mat) const {
 template <typename Obj, size_t SIZE>
 bool MATRIX::operator!=(const MATRIX &mat) const {
   for (size_t i = 0; i < SIZE; ++i) {
-    if (((*this)[i] != mat[i]))
+    if (((*this)[i] != mat[i])) {
       return true;
+    }
   }
 
   return false;
@@ -103,8 +110,9 @@ MATRIX &MATRIX::operator*=(const MATRIX &mat) {
 //=====================================================================================
 template <typename Obj, size_t SIZE>
 MATRIX &MATRIX::operator*=(const Obj &obj) {
-  for (size_t i = 0; i < SIZE; ++i)
+  for (size_t i = 0; i < SIZE; ++i) {
     (*this)[i] *= obj;
+  }
 
   return (*this);
 }
@@ -119,8 +127,9 @@ MATRIX &MATRIX::operator/=(const MATRIX &mat) {
 //=====================================================================================
 template <typename Obj, size_t SIZE>
 MATRIX &MATRIX::operator/=(const Obj &obj) {
-  for (size_t i = 0; i < SIZE; ++i)
+  for (size_t i = 0; i < SIZE; ++i) {
     (*this)[i] /= obj;
+  }
 
   return (*this);
 }
@@ -149,18 +158,20 @@ Obj MATRIX::determinant() const {
         j2 = 0;
 
         for (size_t j = 0; j < SIZE; ++j) {
-          if (j == j1)
+          if (j == j1) {
             continue;
+          }
 
           m[i - 1][j2] = (*this)[i][j];
           ++j2;
         }
       }
 
-      if (j1 & 1)
+      if (j1 & 1) {
         det += (*this)[0][j1] * m.determinant();
-      else
+      } else {
         det -= (*this)[0][j1] * m.determinant();
+      }
     }
 
     return (det);
@@ -200,14 +211,16 @@ MATRIX MATRIX::cofactor() const {
         i1 = 0;
 
         for (size_t ii = 0; ii < SIZE; ++ii) {
-          if (ii == i)
+          if (ii == i) {
             continue;
+          }
 
           j1 = 0;
 
           for (size_t jj = 0; jj < SIZE; jj++) {
-            if (jj == j)
+            if (jj == j) {
               continue;
+            }
 
             c[i1][j1] = (*this)[ii][jj];
             ++j1;
@@ -216,10 +229,11 @@ MATRIX MATRIX::cofactor() const {
           ++i1;
         }
 
-        if ((i + j) & 1)
+        if ((i + j) & 1) {
           result[i][j] = c.determinant();
-        else
+        } else {
           result[i][j] = -c.determinant();
+        }
       }
     }
 
@@ -264,13 +278,15 @@ template <typename Obj, size_t SIZE>
 MATRIX tlp::operator*(const MATRIX &mat1, const MATRIX &mat2) {
   MATRIX result;
 
-  for (size_t i = 0; i < SIZE; ++i)
+  for (size_t i = 0; i < SIZE; ++i) {
     for (size_t j = 0; j < SIZE; ++j) {
       result[i][j] = mat1[i][0] * mat2[0][j];
 
-      for (size_t k = 1; k < SIZE; ++k)
+      for (size_t k = 1; k < SIZE; ++k) {
         result[i][j] += mat1[i][k] * mat2[k][j];
+      }
     }
+  }
 
   return result;
 }
@@ -329,12 +345,12 @@ template <typename Obj, size_t SIZE>
 tlp::Vector<Obj, SIZE> MATRIX::powerIteration(const unsigned int nIterations) const {
   tlp::Vector<Obj, SIZE> iteration;
 
-  for (size_t i = 0; i < SIZE; i++)
+  for (size_t i = 0; i < SIZE; i++) {
     iteration[i] = 1;
+  }
 
   for (unsigned int i = 0; i < nIterations; i++) {
     iteration = (*this) * iteration;
-
     iteration /= iteration.norm();
   }
 

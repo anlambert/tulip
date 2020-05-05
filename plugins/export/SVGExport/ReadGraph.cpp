@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -41,8 +41,9 @@ static bool treatEdges(Graph *graph, tlp::PluginProgress *pp, ExportInterface &e
   ret = exportint.groupEdge();
 
   if (!ret) {
-    if (pp->getError().empty())
+    if (pp->getError().empty()) {
       pp->setError("Error when starting edge export");
+    }
 
     return false;
   }
@@ -54,8 +55,9 @@ static bool treatEdges(Graph *graph, tlp::PluginProgress *pp, ExportInterface &e
   GlGraphRenderingParameters rp;
   GlGraphInputData inputData(graph, &rp);
   for (auto e : graph->edges()) {
-    if ((++i % 100) == 0)
+    if ((++i % 100) == 0) {
       pp->progress(i, nb_elements);
+    }
 
     auto ends = graph->ends(e);
     ret = exportint.startEdge(e.id);
@@ -78,8 +80,9 @@ static bool treatEdges(Graph *graph, tlp::PluginProgress *pp, ExportInterface &e
                                          srcSize, tgtSize, edgeVertices);
 
     // nothing to do if current edge is a loop with no bends
-    if (!nbVertices)
+    if (!nbVertices) {
       continue;
+    }
 
     // Edges extremities
     EdgeExtremityShape::EdgeExtremityShapes src_anchor_shape_type = EdgeExtremityShape::None;
@@ -116,8 +119,9 @@ static bool treatEdges(Graph *graph, tlp::PluginProgress *pp, ExportInterface &e
       // svg only handles a width for each edge
       width =
           std::min(sizes->getNodeValue(ends.first)[0] / 8, sizes->getNodeValue(ends.second)[0] / 8);
-    } else
+    } else {
       width = std::min(sizes->getEdgeValue(e)[0], sizes->getEdgeValue(e)[1]) + 1;
+    }
 
     // Get edge type
     if (!edge_color_interpolation) {
@@ -170,31 +174,38 @@ static bool treatEdges(Graph *graph, tlp::PluginProgress *pp, ExportInterface &e
       return false;
     }
 
-    if (src_anchor_shape_type != EdgeExtremityShape::None)
+    if (src_anchor_shape_type != EdgeExtremityShape::None) {
       ++id_src_shape;
+    }
 
-    if (tgt_anchor_shape_type != EdgeExtremityShape::None)
+    if (tgt_anchor_shape_type != EdgeExtremityShape::None) {
       ++id_tgt_shape;
+    }
 
-    if (src_anchor_shape_type == EdgeExtremityShape::Sphere)
+    if (src_anchor_shape_type == EdgeExtremityShape::Sphere) {
       ++id_src_grad;
+    }
 
-    if (src_anchor_shape_type == EdgeExtremityShape::GlowSphere)
+    if (src_anchor_shape_type == EdgeExtremityShape::GlowSphere) {
       id_src_grad += 2;
+    }
 
-    if (tgt_anchor_shape_type == EdgeExtremityShape::Sphere)
+    if (tgt_anchor_shape_type == EdgeExtremityShape::Sphere) {
       ++id_tgt_grad;
+    }
 
-    if (tgt_anchor_shape_type == EdgeExtremityShape::GlowSphere)
+    if (tgt_anchor_shape_type == EdgeExtremityShape::GlowSphere) {
       id_tgt_grad += 2;
+    }
   }
 
   // Ending the group of edges
   ret = exportint.endGroupEdge();
 
   if (!ret) {
-    if (pp->getError().empty())
+    if (pp->getError().empty()) {
       pp->setError("Error when ending edge export");
+    }
 
     return false;
   }
@@ -222,8 +233,9 @@ static bool treatNodes(Graph *graph, tlp::PluginProgress *pp, ExportInterface &e
   bool ret = exportint.groupNode();
 
   if (!ret) {
-    if (pp->getError().empty())
+    if (pp->getError().empty()) {
       pp->setError("Error when starting node export");
+    }
 
     return false;
   }
@@ -245,14 +257,16 @@ static bool treatNodes(Graph *graph, tlp::PluginProgress *pp, ExportInterface &e
 
   for (auto n : nodes) {
 
-    if (graph->isMetaNode(n))
+    if (graph->isMetaNode(n)) {
       metanodeVertices.push_back(n);
+    }
 
     Coord c = layout->getNodeValue(n);
     Size s = sizes->getNodeValue(n);
 
-    if ((++i % 100) == 0)
+    if ((++i % 100) == 0) {
       pp->progress(i, nb_elements);
+    }
 
     // Never change the call order of the methods below
     ret = exportint.startNode(n.id);
@@ -327,8 +341,9 @@ static bool treatNodes(Graph *graph, tlp::PluginProgress *pp, ExportInterface &e
   ret = exportint.endGroupNode();
 
   if (!ret) {
-    if (pp->getError().empty())
+    if (pp->getError().empty()) {
       pp->setError("Error when finishing to export nodes");
+    }
 
     return false;
   }
@@ -386,8 +401,9 @@ bool ReadGraph::readGraph(Graph *graph, tlp::DataSet *ds, tlp::PluginProgress *p
   bool ret = exportint.writeHeader(graphbb);
 
   if (!ret) {
-    if (pp->getError().empty())
+    if (pp->getError().empty()) {
       pp->setError("Error when exporting graph header");
+    }
 
     return false;
   }
@@ -395,8 +411,9 @@ bool ReadGraph::readGraph(Graph *graph, tlp::DataSet *ds, tlp::PluginProgress *p
   ret = exportint.writeGraph(graphbb, background, noBackground);
 
   if (!ret) {
-    if (pp->getError().empty())
+    if (pp->getError().empty()) {
       pp->setError("Error when starting to export graph");
+    }
 
     return false;
   }
@@ -411,8 +428,9 @@ bool ReadGraph::readGraph(Graph *graph, tlp::DataSet *ds, tlp::PluginProgress *p
                    edge_size_interpolation, edge_extremities, edge_labels, fontsize, fontIconName);
 
   if (!ret) {
-    if (pp->getError().empty())
+    if (pp->getError().empty()) {
       pp->setError("Error when exporting edges");
+    }
 
     return false;
   }
@@ -424,8 +442,9 @@ bool ReadGraph::readGraph(Graph *graph, tlp::DataSet *ds, tlp::PluginProgress *p
                    fontsize, fontIconName);
 
   if (!ret) {
-    if (pp->getError().empty())
+    if (pp->getError().empty()) {
       pp->setError("Error when exporting nodes");
+    }
 
     return false;
   }
@@ -447,8 +466,9 @@ bool ReadGraph::readGraph(Graph *graph, tlp::DataSet *ds, tlp::PluginProgress *p
       float scale = min(size_meta_node.width() / (metagraphbb.width() * 1.4),
                         size_meta_node.height() / (metagraphbb.height() * 1.4));
 
-      if (scale >= 1)
+      if (scale >= 1) {
         scale *= 0.64f;
+      }
 
       // We compute the transformation on X and add him to our vertice
       transformationVertices.push_back(-graphbb.center().getX() + graphbb.width() / 2 -
@@ -463,8 +483,9 @@ bool ReadGraph::readGraph(Graph *graph, tlp::DataSet *ds, tlp::PluginProgress *p
                                      transformationVertices[indice_Transform + 1], scale);
 
       if (!ret) {
-        if (pp->getError().empty())
+        if (pp->getError().empty()) {
           pp->setError("Error when exporting a metanode");
+        }
 
         return false;
       }
@@ -496,8 +517,9 @@ bool ReadGraph::readGraph(Graph *graph, tlp::DataSet *ds, tlp::PluginProgress *p
         return false;
       }
 
-      if (transformationVertices.size() > sizeFirstVertice)
+      if (transformationVertices.size() > sizeFirstVertice) {
         cerr << "Metanode in a metanode not working properly" << endl;
+      }
     }
 
     indice_Transform = 0;
@@ -508,8 +530,9 @@ bool ReadGraph::readGraph(Graph *graph, tlp::DataSet *ds, tlp::PluginProgress *p
   ret = exportint.writeEnd();
 
   if (!ret) {
-    if (pp->getError().empty())
+    if (pp->getError().empty()) {
       pp->setError("Error when ending graph export");
+    }
 
     return false;
   }

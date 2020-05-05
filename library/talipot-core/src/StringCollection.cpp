@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -47,22 +47,25 @@ StringCollection::StringCollection(const std::string &param) : current(0) {
     }
 
     // check escape char
-    if (itChar == '\\')
+    if (itChar == '\\') {
       escapeChar = true;
-    else
+    } else {
       temp += itChar;
+    }
   }
 
-  if (!temp.empty())
+  if (!temp.empty()) {
     _data.push_back(temp);
+  }
 }
 
 StringCollection::StringCollection(const std::vector<string> &vectorParam, const int currentParam)
     : _data(vectorParam) {
-  if (currentParam < int(_data.size()))
+  if (currentParam < int(_data.size())) {
     current = currentParam;
-  else
+  } else {
     current = 0;
+  }
 }
 
 StringCollection::StringCollection(const std::vector<string> &vectorParam,
@@ -70,8 +73,9 @@ StringCollection::StringCollection(const std::vector<string> &vectorParam,
     : _data(vectorParam), current(0) {
 
   for (const auto &itS : _data) {
-    if (itS == currentString)
+    if (itS == currentString) {
       return;
+    }
     ++current;
   }
 
@@ -79,8 +83,9 @@ StringCollection::StringCollection(const std::vector<string> &vectorParam,
 }
 
 const std::string &StringCollection::getCurrentString() const {
-  if (current < _data.size())
+  if (current < _data.size()) {
     return _data.at(current);
+  }
 
   static std::string emptyString;
   return emptyString;

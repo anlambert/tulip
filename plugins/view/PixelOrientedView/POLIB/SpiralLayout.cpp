@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -30,8 +30,9 @@ unsigned int SpiralLayout::unproject(const Vec2i &point) const {
   int x = point[0];
   int y = point[1];
 
-  if (x == 0 && y == 0)
+  if (x == 0 && y == 0) {
     return 0;
+  }
 
   int c = std::max(x, y);
   c = std::max(c, std::max(-x, -y));
@@ -62,9 +63,9 @@ Vec2i SpiralLayout::project(const unsigned int _id) const {
   } else {
     int c = 0;
 
-    if (_id == 1)
+    if (_id == 1) {
       c = 1;
-    else {
+    } else {
       // c = (int)ceil(eq2D(4., 4., 1. - float(_id)));
       c = int(ceil(eq2D2(1. - double(_id))));
     }

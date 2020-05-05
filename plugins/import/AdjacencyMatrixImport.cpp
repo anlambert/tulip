@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -122,8 +122,9 @@ Defines a graph with 3 nodes and 3 edges, the edge between A and C is named E an
 
     if (!(dataSet->get("file::filename", name2) ||
           // ensure compatibility with old version
-          dataSet->get("file::name", name2)))
+          dataSet->get("file::name", name2))) {
       return false;
+    }
 
     tlp_stat_t infoEntry;
     int result = statPath(name2, &infoEntry);
@@ -160,8 +161,9 @@ Defines a graph with 3 nodes and 3 edges, the edge between A and C is named E an
             type = TLP_DOUBLE;
             itemFound = true;
           } else if (valString == "&") {
-            if (!itemFound)
+            if (!itemFound) {
               return formatError(valString.c_str(), curLine);
+            }
 
             type = TLP_AND;
             --curNode;
@@ -169,14 +171,16 @@ Defines a graph with 3 nodes and 3 edges, the edge between A and C is named E an
             itemFound = false;
             continue;
           } else if (valString == "@") {
-            if (andFound)
+            if (andFound) {
               return formatError(valString.c_str(), curLine);
+            }
 
             type = TLP_NOVAL;
             itemFound = false;
           } else if (valString == "#") {
-            if (andFound)
+            if (andFound) {
               return formatError(valString.c_str(), curLine);
+            }
 
             type = TLP_NOTHING;
             itemFound = false;
@@ -206,16 +210,18 @@ Defines a graph with 3 nodes and 3 edges, the edge between A and C is named E an
             switch (type) {
             case TLP_DOUBLE:
 
-              if (!andFound)
+              if (!andFound) {
                 e = graph->addEdge(nodes[curLine], nodes[curNode]);
+              }
 
               metric->setEdgeValue(e, valDouble);
               break;
 
             case TLP_STRING:
 
-              if (!andFound)
+              if (!andFound) {
                 e = graph->addEdge(nodes[curLine], nodes[curNode]);
+              }
 
               stringP->setEdgeValue(e, valString);
               break;
@@ -238,8 +244,9 @@ Defines a graph with 3 nodes and 3 edges, the edge between A and C is named E an
         andFound = false;
       }
 
-      if (andFound)
+      if (andFound) {
         return formatError("&", curLine);
+      }
 
       ++curLine;
     }
@@ -248,8 +255,9 @@ Defines a graph with 3 nodes and 3 edges, the edge between A and C is named E an
 
     // final check:
     // number of lines must be equal to number of nodes
-    if (curLine == nodes.size())
+    if (curLine == nodes.size()) {
       return true;
+    }
 
     pluginProgress->setError(std::string("The number of lines in file ") + name2 +
                              "\n is different from the number of found nodes.");

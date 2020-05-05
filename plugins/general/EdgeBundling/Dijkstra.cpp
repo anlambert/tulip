@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -52,16 +52,18 @@ void Dijkstra::initDijkstra(const tlp::Graph *const forbidden, tlp::node srcTlp,
   mapDik.setAll(0);
   vector<bool> focus(graph.numberOfNodes(), false);
 
-  for (auto n : fous)
+  for (auto n : fous) {
     focus[ntlp2dik.get(n)] = true;
+  }
 
   for (auto n : graph.nodes()) {
     if (n != src) { // init all nodes to +inf
       DijkstraElement *tmp = new DijkstraElement(DBL_MAX / 2. + 10., node(), n);
       dijkstraTable.insert(tmp);
 
-      if (focus[n])
+      if (focus[n]) {
         focusTable.insert(tmp);
+      }
 
       mapDik[n] = tmp;
     } else { // init starting node to 0
@@ -90,17 +92,18 @@ void Dijkstra::initDijkstra(const tlp::Graph *const forbidden, tlp::node srcTlp,
     }
 
     node n = u.n;
-    if (forbiddenNodes[n] && n != src)
+    if (forbiddenNodes[n] && n != src) {
       continue;
+    }
 
     for (auto e : graph.star(n)) {
       node v = graph.opposite(e, n);
       DijkstraElement &dEle = *mapDik[v];
 
       auto eWeight = weights.getEdgeValue(edik2tlp[e]);
-      if (fabs((u.dist + eWeight) - dEle.dist) < 1E-9) // path of the same length
+      if (fabs((u.dist + eWeight) - dEle.dist) < 1E-9) { // path of the same length
         dEle.usedEdge.push_back(e);
-      else if ((u.dist + eWeight) < dEle.dist) {
+      } else if ((u.dist + eWeight) < dEle.dist) {
         // we find a node closer with that path
         dEle.usedEdge.clear();
         //**********************************************
@@ -141,27 +144,31 @@ void Dijkstra::searchPaths(node ntlp, EdgeStaticProperty<unsigned int> &depth) {
 
   node n = ntlp2dik.get(ntlp);
 
-  if (resultNodes[n])
+  if (resultNodes[n]) {
     return;
+  }
 
   resultNodes[n] = true;
 
   for (auto e : graph.star(n)) {
 
-    if (!usedEdges[e] || resultEdges[e])
+    if (!usedEdges[e] || resultEdges[e]) {
       continue;
+    }
 
     node tgt = graph.opposite(e, n);
 
-    if (nodeDistance[tgt] >= nodeDistance[n])
+    if (nodeDistance[tgt] >= nodeDistance[n]) {
       continue;
+    }
 
     resultEdges[e] = true;
     auto ePos = depth.getGraph()->edgePos(edik2tlp[e]);
     depth[ePos] += 1;
 
-    if (!resultNodes[tgt])
+    if (!resultNodes[tgt]) {
       searchPaths(ndik2tlp[tgt], depth);
+    }
   }
 }
 //=============================================================================
@@ -179,13 +186,15 @@ void Dijkstra::searchPath(node ntlp, vector<node> &vNodes) {
     for (auto e : graph.star(n)) {
       // check if that edge does not belong to the shortest path edges
       // or if it has already been treated
-      if (!usedEdges[e] || resultEdges[e])
+      if (!usedEdges[e] || resultEdges[e]) {
         continue;
+      }
 
       node tgt = graph.opposite(e, n);
 
-      if (nodeDistance[tgt] >= nodeDistance[n])
+      if (nodeDistance[tgt] >= nodeDistance[n]) {
         continue;
+      }
 
       n = tgt;
       resultEdges[e] = ok = true;
@@ -193,7 +202,8 @@ void Dijkstra::searchPath(node ntlp, vector<node> &vNodes) {
     }
   }
 
-  if (n != src)
+  if (n != src) {
     cout << "A path does not exist between node " << src.id << " and node " << tgte.id << "!"
          << endl;
+  }
 }

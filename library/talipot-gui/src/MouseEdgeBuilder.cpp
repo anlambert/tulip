@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -33,8 +33,9 @@ MouseEdgeBuilder::MouseEdgeBuilder()
 
 bool MouseEdgeBuilder::eventFilter(QObject *widget, QEvent *e) {
 
-  if (glMainWidget == nullptr)
+  if (glMainWidget == nullptr) {
     glMainWidget = dynamic_cast<GlMainWidget *>(widget);
+  }
 
   assert(glMainWidget);
 
@@ -134,8 +135,9 @@ bool MouseEdgeBuilder::eventFilter(QObject *widget, QEvent *e) {
 }
 
 bool MouseEdgeBuilder::draw(GlMainWidget *glMainWidget) {
-  if (!_started)
+  if (!_started) {
     return false;
+  }
 
   glDisable(GL_STENCIL_TEST);
   glMainWidget->getScene()->getGraphCamera().initGl();
@@ -158,13 +160,15 @@ void MouseEdgeBuilder::initObserver(Graph *newGraph) {
 }
 
 void MouseEdgeBuilder::clearObserver() {
-  if (_graph)
+  if (_graph) {
     _graph->removeListener(this);
+  }
 
   _graph = nullptr;
 
-  if (_layoutProperty)
+  if (_layoutProperty) {
     _layoutProperty->removeListener(this);
+  }
 
   _layoutProperty = nullptr;
 }
@@ -190,8 +194,9 @@ void MouseEdgeBuilder::treatEvent(const Event &evt) {
 }
 
 void MouseEdgeBuilder::clear() {
-  if (glMainWidget)
+  if (glMainWidget) {
     glMainWidget->setCursor(QCursor());
+  }
 }
 
 void MouseEdgeBuilder::addLink(const node &source, const node &target) {

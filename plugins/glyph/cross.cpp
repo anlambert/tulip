@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -111,8 +111,9 @@ void Cross::getIncludeBoundingBox(BoundingBox &boundingBox, node) {
 void Cross::draw(node n, float lod) {
   string textureName = glGraphInputData->getElementTexture()->getNodeValue(n);
 
-  if (!textureName.empty())
+  if (!textureName.empty()) {
     textureName = glGraphInputData->parameters->getTexturePath() + textureName;
+  }
 
   drawCross(glGraphInputData->getElementColor()->getNodeValue(n),
             glGraphInputData->getElementBorderColor()->getNodeValue(n),
@@ -140,9 +141,9 @@ Coord Cross::getAnchor(const Coord &v) const {
   }
 
   // check with the middle of segment points[9], points[10]
-  if (distMin > ((x + 0.5) * (x + 0.5)) + y * y)
-    return {-0.5, 0, 0};
-
+  if (distMin > ((x + 0.5) * (x + 0.5)) + y * y) {
+    anchor = {-0.5, 0, 0};
+  }
   return anchor;
 }
 
@@ -158,8 +159,9 @@ public:
   void draw(edge e, node, const Color &glyphColor, const Color &borderColor, float lod) override {
     string textureName = edgeExtGlGraphInputData->getElementTexture()->getEdgeValue(e);
 
-    if (!textureName.empty())
+    if (!textureName.empty()) {
       textureName = edgeExtGlGraphInputData->parameters->getTexturePath() + textureName;
+    }
 
     drawCross(glyphColor, borderColor,
               edgeExtGlGraphInputData->getElementBorderWidth()->getEdgeValue(e), textureName, lod);

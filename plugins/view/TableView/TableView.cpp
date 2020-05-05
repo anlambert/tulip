@@ -71,8 +71,9 @@ tlp::DataSet TableView::state() const {
 
   BooleanProperty *pi = getFilteringProperty();
 
-  if (pi != nullptr)
+  if (pi != nullptr) {
     data.set("filtering_property", pi->getName());
+  }
 
   return data;
 }
@@ -84,18 +85,21 @@ void TableView::setState(const tlp::DataSet &data) {
 
   _ui->eltTypeCombo->setCurrentIndex(showNodes ? 0 : 1);
 
-  if (data.exists("filtering_property"))
+  if (data.exists("filtering_property")) {
     data.get<std::string>("filtering_property", filterPropertyName);
+  }
 
   GraphPropertiesModel<BooleanProperty> *model =
       static_cast<GraphPropertiesModel<BooleanProperty> *>(_ui->filteringPropertyCombo->model());
   int r = 0;
 
-  if (!filterPropertyName.empty())
+  if (!filterPropertyName.empty()) {
     r = model->rowOf(model->graph()->getBooleanProperty(filterPropertyName));
+  }
 
-  if (r < 0)
+  if (r < 0) {
     r = 0;
+  }
 
   _ui->filteringPropertyCombo->setCurrentIndex(r);
 }
@@ -211,8 +215,9 @@ void TableView::graphChanged(tlp::Graph *g) {
       bool checked = !visibleProperties.isEmpty() ? visibleProperties.contains(propName) : true;
 
       // unless the property did not exist in the previous graph
-      if (previousGraph && !previousGraph->existProperty(QStringToTlpString(propName)))
+      if (previousGraph && !previousGraph->existProperty(QStringToTlpString(propName))) {
         checked = true;
+      }
 
       propertiesEditor->setPropertyChecked(propName, checked);
     }
@@ -229,9 +234,9 @@ void TableView::graphDeleted(Graph *ancestor) {
   // that we can display its ancestor instead
   assert(ancestor == nullptr || graph()->getSuperGraph() == ancestor);
 
-  if (ancestor)
+  if (ancestor) {
     emit graphSet(ancestor);
-  else {
+  } else {
     setGraph(nullptr);
     readSettings();
   }
@@ -304,8 +309,9 @@ void TableView::columnsInserted(const QModelIndex &, int start, int end) {
 }
 
 void TableView::setPropertyVisible(PropertyInterface *pi, bool v) {
-  if (_model == nullptr)
+  if (_model == nullptr) {
     return;
+  }
 
   QString propName = tlpStringToQString(pi->getName());
 
@@ -342,8 +348,9 @@ void TableView::setPropertyVisible(PropertyInterface *pi, bool v) {
 }
 
 void TableView::setColumnsFilterCase() {
-  if (filteringColumns)
+  if (filteringColumns) {
     return;
+  }
 
   filteringColumns = true;
   propertiesEditor->setCaseSensitive(_ui->columnsfiltercase->isChecked() ? Qt::CaseSensitive
@@ -352,8 +359,9 @@ void TableView::setColumnsFilterCase() {
 }
 
 void TableView::setColumnsFilter(const QString &text) {
-  if (filteringColumns)
+  if (filteringColumns) {
     return;
+  }
 
   filteringColumns = true;
   propertiesEditor->getPropertiesFilterEdit()->setText(text);
@@ -361,8 +369,9 @@ void TableView::setColumnsFilter(const QString &text) {
 }
 
 void TableView::setPropertiesFilter(const QString &text) {
-  if (filteringColumns)
+  if (filteringColumns) {
     return;
+  }
 
   filteringColumns = true;
   _ui->columnsFilterEdit->setText(text);
@@ -435,8 +444,9 @@ void TableView::toggleHighlightedRows() {
   GraphSortFilterProxyModel *sortModel =
       static_cast<GraphSortFilterProxyModel *>(_ui->table->model());
 
-  if (sortModel->filterProperty() == selection)
+  if (sortModel->filterProperty() == selection) {
     selection->removeListener(sortModel);
+  }
 
   for (const auto &idx : rows) {
     if (NODES_DISPLAYED) {
@@ -448,8 +458,9 @@ void TableView::toggleHighlightedRows() {
     }
   }
 
-  if (sortModel->filterProperty() == selection)
+  if (sortModel->filterProperty() == selection) {
     selection->addListener(sortModel);
+  }
 }
 
 void TableView::selectHighlightedRows() {
@@ -460,8 +471,9 @@ void TableView::selectHighlightedRows() {
   GraphSortFilterProxyModel *sortModel =
       static_cast<GraphSortFilterProxyModel *>(_ui->table->model());
 
-  if (sortModel->filterProperty() == selection)
+  if (sortModel->filterProperty() == selection) {
     selection->removeListener(sortModel);
+  }
 
   selection->setAllNodeValue(false);
   selection->setAllEdgeValue(false);
@@ -473,16 +485,18 @@ void TableView::selectHighlightedRows() {
       selection->setEdgeValue(edge(idx.data(Model::ElementIdRole).toUInt()), true);
   }
 
-  if (sortModel->filterProperty() == selection)
+  if (sortModel->filterProperty() == selection) {
     selection->addListener(sortModel);
+  }
 }
 
 bool TableView::setAllHighlightedRows(PropertyInterface *prop) {
   Graph *g = graph();
   QModelIndexList rows = _ui->table->selectionModel()->selectedRows();
   uint eltId = UINT_MAX;
-  if (rows.size() == 1)
+  if (rows.size() == 1) {
     eltId = rows[0].data(Model::ElementIdRole).toUInt();
+  }
 
   QVariant val =
       ItemDelegate::showEditorDialog(NODES_DISPLAYED ? NODE : EDGE, prop, g,
@@ -490,8 +504,9 @@ bool TableView::setAllHighlightedRows(PropertyInterface *prop) {
                                      graphicsView()->viewport()->parentWidget(), eltId);
 
   // Check if edition has been cancelled
-  if (!val.isValid())
+  if (!val.isValid()) {
     return false;
+  }
 
   for (const auto &idx : rows) {
     if (NODES_DISPLAYED)
@@ -510,8 +525,9 @@ bool TableView::setCurrentValue(PropertyInterface *prop, unsigned int eltId) {
                                      graphicsView()->viewport()->parentWidget(), eltId);
 
   // Check if edition has been cancelled
-  if (!val.isValid())
+  if (!val.isValid()) {
     return false;
+  }
 
   if (NODES_DISPLAYED)
     GraphModel::setNodeValue(eltId, prop, val);
@@ -570,8 +586,9 @@ void TableView::showCustomContextMenu(const QPoint &pos) {
   std::string propName = QStringToTlpString(
       _model->headerData(idx.column(), Qt::Horizontal, Qt::DisplayRole).toString());
 
-  if (propName.empty())
+  if (propName.empty()) {
     return;
+  }
 
   PropertyInterface *prop = graph()->getProperty(propName);
   bool propIsInherited = prop->getGraph() != graph();
@@ -668,8 +685,9 @@ void TableView::showCustomContextMenu(const QPoint &pos) {
   // keyboard navigation
   action = contextMenu.exec(QCursor::pos() - QPoint(5, 5));
 
-  if (!action)
+  if (!action) {
     return;
+  }
 
   /*if (action == setDefault) {
     propertiesEditor->setDefaultValue(prop, NODES_DISPLAYED);
@@ -730,9 +748,10 @@ void TableView::showCustomContextMenu(const QPoint &pos) {
   if ((action == highlightedSetAll) || (action == setValueAction)) {
     // set values for elts corresponding to highlighted rows
     if (!((highlightedRows.size() > 1) ? setAllHighlightedRows(prop)
-                                       : setCurrentValue(prop, eltId)))
+                                       : setCurrentValue(prop, eltId))) {
       // cancelled so undo
       graph()->pop();
+    }
 
     return;
   }
@@ -767,8 +786,9 @@ void TableView::showHorizontalHeaderCustomContextMenu(const QPoint &pos) {
   std::string propName = QStringToTlpString(
       _model->headerData(idx.column(), Qt::Horizontal, Qt::DisplayRole).toString());
 
-  if (propName.empty())
+  if (propName.empty()) {
     return;
+  }
 
   PropertyInterface *prop = graph()->getProperty(propName);
   bool propIsInherited = prop->getGraph() != graph();
@@ -896,8 +916,9 @@ void TableView::showHorizontalHeaderCustomContextMenu(const QPoint &pos) {
   // and thus allow keyboard navigation
   action = contextMenu.exec(QCursor::pos() - QPoint(5, 5));
 
-  if (!action)
+  if (!action) {
     return;
+  }
 
   if (action == sortById) {
     if (_ui->table->horizontalHeader()->sortIndicatorSection() != -1) {
@@ -935,9 +956,10 @@ void TableView::showHorizontalHeaderCustomContextMenu(const QPoint &pos) {
   graph()->push();
 
   if (action == copyProp) {
-    if (CopyPropertyDialog::copyProperty(graph(), prop, true, getMainWindow()) == nullptr)
+    if (CopyPropertyDialog::copyProperty(graph(), prop, true, getMainWindow()) == nullptr) {
       // cancelled so undo
       graph()->pop();
+    }
 
     return;
   }
@@ -948,68 +970,76 @@ void TableView::showHorizontalHeaderCustomContextMenu(const QPoint &pos) {
   }
 
   if (action == renameProp) {
-    if (!propertiesEditor->renameProperty(prop))
+    if (!propertiesEditor->renameProperty(prop)) {
       // cancelled so undo
       graph()->pop();
+    }
 
     return;
   }
 
   if (action == addProp) {
     if (PropertyCreationDialog::createNewProperty(graph(), getMainWindow(), prop->getTypename()) ==
-        nullptr)
+        nullptr) {
       // cancelled so undo
       graph()->pop();
+    }
 
     return;
   }
 
   if (action == nodesSetAll) {
-    if (!propertiesEditor->setAllValues(prop, true, false))
+    if (!propertiesEditor->setAllValues(prop, true, false)) {
       // cancelled so undo
       graph()->pop();
+    }
 
     return;
   }
 
   if (action == nodesSetAllGraph) {
-    if (!propertiesEditor->setAllValues(prop, true, false, true))
+    if (!propertiesEditor->setAllValues(prop, true, false, true)) {
       // cancelled so undo
       graph()->pop();
+    }
 
     return;
   }
 
   if (action == edgesSetAll) {
-    if (!propertiesEditor->setAllValues(prop, false, false))
+    if (!propertiesEditor->setAllValues(prop, false, false)) {
       // cancelled so undo
       graph()->pop();
+    }
 
     return;
   }
 
   if (action == edgesSetAllGraph) {
-    if (!propertiesEditor->setAllValues(prop, false, false, true))
+    if (!propertiesEditor->setAllValues(prop, false, false, true)) {
       // cancelled so undo
       graph()->pop();
+    }
 
     return;
   }
 
   if (action == nodesSelectedSetAll) {
     // set values for all rows elts
-    if (!propertiesEditor->setAllValues(prop, true, true))
+    if (!propertiesEditor->setAllValues(prop, true, true)) {
       // cancelled so undo
       graph()->pop();
+    }
 
     return;
   }
 
   if (action == edgesSelectedSetAll) {
     // set values for all rows elts
-    if (!propertiesEditor->setAllValues(prop, false, true))
+    if (!propertiesEditor->setAllValues(prop, false, true)) {
       // cancelled so undo
       graph()->pop();
+    }
 
     return;
   }

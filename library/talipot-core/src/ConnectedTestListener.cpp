@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -37,9 +37,9 @@ void ConnectedTestListener::treatEvent(const Event &evt) {
 
     case GraphEvent::TLP_ADD_EDGE:
 
-      if (resultsBuffer.find(graph) != resultsBuffer.end())
-        if (resultsBuffer[graph])
-          return;
+      if (resultsBuffer.find(graph) != resultsBuffer.end() && resultsBuffer[graph]) {
+        return;
+      }
 
       graph->removeListener(this);
       resultsBuffer.erase(graph);
@@ -47,9 +47,9 @@ void ConnectedTestListener::treatEvent(const Event &evt) {
 
     case GraphEvent::TLP_DEL_EDGE:
 
-      if (resultsBuffer.find(graph) != resultsBuffer.end())
-        if (!resultsBuffer[graph])
-          return;
+      if (resultsBuffer.find(graph) != resultsBuffer.end() && !resultsBuffer[graph]) {
+        return;
+      }
 
       graph->removeListener(this);
       resultsBuffer.erase(graph);

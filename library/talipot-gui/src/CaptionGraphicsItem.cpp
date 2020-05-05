@@ -53,10 +53,11 @@ void CaptionGraphicsItem::loadConfiguration() {
 }
 
 void CaptionGraphicsItem::setType(unsigned int type) {
-  if (type == 1 || type == 2)
+  if (type == 1 || type == 2) {
     _nodesEdgesTextItem->setText("on nodes");
-  else
+  } else {
     _nodesEdgesTextItem->setText("on edges");
+  }
 
   _nodesEdgesTextItem->setPos(35, 210);
 }
@@ -88,24 +89,29 @@ void CaptionGraphicsItem::constructConfigWidget() {
   bool findViewMetric = false;
   QString firstDoubleMetricName;
   for (const string &piName : _view->graph()->getProperties()) {
-    if (_view->graph()->getProperty(piName)->getTypename() != "double")
+    if (_view->graph()->getProperty(piName)->getTypename() != "double") {
       continue;
+    }
 
-    if (firstDoubleMetricName.isEmpty())
+    if (firstDoubleMetricName.isEmpty()) {
       firstDoubleMetricName = piName.c_str();
+    }
 
-    if (oldName == piName.c_str())
+    if (oldName == piName.c_str()) {
       selectedProp = piName.c_str();
+    }
 
-    if (piName == "viewMetric")
+    if (piName == "viewMetric") {
       findViewMetric = true;
+    }
   }
 
   if (selectedProp.isEmpty()) {
-    if (findViewMetric)
+    if (findViewMetric) {
       selectedProp = "viewMetric";
-    else
+    } else {
       selectedProp = firstDoubleMetricName;
+    }
   }
 
   _confPropertySelectionWidget->setText(wrappedPropName(selectedProp));
@@ -123,19 +129,22 @@ void CaptionGraphicsItem::filterChangedSlot(float begin, float end) {
 }
 
 void CaptionGraphicsItem::selectPropertyButtonClicked() {
-  if (_view->graph() == nullptr)
+  if (_view->graph() == nullptr) {
     return;
+  }
 
   QMenu menu;
   for (const string &piName : _view->graph()->getProperties()) {
-    if (_view->graph()->getProperty(piName)->getTypename() != "double")
+    if (_view->graph()->getProperty(piName)->getTypename() != "double") {
       continue;
+    }
 
     QAction *action =
         menu.addAction(piName.c_str(), this, &CaptionGraphicsItem::propertySelectedSlot);
 
-    if (_confPropertySelectionWidget->text() == QString(piName.c_str()))
+    if (_confPropertySelectionWidget->text() == QString(piName.c_str())) {
       menu.setActiveAction(action);
+    }
   }
   // set a combo like stylesheet
   QPalette palette = QComboBox().palette();

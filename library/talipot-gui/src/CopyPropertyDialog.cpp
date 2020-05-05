@@ -73,8 +73,9 @@ void CopyPropertyDialog::init(Graph *graph, PropertyInterface *source) {
       if (property->getTypename() == source->getTypename()) {
         // Check if name is different
         if (source->getName() != property->getName() &&
-            _graph->existLocalProperty(property->getName()))
+            _graph->existLocalProperty(property->getName())) {
           ui->localPropertiesComboBox->addItem(tlpStringToQString(property->getName()));
+        }
 
         // check if inherited exists
         if (parent && parent->existProperty(property->getName())) {

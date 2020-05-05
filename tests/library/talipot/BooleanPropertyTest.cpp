@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -187,32 +187,38 @@ void BooleanPropertyTest::testReverse() {
 
   CPPUNIT_ASSERT_EQUAL(true, selection->getNodeValue(node(0)));
   CPPUNIT_ASSERT_EQUAL(true, selection->getNodeValue(node(graph->numberOfNodes() - 1)));
-  for (unsigned int i = 1; i < graph->numberOfNodes() - 1; ++i)
+  for (unsigned int i = 1; i < graph->numberOfNodes() - 1; ++i) {
     CPPUNIT_ASSERT_EQUAL(false, selection->getNodeValue(node(i)));
+  }
   CPPUNIT_ASSERT_EQUAL(true, selection->getEdgeValue(edge(0)));
   CPPUNIT_ASSERT_EQUAL(true, selection->getEdgeValue(edge(graph->numberOfEdges() - 1)));
-  for (unsigned int i = 1; i < graph->numberOfEdges() - 1; ++i)
+  for (unsigned int i = 1; i < graph->numberOfEdges() - 1; ++i) {
     CPPUNIT_ASSERT_EQUAL(false, selection->getEdgeValue(edge(i)));
+  }
 
   selection->reverse();
 
   CPPUNIT_ASSERT_EQUAL(false, selection->getNodeValue(node(0)));
   CPPUNIT_ASSERT_EQUAL(false, selection->getNodeValue(node(graph->numberOfNodes() - 1)));
-  for (unsigned int i = 1; i < graph->numberOfNodes() - 1; ++i)
+  for (unsigned int i = 1; i < graph->numberOfNodes() - 1; ++i) {
     CPPUNIT_ASSERT_EQUAL(true, selection->getNodeValue(node(i)));
+  }
   CPPUNIT_ASSERT_EQUAL(false, selection->getEdgeValue(edge(0)));
   CPPUNIT_ASSERT_EQUAL(false, selection->getEdgeValue(edge(graph->numberOfEdges() - 1)));
-  for (unsigned int i = 1; i < graph->numberOfEdges() - 1; ++i)
+  for (unsigned int i = 1; i < graph->numberOfEdges() - 1; ++i) {
     CPPUNIT_ASSERT_EQUAL(true, selection->getEdgeValue(edge(i)));
+  }
 
   selection->reverse();
 
   CPPUNIT_ASSERT_EQUAL(true, selection->getNodeValue(node(0)));
   CPPUNIT_ASSERT_EQUAL(true, selection->getNodeValue(node(graph->numberOfNodes() - 1)));
-  for (unsigned int i = 1; i < graph->numberOfNodes() - 1; ++i)
+  for (unsigned int i = 1; i < graph->numberOfNodes() - 1; ++i) {
     CPPUNIT_ASSERT_EQUAL(false, selection->getNodeValue(node(i)));
+  }
   CPPUNIT_ASSERT_EQUAL(true, selection->getEdgeValue(edge(0)));
   CPPUNIT_ASSERT_EQUAL(true, selection->getEdgeValue(edge(graph->numberOfEdges() - 1)));
-  for (unsigned int i = 1; i < graph->numberOfEdges() - 1; ++i)
+  for (unsigned int i = 1; i < graph->numberOfEdges() - 1; ++i) {
     CPPUNIT_ASSERT_EQUAL(false, selection->getEdgeValue(edge(i)));
+  }
 }

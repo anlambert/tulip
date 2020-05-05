@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -41,11 +41,13 @@ public:
     theMin = histogram[0];
 
     for (unsigned int i = 1; i < histogram.size(); ++i) {
-      if (theMax < histogram[i])
+      if (theMax < histogram[i]) {
         theMax = histogram[i];
+      }
 
-      if (theMin > histogram[i])
+      if (theMin > histogram[i]) {
         theMin = histogram[i];
+      }
     }
 
     if (setupDialog->getLogarithmicScale()) {
@@ -76,13 +78,15 @@ public:
       painter.setBrush(c);
       int height;
 
-      if (setupDialog->getLogarithmicScale())
+      if (setupDialog->getLogarithmicScale()) {
         height = int(log10(1.0 + histogram[i]) * histoScale);
-      else
+      } else {
         height = int(histogram[i] * histoScale);
+      }
 
-      if (height < 1)
+      if (height < 1) {
         height = 1;
+      }
 
       painter.drawRect(borderWidth + i * 2, borderWidth + 1 + histogram.size() - height, 2, height);
     }
@@ -144,8 +148,9 @@ void ConvolutionClusteringSetup::update() {
   _ui->widthSlider->setMaximum(std::max(_ui->discretizationSlider->value() / 2, 1));
   convolPlugin->setParameters(_ui->discretizationSlider->value(), 0, _ui->widthSlider->value());
 
-  if (histogramWidget)
+  if (histogramWidget) {
     histogramWidget->update();
+  }
 
   QDialog::update();
 }

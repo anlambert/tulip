@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -114,16 +114,18 @@ private:
 
 //====================================================================
 tlp::node ImprovedWalker::getSuperGraph(tlp::node n) {
-  if (tree->indeg(n) < 1)
+  if (tree->indeg(n) < 1) {
     return BADNODE;
+  }
 
   return tree->getInNode(n, 1);
 }
 
 //====================================================================
 tlp::node ImprovedWalker::leftmostChild(tlp::node n) {
-  if (tree->outdeg(n) < 1)
+  if (tree->outdeg(n) < 1) {
     return BADNODE;
+  }
 
   return tree->getOutNode(n, 1);
 }
@@ -132,26 +134,29 @@ tlp::node ImprovedWalker::leftmostChild(tlp::node n) {
 tlp::node ImprovedWalker::rightmostChild(tlp::node n) {
   int pos;
 
-  if ((pos = tree->outdeg(n)) < 1)
+  if ((pos = tree->outdeg(n)) < 1) {
     return BADNODE;
+  }
 
   return tree->getOutNode(n, pos);
 }
 
 //====================================================================
 tlp::node ImprovedWalker::leftSibling(tlp::node n) {
-  if (order[n] <= 1)
+  if (order[n] <= 1) {
     return BADNODE;
-  else
+  } else {
     return tree->getOutNode(getSuperGraph(n), order[n] - 1);
+  }
 }
 
 //====================================================================
 tlp::node ImprovedWalker::rightSibling(tlp::node n) {
   tlp::node father = getSuperGraph(n);
 
-  if (order[n] >= int(tree->outdeg(father)))
+  if (order[n] >= int(tree->outdeg(father))) {
     return BADNODE;
+  }
 
   return tree->getOutNode(father, order[n] + 1);
 }
@@ -164,27 +169,30 @@ tlp::node ImprovedWalker::leftMostSibling(tlp::node n) {
 
 //====================================================================
 tlp::node ImprovedWalker::nextRightContour(tlp::node n) {
-  if (isLeaf(tree, n))
+  if (isLeaf(tree, n)) {
     return thread[n];
-  else
+  } else {
     return rightmostChild(n);
+  }
 }
 
 //====================================================================
 tlp::node ImprovedWalker::nextLeftContour(tlp::node n) {
-  if (isLeaf(tree, n))
+  if (isLeaf(tree, n)) {
     return thread[n];
-  else
+  } else {
     return leftmostChild(n);
+  }
 }
 
 //====================================================================
 tlp::node ImprovedWalker::findCommonAncestor(tlp::node left, tlp::node right,
                                              tlp::node defaultAncestor) {
-  if (getSuperGraph(ancestor[left]) == getSuperGraph(right) /*&& left!=right*/)
+  if (getSuperGraph(ancestor[left]) == getSuperGraph(right) /*&& left!=right*/) {
     return ancestor[left];
-  else
+  } else {
     return defaultAncestor;
+  }
 }
 
 #endif // IMPROVED_WALKER_H

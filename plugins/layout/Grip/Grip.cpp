@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -77,8 +77,9 @@ void Grip::computeCurrentGraphLayout() {
           n1 = ends2.second;
           n3 = n2;
           n2 = ends2.first;
-        } else
+        } else {
           n3 = (ends2.first == n2) ? ends2.second : ends2.first;
+        }
 
         result->setNodeValue(n1, Coord(0, 0, 0));
         result->setNodeValue(n2, Coord(1, 0, 0));
@@ -102,14 +103,16 @@ bool Grip::run() {
   bool is3D = false;
 
   if (dataSet != nullptr) {
-    if (!dataSet->get("3D layout", is3D))
+    if (!dataSet->get("3D layout", is3D)) {
       is3D = false;
+    }
   }
 
-  if (is3D)
+  if (is3D) {
     _dim = 3;
-  else
+  } else {
     _dim = 2;
+  }
 
   if (pluginProgress) {
     // user cannot interact while computing
@@ -257,8 +260,9 @@ void Grip::initialPlacement(unsigned int start, unsigned int end) {
         Coord(alpha - (2. * alpha * randomInteger(1)), alpha - (2. * alpha * randomInteger(1)),
               (alpha - (2. * alpha * randomInteger(1))));
 
-    if (_dim == 2)
+    if (_dim == 2) {
       alea[2] = 0.;
+    }
 
     c_tmp /= nbConsidered;
     oldDisp[currNode] /= nbConsidered;
@@ -285,8 +289,9 @@ void Grip::kk_local_reffinement(node currNode) {
       Coord c_tmp = c_n - c;
       float euclidian_dist_sqr = c_tmp[0] * c_tmp[0] + c_tmp[1] * c_tmp[1];
 
-      if (_dim == 3)
+      if (_dim == 3) {
         euclidian_dist_sqr += c_tmp[2] * c_tmp[2];
+      }
 
       float th_dist = neighbors_dist[currNode][j];
       c_tmp *= (euclidian_dist_sqr / (th_dist * th_dist * edgeLength * edgeLength)) - 1.;
@@ -326,8 +331,9 @@ void Grip::kk_reffinement(unsigned int start, unsigned int end) {
         Coord c_tmp = c_n - c;
         float euclidian_dist_sqr = c_tmp[0] * c_tmp[0] + c_tmp[1] * c_tmp[1];
 
-        if (_dim == 3)
+        if (_dim == 3) {
           euclidian_dist_sqr += c_tmp[2] * c_tmp[2];
+        }
 
         float th_dist = neighbors_dist[currNode][j];
         c_tmp *= (euclidian_dist_sqr / (th_dist * th_dist * edgeLength * edgeLength)) - 1.;
@@ -361,8 +367,9 @@ void Grip::fr_reffinement(unsigned int start, unsigned int end) {
         Coord c_tmp = c_n - curCoord;
         float euclidian_dist_sqr = c_tmp[0] * c_tmp[0] + c_tmp[1] * c_tmp[1];
 
-        if (_dim == 3)
+        if (_dim == 3) {
           euclidian_dist_sqr += c_tmp[2] * c_tmp[2];
+        }
 
         c_tmp *= euclidian_dist_sqr / (edgeLength * edgeLength);
         disp[currNode] += c_tmp;
@@ -376,8 +383,9 @@ void Grip::fr_reffinement(unsigned int start, unsigned int end) {
         double euclidian_dist_sqr =
             double(c_tmp[0]) * double(c_tmp[0]) + double(c_tmp[1]) * double(c_tmp[1]);
 
-        if (_dim == 3)
+        if (_dim == 3) {
           euclidian_dist_sqr += c_tmp[2] * c_tmp[2];
+        }
 
         if (!(euclidian_dist_sqr > 1E-4)) {
           double alpha = randomDouble(2.0);
@@ -385,8 +393,9 @@ void Grip::fr_reffinement(unsigned int start, unsigned int end) {
                         alpha - (2. * alpha * randomInteger(1)),
                         alpha - (2. * alpha * randomInteger(1)));
 
-          if (_dim == 2)
+          if (_dim == 2) {
             c_tmp[2] = 0.;
+          }
 
           euclidian_dist_sqr = 0.01;
         }
@@ -438,13 +447,14 @@ void Grip::updateLocalTemp(node v) {
 //======================================================
 unsigned int Grip::rounds(unsigned int x, unsigned int max, unsigned int maxVal, unsigned int min,
                           unsigned int minVal) {
-  if (x <= max)
+  if (x <= max) {
     return maxVal;
-  else if (max <= x && x <= min) {
+  } else if (max <= x && x <= min) {
     double k = -log(minVal / double(maxVal)) / min;
     return uint(ceil(maxVal * exp(-k * x)));
-  } else
+  } else {
     return minVal;
+  }
 }
 //======================================================
 void Grip::init() {
@@ -458,8 +468,9 @@ void Grip::init() {
     Coord alea = Coord(diam - (2. * diam * randomInteger(1)), diam - (2. * diam * randomInteger(1)),
                        diam - (2. * diam * randomInteger(1)));
 
-    if (_dim == 2)
+    if (_dim == 2) {
       alea[2] = 0.;
+    }
 
     result->setNodeValue(n, alea);
     disp[n] = Coord(0, 0, 0);
@@ -470,8 +481,9 @@ void Grip::init() {
 //======================================================
 void Grip::init_heat(unsigned int end) {
 
-  for (unsigned int i = 0; i <= end; ++i)
+  for (unsigned int i = 0; i <= end; ++i) {
     heat[misf->ordering[i]] = edgeLength / 6.;
+  }
 }
 //======================================================
 void Grip::set_nbr_size() {
@@ -479,11 +491,13 @@ void Grip::set_nbr_size() {
   int initCxty = 10000;
   unsigned int maxLevel = 0;
 
-  for (auto n : currentGraph->nodes())
+  for (auto n : currentGraph->nodes()) {
     maxCxty += currentGraph->deg(n);
+  }
 
-  if (maxCxty < uint(initCxty))
+  if (maxCxty < uint(initCxty)) {
     maxCxty = initCxty;
+  }
 
   for (unsigned int i = 1; i < misf->index.size(); ++i) {
     if (int(misf->index[i] * misf->index[i]) - initCxty >= 0) {
@@ -493,37 +507,41 @@ void Grip::set_nbr_size() {
   }
 
   if (maxLevel == 0 &&
-      int(currentGraph->numberOfNodes() * currentGraph->numberOfNodes()) - initCxty >= 0)
+      int(currentGraph->numberOfNodes() * currentGraph->numberOfNodes()) - initCxty >= 0) {
     maxLevel = misf->index.size();
+  }
 
   for (unsigned int i = 1; i < misf->index.size(); ++i) {
-    if (i >= maxLevel)
+    if (i >= maxLevel) {
       levelToNbNeighbors[i] =
           min(uint(sched(misf->index.size() - i, 0, 2, 10000, 1) * maxCxty / (misf->index[i])),
               uint(misf->index[i] - 1));
-    else
+    } else {
       levelToNbNeighbors[i] = max(misf->index[i] - 1, 3u);
+    }
   }
 
-  if (misf->index.size() >= maxLevel)
+  if (misf->index.size() >= maxLevel) {
     levelToNbNeighbors[misf->index.size()] =
         min(uint(sched(currentGraph->numberOfNodes(), 0, 2, 10000, 1) * maxCxty /
                  (float(currentGraph->numberOfNodes()))),
             uint(currentGraph->numberOfNodes() - 1));
-  else
+  } else {
     levelToNbNeighbors[misf->index.size()] = max(currentGraph->numberOfNodes() - 1, 3u);
+  }
 
   levelToNbNeighbors[misf->index.size()] =
       min(2 * levelToNbNeighbors[misf->index.size()], currentGraph->numberOfNodes() - 1);
 }
 //======================================================
 float Grip::sched(int x, int max, int maxVal, int min, int minVal) {
-  if (x <= max)
+  if (x <= max) {
     return maxVal;
-  else if (max <= x && x <= min) {
+  } else if (max <= x && x <= min) {
     return ((minVal - maxVal) / float(min - max)) * (x - max) + maxVal;
-  } else
+  } else {
     return minVal;
+  }
 }
 //======================================================
 PLUGIN(Grip)

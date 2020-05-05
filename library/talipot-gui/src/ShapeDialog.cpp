@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -67,7 +67,8 @@ void ShapeDialog::showEvent(QShowEvent *ev) {
 
   _selectedShapeName = _ui->shapeListWidget->currentItem()->text();
 
-  if (parentWidget())
+  if (parentWidget()) {
     move(parentWidget()->window()->frameGeometry().topLeft() +
          parentWidget()->window()->rect().center() - rect().center());
+  }
 }

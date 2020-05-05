@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -31,8 +31,9 @@ tlp::MutableContainer<TYPE>::~MutableContainer() {
       auto it = vData->begin();
 
       while (it != vData->end()) {
-        if ((*it) != defaultValue)
+        if ((*it) != defaultValue) {
           StoredType<TYPE>::destroy(*it);
+        }
 
         ++it;
       }
@@ -83,8 +84,9 @@ void tlp::MutableContainer<TYPE>::setAll(typename StoredType<TYPE>::ReturnedCons
       auto it = vData->begin();
 
       while (it != vData->end()) {
-        if ((*it) != defaultValue)
+        if ((*it) != defaultValue) {
           StoredType<TYPE>::destroy(*it);
+        }
 
         ++it;
       }
@@ -190,10 +192,11 @@ void tlp::MutableContainer<TYPE>::vectset(const unsigned int i,
     typename StoredType<TYPE>::Value val = (*vData)[i - minIndex];
     (*vData)[i - minIndex] = value;
 
-    if (val != defaultValue)
+    if (val != defaultValue) {
       StoredType<TYPE>::destroy(val);
-    else
+    } else {
       ++elementInserted;
+    }
   }
 }
 //===================================================================
@@ -317,8 +320,9 @@ void tlp::MutableContainer<TYPE>::add(const unsigned int i, TYPE val) {
           StoredType<TYPE>::destroy(it->second);
           hData->erase(it);
           --elementInserted;
-        } else
+        } else {
           it->second += val;
+        }
       } else {
         set(i, defaultValue + val);
       }
@@ -339,32 +343,33 @@ void tlp::MutableContainer<TYPE>::add(const unsigned int i, TYPE val) {
 template <typename TYPE>
 typename tlp::StoredType<TYPE>::ReturnedConstValue
 tlp::MutableContainer<TYPE>::get(const unsigned int i) const {
-  //  cerr << __PRETTY_FUNCTION__ << endl;
-  if (maxIndex == UINT_MAX)
+  if (maxIndex == UINT_MAX) {
     return StoredType<TYPE>::get(defaultValue);
+  }
 
   switch (state) {
   case VECT:
 
-    if (i > maxIndex || i < minIndex)
+    if (i > maxIndex || i < minIndex) {
       return StoredType<TYPE>::get(defaultValue);
-    else
+    } else {
       return StoredType<TYPE>::get((*vData)[i - minIndex]);
+    }
 
   case HASH: {
     auto it = hData->find(i);
 
-    if (it != hData->end())
+    if (it != hData->end()) {
       return StoredType<TYPE>::get(it->second);
-    else
+    } else {
       return StoredType<TYPE>::get(defaultValue);
+    }
   }
 
   default:
     assert(false);
     tlp::error() << __PRETTY_FUNCTION__ << "unexpected state value (serious bug)" << std::endl;
     return StoredType<TYPE>::get(defaultValue);
-    break;
   }
 }
 //===================================================================
@@ -373,15 +378,16 @@ void tlp::MutableContainer<TYPE>::invertBooleanValue(const unsigned int i) {
   if (std::is_same<typename StoredType<TYPE>::Value, bool>::value) {
     switch (state) {
     case VECT: {
-      if (i > maxIndex || i < minIndex)
+      if (i > maxIndex || i < minIndex) {
         vectset(i, !defaultValue);
-      else {
+      } else {
         typename StoredType<TYPE>::Value val = (*vData)[i - minIndex];
 
-        if (val != defaultValue)
+        if (val != defaultValue) {
           --elementInserted;
-        else
+        } else {
           ++elementInserted;
+        }
         (*vData)[i - minIndex] = !val;
       }
       return;
@@ -418,8 +424,9 @@ typename tlp::StoredType<TYPE>::ReturnedValue tlp::MutableContainer<TYPE>::getDe
 //===================================================================
 template <typename TYPE>
 bool tlp::MutableContainer<TYPE>::hasNonDefaultValue(const unsigned int i) const {
-  if (maxIndex == UINT_MAX)
+  if (maxIndex == UINT_MAX) {
     return false;
+  }
 
   switch (state) {
   case VECT:
@@ -513,8 +520,9 @@ void tlp::MutableContainer<TYPE>::hashtovect() {
   state = VECT;
 
   for (const auto &it : *hData) {
-    if (it.second != defaultValue)
+    if (it.second != defaultValue) {
       vectset(it.first, it.second);
+    }
   }
 
   delete hData;
@@ -524,8 +532,9 @@ void tlp::MutableContainer<TYPE>::hashtovect() {
 template <typename TYPE>
 void tlp::MutableContainer<TYPE>::compress(unsigned int min, unsigned int max,
                                            unsigned int nbElements) {
-  if (max == UINT_MAX || (max - min) < 10)
+  if (max == UINT_MAX || (max - min) < 10) {
     return;
+  }
 
   double limitValue = ratio * (double(max - min + 1.0));
 

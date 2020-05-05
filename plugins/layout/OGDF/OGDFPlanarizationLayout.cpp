@@ -79,8 +79,9 @@ public:
       double dval = 0;
       tlp::StringCollection sc;
 
-      if (dataSet->get("page ratio", dval))
+      if (dataSet->get("page ratio", dval)) {
         pl->pageRatio(dval);
+      }
 
       if (dataSet->get(ELT_EMBEDDER, sc)) {
         if (sc.getCurrent() == ELT_EMBEDDER_MAXFACE) {

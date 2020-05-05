@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -62,8 +62,9 @@ void HierarchicalGraph::buildGrid(tlp::Graph *sg) {
   TLP_MAP_NODES_AND_INDICES(graph, [&](const node n, unsigned int i) {
     unsigned int level = levels[i];
 
-    if (level >= grid.size())
+    if (level >= grid.size()) {
       grid.resize(level + 1);
+    }
 
     embedding->setNodeValue(n, grid[level].size());
     grid[level].push_back(n);
@@ -89,8 +90,9 @@ void HierarchicalGraph::twoLayerCrossReduction(tlp::Graph *sg, unsigned int free
 // Set initial position using a DFS
 void HierarchicalGraph::initCross(tlp::Graph *sg, tlp::node n, tlp::MutableContainer<bool> &visited,
                                   int id) {
-  if (visited.get(n.id))
+  if (visited.get(n.id)) {
     return;
+  }
 
   visited.set(n.id, true);
   embedding->setNodeValue(n, id);
@@ -105,8 +107,9 @@ void HierarchicalGraph::crossReduction(tlp::Graph *sg) {
   node tmp = sg->addNode();
   embedding->setNodeValue(tmp, 0);
   for (auto it : sg->nodes()) {
-    if (sg->outdeg(it) == 0)
+    if (sg->outdeg(it) == 0) {
       sg->addEdge(it, tmp);
+    }
   }
   grid.push_back(vector<node>(1, tmp));
   {
@@ -122,8 +125,9 @@ void HierarchicalGraph::crossReduction(tlp::Graph *sg) {
     vector<node> &igrid = grid[i];
     stable_sort(igrid.begin(), igrid.end(), lessNode);
 
-    for (unsigned int j = 0; j < igrid.size(); ++j)
+    for (unsigned int j = 0; j < igrid.size(); ++j) {
       embedding->setNodeValue(igrid[j], j);
+    }
   }
 
   // Iterations of the sweeping
@@ -143,8 +147,9 @@ void HierarchicalGraph::crossReduction(tlp::Graph *sg) {
     vector<node> &igrid = grid[i];
     stable_sort(igrid.begin(), igrid.end(), lessNode);
 
-    for (unsigned int j = 0; j < igrid.size(); ++j)
+    for (unsigned int j = 0; j < igrid.size(); ++j) {
       embedding->setNodeValue(igrid[j], j);
+    }
   }
 
   sg->delNode(tmp, true);
@@ -158,8 +163,9 @@ void HierarchicalGraph::DagLevelSpanningTree(tlp::Graph *sg, tlp::DoubleProperty
   for (auto n : sg->nodes()) {
     if (sg->indeg(n) > 1) {
       vector<edge> tmpVect;
-      for (auto e : sg->getInEdges(n))
+      for (auto e : sg->getInEdges(n)) {
         tmpVect.push_back(e);
+      }
       sort(tmpVect.begin(), tmpVect.end(), tmpL);
       int toKeep = tmpVect.size() / 2;
 
@@ -181,8 +187,9 @@ void HierarchicalGraph::computeEdgeBends(
   MutableContainer<bool> isReversed;
   isReversed.setAll(false);
 
-  for (auto e : reversedEdges)
+  for (auto e : reversedEdges) {
     isReversed.set(e.id, true);
+  }
 
   for (const auto &it : replacedEdges) {
     edge toUpdate = it.first;
@@ -217,9 +224,9 @@ void HierarchicalGraph::computeEdgeBends(
 
     LineType::RealType edgeLine;
 
-    if (p1 == p2)
+    if (p1 == p2) {
       edgeLine.push_back(p1);
-    else {
+    } else {
       edgeLine.push_back(p1);
       edgeLine.push_back(p2);
     }
@@ -277,8 +284,9 @@ bool HierarchicalGraph::run() {
     }
   }
 
-  if (nodeSize == nullptr)
+  if (nodeSize == nullptr) {
     nodeSize = graph->getSizeProperty("viewSize");
+  }
 
   //=========================================================
   // use a temporary rotated size if necessary
@@ -349,8 +357,9 @@ bool HierarchicalGraph::run() {
   tmp.set("layer spacing", spacing);
   tmp.set("node spacing", nodeSpacing);
 
-  if (edgeLength != nullptr)
+  if (edgeLength != nullptr) {
     tmp.set("edge length", edgeLength);
+  }
 
   tmp.set("orthogonal", true);
   StringCollection tmpS("vertical;horizontal;");
@@ -362,8 +371,9 @@ bool HierarchicalGraph::run() {
       mySGraph->applyPropertyAlgorithm("Hierarchical Tree (R-T Extended)", &tmpLayout, erreurMsg,
                                        &tmp);
 
-  if (edgeLength)
+  if (edgeLength) {
     delete edgeLength;
+  }
 
   assert(resultBool);
 

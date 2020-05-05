@@ -61,14 +61,16 @@ void TextureFileDialog::browse() {
   QString result = QFileDialog::getOpenFileName(parentWidget(), "Choose a texture file",
                                                 _data.texturePath, "Images (*.jpg *.jpeg *.png)");
 
-  if (!result.isEmpty())
+  if (!result.isEmpty()) {
     ui->fileOrDirLineEdit->setText(result);
+  }
 }
 
 void TextureFileDialog::showEvent(QShowEvent *ev) {
   QDialog::showEvent(ev);
 
-  if (parentWidget())
+  if (parentWidget()) {
     move(parentWidget()->window()->frameGeometry().topLeft() +
          parentWidget()->window()->rect().center() - rect().center());
+  }
 }

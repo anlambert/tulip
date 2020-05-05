@@ -50,13 +50,15 @@ void InteractorComposite::undoIsDone() {}
 void InteractorComposite::setLastTarget(QObject *target) {
   _lastTarget = target;
 
-  if (_lastTarget)
+  if (_lastTarget) {
     connect(_lastTarget, &QObject::destroyed, this, &InteractorComposite::lastTargetDestroyed);
+  }
 }
 
 void InteractorComposite::lastTargetDestroyed() {
-  if (sender() == lastTarget())
+  if (sender() == lastTarget()) {
     _lastTarget = nullptr;
+  }
 }
 
 QObject *InteractorComposite::lastTarget() const {
@@ -66,11 +68,13 @@ QObject *InteractorComposite::lastTarget() const {
 void InteractorComposite::setView(tlp::View *view) {
   _view = view;
   // no need to call construct when view is nullptr (called with a nullptr from View::~View())
-  if (view != nullptr)
+  if (view != nullptr) {
     construct();
+  }
 
-  for (auto i : _components)
+  for (auto i : _components) {
     i->setView(view);
+  }
 }
 
 InteractorComposite::iterator InteractorComposite::begin() {
@@ -94,11 +98,12 @@ void InteractorComposite::push_front(InteractorComponent *i) {
 void InteractorComposite::install(QObject *target) {
   setLastTarget(target);
 
-  if (target != nullptr)
+  if (target != nullptr) {
     for (auto i : _components) {
       target->installEventFilter(i);
       i->init();
     }
+  }
 }
 void InteractorComposite::uninstall() {
   if (lastTarget() != nullptr) {

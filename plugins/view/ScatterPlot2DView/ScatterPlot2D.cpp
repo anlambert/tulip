@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -241,32 +241,38 @@ void ScatterPlot2D::createAxis() {
   initYAxisScale = make_pair(yMin, yMax);
 
   if (xAxisScaleDefined) {
-    if (xMin > xAxisScale.first)
+    if (xMin > xAxisScale.first) {
       xMin = xAxisScale.first;
+    }
 
-    if (xMax < xAxisScale.second)
+    if (xMax < xAxisScale.second) {
       xMax = xAxisScale.second;
+    }
   }
 
   xAxisScale.first = xMin;
   xAxisScale.second = xMax;
 
-  if (xMin == xMax)
+  if (xMin == xMax) {
     xMax++;
+  }
 
   if (yAxisScaleDefined) {
-    if (yMin > yAxisScale.first)
+    if (yMin > yAxisScale.first) {
       yMin = yAxisScale.first;
+    }
 
-    if (yMax < yAxisScale.second)
+    if (yMax < yAxisScale.second) {
       yMax = yAxisScale.second;
+    }
   }
 
   yAxisScale.first = yMin;
   yAxisScale.second = yMax;
 
-  if (yMin == yMax)
+  if (yMin == yMax) {
     yMax++;
+  }
 
   xAxis = new GlQuantitativeAxis(xDim, Coord(0.0f, 0.0f, 0.0f), DEFAULT_AXIS_LENGTH,
                                  GlAxis::HORIZONTAL_AXIS, foregroundColor, true);
@@ -295,10 +301,11 @@ void ScatterPlot2D::createAxis() {
   yAxis->addCaption(GlAxis::LEFT, 100.0f, false, 300.0f, 155.0f);
   yAxis->updateAxis();
 
-  if (xAxis->getCaptionHeight() > yAxis->getCaptionHeight())
+  if (xAxis->getCaptionHeight() > yAxis->getCaptionHeight()) {
     xAxis->setCaptionHeight(yAxis->getCaptionHeight(), false);
-  else
+  } else {
     yAxis->setCaptionHeight(xAxis->getCaptionHeight(), false);
+  }
 }
 
 void ScatterPlot2D::computeScatterPlotLayout(GlMainWidget *glWidget,
@@ -311,8 +318,9 @@ void ScatterPlot2D::computeScatterPlotLayout(GlMainWidget *glWidget,
   maxStep = nbGraphNodes;
   drawStep = maxStep / 20;
 
-  if (!drawStep)
+  if (!drawStep) {
     drawStep = 1;
+  }
 
   assert(dynamic_cast<NumericProperty *>(graph->getProperty(xDim)));
   assert(dynamic_cast<NumericProperty *>(graph->getProperty(yDim)));

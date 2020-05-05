@@ -67,12 +67,14 @@ void ViewActionsManager::setAntiAliasing(bool aa) {
   OpenGlConfigManager::setAntiAliasing(aa);
   if (_advAntiAliasingAction) {
     _advAntiAliasingAction->setVisible(aa);
-    if (_advAntiAliasingAction->isChecked())
+    if (_advAntiAliasingAction->isChecked()) {
       _advAntiAliasingAction->setChecked(false);
-    else
+    } else {
       _view->draw();
-  } else
+    }
+  } else {
     _view->draw();
+  }
 }
 
 void ViewActionsManager::fillContextMenu(QMenu *menu) {
@@ -87,8 +89,9 @@ void ViewActionsManager::fillContextMenu(QMenu *menu) {
   action->setChecked(OpenGlConfigManager::antiAliasing());
   connect(action, &QAction::triggered, this, &ViewActionsManager::setAntiAliasing);
 
-  if (_advAntiAliasingAction)
+  if (_advAntiAliasingAction) {
     menu->addAction(_advAntiAliasingAction);
+  }
 
   menu->addAction(_snapshotAction);
 }

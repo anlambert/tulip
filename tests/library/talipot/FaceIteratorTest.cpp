@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -27,8 +27,9 @@ void FaceIteratorTest::setUp() {
   edges.clear();
   nodes.clear();
 
-  for (unsigned int i = 0; i < 10; i++)
+  for (unsigned int i = 0; i < 10; i++) {
     nodes.push_back(map->addNode());
+  }
 
   edges.push_back(map->addEdge(nodes[0], nodes[1]));
   edges.push_back(map->addEdge(nodes[1], nodes[2]));

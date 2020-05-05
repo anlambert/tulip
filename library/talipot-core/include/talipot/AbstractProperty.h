@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -224,8 +224,9 @@ public:
   virtual AbstractProperty<Tnode, Tedge, Tprop> &
   operator=(AbstractProperty<Tnode, Tedge, Tprop> &prop) {
     if (this != &prop) {
-      if (Tprop::graph == nullptr)
+      if (Tprop::graph == nullptr) {
         Tprop::graph = prop.Tprop::graph;
+      }
 
       if (Tprop::graph == prop.Tprop::graph) {
         setAllNodeValue(prop.getNodeDefaultValue());
@@ -242,13 +243,15 @@ public:
       } else {
         //==============================================================*
         for (auto n : Tprop::graph->nodes()) {
-          if (prop.Tprop::graph->isElement(n))
+          if (prop.Tprop::graph->isElement(n)) {
             setNodeValue(n, prop.getNodeValue(n));
+          }
         }
 
         for (auto e : Tprop::graph->edges()) {
-          if (prop.Tprop::graph->isElement(e))
+          if (prop.Tprop::graph->isElement(e)) {
             setEdgeValue(e, prop.getEdgeValue(e));
+          }
         }
       }
 
@@ -278,8 +281,9 @@ public:
   bool setNodeStringValue(const node inN, const std::string &inV) override {
     typename Tnode::RealType v;
 
-    if (!Tnode::fromString(v, inV))
+    if (!Tnode::fromString(v, inV)) {
       return false;
+    }
 
     setNodeValue(inN, v);
     return true;
@@ -287,8 +291,9 @@ public:
   bool setEdgeStringValue(const edge inE, const std::string &inV) override {
     typename Tedge::RealType v;
 
-    if (!Tedge::fromString(v, inV))
+    if (!Tedge::fromString(v, inV)) {
       return false;
+    }
 
     setEdgeValue(inE, v);
     return true;
@@ -296,8 +301,9 @@ public:
   bool setNodeDefaultStringValue(const std::string &inV) override {
     typename Tnode::RealType v;
 
-    if (!Tnode::fromString(v, inV))
+    if (!Tnode::fromString(v, inV)) {
       return false;
+    }
 
     setNodeDefaultValue(v);
     return true;
@@ -305,8 +311,9 @@ public:
   bool setAllNodeStringValue(const std::string &inV, const Graph *graph = nullptr) override {
     typename Tnode::RealType v;
 
-    if (!Tnode::fromString(v, inV))
+    if (!Tnode::fromString(v, inV)) {
       return false;
+    }
 
     setAllNodeValue(v, graph);
     return true;
@@ -314,8 +321,9 @@ public:
   bool setEdgeDefaultStringValue(const std::string &inV) override {
     typename Tedge::RealType v;
 
-    if (!Tedge::fromString(v, inV))
+    if (!Tedge::fromString(v, inV)) {
       return false;
+    }
 
     setEdgeDefaultValue(v);
     return true;
@@ -323,8 +331,9 @@ public:
   bool setAllEdgeStringValue(const std::string &inV, const Graph *graph = nullptr) override {
     typename Tedge::RealType v;
 
-    if (!Tedge::fromString(v, inV))
+    if (!Tedge::fromString(v, inV)) {
       return false;
+    }
 
     setAllEdgeValue(v, graph);
     return true;
@@ -348,8 +357,9 @@ public:
   bool readEdgeValue(std::istream &, edge) override;
   bool copy(const node destination, const node source, PropertyInterface *property,
             bool ifNotDefault = false) override {
-    if (property == nullptr)
+    if (property == nullptr) {
       return false;
+    }
 
     tlp::AbstractProperty<Tnode, Tedge, Tprop> *tp =
         dynamic_cast<tlp::AbstractProperty<Tnode, Tedge, Tprop> *>(property);
@@ -358,16 +368,18 @@ public:
     typename StoredType<typename Tnode::RealType>::ReturnedValue value =
         tp->nodeProperties.get(source.id, notDefault);
 
-    if (ifNotDefault && !notDefault)
+    if (ifNotDefault && !notDefault) {
       return false;
+    }
 
     setNodeValue(destination, value);
     return true;
   }
   bool copy(const edge destination, const edge source, PropertyInterface *property,
             bool ifNotDefault = false) override {
-    if (property == nullptr)
+    if (property == nullptr) {
       return false;
+    }
 
     tlp::AbstractProperty<Tnode, Tedge, Tprop> *tp =
         dynamic_cast<tlp::AbstractProperty<Tnode, Tedge, Tprop> *>(property);
@@ -376,8 +388,9 @@ public:
     typename StoredType<typename Tedge::RealType>::ReturnedValue value =
         tp->edgeProperties.get(source.id, notDefault);
 
-    if (ifNotDefault && !notDefault)
+    if (ifNotDefault && !notDefault) {
       return false;
+    }
 
     setEdgeValue(destination, value);
     return true;
@@ -406,8 +419,9 @@ public:
     typename StoredType<typename Tnode::RealType>::ReturnedValue value =
         nodeProperties.get(n.id, notDefault);
 
-    if (notDefault)
+    if (notDefault) {
       return new TypedValueContainer<typename Tnode::RealType>(value);
+    }
 
     return nullptr;
   }
@@ -416,8 +430,9 @@ public:
     typename StoredType<typename Tedge::RealType>::ReturnedValue value =
         edgeProperties.get(e.id, notDefault);
 
-    if (notDefault)
+    if (notDefault) {
       return new TypedValueContainer<typename Tedge::RealType>(value);
+    }
 
     return nullptr;
   }
@@ -438,10 +453,11 @@ public:
   // mN is the meta node, sg is the corresponding subgraph
   // and mg is the graph owning mN
   void computeMetaValue(node n, Graph *sg, Graph *mg) override {
-    if (Tprop::metaValueCalculator)
+    if (Tprop::metaValueCalculator) {
       static_cast<typename tlp::AbstractProperty<Tnode, Tedge, Tprop>::MetaValueCalculator *>(
           Tprop::metaValueCalculator)
           ->computeMetaValue(this, n, sg, mg);
+    }
   }
   // mE is the meta edge, itE is an iterator on the underlying edges
   // mg is the graph owning mE

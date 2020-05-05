@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -87,16 +87,18 @@ EdgesIteratorFn getEdgesIterator(EDGE_TYPE direction) {
 //======================================================================
 void makeProperDag(Graph *graph, list<node> &addedNodes,
                    std::unordered_map<edge, edge> &replacedEdges, IntegerProperty *edgeLength) {
-  if (TreeTest::isTree(graph))
+  if (TreeTest::isTree(graph)) {
     return;
+  }
 
   assert(AcyclicTest::isAcyclic(graph));
   // We compute the dag level metric on resulting sg.
   NodeStaticProperty<unsigned int> dLevel(graph);
   dagLevel(graph, dLevel);
 
-  if (edgeLength)
+  if (edgeLength) {
     edgeLength->setAllEdgeValue(1);
+  }
 
   // we now transform the dag in a proper Dag, two linked nodes of a proper dag
   // must have a difference of one of dag level metric.
@@ -120,8 +122,9 @@ void makeProperDag(Graph *graph, list<node> &addedNodes,
         addedNodes.push_back(n2);
         edge e = graph->addEdge(n1, n2);
 
-        if (edgeLength)
+        if (edgeLength) {
           edgeLength->setEdgeValue(e, delta - 2);
+        }
 
         dLevel.addNodeValue(n2, sLevel - 1);
         n1 = n2;
@@ -131,8 +134,9 @@ void makeProperDag(Graph *graph, list<node> &addedNodes,
     }
   }
 
-  for (const auto &it : replacedEdges)
+  for (const auto &it : replacedEdges) {
     graph->delEdge(it.first);
+  }
 
   assert(AcyclicTest::isAcyclic(graph));
 }
@@ -156,8 +160,9 @@ vector<vector<node>> computeCanonicalOrdering(PlanarConMap *carte, std::vector<e
                                               PluginProgress *pluginProgress) {
   Ordering o(carte, pluginProgress, 0, 100, 100); // feedback (0% -> 100%)
 
-  if (dummyEdges != nullptr)
+  if (dummyEdges != nullptr) {
     *dummyEdges = o.getDummyEdges();
+  }
 
   vector<vector<node>> res;
   unsigned int nbMax = o.size();
@@ -197,8 +202,9 @@ std::vector<node> computeGraphCenters(Graph *graph) {
   vector<node> result;
 
   for (unsigned int i = minPos; i < nbNodes; ++i) {
-    if (dist[i] == minD)
+    if (dist[i] == minD) {
       result.push_back(nodes[i]);
+    }
   }
 
   return result;
@@ -209,8 +215,9 @@ node graphCenterHeuristic(Graph *graph, PluginProgress *pluginProgress) {
 
   unsigned int nbNodes = graph->numberOfNodes();
 
-  if (nbNodes == 0)
+  if (nbNodes == 0) {
     return node();
+  }
 
   const vector<node> &nodes = graph->nodes();
   tlp::NodeStaticProperty<bool> toTreat(graph);
@@ -227,8 +234,9 @@ node graphCenterHeuristic(Graph *graph, PluginProgress *pluginProgress) {
     if (pluginProgress) {
       pluginProgress->setComment("Computing graph center...");
 
-      if (maxTries - nbTry % 200 == 0)
+      if (maxTries - nbTry % 200 == 0) {
         pluginProgress->progress(maxTries - nbTry, maxTries);
+      }
     }
 
     if (toTreat[n]) {
@@ -242,18 +250,20 @@ node graphCenterHeuristic(Graph *graph, PluginProgress *pluginProgress) {
       } else {
         unsigned int delta = di - cDist;
 
-        for (unsigned int v = 0; v < nbNodes; v++)
-          if (dist[v] < delta)
+        for (unsigned int v = 0; v < nbNodes; v++) {
+          if (dist[v] < delta) {
             // all the nodes at distance less than delta can't be center
             toTreat[v] = false;
+          }
+        }
       }
 
       unsigned int nextMax = 0;
 
       for (unsigned int v = 0; v < nbNodes; v++) {
-        if (dist[v] > (di / 2 + di % 2))
+        if (dist[v] > (di / 2 + di % 2)) {
           toTreat[v] = false;
-        else {
+        } else {
           if (toTreat[v]) {
             if (dist[v] > nextMax) {
               n = v;
@@ -263,8 +273,9 @@ node graphCenterHeuristic(Graph *graph, PluginProgress *pluginProgress) {
         }
       }
 
-      if (nextMax == 0)
+      if (nextMax == 0) {
         break;
+      }
     }
   }
 
@@ -307,8 +318,9 @@ void selectSpanningForest(Graph *graph, BooleanProperty *selectionProperty,
   edgeSel.setAll(true);
 
   // select all nodes
-  for (auto n : graph->nodes())
+  for (auto n : graph->nodes()) {
     selectionProperty->setNodeValue(n, true);
+  }
 
   bool ok = true;
   unsigned int edgeCount = 0;
@@ -325,8 +337,9 @@ void selectSpanningForest(Graph *graph, BooleanProperty *selectionProperty,
           nodeFlag[tgtPos] = true;
           ++nbSelectedNodes;
           fifo.push_back(tgt);
-        } else
+        } else {
           edgeSel[adjit] = false;
+        }
 
         if (pluginProgress) {
           pluginProgress->setComment("Computing a spanning forest...");
@@ -366,9 +379,9 @@ void selectSpanningForest(Graph *graph, BooleanProperty *selectionProperty,
 
         if (!degZ) {
 
-          if (graph->indeg(n) < graph->indeg(goodNode))
+          if (graph->indeg(n) < graph->indeg(goodNode)) {
             goodNode = n;
-          else {
+          } else {
             if ((graph->indeg(n) == graph->indeg(goodNode)) &&
                 (graph->outdeg(n) > graph->outdeg(goodNode)))
               goodNode = n;
@@ -448,14 +461,16 @@ void selectMinimumSpanningTree(Graph *graph, BooleanProperty *selection,
                                NumericProperty *edgeWeight, PluginProgress *pluginProgress) {
   assert(ConnectedTest::isConnected(graph));
 
-  if (!edgeWeight)
+  if (!edgeWeight) {
     // no weight return a spanning tree
     return selectSpanningTree(graph, selection, pluginProgress);
+  }
 
   const vector<node> &nodes = graph->nodes();
 
-  for (unsigned int i = 0; i < nodes.size(); ++i)
+  for (unsigned int i = 0; i < nodes.size(); ++i) {
     selection->setNodeValue(nodes[i], true);
+  }
 
   selection->setAllEdgeValue(false);
 
@@ -481,8 +496,9 @@ void selectMinimumSpanningTree(Graph *graph, BooleanProperty *selection,
     for (; iE < nbEdges; ++iE) {
       auto curEnds = graph->ends(cur = sortedEdges[iE]);
 
-      if ((srcClass = classes[curEnds.first]) != (tgtClass = classes[curEnds.second]))
+      if ((srcClass = classes[curEnds.first]) != (tgtClass = classes[curEnds.second])) {
         break;
+      }
     }
 
     selection->setEdgeValue(cur, true);
@@ -517,8 +533,9 @@ struct visitedElt {
 
 static void bfs(const Graph *graph, node root, std::vector<tlp::node> &nodes,
                 MutableContainer<bool> &visited) {
-  if (visited.get(root.id))
+  if (visited.get(root.id)) {
     return;
+  }
 
   visited.set(root, true);
   visitedElt *first = new visitedElt(root);
@@ -666,8 +683,9 @@ void buildNodesUniformQuantification(const Graph *graph, const NumericProperty *
     sum += it.second;
     nodeMapping[it.first] = k2;
 
-    if (sum > cK * (k2 + 1))
+    if (sum > cK * (k2 + 1)) {
       k2 = ceil(sum / cK) - 1;
+    }
   }
 }
 //==================================================
@@ -695,8 +713,9 @@ void buildEdgesUniformQuantification(const Graph *graph, const NumericProperty *
     sum += it.second;
     edgeMapping[it.first] = k2;
 
-    if (sum > cK * (k2 + 1))
+    if (sum > cK * (k2 + 1)) {
       k2 = ceil(sum / cK) - 1;
+    }
   }
 }
 
@@ -736,8 +755,9 @@ unsigned makeSelectionGraph(const Graph *graph, BooleanProperty *selection, bool
   }
   Observable::unholdObservers();
 
-  if (test)
+  if (test) {
     *test = true;
+  }
 
   return added;
 }
@@ -778,8 +798,9 @@ bool selectShortestPaths(const Graph *const graph, node src, node tgt, ShortestP
   NodeStaticProperty<double> nodeDistance(graph);
   Dijkstra dijkstra(graph, src, eWeights, nodeDistance, direction);
 
-  if (uint(pathType) < ShortestPathType::AllPaths)
+  if (uint(pathType) < ShortestPathType::AllPaths) {
     return dijkstra.searchPath(tgt, result);
+  }
   return dijkstra.searchPaths(tgt, result);
 }
 

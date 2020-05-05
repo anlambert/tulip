@@ -83,12 +83,13 @@ struct TLPTokenParser {
     while ((!stop) && (endOfStream = !(is.get(ch).fail()))) {
       ++curPos;
 
-      if (strGet)
+      if (strGet) {
         switch (ch) {
         case 13:
         case '\n':
-          if (!newLine(ch, curPos))
+          if (!newLine(ch, curPos)) {
             break;
+          }
 
           val.str += ch;
           break;
@@ -127,18 +128,20 @@ struct TLPTokenParser {
           }
 
         default:
-          if (!slashMode)
+          if (!slashMode) {
             val.str += ch;
+          }
 
           slashMode = false;
           break;
         }
-      else if (strComment)
+      } else if (strComment) {
         switch (ch) {
         case 13:
         case '\n':
-          if (!newLine(ch, curPos))
+          if (!newLine(ch, curPos)) {
             break;
+          }
 
           stop = true;
           return COMMENTTOKEN;
@@ -148,29 +151,32 @@ struct TLPTokenParser {
           val.str += ch;
           break;
         }
-      else
+      } else {
         switch (ch) {
         case ' ':
         case '\t':
-          if (started)
+          if (started) {
             stop = true;
+          }
 
           break;
 
         case 13:
         case '\n':
-          if (!newLine(ch, curPos))
+          if (!newLine(ch, curPos)) {
             break;
+          }
 
-          if (started)
+          if (started) {
             stop = true;
+          }
 
           break;
 
         case '(':
-          if (!started)
+          if (!started) {
             return OPENTOKEN;
-          else {
+          } else {
             --curPos;
             is.unget();
             stop = true;
@@ -179,9 +185,9 @@ struct TLPTokenParser {
           break;
 
         case ')':
-          if (!started)
+          if (!started) {
             return CLOSETOKEN;
-          else {
+          } else {
             --curPos;
             is.unget();
             stop = true;
@@ -196,8 +202,9 @@ struct TLPTokenParser {
             --curPos;
             is.unget();
             stop = true;
-          } else
+          } else {
             started = true;
+          }
 
           break;
 
@@ -208,8 +215,9 @@ struct TLPTokenParser {
             --curPos;
             is.unget();
             stop = true;
-          } else
+          } else {
             started = true;
+          }
 
           break;
 
@@ -218,18 +226,21 @@ struct TLPTokenParser {
           started = true;
           break;
         }
+      }
     }
 
-    if (!started && !endOfStream)
+    if (!started && !endOfStream) {
       return ENDOFSTREAM;
+    }
 
     char *endPtr = nullptr;
     const char *cstr = val.str.c_str();
     errno = 0;
     long resultl = strtol(cstr, &endPtr, 10);
 
-    if (errno == ERANGE)
+    if (errno == ERANGE) {
       return ERRORINFILE;
+    }
 
     unsigned long strlength = val.str.length();
 
@@ -247,12 +258,14 @@ struct TLPTokenParser {
         errno = 0;
         resultl = strtol(beginPtr, &endPtr, 10);
 
-        if (errno == ERANGE)
+        if (errno == ERANGE) {
           return ERRORINFILE;
+        }
 
         if (endPtr == (cstr + strlength)) {
-          if (resultl < val.range.first)
+          if (resultl < val.range.first) {
             return ERRORINFILE;
+          }
 
           val.range.second = resultl;
           return RANGETOKEN;
@@ -264,8 +277,9 @@ struct TLPTokenParser {
 
     double resultd = strtod(cstr, &endPtr);
 
-    if (errno == ERANGE)
+    if (errno == ERANGE) {
       return ERRORINFILE;
+    }
 
     if (endPtr == (cstr + strlength)) {
       val.real = resultd;
@@ -282,8 +296,9 @@ struct TLPTokenParser {
       return BOOLTOKEN;
     }
 
-    if (started)
+    if (started) {
       return STRINGTOKEN;
+    }
 
     return ERRORINFILE;
   }
@@ -379,8 +394,9 @@ struct TLPParser {
       TLPBuilder *builder = builderStack.front();
       builderStack.pop_front();
 
-      if (builderStack.empty() || builder != builderStack.front())
+      if (builderStack.empty() || builder != builderStack.front()) {
         delete builder;
+      }
     }
   }
 
@@ -388,10 +404,11 @@ struct TLPParser {
     std::stringstream ess;
     ess << "Error when parsing '" << value.c_str() << "' at line " << tokenParser->curLine + 1;
 
-    if (errno)
+    if (errno) {
       ess << std::endl << strerror(errno);
-    else if (!errorMsg.empty())
+    } else if (!errorMsg.empty()) {
       ess << std::endl << errorMsg;
+    }
 
     pluginProgress->setError(ess.str());
     return false;
@@ -404,16 +421,19 @@ struct TLPParser {
     TLPValue currentValue;
 
     while ((currentToken = tokenParser->nextToken(currentValue, curPos)) != ENDOFSTREAM) {
-      if (curPos % 2000 == 1)
-        if (pluginProgress->progress(curPos, fileSize) != TLP_CONTINUE)
+      if (curPos % 2000 == 1) {
+        if (pluginProgress->progress(curPos, fileSize) != TLP_CONTINUE) {
           return pluginProgress->state() != TLP_CANCEL;
+        }
+      }
 
       switch (currentToken) {
       case OPENTOKEN:
         currentToken = tokenParser->nextToken(currentValue, curPos);
 
-        if (currentToken != STRINGTOKEN)
+        if (currentToken != STRINGTOKEN) {
           return formatError(currentValue.str); // we can throw an exception
+        }
 
         TLPBuilder *newBuilder;
 
@@ -421,46 +441,53 @@ struct TLPParser {
           newBuilder->parser = this;
           builderStack.push_front(newBuilder);
 
-          if (newBuilder->canRead())
-            if (!newBuilder->read(inputStream))
-              return formatError(currentValue.str);
-        } else
+          if (newBuilder->canRead() && !newBuilder->read(inputStream)) {
+            return formatError(currentValue.str);
+          }
+
+        } else {
           return formatError(currentValue.str);
+        }
 
         break;
 
       case BOOLTOKEN:
 
-        if (!builderStack.front()->addBool(currentValue.boolean))
+        if (!builderStack.front()->addBool(currentValue.boolean)) {
           return formatError(currentValue.str);
+        }
 
         break;
 
       case INTTOKEN:
 
-        if (!builderStack.front()->addInt(currentValue.integer))
+        if (!builderStack.front()->addInt(currentValue.integer)) {
           return formatError(currentValue.str);
+        }
 
         break;
 
       case RANGETOKEN:
 
-        if (!builderStack.front()->addRange(currentValue.range.first, currentValue.range.second))
+        if (!builderStack.front()->addRange(currentValue.range.first, currentValue.range.second)) {
           return formatError(currentValue.str);
+        }
 
         break;
 
       case DOUBLETOKEN:
 
-        if (!builderStack.front()->addDouble(currentValue.real))
+        if (!builderStack.front()->addDouble(currentValue.real)) {
           return formatError(currentValue.str);
+        }
 
         break;
 
       case STRINGTOKEN:
 
-        if (!builderStack.front()->addString(currentValue.str))
+        if (!builderStack.front()->addString(currentValue.str)) {
           return formatError(currentValue.str);
+        }
 
         break;
 
@@ -470,10 +497,12 @@ struct TLPParser {
           TLPBuilder *builder = builderStack.front();
           builderStack.pop_front();
 
-          if (builder != builderStack.front())
+          if (builder != builderStack.front()) {
             delete builder;
-        } else
+          }
+        } else {
           return formatError(currentValue.str);
+        }
 
         break;
 
@@ -485,8 +514,9 @@ struct TLPParser {
 
       case COMMENTTOKEN:
 
-        if (displayComment)
+        if (displayComment) {
           tlp::debug() << "Comment line:" << tokenParser->curLine << "->" << currentValue.str;
+        }
 
         break;
 
@@ -495,8 +525,9 @@ struct TLPParser {
       }
     }
 
-    if (pluginProgress)
+    if (pluginProgress) {
       pluginProgress->progress(fileSize, fileSize);
+    }
 
     return true;
   }

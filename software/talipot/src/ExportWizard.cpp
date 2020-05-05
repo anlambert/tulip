@@ -81,8 +81,9 @@ void ExportWizard::algorithmSelected(const QModelIndex &index) {
 }
 
 QString ExportWizard::algorithm() const {
-  if (_ui->exportModules->selectionModel()->hasSelection())
+  if (_ui->exportModules->selectionModel()->hasSelection()) {
     return _ui->exportModules->selectionModel()->selectedIndexes()[0].data().toString();
+  }
 
   return QString();
 }
@@ -90,8 +91,9 @@ QString ExportWizard::algorithm() const {
 tlp::DataSet ExportWizard::parameters() const {
   ParameterListModel *model = dynamic_cast<ParameterListModel *>(_ui->parametersList->model());
 
-  if (model == nullptr)
+  if (model == nullptr) {
     return DataSet();
+  }
 
   return model->parametersValues();
 }
@@ -123,8 +125,9 @@ void ExportWizard::pathChanged(QString s) {
       }
     }
 
-    if (!selectedExport.isEmpty())
+    if (!selectedExport.isEmpty()) {
       break;
+    }
   }
 
   if (selectedExport.isEmpty()) {
@@ -137,8 +140,9 @@ void ExportWizard::pathChanged(QString s) {
   QModelIndexList results = model->match(_ui->exportModules->rootIndex(), Qt::DisplayRole,
                                          selectedExport, 1, Qt::MatchExactly | Qt::MatchRecursive);
 
-  if (results.empty())
+  if (results.empty()) {
     return;
+  }
 
   _ui->exportModules->setCurrentIndex(results[0]);
 }
@@ -189,8 +193,9 @@ bool ExportWizard::validateCurrentPage() {
       PluginsManager::getPluginObject<ExportModule>(tlp::QStringToTlpString(algorithm()));
   std::list<std::string> extensions;
 
-  if (p != nullptr)
+  if (p != nullptr) {
     extensions = p->allFileExtensions();
+  }
 
   bool extok(false);
   QString ext;
@@ -206,14 +211,15 @@ bool ExportWizard::validateCurrentPage() {
   delete p;
 
   if (!extok) {
-    if (extensions.size() == 1)
+    if (extensions.size() == 1) {
       _ui->pathEdit->setText(exportFile + "." + tlp::tlpStringToQString(*extensions.begin()));
-    else {
+    } else {
       ext.resize(ext.length() - 2);
       QString msg = "Filename does not terminate with a valid extension. ";
 
-      if (!algorithm().isEmpty())
+      if (!algorithm().isEmpty()) {
         msg += "Please add one.<br>Valid extensions for " + algorithm() + " are: " + ext;
+      }
 
       QMessageBox::warning(parentWidget(), "Filename not valid", msg);
       return false;

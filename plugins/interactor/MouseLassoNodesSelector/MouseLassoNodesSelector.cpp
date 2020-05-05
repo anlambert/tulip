@@ -69,8 +69,9 @@ bool pointInsidePolygon(const vector<Coord> &polygon, const Coord &point) {
         (point.getX() < (polygon[j].getX() - polygon[i].getX()) *
                                 (point.getY() - polygon[i].getY()) /
                                 (polygon[j].getY() - polygon[i].getY()) +
-                            polygon[i].getX()))
+                            polygon[i].getX())) {
       ret = !ret;
+    }
   }
 
   return ret;
@@ -82,8 +83,9 @@ bool isPolygonAincludesInB(const vector<Coord> &A, const vector<Coord> &B) {
   for (unsigned int i = 0; i < A.size(); ++i) {
     ret = ret && pointInsidePolygon(B, A[i]);
 
-    if (!ret)
+    if (!ret) {
       break;
+    }
   }
 
   return ret;
@@ -208,8 +210,9 @@ bool MouseLassoNodesSelectorInteractorComponent::eventFilter(QObject *obj, QEven
 
   QMouseEvent *me = dynamic_cast<QMouseEvent *>(e);
 
-  if (!me)
+  if (!me) {
     return false;
+  }
 
   camera = &glWidget->getScene()->getLayer("Main")->getCamera();
   graph = glWidget->getScene()->getGlGraphComposite()->getInputData()->getGraph();

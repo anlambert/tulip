@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -71,11 +71,13 @@ struct StableIterator : public Iterator<T> {
       sequenceCopy.push_back(inputIterator->next());
     }
 
-    if (deleteIterator)
+    if (deleteIterator) {
       delete inputIterator;
+    }
 
-    if (sortCopy)
+    if (sortCopy) {
       std::sort(sequenceCopy.begin(), sequenceCopy.end());
+    }
 
     copyIterator = sequenceCopy.begin();
   }

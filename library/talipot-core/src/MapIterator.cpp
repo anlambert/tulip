@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -20,8 +20,9 @@ edge tlp::nextFaceEdge(Graph *g, edge e, node n) {
   EdgeMapIterator it(g, e, n);
   edge result;
 
-  if (it.hasNext())
+  if (it.hasNext()) {
     result = it.next();
+  }
 
   return result;
 }
@@ -36,10 +37,11 @@ NodeMapIterator::NodeMapIterator(Graph *sg, node source, node target) {
       start = false;
       itStl = cloneIt.begin();
     } else {
-      if (start)
+      if (start) {
         cloneIt.push_back(tmp);
-      else
+      } else {
         cloneIt.insert(itStl, tmp);
+      }
     }
   }
 
@@ -66,8 +68,9 @@ EdgeMapIterator::EdgeMapIterator(const Graph *sg, edge source, node target) {
   pos = 0;
 
   for (auto e : sg->getInOutEdges(target)) {
-    if (e == source)
+    if (e == source) {
       pos = treat + 1;
+    }
 
     adj[treat++] = e;
   }

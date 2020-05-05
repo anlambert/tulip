@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -88,8 +88,9 @@ ScatterPlot2D *ScatterPlot2DViewNavigator::getOverviewUnderPointer(const Coord &
   vector<ScatterPlot2D *> overviews = scatterPlot2dView->getSelectedScatterPlots();
 
   for (auto overview : overviews) {
-    if (!overview)
+    if (!overview) {
       continue;
+    }
 
     BoundingBox overviewBB = overview->getBoundingBox();
 

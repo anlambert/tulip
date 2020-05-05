@@ -123,8 +123,9 @@ public:
       Graph *graph = inputData.getGraph();
 
       for (auto n : graph->nodes()) {
-        if (graph->getNodeMetaInfo(n))
+        if (graph->getNodeMetaInfo(n)) {
           metaNodes.insert(n);
+        }
       }
       nodesModified = false;
     }

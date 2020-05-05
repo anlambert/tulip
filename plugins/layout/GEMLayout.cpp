@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -135,10 +135,11 @@ Coord GEMLayout::computeForces(unsigned int v, float shake, float gravity, bool 
   //
   double maxEdgeLength;
 
-  if (_useLength)
+  if (_useLength) {
     maxEdgeLength = std::max(2.0, metric->getEdgeDoubleMin());
-  else
+  } else {
     maxEdgeLength = EDGELENGTH;
+  }
 
   maxEdgeLength *= maxEdgeLength;
 
@@ -148,8 +149,9 @@ Coord GEMLayout::computeForces(unsigned int v, float shake, float gravity, bool 
       Coord d = vPos - _particules[u].pos;
       float n = d[0] * d[0] + d[1] * d[1] + d[2] * d[2]; // d.norm() * d.norm();
 
-      if (n > 0.)
+      if (n > 0.) {
         force += d * float(maxEdgeLength) / n;
+      }
     }
   }
 
@@ -157,19 +159,21 @@ Coord GEMLayout::computeForces(unsigned int v, float shake, float gravity, bool 
   for (auto e : graph->getInOutEdges(vNode)) {
     node uNode = graph->opposite(e, vNode);
 
-    if (uNode == vNode)
+    if (uNode == vNode) {
       // nothing to do if it is a self loop
       continue;
+    }
 
     const GEMparticule &gemQ = _particules[graph->nodePos(uNode)];
 
     if (!testPlaced || gemQ.in > 0) { // test whether the node is already placed
       float edgeLength;
 
-      if (_useLength)
+      if (_useLength) {
         edgeLength = float(metric->getEdgeDoubleValue(e));
-      else
+      } else {
         edgeLength = EDGELENGTH;
+      }
 
       Coord d = vPos - gemQ.pos;
       float n = d.norm() / vMass;
@@ -192,46 +196,53 @@ void GEMLayout::insert() {
   node nCenter = graphCenterHeuristic(graph);
   unsigned int v = _particules[graph->nodePos(nCenter)].id;
 
-  for (unsigned int i = 0; i < _nbNodes; ++i)
+  for (unsigned int i = 0; i < _nbNodes; ++i) {
     _particules[i].in = 0;
+  }
 
   _particules[v].in = -1;
 
   startNode = -1;
 
   for (unsigned int i = 0; i < _nbNodes; ++i) {
-    if (pluginProgress->isPreviewMode())
+    if (pluginProgress->isPreviewMode()) {
       updateLayout();
+    }
 
-    if (pluginProgress->progress(i, _nbNodes) != TLP_CONTINUE)
+    if (pluginProgress->progress(i, _nbNodes) != TLP_CONTINUE) {
       return;
+    }
 
     // choose particule with the minimum value
     int d = 0;
 
-    for (unsigned int j = 0; j < _nbNodes; ++j)
+    for (unsigned int j = 0; j < _nbNodes; ++j) {
       if (_particules[j].in < d) {
         d = _particules[j].in;
         v = j;
       }
+    }
 
     //
     _particules[v].in = 1;
     node vNode = _particules[v].n;
 
     // nothing to do if vNode is a fixed node
-    if (fixedNodes && fixedNodes->getNodeValue(vNode))
+    if (fixedNodes && fixedNodes->getNodeValue(vNode)) {
       continue;
+    }
 
     // remove one to non-visited nodes
     for (auto uNode : graph->getInOutNodes(vNode)) {
-      if (uNode == vNode)
+      if (uNode == vNode) {
         // nothing to do if it is a self loop
         continue;
+      }
 
       GEMparticule &gemQ = _particules[graph->nodePos(uNode)];
-      if (gemQ.in <= 0)
+      if (gemQ.in <= 0) {
         --gemQ.in;
+      }
     }
 
     GEMparticule &gemP = _particules[v];
@@ -240,9 +251,10 @@ void GEMLayout::insert() {
     if (startNode >= 0) {
       int d = 0;
       for (auto uNode : graph->getInOutNodes(vNode)) {
-        if (uNode == vNode)
+        if (uNode == vNode) {
           // nothing to do if it a self loop
           continue;
+        }
 
         GEMparticule &gemQ = _particules[graph->nodePos(uNode)];
         if (gemQ.in > 0) {
@@ -257,10 +269,12 @@ void GEMLayout::insert() {
 
       d = 0;
 
-      while ((d++ < i_maxiter) && (gemP.heat > i_finaltemp))
+      while ((d++ < i_maxiter) && (gemP.heat > i_finaltemp)) {
         this->displace(v, computeForces(v, i_shake, i_gravity, true));
-    } else
+      }
+    } else {
       startNode = i;
+    }
   }
 }
 //==========================================================================
@@ -298,8 +312,9 @@ void GEMLayout::a_round() {
     node vNode = _particules[v].n;
 
     // nothing to do if vNode is a fixed node
-    if (fixedNodes && fixedNodes->getNodeValue(vNode))
+    if (fixedNodes && fixedNodes->getNodeValue(vNode)) {
       continue;
+    }
 
     Coord force = computeForces(v, a_shake, a_gravity, false);
     this->displace(v, force);
@@ -312,10 +327,11 @@ void GEMLayout::arrange() {
 
   double maxEdgeLength;
 
-  if (_useLength)
+  if (_useLength) {
     maxEdgeLength = std::max(2.0, metric->getEdgeDoubleMin());
-  else
+  } else {
     maxEdgeLength = EDGELENGTH;
+  }
 
   maxEdgeLength *= maxEdgeLength;
 
@@ -330,11 +346,13 @@ void GEMLayout::arrange() {
   while (_temperature > stop_temperature && Iteration < max_iter) {
     //    tlp::warning() << "t°:"<< _temperature << "/" << stop_temperature << " it:" << Iteration
     //    << endl;
-    if (pluginProgress->progress(Iteration, max_iter / 2) != TLP_CONTINUE)
+    if (pluginProgress->progress(Iteration, max_iter / 2) != TLP_CONTINUE) {
       return;
+    }
 
-    if (pluginProgress->isPreviewMode())
+    if (pluginProgress->isPreviewMode()) {
       updateLayout();
+    }
 
     this->a_round();
   }
@@ -357,8 +375,9 @@ bool GEMLayout::run() {
       // restore current graph
       graph = tmp;
       // return if needed
-      if (!result)
+      if (!result) {
         return result;
+      }
     }
 
     // call connected component packing
@@ -386,14 +405,16 @@ bool GEMLayout::run() {
     dataSet->get("max iterations", max_iter);
     initLayout = !dataSet->get("initial layout", layout);
 
-    if (initLayout)
+    if (initLayout) {
       dataSet->get("unmovable nodes", fixedNodes);
+    }
   }
 
-  if (is3D)
+  if (is3D) {
     _dim = 3;
-  else
+  } else {
     _dim = 2;
+  }
 
   _nbNodes = graph->numberOfNodes();
 
@@ -403,8 +424,9 @@ bool GEMLayout::run() {
   // initialize a random sequence according the given seed
   tlp::initRandomSequence();
 
-  if (max_iter == 0)
+  if (max_iter == 0) {
     max_iter = std::max(a_maxiter * _nbNodes * _nbNodes, MIN_ITER);
+  }
 
   _particules.resize(_nbNodes);
   /* Max Edge to scale actual edges length to preferres length */
@@ -414,24 +436,28 @@ bool GEMLayout::run() {
     _particules[i].n = n;
     _particules[i].id = i;
 
-    if (!initLayout && layout != nullptr)
+    if (!initLayout && layout != nullptr) {
       _particules[i].pos = layout->getNodeValue(n);
-    else
+    } else {
       _particules[i].pos.fill(0);
+    }
 
     ++i;
   }
 
   if (initLayout && layout != nullptr) {
-    if (i_finaltemp < i_starttemp)
+    if (i_finaltemp < i_starttemp) {
       this->insert();
+    }
   }
 
-  if ((pluginProgress->state() == TLP_CONTINUE) && (a_finaltemp < a_starttemp))
+  if ((pluginProgress->state() == TLP_CONTINUE) && (a_finaltemp < a_starttemp)) {
     this->arrange();
+  }
 
-  if (pluginProgress->state() != TLP_CANCEL)
+  if (pluginProgress->state() != TLP_CANCEL) {
     updateLayout();
+  }
 
   return pluginProgress->state() != TLP_CANCEL;
 }

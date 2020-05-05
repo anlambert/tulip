@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -49,8 +49,9 @@ bool CSVSimpleParser::parse(CSVContentHandler *handler, PluginProgress *progress
 
   bool result = handler->begin();
 
-  if (!result)
+  if (!result) {
     return result;
+  }
 
   istream *csvFile = tlp::getInputFileStream(_fileName.c_str(), ifstream::in | ifstream::binary);
 
@@ -121,8 +122,9 @@ bool CSVSimpleParser::parse(CSVContentHandler *handler, PluginProgress *progress
 
         result = handler->line(row, tokens);
 
-        if (!result)
+        if (!result) {
           break;
+        }
 
         columnMax = max(columnMax, column);
 
@@ -136,8 +138,9 @@ bool CSVSimpleParser::parse(CSVContentHandler *handler, PluginProgress *progress
 
       ++row;
 
-      if (firstLineOnly && row > _firstLine)
+      if (firstLineOnly && row > _firstLine) {
         break;
+      }
     }
 
     delete csvFile;
@@ -153,8 +156,9 @@ bool CSVSimpleParser::parse(CSVContentHandler *handler, PluginProgress *progress
 
 bool CSVSimpleParser::multiplatformgetline(istream &is, string &str) {
   // nothing new to read.
-  if (is.eof())
+  if (is.eof()) {
     return false;
+  }
 
   str.clear();
   str.reserve(2048);
@@ -176,8 +180,9 @@ bool CSVSimpleParser::multiplatformgetline(istream &is, string &str) {
         c = '\r';
       }
 
-      if (!tdlm)
+      if (!tdlm) {
         break;
+      }
     } else if (c == '\n' && !tdlm) {
       break;
     }
@@ -213,14 +218,17 @@ void CSVSimpleParser::tokenize(const string &str, vector<string> &tokens, const 
         }
         // continue until a single textDelim
         while (pos != string::npos && str[++pos] == textDelim);
-      } else
+      } else {
         pos += 1;
+      }
     }
 
     // if merge delimiter, skip the next char if it is a delimiter
     if (mergedelim) {
-      while ((pos < str.length() - delim.size()) && (str.substr(pos + 1, delim.length()) == delim))
+      while ((pos < str.length() - delim.size()) &&
+             (str.substr(pos + 1, delim.length()) == delim)) {
         pos += delim.length();
+      }
     }
 
     // Extracting tokens.
@@ -260,11 +268,12 @@ string CSVSimpleParser::treatToken(const string &token, int, int) {
 
     if (beginPos == 0) {
       // erase space chars at the beginning
-      if (endPos != string::npos)
+      if (endPos != string::npos) {
         currentToken.erase(beginPos, endPos - beginPos);
-      else
+      } else {
         // only space chars in currentToken
         currentToken.clear();
+      }
 
       beginPos = currentToken.find_first_of(spaceChars);
     } else {
@@ -275,14 +284,16 @@ string CSVSimpleParser::treatToken(const string &token, int, int) {
       }
 
       // replace multiple space chars
-      if (endPos - beginPos > 1)
+      if (endPos - beginPos > 1) {
         currentToken.replace(beginPos, endPos - beginPos, 1, ' ');
+      }
 
       beginPos = currentToken.find_first_of(spaceChars, beginPos + 1);
     }
   }
-  if (currentToken == "\"\"")
+  if (currentToken == "\"\"") {
     return std::string();
+  }
 
   // Treat string to remove special characters from its beginning and its end.
   // and non needed "
@@ -292,11 +303,13 @@ string CSVSimpleParser::treatToken(const string &token, int, int) {
 string CSVSimpleParser::removeQuotesIfAny(string &s) {
   // remove special chars at the beginning and end
   string::size_type pos = s.find_first_not_of(defaultRejectedChars);
-  if (pos && pos != string::npos)
+  if (pos && pos != string::npos) {
     s.erase(0, pos);
+  }
   pos = s.find_last_not_of(defaultRejectedChars);
-  if (pos != string::npos && pos < s.size() - 1)
+  if (pos != string::npos && pos < s.size() - 1) {
     s.erase(pos + 1);
+  }
 
   if (s[0] == _textDelimiter) {
     s.erase(0, 1);
@@ -309,8 +322,9 @@ string CSVSimpleParser::removeQuotesIfAny(string &s) {
         pos += 1;
       }
     }
-    if (s[s.size() - 1] == _textDelimiter)
+    if (s[s.size() - 1] == _textDelimiter) {
       s.erase(s.size() - 1, 1);
+    }
   }
   return s;
 }
@@ -338,8 +352,9 @@ bool CSVInvertMatrixParser::line(unsigned int, const std::vector<std::string> &l
 }
 
 bool CSVInvertMatrixParser::end(unsigned int, unsigned int) {
-  if (!handler->begin())
+  if (!handler->begin()) {
     return false;
+  }
 
   vector<string> tokens(columns.size());
 
@@ -350,8 +365,9 @@ bool CSVInvertMatrixParser::end(unsigned int, unsigned int) {
       tokens[i] = columns[i].size() > line ? columns[i][line] : string();
     }
 
-    if (!handler->line(line, tokens))
+    if (!handler->line(line, tokens)) {
       return false;
+    }
   }
 
   return handler->end(maxLineSize, columns.size());

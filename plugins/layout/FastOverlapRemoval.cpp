@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -91,16 +91,18 @@ bool FastOverlapRemoval::run() {
 
   if (dataSet != nullptr) {
 
-    if (dataSet->exists("overlaps removal type"))
+    if (dataSet->exists("overlaps removal type")) {
       dataSet->get("overlaps removal type", stringCollection);
-    else
+    } else {
       dataSet->get("overlap removal type", stringCollection);
+    }
 
     dataSet->get("layout", viewLayout);
 
-    if (!dataSet->get("bounding box", viewSize))
+    if (!dataSet->get("bounding box", viewSize)) {
       // old name of the parameter
       dataSet->get("boundingBox", viewSize);
+    }
 
     dataSet->get("rotation", viewRot);
     dataSet->get("number of passes", nbPasses);
@@ -108,19 +110,23 @@ bool FastOverlapRemoval::run() {
     dataSet->get("y border", yBorder);
   }
 
-  if (viewLayout == nullptr)
+  if (viewLayout == nullptr) {
     viewLayout = graph->getLayoutProperty("viewLayout");
+  }
 
-  if (viewSize == nullptr)
+  if (viewSize == nullptr) {
     viewSize = graph->getSizeProperty("viewSize");
+  }
 
-  if (viewRot == nullptr)
+  if (viewRot == nullptr) {
     viewRot = graph->getDoubleProperty("viewRotation");
+  }
 
   // initialize result for edges
   result->setAllEdgeValue(viewLayout->getEdgeDefaultValue());
-  for (auto e : viewLayout->getNonDefaultValuatedEdges())
+  for (auto e : viewLayout->getNonDefaultValuatedEdges()) {
     result->setEdgeValue(e, viewLayout->getEdgeValue(e));
+  }
 
   size_t nbNodes = graph->numberOfNodes();
   const std::vector<node> &nodes = graph->nodes();

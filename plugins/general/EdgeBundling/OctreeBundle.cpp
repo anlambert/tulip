@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -50,32 +50,39 @@ node OctreeBundle::splitEdge(node a, node b) {
 //=====================================
 bool OctreeBundle::isIn(const Coord &p, const Coord &a, const Coord &b, const Coord &c,
                         const Coord &) {
-  if (p[0] < a[0])
+  if (p[0] < a[0]) {
     return false;
+  }
 
-  if (p[0] > b[0])
+  if (p[0] > b[0]) {
     return false;
+  }
 
-  if (p[1] < a[1])
+  if (p[1] < a[1]) {
     return false;
+  }
 
-  if (p[1] > b[1])
+  if (p[1] > b[1]) {
     return false;
+  }
 
-  if (p[2] < a[2])
+  if (p[2] < a[2]) {
     return false;
+  }
 
-  if (p[2] > c[2])
+  if (p[2] > c[2]) {
     return false;
+  }
 
   return true;
 }
 //=====================================
 void OctreeBundle::elmentSplitting(const Coord &a, const Coord &b, const Coord &c, const Coord &d,
                                    const vector<node> &input, vector<node> &in, vector<node> &out) {
-  if (!((a[0] < b[0]) && (a[1] < b[1])))
+  if (!((a[0] < b[0]) && (a[1] < b[1]))) {
     throw Exception("Two nodes have the same position.\nTry to apply the \"Fast Overlap "
                     "Removal\" algorithm first.");
+  }
 
   in.clear();
   out.clear();
@@ -83,10 +90,11 @@ void OctreeBundle::elmentSplitting(const Coord &a, const Coord &b, const Coord &
   for (auto n : input) {
     const Coord &tmp = layout->getNodeValue(n);
 
-    if (isIn(tmp, a, b, c, d))
+    if (isIn(tmp, a, b, c, d)) {
       in.push_back(n);
-    else
+    } else {
       out.push_back(n);
+    }
   }
 }
 //=====================================
@@ -133,8 +141,9 @@ void OctreeBundle::recQuad(const Coord fr[4], const Coord ba[4], const vector<no
     return;
   }
 
-  if (input.size() == 0 && (fr[0] - ba[2]).norm() < (minSize / (splitRatio)))
+  if (input.size() == 0 && (fr[0] - ba[2]).norm() < (minSize / (splitRatio))) {
     return;
+  }
 
   for (int i = 0; i < 4; ++i) {
     unvalidEdges.push_back(pair<node, node>(frN[i], baN[i]));
@@ -225,8 +234,9 @@ void OctreeBundle::recQuad(const Coord fr[4], const Coord ba[4], const vector<no
                       in, out);
       input2 = out;
       recQuad(middleFace[i], backFace[i], in);
-    } else
+    } else {
       recQuad(middleFace[i], backFace[i], out);
+    }
   }
 
   //
@@ -253,11 +263,13 @@ void OctreeBundle::createOctree(Graph *graph, tlp::LayoutProperty *lay, tlp::Siz
   size = graph->getSizeProperty("viewSize");
   rot = graph->getDoubleProperty("viewRotation");
 
-  if (lay)
+  if (lay) {
     layout = lay;
+  }
 
-  if (siz)
+  if (siz) {
     size = siz;
+  }
 
   this->graph = graph;
 
@@ -313,11 +325,13 @@ void OctreeBundle::createOctree(Graph *graph, tlp::LayoutProperty *lay, tlp::Siz
     node tgt = unvalidEdges[i].second;
     edge e;
 
-    if ((e = graph->existEdge(src, tgt)).isValid())
+    if ((e = graph->existEdge(src, tgt)).isValid()) {
       graph->delEdge(e, true);
+    }
 
-    if ((e = graph->existEdge(tgt, src)).isValid())
+    if ((e = graph->existEdge(tgt, src)).isValid()) {
       graph->delEdge(e, true);
+    }
   }
 
   vector<edge> tmpE;

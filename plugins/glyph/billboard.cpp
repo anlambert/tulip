@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -81,8 +81,9 @@ void Billboard::draw(node n, float) {
 
   Size sz = {1};
 
-  if (glGraphInputData->getElementSize())
+  if (glGraphInputData->getElementSize()) {
     sz = glGraphInputData->getElementSize()->getNodeValue(n);
+  }
 
   // draw rect in the screen plane
   Glyph::drawRectInScreenPlane(rect, sz, false);
@@ -91,10 +92,11 @@ void Billboard::draw(node n, float) {
 Coord Billboard::getAnchor(const Coord &v) const {
   float fmax = std::max(fabsf(v.x()), fabsf(v.y()));
 
-  if (fmax > 0.0f)
+  if (fmax > 0.0f) {
     return v * (0.5f / fmax);
-  else
+  } else {
     return v;
+  }
 }
 //========================================================
 

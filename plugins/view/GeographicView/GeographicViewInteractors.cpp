@@ -108,17 +108,21 @@ void trans(Coord &c1, Coord &c2, float angle1, float angle2) {
   float theta2 = acos(c2[2] / rho2);
   float phi2 = acos(c2[0] / sqrt(c2[0] * c2[0] + c2[1] * c2[1]));
 
-  if (c1[1] < 0)
+  if (c1[1] < 0) {
     phi1 = 2 * M_PI - phi1;
+  }
 
-  if (c1[0] == 0 && c1[1] == 0)
+  if (c1[0] == 0 && c1[1] == 0) {
     phi1 = 0;
+  }
 
-  if (c2[1] < 0)
+  if (c2[1] < 0) {
     phi2 = 2 * M_PI - phi2;
+  }
 
-  if (c2[0] == 0 && c2[1] == 0)
+  if (c2[0] == 0 && c2[1] == 0) {
     phi2 = 0;
+  }
 
   if (theta1 + angle1 > 0.001 && theta1 + angle1 < M_PI && theta2 + angle1 > 0.001 &&
       theta2 + angle1 < M_PI) {

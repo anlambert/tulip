@@ -179,8 +179,9 @@ void WorkspacePanel::setView(tlp::View *view) {
   layout()->addWidget(_view->graphicsView());
   refreshInteractorsToolbar();
 
-  if (!compatibleInteractors.empty())
+  if (!compatibleInteractors.empty()) {
     setCurrentInteractor(compatibleInteractors[0]);
+  }
 
   connect(_view, &QObject::destroyed, this, &WorkspacePanel::viewDestroyed);
   connect(_view, &View::graphSet, this, &WorkspacePanel::viewGraphSet);
@@ -264,10 +265,11 @@ void WorkspacePanel::showEvent(QShowEvent *event) {
 }
 
 void WorkspacePanel::closeEvent(QCloseEvent *event) {
-  if (_view->checkOnClose())
+  if (_view->checkOnClose()) {
     event->accept();
-  else
+  } else {
     event->ignore();
+  }
 }
 
 bool WorkspacePanel::eventFilter(QObject *obj, QEvent *ev) {
@@ -276,11 +278,11 @@ bool WorkspacePanel::eventFilter(QObject *obj, QEvent *ev) {
       _view->showContextMenu(QCursor::pos(),
                              static_cast<QGraphicsSceneContextMenuEvent *>(ev)->scenePos());
     } else if (_viewConfigurationWidgets != nullptr &&
-               _view->configurationWidgets().contains(qobject_cast<QWidget *>(obj)))
+               _view->configurationWidgets().contains(qobject_cast<QWidget *>(obj))) {
       return true;
 
-    else if (ev->type() == QEvent::MouseButtonPress && !_viewConfigurationExpanded &&
-             qobject_cast<QTabBar *>(obj) != nullptr) {
+    } else if (ev->type() == QEvent::MouseButtonPress && !_viewConfigurationExpanded &&
+               qobject_cast<QTabBar *>(obj) != nullptr) {
       setConfigurationTabExpanded(true);
     } else if (ev->type() == QEvent::Wheel && qobject_cast<QTabBar *>(obj) != nullptr) {
       return true;
@@ -291,10 +293,11 @@ bool WorkspacePanel::eventFilter(QObject *obj, QEvent *ev) {
   // because of possible mis-synchronization of Qt events
   if (_ui) {
     if (obj == _ui->interactorsFrame && ev->type() == QEvent::Wheel) {
-      if (static_cast<QWheelEvent *>(ev)->delta() > 0)
+      if (static_cast<QWheelEvent *>(ev)->delta() > 0) {
         scrollInteractorsLeft();
-      else
+      } else {
         scrollInteractorsRight();
+      }
     }
 
     if (obj == _ui->graphCombo && ev->type() == QEvent::Wheel) {
@@ -318,22 +321,26 @@ void WorkspacePanel::setCurrentInteractor(tlp::Interactor *i) {
 }
 
 void WorkspacePanel::setCurrentInteractorConfigurationVisible(bool) {
-  if (_view->currentInteractor() == nullptr)
+  if (_view->currentInteractor() == nullptr) {
     return;
+  }
 
-  if (_interactorConfigWidget->isVisible())
+  if (_interactorConfigWidget->isVisible()) {
     return;
+  }
 
-  if (_interactorConfigWidget->setWidgets(_view->currentInteractor()))
+  if (_interactorConfigWidget->setWidgets(_view->currentInteractor())) {
     _interactorConfigWidget->show();
+  }
 }
 
 void WorkspacePanel::interactorActionTriggered() {
   QAction *action = static_cast<QAction *>(sender());
   Interactor *interactor = static_cast<Interactor *>(action->parent());
 
-  if (interactor == view()->currentInteractor())
+  if (interactor == view()->currentInteractor()) {
     return;
+  }
 
   setCurrentInteractor(interactor);
   if (_interactorConfigWidget->isVisible()) {
@@ -348,10 +355,12 @@ void WorkspacePanel::hideConfigurationTab() {
 void clearLayout(QLayout *layout, bool deleteWidgets = true) {
   while (QLayoutItem *item = layout->takeAt(0)) {
     if (deleteWidgets) {
-      if (QWidget *widget = item->widget())
+      if (QWidget *widget = item->widget()) {
         delete widget;
-    } else if (QLayout *childLayout = item->layout())
+      }
+    } else if (QLayout *childLayout = item->layout()) {
       clearLayout(childLayout, deleteWidgets);
+    }
 
     delete item;
   }
@@ -400,8 +409,9 @@ void WorkspacePanel::refreshInteractorsToolbar() {
 void WorkspacePanel::actionChanged() {
   QAction *action = static_cast<QAction *>(sender());
 
-  if (!_actionTriggers.contains(action))
+  if (!_actionTriggers.contains(action)) {
     return;
+  }
 
   _actionTriggers[action]->setEnabled(action->isEnabled());
 }
@@ -444,8 +454,9 @@ void WorkspacePanel::viewGraphSet(tlp::Graph *g) {
       static_cast<tlp::GraphHierarchiesModel *>(_ui->graphCombo->model());
   QModelIndex graphIndex = model->indexOf(g);
 
-  if (graphIndex == _ui->graphCombo->selectedIndex())
+  if (graphIndex == _ui->graphCombo->selectedIndex()) {
     return;
+  }
 
   _ui->graphCombo->selectIndex(graphIndex);
 }
@@ -487,8 +498,9 @@ void WorkspacePanel::setConfigurationTabExpanded(bool expanded, bool animate) {
 
   QPointF newPos = configurationTabPosition(expanded);
 
-  if (newPos == _viewConfigurationWidgets->pos())
+  if (newPos == _viewConfigurationWidgets->pos()) {
     return;
+  }
 
   if (animate) {
     QPropertyAnimation *anim =
@@ -497,8 +509,9 @@ void WorkspacePanel::setConfigurationTabExpanded(bool expanded, bool animate) {
     anim->setStartValue(_viewConfigurationWidgets->pos());
     anim->setEndValue(newPos);
     anim->start(QAbstractAnimation::DeleteWhenStopped);
-  } else
+  } else {
     _viewConfigurationWidgets->setPos(newPos);
+  }
 
   // there are artefacts in the fonts when the opacity is 1; ugly fix
   _viewConfigurationWidgets->setOpacity((expanded ? 0.99 : 0.6));
@@ -511,9 +524,9 @@ void WorkspacePanel::setConfigurationTabExpanded(bool expanded, bool animate) {
 }
 
 QPointF WorkspacePanel::configurationTabPosition(bool expanded) const {
-  if (expanded)
+  if (expanded) {
     return QPointF(width() - _viewConfigurationWidgets->size().width(), 10);
-  else {
+  } else {
     QTabWidget *tabWidget = static_cast<QTabWidget *>(_viewConfigurationWidgets->widget());
     int tabWidth = (tabWidget != nullptr)
                        ? (_viewConfigurationWidgets->size().width() - tabWidget->widget(0)->width())
@@ -543,13 +556,13 @@ void WorkspacePanel::setHighlightMode(bool hm) {
   // which made appear a 2 pixel height line
   // on top of this panel
   // (only top margin has a non null value in WorkspacePanel.ui)
-  if (hm)
+  if (hm) {
     _ui->borderFrame->setStyleSheet("QFrame[border = \"true\"] {\n"
                                     "border-image:none;\n"
                                     "background-color: #CBDE5D;\n"
                                     "color: white;\n"
                                     "}");
-  else
+  } else {
     // restore the style sheet as described in WorkspacePanel.ui
     _ui->borderFrame->setStyleSheet(
         "QFrame[border = \"true\"] {\n"
@@ -561,6 +574,7 @@ void WorkspacePanel::setHighlightMode(bool hm) {
         "stop: 1 #4a4a4a);\n"
         "color: white;\n"
         "}");
+  }
 }
 
 void WorkspacePanel::dragEnterEvent(QDragEnterEvent *evt) {
@@ -597,9 +611,7 @@ bool WorkspacePanel::handleDropEvent(const QMimeData *mimedata) {
   } else if (panelMime) {
     // Emit swap panels
     emit swapWithPanels(panelMime->panel());
-  }
-
-  else if (algorithmMime) {
+  } else if (algorithmMime) {
     algorithmMime->run(view()->graph());
   }
 

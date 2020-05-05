@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -54,8 +54,9 @@ static void computeNodeAvgValue(
     value += metric->getNodeValue(n);
   }
 
-  if (nbNodes)
+  if (nbNodes) {
     metric->setNodeValue(mN, value / nbNodes);
+  }
 }
 
 static void computeEdgeAvgValue(
@@ -69,8 +70,9 @@ static void computeEdgeAvgValue(
     value += metric->getEdgeValue(e);
   }
 
-  if (nbEdges)
+  if (nbEdges) {
     metric->setEdgeValue(mE, value / nbEdges);
+  }
 }
 
 // sum values
@@ -126,8 +128,9 @@ static void computeNodeMaxValue(
   for (auto n : sg->nodes()) {
     double nVal = metric->getNodeValue(n);
 
-    if (nVal > value)
+    if (nVal > value) {
       value = nVal;
+    }
   }
   metric->setNodeValue(mN, value);
 }
@@ -140,8 +143,9 @@ static void computeEdgeMaxValue(
   for (auto e : itE) {
     const double &eVal = metric->getEdgeValue(e);
 
-    if (eVal > value)
+    if (eVal > value) {
       value = eVal;
+    }
   }
 
   metric->setEdgeValue(mE, value);
@@ -166,8 +170,9 @@ static void computeNodeMinValue(
   for (auto n : sg->nodes()) {
     double nVal = metric->getNodeValue(n);
 
-    if (nVal < value)
+    if (nVal < value) {
       value = nVal;
+    }
   }
   metric->setNodeValue(mN, value);
 }
@@ -180,8 +185,9 @@ static void computeEdgeMinValue(
   for (auto e : itE) {
     const double &eVal = metric->getEdgeValue(e);
 
-    if (eVal < value)
+    if (eVal < value) {
       value = eVal;
+    }
   }
 
   metric->setEdgeValue(mE, value);
@@ -211,8 +217,9 @@ public:
   void
   computeMetaValue(AbstractProperty<tlp::DoubleType, tlp::DoubleType, tlp::NumericProperty> *metric,
                    node mN, Graph *sg, Graph *) override {
-    if (nodeCalc)
+    if (nodeCalc) {
       nodeCalc(metric, mN, sg);
+    }
   }
 
   void
@@ -304,8 +311,9 @@ void DoubleProperty::setAllEdgeValue(tlp::StoredType<double>::ReturnedConstValue
 }
 //=================================================================================
 PropertyInterface *DoubleProperty::clonePrototype(Graph *g, const std::string &n) const {
-  if (!g)
+  if (!g) {
     return nullptr;
+  }
 
   // allow to get an unregistered property (empty name)
   DoubleProperty *p = n.empty() ? new DoubleProperty(g) : g->getLocalDoubleProperty(n);
@@ -315,8 +323,9 @@ PropertyInterface *DoubleProperty::clonePrototype(Graph *g, const std::string &n
 }
 //=================================================================================
 PropertyInterface *DoubleVectorProperty::clonePrototype(Graph *g, const std::string &n) const {
-  if (!g)
+  if (!g) {
     return nullptr;
+  }
 
   // allow to get an unregistered property (empty name)
   DoubleVectorProperty *p =
@@ -333,8 +342,9 @@ void DoubleProperty::setMetaValueCalculator(PredefinedMetaValueCalculator nodeCa
 //=============================================================
 void DoubleProperty::setMetaValueCalculator(PropertyInterface::MetaValueCalculator *calc) {
   if (metaValueCalculator && metaValueCalculator != &avgCalculator &&
-      typeid(metaValueCalculator) == typeid(DoublePropertyPredefinedCalculator))
+      typeid(metaValueCalculator) == typeid(DoublePropertyPredefinedCalculator)) {
     delete metaValueCalculator;
+  }
 
   metaValueCalculator = calc;
 }

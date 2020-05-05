@@ -233,10 +233,11 @@ bool NeighborhoodHighlighter::eventFilter(QObject *, QEvent *e) {
         buildNeighborhoodGraph(tmpNode, originalGraph);
         selectedNode = tmpNode;
       }
-      if (tmpNode.isValid())
+      if (tmpNode.isValid()) {
         glWidget->setCursor(Qt::PointingHandCursor);
-      else
+      } else {
         glWidget->setCursor(QCursor());
+      }
     } else {
       *neighborhoodGraphColors = *neighborhoodGraphBackupColors;
 

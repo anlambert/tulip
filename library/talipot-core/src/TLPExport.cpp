@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -36,14 +36,15 @@ static string convert(const string &tmp) {
   string newStr;
 
   for (unsigned int i = 0; i < tmp.length(); ++i) {
-    if (tmp[i] == '\"')
+    if (tmp[i] == '\"') {
       newStr += "\\\"";
-    else if (tmp[i] == '\n')
+    } else if (tmp[i] == '\n') {
       newStr += "\\n";
-    else if (tmp[i] == '\\')
+    } else if (tmp[i] == '\\') {
       newStr += "\\\\";
-    else
+    } else {
       newStr += tmp[i];
+    }
   }
 
   return newStr;
@@ -125,8 +126,9 @@ public:
         os << "(nodes";
 
         for (unsigned int i = 0; i < nbNodes; ++i) {
-          if (progress % progupdate == 0)
+          if (progress % progupdate == 0) {
             pluginProgress->progress(progress, nbNodes + nbEdges);
+          }
 
           ++progress;
           node current = getNode(nodes[i]);
@@ -138,8 +140,9 @@ public:
             if (current.id == previousNode.id + 1) {
               previousNode = current;
 
-              if (i == nbNodes - 1)
+              if (i == nbNodes - 1) {
                 os << ".." << current.id;
+              }
             } else {
               if (previousNode != beginNode) {
                 os << ".." << previousNode.id;
@@ -160,8 +163,9 @@ public:
         os << "(edges";
 
         for (unsigned int i = 0; i < nbEdges; ++i) {
-          if (progress % progupdate == 0)
+          if (progress % progupdate == 0) {
             pluginProgress->progress(progress, nbNodes + nbEdges);
+          }
 
           ++progress;
           edge current = getEdge(edges[i]);
@@ -173,8 +177,9 @@ public:
             if (current.id == previousEdge.id + 1) {
               previousEdge = current;
 
-              if (i == nbEdges - 1)
+              if (i == nbEdges - 1) {
                 os << ".." << current.id;
+              }
             } else {
               if (previousEdge != beginEdge) {
                 os << ".." << previousEdge.id;
@@ -220,8 +225,9 @@ public:
       const std::vector<edge> &edges = g->edges();
 
       for (unsigned i = 0; i < nbElts; ++i) {
-        if (progress % progupdate == 0)
+        if (progress % progupdate == 0) {
           pluginProgress->progress(progress, nbElts);
+        }
 
         ++progress;
         edge e = edges[i];
@@ -229,18 +235,21 @@ public:
         os << "(edge " << i << " " << getNode(ends.first).id << " " << getNode(ends.second).id
            << ")";
 
-        if (i != nbElts - 1)
+        if (i != nbElts - 1) {
           os << endl;
+        }
       }
 
       os << endl;
     }
 
-    for (Graph *sg : g->subGraphs())
+    for (Graph *sg : g->subGraphs()) {
       saveGraphElements(os, sg);
+    }
 
-    if (g->getSuperGraph() != g)
+    if (g->getSuperGraph() != g) {
       os << ")" << endl;
+    }
   }
   //=====================================================
   void saveLocalProperties(ostream &os, Graph *g) {
@@ -291,21 +300,24 @@ public:
       if (isPathViewProp && !TalipotBitmapDir.empty()) {
         size_t pos = nDefault.find(TalipotBitmapDir);
 
-        if (pos != string::npos)
+        if (pos != string::npos) {
           nDefault.replace(pos, TalipotBitmapDir.size(), "TalipotBitmapDir/");
+        }
 
         pos = eDefault.find(TalipotBitmapDir);
 
-        if (pos != string::npos)
+        if (pos != string::npos) {
           eDefault.replace(pos, TalipotBitmapDir.size(), "TalipotBitmapDir/");
+        }
       }
 
       os << "(default \"" << convert(nDefault) << "\" \"" << convert(eDefault) << "\")" << endl;
 
       for (auto n : prop->getNonDefaultValuatedNodes(g)) {
 
-        if (progress % (1 + nonDefaultvaluatedElementCount / 100) == 0)
+        if (progress % (1 + nonDefaultvaluatedElementCount / 100) == 0) {
           pluginProgress->progress(progress, nonDefaultvaluatedElementCount);
+        }
 
         ++progress;
         string tmp = prop->getNodeStringValue(n);
@@ -314,16 +326,18 @@ public:
         if (isPathViewProp && !TalipotBitmapDir.empty()) {
           size_t pos = tmp.find(TalipotBitmapDir);
 
-          if (pos != string::npos)
+          if (pos != string::npos) {
             tmp.replace(pos, TalipotBitmapDir.size(), "TalipotBitmapDir/");
+          }
         } else if (g->getId() != 0 && // if it is not the real root graph
                    prop->getTypename() == GraphProperty::propertyTypename) {
           unsigned int id = strtoul(tmp.c_str(), nullptr, 10);
 
           // we must check if the pointed subgraph
           // is a descendant of the currently export graph
-          if (!graph->getDescendantGraph(id))
+          if (!graph->getDescendantGraph(id)) {
             continue;
+          }
         }
 
         os << "(node " << getNode(n).id << " \"" << convert(tmp) << "\")" << endl;
@@ -331,8 +345,9 @@ public:
 
       for (auto e : prop->getNonDefaultValuatedEdges(g)) {
 
-        if (progress % (1 + nonDefaultvaluatedElementCount / 100) == 0)
+        if (progress % (1 + nonDefaultvaluatedElementCount / 100) == 0) {
           pluginProgress->progress(progress, nonDefaultvaluatedElementCount);
+        }
 
         ++progress;
 
@@ -366,8 +381,9 @@ public:
           if (isPathViewProp && !TalipotBitmapDir.empty()) {
             size_t pos = tmp.find(TalipotBitmapDir);
 
-            if (pos != string::npos)
+            if (pos != string::npos) {
               tmp.replace(pos, TalipotBitmapDir.size(), "TalipotBitmapDir/");
+            }
           }
 
           os << "(edge " << getEdge(e).id << " \"" << convert(tmp) << "\")" << endl;
@@ -380,8 +396,9 @@ public:
   void saveProperties(ostream &os, Graph *g) {
     saveLocalProperties(os, g);
 
-    for (Graph *sg : g->subGraphs())
+    for (Graph *sg : g->subGraphs()) {
       saveProperties(os, sg);
+    }
   }
   //=====================================================
   void saveAttributes(ostream &os, Graph *g) {
@@ -426,8 +443,9 @@ public:
 
     // save subgraph attributes
 
-    for (Graph *sg : g->subGraphs())
+    for (Graph *sg : g->subGraphs()) {
       saveAttributes(os, sg);
+    }
   }
   //=====================================================
   void saveController(ostream &os, DataSet &data) {
@@ -455,8 +473,9 @@ public:
       dataSet->get("text::comments", comments);
     }
 
-    if (name.length() > 0)
+    if (name.length() > 0) {
       graph->setAttribute("name", name);
+    }
 
     // get ostime
     time_t ostime = time(nullptr);
@@ -472,8 +491,9 @@ public:
     os << "(date \"" << currDate << "\")" << endl;
 
     // author
-    if (author.length() > 0)
+    if (author.length() > 0) {
       os << "(author \"" << author << "\")" << endl;
+    }
 
     // comments
     os << "(comments \"" << comments << "\")" << endl;
@@ -483,8 +503,9 @@ public:
     saveAttributes(os, graph);
 
     // Save views
-    if (dataSet != nullptr && dataSet->get<DataSet>("controller", controller))
+    if (dataSet != nullptr && dataSet->get<DataSet>("controller", controller)) {
       saveController(os, controller);
+    }
 
     os << ')' << endl; // end of (tlp ...
 

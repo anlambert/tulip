@@ -60,8 +60,9 @@ struct TLP_GL_SCOPE OcclusionTest {
    */
   bool testRectangle(const RectangleInt2D &rec) {
     for (const auto &r : data) {
-      if (rec.intersect(r))
+      if (rec.intersect(r)) {
         return true;
+      }
     }
 
     return false;

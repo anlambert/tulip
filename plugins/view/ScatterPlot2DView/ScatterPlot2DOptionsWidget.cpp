@@ -277,17 +277,21 @@ bool ScatterPlot2DOptionsWidget::configurationChanged() {
     oldXAxisScale = getXAxisScale();
     oldYAxisScale = getYAxisScale();
 
-    if (_ui->useXMinSpinBox->value() > initXAxisScale.first)
+    if (_ui->useXMinSpinBox->value() > initXAxisScale.first) {
       _ui->useXMinSpinBox->setValue(initXAxisScale.first);
+    }
 
-    if (_ui->useXMaxSpinBox->value() < initXAxisScale.second)
+    if (_ui->useXMaxSpinBox->value() < initXAxisScale.second) {
       _ui->useXMaxSpinBox->setValue(initXAxisScale.second);
+    }
 
-    if (_ui->useYMinSpinBox->value() > initYAxisScale.first)
+    if (_ui->useYMinSpinBox->value() > initYAxisScale.first) {
       _ui->useYMinSpinBox->setValue(initYAxisScale.first);
+    }
 
-    if (_ui->useYMaxSpinBox->value() < initYAxisScale.second)
+    if (_ui->useYMaxSpinBox->value() < initYAxisScale.second) {
       _ui->useYMaxSpinBox->setValue(initYAxisScale.second);
+    }
   }
 
   return confChanged;

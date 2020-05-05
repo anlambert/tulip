@@ -47,16 +47,18 @@ void ExpandableGroupBox::setWidget(QWidget *w) {
   delete _widget;
   _widget = w;
 
-  if (_widget)
+  if (_widget) {
     layout()->addWidget(_widget);
+  }
 }
 
 QWidget *ExpandableGroupBox::takeWidget() {
   QWidget *result = _widget;
   _widget = nullptr;
 
-  if (result)
+  if (result) {
     layout()->removeWidget(result);
+  }
 
   return result;
 }

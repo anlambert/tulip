@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -21,8 +21,9 @@ const string BooleanVectorProperty::propertyTypename = "vector<bool>";
 
 //=================================================================================
 void BooleanProperty::reverse(const Graph *sg) {
-  if (sg == nullptr)
+  if (sg == nullptr) {
     sg = graph;
+  }
 
   for (auto n : sg->nodes()) {
     notifyBeforeSetNodeValue(n);
@@ -39,19 +40,22 @@ void BooleanProperty::reverse(const Graph *sg) {
 
 //=================================================================================
 void BooleanProperty::reverseEdgeDirection(Graph *sg) {
-  if (sg == nullptr)
+  if (sg == nullptr) {
     sg = graph;
+  }
 
   for (auto e : sg->edges()) {
-    if (getEdgeValue(e))
+    if (getEdgeValue(e)) {
       sg->reverse(e);
+    }
   }
 }
 
 //=================================================================================
 PropertyInterface *BooleanProperty::clonePrototype(Graph *g, const std::string &n) const {
-  if (g == nullptr)
+  if (g == nullptr) {
     return nullptr;
+  }
 
   // allow to get an unregistered property (empty name)
   BooleanProperty *p = n.empty() ? new BooleanProperty(g) : g->getLocalBooleanProperty(n);
@@ -61,8 +65,9 @@ PropertyInterface *BooleanProperty::clonePrototype(Graph *g, const std::string &
 }
 //=================================================================================
 PropertyInterface *BooleanVectorProperty::clonePrototype(Graph *g, const std::string &n) const {
-  if (!g)
+  if (!g) {
     return nullptr;
+  }
 
   // allow to get an unregistered property (empty name)
   BooleanVectorProperty *p =

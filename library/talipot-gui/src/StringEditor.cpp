@@ -46,8 +46,9 @@ void StringEditor::setString(const QString &qstr) {
 }
 
 void StringEditor::done(int r) {
-  if (r == QDialog::Accepted)
+  if (r == QDialog::Accepted) {
     currentString = edit->toPlainText();
+  }
 
   QDialog::done(r);
 }
@@ -56,7 +57,8 @@ void StringEditor::done(int r) {
 void StringEditor::showEvent(QShowEvent *ev) {
   QDialog::showEvent(ev);
 
-  if (parentWidget())
+  if (parentWidget()) {
     move(parentWidget()->window()->frameGeometry().topLeft() +
          parentWidget()->window()->rect().center() - rect().center());
+  }
 }

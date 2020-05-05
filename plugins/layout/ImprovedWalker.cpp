@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -46,10 +46,11 @@ public:
   node next() override {
     node tmp = graph->getOutNode(n, currentChild);
 
-    if (isReversed)
+    if (isReversed) {
       currentChild--;
-    else
+    } else {
       currentChild++;
+    }
 
     return tmp;
   }
@@ -65,8 +66,9 @@ ImprovedWalker::ImprovedWalker(const tlp::PluginContext *context) : LayoutAlgori
 ImprovedWalker::~ImprovedWalker() {}
 //====================================================================
 bool ImprovedWalker::run() {
-  if (pluginProgress)
+  if (pluginProgress) {
     pluginProgress->showPreview(false);
+  }
 
   result->setAllEdgeValue(vector<Coord>());
 
@@ -82,8 +84,9 @@ bool ImprovedWalker::run() {
   oriLayout = new OrientableLayout(result, mask);
   SizeProperty *size;
 
-  if (!getNodeSizePropertyParameter(dataSet, size))
+  if (!getNodeSizePropertyParameter(dataSet, size)) {
     size = graph->getSizeProperty("viewSize");
+  }
 
   getSpacingParameters(dataSet, nodeSpacing, spacing);
 
@@ -98,14 +101,16 @@ bool ImprovedWalker::run() {
   for (unsigned int i = 0; i < maxYbyLevel.size() - 1; ++i) {
     float minLayerSpacing = (maxYbyLevel[i] + maxYbyLevel[i + 1]) / 2.f;
 
-    if (minLayerSpacing + nodeSpacing > spacing)
+    if (minLayerSpacing + nodeSpacing > spacing) {
       spacing = minLayerSpacing + nodeSpacing;
+    }
   }
 
   secondWalk(root, 0, 0);
 
-  if (hasOrthogonalEdge(dataSet))
+  if (hasOrthogonalEdge(dataSet)) {
     oriLayout->setOrthogonalEdge(tree, spacing);
+  }
 
   TreeTest::cleanComputedTree(graph, tree);
 
@@ -173,9 +178,10 @@ void ImprovedWalker::firstWalk(tlp::node v) {
     prelimX[v] = 0;
     node vleftSibling = leftSibling(v);
 
-    if (vleftSibling != BADNODE)
+    if (vleftSibling != BADNODE) {
       prelimX[v] += prelimX[vleftSibling] + nodeSpacing + oriSize->getNodeValue(v).getW() / 2.f +
                     oriSize->getNodeValue(vleftSibling).getW() / 2.f;
+    }
   } else {
     node defaultAncestor = leftmostChild(v);
 
@@ -194,8 +200,9 @@ void ImprovedWalker::firstWalk(tlp::node v) {
       prelimX[v] = prelimX[leftBrother] + nodeSpacing + oriSize->getNodeValue(v).getW() / 2.f +
                    oriSize->getNodeValue(leftBrother).getW() / 2.f;
       modChildX[v] = prelimX[v] - midPoint;
-    } else
+    } else {
       prelimX[v] = midPoint;
+    }
   }
 }
 //====================================================================
@@ -203,8 +210,9 @@ void ImprovedWalker::secondWalk(tlp::node v, float modifierX, int depth) {
   OrientableCoord coord = oriLayout->createCoord(prelimX[v] + modifierX, depth * spacing, 0);
   oriLayout->setNodeValue(v, coord);
 
-  for (auto n : getChildren(v))
+  for (auto n : getChildren(v)) {
     secondWalk(n, modifierX + modChildX[v], depth + 1);
+  }
 }
 //====================================================================
 void ImprovedWalker::combineSubtree(tlp::node v, tlp::node *defaultAncestor) {
@@ -237,11 +245,13 @@ void ImprovedWalker::combineSubtree(tlp::node v, tlp::node *defaultAncestor) {
       nodeInsideLeft = nextRightContour(nodeInsideLeft);
       nodeInsideRight = nextLeftContour(nodeInsideRight);
 
-      if (nodeOutsideLeft.isValid())
+      if (nodeOutsideLeft.isValid()) {
         nodeOutsideLeft = nextLeftContour(nodeOutsideLeft);
+      }
 
-      if (nodeOutsideRight.isValid())
+      if (nodeOutsideRight.isValid()) {
         nodeOutsideRight = nextRightContour(nodeOutsideRight);
+      }
 
       ancestor[nodeOutsideRight] = v;
 

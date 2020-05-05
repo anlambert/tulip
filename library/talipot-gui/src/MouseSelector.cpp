@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -79,17 +79,21 @@ bool MouseSelector::eventFilter(QObject *widget, QEvent *e) {
       int clampedX = qMouseEv->x();
       int clampedY = qMouseEv->y();
 
-      if (clampedX < 0)
+      if (clampedX < 0) {
         clampedX = 0;
+      }
 
-      if (clampedY < 0)
+      if (clampedY < 0) {
         clampedY = 0;
+      }
 
-      if (clampedX > glMainWidget->width())
+      if (clampedX > glMainWidget->width()) {
         clampedX = glMainWidget->width();
+      }
 
-      if (clampedY > glMainWidget->height())
+      if (clampedY > glMainWidget->height()) {
         clampedY = glMainWidget->height();
+      }
 
       w = clampedX - x;
       h = clampedY - y;
@@ -123,9 +127,9 @@ bool MouseSelector::eventFilter(QObject *widget, QEvent *e) {
           Qt::ControlModifier
 #endif
       ) {
-        if (mousePressModifier == Qt::ShiftModifier && kModifier != Qt::ShiftModifier)
+        if (mousePressModifier == Qt::ShiftModifier && kModifier != Qt::ShiftModifier) {
           boolVal = false;
-        else {
+        } else {
           if (selection->getNodeDefaultValue() == true ||
               selection->getEdgeDefaultValue() == true) {
             graph->push();
@@ -214,8 +218,9 @@ bool MouseSelector::eventFilter(QObject *widget, QEvent *e) {
 
         glMainWidget->pickNodesEdges(x, y, w, h, tmpSetNode, tmpSetEdge);
 
-        if (needPush)
+        if (needPush) {
           graph->push();
+        }
 
         if (_mode == EdgesAndNodes || _mode == NodesOnly) {
           for (const auto &entity : tmpSetNode) {
@@ -248,8 +253,9 @@ bool MouseSelector::eventFilter(QObject *widget, QEvent *e) {
 }
 //==================================================================
 bool MouseSelector::draw(GlMainWidget *glMainWidget) {
-  if (!started)
+  if (!started) {
     return false;
+  }
 
   if (glMainWidget->getScene()->getGlGraphComposite()->getInputData()->getGraph() != graph) {
     graph = nullptr;

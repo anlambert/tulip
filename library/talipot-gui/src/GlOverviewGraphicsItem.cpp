@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -52,8 +52,9 @@ void GlOverviewGraphicsItem::setLayerVisible(const string &name, bool visible) {
 
 void GlOverviewGraphicsItem::draw(bool generatePixmap) {
 
-  if (baseScene.getLayersList().empty())
+  if (baseScene.getLayersList().empty()) {
     return;
+  }
 
   if (_frameWidth % 2 == 1) {
     ++_frameWidth;
@@ -135,8 +136,9 @@ void GlOverviewGraphicsItem::draw(bool generatePixmap) {
 
   eyesVector = eyesVector * (1.f / eyesVector[2]);
 
-  for (unsigned int i = 0; i < 4; i++)
+  for (unsigned int i = 0; i < 4; i++) {
     cameraBoundingBox[i] = cameraBoundingBox[i] - eyesVector * cameraBoundingBox[i][2];
+  }
 
   // Change viewport of the scene to the overview viewport
   baseScene.setViewport(0, 0, width, height);
@@ -200,11 +202,13 @@ void GlOverviewGraphicsItem::draw(bool generatePixmap) {
     for (const auto &it : layersList) {
       layersVisibility.push_back(it.second->isVisible());
 
-      if (it.second->isAWorkingLayer())
+      if (it.second->isAWorkingLayer()) {
         it.second->setVisible(false);
+      }
 
-      if (_hiddenLayers.count(it.first) != 0)
+      if (_hiddenLayers.count(it.first) != 0) {
         it.second->setVisible(false);
+      }
     }
 
     // Draw the scene
@@ -215,8 +219,9 @@ void GlOverviewGraphicsItem::draw(bool generatePixmap) {
     vector<bool>::iterator itTmp = layersVisibility.begin();
 
     for (const auto &it : layersList) {
-      if ((*itTmp) == true)
+      if ((*itTmp) == true) {
         it.second->setVisible(true);
+      }
 
       ++itTmp;
     }
@@ -302,8 +307,9 @@ void GlOverviewGraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) 
 }
 
 void GlOverviewGraphicsItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
-  if (mouseClicked)
+  if (mouseClicked) {
     setScenePosition(event->pos());
+  }
 }
 
 void GlOverviewGraphicsItem::setScenePosition(QPointF pos) {

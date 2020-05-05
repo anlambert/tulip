@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -36,8 +36,9 @@ static PyObject *talipotutils_updateVisualization(PyObject *, PyObject *args) {
     workspace = mainWindow->findChild<Workspace *>();
   }
 
-  if (!PyArg_ParseTuple(args, "|i", &i))
+  if (!PyArg_ParseTuple(args, "|i", &i)) {
     Py_RETURN_NONE;
+  }
 
   bool centerViews = i > 0;
 
@@ -106,8 +107,9 @@ static PyObject *talipotutils_runGraphScript(PyObject *, PyObject *args) {
 static PyObject *talipotutils_setProcessQtEvents(PyObject *, PyObject *o) {
   int i;
 
-  if (!PyArg_ParseTuple(o, "i", &i))
+  if (!PyArg_ParseTuple(o, "i", &i)) {
     return NULL;
+  }
 
   PythonInterpreter::getInstance()->setProcessQtEventsDuringScriptExecution(i > 0);
 

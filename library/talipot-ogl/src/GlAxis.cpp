@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -75,13 +75,15 @@ void GlAxis::setAxisGraduations(const std::vector<std::string> &axisGradsLabels,
     BoundingBox textBoundingBox = graduationLabel->getTextBoundingBox();
     labelHeight = spaceBetweenAxisGrads / 2.;
 
-    if (labelHeight > 50)
+    if (labelHeight > 50) {
       labelHeight = 50;
+    }
 
-    if (textBoundingBox.height())
+    if (textBoundingBox.height()) {
       labelWidth = (labelHeight / textBoundingBox.height()) * textBoundingBox.width();
-    else
+    } else {
       labelWidth = 0;
+    }
 
     if (axisOrientation == HORIZONTAL_AXIS) {
 
@@ -167,10 +169,11 @@ Coord GlAxis::computeCaptionCenter(const bool captionFrame) {
   Coord captionCenter;
   float captionHeight;
 
-  if (captionFrame)
+  if (captionFrame) {
     captionHeight = baseCaptionHeight;
-  else
+  } else {
     captionHeight = this->captionHeight;
+  }
 
   if (axisOrientation == VERTICAL_AXIS) {
     if (captionPosition == RIGHT) {
@@ -208,14 +211,16 @@ Coord GlAxis::computeCaptionCenter(const bool captionFrame) {
 void GlAxis::addCaption(const CaptionLabelPosition &captionPos, const float captionHeight,
                         const bool frame, const float maxCapWidth, const float offset,
                         const std::string caption) {
-  if (!caption.empty())
+  if (!caption.empty()) {
     captionText = caption;
+  }
 
   captionPosition = captionPos;
   captionFrame = frame;
 
-  if (maxCapWidth != 0)
+  if (maxCapWidth != 0) {
     maxCaptionWidth = maxCapWidth;
+  }
 
   if (offset != 0) {
     captionOffset = offset;
@@ -233,8 +238,9 @@ void GlAxis::addAxisCaption(const Coord &captionLabelCenter, const bool frame) {
 
   captionLabel = new GlLabel(captionLabelCenter, Size(captionWidth, captionHeight), axisColor);
 
-  if (axisOrientation == VERTICAL_AXIS && (captionPosition == LEFT || captionPosition == RIGHT))
+  if (axisOrientation == VERTICAL_AXIS && (captionPosition == LEFT || captionPosition == RIGHT)) {
     captionLabel->rotate(0, 0, 90);
+  }
 
   captionLabel->setText(captionText);
   captionComposite->addGlEntity(captionLabel, axisName + " axis caption");
@@ -329,19 +335,21 @@ void GlAxis::setGradsLabelsHeight(float height) {
     l->setSize(Size(labelWidth, labelHeight));
 
     if (axisOrientation == HORIZONTAL_AXIS) {
-      if (axisGradsPosition == LEFT_OR_BELOW)
+      if (axisGradsPosition == LEFT_OR_BELOW) {
         l->setPosition(Coord(axisBaseCoord.getX() + i * spaceBetweenAxisGrads,
                              axisBaseCoord.getY() - axisGradsWidth / 2 - labelWidth / 2 - 2));
-      else if (axisGradsPosition == RIGHT_OR_ABOVE)
+      } else if (axisGradsPosition == RIGHT_OR_ABOVE) {
         l->setPosition(Coord(axisBaseCoord.getX() + i * spaceBetweenAxisGrads,
                              axisBaseCoord.getY() + axisGradsWidth / 2 + labelWidth / 2 + 2));
+      }
     } else if (axisOrientation == VERTICAL_AXIS) {
-      if (axisGradsPosition == LEFT_OR_BELOW)
+      if (axisGradsPosition == LEFT_OR_BELOW) {
         l->setPosition(Coord(axisBaseCoord.getX() - axisGradsWidth / 2. - labelWidth / 2. - 2,
                              axisBaseCoord.getY() + i * spaceBetweenAxisGrads));
-      else if (axisGradsPosition == RIGHT_OR_ABOVE)
+      } else if (axisGradsPosition == RIGHT_OR_ABOVE) {
         l->setPosition(Coord(axisBaseCoord.getX() + axisGradsWidth / 2. + labelWidth / 2. + 2,
                              axisBaseCoord.getY() + i * spaceBetweenAxisGrads));
+      }
     }
 
     ++i;

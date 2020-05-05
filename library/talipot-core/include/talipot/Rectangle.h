@@ -79,17 +79,21 @@ struct Rectangle : public Array<Vector<Obj, 2, OTYPE>, 2> {
     assert(this->isValid());
     assert(r.isValid());
 
-    if ((*this)[0][0] > r[1][0])
+    if ((*this)[0][0] > r[1][0]) {
       return false;
+    }
 
-    if ((*this)[1][0] < r[0][0])
+    if ((*this)[1][0] < r[0][0]) {
       return false;
+    }
 
-    if ((*this)[0][1] > r[1][1])
+    if ((*this)[0][1] > r[1][1]) {
       return false;
+    }
 
-    if ((*this)[1][1] < r[0][1])
+    if ((*this)[1][1] < r[0][1]) {
       return false;
+    }
 
     return true;
   }
@@ -102,8 +106,9 @@ struct Rectangle : public Array<Vector<Obj, 2, OTYPE>, 2> {
     assert(this->isValid());
     assert(r.isValid());
 
-    if (!this->intersect(r))
+    if (!this->intersect(r)) {
       return false;
+    }
 
     intersection[0][0] = std::max((*this)[0][0], r[0][0]);
     intersection[1][0] = std::min((*this)[1][0], r[1][0]);
@@ -125,17 +130,21 @@ struct Rectangle : public Array<Vector<Obj, 2, OTYPE>, 2> {
   bool isInside(const Vector<Obj, 2, OTYPE> &p) const {
     assert(isValid());
 
-    if (p[0] > (*this)[1][0])
+    if (p[0] > (*this)[1][0]) {
       return false;
+    }
 
-    if (p[0] < (*this)[0][0])
+    if (p[0] < (*this)[0][0]) {
       return false;
+    }
 
-    if (p[1] > (*this)[1][1])
+    if (p[1] > (*this)[1][1]) {
       return false;
+    }
 
-    if (p[1] < (*this)[0][1])
+    if (p[1] < (*this)[0][1]) {
       return false;
+    }
 
     return true;
   }
@@ -147,11 +156,13 @@ struct Rectangle : public Array<Vector<Obj, 2, OTYPE>, 2> {
     assert(isValid());
     assert(r.isValid());
 
-    if ((*this)[0] == r[0] && (*this)[1] == r[1])
+    if ((*this)[0] == r[0] && (*this)[1] == r[1]) {
       return true;
+    }
 
-    if (this->isInside(r[0]) && this->isInside(r[1]))
+    if (this->isInside(r[0]) && this->isInside(r[1])) {
       return true;
+    }
 
     return false;
   }
@@ -197,8 +208,9 @@ struct Rectangle : public Array<Vector<Obj, 2, OTYPE>, 2> {
   Obj aspectRatio() const {
     assert(isValid());
 
-    if (std::max(height(), width()) < std::numeric_limits<Obj>::epsilon())
+    if (std::max(height(), width()) < std::numeric_limits<Obj>::epsilon()) {
       return 0.;
+    }
 
     return std::min(height(), width()) / std::max(height(), width());
   }

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -25,14 +25,16 @@ GraphElementModel::GraphElementModel(Graph *graph, unsigned int id, QObject *par
     : Model(parent), _graph(graph), _id(id) {}
 
 int GraphElementModel::rowCount(const QModelIndex &parent) const {
-  if (_graph == nullptr || parent.isValid())
+  if (_graph == nullptr || parent.isValid()) {
     return 0;
+  }
   return getGraphProperties().size();
 }
 
 int GraphElementModel::columnCount(const QModelIndex &parent) const {
-  if (_graph == nullptr || parent.isValid())
+  if (_graph == nullptr || parent.isValid()) {
     return 0;
+  }
 
   return 1;
 }
@@ -43,10 +45,11 @@ QModelIndex GraphElementModel::parent(const QModelIndex & /*child*/) const {
 
 QVariant GraphElementModel::headerData(int section, Qt::Orientation orientation, int role) const {
   if (orientation == Qt::Horizontal) {
-    if (role == Qt::DisplayRole || role == Qt::ToolTipRole)
+    if (role == Qt::DisplayRole || role == Qt::ToolTipRole) {
       return headerText(_id);
-    else if (role == Qt::TextAlignmentRole)
+    } else if (role == Qt::TextAlignmentRole) {
       return Qt::AlignCenter;
+    }
   } else if (role == Qt::DisplayRole) {
     return getGraphProperties()[section]->getName().c_str();
   }
@@ -55,8 +58,9 @@ QVariant GraphElementModel::headerData(int section, Qt::Orientation orientation,
 }
 
 QModelIndex GraphElementModel::index(int row, int column, const QModelIndex &parent) const {
-  if (!hasIndex(row, column, parent))
+  if (!hasIndex(row, column, parent)) {
     return QModelIndex();
+  }
   return createIndex(row, column, getGraphProperties()[row]);
 }
 
@@ -89,8 +93,9 @@ QVector<PropertyInterface *> GraphElementModel::getGraphProperties() const {
   QVector<PropertyInterface *> properties;
   for (PropertyInterface *prop : _graph->getObjectProperties()) {
 #ifdef NDEBUG
-    if (prop->getName() == "viewMetaGraph")
+    if (prop->getName() == "viewMetaGraph") {
       continue;
+    }
 #endif
     properties.append(prop);
   }

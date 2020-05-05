@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -38,8 +38,9 @@ float Plane::planeValue(float a, float b, float c, float d, float x, float y) {
 
 bool Plane::computePlane(Coord &p1, Coord &p2, Coord &p3, Coord &p4) {
   // This is not a plane !
-  if (a == 0 && b == 0 && c == 0)
+  if (a == 0 && b == 0 && c == 0) {
     return false;
+  }
 
   if (a != 0) {
     p2 = p1;

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -45,8 +45,9 @@ QStringList Font::installedFontNames() {
     boldItalicFont.setItalic(true);
 
     if (!normalFont.exists() || !boldFont.exists() || !italicFont.exists() ||
-        !boldItalicFont.exists())
+        !boldItalicFont.exists()) {
       continue;
+    }
 
     result << fontName;
   }
@@ -117,8 +118,9 @@ QString Font::fontFamily() const {
   QStringList families(QFontDatabase::applicationFontFamilies(fontId()));
   QString family("Unregistered font");
 
-  if (!families.empty())
+  if (!families.empty()) {
     family = families[0];
+  }
 
   return family;
 }
@@ -149,11 +151,13 @@ bool Font::exists() const {
 void Font::refreshFontFile() {
   _fontFile = talipotFontsDirectory() + fontName() + "/" + fontName();
 
-  if (isBold())
+  if (isBold()) {
     _fontFile += "_Bold";
+  }
 
-  if (isItalic())
+  if (isItalic()) {
     _fontFile += "_Italic";
+  }
 
   _fontFile += ".ttf";
 }

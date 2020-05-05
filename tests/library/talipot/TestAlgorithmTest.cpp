@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -259,11 +259,13 @@ void TestAlgorithmTest::testBiconnected() {
   node n[10];
   edge e[10];
 
-  for (int i = 0; i < 4; ++i)
+  for (int i = 0; i < 4; ++i) {
     n[i] = graph->addNode();
+  }
 
-  for (int i = 0; i < 4; ++i)
+  for (int i = 0; i < 4; ++i) {
     e[i] = graph->addEdge(n[i], n[(i + 1) % 4]);
+  }
 
   CPPUNIT_ASSERT(BiconnectedTest::isBiconnected(graph));
   graph->delEdge(e[0]);
@@ -282,8 +284,9 @@ void TestAlgorithmTest::testBiconnected() {
   // Root separator
   graph->clear();
 
-  for (int i = 0; i < 5; ++i)
+  for (int i = 0; i < 5; ++i) {
     n[i] = graph->addNode();
+  }
 
   e[0] = graph->addEdge(n[0], n[1]);
   e[1] = graph->addEdge(n[0], n[2]);

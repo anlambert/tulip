@@ -53,10 +53,11 @@ public:
   }
 
   void setProperty(const QString &name, const QVariant &value) override {
-    if (name == "fillColor")
+    if (name == "fillColor") {
       static_cast<GlComplexPolygon *>(entity)->setFillColor(value.value<Color>());
-    else if (name == "outlineColor")
+    } else if (name == "outlineColor") {
       static_cast<GlComplexPolygon *>(entity)->setOutlineColor(value.value<Color>());
+    }
   }
 };
 
@@ -127,8 +128,9 @@ QTableView *GeographicViewShowElementInfo::tableView() const {
 
 bool GeographicViewShowElementInfo::eventFilter(QObject *widget, QEvent *e) {
   if (widget == _informationWidget &&
-      (e->type() == QEvent::Wheel || e->type() == QEvent::MouseButtonPress))
+      (e->type() == QEvent::Wheel || e->type() == QEvent::MouseButtonPress)) {
     return true;
+  }
 
   if (_informationWidget->isVisible() && e->type() == QEvent::Wheel) {
     _informationWidgetItem->setVisible(false);
@@ -181,14 +183,16 @@ bool GeographicViewShowElementInfo::eventFilter(QObject *widget, QEvent *e) {
             QPoint position = qMouseEv->pos();
 
             if (position.x() + _informationWidgetItem->rect().width() >
-                _view->graphicsView()->sceneRect().width() - 5)
+                _view->graphicsView()->sceneRect().width() - 5) {
               position.setX(_view->graphicsView()->sceneRect().width() -
                             _informationWidgetItem->rect().width() - 5);
+            }
 
             if (position.y() + _informationWidgetItem->rect().height() >
-                _view->graphicsView()->sceneRect().height())
+                _view->graphicsView()->sceneRect().height()) {
               position.setY(_view->graphicsView()->sceneRect().height() -
                             _informationWidgetItem->rect().height() - 5);
+            }
 
             _informationWidgetItem->setPos(position);
             QPropertyAnimation *animation =
@@ -204,8 +208,9 @@ bool GeographicViewShowElementInfo::eventFilter(QObject *widget, QEvent *e) {
             GlComplexPolygon *polygon =
                 dynamic_cast<GlComplexPolygon *>(selectedEntity.getEntity());
 
-            if (!polygon)
+            if (!polygon) {
               return false;
+            }
 
             _informationWidgetItem->setVisible(true);
             QLabel *title = _informationWidget->findChild<QLabel *>();
@@ -226,12 +231,14 @@ bool GeographicViewShowElementInfo::eventFilter(QObject *widget, QEvent *e) {
             QPoint position = qMouseEv->pos();
 
             if (position.x() + _informationWidgetItem->rect().width() >
-                _view->graphicsView()->sceneRect().width())
+                _view->graphicsView()->sceneRect().width()) {
               position.setX(qMouseEv->pos().x() - _informationWidgetItem->rect().width());
+            }
 
             if (position.y() + _informationWidgetItem->rect().height() >
-                _view->graphicsView()->sceneRect().height())
+                _view->graphicsView()->sceneRect().height()) {
               position.setY(qMouseEv->pos().y() - _informationWidgetItem->rect().height());
+            }
 
             _informationWidgetItem->setPos(position);
             QPropertyAnimation *animation =
@@ -255,8 +262,9 @@ bool GeographicViewShowElementInfo::pick(int x, int y, SelectedEntity &selectedE
   GeographicView *geoView = static_cast<GeographicView *>(view());
 
   if (geoView->getGeographicViewGraphicsView()->getGlMainWidget()->pickNodesEdges(x, y,
-                                                                                  selectedEntity))
+                                                                                  selectedEntity)) {
     return true;
+  }
 
   vector<SelectedEntity> selectedEntities;
 

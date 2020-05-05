@@ -55,14 +55,17 @@ public:
       int ival = 0;
       double val = 0;
 
-      if (dataSet->get("number of pivots", ival))
+      if (dataSet->get("number of pivots", ival)) {
         pivotMds->setNumberOfPivots(ival);
+      }
 
-      if (dataSet->get("edge costs", val))
+      if (dataSet->get("edge costs", val)) {
         pivotMds->setEdgeCosts(ival);
+      }
 
-      if (dataSet->get("use edge costs", bval))
+      if (dataSet->get("use edge costs", bval)) {
         pivotMds->useEdgeCostsAttribute(bval);
+      }
     }
   }
 

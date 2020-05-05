@@ -253,20 +253,23 @@ void SearchWidget::setGraph(Graph *g) {
   _ui->searchTermBCombo->setModel(
       new GraphPropertiesModel<PropertyInterface>("Custom value", g, false, _ui->searchTermBCombo));
 
-  if (!oldStorageName.isEmpty())
+  if (!oldStorageName.isEmpty()) {
     searchForIndex(_ui->resultsStorageCombo, oldStorageName);
-  else
+  } else {
     searchForIndex(_ui->resultsStorageCombo, "viewSelection");
+  }
 
-  if (!oldTermAName.isEmpty())
+  if (!oldTermAName.isEmpty()) {
     searchForIndex(_ui->searchTermACombo, oldTermAName);
-  else
+  } else {
     searchForIndex(_ui->searchTermACombo, "viewMetric");
+  }
 
-  if (!oldTermBName.isEmpty())
+  if (!oldTermBName.isEmpty()) {
     searchForIndex(_ui->searchTermBCombo, oldTermBName);
-  else
+  } else {
     searchForIndex(_ui->searchTermBCombo, "Custom value");
+  }
 }
 
 void SearchWidget::selectionModeChanged(int index) {
@@ -274,8 +277,9 @@ void SearchWidget::selectionModeChanged(int index) {
 }
 
 void SearchWidget::search() {
-  if (_graph == nullptr)
+  if (_graph == nullptr) {
     return;
+  }
 
   _graph->push();
   Observable::holdObservers();
@@ -406,21 +410,23 @@ void SearchWidget::search() {
   Observable::unholdObservers();
   _graph->popIfNoUpdates();
 
-  if (deleteTermB)
+  if (deleteTermB) {
     delete b;
+  }
 
   delete result;
 
-  if (onNodes && !onEdges)
+  if (onNodes && !onEdges) {
     _ui->resultsCountLabel->setText(QString::number(resultsCountNodes) + " node(s) " +
                                     searchOpDescription);
-  else if (!onNodes && onEdges)
+  } else if (!onNodes && onEdges) {
     _ui->resultsCountLabel->setText(QString::number(resultsCountEdges) + " edge(s) " +
                                     searchOpDescription);
-  else
+  } else {
     _ui->resultsCountLabel->setText(QString::number(resultsCountNodes) + " node(s) and " +
                                     QString::number(resultsCountEdges) + " edge(s) " +
                                     searchOpDescription);
+  }
 }
 
 void SearchWidget::graphIndexChanged() {
@@ -464,10 +470,11 @@ void SearchWidget::updateOperators(tlp::PropertyInterface *a, tlp::PropertyInter
 void SearchWidget::updateOperators(PropertyInterface *a, const QString &b) {
   bool isCustomValueDouble = false;
 
-  if (b.isEmpty())
+  if (b.isEmpty()) {
     isCustomValueDouble = true;
-  else
+  } else {
     b.toDouble(&isCustomValueDouble);
+  }
 
   setNumericOperatorsEnabled(dynamic_cast<tlp::NumericProperty *>(a) != nullptr &&
                              isCustomValueDouble);
@@ -477,8 +484,9 @@ void SearchWidget::setNumericOperatorsEnabled(bool e) {
   for (int i = 2; i <= 5; ++i) {
     static_cast<QStandardItemModel *>(_ui->operatorCombo->model())->item(i)->setEnabled(e);
 
-    if (_ui->operatorCombo->currentIndex() == i && !e)
+    if (_ui->operatorCombo->currentIndex() == i && !e) {
       _ui->operatorCombo->setCurrentIndex(0);
+    }
   }
 }
 
@@ -487,10 +495,11 @@ void SearchWidget::updateEditorWidget() {
   tlp::PropertyInterface *prop = term(_ui->searchTermACombo);
   int scopeIndex = _ui->scopeCombo->currentIndex();
 
-  if (scopeIndex == 1 || scopeIndex == 0)
+  if (scopeIndex == 1 || scopeIndex == 0) {
     defaultValue = GraphModel::nodeDefaultValue(prop);
-  else
+  } else {
     defaultValue = GraphModel::edgeDefaultValue(prop);
+  }
 
   // workaround for sf bug #716
   // I suspect that because 0 == false (when updating termA from viewMetric
@@ -529,12 +538,13 @@ PropertyInterface *SearchWidget::term(QComboBox *combo) {
 SearchOperator *SearchWidget::searchOperator() {
   SearchOperator *op = nullptr;
 
-  if (isNumericComparison())
+  if (isNumericComparison()) {
     op = NUMERIC_OPERATORS[_ui->operatorCombo->currentIndex()];
-  else
+  } else {
     op = _ui->caseSensitivityCheck->isChecked()
              ? STRING_OPERATORS[_ui->operatorCombo->currentIndex()]
              : NOCASE_STRING_OPERATORS[_ui->operatorCombo->currentIndex()];
+  }
 
   return op;
 }

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -68,9 +68,9 @@ public:
       : AbstractStringProperty::MetaValueCalculator(), sgLabel(label), useSubGraphName(useSgName) {}
 
   void computeMetaValue(AbstractStringProperty *label, node mN, Graph *sg, Graph *) override {
-    if (sgLabel)
+    if (sgLabel) {
       label->setNodeValue(mN, sgLabel->getNodeValue(sg->getOneNode()));
-    else if (useSubGraphName) {
+    } else if (useSubGraphName) {
       string name;
       sg->getAttribute("name", name);
       label->setNodeValue(mN, name);
@@ -170,13 +170,14 @@ public:
     string name("quotient of ");
     string graphName = graph->getName();
 
-    if (graphName.empty())
+    if (graphName.empty()) {
       name += to_string(graph->getId());
-    else {
+    } else {
       name += graphName;
 
-      if (graphName == "unnamed")
+      if (graphName == "unnamed") {
         name += " " + to_string(graph->getId());
+      }
     }
     quotientGraph->setName(name);
 
@@ -204,8 +205,9 @@ public:
       PropertyInterface *prop = quotientGraph->getProperty(pName);
 
       // do nothing for viewBorderWidth
-      if (pName == "viewBorderWidth")
+      if (pName == "viewBorderWidth") {
         continue;
+      }
 
       if (dynamic_cast<DoubleProperty *>(prop)) {
         prevCalcs[prop] = prop->getMetaValueCalculator();
@@ -290,15 +292,17 @@ public:
 
                 case DoubleProperty::MAX_CALC:
 
-                  if (value < metric->getEdgeValue(op))
+                  if (value < metric->getEdgeValue(op)) {
                     value = metric->getEdgeValue(op);
+                  }
 
                   break;
 
                 case DoubleProperty::MIN_CALC:
 
-                  if (value > metric->getEdgeValue(op))
+                  if (value > metric->getEdgeValue(op)) {
                     value = metric->getEdgeValue(op);
+                  }
 
                   break;
 
@@ -306,10 +310,11 @@ public:
                   break;
                 }
 
-                if (opOK)
+                if (opOK) {
                   metric->setEdgeValue(op, value);
-                else
+                } else {
                   metric->setEdgeValue(mE, value);
+                }
               }
             }
           }
@@ -318,18 +323,20 @@ public:
           if (cardProp) {
             unsigned int card = cardProp->getEdgeValue(mE) + cardProp->getEdgeValue(op);
 
-            if (opOK)
+            if (opOK) {
               cardProp->setEdgeValue(op, card);
-            else
+            } else {
               cardProp->setEdgeValue(mE, card);
+            }
           }
 
           // insert one of the opposite meta edges in edgesToDel
           // and insert its undelying edges in the set of the remaining one
           edge meToKeep(mE.id), meToDel(op.id);
 
-          if (opOK)
+          if (opOK) {
             meToKeep = op, meToDel = mE;
+          }
 
           edgesToDel.insert(meToDel);
           set<edge> se = metaInfo->getEdgeValue(meToKeep);
@@ -390,8 +397,9 @@ public:
 
         // if a quotient graph has been computed
         // update metaInfo of current meta node
-        if (dSet.getAndFree("quotientGraph", sg))
+        if (dSet.getAndFree("quotientGraph", sg)) {
           metaInfo->setNodeValue(mn, sg);
+        }
 
         ++itn;
       }

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -119,8 +119,9 @@ static QStringList optionKeysForModeAndState(const QString &key, QIcon::Mode mod
 static QVariant optionValueForModeAndState(const QString &baseKey, QIcon::Mode mode,
                                            QIcon::State state, const QVariantMap &options) {
   for (auto key : optionKeysForModeAndState(baseKey, mode, state)) {
-    if (options.contains(key) && !(options.value(key).toString().isEmpty()))
+    if (options.contains(key) && !(options.value(key).toString().isEmpty())) {
       return options.value(key);
+    }
   }
   return options.value(baseKey);
 }

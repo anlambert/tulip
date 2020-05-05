@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -93,15 +93,17 @@ struct GuillaumeLatapyModel : public ImportModule {
 
     for (i = 0; i < nbNodes; ++i) {
       if (i % 100 == 0) {
-        if (pluginProgress->progress(i, iterations) != TLP_CONTINUE)
+        if (pluginProgress->progress(i, iterations) != TLP_CONTINUE) {
           return pluginProgress->state() != TLP_CANCEL;
+        }
       }
 
-      if (i < nbNodesScaleFree)
+      if (i < nbNodesScaleFree) {
         vec_bottom_nodes[i].degree =
             uint(ceil(((nbNodes / 2.0 - 10.0) / nbNodesScaleFree / 2) * (i + 1)));
-      else
+      } else {
         vec_bottom_nodes[i].degree = maxDegreeSmallWorldNodes;
+      }
 
       numberOfEdges += vec_bottom_nodes[i].degree;
       vec_bottom_nodes[i].n = graph->addNode();
@@ -111,10 +113,11 @@ struct GuillaumeLatapyModel : public ImportModule {
     unsigned int dixieme = uint(ceil((10.0 * numberOfEdges) / nbNodes)) % 10;
 
     for (i = 0; i < nbNodes - 1; ++i) {
-      if (i % 10 >= dixieme)
+      if (i % 10 >= dixieme) {
         vec_top_nodes[i].degree = degreeTop;
-      else
+      } else {
         vec_top_nodes[i].degree = degreeTop + 1;
+      }
 
       numberOfEdges -= vec_top_nodes[i].degree;
     }
@@ -123,27 +126,31 @@ struct GuillaumeLatapyModel : public ImportModule {
 
     for (i = 0; i < nbNodes; ++i) {
       if (i % 100 == 0) {
-        if (pluginProgress->progress(i + nbNodes, iterations) != TLP_CONTINUE)
+        if (pluginProgress->progress(i + nbNodes, iterations) != TLP_CONTINUE) {
           return pluginProgress->state() != TLP_CANCEL;
+        }
       }
 
       for (j = 0; j < vec_top_nodes[i].degree; ++j) {
         int bottom_id = tlp::randomInteger(vec_bottom_nodes.size() - 1);
 
-        if (isNotNodeInVector(vec_top_nodes[i].bottom_nodes, vec_bottom_nodes[bottom_id].n))
+        if (isNotNodeInVector(vec_top_nodes[i].bottom_nodes, vec_bottom_nodes[bottom_id].n)) {
           vec_top_nodes[i].bottom_nodes.push_back(vec_bottom_nodes[bottom_id].n);
+        }
 
         vec_bottom_nodes[bottom_id].degree--;
 
-        if (vec_bottom_nodes[bottom_id].degree == 0)
+        if (vec_bottom_nodes[bottom_id].degree == 0) {
           vec_bottom_nodes.erase(vec_bottom_nodes.begin() + bottom_id);
+        }
       }
     }
 
     for (i = 0; i < nbNodes; ++i) {
       if (i % 100 == 0) {
-        if (pluginProgress->progress(i + 2 * nbNodes, iterations) != TLP_CONTINUE)
+        if (pluginProgress->progress(i + 2 * nbNodes, iterations) != TLP_CONTINUE) {
           return pluginProgress->state() != TLP_CANCEL;
+        }
       }
 
       for (j = 0; j < vec_top_nodes[i].bottom_nodes.size(); ++j) {

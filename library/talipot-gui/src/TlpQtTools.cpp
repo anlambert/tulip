@@ -148,8 +148,9 @@ bool getColorDialog(const QColor &color, QWidget *parent, const QString &title, 
   if (newColor.isValid()) {
     result = newColor;
     return true;
-  } else
+  } else {
     return false;
+  }
 }
 
 QString propertyTypeToPropertyTypeLabel(const string &typeName) {
@@ -210,11 +211,12 @@ public:
       }
 
       if (image.isNull()) {
-        if (!imageFile.exists())
+        if (!imageFile.exists()) {
           tlp::error() << "Error when loading texture, the file named \"" << filename.c_str()
                        << "\" does not exist" << std::endl;
-        else
+        } else {
           tlp::error() << "Error when loading texture from " << filename.c_str() << std::endl;
+        }
 
         return false;
       }
@@ -304,8 +306,9 @@ class QDebugOStream : public std::ostream {
       if (c == '\n') {
         qDebug() << buf;
         buf.clear();
-      } else
+      } else {
         buf += c;
+      }
 
       return c;
     }
@@ -315,8 +318,9 @@ class QDebugOStream : public std::ostream {
         buf += std::string(p, n - 1);
         qDebug() << buf.c_str();
         buf.clear();
-      } else
+      } else {
         buf += std::string(p, n);
+      }
 
       return n;
     }
@@ -331,8 +335,9 @@ public:
 static QDebugOStream *qDebugStream = nullptr;
 
 void redirectDebugOutputToQDebug() {
-  if (qDebugStream == nullptr)
+  if (qDebugStream == nullptr) {
     qDebugStream = new QDebugOStream();
+  }
 
   tlp::setDebugOutput(*qDebugStream);
 }
@@ -346,8 +351,9 @@ class QWarningOStream : public std::ostream {
       if (c == '\n') {
         qWarning() << buf.c_str();
         buf.clear();
-      } else
+      } else {
         buf += c;
+      }
 
       return c;
     }
@@ -357,8 +363,9 @@ class QWarningOStream : public std::ostream {
         buf += std::string(p, n - 1);
         qWarning() << buf.c_str();
         buf.clear();
-      } else
+      } else {
         buf += std::string(p, n);
+      }
 
       return n;
     }
@@ -373,8 +380,9 @@ public:
 static QWarningOStream *qWarningStream = nullptr;
 
 void redirectWarningOutputToQWarning() {
-  if (qWarningStream == nullptr)
+  if (qWarningStream == nullptr) {
     qWarningStream = new QWarningOStream();
+  }
 
   tlp::setWarningOutput(*qWarningStream);
 }
@@ -388,8 +396,9 @@ class QErrorOStream : public std::ostream {
       if (c == '\n') {
         qCritical() << buf.c_str();
         buf.clear();
-      } else
+      } else {
         buf += c;
+      }
 
       return c;
     }
@@ -399,8 +408,9 @@ class QErrorOStream : public std::ostream {
         buf += std::string(p, n - 1);
         qCritical() << buf.c_str();
         buf.clear();
-      } else
+      } else {
         buf += std::string(p, n);
+      }
 
       return n;
     }
@@ -415,8 +425,9 @@ public:
 static QErrorOStream *qErrorStream = nullptr;
 
 void redirectErrorOutputToQCritical() {
-  if (qErrorStream == nullptr)
+  if (qErrorStream == nullptr) {
     qErrorStream = new QErrorOStream();
+  }
 
   tlp::setErrorOutput(*qErrorStream);
 }
@@ -450,8 +461,9 @@ bool NoQtUserInputFilter::eventFilter(QObject *, QEvent *event) {
 static NoQtUserInputFilter *disableQtUserInputFilter = nullptr;
 
 void disableQtUserInput() {
-  if (disableQtUserInputFilter)
+  if (disableQtUserInputFilter) {
     return;
+  }
 
   disableQtUserInputFilter = new NoQtUserInputFilter();
   QCoreApplication::instance()->installEventFilter(disableQtUserInputFilter);
@@ -459,8 +471,9 @@ void disableQtUserInput() {
 }
 
 void enableQtUserInput() {
-  if (!disableQtUserInputFilter)
+  if (!disableQtUserInputFilter) {
     return;
+  }
 
   QCoreApplication::instance()->removeEventFilter(disableQtUserInputFilter);
   delete disableQtUserInputFilter;

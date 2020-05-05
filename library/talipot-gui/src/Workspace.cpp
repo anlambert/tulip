@@ -105,8 +105,9 @@ void Workspace::setModel(tlp::GraphHierarchiesModel *model) {
   _model = model;
 
   if (_model != nullptr) {
-    for (auto panel : _panels)
+    for (auto panel : _panels) {
       panel->setGraphsModel(_model);
+    }
 
     connect(_model, &GraphHierarchiesModel::currentGraphChanged, this,
             &Workspace::updateStartupMode);
@@ -148,14 +149,16 @@ QString Workspace::panelTitle(tlp::WorkspacePanel *panel) const {
   QRegExp regExp("^.*(?:<([^>])*>){1}$");
 
   for (auto other : _panels) {
-    if (other == panel)
+    if (other == panel) {
       continue;
+    }
 
     if (other->viewName() == panel->viewName()) {
-      if (regExp.exactMatch(other->windowTitle()))
+      if (regExp.exactMatch(other->windowTitle())) {
         digit = std::max<int>(digit, regExp.cap(1).toInt());
-      else
+      } else {
         digit = std::max<int>(digit, 1);
+      }
     }
   }
 
@@ -169,8 +172,9 @@ QString Workspace::panelTitle(tlp::WorkspacePanel *panel) const {
 int Workspace::addPanel(tlp::View *view) {
   WorkspacePanel *panel = new WorkspacePanel(view);
 
-  if (_model != nullptr)
+  if (_model != nullptr) {
     panel->setGraphsModel(_model);
+  }
 
   panel->setWindowTitle(panelTitle(panel));
   connect(panel, &WorkspacePanel::drawNeeded, this, &Workspace::viewNeedsDraw);
@@ -213,13 +217,15 @@ void Workspace::delView(tlp::View *view) {
 void Workspace::panelDestroyed(QObject *obj) {
   WorkspacePanel *panel = static_cast<WorkspacePanel *>(obj);
 
-  if (panel == _focusedPanel)
+  if (panel == _focusedPanel) {
     _focusedPanel = nullptr;
+  }
 
   int removeCount = _panels.removeAll(panel);
 
-  if (removeCount == 0)
+  if (removeCount == 0) {
     return;
+  }
 
   // To prevent segfaults due to Qt's event queue handling when deleting views, we reset the
   // placeholder widget that contained this panel
@@ -231,8 +237,9 @@ void Workspace::panelDestroyed(QObject *obj) {
     }
   }
 
-  if (currentModeWidget() == _ui->exposePage)
+  if (currentModeWidget() == _ui->exposePage) {
     return;
+  }
 
   updateAvailableModes();
 
@@ -245,8 +252,9 @@ void Workspace::viewNeedsDraw() {
   if (_autoCenterViews) {
     // we assume graph has changed
     panel->view()->centerView(true);
-  } else
+  } else {
     panel->view()->draw();
+  }
 }
 
 void Workspace::switchToStartupMode() {
@@ -314,8 +322,9 @@ void Workspace::setSixModeSwitch(QWidget *w) {
 }
 
 void Workspace::switchWorkspaceMode(QWidget *page) {
-  if (currentModeWidget() == page)
+  if (currentModeWidget() == page) {
     return;
+  }
 
   _ui->workspaceContents->setCurrentWidget(page);
   _ui->bottomFrame->setEnabled(page != _ui->startupPage);
@@ -356,8 +365,9 @@ void Workspace::updateAvailableModes() {
 
 void Workspace::updatePanels() {
   for (auto mode : _modeToSlots.keys()) {
-    if (mode == currentModeWidget())
+    if (mode == currentModeWidget()) {
       continue;
+    }
 
     QVector<PlaceHolderWidget *> panelSlots = _modeToSlots[mode];
 
@@ -366,11 +376,13 @@ void Workspace::updatePanels() {
     }
   }
 
-  if (_currentPanelIndex < 0)
+  if (_currentPanelIndex < 0) {
     _currentPanelIndex = 0;
+  }
 
-  if (uint(_currentPanelIndex) > _panels.size() - currentSlotsCount())
+  if (uint(_currentPanelIndex) > _panels.size() - currentSlotsCount()) {
     _currentPanelIndex = _panels.size() - currentSlotsCount();
+  }
 
   //   Fill up slots according to the current index until there is no panel to show
   int i = _currentPanelIndex;
@@ -388,9 +400,9 @@ void Workspace::updatePanels() {
   i = _currentPanelIndex;
 
   for (auto slt : currentModeSlots()) {
-    if (i >= _panels.size())
+    if (i >= _panels.size()) {
       break;
-    else if (slt->widget() != _panels[i]) {
+    } else if (slt->widget() != _panels[i]) {
       slt->setWidget(_panels[i]);
     }
 
@@ -445,8 +457,10 @@ void Workspace::setActivePanel(tlp::View *view) {
 }
 
 void Workspace::setGraphForFocusedPanel(tlp::Graph *g) {
-  if (_focusedPanel && _focusedPanel->isGraphSynchronized() && _focusedPanel->view()->graph() != g)
+  if (_focusedPanel && _focusedPanel->isGraphSynchronized() &&
+      _focusedPanel->view()->graph() != g) {
     _focusedPanel->view()->setGraph(g);
+  }
 }
 
 WorkspacePanel *Workspace::panelForScene(QObject *obj) {
@@ -501,8 +515,9 @@ bool Workspace::handleDragEnterEvent(QEvent *e, const QMimeData *mimedata) {
 bool Workspace::handleDropEvent(const QMimeData *mimedata) {
   const GraphMimeType *graphMime = dynamic_cast<const GraphMimeType *>(mimedata);
 
-  if (graphMime == nullptr)
+  if (graphMime == nullptr) {
     return false;
+  }
 
   if (graphMime != nullptr && graphMime->graph()) {
     emit(addPanelRequest(graphMime->graph()));
@@ -513,15 +528,17 @@ bool Workspace::handleDropEvent(const QMimeData *mimedata) {
 }
 
 void Workspace::expose(bool f) {
-  if (f)
+  if (f) {
     showExposeMode();
-  else
+  } else {
     hideExposeMode();
+  }
 }
 
 void Workspace::showExposeMode() {
-  if (_ui->workspaceContents->currentWidget() == _ui->exposePage)
+  if (_ui->workspaceContents->currentWidget() == _ui->exposePage) {
     return;
+  }
 
   _oldWorkspaceMode = currentModeWidget();
 
@@ -547,15 +564,17 @@ void Workspace::uncheckExposeButton() {
 }
 
 void Workspace::hideExposeMode() {
-  if (currentModeWidget() != _ui->exposePage)
+  if (currentModeWidget() != _ui->exposePage) {
     return;
+  }
 
   _ui->exposeButton->setChecked(false);
   QVector<WorkspacePanel *> newPanels = _ui->exposeMode->panels();
   _panels.clear();
 
-  for (auto p : newPanels)
+  for (auto p : newPanels) {
     _panels.push_back(p);
+  }
 
   _currentPanelIndex = _ui->exposeMode->currentPanelIndex();
 
@@ -572,8 +591,9 @@ void Workspace::hideExposeMode() {
 QWidget *Workspace::suitableMode(QWidget *oldMode) {
   updateAvailableModes();
 
-  if (_modeSwitches.contains(oldMode) && _modeSwitches[oldMode]->isEnabled())
+  if (_modeSwitches.contains(oldMode) && _modeSwitches[oldMode]->isEnabled()) {
     return oldMode;
+  }
 
   int maxSlots = 0;
   QWidget *result = _ui->startupPage;
@@ -676,16 +696,18 @@ void Workspace::readProject(Project *project, QMap<QString, Graph *> rootIds,
 
         View *view = PluginsManager::getPluginObject<View>(QStringToTlpString(viewName));
 
-        if (view == nullptr)
+        if (view == nullptr) {
           continue;
+        }
 
         view->setupUi();
         Graph *rootGraph = rootIds[rootId];
         assert(rootGraph);
         Graph *g = rootGraph->getDescendantGraph(id.toInt());
 
-        if (g == nullptr)
+        if (g == nullptr) {
           g = rootGraph;
+        }
 
         view->setGraph(g);
         DataSet dataSet;
@@ -699,8 +721,9 @@ void Workspace::readProject(Project *project, QMap<QString, Graph *> rootIds,
 
   QIODevice *workspaceXml = project->fileStream("/workspace.xml");
 
-  if (workspaceXml == nullptr)
+  if (workspaceXml == nullptr) {
     return;
+  }
 
   QXmlStreamReader doc(workspaceXml);
 
@@ -711,8 +734,9 @@ void Workspace::readProject(Project *project, QMap<QString, Graph *> rootIds,
 
       for (auto modeWidget : _modeToSlots.keys()) {
         if (_modeToSlots[modeWidget].size() == mode) {
-          if (current > 0 && current < _panels.size())
+          if (current > 0 && current < _panels.size()) {
             setActivePanel(_panels[current]->view());
+          }
 
           QString modeWidgetName = doc.attributes().value("modeWidget").toString();
 
@@ -750,10 +774,11 @@ void Workspace::setPageCountLabel(QLabel *l) {
 
 void Workspace::redrawPanels(bool center) {
   for (auto panel : _panels) {
-    if (center)
+    if (center) {
       panel->view()->centerView();
-    else
+    } else {
       panel->view()->draw();
+    }
   }
 }
 
@@ -786,15 +811,17 @@ void Workspace::updateStartupMode() {
 void Workspace::setFocusedPanelHighlighting(bool h) {
   _focusedPanelHighlighting = h;
 
-  if (_focusedPanel)
+  if (_focusedPanel) {
     _focusedPanel->setHighlightMode(h);
+  }
 }
 
 // update focused panel
 void Workspace::setFocusedPanel(WorkspacePanel *panel) {
   if (_focusedPanel) {
-    if (_focusedPanelHighlighting)
+    if (_focusedPanelHighlighting) {
       _focusedPanel->setHighlightMode(false);
+    }
 
     disconnect(_focusedPanel, &WorkspacePanel::changeGraphSynchronization, this,
                &Workspace::changeFocusedPanelSynchronization);
@@ -804,16 +831,19 @@ void Workspace::setFocusedPanel(WorkspacePanel *panel) {
   connect(_focusedPanel, &WorkspacePanel::changeGraphSynchronization, this,
           &Workspace::changeFocusedPanelSynchronization);
 
-  if (_focusedPanelHighlighting)
+  if (_focusedPanelHighlighting) {
     _focusedPanel->setHighlightMode(true);
+  }
 
   emit panelFocused(panel->view());
 
-  if (_focusedPanel->isGraphSynchronized())
+  if (_focusedPanel->isGraphSynchronized()) {
     emit focusedPanelSynchronized();
+  }
 }
 
 void Workspace::changeFocusedPanelSynchronization(bool s) {
-  if (s)
+  if (s) {
     emit focusedPanelSynchronized();
+  }
 }

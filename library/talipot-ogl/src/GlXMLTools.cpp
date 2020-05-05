@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -37,13 +37,15 @@ unsigned int tlp::GlXMLTools::indentationNumber = 0;
 namespace tlp {
 
 void GlXMLTools::applyIndentation(string &outString) {
-  for (unsigned int i = 0; i < indentationNumber; ++i)
+  for (unsigned int i = 0; i < indentationNumber; ++i) {
     outString.append("  ");
+  }
 }
 
 void GlXMLTools::goToNextCaracter(const string &inString, unsigned int &currentPosition) {
-  while (inString[currentPosition] == ' ' || inString[currentPosition] == '\n')
+  while (inString[currentPosition] == ' ' || inString[currentPosition] == '\n') {
     currentPosition++;
+  }
 }
 
 void GlXMLTools::beginDataNode(string &outString) {
@@ -87,16 +89,18 @@ string GlXMLTools::enterChildNode(const string &inString, unsigned int &currentP
   unsigned int beginPosition = currentPosition + 1;
   size_t endPosition = inString.find('>', currentPosition);
 
-  if (inString.substr(beginPosition - 1, endPosition - beginPosition).find("</") != string::npos)
+  if (inString.substr(beginPosition - 1, endPosition - beginPosition).find("</") != string::npos) {
     return "";
+  }
 
   size_t childNameEndPosition = inString.find(' ', currentPosition);
   currentPosition = endPosition + 1;
 
-  if (childNameEndPosition < endPosition)
+  if (childNameEndPosition < endPosition) {
     return inString.substr(beginPosition, childNameEndPosition - beginPosition);
-  else
+  } else {
     return inString.substr(beginPosition, endPosition - beginPosition);
+  }
 }
 
 void GlXMLTools::leaveChildNode(const string &inString, unsigned int &currentPosition,

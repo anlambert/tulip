@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -59,8 +59,9 @@ public:
       pluginProgress->setComment("Copying nodes values");
       int step = 0, max_step = graph->numberOfNodes();
       for (auto n : selection ? selection->getNonDefaultValuatedNodes() : graph->getNodes()) {
-        if ((++step % 100) == 0)
+        if ((++step % 100) == 0) {
           pluginProgress->progress(step, max_step);
+        }
 
         result->setNodeValue(n, input->getNodeStringValue(n));
       }
@@ -70,8 +71,9 @@ public:
       pluginProgress->setComment("Copying edges values");
       int step = 0, max_step = graph->numberOfEdges();
       for (auto e : selection ? selection->getNonDefaultValuatedEdges() : graph->getEdges()) {
-        if ((++step % 100) == 0)
+        if ((++step % 100) == 0) {
           pluginProgress->progress(step, max_step);
+        }
 
         result->setEdgeValue(e, input->getEdgeStringValue(e));
       }

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -314,7 +314,7 @@ static string &forceUtf8String(string &str) {
     case '\\': // character composition
       if (charComposing) {
         // next one should be an i
-        if (str[i + 1] == 'i')
+        if (str[i + 1] == 'i') {
           switch (charComposing) {
           case '`': // ì
             seq(c3)[1] = '\254';
@@ -347,6 +347,7 @@ static string &forceUtf8String(string &str) {
           default:
             continue;
           }
+        }
 
         str.replace(i, 2, utf8seq, 2);
         ++i;
@@ -601,8 +602,9 @@ static string &forceUtf8String(string &str) {
             // ď
             seq(c4)[1] = '\217';
             break;
-          } else
+          } else {
             continue;
+          }
 
         case 'e':
           switch (charComposing) {
@@ -676,24 +678,27 @@ static string &forceUtf8String(string &str) {
           if (charComposing == '^') {
             seq(c4)[1] = '\245';
             break;
-          } else
+          } else {
             continue;
+          }
 
         case 'j':
           if (charComposing == '^') {
             // ĵ
             seq(c4)[1] = '\265';
             break;
-          } else
+          } else {
             continue;
+          }
 
         case 'k':
           if (charComposing == 'c') {
             // ķ
             seq(c4)[1] = '\267';
             break;
-          } else
+          } else {
             continue;
+          }
 
         case 'l':
           switch (charComposing) {
@@ -888,8 +893,9 @@ static string &forceUtf8String(string &str) {
             // ŵ
             seq(c5)[1] = '\265';
             break;
-          } else
+          } else {
             continue;
+          }
 
         case 'y':
           switch (charComposing) {
@@ -1008,8 +1014,9 @@ static string &forceUtf8String(string &str) {
             // Ď
             seq(c4)[1] = '\216';
             break;
-          } else
+          } else {
             continue;
+          }
 
         case 'E':
           switch (charComposing) {
@@ -1084,8 +1091,9 @@ static string &forceUtf8String(string &str) {
             // Ĥ
             seq(c4)[1] = '\244';
             break;
-          } else
+          } else {
             continue;
+          }
 
         case 'I':
           switch (charComposing) {
@@ -1120,16 +1128,18 @@ static string &forceUtf8String(string &str) {
             // Ĵ
             seq(c4)[1] = '\264';
             break;
-          } else
+          } else {
             continue;
+          }
 
         case 'K':
           if (charComposing == 'c') {
             // Ķ
             seq(c4)[1] = '\266';
             break;
-          } else
+          } else {
             continue;
+          }
 
         case 'L':
           switch (charComposing) {
@@ -1320,8 +1330,9 @@ static string &forceUtf8String(string &str) {
             // Ŵ
             seq(c5)[1] = '\264';
             break;
-          } else
+          } else {
             continue;
+          }
 
         case 'Y':
           switch (charComposing) {
@@ -1366,8 +1377,9 @@ static string &forceUtf8String(string &str) {
         default:
           continue;
         }
-      } else
+      } else {
         continue;
+      }
     }
 
     str.replace(i, 1, utf8seq, 2);
@@ -1433,8 +1445,9 @@ public:
       tlp::StringCollection nodesToImport(NODES_TO_IMPORT);
       nodesToImport.setCurrent(toImport);
 
-      if (dataSet->get("Nodes to import", nodesToImport))
+      if (dataSet->get("Nodes to import", nodesToImport)) {
         toImport = nodesToImport.getCurrent();
+      }
       dataSet->get("One edge per publication", oneEdgePerPubli);
     }
 
@@ -1486,8 +1499,9 @@ public:
       // first add nodes for publication
       vector<node> publis;
 
-      if (createPubliNodes)
+      if (createPubliNodes) {
         graph->addNodes(entries.size(), publis);
+      }
 
       // loop on entries
       unsigned int i = 0;
@@ -1496,8 +1510,9 @@ public:
 
         node publi;
 
-        if (createPubliNodes)
+        if (createPubliNodes) {
           publi = publis[i];
+        }
 
         // set extracted properties
         std::string key = fe.key();
@@ -1529,8 +1544,9 @@ public:
           string pName = fit.first;
 
           // year is already set
-          if (pName == "year")
+          if (pName == "year") {
             continue;
+          }
 
           const xdkbib::Field &field = fit.second;
           bool isNumber =
@@ -1539,15 +1555,16 @@ public:
           PropertyInterface *prop = nullptr;
 
           if (createPubliNodes) {
-            if (isNumber && (pName != "volume") && (pName != "number"))
+            if (isNumber && (pName != "volume") && (pName != "number")) {
               // create an IntegerProperty
               prop = graph->getIntegerProperty(pName);
-            else {
-              if (isAuthor)
+            } else {
+              if (isAuthor) {
                 prop = authProp;
-              else
+              } else {
                 // create a StringProperty
                 prop = graph->getStringProperty(pName);
+              }
             }
           }
 
@@ -1555,8 +1572,9 @@ public:
 
           if (createPubliNodes) {
             if (!isAuthor) {
-              if (!isNumber)
+              if (!isNumber) {
                 forceUtf8String(value);
+              }
 
               prop->setNodeStringValue(publi, value);
             }
@@ -1595,8 +1613,9 @@ public:
                 token = strtok_r(nullptr, " \n", &teamsPtr);
               }
 
-              if (createPubliNodes)
+              if (createPubliNodes) {
                 labriTeamsProp->setNodeValue(publi, teams);
+              }
             }
 
             char *authorsPtr;
@@ -1629,8 +1648,9 @@ public:
                 if (k) {
                   aName += " ";
 
-                  if (labriAuthor == false)
+                  if (labriAuthor == false) {
                     aKey += " ";
+                  }
                 }
 
                 aName += firstName;
@@ -1649,8 +1669,9 @@ public:
               // author must be a unique person
               authPropValue.push_back(aName);
 
-              if ((aName == "al. et") || (createAuthNodes == false))
+              if ((aName == "al. et") || (createAuthNodes == false)) {
                 continue;
+              }
 
               aKey += " " + auth.lastJoin();
               forceUtf8String(aKey);
@@ -1984,8 +2005,9 @@ public:
                 authorsMap[aKey] = author;
                 authNameProp->setNodeValue(author, aName);
 
-                if (labriAuthor && labriTeams)
+                if (labriAuthor && labriTeams) {
                   labriTeamProp->setNodeValue(author, teams[teamIndex]);
+                }
 
                 label->setNodeValue(author, aName);
                 icon->setNodeValue(author, FontAwesome::Solid::User);
@@ -1996,8 +2018,9 @@ public:
                 fromLabriProp->setNodeValue(author, true);
                 color->setNodeValue(author, tlp::Color::Aquamarine);
 
-                if (labriTeams)
+                if (labriTeams) {
                   ++teamIndex;
+                }
               }
 
               if (createPubliNodes) {
@@ -2024,10 +2047,11 @@ public:
               auto addLink = [&](node a1, node a2) {
                 edge e = graph->existEdge(a1, a2);
                 unsigned int cnt = 0;
-                if (e.isValid())
+                if (e.isValid()) {
                   cnt = countProp->getEdgeValue(e);
-                else
+                } else {
                   e = graph->addEdge(a1, a2);
+                }
                 countProp->setEdgeValue(e, cnt + 1);
               };
               // create edges between the authors of the publications
@@ -2039,8 +2063,9 @@ public:
                   keyProp->setEdgeValue(e, key);
                   typeProp->setEdgeValue(e, fe.type());
                   yearProp->setEdgeValue(e, year);
-                } else
+                } else {
                   addLink(authorNodes[0], authorNodes[0]);
+                }
               } else {
                 if (oneEdgePerPubli) {
                   for (unsigned int j = 0; j < authorNodes.size() - 1; ++j) {
@@ -2054,8 +2079,9 @@ public:
                   }
                 } else {
                   for (unsigned int j = 0; j < authorNodes.size() - 1; ++j) {
-                    for (unsigned int k = j + 1; k < authorNodes.size(); ++k)
+                    for (unsigned int k = j + 1; k < authorNodes.size(); ++k) {
                       addLink(authorNodes[j], authorNodes[k]);
+                    }
                   }
                 }
               }
@@ -2068,8 +2094,9 @@ public:
       // in case of duplicate
       // delete unused publi nodes
       if (createPubliNodes) {
-        for (; i < entries.size(); ++i)
+        for (; i < entries.size(); ++i) {
           graph->delNode(publis[i]);
+        }
       }
     } catch (xdkbib::parsing_error &e) {
       stringstream sstr;
@@ -2081,21 +2108,25 @@ public:
 
     // remove unused properties
     if (createPubliNodes) {
-      if (!labriTeamsProp->hasNonDefaultValuatedNodes())
+      if (!labriTeamsProp->hasNonDefaultValuatedNodes()) {
         graph->delLocalProperty(labriTeamsProp->getName());
+      }
 
-      if (!labriAuthorsProp->hasNonDefaultValuatedNodes())
+      if (!labriAuthorsProp->hasNonDefaultValuatedNodes()) {
         graph->delLocalProperty(labriAuthorsProp->getName());
+      }
     }
 
     // layout graph with a bubble tree
     if (createAuthNodes) {
       // delete labri specific properties if not used
-      if (!labriTeamProp->hasNonDefaultValuatedNodes())
+      if (!labriTeamProp->hasNonDefaultValuatedNodes()) {
         graph->delLocalProperty(labriTeamProp->getName());
+      }
 
-      if (!fromLabriProp->hasNonDefaultValuatedNodes())
+      if (!fromLabriProp->hasNonDefaultValuatedNodes()) {
         graph->delLocalProperty(fromLabriProp->getName());
+      }
 
       string err;
       return graph->applyPropertyAlgorithm("FM^3 (OGDF)", graph->getLayoutProperty("viewLayout"),

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -63,11 +63,13 @@ static bool connectedTest(const Graph *const graph) {
 #endif
 //=================================================================
 bool ConnectedTest::isConnected(const tlp::Graph *const graph) {
-  if (instance.resultsBuffer.find(graph) != instance.resultsBuffer.end())
+  if (instance.resultsBuffer.find(graph) != instance.resultsBuffer.end()) {
     return instance.resultsBuffer[graph];
+  }
 
-  if (graph->isEmpty())
+  if (graph->isEmpty()) {
     return true;
+  }
 
   NodeStaticProperty<bool> visited(graph);
   visited.setAll(false);
@@ -83,25 +85,28 @@ void ConnectedTest::makeConnected(Graph *graph, vector<edge> &addedEdges) {
   vector<node> toLink;
   connect(graph, toLink);
 
-  for (unsigned int i = 1; i < toLink.size(); ++i)
+  for (unsigned int i = 1; i < toLink.size(); ++i) {
     addedEdges.push_back(graph->addEdge(toLink[i - 1], toLink[i]));
+  }
 
   assert(connectedTest(graph));
 }
 //=================================================================
 unsigned int ConnectedTest::numberOfConnectedComponents(const tlp::Graph *const graph) {
-  if (graph->isEmpty())
+  if (graph->isEmpty()) {
     return 0u;
+  }
 
   graph->removeListener(instance);
   vector<node> toLink;
   connect(graph, toLink);
   unsigned int result;
 
-  if (!toLink.empty())
+  if (!toLink.empty()) {
     result = toLink.size();
-  else
+  } else {
     result = 1u;
+  }
 
   instance.resultsBuffer[graph] = (result == 1u);
   graph->addListener(instance);
@@ -151,12 +156,14 @@ void ConnectedTest::computeConnectedComponents(const tlp::Graph *graph,
 void ConnectedTest::connect(const tlp::Graph *const graph, vector<node> &toLink) {
   auto it = instance.resultsBuffer.find(graph);
   if (it != instance.resultsBuffer.end()) {
-    if (it->second)
+    if (it->second) {
       return;
+    }
   }
 
-  if (graph->isEmpty())
+  if (graph->isEmpty()) {
     return;
+  }
 
   NodeStaticProperty<bool> visited(graph);
   visited.setAll(false);

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -37,13 +37,15 @@ BubbleTree::computeRelativePosition(tlp::node n,
   tmpSizeFather[2] = 0.; // remove z-coordinates because the drawing is 2D
   double sizeFather = tmpSizeFather.norm() / 2.;
 
-  if (sizeFather < 1E-5)
+  if (sizeFather < 1E-5) {
     sizeFather = 1.;
+  }
 
   double sizeVirtualNode = 1.;
 
-  if (tree->indeg(n) == 0)
+  if (tree->indeg(n) == 0) {
     sizeVirtualNode = 0.;
+  }
 
   /*
    * Initialize node position
@@ -104,14 +106,16 @@ BubbleTree::computeRelativePosition(tlp::node n,
     if (maxRadius > (sumRadius / 2.)) {
       double ratio;
 
-      if (sumRadius - maxRadius > 1E-5)
+      if (sumRadius - maxRadius > 1E-5) {
         ratio = maxRadius / (sumRadius - maxRadius);
-      else
+      } else {
         ratio = 1.;
+      }
 
       for (unsigned int i = 0; i < Nc; ++i) {
-        if (i != maxRadiusIndex)
+        if (i != maxRadiusIndex) {
           subCircleRadius[i] *= ratio;
+        }
       }
 
       sumRadius = 2. * maxRadius;
@@ -124,8 +128,9 @@ BubbleTree::computeRelativePosition(tlp::node n,
     resolution = 2. * M_PI;
     std::vector<unsigned> index(Nc);
 
-    for (unsigned i = 0; i < Nc; ++i)
+    for (unsigned i = 0; i < Nc; ++i) {
       index[i] = i;
+    }
 
     sort(index.begin(), index.end(), greaterRadius(realCircleRadius));
     auto i = index.begin();
@@ -139,8 +144,9 @@ BubbleTree::computeRelativePosition(tlp::node n,
         angularSector[*i] = angleMax;
         sumRadius -= radius;
         resolution -= angleMax;
-      } else
+      } else {
         break;
+      }
     }
 
     if (i != index.end()) {
@@ -151,8 +157,9 @@ BubbleTree::computeRelativePosition(tlp::node n,
       }
 
       resolution = 0.;
-    } else
+    } else {
       resolution /= Nc;
+    }
   }
 
   double angle = 0.;
@@ -161,15 +168,17 @@ BubbleTree::computeRelativePosition(tlp::node n,
   for (unsigned int i = 0; i < Nc; ++i) {
     double packRadius;
 
-    if (fabs(sin(angularSector[i])) > 1E-05)
+    if (fabs(sin(angularSector[i])) > 1E-05) {
       packRadius = realCircleRadius[i] / sin(angularSector[i] / 2.);
-    else
+    } else {
       packRadius = 0.;
+    }
 
     packRadius = std::max(packRadius, sizeFather + realCircleRadius[i]);
 
-    if (i > 0)
+    if (i > 0) {
       angle += (angularSector[i - 1] + angularSector[i]) / 2. + resolution;
+    }
 
     circles[i][0] = packRadius * cos(angle);
     circles[i][1] = packRadius * sin(angle);
@@ -335,8 +344,9 @@ bool BubbleTree::run() {
       tmp->delSubGraph(graph);
       // restore current graph
       graph = tmp;
-      if (pluginProgress && pluginProgress->state() != TLP_CONTINUE)
+      if (pluginProgress && pluginProgress->state() != TLP_CONTINUE) {
         return pluginProgress->state() != TLP_CANCEL;
+      }
     }
 
     // call connected component packing
@@ -358,13 +368,15 @@ bool BubbleTree::run() {
     }
   }
 
-  if (dataSet == nullptr || !dataSet->get("complexity", nAlgo))
+  if (dataSet == nullptr || !dataSet->get("complexity", nAlgo)) {
     nAlgo = true;
+  }
 
   result->setAllEdgeValue(vector<Coord>(0));
 
-  if (pluginProgress)
+  if (pluginProgress) {
     pluginProgress->showPreview(false);
+  }
 
   if (graph->numberOfNodes() == 3 && graph->numberOfEdges() == 3) {
     string err;

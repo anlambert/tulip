@@ -140,8 +140,9 @@ struct TypedDataSerializer : public DataTypeSerializer {
     T value;
     bool ok = read(is, value);
 
-    if (ok)
+    if (ok) {
       return new TypedData<T>(new T(value));
+    }
 
     return nullptr;
   }

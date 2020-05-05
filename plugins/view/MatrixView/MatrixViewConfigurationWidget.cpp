@@ -86,8 +86,9 @@ void MatrixViewConfigurationWidget::setOriented(const bool state) {
 }
 
 void MatrixViewConfigurationWidget::setGraph(tlp::Graph *g) {
-  if (g == nullptr)
+  if (g == nullptr) {
     return;
+  }
 
   QString firstString = _ui->orderingMetricCombo->itemText(0);
   QString currentString = _ui->orderingMetricCombo->currentText();
@@ -100,13 +101,15 @@ void MatrixViewConfigurationWidget::setGraph(tlp::Graph *g) {
     string type = g->getProperty(s)->getTypename();
 
     if (type != DoubleProperty::propertyTypename && type != IntegerProperty::propertyTypename &&
-        type != StringProperty::propertyTypename)
+        type != StringProperty::propertyTypename) {
       continue;
+    }
 
     _ui->orderingMetricCombo->addItem(tlpStringToQString(s));
 
-    if (QStringToTlpString(currentString).compare(s) == 0)
+    if (QStringToTlpString(currentString).compare(s) == 0) {
       currentIndex = i;
+    }
 
     ++i;
   }
@@ -115,13 +118,15 @@ void MatrixViewConfigurationWidget::setGraph(tlp::Graph *g) {
 }
 
 void MatrixViewConfigurationWidget::orderingMetricComboIndexChanged(int i) {
-  if (_modifyingMetricList)
+  if (_modifyingMetricList) {
     return;
+  }
 
   string name;
 
-  if (i > 0)
+  if (i > 0) {
     name = QStringToTlpString(_ui->orderingMetricCombo->itemText(i));
+  }
 
   emit metricSelected(name);
 }

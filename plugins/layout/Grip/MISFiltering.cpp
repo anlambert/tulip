@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -36,8 +36,9 @@ void MISFiltering::computeFiltering() {
 
   inLastVi.setAll(true);
 
-  for (auto n : g_copy->nodes())
+  for (auto n : g_copy->nodes()) {
     levelToNodes[0].insert(n);
+  }
 
   level = 1;
   unsigned int nb = g_copy->numberOfNodes();
@@ -58,8 +59,9 @@ void MISFiltering::computeFiltering() {
     for (unsigned int i = 0; i < toVisit.size(); ++i) {
       node current = toVisit[i];
 
-      if (removedVisit.get(current.id))
+      if (removedVisit.get(current.id)) {
         continue;
+      }
 
       visited.set(current.id, true);
       bfsDepth(current, depth);
@@ -94,8 +96,9 @@ void MISFiltering::bfsDepth(node n, unsigned int depth) {
   for (unsigned int i = 0; i < nextNodes.size(); ++i) {
     node current = nextNodes[i];
     for (auto v : g_copy->getInOutNodes(current)) {
-      if (visited.get(v.id) || inNext.get(v.id))
+      if (visited.get(v.id) || inNext.get(v.id)) {
         continue;
+      }
 
       if (nodeDepth[current] < depth - 1) {
         inNext.set(v.id, true);
@@ -127,8 +130,9 @@ void MISFiltering::updateVectors() {
 
   if (level == 1) {
     unsigned int curPos = 0;
-    for (auto n : g_copy->nodes())
+    for (auto n : g_copy->nodes()) {
       ordering[curPos++] = n;
+    }
     return;
   }
 
@@ -143,40 +147,45 @@ void MISFiltering::updateVectors() {
       node n = *it;
       ++it;
 
-      if (considered.get(n.id))
+      if (considered.get(n.id)) {
         continue;
+      }
 
       ordering[curPos] = n;
       ++curPos;
       considered.set(n.id, true);
     }
 
-    if (level != 0)
+    if (level != 0) {
       index.push_back(curPos);
-    else
+    } else {
       break;
+    }
 
     --level;
   }
 
-  if (index[0] == 3)
+  if (index[0] == 3) {
     return;
+  }
 
-  if (index.size() == 1)
+  if (index.size() == 1) {
     index[0] = 3;
-  else {
+  } else {
     if (index[1] > 3) {
       index[0] = 3;
     } else { // index[1]<=3
       index.erase(index.begin());
 
       if (index.size() >= 2) {
-        if (index[1] > 3)
+        if (index[1] > 3) {
           index[0] = 3;
-        else
+        } else {
           index.erase(index.begin());
-      } else
+        }
+      } else {
         index[0] = 3;
+      }
     }
   }
 }
@@ -198,16 +207,18 @@ void MISFiltering::getNearest(node n, vector<node> &neighbors, vector<unsigned i
   nextNodes.push_back(n);
   alreadyTreated.set(n.id, true);
 
-  for (unsigned int i = 0; i < index[level + 1]; ++i)
+  for (unsigned int i = 0; i < index[level + 1]; ++i) {
     toTreat.set(ordering[i].id, true);
+  }
 
   for (unsigned int i = 0; !found && i < nextNodes.size(); ++i) {
     node current = nextNodes[i];
 
     for (auto v : g_copy->getInOutNodes(current)) {
 
-      if (alreadyTreated.get(v.id))
+      if (alreadyTreated.get(v.id)) {
         continue;
+      }
 
       alreadyTreated.set(v.id, true);
       nodeDepth[v] = nodeDepth[current] + 1;

@@ -104,11 +104,13 @@ void PythonPluginCreationDialog::selectPluginSourceFile() {
   QString fileName =
       QFileDialog::getSaveFileName(this, tr("Set Plugin source file"), "", "Python script (*.py)");
 
-  if (fileName.isEmpty())
+  if (fileName.isEmpty()) {
     return;
+  }
 
-  if (!fileName.endsWith(".py"))
+  if (!fileName.endsWith(".py")) {
     fileName += ".py";
+  }
 
   _ui->pluginFileName->setText(fileName);
 }

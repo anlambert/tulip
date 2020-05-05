@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -52,9 +52,9 @@ double StrengthClustering::computeMQValue(const vector<unordered_set<node>> &par
     unsigned int n1ClustId = clusterId.get(n1.id);
     unsigned int n2ClustId = clusterId.get(n2.id);
 
-    if (n1ClustId == n2ClustId)
+    if (n1ClustId == n2ClustId) {
       nbIntraEdges[n1ClustId] += 1;
-    else {
+    } else {
       pair<unsigned int, unsigned int> pp(n1ClustId, n2ClustId);
 
       if (nbExtraEdges.find(pp) != nbExtraEdges.end()) {
@@ -68,9 +68,10 @@ double StrengthClustering::computeMQValue(const vector<unordered_set<node>> &par
   double positive = 0;
 
   for (unsigned int i = 0; i < partition.size(); ++i) {
-    if (partition[i].size() > 1)
+    if (partition[i].size() > 1) {
       positive +=
           2.0 * double(nbIntraEdges[i]) / double(partition[i].size() * (partition[i].size() - 1));
+    }
   }
 
   positive /= double(partition.size());
@@ -81,12 +82,14 @@ double StrengthClustering::computeMQValue(const vector<unordered_set<node>> &par
     const auto &pp = itMap.first;
     unsigned int val = itMap.second;
 
-    if (!partition[pp.first].empty() && !partition[pp.second].empty())
+    if (!partition[pp.first].empty() && !partition[pp.second].empty()) {
       negative += double(val) / double(partition[pp.first].size() * partition[pp.second].size());
+    }
   }
 
-  if (partition.size() > 1)
+  if (partition.size() > 1) {
     negative /= double(partition.size() * (partition.size() - 1)) / 2.0;
+  }
 
   double result = positive - negative;
   return result;
@@ -101,8 +104,9 @@ void StrengthClustering::computeNodePartition(double threshold,
     if (values->getEdgeValue(e) < threshold) {
       auto eEnds = graph->ends(e);
 
-      if (graph->deg(eEnds.first) > 1 && graph->deg(eEnds.second) > 1)
+      if (graph->deg(eEnds.first) > 1 && graph->deg(eEnds.second) > 1) {
         tmpGraph->delEdge(e);
+      }
     }
   }
 
@@ -110,8 +114,9 @@ void StrengthClustering::computeNodePartition(double threshold,
   unordered_set<node> singleton;
 
   for (auto n : tmpGraph->nodes()) {
-    if (tmpGraph->deg(n) == 0)
+    if (tmpGraph->deg(n) == 0) {
       singleton.insert(n);
+    }
   }
 
   // restore edges to reconnect singleton by computing induced subgraph
@@ -136,9 +141,9 @@ void StrengthClustering::computeNodePartition(double threshold,
   for (auto n : tmpGraph->nodes()) {
     double val = connected.getNodeValue(n);
 
-    if (resultIndex.find(val) != resultIndex.end())
+    if (resultIndex.find(val) != resultIndex.end()) {
       result[resultIndex[val]].insert(n);
-    else {
+    } else {
       unordered_set<node> tmp;
       result.push_back(tmp);
       resultIndex[val] = index;
@@ -198,8 +203,9 @@ bool StrengthClustering::run() {
   string errMsg;
   values = new DoubleProperty(graph);
 
-  if (!graph->applyPropertyAlgorithm("Strength", values, errMsg, nullptr, pluginProgress))
+  if (!graph->applyPropertyAlgorithm("Strength", values, errMsg, nullptr, pluginProgress)) {
     return false;
+  }
 
   NumericProperty *metric = nullptr;
 
@@ -210,14 +216,16 @@ bool StrengthClustering::run() {
   if (metric) {
     NumericProperty *mult = metric->copyProperty(graph);
 
-    if (pluginProgress)
+    if (pluginProgress) {
       pluginProgress->setComment("Computing Strength metric X specified metric on edges ...");
+    }
 
     mult->uniformQuantification(100);
     unsigned int steps = 0, maxSteps = graph->numberOfEdges();
 
-    if (maxSteps < 10)
+    if (maxSteps < 10) {
       maxSteps = 10;
+    }
 
     for (auto e : graph->edges()) {
       values->setEdgeValue(e, values->getEdgeValue(e) * (mult->getEdgeDoubleValue(e) + 1));
@@ -225,8 +233,9 @@ bool StrengthClustering::run() {
       if (pluginProgress && ((++steps % (maxSteps / 10) == 0))) {
         pluginProgress->progress(steps, maxSteps);
 
-        if (pluginProgress->state() != TLP_CONTINUE)
+        if (pluginProgress->state() != TLP_CONTINUE) {
           return pluginProgress->state() != TLP_CANCEL;
+        }
       }
     }
     delete mult;
@@ -242,8 +251,9 @@ bool StrengthClustering::run() {
 
   double threshold = findBestThreshold(NB_TEST, stopped);
 
-  if (stopped)
+  if (stopped) {
     return pluginProgress->state() != TLP_CANCEL;
+  }
 
   vector<unordered_set<node>> tmp;
   computeNodePartition(threshold, tmp);

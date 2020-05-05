@@ -137,8 +137,9 @@ private:
     double q = 0.;
 
     for (unsigned int i = 0; i < nb_qnodes; i++) {
-      if (tot[i] > 0)
+      if (tot[i] > 0) {
         q += ootw * (in[i] - tot[i] * tot[i] * ootw);
+      }
     }
 
     return q;
@@ -147,8 +148,9 @@ private:
   // compute the set of neighboring communities of node
   // for each community, gives the number of links from node to comm
   void neigh_comm(unsigned int n) {
-    for (unsigned int i = 0; i < neigh_last; i++)
+    for (unsigned int i = 0; i < neigh_last; i++) {
       neigh_weight[neigh_pos[i]] = -1;
+    }
 
     neigh_last = 0;
 
@@ -184,9 +186,11 @@ private:
 
     int final = 0;
 
-    for (unsigned int i = 0; i < nb_qnodes; i++)
-      if (renumber[i] != -1)
+    for (unsigned int i = 0; i < nb_qnodes; i++) {
+      if (renumber[i] != -1) {
         renumber[i] = final++;
+      }
+    }
 
     // update clustering
     TLP_PARALLEL_MAP_INDICES(
@@ -289,14 +293,16 @@ private:
         in[best_comm] += 2 * best_nblinks + n_nsl;
         n2c[n] = best_comm;
 
-        if (best_comm != n_comm)
+        if (best_comm != n_comm) {
           nb_moves++;
+        }
       }
 
       new_mod = modularity();
 
-      if (nb_moves > 0)
+      if (nb_moves > 0) {
         improvement = true;
+      }
 
     } while (improvement && ((new_mod - cur_mod) > min_modularity));
 
@@ -325,12 +331,13 @@ private:
 /*@}*/
 
 //========================================================================================
-static const char *paramHelp[] = {
-    // metric
-    "An existing edge weight metric property. If it is not defined all edges have a weight of 1.0.",
+static const char *paramHelp[] = { // metric
+    "An existing edge weight metric property. If it is not defined "
+    "all edges have a weight of 1.0.",
 
     // precision
-    "A given pass stops when the modularity is increased by less than precision. Default value is "
+    "A given pass stops when the modularity is increased by less "
+    "than precision. Default value is "
     "<b>0.000001</b>"};
 //========================================================================================
 // same precision as the original code
@@ -381,9 +388,10 @@ bool LouvainClustering::run() {
     if (!qe.isValid()) {
       qe = quotient->addEdge(q_src, q_tgt);
       (*weights)[qe] = weight;
-    } else
+    } else {
       // set current edge weight
       (*weights)[qe] += weight;
+    }
   }
   ootw = 1. / total_weight;
 
@@ -417,9 +425,11 @@ bool LouvainClustering::run() {
 
   int final = 0;
 
-  for (unsigned int i = 0; i < nb_qnodes; i++)
-    if (renumber[i] != -1)
+  for (unsigned int i = 0; i < nb_qnodes; i++) {
+    if (renumber[i] != -1) {
       renumber[i] = final++;
+    }
+  }
 
   // then set measure values
   int maxVal = -1;

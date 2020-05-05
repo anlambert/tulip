@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -75,8 +75,9 @@ void Hexagon::getIncludeBoundingBox(BoundingBox &boundingBox, node) {
 void Hexagon::draw(node n, float lod) {
   string textureName = glGraphInputData->getElementTexture()->getNodeValue(n);
 
-  if (!textureName.empty())
+  if (!textureName.empty()) {
     textureName = glGraphInputData->parameters->getTexturePath() + textureName;
+  }
 
   drawHexagon(glGraphInputData->getElementColor()->getNodeValue(n),
               glGraphInputData->getElementBorderColor()->getNodeValue(n),
@@ -93,8 +94,9 @@ public:
   void draw(edge e, node, const Color &glyphColor, const Color &borderColor, float lod) override {
     string textureName = edgeExtGlGraphInputData->getElementTexture()->getEdgeValue(e);
 
-    if (!textureName.empty())
+    if (!textureName.empty()) {
       textureName = edgeExtGlGraphInputData->parameters->getTexturePath() + textureName;
+    }
 
     drawHexagon(glyphColor, borderColor,
                 edgeExtGlGraphInputData->getElementBorderWidth()->getEdgeValue(e), textureName, lod,

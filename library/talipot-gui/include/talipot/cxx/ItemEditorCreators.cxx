@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -98,8 +98,11 @@ QVariant LineEditEditorCreator<T>::editorData(QWidget *editor, tlp::Graph *) {
   QVariant result;
   typename T::RealType val;
 
-  if (T::fromString(val, strVal))
-    result.setValue<typename T::RealType>(val);
+  if (T::fromString(val, strVal)) {
+    {
+      result.setValue<typename T::RealType>(val);
+    }
+  }
 
   return result;
 }
@@ -127,8 +130,11 @@ QVariant MultiLinesEditEditorCreator<T>::editorData(QWidget *editor, tlp::Graph 
   QVariant result;
   typename T::RealType val;
 
-  if (T::fromString(val, strVal))
-    result.setValue<typename T::RealType>(val);
+  if (T::fromString(val, strVal)) {
+    {
+      result.setValue<typename T::RealType>(val);
+    }
+  }
 
   return result;
 }
@@ -198,10 +204,15 @@ void PropertyEditorCreator<PROPTYPE>::setEditorData(QWidget *w, const QVariant &
   QComboBox *combo = static_cast<QComboBox *>(w);
   GraphPropertiesModel<PROPTYPE> *model = nullptr;
 
-  if (isMandatory)
-    model = new GraphPropertiesModel<PROPTYPE>(g, false, combo);
-  else
-    model = new GraphPropertiesModel<PROPTYPE>(QObject::tr("Select a property"), g, false, combo);
+  if (isMandatory) {
+    {
+      model = new GraphPropertiesModel<PROPTYPE>(g, false, combo);
+    }
+  } else {
+    {
+      model = new GraphPropertiesModel<PROPTYPE>(QObject::tr("Select a property"), g, false, combo);
+    }
+  }
 
   combo->setModel(model);
   combo->setCurrentIndex(model->rowOf(prop));
@@ -209,8 +220,11 @@ void PropertyEditorCreator<PROPTYPE>::setEditorData(QWidget *w, const QVariant &
 
 template <typename PROPTYPE>
 QVariant PropertyEditorCreator<PROPTYPE>::editorData(QWidget *w, tlp::Graph *g) {
-  if (g == nullptr)
-    return QVariant();
+  if (g == nullptr) {
+    {
+      return QVariant();
+    }
+  }
 
   QComboBox *combo = static_cast<QComboBox *>(w);
   GraphPropertiesModel<PROPTYPE> *model =
@@ -225,8 +239,11 @@ template <typename PROPTYPE>
 QString PropertyEditorCreator<PROPTYPE>::displayText(const QVariant &v) const {
   PROPTYPE *prop = v.value<PROPTYPE *>();
 
-  if (prop == nullptr)
-    return QObject::tr("Select a property");
+  if (prop == nullptr) {
+    {
+      return QObject::tr("Select a property");
+    }
+  }
 
   return tlpStringToQString(prop->getName());
 }
@@ -259,8 +276,11 @@ QVariant VectorEditorCreator<ElementType>::editorData(QWidget *editor, tlp::Grap
   std::vector<ElementType> result;
   QVector<QVariant> editorData = static_cast<VectorEditor *>(editor)->vector();
 
-  for (const QVariant &v : editorData)
-    result.push_back(v.value<ElementType>());
+  for (const QVariant &v : editorData) {
+    {
+      result.push_back(v.value<ElementType>());
+    }
+  }
 
   return QVariant::fromValue<std::vector<ElementType>>(result);
 }
@@ -283,8 +303,11 @@ template <typename ElementType>
 QString VectorEditorCreator<ElementType>::displayText(const QVariant &data) const {
   std::vector<ElementType> v = data.value<std::vector<ElementType>>();
 
-  if (v.empty())
-    return QString();
+  if (v.empty()) {
+    {
+      return QString();
+    }
+  }
 
   // use a DataTypeSerializer if any
   DataTypeSerializer *dts = DataSet::typenameToSerializer(std::string(typeid(v).name()));
@@ -302,8 +325,11 @@ QString VectorEditorCreator<ElementType>::displayText(const QVariant &data) cons
     return truncateText(qstr);
   }
 
-  if (v.size() == 1)
-    return QString("1 element");
+  if (v.size() == 1) {
+    {
+      return QString("1 element");
+    }
+  }
 
   return QString::number(v.size()) + QObject::tr(" elements");
 }

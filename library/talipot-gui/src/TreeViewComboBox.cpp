@@ -52,8 +52,9 @@ void TreeViewComboBox::setModel(QAbstractItemModel *model) {
   QComboBox::setModel(model);
   connect(model, &QAbstractItemModel::rowsRemoved, this, &TreeViewComboBox::rowsRemoved);
 
-  for (int i = 1; i < model->columnCount(); ++i)
+  for (int i = 1; i < model->columnCount(); ++i) {
     _treeView->hideColumn(i);
+  }
 }
 
 void TreeViewComboBox::showPopup() {
@@ -96,10 +97,11 @@ QModelIndex TreeViewComboBox::selectedIndex() const {
 void TreeViewComboBox::rowsRemoved(const QModelIndex &parent, int, int) {
   QModelIndex currentIndex = selectedIndex();
 
-  if (currentIndex.isValid())
+  if (currentIndex.isValid()) {
     selectIndex(currentIndex);
-  else
+  } else {
     selectIndex(parent);
+  }
 }
 
 void TreeViewComboBox::currentIndexChanged() {

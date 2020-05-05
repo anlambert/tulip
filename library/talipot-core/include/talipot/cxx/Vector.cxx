@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -16,24 +16,27 @@
 //======================================================
 TEMPLATEVECTOR
 VECTORTLP &VECTORTLP::operator*=(const TYPE scalaire) {
-  for (size_t i = 0; i < SIZE; ++i)
+  for (size_t i = 0; i < SIZE; ++i) {
     (*this)[i] *= scalaire;
+  }
 
   return (*this);
 }
 //======================================================
 TEMPLATEVECTOR
 VECTORTLP &VECTORTLP::operator*=(const VECTORTLP &vecto) {
-  for (size_t i = 0; i < SIZE; ++i)
+  for (size_t i = 0; i < SIZE; ++i) {
     (*this)[i] *= vecto[i];
+  }
 
   return (*this);
 }
 //======================================================
 TEMPLATEVECTOR
 VECTORTLP &VECTORTLP::operator/=(const TYPE scalaire) {
-  for (size_t i = 0; i < SIZE; ++i)
+  for (size_t i = 0; i < SIZE; ++i) {
     (*this)[i] /= scalaire;
+  }
 
   return (*this);
 }
@@ -49,32 +52,36 @@ VECTORTLP &VECTORTLP::operator/=(const VECTORTLP &vecto) {
 //======================================================
 TEMPLATEVECTOR
 VECTORTLP &VECTORTLP::operator+=(const TYPE scalaire) {
-  for (size_t i = 0; i < SIZE; ++i)
+  for (size_t i = 0; i < SIZE; ++i) {
     (*this)[i] += scalaire;
+  }
 
   return (*this);
 }
 //======================================================
 TEMPLATEVECTOR
 VECTORTLP &VECTORTLP::operator+=(const VECTORTLP &vecto) {
-  for (size_t i = 0; i < SIZE; ++i)
+  for (size_t i = 0; i < SIZE; ++i) {
     (*this)[i] += vecto[i];
+  }
 
   return (*this);
 }
 //======================================================
 TEMPLATEVECTOR
 VECTORTLP &VECTORTLP::operator-=(const TYPE scalaire) {
-  for (size_t i = 0; i < SIZE; ++i)
+  for (size_t i = 0; i < SIZE; ++i) {
     (*this)[i] -= scalaire;
+  }
 
   return (*this);
 }
 //======================================================
 TEMPLATEVECTOR
 VECTORTLP &VECTORTLP::operator-=(const VECTORTLP &vecto) {
-  for (size_t i = 0; i < SIZE; ++i)
+  for (size_t i = 0; i < SIZE; ++i) {
     (*this)[i] -= vecto[i];
+  }
 
   return (*this);
 }
@@ -172,11 +179,13 @@ bool VECTORTLP::operator<(const VECTORTLP &v) const {
 
     if (tmp > std::sqrt(std::numeric_limits<TYPE>::epsilon()) ||
         tmp < -std::sqrt(std::numeric_limits<TYPE>::epsilon())) {
-      if (tmp > 0)
+      if (tmp > 0) {
         return false;
+      }
 
-      if (tmp < 0)
+      if (tmp < 0) {
         return true;
+      }
     }
   }
 
@@ -211,8 +220,9 @@ TYPE VECTORTLP::dotProduct(const VECTORTLP &v) const {
   assert(SIZE > 0);
   OTYPE tmpO = static_cast<OTYPE>((*this)[0]) * static_cast<OTYPE>(v[0]);
 
-  for (size_t i = 1; i < SIZE; ++i)
+  for (size_t i = 1; i < SIZE; ++i) {
     tmpO += static_cast<OTYPE>((*this)[i]) * static_cast<OTYPE>(v[i]);
+  }
 
   return static_cast<TYPE>(tmpO);
 }
@@ -233,8 +243,9 @@ TYPE VECTORTLP::norm() const {
   default:
     OTYPE tmp = tlpsqr<TYPE, OTYPE>((*this)[0]);
 
-    for (size_t i = 1; i < SIZE; ++i)
+    for (size_t i = 1; i < SIZE; ++i) {
       tmp += tlpsqr<TYPE, OTYPE>((*this)[i]);
+    }
 
     return (tlpsqrt<TYPE, OTYPE>(tmp));
   }
@@ -258,8 +269,9 @@ DTYPE VECTORTLP::dist(const VECTOR &c) const {
   default:
     OTYPE tmp = tlpsqr<DTYPE, OTYPE>((*this)[0] - c[0]);
 
-    for (size_t i = 1; i < SIZE; ++i)
+    for (size_t i = 1; i < SIZE; ++i) {
       tmp += tlpsqr<DTYPE, OTYPE>((*this)[i] - c[i]);
+    }
 
     return (tlpsqrt<DTYPE, OTYPE>(tmp));
   }

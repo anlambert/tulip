@@ -104,21 +104,21 @@ void ColorScaleSlider::buildComposite(const std::string &textureName) {
 }
 
 void ColorScaleSlider::setLinkedSlider(ColorScaleSlider *linkedSlider) {
-  if (!linkedSlider)
+  if (!linkedSlider) {
     this->linkedSlider = nullptr;
-  else {
+  } else {
     if (way == ToLeft) {
-      if (linkedSlider->getBasePosition().getX() <= position.getX())
+      if (linkedSlider->getBasePosition().getX() <= position.getX()) {
         this->linkedSlider = linkedSlider;
-      else {
+      } else {
         this->linkedSlider = nullptr;
         std::cerr << __PRETTY_FUNCTION__ << ":" << __LINE__ << " "
                   << "Invalid linked slider bad coordinates" << std::endl;
       }
     } else {
-      if (linkedSlider->getBasePosition().getX() >= position.getX())
+      if (linkedSlider->getBasePosition().getX() >= position.getX()) {
         this->linkedSlider = linkedSlider;
-      else {
+      } else {
         this->linkedSlider = nullptr;
         std::cerr << __PRETTY_FUNCTION__ << ":" << __LINE__ << " "
                   << "Invalid linked slider bad coordinates" << std::endl;
@@ -138,16 +138,18 @@ void ColorScaleSlider::setColor(Color c) {
 }
 
 float ColorScaleSlider::getLeftBound() {
-  if (way == ToRight || linkedSlider == nullptr)
+  if (way == ToRight || linkedSlider == nullptr) {
     return 0;
-  else
+  } else {
     return linkedSlider->getCurrentShift();
+  }
 }
 float ColorScaleSlider::getRightBound() {
-  if (way == ToLeft || linkedSlider == nullptr)
+  if (way == ToLeft || linkedSlider == nullptr) {
     return 1;
-  else
+  } else {
     return linkedSlider->getCurrentShift();
+  }
 }
 
 void ColorScaleSlider::setValue(double value) {
@@ -165,8 +167,9 @@ void ColorScaleSlider::shift(float shift) {
     currentShift = getLeftBound();
   }
 
-  if (currentShift > getRightBound())
+  if (currentShift > getRightBound()) {
     currentShift = getRightBound();
+  }
 
   updatePosition();
 }
@@ -224,11 +227,13 @@ void SliderBar::beginShift() {
 void SliderBar::shift(float shift) {
   float combinedShift = shift;
 
-  if (left->getCurrentShift() + shift < left->getLeftBound())
+  if (left->getCurrentShift() + shift < left->getLeftBound()) {
     combinedShift = left->getLeftBound() - left->getCurrentShift();
+  }
 
-  if (right->getCurrentShift() + shift > right->getRightBound())
+  if (right->getCurrentShift() + shift > right->getRightBound()) {
     combinedShift = right->getRightBound() - right->getCurrentShift();
+  }
 
   right->shift(combinedShift);
   left->shift(combinedShift);
@@ -286,8 +291,9 @@ ThresholdInteractor::~ThresholdInteractor() {
 void ThresholdInteractor::setView(View *view) {
   EditColorScaleInteractor::setView(view);
 
-  if (currentProperty)
+  if (currentProperty) {
     buildSliders(static_cast<SOMView *>(view));
+  }
 
   view->refresh();
 }
@@ -408,12 +414,14 @@ bool ThresholdInteractor::eventFilter(QObject *widget, QEvent *event) {
 #endif
 
     if (me->modifiers() == systMod) {
-      if (somView->getMask())
+      if (somView->getMask()) {
         performSelection(somView, somView->getMask()->getNodesEqualTo(true, som));
-      else
+      } else {
         performSelection(somView, som->getNodes());
-    } else
+      }
+    } else {
       performSelection(somView, som->getNodes());
+    }
 
     return true;
   }
@@ -461,8 +469,9 @@ bool ThresholdInteractor::screenSizeChanged(SOMView *somView) {
   if (EditColorScaleInteractor::screenSizeChanged(somView)) {
     clearSliders();
 
-    if (currentProperty)
+    if (currentProperty) {
       buildSliders(somView);
+    }
 
     return true;
   }
@@ -478,8 +487,9 @@ void ThresholdInteractor::propertyChanged(SOMView *somView, const string &proper
     clearSliders();
     buildSliders(somView);
     layer->setVisible(true);
-  } else
+  } else {
     layer->setVisible(false);
+  }
 }
 
 void ThresholdInteractor::buildSliders(SOMView *somView) {
@@ -499,11 +509,13 @@ void ThresholdInteractor::buildSliders(SOMView *somView) {
     for (auto n : mask->getNodesEqualTo(true, som)) {
       double nodeValue = currentProperty->getNodeDoubleValue(n);
 
-      if (nodeValue < intervalMinValue)
+      if (nodeValue < intervalMinValue) {
         intervalMinValue = nodeValue;
+      }
 
-      if (nodeValue > intervalMaxValue)
+      if (nodeValue > intervalMaxValue) {
         intervalMaxValue = nodeValue;
+      }
     }
   } else {
     intervalMinValue = minValue;
@@ -513,8 +525,9 @@ void ThresholdInteractor::buildSliders(SOMView *somView) {
   InputSample &inputSample = somView->getInputSample();
   unsigned int propertyIndex = inputSample.findIndexForProperty(somView->getSelectedProperty());
 
-  if (textureName.empty())
+  if (textureName.empty()) {
     generateSliderTexture();
+  }
 
   lSlider = new ColorScaleSlider(ColorScaleSlider::ToRight, sliderSize, colorScale, textureName);
 
@@ -547,8 +560,9 @@ void ThresholdInteractor::buildSliders(SOMView *somView) {
   layer->addGlEntity(bar, "sliderBar");
 }
 void ThresholdInteractor::clearSliders() {
-  if (layer)
+  if (layer) {
     layer->getComposite()->reset(true);
+  }
 
   rSlider = nullptr;
   lSlider = nullptr;

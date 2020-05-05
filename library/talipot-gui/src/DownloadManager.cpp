@@ -72,9 +72,10 @@ void DownloadManager::downloadFinished(QNetworkReply *reply) {
     if (reply->error() == QNetworkReply::NoError) {
       QString filename = downloadDestinations[url];
 
-      if (saveToDisk(filename, reply))
+      if (saveToDisk(filename, reply)) {
         printf("Download of %s succeeded (saved to %s)\n", url.toEncoded().constData(),
                qPrintable(filename));
+      }
     } else {
       fprintf(stderr, "Download of %s failed: %s\n", url.toEncoded().constData(),
               qPrintable(reply->errorString()));

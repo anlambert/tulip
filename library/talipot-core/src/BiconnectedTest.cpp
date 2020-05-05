@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -43,8 +43,9 @@ static void makeBiconnectedDFS(Graph *graph, vector<edge> &addedEdges) {
   // so get any node to begin
   node from = graph->getOneNode();
 
-  if (!from.isValid())
+  if (!from.isValid()) {
     return;
+  }
 
   MutableContainer<int> low;
   MutableContainer<int> depth;
@@ -111,11 +112,13 @@ static void makeBiconnectedDFS(Graph *graph, vector<edge> &addedEdges) {
       u = dfsParams.u;
 
       if (low.get(to.id) == depth.get(from.id)) {
-        if (to == u && supergraph.get(from.id).isValid())
+        if (to == u && supergraph.get(from.id).isValid()) {
           addedEdges.push_back(graph->addEdge(to, supergraph.get(from.id)));
+        }
 
-        if (to != u)
+        if (to != u) {
           addedEdges.push_back(graph->addEdge(u, to));
+        }
       }
 
       low.set(from.id, std::min(low.get(from.id), low.get(to.id)));
@@ -151,8 +154,9 @@ bool biconnectedTest(const Graph *graph, node v, MutableContainer<unsigned int> 
       if (vDfs != 1) {
         if (low.get(w.id) >= dfsNumber.get(v.id)) {
           return false;
-        } else
+        } else {
           low.set(v.id, std::min(low.get(v.id), low.get(w.id)));
+        }
       }
     } else if (supergraph.get(v.id) != w) {
       low.set(v.id, std::min(low.get(v.id), dfsNumber.get(w.id)));
@@ -178,8 +182,9 @@ bool BiconnectedTest::isBiconnected(const tlp::Graph *graph) {
   }
 
   auto it = instance.resultsBuffer.find(graph);
-  if (it != instance.resultsBuffer.end())
+  if (it != instance.resultsBuffer.end()) {
     return it->second;
+  }
 
   graph->addListener(instance);
   return instance.resultsBuffer[graph] = biconnectedTest(graph);

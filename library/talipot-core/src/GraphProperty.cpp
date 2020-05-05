@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -33,8 +33,9 @@ GraphProperty::~GraphProperty() {
   if (graph) {
 
     for (auto n : graph->nodes()) {
-      if (getNodeValue(n) != nullptr)
+      if (getNodeValue(n) != nullptr) {
         getNodeValue(n)->removeListener(this);
+      }
     }
 
     if (getNodeDefaultValue() != nullptr) {
@@ -78,19 +79,22 @@ void GraphProperty::setNodeValue(const node n,
       refs.erase(n);
 
       if (refs.empty()) {
-        if (oldGraph != getNodeDefaultValue())
+        if (oldGraph != getNodeDefaultValue()) {
           oldGraph->removeListener(this);
+        }
 
         referencedGraph.set(oldGraph->getId(), set<node>());
       }
-    } else if (oldGraph != getNodeDefaultValue())
+    } else if (oldGraph != getNodeDefaultValue()) {
       oldGraph->removeListener(this);
+    }
   }
 
   AbstractGraphProperty::setNodeValue(n, sg);
 
-  if (sg == nullptr || oldGraph == sg)
+  if (sg == nullptr || oldGraph == sg) {
     return;
+  }
 
   // Gestion de l'abonnement
   sg->addListener(this);
@@ -99,9 +103,9 @@ void GraphProperty::setNodeValue(const node n,
     bool notDefault;
     set<node> &refs = referencedGraph.get(sg->getId(), notDefault);
 
-    if (notDefault)
+    if (notDefault) {
       refs.insert(n);
-    else {
+    } else {
       set<node> newSet;
       newSet.insert(n);
       referencedGraph.set(sg->getId(), newSet);
@@ -110,8 +114,9 @@ void GraphProperty::setNodeValue(const node n,
 }
 //============================================================
 PropertyInterface *GraphProperty::clonePrototype(Graph *g, const std::string &n) const {
-  if (!g)
+  if (!g) {
     return nullptr;
+  }
 
   // allow to get an unregistered property (empty name)
   GraphProperty *p = n.empty() ? new GraphProperty(g) : g->getLocalGraphProperty(n);
@@ -163,8 +168,9 @@ void GraphProperty::treatEvent(const Event &evt) {
       backup.setAll(nullptr);
 
       for (auto n : graph->nodes()) {
-        if (getNodeValue(n) != sg)
+        if (getNodeValue(n) != sg) {
           backup.set(n.id, getNodeValue(n));
+        }
       }
 
       setAllNodeValue(nullptr);
@@ -194,8 +200,9 @@ bool GraphProperty::readNodeDefaultValue(std::istream &iss) {
   // must read 0 (see GraphType::writeb)
   unsigned int id = 0;
 
-  if (!bool(iss.read(reinterpret_cast<char *>(&id), sizeof(id))))
+  if (!bool(iss.read(reinterpret_cast<char *>(&id), sizeof(id)))) {
     return false;
+  }
 
   assert(id == 0);
   return id == 0;
@@ -205,8 +212,9 @@ bool GraphProperty::readNodeValue(std::istream &iss, node n) {
   // must read the id of a subgraph
   unsigned int id = 0;
 
-  if (!bool(iss.read(reinterpret_cast<char *>(&id), sizeof(id))))
+  if (!bool(iss.read(reinterpret_cast<char *>(&id), sizeof(id)))) {
     return false;
+  }
 
   Graph *sg = graph->getRoot()->getDescendantGraph(id);
   setNodeValue(n, sg);

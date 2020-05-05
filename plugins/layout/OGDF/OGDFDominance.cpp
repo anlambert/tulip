@@ -53,8 +53,9 @@ public:
     if (dataSet != nullptr) {
       int ival = 0;
 
-      if (dataSet->get("minimum grid distance", ival))
+      if (dataSet->get("minimum grid distance", ival)) {
         dominance->setMinGridDistance(ival);
+      }
     }
   }
 

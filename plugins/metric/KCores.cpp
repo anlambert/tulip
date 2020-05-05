@@ -137,8 +137,9 @@ bool KCores::run() {
       for (unsigned int i = 0; i < nodes.size(); ++i) {
         // nothing to do if the node
         // is already deleted
-        if (nodeDeleted[i])
+        if (nodeDeleted[i]) {
           continue;
+        }
 
         double &nK = nodeK[i];
         double current_k = nK;
@@ -159,14 +160,16 @@ bool KCores::run() {
 
               switch (degree_type) {
               case IN_EDGE:
-                if ((m = ends.second) == n)
+                if ((m = ends.second) == n) {
                   continue;
+                }
 
                 break;
 
               case OUT_EDGE:
-                if ((m = ends.first) == n)
+                if ((m = ends.first) == n) {
                   continue;
+                }
 
                 break;
 
@@ -176,8 +179,9 @@ bool KCores::run() {
 
               unsigned int mPos = graph->nodePos(m);
 
-              if (nodeDeleted[mPos])
+              if (nodeDeleted[mPos]) {
                 continue;
+              }
 
               nodeK[mPos] -= metric ? metric->getEdgeDoubleValue(ee) : 1;
             }
@@ -187,9 +191,10 @@ bool KCores::run() {
           nodeDeleted[i] = true;
           --nbNodes;
           modify = true;
-        } else if (current_k < next_k)
+        } else if (current_k < next_k) {
           // update next k value
           next_k = current_k;
+        }
       }
     }
 

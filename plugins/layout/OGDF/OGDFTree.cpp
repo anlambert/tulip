@@ -91,20 +91,25 @@ public:
       bool bval = false;
       tlp::StringCollection sc;
 
-      if (dataSet->get("siblings distance", dval))
+      if (dataSet->get("siblings distance", dval)) {
         tree->siblingDistance(dval);
+      }
 
-      if (dataSet->get("subtrees distance", dval))
+      if (dataSet->get("subtrees distance", dval)) {
         tree->subtreeDistance(dval);
+      }
 
-      if (dataSet->get("levels distance", dval))
+      if (dataSet->get("levels distance", dval)) {
         tree->levelDistance(dval);
+      }
 
-      if (dataSet->get("trees distance", dval))
+      if (dataSet->get("trees distance", dval)) {
         tree->treeDistance(dval);
+      }
 
-      if (dataSet->get("orthogonal layout", bval))
+      if (dataSet->get("orthogonal layout", bval)) {
         tree->orthogonalLayout(bval);
+      }
 
       if (dataSet->get(ELT_ORIENTATION, sc)) {
         if (sc.getCurrent() == ELT_TOPTOBOTTOM) {

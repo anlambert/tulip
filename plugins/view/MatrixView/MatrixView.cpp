@@ -113,8 +113,9 @@ void MatrixView::setState(const DataSet &ds) {
   if (ds.get<bool>("quickAccessBarVisible", quickAccessBarVisible)) {
     needQuickAccessBar = true;
     setQuickAccessBarVisible(quickAccessBarVisible);
-  } else // display quickaccessbar
+  } else { // display quickaccessbar
     setQuickAccessBarVisible(true);
+  }
 }
 
 void MatrixView::showEdges(bool show) {
@@ -192,8 +193,9 @@ DataSet MatrixView::state() const {
   ds.set("ordering", _configurationWidget->orderingProperty());
   ds.set("oriented", _isOriented);
 
-  if (needQuickAccessBar)
+  if (needQuickAccessBar) {
     ds.set("quickAccessBarVisible", quickAccessBarVisible());
+  }
 
   return ds;
 }
@@ -214,12 +216,14 @@ void MatrixView::fillContextMenu(QMenu *menu, const QPointF &point) {
     QString sId = QString::number(itemId);
 
     if (isNode) {
-      if (!_displayedNodesAreNodes->getNodeValue(node(itemId)))
+      if (!_displayedNodesAreNodes->getNodeValue(node(itemId))) {
         isNode = false;
+      }
 
       itemId = _displayedNodesToGraphEntities->getNodeValue(node(itemId));
-    } else
+    } else {
       itemId = _displayedEdgesToGraphEdges->getEdgeValue(edge(itemId));
+    }
 
     menu->addAction((isNode ? "Node #" : "Edge #") + sId)->setEnabled(false);
 
@@ -296,11 +300,13 @@ void MatrixView::initDisplayedGraph() {
   createScene(_matrixGraph, DataSet());
 
   Observable::holdObservers();
-  for (auto n : graph()->nodes())
+  for (auto n : graph()->nodes()) {
     addNode(graph(), n);
+  }
 
-  for (auto e : graph()->edges())
+  for (auto e : graph()->edges()) {
     addEdge(graph(), e);
+  }
   Observable::unholdObservers();
 
   GlGraphInputData *inputData =
@@ -346,8 +352,9 @@ void MatrixView::initDisplayedGraph() {
 }
 
 void MatrixView::normalizeSizes(double maxVal) {
-  if (graph() == nullptr)
+  if (graph() == nullptr) {
     return;
+  }
 
   float maxWidth = FLT_MIN, maxHeight = FLT_MIN;
   SizeProperty *originalSizes =
@@ -363,8 +370,9 @@ void MatrixView::normalizeSizes(double maxVal) {
 
   Observable::holdObservers();
   for (auto n : _matrixGraph->nodes()) {
-    if (!_displayedNodesAreNodes->getNodeValue(n))
+    if (!_displayedNodesAreNodes->getNodeValue(n)) {
       continue;
+    }
 
     const Size &s =
         originalSizes->getNodeValue(node(_displayedNodesToGraphEntities->getNodeValue(n)));
@@ -429,14 +437,17 @@ void MatrixView::treatEvent(const Event &message) {
   const GraphEvent *graphEvent = dynamic_cast<const GraphEvent *>(&message);
 
   if (graphEvent) {
-    if (graphEvent->getType() == GraphEvent::TLP_ADD_EDGE)
+    if (graphEvent->getType() == GraphEvent::TLP_ADD_EDGE) {
       addEdge(graphEvent->getGraph(), graphEvent->getEdge());
+    }
 
-    if (graphEvent->getType() == GraphEvent::TLP_DEL_NODE)
+    if (graphEvent->getType() == GraphEvent::TLP_DEL_NODE) {
       delNode(graphEvent->getGraph(), graphEvent->getNode());
+    }
 
-    if (graphEvent->getType() == GraphEvent::TLP_DEL_EDGE)
+    if (graphEvent->getType() == GraphEvent::TLP_DEL_EDGE) {
       delEdge(graphEvent->getGraph(), graphEvent->getEdge());
+    }
   }
 }
 
@@ -446,8 +457,9 @@ void MatrixView::delNode(tlp::Graph *, const tlp::node n) {
 
   const vector<int> &vect = _graphEntitiesToDisplayedNodes->getNodeValue(n);
 
-  for (auto id : vect)
+  for (auto id : vect) {
     _matrixGraph->delNode(node(id));
+  }
 }
 
 void MatrixView::delEdge(tlp::Graph *, const tlp::edge e) {
@@ -456,8 +468,9 @@ void MatrixView::delEdge(tlp::Graph *, const tlp::edge e) {
 
   const vector<int> &vect = _graphEntitiesToDisplayedNodes->getEdgeValue(e);
 
-  for (auto id : vect)
+  for (auto id : vect) {
     _matrixGraph->delNode(node(id));
+  }
 
   _matrixGraph->delEdge(_edgesMap[e]);
   _edgesMap.remove(e);
@@ -491,42 +504,48 @@ void MatrixView::updateNodesOrder() {
   _orderedNodes.clear();
   _orderedNodes.resize(graph()->numberOfNodes());
   int i = 0;
-  for (auto n : graph()->nodes())
+  for (auto n : graph()->nodes()) {
     _orderedNodes[i++] = n;
+  }
 
   if (graph()->existProperty(_orderingMetricName)) {
     PropertyInterface *pi = graph()->getProperty(_orderingMetricName);
 
     if (pi->getTypename() == "double") {
-      if (_configurationWidget->ascendingOrder())
+      if (_configurationWidget->ascendingOrder()) {
         sort(_orderedNodes.begin(), _orderedNodes.end(),
              AscendingPropertySorter<DoubleProperty>(pi));
-      else
+      } else {
         sort(_orderedNodes.begin(), _orderedNodes.end(),
              DescendingPropertySorter<DoubleProperty>(pi));
+      }
 
     } else if (pi->getTypename() == "int") {
-      if (_configurationWidget->ascendingOrder())
+      if (_configurationWidget->ascendingOrder()) {
         sort(_orderedNodes.begin(), _orderedNodes.end(),
              AscendingPropertySorter<IntegerProperty>(pi));
-      else
+      } else {
         sort(_orderedNodes.begin(), _orderedNodes.end(),
              DescendingPropertySorter<IntegerProperty>(pi));
+      }
     } else if (pi->getTypename() == "string") {
-      if (_configurationWidget->ascendingOrder())
+      if (_configurationWidget->ascendingOrder()) {
         sort(_orderedNodes.begin(), _orderedNodes.end(),
              AscendingPropertySorter<StringProperty>(pi));
-      else
+      } else {
         sort(_orderedNodes.begin(), _orderedNodes.end(),
              DescendingPropertySorter<StringProperty>(pi));
+      }
     }
-  } else if (!_configurationWidget->ascendingOrder())
+  } else if (!_configurationWidget->ascendingOrder()) {
     sort(_orderedNodes.begin(), _orderedNodes.end(), DescendingIdSorter());
+  }
 }
 
 void MatrixView::updateLayout() {
-  if (graph() == nullptr)
+  if (graph() == nullptr) {
     return;
+  }
 
   holdObservers();
   updateNodesOrder();
@@ -603,16 +622,19 @@ void MatrixView::setBackgroundColor(QColor c) {
 }
 
 void MatrixView::setOrderingMetric(const std::string &name) {
-  if (!name.empty() && !graph()->existProperty(name))
+  if (!name.empty() && !graph()->existProperty(name)) {
     return;
+  }
 
-  if (graph()->existProperty(_orderingMetricName))
+  if (graph()->existProperty(_orderingMetricName)) {
     graph()->getProperty(_orderingMetricName)->removeObserver(this);
+  }
 
   _orderingMetricName = name;
 
-  if (graph()->existProperty(name))
+  if (graph()->existProperty(name)) {
     graph()->getProperty(name)->addObserver(this);
+  }
 
   _mustUpdateLayout = true;
   emit drawNeeded();

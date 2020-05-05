@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -54,14 +54,16 @@ bool EqualValueClustering::run() {
     dataSet->get("Connected", connected);
   }
 
-  if (property == nullptr)
+  if (property == nullptr) {
     property = graph->getProperty("viewMetric");
+  }
 
   const bool onNodes = eltTypes.getCurrent() == NODE_ELT;
 
   // try to work with NumericProperty
-  if (dynamic_cast<NumericProperty *>(property))
+  if (dynamic_cast<NumericProperty *>(property)) {
     return computeClusters(static_cast<NumericProperty *>(property), onNodes, connected);
+  }
 
   return computeClusters(property, onNodes, connected);
 }
@@ -78,8 +80,9 @@ bool EqualValueClustering::computeClusters(NumericProperty *prop, bool onNodes, 
   if (onNodes) {
     maxSteps = graph->numberOfNodes();
 
-    if (pluginProgress)
+    if (pluginProgress) {
       pluginProgress->setComment("Partitioning nodes...");
+    }
 
     // do a bfs traversal for each node
     for (auto curNode : graph->nodes()) {
@@ -105,14 +108,17 @@ bool EqualValueClustering::computeClusters(NumericProperty *prop, bool onNodes, 
             if (itv != valuesCount.end()) {
               itv->second += 1;
               sstr << " [" << itv->second << ']';
-            } else
+            } else {
               valuesCount[strVal] = 0;
-          } else
+            }
+          } else {
             clusters[curValue] = sg;
+          }
 
           sg->setName(sstr.str());
-        } else
+        } else {
           sg = clusters[curValue];
+        }
 
         // add curNode in the cluster
         sg->addNode(curNode);
@@ -120,8 +126,9 @@ bool EqualValueClustering::computeClusters(NumericProperty *prop, bool onNodes, 
         if (pluginProgress && (++step % 50 == 1)) {
           pluginProgress->progress(step, maxSteps);
 
-          if (pluginProgress->state() != TLP_CONTINUE)
+          if (pluginProgress->state() != TLP_CONTINUE) {
             return pluginProgress->state() != TLP_CANCEL;
+          }
         }
 
         // do a bfs traversal for this node
@@ -156,13 +163,15 @@ bool EqualValueClustering::computeClusters(NumericProperty *prop, bool onNodes, 
                 if (pluginProgress && (++step % 50 == 1)) {
                   pluginProgress->progress(step, maxSteps);
 
-                  if (pluginProgress->state() != TLP_CONTINUE)
+                  if (pluginProgress->state() != TLP_CONTINUE) {
                     return pluginProgress->state() != TLP_CANCEL;
+                  }
                 }
               } else {
                 // check if curEdge already exist in cluster
-                if (!sg->isElement(curEdge))
+                if (!sg->isElement(curEdge)) {
                   sg->addEdge(curEdge);
+                }
               }
             }
           }
@@ -172,8 +181,9 @@ bool EqualValueClustering::computeClusters(NumericProperty *prop, bool onNodes, 
   } else {
     maxSteps = graph->numberOfEdges();
 
-    if (pluginProgress)
+    if (pluginProgress) {
       pluginProgress->setComment("Partitioning edges...");
+    }
 
     // do a bfs traversal for each edge
     for (auto curEdge : graph->edges()) {
@@ -199,14 +209,17 @@ bool EqualValueClustering::computeClusters(NumericProperty *prop, bool onNodes, 
             if (itv != valuesCount.end()) {
               itv->second += 1;
               sstr << " [" << itv->second << ']';
-            } else
+            } else {
               valuesCount[strVal] = 0;
-          } else
+            }
+          } else {
             clusters[curValue] = sg;
+          }
 
           sg->setName(sstr.str());
-        } else
+        } else {
           sg = clusters[curValue];
+        }
 
         // add curEdge in cluster
         const std::pair<node, node> &ends = graph->ends(curEdge);
@@ -217,8 +230,9 @@ bool EqualValueClustering::computeClusters(NumericProperty *prop, bool onNodes, 
         if (pluginProgress && (++step % 50 == 1)) {
           pluginProgress->progress(step, maxSteps);
 
-          if (pluginProgress->state() != TLP_CONTINUE)
+          if (pluginProgress->state() != TLP_CONTINUE) {
             return pluginProgress->state() != TLP_CANCEL;
+          }
         }
 
         // do a bfs traversal for this edge
@@ -250,8 +264,9 @@ bool EqualValueClustering::computeClusters(NumericProperty *prop, bool onNodes, 
               if (pluginProgress && (++step % 50 == 1)) {
                 pluginProgress->progress(step, maxSteps);
 
-                if (pluginProgress->state() != TLP_CONTINUE)
+                if (pluginProgress->state() != TLP_CONTINUE) {
                   return pluginProgress->state() != TLP_CANCEL;
+                }
               }
             }
           }
@@ -275,8 +290,9 @@ bool EqualValueClustering::computeClusters(PropertyInterface *prop, bool onNodes
   if (onNodes) {
     maxSteps = graph->numberOfNodes();
 
-    if (pluginProgress)
+    if (pluginProgress) {
       pluginProgress->setComment("Partitioning nodes...");
+    }
 
     // do a bfs traversal for each node
     for (auto curNode : graph->nodes()) {
@@ -301,14 +317,17 @@ bool EqualValueClustering::computeClusters(PropertyInterface *prop, bool onNodes
             if (itv != valuesCount.end()) {
               itv->second += 1;
               sstr << " [" << itv->second << ']';
-            } else
+            } else {
               valuesCount[curValue] = 0;
-          } else
+            }
+          } else {
             clusters[curValue] = sg;
+          }
 
           sg->setName(sstr.str());
-        } else
+        } else {
           sg = clusters[curValue];
+        }
 
         // add curNode in cluster
         sg->addNode(curNode);
@@ -316,8 +335,9 @@ bool EqualValueClustering::computeClusters(PropertyInterface *prop, bool onNodes
         if (pluginProgress && (++step % 50 == 1)) {
           pluginProgress->progress(step, maxSteps);
 
-          if (pluginProgress->state() != TLP_CONTINUE)
+          if (pluginProgress->state() != TLP_CONTINUE) {
             return pluginProgress->state() != TLP_CANCEL;
+          }
         }
 
         // do a bfs traversal for this node
@@ -351,13 +371,15 @@ bool EqualValueClustering::computeClusters(PropertyInterface *prop, bool onNodes
                 if (pluginProgress && (++step % 50 == 1)) {
                   pluginProgress->progress(step, maxSteps);
 
-                  if (pluginProgress->state() != TLP_CONTINUE)
+                  if (pluginProgress->state() != TLP_CONTINUE) {
                     return pluginProgress->state() != TLP_CANCEL;
+                  }
                 }
               } else {
                 // check if curEdge already exist in cluster
-                if (!sg->isElement(curEdge))
+                if (!sg->isElement(curEdge)) {
                   sg->addEdge(curEdge);
+                }
               }
             }
           }
@@ -367,8 +389,9 @@ bool EqualValueClustering::computeClusters(PropertyInterface *prop, bool onNodes
   } else {
     maxSteps = graph->numberOfEdges();
 
-    if (pluginProgress)
+    if (pluginProgress) {
       pluginProgress->setComment("Partitioning edges...");
+    }
 
     // do a bfs traversal for each edge
     for (auto curEdge : graph->edges()) {
@@ -394,14 +417,17 @@ bool EqualValueClustering::computeClusters(PropertyInterface *prop, bool onNodes
             if (itv != valuesCount.end()) {
               itv->second += 1;
               sstr << " [" << itv->second << ']';
-            } else
+            } else {
               valuesCount[strVal] = 0;
-          } else
+            }
+          } else {
             clusters[curValue] = sg;
+          }
 
           sg->setName(sstr.str());
-        } else
+        } else {
           sg = clusters[curValue];
+        }
 
         // add curEdge in cluster
         const std::pair<node, node> &ends = graph->ends(curEdge);
@@ -412,8 +438,9 @@ bool EqualValueClustering::computeClusters(PropertyInterface *prop, bool onNodes
         if (pluginProgress && (++step % 50 == 1)) {
           pluginProgress->progress(step, maxSteps);
 
-          if (pluginProgress->state() != TLP_CONTINUE)
+          if (pluginProgress->state() != TLP_CONTINUE) {
             return pluginProgress->state() != TLP_CANCEL;
+          }
         }
 
         // do a bfs traversal for this edge
@@ -445,8 +472,9 @@ bool EqualValueClustering::computeClusters(PropertyInterface *prop, bool onNodes
               if (pluginProgress && (++step % 50 == 1)) {
                 pluginProgress->progress(step, maxSteps);
 
-                if (pluginProgress->state() != TLP_CONTINUE)
+                if (pluginProgress->state() != TLP_CONTINUE) {
                   return pluginProgress->state() != TLP_CANCEL;
+                }
               }
             }
           }

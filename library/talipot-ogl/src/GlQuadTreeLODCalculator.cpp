@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -114,8 +114,9 @@ bool GlQuadTreeLODCalculator::needEntities() {
 
   // Check if quadtree need entities
   if (haveToCompute) {
-    if (inputData)
+    if (inputData) {
       oldParameters = *inputData->parameters;
+    }
 
     return true;
   }
@@ -133,8 +134,9 @@ bool GlQuadTreeLODCalculator::needEntities() {
       if (unitCamera != unitOldCamera) {
         haveToCompute = true;
 
-        if (inputData)
+        if (inputData) {
           oldParameters = *inputData->parameters;
+        }
 
         return true;
       }
@@ -195,18 +197,21 @@ void GlQuadTreeLODCalculator::compute(const Vec4i &globalViewport, const Vec4i &
     layerToCamera.clear();
     entities.clear();
 
-    for (auto node : nodesQuadTree)
+    for (auto node : nodesQuadTree) {
       delete node;
+    }
 
     nodesQuadTree.clear();
 
-    for (auto node : edgesQuadTree)
+    for (auto node : edgesQuadTree) {
       delete node;
+    }
 
     edgesQuadTree.clear();
 
-    for (auto node : entitiesQuadTree)
+    for (auto node : entitiesQuadTree) {
       delete node;
+    }
 
     entitiesQuadTree.clear();
 
@@ -389,10 +394,11 @@ void GlQuadTreeLODCalculator::computeFor3DCamera(LayerLODUnit *layerLODUnit, con
 
   int ratio;
 
-  if (currentViewport[2] > currentViewport[3])
+  if (currentViewport[2] > currentViewport[3]) {
     ratio = currentViewport[2];
-  else
+  } else {
     ratio = currentViewport[3];
+  }
 
   vector<unsigned int> resNodes;
   vector<unsigned int> resEdges;
@@ -440,10 +446,11 @@ void GlQuadTreeLODCalculator::computeFor3DCamera(LayerLODUnit *layerLODUnit, con
       auto &quadTree = entitiesQuadTree[quadTreesVectorPosition];
       if (quadTree) {
         if (aX == 0 && aY == 0) {
-          if ((renderingEntitiesFlag & RenderingWithoutRemove) == 0)
+          if ((renderingEntitiesFlag & RenderingWithoutRemove) == 0) {
             quadTree->getElementsWithRatio(cameraBoundingBox, resEntities, ratio);
-          else
+          } else {
             quadTree->getElements(cameraBoundingBox, resEntities);
+          }
         } else {
           quadTree->getElements(resEntities);
         }
@@ -473,8 +480,9 @@ void GlQuadTreeLODCalculator::computeFor3DCamera(LayerLODUnit *layerLODUnit, con
 
 void GlQuadTreeLODCalculator::removeObservers() {
   if (inputData) {
-    if (currentGraph)
+    if (currentGraph) {
       currentGraph->removeListener(this);
+    }
 
     if (layoutProperty) {
       layoutProperty->removeListener(this);
@@ -492,8 +500,9 @@ void GlQuadTreeLODCalculator::removeObservers() {
     }
   }
 
-  if (glScene)
+  if (glScene) {
     glScene->removeListener(this);
+  }
 }
 
 void GlQuadTreeLODCalculator::addObservers() {
@@ -520,14 +529,16 @@ void GlQuadTreeLODCalculator::addObservers() {
     }
   }
 
-  if (glScene)
+  if (glScene) {
     glScene->addListener(this);
+  }
 }
 
 void GlQuadTreeLODCalculator::update(PropertyInterface *property) {
   if (property == inputData->getElementLayout() || property == inputData->getElementSize() ||
-      property == inputData->getElementSelected())
+      property == inputData->getElementSelected()) {
     setHaveToCompute();
+  }
 }
 
 void GlQuadTreeLODCalculator::treatEvent(const Event &ev) {
@@ -631,14 +642,16 @@ void GlQuadTreeLODCalculator::clearCamerasObservers() {
 }
 
 void GlQuadTreeLODCalculator::setHaveToCompute() {
-  if (haveToCompute)
+  if (haveToCompute) {
     return;
+  }
 
   GlQuadTreeLODCalculator *attachedQuadTreeLODCalculator =
       dynamic_cast<GlQuadTreeLODCalculator *>(attachedLODCalculator);
 
-  if (attachedQuadTreeLODCalculator)
+  if (attachedQuadTreeLODCalculator) {
     attachedQuadTreeLODCalculator->setHaveToCompute();
+  }
 
   haveToCompute = true;
   haveToInitObservers = true;

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -101,8 +101,9 @@ bool TLPBExport::exportGraph(std::ostream &os) {
                  MAX_EDGES_TO_WRITE * sizeof(vEdges[0]));
         nbWrittenEdges += edgesToWrite;
 
-        if (pluginProgress->progress(nbWrittenEdges, header.numNodes) != TLP_CONTINUE)
+        if (pluginProgress->progress(nbWrittenEdges, header.numNodes) != TLP_CONTINUE) {
           return pluginProgress->state() != TLP_CANCEL;
+        }
 
         edgesToWrite = 0;
       }
@@ -128,8 +129,9 @@ bool TLPBExport::exportGraph(std::ostream &os) {
       Graph *sg = vSubGraphs[i];
       unsigned int parentId = sg->getSuperGraph()->getId();
 
-      if (parentId == graph->getId())
+      if (parentId == graph->getId()) {
         parentId = 0;
+      }
 
       std::pair<unsigned int, unsigned int> ids(sg->getId(), parentId);
       // write ids
@@ -141,8 +143,9 @@ bool TLPBExport::exportGraph(std::ostream &os) {
         unsigned int nbNodes = nodes.size();
         std::vector<node> sgNodes(nbNodes);
 
-        for (unsigned int j = 0; j < nbNodes; ++j)
+        for (unsigned int j = 0; j < nbNodes; ++j) {
           sgNodes[j] = getNode(nodes[j]);
+        }
 
         std::sort(sgNodes.begin(), sgNodes.end());
 
@@ -161,12 +164,12 @@ bool TLPBExport::exportGraph(std::ostream &os) {
           node current = sgNodes[j];
           pendingWrite = true;
 
-          if (!beginNode.isValid())
+          if (!beginNode.isValid()) {
             beginNode = lastNode = current;
-          else {
-            if (current.id == lastNode.id + 1)
+          } else {
+            if (current.id == lastNode.id + 1) {
               lastNode = current;
-            else {
+            } else {
               vRanges[rangesToWrite++] = std::pair<node, node>(beginNode, lastNode);
               ++numRanges;
               beginNode = lastNode = current;
@@ -208,8 +211,9 @@ bool TLPBExport::exportGraph(std::ostream &os) {
         unsigned int nbEdges = edges.size();
         std::vector<edge> sgEdges(nbEdges);
 
-        for (unsigned int j = 0; j < nbEdges; ++j)
+        for (unsigned int j = 0; j < nbEdges; ++j) {
           sgEdges[j] = getEdge(edges[j]);
+        }
 
         std::sort(sgEdges.begin(), sgEdges.end());
 
@@ -228,12 +232,12 @@ bool TLPBExport::exportGraph(std::ostream &os) {
           edge current = sgEdges[j];
           pendingWrite = true;
 
-          if (!beginEdge.isValid())
+          if (!beginEdge.isValid()) {
             beginEdge = lastEdge = current;
-          else {
-            if (current.id == lastEdge.id + 1)
+          } else {
+            if (current.id == lastEdge.id + 1) {
               lastEdge = current;
-            else {
+            } else {
               vRanges[rangesToWrite++] = std::pair<edge, edge>(beginEdge, lastEdge);
               ++numRanges;
               beginEdge = lastEdge = current;
@@ -269,8 +273,9 @@ bool TLPBExport::exportGraph(std::ostream &os) {
                  rangesToWrite * sizeof(vRanges[0]));
       }
 
-      if (pluginProgress->progress(i, numSubGraphs) != TLP_CONTINUE)
+      if (pluginProgress->progress(i, numSubGraphs) != TLP_CONTINUE) {
         return pluginProgress->state() != TLP_CANCEL;
+      }
     }
   }
   // write properties
@@ -309,8 +314,9 @@ bool TLPBExport::exportGraph(std::ostream &os) {
       // write graph id
       unsigned int propGraphId = prop->getGraph()->getId();
 
-      if (i < numGraphProperties || propGraphId == graph->getId())
+      if (i < numGraphProperties || propGraphId == graph->getId()) {
         propGraphId = 0;
+      }
 
       os.write(reinterpret_cast<const char *>(&propGraphId), sizeof(propGraphId));
       // special treament for pathnames view properties
@@ -325,16 +331,18 @@ bool TLPBExport::exportGraph(std::ostream &os) {
         string defVal = prop->getNodeDefaultStringValue();
         size_t pos = defVal.find(TalipotBitmapDir);
 
-        if (pos != string::npos)
+        if (pos != string::npos) {
           defVal.replace(pos, TalipotBitmapDir.size(), "TalipotBitmapDir/");
+        }
 
         StringType::writeb(os, defVal);
 
         defVal = prop->getEdgeDefaultStringValue();
         pos = defVal.find(TalipotBitmapDir);
 
-        if (pos != string::npos)
+        if (pos != string::npos) {
           defVal.replace(pos, TalipotBitmapDir.size(), "TalipotBitmapDir/");
+        }
 
         StringType::writeb(os, defVal);
       } else {
@@ -385,8 +393,9 @@ bool TLPBExport::exportGraph(std::ostream &os) {
             string sVal = prop->getNodeStringValue(n);
             size_t pos = sVal.find(TalipotBitmapDir);
 
-            if (pos != string::npos)
+            if (pos != string::npos) {
               sVal.replace(pos, TalipotBitmapDir.size(), "TalipotBitmapDir/");
+            }
 
             StringType::writeb(s, sVal);
           } else {
@@ -401,17 +410,18 @@ bool TLPBExport::exportGraph(std::ostream &os) {
                 unsigned int id = 0;
                 UnsignedIntegerType::writeb(s, id);
               }
-            } else
+            } else {
               prop->writeNodeValue(s, n);
+            }
           }
 
           ++nbValues;
 
           if (nbValues == MAX_VALUES_TO_WRITE && canUsePubSetBuf) {
             // write already buffered values
-            if (vBuf)
+            if (vBuf) {
               os.write(vBuf, MAX_VALUES_TO_WRITE * (sizeof(unsigned int) + valueSize));
-            else {
+            } else {
               std::string sbuf = vs.str();
               size = uint(vs.tellp());
               // write buffer
@@ -471,8 +481,9 @@ bool TLPBExport::exportGraph(std::ostream &os) {
               static_cast<char *>(malloc(MAX_VALUES_TO_WRITE * (sizeof(unsigned int) + valueSize)));
           vs.rdbuf()->pubsetbuf(vBuf, MAX_VALUES_TO_WRITE * (sizeof(unsigned int) + valueSize));
         } else {
-          if (prop->getTypename() == GraphProperty::propertyTypename)
+          if (prop->getTypename() == GraphProperty::propertyTypename) {
             isGraphProperty = true;
+          }
         }
 
         // loop on edges
@@ -503,8 +514,9 @@ bool TLPBExport::exportGraph(std::ostream &os) {
               string sVal = prop->getEdgeStringValue(e);
               size_t pos = sVal.find(TalipotBitmapDir);
 
-              if (pos != string::npos)
+              if (pos != string::npos) {
                 sVal.replace(pos, TalipotBitmapDir.size(), "TalipotBitmapDir/");
+              }
 
               StringType::writeb(s, sVal);
             } else {
@@ -516,9 +528,9 @@ bool TLPBExport::exportGraph(std::ostream &os) {
 
           if (nbValues == MAX_VALUES_TO_WRITE && canUsePubSetBuf) {
             // write already buffered values
-            if (vBuf)
+            if (vBuf) {
               os.write(vBuf, MAX_VALUES_TO_WRITE * (sizeof(unsigned int) + valueSize));
-            else {
+            } else {
               std::string sbuf = vs.str();
               size = uint(vs.tellp());
               // write buffer
@@ -548,15 +560,17 @@ bool TLPBExport::exportGraph(std::ostream &os) {
         }
       }
 
-      if (pluginProgress->progress(i, numProperties) != TLP_CONTINUE)
+      if (pluginProgress->progress(i, numProperties) != TLP_CONTINUE) {
         return pluginProgress->state() != TLP_CANCEL;
+      }
     }
   }
   // write graph and sub graphs attributes
   writeAttributes(os, graph);
 
-  for (unsigned int i = 0; i < numSubGraphs; ++i)
+  for (unsigned int i = 0; i < numSubGraphs; ++i) {
     writeAttributes(os, vSubGraphs[i]);
+  }
 
   graph->setSuperGraph(superGraph);
   return true;

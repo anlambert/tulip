@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -54,8 +54,9 @@ static int consoleutils_ConsoleOutput_init(consoleutils_ConsoleOutput *self, PyO
                                            PyObject *) {
   int i;
 
-  if (!PyArg_ParseTuple(args, "|i", &i))
+  if (!PyArg_ParseTuple(args, "|i", &i)) {
     return -1;
+  }
 
   self->stderrflag = i > 0;
   self->writeToConsole = true;
@@ -67,8 +68,9 @@ static PyObject *consoleutils_ConsoleOutput_write(PyObject *self, PyObject *o) {
 
   char *buf;
 
-  if (!PyArg_ParseTuple(o, "s", &buf))
+  if (!PyArg_ParseTuple(o, "s", &buf)) {
     return NULL;
+  }
 
   QString output(QString::fromUtf8(buf));
 
@@ -107,8 +109,9 @@ static PyObject *consoleutils_ConsoleOutput_write(PyObject *self, PyObject *o) {
 static PyObject *consoleutils_ConsoleOutput_enableConsoleOutput(PyObject *self, PyObject *o) {
   int i;
 
-  if (!PyArg_ParseTuple(o, "i", &i))
+  if (!PyArg_ParseTuple(o, "i", &i)) {
     return NULL;
+  }
 
   reinterpret_cast<consoleutils_ConsoleOutput *>(self)->writeToConsole = i > 0;
 

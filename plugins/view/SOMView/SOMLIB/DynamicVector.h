@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -32,8 +32,9 @@ public:
     array = new T[size];
   }
   virtual ~DynamicVector() {
-    if (size != 0)
+    if (size != 0) {
       delete[] array;
+    }
   }
 
   DynamicVector<T> &operator=(const DynamicVector<T> &);

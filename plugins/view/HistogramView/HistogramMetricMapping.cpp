@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -321,17 +321,19 @@ float GlEditableCurve::getYCoordForX(const float xCoord) {
     }
     return false;
   };
-  if (curvePoints.empty())
+  if (curvePoints.empty()) {
     fn(startPoint, endPoint);
-  else {
+  } else {
     if (!fn(startPoint, curvePoints[0])) {
       bool ok = false;
       for (size_t i = 0; i < curvePoints.size() - 1; ++i) {
-        if ((ok = fn(curvePoints[i], curvePoints[i + 1])))
+        if ((ok = fn(curvePoints[i], curvePoints[i + 1]))) {
           break;
+        }
       }
-      if (!ok)
+      if (!ok) {
         fn(curvePoints[curvePoints.size() - 1], endPoint);
+      }
     }
   }
 
@@ -481,8 +483,9 @@ void GlGlyphScale::setGlyphsList(const vector<int> &glyphsList) {
   glyphGraph->clear();
   glyphScaleMap.clear();
 
-  for (auto glyph : glyphsList)
+  for (auto glyph : glyphsList) {
     glyphGraphShape->setNodeValue(glyphGraph->addNode(), glyph);
+  }
 
   size = length / glyphsList.size();
   glyphGraphSize->setAllNodeValue(Size(size, size, size));
@@ -673,8 +676,9 @@ void HistogramMetricMapping::viewChanged(View *view) {
 }
 
 void HistogramMetricMapping::initInteractor() {
-  if (!histoView->getDetailedHistogram())
+  if (!histoView->getDetailedHistogram()) {
     return;
+  }
 
   if (colorScaleConfigDialog == nullptr) {
     colorScaleConfigDialog = new ColorScaleConfigDialog(*colorScale, histoView->getGlMainWidget());
@@ -772,8 +776,9 @@ bool HistogramMetricMapping::eventFilter(QObject *widget, QEvent *e) {
 
   QMouseEvent *me = dynamic_cast<QMouseEvent *>(e);
 
-  if (!me)
+  if (!me) {
     return false;
+  }
 
   bool ret = false;
 
@@ -1146,8 +1151,9 @@ void HistogramMetricMapping::updateMapping(GlQuantitativeAxis *histoXAxis,
          x <= histoXAxis->getAxisBaseCoord().getX() + histoXAxis->getAxisLength(); x += increment) {
       float yCurve = curve->getYCoordForX(x);
 
-      if (yCurve < 0)
+      if (yCurve < 0) {
         yCurve = 0;
+      }
 
       color = glColorScale->getColorAtPos(Coord(0, yCurve, 0));
       mappinqPolyQuad->addQuadEdge(
@@ -1170,8 +1176,9 @@ void HistogramMetricMapping::updateMapping(GlQuantitativeAxis *histoXAxis,
          x <= histoXAxis->getAxisBaseCoord().getX() + histoXAxis->getAxisLength(); x += increment) {
       float yCurve = curve->getYCoordForX(x);
 
-      if (yCurve < 0)
+      if (yCurve < 0) {
         yCurve = 0;
+      }
 
       float minSize = glSizeScale->getMinSize();
       float maxSize = glSizeScale->getMaxSize();
@@ -1199,8 +1206,9 @@ void HistogramMetricMapping::updateMapping(GlQuantitativeAxis *histoXAxis,
       node n = glyphMappingGraph->addNode();
       float yCurve = curve->getYCoordForX(x + increment / 2);
 
-      if (yCurve < 0)
+      if (yCurve < 0) {
         yCurve = 0;
+      }
 
       int glyphId = glGlyphScale->getGlyphAtPos(Coord(0, yCurve, 0));
       glyphGraphShape->setNodeValue(n, glyphId);

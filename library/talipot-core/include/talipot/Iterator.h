@@ -109,8 +109,9 @@ private:
     }
 
     const iterator_t &operator++() {
-      if (!_it->hasNext())
+      if (!_it->hasNext()) {
         _iteratorStatus = Finished;
+      }
       return *this;
     }
 

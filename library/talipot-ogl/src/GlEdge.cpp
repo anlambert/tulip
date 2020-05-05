@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -82,8 +82,9 @@ BoundingBox GlEdge::getBoundingBox(const GlGraphInputData *data, const edge e, c
 
   int tgtGlyphId = 1; // cube outlined
 
-  if (!data->getGraph()->isMetaNode(tgt))
+  if (!data->getGraph()->isMetaNode(tgt)) {
     tgtGlyphId = data->getElementShape()->getNodeValue(tgt);
+  }
 
   Glyph *tgtGlyph = data->glyphs.get(tgtGlyphId);
   // this time we don't take srcCoord but srcAnchor to be oriented to where the line comes from
@@ -255,8 +256,9 @@ void GlEdge::draw(float lod, const GlGraphInputData *data, Camera *camera) {
     endLineAnchor = tgtAnchor;
   }
 
-  if (vertexArrayRendering)
+  if (vertexArrayRendering) {
     return;
+  }
 
   // draw Edge
   drawEdge(srcCoord, tgtCoord, beginLineAnchor, endLineAnchor, bends, srcCol, tgtCol,
@@ -277,8 +279,9 @@ void GlEdge::drawEdge(const Coord &srcNodePos, const Coord &tgtNodePos, const Co
   glDisable(GL_CULL_FACE);
   glDepthFunc(GL_LEQUAL);
 
-  if (bends.empty())
+  if (bends.empty()) {
     shape = EdgeShape::Polyline;
+  }
 
   Coord srcDir = srcNodePos;
   Coord tgtDir = tgtNodePos;
@@ -389,8 +392,9 @@ void GlEdge::drawLabel(bool drawSelect, OcclusionTest *test, const GlGraphInputD
                        float lod) {
   bool select = data->getElementSelected()->getEdgeValue(e);
 
-  if (select != drawSelect)
+  if (select != drawSelect) {
     return;
+  }
 
   drawLabel(test, data, lod);
 }
@@ -404,8 +408,9 @@ void GlEdge::drawLabel(OcclusionTest *test, const GlGraphInputData *data, float 
 
   const string &tmp = data->getElementLabel()->getEdgeValue(e);
 
-  if (tmp.empty())
+  if (tmp.empty()) {
     return;
+  }
 
   bool select = data->getElementSelected()->getEdgeValue(e);
 
@@ -420,18 +425,21 @@ void GlEdge::drawLabel(OcclusionTest *test, const GlGraphInputData *data, float 
 
   float outlineWidth = data->getElementLabelBorderWidth()->getEdgeValue(e);
 
-  if (fontColor.getA() == 0 && (outlineColor.getA() == 0 || outlineWidth == 0))
+  if (fontColor.getA() == 0 && (outlineColor.getA() == 0 || outlineWidth == 0)) {
     return;
+  }
 
   int fontSize = data->getElementFontSize()->getEdgeValue(e);
 
-  if (select)
+  if (select) {
     fontSize += 2;
+  }
 
-  if (select)
+  if (select) {
     label->setStencil(data->parameters->getSelectedEdgesStencil());
-  else
+  } else {
     label->setStencil(data->parameters->getEdgesLabelStencil());
+  }
 
   label->setFontNameSizeAndColor(data->getElementFont()->getEdgeValue(e), fontSize, fontColor);
   label->setText(tmp);
@@ -487,16 +495,19 @@ void GlEdge::drawLabel(OcclusionTest *test, const GlGraphInputData *data, float 
 
       Coord textDirection = firstVector + secondVector;
 
-      if (textDirection[1] < 0)
+      if (textDirection[1] < 0) {
         label->setTranslationAfterRotation(Coord(0, -label->getTranslationAfterRotation()[1], 0));
+      }
 
       angle = (firstAngle + secondAngle) / 2.f;
 
-      if (firstVector[0] * secondVector[0] >= 0)
+      if (firstVector[0] * secondVector[0] >= 0) {
         angle += 90;
+      }
 
-      if (angle >= 90)
+      if (angle >= 90) {
         angle = -180 + angle;
+      }
     }
   }
 
@@ -508,10 +519,11 @@ void GlEdge::drawLabel(OcclusionTest *test, const GlGraphInputData *data, float 
   label->setScaleToSize(false);
   label->setLabelsDensity(data->parameters->getLabelsDensity());
 
-  if (!(data->parameters->getLabelsDensity() == 100)) // labels overlap
+  if (!(data->parameters->getLabelsDensity() == 100)) { // labels overlap
     label->setOcclusionTester(test);
-  else
+  } else {
     label->setOcclusionTester(nullptr);
+  }
 
   label->setPosition(position);
 
@@ -543,8 +555,9 @@ size_t GlEdge::getVertices(const GlGraphInputData *data, const edge e, const nod
 
   srcCoord = data->getElementLayout()->getNodeValue(src);
   tgtCoord = data->getElementLayout()->getNodeValue(tgt);
-  if (!hasBends && (srcCoord - tgtCoord).norm() < 1E-4)
+  if (!hasBends && (srcCoord - tgtCoord).norm() < 1E-4) {
     return 0;
+  }
 
   srcSize = data->getElementSize()->getNodeValue(src);
   tgtSize = data->getElementSize()->getNodeValue(tgt);
@@ -589,8 +602,9 @@ size_t GlEdge::getVertices(const GlGraphInputData *data, const edge e, const nod
 
   computeCleanVertices(bends, beginLineAnchor, endLineAnchor, srcCoord, tgtCoord, vertices, false);
 
-  if (vertices.empty())
+  if (vertices.empty()) {
     return 0;
+  }
 
   auto edgeShape = data->getElementShape()->getEdgeValue(e);
   auto vSize = vertices.size();
@@ -720,10 +734,11 @@ void GlEdge::displayArrowAndAdjustAnchor(const GlGraphInputData *data, const edg
   float nrm = lineAnchor.norm();
   float maxGlyphSize;
 
-  if (tgtEdgeGlyph != 0 && !hasBends)
+  if (tgtEdgeGlyph != 0 && !hasBends) {
     maxGlyphSize = nrm * .5f;
-  else
+  } else {
     maxGlyphSize = nrm;
+  }
 
   Size size;
 

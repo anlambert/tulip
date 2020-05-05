@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -143,8 +143,9 @@ public:
     } else {
       PropertyInterface *prop = dynamic_cast<PropertyInterface *>(evt.sender());
 
-      if (prop && evt.type() == Event::TLP_DELETE)
+      if (prop && evt.type() == Event::TLP_DELETE) {
         destroy(prop);
+      }
     }
   }
 };
@@ -175,12 +176,14 @@ void ObservablePropertyTest::setUp() {
 
   vector<node> nodes;
 
-  for (unsigned int i = 0; i < NB_NODES; ++i)
+  for (unsigned int i = 0; i < NB_NODES; ++i) {
     nodes.push_back(graph->addNode());
+  }
 
-  for (unsigned int i = 0; i < NB_EDGES; ++i)
+  for (unsigned int i = 0; i < NB_EDGES; ++i) {
     graph->addEdge(nodes[randomUnsignedInteger(NB_NODES - 1)],
                    nodes[randomUnsignedInteger(NB_NODES - 1)]);
+  }
 
   observer = new ObserverPTest();
   pObserver = new PropertyObserverTest();
@@ -302,8 +305,9 @@ void ObservablePropertyTest::testAsynchronousSetNodeValue() {
   Observable::unholdObservers();
   CPPUNIT_ASSERT(observer->nbObservables() == 7);
 
-  for (unsigned int i = 0; i < 7; ++i)
+  for (unsigned int i = 0; i < 7; ++i) {
     CPPUNIT_ASSERT(observer->found(props[i]));
+  }
 }
 
 //==========================================================
@@ -319,8 +323,9 @@ void ObservablePropertyTest::testAsynchronousSetEdgeValue() {
   Observable::unholdObservers();
   CPPUNIT_ASSERT(observer->nbObservables() == 7);
 
-  for (unsigned int i = 0; i < 7; ++i)
+  for (unsigned int i = 0; i < 7; ++i) {
     CPPUNIT_ASSERT(observer->found(props[i]));
+  }
 }
 
 //==========================================================
@@ -358,8 +363,9 @@ void ObservablePropertyTest::testAsynchronousSetAllNodeValue() {
   Observable::unholdObservers();
   CPPUNIT_ASSERT(observer->nbObservables() == 7);
 
-  for (unsigned int i = 0; i < 7; ++i)
+  for (unsigned int i = 0; i < 7; ++i) {
     CPPUNIT_ASSERT(observer->found(props[i]));
+  }
 }
 
 //==========================================================
@@ -375,8 +381,9 @@ void ObservablePropertyTest::testAsynchronousSetAllEdgeValue() {
   Observable::unholdObservers();
   CPPUNIT_ASSERT(observer->nbObservables() == 7);
 
-  for (unsigned int i = 0; i < 7; ++i)
+  for (unsigned int i = 0; i < 7; ++i) {
     CPPUNIT_ASSERT(observer->found(props[i]));
+  }
 }
 
 //==========================================================

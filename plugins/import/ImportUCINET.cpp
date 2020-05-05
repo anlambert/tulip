@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -82,8 +82,9 @@ bool nextUnsignedInt(const string &str, unsigned int &value, string::size_type &
   // Find next separator
   pos = str.find_first_of(" \r\t ,", lastPos);
 
-  if (string::npos != pos || string::npos != lastPos)
+  if (string::npos != pos || string::npos != lastPos) {
     return getUnsignedInt(value, str.substr(lastPos, pos - lastPos));
+  }
 
   return false;
 }
@@ -107,11 +108,12 @@ bool nextString(const string &str, string &token, string::size_type &pos) {
         token.push_back(c);
         bslashFound = false;
       } else {
-        if (c == '\\')
+        if (c == '\\') {
           bslashFound = true;
-        else {
-          if (c == '"')
+        } else {
+          if (c == '"') {
             break;
+          }
 
           token.push_back(c);
         }
@@ -146,39 +148,44 @@ bool nextToken(const string &str, const string &separators, string &token, strin
           token.push_back(c);
           bslashFound = false;
         } else {
-          if (c == '\\')
+          if (c == '\\') {
             bslashFound = true;
-          else {
-            if (c == '"')
+          } else {
+            if (c == '"') {
               break;
+            }
 
             token.push_back(c);
           }
         }
       }
 
-      if (pos == size)
+      if (pos == size) {
         return false;
+      }
 
       ++pos;
-    } else
+    } else {
       token.insert(0, str, lastPos, pos - lastPos);
+    }
   }
 
   return true;
 }
 
 bool tokenize(const string &str, vector<string> &tokens, const string &separators) {
-  if (str.empty())
+  if (str.empty()) {
     return true;
+  }
 
   tokens.clear();
   string token;
   string::size_type pos = 0;
   bool result;
 
-  while ((result = nextToken(str, separators, token, pos)) && !token.empty())
+  while ((result = nextToken(str, separators, token, pos)) && !token.empty()) {
     tokens.push_back(token);
+  }
 
   return result;
 }
@@ -317,9 +324,10 @@ public:
           return false;
         }
 
-        if (nc)
+        if (nc) {
           // add nodes
           graph->addNodes(nbNodes = nc + nr);
+        }
 
         continue;
       }
@@ -337,9 +345,10 @@ public:
           return false;
         }
 
-        if (nr)
+        if (nr) {
           // add nodes
           graph->addNodes(nbNodes = nc + nr);
+        }
 
         continue;
       }
@@ -505,8 +514,9 @@ public:
 
       if (nocasecmp(token, "col") || nocasecmp(token, "column")) {
         // 'col' or 'column' found
-        if (embedding & uint(DL_COLS))
+        if (embedding & uint(DL_COLS)) {
           return false;
+        }
 
         if (!nextToken(str, " \r\t,", token, pos) || token.empty()) {
           error << "invalid specification for parameter COLUMNS";
@@ -636,8 +646,9 @@ public:
     vector<std::string> labels;
     StringProperty *label = graph->getStringProperty("viewLabel");
 
-    if (!tokenize(str, labels, " \r\t,"))
+    if (!tokenize(str, labels, " \r\t,")) {
       return false;
+    }
 
     // check the number of read labels
     if ((current + labels.size()) > nbLabels) {
@@ -655,8 +666,9 @@ public:
     }
 
     // check the end of the labels to read
-    if (current == nbLabels)
+    if (current == nbLabels) {
       expectedLine = DL_HEADER;
+    }
 
     return true;
   }
@@ -685,8 +697,9 @@ public:
       // token is row index (first is 1)
       unsigned int row;
 
-      if (!getUnsignedInt(row, token) || row > nbNodes)
+      if (!getUnsignedInt(row, token) || row > nbNodes) {
         return node();
+      }
 
       return nodes[row - 1];
     }
@@ -698,12 +711,14 @@ public:
     if (n /*embedding == DL_ALL*/) { // 1-mode
       std::unordered_map<std::string, node>::iterator it = labelToNode.find(upcasetoken);
 
-      if (it != labelToNode.end())
+      if (it != labelToNode.end()) {
         return (*it).second;
+      }
 
-      if (labels_known || i == nbNodes)
+      if (labels_known || i == nbNodes) {
         // should already exist
         return node();
+      }
 
       ++i;
       graph->getStringProperty("viewLabel")->setNodeValue(nodes[i - 1], token);
@@ -713,12 +728,14 @@ public:
     if (findCol) {
       std::unordered_map<std::string, node>::iterator it = colLabelToNode.find(upcasetoken);
 
-      if (it != colLabelToNode.end())
+      if (it != colLabelToNode.end()) {
         return (*it).second;
+      }
 
-      if (labels_known || i == nc)
+      if (labels_known || i == nc) {
         // should already exist
         return node();
+      }
 
       ++i;
       graph->getStringProperty("viewLabel")->setNodeValue(nodes[i - 1], token);
@@ -726,12 +743,14 @@ public:
     } else {
       std::unordered_map<std::string, node>::iterator it = rowLabelToNode.find(upcasetoken);
 
-      if (it != rowLabelToNode.end())
+      if (it != rowLabelToNode.end()) {
         return (*it).second;
+      }
 
-      if (labels_known || i == nr)
+      if (labels_known || i == nr) {
         // should already exist
         return node();
+      }
 
       ++i;
       graph->getStringProperty("viewLabel")->setNodeValue(nodes[nc + i - 1], token);
@@ -765,17 +784,19 @@ public:
         if ((embedding & DL_ROWS) && (ic == 0) && (current == 0)) {
           graph->getStringProperty("viewLabel")->setNodeValue(src, tokens[i]);
 
-          if (ir == 0 && nc == 1 && diagonal == false)
+          if (ir == 0 && nc == 1 && diagonal == false) {
             ++ir;
-          else
+          } else {
             current = 1;
+          }
 
           continue;
         }
 
-        if (dataFormat == DL_UH && ic == 0)
+        if (dataFormat == DL_UH && ic == 0) {
           // nothing exist before the diagonal
           ic = ir;
+        }
 
         // check diagonal
         if (ir == ic && diagonal == false) {
@@ -818,8 +839,9 @@ public:
 
         // check end of row
         if ((dataFormat == DL_LH && (diagonal ? (ic > ir) : (ic == ir))) ||
-            (ic == (nc ? nc : nbNodes)))
+            (ic == (nc ? nc : nbNodes))) {
           ++ir, ic = 0, current = 0;
+        }
       }
 
       return true;
@@ -935,8 +957,9 @@ public:
     stringstream errors;
     size_t lineNumber = 0;
 
-    if (pluginProgress)
+    if (pluginProgress) {
       pluginProgress->showPreview(false);
+    }
 
     // the current metric
     DoubleProperty *metric = nullptr;
@@ -981,12 +1004,14 @@ public:
         }
 
         if (result) {
-          for (; current < labels.size(); ++current)
+          for (; current < labels.size(); ++current) {
             metrics.push_back(graph->getDoubleProperty(labels[current]));
+          }
 
           // check if all matrix labels have been read
-          if (current == nm)
+          if (current == nm) {
             expectedLine = DL_HEADER;
+          }
         }
 
         break;
@@ -997,23 +1022,27 @@ public:
           // set current metric
           if (nm) {
             // multi matrices case
-            if (im == nm)
+            if (im == nm) {
               return false;
+            }
 
             metric = metrics[im];
-          } else
+          } else {
             // default
             metric = metrics[0];
+          }
         }
 
         vector<std::string> tokens;
 
-        if (!(result = tokenize(line, tokens, " \r\t,")))
+        if (!(result = tokenize(line, tokens, " \r\t,"))) {
           break;
+        }
 
         // check for empty line
-        if (tokens.empty())
+        if (tokens.empty()) {
           break;
+        }
 
         // check for line separation between matrices
         // if dataFormat == DL_EL1 | DL_EL2

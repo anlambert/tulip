@@ -186,8 +186,9 @@ public:
       : _value(value), _equal(equal), hData(hData) {
     it = (*hData).begin();
 
-    while (it != (*hData).end() && StoredType<TYPE>::equal((*it).second, _value) != _equal)
+    while (it != (*hData).end() && StoredType<TYPE>::equal((*it).second, _value) != _equal) {
       ++it;
+    }
   }
   bool hasNext() override {
     return (it != (*hData).end());

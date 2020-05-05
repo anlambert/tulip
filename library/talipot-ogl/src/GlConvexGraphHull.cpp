@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -47,14 +47,17 @@ void GlConvexGraphHull::updateHull(LayoutProperty *layout, SizeProperty *size,
     _polygon = nullptr;
   }
 
-  if (layout)
+  if (layout) {
     _layout = layout;
+  }
 
-  if (size)
+  if (size) {
     _size = size;
+  }
 
-  if (rotation)
+  if (rotation) {
     _rotation = rotation;
+  }
 
   if (graph->isEmpty() == false) {
     _polygon = new GlComplexPolygon(computeConvexHull(graph, _layout, _size, _rotation, nullptr),
@@ -69,7 +72,8 @@ bool GlConvexGraphHull::isVisible() {
 }
 
 void GlConvexGraphHull::setVisible(bool visible) {
-  if (_polygon)
+  if (_polygon) {
     _polygon->setVisible(visible);
+  }
 }
 }

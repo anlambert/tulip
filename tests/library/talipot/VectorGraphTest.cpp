@@ -60,8 +60,9 @@ static void populateGraph(bool nodesOnly = false) {
   // create nodes
   graph.addNodes(NB_NODES, &nodes);
 
-  if (nodesOnly)
+  if (nodesOnly) {
     return;
+  }
 
   // clear vector
   edges.clear();
@@ -71,10 +72,11 @@ static void populateGraph(bool nodesOnly = false) {
 
   // create edges
   for (unsigned int i = 0; i < NB_NODES; ++i) {
-    if (i == NB_NODES - 1)
+    if (i == NB_NODES - 1) {
       edges.push_back(graph.addEdge(nodes[i], nodes[0]));
-    else
+    } else {
       edges.push_back(graph.addEdge(nodes[i], nodes[i + 1]));
+    }
   }
 }
 
@@ -91,8 +93,9 @@ static void checkCreatedGraph(bool nodesOnly = false) {
     ++i;
   }
 
-  if (nodesOnly)
+  if (nodesOnly) {
     return;
+  }
 
   // check edges
   CPPUNIT_ASSERT(graph.numberOfEdges() == NB_NODES);
@@ -118,10 +121,11 @@ static void checkCreatedGraph(bool nodesOnly = false) {
     // check edge source
     CPPUNIT_ASSERT(graph.source(edges[i]) == nodes[i]);
     // check edge target
-    if (i < NB_NODES - 1)
+    if (i < NB_NODES - 1) {
       CPPUNIT_ASSERT(graph.target(edges[i]) == nodes[i + 1]);
-    else
+    } else {
       CPPUNIT_ASSERT(graph.target(edges[i]) == nodes[0]);
+    }
     // check opposite
     if (i < NB_NODES - 1) {
       CPPUNIT_ASSERT(graph.opposite(edges[i], nodes[i]) == nodes[i + 1]);
@@ -153,10 +157,11 @@ static void checkCreatedGraph(bool nodesOnly = false) {
     // check in edges
     ite = graph.getInEdges(nodes[i]);
     CPPUNIT_ASSERT(ite->hasNext());
-    if (i != 0)
+    if (i != 0) {
       CPPUNIT_ASSERT(ite->next() == edges[i - 1]);
-    else
+    } else {
       CPPUNIT_ASSERT(ite->next() == edges[NB_NODES - 1]);
+    }
     CPPUNIT_ASSERT(ite->hasNext() == false);
     delete ite;
   });
@@ -166,20 +171,22 @@ static void checkCreatedGraph(bool nodesOnly = false) {
     // check out neighbours
     Iterator<node> *itn = graph.getOutNodes(nodes[i]);
     CPPUNIT_ASSERT(itn->hasNext());
-    if (i < NB_NODES - 1)
+    if (i < NB_NODES - 1) {
       CPPUNIT_ASSERT(itn->next() == nodes[i + 1]);
-    else
+    } else {
       CPPUNIT_ASSERT(itn->next() == nodes[0]);
+    }
     CPPUNIT_ASSERT(itn->hasNext() == false);
     delete itn;
 
     // check in neighbours
     itn = graph.getInNodes(nodes[i]);
     CPPUNIT_ASSERT(itn->hasNext());
-    if (i == 0)
+    if (i == 0) {
       CPPUNIT_ASSERT(itn->next() == nodes[NB_NODES - 1]);
-    else
+    } else {
       CPPUNIT_ASSERT(itn->next() == nodes[i - 1]);
+    }
     CPPUNIT_ASSERT(itn->hasNext() == false);
     delete itn;
   });
@@ -257,8 +264,9 @@ static void checkGraphAfterDelEdge() {
     if (i % 2 == 0) {
       CPPUNIT_ASSERT(itn->hasNext());
       CPPUNIT_ASSERT(itn->next() == nodes[i + 1]);
-    } else
+    } else {
       CPPUNIT_ASSERT(itn->hasNext() == false);
+    }
     delete itn;
 
     // check in neighbours
@@ -266,8 +274,9 @@ static void checkGraphAfterDelEdge() {
     if (i % 2) {
       CPPUNIT_ASSERT(itn->hasNext());
       CPPUNIT_ASSERT(itn->next() == nodes[i - 1]);
-    } else
+    } else {
       CPPUNIT_ASSERT(itn->hasNext() == false);
+    }
     delete itn;
   });
 }
@@ -323,8 +332,9 @@ static void checkGraphAfterDelNode() {
       if (i % 2 == 0) {
         CPPUNIT_ASSERT(itn->hasNext());
         CPPUNIT_ASSERT(itn->next() == nodes[i + 1]);
-      } else
+      } else {
         CPPUNIT_ASSERT(itn->hasNext() == false);
+      }
       delete itn;
 
       // check in neighbours
@@ -332,8 +342,9 @@ static void checkGraphAfterDelNode() {
       if ((i % 4) == 3) {
         CPPUNIT_ASSERT(itn->hasNext());
         CPPUNIT_ASSERT(itn->next() == nodes[i - 1]);
-      } else
+      } else {
         CPPUNIT_ASSERT(itn->hasNext() == false);
+      }
       delete itn;
     }
   });
@@ -388,8 +399,9 @@ void VectorGraphTest::testDelEdges() {
   checkGraphAfterDelNode();
 
   // delete all edges
-  for (auto n : graph.nodes())
+  for (auto n : graph.nodes()) {
     graph.delEdges(n);
+  }
 
   // check remaining nodes and edges
   checkGraphAfterDelEdges();
@@ -427,8 +439,9 @@ void VectorGraphTest::testAddDelEdges() {
   // add direct edges to nodes[0]
   std::vector<std::pair<node, node>> ends;
   ends.reserve(NB_NODES - 1);
-  for (unsigned int i = 1; i < NB_NODES; ++i)
+  for (unsigned int i = 1; i < NB_NODES; ++i) {
     ends.push_back(std::make_pair(nodes[0], nodes[i]));
+  }
 
   edges.clear();
   graph.addEdges(ends, &edges);
@@ -620,10 +633,11 @@ void checkGraphAfterReverseEdges() {
     // check edge source
     CPPUNIT_ASSERT(graph.target(e) == nodes[i]);
     // check edge target
-    if (i < NB_NODES - 1)
+    if (i < NB_NODES - 1) {
       CPPUNIT_ASSERT(graph.source(e) == nodes[i + 1]);
-    else
+    } else {
       CPPUNIT_ASSERT(graph.source(e) == nodes[0]);
+    }
     // check opposite
     if (i < NB_NODES - 1) {
       CPPUNIT_ASSERT(graph.opposite(e, nodes[i]) == nodes[i + 1]);
@@ -706,10 +720,11 @@ void VectorGraphTest::testMoreSetEnds() {
   unsigned int i = 0;
   for (auto e : graph.edges()) {
     CPPUNIT_ASSERT(e == edges[i]);
-    if (i < NB_NODES - 1)
+    if (i < NB_NODES - 1) {
       graph.setEnds(edges[i], nodes[NB_NODES - i - 2], nodes[NB_NODES - i - 1]);
-    else
+    } else {
       graph.setEnds(edges[i], nodes[NB_NODES - 1], nodes[0]);
+    }
     ++i;
   }
 
@@ -735,10 +750,11 @@ void VectorGraphTest::testMoreSetEnds() {
     // check edge target
     CPPUNIT_ASSERT(graph.target(edges[i]) == nodes[NB_NODES - i - 1]);
     // check edge source
-    if (i < NB_NODES - 1)
+    if (i < NB_NODES - 1) {
       CPPUNIT_ASSERT(graph.source(edges[i]) == nodes[NB_NODES - i - 2]);
-    else
+    } else {
       CPPUNIT_ASSERT(graph.source(edges[i]) == nodes[NB_NODES - 1]);
+    }
     // check opposite
     if (i < NB_NODES - 1) {
       CPPUNIT_ASSERT(graph.opposite(edges[i], nodes[NB_NODES - i - 1]) == nodes[NB_NODES - i - 2]);

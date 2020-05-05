@@ -84,9 +84,10 @@ public:
   void showEvent(QShowEvent *ev) override {
     QDialog::showEvent(ev);
 
-    if (parentWidget())
+    if (parentWidget()) {
       move(parentWidget()->window()->frameGeometry().topLeft() +
            parentWidget()->window()->rect().center() - rect().center());
+    }
   }
 };
 
@@ -121,9 +122,10 @@ void ColorEditorCreator::setEditorData(QWidget *editor, const QVariant &data, bo
 QVariant ColorEditorCreator::editorData(QWidget *editor, tlp::Graph *) {
   ColorDialog *dlg = static_cast<ColorDialog *>(editor);
 
-  if (dlg->ok == QDialog::Rejected)
+  if (dlg->ok == QDialog::Rejected) {
     // restore the previous color
     return QVariant::fromValue<tlp::Color>(dlg->previousColor);
+  }
 
   return QVariant::fromValue<tlp::Color>(QColorToColor(dlg->currentColor()));
 }
@@ -196,10 +198,11 @@ void PropertyInterfaceEditorCreator::setEditorData(QWidget *w, const QVariant &v
   QComboBox *combo = static_cast<QComboBox *>(w);
   GraphPropertiesModel<PropertyInterface> *model = nullptr;
 
-  if (isMandatory)
+  if (isMandatory) {
     model = new GraphPropertiesModel<PropertyInterface>(g, false, combo);
-  else
+  } else {
     model = new GraphPropertiesModel<PropertyInterface>("Select a property", g, false, combo);
+  }
 
   combo->setModel(model);
   combo->setCurrentIndex(model->rowOf(prop));
@@ -215,8 +218,9 @@ QVariant PropertyInterfaceEditorCreator::editorData(QWidget *w, tlp::Graph *) {
 QString PropertyInterfaceEditorCreator::displayText(const QVariant &v) const {
   PropertyInterface *prop = v.value<PropertyInterface *>();
 
-  if (prop == nullptr)
+  if (prop == nullptr) {
     return "";
+  }
 
   return prop->getName().c_str();
 }
@@ -239,10 +243,11 @@ void NumericPropertyEditorCreator::setEditorData(QWidget *w, const QVariant &val
   QComboBox *combo = static_cast<QComboBox *>(w);
   GraphPropertiesModel<NumericProperty> *model = nullptr;
 
-  if (isMandatory)
+  if (isMandatory) {
     model = new GraphPropertiesModel<NumericProperty>(g, false, combo);
-  else
+  } else {
     model = new GraphPropertiesModel<NumericProperty>("Select a property", g, false, combo);
+  }
 
   combo->setModel(model);
   combo->setCurrentIndex(model->rowOf(prop));
@@ -258,8 +263,9 @@ QVariant NumericPropertyEditorCreator::editorData(QWidget *w, tlp::Graph *) {
 QString NumericPropertyEditorCreator::displayText(const QVariant &v) const {
   NumericProperty *prop = v.value<NumericProperty *>();
 
-  if (prop == nullptr)
+  if (prop == nullptr) {
     return "";
+  }
 
   return prop->getName().c_str();
 }
@@ -299,8 +305,9 @@ void StringCollectionEditorCreator::setEditorData(QWidget *widget, const QVarian
   StringCollection col = var.value<StringCollection>();
   QComboBox *combo = static_cast<QComboBox *>(widget);
 
-  for (unsigned int i = 0; i < col.size(); ++i)
+  for (unsigned int i = 0; i < col.size(); ++i) {
     combo->addItem(tlp::tlpStringToQString(col[i]));
+  }
 
   combo->setCurrentIndex(col.getCurrent());
 }
@@ -309,8 +316,9 @@ QVariant StringCollectionEditorCreator::editorData(QWidget *widget, tlp::Graph *
   QComboBox *combo = static_cast<QComboBox *>(widget);
   StringCollection col;
 
-  for (int i = 0; i < combo->count(); ++i)
+  for (int i = 0; i < combo->count(); ++i) {
     col.push_back(QStringToTlpString(combo->itemText(i)));
+  }
 
   col.setCurrent(combo->currentIndex());
   return QVariant::fromValue<StringCollection>(col);
@@ -339,9 +347,10 @@ public:
   void showEvent(QShowEvent *ev) override {
     QDialog::showEvent(ev);
 
-    if (parentWidget())
+    if (parentWidget()) {
       move(parentWidget()->window()->frameGeometry().topLeft() +
            parentWidget()->window()->rect().center() - rect().center());
+    }
   }
 };
 
@@ -367,14 +376,16 @@ void FileDescriptorEditorCreator::setEditorData(QWidget *w, const QVariant &v, b
 
   // force the dialog initial directory
   // only if there is a non empty absolute path
-  if (!desc.absolutePath.isEmpty())
+  if (!desc.absolutePath.isEmpty()) {
     dlg->setDirectory(QFileInfo(desc.absolutePath).absolutePath());
+  }
 
   if (desc.type == FileDescriptor::Directory) {
     dlg->setFileMode(QFileDialog::Directory);
     dlg->setOption(QFileDialog::ShowDirsOnly);
-  } else
+  } else {
     dlg->setFileMode(desc.mustExist ? QFileDialog::ExistingFile : QFileDialog::AnyFile);
+  }
 
   dlg->setModal(true);
   dlg->move(QCursor::pos() - QPoint(150, 200));
@@ -385,8 +396,9 @@ QVariant FileDescriptorEditorCreator::editorData(QWidget *w, tlp::Graph *) {
 
   int result = dlg->ok;
 
-  if (result == QDialog::Rejected)
+  if (result == QDialog::Rejected) {
     return QVariant::fromValue<FileDescriptor>(dlg->previousFileDescriptor);
+  }
 
   if (!dlg->selectedFiles().empty()) {
     return QVariant::fromValue<FileDescriptor>(
@@ -541,8 +553,9 @@ bool TextureFileEditorCreator::paint(QPainter *painter, const QStyleOptionViewIt
 
   const QIcon &imageIcon = imageIconPool.getIconForImageFile(imageFilePath);
 
-  if (!imageIcon.isNull())
+  if (!imageIcon.isNull()) {
     icon = imageIcon;
+  }
 
   int iconSize = rect.height() - 4;
 
@@ -818,11 +831,13 @@ QString FontEditorCreator::displayText(const QVariant &data) const {
   Font font = data.value<Font>();
   QString text(font.fontName());
 
-  if (font.isBold())
+  if (font.isBold()) {
     text += " bold";
+  }
 
-  if (font.isItalic())
+  if (font.isItalic()) {
     text += " italic";
+  }
 
   return text;
 }
@@ -873,8 +888,9 @@ QVariant GraphEditorCreator::editorData(QWidget *, tlp::Graph *) {
 QString GraphEditorCreator::displayText(const QVariant &var) const {
   Graph *g = var.value<Graph *>();
 
-  if (g == nullptr)
+  if (g == nullptr) {
     return QString();
+  }
 
   std::string name;
   g->getAttribute<std::string>("name", name);
@@ -933,8 +949,9 @@ QVariant QVectorBoolEditorCreator::editorData(QWidget *editor, tlp::Graph *) {
   QVector<bool> result;
   QVector<QVariant> editorData = static_cast<VectorEditor *>(editor)->vector();
 
-  for (const QVariant &v : editorData)
+  for (const QVariant &v : editorData) {
     result.push_back(v.value<bool>());
+  }
 
   return QVariant::fromValue<QVector<bool>>(result);
 }
@@ -943,8 +960,9 @@ QString QVectorBoolEditorCreator::displayText(const QVariant &data) const {
   QVector<bool> vb = data.value<QVector<bool>>();
   std::vector<bool> v(vb.begin(), vb.end());
 
-  if (v.empty())
+  if (v.empty()) {
     return QString();
+  }
 
   // use a DataTypeSerializer if any
   DataTypeSerializer *dts = DataSet::typenameToSerializer(std::string(typeid(v).name()));
@@ -960,8 +978,9 @@ QString QVectorBoolEditorCreator::displayText(const QVariant &data) const {
     return truncateText(str, " ...)");
   }
 
-  if (v.size() == 1)
+  if (v.size() == 1) {
     return QString("1 element");
+  }
 
   return QString::number(v.size()) + QString(" elements");
 }
@@ -991,8 +1010,9 @@ QString QStringEditorCreator::displayText(const QVariant &var) const {
 void QStringEditorCreator::setPropertyToEdit(tlp::PropertyInterface *prop) {
   // we should have a property
   // but it cannot be the case when editing a string vector element
-  if (prop)
+  if (prop) {
     propName = prop->getName();
+  }
 }
 
 // StdStringEditorCreator
@@ -1036,8 +1056,9 @@ QVariant QStringListEditorCreator::editorData(QWidget *w, Graph *) {
   auto vect = static_cast<VectorEditor *>(w)->vector();
   QStringList lst;
 
-  for (const QVariant &v : vect)
+  for (const QVariant &v : vect) {
     lst.push_back(v.toString());
+  }
 
   return lst;
 }

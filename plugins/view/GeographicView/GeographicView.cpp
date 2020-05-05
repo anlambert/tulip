@@ -91,8 +91,9 @@ void GeographicView::setupUi() {
 void GeographicView::viewTypeChanged(const QString &viewTypeName) {
   QComboBox *comboBox = geoViewGraphicsView->getViewTypeComboBox();
 
-  if (comboBox == nullptr)
+  if (comboBox == nullptr) {
     return;
+  }
 
   disconnect(comboBox, QOverload<const QString &>::of(&QComboBox::currentIndexChanged), this,
              &GeographicView::viewTypeChanged);
@@ -183,9 +184,10 @@ void GeographicView::setState(const DataSet &dataSet) {
     if (renderingParameters.get("elementsOrderingPropertyName", s) && !s.empty()) {
       rp.setElementOrderingProperty(dynamic_cast<tlp::NumericProperty *>(graph()->getProperty(s)));
     }
-  } else
+  } else {
     // same default initialization as NodeLinkDiagramView
     NodeLinkDiagramView::initRenderingParameters(&rp);
+  }
 
   graphComposite->setRenderingParameters(rp);
   sceneConfigurationWidget->resetChanges();
@@ -318,28 +320,31 @@ void GeographicView::updateSharedProperties() {
   if (useSharedLayoutProperty != geoViewConfigWidget->useSharedLayoutProperty()) {
     useSharedLayoutProperty = geoViewConfigWidget->useSharedLayoutProperty();
 
-    if (useSharedLayoutProperty)
+    if (useSharedLayoutProperty) {
       geoViewGraphicsView->setGeoLayout(graph()->getLayoutProperty("viewLayout"));
-    else
+    } else {
       geoViewGraphicsView->setGeoLayout(new LayoutProperty(graph()));
+    }
   }
 
   if (useSharedShapeProperty != geoViewConfigWidget->useSharedShapeProperty()) {
     useSharedShapeProperty = geoViewConfigWidget->useSharedShapeProperty();
 
-    if (useSharedShapeProperty)
+    if (useSharedShapeProperty) {
       geoViewGraphicsView->setGeoShape(graph()->getIntegerProperty("viewShape"));
-    else
+    } else {
       geoViewGraphicsView->setGeoShape(new IntegerProperty(graph()));
+    }
   }
 
   if (useSharedSizeProperty != geoViewConfigWidget->useSharedSizeProperty()) {
     useSharedSizeProperty = geoViewConfigWidget->useSharedSizeProperty();
 
-    if (useSharedSizeProperty)
+    if (useSharedSizeProperty) {
       geoViewGraphicsView->setGeoSizes(graph()->getSizeProperty("viewSize"));
-    else
+    } else {
       geoViewGraphicsView->setGeoSizes(new SizeProperty(graph()));
+    }
   }
 
   inputData->getGlVertexArrayManager()->setHaveToComputeAll(true);
@@ -410,8 +415,9 @@ QGraphicsItem *GeographicView::centralItem() const {
 void GeographicView::registerTriggers() {
   clearRedrawTriggers();
 
-  if (graph() == nullptr)
+  if (graph() == nullptr) {
     return;
+  }
 
   addRedrawTrigger(
       geoViewGraphicsView->getGlMainWidget()->getScene()->getGlGraphComposite()->getGraph());

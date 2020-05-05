@@ -163,10 +163,11 @@ TalipotMainWindow::TalipotMainWindow()
   QString iconPath;
 
   // show patch number only if needed
-  if (TALIPOT_INT_VERSION % 10)
+  if (TALIPOT_INT_VERSION % 10) {
     _title += TALIPOT_VERSION;
-  else
+  } else {
     _title += TALIPOT_MM_VERSION;
+  }
 
   setWindowTitle(_title);
 
@@ -450,8 +451,9 @@ void TalipotMainWindow::buildRecentDocumentsMenu() {
   _ui->menuOpen_recent_file->clear();
 
   for (const QString &s : Settings::instance().recentDocuments()) {
-    if (!QFileInfo(s).exists() || !talipotCanOpenFile(s))
+    if (!QFileInfo(s).exists() || !talipotCanOpenFile(s)) {
       continue;
+    }
 
     QAction *action = _ui->menuOpen_recent_file->addAction(
         QIcon(":/talipot/app/icons/16/archive.png"), s, this, &TalipotMainWindow::openRecentFile);
@@ -461,8 +463,9 @@ void TalipotMainWindow::buildRecentDocumentsMenu() {
   _ui->menuOpen_recent_file->addSeparator();
 
   for (const QString &s : Settings::instance().value(_recentDocumentsSettingsKey).toStringList()) {
-    if (!QFileInfo(s).exists() || !talipotCanOpenFile(s))
+    if (!QFileInfo(s).exists() || !talipotCanOpenFile(s)) {
       continue;
+    }
 
     QAction *action =
         _ui->menuOpen_recent_file->addAction(QIcon(":/talipot/app/icons/16/empty-file.png"), s,
@@ -481,8 +484,9 @@ void TalipotMainWindow::addRecentDocument(const QString &path) {
 
   recents += path;
 
-  if (recents.size() > 10)
+  if (recents.size() > 10) {
     recents.pop_front();
+  }
 
   Settings::instance().setValue(_recentDocumentsSettingsKey, recents);
   Settings::instance().sync();
@@ -717,19 +721,22 @@ void TalipotMainWindow::refreshDockExpandControls() {
 }
 
 void TalipotMainWindow::exportGraph(Graph *g) {
-  if (g == nullptr)
+  if (g == nullptr) {
     g = _graphs->currentGraph();
+  }
 
-  if (g == nullptr)
+  if (g == nullptr) {
     return;
+  }
 
   static QString exportFile;
   ExportWizard wizard(g, exportFile, this);
   wizard.setWindowTitle(QString("Exporting graph \"") + tlpStringToQString(g->getName()) + '"');
 
   if (wizard.exec() != QDialog::Accepted || wizard.algorithm().isEmpty() ||
-      wizard.outputFile().isEmpty())
+      wizard.outputFile().isEmpty()) {
     return;
+  }
 
   std::string filename = QStringToTlpString(exportFile = wizard.outputFile());
   std::string exportPluginName = QStringToTlpString(wizard.algorithm());
@@ -752,8 +759,9 @@ void TalipotMainWindow::exportGraph(Graph *g) {
       std::stringstream log;
       log << exportPluginName.c_str() << " - " << data.toString().c_str();
 
-      if (Settings::instance().logPluginCall() == Settings::LogCallWithExecutionTime)
+      if (Settings::instance().logPluginCall() == Settings::LogCallWithExecutionTime) {
         log << ": " << start.msecsTo(QTime::currentTime()) << "ms";
+      }
 
       qDebug() << log.str().c_str();
     }
@@ -765,11 +773,13 @@ void TalipotMainWindow::exportGraph(Graph *g) {
 }
 
 void TalipotMainWindow::saveGraphHierarchyInTlpFile(Graph *g) {
-  if (g == nullptr)
+  if (g == nullptr) {
     g = _graphs->currentGraph();
+  }
 
-  if (g == nullptr)
+  if (g == nullptr) {
     return;
+  }
 
   static QString savedFile;
   QString filter("TLP format (*.tlp *.tlp.gz *.tlpz);;TLPB format (*.tlpb *.tlpb.gz *.tlpbz)");
@@ -779,9 +789,9 @@ void TalipotMainWindow::saveGraphHierarchyInTlpFile(Graph *g) {
   if (!filename.isEmpty()) {
     bool result = tlp::saveGraph(g, tlp::QStringToTlpString(filename));
 
-    if (!result)
+    if (!result) {
       QMessageBox::critical(this, "Save error", "Failed to save graph hierarchy");
-    else {
+    } else {
       savedFile = filename;
       addRecentDocument(filename);
     }
@@ -814,8 +824,9 @@ void TalipotMainWindow::importGraph(const std::string &module, DataSet &data) {
       std::stringstream log;
       log << module.c_str() << " import - " << data.toString().c_str();
 
-      if (Settings::instance().logPluginCall() == Settings::LogCallWithExecutionTime)
+      if (Settings::instance().logPluginCall() == Settings::LogCallWithExecutionTime) {
         log << ": " << start.msecsTo(QTime::currentTime()) << "ms";
+      }
 
       qDebug() << log.str().c_str();
     }
@@ -851,15 +862,17 @@ void TalipotMainWindow::importGraph() {
 }
 
 void TalipotMainWindow::createPanel(tlp::Graph *g) {
-  if (_graphs->empty())
+  if (_graphs->empty()) {
     return;
+  }
 
   PanelSelectionWizard wizard(_graphs, this);
 
-  if (g != nullptr)
+  if (g != nullptr) {
     wizard.setSelectedGraph(g);
-  else
+  } else {
     wizard.setSelectedGraph(_graphs->currentGraph());
+  }
 
   int result = wizard.exec();
 
@@ -900,16 +913,18 @@ bool TalipotMainWindow::save() {
 }
 
 bool TalipotMainWindow::saveAs(const QString &path) {
-  if (_graphs->empty())
+  if (_graphs->empty()) {
     return false;
+  }
 
   if (path.isEmpty()) {
     QString path =
         QFileDialog::getSaveFileName(this, "Save project", QString(), "Talipot Project (*.tlpx)");
 
     if (!path.isEmpty()) {
-      if (!path.endsWith(".tlpx"))
+      if (!path.endsWith(".tlpx")) {
         path += ".tlpx";
+      }
 
       _project->setProjectFile(path);
       return saveAs(path);
@@ -926,8 +941,9 @@ bool TalipotMainWindow::saveAs(const QString &path) {
   _pythonIDE->savePythonFilesAndWriteToProject();
   bool ret = _project->write(path, &progress);
 
-  if (ret)
+  if (ret) {
     Settings::instance().addToRecentDocuments(path);
+  }
 
   return ret;
 }
@@ -967,10 +983,11 @@ void TalipotMainWindow::open(QString fileName) {
   filters += "All files (*)";
   filters.insert(0, filterAny);
 
-  if (fileName.isEmpty()) // If open() was called without a parameter, open the file dialog
+  if (fileName.isEmpty()) { // If open() was called without a parameter, open the file dialog
     fileName =
         QFileDialog::getOpenFileName(this, tr("Open graph"), _lastOpenLocation, filters.c_str(),
                                      nullptr, static_cast<QFileDialog::Options>(0));
+  }
 
   if (!fileName.isEmpty()) {
     QFileInfo fileInfo(fileName);
@@ -1048,8 +1065,9 @@ void TalipotMainWindow::clearGraph() {
   if (QMessageBox::question(this, "Clear graph content",
                             "Do you really want to remove all nodes and edges from the current "
                             "graph. This action cannot be undone",
-                            QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
+                            QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes) {
     _graphs->currentGraph()->clear();
+  }
 }
 
 void TalipotMainWindow::deleteSelectedElements(bool fromRoot) {
@@ -1136,8 +1154,9 @@ void TalipotMainWindow::undo() {
   Observable::holdObservers();
   tlp::Graph *graph = _graphs->currentGraph();
 
-  if (graph != nullptr)
+  if (graph != nullptr) {
     graph->pop();
+  }
 
   Observable::unholdObservers();
 
@@ -1151,8 +1170,9 @@ void TalipotMainWindow::redo() {
   Observable::holdObservers();
   tlp::Graph *graph = _graphs->currentGraph();
 
-  if (graph != nullptr)
+  if (graph != nullptr) {
     graph->unpop();
+  }
 
   Observable::unholdObservers();
 
@@ -1167,8 +1187,9 @@ void TalipotMainWindow::cut() {
 }
 
 void TalipotMainWindow::paste() {
-  if (_graphs->currentGraph() == nullptr)
+  if (_graphs->currentGraph() == nullptr) {
     return;
+  }
 
   Graph *outGraph = _graphs->currentGraph();
   std::stringstream ss;
@@ -1191,8 +1212,9 @@ void TalipotMainWindow::copy() {
 }
 
 void TalipotMainWindow::copy(Graph *g, bool deleteAfter) {
-  if (g == nullptr)
+  if (g == nullptr) {
     return;
+  }
 
   BooleanProperty *selection = g->getBooleanProperty("viewSelection");
 
@@ -1251,8 +1273,9 @@ void TalipotMainWindow::group() {
 
   Observable::unholdObservers();
 
-  if (!changeGraph)
+  if (!changeGraph) {
     return;
+  }
 
   for (auto v : _ui->workspace->panels()) {
     if (v->graph() == graph->getRoot())
@@ -1266,8 +1289,9 @@ void TalipotMainWindow::make_graph() {
 }
 
 Graph *TalipotMainWindow::createSubGraph(Graph *graph) {
-  if (graph == nullptr)
+  if (graph == nullptr) {
     return nullptr;
+  }
 
   graph->push();
   Observable::holdObservers();
@@ -1283,8 +1307,9 @@ void TalipotMainWindow::createSubGraph() {
 }
 
 void TalipotMainWindow::cloneSubGraph() {
-  if (_graphs->currentGraph() == nullptr)
+  if (_graphs->currentGraph() == nullptr) {
     return;
+  }
 
   tlp::BooleanProperty prop(_graphs->currentGraph());
   prop.setAllNodeValue(true);
@@ -1294,8 +1319,9 @@ void TalipotMainWindow::cloneSubGraph() {
 }
 
 void TalipotMainWindow::addEmptySubGraph() {
-  if (_graphs->currentGraph() == nullptr)
+  if (_graphs->currentGraph() == nullptr) {
     return;
+  }
 
   _graphs->currentGraph()->push();
   _graphs->currentGraph()->addSubGraph(nullptr, "empty subgraph");
@@ -1374,8 +1400,9 @@ void TalipotMainWindow::CSVImport() {
 
   Graph *g = _graphs->currentGraph();
 
-  if (g == nullptr)
+  if (g == nullptr) {
     return;
+  }
 
   CSVImportWizard wizard(this);
 
@@ -1420,33 +1447,37 @@ void TalipotMainWindow::CSVImport() {
       }
     }
 
-    if (openPanels)
+    if (openPanels) {
       showStartPanels(g);
-    else
+    } else {
       centerPanelsForGraph(g);
+    }
 
     unsigned nb_error = nbLogsAfter - nbLogsBefore;
     if ((nb_error == 1) &&
         (QMessageBox::question(this, "CSV parse error",
                                "When parsing your CSV file,<br/> one error has been "
                                "encountered.<br/>Do you want to see it?",
-                               QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes))
+                               QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)) {
       showLogger();
+    }
     if ((nb_error > 1) &&
         (QMessageBox::question(this, "CSV parse errors",
                                QString("When parsing your CSV file,<br/> %1 errors have been "
                                        "encountered.<br/>Do you want to see them?")
                                    .arg(nb_error),
-                               QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes))
+                               QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)) {
       showLogger();
+    }
 
     g->popIfNoUpdates();
   }
 }
 
 void TalipotMainWindow::showStartPanels(Graph *g) {
-  if (Settings::instance().displayDefaultViews() == false)
+  if (Settings::instance().displayDefaultViews() == false) {
     return;
+  }
 
   // expose mode is not safe to add a new panel
   // so hide it if needed
@@ -1699,18 +1730,19 @@ PluginProgress *TalipotMainWindow::progress(ProgressOptions options) {
 void TalipotMainWindow::closeEvent(QCloseEvent *event) {
   if (terminated()) {
     QMainWindow::closeEvent(event);
-  } else
+  } else {
     event->ignore();
+  }
 }
 
 void TalipotMainWindow::projectFileChanged(const QString &projectFile) {
   QString wTitle(_title);
 
-  if (!_project->name().isEmpty())
+  if (!_project->name().isEmpty()) {
     wTitle += QString(" - ") + _project->name();
-  else if (!projectFile.isEmpty())
+  } else if (!projectFile.isEmpty()) {
     wTitle += QString(" - ") + projectFile;
-  else { // All graphs are deleted, so clear project.
+  } else { // All graphs are deleted, so clear project.
     _project->clearProject();
     wTitle += QString(" - unsaved project");
   }
@@ -1748,8 +1780,9 @@ void TalipotMainWindow::showFullScreen(bool f) {
   } else {
     showNormal();
 
-    if (_maximized)
+    if (_maximized) {
       showMaximized();
+    }
   }
 }
 

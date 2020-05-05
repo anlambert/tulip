@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -66,8 +66,9 @@ struct WangEtAl : public ImportModule {
 
     for (unsigned i = 2; i < n; ++i) {
       if (i % 100 == 0) {
-        if (pluginProgress->progress(i, n) != TLP_CONTINUE)
+        if (pluginProgress->progress(i, n) != TLP_CONTINUE) {
           return pluginProgress->state() != TLP_CANCEL;
+        }
       }
 
       int id = tlp::randomInteger(nbe - 1);

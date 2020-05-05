@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -27,8 +27,9 @@ public:
   // set the meta node label to label of viewMetric max corresponding node
   void computeMetaValue(AbstractStringProperty *label, node mN, Graph *sg, Graph *) override {
     // nothing to do if viewMetric does not exist
-    if (!sg->existProperty("viewMetric"))
+    if (!sg->existProperty("viewMetric")) {
       return;
+    }
 
     node viewMetricMaxNode;
     double vMax = -DBL_MAX;
@@ -43,8 +44,9 @@ public:
       }
     }
 
-    if (viewMetricMaxNode.isValid())
+    if (viewMetricMaxNode.isValid()) {
       label->setNodeValue(mN, label->getNodeValue(viewMetricMaxNode));
+    }
   }
 };
 
@@ -59,8 +61,9 @@ StringProperty::StringProperty(Graph *g, const std::string &n) : AbstractStringP
 }
 //=================================================================================
 PropertyInterface *StringProperty::clonePrototype(Graph *g, const std::string &n) const {
-  if (!g)
+  if (!g) {
     return nullptr;
+  }
 
   // allow to get an unregistered property (empty name)
   StringProperty *p = n.empty() ? new StringProperty(g) : g->getLocalStringProperty(n);
@@ -78,8 +81,9 @@ int StringProperty::compare(const edge e1, const edge e2) const {
 }
 //=================================================================================
 PropertyInterface *StringVectorProperty::clonePrototype(Graph *g, const std::string &n) const {
-  if (!g)
+  if (!g) {
     return nullptr;
+  }
 
   // allow to get an unregistered property (empty name)
   StringVectorProperty *p =

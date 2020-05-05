@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -43,8 +43,9 @@ SceneLayersModel::SceneLayersModel(GlScene *scene, QObject *parent) : Model(pare
 }
 
 QModelIndex SceneLayersModel::index(int row, int column, const QModelIndex &parent) const {
-  if (!hasIndex(row, column, parent))
+  if (!hasIndex(row, column, parent)) {
     return QModelIndex();
+  }
 
   if (!parent.isValid()) { // Top level: layers
     GlLayer *layer = _scene->getLayersList()[row].second;
@@ -61,15 +62,17 @@ QModelIndex SceneLayersModel::index(int row, int column, const QModelIndex &pare
     composite = static_cast<GlComposite *>(parent.internalPointer());
   }
 
-  if (_scene->getGlGraphComposite() == composite)
+  if (_scene->getGlGraphComposite() == composite) {
     return createIndex(row, column, GRAPH_COMPOSITE_IDS[row]);
+  }
 
   int i = 0;
   const auto &entities = composite->getGlEntities();
 
   for (const auto &it : entities) {
-    if (i++ == row)
+    if (i++ == row) {
       return createIndex(row, column, it.second);
+    }
   }
 
   return QModelIndex();
@@ -84,8 +87,9 @@ QModelIndex SceneLayersModel::graphCompositeIndex() const {
     const auto &entities = composite->getGlEntities();
 
     for (const auto &it : entities) {
-      if (it.second == _scene->getGlGraphComposite())
+      if (it.second == _scene->getGlGraphComposite()) {
         return createIndex(row, 0, _scene->getGlGraphComposite());
+      }
 
       row++;
     }
@@ -95,24 +99,28 @@ QModelIndex SceneLayersModel::graphCompositeIndex() const {
 }
 
 QModelIndex SceneLayersModel::parent(const QModelIndex &child) const {
-  if (!child.isValid())
+  if (!child.isValid()) {
     return QModelIndex();
+  }
 
-  if (GRAPH_COMPOSITE_IDS.contains(child.internalId()))
+  if (GRAPH_COMPOSITE_IDS.contains(child.internalId())) {
     return graphCompositeIndex();
+  }
 
   const auto &layers = _scene->getLayersList();
 
   for (const auto &it : layers) {
-    if (it.second == child.internalPointer())
+    if (it.second == child.internalPointer()) {
       return QModelIndex(); // Item was a layer, aka. a top level item.
+    }
   }
 
   GlEntity *entity = static_cast<GlEntity *>(child.internalPointer());
   GlComposite *parent = entity->getParent();
 
-  if (parent == nullptr)
+  if (parent == nullptr) {
     return QModelIndex();
+  }
 
   GlComposite *ancestor = parent->getParent();
 
@@ -120,8 +128,9 @@ QModelIndex SceneLayersModel::parent(const QModelIndex &child) const {
     int row = 0;
 
     for (const auto &it : layers) {
-      if (it.second->getComposite() == parent)
+      if (it.second->getComposite() == parent) {
         return createIndex(row, 0, it.second); // Item was a layer, aka. a top level item.
+      }
 
       row++;
     }
@@ -131,8 +140,9 @@ QModelIndex SceneLayersModel::parent(const QModelIndex &child) const {
   const auto &entities = ancestor->getGlEntities();
 
   for (const auto &it : entities) {
-    if (it.second == parent)
+    if (it.second == parent) {
       return createIndex(row, 0, parent);
+    }
 
     row++;
   }
@@ -150,16 +160,19 @@ int SceneLayersModel::rowCount(const QModelIndex &parent) const {
     return layer->getComposite()->getGlEntities().size();
   }
 
-  if (GRAPH_COMPOSITE_IDS.contains(parent.internalId()))
+  if (GRAPH_COMPOSITE_IDS.contains(parent.internalId())) {
     return 0;
+  }
 
   GlEntity *entity = static_cast<GlEntity *>(parent.internalPointer());
 
-  if (_scene->getGlGraphComposite() == entity)
+  if (_scene->getGlGraphComposite() == entity) {
     return GRAPH_COMPOSITE_IDS.size();
+  }
 
-  if (dynamic_cast<GlComposite *>(entity) != nullptr)
+  if (dynamic_cast<GlComposite *>(entity) != nullptr) {
     return static_cast<GlComposite *>(entity)->getGlEntities().size();
+  }
 
   return 0;
 }
@@ -219,15 +232,18 @@ QVariant SceneLayersModel::data(const QModelIndex &index, int role) const {
       visible = parameters->isViewEdgeLabel();
     }
 
-    if (role == Qt::DisplayRole && index.column() == 0)
+    if (role == Qt::DisplayRole && index.column() == 0) {
       return display;
+    }
 
     if (role == Qt::CheckStateRole) {
-      if (index.column() == 1)
+      if (index.column() == 1) {
         return (visible ? Qt::Checked : Qt::Unchecked);
+      }
 
-      if (index.column() == 2)
+      if (index.column() == 2) {
         return (stencil == NO_STENCIL ? Qt::Unchecked : Qt::Checked);
+      }
     }
 
     return QVariant();
@@ -242,14 +258,16 @@ QVariant SceneLayersModel::data(const QModelIndex &index, int role) const {
   }
 
   if (role == Qt::DisplayRole && index.column() == 0) {
-    if (layer != nullptr)
+    if (layer != nullptr) {
       return layer->getName().c_str();
+    }
 
     const auto &siblings = parent->getGlEntities();
 
     for (const auto &it : siblings) {
-      if (it.second == entity)
+      if (it.second == entity) {
         return it.first.c_str();
+      }
     }
   }
 
@@ -260,22 +278,26 @@ QVariant SceneLayersModel::data(const QModelIndex &index, int role) const {
   }
 
   if (role == Qt::CheckStateRole) {
-    if (index.column() == 1)
+    if (index.column() == 1) {
       return (entity->isVisible() ? Qt::Checked : Qt::Unchecked);
+    }
 
-    if (index.column() == 2)
+    if (index.column() == 2) {
       return (entity->getStencil() == NO_STENCIL ? Qt::Unchecked : Qt::Checked);
+    }
   }
 
-  if (role == Qt::TextAlignmentRole && index.column() != 0)
+  if (role == Qt::TextAlignmentRole && index.column() != 0) {
     return Qt::AlignCenter;
+  }
 
   return QVariant();
 }
 
 bool SceneLayersModel::setData(const QModelIndex &index, const QVariant &value, int role) {
-  if (index.column() == 0 || role != Qt::CheckStateRole)
+  if (index.column() == 0 || role != Qt::CheckStateRole) {
     return false;
+  }
 
   if (GRAPH_COMPOSITE_IDS.contains(index.internalId())) {
     quint32 id = index.internalId();
@@ -284,39 +306,41 @@ bool SceneLayersModel::setData(const QModelIndex &index, const QVariant &value, 
     if (index.column() == 1) {
       bool visible = value.value<int>() == int(Qt::Checked);
 
-      if (id == NODES_ID)
+      if (id == NODES_ID) {
         p->setDisplayNodes(visible);
-      else if (id == EDGES_ID)
+      } else if (id == EDGES_ID) {
         p->setDisplayEdges(visible);
-      else if (id == META_NODES_ID)
+      } else if (id == META_NODES_ID) {
         p->setDisplayMetaNodes(visible);
-      else if (id == NODE_LABELS_ID)
+      } else if (id == NODE_LABELS_ID) {
         p->setViewNodeLabel(visible);
-      else if (id == EDGE_LABELS_ID)
+      } else if (id == EDGE_LABELS_ID) {
         p->setViewEdgeLabel(visible);
-      else if (id == META_NODE_LABELS_ID)
+      } else if (id == META_NODE_LABELS_ID) {
         p->setViewMetaLabel(visible);
+      }
     } else if (index.column() == 2) {
       int stencil = (value.value<int>() == int(Qt::Checked) ? FULL_STENCIL : NO_STENCIL);
 
-      if (id == NODES_ID)
+      if (id == NODES_ID) {
         p->setNodesStencil(stencil);
-      else if (id == EDGES_ID)
+      } else if (id == EDGES_ID) {
         p->setEdgesStencil(stencil);
-      else if (id == SELECTED_NODES_ID)
+      } else if (id == SELECTED_NODES_ID) {
         p->setSelectedNodesStencil(stencil);
-      else if (id == SELECTED_EDGES_ID)
+      } else if (id == SELECTED_EDGES_ID) {
         p->setSelectedEdgesStencil(stencil);
-      else if (id == META_NODES_ID)
+      } else if (id == META_NODES_ID) {
         p->setMetaNodesStencil(stencil);
-      else if (id == SELECTED_META_NODES_ID)
+      } else if (id == SELECTED_META_NODES_ID) {
         p->setSelectedMetaNodesStencil(stencil);
-      else if (id == META_NODE_LABELS_ID)
+      } else if (id == META_NODE_LABELS_ID) {
         p->setMetaNodesLabelStencil(stencil);
-      else if (id == NODE_LABELS_ID)
+      } else if (id == NODE_LABELS_ID) {
         p->setNodesLabelStencil(stencil);
-      else if (id == EDGE_LABELS_ID)
+      } else if (id == EDGE_LABELS_ID) {
         p->setEdgesLabelStencil(stencil);
+      }
     }
 
     emit drawNeeded(_scene);
@@ -329,18 +353,21 @@ bool SceneLayersModel::setData(const QModelIndex &index, const QVariant &value, 
   if (!index.parent().isValid()) {
     layer = static_cast<GlLayer *>(index.internalPointer());
     entity = layer->getComposite();
-  } else
+  } else {
     entity = static_cast<GlEntity *>(index.internalPointer());
+  }
 
   bool val = value.value<int>() == int(Qt::Checked);
 
   if (index.column() == 1) {
-    if (layer)
+    if (layer) {
       layer->setVisible(val);
+    }
 
     entity->setVisible(val);
-  } else if (index.column() == 2)
+  } else if (index.column() == 2) {
     entity->setStencil(val ? FULL_STENCIL : 0xFFFF);
+  }
 
   emit drawNeeded(_scene);
   return true;
@@ -349,16 +376,18 @@ bool SceneLayersModel::setData(const QModelIndex &index, const QVariant &value, 
 QVariant SceneLayersModel::headerData(int section, Qt::Orientation orientation, int role) const {
   if (orientation == Qt::Horizontal) {
     if (role == Qt::DisplayRole) {
-      if (section == 0)
+      if (section == 0) {
         return "Name";
-      else if (section == 1)
+      } else if (section == 1) {
         return "Visible";
-      else
+      } else {
         return "Stencil";
+      }
     }
 
-    else if (role == Qt::TextAlignmentRole)
+    else if (role == Qt::TextAlignmentRole) {
       return Qt::AlignCenter;
+    }
   }
 
   return Model::headerData(section, orientation, role);
@@ -367,8 +396,9 @@ QVariant SceneLayersModel::headerData(int section, Qt::Orientation orientation, 
 Qt::ItemFlags SceneLayersModel::flags(const QModelIndex &index) const {
   Qt::ItemFlags result = QAbstractItemModel::flags(index);
 
-  if (index.column() != 0)
+  if (index.column() != 0) {
     result |= Qt::ItemIsUserCheckable;
+  }
 
   return result;
 }

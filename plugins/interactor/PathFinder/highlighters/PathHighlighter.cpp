@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -24,8 +24,9 @@ PathHighlighter::PathHighlighter(const string &name)
     : name(name), backupScene(nullptr), entityId(0) {}
 
 PathHighlighter::~PathHighlighter() {
-  if (backupScene)
+  if (backupScene) {
     backupScene->removeLayer(getWorkingLayer(backupScene), true);
+  }
 }
 
 GlGraphInputData *PathHighlighter::getInputData(GlMainWidget *glMainWidget) {
@@ -35,8 +36,9 @@ GlGraphInputData *PathHighlighter::getInputData(GlMainWidget *glMainWidget) {
 GlLayer *PathHighlighter::getWorkingLayer(GlScene *scene) {
   GlLayer *result(scene->getLayer(getName()));
 
-  if (result)
+  if (result) {
     return result;
+  }
 
   result = new GlLayer(getName(), false);
   result->setSharedCamera(&scene->getLayer("Main")->getCamera());
@@ -55,8 +57,9 @@ void PathHighlighter::clear() {
       if (entity) {
         layer->deleteGlEntity(entity);
 
-        if (it.second)
+        if (it.second) {
           delete entity;
+        }
       }
     }
 
@@ -74,8 +77,9 @@ void PathHighlighter::addGlEntity(GlScene *scene, GlEntity *entity, bool deleteO
     realName = ss.str();
   }
 
-  if (backupScene)
+  if (backupScene) {
     backupScene->removeListener(this);
+  }
 
   backupScene = scene;
   backupScene->addListener(this);

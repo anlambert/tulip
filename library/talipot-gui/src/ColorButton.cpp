@@ -70,8 +70,9 @@ void ChooseColorButton::chooseColor() {
       // it may not be shown when using gnome
       QColorDialog::ShowAlphaChannel | QColorDialog::DontUseNativeDialog);
 
-  if (c.isValid())
+  if (c.isValid()) {
     setColor(c);
+  }
 }
 
 void ColorButton::paintEvent(QPaintEvent *event) {
@@ -85,6 +86,7 @@ void ColorButton::paintEvent(QPaintEvent *event) {
   p.drawRect(r);
   p.setPen(QColor(255 ^ _color.red(), 255 ^ _color.green(), 255 ^ _color.blue(), 255));
 
-  if (!_text.isEmpty())
+  if (!_text.isEmpty()) {
     p.drawText(r, Qt::AlignCenter, _text);
+  }
 }

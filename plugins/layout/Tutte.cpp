@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -68,8 +68,9 @@ list<node> findCycle(Graph *sg) {
 
   while (n1 != n2) {
     if (father[n1] == father[n2]) {
-      if ((father[n1] != n1) && (father[n2] != n2))
+      if ((father[n1] != n1) && (father[n2] != n2)) {
         result.push_back(father[n1]);
+      }
 
       return result;
     } else {
@@ -143,11 +144,13 @@ bool Tutte::run() {
 
       result->setNodeValue(n, Coord(tmpCoord.getX() / i, tmpCoord.getY() / i, 0));
 
-      if (fabs(baseCoord.getX() - tmpCoord.getX() / i) > 0.02)
+      if (fabs(baseCoord.getX() - tmpCoord.getX() / i) > 0.02) {
         ok = true;
+      }
 
-      if (fabs(baseCoord.getY() - tmpCoord.getY() / i) > 0.02)
+      if (fabs(baseCoord.getY() - tmpCoord.getY() / i) > 0.02) {
         ok = true;
+      }
     }
   }
 
@@ -157,9 +160,9 @@ bool Tutte::run() {
 bool Tutte::check(std::string &erreurMsg) {
   bool result = true;
 
-  if (!TriconnectedTest::isTriconnected(graph))
+  if (!TriconnectedTest::isTriconnected(graph)) {
     result = false;
-  else {
+  } else {
     for (auto n : graph->nodes()) {
       if (graph->deg(n) < 3) {
         result = false;
@@ -168,10 +171,11 @@ bool Tutte::check(std::string &erreurMsg) {
     }
   }
 
-  if (!result)
+  if (!result) {
     erreurMsg = "The graph must be triconnected.";
-  else
+  } else {
     erreurMsg = "";
+  }
 
   return result;
 }

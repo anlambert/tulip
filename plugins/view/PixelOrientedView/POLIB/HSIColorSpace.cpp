@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -36,8 +36,9 @@ HSI::HSI(const tlp::Color &c) {
   saturation = 2.0 * (intensity - mid) / intensity;
   hue = acos(cos_hue) * 3.0 / M_PI;
 
-  if (blue > green)
+  if (blue > green) {
     hue = 6.0 - hue;
+  }
 }
 
 /************************** Conversion from HSI to RGB ***********************/
@@ -68,8 +69,9 @@ double HSI::value(double hue_phase) const {
 HSIColorScale::HSIColorScale(const HSI &from, const HSI &to)
     : foot(from), hue_range(to.hue - from.hue), sat_range(to.saturation - from.saturation),
       int_range(to.intensity - from.intensity) {
-  if (hue_range < 0.0)
+  if (hue_range < 0.0) {
     hue_range += 6.0;
+  }
 }
 
 HSI HSIColorScale::operator[](double f) const {

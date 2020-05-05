@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -72,15 +72,17 @@ public:
     }
 
     if (nbNodes == 0) {
-      if (pluginProgress)
+      if (pluginProgress) {
         pluginProgress->setError(string("Error: the number of nodes cannot be null."));
+      }
 
       return false;
     }
 
     if ((proba < 0) || (proba > 1)) {
-      if (pluginProgress)
+      if (pluginProgress) {
         pluginProgress->setError(string("Error: the probability must be between ]0, 1[."));
+      }
 
       return false;
     }
@@ -95,18 +97,21 @@ public:
       ++i;
       node u = nodes[nbNodes - i];
 
-      if (pluginProgress && pluginProgress->progress(i, nbNodes) != TLP_CONTINUE)
+      if (pluginProgress && pluginProgress->progress(i, nbNodes) != TLP_CONTINUE) {
         return pluginProgress->state() != TLP_CANCEL;
+      }
 
       unsigned int max_index_j = nbNodes - i + 1;
-      if (directed)
+      if (directed) {
         max_index_j = nbNodes;
+      }
 
       for (unsigned int j = 0; j < max_index_j; ++j) {
         node v = nodes[j];
 
-        if ((u == v) && (!self_loop))
+        if ((u == v) && (!self_loop)) {
           continue;
+        }
 
         if (tlp::randomDouble() < proba) {
           graph->addEdge(u, v);

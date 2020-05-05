@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -50,8 +50,9 @@ ColorProperty::ColorProperty(Graph *g, const std::string &n) : AbstractColorProp
 }
 //=================================================================================
 PropertyInterface *ColorProperty::clonePrototype(Graph *g, const std::string &n) const {
-  if (!g)
+  if (!g) {
     return nullptr;
+  }
 
   // allow to get an unregistered property (empty name)
   ColorProperty *p = n.empty() ? new ColorProperty(g) : g->getLocalColorProperty(n);
@@ -61,8 +62,9 @@ PropertyInterface *ColorProperty::clonePrototype(Graph *g, const std::string &n)
 }
 //=================================================================================
 PropertyInterface *ColorVectorProperty::clonePrototype(Graph *g, const std::string &n) const {
-  if (!g)
+  if (!g) {
     return nullptr;
+  }
 
   // allow to get an unregistered property (empty name)
   ColorVectorProperty *p =

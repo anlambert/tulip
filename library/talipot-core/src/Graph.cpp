@@ -59,8 +59,9 @@ ostream &operator<<(ostream &os, const Graph *graph) {
       if (current.id == previousNode.id + 1) {
         previousNode = current;
 
-        if (++i == graph->numberOfNodes())
+        if (++i == graph->numberOfNodes()) {
           os << ".." << current.id;
+        }
       } else {
         if (previousNode != beginNode) {
           os << ".." << previousNode.id;
@@ -236,18 +237,20 @@ Graph *tlp::loadGraph(const std::string &filename, PluginProgress *progress) {
         static_cast<const ImportModule &>(PluginsManager::pluginInformation(pluginName));
     list<string> extensions(importPlugin.fileExtensions());
 
-    for (const string &ext : extensions)
+    for (const string &ext : extensions) {
       if (filename.rfind(ext) == (filename.size() - ext.size())) {
         importPluginName = importPlugin.name();
         break;
       }
+    }
 
     extensions = importPlugin.gzipFileExtensions();
-    for (const string &ext : extensions)
+    for (const string &ext : extensions) {
       if (filename.rfind(ext) == (filename.size() - ext.size())) {
         importPluginName = importPlugin.name();
         break;
       }
+    }
   }
 
   dataSet.set("file::filename", filename);
@@ -284,16 +287,18 @@ bool tlp::saveGraph(Graph *graph, const std::string &filename, PluginProgress *p
         }
       }
       delete exportPlugin;
-      if (gzip)
+      if (gzip) {
         break;
+      }
     }
   }
 
   if (exportPluginName.empty()) {
     string str("No suitable export plugin found. Exporting in TLP format.");
 
-    if (progress)
+    if (progress) {
       progress->setError(str);
+    }
 
     tlp::warning() << str << std::endl;
     exportPluginName = "TLP Export";
@@ -314,8 +319,9 @@ bool tlp::saveGraph(Graph *graph, const std::string &filename, PluginProgress *p
   bool result;
   DataSet ds;
 
-  if (data != nullptr)
+  if (data != nullptr) {
     ds = *data;
+  }
 
   ds.set("file", filename);
   result = tlp::exportGraph(graph, *os, exportPluginName, ds, progress);
@@ -345,8 +351,9 @@ Graph *tlp::importGraph(const std::string &format, DataSet &dataSet, PluginProgr
   if (progress == nullptr) {
     tmpProgress = new SimplePluginProgress();
     deletePluginProgress = true;
-  } else
+  } else {
     tmpProgress = progress;
+  }
 
   AlgorithmContext *tmp = new AlgorithmContext(graph, &dataSet, tmpProgress);
   ImportModule *newImportModule = PluginsManager::getPluginObject<ImportModule>(format, tmp);
@@ -357,8 +364,9 @@ Graph *tlp::importGraph(const std::string &format, DataSet &dataSet, PluginProgr
 
   // If the import failed and we created the graph then delete the graph
   if (!newImportModule->importGraph()) {
-    if (newGraphP)
+    if (newGraphP) {
       delete graph;
+    }
 
     graph = nullptr;
   } else {
@@ -371,8 +379,9 @@ Graph *tlp::importGraph(const std::string &format, DataSet &dataSet, PluginProgr
     setViewPropertiesDefaults(graph);
   }
 
-  if (deletePluginProgress)
+  if (deletePluginProgress) {
     delete tmpProgress;
+  }
 
   delete newImportModule;
   dataSet = *tmp->dataSet;
@@ -396,8 +405,9 @@ bool tlp::exportGraph(Graph *graph, std::ostream &outputStream, const std::strin
   if (progress == nullptr) {
     tmpProgress = new SimplePluginProgress();
     deletePluginProgress = true;
-  } else
+  } else {
     tmpProgress = progress;
+  }
 
   AlgorithmContext *context = new AlgorithmContext(graph, &dataSet, tmpProgress);
   ExportModule *newExportModule = PluginsManager::getPluginObject<ExportModule>(format, context);
@@ -410,8 +420,9 @@ bool tlp::exportGraph(Graph *graph, std::ostream &outputStream, const std::strin
 
   result = newExportModule->exportGraph(outputStream);
 
-  if (deletePluginProgress)
+  if (deletePluginProgress) {
     delete tmpProgress;
+  }
 
   delete newExportModule;
   delete context;
@@ -424,25 +435,30 @@ static void removeFromGraph(Graph *g, const vector<node> &nodes, const std::vect
 
   // Clean properties
   for (auto p : g->getObjectProperties()) {
-    for (unsigned int i = 0; i < nbNodes; i++)
+    for (unsigned int i = 0; i < nbNodes; i++) {
       p->erase(nodes[i]);
+    }
 
-    for (unsigned int i = 0; i < nbEdges; i++)
+    for (unsigned int i = 0; i < nbEdges; i++) {
       p->erase(edges[i]);
+    }
   }
 
   // Remove edges
-  for (unsigned int i = 0; i < nbEdges; i++)
+  for (unsigned int i = 0; i < nbEdges; i++) {
     g->delEdge(edges[i]);
+  }
 
   // Remove nodes
-  for (unsigned int i = 0; i < nbNodes; i++)
+  for (unsigned int i = 0; i < nbNodes; i++) {
     g->delNode(nodes[i]);
+  }
 }
 
 void tlp::removeFromGraph(Graph *ioG, BooleanProperty *inSel) {
-  if (!ioG)
+  if (!ioG) {
     return;
+  }
 
   if (!inSel) {
     ::removeFromGraph(ioG, ioG->nodes(), ioG->edges());
@@ -483,8 +499,9 @@ void tlp::copyToGraph(Graph *outG, const Graph *inG, BooleanProperty *inSel,
     outSel->setAllEdgeValue(false);
   }
 
-  if (!outG || !inG)
+  if (!outG || !inG) {
     return;
+  }
 
   // extend the selection to edge ends
   if (inSel) {
@@ -539,8 +556,9 @@ void tlp::copyToGraph(Graph *outG, const Graph *inG, BooleanProperty *inSel,
     node nOut = outG->addNode();
 
     // select added node
-    if (outSel)
+    if (outSel) {
       outSel->setNodeValue(nOut, true);
+    }
 
     // add to translation tab
     nodeTrl.set(nIn.id, nOut);
@@ -570,8 +588,9 @@ void tlp::copyToGraph(Graph *outG, const Graph *inG, BooleanProperty *inSel,
     edge eOut = outG->addEdge(nodeTrl.get(eEnds.first.id), nodeTrl.get(eEnds.second.id));
 
     // select added edge
-    if (outSel)
+    if (outSel) {
       outSel->setEdgeValue(eOut, true);
+    }
 
     // copy edge properties
     for (unsigned int i = 0; i < nbProperties; ++i) {
@@ -597,8 +616,9 @@ public:
       if (tlp::Observable::isAlive(n) &&
           (g = dynamic_cast<Graph *>(tlp::Observable::getObject(n)))) {
         // check if g is a root graph
-        if (g->getRoot() == g)
+        if (g->getRoot() == g) {
           roots.push_back(g);
+        }
       }
     }
 
@@ -637,8 +657,9 @@ bool Graph::applyAlgorithm(const std::string &algorithm, std::string &errorMessa
   if (progress == nullptr) {
     tmpProgress = new SimplePluginProgress();
     deletePluginProgress = true;
-  } else
+  } else {
     tmpProgress = progress;
+  }
 
   AlgorithmContext *context = new AlgorithmContext(this, parameters, tmpProgress);
   Algorithm *newAlgo = PluginsManager::getPluginObject<Algorithm>(algorithm, context);
@@ -646,15 +667,17 @@ bool Graph::applyAlgorithm(const std::string &algorithm, std::string &errorMessa
   if ((result = newAlgo->check(errorMessage))) {
     result = newAlgo->run();
 
-    if (!result)
+    if (!result) {
       errorMessage = tmpProgress->getError();
+    }
   }
 
   delete newAlgo;
   delete context;
 
-  if (deletePluginProgress)
+  if (deletePluginProgress) {
     delete tmpProgress;
+  }
 
   return result;
 }
@@ -671,8 +694,9 @@ bool tlp::Graph::applyPropertyAlgorithm(const std::string &algorithm, PropertyIn
     tlp::Graph *currentGraph = this;
 
     while (currentGraph->getSuperGraph() != currentGraph) {
-      if (currentGraph == prop->getGraph())
+      if (currentGraph == prop->getGraph()) {
         break;
+      }
 
       currentGraph = currentGraph->getSuperGraph();
     }
@@ -704,15 +728,17 @@ bool tlp::Graph::applyPropertyAlgorithm(const std::string &algorithm, PropertyIn
 
   tlp::PluginProgress *tmpProgress;
 
-  if (progress == nullptr)
+  if (progress == nullptr) {
     tmpProgress = new tlp::SimplePluginProgress();
-  else
+  } else {
     tmpProgress = progress;
+  }
 
   bool hasData = parameters != nullptr;
 
-  if (!hasData)
+  if (!hasData) {
     parameters = new tlp::DataSet();
+  }
 
   // add prop as result in dataset
   parameters->set("result", prop);
@@ -731,8 +757,9 @@ bool tlp::Graph::applyPropertyAlgorithm(const std::string &algorithm, PropertyIn
     if (result) {
       result = tmpAlgo->run();
 
-      if (!result)
+      if (!result) {
         errorMessage = tmpProgress->getError();
+      }
     }
 
     delete tmpAlgo;
@@ -747,22 +774,25 @@ bool tlp::Graph::applyPropertyAlgorithm(const std::string &algorithm, PropertyIn
   circularCalls.erase(algorithm);
   tlp::Observable::unholdObservers();
 
-  if (progress == nullptr)
+  if (progress == nullptr) {
     delete tmpProgress;
+  }
 
-  if (hasData)
+  if (hasData) {
     // remove result from dataset
     parameters->remove("result");
-  else
+  } else {
     delete parameters;
+  }
 
   return result;
 }
 
 tlp::node Graph::getSource() const {
   for (auto source : this->nodes()) {
-    if (indeg(source) == 0)
+    if (indeg(source) == 0) {
       return source;
+    }
   }
 
   return node();
@@ -770,8 +800,9 @@ tlp::node Graph::getSource() const {
 
 tlp::node Graph::getSink() const {
   for (auto sink : this->nodes()) {
-    if (outdeg(sink) == 0)
+    if (outdeg(sink) == 0) {
       return sink;
+    }
   }
 
   return node();
@@ -788,43 +819,51 @@ void Graph::setAttribute(const std::string &name, const DataType *value) {
 }
 
 void Graph::notifyAddNode(const node n) {
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_ADD_NODE, n));
+  }
 }
 
 void Graph::notifyDelNode(const node n) {
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_DEL_NODE, n));
+  }
 }
 
 void Graph::notifyAddEdge(const edge e) {
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_ADD_EDGE, e));
+  }
 }
 
 void Graph::notifyDelEdge(const edge e) {
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_DEL_EDGE, e));
+  }
 }
 
 void Graph::notifyReverseEdge(const edge e) {
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_REVERSE_EDGE, e));
+  }
 }
 
 void Graph::notifyBeforeSetEnds(const edge e) {
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_BEFORE_SET_ENDS, e, Event::TLP_INFORMATION));
+  }
 }
 
 void Graph::notifyAfterSetEnds(const edge e) {
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_AFTER_SET_ENDS, e));
+  }
 }
 
 void Graph::notifyBeforeAddSubGraph(const Graph *graph) {
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_BEFORE_ADD_SUBGRAPH, graph));
+  }
 
   Graph *g = this;
 
@@ -837,8 +876,9 @@ void Graph::notifyBeforeAddSubGraph(const Graph *graph) {
 }
 
 void Graph::notifyAfterAddSubGraph(const Graph *graph) {
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_AFTER_ADD_SUBGRAPH, graph));
+  }
 
   Graph *g = this;
 
@@ -851,8 +891,9 @@ void Graph::notifyAfterAddSubGraph(const Graph *graph) {
 }
 
 void Graph::notifyBeforeDelSubGraph(const Graph *graph) {
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_BEFORE_DEL_SUBGRAPH, graph));
+  }
 
   Graph *g = this;
 
@@ -864,8 +905,9 @@ void Graph::notifyBeforeDelSubGraph(const Graph *graph) {
   getRoot()->notifyBeforeDelDescendantGraph(graph);
 }
 void Graph::notifyAfterDelSubGraph(const Graph *graph) {
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_AFTER_DEL_SUBGRAPH, graph));
+  }
 
   Graph *g = this;
 
@@ -878,57 +920,68 @@ void Graph::notifyAfterDelSubGraph(const Graph *graph) {
 }
 
 void Graph::notifyBeforeAddDescendantGraph(const Graph *graph) {
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_BEFORE_ADD_DESCENDANTGRAPH, graph));
+  }
 }
 void Graph::notifyAfterAddDescendantGraph(const Graph *graph) {
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_AFTER_ADD_DESCENDANTGRAPH, graph));
+  }
 }
 
 void Graph::notifyBeforeDelDescendantGraph(const Graph *graph) {
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_BEFORE_DEL_DESCENDANTGRAPH, graph));
+  }
 }
 void Graph::notifyAfterDelDescendantGraph(const Graph *graph) {
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_AFTER_DEL_DESCENDANTGRAPH, graph));
+  }
 }
 
 void Graph::notifyBeforeAddLocalProperty(const std::string &propName) {
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_BEFORE_ADD_LOCAL_PROPERTY, propName));
+  }
 }
 void Graph::notifyAddLocalProperty(const std::string &propName) {
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_ADD_LOCAL_PROPERTY, propName));
+  }
 }
 
 void Graph::notifyBeforeDelLocalProperty(const std::string &propName) {
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_BEFORE_DEL_LOCAL_PROPERTY, propName,
                          Event::TLP_INFORMATION));
+  }
 }
 
 void Graph::notifyAfterDelLocalProperty(const std::string &propName) {
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_AFTER_DEL_LOCAL_PROPERTY, propName));
+  }
 }
 
 void Graph::notifyBeforeSetAttribute(const std::string &attName) {
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(
         GraphEvent(*this, GraphEvent::TLP_BEFORE_SET_ATTRIBUTE, attName, Event::TLP_INFORMATION));
+  }
 }
 
 void Graph::notifyAfterSetAttribute(const std::string &attName) {
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_AFTER_SET_ATTRIBUTE, attName));
+  }
 }
 
 void Graph::notifyRemoveAttribute(const std::string &attName) {
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_REMOVE_ATTRIBUTE, attName, Event::TLP_INFORMATION));
+  }
 }
 
 void Graph::notifyDestroy() {
@@ -1022,21 +1075,24 @@ static const string colorProperty = "viewColor";
 static void buildMapping(Iterator<node> *it, MutableContainer<node> &mapping,
                          GraphProperty *metaInfo, const node from = node()) {
   for (auto n : it) {
-    if (!from.isValid())
+    if (!from.isValid()) {
       mapping.set(n.id, n);
-    else
+    } else {
       mapping.set(n.id, from);
+    }
 
     Graph *meta = metaInfo->getNodeValue(n);
 
-    if (meta != nullptr)
+    if (meta != nullptr) {
       buildMapping(meta->getNodes(), mapping, metaInfo, mapping.get(n.id));
+    }
   }
 }
 //====================================================================================
 void updatePropertiesUngroup(Graph *graph, node metanode, GraphProperty *clusterInfo) {
-  if (clusterInfo->getNodeValue(metanode) == nullptr)
+  if (clusterInfo->getNodeValue(metanode) == nullptr) {
     return; // The metanode is not a metanode.
+  }
 
   LayoutProperty *graphLayout = graph->getLayoutProperty(layoutProperty);
   SizeProperty *graphSize = graph->getSizeProperty(sizeProperty);
@@ -1053,14 +1109,17 @@ void updatePropertiesUngroup(Graph *graph, node metanode, GraphProperty *cluster
   double height = box.height();
   double depth = box.depth();
 
-  if (width < 0.0001)
+  if (width < 0.0001) {
     width = 1.0;
+  }
 
-  if (height < 0.0001)
+  if (height < 0.0001) {
     height = 1.0;
+  }
 
-  if (depth < 0.0001)
+  if (depth < 0.0001) {
     depth = 1.0;
+  }
 
   // keep aspect ratio of content layout when opening a meta-node
   double divW = size[0] / width;
@@ -1092,16 +1151,18 @@ void updatePropertiesUngroup(Graph *graph, node metanode, GraphProperty *cluster
 
   // propagate all cluster local properties
   for (PropertyInterface *property : cluster->getLocalObjectProperties()) {
-    if (property == graphLayout || property == graphSize || property == graphRot)
+    if (property == graphLayout || property == graphSize || property == graphRot) {
       continue;
+    }
 
     PropertyInterface *graphProp = nullptr;
 
     if (graph->existProperty(property->getName()) &&
-        graph->getProperty(property->getName())->getTypename() == property->getTypename())
+        graph->getProperty(property->getName())->getTypename() == property->getTypename()) {
       graphProp = graph->getProperty(property->getName());
-    else
+    } else {
       graphProp = property->clonePrototype(graph, property->getName());
+    }
 
     for (auto n : cluster->nodes()) {
       graphProp->setNodeStringValue(n, property->getNodeStringValue(n));
@@ -1128,9 +1189,10 @@ Graph *Graph::addCloneSubGraph(const std::string &name, bool addSibling,
   if (addSibling) {
     parentSubGraph = getSuperGraph();
 
-    if (this == parentSubGraph)
+    if (this == parentSubGraph) {
       // cannot add sibling of root graph
       return nullptr;
+    }
   }
 
   Graph *clone = parentSubGraph->addSubGraph(&selection, name);
@@ -1148,8 +1210,9 @@ Graph *Graph::addCloneSubGraph(const std::string &name, bool addSibling,
 //=========================================================
 Graph *Graph::inducedSubGraph(const std::vector<node> &nodes, Graph *parentSubGraph,
                               const string &name) {
-  if (parentSubGraph == nullptr)
+  if (parentSubGraph == nullptr) {
     parentSubGraph = this;
+  }
 
   // create subgraph and add nodes
   Graph *result = parentSubGraph->addSubGraph(name);
@@ -1157,8 +1220,9 @@ Graph *Graph::inducedSubGraph(const std::vector<node> &nodes, Graph *parentSubGr
 
   for (auto n : nodes) {
     for (auto e : getOutEdges(n)) {
-      if (result->isElement(target(e)))
+      if (result->isElement(target(e))) {
         result->addEdge(e);
+      }
     }
   }
 
@@ -1235,8 +1299,9 @@ node Graph::createMetaNode(Graph *subGraph, bool multiEdges, bool edgeDelAll) {
   MutableContainer<bool> graphEdges;
   graphEdges.setAll(false);
 
-  for (auto e : edges())
+  for (auto e : edges()) {
     graphEdges.set(e.id, true);
+  }
 
   // we can now remove nodes from graph
   delNodes(subGraph->nodes());
@@ -1259,21 +1324,25 @@ node Graph::createMetaNode(Graph *subGraph, bool multiEdges, bool edgeDelAll) {
           // add new meta edge
           edge metaEdge = addEdge(src, metaNode);
 
-          if (!graphEdges.get(e.id))
+          if (!graphEdges.get(e.id)) {
             delEdge(metaEdge);
+          }
 
           // e is a sub-edge of metaEdge
           subEdges[metaEdge].insert(e);
 
-          if (!multiEdges)
+          if (!multiEdges) {
             // record metaEdge
             metaEdges[src] = metaEdge;
+          }
 
-          if (!super->isElement(metaEdge))
+          if (!super->isElement(metaEdge)) {
             super->addEdge(metaEdge);
-        } else if (!multiEdges)
+          }
+        } else if (!multiEdges) {
           // e is a sub-edge of an already created meta edge
           subEdges[metaEdges[src]].insert(e);
+        }
 
         edges[src].insert(tgt);
 
@@ -1290,28 +1359,33 @@ node Graph::createMetaNode(Graph *subGraph, bool multiEdges, bool edgeDelAll) {
           // add new meta edge
           edge metaEdge = addEdge(metaNode, tgt);
 
-          if (!graphEdges.get(e.id))
+          if (!graphEdges.get(e.id)) {
             delEdge(metaEdge);
+          }
 
           // e is a sub-edge of metaEdge
           subEdges[metaEdge].insert(e);
 
-          if (!multiEdges)
+          if (!multiEdges) {
             // record metaEdge
             metaEdges[tgt] = metaEdge;
+          }
 
-          if (!super->isElement(metaEdge))
+          if (!super->isElement(metaEdge)) {
             super->addEdge(metaEdge);
-        } else if (!multiEdges)
+          }
+        } else if (!multiEdges) {
           // e is a sub-edge of an already created meta edge
           subEdges[metaEdges[tgt]].insert(e);
+        }
 
         edges[tgt].insert(src);
 
-        if (toDelete == CHECK_TODEL)
+        if (toDelete == CHECK_TODEL) {
           toDelete = ((metaInfo->getNodeValue(src) != nullptr) ||
                       (metaInfo->getNodeValue(tgt) != nullptr)) &&
                      existEdge(src, tgt).isValid();
+        }
 
         if (toDelete) {
           delEdge(e, edgeDelAll);
@@ -1342,8 +1416,9 @@ static void mapSubGraphNodes(Graph *sg, node metaNode, MutableContainer<node> &m
     mappingM.set(n.id, metaNode);
     Graph *ssg = metaInfo->getNodeValue(n);
 
-    if (ssg)
+    if (ssg) {
       mapSubGraphNodes(ssg, metaNode, mappingM, metaInfo);
+    }
   }
 }
 //====================================================================================
@@ -1357,8 +1432,9 @@ void Graph::openMetaNode(node metaNode, bool updateProperties) {
   GraphProperty *metaInfo = static_cast<GraphAbstract *>(getRoot())->getMetaGraphProperty();
   Graph *metaGraph = metaInfo->getNodeValue(metaNode);
 
-  if (metaGraph == nullptr)
+  if (metaGraph == nullptr) {
     return;
+  }
 
   Observable::holdObservers();
   MutableContainer<node> mappingM;
@@ -1374,16 +1450,18 @@ void Graph::openMetaNode(node metaNode, bool updateProperties) {
       mappingM.set(n.id, n);
       Graph *sg = metaInfo->getNodeValue(n);
 
-      if (sg)
+      if (sg) {
         // map all nodes or embedded nodes
         // of this subgraph to n
         mapSubGraphNodes(sg, n, mappingM, metaInfo);
+      }
     }
     addEdges(metaGraph->edges());
   }
 
-  if (updateProperties)
+  if (updateProperties) {
     updatePropertiesUngroup(this, metaNode, metaInfo);
+  }
 
   // check for edges from or to the meta node
   Graph *super = getSuperGraph();
@@ -1417,8 +1495,9 @@ void Graph::openMetaNode(node metaNode, bool updateProperties) {
     }
 
     for (auto metaEdge : super->allEdges(metaNode)) {
-      if (!super->isElement(metaEdge))
+      if (!super->isElement(metaEdge)) {
         continue;
+      }
       Color metaColor = graphColors->getEdgeValue(metaEdge);
       std::unordered_map<node, std::unordered_map<node, set<edge>>> newMetaEdges;
 
@@ -1437,8 +1516,9 @@ void Graph::openMetaNode(node metaNode, bool updateProperties) {
             // by a metanode we are not able to correctly
             // update the meta edges embedding the inout edges
             // of this node
-            if (tgt.isValid())
+            if (tgt.isValid()) {
               newMetaEdges[eEnds.first][tgt].insert(e);
+            }
           }
         } else if (eEnds.second != metaNode) {
           node src = mappingM.get(eEnds.first.id);
@@ -1448,8 +1528,9 @@ void Graph::openMetaNode(node metaNode, bool updateProperties) {
           // by a metanode we are not able to correctly
           // update the meta edges embedding the inout edges
           // of this node
-          if (src.isValid())
+          if (src.isValid()) {
             newMetaEdges[src][eEnds.second].insert(e);
+          }
         }
       }
 
@@ -1462,8 +1543,9 @@ void Graph::openMetaNode(node metaNode, bool updateProperties) {
           node tgt(itnme.first);
 
           // add an edge in the relevant graph
-          if (!isElement(src) || !isElement(tgt))
+          if (!isElement(src) || !isElement(tgt)) {
             graph = super;
+          }
 
           edge mE = graph->addEdge(src, tgt);
           metaInfo->setEdgeValue(mE, itnme.second);
@@ -1497,8 +1579,9 @@ void Graph::openMetaNode(node metaNode, bool updateProperties) {
     //=================================
     for (auto e : root->edges()) {
 
-      if (isElement(e))
+      if (isElement(e)) {
         continue;
+      }
 
       auto eEnds = root->ends(e);
       unsigned int srcId = eEnds.first.id;
@@ -1519,8 +1602,9 @@ void Graph::openMetaNode(node metaNode, bool updateProperties) {
           src = sourceN;
           tgt = targetC;
           edgeColor = metaEdgeToColor[tgt];
-        } else
+        } else {
           continue;
+        }
       }
 
       if (metaInfo->getNodeValue(src) == nullptr && metaInfo->getNodeValue(tgt) == nullptr) {
@@ -1534,8 +1618,9 @@ void Graph::openMetaNode(node metaNode, bool updateProperties) {
         if (!existEdge(src, tgt).isValid()) {
           edge addedEdge = addEdge(src, tgt);
           graphColors->setEdgeValue(addedEdge, edgeColor);
-        } else
+        } else {
           tlp::error() << __PRETTY_FUNCTION__ << ": bug exist edge 1" << std::endl;
+        }
       }
     }
   }
@@ -1653,8 +1738,9 @@ const std::string &GraphEvent::getPropertyName() const {
   assert((evtType > TLP_AFTER_DEL_SUBGRAPH && evtType < TLP_BEFORE_SET_ATTRIBUTE) ||
          evtType > TLP_REMOVE_ATTRIBUTE);
 
-  if (evtType == TLP_BEFORE_RENAME_LOCAL_PROPERTY || evtType == TLP_AFTER_RENAME_LOCAL_PROPERTY)
+  if (evtType == TLP_BEFORE_RENAME_LOCAL_PROPERTY || evtType == TLP_AFTER_RENAME_LOCAL_PROPERTY) {
     return info.renamedProp->first->getName();
+  }
 
   return *(info.name);
 }
@@ -1811,8 +1897,9 @@ struct DescendantGraphsIterator : public Iterator<Graph *> {
   }
 
   ~DescendantGraphsIterator() override {
-    if (current)
+    if (current) {
       delete current;
+    }
 
     while (!iterators.empty()) {
       delete iterators.top();
@@ -1830,11 +1917,12 @@ struct DescendantGraphsIterator : public Iterator<Graph *> {
       Iterator<Graph *> *itg = g->getSubGraphs();
 
       if (itg->hasNext()) {
-        if (current->hasNext())
+        if (current->hasNext()) {
           // pushed iterators are always non empty
           iterators.push(current);
-        else
+        } else {
           delete current;
+        }
 
         current = itg;
       } else {
@@ -1846,8 +1934,9 @@ struct DescendantGraphsIterator : public Iterator<Graph *> {
           if (!iterators.empty()) {
             current = iterators.top();
             iterators.pop();
-          } else
+          } else {
             current = nullptr;
+          }
         }
       }
 
@@ -1866,16 +1955,18 @@ Iterator<Graph *> *Graph::getDescendantGraphs() const {
 GraphEvent::~GraphEvent() {
   if (evtType > TLP_AFTER_DEL_SUBGRAPH) {
     // need to cleanup name if any
-    if (evtType == TLP_BEFORE_RENAME_LOCAL_PROPERTY || evtType == TLP_AFTER_RENAME_LOCAL_PROPERTY)
+    if (evtType == TLP_BEFORE_RENAME_LOCAL_PROPERTY || evtType == TLP_AFTER_RENAME_LOCAL_PROPERTY) {
       delete info.renamedProp;
-    else
+    } else {
       delete info.name;
+    }
   } else {
     //  need to cleanup vectInfos if not null
-    if (evtType == TLP_ADD_NODES && vectInfos.addedNodes)
+    if (evtType == TLP_ADD_NODES && vectInfos.addedNodes) {
       delete vectInfos.addedNodes;
-    else if (evtType == TLP_ADD_EDGES && vectInfos.addedEdges)
+    } else if (evtType == TLP_ADD_EDGES && vectInfos.addedEdges) {
       delete vectInfos.addedEdges;
+    }
   }
 }
 

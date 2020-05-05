@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -42,9 +42,11 @@ void PlanarityTestListener::treatEvent(const Event &evt) {
     case GraphEvent::TLP_DEL_EDGE:
     case GraphEvent::TLP_DEL_NODE:
 
-      if (resultsBuffer.find(graph) != resultsBuffer.end())
-        if (resultsBuffer[graph])
+      if (resultsBuffer.find(graph) != resultsBuffer.end()) {
+        if (resultsBuffer[graph]) {
           return;
+        }
+      }
 
       graph->removeListener(this);
       resultsBuffer.erase(graph);
@@ -52,9 +54,11 @@ void PlanarityTestListener::treatEvent(const Event &evt) {
 
     case GraphEvent::TLP_ADD_EDGE:
 
-      if (resultsBuffer.find(graph) != resultsBuffer.end())
-        if (!resultsBuffer[graph])
+      if (resultsBuffer.find(graph) != resultsBuffer.end()) {
+        if (!resultsBuffer[graph]) {
           return;
+        }
+      }
 
       graph->removeListener(this);
       resultsBuffer.erase(graph);
@@ -67,8 +71,9 @@ void PlanarityTestListener::treatEvent(const Event &evt) {
 
     Graph *graph = static_cast<Graph *>(evt.sender());
 
-    if (evt.type() == Event::TLP_DELETE)
+    if (evt.type() == Event::TLP_DELETE) {
       resultsBuffer.erase(graph);
+    }
   }
 }
 //=================================================================
@@ -76,13 +81,15 @@ static PlanarityTestListener instance;
 //=================================================================
 bool PlanarityTest::isPlanar(Graph *graph) {
   auto itr = instance.resultsBuffer.find(graph);
-  if (itr != instance.resultsBuffer.end())
+  if (itr != instance.resultsBuffer.end()) {
     return itr->second;
+  }
 
   unsigned int nbOfNodes = graph->numberOfNodes();
 
-  if (nbOfNodes == 0)
+  if (nbOfNodes == 0) {
     return instance.resultsBuffer[graph] = true;
+  }
 
   // quick test
   if ((nbOfNodes >= 3) && (graph->numberOfEdges() > ((3 * nbOfNodes) - 6))) {
@@ -109,9 +116,9 @@ bool PlanarityTest::isPlanarEmbedding(const tlp::Graph *graph) {
 }
 //=================================================================
 bool PlanarityTest::planarEmbedding(Graph *graph) {
-  if (!PlanarityTest::isPlanar(graph))
+  if (!PlanarityTest::isPlanar(graph)) {
     return false;
-
+  }
   Observable::holdObservers();
   vector<edge> addedEdges;
   BiconnectedTest::makeBiconnected(graph, addedEdges);
@@ -127,8 +134,9 @@ bool PlanarityTest::planarEmbedding(Graph *graph) {
 }
 //=================================================================
 list<edge> PlanarityTest::getObstructionsEdges(Graph *graph) {
-  if (PlanarityTest::isPlanar(graph))
+  if (PlanarityTest::isPlanar(graph)) {
     return list<edge>();
+  }
 
   vector<edge> addedEdges;
   Observable::holdObservers();

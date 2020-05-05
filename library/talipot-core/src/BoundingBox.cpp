@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -18,11 +18,13 @@
 
 static bool getIntersection(float fDst1, float fDst2, const tlp::Coord &p1, const tlp::Coord &p2,
                             tlp::Coord &hit) {
-  if ((fDst1 * fDst2) >= 0.0f)
+  if ((fDst1 * fDst2) >= 0.0f) {
     return false;
+  }
 
-  if (fDst1 == fDst2)
+  if (fDst1 == fDst2) {
     return false;
+  }
 
   hit = p1 + (p2 - p1) * (-fDst1 / (fDst2 - fDst1));
   return true;
@@ -93,55 +95,70 @@ bool BoundingBox::contains(const tlp::BoundingBox &boundingBox) const {
 }
 
 bool BoundingBox::intersect(const tlp::BoundingBox &boundingBox) const {
-  if (!isValid() || !boundingBox.isValid())
+  if (!isValid() || !boundingBox.isValid()) {
     return false;
+  }
 
-  if ((*this)[1][0] < boundingBox[0][0])
+  if ((*this)[1][0] < boundingBox[0][0]) {
     return false;
+  }
 
-  if (boundingBox[1][0] < (*this)[0][0])
+  if (boundingBox[1][0] < (*this)[0][0]) {
     return false;
+  }
 
-  if ((*this)[1][1] < boundingBox[0][1])
+  if ((*this)[1][1] < boundingBox[0][1]) {
     return false;
+  }
 
-  if (boundingBox[1][1] < (*this)[0][1])
+  if (boundingBox[1][1] < (*this)[0][1]) {
     return false;
+  }
 
-  if ((*this)[1][2] < boundingBox[0][2])
+  if ((*this)[1][2] < boundingBox[0][2]) {
     return false;
+  }
 
-  if (boundingBox[1][2] < (*this)[0][2])
+  if (boundingBox[1][2] < (*this)[0][2]) {
     return false;
+  }
 
   return true;
 }
 
 bool BoundingBox::intersect(const Coord &segStart, const Coord &segEnd) const {
-  if (!isValid())
+  if (!isValid()) {
     return false;
+  }
 
-  if (segEnd[0] < (*this)[0][0] && segStart[0] < (*this)[0][0])
+  if (segEnd[0] < (*this)[0][0] && segStart[0] < (*this)[0][0]) {
     return false;
+  }
 
-  if (segEnd[0] > (*this)[1][0] && segStart[0] > (*this)[1][0])
+  if (segEnd[0] > (*this)[1][0] && segStart[0] > (*this)[1][0]) {
     return false;
+  }
 
-  if (segEnd[1] < (*this)[0][1] && segStart[1] < (*this)[0][1])
+  if (segEnd[1] < (*this)[0][1] && segStart[1] < (*this)[0][1]) {
     return false;
+  }
 
-  if (segEnd[1] > (*this)[1][1] && segStart[1] > (*this)[1][1])
+  if (segEnd[1] > (*this)[1][1] && segStart[1] > (*this)[1][1]) {
     return false;
+  }
 
-  if (segEnd[2] < (*this)[0][2] && segStart[2] < (*this)[0][2])
+  if (segEnd[2] < (*this)[0][2] && segStart[2] < (*this)[0][2]) {
     return false;
+  }
 
-  if (segEnd[2] > (*this)[1][2] && segStart[2] > (*this)[1][2])
+  if (segEnd[2] > (*this)[1][2] && segStart[2] > (*this)[1][2]) {
     return false;
+  }
 
   if (segStart[0] > (*this)[0][0] && segStart[0] < (*this)[1][0] && segStart[1] > (*this)[0][1] &&
-      segStart[1] < (*this)[1][1] && segStart[2] > (*this)[0][2] && segStart[2] < (*this)[1][2])
+      segStart[1] < (*this)[1][1] && segStart[2] > (*this)[0][2] && segStart[2] < (*this)[1][2]) {
     return true;
+  }
 
   Coord hit;
 
@@ -162,8 +179,9 @@ bool BoundingBox::intersect(const Coord &segStart, const Coord &segEnd) const {
        contains(hit)) ||
       (getIntersection(segStart[2] - (*this)[1][2], segEnd[2] - (*this)[1][2], segStart, segEnd,
                        hit) &&
-       contains(hit)))
+       contains(hit))) {
     return true;
+  }
 
   return false;
 }

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -26,8 +26,9 @@ public:
   bool operator()(const node u, const node v) {
     unsigned int du = graph->deg(u), dv = graph->deg(v);
 
-    if (du == dv)
+    if (du == dv) {
       return u.id > v.id;
+    }
 
     return du > dv;
   }
@@ -64,8 +65,9 @@ class WelshPowell : public DoubleAlgorithm {
     bool operator()(const nodeInfo &u, const nodeInfo &v) {
       int du = u.val, dv = v.val;
 
-      if (du == dv)
+      if (du == dv) {
         return u.n.id > v.n.id;
+      }
 
       return du > dv;
     }
@@ -135,12 +137,15 @@ public:
             result->setNodeValue(nInfo.n, nodesInfo[i].val = currentColor);
             ++numberOfColoredNodes;
 
-            if (i == minIndex)
+            if (i == minIndex) {
               ++minIndex;
-          } else
+            }
+          } else {
             nextMaxIndex = i + 1;
-        } else if (i == minIndex)
+          }
+        } else if (i == minIndex) {
           ++minIndex;
+        }
       }
 
       maxIndex = nextMaxIndex;

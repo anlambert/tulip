@@ -44,16 +44,18 @@ void ViewToolTipAndUrlManager::state(DataSet &data) const {
 }
 
 void ViewToolTipAndUrlManager::fillContextMenu(QMenu *menu, node n) {
-  if (_urlPropName.empty())
+  if (_urlPropName.empty()) {
     return;
+  }
 
   Graph *graph = _view->graph();
 
   _contextMenuUrl =
       dynamic_cast<StringProperty *>(graph->getProperty(_urlPropName))->getNodeValue(n);
 
-  if (_contextMenuUrl.empty())
+  if (_contextMenuUrl.empty()) {
     return;
+  }
 
   menu->addSeparator();
   QAction *action = menu->addAction("Open " + tlpStringToQString(_contextMenuUrl), this,
@@ -62,15 +64,17 @@ void ViewToolTipAndUrlManager::fillContextMenu(QMenu *menu, node n) {
 }
 
 void ViewToolTipAndUrlManager::fillContextMenu(QMenu *menu, edge e) {
-  if (_urlPropName.empty())
+  if (_urlPropName.empty()) {
     return;
+  }
 
   Graph *graph = _view->graph();
 
   _contextMenuUrl =
       dynamic_cast<StringProperty *>(graph->getProperty(_urlPropName))->getEdgeValue(e);
-  if (_contextMenuUrl.empty())
+  if (_contextMenuUrl.empty()) {
     return;
+  }
 
   menu->addSeparator();
 
@@ -96,10 +100,10 @@ void ViewToolTipAndUrlManager::fillContextMenu(QMenu *menu) {
 
   // add submenu to manage the url property choice
   QMenu *urlPropMenu;
-  if (graph->existProperty(_urlPropName))
+  if (graph->existProperty(_urlPropName)) {
     urlPropMenu = menu->addMenu(
         QString("Url property").append(" (").append(tlpStringToQString(_urlPropName)).append(")"));
-  else {
+  } else {
     urlPropMenu = menu->addMenu("Url property");
     _urlPropName.clear();
   }
@@ -112,22 +116,25 @@ void ViewToolTipAndUrlManager::fillContextMenu(QMenu *menu) {
   action = urlPropMenu->addAction(" None ");
   action->setCheckable(true);
   urlPropGroup->addAction(action);
-  if (_urlPropName.empty())
+  if (_urlPropName.empty()) {
     action->setChecked(true);
+  }
   action->setToolTip("The graph elements have no associated web page");
   // get all existing StringProperty
   std::set<std::string> props;
   for (auto inheritedProp : graph->getInheritedObjectProperties()) {
     StringProperty *prop = dynamic_cast<StringProperty *>(inheritedProp);
 
-    if (prop != nullptr)
+    if (prop != nullptr) {
       props.insert(prop->getName());
+    }
   }
 
   for (auto localProp : graph->getLocalObjectProperties()) {
     StringProperty *prop = dynamic_cast<StringProperty *>(localProp);
-    if (prop != nullptr)
+    if (prop != nullptr) {
       props.insert(prop->getName());
+    }
   }
 
   // insert the StringProperty found
@@ -140,34 +147,39 @@ void ViewToolTipAndUrlManager::fillContextMenu(QMenu *menu) {
           tlpStringToQString(propName) + "\" property value");
       urlPropGroup->addAction(action);
       action->setCheckable(true);
-      if (_urlPropName == propName)
+      if (_urlPropName == propName) {
         action->setChecked(true);
+      }
     }
   }
 }
 
 void ViewToolTipAndUrlManager::displayToolTips(bool display) {
-  if ((_tooltips = display))
+  if ((_tooltips = display)) {
     _view->graphicsView()->viewport()->installEventFilter(this);
-  else
+  } else {
     _view->graphicsView()->viewport()->removeEventFilter(this);
+  }
 }
 
 void ViewToolTipAndUrlManager::setUrlProp(QAction *action) {
   _urlPropName = QStringToTlpString(action->text());
-  if (!_view->graph()->existProperty(_urlPropName))
+  if (!_view->graph()->existProperty(_urlPropName)) {
     _urlPropName.clear();
+  }
 }
 
 bool ViewToolTipAndUrlManager::eventFilter(QObject *, QEvent *event) {
   Graph *graph = _view->graph();
 
-  if (graph == nullptr)
+  if (graph == nullptr) {
     return false;
+  }
 
   // clear url if tooltip is no longer visible
-  if (!_url.empty() && !QToolTip::isVisible())
+  if (!_url.empty() && !QToolTip::isVisible()) {
     _url.clear();
+  }
 
   // get the property holding the urls associated to graph elements
   StringProperty *urlProp = _urlPropName.empty()
@@ -183,19 +195,24 @@ bool ViewToolTipAndUrlManager::eventFilter(QObject *, QEvent *event) {
       QString ttip;
 
       if (tmpNode.isValid()) {
-        if (urlProp)
+        if (urlProp) {
           _url = urlProp->getNodeValue(tmpNode);
-        if (_tooltips)
+        }
+        if (_tooltips) {
           ttip = NodesGraphModel::getNodeTooltip(graph, tmpNode);
+        }
       } else if (tmpEdge.isValid()) {
-        if (urlProp)
+        if (urlProp) {
           _url = urlProp->getEdgeValue(tmpEdge);
-        if (_tooltips)
+        }
+        if (_tooltips) {
           ttip = EdgesGraphModel::getEdgeTooltip(graph, tmpEdge);
+        }
       }
       // only http urls are valid
-      if (!_url.empty() && _url.find("http://") != 0 && _url.find("https://"))
+      if (!_url.empty() && _url.find("http://") != 0 && _url.find("https://")) {
         _url.insert(0, "http://");
+      }
       if (!_url.empty()) {
         // warn user that there is a web page associated to the current
         // graph element which can be opened with a space key press

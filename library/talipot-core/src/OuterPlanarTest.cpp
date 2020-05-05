@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -37,9 +37,11 @@ void OuterPlanarTestListener::treatEvent(const Event &evt) {
 
     switch (gEvt->getType()) {
     case GraphEvent::TLP_ADD_EDGE:
-      if (resultsBuffer.find(graph) != resultsBuffer.end())
-        if (resultsBuffer[graph])
+      if (resultsBuffer.find(graph) != resultsBuffer.end()) {
+        if (resultsBuffer[graph]) {
           return;
+        }
+      }
 
       graph->removeListener(this);
       resultsBuffer.erase(graph);
@@ -48,9 +50,11 @@ void OuterPlanarTestListener::treatEvent(const Event &evt) {
     case GraphEvent::TLP_DEL_EDGE:
     case GraphEvent::TLP_DEL_NODE:
 
-      if (resultsBuffer.find(graph) != resultsBuffer.end())
-        if (!resultsBuffer[graph])
+      if (resultsBuffer.find(graph) != resultsBuffer.end()) {
+        if (!resultsBuffer[graph]) {
           return;
+        }
+      }
 
     case GraphEvent::TLP_REVERSE_EDGE:
       graph->removeListener(this);
@@ -65,8 +69,9 @@ void OuterPlanarTestListener::treatEvent(const Event &evt) {
 
     Graph *graph = static_cast<Graph *>(evt.sender());
 
-    if (evt.type() == Event::TLP_DELETE)
+    if (evt.type() == Event::TLP_DELETE) {
       resultsBuffer.erase(graph);
+    }
   }
 }
 //=================================================================
@@ -74,21 +79,23 @@ static OuterPlanarTestListener instance;
 //=================================================================
 bool OuterPlanarTest::isOuterPlanar(tlp::Graph *graph) {
   auto it = instance.resultsBuffer.find(graph);
-  if (it != instance.resultsBuffer.end())
+  if (it != instance.resultsBuffer.end()) {
     return it->second;
-  else if (graph->isEmpty())
+  } else if (graph->isEmpty()) {
     return instance.resultsBuffer[graph] = true;
+  }
 
   PlanarityTestImpl planarTest(graph);
 
-  if (!planarTest.isPlanar(true))
+  if (!planarTest.isPlanar(true)) {
     return (instance.resultsBuffer[graph] = false);
-  else {
+  } else {
     Observable::holdObservers();
     node n = graph->addNode();
     for (auto current : graph->nodes()) {
-      if (current != n)
+      if (current != n) {
         graph->addEdge(n, current);
+      }
     }
     instance.resultsBuffer[graph] = planarTest.isPlanar(true);
     graph->delNode(n);

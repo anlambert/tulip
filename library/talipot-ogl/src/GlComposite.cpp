@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -69,8 +69,9 @@ void GlComposite::reset(bool deleteElems) {
 
   for (auto entity : toTreat) {
     for (auto l : layerParents) {
-      if (l->getScene())
+      if (l->getScene()) {
         l->getScene()->notifyDeletedEntity(entity);
+      }
     }
 
     entity->removeParent(this);
@@ -78,20 +79,23 @@ void GlComposite::reset(bool deleteElems) {
     for (auto l : layerParents) {
       GlComposite *composite = dynamic_cast<GlComposite *>(entity);
 
-      if (composite)
+      if (composite) {
         composite->removeLayerParent(l);
+      }
     }
 
-    if (deleteElems)
+    if (deleteElems) {
       delete entity;
+    }
   }
 
   elements.clear();
   _sortedElements.clear();
 
   for (auto l : layerParents) {
-    if (l->getScene())
+    if (l->getScene()) {
       l->getScene()->notifyModifyLayer(l->getName(), l);
+    }
   }
 }
 //============================================================
@@ -120,11 +124,13 @@ void GlComposite::addGlEntity(GlEntity *entity, const string &key) {
     composite = dynamic_cast<GlComposite *>(entity);
 
     for (auto l : layerParents) {
-      if (composite)
+      if (composite) {
         composite->addLayerParent(l);
+      }
 
-      if (l->getScene())
+      if (l->getScene()) {
         l->getScene()->notifyModifyLayer(l->getName(), l);
+      }
     }
   }
 
@@ -138,13 +144,15 @@ void GlComposite::addGlEntity(GlEntity *entity, const string &key) {
 }
 //============================================================
 void GlComposite::deleteGlEntity(const string &key, bool informTheEntity) {
-  if (elements.count(key) == 0)
+  if (elements.count(key) == 0) {
     return;
+  }
 
   GlEntity *entity = elements[key];
 
-  if (informTheEntity)
+  if (informTheEntity) {
     entity->removeParent(this);
+  }
 
   if (informTheEntity) {
     GlComposite *composite = dynamic_cast<GlComposite *>(entity);
@@ -219,8 +227,9 @@ string GlComposite::findKey(GlEntity *entity) {
 GlEntity *GlComposite::findGlEntity(const string &key) {
   auto ite = elements.find(key);
 
-  if (ite == elements.end())
+  if (ite == elements.end()) {
     return nullptr;
+  }
 
   return ite->second;
 }
@@ -232,8 +241,9 @@ void GlComposite::translate(const Coord &move) {
 }
 //============================================================
 void GlComposite::notifyModified(GlEntity *entity) {
-  if (!layerParents.empty())
+  if (!layerParents.empty()) {
     layerParents[0]->getScene()->notifyModifyEntity(entity);
+  }
 }
 //============================================================
 void GlComposite::getXML(string &outString) {

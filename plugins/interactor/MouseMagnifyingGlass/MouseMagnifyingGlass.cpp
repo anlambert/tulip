@@ -99,8 +99,9 @@ bool MouseMagnifyingGlassInteractorComponent::eventFilter(QObject *, QEvent *e) 
       updateMagnifyingGlass = true;
       radius += numSteps;
 
-      if (radius < 1)
+      if (radius < 1) {
         radius = 1;
+      }
 
       delete fbo;
       delete fbo2;
@@ -111,8 +112,9 @@ bool MouseMagnifyingGlassInteractorComponent::eventFilter(QObject *, QEvent *e) 
       updateMagnifyingGlass = true;
       magnifyPower += numSteps;
 
-      if (magnifyPower < 1)
+      if (magnifyPower < 1) {
         magnifyPower = 1;
+      }
     }
   }
 

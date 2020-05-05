@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -51,22 +51,25 @@ void GlLines::glDrawCurve(const Coord &startPoint, const vector<Coord> &bends,
   colorEnd[3] = 1.0;
   GLfloat colorDelta[4];
 
-  for (int i = 0; i < 4; i++)
+  for (int i = 0; i < 4; i++) {
     colorDelta[i] = (colorEnd[i] - colorStart[i]) / (bends.size() + 2);
+  }
 
   glBegin(GL_LINE_STRIP);
   setColor(colorStart);
   glVertex3f(startPoint[0], startPoint[1], startPoint[2]);
 
-  for (int i = 0; i < 4; i++)
+  for (int i = 0; i < 4; i++) {
     colorStart[i] += colorDelta[i];
+  }
 
   for (unsigned int i = 0; i < bends.size(); i++) {
     setColor(colorStart);
     glVertex3f(bends[i][0], bends[i][1], bends[i][2]);
 
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 4; i++) {
       colorStart[i] += colorDelta[i];
+    }
   }
 
   setColor(colorEnd);
@@ -97,8 +100,9 @@ void GlLines::glDrawBezierCurve(const Coord &startPoint, const vector<Coord> &be
   colorEnd[3] = 1.0;
   GLfloat colorDelta[4];
 
-  for (int i = 0; i < 4; i++)
+  for (int i = 0; i < 4; i++) {
     colorDelta[i] = (colorEnd[i] - colorStart[i]) / (steps);
+  }
 
   delete[] colorEnd;
   glMap1f(GL_MAP1_VERTEX_3, 0.0, 1.0, 3, bends.size() + 2, bendsCoordinates);
@@ -110,8 +114,9 @@ void GlLines::glDrawBezierCurve(const Coord &startPoint, const vector<Coord> &be
     setColor(colorStart);
     glEvalCoord1f(i / GLfloat(steps));
 
-    for (unsigned int j = 0; j < 4; j++)
+    for (unsigned int j = 0; j < 4; j++) {
       colorStart[j] += colorDelta[j];
+    }
   }
 
   glEnd();
@@ -142,8 +147,9 @@ void GlLines::glDrawSplineCurve(const Coord &startPoint, const vector<Coord> &be
   colorEnd[3] = 1.0;
   GLfloat colorDelta[4];
 
-  for (int i = 0; i < 4; i++)
+  for (int i = 0; i < 4; i++) {
     colorDelta[i] = (colorEnd[i] - colorStart[i]) / (steps * (bends.size() + 1));
+  }
 
   delete[] colorEnd;
 
@@ -154,10 +160,11 @@ void GlLines::glDrawSplineCurve(const Coord &startPoint, const vector<Coord> &be
     p0 = startPoint;
     p3 = bends[0];
 
-    if (bends.size() > 1)
+    if (bends.size() > 1) {
       p4 = bends[1];
-    else
+    } else {
       p4 = endPoint;
+    }
 
     Coord v03 = p3 - p0;
     Coord v34 = p4 - p3;
@@ -188,8 +195,9 @@ void GlLines::glDrawSplineCurve(const Coord &startPoint, const vector<Coord> &be
       setColor(colorStart);
       glEvalCoord1f(i / GLfloat(steps));
 
-      for (unsigned int j = 0; j < 4; j++)
+      for (unsigned int j = 0; j < 4; j++) {
         colorStart[j] += colorDelta[j];
+      }
     }
 
     glEnd();
@@ -202,10 +210,11 @@ void GlLines::glDrawSplineCurve(const Coord &startPoint, const vector<Coord> &be
     p1 = p1next;
     p3 = bends[i];
 
-    if ((i + 1) < bends.size())
+    if ((i + 1) < bends.size()) {
       p4 = bends[i + 1];
-    else
+    } else {
       p4 = endPoint;
+    }
 
     Coord v03 = p3 - p0;
     Coord v34 = p4 - p3;
@@ -235,8 +244,9 @@ void GlLines::glDrawSplineCurve(const Coord &startPoint, const vector<Coord> &be
       setColor(colorStart);
       glEvalCoord1f(i / GLfloat(steps));
 
-      for (unsigned int j = 0; j < 4; j++)
+      for (unsigned int j = 0; j < 4; j++) {
         colorStart[j] += colorDelta[j];
+      }
     }
 
     glEnd();
@@ -260,8 +270,9 @@ void GlLines::glDrawSplineCurve(const Coord &startPoint, const vector<Coord> &be
       setColor(colorStart);
       glEvalCoord1f(i / GLfloat(steps));
 
-      for (unsigned int j = 0; j < 4; j++)
+      for (unsigned int j = 0; j < 4; j++) {
         colorStart[j] += colorDelta[j];
+      }
     }
 
     glEnd();
@@ -292,10 +303,11 @@ void GlLines::glDrawSpline2Curve(const Coord &startPoint, const vector<Coord> &b
     p0 = startPoint;
     p3 = bends[0];
 
-    if (bends.size() > 1)
+    if (bends.size() > 1) {
       p4 = bends[1];
-    else
+    } else {
       p4 = endPoint;
+    }
 
     Coord v03 = p3 - p0;
     Coord v34 = p4 - p3;
@@ -326,10 +338,11 @@ void GlLines::glDrawSpline2Curve(const Coord &startPoint, const vector<Coord> &b
     p1 = p1next;
     p3 = bends[i];
 
-    if ((i + 1) < bends.size())
+    if ((i + 1) < bends.size()) {
       p4 = bends[i + 1];
-    else
+    } else {
       p4 = endPoint;
+    }
 
     Coord v03 = p3 - p0;
     Coord v34 = p4 - p3;
@@ -379,8 +392,9 @@ void GlLines::glDrawPoint(const Coord &p) {
 }
 //=============================================================
 void GlLines::glDisableLineStipple(unsigned int stippleType) {
-  if (stippleType > 0)
+  if (stippleType > 0) {
     glDisable(GL_LINE_STIPPLE);
+  }
 }
 //=============================================================
 void GlLines::glEnableLineStipple(unsigned int stippleType) {

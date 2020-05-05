@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -38,8 +38,9 @@ bool PathFinderComponent::eventFilter(QObject *obj, QEvent *event) {
   QMouseEvent *qMouseEv = static_cast<QMouseEvent *>(event);
   GlMainWidget *glw = dynamic_cast<GlMainWidget *>(obj);
 
-  if (glw == nullptr)
+  if (glw == nullptr) {
     return false;
+  }
 
   if (event->type() == QEvent::MouseMove) {
     SelectedEntity entity;
@@ -67,8 +68,9 @@ bool PathFinderComponent::eventFilter(QObject *obj, QEvent *event) {
       src = tmp;
       // select it
       selectionProperty->setNodeValue(src, true);
-    } else
+    } else {
       src = node();
+    }
 
     // invalidate the path target
     tgt = node();
@@ -135,8 +137,9 @@ void PathFinderComponent::selectPath(GlMainWidget *glMainWidget, Graph *graph) {
     if (weightsMetricName.compare(NO_METRIC) != 0 && graph->existProperty(weightsMetricName)) {
       PropertyInterface *prop = graph->getProperty(weightsMetricName);
 
-      if (prop && prop->getTypename().compare("double") == 0)
+      if (prop && prop->getTypename().compare("double") == 0) {
         weights = graph->getDoubleProperty(weightsMetricName);
+      }
     }
 
     bool pathFound =
@@ -151,9 +154,10 @@ void PathFinderComponent::selectPath(GlMainWidget *glMainWidget, Graph *graph) {
       QMessageBox::warning(nullptr, "Path finder",
                            "A path between the selected nodes cannot be found.");
 
-    } else
+    } else {
       // A path has been found: highlight it
       runHighlighters(glMainWidget, selection, src, tgt);
+    }
   } else if (src.isValid()) {
     selection->setNodeValue(src, true);
   }
@@ -168,8 +172,9 @@ void PathFinderComponent::runHighlighters(GlMainWidget *glMainWidget, BooleanPro
   for (const auto &h : activeHighlighters) {
     PathHighlighter *hler = findHighlighter(h);
 
-    if (hler)
+    if (hler) {
       hler->highlight(parent, glMainWidget, selection, src, tgt);
+    }
   }
 }
 
@@ -184,15 +189,17 @@ void PathFinderComponent::clearHighlighters(GlMainWidget *glMainWidget) {
   for (const auto &h : activeHighlighters) {
     PathHighlighter *hler = findHighlighter(h);
 
-    if (hler)
+    if (hler) {
       hler->clear();
+    }
   }
 }
 
 PathHighlighter *PathFinderComponent::findHighlighter(const string &name) {
   for (auto p : highlighters) {
-    if (p->getName() == name)
+    if (p->getName() == name) {
       return p;
+    }
   }
 
   return nullptr;

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -25,8 +25,9 @@ FontDialog::FontDialog(QWidget *parent)
     : QDialog(parent), _ui(new Ui::FontDialog), ok(QDialog::Rejected) {
   _ui->setupUi(this);
 
-  for (const QString &font : Font::installedFontNames())
+  for (const QString &font : Font::installedFontNames()) {
     _ui->nameList->addItem(font);
+  }
 
   bool hasFont = _ui->nameList->count() > 0;
   _ui->settingsWidget->setEnabled(hasFont);
@@ -53,8 +54,9 @@ Font FontDialog::font() const {
 }
 
 void FontDialog::fontChanged() {
-  if (_ui->nameList->currentItem() == nullptr || _ui->styleList->currentItem() == nullptr)
+  if (_ui->nameList->currentItem() == nullptr || _ui->styleList->currentItem() == nullptr) {
     return;
+  }
 
   if (sender() == _ui->sizeList) {
     _ui->sizeSpin->setValue(_ui->sizeList->currentItem()->text().toInt());
@@ -76,36 +78,41 @@ void FontDialog::selectFont(const Font &f) {
 
   previousFont = f;
 
-  if (items.empty())
+  if (items.empty()) {
     return;
+  }
 
   _ui->nameList->setCurrentItem(items[0]);
 
   if (f.isBold()) {
-    if (f.isItalic())
+    if (f.isItalic()) {
       _ui->styleList->setCurrentRow(3);
-    else
+    } else {
       _ui->styleList->setCurrentRow(1);
-  } else if (f.isItalic())
+    }
+  } else if (f.isItalic()) {
     _ui->styleList->setCurrentRow(2);
-  else
+  } else {
     _ui->styleList->setCurrentRow(0);
+  }
 }
 
 Font FontDialog::getFont(QWidget * /*parent*/, const Font &selectedFont) {
   FontDialog dlg;
   dlg.selectFont(selectedFont);
 
-  if (dlg.exec() != QDialog::Accepted || !dlg.font().exists())
+  if (dlg.exec() != QDialog::Accepted || !dlg.font().exists()) {
     return Font();
-  else
+  } else {
     return dlg.font();
+  }
 }
 
 void FontDialog::showEvent(QShowEvent *ev) {
   QDialog::showEvent(ev);
 
-  if (parentWidget())
+  if (parentWidget()) {
     move(parentWidget()->window()->frameGeometry().topLeft() +
          parentWidget()->window()->rect().center() - rect().center());
+  }
 }

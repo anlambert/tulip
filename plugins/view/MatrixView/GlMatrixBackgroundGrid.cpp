@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -40,8 +40,9 @@ void GlMatrixBackgroundGrid::draw(float lod, tlp::Camera *camera) {
 
   GridDisplayMode mode = _view->gridDisplayMode();
 
-  if (mode == SHOW_NEVER || (mode == SHOW_ON_ZOOM && abs(bottomRight[0] - topLeft[0]) > 50))
+  if (mode == SHOW_NEVER || (mode == SHOW_ON_ZOOM && abs(bottomRight[0] - topLeft[0]) > 50)) {
     return;
+  }
 
   int N = _view->graph()->numberOfNodes();
   double startX = max<double>(0.5, floor(topLeft[0]) - 0.5),

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -42,8 +42,9 @@ void CliqueEnumeration::addClique(const vector<node> &clique) {
 //================================================================================
 void CliqueEnumeration::getNeighborhood(const node u, set<node> &neigh) {
   neigh.clear();
-  for (auto v : graph->getInOutNodes(u))
+  for (auto v : graph->getInOutNodes(u)) {
     neigh.insert(v);
+  }
 }
 //================================================================================
 node CliqueEnumeration::choosePivot(const set<node> &C) {
@@ -53,12 +54,14 @@ node CliqueEnumeration::choosePivot(const set<node> &C) {
   for (auto c : C) {
     unsigned int inter = 0;
     for (auto v : graph->getInOutNodes(c)) {
-      if (C.find(v) != C.end())
+      if (C.find(v) != C.end()) {
         inter++;
+      }
     }
 
-    if (inter >= maxinter)
+    if (inter >= maxinter) {
       pivot = c;
+    }
   }
 
   return pivot;
@@ -71,8 +74,9 @@ void CliqueEnumeration::maxCliquePivot(set<node> &P, const vector<node> &R, set<
   C.insert(X.begin(), X.end());
 
   if (C.empty()) {
-    if (R.size() >= minsize)
+    if (R.size() >= minsize) {
       addClique(R);
+    }
   } else {
     tlp::node p = choosePivot(C);
     set<node> neighp;
@@ -80,8 +84,9 @@ void CliqueEnumeration::maxCliquePivot(set<node> &P, const vector<node> &R, set<
     set<node> tovisit;
 
     for (auto v : P) {
-      if (neighp.find(v) == neighp.end())
+      if (neighp.find(v) == neighp.end()) {
         tovisit.insert(v);
+      }
     }
 
     for (auto v : tovisit) {
@@ -120,8 +125,9 @@ struct DegreeOrderingElem {
 //================================================================================
 struct LessDegreeOrdering {
   bool operator()(const DegreeOrderingElem *u, const DegreeOrderingElem *v) const {
-    if (u->deg == v->deg)
+    if (u->deg == v->deg) {
       return u->n.id < v->n.id;
+    }
 
     return u->deg < v->deg;
   }
@@ -158,8 +164,9 @@ void CliqueEnumeration::getDegenerateOrdering(vector<node> &ordering) {
 
 //================================================================================
 bool CliqueEnumeration::run() {
-  if (dataSet != nullptr)
+  if (dataSet != nullptr) {
     dataSet->get("minimum size", minsize);
+  }
 
   vector<node> ordering;
   getDegenerateOrdering(ordering);
@@ -171,19 +178,24 @@ bool CliqueEnumeration::run() {
     vector<node> R;
     R.push_back(ordering[i]);
 
-    for (unsigned int j = 0; j <= i; ++j)
-      if (neighu.find(ordering[j]) != neighu.end())
+    for (unsigned int j = 0; j <= i; ++j) {
+      if (neighu.find(ordering[j]) != neighu.end()) {
         X.insert(ordering[j]);
+      }
+    }
 
-    for (unsigned int j = i + 1; j < ordering.size(); ++j)
-      if (neighu.find(ordering[j]) != neighu.end())
+    for (unsigned int j = i + 1; j < ordering.size(); ++j) {
+      if (neighu.find(ordering[j]) != neighu.end()) {
         P.insert(ordering[j]);
+      }
+    }
 
     maxCliquePivot(P, R, X);
   }
 
-  if (dataSet != nullptr)
+  if (dataSet != nullptr) {
     dataSet->set("#cliques created", cliqueid);
+  }
 
   return true;
 }

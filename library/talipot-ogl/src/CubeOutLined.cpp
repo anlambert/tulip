@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -47,8 +47,9 @@ CubeOutLined::~CubeOutLined() {}
 void CubeOutLined::draw(node n, float lod) {
   string textureName = glGraphInputData->getElementTexture()->getNodeValue(n);
 
-  if (!textureName.empty())
+  if (!textureName.empty()) {
     textureName = glGraphInputData->parameters->getTexturePath() + textureName;
+  }
 
   GlBox::draw(glGraphInputData->getElementColor()->getNodeValue(n),
               glGraphInputData->getElementBorderColor()->getNodeValue(n),

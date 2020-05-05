@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -28,10 +28,11 @@ using namespace tlp;
 PlanarityTestImpl::PlanarityTestImpl(Graph *sg) : sg(sg) {}
 //=================================================================
 bool PlanarityTestImpl::isPlanar(bool embedsg) {
-  if (embedsg)
+  if (embedsg) {
     embed = true;
-  else
+  } else {
     embed = false;
+  }
 
   if (sg->isEmpty()) {
     return true;
@@ -75,14 +76,16 @@ bool PlanarityTestImpl::isPlanar(bool embedsg) {
   }
 
   // embeds root with all back-edges to root;
-  if (planar && embedsg)
+  if (planar && embedsg) {
     embedRoot(sg, nbOfNodes);
+  }
 
   // restores G;
   for (auto n2 : stableIterator(sg->getNodes())) {
 
-    if (isCNode(n2))
+    if (isCNode(n2)) {
       sg->delNode(n2, true);
+    }
   }
 
   restore();
@@ -103,8 +106,9 @@ std::list<edge> PlanarityTestImpl::getObstructions() {
 void PlanarityTestImpl::restore() {
   // update obstruction edges to select only original edges
   for (auto &e : obstructionEdges) {
-    if (bidirectedEdges.find(e) != bidirectedEdges.end())
+    if (bidirectedEdges.find(e) != bidirectedEdges.end()) {
       e = bidirectedEdges[e];
+    }
   }
 
   for (const auto &it : bidirectedEdges) {
@@ -183,8 +187,9 @@ void PlanarityTestImpl::findTerminalNodes(Graph *sG, node n, list<node> &listOfC
         if (terminalNode == NULL_NODE && labelB.get(target.id) > dfsPosNum.get(n.id)) {
           state.set(target.id, TERMINAL);
           terminalNode = target;
-        } else
+        } else {
           state.set(target.id, VISITED);
+        }
 
         traversedNodes.push_back(target);
         S.push_front(target);
@@ -220,19 +225,22 @@ void PlanarityTestImpl::findTerminalNodes(Graph *sG, node n, list<node> &listOfC
           terminalNodes[c].remove(terminalNodesItem[target]);
           lastVisited.set(terminalNode.id, lastVisited.get(target.id));
 
-        } else
+        } else {
           lastVisited.set(terminalNode.id, target);
+        }
       }
     }
   }
 
   // groups all back-edges in T_w by their respective 2-connected component;
-  for (auto e : listEdges)
+  for (auto e : listEdges) {
     listBackEdges[componentOf[sG->source(e)]].push_back(e);
+  }
 
   // restores state[target] for all traversed nodes target;
-  for (auto n : traversedNodes)
+  for (auto n : traversedNodes) {
     state.set(n.id, NOT_VISITED);
+  }
 }
 //=================================================================
 bool PlanarityTestImpl::findObstruction(Graph *sG, node n, list<node> &terminalNodes) {
@@ -253,8 +261,9 @@ bool PlanarityTestImpl::findObstruction(Graph *sG, node n, list<node> &terminalN
       node v = findNodeWithLabelBGreaterThanDfsN(false, sG, n, cNodeOfPossibleK33Obstruction);
 
       if (v != NULL_NODE) {
-        if (embed)
+        if (embed) {
           obstructionEdgesPossibleObstrConfirmed(sG, n, t1, v);
+        }
 
         return true;
       }
@@ -290,8 +299,9 @@ bool PlanarityTestImpl::findObstruction(Graph *sG, node n, list<node> &terminalN
       return true;
     }
 
-    if (testObstructionFromTerminalNode(sG, n, t2, t22))
+    if (testObstructionFromTerminalNode(sG, n, t2, t22)) {
       return true;
+    }
 
     if (cNodeOfPossibleK33Obstruction != NULL_NODE) {
       if (embed) {
@@ -313,8 +323,9 @@ bool PlanarityTestImpl::findObstruction(Graph *sG, node n, list<node> &terminalN
     node jl, jr;
 
     if (isCNode(m) && testCNodeCounter(sG, m, n, t12, t22, jl, jr)) {
-      if (embed)
+      if (embed) {
         obstructionEdgesCNodeCounter(sG, m, n, jl, jr, t1, t2);
+      }
 
       return true;
     }
@@ -342,22 +353,27 @@ bool PlanarityTestImpl::findObstruction(Graph *sG, node n, list<node> &terminalN
           min = std::min(min, labelB.get(t2.id));
           min = std::min(min, labelB.get(v.id));
 
-          if (min == labelB.get(t1.id))
+          if (min == labelB.get(t1.id)) {
             countMin++;
+          }
 
-          if (min == labelB.get(t2.id))
+          if (min == labelB.get(t2.id)) {
             countMin++;
+          }
 
-          if (min == labelB.get(v.id))
+          if (min == labelB.get(v.id)) {
             countMin++;
+          }
 
           node n1 = t1, n2 = t2;
 
-          if (isCNode(t1))
+          if (isCNode(t1)) {
             n1 = parent.get(t1.id);
+          }
 
-          if (isCNode(t2))
+          if (isCNode(t2)) {
             n2 = parent.get(t2.id);
+          }
 
           mm = lcaBetween(n1, n2, p0);
 
@@ -366,13 +382,14 @@ bool PlanarityTestImpl::findObstruction(Graph *sG, node n, list<node> &terminalN
               swapNode(t1, t2); // makes t1 == t12;
               swapNode(t12, t22);
             }
-          } else
+          } else {
             mm = NULL_NODE;
+          }
         }
 
-        if (t1 == t12 && t2 == t22 && countMin >= 2 && vv == parent.get(m.id)) // m is c-node;
+        if (t1 == t12 && t2 == t22 && countMin >= 2 && vv == parent.get(m.id)) { // m is c-node;
           obstructionEdgesK5(sG, n, m, t1, t2, NULL_NODE);
-        else if (mm != NULL_NODE) { // m is c-node;
+        } else if (mm != NULL_NODE) { // m is c-node;
           if (t2 != t22 || vv != parent.get(m.id)) {
             node q = t22, k = parent.get(m.id);
 
@@ -382,10 +399,12 @@ bool PlanarityTestImpl::findObstruction(Graph *sG, node n, list<node> &terminalN
             }
 
             obstructionEdgesCountMin23(sG, n, m, t1, t2, NULL_NODE, q, k);
-          } else
+          } else {
             obstructionEdgesCountMin1(sG, n, m, t1, t2, NULL_NODE);
-        } else
+          }
+        } else {
           obstructionEdgesT0(sG, n, t1, t2, NULL_NODE, v);
+        }
 
         return true;
       }
@@ -405,14 +424,15 @@ bool PlanarityTestImpl::findObstruction(Graph *sG, node n, list<node> &terminalN
       int countMin, countF;
       calcInfo3Terminals(t1, t2, t3, countMin, countF, cNode, q);
 
-      if (countF == 3 && countMin >= 2)
+      if (countF == 3 && countMin >= 2) {
         obstructionEdgesK5(sG, n, cNode, t1, t2, t3); // K5, bcycle;
-      else if (countF == 3)
+      } else if (countF == 3) {
         obstructionEdgesCountMin1(sG, n, cNode, t1, t2, t3); // bcycle;
-      else if (cNode != NULL_NODE)
+      } else if (cNode != NULL_NODE) {
         obstructionEdgesCountMin23(sG, n, cNode, t1, t2, t3, q, NULL_NODE); // bcycle;
-      else
+      } else {
         obstructionEdgesT0(sG, n, t1, t2, t3, NULL_NODE); // T0;
+      }
     }
 
     return true;
@@ -427,8 +447,9 @@ void PlanarityTestImpl::setInfoForNewCNode(Graph *sG, node n, node newCNode,
                                            list<node> &terminalNodes) {
   labelB.set(newCNode.id, dfsPosNum.get(n.id));
 
-  if (embed) // needed to calculate obstruction edges;
+  if (embed) { // needed to calculate obstruction edges;
     nodeLabelB.set(newCNode.id, NULL_NODE);
+  }
 
   neighborWTerminal.set(newCNode.id, NULL_NODE);
   parent.set(newCNode.id, n);

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -79,8 +79,9 @@ double tlp::maxDistance(const Graph *graph, const unsigned int nPos,
   while (!queueNode.empty()) {
     node n = queueNode.top();
     queueNode.pop();
-    if (nb_paths.get(n.id) > 0)
+    if (nb_paths.get(n.id) > 0) {
       return distance[n];
+    }
   }
   return 0.;
 }
@@ -91,8 +92,9 @@ double tlp::averagePathLength(const Graph *graph) {
 
   unsigned int nbNodes = graph->numberOfNodes();
 
-  if (nbNodes < 2)
+  if (nbNodes < 2) {
     return result;
+  }
 
   TLP_PARALLEL_MAP_INDICES(nbNodes, [&](unsigned int i) {
     tlp::NodeStaticProperty<unsigned int> distance(graph);
@@ -101,8 +103,9 @@ double tlp::averagePathLength(const Graph *graph) {
     double tmp_result = 0;
 
     for (unsigned int j = 0; j < nbNodes; ++j) {
-      if (j == i)
+      if (j == i) {
         continue;
+      }
 
       unsigned int d = distance[j];
       if (d != UINT_MAX) {
@@ -125,23 +128,26 @@ double tlp::averageClusteringCoefficient(const Graph *graph) {
   unsigned int nbNodes = graph->numberOfNodes();
   double sum = 0;
 
-  for (unsigned int i = 0; i < nbNodes; ++i)
+  for (unsigned int i = 0; i < nbNodes; ++i) {
     sum += clusters[i];
+  }
 
   return sum / nbNodes;
 }
 //================================================================
 unsigned int tlp::maxDegree(const Graph *graph) {
   unsigned int maxdeg = 0;
-  for (auto n : graph->nodes())
+  for (auto n : graph->nodes()) {
     maxdeg = std::max(maxdeg, graph->deg(n));
+  }
   return maxdeg;
 }
 //================================================================
 unsigned int tlp::minDegree(const Graph *graph) {
   unsigned int mindeg = graph->numberOfNodes();
-  for (auto n : graph->nodes())
+  for (auto n : graph->nodes()) {
     mindeg = std::min(mindeg, graph->deg(n));
+  }
   return mindeg;
 }
 //=================================================
@@ -172,8 +178,9 @@ void tlp::clusteringCoefficient(const Graph *graph, tlp::NodeStaticProperty<doub
     if (reachables.size() > 1) {
       //$e(N_v)/(\frac{k*(k-1)}{2}}$
       clusters[i] = nbEdge / (nNode * (nNode - 1));
-    } else
+    } else {
       clusters[i] = 0;
+    }
   });
 }
 //==================================================
@@ -186,8 +193,9 @@ void tlp::dagLevel(const Graph *graph, tlp::NodeStaticProperty<unsigned int> &le
     if (indegree == 0) {
       fifo.push_back(n);
       level[i] = 0;
-    } else
+    } else {
       totreat[i] = indegree - 1;
+    }
   });
 
   //==============================================
@@ -199,9 +207,9 @@ void tlp::dagLevel(const Graph *graph, tlp::NodeStaticProperty<unsigned int> &le
       unsigned int childPos = graph->nodePos(child);
       unsigned int childLevel = totreat[childPos];
 
-      if (childLevel > 0)
+      if (childLevel > 0) {
         totreat[childPos] = childLevel - 1;
-      else {
+      } else {
         level[childPos] = curLevel;
         fifo.push_back(child);
       }
@@ -237,8 +245,9 @@ void tlp::degree(const Graph *graph, tlp::NodeStaticProperty<double> &deg, EDGE_
     } else {
       double normalization = 1.0;
 
-      if (nbNodes > 1 && graph->numberOfEdges())
+      if (nbNodes > 1 && graph->numberOfEdges()) {
         normalization = 1. / (nbNodes - 1);
+      }
 
       switch (direction) {
       case UNDIRECTED:
@@ -300,15 +309,17 @@ void tlp::degree(const Graph *graph, tlp::NodeStaticProperty<double> &deg, EDGE_
       if (nbNodes > 1 && nbEdges > 0) {
         double sum = 0;
 
-        for (auto e : graph->edges())
+        for (auto e : graph->edges()) {
           sum += fabs(weights->getEdgeDoubleValue(e));
+        }
 
         normalization = (sum / nbEdges) * (nbNodes - 1);
 
-        if (fabs(normalization) < 1E-9)
+        if (fabs(normalization) < 1E-9) {
           normalization = 1.0;
-        else
+        } else {
           normalization = 1.0 / normalization;
+        }
       }
 
       switch (direction) {

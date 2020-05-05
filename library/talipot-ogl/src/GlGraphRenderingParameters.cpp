@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -73,8 +73,9 @@ DataSet GlGraphRenderingParameters::getParameters() const {
   data.set("elementsOrdered", _elementOrdered);
   data.set("elementsOrderedDescending", _elementOrderedDescending);
 
-  if (_elementOrderingProperty)
+  if (_elementOrderingProperty) {
     data.set("elementsOrderingPropertyName", _elementOrderingProperty->getName());
+  }
 
   return data;
 }
@@ -84,117 +85,153 @@ void GlGraphRenderingParameters::setParameters(const DataSet &data) {
   bool b = false;
   Color c;
 
-  if (data.get<bool>("antialiased", b))
+  if (data.get<bool>("antialiased", b)) {
     setAntialiasing(b);
+  }
 
-  if (data.get<bool>("arrow", b))
+  if (data.get<bool>("arrow", b)) {
     setViewArrow(b);
+  }
 
-  if (data.get<bool>("displayNodes", b))
+  if (data.get<bool>("displayNodes", b)) {
     setDisplayNodes(b);
+  }
 
-  if (data.get<bool>("displayMetaNodes", b))
+  if (data.get<bool>("displayMetaNodes", b)) {
     setDisplayMetaNodes(b);
+  }
 
-  if (data.get<bool>("displayEdges", b))
+  if (data.get<bool>("displayEdges", b)) {
     setDisplayEdges(b);
+  }
 
-  if (data.get<bool>("nodeLabel", b))
+  if (data.get<bool>("nodeLabel", b)) {
     setViewNodeLabel(b);
+  }
 
-  if (data.get<bool>("edgeLabel", b))
+  if (data.get<bool>("edgeLabel", b)) {
     setViewEdgeLabel(b);
+  }
 
-  if (data.get<bool>("metaLabel", b))
+  if (data.get<bool>("metaLabel", b)) {
     setViewMetaLabel(b);
+  }
 
-  if (data.get<bool>("outScreenLabel", b))
+  if (data.get<bool>("outScreenLabel", b)) {
     setViewOutScreenLabel(b);
+  }
 
-  if (data.get<bool>("elementOrdered", b))
+  if (data.get<bool>("elementOrdered", b)) {
     setElementOrdered(b);
+  }
 
-  if (data.get<bool>("elementZOrdered", b))
+  if (data.get<bool>("elementZOrdered", b)) {
     setElementZOrdered(b);
+  }
 
-  if (data.get<bool>("edgeColorInterpolation", b))
+  if (data.get<bool>("edgeColorInterpolation", b)) {
     setEdgeColorInterpolate(b);
+  }
 
-  if (data.get<bool>("edgeSizeInterpolation", b))
+  if (data.get<bool>("edgeSizeInterpolation", b)) {
     setEdgeSizeInterpolate(b);
+  }
 
-  if (data.get<bool>("edgeFrontDisplay", b))
+  if (data.get<bool>("edgeFrontDisplay", b)) {
     setEdgeFrontDisplay(b);
+  }
 
-  if (data.get<bool>("edge3D", b))
+  if (data.get<bool>("edge3D", b)) {
     setEdge3D(b);
+  }
 
-  if (data.get<bool>("autoScale", b))
+  if (data.get<bool>("autoScale", b)) {
     setLabelScaled(b);
+  }
 
-  if (data.get<bool>("labelScaled", b))
+  if (data.get<bool>("labelScaled", b)) {
     setLabelScaled(b);
+  }
 
-  if (data.get<bool>("labelOverlaped", b))
+  if (data.get<bool>("labelOverlaped", b)) {
     setLabelsDensity(b ? 100 : 0);
+  }
 
-  if (data.get<bool>("labelsAreBillboarded", b))
+  if (data.get<bool>("labelsAreBillboarded", b)) {
     setLabelsAreBillboarded(b);
+  }
 
   unsigned int ui = 0;
 
-  if (data.get<unsigned int>("fontType", ui))
+  if (data.get<unsigned int>("fontType", ui)) {
     setFontsType(ui);
+  }
 
   int i = 0;
 
-  if (data.get<int>("labelMinSize", i))
+  if (data.get<int>("labelMinSize", i)) {
     setMinSizeOfLabel(i);
+  }
 
-  if (data.get<int>("labelMaxSize", i))
+  if (data.get<int>("labelMaxSize", i)) {
     setMaxSizeOfLabel(i);
+  }
 
-  if (data.get<int>("selectedNodesStencil", i))
+  if (data.get<int>("selectedNodesStencil", i)) {
     setSelectedNodesStencil(i);
+  }
 
-  if (data.get<int>("selectedMetaNodesStencil", i))
+  if (data.get<int>("selectedMetaNodesStencil", i)) {
     setSelectedMetaNodesStencil(i);
+  }
 
-  if (data.get<int>("selectedEdgesStencil", i))
+  if (data.get<int>("selectedEdgesStencil", i)) {
     setSelectedEdgesStencil(i);
+  }
 
-  if (data.get<int>("nodesStencil", i))
+  if (data.get<int>("nodesStencil", i)) {
     setNodesStencil(i);
+  }
 
-  if (data.get<int>("metaNodesStencil", i))
+  if (data.get<int>("metaNodesStencil", i)) {
     setMetaNodesStencil(i);
+  }
 
-  if (data.get<int>("edgesStencil", i))
+  if (data.get<int>("edgesStencil", i)) {
     setEdgesStencil(i);
+  }
 
-  if (data.get<int>("nodesLabelStencil", i))
+  if (data.get<int>("nodesLabelStencil", i)) {
     setNodesLabelStencil(i);
+  }
 
-  if (data.get<int>("metaNodesLabelStencil", i))
+  if (data.get<int>("metaNodesLabelStencil", i)) {
     setMetaNodesLabelStencil(i);
+  }
 
-  if (data.get<int>("edgesLabelStencil", i))
+  if (data.get<int>("edgesLabelStencil", i)) {
     setEdgesLabelStencil(i);
+  }
 
-  if (data.get<int>("labelsDensity", i))
+  if (data.get<int>("labelsDensity", i)) {
     setLabelsDensity(i);
+  }
 
-  if (data.get<bool>("edgesMaxSizeToNodesSize", b))
+  if (data.get<bool>("edgesMaxSizeToNodesSize", b)) {
     setEdgesMaxSizeToNodesSize(b);
+  }
 
-  if (data.get<Color>("selectionColor", c))
+  if (data.get<Color>("selectionColor", c)) {
     setSelectionColor(c);
+  }
 
-  if (data.get<bool>("elementsOrdered", b))
+  if (data.get<bool>("elementsOrdered", b)) {
     setElementOrdered(b);
+  }
 
-  if (data.get<bool>("elementsOrderedDescending", b))
+  if (data.get<bool>("elementsOrderedDescending", b)) {
     setElementOrderedDescending(b);
+  }
 }
 //====================================================
 bool GlGraphRenderingParameters::isViewMetaLabel() const {
@@ -205,16 +242,18 @@ void GlGraphRenderingParameters::setViewMetaLabel(bool b) {
 }
 //====================================================
 unsigned int GlGraphRenderingParameters::getFontsType() const {
-  if (_labelScaled)
+  if (_labelScaled) {
     return 0;
-  else
+  } else {
     return 1;
+  }
 }
 void GlGraphRenderingParameters::setFontsType(unsigned int i) {
-  if (i == 1)
+  if (i == 1) {
     _labelsDensity = 100;
-  else
+  } else {
     _labelScaled = true;
+  }
 }
 //====================================================
 void GlGraphRenderingParameters::setFontsPath(const std::string &path) {

@@ -79,7 +79,8 @@ void Vec3fEditor::done(int r) {
 void Vec3fEditor::showEvent(QShowEvent *ev) {
   QDialog::showEvent(ev);
 
-  if (parentWidget())
+  if (parentWidget()) {
     move(parentWidget()->window()->frameGeometry().topLeft() +
          parentWidget()->window()->rect().center() - rect().center());
+  }
 }

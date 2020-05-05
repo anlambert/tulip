@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -196,41 +196,53 @@ struct DOT_ATTR {
     DOT_ATTR attr = *this;
     attr.mask |= inRef.mask;
 
-    if (inRef.mask & LAYOUT)
+    if (inRef.mask & LAYOUT) {
       attr.layout = inRef.layout;
+    }
 
-    if (inRef.mask & SHAPE)
+    if (inRef.mask & SHAPE) {
       attr.shape = inRef.shape;
+    }
 
-    if (inRef.mask & WIDTH)
+    if (inRef.mask & WIDTH) {
       attr.size.setW(inRef.size.getW());
+    }
 
-    if (inRef.mask & HEIGHT)
+    if (inRef.mask & HEIGHT) {
       attr.size.setH(inRef.size.getH());
+    }
 
-    if (inRef.mask & DEPTH)
+    if (inRef.mask & DEPTH) {
       attr.size.setD(inRef.size.getD());
+    }
 
-    if (inRef.mask & LABEL)
+    if (inRef.mask & LABEL) {
       attr.label = inRef.label;
+    }
 
-    if (inRef.mask & HEAD_LABEL)
+    if (inRef.mask & HEAD_LABEL) {
       attr.headLabel = inRef.headLabel;
+    }
 
-    if (inRef.mask & TAIL_LABEL)
+    if (inRef.mask & TAIL_LABEL) {
       attr.tailLabel = inRef.tailLabel;
+    }
 
-    if (inRef.mask & LABEL)
+    if (inRef.mask & LABEL) {
       attr.label = inRef.label;
+    }
 
-    if (inRef.mask & FILL_COLOR)
+    if (inRef.mask & FILL_COLOR) {
       attr.fillcolor = inRef.fillcolor;
+    }
 
-    if (inRef.mask & FONT_COLOR)
+    if (inRef.mask & FONT_COLOR) {
       attr.fontcolor = inRef.fontcolor;
+    }
 
-    if (inRef.mask & COLOR)
+    if (inRef.mask & COLOR) {
       attr.color = inRef.color;
+    }
 
     if (inRef.mask & STYLE) {
       if (inRef.style == 1 && !(attr.mask & FILL_COLOR)) {
@@ -242,11 +254,13 @@ struct DOT_ATTR {
       attr.style = inRef.style;
     }
 
-    if (inRef.mask & COMMENT)
+    if (inRef.mask & COMMENT) {
       attr.comment = inRef.comment;
+    }
 
-    if (inRef.mask & URL)
+    if (inRef.mask & URL) {
       attr.url = inRef.url;
+    }
 
     return attr;
   }
@@ -293,10 +307,11 @@ struct DOT_ATTR {
         mask |= COLOR;
       }
     } else if (inId == "style") { // color ?
-      if (inValue == "filled")
+      if (inValue == "filled") {
         style = 1;
-      else
+      } else {
         style = 2;
+      }
 
       mask |= STYLE;
     } else if (inId == "fillcolor") { // fill color
@@ -394,9 +409,10 @@ struct DOT_YY {
         fOffset = curOffset;
         pStatus = pProgress->progress(fOffset, fSize);
 
-        if (pStatus != TLP_CONTINUE)
+        if (pStatus != TLP_CONTINUE) {
           // in order to stop the parsing we go to the end of the file
           fseek(fd, 0, SEEK_END);
+        }
       }
     }
   }
@@ -471,8 +487,9 @@ struct DOT_YY {
       if (c == 'n' || c == 'l' || c == 'r') {
         nstr.replace(bsPos, 2, 1, '\n');
         bsPos = nstr.find('\\', bsPos + 1);
-      } else
+      } else {
         bsPos = nstr.find('\\', bsPos + 2);
+      }
     }
 
     return nstr;
@@ -486,8 +503,9 @@ struct DOT_YY {
     if (inAttr.mask & DOT_ATTR::LAYOUT) {
       LayoutProperty *layoutP = graph->getLayoutProperty(TLP_LAYOUT_PROXY_NAME);
 
-      for (unsigned int i = 0; i < inA.size(); i++)
+      for (unsigned int i = 0; i < inA.size(); i++) {
         layoutP->setNodeValue(inA[i], inAttr.layout);
+      }
     }
 
     // Label
@@ -510,23 +528,28 @@ struct DOT_YY {
       // we distorse the size
       Size s = {0.75, 0.5f, 0.5f}; // in inches unit
 
-      if ((inAttr.mask & DOT_ATTR::SHAPE) && (inAttr.shape != DEFAULT_SHAPE))
+      if ((inAttr.mask & DOT_ATTR::SHAPE) && (inAttr.shape != DEFAULT_SHAPE)) {
         // no distorsion if it not the default shape
         s.setW(0.5);
+      }
 
-      if (inAttr.mask & DOT_ATTR::WIDTH)
+      if (inAttr.mask & DOT_ATTR::WIDTH) {
         s.setW(inAttr.size.getW());
+      }
 
-      if (inAttr.mask & DOT_ATTR::HEIGHT)
+      if (inAttr.mask & DOT_ATTR::HEIGHT) {
         s.setH(inAttr.size.getH());
+      }
 
-      if (inAttr.mask & DOT_ATTR::DEPTH)
+      if (inAttr.mask & DOT_ATTR::DEPTH) {
         s.setD(inAttr.size.getD());
+      }
 
       SizeProperty *sizeP = graph->getSizeProperty(TLP_SIZE_PROXY_NAME);
 
-      for (unsigned int i = 0; i < inA.size(); i++)
+      for (unsigned int i = 0; i < inA.size(); i++) {
         sizeP->setNodeValue(inA[i], s);
+      }
     }
 
     // Color
@@ -534,22 +557,25 @@ struct DOT_YY {
     if (inAttr.mask & DOT_ATTR::FILL_COLOR) {
       ColorProperty *colP = graph->getColorProperty(TLP_COLOR_PROXY_NAME);
 
-      for (unsigned int i = 0; i < inA.size(); i++)
+      for (unsigned int i = 0; i < inA.size(); i++) {
         colP->setNodeValue(inA[i], inAttr.fillcolor);
+      }
     }
 
     if (inAttr.mask & DOT_ATTR::COLOR) {
       ColorProperty *colP = graph->getColorProperty(TLP_BORDERCOLOR_PROXY_NAME);
 
-      for (unsigned int i = 0; i < inA.size(); i++)
+      for (unsigned int i = 0; i < inA.size(); i++) {
         colP->setNodeValue(inA[i], inAttr.color);
+      }
     }
 
     if (inAttr.mask & DOT_ATTR::FONT_COLOR) {
       ColorProperty *colP = graph->getColorProperty(TLP_FONTCOLOR_PROXY_NAME);
 
-      for (unsigned int i = 0; i < inA.size(); i++)
+      for (unsigned int i = 0; i < inA.size(); i++) {
         colP->setNodeValue(inA[i], inAttr.fontcolor);
+      }
     }
 
     // Shape
@@ -559,8 +585,9 @@ struct DOT_YY {
       for (unsigned int i = 0; i < inA.size(); i++) {
         int shape = DEFAULT_SHAPE;
 
-        if (inAttr.mask & DOT_ATTR::SHAPE)
+        if (inAttr.mask & DOT_ATTR::SHAPE) {
           shape = inAttr.shape;
+        }
 
         // default shape is an ellipse
         // we use a distored circle
@@ -573,8 +600,9 @@ struct DOT_YY {
     if (inAttr.mask & DOT_ATTR::COMMENT) {
       StringProperty *cmntP = graph->getStringProperty(TLP_COMMENT_PROXY_NAME);
 
-      for (unsigned int i = 0; i < inA.size(); i++)
+      for (unsigned int i = 0; i < inA.size(); i++) {
         cmntP->setNodeValue(inA[i], inAttr.comment);
+      }
     }
 
     // URL
@@ -582,16 +610,18 @@ struct DOT_YY {
     if ((inAttr.mask & DOT_ATTR::URL) && inAttr.url.size()) {
       StringProperty *urlP = graph->getStringProperty(TLP_URL_PROXY_NAME);
 
-      for (unsigned int i = 0; i < inA.size(); i++)
+      for (unsigned int i = 0; i < inA.size(); i++) {
         urlP->setNodeValue(inA[i], inAttr.url);
+      }
     }
   }
 
   // Setup edges with a context of attributes
 
   void SetupEdge(const EdgeA &inA, const DOT_ATTR &inAttr) {
-    if (!inAttr.mask)
+    if (!inAttr.mask) {
       return;
+    }
 
     // Label
 
@@ -611,8 +641,9 @@ struct DOT_YY {
     if ((inAttr.mask & DOT_ATTR::HEAD_LABEL) && inAttr.headLabel.size()) {
       StringProperty *labelP = graph->getStringProperty(TLP_HEAD_LABEL_PROXY_NAME);
 
-      for (unsigned int i = 0; i < inA.size(); i++)
+      for (unsigned int i = 0; i < inA.size(); i++) {
         labelP->setEdgeValue(inA[i], inAttr.headLabel);
+      }
     }
 
     // Tail-Label
@@ -620,16 +651,18 @@ struct DOT_YY {
     if ((inAttr.mask & DOT_ATTR::TAIL_LABEL) && inAttr.tailLabel.size()) {
       StringProperty *labelP = graph->getStringProperty(TLP_TAIL_LABEL_PROXY_NAME);
 
-      for (unsigned int i = 0; i < inA.size(); i++)
+      for (unsigned int i = 0; i < inA.size(); i++) {
         labelP->setEdgeValue(inA[i], inAttr.tailLabel);
+      }
     }
 
     // Color
     if (inAttr.mask & DOT_ATTR::COLOR) {
       ColorProperty *colP = graph->getColorProperty(TLP_COLOR_PROXY_NAME);
 
-      for (unsigned int i = 0; i < inA.size(); i++)
+      for (unsigned int i = 0; i < inA.size(); i++) {
         colP->setEdgeValue(inA[i], inAttr.color);
+      }
     }
 
     // Comment
@@ -637,8 +670,9 @@ struct DOT_YY {
     if (inAttr.mask & DOT_ATTR::COMMENT) {
       StringProperty *cmntP = graph->getStringProperty(TLP_COMMENT_PROXY_NAME);
 
-      for (unsigned int i = 0; i < inA.size(); i++)
+      for (unsigned int i = 0; i < inA.size(); i++) {
         cmntP->setEdgeValue(inA[i], inAttr.comment);
+      }
     }
 
     // URL
@@ -646,8 +680,9 @@ struct DOT_YY {
     if ((inAttr.mask & DOT_ATTR::URL) && inAttr.url.size()) {
       StringProperty *urlP = graph->getStringProperty(TLP_URL_PROXY_NAME);
 
-      for (unsigned int i = 0; i < inA.size(); i++)
+      for (unsigned int i = 0; i < inA.size(); i++) {
         urlP->setEdgeValue(inA[i], inAttr.url);
+      }
     }
   }
 
@@ -1265,8 +1300,9 @@ YYSTYPE *yyvaluep;
   (void)yyvaluep;
   (void)yytype;
 
-  if (!yymsg)
+  if (!yymsg) {
     yymsg = "Deleting";
+  }
 
   YY_SYMBOL_PRINT(yymsg, yytype, yyvaluep, yylocationp);
 }
@@ -1446,8 +1482,9 @@ yysetstate:
 
     YYDPRINTF((stderr, "Stack size increased to %lu\n", (unsigned long int)yystacksize));
 
-    if (yyss + yystacksize - 1 <= yyssp)
+    if (yyss + yystacksize - 1 <= yyssp) {
       YYABORT;
+    }
   }
 
   YYDPRINTF((stderr, "Entering state %d\n", yystate));
@@ -1467,8 +1504,9 @@ yybackup:
 
   yyn = yypact[yystate];
 
-  if (yyn == YYPACT_NINF)
+  if (yyn == YYPACT_NINF) {
     goto yydefault;
+  }
 
   /* Not known => get a look-ahead token if don't already have one.  */
 
@@ -1490,35 +1528,40 @@ yybackup:
      detect an error, take that action.  */
   yyn += yytoken;
 
-  if (yyn < 0 || YYLAST < yyn || yycheck[yyn] != yytoken)
+  if (yyn < 0 || YYLAST < yyn || yycheck[yyn] != yytoken) {
     goto yydefault;
+  }
 
   yyn = yytable[yyn];
 
   if (yyn <= 0) {
-    if (yyn == 0 || yyn == YYTABLE_NINF)
+    if (yyn == 0 || yyn == YYTABLE_NINF) {
       goto yyerrlab;
+    }
 
     yyn = -yyn;
     goto yyreduce;
   }
 
-  if (yyn == YYFINAL)
+  if (yyn == YYFINAL) {
     YYACCEPT;
+  }
 
   /* Shift the look-ahead token.  */
   YY_SYMBOL_PRINT("Shifting", yytoken, &yylval, &yylloc);
 
   /* Discard the token being shifted unless it is eof.  */
-  if (yychar != YYEOF)
+  if (yychar != YYEOF) {
     yychar = YYEMPTY;
+  }
 
   *++yyvsp = yylval;
 
   /* Count tokens shifted since error; after three, turn off error
      status.  */
-  if (yyerrstatus)
+  if (yyerrstatus) {
     yyerrstatus--;
+  }
 
   yystate = yyn;
   goto yynewstate;
@@ -1529,8 +1572,9 @@ yybackup:
 yydefault:
   yyn = yydefact[yystate];
 
-  if (yyn == 0)
+  if (yyn == 0) {
     goto yyerrlab;
+  }
 
   goto yyreduce;
 
@@ -1756,8 +1800,9 @@ yyreduce:
     (yyval.attr) = dotyy->nodeAttr;
 
     if ((yyval.created)) {
-      if (!((yyval.attr).mask & DOT_ATTR::LABEL) || (yyval.attr).label.empty())
+      if (!((yyval.attr).mask & DOT_ATTR::LABEL) || (yyval.attr).label.empty()) {
         (yyval.attr).setValue("label", (yyval.s));
+      }
 
       dotyy->SetupNode((yyval.nodeA), (yyval.attr));
     }
@@ -1784,10 +1829,11 @@ yyreduce:
     (yyval.edgeA) = (yyvsp[-3].edgeA);
     (yyval.edgeA) += (yyvsp[-1].edgeA);
 
-    if ((yyvsp[-1].subg))
+    if ((yyvsp[-1].subg)) {
       (yyval.edgeA) += dotyy->bindEdge((yyvsp[-2].s), (yyvsp[-3].nodeA), (yyvsp[-1].nodeA));
-    else if ((yyvsp[-1].nodeA).size())
+    } else if ((yyvsp[-1].nodeA).size()) {
       (yyval.edgeA) += dotyy->bindEdge((yyvsp[-2].s), (yyvsp[-3].nodeA), (yyvsp[-1].nodeA)[0]);
+    }
 
     dotyy->SetupEdge((yyval.edgeA), dotyy->edgeAttr + (yyvsp[0].attr));
     ;
@@ -1802,10 +1848,11 @@ yyreduce:
     (yyval.edgeA) = (yyvsp[-3].edgeA);
     (yyval.edgeA) += (yyvsp[-1].edgeA);
 
-    if ((yyvsp[-1].subg))
+    if ((yyvsp[-1].subg)) {
       (yyval.edgeA) += dotyy->bindEdge((yyvsp[-2].s), (yyvsp[-3].nodeA), (yyvsp[-1].nodeA));
-    else if ((yyvsp[-1].nodeA).size())
+    } else if ((yyvsp[-1].nodeA).size()) {
       (yyval.edgeA) += dotyy->bindEdge((yyvsp[-2].s), (yyvsp[-3].nodeA), (yyvsp[-1].nodeA)[0]);
+    }
 
     dotyy->SetupEdge((yyval.edgeA), dotyy->edgeAttr + (yyvsp[0].attr));
     ;
@@ -1834,10 +1881,11 @@ yyreduce:
     (yyval.edgeA) = (yyvsp[-2].edgeA);
     (yyval.edgeA) += (yyvsp[0].edgeA);
 
-    if ((yyvsp[0].subg))
+    if ((yyvsp[0].subg)) {
       (yyval.edgeA) += dotyy->bindEdge((yyvsp[-1].s), (yyvsp[-2].nodeA), (yyvsp[0].nodeA));
-    else if ((yyvsp[0].nodeA).size())
+    } else if ((yyvsp[0].nodeA).size()) {
       (yyval.edgeA) += dotyy->bindEdge((yyvsp[-1].s), (yyvsp[-2].nodeA), (yyvsp[0].nodeA)[0]);
+    }
 
     ;
   } break;
@@ -1851,10 +1899,11 @@ yyreduce:
     (yyval.edgeA) = (yyvsp[-2].edgeA);
     (yyval.edgeA) += (yyvsp[0].edgeA);
 
-    if ((yyvsp[0].subg))
+    if ((yyvsp[0].subg)) {
       (yyval.edgeA) += dotyy->bindEdge((yyvsp[-1].s), (yyvsp[-2].nodeA), (yyvsp[0].nodeA));
-    else if ((yyvsp[0].nodeA).size())
+    } else if ((yyvsp[0].nodeA).size()) {
       (yyval.edgeA) += dotyy->bindEdge((yyvsp[-1].s), (yyvsp[-2].nodeA), (yyvsp[0].nodeA)[0]);
+    }
 
     ;
   } break;
@@ -1955,10 +2004,11 @@ yyreduce:
 
   yystate = yypgoto[yyn - YYNTOKENS] + *yyssp;
 
-  if (0 <= yystate && yystate <= YYLAST && yycheck[yystate] == *yyssp)
+  if (0 <= yystate && yystate <= YYLAST && yycheck[yystate] == *yyssp) {
     yystate = yytable[yystate];
-  else
+  } else {
     yystate = yydefgoto[yyn - YYNTOKENS];
+  }
 
   goto yynewstate;
 
@@ -2036,16 +2086,18 @@ yyerrlab:
     if (yychar <= YYEOF) {
       /* If at end of input, pop the error token,
              then the rest of the stack, then return failure.  */
-      if (yychar == YYEOF)
+      if (yychar == YYEOF) {
         for (;;) {
 
           YYPOPSTACK;
 
-          if (yyssp == yyss)
+          if (yyssp == yyss) {
             YYABORT;
+          }
 
           yydestruct("Error: popping", yystos[*yyssp], yyvsp);
         }
+      }
     } else {
       yydestruct("Error: discarding", yytoken, &yylval);
       yychar = YYEMPTY;
@@ -2066,8 +2118,9 @@ yyerrorlab:
 
   /* Pacify GCC when the user code never invokes YYERROR and the label
      yyerrorlab therefore never appears in user code.  */
-  if (0)
+  if (0) {
     goto yyerrorlab;
+  }
 
 #endif
 
@@ -2093,14 +2146,16 @@ yyerrlab1:
       if (0 <= yyn && yyn <= YYLAST && yycheck[yyn] == YYTERROR) {
         yyn = yytable[yyn];
 
-        if (0 < yyn)
+        if (0 < yyn) {
           break;
+        }
       }
     }
 
     /* Pop the current state because it cannot handle the error token.  */
-    if (yyssp == yyss)
+    if (yyssp == yyss) {
       YYABORT;
+    }
 
     yydestruct("Error: popping", yystos[yystate], yyvsp);
     YYPOPSTACK;
@@ -2108,8 +2163,9 @@ yyerrlab1:
     YY_STACK_PRINT(yyss, yyssp);
   }
 
-  if (yyn == YYFINAL)
+  if (yyn == YYFINAL) {
     YYACCEPT;
+  }
 
   *++yyvsp = yylval;
 
@@ -2148,8 +2204,9 @@ yyoverflowlab:
 yyreturn:
 #ifndef yyoverflow
 
-  if (yyss != yyssa)
+  if (yyss != yyssa) {
     YYSTACK_FREE(yyss);
+  }
 
 #endif
   return yyresult;

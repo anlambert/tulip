@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -27,8 +27,9 @@ GraphView::GraphView(Graph *supergraph, BooleanProperty *filter, unsigned int sg
     : GraphAbstract(supergraph, sgId) {
   _nodeData.setAll(nullptr);
 
-  if (filter == nullptr)
+  if (filter == nullptr) {
     return;
+  }
 
   if ((filter->getGraph() == supergraph) && (filter->getNodeDefaultValue() == true) &&
       (filter->numberOfNonDefaultValuatedNodes() == 0)) {
@@ -36,8 +37,9 @@ GraphView::GraphView(Graph *supergraph, BooleanProperty *filter, unsigned int sg
     _nodes.clone(supergraph->nodes());
     unsigned int nbNodes = _nodes.size();
 
-    for (unsigned int i = 0; i < nbNodes; ++i)
+    for (unsigned int i = 0; i < nbNodes; ++i) {
       _nodeData.set(_nodes[i], new SGraphNodeData());
+    }
   } else {
     Iterator<unsigned int> *it = nullptr;
     it = filter->nodeProperties.findAll(true);
@@ -47,8 +49,9 @@ GraphView::GraphView(Graph *supergraph, BooleanProperty *filter, unsigned int sg
     if (it == nullptr) {
       Graph *graphToFilter = filter->getGraph();
 
-      if (graphToFilter == nullptr)
+      if (graphToFilter == nullptr) {
         graphToFilter = supergraph;
+      }
 
       iteN = graphToFilter->getNodes();
     } else {
@@ -57,8 +60,9 @@ GraphView::GraphView(Graph *supergraph, BooleanProperty *filter, unsigned int sg
 
     while (iteN->hasNext()) {
       auto n = iteN->next();
-      if (filter->getNodeValue(n))
+      if (filter->getNodeValue(n)) {
         addNode(n);
+      }
     }
     delete iteN;
   }
@@ -82,8 +86,9 @@ GraphView::GraphView(Graph *supergraph, BooleanProperty *filter, unsigned int sg
     if (it == nullptr) {
       Graph *graphToFilter = filter->getGraph();
 
-      if (graphToFilter == nullptr)
+      if (graphToFilter == nullptr) {
         graphToFilter = supergraph;
+      }
 
       itE = graphToFilter->getEdges();
     } else {
@@ -92,8 +97,9 @@ GraphView::GraphView(Graph *supergraph, BooleanProperty *filter, unsigned int sg
 
     while (itE->hasNext()) {
       auto e = itE->next();
-      if (filter->getEdgeValue(e))
+      if (filter->getEdgeValue(e)) {
         addEdge(e);
+      }
     }
     delete itE;
   }
@@ -105,8 +111,9 @@ GraphView::~GraphView() {
 }
 //----------------------------------------------------------------
 edge GraphView::existEdge(const node src, const node tgt, bool directed) const {
-  if (!isElement(src) || !isElement(tgt))
+  if (!isElement(src) || !isElement(tgt)) {
     return edge();
+  }
 
   std::vector<edge> ee;
 
@@ -140,23 +147,25 @@ void GraphView::setEndsInternal(const edge e, node src, node tgt, const node new
       if (src != newSrc) {
         _nodeData.get(newSrc.id)->outDegreeAdd(1);
 
-        if (src.isValid() && isElement(src))
+        if (src.isValid() && isElement(src)) {
           _nodeData.get(src.id)->outDegreeAdd(-1);
-        else
+        } else {
           // as src may no longer exist (pop case)
           // set src as invalid for subgraphs loop
           src = node();
+        }
       }
 
       if (tgt != newTgt) {
         _nodeData.get(newTgt.id)->inDegreeAdd(1);
 
-        if (tgt.isValid() && isElement(tgt))
+        if (tgt.isValid() && isElement(tgt)) {
           _nodeData.get(tgt.id)->inDegreeAdd(-1);
-        else
+        } else {
           // as tgt may no longer exist (pop case)
           // set tgt as invalid for subgraphs loop
           tgt = node();
+        }
       }
 
       // notification
@@ -209,9 +218,9 @@ void GraphView::addNodesInternal(unsigned int nbAdded, const std::vector<node> *
 
   std::vector<node>::const_iterator it;
 
-  if (nodes)
+  if (nodes) {
     it = nodes->begin();
-  else {
+  } else {
     nodes = &getSuperGraph()->nodes();
     it = nodes->begin() + nodes->size() - nbAdded;
   }
@@ -225,16 +234,18 @@ void GraphView::addNodesInternal(unsigned int nbAdded, const std::vector<node> *
     _nodes.add(n);
   }
 
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_ADD_NODES, nbAdded));
+  }
 }
 //----------------------------------------------------------------
 void GraphView::addNode(const node n) {
   assert(getRoot()->isElement(n));
 
   if (!isElement(n)) {
-    if (!getSuperGraph()->isElement(n))
+    if (!getSuperGraph()->isElement(n)) {
       getSuperGraph()->addNode(n);
+    }
 
     restoreNode(n);
   }
@@ -250,8 +261,9 @@ void GraphView::addNodes(Iterator<node> *addedNodes) {
     if (!isElement(n)) {
       nodes.push_back(n);
 
-      if (!superIsRoot && !super->isElement(n))
+      if (!superIsRoot && !super->isElement(n)) {
         superNodes.push_back(n);
+      }
     }
   }
 
@@ -259,8 +271,9 @@ void GraphView::addNodes(Iterator<node> *addedNodes) {
     super->addNodes(stlIterator(superNodes));
   }
 
-  if (!nodes.empty())
+  if (!nodes.empty()) {
     addNodesInternal(nodes.size(), &nodes);
+  }
 }
 //----------------------------------------------------------------
 edge GraphView::addEdgeInternal(edge e) {
@@ -287,9 +300,9 @@ void GraphView::addEdgesInternal(unsigned int nbAdded, const std::vector<edge> *
   unsigned int i = 0;
   std::vector<edge>::const_iterator it;
 
-  if (ee)
+  if (ee) {
     it = ee->begin();
-  else {
+  } else {
     ee = &getSuperGraph()->edges();
     it = ee->begin() + ee->size() - nbAdded;
   }
@@ -307,8 +320,9 @@ void GraphView::addEdgesInternal(unsigned int nbAdded, const std::vector<edge> *
     _nodeData.get(tgt.id)->inDegreeAdd(1);
   }
 
-  if (hasOnlookers())
+  if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_ADD_EDGES, nbAdded));
+  }
 }
 //----------------------------------------------------------------
 edge GraphView::addEdge(const node n1, const node n2) {
@@ -323,8 +337,9 @@ void GraphView::addEdge(const edge e) {
   assert(isElement(target(e)));
 
   if (!isElement(e)) {
-    if (!getSuperGraph()->isElement(e))
+    if (!getSuperGraph()->isElement(e)) {
       getSuperGraph()->addEdge(e);
+    }
 
     addEdgeInternal(e);
   }
@@ -355,8 +370,9 @@ void GraphView::addEdges(Iterator<edge> *addedEdges) {
     if (!isElement(e)) {
       ee.push_back(e);
 
-      if (!superIsRoot && !super->isElement(e))
+      if (!superIsRoot && !super->isElement(e)) {
         superEdges.push_back(e);
+      }
     }
   }
 
@@ -364,8 +380,9 @@ void GraphView::addEdges(Iterator<edge> *addedEdges) {
     super->addEdges(stlIterator(superEdges));
   }
 
-  if (!ee.empty())
+  if (!ee.empty()) {
     addEdgesInternal(ee.size(), &ee, std::vector<pair<node, node>>());
+  }
 }
 //----------------------------------------------------------------
 void GraphView::removeNode(const node n) {
@@ -395,8 +412,9 @@ void GraphView::delNode(const node n, bool deleteInAllGraphs) {
 
     for (Graph *sg : subGraphs()) {
 
-      if (sg->isElement(n))
+      if (sg->isElement(n)) {
         sgq.push(sg);
+      }
     }
 
     // subgraphs loop
@@ -404,8 +422,9 @@ void GraphView::delNode(const node n, bool deleteInAllGraphs) {
       Graph *sg = sgq.top();
 
       for (Graph *ssg : sg->subGraphs()) {
-        if (ssg->isElement(n))
+        if (ssg->isElement(n)) {
           sgq.push(ssg);
+        }
       }
 
       if (sg == sgq.top()) {
@@ -433,8 +452,9 @@ void GraphView::removeEdge(const edge e) {
 //----------------------------------------------------------------
 void GraphView::removeEdges(const std::vector<edge> &ee) {
   for (auto e : ee) {
-    if (isElement(e))
+    if (isElement(e)) {
       removeEdge(e);
+    }
   }
 }
 //----------------------------------------------------------------
@@ -445,8 +465,9 @@ void GraphView::delEdge(const edge e, bool deleteInAllGraphs) {
     assert(isElement(e));
     // propagate to subgraphs
     for (Graph *subGraph : subGraphs()) {
-      if (subGraph->isElement(e))
+      if (subGraph->isElement(e)) {
         subGraph->delEdge(e);
+      }
     }
 
     removeEdge(e);
@@ -488,8 +509,9 @@ Iterator<edge> *GraphView::getInOutEdges(const node n) const {
 std::vector<edge> GraphView::getEdges(const node src, const node tgt, bool directed) const {
   std::vector<edge> ee;
 
-  if (isElement(src) && isElement(tgt))
+  if (isElement(src) && isElement(tgt)) {
     getRootImpl()->getEdges(src, tgt, directed, ee, this);
+  }
 
   return ee;
 }

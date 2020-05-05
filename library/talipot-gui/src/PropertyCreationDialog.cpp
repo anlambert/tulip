@@ -38,8 +38,9 @@ PropertyCreationDialog::PropertyCreationDialog(Graph *graph, QWidget *parent,
     int selectedIndex =
         ui->propertyTypeComboBox->findText(propertyTypeToPropertyTypeLabel(selectedType));
 
-    if (selectedIndex != -1)
+    if (selectedIndex != -1) {
       ui->propertyTypeComboBox->setCurrentIndex(selectedIndex);
+    }
   }
 }
 

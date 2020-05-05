@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -30,9 +30,11 @@ Dijkstra::Dijkstra(const Graph *const graph, node src, const EdgeStaticProperty<
   set<DijkstraElement *, LessDijkstraElement> dijkstraTable;
   NodeStaticProperty<DijkstraElement *> mapDik(graph);
   mapDik.setAll(nullptr);
-  if (queueNodes)
-    while (!queueNodes->empty())
+  if (queueNodes) {
+    while (!queueNodes->empty()) {
       queueNodes->pop();
+    }
+  }
   if (numberOfPaths) {
     numberOfPaths->setAll(0);
     numberOfPaths->set(this->src.id, 1);
@@ -41,12 +43,13 @@ Dijkstra::Dijkstra(const Graph *const graph, node src, const EdgeStaticProperty<
   unsigned int i = 0;
   for (auto n : graph->nodes()) {
     DijkstraElement *tmp;
-    if (n != src)
+    if (n != src) {
       // init all nodes to +inf
       tmp = new DijkstraElement(DBL_MAX / 2. + 10., node(), n);
-    else
+    } else {
       // init starting node to 0
       tmp = new DijkstraElement(0, n, n);
+    }
 
     dijkstraTable.insert(tmp);
 
@@ -60,8 +63,9 @@ Dijkstra::Dijkstra(const Graph *const graph, node src, const EdgeStaticProperty<
     auto it = dijkstraTable.begin();
     DijkstraElement &u = *(*it);
     dijkstraTable.erase(it);
-    if (queueNodes)
+    if (queueNodes) {
       queueNodes->push(u.n);
+    }
 
     for (auto e : getEdges(graph, u.n)) {
       node v = graph->opposite(e, u.n);
@@ -71,8 +75,9 @@ Dijkstra::Dijkstra(const Graph *const graph, node src, const EdgeStaticProperty<
 
       if (fabs((u.dist + eWeight) - dEle->dist) < 1E-9) { // path of the same length
         dEle->usedEdge.push_back(e);
-        if (numberOfPaths)
+        if (numberOfPaths) {
           numberOfPaths->set(v.id, numberOfPaths->get(v.id) + numberOfPaths->get(u.n.id));
+        }
       } else if ((u.dist + eWeight) < dEle->dist) {
         // we find a node closer with that path
         dEle->usedEdge.clear();
@@ -83,8 +88,9 @@ Dijkstra::Dijkstra(const Graph *const graph, node src, const EdgeStaticProperty<
         dEle->previous = u.n;
         dEle->usedEdge.push_back(e);
         dijkstraTable.insert(dEle);
-        if (numberOfPaths)
+        if (numberOfPaths) {
           numberOfPaths->set(v.id, numberOfPaths->get(u.n.id));
+        }
       }
     }
   }
@@ -112,16 +118,19 @@ bool Dijkstra::searchPath(node n, BooleanProperty *result) {
     Iterator<edge> *it = graph->getInOutEdges(n);
     while (it->hasNext()) {
       edge e = it->next();
-      if (!usedEdges.get(e.id))
+      if (!usedEdges.get(e.id)) {
         continue; // edge does not belong to the shortest path
+      }
 
-      if (result->getEdgeValue(e))
+      if (result->getEdgeValue(e)) {
         continue; // edge already treated
+      }
 
       node tgt = graph->opposite(e, n);
 
-      if (nodeDistance[tgt] >= nodeDistance[n])
+      if (nodeDistance[tgt] >= nodeDistance[n]) {
         continue;
+      }
 
       n = tgt;
       result->setEdgeValue(e, true);
@@ -146,20 +155,24 @@ bool Dijkstra::searchPath(node n, BooleanProperty *result) {
 void Dijkstra::internalSearchPaths(node n, BooleanProperty *result) {
   result->setNodeValue(n, true);
   for (auto e : graph->getInOutEdges(n)) {
-    if (!usedEdges.get(e.id))
+    if (!usedEdges.get(e.id)) {
       continue;
+    }
 
-    if (result->getEdgeValue(e))
+    if (result->getEdgeValue(e)) {
       continue;
+    }
 
     node tgt = graph->opposite(e, n);
 
-    if (nodeDistance[tgt] >= nodeDistance[n])
+    if (nodeDistance[tgt] >= nodeDistance[n]) {
       continue;
+    }
 
     result->setEdgeValue(e, true);
-    if (!result->getNodeValue(tgt))
+    if (!result->getNodeValue(tgt)) {
       internalSearchPaths(tgt, result);
+    }
   }
 }
 //========================================

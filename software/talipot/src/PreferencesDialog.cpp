@@ -63,8 +63,9 @@ inline void setDefaultNodeValueInProperty(const std::string &propertyName, const
       PROP *prop = dynamic_cast<PROP *>(root->getProperty(propertyName));
 
       if (prop) {
-        if (graphPush)
+        if (graphPush) {
           root->push();
+        }
 
         prop->setAllNodeValue(value);
       }
@@ -91,8 +92,9 @@ inline void setDefaultEdgeValueInProperty(const std::string &propertyName, const
       PROP *prop = dynamic_cast<PROP *>(root->getProperty(propertyName));
 
       if (prop) {
-        if (graphPush)
+        if (graphPush) {
           root->push();
+        }
 
         prop->setAllEdgeValue(value);
       }
@@ -150,9 +152,10 @@ void PreferencesDialog::writeSettings() {
     Settings::instance().setDefaultColor(tlp::NODE,
                                          model->data(model->index(0, 1)).value<tlp::Color>());
 
-    if (applyDrawingDefaults)
+    if (applyDrawingDefaults) {
       setDefaultNodeValueInProperty<ColorProperty>(
           "viewColor", Settings::instance().defaultColor(tlp::NODE), graphPush);
+    }
   }
 
   if (Settings::instance().defaultColor(tlp::EDGE) !=
@@ -160,9 +163,10 @@ void PreferencesDialog::writeSettings() {
     Settings::instance().setDefaultColor(tlp::EDGE,
                                          model->data(model->index(0, 2)).value<tlp::Color>());
 
-    if (applyDrawingDefaults)
+    if (applyDrawingDefaults) {
       setDefaultEdgeValueInProperty<ColorProperty>(
           "viewColor", Settings::instance().defaultColor(tlp::EDGE), graphPush);
+    }
   }
 
   if (Settings::instance().defaultSize(tlp::NODE) !=
@@ -178,9 +182,10 @@ void PreferencesDialog::writeSettings() {
     Settings::instance().setDefaultSize(tlp::EDGE,
                                         model->data(model->index(1, 2)).value<tlp::Size>());
 
-    if (applyDrawingDefaults)
+    if (applyDrawingDefaults) {
       setDefaultEdgeValueInProperty<SizeProperty>(
           "viewSize", Settings::instance().defaultSize(tlp::EDGE), graphPush);
+    }
   }
 
   if (Settings::instance().defaultShape(tlp::NODE) !=
@@ -188,9 +193,10 @@ void PreferencesDialog::writeSettings() {
     Settings::instance().setDefaultShape(
         tlp::NODE, model->data(model->index(2, 1)).value<NodeShape::NodeShapes>());
 
-    if (applyDrawingDefaults)
+    if (applyDrawingDefaults) {
       setDefaultNodeValueInProperty<IntegerProperty>(
           "viewShape", Settings::instance().defaultShape(tlp::NODE), graphPush);
+    }
   }
 
   if (Settings::instance().defaultShape(tlp::EDGE) !=
@@ -231,8 +237,9 @@ void PreferencesDialog::writeSettings() {
     bool ok = true;
     unsigned int seed = _ui->randomSeedEdit->text().toUInt(&ok);
     tlp::setSeedOfRandomSequence(seed);
-  } else
+  } else {
     tlp::setSeedOfRandomSequence();
+  }
 
   Settings::instance().setSeedOfRandomSequence(tlp::getSeedOfRandomSequence());
 }
@@ -338,8 +345,9 @@ void PreferencesDialog::cellChanged(int row, int column) {
 }
 
 void PreferencesDialog::randomSeedCheckChanged(int state) {
-  if (state == Qt::Checked && _ui->randomSeedEdit->text().isEmpty())
+  if (state == Qt::Checked && _ui->randomSeedEdit->text().isEmpty()) {
     _ui->randomSeedEdit->setText("1");
+  }
 }
 
 #define RESET_NODE 0
@@ -353,8 +361,9 @@ void PreferencesDialog::resetToTalipotDefaults(int row, int updateMode) {
   }
 
   if (row == -1) {
-    for (row = 0; row < _ui->graphDefaultsTable->rowCount(); ++row)
+    for (row = 0; row < _ui->graphDefaultsTable->rowCount(); ++row) {
       resetToTalipotDefaults(row, RESET_BOTH);
+    }
 
     return;
   }
@@ -367,54 +376,59 @@ void PreferencesDialog::resetToTalipotDefaults(int row, int updateMode) {
 
   switch (row) {
   case 0: // default color
-    if (updateMode == RESET_NODE)
+    if (updateMode == RESET_NODE) {
       model->setData(model->index(0, 1), QVariant::fromValue<tlp::Color>(
                                              Settings::instance().defaultColor(tlp::NODE, true)));
-    else
+    } else {
       model->setData(model->index(0, 2), QVariant::fromValue<tlp::Color>(
                                              Settings::instance().defaultColor(tlp::EDGE, true)));
+    }
 
     break;
 
   case 1: // default size
-    if (updateMode == RESET_NODE)
+    if (updateMode == RESET_NODE) {
       model->setData(model->index(1, 1), QVariant::fromValue<tlp::Size>(
                                              Settings::instance().defaultSize(tlp::NODE, true)));
-    else
+    } else {
       model->setData(model->index(1, 2), QVariant::fromValue<tlp::Size>(
                                              Settings::instance().defaultSize(tlp::EDGE, true)));
+    }
 
     break;
 
   case 2: // default shape
-    if (updateMode == RESET_NODE)
+    if (updateMode == RESET_NODE) {
       model->setData(model->index(2, 1),
                      QVariant::fromValue<NodeShape::NodeShapes>(static_cast<NodeShape::NodeShapes>(
                          Settings::instance().defaultShape(tlp::NODE, true))));
-    else
+    } else {
       model->setData(model->index(2, 2),
                      QVariant::fromValue<EdgeShape::EdgeShapes>(static_cast<EdgeShape::EdgeShapes>(
                          Settings::instance().defaultShape(tlp::EDGE, true))));
+    }
 
     break;
 
   case 3: // default selection color
-    if (updateMode == RESET_NODE)
+    if (updateMode == RESET_NODE) {
       model->setData(model->index(3, 1), QVariant::fromValue<tlp::Color>(
                                              Settings::instance().defaultSelectionColor(true)));
-    else
+    } else {
       model->setData(model->index(3, 2), QVariant::fromValue<tlp::Color>(
                                              Settings::instance().defaultSelectionColor(true)));
+    }
 
     break;
 
   case 4: // default label color
-    if (updateMode == RESET_NODE)
+    if (updateMode == RESET_NODE) {
       model->setData(model->index(4, 1),
                      QVariant::fromValue<tlp::Color>(Settings::instance().defaultLabelColor(true)));
-    else
+    } else {
       model->setData(model->index(4, 2),
                      QVariant::fromValue<tlp::Color>(Settings::instance().defaultLabelColor(true)));
+    }
 
   default:
     break;
@@ -461,7 +475,8 @@ void PreferencesDialog::showGraphDefaultsContextMenu(const QPoint &p) {
 
     action = contextMenu.exec(QCursor::pos() - QPoint(5, 5));
 
-    if (action)
+    if (action) {
       resetToTalipotDefaults(row, action->data().toInt());
+    }
   }
 }

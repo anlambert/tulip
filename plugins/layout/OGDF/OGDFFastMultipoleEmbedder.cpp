@@ -67,23 +67,29 @@ public:
       int ival = 0;
       bool bval = 0;
 
-      if (dataSet->get("number of iterations", ival))
+      if (dataSet->get("number of iterations", ival)) {
         fme->setNumIterations(ival);
+      }
 
-      if (dataSet->get("number of coefficients", ival))
+      if (dataSet->get("number of coefficients", ival)) {
         fme->setMultipolePrec(ival);
+      }
 
-      if (dataSet->get("number of threads", ival))
+      if (dataSet->get("number of threads", ival)) {
         fme->setNumberOfThreads(ival);
+      }
 
-      if (dataSet->get("default node size", dval))
+      if (dataSet->get("default node size", dval)) {
         fme->setDefaultNodeSize(dval);
+      }
 
-      if (dataSet->get("default edge length", dval))
+      if (dataSet->get("default edge length", dval)) {
         fme->setDefaultEdgeLength(dval);
+      }
 
-      if (dataSet->get("randomize layout", bval))
+      if (dataSet->get("randomize layout", bval)) {
         fme->setRandomize(bval);
+      }
     }
 
     // ensure the input graph is simple as the layout failed in non multi-threaded mode otherwise

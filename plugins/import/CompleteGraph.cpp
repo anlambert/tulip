@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -41,39 +41,46 @@ public:
       dataSet->get("nodes", nbNodes);
       if (!dataSet->get("directed", directed) &&
           // for compatibility with version 1.1
-          dataSet->get("undirected", directed))
+          dataSet->get("undirected", directed)) {
         directed = !directed;
+      }
     }
 
     if (nbNodes == 0) {
-      if (pluginProgress)
+      if (pluginProgress) {
         pluginProgress->setError("Error: number of nodes must be greater than 0");
+      }
 
       return false;
     }
 
-    if (pluginProgress)
+    if (pluginProgress) {
       pluginProgress->showPreview(false);
+    }
 
     vector<node> nodes(nbNodes);
 
     graph->reserveNodes(nbNodes);
 
-    for (size_t j = 0; j < nbNodes; ++j)
+    for (size_t j = 0; j < nbNodes; ++j) {
       nodes[j] = graph->addNode();
+    }
 
-    if (!directed)
+    if (!directed) {
       graph->reserveEdges(nbNodes - 1);
-    else
+    } else {
       graph->reserveEdges(2 * (nbNodes - 1));
+    }
 
-    for (size_t i = 0; i < nbNodes - 1; ++i)
+    for (size_t i = 0; i < nbNodes - 1; ++i) {
       for (size_t j = i + 1; j < nbNodes; ++j) {
         graph->addEdge(nodes[i], nodes[j]);
 
-        if (directed)
+        if (directed) {
           graph->addEdge(nodes[j], nodes[i]);
+        }
       }
+    }
 
     return true;
   }

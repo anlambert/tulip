@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -63,8 +63,9 @@ HistogramView::HistogramView(const PluginContext *)
 
 HistogramView::~HistogramView() {
   if (isConstruct) {
-    if (currentInteractor() != nullptr)
+    if (currentInteractor() != nullptr) {
       currentInteractor()->uninstall();
+    }
 
     delete propertiesSelectionWidget;
     delete histoOptionsWidget;
@@ -180,8 +181,9 @@ void HistogramView::setState(const DataSet &dataSet) {
     initGlWidget(graph());
     detailedHistogram = nullptr;
 
-    if (edgeAsNodeGraph)
+    if (edgeAsNodeGraph) {
       delete edgeAsNodeGraph;
+    }
 
     if (_histoGraph) {
       edgeAsNodeGraph = tlp::newGraph();
@@ -347,8 +349,9 @@ void HistogramView::setState(const DataSet &dataSet) {
   if (dataSet.get<bool>("quickAccessBarVisible", quickAccessBarVisible)) {
     needQuickAccessBar = true;
     setQuickAccessBarVisible(quickAccessBarVisible);
-  } else
+  } else {
     setQuickAccessBarVisible(true);
+  }
 }
 
 DataSet HistogramView::state() const {
@@ -411,8 +414,9 @@ DataSet HistogramView::state() const {
 
   dataSet.set("histo detailed name", histoDetailedNamed);
 
-  if (needQuickAccessBar)
+  if (needQuickAccessBar) {
     dataSet.set("quickAccessBarVisible", quickAccessBarVisible());
+  }
 
   return dataSet;
 }
@@ -542,14 +546,16 @@ void HistogramView::draw() {
     addEmptyViewLabel();
     gl->centerScene();
 
-    if (quickAccessBarVisible())
+    if (quickAccessBarVisible()) {
       _quickAccessBar->setEnabled(false);
+    }
 
     return;
   }
 
-  if (quickAccessBarVisible())
+  if (quickAccessBarVisible()) {
     _quickAccessBar->setEnabled(true);
+  }
 
   if (detailedHistogram != nullptr) {
     needUpdateHistogram = true;
@@ -676,11 +682,12 @@ void HistogramView::buildHistograms() {
     propertyLabel->setText(selectedProperties[i]);
     propertiesLabels.push_back(propertyLabel);
 
-    if (i == 0)
+    if (i == 0) {
       minSize = propertyLabel->getHeightAfterScale();
-    else {
-      if (minSize > propertyLabel->getHeightAfterScale())
+    } else {
+      if (minSize > propertyLabel->getHeightAfterScale()) {
         minSize = propertyLabel->getHeightAfterScale();
+      }
     }
 
     labelsComposite->addGlEntity(propertyLabel, selectedProperties[i] + " label");
@@ -691,8 +698,9 @@ void HistogramView::buildHistograms() {
     }
 
     // add some feedback
-    if (i % 10 == 0)
+    if (i % 10 == 0) {
       QApplication::processEvents();
+    }
   }
 
   // re-enable user input
@@ -753,8 +761,9 @@ void HistogramView::destroyHistogramsIfNeeded() {
 }
 
 void HistogramView::switchFromSmallMultiplesToDetailedView(Histogram *histogramToDetail) {
-  if (!histogramToDetail)
+  if (!histogramToDetail) {
     return;
+  }
 
   if (smallMultiplesView) {
     sceneRadiusBak = getGlMainWidget()->getScene()->getGraphCamera().getSceneRadius();
@@ -767,8 +776,9 @@ void HistogramView::switchFromSmallMultiplesToDetailedView(Histogram *histogramT
   mainLayer->deleteGlEntity(histogramsComposite);
   mainLayer->deleteGlEntity(labelsComposite);
 
-  if (detailedHistogram)
+  if (detailedHistogram) {
     _histoGraph->getProperty(detailedHistogram->getPropertyName())->removeListener(this);
+  }
 
   detailedHistogram = histogramToDetail;
   detailedHistogramPropertyName = detailedHistogram->getPropertyName();
@@ -802,8 +812,9 @@ void HistogramView::switchFromSmallMultiplesToDetailedView(Histogram *histogramT
 
   toggleInteractors(true);
 
-  if (smallMultiplesView)
+  if (smallMultiplesView) {
     centerView();
+  }
 
   smallMultiplesView = false;
 
@@ -836,8 +847,9 @@ void HistogramView::switchFromSmallMultiplesToDetailedView(Histogram *histogramT
 
 void HistogramView::switchFromDetailedViewToSmallMultiples() {
 
-  if (needUpdateHistogram)
+  if (needUpdateHistogram) {
     updateHistograms();
+  }
 
   mainLayer->addGlEntity(emptyGlGraphComposite, "graph");
 
@@ -888,19 +900,21 @@ void HistogramView::updateDetailedHistogramAxis() {
   yAxis->addCaption(GlAxis::LEFT, 100, false, 300, 155,
                     (dataLocation == NODE ? "number of nodes" : "number of edges"));
 
-  if (xAxis->getCaptionHeight() > yAxis->getCaptionHeight())
+  if (xAxis->getCaptionHeight() > yAxis->getCaptionHeight()) {
     xAxis->setCaptionHeight(yAxis->getCaptionHeight(), false);
-  else
+  } else {
     yAxis->setCaptionHeight(xAxis->getCaptionHeight(), false);
+  }
 
   axisComposite->reset(false);
   axisComposite->addGlEntity(xAxis, "x axis");
   axisComposite->addGlEntity(yAxis, "y axis");
 
-  if (xAxis->getSpaceBetweenAxisGrads() > yAxis->getSpaceBetweenAxisGrads())
+  if (xAxis->getSpaceBetweenAxisGrads() > yAxis->getSpaceBetweenAxisGrads()) {
     xAxis->setGradsLabelsHeight(yAxis->getSpaceBetweenAxisGrads() / 2.);
-  else
+  } else {
     yAxis->setGradsLabelsHeight(xAxis->getSpaceBetweenAxisGrads() / 2.);
+  }
 
   xAxisDetail = xAxis;
   yAxisDetail = yAxis;
@@ -932,8 +946,9 @@ void HistogramView::interactorsInstalled(const QList<tlp::Interactor *> &) {
 
 void HistogramView::applySettings() {
   if (propertiesSelectionWidget->configurationChanged() ||
-      histoOptionsWidget->configurationChanged())
+      histoOptionsWidget->configurationChanged()) {
     viewConfigurationChanged();
+  }
 }
 
 void HistogramView::treatEvent(const Event &message) {
@@ -941,17 +956,21 @@ void HistogramView::treatEvent(const Event &message) {
     const GraphEvent *graphEvent = dynamic_cast<const GraphEvent *>(&message);
 
     if (graphEvent) {
-      if (graphEvent->getType() == GraphEvent::TLP_ADD_NODE)
+      if (graphEvent->getType() == GraphEvent::TLP_ADD_NODE) {
         addNode(graphEvent->getGraph(), graphEvent->getNode());
+      }
 
-      if (graphEvent->getType() == GraphEvent::TLP_ADD_EDGE)
+      if (graphEvent->getType() == GraphEvent::TLP_ADD_EDGE) {
         addEdge(graphEvent->getGraph(), graphEvent->getEdge());
+      }
 
-      if (graphEvent->getType() == GraphEvent::TLP_DEL_NODE)
+      if (graphEvent->getType() == GraphEvent::TLP_DEL_NODE) {
         delNode(graphEvent->getGraph(), graphEvent->getNode());
+      }
 
-      if (graphEvent->getType() == GraphEvent::TLP_DEL_EDGE)
+      if (graphEvent->getType() == GraphEvent::TLP_DEL_EDGE) {
         delEdge(graphEvent->getGraph(), graphEvent->getEdge());
+      }
     }
   }
 
@@ -959,17 +978,21 @@ void HistogramView::treatEvent(const Event &message) {
     const PropertyEvent *propertyEvent = dynamic_cast<const PropertyEvent *>(&message);
 
     if (propertyEvent) {
-      if (propertyEvent->getType() == PropertyEvent::TLP_AFTER_SET_NODE_VALUE)
+      if (propertyEvent->getType() == PropertyEvent::TLP_AFTER_SET_NODE_VALUE) {
         afterSetNodeValue(propertyEvent->getProperty(), propertyEvent->getNode());
+      }
 
-      if (propertyEvent->getType() == PropertyEvent::TLP_AFTER_SET_EDGE_VALUE)
+      if (propertyEvent->getType() == PropertyEvent::TLP_AFTER_SET_EDGE_VALUE) {
         afterSetEdgeValue(propertyEvent->getProperty(), propertyEvent->getEdge());
+      }
 
-      if (propertyEvent->getType() == PropertyEvent::TLP_AFTER_SET_ALL_NODE_VALUE)
+      if (propertyEvent->getType() == PropertyEvent::TLP_AFTER_SET_ALL_NODE_VALUE) {
         afterSetAllNodeValue(propertyEvent->getProperty());
+      }
 
-      if (propertyEvent->getType() == PropertyEvent::TLP_AFTER_SET_ALL_EDGE_VALUE)
+      if (propertyEvent->getType() == PropertyEvent::TLP_AFTER_SET_ALL_EDGE_VALUE) {
         afterSetAllEdgeValue(propertyEvent->getProperty());
+      }
     }
   }
 }
@@ -989,8 +1012,9 @@ void HistogramView::afterSetNodeValue(PropertyInterface *p, const node n) {
 }
 
 void HistogramView::afterSetEdgeValue(PropertyInterface *p, const edge e) {
-  if (edgeToNode.find(e) == edgeToNode.end())
+  if (edgeToNode.find(e) == edgeToNode.end()) {
     return;
+  }
 
   if (p->getName() == "viewColor") {
     ColorProperty *edgeAsNodeGraphColors = edgeAsNodeGraph->getColorProperty("viewColor");
@@ -1007,8 +1031,9 @@ void HistogramView::afterSetEdgeValue(PropertyInterface *p, const edge e) {
     BooleanProperty *viewSelection = static_cast<BooleanProperty *>(p);
     edgeAsNodeGraphSelection->removeListener(this);
 
-    if (edgeAsNodeGraphSelection->getNodeValue(edgeToNode[e]) != viewSelection->getEdgeValue(e))
+    if (edgeAsNodeGraphSelection->getNodeValue(edgeToNode[e]) != viewSelection->getEdgeValue(e)) {
       edgeAsNodeGraphSelection->setNodeValue(edgeToNode[e], viewSelection->getEdgeValue(e));
+    }
 
     edgeAsNodeGraphSelection->addListener(this);
     setUpdateNeeded();
@@ -1088,8 +1113,9 @@ void HistogramView::delEdge(Graph *, const edge e) {
 }
 
 unsigned int HistogramView::getMappedId(unsigned int id) {
-  if (dataLocation == EDGE)
+  if (dataLocation == EDGE) {
     return nodeToEdge[node(id)].id;
+  }
 
   return id;
 }

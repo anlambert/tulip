@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -29,8 +29,9 @@ MultipleEdgeSelection::MultipleEdgeSelection(const tlp::PluginContext *context)
 
 bool MultipleEdgeSelection::run() {
   bool directed = false;
-  if (dataSet)
+  if (dataSet) {
     dataSet->get("directed", directed);
+  }
 
   vector<edge> multipleEdges;
   SimpleTest::simpleTest(graph, &multipleEdges, nullptr, directed);
@@ -42,8 +43,9 @@ bool MultipleEdgeSelection::run() {
   }
 
   // output some useful information
-  if (dataSet != nullptr)
+  if (dataSet != nullptr) {
     dataSet->set("#edges selected", uint(multipleEdges.size()));
+  }
 
   return true;
 }

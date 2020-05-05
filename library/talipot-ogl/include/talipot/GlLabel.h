@@ -294,12 +294,13 @@ public:
    * - If density > 0 : GlLabels don't overlap and have space wetween us
    */
   void setLabelsDensity(int density) {
-    if (density < -100)
+    if (density < -100) {
       labelsDensity = -100;
-    else if (density > 100)
+    } else if (density > 100) {
       labelsDensity = 100;
-    else
+    } else {
       labelsDensity = density;
+    }
   }
 
   /**

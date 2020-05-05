@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -190,8 +190,9 @@ static bool runQHull(int dim, vector<double> &points,
 //================================================================================================
 
 static void normalize(Vec3f &v) {
-  if (v.norm() != 0)
+  if (v.norm() != 0) {
     v /= v.norm();
+  }
 }
 
 //================================================================================================
@@ -345,8 +346,9 @@ bool tlp::delaunayTriangulation(vector<Coord> &points,
   bool coPlanarLayout = isLayoutCoPlanar(points, invTransformMatrix);
   Mat3f transformMatrix = invTransformMatrix;
 
-  if (coPlanarLayout)
+  if (coPlanarLayout) {
     transformMatrix.inverse();
+  }
 
   int dim = 3;
 
@@ -541,16 +543,18 @@ bool tlp::voronoiDiagram(vector<Coord> &sites, VoronoiDiagram &voronoiDiagram) {
       }
 
       // only treats simplices which have at least one original site in its vertices
-      if (!treatSimplex)
+      if (!treatSimplex) {
         continue;
+      }
 
       // compute the circumscribed center of the simplex (triangle in 2d, tetrahedron in 3d)
       tlp::Coord circumCenterPos;
 
-      if (simplices[i].size() == 3)
+      if (simplices[i].size() == 3) {
         circumCenterPos = computeTriangleCircumscribedCenter(A, B, C);
-      else
+      } else {
         circumCenterPos = computeTetrahedronCircumscribedCenter(A, B, C, D);
+      }
 
       unsigned int circumCenterIdx = 0;
 

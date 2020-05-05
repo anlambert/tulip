@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -37,8 +37,9 @@ static double clusterGetEdgeValue(Graph *graph, tlp::NodeStaticProperty<double> 
 
   double sum = v1 * v1 + v2 * v2;
 
-  if (sum)
+  if (sum) {
     return 1. - fabs(v1 - v2) / sqrt(sum);
+  }
 
   return 0.;
 }
@@ -46,8 +47,9 @@ static double clusterGetEdgeValue(Graph *graph, tlp::NodeStaticProperty<double> 
 bool ClusterMetric::run() {
   unsigned int maxDepth = 1;
 
-  if (dataSet != nullptr)
+  if (dataSet != nullptr) {
     dataSet->get("depth", maxDepth);
+  }
 
   tlp::NodeStaticProperty<double> clusters(graph);
   clusteringCoefficient(graph, clusters, maxDepth);

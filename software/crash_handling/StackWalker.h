@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -43,10 +43,11 @@ public:
                               int64_t symbolOffset = 0, const std::string &fileName = "",
                               unsigned int line = 0) {
 
-    if (frameId % 2 == 0)
+    if (frameId % 2 == 0) {
       os << setTextBackgroundColor(DARK_GRAY);
-    else
+    } else {
       os << setTextBackgroundColor(LIGHT_GRAY);
+    }
 
     os << bold;
 

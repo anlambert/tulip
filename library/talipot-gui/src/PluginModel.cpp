@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -40,8 +40,9 @@ int SimplePluginListModel::columnCount(const QModelIndex &) const {
 }
 
 int SimplePluginListModel::rowCount(const QModelIndex &parent) const {
-  if (parent.isValid())
+  if (parent.isValid()) {
     return 0;
+  }
 
   return _list.size();
 }
@@ -51,8 +52,9 @@ QModelIndex SimplePluginListModel::parent(const QModelIndex &) const {
 }
 
 QModelIndex SimplePluginListModel::index(int row, int column, const QModelIndex &parent) const {
-  if (parent.isValid())
+  if (parent.isValid()) {
     return QModelIndex();
+  }
 
   return createIndex(row, column);
 }

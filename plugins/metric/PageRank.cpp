@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -76,8 +76,9 @@ struct PageRank : public DoubleAlgorithm {
       dataSet->get("weight", weight);
     }
 
-    if (d <= 0 || d >= 1)
+    if (d <= 0 || d >= 1) {
       return false;
+    }
 
     // Initialize the PageRank
     NodeStaticProperty<double> pr(graph);
@@ -101,8 +102,9 @@ struct PageRank : public DoubleAlgorithm {
       if (!weight) {
         TLP_PARALLEL_MAP_NODES_AND_INDICES(graph, [&](const node n, unsigned int i) {
           double n_sum = 0;
-          for (auto nin : getNodes(graph, n))
+          for (auto nin : getNodes(graph, n)) {
             n_sum += pr.getNodeValue(nin) / deg.getNodeValue(nin);
+          }
           next_pr[i] = one_minus_d + d * n_sum;
         });
       } else {
@@ -110,8 +112,9 @@ struct PageRank : public DoubleAlgorithm {
           double n_sum = 0;
           for (auto e : getEdges(graph, n)) {
             node nin = graph->opposite(e, n);
-            if (deg.getNodeValue(nin) > 0)
+            if (deg.getNodeValue(nin) > 0) {
               n_sum += weight->getEdgeDoubleValue(e) * pr.getNodeValue(nin) / deg.getNodeValue(nin);
+            }
           }
           next_pr[i] = one_minus_d + d * n_sum;
         });

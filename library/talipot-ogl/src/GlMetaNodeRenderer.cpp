@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -55,8 +55,9 @@ void GlMetaNodeRenderer::render(node n, float, Camera *camera) {
   GLint renderMode;
   glGetIntegerv(GL_RENDER_MODE, &renderMode);
 
-  if (renderMode == GL_SELECT)
+  if (renderMode == GL_SELECT) {
     return;
+  }
 
   Graph *metaGraph = _inputData->getGraph()->getNodeMetaInfo(n);
   GlScene *scene = nullptr;
@@ -127,8 +128,9 @@ void GlMetaNodeRenderer::render(node n, float, Camera *camera) {
   viewport[2] *= 2;
   viewport[3] *= 2;
 
-  if (viewport[2] == 0 || viewport[3] == 0)
+  if (viewport[2] == 0 || viewport[3] == 0) {
     return;
+  }
 
   scene->setViewport(viewport[0], viewport[1], viewport[2], viewport[3]);
   scene->setClearBufferAtDraw(false);

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -26,8 +26,9 @@ ItemsListWidget::ItemsListWidget(QWidget *parent, const unsigned int maxListSize
 }
 
 void ItemsListWidget::mousePressEvent(QMouseEvent *event) {
-  if (event->button() == Qt::LeftButton)
+  if (event->button() == Qt::LeftButton) {
     startPos = event->pos();
+  }
 
   QListWidget::mousePressEvent(event);
 }

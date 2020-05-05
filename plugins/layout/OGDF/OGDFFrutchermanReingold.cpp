@@ -93,17 +93,21 @@ void OGDFFrutchermanReingold::beforeCall() {
     bool bval = false;
     tlp::StringCollection sc;
 
-    if (dataSet->get("iterations", ival))
+    if (dataSet->get("iterations", ival)) {
       sefr->iterations(ival);
+    }
 
-    if (dataSet->get("noise", bval))
+    if (dataSet->get("noise", bval)) {
       sefr->noise(bval);
+    }
 
-    if (dataSet->get("minDistCC", dval))
+    if (dataSet->get("minDistCC", dval)) {
       sefr->minDistCC(dval);
+    }
 
-    if (dataSet->get("pageRatio", dval))
+    if (dataSet->get("pageRatio", dval)) {
       sefr->pageRatio(dval);
+    }
 
     if (dataSet->get(ELT_COOLING, sc)) {
       if (sc.getCurrent() == ELT_FACTOR) {
@@ -123,10 +127,12 @@ void OGDFFrutchermanReingold::beforeCall() {
       }
     }
 
-    if (dataSet->get("check convergence", bval))
+    if (dataSet->get("check convergence", bval)) {
       sefr->checkConvergence(bval);
+    }
 
-    if (dataSet->get("convergence tolerance", dval))
+    if (dataSet->get("convergence tolerance", dval)) {
       sefr->convTolerance(dval);
+    }
   }
 }

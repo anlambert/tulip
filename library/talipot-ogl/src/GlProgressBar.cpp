@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -116,8 +116,9 @@ void GlProgressBar::progress_handler(int step, int max_step) {
 
   float progressBarWidth = (currentPercent * progressBarMaxWidth) / 100.;
 
-  if (progressBarWidth == 0)
+  if (progressBarWidth == 0) {
     progressBarWidth = 1; // Avoid assert in GlAbstractPolygon::draw
+  }
 
   Coord progressBarCoords[4];
   progressBarCoords[0] = progressBarTLCorner;

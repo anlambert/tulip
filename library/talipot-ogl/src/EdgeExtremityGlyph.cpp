@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -42,8 +42,9 @@ void EdgeExtremityGlyph::get3DTransformationMatrix(const Coord &src, const Coord
   float nAB; //|AB|
   nAB = vAB.norm();
 
-  if (fabs(nAB) > 1E-6)
+  if (fabs(nAB) > 1E-6) {
     vAB /= nAB;
+  }
 
   // vAB * vV = xAB * xV + yAB*yV + zAB * zV = |AB| * |V| * cos(alpha) = 0;
   if (fabs(vAB[2]) < 1E-6) {
@@ -64,8 +65,9 @@ void EdgeExtremityGlyph::get3DTransformationMatrix(const Coord &src, const Coord
   vW = vAB ^ vV;
   float nW = vW.norm();
 
-  if (fabs(nW) > 1E-6)
+  if (fabs(nW) > 1E-6) {
     vW /= nW;
+  }
 
   for (unsigned int i = 0; i < 3; ++i) {
     transformationMatrix[0][i] = vW[i];
@@ -101,8 +103,9 @@ void EdgeExtremityGlyph::get2DTransformationMatrix(const Coord &src, const Coord
   float nAB; //|AB|
   nAB = vAB.norm();
 
-  if (fabs(nAB) > 1E-6)
+  if (fabs(nAB) > 1E-6) {
     vAB /= nAB;
+  }
 
   // vAB * vV = xAB * xV + yAB*yV + zAB * zV = |AB| * |V| * cos(alpha) = 0;
   if (fabs(vAB[2]) < 1E-6) {
@@ -123,8 +126,9 @@ void EdgeExtremityGlyph::get2DTransformationMatrix(const Coord &src, const Coord
   vW = vAB ^ vV;
   float nW = vW.norm();
 
-  if (fabs(nW) > 1E-6)
+  if (fabs(nW) > 1E-6) {
     vW /= nW;
+  }
 
   for (unsigned int i = 0; i < 3; ++i) {
     transformationMatrix[0][i] = vAB[i];

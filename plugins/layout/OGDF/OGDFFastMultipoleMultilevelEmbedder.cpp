@@ -49,11 +49,13 @@ public:
     if (dataSet != nullptr) {
       int ival = 0;
 
-      if (dataSet->get("number of threads", ival))
+      if (dataSet->get("number of threads", ival)) {
         fmme->maxNumThreads(ival);
+      }
 
-      if (dataSet->get("multilevel nodes bound", ival))
+      if (dataSet->get("multilevel nodes bound", ival)) {
         fmme->multilevelUntilNumNodesAreLess(ival);
+      }
     }
 
     // ensure the input graph is simple as the layout failed in non multi-threaded mode otherwise

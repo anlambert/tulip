@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -47,13 +47,15 @@ struct TalipotGraphicsView : public QGraphicsView {
         dynamic_cast<GlMainWidgetGraphicsItem *>(_centralItem);
     QGraphicsProxyWidget *proxyWidget = dynamic_cast<QGraphicsProxyWidget *>(_centralItem);
 
-    if (glMainWidgetItem)
+    if (glMainWidgetItem) {
       glMainWidgetItem->resize(width(), height());
-    else if (proxyWidget)
+    } else if (proxyWidget) {
       proxyWidget->resize(width(), height());
+    }
 
-    if (scene())
+    if (scene()) {
       scene()->update();
+    }
 
     // Hack : send a mouse event to force redraw of the scene (otherwise artifacts was displayed
     // when maximizing or minimizing the graphics view)
@@ -92,8 +94,9 @@ void ViewWidget::setupUi() {
 }
 
 void ViewWidget::currentInteractorChanged(tlp::Interactor *i) {
-  if (i)
+  if (i) {
     i->install(_centralWidget);
+  }
 }
 
 void ViewWidget::graphDeleted(Graph *parentGraph) {
@@ -104,13 +107,15 @@ void ViewWidget::setCentralWidget(QWidget *w, bool deleteOldCentralWidget) {
   assert(w);
   QGraphicsItem *oldCentralItem = _centralWidgetItem;
 
-  if (currentInteractor())
+  if (currentInteractor()) {
     currentInteractor()->uninstall();
+  }
 
   _centralWidget = w;
 
-  if (currentInteractor())
+  if (currentInteractor()) {
     currentInteractor()->install(w);
+  }
 
   GlMainWidget *glMainWidget = dynamic_cast<GlMainWidget *>(w);
 
@@ -129,8 +134,9 @@ void ViewWidget::setCentralWidget(QWidget *w, bool deleteOldCentralWidget) {
       glMainWidgetItem = new GlMainWidgetGraphicsItem(glMainWidget, _graphicsView->width(),
                                                       _graphicsView->height());
 
-      if (_centralWidgetItem)
+      if (_centralWidgetItem) {
         _graphicsView->scene()->removeItem(_centralWidgetItem);
+      }
 
       _centralWidgetItem = glMainWidgetItem;
       _graphicsView->scene()->addItem(_centralWidgetItem);
@@ -171,13 +177,15 @@ void ViewWidget::addToScene(QGraphicsItem *item) {
 }
 
 void ViewWidget::removeFromScene(QGraphicsItem *item) {
-  if (!_items.contains(item))
+  if (!_items.contains(item)) {
     return;
+  }
 
   _items.remove(item);
 
-  if (_graphicsView->scene())
+  if (_graphicsView->scene()) {
     _graphicsView->scene()->removeItem(item);
+  }
 }
 
 void ViewWidget::refreshItemsParenthood() {
@@ -191,8 +199,9 @@ QGraphicsItem *ViewWidget::centralItem() const {
 }
 
 QPixmap ViewWidget::snapshot(const QSize &outputSize) const {
-  if (_centralWidget == nullptr)
+  if (_centralWidget == nullptr) {
     return QPixmap();
+  }
 
   QPixmap result(_centralWidget->size());
   _centralWidget->render(&result);

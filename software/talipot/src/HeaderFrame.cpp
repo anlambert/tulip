@@ -42,15 +42,17 @@ QString HeaderFrame::title() const {
 void HeaderFrame::setTitle(const QString &title) {
   _ui->titleLabel->setText(title);
 
-  if (_ui->menusCombo->count() == 0)
+  if (_ui->menusCombo->count() == 0) {
     switchToLabel(_ui);
+  }
 }
 
 QStringList HeaderFrame::menus() const {
   QStringList result;
 
-  for (int i = 0; i < _ui->menusCombo->count(); ++i)
+  for (int i = 0; i < _ui->menusCombo->count(); ++i) {
     result << _ui->menusCombo->itemText(i);
+  }
 
   return result;
 }
@@ -59,8 +61,9 @@ void HeaderFrame::setMenus(const QStringList &menus) {
   _ui->menusCombo->clear();
   switchToLabel(_ui, menus.empty());
 
-  for (const QString &s : menus)
+  for (const QString &s : menus) {
     _ui->menusCombo->addItem(s);
+  }
 }
 
 QString HeaderFrame::currentMenu() const {
@@ -88,14 +91,16 @@ void HeaderFrame::setExpanded(bool e) {
 
   QWidget *pw = parentWidget();
 
-  if (!pw)
+  if (!pw) {
     return;
+  }
 
   for (auto obj : pw->children()) {
     QWidget *w = dynamic_cast<QWidget *>(obj);
 
-    if (w && w != this)
+    if (w && w != this) {
       w->setVisible(e);
+    }
   }
 
   int maxH, minH;

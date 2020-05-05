@@ -79,16 +79,18 @@ bool Project::openProjectFile(const QString &file, tlp::PluginProgress *progress
   if (!QuaZIPFacade::unzip(rootDir(), file, progress)) {
     progress->setError("Failed to unzip project.");
 
-    if (deleteProgress)
+    if (deleteProgress) {
       delete progress;
+    }
 
     return false;
   }
 
   readMetaInfo();
 
-  if (deleteProgress)
+  if (deleteProgress) {
     delete progress;
+  }
 
   _projectFile = file;
   emit projectFileChanged(file);
@@ -124,8 +126,9 @@ bool Project::write(const QString &file, tlp::PluginProgress *progress) {
     return false;
   }
 
-  if (deleteProgress)
+  if (deleteProgress) {
     delete progress;
+  }
 
   _projectFile = file;
   emit projectFileChanged(file);
@@ -146,8 +149,9 @@ QStringList Project::entryList(const QString &relativePath, const QStringList &n
   QString path(toAbsolutePath(relativePath));
   QFileInfo info(path);
 
-  if (!info.exists() || !info.isDir())
+  if (!info.exists() || !info.isDir()) {
     return QStringList();
+  }
 
   QDir dir(path);
   return dir.entryList(nameFilters, filters, sort);
@@ -158,8 +162,9 @@ QStringList Project::entryList(const QString &relativePath, QDir::Filters filter
   QString path(toAbsolutePath(relativePath));
   QFileInfo info(path);
 
-  if (!info.exists() || !info.isDir())
+  if (!info.exists() || !info.isDir()) {
     return QStringList();
+  }
 
   QDir dir(path);
   return dir.entryList(filters, sort);
@@ -260,8 +265,9 @@ QString Project::version() const {
 bool Project::writeMetaInfo() {
   QFile out(QDir(rootDir()).absoluteFilePath(INFO_FILE_NAME));
 
-  if (!out.open(QIODevice::WriteOnly | QIODevice::Truncate))
+  if (!out.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
     return false;
+  }
 
   QXmlStreamWriter doc(&out);
   doc.setAutoFormatting(true);
@@ -273,8 +279,9 @@ bool Project::writeMetaInfo() {
   for (int i = mo->propertyOffset(); i < mo->propertyCount(); ++i) {
     QMetaProperty prop(mo->property(i));
 
-    if (QString(prop.name()) == "objectName")
+    if (QString(prop.name()) == "objectName") {
       continue;
+    }
 
     doc.writeTextElement(prop.name(), property(prop.name()).toString());
   }
@@ -287,8 +294,9 @@ bool Project::writeMetaInfo() {
 bool Project::readMetaInfo() {
   QFile in(QDir(rootDir()).absoluteFilePath(INFO_FILE_NAME));
 
-  if (!in.open(QIODevice::ReadOnly))
+  if (!in.open(QIODevice::ReadOnly)) {
     return false;
+  }
 
   QXmlStreamReader doc(&in);
 
@@ -310,8 +318,9 @@ bool Project::readMetaInfo() {
 
       std::string name = QStringToTlpString(doc.name().toString());
 
-      if (property(name.c_str()).isValid())
+      if (property(name.c_str()).isValid()) {
         setProperty(name.c_str(), doc.readElementText());
+      }
     }
   }
 
@@ -322,8 +331,9 @@ bool Project::readMetaInfo() {
 QString Project::toAbsolutePath(const QString &relativePath) {
   QString path(relativePath);
 
-  if (relativePath.startsWith("/"))
+  if (relativePath.startsWith("/")) {
     path = path.remove(0, 1);
+  }
 
   return QDir(rootDir() + "/" + QString(DATA_DIR_NAME)).absoluteFilePath(path);
 }
@@ -331,8 +341,9 @@ QString Project::toAbsolutePath(const QString &relativePath) {
 bool Project::clearProject() {
   QFileInfo pathInfo(QDir(rootDir()).absolutePath());
 
-  if (!pathInfo.isDir() || !pathInfo.exists())
+  if (!pathInfo.isDir() || !pathInfo.exists()) {
     return false;
+  }
 
   QDir dir(pathInfo.absoluteFilePath());
   QFileInfoList entries(dir.entryInfoList(QDir::NoDotAndDotDot | QDir::System | QDir::Hidden |
@@ -344,11 +355,13 @@ bool Project::clearProject() {
     if (info.isDir()) {
       QDir dird(info.absoluteFilePath());
       result = dird.removeRecursively();
-    } else
+    } else {
       result = dir.remove(info.absoluteFilePath());
+    }
 
-    if (!result)
+    if (!result) {
       return false;
+    }
   }
   return true;
 }

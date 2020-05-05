@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -35,8 +35,9 @@ public:
     // of the plugins in a CMakeFiles sub dir (/CMakeRelink.dir)
     // So set the failure flag only if the plugin was not found
     // under the CMakeFiles dir
-    if (libName.find("CMakeFiles") == std::string::npos)
+    if (libName.find("CMakeFiles") == std::string::npos) {
       allPluginsLoaded = false;
+    }
     tlp::PluginLoaderTxt::aborted(filename, errormsg);
   }
 

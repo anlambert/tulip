@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -198,19 +198,22 @@ Coord Cylinder::getAnchor(const Coord &v) const {
   float x = v.x(), y = v.y(), z = v.z();
   float n = sqrt(x * x + y * y);
 
-  if (n == 0.0f)
+  if (n == 0.0f) {
     return v;
+  }
 
   n = 0.5f / n;
   x *= n;
   y *= n;
   z *= n;
 
-  if (z < -0.5f)
+  if (z < -0.5f) {
     z = -0.5f; // z = z >? -0.5f;
+  }
 
-  if (z > +0.5f)
+  if (z > +0.5f) {
     z = +0.5f; // z = z <? +0.5f;
+  }
 
   return {x, y, z};
 }
@@ -267,8 +270,9 @@ void HalfCylinder::draw(node n, float) {
 Coord HalfCylinder::getAnchor(const Coord &v) const {
   float n = sqrt(v.x() * v.x() + v.y() * v.y());
 
-  if (n == 0.0f)
+  if (n == 0.0f) {
     return v;
+  }
 
   return v * (0.5f / n);
 }

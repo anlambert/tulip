@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -188,18 +188,20 @@ public:
   VECTOR &normalize() {
     OTYPE tmp = 0;
 
-    for (size_t i = 0; i < SIZE; ++i)
+    for (size_t i = 0; i < SIZE; ++i) {
       tmp += tlpsqr<TYPE, OTYPE>((*this)[i]);
+    }
 
     if (tmp < sqrt(std::numeric_limits<TYPE>::epsilon())) {
       return *this;
     }
 
     for (size_t i = 0; i < SIZE; ++i) {
-      if ((*this)[i] < 0.)
+      if ((*this)[i] < 0.) {
         (*this)[i] = -tlpsqrt<TYPE, OTYPE>(tlpsqr<TYPE, OTYPE>((*this)[i]) / tmp);
-      else
+      } else {
         (*this)[i] = tlpsqrt<TYPE, OTYPE>(tlpsqr<TYPE, OTYPE>((*this)[i]) / tmp);
+      }
     }
 
     return *this;
@@ -231,8 +233,9 @@ TEMPLATEVECTOR
 inline VECTOR minVector(const VECTOR &u, const VECTOR &v) {
   VECTOR tmp;
 
-  for (size_t i = 0; i < SIZE; ++i)
+  for (size_t i = 0; i < SIZE; ++i) {
     tmp[i] = std::min(u[i], v[i]);
+  }
 
   return tmp;
 }
@@ -245,8 +248,9 @@ TEMPLATEVECTOR
 inline VECTOR maxVector(const VECTOR &u, const VECTOR &v) {
   VECTOR tmp;
 
-  for (size_t i = 0; i < SIZE; ++i)
+  for (size_t i = 0; i < SIZE; ++i) {
     tmp[i] = std::max(u[i], v[i]);
+  }
 
   return tmp;
 }

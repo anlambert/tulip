@@ -139,8 +139,9 @@ vector<Color> ColorScaleConfigDialog::getColorScaleFromImageFile(const QString &
 
   unsigned int step = 1;
 
-  if (imageHeight > 50)
+  if (imageHeight > 50) {
     step = 10;
+  }
 
   vector<Color> colors;
 
@@ -194,8 +195,9 @@ void ColorScaleConfigDialog::importColorScaleFromFile(const QString &currentDir)
   QString imageFilePath = QFileDialog::getOpenFileName(this, tr("Open Image File"), currentDir,
                                                        tr("Image Files (*.png *.jpg *.bmp)"));
 
-  if (imageFilePath.isEmpty())
+  if (imageFilePath.isEmpty()) {
     return;
+  }
 
   vector<Color> colorsList = getColorScaleFromImageFile(imageFilePath);
 
@@ -406,8 +408,9 @@ void ColorScaleConfigDialog::loadUserSavedColorScales() {
   QStringList savedColorScalesIdList = Settings::instance().childKeys();
 
   for (int i = 0; i < savedColorScalesIdList.size(); ++i) {
-    if (!savedColorScalesIdList.at(i).contains("_gradient?"))
+    if (!savedColorScalesIdList.at(i).contains("_gradient?")) {
       _ui->savedColorScalesList->addItem(savedColorScalesIdList.at(i));
+    }
   }
 
   Settings::instance().endGroup();
@@ -506,9 +509,10 @@ void ColorScaleConfigDialog::setColorScale(const ColorScale &colorScale) {
             &ColorScaleConfigDialog::nbColorsValueChanged);
     _ui->tabWidget->setCurrentIndex(0);
     applyGlobalAlphaToColorScale();
-  } else
+  } else {
     // use latest ColorScale
     setColorScale(ColorScalesManager::getLatestColorScale());
+  }
 }
 
 const ColorScale &ColorScaleConfigDialog::getColorScale() const {

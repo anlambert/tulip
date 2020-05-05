@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -233,8 +233,9 @@ void OutEdgesIterator::prepareNext() {
   while (it->hasNext()) {
     curEdge = it->next();
 
-    if (sg->isElement(curEdge))
+    if (sg->isElement(curEdge)) {
       return;
+    }
   }
 
   // set curEdge as invalid
@@ -272,8 +273,9 @@ void InEdgesIterator::prepareNext() {
   while (it->hasNext()) {
     curEdge = it->next();
 
-    if (sg->isElement(curEdge))
+    if (sg->isElement(curEdge)) {
       return;
+    }
   }
 
   // set curEdge as invalid
@@ -312,8 +314,9 @@ void InOutEdgesIterator::prepareNext() {
   while (it->hasNext()) {
     curEdge = it->next();
 
-    if (sg->isElement(curEdge))
+    if (sg->isElement(curEdge)) {
       return;
+    }
   }
 
   // set curEdge as invalid

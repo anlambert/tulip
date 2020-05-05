@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -127,8 +127,9 @@ public:
   }
 
   bool importGraph() override {
-    if (dataSet == nullptr)
+    if (dataSet == nullptr) {
       return false;
+    }
 
     std::string rootPathStr;
     dataSet->get("dir::directory", rootPathStr);
@@ -181,8 +182,9 @@ public:
 
     tlp::node rootNode = addFileNode(rootInfo, graph);
 
-    if (!rootInfo.isDir())
+    if (!rootInfo.isDir()) {
       return true;
+    }
 
     QStack<QPair<QString, tlp::node>> fsStack;
     fsStack.push(QPair<QString, tlp::node>(rootInfo.absoluteFilePath(), rootNode));
@@ -195,8 +197,9 @@ public:
       QFlags<QDir::Filter> filter =
           QDir::NoDotAndDotDot | QDir::System | QDir::AllDirs | QDir::Files;
 
-      if (hiddenFiles)
+      if (hiddenFiles) {
         filter |= QDir::Hidden;
+      }
 
       QFileInfoList entries(currentDir.entryInfoList(filter, QDir::DirsFirst));
 
@@ -216,19 +219,22 @@ public:
         tlp::node fileNode = addFileNode(fileInfo, graph);
         graph->addEdge(parentNode, fileNode);
 
-        if (fileInfo.isDir() && (!fileInfo.isSymLink() || symlinks))
+        if (fileInfo.isDir() && (!fileInfo.isSymLink() || symlinks)) {
           fsStack.push_back(QPair<QString, tlp::node>(fileInfo.absoluteFilePath(), fileNode));
+        }
 
-        if ((++i % 100) == 0)
+        if ((++i % 100) == 0) {
           pluginProgress->progress(i, entries.count());
+        }
 
         if (pluginProgress->state() == TLP_CANCEL) {
           pluginProgress->setError("Import cancelled by user.");
           return false;
         }
 
-        if (pluginProgress->state() == TLP_STOP)
+        if (pluginProgress->state() == TLP_STOP) {
           break;
+        }
       }
     }
 

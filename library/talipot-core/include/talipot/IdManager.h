@@ -74,8 +74,9 @@ public:
     ++current;
 
     while (it != freeIds.end()) {
-      if (current < *it)
+      if (current < *it) {
         return static_cast<TYPE>(tmp);
+      }
 
       ++current;
       ++it;
@@ -330,8 +331,9 @@ public:
     static_cast<std::vector<ID_TYPE> &>(*this) = elts;
     unsigned int nb = elts.size();
 
-    for (unsigned int i = 0; i < nb; ++i)
+    for (unsigned int i = 0; i < nb; ++i) {
       pos.set(elts[i], i);
+    }
   }
 
   void remove(ID_TYPE elt) {
@@ -342,8 +344,9 @@ public:
     // put the last elt at the freed position
     unsigned int last = this->size() - 1;
 
-    if (i < last)
+    if (i < last) {
       pos.set(((*this)[i] = (*this)[last]), i);
+    }
 
     // resize the container
     this->resize(last);
@@ -356,8 +359,9 @@ public:
     std::sort(this->begin(), this->end());
     unsigned int nbElts = this->size();
 
-    for (unsigned int i = 0; i < nbElts; ++i)
+    for (unsigned int i = 0; i < nbElts; ++i) {
       pos.set((*this)[i], i);
+    }
   }
 };
 }

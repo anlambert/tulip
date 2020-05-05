@@ -67,8 +67,9 @@ edge PlanarConMap::addEdgeMap(const node v, const node w, Face f, const edge e1,
   assert(containEdge(f, e1) && containEdge(f, e2));
   assert(containEdge(f, succCycleEdge(e1, v)) && containEdge(f, succCycleEdge(e2, w)));
 
-  if (new_face == Face())
+  if (new_face == Face()) {
     new_face = Face(faceId++);
+  }
 
   edge e_tmp;
   vector<edge> v_edges1, v_edges2;
@@ -90,19 +91,21 @@ edge PlanarConMap::addEdgeMap(const node v, const node w, Face f, const edge e1,
   if (!e.isValid()) {
     e = supergraph->addEdge(v, w);
     graph_component->addEdge(e);
-  } else
+  } else {
     graph_component->addEdge(e);
+  }
 
   // Compute the cycle around v
   vector<edge> v_order(deg(v));
   unsigned int cpt = 0;
   for (auto e_order : getInOutEdges(v)) {
-    if (e_order == e)
+    if (e_order == e) {
       continue;
+    }
 
-    if (e_order != succ1)
+    if (e_order != succ1) {
       v_order[cpt] = e_order;
-    else {
+    } else {
       v_order[cpt] = e;
       v_order[++cpt] = succ1;
     }
@@ -115,12 +118,13 @@ edge PlanarConMap::addEdgeMap(const node v, const node w, Face f, const edge e1,
   vector<edge> v_order2(deg(w));
   cpt = 0;
   for (auto e_order : getInOutEdges(w)) {
-    if (e_order == e)
+    if (e_order == e) {
       continue;
+    }
 
-    if (e_order != succ2)
+    if (e_order != succ2) {
       v_order2[cpt] = e_order;
-    else {
+    } else {
       v_order2[cpt] = e;
       v_order2[++cpt] = succ2;
     }
@@ -138,8 +142,9 @@ edge PlanarConMap::addEdgeMap(const node v, const node w, Face f, const edge e1,
     e_tmp = facesEdges[f][i];
   }
 
-  if (e1 == succ1 && e_tmp == facesEdges[f][(i + 1) % nb_edges])
+  if (e1 == succ1 && e_tmp == facesEdges[f][(i + 1) % nb_edges]) {
     i = (i + 1) % nb_edges;
+  }
 
   bool e2_found = false;
 
@@ -151,8 +156,9 @@ edge PlanarConMap::addEdgeMap(const node v, const node w, Face f, const edge e1,
     isInNewFace.set(eEnds.second.id, true);
     ++nb_added;
 
-    if (e_tmp == e2)
+    if (e_tmp == e2) {
       e2_found = true;
+    }
 
     i = (i + 1) % nb_edges;
     e_tmp = facesEdges[f][i];
@@ -200,12 +206,13 @@ edge PlanarConMap::addEdgeMap(const node v, const node w, Face f, const edge e1,
   for (i = 0; i < v_edges1.size() - 1; ++i) {
     e_tmp = v_edges1[i];
 
-    if (isInVe2.get(e_tmp.id))
+    if (isInVe2.get(e_tmp.id)) {
       edgesFaces[e_tmp][0] = new_face;
-    else if (edgesFaces[e_tmp][0] == f)
+    } else if (edgesFaces[e_tmp][0] == f) {
       edgesFaces[e_tmp][0] = new_face;
-    else
+    } else {
       edgesFaces[e_tmp][1] = new_face;
+    }
   }
 
   // initialize the list of faces adjacent to all nodes of the new face
@@ -213,8 +220,9 @@ edge PlanarConMap::addEdgeMap(const node v, const node w, Face f, const edge e1,
     node n_tmp(id);
     vector<Face> v_faces;
 
-    for (Face f : getFacesAdj(n_tmp))
+    for (Face f : getFacesAdj(n_tmp)) {
       v_faces.push_back(f);
+    }
 
     nodesFaces[n_tmp] = v_faces;
   }
@@ -243,9 +251,9 @@ void PlanarConMap::delEdgeMap(edge e, Face f) {
   // if there is only one face adjacent to e.
   if (f1 == f2) {
     // clear the map if it will contain any node.
-    if (numberOfNodes() == 2)
+    if (numberOfNodes() == 2) {
       clear();
-    else {
+    } else {
       node n_tmp = (deg(n1) != 1 ? n1 : n2);
       unsigned int nb_edges = facesEdges[f1].size();
       bool found = false;
@@ -253,9 +261,9 @@ void PlanarConMap::delEdgeMap(edge e, Face f) {
       for (unsigned int i = 0; v_edges.size() < nb_edges - 2; i = (i + 1) % nb_edges) {
         edge e_tmp = facesEdges[f1][i];
 
-        if (e_tmp == e)
+        if (e_tmp == e) {
           found = true;
-        else if (found) {
+        } else if (found) {
           v_edges.push_back(e_tmp);
         }
       }
@@ -286,14 +294,16 @@ void PlanarConMap::delEdgeMap(edge e, Face f) {
     for (unsigned int i = 0; v_edges.size() < nb_edges - 1; i = (i + 1) % nb_edges) {
       edge e_tmp = facesEdges[f1][i];
 
-      if (e_tmp == e)
+      if (e_tmp == e) {
         found = true;
-      else if (found) {
-        if (edgesFaces[e_tmp][0] == f2)
+      } else if (found) {
+        if (edgesFaces[e_tmp][0] == f2) {
           edgesFaces[e_tmp][0] = f1;
+        }
 
-        if (edgesFaces[e_tmp][1] == f2)
+        if (edgesFaces[e_tmp][1] == f2) {
           edgesFaces[e_tmp][1] = f1;
+        }
 
         v_edges.push_back(e_tmp);
       }
@@ -309,14 +319,16 @@ void PlanarConMap::delEdgeMap(edge e, Face f) {
       isInF2.set(eEnds.first.id, true);
       isInF2.set(eEnds.second.id, true);
 
-      if (e_tmp == e)
+      if (e_tmp == e) {
         found = true;
-      else if (found) {
-        if (edgesFaces[e_tmp][0] == f2)
+      } else if (found) {
+        if (edgesFaces[e_tmp][0] == f2) {
           edgesFaces[e_tmp][0] = f1;
+        }
 
-        if (edgesFaces[e_tmp][1] == f2)
+        if (edgesFaces[e_tmp][1] == f2) {
           edgesFaces[e_tmp][1] = f1;
+        }
 
         v_edges.push_back(e_tmp);
         ++nb_added;
@@ -333,8 +345,9 @@ void PlanarConMap::delEdgeMap(edge e, Face f) {
       node n_tmp(id);
       vector<Face> v_faces;
 
-      for (Face f : getFacesAdj(n_tmp))
+      for (Face f : getFacesAdj(n_tmp)) {
         v_faces.push_back(f);
+      }
 
       nodesFaces[n_tmp] = v_faces;
     }
@@ -351,8 +364,9 @@ edge PlanarConMap::succCycleEdge(const edge e, const node n) const {
   assert(isElement(e) && isElement(n));
   assert(source(e) == n || target(e) == n);
 
-  if (deg(n) == 1)
+  if (deg(n) == 1) {
     return e;
+  }
 
   int i = 0;
   edge e1;
@@ -387,8 +401,9 @@ edge PlanarConMap::predCycleEdge(const edge e, const node n) const {
   assert(isElement(e) && isElement(n));
   assert(source(e) == n || target(e) == n);
 
-  if (deg(n) == 1)
+  if (deg(n) == 1) {
     return e;
+  }
 
   Iterator<edge> *it = getInOutEdges(n);
   edge prec, e1;
@@ -399,10 +414,11 @@ edge PlanarConMap::predCycleEdge(const edge e, const node n) const {
     e1 = it->next();
     i++;
 
-    if (e == e1)
+    if (e == e1) {
       stop = true;
-    else
+    } else {
       prec = e1;
+    }
   }
 
   assert(e == e1);
@@ -470,10 +486,11 @@ node PlanarConMap::predCycleNode(const node v, const node w) const {
     n1 = it->next();
     i++;
 
-    if (w == n1)
+    if (w == n1) {
       stop = true;
-    else
+    } else {
       prec = n1;
+    }
   }
 
   assert(w == n1);
@@ -487,8 +504,9 @@ node PlanarConMap::predCycleNode(const node v, const node w) const {
       return n1;
     }
 
-    while (it->hasNext())
+    while (it->hasNext()) {
       n1 = it->next();
+    }
 
     delete it;
     return n1;
@@ -528,13 +546,15 @@ void PlanarConMap::computeFaces() {
         vector<edge> v_tmp;
         v_tmp.push_back(e);
         facesEdges.insert(faceMapEntry(f, v_tmp));
-      } else
+      } else {
         facesEdges[f].push_back(e);
+      }
     }
 
     // Compute the list of adjacent faces of each node
-    for (auto n : nodes())
+    for (auto n : nodes()) {
       nodesFaces.insert(nodeMapEntry(n, v_faces));
+    }
 
     if (facesEdges.size() == 0) {
       vector<edge> v;
@@ -562,10 +582,11 @@ void PlanarConMap::computeFaces() {
           node n_tmp, n;
           int i = 0;
 
-          if (sens.get(e1.id))
+          if (sens.get(e1.id)) {
             n = target(e1);
-          else
+          } else {
             n = source(e1);
+          }
 
           n_tmp = n;
 
@@ -583,8 +604,9 @@ void PlanarConMap::computeFaces() {
               vector<Face> v_tmp;
               v_tmp.push_back(lf);
               nodesFaces.insert(nodeMapEntry(n, v_tmp));
-            } else
+            } else {
               nodesFaces[n].push_back(lf);
+            }
 
             auto ite = edgesFaces.find(e1);
 
@@ -592,11 +614,13 @@ void PlanarConMap::computeFaces() {
               vector<Face> v_tmp;
               v_tmp.push_back(lf);
               edgesFaces.insert(edgeMapEntry(e1, v_tmp));
-            } else
+            } else {
               edgesFaces[e1].push_back(lf);
+            }
 
-            if (source(e1) == n)
+            if (source(e1) == n) {
               sens.set(e1.id, true);
+            }
 
             ++i;
           } while ((e1 != e) || (n_tmp != n));
@@ -714,8 +738,9 @@ Face PlanarConMap::splitFace(Face f, const node v, const node w, node n) {
     } else if (!v_found && (eEnds.first == v || eEnds.second == v)) {
       pred_was_v = true;
       e_tmp2 = e_tmp;
-    } else if (!v_found)
+    } else if (!v_found) {
       pred_was_v = false;
+    }
 
     if (!w_found && pred_was_w && (eEnds.first == w || eEnds.second == w)) {
       e2 = e_tmp2;
@@ -723,17 +748,20 @@ Face PlanarConMap::splitFace(Face f, const node v, const node w, node n) {
     } else if (!w_found && (eEnds.first == w || eEnds.second == w)) {
       pred_was_w = true;
       e_tmp2 = e_tmp;
-    } else if (!w_found)
+    } else if (!w_found) {
       pred_was_w = false;
+    }
   }
 
   delete ite;
 
-  if (!v_found && first_was_v)
+  if (!v_found && first_was_v) {
     e1 = e_tmp;
+  }
 
-  if (!w_found && first_was_w)
+  if (!w_found && first_was_w) {
     e2 = e_tmp;
+  }
 
   Face new_face = Face(faceId++);
 
@@ -757,14 +785,16 @@ Face PlanarConMap::splitFace(Face f, const node v, const node w, node n) {
       nodeToUpdate.set(eEnds.second.id, true);
 
       if ((edgesFaces[e][0] == f && edgesFaces[e][1] == new_face) ||
-          (edgesFaces[e][0] == new_face && edgesFaces[e][1] == f))
+          (edgesFaces[e][0] == new_face && edgesFaces[e][1] == f)) {
         isShared.set(e.id, true);
-      else {
-        if (edgesFaces[e][0] == new_face)
+      } else {
+        if (edgesFaces[e][0] == new_face) {
           edgesFaces[e][0] = f;
+        }
 
-        if (edgesFaces[e][1] == new_face)
+        if (edgesFaces[e][1] == new_face) {
           edgesFaces[e][1] = f;
+        }
       }
     }
 
@@ -772,11 +802,13 @@ Face PlanarConMap::splitFace(Face f, const node v, const node w, node n) {
       edge e = facesEdges[new_face][i];
 
       if (!isShared.get(e.id)) {
-        if (edgesFaces[e][0] == f)
+        if (edgesFaces[e][0] == f) {
           edgesFaces[e][0] = new_face;
+        }
 
-        if (edgesFaces[e][1] == f)
+        if (edgesFaces[e][1] == f) {
           edgesFaces[e][1] = new_face;
+        }
       }
     }
 
@@ -784,8 +816,9 @@ Face PlanarConMap::splitFace(Face f, const node v, const node w, node n) {
       node n_tmp(id);
       vector<Face> v_faces;
 
-      for (Face f : getFacesAdj(n_tmp))
+      for (Face f : getFacesAdj(n_tmp)) {
         v_faces.push_back(f);
+      }
 
       nodesFaces[n_tmp] = v_faces;
     }
@@ -814,15 +847,18 @@ void PlanarConMap::mergeFaces(Face f, Face g) {
     if (!last_found && containEdge(g, ve[i])) {
       first_found = true;
       last = ve[i];
-    } else if (first_found)
+    } else if (first_found) {
       last_found = true;
+    }
   }
 
   ve = facesEdges[g];
 
-  for (unsigned int i = 0; i < ve.size(); ++i)
-    if (isInF.get(ve[i].id))
+  for (unsigned int i = 0; i < ve.size(); ++i) {
+    if (isInF.get(ve[i].id)) {
       toDel.push_back(ve[i]);
+    }
+  }
 
   assert(!toDel.empty());
   assert(toDel.size() != facesEdges[g].size() && toDel.size() != facesEdges[f].size());
@@ -844,10 +880,11 @@ void PlanarConMap::mergeFaces(Face f, Face g) {
     edge e = toDel[cpt];
     auto eEnds = ends(e);
 
-    if (deg(eEnds.first) == 1 || deg(eEnds.second) == 1)
+    if (deg(eEnds.first) == 1 || deg(eEnds.second) == 1) {
       delEdgeMap(e, f);
-    else
+    } else {
       break;
+    }
   }
 }
 
@@ -866,8 +903,9 @@ bool PlanarConMap::containNode(Face f, node v) {
 //============================================================
 bool PlanarConMap::containEdge(Face f, edge e) {
   for (unsigned int i = 0; i < 2; ++i)
-    if (edgesFaces[e][i] == f)
+    if (edgesFaces[e][i] == f) {
       return true;
+    }
 
   return false;
 }
@@ -879,8 +917,9 @@ Face PlanarConMap::getFaceContaining(node v, node w) {
   Face f1 = edgesFaces[e][0];
   Face f2 = edgesFaces[e][1];
 
-  if (f1 == f2)
+  if (f1 == f2) {
     return f1;
+  }
 
   Face f_tmp, f_tmp2;
   int taille1 = facesEdges[f1].size();
@@ -897,8 +936,9 @@ Face PlanarConMap::getFaceContaining(node v, node w) {
 
   int cpt = 0;
 
-  while (cpt < taille1 && facesEdges[f_tmp][cpt] != e)
+  while (cpt < taille1 && facesEdges[f_tmp][cpt] != e) {
     cpt++;
+  }
 
   if (cpt != 0) {
     auto eEnds = ends(facesEdges[f_tmp][cpt - 1]);
@@ -912,8 +952,9 @@ Face PlanarConMap::getFaceContaining(node v, node w) {
 //=================================================================
 Face PlanarConMap::sameFace(node v, node n) {
   for (Face f : getFacesAdj(v)) {
-    if (containNode(f, n))
+    if (containNode(f, n)) {
       return f;
+    }
   }
   return Face();
 }

@@ -44,10 +44,11 @@ void CaptionItem::create(CaptionType captionType) {
   _captionGraphicsItem->setType(captionType);
   initCaption();
 
-  if (captionType == NodesColorCaption || captionType == EdgesColorCaption)
+  if (captionType == NodesColorCaption || captionType == EdgesColorCaption) {
     generateColorCaption(captionType);
-  else
+  } else {
     generateSizeCaption(captionType);
+  }
 
   if (_backupColorProperty) {
     delete _backupColorProperty;
@@ -62,27 +63,30 @@ void CaptionItem::create(CaptionType captionType) {
 void CaptionItem::initCaption() {
   _captionGraphicsItem->loadConfiguration();
 
-  if (_metricProperty)
+  if (_metricProperty) {
     _metricProperty->removeObserver(this);
+  }
 
   _metricProperty = nullptr;
 
-  if (_colorProperty)
+  if (_colorProperty) {
     _colorProperty->removeObserver(this);
+  }
 
   _colorProperty = nullptr;
 
-  if (_sizeProperty)
+  if (_sizeProperty) {
     _sizeProperty->removeObserver(this);
+  }
 
   _sizeProperty = nullptr;
 }
 
 void CaptionItem::clearObservers() {
 
-  if (_graph != view->graph())
-    if (_graph)
-      _graph->removeObserver(this);
+  if (_graph != view->graph() && _graph) {
+    _graph->removeObserver(this);
+  }
 
   _graph = view->graph();
 
@@ -93,8 +97,9 @@ void CaptionItem::clearObservers() {
     return;
   }
 
-  if (_metricProperty)
+  if (_metricProperty) {
     _metricProperty->removeObserver(this);
+  }
 
   if (!_captionGraphicsItem->usedProperty().empty()) {
     _metricProperty = view->graph()->getDoubleProperty(_captionGraphicsItem->usedProperty());
@@ -104,11 +109,13 @@ void CaptionItem::clearObservers() {
   }
 
   if (_captionType == NodesColorCaption || _captionType == EdgesColorCaption) {
-    if (_colorProperty)
+    if (_colorProperty) {
       _colorProperty->removeObserver(this);
+    }
   } else {
-    if (_sizeProperty)
+    if (_sizeProperty) {
       _sizeProperty->removeObserver(this);
+    }
 
     _sizeProperty = view->graph()->getSizeProperty("viewSize");
     _sizeProperty->addObserver(this);
@@ -209,8 +216,9 @@ void CaptionItem::generateSizeCaption(CaptionType captionType) {
     for (auto n : view->graph()->nodes()) {
       metricToSizeMap[_metricProperty->getNodeValue(n)] = _sizeProperty->getNodeValue(n)[0];
 
-      if (maxSize < _sizeProperty->getNodeValue(n)[0])
+      if (maxSize < _sizeProperty->getNodeValue(n)[0]) {
         maxSize = _sizeProperty->getNodeValue(n)[0];
+      }
     }
 
   } else {
@@ -218,8 +226,9 @@ void CaptionItem::generateSizeCaption(CaptionType captionType) {
     for (auto e : view->graph()->edges()) {
       metricToSizeMap[_metricProperty->getEdgeValue(e)] = _sizeProperty->getEdgeValue(e)[0];
 
-      if (maxSize < _sizeProperty->getEdgeValue(e)[0])
+      if (maxSize < _sizeProperty->getEdgeValue(e)[0]) {
         maxSize = _sizeProperty->getEdgeValue(e)[0];
+      }
     }
   }
 
@@ -286,8 +295,9 @@ void CaptionItem::removeObservation(bool remove) {
   } else {
     _graph->removeObserver(this);
 
-    if (_metricProperty)
+    if (_metricProperty) {
       _metricProperty->removeObserver(this);
+    }
 
     if (_captionType == NodesColorCaption || _captionType == EdgesColorCaption) {
       _colorProperty->removeObserver(this);
@@ -298,8 +308,9 @@ void CaptionItem::removeObservation(bool remove) {
 }
 
 void CaptionItem::applyNewFilter(float begin, float end) {
-  if (_metricProperty == nullptr)
+  if (_metricProperty == nullptr) {
     return;
+  }
 
   emit filtering(true);
   _graph->removeObserver(this);
@@ -404,27 +415,33 @@ void CaptionItem::treatEvents(const vector<Event> &ev) {
     PropertyInterface *prop = dynamic_cast<PropertyInterface *>(e.sender());
     Graph *graph = dynamic_cast<Graph *>(e.sender());
 
-    if (e.type() == Event::TLP_DELETE)
+    if (e.type() == Event::TLP_DELETE) {
       deleteEvent = true;
+    }
 
-    if (prop)
+    if (prop) {
       propertyEvent = true;
+    }
 
-    if (graph)
+    if (graph) {
       graphEvent = true;
+    }
   }
 
-  if (deleteEvent)
+  if (deleteEvent) {
     create(_captionType);
+  }
 
   if (propertyEvent) {
-    if (_captionType == NodesColorCaption || _captionType == EdgesColorCaption)
+    if (_captionType == NodesColorCaption || _captionType == EdgesColorCaption) {
       generateColorCaption(_captionType);
-    else
+    } else {
       generateSizeCaption(_captionType);
+    }
 
-    if (_backupColorProperty)
+    if (_backupColorProperty) {
       delete _backupColorProperty;
+    }
 
     _backupColorProperty = new ColorProperty(_graph);
     *_backupColorProperty = *_colorProperty;
@@ -436,13 +453,15 @@ void CaptionItem::treatEvents(const vector<Event> &ev) {
 }
 
 void CaptionItem::selectedPropertyChanged(string /*propertyName*/) {
-  if (_captionType == NodesColorCaption || _captionType == EdgesColorCaption)
+  if (_captionType == NodesColorCaption || _captionType == EdgesColorCaption) {
     generateColorCaption(_captionType);
-  else
+  } else {
     generateSizeCaption(_captionType);
+  }
 
-  if (_backupColorProperty)
+  if (_backupColorProperty) {
     delete _backupColorProperty;
+  }
 
   _backupColorProperty = new ColorProperty(_graph);
   *_backupColorProperty = *_colorProperty;

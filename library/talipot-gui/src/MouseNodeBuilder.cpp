@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -32,8 +32,9 @@ bool MouseNodeBuilder::eventFilter(QObject *widget, QEvent *e) {
   if (qMouseEv != nullptr) {
     SelectedEntity selectedEntity;
 
-    if (glMainWidget == nullptr)
+    if (glMainWidget == nullptr) {
       glMainWidget = static_cast<GlMainWidget *>(widget);
+    }
 
     if (e->type() == QEvent::MouseMove) {
       if (glMainWidget->pickNodesEdges(qMouseEv->x(), qMouseEv->y(), selectedEntity) &&
@@ -70,8 +71,9 @@ bool MouseNodeBuilder::eventFilter(QObject *widget, QEvent *e) {
         Coord cameraDirection = glMainWidget->getScene()->getGraphCamera().getEyes() -
                                 glMainWidget->getScene()->getGraphCamera().getCenter();
 
-        if (cameraDirection[0] == 0 && cameraDirection[1] == 0)
+        if (cameraDirection[0] == 0 && cameraDirection[1] == 0) {
           point[2] = 0;
+        }
 
         mLayout->setNodeValue(newNode, point);
         Observable::unholdObservers();
@@ -85,6 +87,7 @@ bool MouseNodeBuilder::eventFilter(QObject *widget, QEvent *e) {
 }
 
 void MouseNodeBuilder::clear() {
-  if (glMainWidget)
+  if (glMainWidget) {
     glMainWidget->setCursor(QCursor());
+  }
 }

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -58,8 +58,9 @@ list<string> ColorScalesManager::getColorScalesList() {
   QStringList savedColorScalesIdList = Settings::instance().childKeys();
 
   for (int i = 0; i < savedColorScalesIdList.size(); ++i) {
-    if (!savedColorScalesIdList.at(i).contains("_gradient?"))
+    if (!savedColorScalesIdList.at(i).contains("_gradient?")) {
       ret.push_back(QStringToTlpString(savedColorScalesIdList.at(i)));
+    }
   }
 
   Settings::instance().endGroup();
@@ -68,8 +69,9 @@ list<string> ColorScalesManager::getColorScalesList() {
   savedColorScalesIdList = Settings::instance().childKeys();
 
   for (int i = 0; i < savedColorScalesIdList.size(); ++i) {
-    if (!savedColorScalesIdList.at(i).contains("_gradient?"))
+    if (!savedColorScalesIdList.at(i).contains("_gradient?")) {
       ret.push_back(QStringToTlpString(savedColorScalesIdList.at(i)));
+    }
   }
 
   Settings::instance().endGroup();
@@ -83,8 +85,9 @@ static ColorScale getColorScaleFromImageFile(const QString &imageFilePath) {
 
   unsigned int step = 1;
 
-  if (imageHeight > 50)
+  if (imageHeight > 50) {
     step = 10;
+  }
 
   vector<Color> colors;
 

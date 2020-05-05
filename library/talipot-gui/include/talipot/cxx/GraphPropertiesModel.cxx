@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -20,14 +20,20 @@ template <typename PROPTYPE>
 void tlp::GraphPropertiesModel<PROPTYPE>::rebuildCache() {
   _properties.clear();
 
-  if (_graph == nullptr)
-    return;
+  if (_graph == nullptr) {
+    {
+      return;
+    }
+  }
 
   for (auto inheritedProp : _graph->getInheritedObjectProperties()) {
 #ifdef NDEBUG
 
-    if (inheritedProp->getName() == "viewMetaGraph")
-      continue;
+    if (inheritedProp->getName() == "viewMetaGraph") {
+      {
+        continue;
+      }
+    }
 
 #endif
     PROPTYPE *prop = dynamic_cast<PROPTYPE *>(inheritedProp);
@@ -39,8 +45,11 @@ void tlp::GraphPropertiesModel<PROPTYPE>::rebuildCache() {
   for (auto localProp : _graph->getLocalObjectProperties()) {
 #ifdef NDEBUG
 
-    if (localProp->getName() == "viewMetaGraph")
-      continue;
+    if (localProp->getName() == "viewMetaGraph") {
+      {
+        continue;
+      }
+    }
 
 #endif
     PROPTYPE *prop = dynamic_cast<PROPTYPE *>(localProp);
@@ -76,14 +85,20 @@ GraphPropertiesModel<PROPTYPE>::GraphPropertiesModel(QString placeholder, tlp::G
 template <typename PROPTYPE>
 QModelIndex GraphPropertiesModel<PROPTYPE>::index(int row, int column,
                                                   const QModelIndex &parent) const {
-  if (_graph == nullptr || !hasIndex(row, column, parent))
-    return QModelIndex();
+  if (_graph == nullptr || !hasIndex(row, column, parent)) {
+    {
+      return QModelIndex();
+    }
+  }
 
   int vectorIndex = row;
 
   if (!_placeholder.isEmpty()) {
-    if (row == 0)
-      return createIndex(row, column);
+    if (row == 0) {
+      {
+        return createIndex(row, column);
+      }
+    }
 
     vectorIndex--;
   }
@@ -98,13 +113,19 @@ QModelIndex GraphPropertiesModel<PROPTYPE>::parent(const QModelIndex &) const {
 
 template <typename PROPTYPE>
 int GraphPropertiesModel<PROPTYPE>::rowCount(const QModelIndex &parent) const {
-  if (parent.isValid() || _graph == nullptr || forcingRedraw)
-    return 0;
+  if (parent.isValid() || _graph == nullptr || forcingRedraw) {
+    {
+      return 0;
+    }
+  }
 
   int result = _properties.size();
 
-  if (!_placeholder.isEmpty())
-    result++;
+  if (!_placeholder.isEmpty()) {
+    {
+      result++;
+    }
+  }
 
   return result;
 }
@@ -116,38 +137,54 @@ int GraphPropertiesModel<PROPTYPE>::columnCount(const QModelIndex &) const {
 
 template <typename PROPTYPE>
 QVariant GraphPropertiesModel<PROPTYPE>::data(const QModelIndex &index, int role) const {
-  if (_graph == nullptr || (index.internalPointer() == nullptr && index.row() != 0))
-    return QVariant();
+  if (_graph == nullptr || (index.internalPointer() == nullptr && index.row() != 0)) {
+    {
+      return QVariant();
+    }
+  }
 
   PropertyInterface *pi = static_cast<PropertyInterface *>(index.internalPointer());
 
   if (role == Qt::DisplayRole || role == Qt::ToolTipRole) {
-    if (!_placeholder.isEmpty() && index.row() == 0)
-      return _placeholder;
+    if (!_placeholder.isEmpty() && index.row() == 0) {
+      {
+        return _placeholder;
+      }
+    }
 
-    if (pi == nullptr)
-      return QString();
+    if (pi == nullptr) {
+      {
+        return QString();
+      }
+    }
 
-    if (index.column() == 0)
-      return tlpStringToQString(pi->getName());
-    else if (index.column() == 1)
-      return pi->getTypename().c_str();
-    else if (index.column() == 2)
-      return (_graph->existLocalProperty(pi->getName())
-                  ? tr("Local")
-                  : tr("Inherited from graph ") + QString::number(pi->getGraph()->getId()) + " (" +
-                        tlpStringToQString(pi->getGraph()->getName()) + ')');
+    if (index.column() == 0) {
+      {
+        return tlpStringToQString(pi->getName());
+      }
+    } else if (index.column() == 1) {
+      { return pi->getTypename().c_str(); }
+    } else if (index.column() == 2) {
+      {
+        return (_graph->existLocalProperty(pi->getName())
+                    ? tr("Local")
+                    : tr("Inherited from graph ") + QString::number(pi->getGraph()->getId()) +
+                          " (" + tlpStringToQString(pi->getGraph()->getName()) + ')');
+      }
+    }
   }
 
   else if (role == Qt::DecorationRole && index.column() == 0 && pi != nullptr &&
-           !_graph->existLocalProperty(pi->getName()))
-    return QIcon(":/talipot/gui/ui/inherited_properties.png");
-
-  else if (role == Qt::FontRole) {
+           !_graph->existLocalProperty(pi->getName())) {
+    { return QIcon(":/talipot/gui/ui/inherited_properties.png"); }
+  } else if (role == Qt::FontRole) {
     QFont f;
 
-    if (!_placeholder.isEmpty() && index.row() == 0)
-      f.setItalic(true);
+    if (!_placeholder.isEmpty() && index.row() == 0) {
+      {
+        f.setItalic(true);
+      }
+    }
 
     return f;
   } else if (role == PropertyRole) {
@@ -163,8 +200,11 @@ template <typename PROPTYPE>
 int GraphPropertiesModel<PROPTYPE>::rowOf(PROPTYPE *pi) const {
   int result = _properties.indexOf(pi);
 
-  if (result > -1 && !_placeholder.isEmpty())
-    ++result;
+  if (result > -1 && !_placeholder.isEmpty()) {
+    {
+      ++result;
+    }
+  }
 
   return result;
 }
@@ -172,8 +212,11 @@ int GraphPropertiesModel<PROPTYPE>::rowOf(PROPTYPE *pi) const {
 template <typename PROPTYPE>
 int GraphPropertiesModel<PROPTYPE>::rowOf(const QString &pName) const {
   for (int i = 0; i < _properties.size(); ++i) {
-    if (pName == tlpStringToQString(_properties[i]->getName()))
-      return i;
+    if (pName == tlpStringToQString(_properties[i]->getName())) {
+      {
+        return i;
+      }
+    }
   }
 
   return -1;
@@ -184,12 +227,15 @@ QVariant tlp::GraphPropertiesModel<PROPTYPE>::headerData(int section, Qt::Orient
                                                          int role) const {
   if (orientation == Qt::Horizontal) {
     if (role == Qt::DisplayRole) {
-      if (section == 0)
-        return tr("Name");
-      else if (section == 1)
-        return tr("Type");
-      else if (section == 2)
-        return tr("Scope");
+      if (section == 0) {
+        {
+          return tr("Name");
+        }
+      } else if (section == 1) {
+        { return tr("Type"); }
+      } else if (section == 2) {
+        { return tr("Scope"); }
+      }
     }
   }
 
@@ -199,14 +245,20 @@ QVariant tlp::GraphPropertiesModel<PROPTYPE>::headerData(int section, Qt::Orient
 template <typename PROPTYPE>
 bool tlp::GraphPropertiesModel<PROPTYPE>::setData(const QModelIndex &index, const QVariant &value,
                                                   int role) {
-  if (_graph == nullptr)
-    return false;
+  if (_graph == nullptr) {
+    {
+      return false;
+    }
+  }
 
   if (_checkable && role == Qt::CheckStateRole && index.column() == 0) {
-    if (value.value<int>() == int(Qt::Checked))
-      _checkedProperties.insert(static_cast<PROPTYPE *>(index.internalPointer()));
-    else
-      _checkedProperties.remove(static_cast<PROPTYPE *>(index.internalPointer()));
+    if (value.value<int>() == int(Qt::Checked)) {
+      {
+        _checkedProperties.insert(static_cast<PROPTYPE *>(index.internalPointer()));
+      }
+    } else {
+      { _checkedProperties.remove(static_cast<PROPTYPE *>(index.internalPointer())); }
+    }
 
     emit checkStateChanged(index, static_cast<Qt::CheckState>(value.value<int>()));
     return true;

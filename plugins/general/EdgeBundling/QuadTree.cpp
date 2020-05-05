@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -51,26 +51,31 @@ node QuadTreeBundle::splitEdge(node a, node b) {
 }
 //=====================================
 bool QuadTreeBundle::isIn(const Coord &p, const Coord &a, const Coord &b) {
-  if (p[0] < a[0])
+  if (p[0] < a[0]) {
     return false;
+  }
 
-  if (p[0] > b[0])
+  if (p[0] > b[0]) {
     return false;
+  }
 
-  if (p[1] < a[1])
+  if (p[1] < a[1]) {
     return false;
+  }
 
-  if (p[1] > b[1])
+  if (p[1] > b[1]) {
     return false;
+  }
 
   return true;
 }
 //=====================================
 void QuadTreeBundle::elmentSplitting(const Coord &a, const Coord &b, const vector<node> &input,
                                      vector<node> &in, vector<node> &out) {
-  if (!((a[0] < b[0]) && (a[1] < b[1])))
+  if (!((a[0] < b[0]) && (a[1] < b[1]))) {
     throw Exception("2 nodes have the same position.\nTry to apply the \"Fast Overlap "
                     "Removal\" algorithm before.");
+  }
 
   in.clear();
   out.clear();
@@ -78,10 +83,11 @@ void QuadTreeBundle::elmentSplitting(const Coord &a, const Coord &b, const vecto
   for (auto n : input) {
     const Coord &tmp = layout->getNodeValue(n);
 
-    if (isIn(tmp, a, b))
+    if (isIn(tmp, a, b)) {
       in.push_back(n);
-    else
+    } else {
       out.push_back(n);
+    }
   }
 }
 //=====================================
@@ -194,15 +200,17 @@ void QuadTreeBundle::createQuadTree(Graph *graph, tlp::LayoutProperty *lay,
   // create the border of the Quadtree
   nbNodesInOriginalGraph = graph->numberOfNodes();
 
-  if (!lay)
+  if (!lay) {
     layout = graph->getLayoutProperty("viewLayout");
-  else
+  } else {
     layout = lay;
+  }
 
-  if (!siz)
+  if (!siz) {
     size = graph->getSizeProperty("viewSize");
-  else
+  } else {
     size = siz;
+  }
 
   rot = graph->getDoubleProperty("viewRotation");
   this->graph = graph;

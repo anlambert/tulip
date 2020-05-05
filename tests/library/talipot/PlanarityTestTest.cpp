@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -130,21 +130,24 @@ void PlanarityTestTest::planarMetaGraphsEmbedding() {
   toGroup.reserve(10);
   const std::vector<node> &nodes = graph->nodes();
 
-  for (unsigned int i = 0; i < 10; ++i)
+  for (unsigned int i = 0; i < 10; ++i) {
     toGroup.push_back(nodes[i]);
+  }
 
   g->createMetaNode(toGroup);
   toGroup.clear();
 
-  for (unsigned int i = 10; i < 20; ++i)
+  for (unsigned int i = 10; i < 20; ++i) {
     toGroup.push_back(nodes[i]);
+  }
 
   node meta2 = g->createMetaNode(toGroup);
   toGroup.clear();
   toGroup.push_back(meta2);
 
-  for (unsigned int i = 20; i < 30; ++i)
+  for (unsigned int i = 20; i < 30; ++i) {
     toGroup.push_back(nodes[i]);
+  }
 
   g->createMetaNode(toGroup, false);
   toGroup.clear();

@@ -279,13 +279,15 @@ void OGDFFm3::beforeCall() {
     fmmm->useHighLevelOptions(true);
     tlp::SizeProperty *size = nullptr;
 
-    if (dataSet->get("Node Size", size))
+    if (dataSet->get("Node Size", size)) {
       tlpToOGDF->copyTlpNodeSizeToOGDF(size);
+    }
 
     double edgeLenth = 10;
 
-    if (dataSet->get("Unit edge length", edgeLenth))
+    if (dataSet->get("Unit edge length", edgeLenth)) {
       fmmm->unitEdgeLength(edgeLenth);
+    }
 
     bool bval = false;
 

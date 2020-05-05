@@ -76,8 +76,9 @@ void SceneConfigWidget::resetChanges() {
   _ui->scrollArea->setEnabled(_glMainWidget != nullptr);
 
   if (_glMainWidget == nullptr || _glMainWidget->getScene()->getGlGraphComposite() == nullptr ||
-      _glMainWidget->getScene()->getGlGraphComposite()->getGraph() == nullptr)
+      _glMainWidget->getScene()->getGlGraphComposite()->getGraph() == nullptr) {
     return;
+  }
 
   Graph *graph = _glMainWidget->getScene()->getGlGraphComposite()->getGraph();
   GlGraphRenderingParameters *renderingParameters =
@@ -89,11 +90,12 @@ void SceneConfigWidget::resetChanges() {
       new GraphPropertiesModel<NumericProperty>("Disable ordering", graph);
   _ui->labelsOrderingCombo->setModel(model);
 
-  if (renderingParameters->getElementOrderingProperty() == nullptr)
+  if (renderingParameters->getElementOrderingProperty() == nullptr) {
     _ui->labelsOrderingCombo->setCurrentIndex(0);
-  else
+  } else {
     _ui->labelsOrderingCombo->setCurrentIndex(
         model->rowOf(renderingParameters->getElementOrderingProperty()));
+  }
 
   _ui->descendingCB->setChecked(renderingParameters->isElementOrderedDescending());
 
@@ -117,16 +119,18 @@ void SceneConfigWidget::resetChanges() {
   _ui->selectionColorButton->setColor(renderingParameters->getSelectionColor());
 
   // PROJECTION
-  if (_glMainWidget->getScene()->isViewOrtho())
+  if (_glMainWidget->getScene()->isViewOrtho()) {
     _ui->orthoRadioButton->setChecked(true);
-  else
+  } else {
     _ui->centralRadioButton->setChecked(true);
+  }
 
   // GRAPH CHANGING
-  if (_glMainWidget->keepScenePointOfViewOnSubgraphChanging())
+  if (_glMainWidget->keepScenePointOfViewOnSubgraphChanging()) {
     _ui->keepSceneRadioButton->setChecked(true);
-  else
+  } else {
     _ui->centerSceneRadioButton->setChecked(true);
+  }
 
   //  QApplication::processEvents();
   _resetting = false;
@@ -152,16 +156,17 @@ bool SceneConfigWidget::eventFilter(QObject *obj, QEvent *ev) {
 }
 
 void SceneConfigWidget::applySettings() {
-  if (_resetting || !_glMainWidget->getScene()->getGlGraphComposite())
+  if (_resetting || !_glMainWidget->getScene()->getGlGraphComposite()) {
     return;
+  }
 
   GlGraphRenderingParameters *renderingParameters =
       _glMainWidget->getScene()->getGlGraphComposite()->getRenderingParametersPointer();
 
   // NODES
-  if (_ui->labelsOrderingCombo->currentIndex() == 0)
+  if (_ui->labelsOrderingCombo->currentIndex() == 0) {
     renderingParameters->setElementOrderingProperty(nullptr);
-  else {
+  } else {
     GraphPropertiesModel<NumericProperty> *model =
         static_cast<GraphPropertiesModel<NumericProperty> *>(_ui->labelsOrderingCombo->model());
     renderingParameters->setElementOrderingProperty(

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -79,11 +79,13 @@ HilbertLayout::HilbertLayout(unsigned char order) : order(order) {
 unsigned int HilbertLayout::unproject(const Vec2i &point) const {
   Vec2i p;
 
-  if (point[0] <= -shift || point[0] >= shift)
+  if (point[0] <= -shift || point[0] >= shift) {
     return UINT_MAX;
+  }
 
-  if (point[1] <= -shift || point[1] >= shift)
+  if (point[1] <= -shift || point[1] >= shift) {
     return UINT_MAX;
+  }
 
   p[0] = point[0] + shift;
   p[1] = point[1] + shift;

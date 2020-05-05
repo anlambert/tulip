@@ -405,8 +405,9 @@ public:
    * Layers will not be deleted in this function
    */
   void clearLayersList() {
-    for (const auto &it : layersList)
+    for (const auto &it : layersList) {
       delete it.second;
+    }
 
     layersList.clear();
   }

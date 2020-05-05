@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -26,8 +26,9 @@ void PluginProgress::setPreviewHandler(ProgressPreviewHandler *handler) {
   _previewHandler = handler;
 }
 ProgressState PluginProgress::progress(int step, int max_step) {
-  if (_previewHandler != nullptr && isPreviewMode())
+  if (_previewHandler != nullptr && isPreviewMode()) {
     _previewHandler->progressStateChanged(step, max_step);
+  }
 
   return TLP_CONTINUE;
 }

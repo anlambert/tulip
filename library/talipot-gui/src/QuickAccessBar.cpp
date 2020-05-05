@@ -48,9 +48,9 @@ public:
     if (ev->type() == QEvent::MouseButtonPress) {
       QMouseEvent *mouseEv = static_cast<QMouseEvent *>(ev);
 
-      if (!_view->geometry().contains(mouseEv->globalPos()))
+      if (!_view->geometry().contains(mouseEv->globalPos())) {
         _view->close();
-      else {
+      } else {
         setCurrentIndex(_view->indexAt(mouseEv->pos()).row());
         _view->close();
       }
@@ -80,8 +80,9 @@ public:
   }
 
   void hidePopup() override {
-    if (_view != nullptr)
+    if (_view != nullptr) {
       _view->close();
+    }
   }
 };
 
@@ -126,77 +127,101 @@ QuickAccessBarImpl::QuickAccessBarImpl(QGraphicsItem *quickAccessBarItem,
   _ui->edgeBorderColorButton->setDialogTitle("Choose the default color for the border of edges");
   _ui->labelColorButton->setDialogTitle("Choose the default color for the label of nodes or edges");
 
-  if (buttons.testFlag(ALLBUTTONS))
+  if (buttons.testFlag(ALLBUTTONS)) {
     return;
+  }
 
-  if (!buttons.testFlag(NODESCOLORCAPTION))
+  if (!buttons.testFlag(NODESCOLORCAPTION)) {
     _ui->nodesColorCaptionButton->hide();
+  }
 
-  if (!buttons.testFlag(NODESSIZECAPTION))
+  if (!buttons.testFlag(NODESSIZECAPTION)) {
     _ui->nodesSizeCaptionButton->hide();
+  }
 
-  if (!buttons.testFlag(EDGESCOLORCAPTION))
+  if (!buttons.testFlag(EDGESCOLORCAPTION)) {
     _ui->edgesColorCaptionButton->hide();
+  }
 
-  if (!buttons.testFlag(EDGESIZECAPTION))
+  if (!buttons.testFlag(EDGESIZECAPTION)) {
     _ui->edgesSizeCaptionButton->hide();
+  }
 
-  if (!buttons.testFlag(SCREENSHOT))
+  if (!buttons.testFlag(SCREENSHOT)) {
     _ui->screenshotButton->hide();
+  }
 
-  if (!buttons.testFlag(BACKGROUNDCOLOR))
+  if (!buttons.testFlag(BACKGROUNDCOLOR)) {
     _ui->backgroundColorButton->hide();
+  }
 
-  if (!buttons.testFlag(NODECOLOR))
+  if (!buttons.testFlag(NODECOLOR)) {
     _ui->nodeColorButton->hide();
+  }
 
-  if (!buttons.testFlag(EDGECOLOR))
+  if (!buttons.testFlag(EDGECOLOR)) {
     _ui->edgeColorButton->hide();
+  }
 
-  if (!buttons.testFlag(NODEBORDERCOLOR))
+  if (!buttons.testFlag(NODEBORDERCOLOR)) {
     _ui->nodeBorderColorButton->hide();
+  }
 
-  if (!buttons.testFlag(EDGEBORDERCOLOR))
+  if (!buttons.testFlag(EDGEBORDERCOLOR)) {
     _ui->edgeBorderColorButton->hide();
+  }
 
-  if (!buttons.testFlag(LABELCOLOR))
+  if (!buttons.testFlag(LABELCOLOR)) {
     _ui->labelColorButton->hide();
+  }
 
-  if (!buttons.testFlag(COLORINTERPOLATION))
+  if (!buttons.testFlag(COLORINTERPOLATION)) {
     _ui->colorInterpolationToggle->hide();
+  }
 
-  if (!buttons.testFlag(SIZEINTERPOLATION))
+  if (!buttons.testFlag(SIZEINTERPOLATION)) {
     _ui->sizeInterpolationToggle->hide();
+  }
 
-  if (!buttons.testFlag(SHOWEDGES))
+  if (!buttons.testFlag(SHOWEDGES)) {
     _ui->showEdgesToggle->hide();
+  }
 
-  if (!buttons.testFlag(SHOWLABELS))
+  if (!buttons.testFlag(SHOWLABELS)) {
     _ui->showLabelsToggle->hide();
+  }
 
-  if (!buttons.testFlag(LABELSSCALED))
+  if (!buttons.testFlag(LABELSSCALED)) {
     _ui->labelsScaledToggle->hide();
+  }
 
-  if (!buttons.testFlag(NODESHAPE))
+  if (!buttons.testFlag(NODESHAPE)) {
     _ui->nodeShapeButton->hide();
+  }
 
-  if (!buttons.testFlag(EDGESHAPE))
+  if (!buttons.testFlag(EDGESHAPE)) {
     _ui->edgeShapeButton->hide();
+  }
 
-  if (!buttons.testFlag(NODESIZE))
+  if (!buttons.testFlag(NODESIZE)) {
     _ui->nodeSizeButton->hide();
+  }
 
-  if (!buttons.testFlag(EDGESIZE))
+  if (!buttons.testFlag(EDGESIZE)) {
     _ui->edgeSizeButton->hide();
+  }
 
-  if (!buttons.testFlag(NODELABELPOSITION))
+  if (!buttons.testFlag(NODELABELPOSITION)) {
     _ui->labelPositionButton->hide();
+  }
 
-  if (!buttons.testFlag(SELECTFONT))
+  if (!buttons.testFlag(SELECTFONT)) {
     _ui->fontButton->hide();
+  }
 
-  if (!buttons.testFlag(SHOWNODES))
+  if (!buttons.testFlag(SHOWNODES)) {
     _ui->showNodesToggle->hide();
+  }
 }
 
 void QuickAccessBarImpl::addButtonAtEnd(QAbstractButton *button) {
@@ -332,12 +357,13 @@ void QuickAccessBarImpl::showHideCaption(CaptionItem::CaptionType captionType) {
 
   size_t captionIndice = 0;
 
-  if (captionType == CaptionItem::NodesSizeCaption)
+  if (captionType == CaptionItem::NodesSizeCaption) {
     captionIndice = 1;
-  else if (captionType == CaptionItem::EdgesColorCaption)
+  } else if (captionType == CaptionItem::EdgesColorCaption) {
     captionIndice = 2;
-  else if (captionType == CaptionItem::EdgesSizeCaption)
+  } else if (captionType == CaptionItem::EdgesSizeCaption) {
     captionIndice = 3;
+  }
 
   _captions[captionIndice]->captionGraphicsItem()->setVisible(
       !_captions[captionIndice]->captionGraphicsItem()->isVisible());
@@ -436,16 +462,18 @@ void QuickAccessBarImpl::setAllColorValues(unsigned int eltType, ColorProperty *
       hasSelected = true;
     }
 
-    if (!hasSelected)
+    if (!hasSelected) {
       prop->setAllNodeValue(color, _mainView->graph());
+    }
   } else {
     for (auto e : selected->getNonDefaultValuatedEdges(_mainView->graph())) {
       prop->setEdgeValue(e, color);
       hasSelected = true;
     }
 
-    if (!hasSelected)
+    if (!hasSelected) {
       prop->setAllEdgeValue(color, _mainView->graph());
+    }
   }
 
   Observable::unholdObservers();
@@ -475,8 +503,9 @@ void QuickAccessBarImpl::setAllValues(unsigned int eltType, PropertyInterface *p
                                                 _mainView->graphicsView()->window());
 
   // Check if edition has been cancelled
-  if (!val.isValid())
+  if (!val.isValid()) {
     return;
+  }
 
   BooleanProperty *selected = inputData()->getElementSelected();
   bool hasSelected = false;
@@ -491,16 +520,18 @@ void QuickAccessBarImpl::setAllValues(unsigned int eltType, PropertyInterface *p
       hasSelected = true;
     }
 
-    if (!hasSelected)
+    if (!hasSelected) {
       GraphModel::setAllNodeValue(prop, val, _mainView->graph());
+    }
   } else {
     for (auto e : selected->getNonDefaultValuatedEdges(_mainView->graph())) {
       GraphModel::setEdgeValue(e.id, prop, val);
       hasSelected = true;
     }
 
-    if (!hasSelected)
+    if (!hasSelected) {
       GraphModel::setAllEdgeValue(prop, val, _mainView->graph());
+    }
   }
 
   Observable::unholdObservers();
@@ -576,8 +607,9 @@ void QuickAccessBarImpl::selectFont() {
   FontDialog dlg(_mainView->graphicsView()->window());
   dlg.selectFont(Font::fromFile(inputData()->getElementFont()->getNodeDefaultValue().c_str()));
 
-  if (dlg.exec() != QDialog::Accepted || !dlg.font().exists())
+  if (dlg.exec() != QDialog::Accepted || !dlg.font().exists()) {
     return;
+  }
 
   _mainView->graph()->push();
 

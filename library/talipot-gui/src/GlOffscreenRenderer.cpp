@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -137,8 +137,9 @@ void GlOffscreenRenderer::initFrameBuffers(const bool antialiased) {
     QOpenGLFramebufferObjectFormat fboFmt;
     fboFmt.setAttachment(QOpenGLFramebufferObject::CombinedDepthStencil);
 
-    if (antialiasedFbo)
+    if (antialiasedFbo) {
       fboFmt.setSamples(OpenGlConfigManager::maxNumberOfSamples());
+    }
 
     glFrameBuf = new QOpenGLFramebufferObject(vPWidth, vPHeight, fboFmt);
   }
@@ -178,10 +179,11 @@ void GlOffscreenRenderer::renderScene(const bool centerScene, const bool antiali
   scene.draw();
   glFrameBuf->release();
 
-  if (antialiasedFbo)
+  if (antialiasedFbo) {
     QOpenGLFramebufferObject::blitFramebuffer(
         glFrameBuf2, QRect(0, 0, glFrameBuf2->width(), glFrameBuf2->height()), glFrameBuf,
         QRect(0, 0, glFrameBuf->width(), glFrameBuf->height()));
+  }
 }
 
 void GlOffscreenRenderer::renderExternalScene(GlScene *scene, const bool antialiased) {
@@ -198,10 +200,11 @@ void GlOffscreenRenderer::renderExternalScene(GlScene *scene, const bool antiali
   scene->draw();
   glFrameBuf->release();
 
-  if (antialiasedFbo)
+  if (antialiasedFbo) {
     QOpenGLFramebufferObject::blitFramebuffer(
         glFrameBuf2, QRect(0, 0, glFrameBuf2->width(), glFrameBuf2->height()), glFrameBuf,
         QRect(0, 0, glFrameBuf->width(), glFrameBuf->height()));
+  }
 
   scene->setViewport(backupViewport);
 }
@@ -217,10 +220,11 @@ static inline QImage convertImage(const QImage &image) {
 
 QImage GlOffscreenRenderer::getImage() {
   makeOpenGLContextCurrent();
-  if (!antialiasedFbo)
+  if (!antialiasedFbo) {
     return convertImage(glFrameBuf->toImage());
-  else
+  } else {
     return convertImage(glFrameBuf2->toImage());
+  }
 }
 
 GLuint GlOffscreenRenderer::getGLTexture(const bool generateMipMaps) {

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -319,32 +319,33 @@ int RectanglePacking::calculOfNumberOptimalRepositionnedRectangles(const char *q
 
   double numberOfRectanglesDouble = numberOfRectangles;
 
-  if (!strcmp(quality, "n5"))
+  if (!strcmp(quality, "n5")) {
     return numberOfRectangles;
 
-  else if (!strcmp(quality, "n4logn"))
+  } else if (!strcmp(quality, "n4logn")) {
     return int(floor(pow(pow(numberOfRectanglesDouble, 4.0) * log(numberOfRectanglesDouble), 0.2)));
 
-  else if (!strcmp(quality, "n4"))
+  } else if (!strcmp(quality, "n4")) {
     return int(floor(pow(numberOfRectanglesDouble, 0.8)));
 
-  else if (!strcmp(quality, "n3logn"))
+  } else if (!strcmp(quality, "n3logn")) {
     return int(floor(pow(pow(numberOfRectanglesDouble, 3.0) * log(numberOfRectanglesDouble), 0.2)));
 
-  else if (!strcmp(quality, "n3"))
+  } else if (!strcmp(quality, "n3")) {
     return int(floor(pow(numberOfRectanglesDouble, 0.6)));
 
-  else if (!strcmp(quality, "n2logn"))
+  } else if (!strcmp(quality, "n2logn")) {
     return int(floor(pow(pow(numberOfRectanglesDouble, 2.0) * log(numberOfRectanglesDouble), 0.2)));
 
-  else if (!strcmp(quality, "n2"))
+  } else if (!strcmp(quality, "n2")) {
     return int(floor(pow(numberOfRectanglesDouble, 0.4)));
 
-  else if (!strcmp(quality, "nlogn"))
+  } else if (!strcmp(quality, "nlogn")) {
     return int(floor(pow(numberOfRectanglesDouble * log(numberOfRectanglesDouble), 0.2)));
 
-  else if (!strcmp(quality, "n"))
+  } else if (!strcmp(quality, "n")) {
     return int(floor(pow(numberOfRectanglesDouble, 0.2)));
+  }
 
   return 0;
 }
@@ -416,10 +417,11 @@ void RectanglePacking::endOfLine(float &heightTemp, float &widthTemp, bool &bool
   heightTemp = 0;
   widthTemp = 0;
 
-  if (bestHeightOfBoundingBox > bestWidthOfBoundingBox)
+  if (bestHeightOfBoundingBox > bestWidthOfBoundingBox) {
     ratio = bestHeightOfBoundingBox / bestWidthOfBoundingBox;
-  else
+  } else {
     ratio = bestWidthOfBoundingBox / bestHeightOfBoundingBox;
+  }
 
   if ((ratio > 1.1) && (bestWidthOfBoundingBox > bestHeightOfBoundingBox)) {
     boolWidth = 1;
@@ -439,10 +441,11 @@ void RectanglePacking::endOfColumn(float &widthTemp, float &heightTemp, bool &bo
   widthTemp = 0;
   heightTemp = 0;
 
-  if (bestHeightOfBoundingBox > bestWidthOfBoundingBox)
+  if (bestHeightOfBoundingBox > bestWidthOfBoundingBox) {
     ratio = bestHeightOfBoundingBox / bestWidthOfBoundingBox;
-  else
+  } else {
     ratio = bestWidthOfBoundingBox / bestHeightOfBoundingBox;
+  }
 
   if ((ratio > 1.1) && (bestHeightOfBoundingBox > bestWidthOfBoundingBox)) {
     boolWidth = 0;
@@ -465,10 +468,11 @@ void RectanglePacking::continueLine(vector<Rectangle<float>>::iterator itr, floa
 
     float ratio;
 
-    if (bestHeightOfBoundingBox > bestWidthOfBoundingBox)
+    if (bestHeightOfBoundingBox > bestWidthOfBoundingBox) {
       ratio = bestHeightOfBoundingBox / bestWidthOfBoundingBox;
-    else
+    } else {
       ratio = bestWidthOfBoundingBox / bestHeightOfBoundingBox;
+    }
 
     if ((ratio > 1.1) && (bestWidthOfBoundingBox > bestHeightOfBoundingBox)) {
       boolWidth = 1;
@@ -486,8 +490,9 @@ void RectanglePacking::continueLine(vector<Rectangle<float>>::iterator itr, floa
     (*itr)[1][1] = bestHeightOfBoundingBox + newRectangleHeight;
     widthTemp += newRectangleWidth;
 
-    if (newRectangleHeight > heightTemp)
+    if (newRectangleHeight > heightTemp) {
       heightTemp = newRectangleHeight;
+    }
   }
 }
 
@@ -503,10 +508,11 @@ void RectanglePacking::continueColumn(vector<Rectangle<float>>::iterator itr, fl
 
     float ratio;
 
-    if (bestHeightOfBoundingBox > bestWidthOfBoundingBox)
+    if (bestHeightOfBoundingBox > bestWidthOfBoundingBox) {
       ratio = bestHeightOfBoundingBox / bestWidthOfBoundingBox;
-    else
+    } else {
       ratio = bestWidthOfBoundingBox / bestHeightOfBoundingBox;
+    }
 
     if ((ratio > 1.1) && (bestHeightOfBoundingBox > bestWidthOfBoundingBox)) {
       boolWidth = 0;
@@ -522,8 +528,9 @@ void RectanglePacking::continueColumn(vector<Rectangle<float>>::iterator itr, fl
     (*itr)[1][1] = heightTemp + newRectangleHeight;
     heightTemp += newRectangleHeight;
 
-    if (newRectangleWidth > widthTemp)
+    if (newRectangleWidth > widthTemp) {
       widthTemp = newRectangleWidth;
+    }
   }
 }
 
@@ -607,25 +614,26 @@ int RectanglePacking::calculNumberOfTestedPositions(const char *quality) {
 
   double numberOfRectanglesDouble = numberOfRectangles;
 
-  if (!strcmp(quality, "n5"))
+  if (!strcmp(quality, "n5")) {
     return numberOfRectangles;
 
-  else if (!strcmp(quality, "n4logn"))
+  } else if (!strcmp(quality, "n4logn")) {
     return int(
         floor(pow(pow(numberOfRectanglesDouble, 3.0) * log(numberOfRectanglesDouble), 0.25)));
 
-  else if (!strcmp(quality, "n4"))
+  } else if (!strcmp(quality, "n4")) {
     return int(floor(pow(numberOfRectanglesDouble, 0.75)));
 
-  else if (!strcmp(quality, "n3logn"))
+  } else if (!strcmp(quality, "n3logn")) {
     return int(
         floor(pow(pow(numberOfRectanglesDouble, 2.0) * log(numberOfRectanglesDouble), 0.25)));
 
-  else if (!strcmp(quality, "n3"))
+  } else if (!strcmp(quality, "n3")) {
     return int(floor(sqrt(numberOfRectanglesDouble)));
 
-  else if (!strcmp(quality, "n2logn"))
+  } else if (!strcmp(quality, "n2logn")) {
     return int(floor(sqrt(log(numberOfRectanglesDouble))));
+  }
 
   return 0;
 }

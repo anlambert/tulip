@@ -72,8 +72,9 @@ protected:
     while (it->hasNext()) {
       curNode = it->next();
 
-      if (_filter.get(curNode) == value)
+      if (_filter.get(curNode) == value) {
         return;
+      }
     }
 
     // set curNode as invalid
@@ -126,8 +127,9 @@ protected:
     while (it->hasNext()) {
       curEdge = it->next();
 
-      if (_filter.get(curEdge.id) == value)
+      if (_filter.get(curEdge.id) == value) {
         return;
+      }
     }
 
     // set curEdge as invalid

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -71,9 +71,11 @@ void GlQuantitativeAxis::setAxisParameters(const long long minV, const long long
   min = minV;
   long long maxVCp = maxV;
 
-  if (incrementStepV)
-    while (((maxVCp - minV) % incrementStepV) != 0)
+  if (incrementStepV) {
+    while (((maxVCp - minV) % incrementStepV) != 0) {
       ++maxVCp;
+    }
+  }
 
   max = maxVCp;
   incrementStep = incrementStepV;
@@ -125,8 +127,9 @@ void GlQuantitativeAxis::buildAxisGraduations() {
 
   for (double i = minV + increment; i < maxV; i += increment) {
 
-    if (axisLabels.size() == nbGraduations - 1)
+    if (axisLabels.size() == nbGraduations - 1) {
       break;
+    }
 
     string gradLabel;
 

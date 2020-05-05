@@ -105,9 +105,10 @@ void FontIconDialog::showEvent(QShowEvent *ev) {
 
   _selectedIconName = _ui->iconListWidget->currentItem()->text();
 
-  if (parentWidget())
+  if (parentWidget()) {
     move(parentWidget()->window()->frameGeometry().topLeft() +
          parentWidget()->window()->rect().center() - rect().center());
+  }
 }
 
 void FontIconDialog::openUrlInBrowser(const QString &url) {

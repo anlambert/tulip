@@ -54,8 +54,9 @@ static void computeGraphPoints(const std::vector<node> &nodes, const std::vector
       points[3].set(-nSize[0] / 2., +nSize[1] / 2., +nSize[2] / 2.);
 
       for (unsigned int i = 0; i < 4; ++i) {
-        if (rot)
+        if (rot) {
           rotate(points[i], rot);
+        }
 
         gPoints.push_back(points[i] + point);
       }
@@ -65,8 +66,9 @@ static void computeGraphPoints(const std::vector<node> &nodes, const std::vector
   if (layout->hasNonDefaultValuatedEdges()) {
     for (auto e : edges) {
       if ((selection == nullptr) || selection->getEdgeValue(e)) {
-        for (const Coord &coord : layout->getEdgeValue(e))
+        for (const Coord &coord : layout->getEdgeValue(e)) {
           gPoints.push_back(coord);
+        }
       }
     }
   }
@@ -86,8 +88,9 @@ BoundingBox tlp::computeBoundingBox(const std::vector<node> &nodes, const std::v
   std::vector<Coord> gPoints;
   computeGraphPoints(nodes, edges, layout, size, rotation, selection, gPoints);
   BoundingBox bbox;
-  for (const Coord &point : gPoints)
+  for (const Coord &point : gPoints) {
     bbox.expand(point);
+  }
   return bbox;
 }
 //===========================================================================
@@ -97,8 +100,9 @@ pair<Coord, Coord> tlp::computeBoundingRadius(const Graph *graph, const LayoutPr
                                               const BooleanProperty *selection) {
   pair<Coord, Coord> result;
 
-  if (graph->isEmpty())
+  if (graph->isEmpty()) {
     return result;
+  }
 
   BoundingBox boundingBox = tlp::computeBoundingBox(graph, layout, size, rotation, selection);
   Coord center = boundingBox.center();
@@ -185,13 +189,15 @@ bool tlp::computeLinesIntersection(const std::pair<tlp::Coord, tlp::Coord> &line
   float axbnorm = axb.norm();
 
   // lines are parallel, no intersection
-  if (axbnorm == 0)
+  if (axbnorm == 0) {
     return false;
+  }
 
   Coord c = line2.first - line1.first;
   // skew lines, no intersection
-  if (c.dotProduct(axb) != 0)
+  if (c.dotProduct(axb) != 0) {
     return false;
+  }
 
   // lines intersects, compute the point
   float s = (c ^ b).dotProduct(axb) / (axbnorm * axbnorm);
@@ -232,8 +238,9 @@ Coord tlp::computePolygonCentroid(const vector<Coord> &points) {
 //======================================================================================================
 
 static inline void normalize(Vec3f &v) {
-  if (v.norm() != 0)
+  if (v.norm() != 0) {
     v /= v.norm();
+  }
 }
 
 //======================================================================================================

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -31,8 +31,9 @@ PropertyManager::PropertyManager(Graph *g) : graph(g) {
     for (PropertyInterface *prop : graph->getSuperGraph()->getObjectProperties()) {
       inheritedProperties[prop->getName()] = prop;
 
-      if (prop->getName() == metaGraphPropertyName)
+      if (prop->getName() == metaGraphPropertyName) {
         static_cast<GraphAbstract *>(graph)->metaGraphProperty = static_cast<GraphProperty *>(prop);
+      }
     }
   }
 }
@@ -59,10 +60,10 @@ bool PropertyManager::existInheritedProperty(const string &str) const {
 void PropertyManager::setLocalProperty(const string &str, PropertyInterface *p) {
   bool hasInheritedProperty = false;
 
-  if (existLocalProperty(str))
+  if (existLocalProperty(str)) {
     // delete previously existing local property
     delete localProperties[str];
-  else {
+  } else {
     // remove previously existing inherited property
     auto it = inheritedProperties.find(str);
     hasInheritedProperty = it != inheritedProperties.end();
@@ -93,14 +94,16 @@ void PropertyManager::setLocalProperty(const string &str, PropertyInterface *p) 
 bool PropertyManager::renameLocalProperty(PropertyInterface *prop, const string &newName) {
   assert(prop && prop->getGraph() == graph);
 
-  if (existLocalProperty(newName))
+  if (existLocalProperty(newName)) {
     return false;
+  }
 
   std::string propName = prop->getName();
   auto it = localProperties.find(propName);
 
-  if (it == localProperties.end())
+  if (it == localProperties.end()) {
     return false;
+  }
 
   assert(it->second == prop);
 
@@ -173,8 +176,9 @@ void PropertyManager::setInheritedProperty(const string &str, PropertyInterface 
       static_cast<GraphAbstract *>(graph)->notifyBeforeAddInheritedProperty(str);
       inheritedProperties[str] = p;
 
-      if (str == metaGraphPropertyName)
+      if (str == metaGraphPropertyName) {
         static_cast<GraphAbstract *>(graph)->metaGraphProperty = static_cast<GraphProperty *>(p);
+      }
     } else {
       // no need for notification
       // already done through notifyBeforeDelInheritedProperty(str);
@@ -202,11 +206,13 @@ void PropertyManager::setInheritedProperty(const string &str, PropertyInterface 
 PropertyInterface *PropertyManager::getProperty(const string &str) const {
   assert(existProperty(str));
 
-  if (existLocalProperty(str))
+  if (existLocalProperty(str)) {
     return getLocalProperty(str);
+  }
 
-  if (existInheritedProperty(str))
+  if (existInheritedProperty(str)) {
     return getInheritedProperty(str);
+  }
 
   return nullptr;
 }
@@ -254,11 +260,12 @@ void PropertyManager::delLocalProperty(const string &str) {
 
     // Delete property
     // Need to be done after subgraph notification.
-    if (graph->canDeleteProperty(graph, oldProp))
+    if (graph->canDeleteProperty(graph, oldProp)) {
       // if (!graph->canPop())
       delete oldProp;
-    else
+    } else {
       oldProp->notifyDestroy();
+    }
   }
 }
 //==============================================================

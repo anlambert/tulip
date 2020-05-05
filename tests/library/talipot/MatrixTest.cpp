@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -48,11 +48,13 @@ void MatrixTest::testExternalOperation() {
     for (unsigned int j = 0; j < SIZE; ++j) {
       mat1[i][j] = double((i + 1) * (j + SIZE));
 
-      if (i == j)
+      if (i == j) {
         matid[i][j] = 1.0;
+      }
 
-      if (i == j)
+      if (i == j) {
         mat1[i][j] = 0.0; // ensure be inversible
+      }
     }
   }
 
@@ -88,16 +90,18 @@ void MatrixTest::testExternalOperation() {
 
   result = mat2 * matinv;
 
-  for (unsigned int i = 0; i < SIZE; ++i)
+  for (unsigned int i = 0; i < SIZE; ++i) {
     for (unsigned int j = 0; j < SIZE; ++j) {
       double res = fabs(matid[i][j] - result[i][j]);
       bool ok = false;
 
-      if (fabs(res) < 1.E-5)
+      if (fabs(res) < 1.E-5) {
         ok = true;
+      }
 
       CPPUNIT_ASSERT(ok);
     }
+  }
 
   Vector<double, SIZE> vec2, vec3;
   vec2 = matid * vec;
@@ -111,8 +115,9 @@ void MatrixTest::testExternalOperation() {
     double res = fabs(vec2[j] - vec[j]);
     bool ok = false;
 
-    if (res < 1.E-5)
+    if (res < 1.E-5) {
       ok = true;
+    }
 
     CPPUNIT_ASSERT(ok);
   }
@@ -124,8 +129,9 @@ void MatrixTest::testExternalOperation() {
   for (unsigned int j = 0; j < SIZE; ++j) {
     double res = fabs(vec2[j] - vec3[j]);
 
-    if (res > 1.E-5)
+    if (res > 1.E-5) {
       ok = true;
+    }
   }
 
   CPPUNIT_ASSERT(ok);
@@ -137,8 +143,9 @@ void MatrixTest::testExternalOperation() {
     bool ok = false;
     double res = fabs(vec[j] - vec3[j]);
 
-    if (res < 1.E-5)
+    if (res < 1.E-5) {
       ok = true;
+    }
 
     CPPUNIT_ASSERT(ok);
   }
@@ -150,19 +157,22 @@ void MatrixTest::testInternalOperation() {
   matnull.fill(0);
   matid.fill(0);
 
-  for (unsigned int i = 0; i < SIZE; ++i)
+  for (unsigned int i = 0; i < SIZE; ++i) {
     for (unsigned int j = 0; j < SIZE; ++j) {
       mat1[i][j] = double((i + 1) * (j + SIZE));
 
-      if (i == j)
+      if (i == j) {
         matid[i][j] = 1.0;
+      }
 
       CPPUNIT_ASSERT_EQUAL(0.0, matnull[i][j]);
       CPPUNIT_ASSERT_EQUAL(double(((i + 1) * (j + SIZE))), mat1[i][j]);
 
-      if (i == j)
+      if (i == j) {
         mat1[i][j] = 0.0;
+      }
     }
+  }
 
   Matrix<double, SIZE> mat2(mat1);
   CPPUNIT_ASSERT_EQUAL(mat2, mat1);
@@ -184,16 +194,18 @@ void MatrixTest::testInternalOperation() {
   matinv.inverse();
   mat1 *= matinv;
 
-  for (unsigned int i = 0; i < SIZE; ++i)
+  for (unsigned int i = 0; i < SIZE; ++i) {
     for (unsigned int j = 0; j < SIZE; ++j) {
       double res = fabs(matid[i][j] - mat1[i][j]);
       bool ok = false;
 
-      if (res < 1.E-5)
+      if (res < 1.E-5) {
         ok = true;
+      }
 
       CPPUNIT_ASSERT(ok);
     }
+  }
 
   mat1.fill(1.0);
   mat2 = mat1;

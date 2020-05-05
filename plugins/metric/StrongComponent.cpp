@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -23,8 +23,9 @@ int StrongComponent::attachNumerotation(tlp::node n, std::unordered_map<tlp::nod
                                         std::unordered_map<tlp::node, bool> &finished,
                                         std::unordered_map<tlp::node, int> &minAttach, int &id,
                                         std::stack<tlp::node> &renum, int &curComponent) {
-  if (visited[n])
+  if (visited[n]) {
     return minAttach[n];
+  }
 
   visited[n] = true;
   int myId = id;
@@ -38,8 +39,9 @@ int StrongComponent::attachNumerotation(tlp::node n, std::unordered_map<tlp::nod
     if (!finished[tmpN]) {
       int tmp = attachNumerotation(tmpN, visited, finished, minAttach, id, renum, curComponent);
 
-      if (res > tmp)
+      if (res > tmp) {
         res = tmp;
+      }
     }
   }
 
@@ -84,10 +86,11 @@ bool StrongComponent::run() {
   for (auto ite : graph->edges()) {
     auto eEnds = graph->ends(ite);
 
-    if (result->getNodeValue(eEnds.first) == result->getNodeValue(eEnds.second))
+    if (result->getNodeValue(eEnds.first) == result->getNodeValue(eEnds.second)) {
       result->setEdgeValue(ite, result->getNodeValue(eEnds.first));
-    else
+    } else {
       result->setEdgeValue(ite, curComponent);
+    }
   }
 
   return true;

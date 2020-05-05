@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -73,8 +73,9 @@ edge GraphImpl::existEdge(const node src, const node tgt, bool directed) const {
 }
 //----------------------------------------------------------------
 unsigned int GraphImpl::getSubGraphId(unsigned int id) {
-  if (id == 0)
+  if (id == 0) {
     return graphIds.get();
+  }
 
   graphIds.getFreeId(id);
   return id;
@@ -99,8 +100,9 @@ void GraphImpl::addNodes(unsigned int nb) {
   if (nb) {
     storage.addNodes(nb);
 
-    if (hasOnlookers())
+    if (hasOnlookers()) {
       sendEvent(GraphEvent(*this, GraphEvent::TLP_ADD_NODES, nb));
+    }
   }
 }
 //----------------------------------------------------------------
@@ -108,8 +110,9 @@ void GraphImpl::addNodes(unsigned int nb, std::vector<node> &addedNodes) {
   if (nb) {
     storage.addNodes(nb, &addedNodes);
 
-    if (hasOnlookers())
+    if (hasOnlookers()) {
       sendEvent(GraphEvent(*this, GraphEvent::TLP_ADD_NODES, nb));
+    }
   }
 }
 //----------------------------------------------------------------
@@ -144,8 +147,9 @@ void GraphImpl::addEdges(const std::vector<std::pair<node, node>> &edges,
   if (!edges.empty()) {
     storage.addEdges(edges, &addedEdges);
 
-    if (hasOnlookers())
+    if (hasOnlookers()) {
       sendEvent(GraphEvent(*this, GraphEvent::TLP_ADD_EDGES, edges.size()));
+    }
   }
 }
 //----------------------------------------------------------------
@@ -153,8 +157,9 @@ void GraphImpl::addEdges(const std::vector<std::pair<node, node>> &edges) {
   if (!edges.empty()) {
     storage.addEdges(edges);
 
-    if (hasOnlookers())
+    if (hasOnlookers()) {
       sendEvent(GraphEvent(*this, GraphEvent::TLP_ADD_EDGES, edges.size()));
+    }
   }
 }
 //----------------------------------------------------------------
@@ -190,8 +195,9 @@ void GraphImpl::delNode(const node n, bool) {
   std::stack<Graph *> sgq;
 
   for (Graph *sg : subGraphs()) {
-    if (sg->isElement(n))
+    if (sg->isElement(n)) {
       sgq.push(sg);
+    }
   }
 
   // subgraphs loop
@@ -199,8 +205,9 @@ void GraphImpl::delNode(const node n, bool) {
     Graph *sg = sgq.top();
 
     for (Graph *ssg : sg->subGraphs()) {
-      if (ssg->isElement(n))
+      if (ssg->isElement(n)) {
         sgq.push(ssg);
+      }
     }
 
     if (sg == sgq.top()) {
@@ -213,8 +220,9 @@ void GraphImpl::delNode(const node n, bool) {
   // for notification and removal from propertyContainer
   for (auto e : edges) {
     // if e is a loop it may have been previously deleted
-    if (isElement(e))
+    if (isElement(e)) {
       removeEdge(e);
+    }
   }
 
   notifyDelNode(n);
@@ -236,8 +244,9 @@ void GraphImpl::delEdge(const edge e, bool) {
   for (Graph *subgraph : subGraphs()) {
     assert(subgraph != this);
 
-    if (subgraph->isElement(e))
+    if (subgraph->isElement(e)) {
       subgraph->delEdge(e);
+    }
   }
 
   removeEdge(e);
@@ -312,8 +321,9 @@ void GraphImpl::setEnds(const edge e, const node newSrc, const node newTgt) {
   node tgt = eEnds.second;
 
   // nothing to do if same ends
-  if (src == newSrc && tgt == newTgt)
+  if (src == newSrc && tgt == newTgt) {
     return;
+  }
 
   // notification
   notifyBeforeSetEnds(e);
@@ -421,9 +431,10 @@ void GraphImpl::push(bool unpopAllowed, std::vector<PropertyInterface *> *propsT
   // end any previous updates observation
   unobserveUpdates();
 
-  if (hasRecorders)
+  if (hasRecorders) {
     // stop recording for current recorder
     recorders.front()->stopRecording(this);
+  }
 
   const GraphStorageIdsMemento *prevIdsMemento =
       hasRecorders ? recorders.front()->newIdsState : nullptr;
@@ -452,8 +463,9 @@ void GraphImpl::push(bool unpopAllowed, std::vector<PropertyInterface *> *propsT
 
   if (propsToPreserve) {
     // the properties to preserve do not have to be observed
-    for (unsigned int i = 0; i < propsToPreserve->size(); ++i)
+    for (unsigned int i = 0; i < propsToPreserve->size(); ++i) {
       recorder->dontObserveProperty((*propsToPreserve)[i]);
+    }
   }
 }
 //----------------------------------------------------------------
@@ -465,8 +477,9 @@ void GraphImpl::pop(bool unpopAllowed) {
     unobserveUpdates();
     GraphUpdatesRecorder *prevRecorder = recorders.front();
 
-    if (unpopAllowed && prevRecorder->restartAllowed)
+    if (unpopAllowed && prevRecorder->restartAllowed) {
       prevRecorder->recordNewValues(this);
+    }
 
     prevRecorder->stopRecording(this);
     // undo all recorded updates
@@ -478,22 +491,25 @@ void GraphImpl::pop(bool unpopAllowed) {
       // observe any updates
       // in order to remove previous recorders if needed
       observeUpdates(this);
-    } else
+    } else {
       delete prevRecorder;
+    }
 
     // must be done here (see canPop, canUnpop)
     recorders.pop_front();
 
     // restart the front recorder
-    if (!recorders.empty())
+    if (!recorders.empty()) {
       recorders.front()->restartRecording(this);
+    }
   }
 }
 //----------------------------------------------------------------
 void GraphImpl::popIfNoUpdates() {
-  if (!recorders.empty() && !recorders.front()->hasUpdates())
+  if (!recorders.empty() && !recorders.front()->hasUpdates()) {
     // no need of a "no updates" recorder
     this->pop(false);
+  }
 }
 //----------------------------------------------------------------
 void GraphImpl::unpop() {
@@ -502,8 +518,9 @@ void GraphImpl::unpop() {
   if (nbPrev != 0) {
     unobserveUpdates();
 
-    if (!recorders.empty())
+    if (!recorders.empty()) {
       recorders.front()->stopRecording(this);
+    }
 
     GraphUpdatesRecorder *prevRecorder = previousRecorders.front();
     previousRecorders.pop_front();
@@ -515,8 +532,9 @@ void GraphImpl::unpop() {
     // if previous recorders can be unpop
     // ensure they will be removed
     // with the next update
-    if (nbPrev > 1)
+    if (nbPrev > 1) {
       observeUpdates(this);
+    }
   }
 }
 //----------------------------------------------------------------

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -87,19 +87,22 @@ struct KlemmEguiluzModel : public ImportModule {
     for (unsigned int i = 0; i < m; ++i) {
       activated[i] = true;
 
-      for (unsigned int j = i + 1; j < m; ++j)
+      for (unsigned int j = i + 1; j < m; ++j) {
         graph->addEdge(nodes[i], nodes[j]);
+      }
     }
 
     for (unsigned i = m; i < n; ++i) {
       if (i % 100 == 0) {
-        if (pluginProgress->progress(i, n) != TLP_CONTINUE)
+        if (pluginProgress->progress(i, n) != TLP_CONTINUE) {
           return pluginProgress->state() != TLP_CANCEL;
+        }
       }
 
       double a = 0, pr, pr_sum;
-      for (unsigned int j = 0; j < i; ++j)
+      for (unsigned int j = 0; j < i; ++j) {
         a += 1 / double(graph->deg(nodes[j]));
+      }
 
       // the new node is connected to m nodes
       for (unsigned int j = 0; j < i; ++j) {
@@ -129,17 +132,20 @@ struct KlemmEguiluzModel : public ImportModule {
       // deactivate one of the previously m activated nodes
       a = 0;
 
-      for (unsigned int j = 0; j < i; ++j)
-        if (activated[j])
+      for (unsigned int j = 0; j < i; ++j) {
+        if (activated[j]) {
           a += 1 / double(graph->deg(nodes[j]));
+        }
+      }
 
       pr = tlp::randomDouble();
       pr_sum = 0;
       unsigned int sn = 0;
 
       while (pr_sum < pr && sn < i) {
-        if (activated[sn])
+        if (activated[sn]) {
           pr_sum += a * (1 / double(graph->deg(nodes[sn])));
+        }
 
         ++sn;
       }

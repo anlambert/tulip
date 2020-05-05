@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -243,28 +243,32 @@ public:
             x = srcCoord[0] + factor * dy;
             y = srcCoord[1] - factor * dy;
 
-            if (tgtCoord[0] < x)
+            if (tgtCoord[0] < x) {
               x = tgtCoord[0];
+            }
           } else if (srcCoord[0] > tgtCoord[0]) {
             x = srcCoord[0] - factor * dy;
             y = srcCoord[1] - factor * dy;
 
-            if (tgtCoord[0] > x)
+            if (tgtCoord[0] > x) {
               x = tgtCoord[0];
+            }
           }
         } else if (srcCoord[1] < tgtCoord[1]) {
           if (srcCoord[0] < tgtCoord[0]) {
             x = srcCoord[0] + factor * dy;
             y = srcCoord[1] + factor * dy;
 
-            if (tgtCoord[0] < x)
+            if (tgtCoord[0] < x) {
               x = tgtCoord[0];
+            }
           } else if (srcCoord[0] > tgtCoord[0]) {
             x = srcCoord[0] - factor * dy;
             y = srcCoord[1] + factor * dy;
 
-            if (tgtCoord[0] > x)
+            if (tgtCoord[0] > x) {
               x = tgtCoord[0];
+            }
           }
         }
       } else if (dx > dy) {
@@ -277,8 +281,9 @@ public:
             x = srcCoord[0] - factor * dx;
             y = srcCoord[1] - factor * dx;
 
-            if (tgtCoord[1] > y)
+            if (tgtCoord[1] > y) {
               y = tgtCoord[1];
+            }
           }
         } else if (srcCoord[1] < tgtCoord[1]) {
           if (srcCoord[0] < tgtCoord[0]) {
@@ -289,8 +294,9 @@ public:
             x = srcCoord[0] - factor * dx;
             y = srcCoord[1] + factor * dx;
 
-            if (tgtCoord[1] < y)
+            if (tgtCoord[1] < y) {
               y = tgtCoord[1];
+            }
           }
         }
       }

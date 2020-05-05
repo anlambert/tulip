@@ -95,8 +95,9 @@ void TalipotLogger::logImpl(QtMsgType type, const QString &msg) {
   // on some windows systems
   // "No errors." messages may be logged coming from QGLShader::link
   // we try to hide them
-  if (msg.indexOf("No errors.") != -1 || msg.isEmpty())
+  if (msg.indexOf("No errors.") != -1 || msg.isEmpty()) {
     return;
+  }
 
   if (type == QtFatalMsg) {
     std::cerr << tlp::QStringToTlpString(msg) << std::endl;
@@ -170,11 +171,13 @@ void TalipotLogger::clear() {
 void TalipotLogger::copy() {
   QStringList strings;
 
-  for (auto item : _ui->listWidget->selectedItems())
+  for (auto item : _ui->listWidget->selectedItems()) {
     strings << item->text();
+  }
 
-  if (!strings.isEmpty())
+  if (!strings.isEmpty()) {
     QApplication::clipboard()->setText(strings.join("\n"));
+  }
 }
 
 void TalipotLogger::showContextMenu(const QPoint &pos) {

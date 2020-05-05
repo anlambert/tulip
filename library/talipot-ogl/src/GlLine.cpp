@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -21,8 +21,9 @@ namespace tlp {
 GlLine::GlLine(const vector<Coord> &points, const vector<Color> &colors)
     : _points(points), _colors(colors), width(1.0), factor(1), pattern(0) {
 
-  for (const auto &p : _points)
+  for (const auto &p : _points) {
     boundingBox.expand(p);
+  }
 }
 //=====================================================
 GlLine::~GlLine() {}
@@ -75,8 +76,9 @@ void GlLine::draw(float, Camera *) {
   glDisableClientState(GL_VERTEX_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
 
-  if (pattern != 0)
+  if (pattern != 0) {
     glDisable(GL_LINE_STIPPLE);
+  }
 
   glLineWidth(1.0);
   glEnable(GL_LIGHTING);
@@ -117,7 +119,8 @@ void GlLine::setWithXML(const string &inString, unsigned int &currentPosition) {
   GlXMLTools::setWithXML(inString, currentPosition, "factor", factor);
   GlXMLTools::setWithXML(inString, currentPosition, "pattern", pattern);
 
-  for (const auto &p : _points)
+  for (const auto &p : _points) {
     boundingBox.expand(p);
+  }
 }
 }

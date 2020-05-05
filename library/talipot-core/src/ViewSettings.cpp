@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -51,8 +51,9 @@ Color ViewSettings::defaultColor(ElementType elem) const {
 }
 
 void ViewSettings::setDefaultColor(ElementType elem, const Color &color) {
-  if (color == defaultColor(elem))
+  if (color == defaultColor(elem)) {
     return;
+  }
 
   if (elem == NODE) {
     _defaultNodeColor = color;
@@ -100,8 +101,9 @@ Color ViewSettings::defaultLabelColor() const {
 }
 
 void ViewSettings::setDefaultLabelColor(const Color &color) {
-  if (color == _defaultLabelColor)
+  if (color == _defaultLabelColor) {
     return;
+  }
 
   _defaultLabelColor = color;
   _instance.sendEvent(ViewSettingsEvent(color));
@@ -146,8 +148,9 @@ Size ViewSettings::defaultSize(ElementType elem) const {
 }
 
 void ViewSettings::setDefaultSize(ElementType elem, const Size &size) {
-  if (size == defaultSize(elem))
+  if (size == defaultSize(elem)) {
     return;
+  }
 
   if (elem == NODE) {
     _defaultNodeSize = size;
@@ -167,8 +170,9 @@ int ViewSettings::defaultShape(ElementType elem) const {
 }
 
 void ViewSettings::setDefaultShape(ElementType elem, int shape) {
-  if (shape == defaultShape(elem))
+  if (shape == defaultShape(elem)) {
     return;
+  }
 
   if (elem == NODE) {
     _defaultNodeShape = shape;
@@ -214,8 +218,9 @@ void ViewSettings::setDefaultEdgeExtremityTgtSize(const Size &size) {
 std::string ViewSettings::defaultFontFile() const {
   // _defaultFontFile initialization must be delayed
   // until TalipotBitmapDir is set
-  if (_defaultFontFile.empty())
+  if (_defaultFontFile.empty()) {
     _defaultFontFile = tlp::TalipotBitmapDir + "font.ttf";
+  }
   return _defaultFontFile;
 }
 

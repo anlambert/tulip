@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -45,8 +45,9 @@ bool pointInPolygon(const vector<Coord> &polygon, const Coord &point) {
         (point.getX() < (polygon[j].getX() - polygon[i].getX()) *
                                 (point.getY() - polygon[i].getY()) /
                                 (polygon[j].getY() - polygon[i].getY()) +
-                            polygon[i].getX()))
+                            polygon[i].getX())) {
       ret = !ret;
+    }
   }
 
   return ret;
@@ -58,8 +59,9 @@ bool isPolygonAincludesInB(const vector<Coord> &A, const vector<Coord> &B) {
   for (size_t i = 0; i < A.size(); ++i) {
     ret = ret && pointInPolygon(B, A[i]);
 
-    if (!ret)
+    if (!ret) {
       break;
+    }
   }
 
   return ret;

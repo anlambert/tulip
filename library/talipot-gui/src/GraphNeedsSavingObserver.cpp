@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -28,8 +28,9 @@ GraphNeedsSavingObserver::GraphNeedsSavingObserver(Graph *graph, QMainWindow *ma
 }
 
 void GraphNeedsSavingObserver::treatEvents(const vector<Event> &) {
-  if (!_needsSaving)
+  if (!_needsSaving) {
     forceToSave();
+  }
 }
 
 void GraphNeedsSavingObserver::saved() {
@@ -37,8 +38,9 @@ void GraphNeedsSavingObserver::saved() {
   removeObservers();
   addObserver();
 
-  if (_mainWindow)
+  if (_mainWindow) {
     _mainWindow->setWindowModified(false);
+  }
 }
 
 bool GraphNeedsSavingObserver::needsSaving() const {
@@ -50,8 +52,9 @@ void GraphNeedsSavingObserver::forceToSave() {
   // No need to listen to the graph anymore
   removeObservers();
 
-  if (_mainWindow)
+  if (_mainWindow) {
     _mainWindow->setWindowModified(true);
+  }
 
   emit(savingNeeded());
 }

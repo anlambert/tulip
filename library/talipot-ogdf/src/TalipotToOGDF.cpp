@@ -101,8 +101,9 @@ vector<Coord> TalipotToOGDF::getEdgeCoordFromOGDFGraphAttr(edge eTlp) {
 }
 
 void TalipotToOGDF::copyTlpNumericPropertyToOGDFEdgeLength(NumericProperty *metric) {
-  if (!metric)
+  if (!metric) {
     return;
+  }
 
   for (auto eTlp : talipotGraph->edges()) {
     ogdfGraphAttributes.doubleWeight(ogdfEdges[eTlp]) = metric->getEdgeDoubleValue(eTlp);
@@ -110,8 +111,9 @@ void TalipotToOGDF::copyTlpNumericPropertyToOGDFEdgeLength(NumericProperty *metr
 }
 
 void TalipotToOGDF::copyTlpNodeSizeToOGDF(SizeProperty *size) {
-  if (!size)
+  if (!size) {
     return;
+  }
 
   for (auto nTlp : talipotGraph->nodes()) {
     const Size &s = size->getNodeValue(nTlp);
@@ -134,8 +136,9 @@ void TalipotToOGDF::copyTlpNodeSizeToOGDF(SizeProperty *size) {
 }
 
 void TalipotToOGDF::copyTlpNumericPropertyToOGDFNodeWeight(NumericProperty *metric) {
-  if (!metric)
+  if (!metric) {
     return;
+  }
 
   for (auto nTlp : talipotGraph->nodes()) {
     ogdfGraphAttributes.weight(ogdfNodes[nTlp]) = int(metric->getNodeDoubleValue(nTlp));

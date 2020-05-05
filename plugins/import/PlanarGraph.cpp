@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -51,8 +51,9 @@ public:
       dataSet->get("nodes", nbNodes);
     }
 
-    if (nbNodes < 3)
+    if (nbNodes < 3) {
       nbNodes = 3;
+    }
 
     // initialize a random sequence according the given seed
     tlp::initRandomSequence();

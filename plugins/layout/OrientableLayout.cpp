@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -122,8 +122,9 @@ void OrientableLayout::setOrthogonalEdge(const Graph *tree, float interNodeDista
   for (auto currentNode : tree->nodes()) {
     OrientableCoord currentNodeCoord = getNodeValue(currentNode);
 
-    for (auto e : tree->getOutEdges(currentNode))
+    for (auto e : tree->getOutEdges(currentNode)) {
       addControlPoints(tree, currentNodeCoord, e, interNodeDistance);
+    }
   }
 }
 

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -48,11 +48,12 @@ public:
                                                 sg->getDoubleProperty("viewRotation"));
 
       prop->setNodeValue(mN, Size(box.width(), box.height(), box.depth()));
-    } else
+    } else {
       // between the min and max computed values for other size properties
       prop->setNodeValue(mN, (static_cast<SizeProperty *>(prop)->getMax(sg) +
                               static_cast<SizeProperty *>(prop)->getMin(sg)) /
                                  2.0f);
+    }
   }
 };
 
@@ -88,41 +89,49 @@ void SizeProperty::scale(const tlp::Vec3f &v, Iterator<node> *itN, Iterator<edge
 }
 //=============================================================================
 void SizeProperty::scale(const tlp::Vec3f &v, const Graph *sg) {
-  if (sg == nullptr)
+  if (sg == nullptr) {
     sg = graph;
+  }
 
-  if (sg->isEmpty())
+  if (sg->isEmpty()) {
     return;
+  }
 
   scale(v, sg->getNodes(), sg->getEdges());
 }
 //=============================================================================
 Size SizeProperty::getMax(const Graph *sg) {
-  if (sg == nullptr)
+  if (sg == nullptr) {
     sg = graph;
+  }
 
   unsigned int sgi = sg->getId();
 
-  if (minMaxOk.find(sgi) == minMaxOk.end())
+  if (minMaxOk.find(sgi) == minMaxOk.end()) {
     minMaxOk[sgi] = false;
+  }
 
-  if (!minMaxOk[sgi])
+  if (!minMaxOk[sgi]) {
     computeMinMax(sg);
+  }
 
   return max[sgi];
 }
 //=============================================================================
 Size SizeProperty::getMin(const Graph *sg) {
-  if (sg == nullptr)
+  if (sg == nullptr) {
     sg = graph;
+  }
 
   unsigned int sgi = sg->getId();
 
-  if (minMaxOk.find(sgi) == minMaxOk.end())
+  if (minMaxOk.find(sgi) == minMaxOk.end()) {
     minMaxOk[sgi] = false;
+  }
 
-  if (!minMaxOk[sgi])
+  if (!minMaxOk[sgi]) {
     computeMinMax(sg);
+  }
 
   return min[sgi];
 }
@@ -183,8 +192,9 @@ void SizeProperty::setAllNodeValue(tlp::StoredType<Size>::ReturnedConstValue v,
 }
 //=============================================================================
 PropertyInterface *SizeProperty::clonePrototype(Graph *g, const std::string &n) const {
-  if (!g)
+  if (!g) {
     return nullptr;
+  }
 
   // allow to get an unregistered property (empty name)
   SizeProperty *p = n.empty() ? new SizeProperty(g) : g->getLocalSizeProperty(n);
@@ -203,8 +213,9 @@ int SizeProperty::compare(const node n1, const node n2) const {
 
 //=============================================================================
 PropertyInterface *SizeVectorProperty::clonePrototype(Graph *g, const std::string &n) const {
-  if (!g)
+  if (!g) {
     return nullptr;
+  }
 
   // allow to get an unregistered property (empty name)
   SizeVectorProperty *p = n.empty() ? new SizeVectorProperty(g) : g->getLocalSizeVectorProperty(n);

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -34,8 +34,9 @@ public:
 
 bool HierarchicalClustering::split(DoubleProperty *metric, list<node> &orderedNode) {
 
-  for (auto n : graph->nodes())
+  for (auto n : graph->nodes()) {
     orderedNode.push_back(n);
+  }
 
   LessThan comp;
   comp.metric = metric;
@@ -48,8 +49,9 @@ bool HierarchicalClustering::split(DoubleProperty *metric, list<node> &orderedNo
   int nbElement = orderedNode.size();
   nbElement /= 2;
 
-  if (nbElement < 10)
+  if (nbElement < 10) {
     return (true);
+  }
 
   itListNode = orderedNode.begin();
   tmpDbl = metric->getNodeValue(*itListNode);
@@ -91,8 +93,9 @@ bool HierarchicalClustering::run() {
       splitRes.setAllNodeValue(true);
       splitRes.setAllEdgeValue(true);
 
-      for (auto n : badNodeList)
+      for (auto n : badNodeList) {
         splitRes.setNodeValue(n, false);
+      }
 
       for (auto nit : graph->nodes()) {
 

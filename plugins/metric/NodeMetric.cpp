@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -45,8 +45,9 @@ struct dfsStruct {
 double NodeMetric::getNodeValue(tlp::node current) {
   double value = result->getNodeValue(current);
 
-  if (value != 0.0)
+  if (value != 0.0) {
     return value;
+  }
 
   // dfs loop
   stack<dfsStruct> dfsLevels;
@@ -61,9 +62,9 @@ double NodeMetric::getNodeValue(tlp::node current) {
       value = result->getNodeValue(neighbour);
 
       // compute res
-      if (value != 0.0)
+      if (value != 0.0) {
         res += value;
-      else {
+      } else {
         // store res for current
         dfsLevels.top().res = res;
         // push new dfsParams on stack
@@ -76,9 +77,10 @@ double NodeMetric::getNodeValue(tlp::node current) {
       }
     }
 
-    if (outNodes->hasNext())
+    if (outNodes->hasNext()) {
       // new dfsParams has been pushed on stack
       continue;
+    }
 
     // save current res
     result->setNodeValue(current, res);
@@ -86,8 +88,9 @@ double NodeMetric::getNodeValue(tlp::node current) {
     delete outNodes;
     dfsLevels.pop();
 
-    if (dfsLevels.empty())
+    if (dfsLevels.empty()) {
       break;
+    }
 
     // get dfsParams on top of dfsLevels
     dfsParams = dfsLevels.top();
@@ -104,8 +107,9 @@ double NodeMetric::getNodeValue(tlp::node current) {
 bool NodeMetric::run() {
   result->setAllEdgeValue(0);
   result->setAllNodeValue(0);
-  for (auto n : graph->nodes())
+  for (auto n : graph->nodes()) {
     result->setNodeValue(n, getNodeValue(n));
+  }
   return true;
 }
 //====================================================================

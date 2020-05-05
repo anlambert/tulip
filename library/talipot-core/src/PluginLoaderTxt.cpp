@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -47,8 +47,9 @@ void PluginLoaderTxt::aborted(const string &filename, const string &erreurmsg) {
 }
 
 void PluginLoaderTxt::finished(bool state, const string &msg) {
-  if (state)
+  if (state) {
     std::cout << "Loading complete" << endl;
-  else
+  } else {
     std::cout << "Loading error " << msg << endl;
+  }
 }

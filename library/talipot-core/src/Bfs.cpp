@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -30,15 +30,18 @@ Bfs::Bfs(Graph *G, BooleanProperty *resultatAlgoSelection)
   if (itn->hasNext()) {
     root = itn->next();
 
-    if (!G->isElement(root))
+    if (!G->isElement(root)) {
       unselected = true;
-  } else
+    }
+  } else {
     unselected = true;
+  }
 
   delete itn;
 
-  if (unselected)
+  if (unselected) {
     root = graph->getOneNode();
+  }
 
   resultatAlgoSelection->setNodeValue(root, true);
   selectedNodes.set(root.id, true);
@@ -55,8 +58,9 @@ void Bfs::computeBfs(Graph *G, BooleanProperty *resultatAlgoSelection, node root
   while (taille != nbNodes) {
     node r = next_roots[i];
 
-    if (!G->isElement(r))
+    if (!G->isElement(r)) {
       tlp::error() << __PRETTY_FUNCTION__ << ": ERROR NODE R NOT IN G" << std::endl;
+    }
 
     for (auto e : G->getInOutEdges(r)) {
 

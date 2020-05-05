@@ -125,8 +125,9 @@ public:
   tlp::PropertyInterface *getProperty(const std::string &name) const {
     auto it = _propertiesNameMap.find(name);
 
-    if (it != _propertiesNameMap.end())
+    if (it != _propertiesNameMap.end()) {
       return _propertiesMap[it->second];
+    }
 
     return nullptr;
   }

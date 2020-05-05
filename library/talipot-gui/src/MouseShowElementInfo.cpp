@@ -40,11 +40,12 @@ MouseShowElementInfo::MouseShowElementInfo(const bool showVisualPropButton)
   _informationWidgetItem->setWidget(_informationWidget);
   _informationWidgetItem->setVisible(false);
 
-  if (showVisualPropButton)
+  if (showVisualPropButton) {
     connect(_ui->displayTalipotProp, &QAbstractButton::toggled, this,
             &MouseShowElementInfo::showVisualProp);
-  else
+  } else {
     _ui->displayTalipotProp->hide();
+  }
   connect(_ui->closeButton, &QAbstractButton::clicked, this, &MouseShowElementInfo::hideInfos);
 }
 
@@ -71,8 +72,9 @@ void MouseShowElementInfo::hideInfos() {
 void MouseShowElementInfo::clear() {
   _informationWidgetItem->setVisible(false);
 
-  if (glMainWidget)
+  if (glMainWidget) {
     glMainWidget->setCursor(QCursor());
+  }
 }
 
 QTableView *MouseShowElementInfo::tableView() const {
@@ -108,8 +110,9 @@ bool MouseShowElementInfo::eventFilter(QObject *widget, QEvent *e) {
   QMouseEvent *qMouseEv = dynamic_cast<QMouseEvent *>(e);
 
   if (qMouseEv != nullptr) {
-    if (glMainWidget == nullptr)
+    if (glMainWidget == nullptr) {
       glMainWidget = dynamic_cast<GlMainWidget *>(widget);
+    }
 
     assert(glMainWidget);
 
@@ -154,14 +157,16 @@ bool MouseShowElementInfo::eventFilter(QObject *widget, QEvent *e) {
             QPoint position = qMouseEv->pos();
 
             if (position.x() + _informationWidgetItem->rect().width() >
-                _view->graphicsView()->sceneRect().width() - 5)
+                _view->graphicsView()->sceneRect().width() - 5) {
               position.setX(_view->graphicsView()->sceneRect().width() -
                             _informationWidgetItem->rect().width() - 5);
+            }
 
             if (position.y() + _informationWidgetItem->rect().height() >
-                _view->graphicsView()->sceneRect().height() - 5)
+                _view->graphicsView()->sceneRect().height() - 5) {
               position.setY(_view->graphicsView()->sceneRect().height() -
                             _informationWidgetItem->rect().height() - 5);
+            }
 
             _informationWidgetItem->setPos(position);
             _informationWidgetItem->setVisible(true);

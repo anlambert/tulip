@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -119,18 +119,20 @@ struct TLPGraphBuilder : public TLPTrue {
       char *endptr;
       version = strtod(cptr, &endptr);
       // check for correctness of version parsing and value
-      if ((endptr != cptr) && (version <= TLP_VERSION))
+      if ((endptr != cptr) && (version <= TLP_VERSION)) {
         return true;
+      }
     }
     parser->errorMsg = "invalid tlp version";
     return false;
   }
 
   bool addNode(int id) {
-    if (version < 2.1f)
+    if (version < 2.1f) {
       nodeIndex[id] = _graph->addNode();
-    else
+    } else {
       _graph->addNode();
+    }
 
     return true;
   }
@@ -166,8 +168,9 @@ struct TLPGraphBuilder : public TLPTrue {
   bool addClusterNode(int nodeId) {
     node n(nodeId);
 
-    if (version < 2.1)
+    if (version < 2.1) {
       n = nodeIndex[nodeId];
+    }
 
     if (_graph->isElement(n) && _cluster) {
       _cluster->addNode(n);
@@ -179,8 +182,9 @@ struct TLPGraphBuilder : public TLPTrue {
   bool addClusterEdge(int edgeId) {
     edge e(edgeId);
 
-    if (version < 2.1)
+    if (version < 2.1) {
       e = edgeIndex[edgeId];
+    }
 
     if (_graph->isElement(e) && _cluster) {
       _cluster->addEdge(e);
@@ -219,8 +223,9 @@ struct TLPGraphBuilder : public TLPTrue {
                                     bool &isPathViewProperty) {
     Graph *g = clusterId ? getSubGraph(clusterId) : _graph;
 
-    if (g == nullptr)
+    if (g == nullptr) {
       return nullptr;
+    }
 
     if (propertyType == GRAPH || propertyType == METAGRAPH) {
       // METAGRAPH was used in Tulip 2
@@ -228,50 +233,63 @@ struct TLPGraphBuilder : public TLPTrue {
       return g->getLocalGraphProperty(propertyName);
     }
 
-    if (propertyType == DOUBLE || propertyType == METRIC)
+    if (propertyType == DOUBLE || propertyType == METRIC) {
       // METRIC was used in Tulip 2
       return g->getLocalDoubleProperty(propertyName);
+    }
 
-    if (propertyType == LAYOUT)
+    if (propertyType == LAYOUT) {
       return g->getLocalLayoutProperty(propertyName);
+    }
 
-    if (propertyType == SIZE)
+    if (propertyType == SIZE) {
       return g->getLocalSizeProperty(propertyName);
+    }
 
-    if (propertyType == COLOR)
+    if (propertyType == COLOR) {
       return g->getLocalColorProperty(propertyName);
+    }
 
-    if (propertyType == INT)
+    if (propertyType == INT) {
       return g->getLocalIntegerProperty(propertyName);
+    }
 
-    if (propertyType == BOOL)
+    if (propertyType == BOOL) {
       return g->getLocalBooleanProperty(propertyName);
+    }
 
     if (propertyType == STRING) {
       isPathViewProperty = ((propertyName == "viewFont") || (propertyName == "viewTexture"));
       return g->getLocalStringProperty(propertyName);
     }
 
-    if (propertyType == SIZE_VECTOR)
+    if (propertyType == SIZE_VECTOR) {
       return g->getLocalSizeVectorProperty(propertyName);
+    }
 
-    if (propertyType == COLOR_VECTOR)
+    if (propertyType == COLOR_VECTOR) {
       return g->getLocalColorVectorProperty(propertyName);
+    }
 
-    if (propertyType == COORD_VECTOR)
+    if (propertyType == COORD_VECTOR) {
       return g->getLocalCoordVectorProperty(propertyName);
+    }
 
-    if (propertyType == DOUBLE_VECTOR)
+    if (propertyType == DOUBLE_VECTOR) {
       return g->getLocalDoubleVectorProperty(propertyName);
+    }
 
-    if (propertyType == INT_VECTOR)
+    if (propertyType == INT_VECTOR) {
       return g->getLocalIntegerVectorProperty(propertyName);
+    }
 
-    if (propertyType == BOOL_VECTOR)
+    if (propertyType == BOOL_VECTOR) {
       return g->getLocalBooleanVectorProperty(propertyName);
+    }
 
-    if (propertyType == STRING_VECTOR)
+    if (propertyType == STRING_VECTOR) {
       return g->getLocalStringVectorProperty(propertyName);
+    }
 
     return nullptr;
   }
@@ -279,8 +297,9 @@ struct TLPGraphBuilder : public TLPTrue {
                     bool isPathViewProperty) {
     node n(nodeId);
 
-    if (version < 2.1)
+    if (version < 2.1) {
       n = nodeIndex[nodeId];
+    }
 
     assert(prop->getGraph()->isElement(n));
 
@@ -288,13 +307,15 @@ struct TLPGraphBuilder : public TLPTrue {
       // if needed replace symbolic path by real path
       size_t pos = value.find(TalipotBitmapDirSym);
 
-      if (pos != std::string::npos)
+      if (pos != std::string::npos) {
         value.replace(pos, TalipotBitmapDirSym.size(), TalipotBitmapDir);
+      }
 
       pos = value.find(TulipBitmapDirSym);
 
-      if (pos != std::string::npos)
+      if (pos != std::string::npos) {
         value.replace(pos, TulipBitmapDirSym.size(), TalipotBitmapDir);
+      }
 
     } else {
       if (isGraphProperty) {
@@ -322,8 +343,9 @@ struct TLPGraphBuilder : public TLPTrue {
                     bool isPathViewProperty) {
     edge e(edgeId);
 
-    if (version < 2.1)
+    if (version < 2.1) {
       e = edgeIndex[edgeId];
+    }
 
     assert(prop->getGraph()->isElement(e));
 
@@ -333,27 +355,29 @@ struct TLPGraphBuilder : public TLPTrue {
       // if needed replace symbolic path by real path
       size_t pos = value.find(TalipotBitmapDirSym);
 
-      if (pos != std::string::npos)
+      if (pos != std::string::npos) {
         value.replace(pos, TalipotBitmapDirSym.size(), TalipotBitmapDir);
+      }
 
       pos = value.find(TulipBitmapDirSym);
 
-      if (pos != std::string::npos)
+      if (pos != std::string::npos) {
         value.replace(pos, TulipBitmapDirSym.size(), TalipotBitmapDir);
+      }
 
     } else if ((version < 2.2) && (propertyName == std::string("viewSrcAnchorShape") ||
-                                   propertyName == std::string("viewTgtAnchorShape")))
+                                   propertyName == std::string("viewTgtAnchorShape"))) {
       // If we are in the old edge extremities id system we need to convert the ids in the file.
       return prop->setEdgeStringValue(e, convertOldEdgeExtremitiesValueToNew(value));
-    else {
+    } else {
       if (isGraphProperty) {
         GraphProperty *gProp = static_cast<GraphProperty *>(prop);
         std::set<edge> v;
         bool result = EdgeSetType::fromString(v, value);
 
-        if (result)
+        if (result) {
           gProp->setEdgeValue(e, v);
-        else {
+        } else {
           std::stringstream ess;
           ess << "invalid edge value for property " << propertyName;
           parser->errorMsg = ess.str();
@@ -411,8 +435,9 @@ struct TLPGraphBuilder : public TLPTrue {
       const char *startPtr = value.c_str();
       int result = strtol(startPtr, &endPtr, 10);
 
-      if (endPtr == startPtr)
+      if (endPtr == startPtr) {
         result = 0; // use root graph
+      }
 
       if (clusterIndex.find(result) == clusterIndex.end()) {
         std::stringstream ess;
@@ -430,13 +455,15 @@ struct TLPGraphBuilder : public TLPTrue {
       // if needed replace symbolic path by real path
       size_t pos = value.find(TalipotBitmapDirSym);
 
-      if (pos != std::string::npos)
+      if (pos != std::string::npos) {
         value.replace(pos, TalipotBitmapDirSym.size(), TalipotBitmapDir);
+      }
 
       pos = value.find(TulipBitmapDirSym);
 
-      if (pos != std::string::npos)
+      if (pos != std::string::npos) {
         value.replace(pos, TulipBitmapDirSym.size(), TalipotBitmapDir);
+      }
     }
 
     return prop->setAllNodeStringValue(value);
@@ -451,9 +478,9 @@ struct TLPGraphBuilder : public TLPTrue {
       std::set<edge> v;
       bool result = EdgeSetType::fromString(v, value);
 
-      if (result)
+      if (result) {
         gProp->setAllEdgeValue(v);
-      else {
+      } else {
         std::stringstream ess;
         ess << "invalid edge value for property " << propertyName;
         parser->errorMsg = ess.str();
@@ -475,13 +502,15 @@ struct TLPGraphBuilder : public TLPTrue {
         // if needed replace symbolic path by real path
         size_t pos = value.find(TalipotBitmapDirSym);
 
-        if (pos != std::string::npos)
+        if (pos != std::string::npos) {
           value.replace(pos, TalipotBitmapDirSym.size(), TalipotBitmapDir);
+        }
 
         pos = value.find(TulipBitmapDirSym);
 
-        if (pos != std::string::npos)
+        if (pos != std::string::npos) {
           value.replace(pos, TulipBitmapDirSym.size(), TalipotBitmapDir);
+        }
       }
     }
 
@@ -492,8 +521,9 @@ struct TLPGraphBuilder : public TLPTrue {
       _cluster = clusterIndex[id] =
           static_cast<GraphAbstract *>(clusterIndex[supergraphId])->addSubGraph(uint(id));
 
-      if (name.size())
+      if (name.size()) {
         _cluster->setAttribute("name", name);
+      }
 
       return true;
     }
@@ -573,14 +603,16 @@ struct TLPClusterBuilder : public TLPFalse {
   bool addInt(const int id) override {
     clusterId = id;
 
-    if (graphBuilder->version > 2.2)
+    if (graphBuilder->version > 2.2) {
       return graphBuilder->addCluster(id, std::string(), supergraphId);
+    }
 
     return true;
   }
   bool addString(const std::string &str) override {
-    if (graphBuilder->version < 2.3)
+    if (graphBuilder->version < 2.3) {
       return graphBuilder->addCluster(clusterId, str, supergraphId);
+    }
 
     return true;
   }
@@ -656,8 +688,9 @@ struct TLPAttributesBuilder : public TLPFalse {
     // to read the id of the graph
     unsigned int id;
 
-    if (!(is >> id))
+    if (!(is >> id)) {
       return false;
+    }
 
     Graph *subgraph = id ? graphBuilder->getSubGraph(id) : graphBuilder->_graph;
 
@@ -712,10 +745,11 @@ struct TLPFileInfoBuilder : public TLPFalse {
   bool addString(const std::string &str) override {
     std::string theStr(str);
 
-    if (name == AUTHOR)
+    if (name == AUTHOR) {
       graphBuilder->dataSet->set(AUTHOR, theStr);
-    else if (name == COMMENTS)
+    } else if (name == COMMENTS) {
       graphBuilder->dataSet->set("text::comments", theStr);
+    }
 
     return true;
   }
@@ -777,8 +811,9 @@ struct TLPPropertyBuilder : public TLPFalse {
     assert(id != INT_MAX);
     clusterId = id;
 
-    if (!propertyType.empty() && !propertyName.empty())
+    if (!propertyType.empty() && !propertyName.empty()) {
       return getProperty();
+    }
 
     return true;
   }
@@ -788,8 +823,9 @@ struct TLPPropertyBuilder : public TLPFalse {
     } else if (propertyName.empty()) {
       propertyName = str;
 
-      if (clusterId != INT_MAX)
+      if (clusterId != INT_MAX) {
         return getProperty();
+      }
     } else {
       parser->errorMsg = "invalid property format";
       return false;
@@ -929,8 +965,9 @@ bool TLPGraphBuilder::addStruct(const std::string &structName, TLPBuilder *&newB
     newBuilder = new TLPDataSetBuilder(this, const_cast<char *>(VIEWS));
   } else if (structName == CONTROLLER) {
     newBuilder = new TLPDataSetBuilder(this, const_cast<char *>(CONTROLLER));
-  } else
+  } else {
     newBuilder = new TLPFileInfoBuilder(this, structName);
+  }
 
   return true;
 }
@@ -1025,12 +1062,13 @@ public:
         }
       }
 
-      if (!gzip)
+      if (!gzip) {
         input = tlp::getInputFileStream(filename, std::ifstream::in |
                                                       // consider file has binary
                                                       // to avoid pb using tellg
                                                       // on the input stream
                                                       std::ifstream::binary);
+      }
 
     } else {
       dataSet->get<std::string>("file::data", data);
@@ -1050,8 +1088,9 @@ public:
       tlp::warning() << pluginProgress->getError() << std::endl;
     }
 
-    if (tmpss)
+    if (tmpss) {
       delete tmpss;
+    }
 
     delete input;
     return result;

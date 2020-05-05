@@ -73,11 +73,13 @@ namespace std {
 template <>
 struct less<UrlElement> {
   bool operator()(const UrlElement &lhs, const UrlElement &rhs) const {
-    if (lhs.server.compare(rhs.server) < 0)
+    if (lhs.server.compare(rhs.server) < 0) {
       return true;
+    }
 
-    if (lhs.server.compare(rhs.server) > 0)
+    if (lhs.server.compare(rhs.server) > 0) {
       return false;
+    }
 
     return lhs.getUrl().compare(rhs.getUrl()) < 0;
   }
@@ -109,15 +111,17 @@ void HttpContext::request(const std::string &url, bool head) {
 
 void HttpContext::finished() {
   // check to see if it is the request we made
-  if (reply != qobject_cast<QNetworkReply *>(sender()))
+  if (reply != qobject_cast<QNetworkReply *>(sender())) {
     return;
+  }
 
   // OK
   processed = true;
 
   // set status of the request
-  if ((status = (reply->error() == QNetworkReply::NoError)))
+  if ((status = (reply->error() == QNetworkReply::NoError))) {
     data = reply->readAll().data();
+  }
 
   reply->close();
   reply->deleteLater();
@@ -126,8 +130,9 @@ void HttpContext::finished() {
 
 void HttpContext::headerReceived() {
   // check to see if it is the request we made
-  if (reply != qobject_cast<QNetworkReply *>(sender()))
+  if (reply != qobject_cast<QNetworkReply *>(sender())) {
     return;
+  }
 
   processed = true;
 
@@ -137,17 +142,18 @@ void HttpContext::headerReceived() {
     if (value.canConvert<int>()) {
       code = value.toInt();
 
-      if (code > 399) /* error codes */
+      if (code > 399) { /* error codes */
         isHtml = false;
-      else if ((code > 299) && (code < 305 || code == 307)) {
+      } else if ((code > 299) && (code < 305 || code == 307)) {
         /* redirection codes */
         redirected = true;
         QVariant redirectionTarget = reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
 
-        if (!redirectionTarget.isNull())
+        if (!redirectionTarget.isNull()) {
           data = QStringToTlpString(redirectionTarget.toUrl().toString());
-        else
+        } else {
           data = "";
+        }
 
         reply->close();
         reply->deleteLater();
@@ -168,8 +174,9 @@ void HttpContext::headerReceived() {
 }
 
 void HttpContext::timeout() {
-  if (!processed)
+  if (!processed) {
     tlp::warning() << "time-out occurs" << endl;
+  }
 
   // if timeout occurs
   // just indicates the we failed during processing
@@ -189,10 +196,11 @@ void UrlElement::setUrl(const std::string &theUrl) {
   url = theUrl;
   size_t len = theUrl.find_first_of("?", 0);
 
-  if (len != string::npos)
+  if (len != string::npos) {
     clean_url = theUrl.substr(0, len);
-  else
+  } else {
     clean_url.clear();
+  }
 }
 
 void UrlElement::fill(std::string &result) {
@@ -209,8 +217,9 @@ void UrlElement::clear() {
 }
 
 bool UrlElement::load() {
-  if (!siteconnect(server, url, false))
+  if (!siteconnect(server, url, false)) {
     return false;
+  }
 
   fill(data);
   return true;
@@ -225,34 +234,41 @@ bool UrlElement::isHtmlPage() {
   string lowercase(url);
   size_t len = lowercase.length();
 
-  for (size_t i = 0; i < len; ++i)
+  for (size_t i = 0; i < len; ++i) {
     lowercase[i] = tolower(lowercase[i]);
+  }
 
-  for (unsigned int i = 0; not_html_extensions[i]; i++)
-    if (lowercase.rfind(not_html_extensions[i], len) != string::npos)
+  for (unsigned int i = 0; not_html_extensions[i]; i++) {
+    if (lowercase.rfind(not_html_extensions[i], len) != string::npos) {
       return false;
+    }
+  }
 
-  if (!siteconnect(server, url, true))
+  if (!siteconnect(server, url, true)) {
     return false;
+  }
 
   return context->isHtml;
 }
 
 bool UrlElement::siteconnect(const std::string &server, const std::string &path, bool headonly) {
   // check that we actually got data..
-  if (server.empty())
+  if (server.empty()) {
     return false;
+  }
 
-  if (!context)
+  if (!context) {
     context = new HttpContext();
+  }
 
   string thePath("/");
 
   // prefix the path with / if it doesn't start with it..
-  if (path.c_str()[0] != '/')
+  if (path.c_str()[0] != '/') {
     thePath += url;
-  else
+  } else {
     thePath = url;
+  }
 
   string url("http://");
   url += server.c_str() + thePath;
@@ -284,19 +300,22 @@ UrlElement UrlElement::parseUrl(const std::string &href) {
   string lowercase(href);
   size_t i, len = lowercase.length();
 
-  for (i = 0; i < len; ++i)
+  for (i = 0; i < len; ++i) {
     lowercase[i] = tolower(lowercase[i]);
+  }
 
   for (i = 0; rejected_protocols[i] != nullptr; i++) {
-    if (lowercase.find(rejected_protocols[i]) != string::npos)
+    if (lowercase.find(rejected_protocols[i]) != string::npos) {
       break;
+    }
   }
 
   if (rejected_protocols[i]) {
     newUrl.http_prefix.clear();
 
-    if (i != 3 /* no javascript */)
+    if (i != 3 /* no javascript */) {
       newUrl.server = href;
+    }
 
     return newUrl;
   }
@@ -305,13 +324,14 @@ UrlElement UrlElement::parseUrl(const std::string &href) {
   bool host = false;
   pos = lowercase.rfind("://", len);
 
-  if (pos == string::npos)
+  if (pos == string::npos) {
     pos = 0;
-  else {
+  } else {
     host = true;
 
-    if (lowercase[pos - 1] == 's')
+    if (lowercase[pos - 1] == 's') {
       newUrl.http_prefix = "https://";
+    }
 
     pos += 3;
   }
@@ -319,8 +339,9 @@ UrlElement UrlElement::parseUrl(const std::string &href) {
   if (host) {
     size_t endhost = lowercase.find_first_of("/ ", pos);
 
-    if (endhost == string::npos)
+    if (endhost == string::npos) {
       endhost = len;
+    }
 
     string hostname = href.substr(pos, endhost - pos);
     newUrl.server = hostname;
@@ -328,13 +349,15 @@ UrlElement UrlElement::parseUrl(const std::string &href) {
   } else {
     size_t querystart = lowercase.find_first_of("#", pos); /* previously ?#  instead of # */
 
-    if (querystart != string::npos)
+    if (querystart != string::npos) {
       len = querystart;
+    }
 
     string theUrl = href.substr(pos, len - pos);
 
-    if (theUrl.empty())
+    if (theUrl.empty()) {
       return newUrl;
+    }
 
     // Manage relative urls
     if (theUrl[0] != '/') {
@@ -344,8 +367,9 @@ UrlElement UrlElement::parseUrl(const std::string &href) {
       if (findUp == string::npos) {
         urlreference.clear();
         urlreference.append(1, '/');
-      } else
+      } else {
         urlreference = urlreference.substr(0, findUp + 1);
+      }
 
       size_t pos;
 
@@ -353,12 +377,14 @@ UrlElement UrlElement::parseUrl(const std::string &href) {
       for (pos = 0; pos < theUrl.size(); ++pos) {
         char c = theUrl[pos];
 
-        if (c != ' ' && c != '\t')
+        if (c != ' ' && c != '\t') {
           break;
+        }
       }
 
-      if (pos > 0)
+      if (pos > 0) {
         theUrl = theUrl.substr(pos);
+      }
 
       while ((pos = theUrl.find("./")) != string::npos) {
         if (pos == 0) {
@@ -403,7 +429,8 @@ static const char *paramHelp[] = {
     "This parameter defines the first web page to visit. No need for / at the beginning.",
 
     // max number of links
-    "This parameter defines the maximum number of nodes (different pages) allowed in the extracted "
+    "This parameter defines the maximum number of nodes (different pages) allowed in the "
+    "extracted "
     "graph.",
 
     // non http links
@@ -468,22 +495,25 @@ struct WebImport : public ImportModule {
         chnum = ch - '0';
 
         if (chnum > 9) {
-          if (ch >= 'A')
+          if (ch >= 'A') {
             chnum = 10 + (ch - 'A');
-          else
+          } else {
             chnum = 10 + (ch - 'a');
+          }
         }
 
         chnum *= 16;
         ch = url.at(++i);
 
         if (ch - '0' > 9) {
-          if (ch >= 'A')
+          if (ch >= 'A') {
             chnum += ch - 'A';
-          else
+          } else {
             chnum += ch - 'a';
-        } else
+          }
+        } else {
           chnum += ch - '0';
+        }
 
         buffer += chnum;
       } else {
@@ -507,8 +537,9 @@ struct WebImport : public ImportModule {
       stringstream str;
       str << url.server;
 
-      if (url.url[0] != '/')
+      if (url.url[0] != '/') {
         str << "/";
+      }
 
       str << url.getUrl();
       labels->setNodeValue(n, urlDecode(str.str()));
@@ -537,17 +568,20 @@ struct WebImport : public ImportModule {
 
     // if new nodes can not be added (numberOfNodes() == maxSize)
     // stop adding edge
-    if (!sNode.isValid() || !tNode.isValid())
+    if (!sNode.isValid() || !tNode.isValid()) {
       return false;
+    }
 
     if (sAdded || tAdded || ((sNode != tNode) && !graph->existEdge(sNode, tNode).isValid())) {
       edge e = graph->addEdge(sNode, tNode);
 
-      if (type)
+      if (type) {
         labels->setEdgeValue(e, type);
+      }
 
-      if (color)
+      if (color) {
         colors->setEdgeValue(e, *color);
+      }
     }
 
     return true;
@@ -609,8 +643,9 @@ struct WebImport : public ImportModule {
 
           // find the end of the string
           for (; end < llen; end++) {
-            if (lowercase[end] == c)
+            if (lowercase[end] == c) {
               break;
+            }
           }
 
           if (end != start) {
@@ -625,32 +660,37 @@ struct WebImport : public ImportModule {
   // parsehtml - parse the given html and add to queue
   void parseHtml(UrlElement &url) {
     // tlp::warning() << __PRETTY_FUNCTION__ << endl << flush;
-    if (url.data.empty())
+    if (url.data.empty()) {
       return;
+    }
 
     string lowercase(url.data);
 
-    for (size_t i = 0; i < lowercase.length(); ++i)
+    for (size_t i = 0; i < lowercase.length(); ++i) {
       lowercase[i] = tolower(lowercase[i]);
+    }
 
     findAndTreatUrls(lowercase, " href", url);
     findAndTreatUrls(lowercase, " src", url);
   }
   //========================================================
   void addUrl(const UrlElement &url, bool _toVisit) {
-    if (visited.find(url) != visited.end())
+    if (visited.find(url) != visited.end()) {
       return;
+    }
 
-    if (_toVisit && url.is_http())
+    if (_toVisit && url.is_http()) {
       toVisit.push_back(url);
+    }
   }
   //========================================================
   void parseUrl(const string &href, UrlElement &starturl) {
     UrlElement newUrl = starturl.parseUrl(href);
 
     if (newUrl.isValid() && (extractNonHttp || newUrl.is_http()) &&
-        addEdge(starturl, newUrl, nullptr, nullptr))
+        addEdge(starturl, newUrl, nullptr, nullptr)) {
       addUrl(newUrl, visitOther || (newUrl.server == starturl.server));
+    }
   }
   //========================================================
   bool start() {
@@ -664,8 +704,9 @@ struct WebImport : public ImportModule {
         if (pluginProgress && ((nbNodes % step) == 0)) {
           pluginProgress->setComment(string("Visiting ") + urlDecode(url.server + url.url));
 
-          if (pluginProgress->progress(nbNodes, maxSize) != TLP_CONTINUE)
+          if (pluginProgress->progress(nbNodes, maxSize) != TLP_CONTINUE) {
             return pluginProgress->state() != TLP_CANCEL;
+          }
         }
 
 #ifndef NDEBUG
@@ -681,10 +722,12 @@ struct WebImport : public ImportModule {
                            << "redirected to " << redirection.server << redirection.url << endl;
 #endif
 
-            if (addEdge(url, redirection, "redirection", redirectionColor))
+            if (addEdge(url, redirection, "redirection", redirectionColor)) {
               addUrl(redirection, visitOther || redirection.server == url.server);
-          } else
+            }
+          } else {
             tlp::warning() << endl << "invalid redirection" << endl;
+          }
         } else {
           url.load();
           parseHtml(url);
@@ -731,23 +774,27 @@ struct WebImport : public ImportModule {
     UrlElement mySite;
     size_t pos = server.find("http://");
 
-    if (pos == 0)
+    if (pos == 0) {
       // remove http:// prefix
       server = server.substr(7);
+    }
 
     // remove / prefix
-    if (server[0] == '/')
+    if (server[0] == '/') {
       server = server.substr(1);
+    }
 
-    if (server[server.size() - 1] == '/')
+    if (server[server.size() - 1] == '/') {
       // remove / suffix
       server = server.substr(0, server.size() - 1);
+    }
 
     mySite.server = server;
 
-    if (url[0] == '/')
+    if (url[0] == '/') {
       // remove / prefix
       url = url.substr(1);
+    }
 
     mySite.setUrl(string("/") + url);
     mySite.data = "";
@@ -783,8 +830,9 @@ struct WebImport : public ImportModule {
       pluginProgress->setComment(std::string("Visiting ") + mySite.server + mySite.url);
     }
 
-    if (!start())
+    if (!start()) {
       return false;
+    }
 
     if (computelayout) {
       pluginProgress->setComment("Layouting extracted graph using FM³...");

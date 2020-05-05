@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -280,8 +280,9 @@ GraphHierarchiesModel::GraphHierarchiesModel(QObject *parent)
 
 GraphHierarchiesModel::GraphHierarchiesModel(const GraphHierarchiesModel &copy)
     : Model(copy.QObject::parent()), tlp::Observable() {
-  for (int i = 0; i < copy.size(); ++i)
+  for (int i = 0; i < copy.size(); ++i) {
     addGraph(copy[i]);
+  }
 
   _currentGraph = nullptr;
 }
@@ -292,21 +293,24 @@ GraphHierarchiesModel::~GraphHierarchiesModel() {
 
 // Cache related methods
 QModelIndex GraphHierarchiesModel::indexOf(const tlp::Graph *g) {
-  if (g == nullptr)
+  if (g == nullptr) {
     return QModelIndex();
+  }
 
   QModelIndex result = _indexCache[g];
 
   // ensure result is valid and points on an existing row
-  if (!result.isValid() || (result.row() > (size() - 1)))
+  if (!result.isValid() || (result.row() > (size() - 1))) {
     result = forceGraphIndex(const_cast<Graph *>(g));
+  }
 
   return result;
 }
 
 QModelIndex GraphHierarchiesModel::forceGraphIndex(Graph *g) {
-  if (g == nullptr)
+  if (g == nullptr) {
     return QModelIndex();
+  }
 
   QModelIndex result;
 
@@ -318,8 +322,9 @@ QModelIndex GraphHierarchiesModel::forceGraphIndex(Graph *g) {
     unsigned int n = 0;
 
     for (n = 0; n < parent->numberOfSubGraphs(); ++n) {
-      if (parent->getNthSubGraph(n) == g)
+      if (parent->getNthSubGraph(n) == g) {
         break;
+      }
     }
 
     result = createIndex(n, 0, g);
@@ -350,8 +355,9 @@ QMap<QString, tlp::Graph *> GraphHierarchiesModel::readProject(tlp::Project *pro
     if (!project->exists(file)) {
       file = GRAPHS_PATH + entry + "/graph.tlpb";
 
-      if (!project->exists(file))
+      if (!project->exists(file)) {
         continue;
+      }
     }
 
     QString absolutePath = project->toAbsolutePath(file);
@@ -392,33 +398,37 @@ QMap<tlp::Graph *, QString> GraphHierarchiesModel::writeProject(tlp::Project *pr
     QString folder = GRAPHS_PATH + "/" + QString::number(i++) + "/";
     project->mkpath(folder);
 
-    if (!Settings::instance().isUseTlpbFileFormat())
+    if (!Settings::instance().isUseTlpbFileFormat()) {
       tlp::saveGraph(g, QStringToTlpString(project->toAbsolutePath(folder + "graph.tlp")),
                      progress);
-    else
+    } else {
       tlp::saveGraph(g, QStringToTlpString(project->toAbsolutePath(folder + "graph.tlpb")),
                      progress);
+    }
   }
 
   writeTextureFilesInProject(_graphs, project, progress);
 
-  for (GraphNeedsSavingObserver *observer : _saveNeeded)
+  for (GraphNeedsSavingObserver *observer : _saveNeeded) {
     observer->saved();
+  }
 
   return rootIds;
 }
 
 // Model related
 QModelIndex GraphHierarchiesModel::index(int row, int column, const QModelIndex &parent) const {
-  if (row < 0)
+  if (row < 0) {
     return QModelIndex();
+  }
 
   Graph *g = nullptr;
 
-  if (parent.isValid())
+  if (parent.isValid()) {
     g = static_cast<Graph *>(parent.internalPointer())->getNthSubGraph(row);
-  else if (row < _graphs.size())
+  } else if (row < _graphs.size()) {
     g = _graphs[row];
+  }
 
   if (g == nullptr) {
     return QModelIndex();
@@ -428,8 +438,9 @@ QModelIndex GraphHierarchiesModel::index(int row, int column, const QModelIndex 
 }
 
 QModelIndex GraphHierarchiesModel::parent(const QModelIndex &child) const {
-  if (!child.isValid())
+  if (!child.isValid()) {
     return QModelIndex();
+  }
 
   Graph *childGraph = static_cast<Graph *>(child.internalPointer());
 
@@ -441,9 +452,9 @@ QModelIndex GraphHierarchiesModel::parent(const QModelIndex &child) const {
   int row = 0;
   Graph *parent = childGraph->getSuperGraph();
 
-  if (_graphs.contains(parent))
+  if (_graphs.contains(parent)) {
     row = _graphs.indexOf(parent);
-  else {
+  } else {
     Graph *ancestor = parent->getSuperGraph();
 
     for (unsigned int i = 0; i < ancestor->numberOfSubGraphs(); i++) {
@@ -459,11 +470,13 @@ QModelIndex GraphHierarchiesModel::parent(const QModelIndex &child) const {
 }
 
 int GraphHierarchiesModel::rowCount(const QModelIndex &parent) const {
-  if (!parent.isValid())
+  if (!parent.isValid()) {
     return _graphs.size();
+  }
 
-  if (parent.column() != 0)
+  if (parent.column() != 0) {
     return 0;
+  }
 
   Graph *parentGraph = static_cast<Graph *>(parent.internalPointer());
 
@@ -486,20 +499,22 @@ bool GraphHierarchiesModel::setData(const QModelIndex &index, const QVariant &va
 
 QVariant GraphHierarchiesModel::data(const QModelIndex &index, int role) const {
 
-  if (!index.isValid())
+  if (!index.isValid()) {
     return QVariant();
+  }
 
   Graph *graph = static_cast<Graph *>(index.internalPointer());
 
   if (role == Qt::DisplayRole || role == Qt::EditRole) {
-    if (index.column() == NAME_SECTION)
+    if (index.column() == NAME_SECTION) {
       return generateName(graph);
-    else if (index.column() == ID_SECTION)
+    } else if (index.column() == ID_SECTION) {
       return graph->getId();
-    else if (index.column() == NODES_SECTION)
+    } else if (index.column() == NODES_SECTION) {
       return graph->numberOfNodes();
-    else if (index.column() == EDGES_SECTION)
+    } else if (index.column() == EDGES_SECTION) {
       return graph->numberOfEdges();
+    }
   }
 
   else if (role == Qt::ToolTipRole) {
@@ -515,14 +530,15 @@ QVariant GraphHierarchiesModel::data(const QModelIndex &index, int role) const {
     return QVariant::fromValue<Graph *>(static_cast<Graph *>(index.internalPointer()));
   }
 
-  else if (role == Qt::TextAlignmentRole && index.column() != NAME_SECTION)
+  else if (role == Qt::TextAlignmentRole && index.column() != NAME_SECTION) {
     return Qt::AlignCenter;
 
-  else if (role == Qt::FontRole) {
+  } else if (role == Qt::FontRole) {
     QFont f;
 
-    if (graph == _currentGraph)
+    if (graph == _currentGraph) {
       f.setBold(true);
+    }
 
     return f;
   }
@@ -534,18 +550,20 @@ QVariant GraphHierarchiesModel::headerData(int section, Qt::Orientation orientat
                                            int role) const {
   if (orientation == Qt::Horizontal) {
     if (role == Qt::DisplayRole) {
-      if (section == NAME_SECTION)
+      if (section == NAME_SECTION) {
         return "Name";
-      else if (section == ID_SECTION)
+      } else if (section == ID_SECTION) {
         return "Id";
-      else if (section == NODES_SECTION)
+      } else if (section == NODES_SECTION) {
         return "Nodes";
-      else if (section == EDGES_SECTION)
+      } else if (section == EDGES_SECTION) {
         return "Edges";
+      }
     }
 
-    else if (role == Qt::TextAlignmentRole && section != NAME_SECTION)
+    else if (role == Qt::TextAlignmentRole && section != NAME_SECTION) {
       return Qt::AlignCenter;
+    }
   }
 
   return Model::headerData(section, orientation, role);
@@ -554,8 +572,9 @@ QVariant GraphHierarchiesModel::headerData(int section, Qt::Orientation orientat
 Qt::ItemFlags GraphHierarchiesModel::flags(const QModelIndex &index) const {
   Qt::ItemFlags result = QAbstractItemModel::flags(index);
 
-  if (index.column() == 0)
+  if (index.column() == 0) {
     result = result | Qt::ItemIsEditable | Qt::ItemIsDragEnabled;
+  }
 
   return result;
 }
@@ -566,16 +585,18 @@ QMimeData *GraphHierarchiesModel::mimeData(const QModelIndexList &indexes) const
   for (const QModelIndex &index : indexes) {
     Graph *g = data(index, GraphRole).value<Graph *>();
 
-    if (g != nullptr)
+    if (g != nullptr) {
       graphs.insert(g);
+    }
   }
 
   GraphMimeType *result = new GraphMimeType();
 
   // every current implementation uses a single graph, so we do not have a graphmim with multiple
   // graphs.
-  for (auto g : graphs)
+  for (auto g : graphs) {
     result->setGraph(g);
+  }
 
   return result;
 }
@@ -605,8 +626,9 @@ void GraphHierarchiesModel::setCurrentGraph(tlp::Graph *g) {
     }
   }
 
-  if (!inHierarchy)
+  if (!inHierarchy) {
     return;
+  }
 
   Graph *oldGraph = _currentGraph;
   _currentGraph = g;
@@ -647,12 +669,14 @@ static void addListenerToWholeGraphHierarchy(Graph *root, Observable *listener) 
 }
 
 void GraphHierarchiesModel::addGraph(tlp::Graph *g) {
-  if (_graphs.contains(g) || g == nullptr)
+  if (_graphs.contains(g) || g == nullptr) {
     return;
+  }
 
   for (auto _g : _graphs) {
-    if (_g->isDescendantGraph(g))
+    if (_g->isDescendantGraph(g)) {
       return;
+    }
   }
 
   beginInsertRows(QModelIndex(), rowCount(), rowCount());
@@ -661,8 +685,9 @@ void GraphHierarchiesModel::addGraph(tlp::Graph *g) {
 
   _graphs.push_back(g);
 
-  if (_graphs.size() == 1)
+  if (_graphs.size() == 1) {
     setCurrentGraph(g);
+  }
 
   endInsertRows();
   initIndexCache(g);
@@ -687,8 +712,9 @@ void GraphHierarchiesModel::removeGraph(tlp::Graph *g) {
       if (_graphs.empty()) {
         _currentGraph = nullptr;
         emit currentGraphChanged(_currentGraph);
-      } else
+      } else {
         setCurrentGraph(_graphs[0]);
+      }
     }
   }
 }
@@ -706,10 +732,11 @@ void GraphHierarchiesModel::treatEvent(const Event &e) {
     delete s;
 
     if (_currentGraph == g) {
-      if (_graphs.empty())
+      if (_graphs.empty()) {
         _currentGraph = nullptr;
-      else
+      } else {
         _currentGraph = _graphs[0];
+      }
 
       emit currentGraphChanged(_currentGraph);
     }
@@ -718,8 +745,9 @@ void GraphHierarchiesModel::treatEvent(const Event &e) {
   } else if (e.type() == Event::TLP_MODIFICATION) {
     const GraphEvent *ge = dynamic_cast<const tlp::GraphEvent *>(&e);
 
-    if (!ge)
+    if (!ge) {
       return;
+    }
 
     if (_graphs.contains(ge->getGraph()->getRoot())) {
 
@@ -781,8 +809,9 @@ void GraphHierarchiesModel::treatEvent(const Event &e) {
         // update index cache for subgraphs of parent graph
         int i = 0;
         for (auto sg2 : parentGraph->subGraphs()) {
-          if (sg2 != sg)
+          if (sg2 != sg) {
             _indexCache[sg2] = createIndex(i++, 0, sg2);
+          }
         }
 
         // prevent dangling pointer to remain in the persistent indexes

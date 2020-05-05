@@ -68,8 +68,9 @@ void PythonPanel::dropEvent(QDropEvent *dropEv) {
         static_cast<tlp::GraphHierarchiesModel *>(_ui->graphCombo->model());
     QModelIndex graphIndex = model->indexOf(mimeType->graph());
 
-    if (graphIndex == _ui->graphCombo->selectedIndex())
+    if (graphIndex == _ui->graphCombo->selectedIndex()) {
       return;
+    }
 
     _ui->graphCombo->selectIndex(graphIndex);
     dropEv->accept();
@@ -82,8 +83,9 @@ void PythonPanel::beginCurrentLinesExecution() {
                       .value<tlp::Graph *>();
 
   // undo/redo management
-  if (g)
+  if (g) {
     g->push();
+  }
 }
 
 void PythonPanel::endCurrentLinesExecution() {

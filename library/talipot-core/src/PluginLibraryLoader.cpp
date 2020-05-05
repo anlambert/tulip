@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -63,8 +63,9 @@ void PluginLibraryLoader::loadPlugins(PluginLoader *loader, const std::string &f
     _message.clear();
 
     if (initPluginDir(loader)) {
-      if (loader)
+      if (loader) {
         loader->finished(true, _message);
+      }
     }
 
 #ifndef NDEBUG
@@ -93,8 +94,9 @@ void PluginLibraryLoader::loadPluginsFromDir(const std::string &rootPath, Plugin
   _message.clear();
 
   if (initPluginDir(loader, true, userLocalPath)) {
-    if (loader)
+    if (loader) {
       loader->finished(true, _message);
+    }
   }
 
 #ifndef NDEBUG
@@ -147,8 +149,9 @@ bool PluginLibraryLoader::loadPluginLibrary(const std::string &filename, PluginL
   void *handle = dlopen(filename.c_str(), RTLD_NOW);
 
   if (!handle) {
-    if (loader != nullptr)
+    if (loader != nullptr) {
       loader->aborted(filename, std::string(dlerror()));
+    }
 
     return false;
   }
@@ -176,12 +179,14 @@ int __talipot_select_libs(struct dirent *ent) {
 #endif
   int idx = strlen(ent->d_name) - suffix_len;
 
-  if (idx < 0)
+  if (idx < 0) {
     return 0;
+  }
 
   for (unsigned long i = 0; i < suffix_len; ++i) {
-    if ((ent->d_name[idx + i]) != suffix[i])
+    if ((ent->d_name[idx + i]) != suffix[i]) {
       return 0;
+    }
   }
 
   return 1;
@@ -342,24 +347,27 @@ bool PluginLibraryLoader::initPluginDir(PluginLoader *loader, bool recursive,
 #endif
                   alphasort);
 
-  if (loader != nullptr)
+  if (loader != nullptr) {
     loader->numberOfFiles(n);
+  }
 
   if (n < 0) {
     _message += _pluginPath + " - " + std::string(strerror(errno));
     return false;
   }
 
-  if (loader != nullptr)
+  if (loader != nullptr) {
     loader->start(_pluginPath.c_str());
+  }
 
   while (n > 0) {
     n--;
     std::string lib(namelist[n]->d_name);
     free(namelist[n]);
 
-    if (n == 0)
+    if (n == 0) {
       free(namelist);
+    }
 
     // don't print error messages when trying to load Talipot Python
     // binary modules
@@ -378,11 +386,13 @@ bool PluginLibraryLoader::initPluginDir(PluginLoader *loader, bool recursive,
         if (!userPluginsPath.empty()) {
           std::string userPluginLibrary = userPluginsPath + "/" + lib;
           struct stat slib;
-          if (stat(userPluginLibrary.c_str(), &slib) == 0)
+          if (stat(userPluginLibrary.c_str(), &slib) == 0) {
             continue;
+          }
         }
-        if (loader != nullptr)
+        if (loader != nullptr) {
           loader->loading(lib);
+        }
 
         loadPluginLibrary(_currentPluginLibrary, loader);
         continue;
@@ -424,9 +434,10 @@ bool PluginLibraryLoader::initPluginDir(PluginLoader *loader, bool recursive,
       }
     }
 
-    if (loader)
+    if (loader) {
       loader->aborted(_currentPluginLibrary,
                       _currentPluginLibrary + " is not a Talipot plugin library");
+    }
   }
 
   if (recursive) {
@@ -453,8 +464,9 @@ bool PluginLibraryLoader::initPluginDir(PluginLoader *loader, bool recursive,
 
       _pluginPath = rootPath;
 
-      if (n == 0)
+      if (n == 0) {
         free(namelist);
+      }
     }
   }
 

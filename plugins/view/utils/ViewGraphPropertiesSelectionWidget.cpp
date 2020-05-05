@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -39,16 +39,19 @@ void ViewGraphPropertiesSelectionWidget::setWidgetParameters(
 
   bool notSameGraph = true;
 
-  if (graph == this->graph)
+  if (graph == this->graph) {
     notSameGraph = false;
+  }
 
-  if (notSameGraph && this->graph != nullptr && graph != nullptr)
+  if (notSameGraph && this->graph != nullptr && graph != nullptr) {
     this->graph->removeListener(this);
+  }
 
   this->graph = graph;
 
-  if (graph != nullptr && notSameGraph)
+  if (graph != nullptr && notSameGraph) {
     graph->addListener(this);
+  }
 
   this->graphPropertiesTypesFilter = graphPropertiesTypesFilter;
 
@@ -93,8 +96,9 @@ void ViewGraphPropertiesSelectionWidget::setWidgetEnabled(const bool enabled) {
 }
 
 void ViewGraphPropertiesSelectionWidget::setSelectedProperties(vector<string> selectedProperties) {
-  if (!graph)
+  if (!graph) {
     return;
+  }
 
   vector<string> stringList = iteratorVector(graph->getProperties());
   vector<string> finalStringList;

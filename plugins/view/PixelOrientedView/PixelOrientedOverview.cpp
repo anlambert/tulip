@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -181,8 +181,9 @@ void PixelOrientedOverview::computePixelView(GlMainWidget *glWidget) {
     }
   }
 
-  if (xCoordSet.size() < 2)
+  if (xCoordSet.size() < 2) {
     return;
+  }
 
   set<int>::iterator it = xCoordSet.begin();
   int x1 = *(it++);

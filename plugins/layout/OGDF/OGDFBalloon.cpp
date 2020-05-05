@@ -44,8 +44,9 @@ public:
     if (dataSet != nullptr) {
       bool val = false;
 
-      if (dataSet->get("Even angles", val))
+      if (dataSet->get("Even angles", val)) {
         balloon->setEvenAngles(val);
+      }
     }
   }
 

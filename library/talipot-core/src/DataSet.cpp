@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -226,8 +226,9 @@ bool DataSet::read(std::istream &is, DataSet &ds) {
       return is.eof();
     }
 
-    if (isspace(c))
+    if (isspace(c)) {
       continue;
+    }
 
     if (c == ')') {
       // no open paren at the beginning
@@ -243,8 +244,9 @@ bool DataSet::read(std::istream &is, DataSet &ds) {
       while ((ok = bool(is >> c)) && isspace(c)) {
       }
 
-      if (!ok)
+      if (!ok) {
         return false;
+      }
 
       string otn;
 
@@ -257,11 +259,13 @@ bool DataSet::read(std::istream &is, DataSet &ds) {
       while ((ok = bool(is >> c)) && isspace(c)) {
       }
 
-      if (!ok)
+      if (!ok) {
         return false;
+      }
 
-      if (c != '"')
+      if (c != '"') {
         return false;
+      }
 
       string prop;
 
@@ -270,40 +274,47 @@ bool DataSet::read(std::istream &is, DataSet &ds) {
         prop.push_back(c);
       }
 
-      if (!ok)
+      if (!ok) {
         return false;
+      }
 
       // skip spaces before data type
       while ((ok = bool(is >> c)) && isspace(c)) {
       }
 
-      if (!ok)
+      if (!ok) {
         return false;
+      }
 
       is.unget();
 
       // read data type
-      if (!ds.readData(is, prop, otn))
+      if (!ds.readData(is, prop, otn)) {
         return false;
+      }
 
       // skip spaces before )
       while ((ok = bool(is >> c)) && isspace(c)) {
       }
 
-      if (!ok)
+      if (!ok) {
         return false;
+      }
 
-      if (c != ')')
+      if (c != ')') {
         return false;
+      }
 
-    } else
+    } else {
       return false;
+    }
   }
 }
 
 DataTypeSerializer *DataSet::typenameToSerializer(const std::string &name) {
-  if (serializerContainer.tnTodts.count(name) == 0)
+  if (serializerContainer.tnTodts.count(name) == 0) {
     return nullptr;
+  }
 
   return serializerContainer.tnTodts[name];
 }
@@ -322,10 +333,11 @@ string DataSet::toString() const {
         PropertyInterface *prop = *(static_cast<PropertyInterface **>(p.second->value));
         ss << "'" << p.first << "'=";
 
-        if (prop)
+        if (prop) {
           ss << '"' << prop->getName().c_str() << '"';
-        else
+        } else {
           ss << "None";
+        }
 
         ss << " ";
       }

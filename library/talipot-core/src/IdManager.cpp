@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -20,37 +20,45 @@ namespace tlp {
 
 //-----------------------------------------------------------
 bool IdManager::is_free(const unsigned int id) const {
-  if (id < state.firstId)
+  if (id < state.firstId) {
     return true;
+  }
 
-  if (id >= state.nextId)
+  if (id >= state.nextId) {
     return true;
+  }
 
-  if (state.freeIds.find(id) != state.freeIds.end())
+  if (state.freeIds.find(id) != state.freeIds.end()) {
     return true;
+  }
 
   return false;
 }
 //-----------------------------------------------------------
 void IdManager::free(const unsigned int id) {
-  if (id < state.firstId)
+  if (id < state.firstId) {
     return;
+  }
 
-  if (id >= state.nextId)
+  if (id >= state.nextId) {
     return;
+  }
 
-  if (state.freeIds.find(id) != state.freeIds.end())
+  if (state.freeIds.find(id) != state.freeIds.end()) {
     return;
+  }
 
-  if (state.firstId == state.nextId)
+  if (state.firstId == state.nextId) {
     return;
+  }
 
   if (id == state.firstId) {
     for (;;) {
       auto it = state.freeIds.find(++state.firstId);
 
-      if (it == state.freeIds.end())
+      if (it == state.freeIds.end()) {
         break;
+      }
 
       state.freeIds.erase(it);
     }
@@ -60,8 +68,9 @@ void IdManager::free(const unsigned int id) {
     if (state.firstId == state.nextId) {
       state.firstId = state.nextId = 0;
     }
-  } else
+  } else {
     state.freeIds.insert(id);
+  }
 }
 //-----------------------------------------------------------
 #ifndef TLP_NO_IDS_REUSE
@@ -78,11 +87,12 @@ void IdManager::getFreeId(unsigned int id) {
   assert(id > state.firstId);
 
   if (id >= state.nextId) {
-    if (state.firstId == state.nextId)
+    if (state.firstId == state.nextId) {
       state.firstId = id;
-    else {
-      for (; state.nextId < id; ++state.nextId)
+    } else {
+      for (; state.nextId < id; ++state.nextId) {
         state.freeIds.insert(state.nextId);
+      }
     }
 
     state.nextId = id + 1;

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -40,8 +40,9 @@ void TestAcyclicListener::treatEvent(const Event &evt) {
     switch (graphEvent->getType()) {
     case GraphEvent::TLP_ADD_EDGE:
 
-      if (!resultsBuffer[graph])
+      if (!resultsBuffer[graph]) {
         return;
+      }
 
       graph->removeListener(this);
       resultsBuffer.erase(graph);
@@ -49,8 +50,9 @@ void TestAcyclicListener::treatEvent(const Event &evt) {
 
     case GraphEvent::TLP_DEL_EDGE:
 
-      if (resultsBuffer[graph])
+      if (resultsBuffer[graph]) {
         return;
+      }
 
     case GraphEvent::TLP_REVERSE_EDGE:
       graph->removeListener(this);
@@ -65,8 +67,9 @@ void TestAcyclicListener::treatEvent(const Event &evt) {
 
     Graph *graph = static_cast<Graph *>(evt.sender());
 
-    if (evt.type() == Event::TLP_DELETE)
+    if (evt.type() == Event::TLP_DELETE) {
       resultsBuffer.erase(graph);
+    }
   }
 }
 //**********************************************************************
@@ -83,8 +86,9 @@ bool AcyclicTest::isAcyclic(const Graph *graph) {
 //**********************************************************************
 void AcyclicTest::makeAcyclic(Graph *graph, vector<edge> &reversed,
                               vector<tlp::SelfLoops> &selfLoops) {
-  if (AcyclicTest::isAcyclic(graph))
+  if (AcyclicTest::isAcyclic(graph)) {
     return;
+  }
 
   std::vector<edge> edgesToDel;
   // replace self loops by three edges and two nodes.
@@ -106,8 +110,9 @@ void AcyclicTest::makeAcyclic(Graph *graph, vector<edge> &reversed,
       edgesToDel.push_back(e);
     }
   }
-  if (!edgesToDel.empty())
+  if (!edgesToDel.empty()) {
     graph->delEdges(edgesToDel);
+  }
 
   // find obstruction edges
   reversed.clear();
@@ -117,8 +122,9 @@ void AcyclicTest::makeAcyclic(Graph *graph, vector<edge> &reversed,
     tlp::warning() << "[Warning]: " << __FUNCTION__ << ", is not efficient" << std::endl;
   }
 
-  for (auto e : reversed)
+  for (auto e : reversed) {
     graph->reverse(e);
+  }
 
   assert(AcyclicTest::acyclicTest(graph));
 }
@@ -168,9 +174,9 @@ bool AcyclicTest::acyclicTest(const Graph *graph, vector<edge> *obstructionEdges
                 // found a cycle
                 result = false;
 
-                if (obstructionEdges != nullptr)
+                if (obstructionEdges != nullptr) {
                   obstructionEdges->push_back(tmp);
-                else {
+                } else {
                   // it is finished if we don't need
                   // to collect obstruction edges
                   break;
@@ -187,8 +193,9 @@ bool AcyclicTest::acyclicTest(const Graph *graph, vector<edge> *obstructionEdges
 
           // it may be finished if we don't need
           // to collect obstruction edges
-          if ((!result) && (obstructionEdges == nullptr))
+          if ((!result) && (obstructionEdges == nullptr)) {
             break;
+          }
         }
       }
 

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -126,8 +126,9 @@ bool CsvExport::exportGraph(std::ostream &os) {
 
   // get chosen values of plugin parameters
   if (dataSet != nullptr) {
-    if (dataSet->get(ELT_TYPE, eltTypes))
+    if (dataSet->get(ELT_TYPE, eltTypes)) {
       eltType = eltTypes.getCurrent();
+    }
 
     dataSet->get(EXPORT_SELECTION, exportSelection);
     dataSet->get(EXPORT_ID, exportId);
@@ -157,11 +158,13 @@ bool CsvExport::exportGraph(std::ostream &os) {
       }
     }
 
-    if (dataSet->get(STRING_DELIMITER, stringDelimiters))
+    if (dataSet->get(STRING_DELIMITER, stringDelimiters)) {
       stringDelimiter = stringDelimiters.getCurrent() == DBL_QUOTE_DELIMITER ? '"' : '\'';
+    }
 
-    if (dataSet->get(DECIMAL_MARK, decimalMarks))
+    if (dataSet->get(DECIMAL_MARK, decimalMarks)) {
       decimalMark = decimalMarks.getCurrent() ? ',' : '.';
+    }
   }
 
   // export names of fields
@@ -198,10 +201,11 @@ bool CsvExport::exportGraph(std::ostream &os) {
       props.push_back(prop);
       propIsString.push_back(dynamic_cast<tlp::StringProperty *>(prop));
 
-      if (!first)
+      if (!first) {
         os << fieldSeparator;
-      else
+      } else {
         first = false;
+      }
 
       exportString(os, propName);
     }
@@ -220,8 +224,9 @@ bool CsvExport::exportGraph(std::ostream &os) {
   std::locale prevLocale;
 
   // change decimal point of global locale if needed
-  if (decimalMark == ',')
+  if (decimalMark == ',') {
     std::locale::global(std::locale(prevLocale, new decimal_comma));
+  }
 
   if (eltType != EDGE_TYPE) {
     Iterator<node> *it = exportSelection ? prop->getNodesEqualTo(true, graph) : graph->getNodes();
@@ -231,11 +236,13 @@ bool CsvExport::exportGraph(std::ostream &os) {
       if (exportId) {
         os << n;
 
-        if (eltType == BOTH_TYPES)
+        if (eltType == BOTH_TYPES) {
           os << fieldSeparator << fieldSeparator;
+        }
 
-        if (nbProps > 0)
+        if (nbProps > 0) {
           os << fieldSeparator;
+        }
       }
 
       for (unsigned int i = 0; i < nbProps; ++i) {
@@ -243,14 +250,16 @@ bool CsvExport::exportGraph(std::ostream &os) {
         string value = prop->getNodeStringValue(n);
 
         if (!value.empty()) {
-          if (propIsString[i])
+          if (propIsString[i]) {
             exportString(os, value);
-          else
+          } else {
             os << value;
+          }
         }
 
-        if (i != nbProps - 1)
+        if (i != nbProps - 1) {
           os << fieldSeparator;
+        }
       }
 
       os << endl;
@@ -264,14 +273,16 @@ bool CsvExport::exportGraph(std::ostream &os) {
     for (auto e : it) {
 
       if (exportId) {
-        if (eltType == BOTH_TYPES)
+        if (eltType == BOTH_TYPES) {
           os << fieldSeparator;
+        }
 
         auto ends = graph->ends(e);
         os << ends.first << fieldSeparator << ends.second.id;
 
-        if (nbProps > 0)
+        if (nbProps > 0) {
           os << fieldSeparator;
+        }
       }
 
       for (unsigned int i = 0; i < nbProps; ++i) {
@@ -279,14 +290,16 @@ bool CsvExport::exportGraph(std::ostream &os) {
         string value = prop->getEdgeStringValue(e);
 
         if (!value.empty()) {
-          if (propIsString[i])
+          if (propIsString[i]) {
             exportString(os, value);
-          else
+          } else {
             os << value;
+          }
         }
 
-        if (i != nbProps - 1)
+        if (i != nbProps - 1) {
           os << fieldSeparator;
+        }
       }
 
       os << endl;

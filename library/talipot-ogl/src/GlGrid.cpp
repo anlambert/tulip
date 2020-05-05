@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -22,8 +22,9 @@ namespace tlp {
 GlGrid::GlGrid(const Coord &frontTopLeft, const Coord &backBottomRight, const Size &cell,
                const Color &color, bool displayDim[3])
     : frontTopLeft(frontTopLeft), backBottomRight(backBottomRight), color(color), cell(cell) {
-  for (unsigned int i = 0; i < 3; ++i)
+  for (unsigned int i = 0; i < 3; ++i) {
     this->displayDim[i] = displayDim[i];
+  }
 
   boundingBox.expand(frontTopLeft);
   boundingBox.expand(backBottomRight);
@@ -101,13 +102,15 @@ void GlGrid::draw(float, Camera *) {
 }
 //============================================================
 void GlGrid::getDisplayDim(bool displayDim[3]) const {
-  for (int i = 0; i < 3; ++i)
+  for (int i = 0; i < 3; ++i) {
     displayDim[i] = this->displayDim[i];
+  }
 }
 //============================================================
 void GlGrid::setDisplayDim(bool displayDim[3]) {
-  for (int i = 0; i < 3; i++)
+  for (int i = 0; i < 3; i++) {
     this->displayDim[i] = displayDim[i];
+  }
 }
 //============================================================
 void GlGrid::translate(const Coord &vec) {

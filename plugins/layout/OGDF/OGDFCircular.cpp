@@ -51,20 +51,25 @@ public:
     if (dataSet != nullptr) {
       double val = 0;
 
-      if (dataSet->get("minDistCircle", val))
+      if (dataSet->get("minDistCircle", val)) {
         circular->minDistCircle(val);
+      }
 
-      if (dataSet->get("minDistLevel", val))
+      if (dataSet->get("minDistLevel", val)) {
         circular->minDistLevel(val);
+      }
 
-      if (dataSet->get("minDistSibling", val))
+      if (dataSet->get("minDistSibling", val)) {
         circular->minDistSibling(val);
+      }
 
-      if (dataSet->get("minDistCC", val))
+      if (dataSet->get("minDistCC", val)) {
         circular->minDistCC(val);
+      }
 
-      if (dataSet->get("pageRatio", val))
+      if (dataSet->get("pageRatio", val)) {
         circular->pageRatio(val);
+      }
     }
 
     // graph must be simple or the layout algorithm crashes otherwise

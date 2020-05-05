@@ -41,8 +41,9 @@ CustomTreeView::CustomTreeView(QWidget *parent) : QTreeView(parent) {
 }
 
 int CustomTreeView::sizeHintForColumn(int col) const {
-  if (!model() || col > 0)
+  if (!model() || col > 0) {
     return -1;
+  }
 
   ensurePolished();
   int hint = 0;
@@ -92,11 +93,13 @@ void CustomTreeView::setAllHierarchyVisible(const QModelIndex &index, bool visib
   }
 
   if (visible) {
-    if (!isExpanded(index))
+    if (!isExpanded(index)) {
       expand(index);
+    }
   } else {
-    if (isExpanded(index))
+    if (isExpanded(index)) {
       collapse(index);
+    }
   }
 }
 
@@ -184,14 +187,16 @@ void GraphHierarchiesEditor::contextMenuRequested(const QPoint &p) {
     menu.addAction(_ui->actionDelete_all_nodes);
     menu.addAction(_ui->actionDelete_all_edges);
     menu.addAction(_ui->actionDelete_selection);
-    if (_contextGraph->getRoot() != _contextGraph)
+    if (_contextGraph->getRoot() != _contextGraph) {
       menu.addAction(_ui->actionDelete_selection_from_root_graph);
+    }
     if (!_contextGraph->subGraphs().empty()) {
       menu.addSeparator();
-      if (!_ui->hierarchiesTree->isExpanded(_contextIndex))
+      if (!_ui->hierarchiesTree->isExpanded(_contextIndex)) {
         menu.addAction(_ui->actionExpand_hierarchy);
-      else
+      } else {
         menu.addAction(_ui->actionCollapse_hierarchy);
+      }
     }
     menu.exec(_ui->hierarchiesTree->viewport()->mapToGlobal(p));
     _contextIndex = QModelIndex();
@@ -200,8 +205,9 @@ void GraphHierarchiesEditor::contextMenuRequested(const QPoint &p) {
 }
 
 void GraphHierarchiesEditor::clicked(const QModelIndex &index) {
-  if (!index.isValid() || index.internalPointer() == nullptr)
+  if (!index.isValid() || index.internalPointer() == nullptr) {
     return;
+  }
 
   _contextGraph = index.data(tlp::Model::GraphRole).value<tlp::Graph *>();
   _model->setCurrentGraph(_contextGraph);
@@ -209,8 +215,9 @@ void GraphHierarchiesEditor::clicked(const QModelIndex &index) {
 }
 
 void GraphHierarchiesEditor::doubleClicked(const QModelIndex &index) {
-  if (!index.isValid() || index.internalPointer() == nullptr)
+  if (!index.isValid() || index.internalPointer() == nullptr) {
     return;
+  }
 
   _contextGraph = index.data(tlp::Model::GraphRole).value<tlp::Graph *>();
   _model->setCurrentGraph(_contextGraph);
@@ -220,8 +227,9 @@ void GraphHierarchiesEditor::doubleClicked(const QModelIndex &index) {
 
 void GraphHierarchiesEditor::currentChanged(const QModelIndex &index, const QModelIndex &previous) {
   if (synchronized() && index.isValid() && index.internalPointer()) {
-    if (index == previous)
+    if (index == previous) {
       return;
+    }
 
     _contextGraph = index.data(tlp::Model::GraphRole).value<tlp::Graph *>();
     disconnect(_ui->hierarchiesTree->selectionModel(), &QItemSelectionModel::currentChanged, this,
@@ -234,16 +242,18 @@ void GraphHierarchiesEditor::currentChanged(const QModelIndex &index, const QMod
 }
 
 void GraphHierarchiesEditor::addSubGraph() {
-  if (_contextGraph == nullptr)
+  if (_contextGraph == nullptr) {
     return;
+  }
 
   _contextGraph->push();
   _contextGraph->addSubGraph("empty subgraph");
 }
 
 void GraphHierarchiesEditor::cloneSubGraph() {
-  if (_contextGraph == nullptr)
+  if (_contextGraph == nullptr) {
     return;
+  }
 
   _contextGraph->push();
   std::string sgName("clone subgraph of ");
@@ -251,8 +261,9 @@ void GraphHierarchiesEditor::cloneSubGraph() {
 }
 
 void GraphHierarchiesEditor::cloneSibling() {
-  if (_contextGraph == nullptr)
+  if (_contextGraph == nullptr) {
     return;
+  }
 
   _contextGraph->push();
   std::string sgName("clone sibling of ");
@@ -260,8 +271,9 @@ void GraphHierarchiesEditor::cloneSibling() {
 }
 
 void GraphHierarchiesEditor::cloneSiblingWithProperties() {
-  if (_contextGraph == nullptr)
+  if (_contextGraph == nullptr) {
     return;
+  }
 
   _contextGraph->push();
   std::string sgName("clone sibling of ");
@@ -269,8 +281,9 @@ void GraphHierarchiesEditor::cloneSiblingWithProperties() {
 }
 
 void GraphHierarchiesEditor::addInducedSubGraph() {
-  if (_contextGraph == nullptr)
+  if (_contextGraph == nullptr) {
     return;
+  }
 
   TalipotMainWindow::getInstance()->createSubGraph(_contextGraph);
 }
@@ -284,8 +297,9 @@ void GraphHierarchiesEditor::delGraph() {
                         .value<tlp::Graph *>();
   }
 
-  if (_contextGraph == nullptr)
+  if (_contextGraph == nullptr) {
     return;
+  }
 
   TalipotMainWindow::getInstance()->closePanelsForGraph(_contextGraph);
   _contextGraph->push();
@@ -311,8 +325,9 @@ void GraphHierarchiesEditor::delAllGraph() {
                         .value<tlp::Graph *>();
   }
 
-  if (_contextGraph == nullptr)
+  if (_contextGraph == nullptr) {
     return;
+  }
 
   if (_contextGraph->getRoot() == _contextGraph) {
 
@@ -341,8 +356,9 @@ void GraphHierarchiesEditor::delAllGraph() {
 }
 
 void GraphHierarchiesEditor::delAllNodes() {
-  if (_contextGraph == nullptr)
+  if (_contextGraph == nullptr) {
     return;
+  }
 
   _contextGraph->push();
   Observable::holdObservers();
@@ -351,8 +367,9 @@ void GraphHierarchiesEditor::delAllNodes() {
 }
 
 void GraphHierarchiesEditor::delAllEdges() {
-  if (_contextGraph == nullptr)
+  if (_contextGraph == nullptr) {
     return;
+  }
 
   _contextGraph->push();
   Observable::holdObservers();
@@ -395,8 +412,9 @@ void GraphHierarchiesEditor::createPanel() {
   if (g == nullptr) {
     g = _model->currentGraph();
 
-    if (g == nullptr)
+    if (g == nullptr) {
       return;
+    }
   }
 
   TalipotMainWindow::getInstance()->createPanel(g);

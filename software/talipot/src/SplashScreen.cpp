@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -117,8 +117,9 @@ void SplashScreen::drawContents(QPainter *painter) {
   painter->drawRect(progressRect);
   qreal w = progressRect.width();
 
-  if (_numberOfFiles > 0)
+  if (_numberOfFiles > 0) {
     w = 1. * _fileCounter * progressRect.width() / _numberOfFiles;
+  }
 
   painter->setBrush(QColor(0, 0, 0, 200));
   painter->drawRect(progressRect.x(), progressRect.y(), w, progressRect.height());

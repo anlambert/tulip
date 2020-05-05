@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -153,8 +153,9 @@ void GlGraphLowDetailsRenderer::draw(float, Camera *) {
   while (cur < indices.size()) {
     if (indices.size() - cur > 64000) {
       glDrawElements(GL_LINES, 64000, GL_UNSIGNED_INT, &indices[cur]);
-    } else
+    } else {
       glDrawElements(GL_LINES, indices.size() - cur, GL_UNSIGNED_INT, &indices[cur]);
+    }
 
     cur += 64000;
   }
@@ -168,8 +169,9 @@ void GlGraphLowDetailsRenderer::draw(float, Camera *) {
   while (cur < quad_indices.size()) {
     if (quad_indices.size() - cur > 64000) {
       glDrawElements(GL_QUADS, 64000, GL_UNSIGNED_INT, &quad_indices[cur]);
-    } else
+    } else {
       glDrawElements(GL_QUADS, quad_indices.size() - cur, GL_UNSIGNED_INT, &quad_indices[cur]);
+    }
 
     cur += 64000;
   }

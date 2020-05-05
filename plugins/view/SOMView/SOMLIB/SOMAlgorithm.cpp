@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -33,12 +33,14 @@ SOMAlgorithm::SOMAlgorithm(TimeDecreasingFunction *learningRateFunction,
       learningRateFunction(learningRateFunction), diffusionRateFunction(diffusionRateFunction) {
 
   // Init default degenerescence functions if user don't do it
-  if (this->learningRateFunction == nullptr)
+  if (this->learningRateFunction == nullptr) {
     this->learningRateFunction = new TimeDecreasingFunctionSimple(0.7);
+  }
 
-  if (this->diffusionRateFunction == nullptr)
+  if (this->diffusionRateFunction == nullptr) {
     this->diffusionRateFunction =
         new DiffusionRateFunctionSimple(new TimeDecreasingFunctionSimple(0.7), 3);
+  }
 }
 
 SOMAlgorithm::~SOMAlgorithm() {
@@ -49,13 +51,15 @@ SOMAlgorithm::~SOMAlgorithm() {
 void SOMAlgorithm::run(SOMMap *map, InputSample &inputSample, unsigned int nTimes,
                        tlp::PluginProgress *pluginProgress) {
   // Map initialisation
-  if (pluginProgress)
+  if (pluginProgress) {
     pluginProgress->setComment("Initialization");
+  }
 
   initMap(map, inputSample, pluginProgress);
 
-  if (pluginProgress)
+  if (pluginProgress) {
     pluginProgress->setComment("Training");
+  }
 
   trainNInputSample(map, inputSample, nTimes, pluginProgress);
 
@@ -127,8 +131,9 @@ void SOMAlgorithm::train(SOMMap *map, InputSample &inputSample, unsigned int max
     // Next Iteration
     ++currentIteration;
 
-    if (pluginProgress)
+    if (pluginProgress) {
       pluginProgress->progress(currentIteration, maxIteration);
+    }
   }
 
   delete nodeIterator;
@@ -194,8 +199,9 @@ void SOMAlgorithm::propagateModification(SOMMap *map, const DynamicVector<double
   double learningRate =
       learningRateFunction->computeCurrentTimeRate(currentIteration, maxIteration, sampleSize);
 
-  if (learningRate == 0)
+  if (learningRate == 0) {
     return;
+  }
 
   // Treatment of the deque
   while (!toVisit.empty()) {
@@ -242,8 +248,9 @@ void SOMAlgorithm::computeMapping(SOMMap *map, InputSample &inputSample,
     cumDist += dist;
     mappingTab[somNode].insert(n);
 
-    if (mappingTab[somNode].size() > maxElement)
+    if (mappingTab[somNode].size() > maxElement) {
       maxElement = mappingTab[somNode].size();
+    }
   }
   medDist = cumDist / inputSample.getSampleSize();
 }

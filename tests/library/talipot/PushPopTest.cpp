@@ -905,8 +905,9 @@ void PushPopTest::testDelSubgraph() {
 }
 
 static void createSubgraphs(Graph *graph, int m, int n) {
-  if (n == 0)
+  if (n == 0) {
     return;
+  }
   for (int i = 0; i < m; ++i) {
     Graph *sg = graph->addCloneSubGraph();
     createSubgraphs(sg, m, n - 1);
@@ -1120,8 +1121,9 @@ public:
   void treatEvent(const Event &evt) override {
     PropertyInterface *prop = dynamic_cast<PropertyInterface *>(evt.sender());
 
-    if (prop && evt.type() == Event::TLP_DELETE)
+    if (prop && evt.type() == Event::TLP_DELETE) {
       destroy(prop);
+    }
   }
 };
 

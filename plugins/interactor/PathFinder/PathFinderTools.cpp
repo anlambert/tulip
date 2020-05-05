@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -48,8 +48,9 @@ bool getEdgeEnclosingCircle(Circlef &circle, GlGraphInputData *inputData, edge e
   selection->setAllEdgeValue(false);
   selection->setEdgeValue(e, true);
 
-  if (inputData->getElementLayout()->getEdgeValue(e).size() == 0)
+  if (inputData->getElementLayout()->getEdgeValue(e).size() == 0) {
     return false;
+  }
 
   circle = getEnclosingCircle(inputData, selection);
   return true;

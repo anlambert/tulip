@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -16,8 +16,11 @@ template <typename T>
 void ItemDelegate::registerCreator(tlp::ItemEditorCreator *c) {
   int id = qMetaTypeId<T>();
 
-  if (_creators.contains(id))
-    return;
+  if (_creators.contains(id)) {
+    {
+      return;
+    }
+  }
 
   _creators[id] = c;
 }

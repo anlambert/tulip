@@ -42,8 +42,9 @@ public:
   explicit GraphPropertiesModel(QString placeholder, tlp::Graph *graph, bool checkable = false,
                                 QObject *parent = nullptr);
   ~GraphPropertiesModel() override {
-    if (_graph != nullptr)
+    if (_graph != nullptr) {
       _graph->removeListener(this);
+    }
   }
 
   tlp::Graph *graph() const {
@@ -51,18 +52,21 @@ public:
   }
 
   void setGraph(tlp::Graph *graph) {
-    if (_graph == graph)
+    if (_graph == graph) {
       return;
+    }
 
     beginResetModel();
 
-    if (_graph != nullptr)
+    if (_graph != nullptr) {
       _graph->removeListener(this);
+    }
 
     _graph = graph;
 
-    if (_graph != nullptr)
+    if (_graph != nullptr) {
       _graph->addListener(this);
+    }
 
     rebuildCache();
     endResetModel();
@@ -96,8 +100,9 @@ public:
 
     const GraphEvent *graphEvent = dynamic_cast<const GraphEvent *>(&evt);
 
-    if (graphEvent == nullptr)
+    if (graphEvent == nullptr) {
       return;
+    }
 
     if (graphEvent->getType() == GraphEvent::TLP_BEFORE_DEL_LOCAL_PROPERTY ||
         graphEvent->getType() == GraphEvent::TLP_BEFORE_DEL_INHERITED_PROPERTY) {
@@ -147,8 +152,9 @@ public:
   Qt::ItemFlags flags(const QModelIndex &index) const override {
     Qt::ItemFlags result = QAbstractItemModel::flags(index);
 
-    if (index.column() == 0 && _checkable)
+    if (index.column() == 0 && _checkable) {
       result |= Qt::ItemIsUserCheckable;
+    }
 
     return result;
   }

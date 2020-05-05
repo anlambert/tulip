@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -39,9 +39,11 @@ void TriconnectedTestListener::treatEvent(const Event &evt) {
     switch (gEvt->getType()) {
     case GraphEvent::TLP_ADD_EDGE:
 
-      if (resultsBuffer.find(graph) != resultsBuffer.end())
-        if (resultsBuffer[graph])
+      if (resultsBuffer.find(graph) != resultsBuffer.end()) {
+        if (resultsBuffer[graph]) {
           return;
+        }
+      }
 
     case GraphEvent::TLP_DEL_EDGE:
     case GraphEvent::TLP_DEL_NODE:
@@ -61,8 +63,9 @@ void TriconnectedTestListener::treatEvent(const Event &evt) {
 
     Graph *graph = static_cast<Graph *>(evt.sender());
 
-    if (evt.type() == Event::TLP_DELETE)
+    if (evt.type() == Event::TLP_DELETE) {
       resultsBuffer.erase(graph);
+    }
   }
 }
 //=================================================================
@@ -70,11 +73,13 @@ static TriconnectedTestListener instance;
 //=================================================================
 bool TriconnectedTest::isTriconnected(Graph *graph) {
   auto it = instance.resultsBuffer.find(graph);
-  if (it != instance.resultsBuffer.end())
+  if (it != instance.resultsBuffer.end()) {
     return it->second;
+  }
 
-  if (graph->isEmpty())
+  if (graph->isEmpty()) {
     return false;
+  }
 
   bool result = true;
   Graph *tmp = graph->addCloneSubGraph();
