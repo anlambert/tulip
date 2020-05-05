@@ -91,10 +91,9 @@ vector<Coord> TalipotToOGDF::getEdgeCoordFromOGDFGraphAttr(edge eTlp) {
   if (ogdfEdges.find(eTlp) != ogdfEdges.end()) {
 
     ogdf::edge e = ogdfEdges[eTlp];
-    ogdf::DPolyline line = ogdfGraphAttributes.bends(e);
 
-    for (ogdf::ListIterator<ogdf::DPoint> p = line.begin(); p.valid(); ++p) {
-      v.push_back(Coord((*p).m_x, (*p).m_y, 0.));
+    for (const auto &bend : ogdfGraphAttributes.bends(e)) {
+      v.push_back(Coord(bend.m_x, bend.m_y));
     }
   }
   return v;
