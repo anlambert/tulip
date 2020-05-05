@@ -66,10 +66,7 @@ ENDIF(NOT MSVC AND "${CMAKE_BUILD_TYPE}" STREQUAL "")
 # ========================================================
 STRING(COMPARE EQUAL "${CMAKE_SIZEOF_VOID_P}" "8" X86_64)
 IF(X86_64)
-  SET(PROCESSOR_ARCHITECTURE "64")
   TALIPOT_SET_CXX_FLAGS("-DX86_64")
-ELSE(X86_64)
-  SET(PROCESSOR_ARCHITECTURE "32")
 ENDIF(X86_64)
 
 # ========================================================
