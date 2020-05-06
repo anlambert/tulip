@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -42,12 +42,10 @@ protected:
   tlp::node node;
 
   // Children of this tree node.
-  //    std::vector<OctTree*>* children ;//= new OctTree[8];
   OctTree **_children;
 
   // Number of children of this tree node.
   unsigned int childCount; // = 0;
-  // unsigned int childrenSize;
 
   // Barycenter of the contained graph nodes.
   Coord position;
