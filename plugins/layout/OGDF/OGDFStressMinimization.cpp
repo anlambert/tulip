@@ -51,14 +51,14 @@ static const char *paramHelp[] = {
 
 };
 
-class OGDFStressMajorization : public tlp::OGDFLayoutPluginBase {
+class OGDFStressMinimization : public tlp::OGDFLayoutPluginBase {
 
 public:
-  PLUGININFORMATION("Stress Majorization (OGDF)", "Karsten Klein", "12/11/2007",
+  PLUGININFORMATION("Stress Minimization (OGDF)", "Karsten Klein", "12/11/2007",
                     "Implements an alternative to force-directed layout which is a distance-based "
                     "layout realized by the stress majorization approach. ",
                     "2.0", "Force Directed")
-  OGDFStressMajorization(const tlp::PluginContext *context)
+  OGDFStressMinimization(const tlp::PluginContext *context)
       : OGDFLayoutPluginBase(context, new ogdf::StressMinimization()) {
     addInParameter<tlp::StringCollection>("terminationCriterion", paramHelp[0],
                                           "None;PositionDifference;Stress", true,
@@ -130,4 +130,4 @@ public:
   }
 };
 
-PLUGIN(OGDFStressMajorization)
+PLUGIN(OGDFStressMinimization)
