@@ -386,13 +386,15 @@ void TableView::filterChanged() {
 
   Graph *g = graph();
 
-  if (_ui->matchPropertyCombo->currentText() == anyProperty) {
+  QString property = _ui->matchPropertyCombo->currentText();
+
+  if (property == anyProperty) {
     for (int i = 0; i < _model->columnCount(); ++i) {
       if (!_ui->table->horizontalHeader()->isSectionHidden(i))
         props +=
             _model->headerData(i, Qt::Horizontal, Model::PropertyRole).value<PropertyInterface *>();
     }
-  } else {
+  } else if (!property.isEmpty()) {
     // a visible column
     props += g->getProperty(QStringToTlpString(_ui->matchPropertyCombo->currentText()));
   }
