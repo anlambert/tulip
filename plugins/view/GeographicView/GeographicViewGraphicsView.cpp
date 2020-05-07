@@ -961,6 +961,8 @@ void GeographicViewGraphicsView::refreshMap() {
     return;
   }
 
+  GlOffscreenRenderer::getInstance()->makeOpenGLContextCurrent();
+
   BoundingBox bb;
   Coord rightCoord = leafletMaps->getPixelPosOnScreenForLatLng(180, 180);
   Coord leftCoord = leafletMaps->getPixelPosOnScreenForLatLng(0, 0);

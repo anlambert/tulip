@@ -448,8 +448,6 @@ QPixmap GeographicView::snapshot(const QSize &size) const {
     }
   }
 
-  // GlOffscreenRenderer::getInstance()->makeOpenGLContextCurrent();
-
   int width = geoViewGraphicsView->width();
   int height = geoViewGraphicsView->height();
 
