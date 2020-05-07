@@ -113,7 +113,9 @@ QWidget *ItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem 
   }
 
   PropertyInterface *pi = index.data(Model::PropertyRole).value<PropertyInterface *>();
-  c->setPropertyToEdit(pi);
+  if (pi) {
+    c->setPropertyToEdit(pi);
+  }
   QWidget *w = c->createWidget(parent);
   return w;
 }

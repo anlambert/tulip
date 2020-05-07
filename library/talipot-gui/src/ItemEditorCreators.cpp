@@ -176,6 +176,14 @@ QVariant Vec3fEditorCreator::editorData(QWidget *w, tlp::Graph *) {
   }
 }
 
+QString Vec3fEditorCreator::displayText(const QVariant &v) const {
+  if (editSize) {
+    return tlpStringToQString(SizeType::toString((v.value<tlp::Size>())));
+  } else {
+    return tlpStringToQString(PointType::toString(v.value<tlp::Coord>()));
+  }
+}
+
 void Vec3fEditorCreator::setPropertyToEdit(tlp::PropertyInterface *prop) {
   editSize = (dynamic_cast<tlp::SizeProperty *>(prop) != nullptr);
 }

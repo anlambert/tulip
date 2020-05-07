@@ -101,7 +101,7 @@ public:
   QString displayText(const QVariant &) const override;
 };
 
-class TLP_QT_SCOPE Vec3fEditorCreator : public StringDisplayEditorCreator<tlp::PointType> {
+class TLP_QT_SCOPE Vec3fEditorCreator : public ItemEditorCreator {
   bool editSize;
 
 public:
@@ -109,6 +109,7 @@ public:
   QWidget *createWidget(QWidget *) const override;
   void setEditorData(QWidget *, const QVariant &, bool, tlp::Graph *) override;
   QVariant editorData(QWidget *, tlp::Graph *) override;
+  QString displayText(const QVariant &v) const override;
   void setPropertyToEdit(tlp::PropertyInterface *prop) override;
 };
 
