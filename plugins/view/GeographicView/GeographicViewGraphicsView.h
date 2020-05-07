@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -97,10 +97,6 @@ public:
 
   void treatEvent(const Event &ev) override;
 
-  void afterSetNodeValue(PropertyInterface *, const node);
-
-  void afterSetAllNodeValue(PropertyInterface *);
-
   GlMainWidgetGraphicsItem *getGlMainWidgetItem() {
     return glWidgetItem;
   }
@@ -150,7 +146,6 @@ private:
   Graph *graph;
   LeafletMaps *leafletMaps;
   std::unordered_map<node, std::pair<double, double>> nodeLatLng;
-  std::unordered_map<node, std::pair<double, double>> nodeLatLngFOR;
   std::unordered_map<edge, std::vector<std::pair<double, double>>> edgeBendsLatLng;
 
   Camera globeCameraBackup;
@@ -189,6 +184,9 @@ private:
   QOpenGLFramebufferObject *renderFbo;
   GlLayer *backgroundLayer;
   std::string mapTextureId;
+
+  DoubleProperty *latitudeProperty;
+  DoubleProperty *longitudeProperty;
 };
 }
 
