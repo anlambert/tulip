@@ -17,9 +17,7 @@ void ItemDelegate::registerCreator(tlp::ItemEditorCreator *c) {
   int id = qMetaTypeId<T>();
 
   if (_creators.contains(id)) {
-    {
-      return;
-    }
+    return;
   }
 
   _creators[id] = c;

@@ -99,9 +99,7 @@ QVariant LineEditEditorCreator<T>::editorData(QWidget *editor, tlp::Graph *) {
   typename T::RealType val;
 
   if (T::fromString(val, strVal)) {
-    {
-      result.setValue<typename T::RealType>(val);
-    }
+    result.setValue<typename T::RealType>(val);
   }
 
   return result;
@@ -131,9 +129,7 @@ QVariant MultiLinesEditEditorCreator<T>::editorData(QWidget *editor, tlp::Graph 
   typename T::RealType val;
 
   if (T::fromString(val, strVal)) {
-    {
-      result.setValue<typename T::RealType>(val);
-    }
+    result.setValue<typename T::RealType>(val);
   }
 
   return result;
@@ -205,13 +201,9 @@ void PropertyEditorCreator<PROPTYPE>::setEditorData(QWidget *w, const QVariant &
   GraphPropertiesModel<PROPTYPE> *model = nullptr;
 
   if (isMandatory) {
-    {
-      model = new GraphPropertiesModel<PROPTYPE>(g, false, combo);
-    }
+    model = new GraphPropertiesModel<PROPTYPE>(g, false, combo);
   } else {
-    {
-      model = new GraphPropertiesModel<PROPTYPE>(QObject::tr("Select a property"), g, false, combo);
-    }
+    model = new GraphPropertiesModel<PROPTYPE>(QObject::tr("Select a property"), g, false, combo);
   }
 
   combo->setModel(model);
@@ -221,9 +213,7 @@ void PropertyEditorCreator<PROPTYPE>::setEditorData(QWidget *w, const QVariant &
 template <typename PROPTYPE>
 QVariant PropertyEditorCreator<PROPTYPE>::editorData(QWidget *w, tlp::Graph *g) {
   if (g == nullptr) {
-    {
-      return QVariant();
-    }
+    return QVariant();
   }
 
   QComboBox *combo = static_cast<QComboBox *>(w);
@@ -240,9 +230,7 @@ QString PropertyEditorCreator<PROPTYPE>::displayText(const QVariant &v) const {
   PROPTYPE *prop = v.value<PROPTYPE *>();
 
   if (prop == nullptr) {
-    {
-      return QObject::tr("Select a property");
-    }
+    return QObject::tr("Select a property");
   }
 
   return tlpStringToQString(prop->getName());
@@ -277,9 +265,7 @@ QVariant VectorEditorCreator<ElementType>::editorData(QWidget *editor, tlp::Grap
   QVector<QVariant> editorData = static_cast<VectorEditor *>(editor)->vector();
 
   for (const QVariant &v : editorData) {
-    {
-      result.push_back(v.value<ElementType>());
-    }
+    result.push_back(v.value<ElementType>());
   }
 
   return QVariant::fromValue<std::vector<ElementType>>(result);
@@ -304,9 +290,7 @@ QString VectorEditorCreator<ElementType>::displayText(const QVariant &data) cons
   std::vector<ElementType> v = data.value<std::vector<ElementType>>();
 
   if (v.empty()) {
-    {
-      return QString();
-    }
+    return QString();
   }
 
   // use a DataTypeSerializer if any
@@ -326,9 +310,7 @@ QString VectorEditorCreator<ElementType>::displayText(const QVariant &data) cons
   }
 
   if (v.size() == 1) {
-    {
-      return QString("1 element");
-    }
+    return QString("1 element");
   }
 
   return QString::number(v.size()) + QObject::tr(" elements");
