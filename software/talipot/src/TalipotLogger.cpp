@@ -22,6 +22,7 @@
 #include <QPushButton>
 #include <QShowEvent>
 #include <QHideEvent>
+#include <QList>
 
 #include <talipot/TlpQtTools.h>
 #include <talipot/Settings.h>
@@ -92,11 +93,18 @@ void TalipotLogger::log(QtMsgType type, const QMessageLogContext &, const QStrin
 
 void TalipotLogger::logImpl(QtMsgType type, const QString &msg) {
 
-  // on some windows systems
-  // "No errors." messages may be logged coming from QGLShader::link
-  // we try to hide them
-  if (msg.indexOf("No errors.") != -1 || msg.isEmpty()) {
+  if (msg.isEmpty()) {
     return;
+  }
+
+  QList<QString> msgPrefixToFilter;
+  msgPrefixToFilter.append("QGraphicsScene::sendEvent");
+  msgPrefixToFilter.append("QXcbConnection: XCB error:");
+
+  for (const auto &prefix : msgPrefixToFilter) {
+    if (msg.startsWith(prefix)) {
+      return;
+    }
   }
 
   if (type == QtFatalMsg) {
