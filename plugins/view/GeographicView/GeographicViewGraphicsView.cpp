@@ -362,20 +362,46 @@ void simplifyPolyFile(QString fileName, float definition) {
   }
 }
 
-static double latitudeToMercator(double latitude) {
-  double mercatorLatitude = latitude * M_PI / 360.;
+static inline double toRadian(double val) {
+  return val * M_PI / 360.;
+}
+
+static inline double toDegree(double val) {
+  return val * 360. / M_PI;
+}
+
+static inline double latitudeToMercator(double latitude) {
+  double mercatorLatitude = toRadian(latitude * 2);
   mercatorLatitude = sin(abs(mercatorLatitude));
   mercatorLatitude = log((1. + mercatorLatitude) / (1. - mercatorLatitude)) / 2.;
 
   if (latitude < 0) {
-    return -mercatorLatitude / M_PI * 360.;
+    return toDegree(-mercatorLatitude);
   }
 
-  return mercatorLatitude / M_PI * 360.;
+  return toDegree(mercatorLatitude);
 }
 
 static double mercatorToLatitude(double mercator) {
-  return atan(sinh(mercator / 360. * M_PI)) / M_PI * 360.;
+  return (atan(sinh(mercator / 360. * M_PI)) / M_PI * 360.) / 2;
+}
+
+static inline Coord latLngToPolar(const pair<double, double> &latLng) {
+  return Coord(toRadian(latLng.first * 2), toRadian(latLng.second * 2));
+}
+
+static inline Coord polarToSpherical(const Coord &polar, float radius) {
+  float lambda = polar[1];
+  float theta = lambda;
+  if (lambda > M_PI) {
+    theta = lambda + 2. * M_PI;
+  }
+  float phi = M_PI / 2. - polar[0];
+  return {radius * sin(phi) * cos(theta), radius * sin(phi) * sin(theta), radius * cos(phi)};
+}
+
+static inline Coord projectLatLngToSphere(const pair<double, double> &latLng, float radius) {
+  return polarToSpherical(latLngToPolar(latLng), radius);
 }
 
 QGraphicsProxyWidget *proxyGM = nullptr;
@@ -977,12 +1003,10 @@ void GeographicViewGraphicsView::refreshMap() {
     float middleLng =
         leafletMaps->getLatLngForPixelPosOnScreen(width() / 2., height() / 2.).second * 2.;
     bb.expand(Coord(middleLng - mapWidth / 2.,
-                    latitudeToMercator(leafletMaps->getLatLngForPixelPosOnScreen(0, 0).first * 2.),
-                    0));
+                    latitudeToMercator(leafletMaps->getLatLngForPixelPosOnScreen(0, 0).first), 0));
     bb.expand(Coord(
         middleLng + mapWidth / 2.,
-        latitudeToMercator(leafletMaps->getLatLngForPixelPosOnScreen(width(), height()).first * 2.),
-        0));
+        latitudeToMercator(leafletMaps->getLatLngForPixelPosOnScreen(width(), height()).first), 0));
     GlSceneZoomAndPan sceneZoomAndPan(glMainWidget->getScene(), bb, "Main", 1);
     sceneZoomAndPan.zoomAndPanAnimationStep(1);
   }
@@ -1040,7 +1064,7 @@ void GeographicViewGraphicsView::treatEvent(const Event &ev) {
     // compute new node latitude / longitude from updated coordinates
     node n = propEvt->getNode();
     const Coord &p = geoLayout->getNodeValue(n);
-    pair<double, double> latLng = {mercatorToLatitude(p.y()) / 2, p.x() / 2};
+    pair<double, double> latLng = {mercatorToLatitude(p.y()), p.x() / 2};
     nodeLatLng[n] = latLng;
     if (latitudeProperty && longitudeProperty) {
       latitudeProperty->setNodeValue(n, latLng.first);
@@ -1145,7 +1169,7 @@ void GeographicViewGraphicsView::switchViewType() {
 
       if (nodeLatLng.find(n) != nodeLatLng.end()) {
         geoLayout->setNodeValue(
-            n, Coord(nodeLatLng[n].second * 2., latitudeToMercator(nodeLatLng[n].first * 2.), 0));
+            n, Coord(nodeLatLng[n].second * 2., latitudeToMercator(nodeLatLng[n].first), 0));
       }
     }
 
@@ -1155,7 +1179,7 @@ void GeographicViewGraphicsView::switchViewType() {
 
         for (unsigned int i = 0; i < edgeBendsLatLng[e].size(); ++i) {
           edgeBendsCoords.push_back(Coord(edgeBendsLatLng[e][i].second * 2.,
-                                          latitudeToMercator(edgeBendsLatLng[e][i].first * 2.), 0));
+                                          latitudeToMercator(edgeBendsLatLng[e][i].first), 0));
         }
 
         geoLayout->setEdgeValue(e, edgeBendsCoords);
@@ -1201,22 +1225,7 @@ void GeographicViewGraphicsView::switchViewType() {
         }
 
         if (nodeLatLng.find(n) != nodeLatLng.end()) {
-          Coord tmp = Coord(nodeLatLng[n].first * 2. / 360. * M_PI,
-                            nodeLatLng[n].second * 2. / 360. * M_PI);
-
-          float lambda = tmp[1];
-          float theta;
-
-          if (lambda <= M_PI) {
-            theta = lambda;
-          } else {
-            theta = lambda + 2. * M_PI;
-          }
-
-          float phi = M_PI / 2.0 - tmp[0];
-
-          tmp = Coord(50. * sin(phi) * cos(theta), 50. * sin(phi) * sin(theta), 50. * cos(phi));
-          geoLayout->setNodeValue(n, tmp);
+          geoLayout->setNodeValue(n, projectLatLngToSphere(nodeLatLng[n], 50));
         }
       }
 
@@ -1224,31 +1233,15 @@ void GeographicViewGraphicsView::switchViewType() {
         const std::pair<node, node> &eEnds = graph->ends(e);
         node src = eEnds.first;
         node tgt = eEnds.second;
-        Coord srcC = Coord(nodeLatLng[src].first * 2. / 360. * M_PI,
-                           nodeLatLng[src].second * 2. / 360. * M_PI);
-        Coord tgtC = Coord(nodeLatLng[tgt].first * 2. / 360. * M_PI,
-                           nodeLatLng[tgt].second * 2. / 360. * M_PI);
-
         unsigned int bendsNumber = 2;
         vector<Coord> bends;
 
+        Coord srcCoord = latLngToPolar(nodeLatLng[src]);
+        Coord tgtCoord = latLngToPolar(nodeLatLng[tgt]);
+
         for (unsigned int i = 0; i < bendsNumber; ++i) {
-          Coord tmp = srcC + ((tgtC - srcC) / (bendsNumber + 1.f)) * (i + 1.f);
-          float lambda = tmp[1];
-          float theta;
-
-          if (lambda <= M_PI) {
-            theta = lambda;
-          } else {
-            theta = lambda + 2. * M_PI;
-          }
-
-          float phi = M_PI / 2.0 - tmp[0];
-
-          Coord tmp1 =
-              Coord(75. * sin(phi) * cos(theta), 75. * sin(phi) * sin(theta), 75. * cos(phi));
-
-          bends.push_back(tmp1);
+          Coord tmp = srcCoord + ((tgtCoord - srcCoord) / (bendsNumber + 1.f)) * (i + 1.f);
+          bends.push_back(polarToSpherical(tmp, 75));
         }
 
         geoLayout->setEdgeValue(e, bends);
