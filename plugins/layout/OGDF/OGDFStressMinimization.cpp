@@ -36,7 +36,7 @@ static const char *paramHelp[] = {
     "used for nodes within different components.",
 
     // numberOfIterations
-    "Sets a fixed number of iterations for stress majorization. If the new value is smaller or "
+    "Sets a fixed number of iterations for stress minimization. If the new value is smaller or "
     "equal 0 the default value (200) is used.",
 
     // edgeCosts
@@ -56,7 +56,7 @@ class OGDFStressMinimization : public tlp::OGDFLayoutPluginBase {
 public:
   PLUGININFORMATION("Stress Minimization (OGDF)", "Karsten Klein", "12/11/2007",
                     "Implements an alternative to force-directed layout which is a distance-based "
-                    "layout realized by the stress majorization approach. ",
+                    "layout realized by the stress minimization approach. ",
                     "2.0", "Force Directed")
   OGDFStressMinimization(const tlp::PluginContext *context)
       : OGDFLayoutPluginBase(context, new ogdf::StressMinimization()) {
