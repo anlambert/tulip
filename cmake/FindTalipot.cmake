@@ -16,28 +16,23 @@
 # This script will output the following variables:
 #
 # TALIPOT_DIR (will not be modified if already set): The Talipot installation
-#   path
-# TALIPOT_FOUND: This variable is set to true if a valid Talipot
-#   installation has been found.
-# TALIPOT_INCLUDE_DIR: The path where Talipot
-#   headers are located.
-# TALIPOT_LIBRARIES: Contains path to the Talipot libraries
+# path TALIPOT_FOUND: This variable is set to true if a valid Talipot
+# installation has been found. TALIPOT_INCLUDE_DIR: The path where Talipot
+# headers are located. TALIPOT_LIBRARIES: Contains path to the Talipot libraries
 # TALIPOT_LIBRARIES_DIR: Contains path to the Talipot libraries
 # TALIPOT_PLUGINS_DIR: Path where Talipot plugins are located
 # TALIPOT_GLYPH_PLUGINS_DIR: Path where Talipot glyph plugins are located
 # TALIPOT_INTERACTOR_PLUGINS_DIR: Path where Talipot interaction plugins are
-#   located TALIPOT_VIEW_PLUGINS_DIR: Path where Talipot view plugins are located
+# located TALIPOT_VIEW_PLUGINS_DIR: Path where Talipot view plugins are located
 # TALIPOT_CORE_LIBRARY: The path to the TalipotCore module library.
 # TALIPOT_OGL_LIBRARY: The path to the TalipotOGL module library.
 # TALIPOT_GUI_LIBRARY: The path to the TalipotGUI module library.
 # TALIPOT_OGDF_LIBRARY: The path to the TalipotOGDF module library.
 # TALIPOT_PYTHON_LIBRARY: The path to the TalipotPython module library.
-# TALIPOT_SHARE_DIR: Installation path for resources
-# TALIPOT_VERSION: Complete version string.
-# TALIPOT_MAJOR_VERSION: Major version digit.
-# TALIPOT_MINOR_VERSION: Minor version digit.
-# TALIPOT_PATCH_VERSION: Patch version digit.
-# TALIPOT_USE_FILE: Additional Talipot-related macro definitions
+# TALIPOT_SHARE_DIR: Installation path for resources TALIPOT_VERSION: Complete
+# version string. TALIPOT_MAJOR_VERSION: Major version digit.
+# TALIPOT_MINOR_VERSION: Minor version digit. TALIPOT_PATCH_VERSION: Patch
+# version digit. TALIPOT_USE_FILE: Additional Talipot-related macro definitions
 
 # Define version separator (different for MSVC builds)
 SET(TalipotVersionSeparator .)
@@ -47,11 +42,9 @@ IF(${CMAKE_GENERATOR} MATCHES "Visual Studio" OR ${CMAKE_GENERATOR} MATCHES
 ENDIF()
 
 # A macro to retrieve Talipot version from the talipot/Release.h file This will
-# output the following variables:
-# TALIPOT_VERSION: Complete version string.
-# TALIPOT_MAJOR_VERSION: Major version digit.
-# TALIPOT_MINOR_VERSION: Minor version digit.
-# TALIPOT_PATCH_VERSION: Patch version digit.
+# output the following variables: TALIPOT_VERSION: Complete version string.
+# TALIPOT_MAJOR_VERSION: Major version digit. TALIPOT_MINOR_VERSION: Minor
+# version digit. TALIPOT_PATCH_VERSION: Patch version digit.
 MACRO(RETRIEVE_VERSION)
   # Unset previous variables
   SET(TALIPOT_VERSION)
@@ -182,11 +175,7 @@ SET(TALIPOT_VIEW_PLUGINS_DIR ${TALIPOT_PLUGINS_DIR}/view)
 MARK_AS_ADVANCED(TALIPOT_VIEW_PLUGINS_DIR)
 SET(TALIPOT_FOUND true)
 
-IF(WIN32 AND NOT MSVC)
-  SET(TALIPOT_LIBRARIES_DIR "${TALIPOT_DIR}/${CMAKE_INSTALL_BINDIR}")
-ELSE()
-  SET(TALIPOT_LIBRARIES_DIR ${TALIPOT_DIR}/${CMAKE_INSTALL_LIBDIR})
-ENDIF()
+SET(TALIPOT_LIBRARIES_DIR ${TALIPOT_DIR}/${CMAKE_INSTALL_LIBDIR})
 
 FIND_LIBRARY(
   TALIPOT_CORE_LIBRARY
