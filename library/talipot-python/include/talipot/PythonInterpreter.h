@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -21,14 +21,13 @@ typedef _object PyObject;
 
 #include <talipot/PythonCppTypesConverter.h>
 #include <talipot/Graph.h>
+#include <talipot/Singleton.h>
+#include <talipot/TlpTools.h>
 
 #include <QObject>
 #include <QVector>
 #include <QSet>
 #include <QString>
-
-#include <memory>
-#include <mutex>
 
 class QAbstractScrollArea;
 class QPlainTextEdit;
@@ -36,23 +35,22 @@ class QTextBrowser;
 
 namespace tlp {
 
-class TLP_PYTHON_SCOPE PythonInterpreter : public QObject {
+class PythonInterpreter;
+DECLARE_DLL_TEMPLATE_INSTANCE(Singleton<PythonInterpreter>, TLP_PYTHON_TEMPLATE_DECLARE_SCOPE)
 
-  friend std::unique_ptr<PythonInterpreter>::deleter_type;
+class TLP_PYTHON_SCOPE PythonInterpreter : public QObject, public Singleton<PythonInterpreter> {
+
+  friend class Singleton<PythonInterpreter>;
 
   Q_OBJECT
 
   PythonInterpreter();
-  ~PythonInterpreter() override;
 
   void holdGIL();
   void releaseGIL();
 
   void setDefaultConsoleWidget(QAbstractScrollArea *consoleWidget);
   void setConsoleWidget(QAbstractScrollArea *consoleWidget);
-
-  static std::unique_ptr<PythonInterpreter> _instance;
-  static std::once_flag _onceFlag;
 
   bool _wasInit;
   bool _runningScript;
@@ -77,7 +75,7 @@ public:
   static const std::vector<QString> pythonAccentuatedCharactersReplace;
   static const char *pythonKeywords[];
 
-  static PythonInterpreter *getInstance();
+  ~PythonInterpreter() override;
 
   bool interpreterInit();
 

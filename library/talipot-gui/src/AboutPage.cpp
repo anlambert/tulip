@@ -63,10 +63,10 @@ AboutPage::AboutPage(QWidget *parent) : QWidget(parent), _ui(new Ui::AboutPageDa
       "  </body>"
       "</html>");
 
-  bool openGlOk = GlOffscreenRenderer::getInstance()->getOpenGLContext()->isValid();
+  bool openGlOk = GlOffscreenRenderer::instance().getOpenGLContext()->isValid();
 
   if (openGlOk) {
-    GlOffscreenRenderer::getInstance()->makeOpenGLContextCurrent();
+    GlOffscreenRenderer::instance().makeOpenGLContextCurrent();
   }
 
   QString talipotDependenciesInfo =
@@ -96,7 +96,7 @@ AboutPage::AboutPage(QWidget *parent) : QWidget(parent), _ui(new Ui::AboutPageDa
       "</p>";
 
   if (openGlOk) {
-    GlOffscreenRenderer::getInstance()->doneOpenGLContextCurrent();
+    GlOffscreenRenderer::instance().doneOpenGLContextCurrent();
   }
 
   _ui->dependenciesInfo->setText(talipotDependenciesInfo);

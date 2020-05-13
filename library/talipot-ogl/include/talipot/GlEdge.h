@@ -19,9 +19,7 @@
 #include <talipot/Matrix.h>
 #include <talipot/GlLabel.h>
 #include <talipot/GlSceneVisitor.h>
-
-#include <memory>
-#include <mutex>
+#include <talipot/Singleton.h>
 
 namespace tlp {
 
@@ -40,11 +38,7 @@ public:
    * id must be the id of the edge in graph
    */
   GlEdge(edge e = edge(), Graph *graph = nullptr, bool sel = false)
-      : e(e), graph(graph), selectionDraw(sel) {
-    if (!label.get()) {
-      std::call_once(onceFlag, []() { label.reset(new GlLabel); });
-    }
-  }
+      : e(e), graph(graph), selectionDraw(sel) {}
 
   /**
    * Virtual function to accept GlSceneVisitor on this class
@@ -125,8 +119,7 @@ public:
 
 private:
   bool selectionDraw;
-  static std::unique_ptr<GlLabel> label;
-  static std::once_flag onceFlag;
+  static Singleton<GlLabel> label;
 
   /**
    * Draw the Edge : this function is used by draw function

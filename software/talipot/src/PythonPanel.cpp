@@ -29,7 +29,7 @@ PythonPanel::PythonPanel(QWidget *parent) : QWidget(parent), _ui(new Ui::PythonP
   _ui->setupUi(this);
   connect(_ui->graphCombo, &TreeViewComboBox::currentItemChanged, this,
           &PythonPanel::graphComboIndexChanged);
-  tlp::PythonInterpreter::getInstance()->runString(setCurrentGraphFunction);
+  tlp::PythonInterpreter::instance().runString(setCurrentGraphFunction);
   connect(_ui->pythonShellWidget, &tlp::PythonShellWidget::beginCurrentLinesExecution, this,
           &PythonPanel::beginCurrentLinesExecution);
   connect(_ui->pythonShellWidget, &tlp::PythonShellWidget::endCurrentLinesExecution, this,
@@ -48,7 +48,7 @@ void PythonPanel::graphComboIndexChanged() {
   tlp::Graph *g = _ui->graphCombo->model()
                       ->data(_ui->graphCombo->selectedIndex(), tlp::Model::GraphRole)
                       .value<tlp::Graph *>();
-  tlp::PythonInterpreter::getInstance()->runGraphScript("__main__", "setCurrentGraph", g);
+  tlp::PythonInterpreter::instance().runGraphScript("__main__", "setCurrentGraph", g);
   _ui->pythonShellWidget->getAutoCompletionDb()->setGraph(g);
 }
 

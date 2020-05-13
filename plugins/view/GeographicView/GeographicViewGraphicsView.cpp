@@ -992,7 +992,7 @@ void GeographicViewGraphicsView::refreshMap() {
     return;
   }
 
-  GlOffscreenRenderer::getInstance()->makeOpenGLContextCurrent();
+  GlOffscreenRenderer::instance().makeOpenGLContextCurrent();
 
   BoundingBox bb;
   Coord rightCoord = leafletMaps->getPixelPosOnScreenForLatLng(180, 180);
@@ -1199,7 +1199,7 @@ void GeographicViewGraphicsView::switchViewType() {
   else {
 
     if (!planisphereEntity) {
-      GlOffscreenRenderer::getInstance()->makeOpenGLContextCurrent();
+      GlOffscreenRenderer::instance().makeOpenGLContextCurrent();
       GlTextureManager::loadTexture(planisphereTextureId);
       planisphereEntity = new GlSphere(Coord(0., 0., 0.), 50., planisphereTextureId, 255, 0, 0, 90);
       glMainWidget->getScene()->getLayer("Main")->addGlEntity(planisphereEntity, "globeMap");
@@ -1301,7 +1301,7 @@ void GeographicViewGraphicsView::updateMapTexture() {
   leafletMaps->render(&painter);
   painter.end();
 
-  GlOffscreenRenderer::getInstance()->makeOpenGLContextCurrent();
+  GlOffscreenRenderer::instance().makeOpenGLContextCurrent();
 
   if (renderFbo == nullptr || renderFbo->width() != width || renderFbo->height() != height) {
     delete renderFbo;

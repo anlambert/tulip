@@ -266,7 +266,7 @@ void AutoCompletionDataBase::analyseCurrentScriptCode(const QString &code, const
     }
   }
 
-  QVector<QString> importedModules = PythonInterpreter::getInstance()->getImportedModulesList();
+  QVector<QString> importedModules = PythonInterpreter::instance().getImportedModulesList();
 
   for (int i = 0; i < importedModules.size(); ++i) {
     QString moduleName = importedModules[i];
@@ -279,13 +279,13 @@ void AutoCompletionDataBase::analyseCurrentScriptCode(const QString &code, const
 
   QString builtinModName = "__builtin__";
 
-  if (PythonInterpreter::getInstance()->getPythonVersion() >= 3.0) {
+  if (PythonInterpreter::instance().getPythonVersion() >= 3.0) {
     builtinModName = "builtins";
   }
 
-  if (PythonInterpreter::getInstance()->runString(QString("import ") + builtinModName)) {
+  if (PythonInterpreter::instance().runString(QString("import ") + builtinModName)) {
     QVector<QString> builtinDictContent =
-        PythonInterpreter::getInstance()->getObjectDictEntries(builtinModName);
+        PythonInterpreter::instance().getObjectDictEntries(builtinModName);
 
     for (int i = 0; i < builtinDictContent.size(); ++i) {
       _globalAutoCompletionList.insert(builtinDictContent[i]);
@@ -786,7 +786,7 @@ QString AutoCompletionDataBase::findTypeForExpr(const QString &expr,
         }
 
         if (currentType.isEmpty()) {
-          currentType = PythonInterpreter::getInstance()->getVariableType(p);
+          currentType = PythonInterpreter::instance().getVariableType(p);
         }
 
       } else {
@@ -829,7 +829,7 @@ QString AutoCompletionDataBase::findTypeForExpr(const QString &expr,
     }
 
     if (currentType.isEmpty()) {
-      currentType = PythonInterpreter::getInstance()->getVariableType(expr);
+      currentType = PythonInterpreter::instance().getVariableType(expr);
     }
   }
 
@@ -1314,7 +1314,7 @@ QSet<QString> AutoCompletionDataBase::getAllDictForType(const QString &type, con
     }
   }
 
-  QVector<QString> baseTypes = PythonInterpreter::getInstance()->getBaseTypesForType(type);
+  QVector<QString> baseTypes = PythonInterpreter::instance().getBaseTypesForType(type);
 
   for (int i = 0; i < baseTypes.size(); ++i) {
     QString baseType = baseTypes[i];
@@ -1485,7 +1485,7 @@ AutoCompletionDataBase::getParamTypesForMethodOrFunction(const QString &type,
                                                          const QString &funcName) const {
   QString fullName = type + "." + funcName;
   QVector<QVector<QString>> ret = _apiDb->getParamTypesForMethodOrFunction(fullName);
-  QVector<QString> baseTypes = PythonInterpreter::getInstance()->getBaseTypesForType(type);
+  QVector<QString> baseTypes = PythonInterpreter::instance().getBaseTypesForType(type);
 
   for (int i = 0; i < baseTypes.size(); ++i) {
     QString baseType = baseTypes[i];
@@ -1514,7 +1514,7 @@ QString AutoCompletionDataBase::getReturnTypeForMethodOrFunction(const QString &
   QString ret = _apiDb->getReturnTypeForMethodOrFunction(fullName);
 
   if (ret.isEmpty()) {
-    QVector<QString> baseTypes = PythonInterpreter::getInstance()->getBaseTypesForType(type);
+    QVector<QString> baseTypes = PythonInterpreter::instance().getBaseTypesForType(type);
 
     for (int i = 0; i < baseTypes.size(); ++i) {
       QString baseType = baseTypes[i];

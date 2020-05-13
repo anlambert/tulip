@@ -176,7 +176,7 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD ul_reason_for_call, LPVOID lpReserve
   case DLL_PROCESS_ATTACH:
 
     if (QApplication::instance()) {
-      PythonInterpreter::getInstance()->initConsoleOutput();
+      PythonInterpreter::instance().initConsoleOutput();
     }
 
     break;
@@ -193,9 +193,6 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD ul_reason_for_call, LPVOID lpReserve
 }
 }
 #endif
-
-std::unique_ptr<PythonInterpreter> PythonInterpreter::_instance;
-std::once_flag PythonInterpreter::_onceFlag;
 
 PythonInterpreter::PythonInterpreter()
     : _wasInit(false), _runningScript(false), _defaultConsoleWidget(nullptr), _outputEnabled(true),
@@ -405,11 +402,6 @@ PythonInterpreter::~PythonInterpreter() {
   consoleOuputEmitter = nullptr;
   delete consoleOuputHandler;
   consoleOuputHandler = nullptr;
-}
-
-PythonInterpreter *PythonInterpreter::getInstance() {
-  std::call_once(PythonInterpreter::_onceFlag, []() { _instance.reset(new PythonInterpreter); });
-  return _instance.get();
 }
 
 void PythonInterpreter::initConsoleOutput() {
@@ -1066,6 +1058,8 @@ void PythonInterpreter::clearTracebacks() {
   pythonCode += "sys.last_traceback = None\n";
   runString(pythonCode);
 }
+
+INSTANTIATE_DLL_TEMPLATE(tlp::Singleton<tlp::PythonInterpreter>, TLP_PYTHON_TEMPLATE_DEFINE_SCOPE)
 
 #ifdef __GNUC__
 #pragma GCC diagnostic pop

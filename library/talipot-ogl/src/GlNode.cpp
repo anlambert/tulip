@@ -42,8 +42,7 @@ using namespace std;
 
 namespace tlp {
 
-unique_ptr<GlLabel> GlNode::label;
-once_flag GlNode::onceFlag;
+Singleton<GlLabel> GlNode::label;
 
 void GlNode::init(const GlGraphInputData *data) {
   coord = data->getElementLayout()->getNodeValue(n);
@@ -206,9 +205,9 @@ void GlNode::drawLabel(OcclusionTest *test, const GlGraphInputData *data, float 
   }
 
   if (selected) {
-    label->setStencil(data->parameters->getSelectedNodesStencil());
+    label.instance().setStencil(data->parameters->getSelectedNodesStencil());
   } else {
-    label->setStencil(data->parameters->getNodesLabelStencil());
+    label.instance().setStencil(data->parameters->getNodesLabelStencil());
   }
 
   int fontSize = data->getElementFontSize()->getNodeValue(n);
@@ -228,30 +227,31 @@ void GlNode::drawLabel(OcclusionTest *test, const GlGraphInputData *data, float 
   Coord centerBB = includeBB.center();
   Vec3f sizeBB = includeBB[1] - includeBB[0];
 
-  label->setFontNameSizeAndColor(data->getElementFont()->getNodeValue(n), fontSize, fontColor);
-  label->setOutlineColor(fontBorderColor);
-  label->setOutlineSize(fontBorderWidth);
-  label->setText(tmp);
-  label->setTranslationAfterRotation(centerBB * size);
-  label->setSize(Size(size[0] * sizeBB[0], size[1] * sizeBB[1], 0));
-  label->setSizeForOutAlign(Size(size[0], size[1], 0));
-  label->rotate(0, 0, rot);
-  label->setAlignment(labelPos);
-  label->setScaleToSize(data->parameters->isLabelScaled());
-  label->setUseLODOptimisation(true, this->getBoundingBox(data));
-  label->setLabelsDensity(data->parameters->getLabelsDensity());
-  label->setUseMinMaxSize(!data->parameters->isLabelFixedFontSize());
-  label->setMinSize(data->parameters->getMinSizeOfLabel());
-  label->setMaxSize(data->parameters->getMaxSizeOfLabel());
-  label->setOcclusionTester(test);
-  label->setBillboarded(data->parameters->getLabelsAreBillboarded());
+  label.instance().setFontNameSizeAndColor(data->getElementFont()->getNodeValue(n), fontSize,
+                                           fontColor);
+  label.instance().setOutlineColor(fontBorderColor);
+  label.instance().setOutlineSize(fontBorderWidth);
+  label.instance().setText(tmp);
+  label.instance().setTranslationAfterRotation(centerBB * size);
+  label.instance().setSize(Size(size[0] * sizeBB[0], size[1] * sizeBB[1], 0));
+  label.instance().setSizeForOutAlign(Size(size[0], size[1], 0));
+  label.instance().rotate(0, 0, rot);
+  label.instance().setAlignment(labelPos);
+  label.instance().setScaleToSize(data->parameters->isLabelScaled());
+  label.instance().setUseLODOptimisation(true, this->getBoundingBox(data));
+  label.instance().setLabelsDensity(data->parameters->getLabelsDensity());
+  label.instance().setUseMinMaxSize(!data->parameters->isLabelFixedFontSize());
+  label.instance().setMinSize(data->parameters->getMinSizeOfLabel());
+  label.instance().setMaxSize(data->parameters->getMaxSizeOfLabel());
+  label.instance().setOcclusionTester(test);
+  label.instance().setBillboarded(data->parameters->getLabelsAreBillboarded());
 
   if (includeBB[1][2] != 0 && !data->parameters->getLabelsAreBillboarded()) {
-    label->setPosition(Coord(coord[0], coord[1], coord[2] + size[2] / 2.));
+    label.instance().setPosition(Coord(coord[0], coord[1], coord[2] + size[2] / 2.));
   } else {
-    label->setPosition(Coord(coord[0], coord[1], coord[2]));
+    label.instance().setPosition(Coord(coord[0], coord[1], coord[2]));
   }
 
-  label->drawWithStencil(lod, camera);
+  label.instance().drawWithStencil(lod, camera);
 }
 }

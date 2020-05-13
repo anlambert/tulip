@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -15,6 +15,7 @@
 #define TALIPOT_MAIN_WINDOW_H
 
 #include <talipot/Observable.h>
+#include <talipot/Singleton.h>
 
 #include <QModelIndex>
 #include <QPoint>
@@ -49,8 +50,13 @@ namespace tlp {
 class PythonIDE;
 }
 
-class TalipotMainWindow : public QMainWindow, tlp::Observable {
+class TalipotMainWindow : public QMainWindow,
+                          public tlp::Observable,
+                          public tlp::Singleton<TalipotMainWindow> {
   Q_OBJECT
+
+  friend tlp::Singleton<TalipotMainWindow>;
+
   Ui::TalipotMainWindowData *_ui;
   tlp::GraphHierarchiesModel *_graphs;
   tlp::ColorScaleConfigDialog *_colorScalesDialog;
@@ -59,6 +65,7 @@ class TalipotMainWindow : public QMainWindow, tlp::Observable {
   PythonPanel *_pythonPanel;
   tlp::PythonIDE *_pythonIDE;
   QDialog *_pythonIDEDialog;
+  TalipotLogger *_logger;
 
   QString _lastOpenLocation;
   QString _recentDocumentsSettingsKey;
@@ -66,18 +73,15 @@ class TalipotMainWindow : public QMainWindow, tlp::Observable {
 
   bool _maximized;
 
+  TalipotMainWindow();
+
   void buildRecentDocumentsMenu();
   void addRecentDocument(const QString &path);
 
   void showStartPanels(tlp::Graph *);
   void applyRandomLayout(tlp::Graph *);
 
-  static TalipotMainWindow *_instance;
-
 public:
-  TalipotLogger *_logger;
-
-  TalipotMainWindow();
   ~TalipotMainWindow() override;
   void start(const QString &inputFilePath);
   tlp::GraphHierarchiesModel *model() const;
@@ -107,8 +111,6 @@ public:
   void resetTitle() {
     emit resetWindowTitle();
   }
-
-  static TalipotMainWindow *getInstance();
 
 public slots:
   void importGraph();

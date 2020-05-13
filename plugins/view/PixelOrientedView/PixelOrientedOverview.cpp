@@ -194,13 +194,13 @@ void PixelOrientedOverview::computePixelView(GlMainWidget *glWidget) {
 
   overviewLabel->setColor(textColor);
 
-  GlOffscreenRenderer *glOffscreenRenderer = GlOffscreenRenderer::getInstance();
+  GlOffscreenRenderer &glOffscreenRenderer = GlOffscreenRenderer::instance();
 
-  glOffscreenRenderer->setViewPortSize(width, height);
-  glOffscreenRenderer->clearScene();
-  glOffscreenRenderer->setSceneBackgroundColor(backgroundColor);
-  glOffscreenRenderer->addGraphCompositeToScene(graphComposite);
-  glOffscreenRenderer->renderScene(true);
+  glOffscreenRenderer.setViewPortSize(width, height);
+  glOffscreenRenderer.clearScene();
+  glOffscreenRenderer.setSceneBackgroundColor(backgroundColor);
+  glOffscreenRenderer.addGraphCompositeToScene(graphComposite);
+  glOffscreenRenderer.renderScene(true);
 
   if (glWidget != nullptr) {
     glProgressBar->progress(maxStep, maxStep);
@@ -210,7 +210,7 @@ void PixelOrientedOverview::computePixelView(GlMainWidget *glWidget) {
     delete glProgressBar;
   }
 
-  GLuint textureId = glOffscreenRenderer->getGLTexture(true);
+  GLuint textureId = glOffscreenRenderer.getGLTexture(true);
   GlTextureManager::deleteTexture(textureName);
   GlTextureManager::registerExternalTexture(textureName, textureId);
 

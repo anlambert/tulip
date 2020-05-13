@@ -85,13 +85,13 @@ PythonCodeHighlighter::PythonCodeHighlighter(QTextDocument *parent)
 
   QString builtinModName = "__builtin__";
 
-  if (PythonInterpreter::getInstance()->getPythonVersion() >= 3.0) {
+  if (PythonInterpreter::instance().getPythonVersion() >= 3.0) {
     builtinModName = "builtins";
   }
 
-  if (PythonInterpreter::getInstance()->runString(QString("import ") + builtinModName)) {
+  if (PythonInterpreter::instance().runString(QString("import ") + builtinModName)) {
     QVector<QString> builtinDictContent =
-        PythonInterpreter::getInstance()->getObjectDictEntries(builtinModName);
+        PythonInterpreter::instance().getObjectDictEntries(builtinModName);
     QStringList builtinPatterns;
 
     for (int i = 0; i < builtinDictContent.size(); ++i) {
@@ -220,19 +220,19 @@ void PythonCodeHighlighter::highlightBlock(const QString &text) {
     int length = qtApiRegexp.matchedLength();
     QString expr = text.mid(index, length);
 
-    if (APIDataBase::getInstance()->typeExists(expr) ||
-        !APIDataBase::getInstance()->getFullTypeName(expr).isEmpty()) {
+    if (APIDataBase::instance().typeExists(expr) ||
+        !APIDataBase::instance().getFullTypeName(expr).isEmpty()) {
       setFormat(index, length, _qtApiFormat);
     } else if (expr.indexOf(".") != -1) {
       QString type = expr.mid(0, expr.lastIndexOf("."));
 
-      if (!APIDataBase::getInstance()->getFullTypeName(type).isEmpty()) {
-        type = APIDataBase::getInstance()->getFullTypeName(type);
+      if (!APIDataBase::instance().getFullTypeName(type).isEmpty()) {
+        type = APIDataBase::instance().getFullTypeName(type);
       }
 
       QString entry = expr.mid(expr.lastIndexOf(".") + 1);
 
-      if (APIDataBase::getInstance()->dictEntryExists(type, entry)) {
+      if (APIDataBase::instance().dictEntryExists(type, entry)) {
         setFormat(index, length, _qtApiFormat);
       }
     }

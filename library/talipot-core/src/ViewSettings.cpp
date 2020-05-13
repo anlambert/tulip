@@ -16,7 +16,8 @@
 
 namespace tlp {
 
-static ViewSettings _instance;
+INSTANTIATE_DLL_TEMPLATE(Singleton<ViewSettings>, TLP_TEMPLATE_DEFINE_SCOPE)
+
 static Color _defaultNodeColor(Color::Red);
 static Color _defaultEdgeColor(Color::Black);
 static Color _defaultNodeBorderColor(Color::Black);
@@ -38,10 +39,6 @@ static Size _defaultEdgeExtremityTgtSize(1, 1, 0);
 static std::string _defaultFontFile;
 static int _defaultFontSize(18);
 
-ViewSettings &ViewSettings::instance() {
-  return _instance;
-}
-
 Color ViewSettings::defaultColor(ElementType elem) const {
   if (elem == NODE) {
     return _defaultNodeColor;
@@ -61,7 +58,7 @@ void ViewSettings::setDefaultColor(ElementType elem, const Color &color) {
     _defaultEdgeColor = color;
   }
 
-  _instance.sendEvent(ViewSettingsEvent(elem, color));
+  sendEvent(ViewSettingsEvent(elem, color));
 }
 
 Color ViewSettings::defaultBorderColor(ElementType elem) const {
@@ -106,7 +103,7 @@ void ViewSettings::setDefaultLabelColor(const Color &color) {
   }
 
   _defaultLabelColor = color;
-  _instance.sendEvent(ViewSettingsEvent(color));
+  sendEvent(ViewSettingsEvent(color));
 }
 
 Color ViewSettings::defaultLabelBorderColor() const {
@@ -158,7 +155,7 @@ void ViewSettings::setDefaultSize(ElementType elem, const Size &size) {
     _defaultEdgeSize = size;
   }
 
-  _instance.sendEvent(ViewSettingsEvent(elem, size));
+  sendEvent(ViewSettingsEvent(elem, size));
 }
 
 int ViewSettings::defaultShape(ElementType elem) const {
@@ -180,7 +177,7 @@ void ViewSettings::setDefaultShape(ElementType elem, int shape) {
     _defaultEdgeShape = shape;
   }
 
-  _instance.sendEvent(ViewSettingsEvent(elem, shape));
+  sendEvent(ViewSettingsEvent(elem, shape));
 }
 
 int ViewSettings::defaultEdgeExtremitySrcShape() const {

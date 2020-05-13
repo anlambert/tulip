@@ -50,7 +50,7 @@ static PyObject *talipotutils_updateVisualization(PyObject *, PyObject *args) {
 }
 
 static PyObject *talipotutils_pauseRunningScript(PyObject *, PyObject *) {
-  PythonInterpreter::getInstance()->pauseCurrentScript();
+  PythonInterpreter::instance().pauseCurrentScript();
   Py_RETURN_NONE;
 }
 
@@ -62,7 +62,7 @@ static PyObject *talipotutils_runGraphScript(PyObject *, PyObject *args) {
     QString scriptName(s);
     scriptName.replace(".py", "");
 
-    if (PythonInterpreter::getInstance()->runString(QString("import ") + scriptName)) {
+    if (PythonInterpreter::instance().runString(QString("import ") + scriptName)) {
 
       // Getting proper sipWrapperType
       const sipTypeDef *kpTypeDef = sipFindType("tlp::Graph");
@@ -76,7 +76,7 @@ static PyObject *talipotutils_runGraphScript(PyObject *, PyObject *args) {
         tlp::Graph *graph = static_cast<tlp::Graph *>(
             sipConvertToType(o, kpTypeDef, NULL, SIP_NOT_NONE, &state, &err));
 
-        if (!PythonInterpreter::getInstance()->runGraphScript(scriptName, "main", graph)) {
+        if (!PythonInterpreter::instance().runGraphScript(scriptName, "main", graph)) {
           PyErr_SetString(PyExc_Exception,
                           (std::string("An exception occurred when executing the ") +
                            std::string(s) + " script")
@@ -111,7 +111,7 @@ static PyObject *talipotutils_setProcessQtEvents(PyObject *, PyObject *o) {
     return NULL;
   }
 
-  PythonInterpreter::getInstance()->setProcessQtEventsDuringScriptExecution(i > 0);
+  PythonInterpreter::instance().setProcessQtEventsDuringScriptExecution(i > 0);
 
   Py_RETURN_NONE;
 }

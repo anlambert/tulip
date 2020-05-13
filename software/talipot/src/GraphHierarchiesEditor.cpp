@@ -285,7 +285,7 @@ void GraphHierarchiesEditor::addInducedSubGraph() {
     return;
   }
 
-  TalipotMainWindow::getInstance()->createSubGraph(_contextGraph);
+  TalipotMainWindow::instance().createSubGraph(_contextGraph);
 }
 
 void GraphHierarchiesEditor::delGraph() {
@@ -301,7 +301,7 @@ void GraphHierarchiesEditor::delGraph() {
     return;
   }
 
-  TalipotMainWindow::getInstance()->closePanelsForGraph(_contextGraph);
+  TalipotMainWindow::instance().closePanelsForGraph(_contextGraph);
   _contextGraph->push();
 
   if (_contextGraph->getRoot() == _contextGraph) {
@@ -335,18 +335,18 @@ void GraphHierarchiesEditor::delAllGraph() {
                               "You are going to delete a complete graph hierarchy. This operation "
                               "cannot be undone. Do you really want to continue?",
                               QMessageBox::Ok | QMessageBox::Cancel) == QMessageBox::Ok) {
-      TalipotMainWindow::getInstance()->closePanelsForGraph(_contextGraph);
+      TalipotMainWindow::instance().closePanelsForGraph(_contextGraph);
       delete _contextGraph;
       _model->setCurrentGraph(nullptr);
 
       if (_model->empty()) {
-        TalipotMainWindow::getInstance()->setWindowModified(false);
-        TalipotMainWindow::getInstance()->resetTitle();
+        TalipotMainWindow::instance().setWindowModified(false);
+        TalipotMainWindow::instance().resetTitle();
       }
     }
   } else {
     _contextGraph->push();
-    TalipotMainWindow::getInstance()->closePanelsForGraph(_contextGraph);
+    TalipotMainWindow::instance().closePanelsForGraph(_contextGraph);
     tlp::Graph *sg = _contextGraph->getSuperGraph();
     _contextGraph->getSuperGraph()->delAllSubGraphs(_contextGraph);
     _model->setCurrentGraph(sg);
@@ -417,11 +417,11 @@ void GraphHierarchiesEditor::createPanel() {
     }
   }
 
-  TalipotMainWindow::getInstance()->createPanel(g);
+  TalipotMainWindow::instance().createPanel(g);
 }
 
 void GraphHierarchiesEditor::exportGraph() {
-  TalipotMainWindow::getInstance()->exportGraph(_contextGraph);
+  TalipotMainWindow::instance().exportGraph(_contextGraph);
 }
 
 void GraphHierarchiesEditor::renameGraph() {
@@ -432,7 +432,7 @@ void GraphHierarchiesEditor::renameGraph() {
 }
 
 void GraphHierarchiesEditor::saveGraphHierarchyInTlpFile() {
-  TalipotMainWindow::getInstance()->saveGraphHierarchyInTlpFile(_contextGraph);
+  TalipotMainWindow::instance().saveGraphHierarchyInTlpFile(_contextGraph);
 }
 
 void GraphHierarchiesEditor::toggleSynchronization(bool f) {

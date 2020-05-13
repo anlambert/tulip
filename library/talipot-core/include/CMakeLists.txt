@@ -59,6 +59,7 @@ INSTALL(
         talipot/Rectangle.h
         talipot/SimplePluginProgress.h
         talipot/SimpleTest.h
+        talipot/Singleton.h
         talipot/Size.h
         talipot/SizeProperty.h
         talipot/SortIterator.h

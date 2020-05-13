@@ -294,7 +294,7 @@ void initTalipotSoftware(tlp::PluginLoader *loader) {
 
   // Explicitely create a shared OpenGL context to
   // ensure it is initialized before using it
-  GlOffscreenRenderer::getInstance()->getOpenGLContext();
+  GlOffscreenRenderer::instance().getOpenGLContext();
 }
 
 // tlp::debug redirection

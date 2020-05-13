@@ -122,7 +122,7 @@ int main(int argc, char **argv) {
 #endif
 
   // initialize embedded Python interpreter
-  PythonInterpreter::getInstance();
+  PythonInterpreter::instance();
 
   // initialize Talipot
   QMap<QString, QString> pluginErrors;
@@ -142,23 +142,23 @@ int main(int argc, char **argv) {
   }
 
   // Create and initialize Talipot main window
-  TalipotMainWindow *mainWindow = new TalipotMainWindow();
-  mainWindow->pluginsCenter()->reportPluginErrors(pluginErrors);
+  TalipotMainWindow &mainWindow = TalipotMainWindow::instance();
+  mainWindow.pluginsCenter()->reportPluginErrors(pluginErrors);
 
-  mainWindow->show();
-  mainWindow->start(inputFilePath);
+  mainWindow.show();
+  mainWindow.start(inputFilePath);
 
   Settings::instance().setFirstRun(false);
   Settings::instance().setFirstTalipotMMRun(false);
 
   int result = talipot.exec();
 
-  delete mainWindow;
+  mainWindow.destroyInstance();
 
   // We need to clear allocated OpenGL resources to avoid a
   // segfault when we close talipot
   GlTextureManager::deleteAllTextures();
-  delete GlOffscreenRenderer::getInstance();
+  GlOffscreenRenderer::destroyInstance();
 
   return result;
 }

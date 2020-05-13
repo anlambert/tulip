@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -28,7 +28,7 @@ map<Graph *, unsigned int> GraphDimension::graphDimensionsMap;
 
 GraphDimension::GraphDimension(Graph *graph, const string &dimName)
     : graph(graph), dimName(dimName) {
-  nodeSorter = NodeMetricSorter::getInstance(graph);
+  nodeSorter = NodeMetricSorter::instance(graph);
   nodeSorter->sortNodesForProperty(dimName);
   propertyType = graph->getProperty(dimName)->getTypename();
 

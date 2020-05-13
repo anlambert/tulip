@@ -28,8 +28,6 @@
 using namespace tlp;
 using namespace std;
 
-Settings *Settings::_instance = nullptr;
-
 static const QString TS_RemoteLocations = "app/remote_locations";
 static const QString TS_RecentDocuments = "app/recent_documents";
 static const QString TS_PluginsToRemove = "app/pluginsToRemove";
@@ -69,16 +67,9 @@ static const QString TS_WarnUserAboutGraphicsCard = "app/warn_about_graphics_car
 static const QString TS_LoggerAnchored = "app/gui/logger_anchored";
 static const QString TS_PythonIDEAnchored = "app/gui/python_ide_anchored";
 
-Settings::Settings() : QSettings("TalipotFramework", "Talipot") {}
-
-Settings &Settings::instance() {
-  if (!_instance) {
-    _instance = new Settings;
-    ViewSettings::instance().addListener(_instance);
-    GlDefaultSelectionColorManager::setManager(_instance);
-  }
-
-  return *_instance;
+Settings::Settings() : QSettings("TalipotFramework", "Talipot") {
+  ViewSettings::instance().addListener(this);
+  GlDefaultSelectionColorManager::setManager(this);
 }
 
 void Settings::synchronizeViewSettings() {
@@ -468,3 +459,5 @@ void Settings::treatEvent(const Event &message) {
     setDefaultLabelColor(sev->getColor());
   }
 }
+
+INSTANTIATE_DLL_TEMPLATE(tlp::Singleton<tlp::Settings>, TLP_QT_TEMPLATE_DEFINE_SCOPE)

@@ -101,16 +101,16 @@ void GlMainWidgetGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphi
     emit widgetPainted(_graphChanged);
   }
 
-  GlOffscreenRenderer::getInstance()->setViewPortSize(width, height);
+  GlOffscreenRenderer::instance().setViewPortSize(width, height);
 
   if (_redrawNeeded) {
-    GlOffscreenRenderer::getInstance()->renderGlMainWidget(glMainWidget);
+    GlOffscreenRenderer::instance().renderGlMainWidget(glMainWidget);
     _redrawNeeded = false;
   } else {
-    GlOffscreenRenderer::getInstance()->renderGlMainWidget(glMainWidget, false);
+    GlOffscreenRenderer::instance().renderGlMainWidget(glMainWidget, false);
   }
 
-  painter->drawImage(QRect(0, 0, width, height), GlOffscreenRenderer::getInstance()->getImage());
+  painter->drawImage(QRect(0, 0, width, height), GlOffscreenRenderer::instance().getImage());
 }
 
 void GlMainWidgetGraphicsItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {

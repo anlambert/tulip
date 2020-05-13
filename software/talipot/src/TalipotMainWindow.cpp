@@ -120,7 +120,7 @@ static void logMsgToStdErr(const QString &msg) {
 
 static void talipotLogger(QtMsgType type, const QMessageLogContext &context, const QString &msg) {
   logMsgToStdErr(msg);
-  TalipotMainWindow::getInstance()->log(type, context, msg);
+  TalipotMainWindow::instance().log(type, context, msg);
 }
 
 class PythonIDEDialog : public QDialog {
@@ -145,18 +145,11 @@ protected:
   }
 };
 
-TalipotMainWindow *TalipotMainWindow::_instance = nullptr;
-
-TalipotMainWindow *TalipotMainWindow::getInstance() {
-  return _instance;
-}
-
 TalipotMainWindow::TalipotMainWindow()
     : _ui(new Ui::TalipotMainWindowData), _graphs(new GraphHierarchiesModel(this)),
       _project(Project::newProject()), _pluginsCenter(new PluginsCenter()),
       _recentDocumentsSettingsKey("talipot/recent_files"), _maximized(false) {
   Q_INIT_RESOURCE(TalipotApp);
-  _instance = this;
   _ui->setupUi(this);
 
   _title = "Talipot ";
@@ -678,7 +671,7 @@ void TalipotMainWindow::start(const QString &inputFilePath) {
   _pythonPanel->setModel(_graphs);
   _pythonIDE->setGraphsModel(_graphs);
   connect(_pythonIDE, &PythonIDE::anchoredRequest, this, &TalipotMainWindow::anchoredPythonIDE);
-  tlp::PluginsManager::instance()->addListener(this);
+  tlp::PluginsManager::instance().addListener(this);
   QTimer::singleShot(100, this, &TalipotMainWindow::initPythonIDE);
 
   if (!inputFilePath.isEmpty() && QFileInfo(inputFilePath).exists()) {

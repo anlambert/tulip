@@ -17,8 +17,8 @@
 #include <talipot/config.h>
 #include <talipot/Coord.h>
 #include <talipot/GlScene.h>
-
 #include <talipot/OpenGlIncludes.h>
+#include <talipot/Singleton.h>
 
 #include <QImage>
 
@@ -32,13 +32,16 @@ class GlEntity;
 class GlGraphComposite;
 class GlMainWidget;
 
+class GlOffscreenRenderer;
+DECLARE_DLL_TEMPLATE_INSTANCE(Singleton<GlOffscreenRenderer>, TLP_QT_TEMPLATE_DECLARE_SCOPE)
+
 /**
  * @brief Render a scene in an image or in a texture.
  *
  * Here is an example to render a graph in a QImage to use it as preview.
  * @code
  * //Get the renderer
- * glOffscreenRenderer *glOffscreenRenderer = GlOffscreenRenderer::getInstance();
+ * glOffscreenRenderer *glOffscreenRenderer = GlOffscreenRenderer::instance();
  * //Define the viewport size. Needed to initialize the offscreen rederer.
  * glOffscreenRenderer->setViewPortSize(200,200);
  * //Erase old elements
@@ -52,16 +55,11 @@ class GlMainWidget;
  * QImage preview = glOffscreenRenderer->getGLTexture(true);
  * @endcode
  **/
-class TLP_QT_SCOPE GlOffscreenRenderer {
+class TLP_QT_SCOPE GlOffscreenRenderer : public Singleton<GlOffscreenRenderer> {
+
+  friend class Singleton<GlOffscreenRenderer>;
 
 public:
-  /**
-   * @brief Get the renderer instance.
-   **/
-  static GlOffscreenRenderer *getInstance() {
-    return instance;
-  }
-
   ~GlOffscreenRenderer();
 
   /**
@@ -131,8 +129,6 @@ private:
   GlOffscreenRenderer();
 
   void initFrameBuffers(const bool antialiased);
-
-  static GlOffscreenRenderer *instance;
 
   QOpenGLContext *glContext;
   QOffscreenSurface *offscreenSurface;

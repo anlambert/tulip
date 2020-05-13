@@ -102,13 +102,13 @@ static QString cleanPropertyName(const QString &propertyName) {
 
   QString builtinModName = "__builtin__";
 
-  if (PythonInterpreter::getInstance()->getPythonVersion() >= 3.0) {
+  if (PythonInterpreter::instance().getPythonVersion() >= 3.0) {
     builtinModName = "builtins";
   }
 
-  PythonInterpreter::getInstance()->importModule(builtinModName);
+  PythonInterpreter::instance().importModule(builtinModName);
   static QVector<QString> builtinDictContent =
-      PythonInterpreter::getInstance()->getObjectDictEntries(builtinModName);
+      PythonInterpreter::instance().getObjectDictEntries(builtinModName);
 
   for (i = 0; i < builtinDictContent.size(); ++i) {
     if (ret == builtinDictContent[i]) {
@@ -351,7 +351,7 @@ talipotplugins.registerPluginOfGroup(pluginName='%2',
 }
 
 PythonIDE::PythonIDE(QWidget *parent)
-    : QWidget(parent), _ui(new Ui::PythonIDE), _pythonInterpreter(PythonInterpreter::getInstance()),
+    : QWidget(parent), _ui(new Ui::PythonIDE), _pythonInterpreter(&PythonInterpreter::instance()),
       _dontTreatFocusIn(false), _project(nullptr), _graphsModel(nullptr), _scriptStopped(false),
       _saveFilesToProject(true), _notifyProjectModified(false), _anchored(true) {
   _ui->setupUi(this);
@@ -455,13 +455,13 @@ PythonIDE::PythonIDE(QWidget *parent)
   connect(_ui->anchoredCB_2, &QAbstractButton::toggled, this, &PythonIDE::anchored);
   connect(_ui->anchoredCB_3, &QAbstractButton::toggled, this, &PythonIDE::anchored);
 
-  APIDataBase::getInstance()->loadApiFile(tlpStringToQString(tlp::TalipotShareDir) +
-                                          "/apiFiles/talipot.api");
-  APIDataBase::getInstance()->loadApiFile(
-      tlpStringToQString(tlp::TalipotShareDir) + "/apiFiles/Python-" +
-      PythonInterpreter::getInstance()->getPythonVersionStr() + ".api");
-  APIDataBase::getInstance()->loadApiFile(tlpStringToQString(tlp::TalipotShareDir) +
-                                          "/apiFiles/talipotgui.api");
+  APIDataBase::instance().loadApiFile(tlpStringToQString(tlp::TalipotShareDir) +
+                                      "/apiFiles/talipot.api");
+  APIDataBase::instance().loadApiFile(tlpStringToQString(tlp::TalipotShareDir) +
+                                      "/apiFiles/Python-" +
+                                      PythonInterpreter::instance().getPythonVersionStr() + ".api");
+  APIDataBase::instance().loadApiFile(tlpStringToQString(tlp::TalipotShareDir) +
+                                      "/apiFiles/talipotgui.api");
 }
 
 PythonIDE::~PythonIDE() {
@@ -671,7 +671,7 @@ void PythonIDE::newPythonPlugin() {
 
     int editorId = addPluginEditor(fileInfo.absoluteFilePath());
     _ui->pluginsTabWidget->setTabToolTip(editorId, fileInfo.absoluteFilePath());
-    PythonInterpreter::getInstance()->addModuleSearchPath(modulePath);
+    PythonInterpreter::instance().addModuleSearchPath(modulePath);
     _ui->pluginsTabWidget->setTabText(editorId, QString("[") +
                                                     pluginCreationDialog.getPluginType() +
                                                     QString("] ") + fileInfo.fileName());

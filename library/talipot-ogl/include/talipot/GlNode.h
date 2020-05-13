@@ -22,9 +22,8 @@
 #include <talipot/GlLabel.h>
 #include <talipot/GlSceneVisitor.h>
 #include <talipot/GlGraphInputData.h>
+#include <talipot/Singleton.h>
 
-#include <memory>
-#include <mutex>
 #include <vector>
 
 namespace tlp {
@@ -43,11 +42,7 @@ public:
    */
   GlNode(node n = node(), Graph *graph = nullptr)
       : n(n), graph(graph), selectionBox(Coord(0, 0, 0), Size(1, 1, 1), Color(0, 0, 255, 255),
-                                         Color(0, 255, 0, 255), false, true, "", 3) {
-    if (!label.get()) {
-      std::call_once(onceFlag, []() { label.reset(new GlLabel); });
-    }
-  }
+                                         Color(0, 255, 0, 255), false, true, "", 3) {}
 
   /**
    * Virtual function to accept GlSceneVisitor on this class
@@ -105,8 +100,7 @@ public:
 
 protected:
   GlBox selectionBox;
-  static std::unique_ptr<GlLabel> label;
-  static std::once_flag onceFlag;
+  static Singleton<GlLabel> label;
 
   // initialize the data member below
   void init(const GlGraphInputData *data);

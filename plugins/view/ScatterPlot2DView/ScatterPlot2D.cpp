@@ -172,11 +172,11 @@ void ScatterPlot2D::generateOverview(GlMainWidget *glWidget, LayoutProperty *rev
     }
   }
 
-  GlOffscreenRenderer *glOffscreenRenderer = GlOffscreenRenderer::getInstance();
-  glOffscreenRenderer->setViewPortSize(size, size);
-  glOffscreenRenderer->clearScene();
+  GlOffscreenRenderer &glOffscreenRenderer = GlOffscreenRenderer::instance();
+  glOffscreenRenderer.setViewPortSize(size, size);
+  glOffscreenRenderer.clearScene();
 
-  GlScene *scene = glOffscreenRenderer->getScene();
+  GlScene *scene = glOffscreenRenderer.getScene();
 
   if (mapBackgroundColorToCoeff) {
     GlLayer *backgroundLayer = scene->getLayer("Background");
@@ -186,17 +186,17 @@ void ScatterPlot2D::generateOverview(GlMainWidget *glWidget, LayoutProperty *rev
 
   setGraphView(glGraphComposite, displayEdges, displaylabels, scale);
 
-  glOffscreenRenderer->setSceneBackgroundColor(backgroundColor);
-  glOffscreenRenderer->addGraphCompositeToScene(glGraphComposite);
-  glOffscreenRenderer->addGlEntityToScene(xAxis);
-  glOffscreenRenderer->addGlEntityToScene(yAxis);
-  glOffscreenRenderer->renderScene(true);
+  glOffscreenRenderer.setSceneBackgroundColor(backgroundColor);
+  glOffscreenRenderer.addGraphCompositeToScene(glGraphComposite);
+  glOffscreenRenderer.addGlEntityToScene(xAxis);
+  glOffscreenRenderer.addGlEntityToScene(yAxis);
+  glOffscreenRenderer.renderScene(true);
 
-  GLuint textureId = glOffscreenRenderer->getGLTexture(true);
+  GLuint textureId = glOffscreenRenderer.getGLTexture(true);
   GlTextureManager::deleteTexture(textureName);
   GlTextureManager::registerExternalTexture(textureName, textureId);
 
-  glOffscreenRenderer->clearScene();
+  glOffscreenRenderer.clearScene();
 
   deleteGlEntity(glProgressBar);
   delete glProgressBar;

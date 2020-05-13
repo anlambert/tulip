@@ -24,17 +24,7 @@
 
 #include <talipot/DownloadManager.h>
 
-#include <cstdio>
-
-DownloadManager *DownloadManager::_instance = nullptr;
-
-DownloadManager *DownloadManager::getInstance() {
-  if (!_instance) {
-    _instance = new DownloadManager();
-  }
-
-  return _instance;
-}
+using namespace tlp;
 
 DownloadManager::DownloadManager() {
   connect(this, &QNetworkAccessManager::finished, this, &DownloadManager::downloadFinished);
@@ -86,3 +76,5 @@ void DownloadManager::downloadFinished(QNetworkReply *reply) {
 
   reply->deleteLater();
 }
+
+INSTANTIATE_DLL_TEMPLATE(tlp::Singleton<tlp::DownloadManager>, TLP_QT_TEMPLATE_DEFINE_SCOPE)

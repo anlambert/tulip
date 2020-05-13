@@ -17,12 +17,12 @@
 #include <list>
 #include <string>
 #include <map>
-#include <memory>
-#include <mutex>
 
 #include <talipot/Plugin.h>
 #include <talipot/PluginLoader.h>
 #include <talipot/Observable.h>
+#include <talipot/Singleton.h>
+#include <talipot/TlpTools.h>
 
 namespace tlp {
 class PluginContext;
@@ -39,6 +39,9 @@ class FactoryInterface {
 public:
   virtual tlp::Plugin *createPluginObject(tlp::PluginContext *context) = 0;
 };
+
+class PluginsManager;
+DECLARE_DLL_TEMPLATE_INSTANCE(Singleton<PluginsManager>, TLP_TEMPLATE_DECLARE_SCOPE)
 
 /**
  * @ingroup Plugins
@@ -57,7 +60,9 @@ public:
  * @see tlp::PluginLoader
  * @see tlp::PluginLibraryLoader
  */
-class TLP_SCOPE PluginsManager : public Observable {
+class TLP_SCOPE PluginsManager : public Observable, public Singleton<PluginsManager> {
+
+  friend class Singleton<PluginsManager>;
 
   struct PluginDescription {
     FactoryInterface *factory;
@@ -75,9 +80,6 @@ class TLP_SCOPE PluginsManager : public Observable {
   // that register into this map
   std::map<std::string, PluginDescription> _plugins;
 
-  static std::unique_ptr<PluginsManager> _instance;
-  static std::once_flag _onceFlag;
-
 public:
   static PluginLoader *currentLoader;
 
@@ -90,14 +92,6 @@ public:
    * @return void
    **/
   static void checkLoadedPluginsDependencies(tlp::PluginLoader *loader);
-
-  /**
-   * @brief Gets the static instance of this class. If not already done, creates it beforehand.
-   *
-   * @return PluginsManager< ObjectType, Context >* The only instance of this object that exists in
-   *the whole program.
-   **/
-  static tlp::PluginsManager *instance();
 
   /**
    * @brief Constructs a plug-in.
@@ -119,7 +113,7 @@ public:
    */
   template <typename PluginType>
   static bool pluginExists(const std::string &pluginName) {
-    return instance()->pluginExistsImpl<PluginType>(pluginName);
+    return instance().pluginExistsImpl<PluginType>(pluginName);
   }
 
   /**
@@ -136,7 +130,7 @@ public:
   template <typename PluginType>
   static PluginType *getPluginObject(const std::string &name,
                                      tlp::PluginContext *context = nullptr) {
-    return instance()->getPluginObjectImpl<PluginType>(name, context);
+    return instance().getPluginObjectImpl<PluginType>(name, context);
   }
 
   /**
@@ -147,7 +141,7 @@ public:
 
   template <typename PluginType>
   static std::list<std::string> availablePlugins() {
-    return instance()->availablePluginsImpl<PluginType>();
+    return instance().availablePluginsImpl<PluginType>();
   }
 
   /**
@@ -268,7 +262,7 @@ public:
 
   // constructor for node/edge events
   PluginEvent(PluginEventType pluginEvtType, const std::string &pluginName)
-      : Event(*(tlp::PluginsManager::instance()), Event::TLP_MODIFICATION), evtType(pluginEvtType),
+      : Event(tlp::PluginsManager::instance(), Event::TLP_MODIFICATION), evtType(pluginEvtType),
         pluginName(pluginName) {}
 
   PluginEventType getType() const {

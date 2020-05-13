@@ -86,8 +86,8 @@ static PyObject *consoleutils_ConsoleOutput_write(PyObject *self, PyObject *o) {
     consoleOuputString += output;
   }
 
-  if ((PythonInterpreter::getInstance()->outputEnabled() && !stdErr) ||
-      (PythonInterpreter::getInstance()->errorOutputEnabled() && stdErr)) {
+  if ((PythonInterpreter::instance().outputEnabled() && !stdErr) ||
+      (PythonInterpreter::instance().errorOutputEnabled() && stdErr)) {
 
     if (buf != NULL && reinterpret_cast<consoleutils_ConsoleOutput *>(self)->writeToConsole) {
 
@@ -96,7 +96,7 @@ static PyObject *consoleutils_ConsoleOutput_write(PyObject *self, PyObject *o) {
       QStringList lines = currentConcatOutput.split('\n');
 
       for (int i = 0; i < lines.count() - 1; ++i) {
-        PythonInterpreter::getInstance()->sendOutputToConsole(lines[i], stdErr);
+        PythonInterpreter::instance().sendOutputToConsole(lines[i], stdErr);
       }
 
       currentConcatOutput = lines[lines.size() - 1];
@@ -120,7 +120,7 @@ static PyObject *consoleutils_ConsoleOutput_enableConsoleOutput(PyObject *self, 
 
 static PyObject *consoleutils_ConsoleOutput_flush(PyObject *self, PyObject *) {
   if (!currentConcatOutput.isEmpty()) {
-    PythonInterpreter::getInstance()->sendOutputToConsole(
+    PythonInterpreter::instance().sendOutputToConsole(
         currentConcatOutput, reinterpret_cast<consoleutils_ConsoleOutput *>(self)->stderrflag);
     currentConcatOutput = "";
   }
@@ -238,7 +238,7 @@ static int consoleutils_ConsoleInput_init(consoleutils_ConsoleInput *, PyObject 
 
 /* This redirects stdin from the calling script. */
 static PyObject *consoleutils_ConsoleInput_readline(PyObject *, PyObject *) {
-  QString line = PythonInterpreter::getInstance()->readLineFromConsole();
+  QString line = PythonInterpreter::instance().readLineFromConsole();
 #if PY_MAJOR_VERSION >= 3
   PyObject *obj = PyUnicode_FromString(line.toLatin1().data());
 #else

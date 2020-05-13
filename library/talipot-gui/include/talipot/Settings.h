@@ -21,8 +21,12 @@
 #include <talipot/GlGraphRenderingParameters.h>
 #include <talipot/Size.h>
 #include <talipot/Graph.h>
+#include <talipot/Singleton.h>
 
 namespace tlp {
+
+class Settings;
+DECLARE_DLL_TEMPLATE_INSTANCE(Singleton<Settings>, TLP_QT_TEMPLATE_DECLARE_SCOPE)
 
 /**
  * @brief This class provides convenience functions to access the Tulip settings file (using
@@ -32,13 +36,16 @@ namespace tlp {
  * This object does not mask any method from the QSettings class, which mean that the user can
  * still access custom keys by invoking the QSettings::value method.
  */
-class TLP_QT_SCOPE Settings : public QSettings, GlDefaultSelectionColorManager, Observable {
+class TLP_QT_SCOPE Settings : public QSettings,
+                              public GlDefaultSelectionColorManager,
+                              public Observable,
+                              public Singleton<Settings> {
   Q_OBJECT
   Q_ENUMS(DisplayProperty)
 
-public:
-  static Settings &instance();
+  friend class Singleton<Settings>;
 
+public:
   static QString elementKey(const QString &configEntry, tlp::ElementType elem);
 
   void synchronizeViewSettings();
@@ -179,7 +186,6 @@ public:
 
 private:
   Settings();
-  static Settings *_instance;
 
   void setFavoriteAlgorithms(const QSet<QString> &lst);
 };

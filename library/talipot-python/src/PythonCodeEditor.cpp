@@ -169,7 +169,7 @@ void AutoCompletionList::insertSelectedItem() {
     if (!type.isEmpty()) {
       QVector<QString> types;
       types.push_back(type);
-      QVector<QString> baseTypes = PythonInterpreter::getInstance()->getBaseTypesForType(type);
+      QVector<QString> baseTypes = PythonInterpreter::instance().getBaseTypesForType(type);
 
       for (int i = 0; i < baseTypes.size(); ++i) {
         types.push_back(baseTypes[i]);
@@ -178,9 +178,9 @@ void AutoCompletionList::insertSelectedItem() {
       for (int i = 0; i < types.size(); ++i) {
         QString funcName = types[i] + "." + textToInsert;
 
-        if (APIDataBase::getInstance()->functionExists(funcName)) {
+        if (APIDataBase::instance().functionExists(funcName)) {
           QVector<QVector<QString>> params =
-              APIDataBase::getInstance()->getParamTypesForMethodOrFunction(funcName);
+              APIDataBase::instance().getParamTypesForMethodOrFunction(funcName);
 
           if (params.count() > 1 || params[0].count() > 0) {
             if (text.indexOf("class ") == -1) {
@@ -489,7 +489,7 @@ PythonCodeEditor::PythonCodeEditor(QWidget *parent)
 
   if (_autoCompletionList == nullptr) {
     _autoCompletionList = new AutoCompletionList();
-    _autoCompletionDb = new AutoCompletionDataBase(APIDataBase::getInstance());
+    _autoCompletionDb = new AutoCompletionDataBase(&APIDataBase::instance());
 
     // Hack to get a pointer on the main window
     // in order for the autocompletion dialog to catch

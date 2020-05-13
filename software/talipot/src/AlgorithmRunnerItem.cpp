@@ -213,7 +213,7 @@ public:
       }
 
       // restore initial properties
-      TalipotMainWindow::getInstance()->setGlMainViewPropertiesForGraph(graph, outPropsMap);
+      TalipotMainWindow::instance().setGlMainViewPropertiesForGraph(graph, outPropsMap);
     }
   }
 
@@ -232,7 +232,7 @@ public:
 
       if (!outPropsMap.empty() &&
           // set temporary properties as drawing properties
-          (TalipotMainWindow::getInstance()->setGlMainViewPropertiesForGraph(graph, outPropsMap) ==
+          (TalipotMainWindow::instance().setGlMainViewPropertiesForGraph(graph, outPropsMap) ==
            false)) {
         // clear map if there is nothing to do
         outPropsMap.clear();
@@ -241,7 +241,7 @@ public:
 
     // draw with temporary computed properties
     if (!outPropsMap.empty()) {
-      TalipotMainWindow::getInstance()->centerPanelsForGraph(graph, true, true);
+      TalipotMainWindow::instance().centerPanelsForGraph(graph, true, true);
     }
   }
 };
@@ -376,7 +376,7 @@ void AlgorithmRunnerItem::run(Graph *g) {
   }
 
   std::string errorMessage;
-  PluginProgress *progress = TalipotMainWindow::getInstance()->progress();
+  PluginProgress *progress = TalipotMainWindow::instance().progress();
   progress->setTitle(algorithm);
 
   // set preview handler if needed
@@ -542,13 +542,13 @@ void AlgorithmRunnerItem::afterRun(Graph *g, const tlp::DataSet &dataSet) {
     }
 
     if (Settings::instance().isAutomaticCentering()) {
-      TalipotMainWindow::getInstance()->centerPanelsForGraph(g);
+      TalipotMainWindow::instance().centerPanelsForGraph(g);
     }
   } else if (Settings::instance().isAutomaticCentering() &&
              PluginsManager::pluginExists<Algorithm>(stdName) &&
              !PluginsManager::pluginExists<PropertyAlgorithm>(stdName) &&
              !PluginsManager::pluginExists<GraphTest>(stdName)) {
-    TalipotMainWindow::getInstance()->centerPanelsForGraph(g);
+    TalipotMainWindow::instance().centerPanelsForGraph(g);
   } else if (PluginsManager::pluginExists<DoubleAlgorithm>(stdName) &&
              Settings::instance().isAutomaticMapMetric()) {
     DoubleProperty *prop = nullptr;

@@ -13,6 +13,7 @@
 
 %ModuleHeaderCode
 #include <ViewsUtils.h>
+#include <talipot/GlOffscreenRenderer.h>
 extern ViewsManager tvm;
 %End
 
@@ -202,7 +203,7 @@ Closes and destroys all the views associated to a particular graph.
     if (tvm.areViewsVisible()) {
       QApplication::exec();
     }
-
+    tlp::GlOffscreenRenderer::destroyInstance();
 %End
 
 };

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -26,7 +26,7 @@ PythonTabWidget::PythonTabWidget(QWidget *parent)
 void PythonTabWidget::paintEvent(QPaintEvent *event) {
   QTabWidget::paintEvent(event);
   static QImage pythonLogoImg(":/talipot/python/icons/python.png");
-  static QString pythonVersion(PythonInterpreter::getInstance()->getPythonVersionStr());
+  static QString pythonVersion(PythonInterpreter::instance().getPythonVersionStr());
   QPainter painter(this);
   painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing |
                          QPainter::SmoothPixmapTransform);

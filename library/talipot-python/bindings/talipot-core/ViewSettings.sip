@@ -114,7 +114,7 @@ public:
 
 };
 
-class ViewSettings : tlp::Observable {
+class ViewSettings : tlp::Observable /NoDefaultCtors/ {
 %TypeHeaderCode
 #include <talipot/ViewSettings.h>
 %End

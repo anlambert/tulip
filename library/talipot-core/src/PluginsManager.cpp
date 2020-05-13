@@ -19,15 +19,9 @@
 using namespace tlp;
 using namespace std;
 
-std::unique_ptr<PluginsManager> PluginsManager::_instance;
-std::once_flag PluginsManager::_onceFlag;
+INSTANTIATE_DLL_TEMPLATE(tlp::Singleton<tlp::PluginsManager>, TLP_TEMPLATE_DEFINE_SCOPE)
 
 PluginLoader *PluginsManager::currentLoader = nullptr;
-
-PluginsManager *PluginsManager::instance() {
-  std::call_once(PluginsManager::_onceFlag, []() { _instance.reset(new PluginsManager); });
-  return _instance.get();
-}
 
 PluginsManager::~PluginsManager() {
   for (auto &it : _plugins) {
@@ -92,7 +86,7 @@ void PluginsManager::checkLoadedPluginsDependencies(tlp::PluginLoader *loader) {
 std::list<std::string> PluginsManager::availablePlugins() {
   std::list<std::string> keys;
 
-  auto &plugins = instance()->_plugins;
+  auto &plugins = instance()._plugins;
 
   for (const auto &it : plugins) {
     // deprecated names are not listed
@@ -105,7 +99,7 @@ std::list<std::string> PluginsManager::availablePlugins() {
 }
 
 const Plugin &PluginsManager::pluginInformation(const std::string &name) {
-  auto &plugins = instance()->_plugins;
+  auto &plugins = instance()._plugins;
   return *(plugins.find(name)->second.info);
 }
 
@@ -114,7 +108,7 @@ void PluginsManager::registerPlugin(FactoryInterface *objectFactory) {
   tlp::Plugin *information = objectFactory->createPluginObject(nullptr);
   std::string pluginName = information->name();
 
-  auto &plugins = instance()->_plugins;
+  auto &plugins = instance()._plugins;
 
   if (plugins.find(pluginName) == plugins.end()) {
     PluginDescription &description = plugins[pluginName];
@@ -126,7 +120,7 @@ void PluginsManager::registerPlugin(FactoryInterface *objectFactory) {
       currentLoader->loaded(information, information->dependencies());
     }
 
-    instance()->sendPluginAddedEvent(pluginName);
+    instance().sendPluginAddedEvent(pluginName);
 
     // register under a deprecated name if needed
     std::string oldName = information->deprecatedName();
@@ -152,13 +146,13 @@ void PluginsManager::registerPlugin(FactoryInterface *objectFactory) {
 }
 
 void tlp::PluginsManager::removePlugin(const std::string &name) {
-  auto &plugins = instance()->_plugins;
+  auto &plugins = instance()._plugins;
   plugins.erase(name);
-  instance()->sendPluginRemovedEvent(name);
+  instance().sendPluginRemovedEvent(name);
 }
 
 tlp::Plugin *PluginsManager::getPluginObject(const std::string &name, PluginContext *context) {
-  auto &plugins = instance()->_plugins;
+  auto &plugins = instance()._plugins;
   auto it = plugins.find(name);
 
   if (it != plugins.end()) {
@@ -187,12 +181,12 @@ const std::list<tlp::Dependency> &PluginsManager::getPluginDependencies(const st
 }
 
 std::string PluginsManager::getPluginLibrary(const std::string &name) {
-  auto &plugins = instance()->_plugins;
+  auto &plugins = instance()._plugins;
   return plugins.find(name)->second.library;
 }
 
 bool PluginsManager::pluginExists(const std::string &pluginName) {
-  auto &plugins = instance()->_plugins;
+  auto &plugins = instance()._plugins;
   return plugins.find(pluginName) != plugins.end();
 }
 

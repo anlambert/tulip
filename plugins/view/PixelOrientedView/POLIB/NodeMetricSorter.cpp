@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -22,7 +22,7 @@ using namespace tlp;
 
 map<Graph *, NodeMetricSorter *> NodeMetricSorter::instances;
 
-NodeMetricSorter *NodeMetricSorter::getInstance(Graph *graph) {
+NodeMetricSorter *NodeMetricSorter::instance(Graph *graph) {
   if (instances.find(graph) == instances.end()) {
     instances[graph] = new NodeMetricSorter(graph);
   }

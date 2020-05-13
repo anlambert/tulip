@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -19,6 +19,7 @@
 #include <talipot/Size.h>
 #include <talipot/Graph.h>
 #include <talipot/Observable.h>
+#include <talipot/Singleton.h>
 
 #include <string>
 #include <map>
@@ -94,12 +95,15 @@ public:
   enum LabelPositions { Center = 0, Top, Bottom, Left, Right };
 };
 
-class TLP_SCOPE ViewSettings : public Observable {
+class ViewSettings;
+DECLARE_DLL_TEMPLATE_INSTANCE(Singleton<ViewSettings>, TLP_TEMPLATE_DECLARE_SCOPE)
+
+class TLP_SCOPE ViewSettings : public Observable, public Singleton<ViewSettings> {
+
+  friend class Singleton<ViewSettings>;
 
 public:
   typedef std::map<LabelPosition::LabelPositions, std::string> labelmap;
-
-  static ViewSettings &instance();
 
   static labelmap POSITION_LABEL_MAP;
 
@@ -147,6 +151,9 @@ public:
 
   int defaultFontSize() const;
   void setDefaultFontSize(int fontSize);
+
+private:
+  ViewSettings() {}
 };
 
 class TLP_SCOPE ViewSettingsEvent : public tlp::Event {

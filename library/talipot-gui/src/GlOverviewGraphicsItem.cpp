@@ -212,9 +212,9 @@ void GlOverviewGraphicsItem::draw(bool generatePixmap) {
     }
 
     // Draw the scene
-    GlOffscreenRenderer::getInstance()->setViewPortSize(width - 2 * _frameWidth,
-                                                        height - 2 * _frameWidth);
-    GlOffscreenRenderer::getInstance()->renderExternalScene(&baseScene, true);
+    GlOffscreenRenderer::instance().setViewPortSize(width - 2 * _frameWidth,
+                                                    height - 2 * _frameWidth);
+    GlOffscreenRenderer::instance().renderExternalScene(&baseScene, true);
 
     vector<bool>::iterator itTmp = layersVisibility.begin();
 
@@ -246,7 +246,7 @@ void GlOverviewGraphicsItem::draw(bool generatePixmap) {
 
   if (generatePixmap) {
     // Load scene pixmap to the item
-    QImage img = GlOffscreenRenderer::getInstance()->getImage();
+    QImage img = GlOffscreenRenderer::instance().getImage();
     overview.setPos(_frameWidth, _frameWidth);
     overview.setPixmap(QPixmap::fromImage(img));
   }

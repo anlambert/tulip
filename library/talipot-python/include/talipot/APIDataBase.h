@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -20,10 +20,17 @@
 #include <QString>
 
 #include <talipot/config.h>
+#include <talipot/Singleton.h>
+#include <talipot/TlpTools.h>
 
 namespace tlp {
 
-class TLP_PYTHON_SCOPE APIDataBase {
+class APIDataBase;
+DECLARE_DLL_TEMPLATE_INSTANCE(Singleton<APIDataBase>, TLP_PYTHON_TEMPLATE_DECLARE_SCOPE)
+
+class TLP_PYTHON_SCOPE APIDataBase : public Singleton<APIDataBase> {
+
+  friend class Singleton<APIDataBase>;
 
   APIDataBase();
 
@@ -31,13 +38,7 @@ class TLP_PYTHON_SCOPE APIDataBase {
   QHash<QString, QString> _returnType;
   QHash<QString, QVector<QVector<QString>>> _paramTypes;
 
-  static APIDataBase _instance;
-
 public:
-  static APIDataBase *getInstance() {
-    return &_instance;
-  }
-
   void loadApiFile(const QString &apiFilePath);
 
   void addApiEntry(const QString &apiEntry);

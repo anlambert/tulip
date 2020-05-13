@@ -693,19 +693,19 @@ void Histogram::update() {
 
   setGraphView(graphComposite, (dataLocation == NODE) ? displayEdges : false);
 
-  GlOffscreenRenderer *glOffscreenRenderer = GlOffscreenRenderer::getInstance();
-  glOffscreenRenderer->setViewPortSize(size, size);
-  glOffscreenRenderer->clearScene();
-  glOffscreenRenderer->setSceneBackgroundColor(backgroundColor);
-  glOffscreenRenderer->addGlEntityToScene(xAxis);
-  glOffscreenRenderer->addGlEntityToScene(yAxis);
-  glOffscreenRenderer->addGlEntityToScene(histoBinsComposite);
-  glOffscreenRenderer->addGraphCompositeToScene(graphComposite);
-  glOffscreenRenderer->renderScene(true);
-  GLuint textureId = glOffscreenRenderer->getGLTexture(true);
+  GlOffscreenRenderer &glOffscreenRenderer = GlOffscreenRenderer::instance();
+  glOffscreenRenderer.setViewPortSize(size, size);
+  glOffscreenRenderer.clearScene();
+  glOffscreenRenderer.setSceneBackgroundColor(backgroundColor);
+  glOffscreenRenderer.addGlEntityToScene(xAxis);
+  glOffscreenRenderer.addGlEntityToScene(yAxis);
+  glOffscreenRenderer.addGlEntityToScene(histoBinsComposite);
+  glOffscreenRenderer.addGraphCompositeToScene(graphComposite);
+  glOffscreenRenderer.renderScene(true);
+  GLuint textureId = glOffscreenRenderer.getGLTexture(true);
   GlTextureManager::deleteTexture(textureName);
   GlTextureManager::registerExternalTexture(textureName, textureId);
-  glOffscreenRenderer->clearScene();
+  glOffscreenRenderer.clearScene();
 
   Gl2DRect *rectTextured = new Gl2DRect(blCorner.getY() + size, blCorner.getY(), blCorner.getX(),
                                         blCorner.getX() + size, textureName);

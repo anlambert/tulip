@@ -264,7 +264,7 @@ void GlMainWidget::makeCurrent() {
     int height = contentsRect().height();
     scene.setViewport(0, 0, screenToViewport(width), screenToViewport(height));
   } else {
-    GlOffscreenRenderer::getInstance()->makeOpenGLContextCurrent();
+    GlOffscreenRenderer::instance().makeOpenGLContextCurrent();
   }
 }
 //==================================================
@@ -272,7 +272,7 @@ void GlMainWidget::doneCurrent() {
   if (isVisible()) {
     QOpenGLWidget::doneCurrent();
   } else {
-    GlOffscreenRenderer::getInstance()->doneOpenGLContextCurrent();
+    GlOffscreenRenderer::instance().doneOpenGLContextCurrent();
   }
 }
 //==================================================

@@ -16,22 +16,32 @@
 #include <QMap>
 
 #include <talipot/config.h>
+#include <talipot/Singleton.h>
+#include <talipot/TlpQtTools.h>
 
 class QNetworkReply;
 
-class TLP_QT_SCOPE DownloadManager : public QNetworkAccessManager {
+namespace tlp {
+
+class DownloadManager;
+DECLARE_DLL_TEMPLATE_INSTANCE(Singleton<DownloadManager>, TLP_QT_TEMPLATE_DECLARE_SCOPE)
+
+class TLP_QT_SCOPE DownloadManager : public QNetworkAccessManager,
+                                     public Singleton<DownloadManager> {
   Q_OBJECT
+
+  friend class Singleton<DownloadManager>;
+
   QList<QNetworkReply *> currentDownloads;
   QMap<QUrl, QString> downloadDestinations;
 
-  static DownloadManager *_instance;
   DownloadManager();
 
 public:
-  static DownloadManager *getInstance();
   QNetworkReply *downloadPlugin(const QUrl &url, const QString &destination);
   bool saveToDisk(const QString &filename, QIODevice *data);
 
 public slots:
   void downloadFinished(QNetworkReply *reply);
 };
+}

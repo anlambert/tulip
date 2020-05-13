@@ -57,7 +57,7 @@ PythonShellWidget::PythonShellWidget(QWidget *parent) : PythonCodeEditor(parent)
   setFindReplaceActivated(false);
   setCommentShortcutsActivated(false);
   setIndentShortcutsActivated(false);
-  insert(PythonInterpreter::getInstance()->getPythonShellBanner() + "\n");
+  insert(PythonInterpreter::instance().getPythonShellBanner() + "\n");
   insert("# Use Ctrl + Space to show dynamic auto-completion dialog\n");
   insert(ps1);
   _currentPs = ps1;
@@ -212,16 +212,16 @@ void PythonShellWidget::executeCurrentLines() {
   emit beginCurrentLinesExecution();
 
   tlp::Observable::holdObservers();
-  PythonInterpreter::getInstance()->setConsoleWidget(this);
-  PythonInterpreter::getInstance()->setProcessQtEventsDuringScriptExecution(true);
+  PythonInterpreter::instance().setConsoleWidget(this);
+  PythonInterpreter::instance().setProcessQtEventsDuringScriptExecution(true);
   // eval the input statement in 'single input mode'
-  PythonInterpreter::getInstance()->evalPythonStatement(_currentCodeLines, true);
+  PythonInterpreter::instance().evalPythonStatement(_currentCodeLines, true);
   // flush stdout as every input that does not eval to 'None' is printed to it
-  PythonInterpreter::getInstance()->runString("sys.stdout.flush()");
+  PythonInterpreter::instance().runString("sys.stdout.flush()");
   _currentCodeLines = "";
-  PythonInterpreter::getInstance()->setProcessQtEventsDuringScriptExecution(false);
-  PythonInterpreter::getInstance()->resetConsoleWidget();
-  PythonInterpreter::getInstance()->setDefaultSIGINTHandler();
+  PythonInterpreter::instance().setProcessQtEventsDuringScriptExecution(false);
+  PythonInterpreter::instance().resetConsoleWidget();
+  PythonInterpreter::instance().setDefaultSIGINTHandler();
   tlp::Observable::unholdObservers();
 
   emit endCurrentLinesExecution();
@@ -267,7 +267,7 @@ void PythonShellWidget::updateAutoCompletionList(bool) {
 
     if (context.size() == 2) {
       QVector<QString> dynamicAutoCompletionList =
-          PythonInterpreter::getInstance()->getObjectDictEntries(context[0], context[1]);
+          PythonInterpreter::instance().getObjectDictEntries(context[0], context[1]);
 
       for (int i = 0; i < dynamicAutoCompletionList.size(); ++i) {
         QString entry = dynamicAutoCompletionList[i];
@@ -281,7 +281,7 @@ void PythonShellWidget::updateAutoCompletionList(bool) {
     if (autoCompletionResult.count() == 0) {
       if (context.size() == 1) {
         QVector<QString> dynamicAutoCompletionList =
-            PythonInterpreter::getInstance()->getGlobalDictEntries(context[0]);
+            PythonInterpreter::instance().getGlobalDictEntries(context[0]);
 
         for (int i = 0; i < dynamicAutoCompletionList.size(); ++i) {
           QString entry = dynamicAutoCompletionList[i];

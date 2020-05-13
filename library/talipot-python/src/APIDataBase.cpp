@@ -25,7 +25,7 @@
 
 using namespace tlp;
 
-APIDataBase APIDataBase::_instance;
+INSTANTIATE_DLL_TEMPLATE(tlp::Singleton<tlp::APIDataBase>, TLP_PYTHON_TEMPLATE_DEFINE_SCOPE)
 
 APIDataBase::APIDataBase() {
   addApiEntry("tlp.node.id");

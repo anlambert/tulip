@@ -47,8 +47,7 @@ using namespace std;
 
 namespace tlp {
 
-unique_ptr<GlLabel> GlEdge::label;
-once_flag GlEdge::onceFlag;
+Singleton<GlLabel> GlEdge::label;
 
 BoundingBox GlEdge::getBoundingBox(const GlGraphInputData *data) {
   auto ends = data->graph->ends(e);
@@ -436,15 +435,16 @@ void GlEdge::drawLabel(OcclusionTest *test, const GlGraphInputData *data, float 
   }
 
   if (select) {
-    label->setStencil(data->parameters->getSelectedEdgesStencil());
+    label.instance().setStencil(data->parameters->getSelectedEdgesStencil());
   } else {
-    label->setStencil(data->parameters->getEdgesLabelStencil());
+    label.instance().setStencil(data->parameters->getEdgesLabelStencil());
   }
 
-  label->setFontNameSizeAndColor(data->getElementFont()->getEdgeValue(e), fontSize, fontColor);
-  label->setText(tmp);
-  label->setOutlineColor(outlineColor);
-  label->setOutlineSize(outlineWidth);
+  label.instance().setFontNameSizeAndColor(data->getElementFont()->getEdgeValue(e), fontSize,
+                                           fontColor);
+  label.instance().setText(tmp);
+  label.instance().setOutlineColor(outlineColor);
+  label.instance().setOutlineSize(outlineWidth);
 
   auto ends = data->graph->ends(e);
   const node src = ends.first;
@@ -460,7 +460,7 @@ void GlEdge::drawLabel(OcclusionTest *test, const GlGraphInputData *data, float 
 
   getEdgeSize(data, e, srcSize, tgtSize, maxSrcSize, maxTgtSize, edgeSize);
 
-  label->setTranslationAfterRotation(Coord());
+  label.instance().setTranslationAfterRotation(Coord());
 
   const Coord &srcCoord = data->getElementLayout()->getNodeValue(src);
   const Coord &tgtCoord = data->getElementLayout()->getNodeValue(tgt);
@@ -496,7 +496,8 @@ void GlEdge::drawLabel(OcclusionTest *test, const GlGraphInputData *data, float 
       Coord textDirection = firstVector + secondVector;
 
       if (textDirection[1] < 0) {
-        label->setTranslationAfterRotation(Coord(0, -label->getTranslationAfterRotation()[1], 0));
+        label.instance().setTranslationAfterRotation(
+            Coord(0, -label.instance().getTranslationAfterRotation()[1], 0));
       }
 
       angle = (firstAngle + secondAngle) / 2.f;
@@ -513,34 +514,34 @@ void GlEdge::drawLabel(OcclusionTest *test, const GlGraphInputData *data, float 
 
   int labelPos = data->getElementLabelPosition()->getEdgeValue(e);
 
-  label->setSize(Size());
-  label->rotate(0, 0, angle);
-  label->setAlignment(labelPos);
-  label->setScaleToSize(false);
-  label->setLabelsDensity(data->parameters->getLabelsDensity());
+  label.instance().setSize(Size());
+  label.instance().rotate(0, 0, angle);
+  label.instance().setAlignment(labelPos);
+  label.instance().setScaleToSize(false);
+  label.instance().setLabelsDensity(data->parameters->getLabelsDensity());
 
   if (!(data->parameters->getLabelsDensity() == 100)) { // labels overlap
-    label->setOcclusionTester(test);
+    label.instance().setOcclusionTester(test);
   } else {
-    label->setOcclusionTester(nullptr);
+    label.instance().setOcclusionTester(nullptr);
   }
 
-  label->setPosition(position);
+  label.instance().setPosition(position);
 
   if (edgeSize[0] > edgeSize[1]) {
-    label->setTranslationAfterRotation(Coord(0, -edgeSize[0] / 2));
+    label.instance().setTranslationAfterRotation(Coord(0, -edgeSize[0] / 2));
   } else {
-    label->setTranslationAfterRotation(Coord(0, -edgeSize[1] / 2));
+    label.instance().setTranslationAfterRotation(Coord(0, -edgeSize[1] / 2));
   }
 
   BoundingBox bb = getBoundingBox(data, e, src, tgt, srcCoord, tgtCoord, srcSize, tgtSize, bends);
-  label->setUseLODOptimisation(true, bb);
-  label->setUseMinMaxSize(!data->parameters->isLabelFixedFontSize());
-  label->setMinSize(data->parameters->getMinSizeOfLabel());
-  label->setMaxSize(data->parameters->getMaxSizeOfLabel());
-  label->setBillboarded(data->parameters->getLabelsAreBillboarded());
+  label.instance().setUseLODOptimisation(true, bb);
+  label.instance().setUseMinMaxSize(!data->parameters->isLabelFixedFontSize());
+  label.instance().setMinSize(data->parameters->getMinSizeOfLabel());
+  label.instance().setMaxSize(data->parameters->getMaxSizeOfLabel());
+  label.instance().setBillboarded(data->parameters->getLabelsAreBillboarded());
 
-  label->drawWithStencil(lod, camera);
+  label.instance().drawWithStencil(lod, camera);
 }
 
 size_t GlEdge::getVertices(const GlGraphInputData *data, const edge e, const node src,

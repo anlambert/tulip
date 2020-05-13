@@ -101,10 +101,10 @@ void HttpContext::request(const std::string &url, bool head) {
   QNetworkRequest request(QUrl(url.c_str()));
 
   if (head) {
-    reply = DownloadManager::getInstance()->head(request);
+    reply = DownloadManager::instance().head(request);
     connect(reply, &QNetworkReply::finished, this, &HttpContext::headerReceived);
   } else {
-    reply = DownloadManager::getInstance()->get(request);
+    reply = DownloadManager::instance().get(request);
     connect(reply, &QNetworkReply::finished, this, &HttpContext::finished);
   }
 }

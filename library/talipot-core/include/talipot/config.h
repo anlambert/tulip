@@ -11,14 +11,14 @@
  *
  */
 
-#ifndef TalipotCONF_H
-#define TalipotCONF_H
+#ifndef TALIPOT_CONF_H
+#define TALIPOT_CONF_H
 
 #include <cstddef>
 
 /**
- * @brief this file contains various helper macros and functions to have a true cross-platform
- * compilation.
+ * @brief This file contains various helper macros and functions for
+ * cross-platform compilation.
  *
  */
 
@@ -31,6 +31,8 @@ typedef unsigned char uchar;
 
 #if defined(_MSC_VER)
 // disable some annoying Visual Studio warnings
+#pragma warning( \
+    disable : 4146) // unary minus operator applied to unsigned type, result still unsigned
 #pragma warning(disable : 4251) // member is not dllexport
 #pragma warning(disable : 4267) // conversion from 'size_t' to 'type', possible loss of data
 #pragma warning(disable : 4275) // base class is not dllexport
@@ -45,8 +47,7 @@ typedef unsigned char uchar;
 // disable deprecated warnings when compiling the talipot dlls, as MSVC is overly verbose with
 // deprecation
 // (even if a deprecated function is not used, warnings are issued)
-#if defined(DLL_Talipot) || defined(DLL_TALIPOT_GL) || defined(DLL_TALIPOT_QT) || \
-    defined(DLL_TALIPOT_QT2)
+#if defined(DLL_TALIPOT) || defined(DLL_TALIPOT_GL) || defined(DLL_TALIPOT_QT)
 #pragma warning(disable : 4996) // deprecated functions
 #endif
 
@@ -134,45 +135,117 @@ inline double log1p(double x) {
 #ifdef _WIN32
 #ifdef DLL_Talipot
 #define TLP_SCOPE __declspec(dllexport)
+// To workaround critical warning C4910 on Visual Studio stating that
+// extern explicit template cannot be labeled with __declspec(dllexport).
+#ifdef _MSC_VER
+#define TLP_TEMPLATE_DECLARE_SCOPE
+#define TLP_TEMPLATE_DEFINE_SCOPE TLP_SCOPE
+#else
+#define TLP_TEMPLATE_DECLARE_SCOPE TLP_SCOPE
+#define TLP_TEMPLATE_DEFINE_SCOPE
+#endif
 #else
 #define TLP_SCOPE __declspec(dllimport)
+#ifdef _MSC_VER
+#define TLP_TEMPLATE_DECLARE_SCOPE TLP_SCOPE
+#define TLP_TEMPLATE_DEFINE_SCOPE
+#else
+#define TLP_TEMPLATE_DECLARE_SCOPE TLP_SCOPE
+#define TLP_TEMPLATE_DEFINE_SCOPE
+#endif
 #endif
 #endif
 #ifndef TLP_SCOPE
 #define TLP_SCOPE
+#define TLP_TEMPLATE_DECLARE_SCOPE
+#define TLP_TEMPLATE_DEFINE_SCOPE
 #endif
 
 #ifdef _WIN32
 #ifdef DLL_TALIPOT_GL
 #define TLP_GL_SCOPE __declspec(dllexport)
+// To workaround critical warning C4910 on Visual Studio stating that
+// extern explicit template cannot be labeled with __declspec(dllexport).
+#ifdef _MSC_VER
+#define TLP_GL_TEMPLATE_DECLARE_SCOPE
+#define TLP_GL_TEMPLATE_DEFINE_SCOPE TLP_GL_SCOPE
+#else
+#define TLP_GL_TEMPLATE_DECLARE_SCOPE TLP_GL_SCOPE
+#define TLP_GL_TEMPLATE_DEFINE_SCOPE
+#endif
 #else
 #define TLP_GL_SCOPE __declspec(dllimport)
+#ifdef _MSC_VER
+#define TLP_GL_TEMPLATE_DECLARE_SCOPE TLP_GL_SCOPE
+#define TLP_GL_TEMPLATE_DEFINE_SCOPE
+#else
+#define TLP_GL_TEMPLATE_DECLARE_SCOPE TLP_GL_SCOPE
+#define TLP_GL_TEMPLATE_DEFINE_SCOPE
+#endif
 #endif
 #endif
 #ifndef TLP_GL_SCOPE
 #define TLP_GL_SCOPE
+#define TLP_GL_TEMPLATE_DECLARE_SCOPE
+#define TLP_GL_TEMPLATE_DEFINE_SCOPE
 #endif
 
 #ifdef _WIN32
 #ifdef DLL_TALIPOT_QT
 #define TLP_QT_SCOPE __declspec(dllexport)
+// To workaround critical warning C4910 on Visual Studio stating that
+// extern explicit template cannot be labeled with __declspec(dllexport).
+#ifdef _MSC_VER
+#define TLP_QT_TEMPLATE_DECLARE_SCOPE
+#define TLP_QT_TEMPLATE_DEFINE_SCOPE TLP_QT_SCOPE
+#else
+#define TLP_QT_TEMPLATE_DECLARE_SCOPE TLP_QT_SCOPE
+#define TLP_QT_TEMPLATE_DEFINE_SCOPE
+#endif
 #else
 #define TLP_QT_SCOPE __declspec(dllimport)
+#ifdef _MSC_VER
+#define TLP_QT_TEMPLATE_DECLARE_SCOPE TLP_QT_SCOPE
+#define TLP_QT_TEMPLATE_DEFINE_SCOPE
+#else
+#define TLP_QT_TEMPLATE_DECLARE_SCOPE TLP_QT_SCOPE
+#define TLP_QT_TEMPLATE_DEFINE_SCOPE
+#endif
 #endif
 #endif
 #ifndef TLP_QT_SCOPE
 #define TLP_QT_SCOPE
+#define TLP_QT_TEMPLATE_DECLARE_SCOPE
+#define TLP_QT_TEMPLATE_DEFINE_SCOPE
 #endif
 
 #ifdef _WIN32
 #ifdef DLL_TALIPOT_PYTHON
 #define TLP_PYTHON_SCOPE __declspec(dllexport)
+// To workaround critical warning C4910 on Visual Studio stating that
+// extern explicit template cannot be labeled with __declspec(dllexport).
+#ifdef _MSC_VER
+#define TLP_PYTHON_TEMPLATE_DECLARE_SCOPE
+#define TLP_PYTHON_TEMPLATE_DEFINE_SCOPE TLP_PYTHON_SCOPE
+#else
+#define TLP_PYTHON_TEMPLATE_DECLARE_SCOPE TLP_PYTHON_SCOPE
+#define TLP_PYTHON_TEMPLATE_DEFINE_SCOPE
+#endif
 #else
 #define TLP_PYTHON_SCOPE __declspec(dllimport)
+#ifdef _MSC_VER
+#define TLP_PYTHON_TEMPLATE_DECLARE_SCOPE TLP_PYTHON_SCOPE
+#define TLP_PYTHON_TEMPLATE_DEFINE_SCOPE
+#else
+#define TLP_PYTHON_TEMPLATE_DECLARE_SCOPE TLP_PYTHON_SCOPE
+#define TLP_PYTHON_TEMPLATE_DEFINE_SCOPE
+#endif
 #endif
 #endif
 #ifndef TLP_PYTHON_SCOPE
 #define TLP_PYTHON_SCOPE
+#define TLP_PYTHON_TEMPLATE_DECLARE_SCOPE
+#define TLP_PYTHON_TEMPLATE_DEFINE_SCOPE
 #endif
 
 #ifdef _WIN32
@@ -185,6 +258,13 @@ inline double log1p(double x) {
 #ifndef TLP_OGDF_SCOPE
 #define TLP_OGDF_SCOPE
 #endif
+
+#define SINGLE_ARG(...) __VA_ARGS__
+
+#define DECLARE_DLL_TEMPLATE_INSTANCE(TEMPLATE_CLASS, SCOPE) \
+  extern template class SCOPE TEMPLATE_CLASS;
+
+#define INSTANTIATE_DLL_TEMPLATE(TEMPLATE_CLASS, SCOPE) template class SCOPE TEMPLATE_CLASS;
 
 #include <ostream>
 
@@ -227,4 +307,4 @@ extern TLP_SCOPE void setErrorOutput(std::ostream &os);
 extern TLP_SCOPE std::string getTalipotVersion();
 }
 
-#endif // TalipotCONF_H
+#endif // TALIPOT_CONF_H
