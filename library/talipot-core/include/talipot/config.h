@@ -133,7 +133,7 @@ inline double log1p(double x) {
 
 // WIN32 specific defines: dllimport and dllexport stuff
 #ifdef _WIN32
-#ifdef DLL_Talipot
+#ifdef DLL_TALIPOT
 #define TLP_SCOPE __declspec(dllexport)
 // To workaround critical warning C4910 on Visual Studio stating that
 // extern explicit template cannot be labeled with __declspec(dllexport).

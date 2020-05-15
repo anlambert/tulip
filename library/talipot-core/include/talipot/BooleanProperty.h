@@ -16,16 +16,20 @@
 
 #include <talipot/PropertyTypes.h>
 #include <talipot/AbstractProperty.h>
+#include <talipot/TlpTools.h>
 
 namespace tlp {
 
 class PropertyContext;
 
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(AbstractProperty<BooleanType, BooleanType>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+
 /**
  * @ingroup Graph
  * @brief A graph property that maps a boolean value to graph elements.
  */
-class TLP_SCOPE BooleanProperty : public AbstractProperty<tlp::BooleanType, tlp::BooleanType> {
+class TLP_SCOPE BooleanProperty : public AbstractProperty<BooleanType, BooleanType> {
 public:
   BooleanProperty(Graph *g, const std::string &n = "")
       : AbstractProperty<BooleanType, BooleanType>(g, n) {}
@@ -51,15 +55,21 @@ public:
   void reverseEdgeDirection(Graph *sg = nullptr);
 };
 
+DECLARE_DLL_TEMPLATE_INSTANCE(
+    SINGLE_ARG(AbstractProperty<BooleanVectorType, BooleanVectorType, VectorPropertyInterface>),
+    TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(AbstractVectorProperty<BooleanVectorType, BooleanType>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+
 /**
  * @ingroup Graph
  * @brief A graph property that maps a std::vector<bool> value to graph elements.
  */
 class TLP_SCOPE BooleanVectorProperty
-    : public AbstractVectorProperty<tlp::BooleanVectorType, tlp::BooleanType> {
+    : public AbstractVectorProperty<BooleanVectorType, BooleanType> {
 public:
   BooleanVectorProperty(Graph *g, const std::string &n = "")
-      : AbstractVectorProperty<BooleanVectorType, tlp::BooleanType>(g, n) {}
+      : AbstractVectorProperty<BooleanVectorType, BooleanType>(g, n) {}
   // PropertyInterface inherited methods
   PropertyInterface *clonePrototype(Graph *, const std::string &) const override;
   static const std::string propertyTypename;
@@ -67,9 +77,6 @@ public:
     return propertyTypename;
   }
 };
-#ifdef _MSC_VER
-template class AbstractVectorProperty<BooleanVectorType, BooleanType>;
-#endif
 }
 
 #endif // TALIPOT_BOOLEAN_PROPERTY_H

@@ -92,3 +92,13 @@ PropertyInterface *StringVectorProperty::clonePrototype(Graph *g, const std::str
   p->setAllEdgeValue(getEdgeDefaultValue());
   return p;
 }
+
+INSTANTIATE_DLL_TEMPLATE(SINGLE_ARG(tlp::AbstractProperty<tlp::StringType, tlp::StringType>),
+                         TLP_TEMPLATE_DEFINE_SCOPE)
+INSTANTIATE_DLL_TEMPLATE(
+    SINGLE_ARG(tlp::AbstractProperty<tlp::StringVectorType, tlp::StringVectorType,
+                                     tlp::VectorPropertyInterface>),
+    TLP_TEMPLATE_DEFINE_SCOPE)
+INSTANTIATE_DLL_TEMPLATE(
+    SINGLE_ARG(tlp::AbstractVectorProperty<tlp::StringVectorType, tlp::StringType>),
+    TLP_TEMPLATE_DEFINE_SCOPE)

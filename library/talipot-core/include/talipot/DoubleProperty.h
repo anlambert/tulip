@@ -18,12 +18,17 @@
 #include <talipot/AbstractProperty.h>
 #include <talipot/MinMaxProperty.h>
 #include <talipot/NumericProperty.h>
+#include <talipot/TlpTools.h>
 
 namespace tlp {
 
 class PropertyContext;
 
-typedef MinMaxProperty<tlp::DoubleType, tlp::DoubleType, tlp::NumericProperty> DoubleMinMaxProperty;
+typedef MinMaxProperty<DoubleType, DoubleType, NumericProperty> DoubleMinMaxProperty;
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(AbstractProperty<DoubleType, DoubleType, NumericProperty>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MinMaxProperty<DoubleType, DoubleType, NumericProperty>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
 
 /**
  * @ingroup Graph
@@ -33,8 +38,7 @@ class TLP_SCOPE DoubleProperty : public DoubleMinMaxProperty {
 public:
   DoubleProperty(Graph *, const std::string &n = "");
 
-  void clone_handler(
-      AbstractProperty<tlp::DoubleType, tlp::DoubleType, tlp::NumericProperty> &) override;
+  void clone_handler(AbstractProperty<DoubleType, DoubleType, NumericProperty> &) override;
 
   PropertyInterface *clonePrototype(Graph *, const std::string &) const override;
   static const std::string propertyTypename;
@@ -42,11 +46,11 @@ public:
     return propertyTypename;
   }
 
-  void setNodeValue(const node n, tlp::StoredType<double>::ReturnedConstValue v) override;
-  void setEdgeValue(const edge e, tlp::StoredType<double>::ReturnedConstValue v) override;
-  void setAllNodeValue(tlp::StoredType<double>::ReturnedConstValue v,
+  void setNodeValue(const node n, StoredType<double>::ReturnedConstValue v) override;
+  void setEdgeValue(const edge e, StoredType<double>::ReturnedConstValue v) override;
+  void setAllNodeValue(StoredType<double>::ReturnedConstValue v,
                        const Graph *graph = nullptr) override;
-  void setAllEdgeValue(tlp::StoredType<double>::ReturnedConstValue v,
+  void setAllEdgeValue(StoredType<double>::ReturnedConstValue v,
                        const Graph *graph = nullptr) override;
 
   enum PredefinedMetaValueCalculator {
@@ -104,16 +108,21 @@ private:
   void treatEvent(const Event &) override;
 };
 
+DECLARE_DLL_TEMPLATE_INSTANCE(
+    SINGLE_ARG(AbstractProperty<DoubleVectorType, DoubleVectorType, VectorPropertyInterface>),
+    TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(AbstractVectorProperty<DoubleVectorType, DoubleType>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+
 /**
  * @ingroup Graph
  * @brief A graph property that maps a std::vector<double> value to graph elements.
  */
 
-class TLP_SCOPE DoubleVectorProperty
-    : public AbstractVectorProperty<tlp::DoubleVectorType, tlp::DoubleType> {
+class TLP_SCOPE DoubleVectorProperty : public AbstractVectorProperty<DoubleVectorType, DoubleType> {
 public:
   DoubleVectorProperty(Graph *g, const std::string &n = "")
-      : AbstractVectorProperty<DoubleVectorType, tlp::DoubleType>(g, n) {}
+      : AbstractVectorProperty<DoubleVectorType, DoubleType>(g, n) {}
   // redefinition of some PropertyInterface methods
   PropertyInterface *clonePrototype(Graph *, const std::string &) const override;
   static const std::string propertyTypename;
@@ -121,8 +130,5 @@ public:
     return propertyTypename;
   }
 };
-#ifdef _MSC_VER
-template class AbstractVectorProperty<DoubleVectorType, DoubleType>;
-#endif
 }
 #endif // TALIPOT_DOUBLE_PROPERTY_H

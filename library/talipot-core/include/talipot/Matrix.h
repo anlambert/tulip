@@ -11,15 +11,14 @@
  *
  */
 
-//@TLPGEOLICENCE#
-
 #ifndef TALIPOT_MATRIX_H
 #define TALIPOT_MATRIX_H
+
+#include <talipot/Vector.h>
 
 #include <cassert>
 #include <iostream>
 #include <vector>
-#include <talipot/Vector.h>
 
 namespace tlp {
 
@@ -131,45 +130,57 @@ public:
 };
 
 typedef Matrix<float, 3> Mat3f;
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(Matrix<float, 3>), TLP_TEMPLATE_DECLARE_SCOPE)
+
 typedef Matrix<double, 3> Mat3d;
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(Matrix<double, 3>), TLP_TEMPLATE_DECLARE_SCOPE)
+
 typedef Matrix<float, 4> Mat4f;
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(Matrix<float, 4>), TLP_TEMPLATE_DECLARE_SCOPE)
+
 typedef Matrix<double, 4> Mat4d;
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(Matrix<double, 4>), TLP_TEMPLATE_DECLARE_SCOPE)
 
 /**
  * Returns a new matrix equal to the sum of 2 matrices
  */
 template <typename Obj, size_t SIZE>
-MATRIX operator+(const MATRIX &mat1, const MATRIX &mat2);
+extern TLP_TEMPLATE_DECLARE_SCOPE MATRIX operator+(const MATRIX &mat1, const MATRIX &mat2);
 /**
  * Returns a new matrix equal to the difference of 2 matrices
  */
 template <typename Obj, size_t SIZE>
-MATRIX operator-(const MATRIX &mat1, const MATRIX &mat2);
+extern TLP_TEMPLATE_DECLARE_SCOPE MATRIX operator-(const MATRIX &mat1, const MATRIX &mat2);
 /**
  * Returns a new matrix equal to the multiplication of the matrix by
  * obj
  */
 template <typename Obj, size_t SIZE>
-MATRIX operator*(const MATRIX &mat, const Obj &obj);
+extern TLP_TEMPLATE_DECLARE_SCOPE MATRIX operator*(const MATRIX &mat, const Obj &obj);
 /**
  * Returns a new matrix equal to the multiplication of the matrix by
  * another matrix
  */
 template <typename Obj, size_t SIZE>
-MATRIX operator*(const MATRIX &mat1, const MATRIX &mat2);
+extern TLP_TEMPLATE_DECLARE_SCOPE MATRIX operator*(const MATRIX &mat1, const MATRIX &mat2);
 /**
  * Returns a new vector equal to the multiplication of the vector by
  * a matrix,(the vector is automatically transposed to do the multiplication)
  */
 template <typename Obj, size_t SIZE>
-Vector<Obj, SIZE> operator*(const Vector<Obj, SIZE> &vec, const tlp::Matrix<Obj, SIZE> &);
+extern TLP_TEMPLATE_DECLARE_SCOPE Vector<Obj, SIZE> operator*(const Vector<Obj, SIZE> &vec,
+                                                              const tlp::Matrix<Obj, SIZE> &);
 /**
  * Returns a new vector equal to the multiplication of the matrix by
  * a vector
  */
 template <typename Obj, size_t SIZE>
-Vector<Obj, SIZE> operator*(const Matrix<Obj, SIZE> &, const Vector<Obj, SIZE> &vec);
+extern TLP_TEMPLATE_DECLARE_SCOPE Vector<Obj, SIZE> operator*(const Matrix<Obj, SIZE> &,
+                                                              const Vector<Obj, SIZE> &vec);
 }
 
+#ifdef DLL_TALIPOT
 #include "cxx/Matrix.cxx"
+#endif
+
 #endif // TALIPOT_MATRIX_H

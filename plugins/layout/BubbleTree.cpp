@@ -29,9 +29,8 @@ struct greaterRadius {
   }
 };
 
-double
-BubbleTree::computeRelativePosition(tlp::node n,
-                                    NodeStaticProperty<Vector<double, 5>> &relativePosition) {
+double BubbleTree::computeRelativePosition(tlp::node n,
+                                           NodeStaticProperty<Vec5d> &relativePosition) {
 
   Size tmpSizeFather = nodeSize->getNodeValue(n);
   tmpSizeFather[2] = 0.; // remove z-coordinates because the drawing is 2D
@@ -51,7 +50,7 @@ BubbleTree::computeRelativePosition(tlp::node n,
    * Initialize node position
    */
   relativePosition[n][0] = 0.;
-  tlp::Vector<double, 5> &rPos = relativePosition[n];
+  tlp::Vec5d &rPos = relativePosition[n];
   rPos[1] = 0.;
 
   /*
@@ -205,8 +204,8 @@ BubbleTree::computeRelativePosition(tlp::node n,
   return circleH.radius;
 }
 
-void BubbleTree::calcLayout2(tlp::node n, tlp::Vector<double, 5> &nrPos,
-                             NodeStaticProperty<Vector<double, 5>> &relativePosition,
+void BubbleTree::calcLayout2(tlp::node n, tlp::Vec5d &nrPos,
+                             NodeStaticProperty<Vec5d> &relativePosition,
                              const tlp::Vec3d &enclosingCircleCenter,
                              const tlp::Vec3d &originNodePosition) {
   /*
@@ -273,7 +272,7 @@ void BubbleTree::calcLayout2(tlp::node n, tlp::Vector<double, 5> &nrPos,
 
   while (it->hasNext()) {
     node itn = it->next();
-    tlp::Vector<double, 5> &rPos = relativePosition[itn];
+    tlp::Vec5d &rPos = relativePosition[itn];
     Vec3d newpos;
     newpos[0] = rPos[0];
     newpos[1] = rPos[1];
@@ -286,7 +285,7 @@ void BubbleTree::calcLayout2(tlp::node n, tlp::Vector<double, 5> &nrPos,
   delete it;
 }
 
-void BubbleTree::calcLayout(tlp::node n, NodeStaticProperty<Vector<double, 5>> &relativePosition) {
+void BubbleTree::calcLayout(tlp::node n, NodeStaticProperty<Vec5d> &relativePosition) {
   /*
    * Make the recursive call, to place the children of n.
    */
@@ -294,14 +293,14 @@ void BubbleTree::calcLayout(tlp::node n, NodeStaticProperty<Vector<double, 5>> &
   Iterator<node> *it = tree->getOutNodes(n);
 
   if (it->hasNext()) {
-    tlp::Vector<double, 5> &nPos = relativePosition[n];
+    tlp::Vec5d &nPos = relativePosition[n];
     double nPos2 = nPos[2];
     double nPos3 = nPos[3];
 
     while (it->hasNext()) {
       node itn = it->next();
       Vec3d origin, tmp;
-      tlp::Vector<double, 5> &rPos = relativePosition[itn];
+      tlp::Vec5d &rPos = relativePosition[itn];
       origin[0] = rPos[0] - nPos2;
       origin[1] = rPos[1] - nPos3;
       origin[2] = 0.;
@@ -393,7 +392,7 @@ bool BubbleTree::run() {
 
   node startNode = tree->getSource();
   assert(startNode.isValid());
-  NodeStaticProperty<Vector<double, 5>> relativePosition(graph);
+  NodeStaticProperty<Vec5d> relativePosition(graph);
   computeRelativePosition(startNode, relativePosition);
   calcLayout(startNode, relativePosition);
 

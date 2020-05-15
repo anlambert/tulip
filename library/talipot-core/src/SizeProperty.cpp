@@ -223,3 +223,12 @@ PropertyInterface *SizeVectorProperty::clonePrototype(Graph *g, const std::strin
   p->setAllEdgeValue(getEdgeDefaultValue());
   return p;
 }
+
+INSTANTIATE_DLL_TEMPLATE(SINGLE_ARG(tlp::AbstractProperty<tlp::SizeType, tlp::SizeType>),
+                         TLP_TEMPLATE_DEFINE_SCOPE)
+INSTANTIATE_DLL_TEMPLATE(SINGLE_ARG(tlp::AbstractProperty<tlp::SizeVectorType, tlp::SizeVectorType,
+                                                          tlp::VectorPropertyInterface>),
+                         TLP_TEMPLATE_DEFINE_SCOPE)
+INSTANTIATE_DLL_TEMPLATE(
+    SINGLE_ARG(tlp::AbstractVectorProperty<tlp::SizeVectorType, tlp::SizeType>),
+    TLP_TEMPLATE_DEFINE_SCOPE)

@@ -15,6 +15,142 @@
 
 //======================================================
 TEMPLATEVECTOR
+VECTORTLP::Vector() {
+  tlp::Array<TYPE, SIZE>::fill(0);
+}
+//======================================================
+TEMPLATEVECTOR
+VECTORTLP::Vector(const VECTORTLP &v) {
+  set(v);
+}
+//======================================================
+TEMPLATEVECTOR
+VECTORTLP::Vector(VECTORTLP &&v) {
+  set(v);
+}
+//======================================================
+TEMPLATEVECTOR
+VECTORTLP::Vector(const tlp::Vector<TYPE, SIZE + 1, OTYPE> &v) {
+  set(v);
+}
+//======================================================
+TEMPLATEVECTOR
+VECTORTLP::Vector(const TYPE x) {
+  Array<TYPE, SIZE>::fill(x);
+}
+//======================================================
+TEMPLATEVECTOR
+VECTORTLP::Vector(const TYPE x, const TYPE y) : VECTORTLP() {
+  set(x, y);
+}
+//======================================================
+TEMPLATEVECTOR
+VECTORTLP::Vector(const TYPE x, const TYPE y, const TYPE z) : VECTORTLP() {
+  set(x, y, z);
+}
+//======================================================
+TEMPLATEVECTOR
+VECTORTLP::Vector(const tlp::Vector<TYPE, 2, OTYPE> &v, const TYPE z) : VECTORTLP() {
+  set(v, z);
+}
+//======================================================
+TEMPLATEVECTOR
+VECTORTLP::Vector(const TYPE x, const TYPE y, const TYPE z, const TYPE w) : VECTORTLP() {
+  set(x, y, z, w);
+}
+//======================================================
+TEMPLATEVECTOR
+VECTORTLP::Vector(const tlp::Vector<TYPE, 2, OTYPE> &v, const TYPE z, const TYPE w) : VECTORTLP() {
+  set(v, z, w);
+}
+//======================================================
+TEMPLATEVECTOR
+VECTORTLP::Vector(const tlp::Vector<TYPE, 3, OTYPE> &v, const TYPE w) : VECTORTLP() {
+  set(v, w);
+}
+//======================================================
+TEMPLATEVECTOR
+void VECTORTLP::set(const TYPE x) {
+  (*this)[0] = x;
+}
+//======================================================
+TEMPLATEVECTOR
+void VECTORTLP::set(const TYPE x, const TYPE y) {
+  assert(SIZE > 1);
+  (*this)[0] = x;
+  (*this)[1] = y;
+}
+//======================================================
+TEMPLATEVECTOR
+void VECTORTLP::set(const TYPE x, const TYPE y, const TYPE z) {
+  assert(SIZE > 2);
+  (*this)[0] = x;
+  (*this)[1] = y;
+  (*this)[2] = z;
+}
+//======================================================
+TEMPLATEVECTOR
+void VECTORTLP::set(const TYPE x, const TYPE y, const TYPE z, const TYPE w) {
+  assert(SIZE > 3);
+  (*this)[0] = x;
+  (*this)[1] = y;
+  (*this)[2] = z;
+  (*this)[3] = w;
+}
+//======================================================
+TEMPLATEVECTOR
+void VECTORTLP::set(const tlp::Vector<TYPE, 2, OTYPE> &v, const TYPE z) {
+  assert(SIZE > 2);
+  set(v[0], v[1], z);
+}
+//======================================================
+TEMPLATEVECTOR
+void VECTORTLP::set(const tlp::Vector<TYPE, 2, OTYPE> &v, const TYPE z, const TYPE w) {
+  assert(SIZE > 3);
+  set(v[0], v[1], z, w);
+}
+//======================================================
+TEMPLATEVECTOR
+void VECTORTLP::set(const tlp::Vector<TYPE, 3, OTYPE> &v, const TYPE w) {
+  assert(SIZE > 3);
+  set(v[0], v[1], v[2], w);
+  (*this)[3] = w;
+}
+//======================================================
+TEMPLATEVECTOR
+void VECTORTLP::set(const tlp::Vector<TYPE, SIZE, OTYPE> &v) {
+  std::copy(v.begin(), v.begin() + SIZE, Array<TYPE, SIZE>::begin());
+}
+//======================================================
+TEMPLATEVECTOR
+void VECTORTLP::set(const tlp::Vector<TYPE, SIZE + 1, OTYPE> &v) {
+  std::copy(v.begin(), v.begin() + SIZE, Array<TYPE, SIZE>::begin());
+}
+//======================================================
+TEMPLATEVECTOR
+VECTORTLP &VECTORTLP::normalize() {
+  OTYPE tmp = 0;
+
+  for (size_t i = 0; i < SIZE; ++i) {
+    tmp += tlpsqr<TYPE, OTYPE>((*this)[i]);
+  }
+
+  if (tmp < sqrt(std::numeric_limits<TYPE>::epsilon())) {
+    return *this;
+  }
+
+  for (size_t i = 0; i < SIZE; ++i) {
+    if ((*this)[i] < 0.) {
+      (*this)[i] = -tlpsqrt<TYPE, OTYPE>(tlpsqr<TYPE, OTYPE>((*this)[i]) / tmp);
+    } else {
+      (*this)[i] = tlpsqrt<TYPE, OTYPE>(tlpsqr<TYPE, OTYPE>((*this)[i]) / tmp);
+    }
+  }
+
+  return *this;
+}
+//======================================================
+TEMPLATEVECTOR
 VECTORTLP &VECTORTLP::operator*=(const TYPE scalaire) {
   for (size_t i = 0; i < SIZE; ++i) {
     (*this)[i] *= scalaire;
@@ -275,6 +411,12 @@ DTYPE VECTORTLP::dist(const VECTOR &c) const {
 
     return (tlpsqrt<DTYPE, OTYPE>(tmp));
   }
+}
+
+//======================================================
+TEMPLATEVECTOR
+TYPE VECTORTLP::length() const {
+  return norm();
 }
 
 #undef VECTORTLP

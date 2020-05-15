@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -16,12 +16,15 @@
 
 #include <talipot/PropertyTypes.h>
 #include <talipot/AbstractProperty.h>
+#include <talipot/TlpTools.h>
 
 namespace tlp {
 
 class PropertyContext;
 
-typedef AbstractProperty<tlp::ColorType, tlp::ColorType> AbstractColorProperty;
+typedef AbstractProperty<ColorType, ColorType> AbstractColorProperty;
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(tlp::AbstractProperty<tlp::ColorType, tlp::ColorType>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
 
 /**
  * @ingroup Graph
@@ -41,15 +44,20 @@ public:
   int compare(const edge e1, const edge e2) const override;
 };
 
+DECLARE_DLL_TEMPLATE_INSTANCE(
+    SINGLE_ARG(AbstractProperty<ColorVectorType, ColorVectorType, VectorPropertyInterface>),
+    TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(AbstractVectorProperty<ColorVectorType, ColorType>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+
 /**
  * @ingroup Graph
  * @brief A graph property that maps a std::vector<tlp::Color> value to graph elements.
  */
-class TLP_SCOPE ColorVectorProperty
-    : public AbstractVectorProperty<tlp::ColorVectorType, tlp::ColorType> {
+class TLP_SCOPE ColorVectorProperty : public AbstractVectorProperty<ColorVectorType, ColorType> {
 public:
   ColorVectorProperty(Graph *g, const std::string &n = "")
-      : AbstractVectorProperty<ColorVectorType, tlp::ColorType>(g, n) {}
+      : AbstractVectorProperty<ColorVectorType, ColorType>(g, n) {}
   // PropertyInterface inherited methods
   PropertyInterface *clonePrototype(Graph *, const std::string &) const override;
   static const std::string propertyTypename;
@@ -57,8 +65,5 @@ public:
     return propertyTypename;
   }
 };
-#ifdef _MSC_VER
-template class AbstractVectorProperty<ColorVectorType, ColorType>;
-#endif
 }
 #endif // TALIPOT_COLOR_PROPERTY_H

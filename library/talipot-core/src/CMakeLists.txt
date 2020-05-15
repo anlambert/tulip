@@ -76,7 +76,9 @@ SET(talipot_LIB_SRCS
     TlpJsonExport.cpp
     TlpJsonImport.cpp
     TLPBExport.cpp
-    TLPBImport.cpp)
+    TLPBImport.cpp
+    Vector.cpp
+    Matrix.cpp)
 
 # disable GCC var tracking on these file as it eats too much compile time and
 # warnings are emitted otherwise

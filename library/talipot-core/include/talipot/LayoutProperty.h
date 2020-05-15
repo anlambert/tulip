@@ -18,26 +18,24 @@
 #include <talipot/Observable.h>
 #include <talipot/AbstractProperty.h>
 #include <talipot/MinMaxProperty.h>
+#include <talipot/TlpTools.h>
 
 namespace tlp {
-
-template <>
-void tlp::MinMaxProperty<tlp::PointType, tlp::LineType>::updateEdgeValue(
-    tlp::edge e, tlp::LineType::RealType newValue);
-
-template <>
-std::pair<tlp::Coord, tlp::Coord>
-tlp::MinMaxProperty<tlp::PointType, tlp::LineType>::computeMinMaxNode(const Graph *sg);
 
 class PropertyContext;
 class Graph;
 
-typedef AbstractProperty<tlp::PointType, tlp::LineType> AbstractLayoutProperty;
-typedef MinMaxProperty<tlp::PointType, tlp::LineType> LayoutMinMaxProperty;
+typedef AbstractProperty<PointType, LineType> AbstractLayoutProperty;
+typedef MinMaxProperty<PointType, LineType> LayoutMinMaxProperty;
+
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(tlp::AbstractProperty<tlp::PointType, tlp::LineType>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(tlp::MinMaxProperty<tlp::PointType, tlp::LineType>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
 
 /**
  * @ingroup Graph
- * @brief A graph property that maps a tlp::Coord value to graph nodes and std::vector<tlp::Coord>
+ * @brief A graph property that maps a Coord value to graph nodes and std::vector<Coord>
  * for edges.
  */
 class TLP_SCOPE LayoutProperty : public LayoutMinMaxProperty {
@@ -285,15 +283,18 @@ public:
   // unsigned int crossingNumber() const;
 
   // redefinition of some AbstractProperty methods
-  void setNodeValue(const node, tlp::StoredType<Coord>::ReturnedConstValue v) override;
-  void setEdgeValue(const edge, tlp::StoredType<std::vector<Coord>>::ReturnedConstValue v) override;
-  void setAllNodeValue(tlp::StoredType<Coord>::ReturnedConstValue v,
+  void setNodeValue(const node, StoredType<Coord>::ReturnedConstValue v) override;
+  void setEdgeValue(const edge, StoredType<std::vector<Coord>>::ReturnedConstValue v) override;
+  void setAllNodeValue(StoredType<Coord>::ReturnedConstValue v,
                        const Graph *graph = nullptr) override;
-  void setAllEdgeValue(tlp::StoredType<std::vector<Coord>>::ReturnedConstValue v,
+  void setAllEdgeValue(StoredType<std::vector<Coord>>::ReturnedConstValue v,
                        const Graph *graph = nullptr) override;
 
+  void updateEdgeValue(edge e, LineType::RealType newValue) override;
+
 protected:
-  void clone_handler(AbstractProperty<tlp::PointType, tlp::LineType> &) override;
+  void clone_handler(AbstractProperty<PointType, LineType> &) override;
+  std::pair<Coord, Coord> computeMinMaxNode(const Graph *sg) override;
 
 private:
   void resetBoundingBox();
@@ -306,15 +307,20 @@ public:
   unsigned int nbBendedEdges;
 };
 
+DECLARE_DLL_TEMPLATE_INSTANCE(
+    SINGLE_ARG(AbstractProperty<CoordVectorType, CoordVectorType, VectorPropertyInterface>),
+    TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(AbstractVectorProperty<CoordVectorType, PointType>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+
 /**
  * @ingroup Graph
- * @brief A graph property that maps a std::vector<tlp::Coord> value to graph elements.
+ * @brief A graph property that maps a std::vector<Coord> value to graph elements.
  */
-class TLP_SCOPE CoordVectorProperty
-    : public AbstractVectorProperty<tlp::CoordVectorType, tlp::PointType> {
+class TLP_SCOPE CoordVectorProperty : public AbstractVectorProperty<CoordVectorType, PointType> {
 public:
   CoordVectorProperty(Graph *g, const std::string &n = "")
-      : AbstractVectorProperty<CoordVectorType, tlp::PointType>(g, n) {}
+      : AbstractVectorProperty<CoordVectorType, PointType>(g, n) {}
   // redefinition of some PropertyInterface methods
   PropertyInterface *clonePrototype(Graph *, const std::string &) const override;
   static const std::string propertyTypename;
@@ -324,8 +330,6 @@ public:
 };
 
 typedef CoordVectorProperty LayoutVectorProperty;
-#ifdef _MSC_VER
-template class AbstractVectorProperty<CoordVectorType, PointType>;
-#endif
 }
+
 #endif // TALIPOT_LAYOUT_PROPERTY_H

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -18,17 +18,20 @@
 
 #include <talipot/PropertyTypes.h>
 #include <talipot/AbstractProperty.h>
+#include <talipot/TlpTools.h>
 
 namespace tlp {
 
 class PropertyContext;
 class GraphAbstract;
 
-typedef AbstractProperty<tlp::GraphType, tlp::EdgeSetType> AbstractGraphProperty;
+typedef AbstractProperty<GraphType, EdgeSetType> AbstractGraphProperty;
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(AbstractProperty<GraphType, EdgeSetType>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
 
 /**
  * @ingroup Graph
- * @brief A graph property that maps a tlp::Graph* value to graph elements.
+ * @brief A graph property that maps a Graph* value to graph elements.
  *
  * @warning This property is mainly used into the meta node engine. Using GraphProperty outside of
  * this system is strongly discouraged since it could lead to unwanted behavior.
@@ -54,13 +57,12 @@ public:
   }
 
   // redefinition of some AbstractProperty methods
-  void setNodeValue(const node n,
-                    tlp::StoredType<GraphType::RealType>::ReturnedConstValue g) override;
-  void setAllNodeValue(tlp::StoredType<GraphType::RealType>::ReturnedConstValue g,
+  void setNodeValue(const node n, StoredType<GraphType::RealType>::ReturnedConstValue g) override;
+  void setAllNodeValue(StoredType<GraphType::RealType>::ReturnedConstValue g,
                        const Graph *graph = nullptr) override;
   bool readNodeDefaultValue(std::istream &iss) override;
   bool readNodeValue(std::istream &iss, node n) override;
-  // tlp::GraphType encapsulates a tlp::Graph pointer but that is the graph id
+  // GraphType encapsulates a Graph pointer but that is the graph id
   // that gets serialized when using the TLPB format
   unsigned int nodeValueSize() const override {
     return sizeof(unsigned int);

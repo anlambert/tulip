@@ -76,3 +76,13 @@ PropertyInterface *BooleanVectorProperty::clonePrototype(Graph *g, const std::st
   p->setAllEdgeValue(getEdgeDefaultValue());
   return p;
 }
+
+INSTANTIATE_DLL_TEMPLATE(SINGLE_ARG(tlp::AbstractProperty<tlp::BooleanType, tlp::BooleanType>),
+                         TLP_TEMPLATE_DEFINE_SCOPE)
+INSTANTIATE_DLL_TEMPLATE(
+    SINGLE_ARG(tlp::AbstractProperty<tlp::BooleanVectorType, tlp::BooleanVectorType,
+                                     tlp::VectorPropertyInterface>),
+    TLP_TEMPLATE_DEFINE_SCOPE)
+INSTANTIATE_DLL_TEMPLATE(
+    SINGLE_ARG(tlp::AbstractVectorProperty<tlp::BooleanVectorType, tlp::BooleanType>),
+    TLP_TEMPLATE_DEFINE_SCOPE)

@@ -18,14 +18,20 @@
 #include <talipot/AbstractProperty.h>
 #include <talipot/MinMaxProperty.h>
 #include <talipot/NumericProperty.h>
+#include <talipot/TlpTools.h>
 
 namespace tlp {
 
 class Graph;
 class PropertyContext;
 
-typedef MinMaxProperty<tlp::IntegerType, tlp::IntegerType, tlp::NumericProperty>
-    IntegerMinMaxProperty;
+typedef MinMaxProperty<IntegerType, IntegerType, NumericProperty> IntegerMinMaxProperty;
+
+DECLARE_DLL_TEMPLATE_INSTANCE(
+    SINGLE_ARG(AbstractProperty<IntegerType, IntegerType, NumericProperty>),
+    TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MinMaxProperty<IntegerType, IntegerType, NumericProperty>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
 
 /**
  * @ingroup Graph
@@ -41,11 +47,11 @@ public:
   const std::string &getTypename() const override {
     return propertyTypename;
   }
-  void setNodeValue(const node n, tlp::StoredType<int>::ReturnedConstValue v) override;
-  void setEdgeValue(const edge e, tlp::StoredType<int>::ReturnedConstValue v) override;
-  void setAllNodeValue(tlp::StoredType<int>::ReturnedConstValue v,
+  void setNodeValue(const node n, StoredType<int>::ReturnedConstValue v) override;
+  void setEdgeValue(const edge e, StoredType<int>::ReturnedConstValue v) override;
+  void setAllNodeValue(StoredType<int>::ReturnedConstValue v,
                        const Graph *graph = nullptr) override;
-  void setAllEdgeValue(tlp::StoredType<int>::ReturnedConstValue v,
+  void setAllEdgeValue(StoredType<int>::ReturnedConstValue v,
                        const Graph *graph = nullptr) override;
 
   int compare(const node n1, const node n2) const override;
@@ -89,23 +95,28 @@ public:
   }
 
 protected:
-  void clone_handler(
-      AbstractProperty<tlp::IntegerType, tlp::IntegerType, tlp::NumericProperty> &) override;
+  void clone_handler(AbstractProperty<IntegerType, IntegerType, NumericProperty> &) override;
 
 private:
   // override Observable::treatEvent
   void treatEvent(const Event &) override;
 };
 
+DECLARE_DLL_TEMPLATE_INSTANCE(
+    SINGLE_ARG(AbstractProperty<IntegerVectorType, IntegerVectorType, VectorPropertyInterface>),
+    TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(AbstractVectorProperty<IntegerVectorType, IntegerType>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+
 /**
  * @ingroup Graph
  * @brief A graph property that maps a std::vector<int> value to graph elements.
  */
 class TLP_SCOPE IntegerVectorProperty
-    : public AbstractVectorProperty<tlp::IntegerVectorType, tlp::IntegerType> {
+    : public AbstractVectorProperty<IntegerVectorType, IntegerType> {
 public:
   IntegerVectorProperty(Graph *g, const std::string &n = "")
-      : AbstractVectorProperty<IntegerVectorType, tlp::IntegerType>(g, n) {}
+      : AbstractVectorProperty<IntegerVectorType, IntegerType>(g, n) {}
   // redefinition of some PropertyInterface methods
   PropertyInterface *clonePrototype(Graph *, const std::string &) const override;
   static const std::string propertyTypename;
@@ -113,8 +124,5 @@ public:
     return propertyTypename;
   }
 };
-#ifdef _MSC_VER
-template class AbstractVectorProperty<IntegerVectorType, IntegerType>;
-#endif
 }
 #endif // TALIPOT_INTEGER_PROPERTY_H

@@ -11,9 +11,10 @@
  *
  */
 
-#include <climits>
 #include <talipot/DoubleProperty.h>
 #include <talipot/GraphTools.h>
+
+#include <climits>
 
 using namespace std;
 using namespace tlp;
@@ -352,3 +353,17 @@ void DoubleProperty::setMetaValueCalculator(PropertyInterface::MetaValueCalculat
 void DoubleProperty::treatEvent(const Event &evt) {
   DoubleMinMaxProperty::treatEvent(evt);
 }
+
+INSTANTIATE_DLL_TEMPLATE(
+    SINGLE_ARG(tlp::AbstractProperty<tlp::DoubleType, tlp::DoubleType, tlp::NumericProperty>),
+    TLP_TEMPLATE_DEFINE_SCOPE)
+INSTANTIATE_DLL_TEMPLATE(
+    SINGLE_ARG(tlp::MinMaxProperty<tlp::DoubleType, tlp::DoubleType, tlp::NumericProperty>),
+    TLP_TEMPLATE_DEFINE_SCOPE)
+INSTANTIATE_DLL_TEMPLATE(
+    SINGLE_ARG(tlp::AbstractProperty<tlp::DoubleVectorType, tlp::DoubleVectorType,
+                                     tlp::VectorPropertyInterface>),
+    TLP_TEMPLATE_DEFINE_SCOPE)
+INSTANTIATE_DLL_TEMPLATE(
+    SINGLE_ARG(tlp::AbstractVectorProperty<tlp::DoubleVectorType, tlp::DoubleType>),
+    TLP_TEMPLATE_DEFINE_SCOPE)

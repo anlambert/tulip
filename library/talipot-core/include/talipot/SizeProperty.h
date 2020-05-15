@@ -18,16 +18,19 @@
 
 #include <talipot/PropertyTypes.h>
 #include <talipot/AbstractProperty.h>
+#include <talipot/TlpTools.h>
 
 namespace tlp {
 
 class PropertyContext;
 
-typedef AbstractProperty<tlp::SizeType, tlp::SizeType> AbstractSizeProperty;
+typedef AbstractProperty<SizeType, SizeType> AbstractSizeProperty;
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(AbstractProperty<SizeType, SizeType>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
 
 /**
  * @ingroup Graph
- * @brief A graph property that maps a tlp::Size value to graph elements.
+ * @brief A graph property that maps a Size value to graph elements.
  */
 class TLP_SCOPE SizeProperty : public AbstractSizeProperty {
 
@@ -36,8 +39,8 @@ public:
 
   Size getMax(const Graph *sg = nullptr);
   Size getMin(const Graph *sg = nullptr);
-  void scale(const tlp::Vec3f &, const Graph *sg = nullptr);
-  void scale(const tlp::Vec3f &, Iterator<node> *, Iterator<edge> *);
+  void scale(const Vec3f &, const Graph *sg = nullptr);
+  void scale(const Vec3f &, Iterator<node> *, Iterator<edge> *);
 
   // redefinition of some PropertyInterface methods
   PropertyInterface *clonePrototype(Graph *, const std::string &) const override;
@@ -47,8 +50,8 @@ public:
   }
 
   // redefinition of some AbstractProperty methods
-  void setNodeValue(const node n, tlp::StoredType<Size>::ReturnedConstValue v) override;
-  void setAllNodeValue(tlp::StoredType<Size>::ReturnedConstValue v,
+  void setNodeValue(const node n, StoredType<Size>::ReturnedConstValue v) override;
+  void setAllNodeValue(StoredType<Size>::ReturnedConstValue v,
                        const Graph *graph = nullptr) override;
 
   int compare(const node n1, const node n2) const override;
@@ -62,12 +65,17 @@ private:
   void computeMinMax(const Graph *sg = nullptr);
 };
 
+DECLARE_DLL_TEMPLATE_INSTANCE(
+    SINGLE_ARG(AbstractProperty<SizeVectorType, SizeVectorType, VectorPropertyInterface>),
+    TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(AbstractVectorProperty<SizeVectorType, SizeType>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+
 /**
  * @ingroup Graph
- * @brief A graph property that maps a std::vector<tlp::Size> value to graph elements.
+ * @brief A graph property that maps a std::vector<Size> value to graph elements.
  */
-class TLP_SCOPE SizeVectorProperty
-    : public AbstractVectorProperty<tlp::SizeVectorType, tlp::SizeType> {
+class TLP_SCOPE SizeVectorProperty : public AbstractVectorProperty<SizeVectorType, SizeType> {
 public:
   SizeVectorProperty(Graph *g, const std::string &n = "")
       : AbstractVectorProperty<SizeVectorType, SizeType>(g, n) {}
@@ -79,8 +87,5 @@ public:
     return propertyTypename;
   }
 };
-#ifdef _MSC_VER
-template class AbstractVectorProperty<SizeVectorType, SizeType>;
-#endif
 }
 #endif // TALIPOT_SIZE_PROPERTY_H

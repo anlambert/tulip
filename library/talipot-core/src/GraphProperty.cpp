@@ -220,3 +220,6 @@ bool GraphProperty::readNodeValue(std::istream &iss, node n) {
   setNodeValue(n, sg);
   return true;
 }
+
+INSTANTIATE_DLL_TEMPLATE(SINGLE_ARG(tlp::AbstractProperty<tlp::GraphType, tlp::EdgeSetType>),
+                         TLP_TEMPLATE_DEFINE_SCOPE)

@@ -60,98 +60,45 @@ inline double tlpsqrt<double, long double>(long double a) {
 template <typename TYPE, size_t SIZE, typename OTYPE = double, typename DTYPE = TYPE>
 class Vector : public Array<TYPE, SIZE> {
 public:
-  VECTOR() {
-    Array<TYPE, SIZE>::fill(0);
-  }
+  VECTOR();
 
-  VECTOR(const Vector<TYPE, SIZE, OTYPE, DTYPE> &v) {
-    set(v);
-  }
+  VECTOR(const Vector<TYPE, SIZE, OTYPE, DTYPE> &v);
 
-  VECTOR(Vector<TYPE, SIZE, OTYPE, DTYPE> &&v) {
-    set(v);
-  }
+  VECTOR(Vector<TYPE, SIZE, OTYPE, DTYPE> &&v);
 
-  VECTOR(const Vector<TYPE, SIZE + 1, OTYPE> &v) {
-    set(v);
-  }
+  VECTOR(const Vector<TYPE, SIZE + 1, OTYPE> &v);
 
-  VECTOR(const TYPE x) {
-    Array<TYPE, SIZE>::fill(x);
-  }
+  VECTOR(const TYPE x);
 
-  VECTOR(const TYPE x, const TYPE y) : VECTOR() {
-    set(x, y);
-  }
+  VECTOR(const TYPE x, const TYPE y);
 
-  VECTOR(const TYPE x, const TYPE y, const TYPE z) : VECTOR() {
-    set(x, y, z);
-  }
+  VECTOR(const TYPE x, const TYPE y, const TYPE z);
 
-  VECTOR(const Vector<TYPE, 2, OTYPE> &v, const TYPE z) : VECTOR() {
-    set(v, z);
-  }
+  VECTOR(const Vector<TYPE, 2, OTYPE> &v, const TYPE z);
 
-  VECTOR(const TYPE x, const TYPE y, const TYPE z, const TYPE w) : VECTOR() {
-    set(x, y, z, w);
-  }
+  VECTOR(const TYPE x, const TYPE y, const TYPE z, const TYPE w);
 
-  VECTOR(const Vector<TYPE, 2, OTYPE> &v, const TYPE z, const TYPE w) : VECTOR() {
-    set(v, z, w);
-  }
+  VECTOR(const Vector<TYPE, 2, OTYPE> &v, const TYPE z, const TYPE w);
 
-  VECTOR(const Vector<TYPE, 3, OTYPE> &v, const TYPE w) : VECTOR() {
-    set(v, w);
-  }
+  VECTOR(const Vector<TYPE, 3, OTYPE> &v, const TYPE w);
 
-  void set(const TYPE x) {
-    (*this)[0] = x;
-  }
+  void set(const TYPE x);
 
-  void set(const TYPE x, const TYPE y) {
-    assert(SIZE > 1);
-    (*this)[0] = x;
-    (*this)[1] = y;
-  }
+  void set(const TYPE x, const TYPE y);
 
-  void set(const TYPE x, const TYPE y, const TYPE z) {
-    assert(SIZE > 2);
-    (*this)[0] = x;
-    (*this)[1] = y;
-    (*this)[2] = z;
-  }
+  void set(const TYPE x, const TYPE y, const TYPE z);
 
-  void set(const TYPE x, const TYPE y, const TYPE z, const TYPE w) {
-    assert(SIZE > 3);
-    (*this)[0] = x;
-    (*this)[1] = y;
-    (*this)[2] = z;
-    (*this)[3] = w;
-  }
+  void set(const TYPE x, const TYPE y, const TYPE z, const TYPE w);
 
-  void set(const Vector<TYPE, 2, OTYPE> &v, const TYPE z) {
-    assert(SIZE > 2);
-    set(v[0], v[1], z);
-  }
+  void set(const Vector<TYPE, 2, OTYPE> &v, const TYPE z);
 
-  void set(const Vector<TYPE, 2, OTYPE> &v, const TYPE z, const TYPE w) {
-    assert(SIZE > 3);
-    set(v[0], v[1], z, w);
-  }
+  void set(const Vector<TYPE, 2, OTYPE> &v, const TYPE z, const TYPE w);
 
-  void set(const Vector<TYPE, 3, OTYPE> &v, const TYPE w) {
-    assert(SIZE > 3);
-    set(v[0], v[1], v[2], w);
-    (*this)[3] = w;
-  }
+  void set(const Vector<TYPE, 3, OTYPE> &v, const TYPE w);
 
-  void set(const Vector<TYPE, SIZE, OTYPE> &v) {
-    std::copy(v.begin(), v.begin() + SIZE, Array<TYPE, SIZE>::begin());
-  }
+  void set(const Vector<TYPE, SIZE, OTYPE> &v);
 
-  void set(const Vector<TYPE, SIZE + 1, OTYPE> &v) {
-    std::copy(v.begin(), v.begin() + SIZE, Array<TYPE, SIZE>::begin());
-  }
+  void set(const Vector<TYPE, SIZE + 1, OTYPE> &v);
 
   VECTOR &operator*=(const TYPE);
 
@@ -181,31 +128,9 @@ public:
 
   TYPE norm() const;
 
-  TYPE length() const {
-    return norm();
-  }
+  TYPE length() const;
 
-  VECTOR &normalize() {
-    OTYPE tmp = 0;
-
-    for (size_t i = 0; i < SIZE; ++i) {
-      tmp += tlpsqr<TYPE, OTYPE>((*this)[i]);
-    }
-
-    if (tmp < sqrt(std::numeric_limits<TYPE>::epsilon())) {
-      return *this;
-    }
-
-    for (size_t i = 0; i < SIZE; ++i) {
-      if ((*this)[i] < 0.) {
-        (*this)[i] = -tlpsqrt<TYPE, OTYPE>(tlpsqr<TYPE, OTYPE>((*this)[i]) / tmp);
-      } else {
-        (*this)[i] = tlpsqrt<TYPE, OTYPE>(tlpsqr<TYPE, OTYPE>((*this)[i]) / tmp);
-      }
-    }
-
-    return *this;
-  }
+  VECTOR &normalize();
 
   DTYPE dist(const VECTOR &) const;
 
@@ -272,88 +197,119 @@ inline void minMaxVectors(const VECTOR &u, const VECTOR &v, VECTOR &min, VECTOR 
 }
 
 TEMPLATEVECTOR
-VECTOR operator*(const VECTOR &, const VECTOR &);
+extern TLP_TEMPLATE_DECLARE_SCOPE VECTOR operator*(const VECTOR &, const VECTOR &);
 TEMPLATEVECTOR
-VECTOR operator*(const TYPE, const VECTOR &);
+extern TLP_TEMPLATE_DECLARE_SCOPE VECTOR operator*(const TYPE, const VECTOR &);
 TEMPLATEVECTOR
-VECTOR operator*(const VECTOR &, const TYPE);
+extern TLP_TEMPLATE_DECLARE_SCOPE VECTOR operator*(const VECTOR &, const TYPE);
 
 TEMPLATEVECTOR
-VECTOR operator+(const VECTOR &, const VECTOR &);
+extern TLP_TEMPLATE_DECLARE_SCOPE VECTOR operator+(const VECTOR &, const VECTOR &);
 TEMPLATEVECTOR
-VECTOR operator+(const VECTOR &, const TYPE);
+extern TLP_TEMPLATE_DECLARE_SCOPE VECTOR operator+(const VECTOR &, const TYPE);
 
 TEMPLATEVECTOR
-VECTOR operator-(const VECTOR &, const VECTOR &);
+extern TLP_TEMPLATE_DECLARE_SCOPE VECTOR operator-(const VECTOR &, const VECTOR &);
 TEMPLATEVECTOR
-VECTOR operator-(const VECTOR &, const TYPE);
+extern TLP_TEMPLATE_DECLARE_SCOPE VECTOR operator-(const VECTOR &, const TYPE);
 
 TEMPLATEVECTOR
-VECTOR operator/(const VECTOR &, const VECTOR &);
+extern TLP_TEMPLATE_DECLARE_SCOPE VECTOR operator/(const VECTOR &, const VECTOR &);
 TEMPLATEVECTOR
-VECTOR operator/(const VECTOR &, const TYPE);
+extern TLP_TEMPLATE_DECLARE_SCOPE VECTOR operator/(const VECTOR &, const TYPE);
 
 TEMPLATEVECTOR
-VECTOR operator^(const VECTOR &, const VECTOR &);
+extern TLP_TEMPLATE_DECLARE_SCOPE VECTOR operator^(const VECTOR &, const VECTOR &);
 TEMPLATEVECTOR
-VECTOR operator-(const VECTOR &);
+extern TLP_TEMPLATE_DECLARE_SCOPE VECTOR operator-(const VECTOR &);
 /**
  * @brief typedef for 2D vector of unsigned int
  */
 typedef Vector<unsigned int, 2> Vec2ui;
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(Vector<unsigned int, 2>), TLP_TEMPLATE_DECLARE_SCOPE)
 /**
  * @brief typedef for 3D vector of unsigned int
  */
 typedef Vector<unsigned int, 3> Vec3ui;
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(Vector<unsigned int, 3>), TLP_TEMPLATE_DECLARE_SCOPE)
 /**
  * @brief typedef for 4D vector of unsigned int
  */
 typedef Vector<unsigned int, 4> Vec4ui;
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(Vector<unsigned int, 4>), TLP_TEMPLATE_DECLARE_SCOPE)
 /**
  * @brief typedef for 2D vector of int
  */
 typedef Vector<int, 2> Vec2i;
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(Vector<int, 2>), TLP_TEMPLATE_DECLARE_SCOPE)
 /**
  * @brief typedef for 3D vector of int
  */
 typedef Vector<int, 3> Vec3i;
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(Vector<int, 3>), TLP_TEMPLATE_DECLARE_SCOPE)
 /**
  * @brief typedef for 4D vector of int
  */
 typedef Vector<int, 4> Vec4i;
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(Vector<int, 4>), TLP_TEMPLATE_DECLARE_SCOPE)
 /**
  * @brief typedef for 2D vector of double
  */
 typedef Vector<double, 2, long double> Vec2d;
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(Vector<double, 2, long double>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(Vector<double, 1, double>), TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(Vector<double, 2, double>), TLP_TEMPLATE_DECLARE_SCOPE)
 /**
  * @brief typedef for 3D vector of double
  */
 typedef Vector<double, 3, long double> Vec3d;
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(Vector<double, 3, long double>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(Vector<double, 3, double>), TLP_TEMPLATE_DECLARE_SCOPE)
 /**
  * @brief typedef for 4D vector of double
  */
 typedef Vector<double, 4, long double> Vec4d;
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(Vector<double, 4, long double>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(Vector<double, 4, double>), TLP_TEMPLATE_DECLARE_SCOPE)
+/**
+ * @brief typedef for 5D vector of double
+ */
+typedef Vector<double, 5, long double> Vec5d;
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(Vector<double, 5, long double>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(Vector<double, 5, double>), TLP_TEMPLATE_DECLARE_SCOPE)
 /**
  * @brief typedef for 2D vector of float
  */
 typedef Vector<float, 2, double> Vec2f;
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(Vector<float, 1, double>), TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(Vector<float, 2, double>), TLP_TEMPLATE_DECLARE_SCOPE)
 /**
  * @brief typedef for 3D vector of float
  */
 typedef Vector<float, 3, double> Vec3f;
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(Vector<float, 3, double>), TLP_TEMPLATE_DECLARE_SCOPE)
 /**
  * @brief typedef for 4D vector of float
  */
 typedef Vector<float, 4, double> Vec4f;
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(Vector<float, 4, double>), TLP_TEMPLATE_DECLARE_SCOPE)
+/**
+ * @brief typedef for 5D vector of float
+ */
+typedef Vector<float, 5, double> Vec5f;
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(Vector<float, 5, double>), TLP_TEMPLATE_DECLARE_SCOPE)
+
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(Vector<unsigned char, 4>), TLP_TEMPLATE_DECLARE_SCOPE)
 }
 
 #ifdef _MSC_VER
 static double sqrt(tlp::Vector<float, 5> &v) {
   return sqrt((double)v[0]);
 }
-
-template class TLP_SCOPE tlp::Vector<unsigned char, 4>;
-
 #endif
 
 namespace std {
@@ -453,7 +409,9 @@ struct hash<tlp::Vec4f> {
 };
 } // namespace std
 
+#ifdef DLL_TALIPOT
 #include "cxx/Vector.cxx"
+#endif
 
 // fix for bug #3598871: allow use of VECTOR keyword in other software
 #undef VECTOR

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -52,11 +52,11 @@ public:
 
 private:
   double computeRelativePosition(tlp::node n,
-                                 tlp::NodeStaticProperty<tlp::Vector<double, 5>> &relativePosition);
-  void calcLayout(tlp::node n, tlp::NodeStaticProperty<tlp::Vector<double, 5>> &relativePosition);
-  void calcLayout2(tlp::node n, tlp::Vector<double, 5> &nrPos,
-                   tlp::NodeStaticProperty<tlp::Vector<double, 5>> &relativePosition,
-                   const tlp::Vec3d &, const tlp::Vec3d &);
+                                 tlp::NodeStaticProperty<tlp::Vec5d> &relativePosition);
+  void calcLayout(tlp::node n, tlp::NodeStaticProperty<tlp::Vec5d> &relativePosition);
+  void calcLayout2(tlp::node n, tlp::Vec5d &nrPos,
+                   tlp::NodeStaticProperty<tlp::Vec5d> &relativePosition, const tlp::Vec3d &,
+                   const tlp::Vec3d &);
   tlp::Graph *tree;
   tlp::SizeProperty *nodeSize;
   bool nAlgo;

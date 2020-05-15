@@ -94,7 +94,7 @@ INSTALL(
         talipot/cxx/DataSet.cxx
         talipot/cxx/Graph.cxx
         talipot/cxx/Matrix.cxx
-        talipot/cxx/minmaxproperty.cxx
+        talipot/cxx/MinMaxProperty.cxx
         talipot/cxx/MutableContainer.cxx
         talipot/cxx/Vector.cxx
   DESTINATION ${TalipotIncludeInstallDir}/talipot/cxx/)

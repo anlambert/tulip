@@ -97,3 +97,13 @@ int compareHSVValues(const Color &c1, const Color &c2) {
     return c1.getH() < c2.getH() ? -1 : 1;
   }
 }
+
+INSTANTIATE_DLL_TEMPLATE(SINGLE_ARG(tlp::AbstractProperty<tlp::ColorType, tlp::ColorType>),
+                         TLP_TEMPLATE_DEFINE_SCOPE)
+INSTANTIATE_DLL_TEMPLATE(
+    SINGLE_ARG(tlp::AbstractProperty<tlp::ColorVectorType, tlp::ColorVectorType,
+                                     tlp::VectorPropertyInterface>),
+    TLP_TEMPLATE_DEFINE_SCOPE)
+INSTANTIATE_DLL_TEMPLATE(
+    SINGLE_ARG(tlp::AbstractVectorProperty<tlp::ColorVectorType, tlp::ColorType>),
+    TLP_TEMPLATE_DEFINE_SCOPE)

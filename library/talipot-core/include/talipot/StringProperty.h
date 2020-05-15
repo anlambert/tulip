@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -16,12 +16,15 @@
 
 #include <talipot/PropertyTypes.h>
 #include <talipot/AbstractProperty.h>
+#include <talipot/TlpTools.h>
 
 namespace tlp {
 
 class PropertyContext;
 
-typedef AbstractProperty<tlp::StringType, tlp::StringType> AbstractStringProperty;
+typedef AbstractProperty<StringType, StringType> AbstractStringProperty;
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(AbstractProperty<StringType, StringType>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
 
 /**
  * @ingroup Graph
@@ -48,15 +51,20 @@ public:
   int compare(const edge e1, const edge e2) const override;
 };
 
+DECLARE_DLL_TEMPLATE_INSTANCE(
+    SINGLE_ARG(AbstractProperty<StringVectorType, StringVectorType, VectorPropertyInterface>),
+    TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(AbstractVectorProperty<StringVectorType, StringType>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+
 /**
  * @ingroup Graph
  * @brief A graph property that maps a std::vector<std::string> value to graph elements.
  */
-class TLP_SCOPE StringVectorProperty
-    : public AbstractVectorProperty<tlp::StringVectorType, tlp::StringType> {
+class TLP_SCOPE StringVectorProperty : public AbstractVectorProperty<StringVectorType, StringType> {
 public:
   StringVectorProperty(Graph *g, const std::string &n = "")
-      : AbstractVectorProperty<StringVectorType, tlp::StringType>(g, n) {}
+      : AbstractVectorProperty<StringVectorType, StringType>(g, n) {}
 
   // redefinition of some PropertyInterface methods
   PropertyInterface *clonePrototype(Graph *, const std::string &) const override;
@@ -72,8 +80,5 @@ public:
     return 0;
   }
 };
-#ifdef _MSC_VER
-template class AbstractVectorProperty<StringVectorType, StringType>;
-#endif
 }
 #endif // TALIPOT_STRING_PROPERTY_H

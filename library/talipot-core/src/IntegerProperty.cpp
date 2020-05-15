@@ -113,3 +113,17 @@ void IntegerProperty::edgesUniformQuantification(unsigned int k) {
     setEdgeValue(ite, edgeMapping[getEdgeValue(ite)]);
   }
 }
+
+INSTANTIATE_DLL_TEMPLATE(
+    SINGLE_ARG(tlp::AbstractProperty<tlp::IntegerType, tlp::IntegerType, tlp::NumericProperty>),
+    TLP_TEMPLATE_DEFINE_SCOPE)
+INSTANTIATE_DLL_TEMPLATE(
+    SINGLE_ARG(tlp::MinMaxProperty<tlp::IntegerType, tlp::IntegerType, tlp::NumericProperty>),
+    TLP_TEMPLATE_DEFINE_SCOPE)
+INSTANTIATE_DLL_TEMPLATE(
+    SINGLE_ARG(tlp::AbstractProperty<tlp::IntegerVectorType, tlp::IntegerVectorType,
+                                     tlp::VectorPropertyInterface>),
+    TLP_TEMPLATE_DEFINE_SCOPE)
+INSTANTIATE_DLL_TEMPLATE(
+    SINGLE_ARG(tlp::AbstractVectorProperty<tlp::IntegerVectorType, tlp::IntegerType>),
+    TLP_TEMPLATE_DEFINE_SCOPE)

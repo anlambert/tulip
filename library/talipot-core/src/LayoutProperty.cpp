@@ -21,141 +21,6 @@
 using namespace std;
 using namespace tlp;
 
-//=================================================================================
-namespace tlp {
-void maxV(tlp::Coord &res, const tlp::Coord &cmp) {
-  for (unsigned int i = 0; i < 3; ++i) {
-    res[i] = std::max(res[i], cmp[i]);
-  }
-}
-void minV(tlp::Coord &res, const tlp::Coord &cmp) {
-  for (unsigned int i = 0; i < 3; ++i) {
-    res[i] = std::min(res[i], cmp[i]);
-  }
-}
-
-/**
- * @brief This template specialization provides specific computation for min and max values of
- *Layout properties (they are specific in that they use the control points of the edges)
- **/
-template <>
-std::pair<tlp::Coord, tlp::Coord>
-tlp::MinMaxProperty<tlp::PointType, tlp::LineType>::computeMinMaxNode(const Graph *sg) {
-
-  tlp::Coord maxT = {-FLT_MAX, -FLT_MAX, -FLT_MAX};
-  tlp::Coord minT = {FLT_MAX, FLT_MAX, FLT_MAX};
-
-  for (auto itn : sg->nodes()) {
-    const Coord &tmpCoord = this->getNodeValue(itn);
-    maxV(maxT, tmpCoord);
-    minV(minT, tmpCoord);
-  }
-
-  if (static_cast<LayoutProperty *>(this)->nbBendedEdges > 0) {
-    for (auto ite : sg->edges()) {
-      const LineType::RealType &value = this->getEdgeValue(ite);
-
-      for (const auto &coord : value) {
-        maxV(maxT, coord);
-        minV(minT, coord);
-      }
-    }
-  }
-
-  unsigned int sgi = sg->getId();
-
-  // graph observation is now delayed
-  // until we need to do some minmax computation
-  if (minMaxNode.find(sgi) == minMaxNode.end()) {
-    // launch graph hierarchy observation
-    graph->addListener(this);
-  }
-
-  std::pair<tlp::Coord, tlp::Coord> minmax(minT, maxT);
-  return minMaxNode[sgi] = minmax;
-}
-
-/**
- * @brief This template specialization provides specific computation for min and max values of
- *Layout properties (they are specific in that they use the control points of the edges)
- **/
-template <>
-void tlp::MinMaxProperty<tlp::PointType, tlp::LineType>::updateEdgeValue(
-    tlp::edge e, tlp::LineType::RealType newValue) {
-
-  const std::vector<Coord> &oldV = this->getEdgeValue(e);
-
-  if (newValue == oldV) {
-    return;
-  }
-
-  static_cast<LayoutProperty *>(this)->nbBendedEdges +=
-      (newValue.empty() ? 0 : 1) - (oldV.empty() ? 0 : 1);
-
-  if (!minMaxNode.empty()) {
-    // loop on subgraph min/max
-    for (const auto &it : minMaxNode) {
-      const Coord &minV = it.second.first;
-      const Coord &maxV = it.second.second;
-      bool reset = false;
-
-      // check if min has to be updated
-      for (unsigned i = 0; i < newValue.size(); ++i) {
-        if (minV > newValue[i]) {
-          reset = true;
-          break;
-        }
-      }
-
-      if (!reset) {
-        // check if max has to be updated
-        for (unsigned i = 0; i < newValue.size(); ++i) {
-          if (maxV < newValue[i]) {
-            reset = true;
-            break;
-          }
-        }
-      }
-
-      if (!reset) {
-        // check if minV belongs to oldV
-        for (unsigned i = 0; i < oldV.size(); ++i) {
-          if (minV == oldV[i]) {
-            reset = false;
-            break;
-          }
-        }
-      }
-
-      if (!reset) {
-        // check if maxV belongs to oldV
-        for (unsigned i = 0; i < oldV.size(); ++i) {
-          if (maxV == oldV[i]) {
-            reset = false;
-            break;
-          }
-        }
-      }
-
-      // reset bounding box if needed
-      if (reset) {
-        needGraphListener = static_cast<LayoutProperty *>(this)->nbBendedEdges > 0;
-        removeListenersAndClearNodeMap();
-        return;
-      }
-    }
-  }
-
-  // we need to observe the graph as soon as there is an edge
-  // with bends
-  if (!needGraphListener &&
-      (needGraphListener = (static_cast<LayoutProperty *>(this)->nbBendedEdges > 0)) &&
-      (minMaxNode.find(graph->getId()) == minMaxNode.end())) {
-    graph->addListener(this);
-  }
-}
-}
-
 inline double sqr(double x) {
   return (x * x);
 }
@@ -871,3 +736,144 @@ PropertyInterface *CoordVectorProperty::clonePrototype(Graph *g, const std::stri
   p->setAllEdgeValue(getEdgeDefaultValue());
   return p;
 }
+
+static inline void maxV(tlp::Coord &res, const tlp::Coord &cmp) {
+  for (unsigned int i = 0; i < 3; ++i) {
+    res[i] = std::max(res[i], cmp[i]);
+  }
+}
+
+static inline void minV(tlp::Coord &res, const tlp::Coord &cmp) {
+  for (unsigned int i = 0; i < 3; ++i) {
+    res[i] = std::min(res[i], cmp[i]);
+  }
+}
+
+/**
+ * @brief Provides specific computation for min and max values of
+ *Layout properties (they are specific in that they use the control points of the edges)
+ **/
+std::pair<tlp::Coord, tlp::Coord> LayoutProperty::computeMinMaxNode(const Graph *sg) {
+
+  tlp::Coord maxT = {-FLT_MAX, -FLT_MAX, -FLT_MAX};
+  tlp::Coord minT = {FLT_MAX, FLT_MAX, FLT_MAX};
+
+  for (auto itn : sg->nodes()) {
+    const Coord &tmpCoord = this->getNodeValue(itn);
+    maxV(maxT, tmpCoord);
+    minV(minT, tmpCoord);
+  }
+
+  if (static_cast<LayoutProperty *>(this)->nbBendedEdges > 0) {
+    for (auto ite : sg->edges()) {
+      const LineType::RealType &value = this->getEdgeValue(ite);
+
+      for (const auto &coord : value) {
+        maxV(maxT, coord);
+        minV(minT, coord);
+      }
+    }
+  }
+
+  unsigned int sgi = sg->getId();
+
+  // graph observation is now delayed
+  // until we need to do some minmax computation
+  if (minMaxNode.find(sgi) == minMaxNode.end()) {
+    // launch graph hierarchy observation
+    graph->addListener(this);
+  }
+
+  std::pair<tlp::Coord, tlp::Coord> minmax(minT, maxT);
+  return minMaxNode[sgi] = minmax;
+}
+
+/**
+ * @brief Provides specific computation for min and max values of
+ *Layout properties (they are specific in that they use the control points of the edges)
+ **/
+void LayoutProperty::updateEdgeValue(tlp::edge e, tlp::LineType::RealType newValue) {
+
+  const std::vector<Coord> &oldV = this->getEdgeValue(e);
+
+  if (newValue == oldV) {
+    return;
+  }
+
+  static_cast<LayoutProperty *>(this)->nbBendedEdges +=
+      (newValue.empty() ? 0 : 1) - (oldV.empty() ? 0 : 1);
+
+  if (!minMaxNode.empty()) {
+    // loop on subgraph min/max
+    for (const auto &it : minMaxNode) {
+      const Coord &minV = it.second.first;
+      const Coord &maxV = it.second.second;
+      bool reset = false;
+
+      // check if min has to be updated
+      for (unsigned i = 0; i < newValue.size(); ++i) {
+        if (minV > newValue[i]) {
+          reset = true;
+          break;
+        }
+      }
+
+      if (!reset) {
+        // check if max has to be updated
+        for (unsigned i = 0; i < newValue.size(); ++i) {
+          if (maxV < newValue[i]) {
+            reset = true;
+            break;
+          }
+        }
+      }
+
+      if (!reset) {
+        // check if minV belongs to oldV
+        for (unsigned i = 0; i < oldV.size(); ++i) {
+          if (minV == oldV[i]) {
+            reset = false;
+            break;
+          }
+        }
+      }
+
+      if (!reset) {
+        // check if maxV belongs to oldV
+        for (unsigned i = 0; i < oldV.size(); ++i) {
+          if (maxV == oldV[i]) {
+            reset = false;
+            break;
+          }
+        }
+      }
+
+      // reset bounding box if needed
+      if (reset) {
+        needGraphListener = static_cast<LayoutProperty *>(this)->nbBendedEdges > 0;
+        removeListenersAndClearNodeMap();
+        return;
+      }
+    }
+  }
+
+  // we need to observe the graph as soon as there is an edge
+  // with bends
+  if (!needGraphListener &&
+      (needGraphListener = (static_cast<LayoutProperty *>(this)->nbBendedEdges > 0)) &&
+      (minMaxNode.find(graph->getId()) == minMaxNode.end())) {
+    graph->addListener(this);
+  }
+}
+
+INSTANTIATE_DLL_TEMPLATE(SINGLE_ARG(tlp::AbstractProperty<tlp::PointType, tlp::LineType>),
+                         TLP_TEMPLATE_DEFINE_SCOPE)
+INSTANTIATE_DLL_TEMPLATE(SINGLE_ARG(tlp::MinMaxProperty<tlp::PointType, tlp::LineType>),
+                         TLP_TEMPLATE_DEFINE_SCOPE)
+INSTANTIATE_DLL_TEMPLATE(
+    SINGLE_ARG(tlp::AbstractProperty<tlp::CoordVectorType, tlp::CoordVectorType,
+                                     tlp::VectorPropertyInterface>),
+    TLP_TEMPLATE_DEFINE_SCOPE)
+INSTANTIATE_DLL_TEMPLATE(
+    SINGLE_ARG(tlp::AbstractVectorProperty<tlp::CoordVectorType, tlp::PointType>),
+    TLP_TEMPLATE_DEFINE_SCOPE)

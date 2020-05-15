@@ -19,6 +19,7 @@
 #include <talipot/GraphIterators.h>
 #include <talipot/GraphView.h>
 #include <talipot/PropertyManager.h>
+#include <talipot/ConversionIterator.h>
 
 using namespace std;
 namespace tlp {
