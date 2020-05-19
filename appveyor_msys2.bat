@@ -18,8 +18,10 @@ echo TALIPOT_BUILD_CORE_ONLY=%TALIPOT_BUILD_CORE_ONLY%
 rem Set the paths appropriately
 PATH C:\msys64\%MSYSTEM%\bin;C:\msys64\usr\bin;%PATH%
 
-rem Upgrade the MSYS2 platform
-bash -lc "pacman --noconfirm --sync --refresh --sysupgrade"
+rem Workaround https://github.com/msys2/MSYS2-packages/issues/1967
+bash -lc "pacman --noconfirm -U http://repo.msys2.org/msys/x86_64/pacman-5.2.1-6-x86_64.pkg.tar.xz"
+rem Upgrade MSYS2 platform
+bash -lc "pacman --noconfirm -Syu"
 
 rem Install required tools
 bash -lc "pacman --noconfirm -S --needed base-devel unzip"
