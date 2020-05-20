@@ -50,18 +50,7 @@ bash -lc "pacman --noconfirm -S --needed mingw-w64-%MSYS2_ARCH%-glew"
 bash -lc "pacman --noconfirm -S --needed mingw-w64-%MSYS2_ARCH%-qt5"
 bash -lc "pacman --noconfirm -S --needed mingw-w64-%MSYS2_ARCH%-quazip"
 bash -lc "pacman --noconfirm -S --needed mingw-w64-%MSYS2_ARCH%-qtwebkit"
-rem Workaround a MSYS2 packaging issue for Qt5
-rem (see https://github.com/msys2/MINGW-packages/issues/5253)
-rem Qt 5.12.3
-bash -lc "sed -i -e 's/C:\/building\/msys32/C:\/msys64/g' C:/msys64/mingw64/lib/cmake/Qt5Gui/Qt5GuiConfigExtras.cmake || true"
-rem Qt 5.12.4
-bash -lc "sed -i -e 's/C:\/building\/msys64/C:\/msys64/g' C:/msys64/mingw64/lib/cmake/Qt5Gui/Qt5GuiConfigExtras.cmake || true"
-rem Workaround for QtWebkit detection when current MSYS2 package has not yet been rebuilt
-rem against latest Qt 5 version and Qt version detection is too strict in QtWebKit CMake modules
-bash -lc "sed -i -e 's/5\.12\.3/5\.12\.4/g' C:/msys64/mingw64/lib/cmake/Qt5WebKit/Qt5WebKitConfig.cmake || true"
-bash -lc "sed -i -e 's/5\.12\.3/5\.12\.4/g' C:/msys64/mingw64/lib/cmake/Qt5WebKitWidgets/Qt5WebKitWidgetsConfig.cmake || true"
-bash -lc "sed -i -e 's/5\.12\.4/5\.13\.1/g' C:/msys64/mingw64/lib/cmake/Qt5WebKit/Qt5WebKitConfig.cmake || true"
-bash -lc "sed -i -e 's/5\.12\.4/5\.13\.1/g' C:/msys64/mingw64/lib/cmake/Qt5WebKitWidgets/Qt5WebKitWidgetsConfig.cmake || true"
+
 set TALIPOT_BUILD_DOC=ON
 goto talipot_build
 
