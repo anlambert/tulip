@@ -23,6 +23,8 @@
 #include <QFont>
 #include <QVariantMap>
 #include <QMap>
+#include <QScreen>
+#include <QGuiApplication>
 
 using namespace tlp;
 
@@ -150,7 +152,9 @@ void FontIconEngine::paint(QPainter *painter, const QRect &rect, QIcon::Mode mod
 }
 
 QPixmap FontIconEngine::pixmap(const QSize &size, QIcon::Mode mode, QIcon::State state) {
+  auto scale = QGuiApplication::primaryScreen()->devicePixelRatio();
   QPixmap pm(size);
+  pm.setDevicePixelRatio(1.0 / scale);
   pm.fill(Qt::transparent); // we need transparency
   QPainter painter(&pm);
   paint(&painter, QRect(QPoint(0, 0), size), mode, state);

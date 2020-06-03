@@ -113,6 +113,8 @@ int main(int argc, char **argv) {
 
   CrashHandling::installCrashHandler();
 
+  QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
+  QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
   QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts, true);
 
   QApplication talipot(argc, argv);
