@@ -496,8 +496,8 @@ GeographicViewGraphicsView::GeographicViewGraphicsView(GeographicView *geoView,
   comboBoxProxy->setPos(20, 20);
   comboBoxProxy->setZValue(1);
 
-  connect(viewTypeComboBox, QOverload<const QString &>::of(&QComboBox::currentIndexChanged),
-          _geoView, &GeographicView::viewTypeChanged);
+  connect(viewTypeComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), _geoView,
+          QOverload<int>::of(&GeographicView::viewTypeChanged));
 
   // 2 push buttons
   // zoom +

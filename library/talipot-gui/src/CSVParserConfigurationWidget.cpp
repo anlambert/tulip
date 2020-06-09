@@ -133,8 +133,7 @@ void CSVParserConfigurationWidget::changeFileNameButtonPressed() {
   QString fileName = QFileDialog::getOpenFileName(
       this, tr("Choose a CSV file"),
       lastOpenedFile.isEmpty() ? QString() : QFileInfo(lastOpenedFile).absoluteDir().absolutePath(),
-      tr("CSV files (*.csv);;Text files (*.txt);;All files (*)"), nullptr,
-      static_cast<QFileDialog::Options>(0));
+      tr("CSV files (*.csv);;Text files (*.txt);;All files (*)"));
   setFileToOpen(fileName);
 }
 

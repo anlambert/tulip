@@ -235,7 +235,11 @@ void SnapshotDialog::sizeSpinBoxValueChanged() {
   // resize snapshotLabel
   QSize sSize = ui->snapshotWidget->size();
   sSize -= QSize(2, 2);
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+  QSize psize = ui->snapshotLabel->pixmap(Qt::ReturnByValue).size();
+#else
   QSize psize = ui->snapshotLabel->pixmap()->size();
+#endif
   psize.scale(sSize, Qt::KeepAspectRatio);
   ui->snapshotLabel->resize(psize);
   sSize -= psize;

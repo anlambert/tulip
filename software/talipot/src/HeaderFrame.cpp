@@ -26,8 +26,8 @@ HeaderFrame::HeaderFrame(QWidget *parent)
     : QWidget(parent), _ui(new Ui::HeaderFrameData), _expanded(true) {
   _ui->setupUi(this);
   switchToLabel(_ui);
-  connect(_ui->menusCombo, QOverload<const QString &>::of(&QComboBox::currentIndexChanged), this,
-          &HeaderFrame::menuChanged);
+  connect(_ui->menusCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), this,
+          QOverload<int>::of(&HeaderFrame::menuChanged));
   connect(_ui->expandButton, &QAbstractButton::toggled, this, &HeaderFrame::setExpanded);
 }
 
@@ -136,4 +136,8 @@ QWidget *HeaderFrame::mainFrame() const {
 
 void HeaderFrame::insertWidget(QWidget *w) {
   _ui->horizontalLayout->insertWidget(_ui->horizontalLayout->indexOf(_ui->expandButton), w);
+}
+
+void HeaderFrame::menuChanged(int idx) {
+  emit menuChanged(_ui->menusCombo->itemText(idx));
 }

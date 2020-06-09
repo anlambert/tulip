@@ -87,15 +87,18 @@ bool MouseMagnifyingGlassInteractorComponent::eventFilter(QObject *, QEvent *e) 
     updateMagnifyingGlass = true;
   } else if (e->type() == QEvent::Wheel) {
     QWheelEvent *wheelEvent = static_cast<QWheelEvent *>(e);
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+    float x = glWidget->width() - wheelEvent->position().x();
+    float y = wheelEvent->position().y();
+#else
     float x = glWidget->width() - wheelEvent->x();
     float y = wheelEvent->y();
+#endif
     screenCoords = Coord(x, y, 0);
     boxCenter = camera->viewportTo3DWorld(glWidget->screenToViewport(screenCoords));
-    int numDegrees = wheelEvent->delta() / 8;
-    int numSteps = numDegrees / 15;
+    int numSteps = wheelEvent->angleDelta().y() / 120;
 
-    if (wheelEvent->orientation() == Qt::Vertical &&
-        (wheelEvent->modifiers() == Qt::ControlModifier)) {
+    if (numSteps && (wheelEvent->modifiers() == Qt::ControlModifier)) {
       updateMagnifyingGlass = true;
       radius += numSteps;
 
@@ -107,8 +110,7 @@ bool MouseMagnifyingGlassInteractorComponent::eventFilter(QObject *, QEvent *e) 
       delete fbo2;
       fbo = nullptr;
       fbo2 = nullptr;
-    } else if (wheelEvent->orientation() == Qt::Vertical &&
-               (wheelEvent->modifiers() == Qt::ShiftModifier)) {
+    } else if (numSteps && (wheelEvent->modifiers() == Qt::ShiftModifier)) {
       updateMagnifyingGlass = true;
       magnifyPower += numSteps;
 

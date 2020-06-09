@@ -157,7 +157,7 @@ public slots:
 
   void centerView();
 
-  void viewTypeChanged(const QString &viewTypeName);
+  void viewTypeChanged(int);
 
   void zoomIn();
   void zoomOut();
@@ -173,6 +173,8 @@ protected slots:
   void initMap();
 
 private:
+  void viewTypeChanged(const QString &viewTypeName);
+
   void updatePoly(bool force = false);
 
   void loadStoredPolyInformation(const DataSet &dataset);

@@ -63,6 +63,8 @@ public:
   unsigned int getPropertyNumber() const;
 
 private:
+  void typeCBChanged(const QString &index);
+
   PropertyNameValidator *propertyNameValidator;
   QPushButton *propertyEditButton;
   Ui_CSVPropertyDialog *ui;
@@ -71,7 +73,8 @@ private:
 
 private slots:
   void showPropertyCreationDialog();
-  void typeCBChanged(const QString &index);
+  void typeCBChanged(int);
+
   void addException();
   void delCurrentException();
 

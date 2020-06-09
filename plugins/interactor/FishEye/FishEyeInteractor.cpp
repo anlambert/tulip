@@ -152,17 +152,15 @@ bool FishEyeInteractorComponent::eventFilter(QObject *obj, QEvent *e) {
   } else if (e->type() == QEvent::Wheel) {
     activateFishEye = true;
     QWheelEvent *wheelEvent = static_cast<QWheelEvent *>(e);
-    int numSteps = wheelEvent->delta() / 120;
+    int numSteps = wheelEvent->angleDelta().y() / 120;
 
-    if (wheelEvent->orientation() == Qt::Vertical &&
-        (wheelEvent->modifiers() == Qt::ControlModifier)) {
+    if (numSteps && (wheelEvent->modifiers() == Qt::ControlModifier)) {
       activateFishEye = true;
       configWidget->setFishEyeRadius(configWidget->getFishEyeRadius() +
                                      configWidget->getFishEyeRadiusIncrementStep() * numSteps);
       glWidget->redraw();
       return true;
-    } else if (wheelEvent->orientation() == Qt::Vertical &&
-               (wheelEvent->modifiers() == Qt::ShiftModifier)) {
+    } else if (numSteps && (wheelEvent->modifiers() == Qt::ShiftModifier)) {
       activateFishEye = true;
       float newHeight = configWidget->getFishEyeHeight() +
                         configWidget->getFishEyeHeightIncrementStep() * numSteps;

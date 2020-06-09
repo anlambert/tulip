@@ -21,12 +21,21 @@ PathFinderConfigurationWidget::PathFinderConfigurationWidget(QWidget *parent)
     : QWidget(parent), _ui(new Ui::PathFinderConfigurationData) {
   _ui->setupUi(this);
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+  connect(_ui->weightCombo, &QComboBox::textActivated, this,
+          &PathFinderConfigurationWidget::setWeightMetric);
+  connect(_ui->edgeOrientationCombo, &QComboBox::textActivated, this,
+          &PathFinderConfigurationWidget::setEdgeOrientation);
+  connect(_ui->pathsTypeCombo, &QComboBox::textActivated, this,
+          &PathFinderConfigurationWidget::setPathsType);
+#else
   connect(_ui->weightCombo, QOverload<const QString &>::of(&QComboBox::activated), this,
           &PathFinderConfigurationWidget::setWeightMetric);
   connect(_ui->edgeOrientationCombo, QOverload<const QString &>::of(&QComboBox::activated), this,
           &PathFinderConfigurationWidget::setEdgeOrientation);
   connect(_ui->pathsTypeCombo, QOverload<const QString &>::of(&QComboBox::activated), this,
           &PathFinderConfigurationWidget::setPathsType);
+#endif
   connect(_ui->toleranceCheck, &QAbstractButton::clicked, this,
           &PathFinderConfigurationWidget::activateTolerance);
   connect(_ui->toleranceSpin, QOverload<int>::of(&QSpinBox::valueChanged), this,

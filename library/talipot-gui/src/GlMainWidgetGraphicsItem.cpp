@@ -142,8 +142,16 @@ void GlMainWidgetGraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event
 }
 
 void GlMainWidgetGraphicsItem::wheelEvent(QGraphicsSceneWheelEvent *event) {
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+  QPoint angleDelta =
+      event->orientation() == Qt::Vertical ? QPoint(0, event->delta()) : QPoint(event->delta(), 0);
+  QWheelEvent eventModif(event->pos(), event->screenPos(), QPoint(), angleDelta, event->buttons(),
+                         event->modifiers(), Qt::NoScrollPhase, false);
+#else
   QWheelEvent eventModif(QPoint(event->pos().x(), event->pos().y()), event->delta(),
                          event->buttons(), event->modifiers(), event->orientation());
+#endif
+
   QApplication::sendEvent(glMainWidget, &eventModif);
   event->setAccepted(eventModif.isAccepted());
 }

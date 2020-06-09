@@ -86,6 +86,10 @@ void PropertyConfigurationWidget::toggleUsed() {
   emit stateChange(_used);
 }
 
+void PropertyConfigurationWidget::typeCBChanged(int idx) {
+  typeCBChanged(ui->typeCB->itemText(idx));
+}
+
 void PropertyConfigurationWidget::typeCBChanged(const QString &type) {
   bool enabled = type.contains(QString("Vector"));
   ui->separatorCB->setEnabled(enabled);
@@ -164,8 +168,8 @@ void PropertyConfigurationWidget::showPropertyCreationDialog() {
   ui->nameCB->addItem(tlpStringToQString(_name));
   ui->nameCB->setCurrentIndex(0);
   typeCBChanged(ui->typeCB->currentText());
-  connect(ui->typeCB, QOverload<const QString &>::of(&QComboBox::currentIndexChanged), this,
-          &PropertyConfigurationWidget::typeCBChanged);
+  connect(ui->typeCB, QOverload<int>::of(&QComboBox::currentIndexChanged), this,
+          QOverload<int>::of(&PropertyConfigurationWidget::typeCBChanged));
 
   if (_valueSeparator) {
     index = ui->separatorCB->findText(QString(QChar(_valueSeparator)));

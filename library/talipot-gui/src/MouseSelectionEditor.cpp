@@ -369,7 +369,7 @@ bool MouseSelectionEditor::eventFilter(QObject *widget, QEvent *e) {
     case ALIGN_VERTICALLY:
     case ALIGN_HORIZONTALLY:
     default:
-      qWarning() << "[Error] : " << __FUNCTION__ << " should not have been called" << endl;
+      qWarning() << "[Error] : " << __FUNCTION__ << " should not have been called\n";
       break;
     }
   }
@@ -463,7 +463,6 @@ void MouseSelectionEditor::undoEdition() {
 }
 //========================================================================================
 void MouseSelectionEditor::stopEdition() {
-  // qWarning() << __PRETTY_FUNCTION__ << endl;
   if (layer) {
     glMainWidget->getScene()->removeLayer(layer, true);
     layer = nullptr;
@@ -482,7 +481,6 @@ void MouseSelectionEditor::initProxies(GlMainWidget *glMainWidget) {
 }
 //========================================================================================
 void MouseSelectionEditor::mMouseTranslate(double newX, double newY, GlMainWidget *glMainWidget) {
-  //  qWarning() << __PRETTY_FUNCTION__ << endl;
   Observable::holdObservers();
   initProxies(glMainWidget);
   Coord v0;
@@ -851,13 +849,6 @@ bool MouseSelectionEditor::computeFFD(GlMainWidget *glMainWidget) {
   ffdCenter = boundingBox.center();
 
   Coord tmpCenter = glMainWidget->getScene()->getGraphCamera().worldTo2DViewport(ffdCenter);
-
-  //  qWarning() << tmpCenter << endl;
-
-  // tmpCenter[0] = (double)glMainWidget->width() - tmpCenter[0];
-  // tmpCenter[1] = (double)glMainWidget->height() - tmpCenter[1];
-
-  //  tmpCenter[1] = tmpCenter[1];
 
   int x = int(max2D[0] - min2D[0]) / 2 + 1; // (+1) because selection use glLineWidth=3 thus
   int y = int(max2D[1] - min2D[1]) / 2 + 1; // the rectangle can be too small.

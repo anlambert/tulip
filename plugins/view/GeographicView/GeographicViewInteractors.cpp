@@ -161,9 +161,10 @@ bool GeographicViewNavigator::eventFilter(QObject *widget, QEvent *e) {
       geoView->viewType() == GeographicView::LeafletCustomTileLayer) {
     return false;
   } else if (geoView->viewType() == GeographicView::Globe) {
-    if (e->type() == QEvent::Wheel && qWheelEv->orientation() == Qt::Vertical) {
-#define WHEEL_DELTA 120
-      g->getScene()->zoomXY(qWheelEv->delta() / WHEEL_DELTA, g->width() / 2., g->height() / 2.);
+
+    if (e->type() == QEvent::Wheel) {
+      int numSteps = qWheelEv->angleDelta().y() / 120;
+      g->getScene()->zoomXY(numSteps, g->width() / 2., g->height() / 2.);
       view()->draw();
       return true;
     }

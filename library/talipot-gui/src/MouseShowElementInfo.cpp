@@ -94,7 +94,11 @@ bool MouseShowElementInfo::eventFilter(QObject *widget, QEvent *e) {
     QRect widgetRect = _informationWidget->geometry();
     QPoint cursorPos;
     if (e->type() == QEvent::Wheel) {
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+      cursorPos = static_cast<QWheelEvent *>(e)->position().toPoint();
+#else
       cursorPos = static_cast<QWheelEvent *>(e)->pos();
+#endif
     } else {
       cursorPos = static_cast<QMouseEvent *>(e)->pos();
     }

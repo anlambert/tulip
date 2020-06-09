@@ -88,6 +88,10 @@ void GeographicView::setupUi() {
   _viewActionsManager = new ViewActionsManager(this, geoViewGraphicsView->getGlMainWidget(), true);
 }
 
+void GeographicView::viewTypeChanged(int idx) {
+  viewTypeChanged(geoViewGraphicsView->getViewTypeComboBox()->itemText(idx));
+}
+
 void GeographicView::viewTypeChanged(const QString &viewTypeName) {
   QComboBox *comboBox = geoViewGraphicsView->getViewTypeComboBox();
 
@@ -95,8 +99,8 @@ void GeographicView::viewTypeChanged(const QString &viewTypeName) {
     return;
   }
 
-  disconnect(comboBox, QOverload<const QString &>::of(&QComboBox::currentIndexChanged), this,
-             &GeographicView::viewTypeChanged);
+  disconnect(comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this,
+             QOverload<int>::of(&GeographicView::viewTypeChanged));
 
   _viewType = getViewTypeFromName(viewTypeName);
 
@@ -106,8 +110,8 @@ void GeographicView::viewTypeChanged(const QString &viewTypeName) {
   comboBox->insertItem(0, viewTypeName);
   comboBox->setCurrentIndex(0);
 
-  connect(comboBox, QOverload<const QString &>::of(&QComboBox::currentIndexChanged), this,
-          &GeographicView::viewTypeChanged);
+  connect(comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this,
+          QOverload<int>::of(&GeographicView::viewTypeChanged));
 }
 
 void GeographicView::fillContextMenu(QMenu *menu, const QPointF &pf) {

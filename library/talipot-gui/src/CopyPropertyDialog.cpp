@@ -47,8 +47,13 @@ CopyPropertyDialog::CopyPropertyDialog(QWidget *parent)
       QApplication::style()->standardIcon(QStyle::SP_MessageBoxWarning).pixmap(16, 16));
   connect(ui->newPropertyNameLineEdit, &QLineEdit::textChanged, this,
           &CopyPropertyDialog::checkValidity);
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+  connect(ui->buttonGroup, QOverload<int>::of(&QButtonGroup::idClicked), this,
+          &CopyPropertyDialog::checkValidity);
+#else
   connect(ui->buttonGroup, QOverload<int>::of(&QButtonGroup::buttonClicked), this,
           &CopyPropertyDialog::checkValidity);
+#endif
   checkValidity();
 }
 

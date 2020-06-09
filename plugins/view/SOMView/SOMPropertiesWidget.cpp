@@ -296,7 +296,11 @@ void SOMPropertiesWidget::setData(const DataSet &data) {
     string propertiesString;
     data.get("properties", propertiesString);
     // Use QString split function to parse string.
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+    QStringList list = tlpStringToQString(propertiesString).split(";", Qt::SkipEmptyParts);
+#else
     QStringList list = tlpStringToQString(propertiesString).split(";", QString::SkipEmptyParts);
+#endif
     vector<string> properties;
 
     for (const QString &s : list) {

@@ -978,8 +978,7 @@ void TalipotMainWindow::open(QString fileName) {
 
   if (fileName.isEmpty()) { // If open() was called without a parameter, open the file dialog
     fileName =
-        QFileDialog::getOpenFileName(this, tr("Open graph"), _lastOpenLocation, filters.c_str(),
-                                     nullptr, static_cast<QFileDialog::Options>(0));
+        QFileDialog::getOpenFileName(this, tr("Open graph"), _lastOpenLocation, filters.c_str());
   }
 
   if (!fileName.isEmpty()) {
