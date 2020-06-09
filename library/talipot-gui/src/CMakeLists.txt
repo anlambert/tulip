@@ -117,19 +117,14 @@ SET_SOURCE_FILES_PROPERTIES(
 ADD_LIBRARY(talipot-gui-python STATIC ${PYTHON_PART_SRCS})
 
 TARGET_LINK_LIBRARIES(talipot-gui-python ${QT_LIBRARIES})
-
-IF(UNIX)
-  SET_TARGET_PROPERTIES(talipot-gui-python PROPERTIES COMPILE_OPTIONS "-fPIC")
-ENDIF(UNIX)
+SET_TARGET_PROPERTIES(talipot-gui-python PROPERTIES POSITION_INDEPENDENT_CODE
+                                                    ON)
 
 ADD_LIBRARY(talipot-about-page-utils STATIC AboutPageUtils.cpp)
 
 TARGET_LINK_LIBRARIES(talipot-about-page-utils ${QT_LIBRARIES})
-
-IF(UNIX)
-  SET_TARGET_PROPERTIES(talipot-about-page-utils PROPERTIES COMPILE_OPTIONS
-                                                            "-fPIC")
-ENDIF(UNIX)
+SET_TARGET_PROPERTIES(talipot-about-page-utils
+                      PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
 QTX_WRAP_UI(
   UI_HEADERS
@@ -248,7 +243,6 @@ ADD_LIBRARY(${LibTalipotGUIName} SHARED ${SRCS} ${MOC_SRCS} ${RCC_SRCS}
 TARGET_LINK_LIBRARIES(
   ${LibTalipotGUIName} ${QT_LIBRARIES} ${LibTalipotCoreName}
   ${LibTalipotOGLName} ${QUAZIP_LIBRARIES})
-
 
 TARGET_LINK_LIBRARIES(${LibTalipotGUIName} talipot-gui-python)
 
