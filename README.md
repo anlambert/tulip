@@ -59,7 +59,7 @@ Talipot can be easily compiled on every supported platforms. However, that proce
 
 The following dependencies are required to build Talipot:
 
-  * [CMake](https://cmake.org) >= 2.8.12
+  * [CMake](https://cmake.org) >= 3.1
   * A [C++11](https://en.wikipedia.org/wiki/C%2B%2B11) compiler : [GCC](https://gcc.gnu.org/) >= 4.8.1,
   [Clang](https://clang.llvm.org/) >= 3.3 or
   [Microsoft Visual Studio](https://www.visualstudio.com/) >= 2013
@@ -72,7 +72,7 @@ The following dependencies are required to build Talipot:
   * [QuaZIP](http://quazip.sourceforge.net/)
   * [yajl](https://lloyd.github.io/yajl/) >= 2.0
   * [Python](https://www.python.org) >= 2.6
-  * [SIP](https://www.riverbankcomputing.com/software/sip/intro) >= 4.19.17
+  * [SIP](https://www.riverbankcomputing.com/software/sip/intro) >= 4.19.23
   (if SIP can not be found or its version does not match the required one,
   it will be compiled using a copy of its source code in the Talipot tree)
 
