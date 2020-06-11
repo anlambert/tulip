@@ -94,7 +94,7 @@ if %errorlevel% neq 0 exit /b %errorlevel%
 
 rem get, compile and install glew
 cd C:/talipot_dependencies
-curl -LO https://sourceforge.mirrorservice.org/g/gl/glew/glew/2.1.0/glew-2.1.0.zip
+curl -LO https://github.com/nigels-com/glew/releases/download/glew-2.1.0/glew-2.1.0.zip
 if %errorlevel% neq 0 exit /b %errorlevel%
 7z x glew-2.1.0.zip
 cd glew-2.1.0/build/cmake
