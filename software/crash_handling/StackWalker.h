@@ -54,12 +54,16 @@ public:
     os << lightRed << std::dec << std::setfill('0') << "#" << std::setw(2) << frameId
        << lightMagenta << " 0x" << std::hex << std::setw(16) << pcAddress << lightRed << " in ";
 
-    os << white;
+    if (frameId % 2 == 0) {
+      os << white;
+    } else {
+      os << black;
+    }
 
     if (!funcName.empty()) {
       os << funcName;
     } else {
-      os << "??";
+      os << "???";
     }
 
     if (symbolOffset != 0) {
@@ -73,7 +77,7 @@ public:
     if (!moduleName.empty()) {
       os << lightRed << " from " << lightCyan << moduleName;
     } else {
-      os << lightRed << " from " << lightGreen << "??";
+      os << lightRed << " from " << lightGreen << "???";
     }
 
     os << fillToEndOfLine << defaultTextColor << std::endl;
