@@ -37,15 +37,18 @@ public:
                     "multidimensional scaling of large data.",
                     "1.0", "Force Directed")
   OGDFPivotMDS(const tlp::PluginContext *context)
-      : OGDFLayoutPluginBase(context, new ogdf::ComponentSplitterLayout()),
-        pivotMds(new ogdf::PivotMDS()) {
+      : OGDFLayoutPluginBase(context,
+                             tlp::getOGDFLayoutModule<ogdf::ComponentSplitterLayout>(context)),
+        pivotMds(tlp::getOGDFLayoutModule<ogdf::PivotMDS>(context)) {
     addInParameter<int>("number of pivots", paramHelp[0], "250", false);
     addInParameter<bool>("use edge costs", paramHelp[1], "false", false);
     addInParameter<double>("edge costs", paramHelp[2], "100", false);
 
-    ogdf::ComponentSplitterLayout *csl =
-        static_cast<ogdf::ComponentSplitterLayout *>(ogdfLayoutAlgo);
-    csl->setLayoutModule(pivotMds);
+    if (context) {
+      ogdf::ComponentSplitterLayout *csl =
+          static_cast<ogdf::ComponentSplitterLayout *>(ogdfLayoutAlgo);
+      csl->setLayoutModule(pivotMds);
+    }
   }
 
   void beforeCall() override {

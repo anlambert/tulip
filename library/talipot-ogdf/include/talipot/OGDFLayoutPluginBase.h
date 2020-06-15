@@ -25,6 +25,11 @@ class GraphAttributes;
 
 namespace tlp {
 
+template <class OGDFLayoutModule>
+static inline OGDFLayoutModule *getOGDFLayoutModule(const PluginContext *context) {
+  return context ? new OGDFLayoutModule() : nullptr;
+}
+
 class TLP_OGDF_SCOPE OGDFLayoutPluginBase : public LayoutAlgorithm {
 public:
   OGDFLayoutPluginBase(const PluginContext *context, ogdf::LayoutModule *ogdfLayoutAlgo);

@@ -71,7 +71,7 @@ public:
                     "orthogonal edge routing.",
                     "1.5", "Tree")
   OGDFTree(const tlp::PluginContext *context)
-      : OGDFLayoutPluginBase(context, new ogdf::TreeLayout()) {
+      : OGDFLayoutPluginBase(context, tlp::getOGDFLayoutModule<ogdf::TreeLayout>(context)) {
     addInParameter<double>("siblings distance", paramHelp[0], "20");
     addInParameter<double>("subtrees distance", paramHelp[1], "20");
     addInParameter<double>("levels distance", paramHelp[2], "50");

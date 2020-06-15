@@ -59,7 +59,7 @@ public:
                     "layout realized by the stress minimization approach. ",
                     "2.0", "Force Directed")
   OGDFStressMinimization(const tlp::PluginContext *context)
-      : OGDFLayoutPluginBase(context, new ogdf::StressMinimization()) {
+      : OGDFLayoutPluginBase(context, tlp::getOGDFLayoutModule<ogdf::StressMinimization>(context)) {
     addInParameter<tlp::StringCollection>("terminationCriterion", paramHelp[0],
                                           "None;PositionDifference;Stress", true,
                                           "None <br> PositionDifference <br> Stress");

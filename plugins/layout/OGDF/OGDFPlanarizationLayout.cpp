@@ -66,7 +66,8 @@ public:
   PLUGININFORMATION("Planarization Layout (OGDF)", "Carsten Gutwenger", "12/11/2007",
                     "The planarization approach for drawing graphs.", "1.0", "Planar")
   OGDFPlanarizationLayout(const tlp::PluginContext *context)
-      : OGDFLayoutPluginBase(context, new ogdf::PlanarizationLayout()) {
+      : OGDFLayoutPluginBase(context,
+                             tlp::getOGDFLayoutModule<ogdf::PlanarizationLayout>(context)) {
     addInParameter<double>("page ratio", paramHelp[0], "1.1");
     addInParameter<tlp::StringCollection>(ELT_EMBEDDER, paramHelp[1], ELT_EMBEDDER_LIST, true,
                                           embedderValuesDescription);

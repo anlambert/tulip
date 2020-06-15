@@ -31,7 +31,8 @@ public:
                     "layout algorithm to produce a drawing on a grid.",
                     "1.0", "Planar")
   OGDFPlanarizationGrid(const tlp::PluginContext *context)
-      : OGDFLayoutPluginBase(context, new ogdf::PlanarizationGridLayout()) {
+      : OGDFLayoutPluginBase(context,
+                             tlp::getOGDFLayoutModule<ogdf::PlanarizationGridLayout>(context)) {
     addInParameter<double>("page ratio", paramHelp[0], "1.1");
   }
 

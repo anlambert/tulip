@@ -33,15 +33,17 @@ public:
                     "which utilizes various tools to speed up the computation.",
                     "1.1", "Multilevel")
   OGDFFastMultipoleMultiLevelEmbedder(const tlp::PluginContext *context)
-      : OGDFLayoutPluginBase(context, new ogdf::ComponentSplitterLayout()),
-        fmme(new ogdf::FastMultipoleMultilevelEmbedder()) {
+      : OGDFLayoutPluginBase(context,
+                             tlp::getOGDFLayoutModule<ogdf::ComponentSplitterLayout>(context)),
+        fmme(tlp::getOGDFLayoutModule<ogdf::FastMultipoleMultilevelEmbedder>(context)) {
     addInParameter<int>("number of threads", paramHelp[0], "2");
     addInParameter<int>("multilevel nodes bound", paramHelp[1], "10");
-
-    ogdf::ComponentSplitterLayout *csl =
-        static_cast<ogdf::ComponentSplitterLayout *>(ogdfLayoutAlgo);
-    // ComponentSplitterLayout takes ownership of the FastMultipoleMultilevelEmbedder instance
-    csl->setLayoutModule(fmme);
+    if (context) {
+      ogdf::ComponentSplitterLayout *csl =
+          static_cast<ogdf::ComponentSplitterLayout *>(ogdfLayoutAlgo);
+      // ComponentSplitterLayout takes ownership of the FastMultipoleMultilevelEmbedder instance
+      csl->setLayoutModule(fmme);
+    }
   }
 
   void beforeCall() override {

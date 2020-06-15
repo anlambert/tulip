@@ -29,11 +29,14 @@ public:
                     "less crossings than Sugiyama layout.",
                     "1.1", "Hierarchical")
   OGDFUpwardPlanarization(const tlp::PluginContext *context)
-      : OGDFLayoutPluginBase(context, new ogdf::ComponentSplitterLayout()) {
+      : OGDFLayoutPluginBase(context,
+                             tlp::getOGDFLayoutModule<ogdf::ComponentSplitterLayout>(context)) {
     addInParameter<bool>("transpose", paramHelp[0], "false");
-    ogdf::ComponentSplitterLayout *csl =
-        static_cast<ogdf::ComponentSplitterLayout *>(ogdfLayoutAlgo);
-    csl->setLayoutModule(new ogdf::UpwardPlanarizationLayout());
+    if (context) {
+      ogdf::ComponentSplitterLayout *csl =
+          static_cast<ogdf::ComponentSplitterLayout *>(ogdfLayoutAlgo);
+      csl->setLayoutModule(new ogdf::UpwardPlanarizationLayout());
+    }
   }
 
   void afterCall() override {

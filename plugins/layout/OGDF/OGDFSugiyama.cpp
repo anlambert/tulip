@@ -144,7 +144,7 @@ public:
                     "1.7", "Hierarchical")
 
   OGDFSugiyama(const tlp::PluginContext *context)
-      : OGDFLayoutPluginBase(context, new ogdf::SugiyamaLayout()) {
+      : OGDFLayoutPluginBase(context, tlp::getOGDFLayoutModule<ogdf::SugiyamaLayout>(context)) {
     addInParameter<int>("fails", paramHelp[0], "4");
     addInParameter<int>("runs", paramHelp[1], "15");
     addInParameter<double>("node distance", paramHelp[2], "3");

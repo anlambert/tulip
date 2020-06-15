@@ -46,18 +46,21 @@ public:
                     "modified attractive forces.",
                     "1.0", "Force Directed")
   OGDFFastMultipoleEmbedder(const tlp::PluginContext *context)
-      : OGDFLayoutPluginBase(context, new ogdf::ComponentSplitterLayout()),
-        fme(new ogdf::FastMultipoleEmbedder()) {
+      : OGDFLayoutPluginBase(context,
+                             tlp::getOGDFLayoutModule<ogdf::ComponentSplitterLayout>(context)),
+        fme(tlp::getOGDFLayoutModule<ogdf::FastMultipoleEmbedder>(context)) {
     addInParameter<int>("number of iterations", paramHelp[0], "100");
     addInParameter<int>("number of coefficients", paramHelp[1], "5");
     addInParameter<bool>("randomize layout", paramHelp[2], "true");
     addInParameter<double>("default node size", paramHelp[3], "20.0");
     addInParameter<double>("default edge length", paramHelp[4], "1.0");
     addInParameter<int>("number of threads", paramHelp[5], "3");
-    ogdf::ComponentSplitterLayout *csl =
-        static_cast<ogdf::ComponentSplitterLayout *>(ogdfLayoutAlgo);
-    // ComponentSplitterLayout takes ownership of the FastMultipoleEmbedder instance
-    csl->setLayoutModule(fme);
+    if (context) {
+      ogdf::ComponentSplitterLayout *csl =
+          static_cast<ogdf::ComponentSplitterLayout *>(ogdfLayoutAlgo);
+      // ComponentSplitterLayout takes ownership of the FastMultipoleEmbedder instance
+      csl->setLayoutModule(fme);
+    }
   }
 
   void beforeCall() override {

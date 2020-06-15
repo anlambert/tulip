@@ -70,7 +70,8 @@ public:
 PLUGIN(OGDFFrutchermanReingold)
 
 OGDFFrutchermanReingold::OGDFFrutchermanReingold(const tlp::PluginContext *context)
-    : OGDFLayoutPluginBase(context, new ogdf::SpringEmbedderFRExact()) {
+    : OGDFLayoutPluginBase(context,
+                           tlp::getOGDFLayoutModule<ogdf::SpringEmbedderFRExact>(context)) {
   addInParameter<int>("iterations", paramHelp[0], "1000");
   addInParameter<bool>("noise", paramHelp[1], "true");
   addInParameter<bool>("use node weights", paramHelp[2], "false");

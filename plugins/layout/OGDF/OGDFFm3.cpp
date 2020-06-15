@@ -229,7 +229,7 @@ public:
 PLUGIN(OGDFFm3)
 
 OGDFFm3::OGDFFm3(const tlp::PluginContext *context)
-    : OGDFLayoutPluginBase(context, new ogdf::FMMMLayout()) {
+    : OGDFLayoutPluginBase(context, tlp::getOGDFLayoutModule<ogdf::FMMMLayout>(context)) {
   addInParameter<tlp::NumericProperty *>("Edge Length Property", paramHelp[0], "viewMetric", false);
   addInParameter<tlp::SizeProperty>("Node Size", paramHelp[1], "viewSize", false);
   addInParameter<double>("Unit edge length", paramHelp[2], "10.0", false);
