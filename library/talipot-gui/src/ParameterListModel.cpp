@@ -30,7 +30,7 @@ static QIcon bracketIcon() {
     QPixmap tmp = FontIconManager::icon(MaterialDesignIcons::CodeBrackets, Qt::darkGray, 1.4)
                       .pixmap(128, 128);
     QPainter painter(&tmp);
-    painter.fillRect(0, 0, 64, 128, Qt::white);
+    painter.fillRect(0, 0, 64, 128, backgroundColor());
     painter.end();
     icon = tmp;
   }
@@ -111,6 +111,8 @@ QVariant ParameterListModel::data(const QModelIndex &index, int role) const {
     } else {
       return QColor(222, 255, 222);
     }
+  } else if (role == Qt::ForegroundRole) {
+    return darkColor;
   } else if (role == Qt::DisplayRole) {
     tlp::DataType *dataType = _data.getData(info.getName());
 

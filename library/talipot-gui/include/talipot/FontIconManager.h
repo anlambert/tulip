@@ -18,13 +18,14 @@
 #include <QString>
 
 #include <talipot/config.h>
+#include <talipot/TlpQtTools.h>
 
 namespace tlp {
 
 class TLP_QT_SCOPE FontIconManager {
 
 public:
-  static const QIcon &icon(const QString &iconName, const QColor &color = QColor(50, 50, 50),
+  static const QIcon &icon(const QString &iconName, const QColor &color = tlp::textColor(),
                            const double scaleFactor = 1.0, const double rotation = 0,
                            const QPointF &translation = QPointF(0, 0));
 

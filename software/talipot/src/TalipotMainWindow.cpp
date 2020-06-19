@@ -146,25 +146,22 @@ protected:
   }
 };
 
-static QColor iconColor = Qt::white;
-static QColor menuIconColor = QColor("#404244");
-
 static QIcon getFileNewIcon() {
-  QIcon backIcon = FontIconManager::icon(MaterialDesignIcons::File, menuIconColor);
+  QIcon backIcon = FontIconManager::icon(MaterialDesignIcons::File);
   QIcon frontIcon =
       FontIconManager::icon(MaterialDesignIcons::Plus, Qt::white, 0.7, 0, QPointF(0, 10));
   return FontIconManager::stackIcons(backIcon, frontIcon);
 }
 
 static QIcon getMakeSelectionAGraphIcon() {
-  QIcon backIcon = FontIconManager::icon(MaterialDesignIcons::Select, menuIconColor);
-  QIcon frontIcon = FontIconManager::icon(MaterialDesignIcons::VectorPolyline, menuIconColor, 0.7);
+  QIcon backIcon = FontIconManager::icon(MaterialDesignIcons::Select);
+  QIcon frontIcon = FontIconManager::icon(MaterialDesignIcons::VectorPolyline, textColor(), 0.7);
   return FontIconManager::stackIcons(backIcon, frontIcon);
 }
 
 static QIcon getReverseSelectedEdgesIcon() {
-  QIcon backIcon = FontIconManager::icon(MaterialDesignIcons::Select, menuIconColor);
-  QIcon frontIcon = FontIconManager::icon(MaterialDesignIcons::SwapHorizontal, menuIconColor, 0.8);
+  QIcon backIcon = FontIconManager::icon(MaterialDesignIcons::Select);
+  QIcon frontIcon = FontIconManager::icon(MaterialDesignIcons::SwapHorizontal, textColor(), 0.8);
   return FontIconManager::stackIcons(backIcon, frontIcon);
 }
 
@@ -193,87 +190,87 @@ TalipotMainWindow::TalipotMainWindow()
   setWindowTitle(_title);
 
   _ui->developButton->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::LanguagePython, iconColor));
-  _ui->graphsButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Graph, iconColor));
-  _ui->algorithmsButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Cogs, iconColor));
-  _ui->importButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Import, iconColor));
-  _ui->exportButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Export, iconColor));
-  _ui->undoButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Reply, iconColor));
-  _ui->redoButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Share, iconColor));
-  _ui->searchButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Magnify, iconColor));
+      FontIconManager::icon(MaterialDesignIcons::LanguagePython, Qt::white));
+  _ui->graphsButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Graph, Qt::white));
+  _ui->algorithmsButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Cogs, Qt::white));
+  _ui->importButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Import, Qt::white));
+  _ui->exportButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Export, Qt::white));
+  _ui->undoButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Reply, Qt::white));
+  _ui->redoButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Share, Qt::white));
+  _ui->searchButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Magnify, Qt::white));
 
   _ui->actionNewProject->setIcon(getFileNewIcon());
   _ui->actionOpen_Project->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::FileImport, menuIconColor));
+      FontIconManager::icon(MaterialDesignIcons::FileImport));
   _ui->menuOpen_recent_file->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Clock, menuIconColor));
+      FontIconManager::icon(MaterialDesignIcons::Clock));
   _ui->actionSave_Project->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::FileExport, menuIconColor));
+      FontIconManager::icon(MaterialDesignIcons::FileExport));
   _ui->actionSave_Project_as->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::FileExport, menuIconColor));
-  _ui->actionImport->setIcon(FontIconManager::icon(MaterialDesignIcons::Import, menuIconColor));
-  _ui->actionImport_CSV->setIcon(FontIconManager::icon(MaterialDesignIcons::Table, menuIconColor));
+      FontIconManager::icon(MaterialDesignIcons::FileExport));
+  _ui->actionImport->setIcon(FontIconManager::icon(MaterialDesignIcons::Import));
+  _ui->actionImport_CSV->setIcon(FontIconManager::icon(MaterialDesignIcons::Table));
   _ui->actionNew_graph->setIcon(getFileNewIcon());
-  _ui->actionExit->setIcon(FontIconManager::icon(MaterialDesignIcons::CloseCircle, menuIconColor));
+  _ui->actionExit->setIcon(FontIconManager::icon(MaterialDesignIcons::CloseCircle));
 
-  _ui->actionUndo->setIcon(FontIconManager::icon(MaterialDesignIcons::Reply, menuIconColor));
-  _ui->actionRedo->setIcon(FontIconManager::icon(MaterialDesignIcons::Share, menuIconColor));
-  _ui->actionCut->setIcon(FontIconManager::icon(MaterialDesignIcons::ContentCut, menuIconColor));
+  _ui->actionUndo->setIcon(FontIconManager::icon(MaterialDesignIcons::Reply));
+  _ui->actionRedo->setIcon(FontIconManager::icon(MaterialDesignIcons::Share));
+  _ui->actionCut->setIcon(FontIconManager::icon(MaterialDesignIcons::ContentCut));
   _ui->actionPaste->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::ContentPaste, menuIconColor));
-  _ui->actionCopy->setIcon(FontIconManager::icon(MaterialDesignIcons::ContentCopy, menuIconColor));
-  _ui->actionDelete->setIcon(FontIconManager::icon(MaterialDesignIcons::Delete, menuIconColor));
+      FontIconManager::icon(MaterialDesignIcons::ContentPaste));
+  _ui->actionCopy->setIcon(FontIconManager::icon(MaterialDesignIcons::ContentCopy));
+  _ui->actionDelete->setIcon(FontIconManager::icon(MaterialDesignIcons::Delete));
   _ui->actionSelect_All->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::SelectAll, menuIconColor));
+      FontIconManager::icon(MaterialDesignIcons::SelectAll));
   _ui->actionInvert_selection->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::SelectInverse, menuIconColor));
+      FontIconManager::icon(MaterialDesignIcons::SelectInverse));
   _ui->actionCancel_selection->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::SelectOff, menuIconColor));
+      FontIconManager::icon(MaterialDesignIcons::SelectOff));
   _ui->actionGroup_elements->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Group, menuIconColor));
-  _ui->actionPreferences->setIcon(FontIconManager::icon(MaterialDesignIcons::Cog, menuIconColor));
+      FontIconManager::icon(MaterialDesignIcons::Group));
+  _ui->actionPreferences->setIcon(FontIconManager::icon(MaterialDesignIcons::Cog));
   _ui->actionFull_screen->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Fullscreen, menuIconColor));
+      FontIconManager::icon(MaterialDesignIcons::Fullscreen));
   _ui->action_Close_All->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::WindowClose, menuIconColor));
+      FontIconManager::icon(MaterialDesignIcons::WindowClose));
   _ui->actionMessages_log->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Information, menuIconColor));
-  _ui->actionGraphs->setIcon(FontIconManager::icon(MaterialDesignIcons::Graph, menuIconColor));
-  _ui->actionAlgorithms->setIcon(FontIconManager::icon(MaterialDesignIcons::Cogs, menuIconColor));
-  _ui->actionSearch->setIcon(FontIconManager::icon(MaterialDesignIcons::Magnify, menuIconColor));
+      FontIconManager::icon(MaterialDesignIcons::Information));
+  _ui->actionGraphs->setIcon(FontIconManager::icon(MaterialDesignIcons::Graph));
+  _ui->actionAlgorithms->setIcon(FontIconManager::icon(MaterialDesignIcons::Cogs));
+  _ui->actionSearch->setIcon(FontIconManager::icon(MaterialDesignIcons::Magnify));
   _ui->actionAlgorithms->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Magnify, menuIconColor));
+      FontIconManager::icon(MaterialDesignIcons::Magnify));
   _ui->actionAbout_us->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::InformationOutline, menuIconColor));
+      FontIconManager::icon(MaterialDesignIcons::InformationOutline));
   _ui->actionShowUserDocumentation->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::BookOpenVariant, menuIconColor));
+      FontIconManager::icon(MaterialDesignIcons::BookOpenVariant));
   _ui->actionShowAPIDocumentation->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::LanguageCpp, menuIconColor));
+      FontIconManager::icon(MaterialDesignIcons::LanguageCpp));
   _ui->actionShowPythonDocumentation->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::LanguagePython, menuIconColor));
+      FontIconManager::icon(MaterialDesignIcons::LanguagePython));
   _ui->actionPython_IDE->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::LanguagePython, menuIconColor));
+      FontIconManager::icon(MaterialDesignIcons::LanguagePython));
   _ui->actionPlugins_Center->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::ArrowDownBoldBox, menuIconColor));
-  _ui->menuSelect->setIcon(FontIconManager::icon(MaterialDesignIcons::SelectAll, menuIconColor));
+      FontIconManager::icon(MaterialDesignIcons::ArrowDownBoldBox));
+  _ui->menuSelect->setIcon(FontIconManager::icon(MaterialDesignIcons::SelectAll));
   _ui->actionSelect_All_Edges->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::SelectAll, menuIconColor));
+      FontIconManager::icon(MaterialDesignIcons::SelectAll));
   _ui->actionSelect_All_Nodes->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::SelectAll, menuIconColor));
-  _ui->menuDelete->setIcon(FontIconManager::icon(MaterialDesignIcons::Delete, menuIconColor));
-  _ui->actionDelete_all->setIcon(FontIconManager::icon(MaterialDesignIcons::Delete, menuIconColor));
+      FontIconManager::icon(MaterialDesignIcons::SelectAll));
+  _ui->menuDelete->setIcon(FontIconManager::icon(MaterialDesignIcons::Delete));
+  _ui->actionDelete_all->setIcon(FontIconManager::icon(MaterialDesignIcons::Delete));
   _ui->actionDelete_from_the_root_graph->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Delete, menuIconColor));
+      FontIconManager::icon(MaterialDesignIcons::Delete));
   _ui->menuCreate->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Tournament, menuIconColor, 1.0, -90));
+      FontIconManager::icon(MaterialDesignIcons::Tournament, textColor(), 1.0, -90));
   _ui->actionClone_sub_graph->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Tournament, menuIconColor, 1.0, -90));
+      FontIconManager::icon(MaterialDesignIcons::Tournament, textColor(), 1.0, -90));
   _ui->actionCreate_sub_graph->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Tournament, menuIconColor, 1.0, -90));
+      FontIconManager::icon(MaterialDesignIcons::Tournament, textColor(), 1.0, -90));
   _ui->actionCreate_empty_sub_graph->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Tournament, menuIconColor, 1.0, -90));
+      FontIconManager::icon(MaterialDesignIcons::Tournament, textColor(), 1.0, -90));
   _ui->actionColor_scales_management->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Palette, menuIconColor));
+      FontIconManager::icon(MaterialDesignIcons::Palette));
   _ui->actionReverse_selected_edges->setIcon(getReverseSelectedEdgesIcon());
   _ui->actionMake_selection_a_graph->setIcon(getMakeSelectionAGraphIcon());
 
@@ -515,7 +512,7 @@ void TalipotMainWindow::buildRecentDocumentsMenu() {
     }
 
     QAction *action = _ui->menuOpen_recent_file->addAction(
-        FontIconManager::icon(MaterialDesignIcons::Archive, menuIconColor), s, this,
+        FontIconManager::icon(MaterialDesignIcons::Archive), s, this,
         &TalipotMainWindow::openRecentFile);
     action->setData(s);
   }
@@ -527,9 +524,9 @@ void TalipotMainWindow::buildRecentDocumentsMenu() {
       continue;
     }
 
-    QAction *action = _ui->menuOpen_recent_file->addAction(
-        FontIconManager::icon(MaterialDesignIcons::File, menuIconColor), s, this,
-        &TalipotMainWindow::openRecentFile);
+    QAction *action =
+        _ui->menuOpen_recent_file->addAction(FontIconManager::icon(MaterialDesignIcons::File), s,
+                                             this, &TalipotMainWindow::openRecentFile);
     action->setData(s);
   }
   _ui->menuOpen_recent_file->setEnabled(!_ui->menuOpen_recent_file->isEmpty());

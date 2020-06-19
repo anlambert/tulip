@@ -137,10 +137,25 @@ int main(int argc, char **argv) {
   QApplication talipot(argc, argv);
   talipot.setApplicationName("Talipot");
 
-  QFile talipotQss(":/talipot/app/style/talipot.qss");
-  talipotQss.open(QIODevice::ReadOnly | QIODevice::Text);
-  talipot.setStyleSheet(talipotQss.readAll());
-  talipotQss.close();
+  QFile talipotQssFile(":/talipot/app/style/talipot.qss");
+  talipotQssFile.open(QIODevice::ReadOnly | QIODevice::Text);
+  QString talipotQss = QString("AlgorithmRunner #contents,\n"
+                               "QDialog,\n"
+                               "QGroupBox,\n"
+                               "QFrame,\n"
+                               "QHeaderView::section {\n"
+                               "  background: %1;\n"
+                               "}\n")
+                           .arg(backgroundColor().name());
+  talipotQss += talipotQssFile.readAll();
+  if (applicationIsInDarkMode()) {
+    QFile talipotDarkQssFile(":/talipot/app/style/talipotDark.qss");
+    talipotDarkQssFile.open(QIODevice::ReadOnly | QIODevice::Text);
+    talipotQss += talipotDarkQssFile.readAll();
+    talipotDarkQssFile.close();
+  }
+  talipot.setStyleSheet(talipotQss);
+  talipotQssFile.close();
 
 #if defined(Q_OS_MAC)
   // Use Qt Fusion widgets style on MacOS as default OS theme

@@ -208,7 +208,7 @@ void GlMainView::updateShowOverviewButton() {
 
     if (_overviewItem && _overviewItem->isVisible()) {
       _showOvButton->setIcon(
-          FontIconManager::icon(MaterialDesignIcons::Close, QColor(50, 50, 50), 0.8));
+          FontIconManager::icon(MaterialDesignIcons::Close, textColor(), 0.8));
       _showOvButton->setChecked(true);
       _showOvButton->setToolTip("Hide overview display");
       _showOvButton->move(
@@ -266,7 +266,7 @@ void GlMainView::updateShowQuickAccessBarButton() {
 
     if (quickAccessBarVisible()) {
       _showQabButton->setIcon(
-          FontIconManager::icon(MaterialDesignIcons::Close, QColor(50, 50, 50), 0.8));
+          FontIconManager::icon(MaterialDesignIcons::Close, textColor(), 0.8));
       _showQabButton->setChecked(true);
       _showQabButton->setToolTip("Hide quick access bar");
       _showQabButton->move(0, rect.height() - _quickAccessBarItem->size().height() -

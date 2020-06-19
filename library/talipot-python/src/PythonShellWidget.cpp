@@ -17,6 +17,7 @@
 #include <QKeyEvent>
 
 #include <talipot/TlpTools.h>
+#include <talipot/TlpQtTools.h>
 #include <talipot/Observable.h>
 
 #include "talipot/PythonShellWidget.h"
@@ -80,7 +81,7 @@ void PythonShellWidget::insert(const QString &txt, const bool atEnd) {
   }
 
   QTextCharFormat format = textCursor().charFormat();
-  format.setForeground(Qt::black);
+  format.setForeground(darkColor);
   textCursor().insertText(txt, format);
 }
 

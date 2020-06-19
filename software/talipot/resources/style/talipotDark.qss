@@ -1,0 +1,74 @@
+/**
+ *
+ * Copyright (C) 2020  The Talipot developers
+ *
+ * Talipot is a fork of Tulip, created by David Auber
+ * and the Tulip development Team from LaBRI, University of Bordeaux
+ *
+ * See the AUTHORS file at the top-level directory of this distribution
+ * License: GNU General Public License version 3, or any later version
+ * See top-level LICENSE file for more information
+ *
+ */
+
+ExpandableGroupBox::indicator:unchecked {
+  image: url(:/talipot/gui/icons/svg/menu-right-white.svg);
+}
+
+ExpandableGroupBox::indicator:checked {
+  image: url(:/talipot/gui/icons/svg/menu-down-white.svg);
+}
+
+QWizard QTreeView::branch:has-children:!has-siblings:closed,
+QWizard QTreeView::branch:closed:has-children:has-siblings {
+  border-image: none;
+  image: url(:/talipot/gui/icons/svg/menu-right-white.svg);
+}
+
+QWizard QTreeView::branch:open:has-children:!has-siblings,
+QWizard QTreeView::branch:open:has-children:has-siblings  {
+  border-image: none;
+  image: url(:/talipot/gui/icons/svg/menu-down-white.svg);
+}
+
+#PropertiesEditor QTableView::indicator:checked {
+  image: url(:/talipot/gui/icons/svg/eye-outline-white.svg);
+  width: 20px;
+}
+
+#PropertiesEditor QTableView::indicator:unchecked {
+  image: url(:/talipot/gui/icons/svg/eye-off-outline-white.svg);
+  width: 20px;
+}
+
+#PropertiesEditor QCheckBox::indicator:checked {
+  image: url(:/talipot/gui/icons/svg/eye-outline-white.svg);
+  width: 20px;
+}
+
+#PropertiesEditor QCheckBox::indicator:unchecked {
+  image: url(:/talipot/gui/icons/svg/eye-off-outline-white.svg);
+  width: 20px;
+}
+
+#PropertiesEditor #propsVisibilityCheck::indicator:indeterminate {
+  image: url(:/talipot/gui/icons/svg/eye-off-partial-outline-white.svg);
+  width: 20px;
+}
+
+AlgorithmRunner QPushButton:flat {
+  border-image: none;
+  border: 1px solid black;
+  outline: none;
+}
+
+AlgorithmRunner QPushButton:hover {
+  border-image: none;
+  border: 1px solid #c9c9c9;
+}
+
+AlgorithmRunner QPushButton:pressed {
+  border-image: none;
+  background: #e9e9e9;
+  border: 1px solid #c9c9c9;
+}

@@ -64,5 +64,8 @@
         <file>icons/svg/eye-outline.svg</file>
         <file>icons/svg/eye-off-outline.svg</file>
         <file>icons/svg/eye-off-partial-outline.svg</file>
+        <file>icons/svg/eye-outline-white.svg</file>
+        <file>icons/svg/eye-off-outline-white.svg</file>
+        <file>icons/svg/eye-off-partial-outline-white.svg</file>
     </qresource>
 </RCC>

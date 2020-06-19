@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -21,6 +21,8 @@
 #include <QElapsedTimer>
 #include <QScrollBar>
 #include <QDebug>
+
+#include <talipot/TlpQtTools.h>
 
 #include <iostream>
 
@@ -55,7 +57,11 @@ public slots:
     if (errorOutput) {
       brush.setColor(Qt::red);
     } else {
-      brush.setColor(Qt::black);
+      if (textBrowser) {
+        brush.setColor(tlp::textColor());
+      } else {
+        brush.setColor(tlp::darkColor);
+      }
     }
 
     QTextCursor cursor;

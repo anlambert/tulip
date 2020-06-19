@@ -74,8 +74,8 @@ QuickAccessBarImpl::QuickAccessBarImpl(QGraphicsItem *quickAccessBarItem,
       delegate(new ItemDelegate(this)), _oldFontScale(1), _oldNodeScale(1),
       _captionsInitialized(false) {
   _ui->setupUi(this);
-  _ui->screenshotButton->setIcon(FontIconManager::icon(
-      MaterialDesignIcons::Camera, QColor(50, 50, 50), 1.0, 0.0, QPointF(0, 1)));
+  _ui->screenshotButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Camera, darkColor, 1.0, 0.0, QPointF(0, 1)));
   _ui->backgroundColorButton->setDialogTitle("Choose the background color");
   _ui->nodeColorButton->setDialogTitle("Choose the node's default color");
   _ui->edgeColorButton->setDialogTitle("Choose the edge's default color");

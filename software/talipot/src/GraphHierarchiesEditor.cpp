@@ -114,43 +114,33 @@ void CustomTreeView::resizeFirstColumnToContentImpl() {
   resizeColumnToContents(0);
 }
 
-static QColor menuIconColor = QColor("#404244");
-
 GraphHierarchiesEditor::GraphHierarchiesEditor(QWidget *parent)
     : QWidget(parent), _ui(new Ui::GraphHierarchiesEditor), _contextGraph(nullptr),
       _model(nullptr) {
   _ui->setupUi(this);
   _ui->hierarchiesTree->addAction(_ui->actionDelete_All);
   _ui->actionDelete_All->setShortcutContext(Qt::WidgetWithChildrenShortcut);
-  _ui->actionCreate_panel->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::PlusBox, menuIconColor));
-  _ui->actionExport->setIcon(FontIconManager::icon(MaterialDesignIcons::Export, menuIconColor));
-  _ui->actionSave_to_file->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::FileExport, menuIconColor));
-  _ui->actionRename->setIcon(FontIconManager::icon(MaterialDesignIcons::RenameBox, menuIconColor));
-  _ui->actionDelete_graph->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Delete, menuIconColor));
-  _ui->actionDelete_All->setIcon(FontIconManager::icon(MaterialDesignIcons::Delete, menuIconColor));
-  _ui->actionDelete_all_nodes->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Delete, menuIconColor));
-  _ui->actionDelete_all_edges->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Delete, menuIconColor));
-  _ui->actionDelete_selection->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Delete, menuIconColor));
-  _ui->actionDelete_selection_from_root_graph->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Delete, menuIconColor));
+  _ui->actionCreate_panel->setIcon(FontIconManager::icon(MaterialDesignIcons::PlusBox));
+  _ui->actionExport->setIcon(FontIconManager::icon(MaterialDesignIcons::Export));
+  _ui->actionSave_to_file->setIcon(FontIconManager::icon(MaterialDesignIcons::FileExport));
+  _ui->actionRename->setIcon(FontIconManager::icon(MaterialDesignIcons::RenameBox));
+  _ui->actionDelete_graph->setIcon(FontIconManager::icon(MaterialDesignIcons::Delete));
+  _ui->actionDelete_All->setIcon(FontIconManager::icon(MaterialDesignIcons::Delete));
+  _ui->actionDelete_all_nodes->setIcon(FontIconManager::icon(MaterialDesignIcons::Delete));
+  _ui->actionDelete_all_edges->setIcon(FontIconManager::icon(MaterialDesignIcons::Delete));
+  _ui->actionDelete_selection->setIcon(FontIconManager::icon(MaterialDesignIcons::Delete));
+  _ui->actionDelete_selection_from_root_graph->setIcon(FontIconManager::icon(MaterialDesignIcons::Delete));
   _ui->actionAdd_sub_graph->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Tournament, menuIconColor, 1.0, -90));
+      FontIconManager::icon(MaterialDesignIcons::Tournament, textColor(), 1.0, -90));
   _ui->actionClone_subgraph->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Tournament, menuIconColor, 1.0, -90));
+      FontIconManager::icon(MaterialDesignIcons::Tournament, textColor(), 1.0, -90));
   _ui->actionCreate_induced_sub_graph->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Tournament, menuIconColor, 1.0, -90));
+      FontIconManager::icon(MaterialDesignIcons::Tournament, textColor(), 1.0, -90));
   _ui->actionClone_sibling->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Tournament, menuIconColor, 1.0, -90));
+      FontIconManager::icon(MaterialDesignIcons::Tournament, textColor(), 1.0, -90));
   _ui->actionClone_sibling_with_properties->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Tournament, menuIconColor, 1.0, -90));
-  _ui->actionExpand_hierarchy->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::FileTree, menuIconColor));
+      FontIconManager::icon(MaterialDesignIcons::Tournament, textColor(), 1.0, -90));
+  _ui->actionExpand_hierarchy->setIcon(FontIconManager::icon(MaterialDesignIcons::FileTree));
 
   QToolButton *linkButton = new QToolButton();
   linkButton->setObjectName("linkButton");

@@ -13,5 +13,6 @@
         <file>icons/svg/star-outline.svg</file>
         <file>icons/svg/star-outline-hover.svg</file>
         <file>style/talipot.qss</file>
+        <file>style/talipotDark.qss</file>
     </qresource>
 </RCC>

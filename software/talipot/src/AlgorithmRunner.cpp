@@ -196,7 +196,7 @@ AlgorithmRunner::AlgorithmRunner(QWidget *parent)
       "applied to a subgraph, this result can be stored either\n- in a local subgraph "
       "property (created on the fly if needed),\nor\n- in a property already existing in "
       "the ascendant hierarchy (inherited or local).");
-  _ui->header->mainFrame()->layout()->addWidget(_storeResultAsLocalButton);
+  _ui->header->layout()->addWidget(_storeResultAsLocalButton);
   QMenu *resultMenu = new QMenu(this);
   _resultAsLocalPropAction =
       resultMenu->addAction("Always store result in a local property of the graph");

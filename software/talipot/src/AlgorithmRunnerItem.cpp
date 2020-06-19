@@ -94,7 +94,7 @@ AlgorithmRunnerItem::AlgorithmRunnerItem(QString pluginName, QWidget *parent)
 
   connect(_ui->favoriteCheck, &QCheckBox::stateChanged, this,
           &AlgorithmRunnerItem::favoriteChanged);
-  QIcon icon = FontIconManager::icon(iconName, QColor(50, 50, 50), 0.6);
+  QIcon icon = FontIconManager::icon(iconName, textColor(), 0.6);
   _ui->languageLabel->setPixmap(icon.pixmap(_ui->languageLabel->size()));
   _ui->languageLabel->setToolTip(tooltip);
 }

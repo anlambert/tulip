@@ -26,7 +26,7 @@ unique_ptr<QPixmap> ClearableLineEdit::CLEAR_PIXMAP;
 void ClearableLineEdit::initPixmap() {
   if (!CLEAR_PIXMAP.get()) {
     CLEAR_PIXMAP.reset(new QPixmap(FontIconManager::icon(MaterialDesignIcons::Backspace,
-                                                         QColor(50, 50, 50), 0.5, 0, QPointF(5, 0))
+                                                         textColor(), 0.5, 0, QPointF(5, 0))
                                        .pixmap(32, 32)));
   }
 }

@@ -25,7 +25,7 @@ void switchToLabel(Ui::HeaderFrame *ui, bool f = true) {
 }
 
 HeaderFrame::HeaderFrame(QWidget *parent)
-    : QWidget(parent), _ui(new Ui::HeaderFrame), _expanded(true) {
+    : QFrame(parent), _ui(new Ui::HeaderFrame), _expanded(true) {
   _ui->setupUi(this);
   switchToLabel(_ui);
   connect(_ui->menusCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), this,
@@ -130,10 +130,6 @@ bool HeaderFrame::isExpanded() const {
 
 QWidget *HeaderFrame::expandControl() const {
   return _ui->expandButton;
-}
-
-QWidget *HeaderFrame::mainFrame() const {
-  return _ui->mainFrame;
 }
 
 void HeaderFrame::insertWidget(QWidget *w) {

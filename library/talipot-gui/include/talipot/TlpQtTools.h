@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -127,6 +127,16 @@ TLP_QT_SCOPE void disableQtUserInput();
 TLP_QT_SCOPE void enableQtUserInput();
 
 TLP_QT_SCOPE QMainWindow *getMainWindow();
+
+TLP_QT_SCOPE bool applicationIsInDarkMode();
+
+TLP_QT_SCOPE const QColor &backgroundColor();
+
+TLP_QT_SCOPE const QColor &textColor();
+
+extern TLP_QT_SCOPE const QColor lightColor;
+extern TLP_QT_SCOPE const QColor darkColor;
+
 }
 
 // QDebug extension

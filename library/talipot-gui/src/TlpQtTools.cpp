@@ -57,6 +57,10 @@
 #include <talipot/ItemEditorCreators.h>
 #include <talipot/GlOffscreenRenderer.h>
 
+#ifdef Q_OS_MAC
+extern bool qt_mac_applicationIsInDarkMode();
+#endif
+
 /**
  * For openDataSetDialog function : see OpenDataSet.cpp
  */
@@ -488,6 +492,33 @@ QMainWindow *getMainWindow() {
     }
   }
   return nullptr;
+}
+
+bool applicationIsInDarkMode() {
+#ifdef Q_OS_MAC
+  return qt_mac_applicationIsInDarkMode();
+#else
+  return false;
+#endif
+}
+
+const QColor darkColor = QColor(50, 50, 50);
+const QColor lightColor = Qt::white;
+
+const QColor &backgroundColor() {
+  if (applicationIsInDarkMode()) {
+    return darkColor;
+  } else {
+    return lightColor;
+  }
+}
+
+const QColor &textColor() {
+  if (applicationIsInDarkMode()) {
+    return lightColor;
+  } else {
+    return darkColor;
+  }
 }
 
 }

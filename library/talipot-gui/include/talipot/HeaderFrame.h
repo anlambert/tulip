@@ -16,7 +16,7 @@
 
 #include <talipot/config.h>
 
-#include <QWidget>
+#include <QFrame>
 
 namespace Ui {
 class HeaderFrame;
@@ -24,7 +24,7 @@ class HeaderFrame;
 
 namespace tlp {
 
-class TLP_QT_SCOPE HeaderFrame : public QWidget {
+class TLP_QT_SCOPE HeaderFrame : public QFrame {
   Q_OBJECT
 
   QPair<int, int> _oldHeightInfo;
@@ -53,7 +53,6 @@ public:
   bool isExpanded() const;
 
   QWidget *expandControl() const;
-  QWidget *mainFrame() const;
 
 public slots:
   void setTitle(const QString &title);
