@@ -65,7 +65,6 @@ SET(SRCS
     QuickAccessBar.cpp
     Font.cpp
     FontDialog.cpp
-    ScrollPopupButton.cpp
     WorkspaceExposeWidget.cpp
     GraphTableItemDelegate.cpp
     StringEditor.cpp
@@ -197,7 +196,6 @@ QTX_WRAP_CPP(
   ../include/talipot/SceneConfigWidget.h
   ../include/talipot/SceneLayersModel.h
   ../include/talipot/SceneLayersConfigWidget.h
-  ../include/talipot/ScrollPopupButton.h
   ../include/talipot/SimplePluginProgressWidget.h
   ../include/talipot/SimpleStringsListSelectionWidget.h
   ../include/talipot/SnapshotDialog.h
