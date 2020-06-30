@@ -906,7 +906,7 @@ QWizard QTableView {
   border-right: 0px;
 }
 
-#ViewConfigurationTabWidget QTabBar::tab {
+#ViewConfigurationTabWidget > QTabBar::tab {
   border-image:none;
   border: 1px solid black;
   border-right: 0px;
@@ -917,39 +917,39 @@ QWizard QTableView {
   font: bold;
 }
 
-#ViewConfigurationTabWidget QTabBar::tab:!selected {
+#ViewConfigurationTabWidget > QTabBar::tab:!selected {
   margin-left: 1px;
   background: #323232;
   border: 1px solid black;
   color: gray;
 }
 
-#ViewConfigurationTabWidget QTabBar::tab:!selected:hover {
+#ViewConfigurationTabWidget > QTabBar::tab:!selected:hover {
   background: #565656;
 }
 
-#ViewConfigurationTabWidget QTabBar::tab:selected {
+#ViewConfigurationTabWidget > QTabBar::tab:selected {
   background: black;
   border: 1px solid gray;
   color: white;
 }
 
-#ViewConfigurationTabWidget QTabBar::close-button:selected  {
+#ViewConfigurationTabWidget > QTabBar::close-button:selected  {
   image: url(:/talipot/gui/icons/svg/close-selected.svg);
   background: transparent;
 }
 
-#ViewConfigurationTabWidget QTabBar::close-button  {
+#ViewConfigurationTabWidget > QTabBar::close-button  {
   image: url(:/talipot/gui/icons/svg/close-unselected.svg);
   background: transparent;
 }
 
-#ViewConfigurationTabWidget QTabBar::close-button:hover {
+#ViewConfigurationTabWidget > QTabBar::close-button:hover {
   image: url(:/talipot/gui/icons/svg/close-hover.svg);
   background: transparent;
 }
 
-#ViewConfigurationTabWidget QTabBar::close-button:pressed {
+#ViewConfigurationTabWidget > QTabBar::close-button:pressed {
   image: url(:/talipot/gui/icons/svg/close-pressed.svg);
   background: transparent;
 }

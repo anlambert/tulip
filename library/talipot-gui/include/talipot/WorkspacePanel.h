@@ -27,6 +27,7 @@ class QGraphicsProxyWidget;
 class QGraphicsRectItem;
 class QMimeData;
 class QVBoxLayout;
+class QTabWidget;
 
 namespace Ui {
 class WorkspacePanel;
@@ -48,7 +49,8 @@ class TLP_QT_SCOPE WorkspacePanel : public QFrame {
   QMap<QAction *, QWidget *> _actionTriggers;
   QGraphicsRectItem *_overlayRect;
 
-  QGraphicsProxyWidget *_viewConfigurationWidgets;
+  QTabWidget *_viewConfigurationTabWidget;
+  QGraphicsProxyWidget *_viewConfigurationTabWidgetProxy;
   bool _viewConfigurationExpanded;
 
   QPointF configurationTabPosition(bool expanded) const;

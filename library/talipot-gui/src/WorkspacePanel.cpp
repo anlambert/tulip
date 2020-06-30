@@ -76,7 +76,8 @@ public:
 WorkspacePanel::WorkspacePanel(tlp::View *view, QWidget *parent)
     : QFrame(parent), _ui(new Ui::WorkspacePanel),
       _interactorConfigWidget(new InteractorConfigWidget(this)), _view(nullptr),
-      _overlayRect(nullptr), _viewConfigurationWidgets(nullptr), _viewConfigurationExpanded(false) {
+      _overlayRect(nullptr), _viewConfigurationTabWidget(nullptr),
+      _viewConfigurationTabWidgetProxy(nullptr), _viewConfigurationExpanded(false) {
   _ui->setupUi(this);
   _ui->linkButton->setIcon(
       FontIconManager::icon(MaterialDesignIcons::LinkVariantOff, Qt::white, 0.8));
@@ -89,9 +90,26 @@ WorkspacePanel::WorkspacePanel(tlp::View *view, QWidget *parent)
   _ui->graphCombo->installEventFilter(this);
   connect(_ui->linkButton, &QAbstractButton::toggled, this, &WorkspacePanel::toggleSynchronization);
   connect(_ui->closeButton, &QAbstractButton::clicked, this, &QWidget::close);
-  setView(view);
   setAttribute(Qt::WA_DeleteOnClose);
   setAutoFillBackground(true);
+
+#ifdef WIN32
+  _viewConfigurationTabWidget = new CustomTabWidget();
+#else
+  _viewConfigurationTabWidget = new QTabWidget();
+#endif
+  _viewConfigurationTabWidget->setObjectName("ViewConfigurationTabWidget");
+  _viewConfigurationTabWidget->setTabsClosable(true);
+  connect(_viewConfigurationTabWidget, &QTabWidget::tabCloseRequested, this,
+          &WorkspacePanel::hideConfigurationTab);
+  _viewConfigurationTabWidget->setTabPosition(QTabWidget::West);
+  _viewConfigurationTabWidget->findChild<QTabBar *>()->installEventFilter(this);
+  _viewConfigurationTabWidgetProxy = new QGraphicsProxyWidget(view->centralItem());
+  _viewConfigurationTabWidgetProxy->installEventFilter(this);
+  _viewConfigurationTabWidgetProxy->setWidget(_viewConfigurationTabWidget);
+  _viewConfigurationTabWidgetProxy->setZValue(DBL_MAX);
+  _interactorConfigWidget->installEventFilter(this);
+  setView(view);
 }
 
 WorkspacePanel::~WorkspacePanel() {
@@ -149,6 +167,24 @@ void WorkspacePanel::setView(tlp::View *view) {
     compatibleInteractors << PluginsManager::getPluginObject<Interactor>(name);
   }
 
+  connect(_view, &QObject::destroyed, this, &WorkspacePanel::viewDestroyed);
+  connect(_view, &View::graphSet, this, &WorkspacePanel::viewGraphSet);
+  connect(_view, &View::drawNeeded, this, &WorkspacePanel::drawNeeded);
+  connect(_view, &View::interactorsChanged, this, &WorkspacePanel::refreshInteractorsToolbar);
+  _view->graphicsView()->scene()->installEventFilter(this);
+
+  _viewConfigurationTabWidget->clear();
+  if (!_view->configurationWidgets().empty()) {
+    for (auto w : _view->configurationWidgets()) {
+      w->installEventFilter(this);
+      w->resize(w->width(), w->sizeHint().height());
+      _viewConfigurationTabWidget->addTab(w, w->windowTitle());
+    }
+    if (!compatibleInteractors.empty()) {
+      _viewConfigurationTabWidget->addTab(_interactorConfigWidget, "Interactor");
+    }
+  }
+
   _view->setInteractors(compatibleInteractors);
   _ui->scrollArea->setVisible(!compatibleInteractors.empty());
   _view->graphicsView()->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -160,37 +196,6 @@ void WorkspacePanel::setView(tlp::View *view) {
     setCurrentInteractor(compatibleInteractors[0]);
   } else {
     _ui->sep4->hide();
-  }
-
-  connect(_view, &QObject::destroyed, this, &WorkspacePanel::viewDestroyed);
-  connect(_view, &View::graphSet, this, &WorkspacePanel::viewGraphSet);
-  connect(_view, &View::drawNeeded, this, &WorkspacePanel::drawNeeded);
-  connect(_view, &View::interactorsChanged, this, &WorkspacePanel::refreshInteractorsToolbar);
-  _view->graphicsView()->scene()->installEventFilter(this);
-
-  if (!_view->configurationWidgets().empty()) {
-#ifdef WIN32
-    QTabWidget *viewConfigurationTabs = new CustomTabWidget();
-#else
-    QTabWidget *viewConfigurationTabs = new QTabWidget();
-#endif
-    viewConfigurationTabs->setObjectName("ViewConfigurationTabWidget");
-    viewConfigurationTabs->setTabsClosable(true);
-    connect(viewConfigurationTabs, &QTabWidget::tabCloseRequested, this,
-            &WorkspacePanel::hideConfigurationTab);
-    viewConfigurationTabs->setTabPosition(QTabWidget::West);
-    viewConfigurationTabs->findChild<QTabBar *>()->installEventFilter(this);
-
-    for (auto w : _view->configurationWidgets()) {
-      w->installEventFilter(this);
-      w->resize(w->width(), w->sizeHint().height());
-      viewConfigurationTabs->addTab(w, w->windowTitle());
-    }
-
-    _viewConfigurationWidgets = new QGraphicsProxyWidget(_view->centralItem());
-    _viewConfigurationWidgets->installEventFilter(this);
-    _viewConfigurationWidgets->setWidget(viewConfigurationTabs);
-    _viewConfigurationWidgets->setZValue(DBL_MAX);
   }
 
   resetInteractorsScrollButtonsVisibility();
@@ -252,25 +257,26 @@ void WorkspacePanel::closeEvent(QCloseEvent *event) {
 }
 
 bool WorkspacePanel::eventFilter(QObject *obj, QEvent *ev) {
-  if (_view != nullptr) {
-    if (ev->type() == QEvent::GraphicsSceneContextMenu) {
-      _view->showContextMenu(QCursor::pos(),
-                             static_cast<QGraphicsSceneContextMenuEvent *>(ev)->scenePos());
-    } else if (_viewConfigurationWidgets != nullptr &&
-               _view->configurationWidgets().contains(qobject_cast<QWidget *>(obj))) {
-      return true;
-
-    } else if (ev->type() == QEvent::MouseButtonPress && !_viewConfigurationExpanded &&
-               qobject_cast<QTabBar *>(obj) != nullptr) {
-      setConfigurationTabExpanded(true);
-    } else if (ev->type() == QEvent::Wheel && qobject_cast<QTabBar *>(obj) != nullptr) {
-      return true;
-    }
-  }
-
   // we must check _ui has not been deleted
   // because of possible mis-synchronization of Qt events
-  if (_ui) {
+  if (_ui != nullptr) {
+    if (_view != nullptr) {
+      if (ev->type() == QEvent::GraphicsSceneContextMenu) {
+        _view->showContextMenu(QCursor::pos(),
+                               static_cast<QGraphicsSceneContextMenuEvent *>(ev)->scenePos());
+      } else if (_viewConfigurationTabWidgetProxy != nullptr &&
+                 _viewConfigurationTabWidget->indexOf(qobject_cast<QWidget *>(obj)) != -1) {
+        ev->accept();
+        return true;
+
+      } else if (ev->type() == QEvent::MouseButtonPress && !_viewConfigurationExpanded &&
+                 qobject_cast<QTabBar *>(obj) != nullptr) {
+        setConfigurationTabExpanded(true);
+      } else if (ev->type() == QEvent::Wheel && qobject_cast<QTabBar *>(obj) != nullptr) {
+        return true;
+      }
+    }
+
     if (obj == _ui->interactorsFrame && ev->type() == QEvent::Wheel) {
       if (static_cast<QWheelEvent *>(ev)->angleDelta().y() > 0) {
         scrollInteractorsLeft();
@@ -287,30 +293,30 @@ bool WorkspacePanel::eventFilter(QObject *obj, QEvent *ev) {
   return QWidget::eventFilter(obj, ev);
 }
 
-void WorkspacePanel::setCurrentInteractor(tlp::Interactor *i) {
-  assert(i);
-  view()->setCurrentInteractor(i);
-  _ui->currentInteractorButton->setText(i->action()->text());
-  _ui->currentInteractorButton->setIcon(i->action()->icon());
+void WorkspacePanel::setCurrentInteractor(tlp::Interactor *interactor) {
+  view()->setCurrentInteractor(interactor);
+  _ui->currentInteractorButton->setText(interactor->action()->text());
+  _ui->currentInteractorButton->setIcon(interactor->action()->icon());
   _ui->currentInteractorButton->setToolTip(
-      "Active tool:<br/><b>" + i->action()->text() +
-      QString(_view->currentInteractor()->configurationWidget()
+      "Active tool:<br/><b>" + interactor->action()->text() +
+      QString(interactor->configurationWidget()
                   ? "</b><br/><i>click to show/hide its configuration panel.</i>"
                   : "</b>"));
+  if (_interactorConfigWidget->setWidgets(interactor)) {
+    _viewConfigurationTabWidget->setTabEnabled(
+        _viewConfigurationTabWidget->indexOf(_interactorConfigWidget), true);
+  } else {
+    _viewConfigurationTabWidget->setTabEnabled(
+        _viewConfigurationTabWidget->indexOf(_interactorConfigWidget), false);
+  }
 }
 
 void WorkspacePanel::setCurrentInteractorConfigurationVisible(bool) {
   if (_view->currentInteractor() == nullptr) {
     return;
   }
-
-  if (_interactorConfigWidget->isVisible()) {
-    return;
-  }
-
-  if (_interactorConfigWidget->setWidgets(_view->currentInteractor())) {
-    _interactorConfigWidget->show();
-  }
+  _viewConfigurationTabWidget->setCurrentWidget(_interactorConfigWidget);
+  setConfigurationTabExpanded(true);
 }
 
 void WorkspacePanel::interactorActionTriggered() {
@@ -322,9 +328,6 @@ void WorkspacePanel::interactorActionTriggered() {
   }
 
   setCurrentInteractor(interactor);
-  if (_interactorConfigWidget->isVisible()) {
-    _interactorConfigWidget->setWidgets(_view->currentInteractor());
-  }
 }
 
 void WorkspacePanel::hideConfigurationTab() {
@@ -457,7 +460,7 @@ void WorkspacePanel::graphComboIndexChanged() {
 }
 
 void WorkspacePanel::resizeEvent(QResizeEvent *ev) {
-  if (_viewConfigurationWidgets) {
+  if (_viewConfigurationTabWidgetProxy) {
     setConfigurationTabExpanded(_viewConfigurationExpanded, false);
   }
 
@@ -469,30 +472,30 @@ void WorkspacePanel::resizeEvent(QResizeEvent *ev) {
 void WorkspacePanel::setConfigurationTabExpanded(bool expanded, bool animate) {
 
   if (_view != nullptr) {
-    _viewConfigurationWidgets->setMinimumHeight(_view->graphicsView()->height());
-    _viewConfigurationWidgets->setMaximumHeight(_view->graphicsView()->height());
-    _viewConfigurationWidgets->setMaximumWidth(_view->graphicsView()->width());
+    _viewConfigurationTabWidgetProxy->setMinimumHeight(_view->graphicsView()->height());
+    _viewConfigurationTabWidgetProxy->setMaximumHeight(_view->graphicsView()->height());
+    _viewConfigurationTabWidgetProxy->setMaximumWidth(_view->graphicsView()->width());
   }
 
   QPointF newPos = configurationTabPosition(expanded);
 
-  if (newPos == _viewConfigurationWidgets->pos()) {
+  if (newPos == _viewConfigurationTabWidgetProxy->pos()) {
     return;
   }
 
   if (animate) {
-    QPropertyAnimation *anim =
-        new QPropertyAnimation(_viewConfigurationWidgets, "pos", _viewConfigurationWidgets);
+    QPropertyAnimation *anim = new QPropertyAnimation(_viewConfigurationTabWidgetProxy, "pos",
+                                                      _viewConfigurationTabWidgetProxy);
     anim->setDuration(250);
-    anim->setStartValue(_viewConfigurationWidgets->pos());
+    anim->setStartValue(_viewConfigurationTabWidgetProxy->pos());
     anim->setEndValue(newPos);
     anim->start(QAbstractAnimation::DeleteWhenStopped);
   } else {
-    _viewConfigurationWidgets->setPos(newPos);
+    _viewConfigurationTabWidgetProxy->setPos(newPos);
   }
 
   // there are artefacts in the fonts when the opacity is 1; ugly fix
-  _viewConfigurationWidgets->setOpacity((expanded ? 0.99 : 0.6));
+  _viewConfigurationTabWidgetProxy->setOpacity((expanded ? 0.99 : 0.6));
 
   if (!expanded && _viewConfigurationExpanded) {
     _view->applySettings();
@@ -503,12 +506,13 @@ void WorkspacePanel::setConfigurationTabExpanded(bool expanded, bool animate) {
 
 QPointF WorkspacePanel::configurationTabPosition(bool expanded) const {
   if (expanded) {
-    return QPointF(width() - _viewConfigurationWidgets->size().width(), 10);
+    return QPointF(width() - _viewConfigurationTabWidgetProxy->size().width(), 10);
   } else {
-    QTabWidget *tabWidget = static_cast<QTabWidget *>(_viewConfigurationWidgets->widget());
-    int tabWidth = (tabWidget != nullptr)
-                       ? (_viewConfigurationWidgets->size().width() - tabWidget->widget(0)->width())
-                       : 0;
+    QTabWidget *tabWidget = static_cast<QTabWidget *>(_viewConfigurationTabWidgetProxy->widget());
+    int tabWidth =
+        (tabWidget != nullptr)
+            ? (_viewConfigurationTabWidgetProxy->size().width() - tabWidget->widget(0)->width())
+            : 0;
     return QPointF(width() - tabWidth, 10);
   }
 }

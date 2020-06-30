@@ -35,7 +35,7 @@ void NodeLinkDiagramViewInteractor::setConfigurationWidgetText(const QString &te
   _label->setText(text);
 }
 
-QLabel *NodeLinkDiagramViewInteractor::configurationDocWidget() const {
+QLabel *NodeLinkDiagramViewInteractor::docWidget() const {
   return _label->text().isEmpty() ? nullptr : _label;
 }
 

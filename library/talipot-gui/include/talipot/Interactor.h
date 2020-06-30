@@ -77,8 +77,6 @@ public:
   virtual bool isCompatible(const std::string &viewName) const = 0;
 
   /**
-    @deprecated Use QWidget *configurationDocWidget() and/or QWidget *configurationOptionsWidget()
-    instead
     @return the configuration widget used to set up the interactor.
     @warning This method MUST ALWAYS return the same pointer. Doing otherwise may lead to memory
     leaks.
@@ -88,10 +86,7 @@ public:
   virtual QWidget *configurationWidget() const {
     return nullptr;
   }
-  virtual QLabel *configurationDocWidget() const {
-    return nullptr;
-  }
-  virtual QWidget *configurationOptionsWidget() const {
+  virtual QLabel *docWidget() const {
     return nullptr;
   }
 
@@ -236,11 +231,11 @@ public:
     QWidget *configurationWidget() const {                                                         \
       return getComponent()->configurationWidget();                                                \
     }                                                                                              \
-    QLabel *configurationDocWidget() const {                                                       \
-      return getComponent()->configurationDocWidget();                                             \
+    QLabel *docWidget() const {                                                                    \
+      return getComponent()->docWidget();                                                          \
     }                                                                                              \
     QWidget *configurationActionsWidget() const {                                                  \
-      return getComponent()->configurationOptionsWidget();                                         \
+      return getComponent()->configurationWidget();                                                \
     }                                                                                              \
     unsigned int priority() const {                                                                \
       return getComponent()->priority();                                                           \
@@ -324,11 +319,11 @@ public:
     QWidget *configurationWidget() const {                                                         \
       return getComponent()->configurationWidget();                                                \
     }                                                                                              \
-    QLabel *configurationDocWidget() const {                                                       \
-      return getComponent()->configurationDocWidget();                                             \
+    QLabel *docWidget() const {                                                                    \
+      return getComponent()->docWidget();                                                          \
     }                                                                                              \
     QWidget *configurationActionsWidget() const {                                                  \
-      return getComponent()->configurationOptionsWidget();                                         \
+      return getComponent()->configurationWidget();                                                \
     }                                                                                              \
     unsigned int priority() const {                                                                \
       return PRIORITY;                                                                             \

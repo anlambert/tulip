@@ -25,7 +25,7 @@ class QShowEvent;
 namespace tlp {
 class Interactor;
 
-class InteractorConfigWidget : public QDialog {
+class InteractorConfigWidget : public QWidget {
 
   Ui::InteractorConfigWidget *_ui;
   Interactor *_interactor;
@@ -35,8 +35,6 @@ public:
   ~InteractorConfigWidget();
   bool setWidgets(Interactor *interactor);
   void clearWidgets();
-
-  void showEvent(QShowEvent *) override;
 };
 
 }

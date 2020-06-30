@@ -189,7 +189,7 @@ void InteractorAxisSliders::construct() {
   push_back(new MousePanNZoomNavigator);
 }
 
-QWidget *InteractorAxisSliders::configurationOptionsWidget() const {
+QWidget *InteractorAxisSliders::configurationWidget() const {
   return configwidget;
 }
 

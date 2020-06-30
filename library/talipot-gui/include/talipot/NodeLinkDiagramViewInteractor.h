@@ -35,7 +35,7 @@ public:
 
   void setConfigurationWidgetText(const QString &text);
 
-  QLabel *configurationDocWidget() const override;
+  QLabel *docWidget() const override;
 
   unsigned int priority() const override;
 };
