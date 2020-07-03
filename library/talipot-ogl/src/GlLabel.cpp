@@ -412,7 +412,7 @@ void GlLabel::draw(float, Camera *camera) {
     baseCoord[1] +=
         translationAfterRotation[0] * sin(angle) + translationAfterRotation[1] * cos(angle);
 
-    Matrix<float, 4> modelviewMatrix, projectionMatrix, transformMatrix;
+    MatrixGL modelviewMatrix, projectionMatrix, transformMatrix;
 
     glGetFloatv(GL_MODELVIEW_MATRIX, reinterpret_cast<GLfloat *>(&modelviewMatrix));
     glGetFloatv(GL_PROJECTION_MATRIX, reinterpret_cast<GLfloat *>(&projectionMatrix));
@@ -504,7 +504,7 @@ void GlLabel::draw(float, Camera *camera) {
     }
   } else {
 
-    Matrix<float, 4> modelviewMatrix, projectionMatrix, transformMatrix;
+    MatrixGL modelviewMatrix, projectionMatrix, transformMatrix;
 
     glGetFloatv(GL_MODELVIEW_MATRIX, reinterpret_cast<GLfloat *>(&modelviewMatrix));
     glGetFloatv(GL_PROJECTION_MATRIX, reinterpret_cast<GLfloat *>(&projectionMatrix));

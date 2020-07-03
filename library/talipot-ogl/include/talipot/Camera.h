@@ -18,6 +18,7 @@
 #include <talipot/Matrix.h>
 #include <talipot/BoundingBox.h>
 #include <talipot/Observable.h>
+#include <talipot/GlTools.h>
 
 namespace tlp {
 
@@ -79,35 +80,12 @@ public:
   }
 
   /**
-   * @brief Load this camera parameters (eye, center, zoom factor) with an other camera parameters
-   */
-  void loadCameraParametersWith(const Camera &camera) {
-    *this = camera;
-  }
-
-  /**
    * @brief Return the camera bounding box
    *
    * This bounding box is the part of the scene visualized by this camera.
    */
   BoundingBox getBoundingBox() const;
 
-  /**
-   * @brief This function moves the camera forward or backward depending on the speed
-   */
-  void move(float speed);
-  /**
-   * @brief This function strafes the camera left and right depending on the speed (-/+)
-   */
-  void strafeLeftRight(float speed);
-  /**
-   * @brief This function strafes the camera up and down depending on the speed (-/+)
-   */
-  void strafeUpDown(float speed);
-  /**
-   * @brief This function rotates the camera's eyes around the center depending on the values passed
-   * in.
-   */
   void rotate(float angle, float x, float y, float z);
 
   /**
@@ -230,34 +208,28 @@ public:
   /**
    * Get the modelview matrix
    */
-  void getModelviewMatrix(Matrix<float, 4> &modelviewMatrix) const {
-    modelviewMatrix = this->modelviewMatrix;
+  const MatrixGL &getModelViewMatrix() const {
+    return modelviewMatrix;
   }
 
   /**
    * Get the projection matrix
    */
-  void getProjectionMatrix(Matrix<float, 4> &projectionMatrix) const {
-    projectionMatrix = this->projectionMatrix;
+  const MatrixGL &getProjectionMatrix() const {
+    return projectionMatrix;
   }
 
   /**
    * Get the transform matrix : transformMatrix = projectionMatrix * modelviewMatrix
    */
-  void getTransformMatrix(Matrix<float, 4> &transformMatrix) const {
-    transformMatrix = this->transformMatrix;
+  const MatrixGL &getTransformMatrix() const {
+    return transformMatrix;
   }
-
-  /**
-   * Get the projection and the modelview matrix generated with the given viewport
-   */
-  void getProjAndMVMatrix(const Vec4i &viewport, Matrix<float, 4> &projectionMatrix,
-                          Matrix<float, 4> &modelviewMatrix) const;
 
   /**
    * Get the transform matrix generated with the given viewport
    */
-  void getTransformMatrix(const Vec4i &viewport, Matrix<float, 4> &transformMatrix) const;
+  const MatrixGL &getTransformMatrix(const Vec4i &viewport) const;
 
   /**
    * @brief Init Gl parameters
@@ -299,9 +271,9 @@ private:
 
   GlScene *scene;
 
-  Matrix<float, 4> modelviewMatrix;
-  Matrix<float, 4> projectionMatrix;
-  Matrix<float, 4> transformMatrix;
+  MatrixGL modelviewMatrix;
+  MatrixGL projectionMatrix;
+  MatrixGL transformMatrix;
 
   bool d3;
 };

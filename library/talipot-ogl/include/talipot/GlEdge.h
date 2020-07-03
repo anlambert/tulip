@@ -20,6 +20,7 @@
 #include <talipot/GlLabel.h>
 #include <talipot/GlSceneVisitor.h>
 #include <talipot/Singleton.h>
+#include <talipot/GlTools.h>
 
 namespace tlp {
 
@@ -134,8 +135,7 @@ private:
    * Function used to compute bounding box for edge extremity.
    */
   BoundingBox eeGlyphBoundingBox(const Coord &anchor, const Coord &tgt, float glyphNrm,
-                                 const Matrix<float, 4> &transformation,
-                                 const Matrix<float, 4> &size);
+                                 const MatrixGL &transformation, const MatrixGL &size);
 
   /**
    * Compute the edge colors and store these colors in srcCol and tgtCol

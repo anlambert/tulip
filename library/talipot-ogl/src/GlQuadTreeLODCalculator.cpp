@@ -236,8 +236,7 @@ void GlQuadTreeLODCalculator::compute(const Vec4i &globalViewport, const Vec4i &
         layerToCamera.insert(pair<GlLayer *, Camera>(currentLayer, *camera));
       }
 
-      Matrix<float, 4> transformMatrix;
-      camera->getTransformMatrix(globalViewport, transformMatrix);
+      const MatrixGL &transformMatrix = camera->getTransformMatrix(globalViewport);
 
       Coord eye;
 
@@ -272,8 +271,7 @@ void GlQuadTreeLODCalculator::compute(const Vec4i &globalViewport, const Vec4i &
       LayerLODUnit *layerLODUnit = &(layersLODVector.back());
       layerLODUnit->camera = camera;
 
-      Matrix<float, 4> transformMatrix;
-      camera->getTransformMatrix(globalViewport, transformMatrix);
+      const MatrixGL &transformMatrix = camera->getTransformMatrix(globalViewport);
 
       Coord eye;
 
@@ -293,7 +291,7 @@ void GlQuadTreeLODCalculator::compute(const Vec4i &globalViewport, const Vec4i &
 }
 
 void GlQuadTreeLODCalculator::computeFor3DCamera(LayerLODUnit *layerLODUnit, const Coord &eye,
-                                                 const Matrix<float, 4> &transformMatrix,
+                                                 const MatrixGL &transformMatrix,
                                                  const Vec4i &globalViewport,
                                                  const Vec4i &currentViewport) {
 

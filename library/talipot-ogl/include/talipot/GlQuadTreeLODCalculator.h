@@ -74,7 +74,7 @@ public:
    * Specific function to compute LOD for 3D cameras
    */
   void computeFor3DCamera(LayerLODUnit *layerLODUnit, const Coord &eye,
-                          const Matrix<float, 4> &transformMatrix, const Vec4i &globalViewport,
+                          const MatrixGL &transformMatrix, const Vec4i &globalViewport,
                           const Vec4i &currentViewport) override;
 
   /**

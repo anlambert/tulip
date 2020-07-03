@@ -155,7 +155,7 @@ void GlOverviewGraphicsItem::draw(bool generatePixmap) {
     unsigned int i = 0;
 
     for (const auto &it : layerList) {
-      it.second->getCamera().loadCameraParametersWith(_oldCameras[i]);
+      it.second->getCamera() = _oldCameras[i];
       ++i;
     }
   }

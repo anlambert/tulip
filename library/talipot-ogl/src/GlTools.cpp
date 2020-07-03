@@ -237,9 +237,8 @@ GLfloat projectSize(const BoundingBox &bb, const MatrixGL &projectionMatrix,
   return size;
 }
 //====================================================
-float calculateAABBSize(const BoundingBox &bb, const Coord &eye,
-                        const Matrix<float, 4> &transformMatrix, const Vec4i &globalViewport,
-                        const Vec4i &currentViewport) {
+float calculateAABBSize(const BoundingBox &bb, const Coord &eye, const MatrixGL &transformMatrix,
+                        const Vec4i &globalViewport, const Vec4i &currentViewport) {
   BoundingBox bbTmp = bb;
   Coord src[8];
   Coord dst[8];

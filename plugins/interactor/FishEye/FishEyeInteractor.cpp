@@ -194,8 +194,7 @@ bool FishEyeInteractorComponent::draw(GlMainWidget *glWidget) {
   if (activateFishEye && fisheyeShader != nullptr && fisheyeShader->isLinked()) {
     fisheyeShader->activate();
 
-    Matrix<float, 4> modelViewMatrix;
-    camera->getModelviewMatrix(modelViewMatrix);
+    const MatrixGL &modelViewMatrix = camera->getModelViewMatrix();
     Vec4f centerCoord;
     centerCoord[0] = fisheyeCenter[0];
     centerCoord[1] = fisheyeCenter[1];

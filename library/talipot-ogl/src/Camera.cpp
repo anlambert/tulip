@@ -15,7 +15,6 @@
 
 #include <cmath>
 
-#include <talipot/GlTools.h>
 #include <talipot/GlScene.h>
 #include <talipot/GlXMLTools.h>
 
@@ -59,18 +58,6 @@ BoundingBox Camera::getBoundingBox() const {
   bb.expand(viewportTo3DWorld(Coord(viewport[0], viewport[1], 0)));
   bb.expand(viewportTo3DWorld(Coord(viewport[0] + viewport[2], viewport[1] + viewport[3], 0)));
   return bb;
-}
-//====================================================
-void Camera::move(float speed) {
-  Coord move = eyes - center;
-  move *= speed / move.norm();
-  eyes += move;
-  center += move;
-  matrixCoherent = false;
-
-  if (hasOnlookers()) {
-    sendEvent(Event(*this, Event::TLP_MODIFICATION));
-  }
 }
 //====================================================
 void Camera::rotate(float angle, float x, float y, float z) {
@@ -118,30 +105,6 @@ void Camera::rotate(float angle, float x, float y, float z) {
   // our new rotated eyes of our camera.
   eyes = center + vNewEyes;
   up = vNewUp;
-  matrixCoherent = false;
-
-  if (hasOnlookers()) {
-    sendEvent(Event(*this, Event::TLP_MODIFICATION));
-  }
-}
-//====================================================
-void Camera::strafeLeftRight(float speed) {
-  Coord strafeVector = ((eyes - center) ^ up);
-  strafeVector *= speed / strafeVector.norm();
-  center += strafeVector;
-  eyes += strafeVector;
-  matrixCoherent = false;
-
-  if (hasOnlookers()) {
-    sendEvent(Event(*this, Event::TLP_MODIFICATION));
-  }
-}
-//====================================================
-void Camera::strafeUpDown(float speed) {
-  Coord strafeVector = up;
-  strafeVector *= speed / strafeVector.norm();
-  center += strafeVector;
-  eyes += strafeVector;
   matrixCoherent = false;
 
   if (hasOnlookers()) {
@@ -279,7 +242,7 @@ void Camera::initModelView() {
 
     up2 = s / s.norm() ^ f;
 
-    Matrix<float, 4> m;
+    MatrixGL m;
     m[0][0] = s[0];
     m[1][0] = s[1];
     m[2][0] = s[2];
@@ -360,40 +323,21 @@ void Camera::setUp(const Coord &up) {
   }
 }
 //====================================================
-void Camera::getProjAndMVMatrix(const Vec4i &viewport, Matrix<float, 4> &projectionMatrix,
-                                Matrix<float, 4> &modelviewMatrix) const {
+const MatrixGL &Camera::getTransformMatrix(const Vec4i &viewport) const {
   glMatrixMode(GL_PROJECTION);
   glPushMatrix();
   glMatrixMode(GL_MODELVIEW);
   glPushMatrix();
-  // We have a cast to remove const on this
   const_cast<Camera *>(this)->initProjection(viewport);
   const_cast<Camera *>(this)->initModelView();
-  projectionMatrix = this->projectionMatrix;
-  modelviewMatrix = this->modelviewMatrix;
   glMatrixMode(GL_PROJECTION);
   glPopMatrix();
   glMatrixMode(GL_MODELVIEW);
   glPopMatrix();
-}
-//====================================================
-void Camera::getTransformMatrix(const Vec4i &viewport, Matrix<float, 4> &transformMatrix) const {
-  glMatrixMode(GL_PROJECTION);
-  glPushMatrix();
-  glMatrixMode(GL_MODELVIEW);
-  glPushMatrix();
-  // We have a cast to remove const on this
-  const_cast<Camera *>(this)->initProjection(viewport);
-  const_cast<Camera *>(this)->initModelView();
-  transformMatrix = this->transformMatrix;
-  glMatrixMode(GL_PROJECTION);
-  glPopMatrix();
-  glMatrixMode(GL_MODELVIEW);
-  glPopMatrix();
+  return transformMatrix;
 }
 //====================================================
 Coord Camera::viewportTo3DWorld(const Coord &point) const {
-  // We have a cast to remove const on this
   const_cast<Camera *>(this)->initProjection();
   const_cast<Camera *>(this)->initModelView();
 
@@ -411,7 +355,6 @@ Coord Camera::viewportTo3DWorld(const Coord &point) const {
 }
 //====================================================
 Coord Camera::worldTo2DViewport(const Coord &obj) const {
-  // We have a cast to remove const on this
   const_cast<Camera *>(this)->initProjection();
   const_cast<Camera *>(this)->initModelView();
 

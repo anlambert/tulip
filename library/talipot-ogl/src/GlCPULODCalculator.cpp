@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -82,8 +82,7 @@ void GlCPULODCalculator::compute(const Vec4i &globalViewport, const Vec4i &curre
   for (auto &it : layersLODVector) {
     Camera *camera = it.camera;
 
-    Matrix<float, 4> transformMatrix;
-    camera->getTransformMatrix(globalViewport, transformMatrix);
+    const MatrixGL &transformMatrix = camera->getTransformMatrix(globalViewport);
 
     if (camera->is3D()) {
       Coord eye = camera->getEyes() +
@@ -98,7 +97,7 @@ void GlCPULODCalculator::compute(const Vec4i &globalViewport, const Vec4i &curre
 }
 
 void GlCPULODCalculator::computeFor3DCamera(LayerLODUnit *layerLODUnit, const Coord &eye,
-                                            const Matrix<float, 4> &transformMatrix,
+                                            const MatrixGL &transformMatrix,
                                             const Vec4i &globalViewport,
                                             const Vec4i &currentViewport) {
 

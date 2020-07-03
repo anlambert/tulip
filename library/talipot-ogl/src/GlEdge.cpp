@@ -699,11 +699,8 @@ void GlEdge::getEdgeAnchor(const GlGraphInputData *data, const node src, const n
 }
 
 float GlEdge::getEdgeWidthLod(const Coord &edgeCoord, const Size &edgeSize, Camera *camera) {
-  Matrix<float, 4u> projectionMatrix;
-  Matrix<float, 4u> modelviewMatrix;
-  camera->getProjectionMatrix(projectionMatrix);
-  camera->getModelviewMatrix(modelviewMatrix);
-
+  const MatrixGL &projectionMatrix = camera->getProjectionMatrix();
+  const MatrixGL &modelviewMatrix = camera->getModelViewMatrix();
   if (edgeSize[0] != edgeSize[1]) {
     return std::max(
         std::abs(projectSize(edgeCoord, Size(edgeSize[0], edgeSize[0], edgeSize[0]),
@@ -764,10 +761,8 @@ void GlEdge::displayArrowAndAdjustAnchor(const GlGraphInputData *data, const edg
 
   if (extremityGlyph) {
 
-    MatrixGL projectionMatrix;
-    MatrixGL modelviewMatrix;
-    camera->getProjectionMatrix(projectionMatrix);
-    camera->getModelviewMatrix(modelviewMatrix);
+    const MatrixGL &projectionMatrix = camera->getProjectionMatrix();
+    const MatrixGL &modelviewMatrix = camera->getModelViewMatrix();
 
     float lod =
         projectSize(srcAnchor, size, projectionMatrix, modelviewMatrix, camera->getViewport());

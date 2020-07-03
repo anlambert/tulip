@@ -48,8 +48,8 @@ TLP_GL_SCOPE GLfloat projectSize(const BoundingBox &bb, const MatrixGL &, const 
 TLP_GL_SCOPE GLfloat projectSize(const Coord &position, const Size &size, const MatrixGL &,
                                  const MatrixGL &, const Vec4i &viewport);
 TLP_GL_SCOPE float calculateAABBSize(const BoundingBox &bb, const Coord &eye,
-                                     const Matrix<float, 4> &transformMatrix,
-                                     const Vec4i &globalViewport, const Vec4i &currentViewport);
+                                     const MatrixGL &transformMatrix, const Vec4i &globalViewport,
+                                     const Vec4i &currentViewport);
 TLP_GL_SCOPE float calculate2DLod(const BoundingBox &bb, const Vec4i &globalViewport,
                                   const Vec4i &currentViewport);
 

@@ -19,6 +19,7 @@
 #include <talipot/Coord.h>
 #include <talipot/GlLODCalculator.h>
 #include <talipot/Matrix.h>
+#include <talipot/GlTools.h>
 
 namespace tlp {
 class GlEntity;
@@ -100,8 +101,8 @@ public:
 
 protected:
   virtual void computeFor3DCamera(LayerLODUnit *layerLODUnit, const Coord &eye,
-                                  const Matrix<float, 4> &transformMatrix,
-                                  const Vec4i &globalViewport, const Vec4i &currentViewport);
+                                  const MatrixGL &transformMatrix, const Vec4i &globalViewport,
+                                  const Vec4i &currentViewport);
 
   virtual void computeFor2DCamera(LayerLODUnit *layerLODUnit, const Vec4i &globalViewport,
                                   const Vec4i &currentViewport);

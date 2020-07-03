@@ -20,6 +20,7 @@
 #include <talipot/Matrix.h>
 #include <talipot/Plugin.h>
 #include <talipot/MaterialDesignIcons.h>
+#include <talipot/GlTools.h>
 
 namespace tlp {
 
@@ -27,7 +28,6 @@ class Color;
 
 static const std::string EEGLYPH_CATEGORY = "Edge extremity";
 
-typedef Matrix<float, 4> MatrixGL;
 class GlGraphInputData;
 
 class TLP_GL_SCOPE EdgeExtremityGlyph : public Plugin {
