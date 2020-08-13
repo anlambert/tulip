@@ -5,8 +5,8 @@
 #     * Qt 5.9
 #     * Python 2.7
 #  - a "modern" Talipot build using:
-#     * recent compiler (GCC 9 on Linux, clang 9.0 from MacPorts or Homebrew on Mac OS)
-#     * Qt 5.13 on Linux, Qt 5.14 from MacPorts on MacOS, Qt 5.13 from Homebrew on Mac OS
+#     * recent compiler (GCC 9 on Linux, clang 10 from MacPorts or Homebrew on Mac OS)
+#     * Qt 5.14 on Linux, Qt 5.14 from MacPorts on MacOS, Qt 5.15 from Homebrew on Mac OS
 #     * Python 3.8 on Linux, Python 2.7 on MacOS
 # As TravisCI limits build job times to 45 minutes, Talipot is built in two successive stages
 # to avoid timeouts (which happened often with MacOs builds):
@@ -70,35 +70,26 @@ jobs:
     -
       if: commit_message !~ /\[ci-macos-only\]$/
       os: linux
-      dist: bionic
+      dist: focal
       compiler: gcc
       cache: ccache
       addons:
         apt:
-          # we get GCC 9.x and Python 3.8 from external ppas
-          sources:
-            - sourceline: "ppa:ubuntu-toolchain-r/test"
-            - sourceline: "ppa:deadsnakes/ppa"
           # install Talipot build dependencies
           packages:
-            - g++-9
             - cmake
             - ccache
             - ninja-build
             - libqhull-dev
             - libyajl-dev
-            - python3.8
-            - libpython3.8-dev
+            - python3
+            - libpython3-dev
             - libcppunit-dev
             - binutils-dev
-      before_install:
-        # force the use of GCC 9
-        - eval "${MATRIX_EVAL}"
       env:
         # use Python 3.8
-        - PYTHON_EXECUTABLE=/usr/bin/python3.8
-        # use GCC 7
-        - MATRIX_EVAL="CC=gcc-9 && CXX=g++-9"
+        - PYTHON_EXECUTABLE=/usr/bin/python3
+
       script:
         # create build directory
         - mkdir build && cd build
@@ -177,29 +168,25 @@ jobs:
     -
       if: commit_message !~ /\[ci-macos-only\]$/
       os: linux
-      dist: bionic
+      dist: focal
       compiler: gcc
       cache: ccache
       services:
         - xvfb
       addons:
         apt:
-          # we get GCC 9.x, Python 3.8 and Qt 5.13 from external ppas
           sources:
-            - sourceline: "ppa:ubuntu-toolchain-r/test"
-            - sourceline: "ppa:deadsnakes/ppa"
-            - sourceline: 'deb http://archive.neon.kde.org/user/ bionic main'
+            - sourceline: 'deb http://archive.neon.kde.org/user/ focal main'
               key_url: 'http://archive.neon.kde.org/public.key'
           # install Talipot build dependencies
           packages:
-            - g++-9
             - cmake
             - ccache
             - ninja-build
             - libqhull-dev
             - libyajl-dev
-            - python3.8
-            - libpython3.8-dev
+            - python3
+            - libpython3-dev
             - libcppunit-dev
             - binutils-dev
             - qt5-default
@@ -207,14 +194,9 @@ jobs:
             - libquazip5-dev
             - libglew-dev
             - libfreetype6-dev
-      before_install:
-        # force the use of GCC 9
-        - eval "${MATRIX_EVAL}"
       env:
         # use Python 3.8
-        - PYTHON_EXECUTABLE=/usr/bin/python3.8
-        # use GCC 9
-        - MATRIX_EVAL="CC=gcc-9 && CXX=g++-9"
+        - PYTHON_EXECUTABLE=/usr/bin/python3
       script:
         # create build directory
         - mkdir build && cd build
