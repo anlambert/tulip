@@ -53,7 +53,7 @@ bool CSVSimpleParser::parse(CSVContentHandler *handler, PluginProgress *progress
     return result;
   }
 
-  istream *csvFile = tlp::getInputFileStream(_fileName.c_str(), ifstream::in | ifstream::binary);
+  istream *csvFile = tlp::getInputFileStream(_fileName);
 
   if (*csvFile) {
     // Real row number used to

@@ -18,7 +18,7 @@ make -j4 install
 cd ..
 
 # install talipot-core wheel deps
-yum -y install zlib-devel qhull-devel ccache
+yum -y install zlib-devel libzstd-devel qhull-devel ccache
 
 # ensure python library from based system is present, even if we do
 # not link to it, as cmake will fail to find PythonLibs otherwise

@@ -32,7 +32,7 @@ class DataSet;
  * @addtogroup Plugins
  * @brief Base class for import plug-ins.
  **/
-class ImportModule : public tlp::Plugin {
+class TLP_SCOPE ImportModule : public tlp::Plugin {
 public:
   ImportModule(const tlp::PluginContext *context) {
     if (context != nullptr) {
@@ -51,7 +51,7 @@ public:
    * @return the list of file extensions the plugin can import.
    **/
   virtual std::list<std::string> fileExtensions() const {
-    return std::list<std::string>();
+    return {};
   }
 
   /**
@@ -61,7 +61,23 @@ public:
    * @return the list of gzipped file extensions the plugin can import.
    **/
   virtual std::list<std::string> gzipFileExtensions() const {
-    return std::list<std::string>();
+    std::list<std::string> gzipExtensions;
+    for (const auto &ext : fileExtensions()) {
+      for (const std::string &gzExt : {".gz", "z"}) {
+        gzipExtensions.push_back(ext + gzExt);
+      }
+    }
+    return gzipExtensions;
+  }
+
+  virtual std::list<std::string> zstdFileExtensions() const {
+    std::list<std::string> zstdExtensions;
+    for (const auto &ext : fileExtensions()) {
+      for (const std::string &zstExt : {".zst", "zst"}) {
+        zstdExtensions.push_back(ext + zstExt);
+      }
+    }
+    return zstdExtensions;
   }
 
   /**
@@ -71,8 +87,10 @@ public:
    **/
   std::list<std::string> allFileExtensions() const {
     std::list<std::string> zext(gzipFileExtensions());
+    std::list<std::string> zstext(zstdFileExtensions());
     std::list<std::string> ext(fileExtensions());
     ext.splice(ext.end(), zext);
+    ext.splice(ext.end(), zstext);
     return ext;
   }
 
@@ -105,6 +123,20 @@ public:
    * @brief A container for the parameters of this import plug-in.
    **/
   DataSet *dataSet;
+
+protected:
+  struct InputData {
+    InputData(std::istream *is = nullptr, size_t size = 0, const std::string &filename = "")
+        : is(is), size(size), filename(filename) {}
+    bool valid() const {
+      return is.get() != nullptr;
+    }
+    std::unique_ptr<std::istream> is;
+    size_t size;
+    std::string filename;
+  };
+
+  InputData getInputData() const;
 };
 }
 #endif // TALIPOT_IMPORT_MODULE_H

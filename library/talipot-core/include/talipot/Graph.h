@@ -64,91 +64,103 @@ enum ElementType {
 
 /**
  * @ingroup Graph
- * @brief Loads a graph from a file (extension can be any of the Talipot supported input graph file
- *format).
+ * @brief Loads a graph from a file
  *
- * This function loads a graph serialized in a file trough the available Talipot import plugins.
+ * This function loads a graph serialized in a file through one of the available
+ * Talipot import plugins.
+ *
  * The selection of the import plugin is based on the provided filename extension.
+ * The graph file formats that can be imported from a standard Talipot installation
+ * are: TLP (*.tlp), TLP Binary (*.tlpb), TLP JSON (*.json), Gephi (*.gexf),
+ * Pajek (*.net, *.paj), GML (*.gml), Graphviz (*.dot) and UCINET (*.txt).
+ *
+ * Apart for the Gephi and Graphviz formats, the function can also import a graph
+ * file compressed with zlib (filename must be suffixed by ".gz" or "z") or Zstandard
+ * (filename must be suffixed by ".zst" or "zst").
+ *
  * The import will fail if the selected import plugin is not loaded.
- * The graph file formats that can currently be imported are : TLP (*.tlp, *.tlp.gz, *.tlpz), TLP
- *Binary (*.tlpb, *.tlpb.gz, *.tlpbz), TLP JSON (*.json),
- * Gephi (*.gexf), Pajek (*.net, *.paj), GML (*.gml), Graphviz (*.dot) and UCINET (*.txt)
  *
  * As a fallback, the function uses the "TLP Import" import plugin
- * (always loaded as it is linked into the talipot-core library).
+ * (always loaded as it is contained in the talipot-core library).
  *
  * If the import fails (no such file, parse error, ...) nullptr is returned.
  *
- * @param filename the file in one of the supported formats to parse.
- * @return Graph* the imported Graph, nullptr if the import failed.
+ * @param filename path to a graph file to import
+ * @param progress to report the progress of the operation
+ * @param graph optional graph to import the data into (useful to import data into a
+ * subgraph)
+ * @return the imported graph or nullptr if the import failed
  **/
-TLP_SCOPE Graph *loadGraph(const std::string &filename, tlp::PluginProgress *progress = nullptr);
+TLP_SCOPE Graph *loadGraph(const std::string &filename, tlp::PluginProgress *progress = nullptr,
+                           tlp::Graph *graph = nullptr);
 
 /**
  * @ingroup Graph
- * @brief Saves the corresponding graph to a file (extension can be any of the Talipot supported
- *output graph file format)..
+ * @brief Saves the corresponding graph to a file
  *
- * This function serializes the corresponding graph and all its subgraphs (depending on the format)
- *to a file
- * through the available Talipot export plugins.
+ * This function serializes the corresponding graph and all its subgraphs
+ * (depending on the format) to a file through the available Talipot export plugins.
+ *
  * The selection of the export plugin is based on the provided filename extension.
+ * The file formats a graph can be exported to from a standard Talipot installation
+ * are: TLP (*.tlp), TLP Binary (*.tlpb), TLP JSON (*.json), GML (*.gml) and CSV (*.csv).
+ *
+ * The function can also export to a file compressed using zlib (filename must be
+ * suffixed by ".gz" or "z") or Zstandard (filename must be suffixed by ".zst" or "zst").
+ *
  * The export will fail if the selected export plugin is not loaded.
  *
  * As a fallback, this function uses the "TLP Export" export plugin
- * (always loaded as it is linked into the talipot-core library).
+ * (always loaded as it is contained into the talipot-core library).
  *
- * @param graph the graph to save.
- * @param filename the file to save the graph to.
- * @param progress  PluginProgress to report the progress of the operation, as well as final state.
- *Defaults to nullptr.
- * @param data Parameters to pass to the export plugin (e.g. additional data, options for the
- *format)
- * @return bool whether the export was successful or not.
+ * @param graph the graph to save
+ * @param filename the file to save the graph to
+ * @param progress to report the progress of the operation
+ * @param parameters parameters to pass to the export plugin (e.g. additional data,
+ * options for the format)
+ * @return whether the export was successful or not
  **/
 TLP_SCOPE bool saveGraph(Graph *graph, const std::string &filename,
-                         tlp::PluginProgress *progress = nullptr, tlp::DataSet *data = nullptr);
+                         tlp::PluginProgress *progress = nullptr,
+                         tlp::DataSet *parameters = nullptr);
 
 /**
  * @ingroup Graph
- * @brief Exports a graph using the specified export plugin with parameters stored in the DataSet.
+ * @brief Exports a graph using the specified export plugin with parameters
  *
- * You determine the destination, whether by using a fstream, or by saving the contents of the
- *stream to the destination of your choice.
+ * You determine the destination, whether by using a file stream or any other
+ * stream type (string stream for instance).
  *
- * @param graph The graph to export.
- * @param outputStream The stream to export to. Can be a standard ostream, an ofstream, or even a
- *gzipped ostream.
- * @param format The format to use to export the Graph.
- * @param dataSet Parameters to pass to the export plugin (e.g. additional data, options for the
- *format)
- * @param progress A PluginProgress to report the progress of the operation, as well as final state.
- *Defaults to nullptr.
- * @return bool Whether the export was successful or not.
+ * @param graph the graph to export
+ * @param os the stream to export data into (can be a standard ostream, an ofstream,
+ * or even a compressed ostream)
+ * @param format The format to use to export the graph
+ * @param parameters parameters to pass to the export plugin (e.g. additional data,
+ * options for the format)
+ * @param progress a PluginProgress to report the progress of the operation
+ * @return whether the export was successful or not
  **/
-TLP_SCOPE bool exportGraph(Graph *graph, std::ostream &outputStream, const std::string &format,
-                           DataSet &dataSet, PluginProgress *progress = nullptr);
+TLP_SCOPE bool exportGraph(Graph *graph, std::ostream &os, const std::string &format,
+                           DataSet &parameters, PluginProgress *progress = nullptr);
 
 /**
  * @ingroup Graph
- * @brief Imports a graph using the specified import plugin with the parameters stored in the
- *DataSet.
+ * @brief Imports a graph using the specified import plugin with parameters
  *
- * If no graph is passed, then a new graph will be created. You can pass a graph in order to import
- *data into it.
- * Returns the graph with imported data, or nullptr if the import failed. In this case, the
- *Pluginprogress should have an error that can be displayed.
+ * If no graph is passed, then a new graph will be created.
+ * You can pass a graph in order to import data into it.
  *
- * @param format The format to use to import the graph.
- * @param dataSet The parameters to pass to the import plugin (file to read, ...)
- * @param progress A PluginProgress to report the progress of the operation, as well as final state.
- *Defaults to nullptr.
- * @param newGraph The graph to import the data into. This can be useful to import data into a
- *subgraph. Defaults to nullptr.
- * @return :Graph* The graph containing the imported data, or nullptr in case of failure.
+ * Returns the graph with imported data, or nullptr if the import failed.
+ * In this case, the PluginProgress should have an error that can be displayed.
+ *
+ * @param format the format to use to import the graph
+ * @param parameters the parameters to pass to the import plugin (file to read, ...)
+ * @param progress a PluginProgress to report the progress of the operation
+ * @param graph optional graph to import the data into (useful to import data into a subgraph)
+ * @return the graph containing the imported data, or nullptr in case of failure
  **/
-TLP_SCOPE Graph *importGraph(const std::string &format, DataSet &dataSet,
-                             PluginProgress *progress = nullptr, Graph *newGraph = nullptr);
+TLP_SCOPE Graph *importGraph(const std::string &format, DataSet &parameters,
+                             PluginProgress *progress = nullptr, Graph *graph = nullptr);
 
 /**
  * @ingroup Graph

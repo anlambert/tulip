@@ -60,6 +60,19 @@ if %errorlevel% neq 0 exit /b %errorlevel%
 msbuild INSTALL.vcxproj /m /clp:ErrorsOnly /p:Configuration=Release %CLCACHE_MSBUILD_CONF%
 if %errorlevel% neq 0 exit /b %errorlevel%
 
+rem get, compile and install zstd
+curl -LO https://github.com/facebook/zstd/releases/download/v1.4.5/zstd-1.4.5.tar.gz
+if %errorlevel% neq 0 exit /b %errorlevel%
+7z x zstd-1.4.5.tar.gz -so | 7z x -aoa -si -ttar
+cd zstd-1.4.5/build/cmake
+md build && cd build
+cmake -G "%CMAKE_VS_GENERATOR%" -DCMAKE_INSTALL_PREFIX="C:/talipot_dependencies" ..
+if %errorlevel% neq 0 exit /b %errorlevel%
+msbuild INSTALL.vcxproj /m /clp:ErrorsOnly /p:Configuration=Release %CLCACHE_MSBUILD_CONF%
+rem Fix zstd cmake bug not installing dll (fixed upstream but not released yet)
+copy lib\Release\zstd.dll C:\talipot_dependencies\bin\
+if %errorlevel% neq 0 exit /b %errorlevel%
+
 rem get, compile and install cppunit
 cd C:/talipot_dependencies
 git clone git://anongit.freedesktop.org/git/libreoffice/cppunit/

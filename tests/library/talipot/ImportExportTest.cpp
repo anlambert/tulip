@@ -49,7 +49,7 @@ void ImportExportTest::setUp() {
 void ImportExportTest::testgridImportExport() {
   Graph *original = createSimpleGraph();
 
-  importExportGraph(original);
+  exportImportGraph(original);
 
   delete original;
 }
@@ -57,7 +57,7 @@ void ImportExportTest::testgridImportExport() {
 void ImportExportTest::testgridImportExportNonAsciiPath() {
   Graph *original = createSimpleGraph();
 
-  importExportGraph(original, "graph_export_éà");
+  exportImportGraph(original, "graph_export_éà");
 
   delete original;
 }
@@ -153,7 +153,7 @@ void ImportExportTest::testAttributes() {
   original->setAttribute("set<edge>", setEdge);
   original->setAttribute("tlp::DataSet", dataSet);
 
-  importExportGraph(original);
+  exportImportGraph(original);
 
   delete original;
 }
@@ -219,10 +219,10 @@ void ImportExportTest::testSubGraphsImportExport() {
     subsubid->setNodeValue(n, i++);
   }
 
-  importExportGraph(original);
-  importExportGraph(sub1);
-  importExportGraph(sub2);
-  importExportGraph(subsub);
+  exportImportGraph(original);
+  exportImportGraph(sub1);
+  exportImportGraph(sub2);
+  exportImportGraph(subsub);
 
   delete original;
 }
@@ -403,7 +403,7 @@ void ImportExportTest::testNanInfValuesImportExport() {
   value.push_back(-numeric_limits<float>::infinity());
   doubleVecProp->setAllNodeValue(value);
 
-  importExportGraph(original);
+  exportImportGraph(original);
   delete original;
 }
 
@@ -427,35 +427,46 @@ void ImportExportTest::testMetaGraphImportExport() {
 
   // test the root graph and its meta information are correctly
   // exported then imported
-  importExportGraph(graph);
+  exportImportGraph(graph);
   // test the groups subgraph without meta information is correctly
   // exported then imported
-  importExportGraph(groups);
+  exportImportGraph(groups);
   delete graph;
 }
 
-void ImportExportTest::importExportGraph(tlp::Graph *original, const string &exportFilename) {
+void ImportExportTest::exportImportGraph(tlp::Graph *original, const string &exportBaseFilename) {
 
-  exportGraph(original, exportAlgorithm, exportFilename);
+  const ExportModule &exportPlugin =
+      static_cast<const ExportModule &>(PluginsManager::pluginInformation(exportAlgorithm));
 
-  Graph *imported = importGraph(importAlgorithm, exportFilename);
+  vector<string> exts = {exportPlugin.fileExtension(), exportPlugin.gzipFileExtensions().front(),
+                         exportPlugin.zstdFileExtensions().front()};
 
-  // When exporting a leaf subgraph in the hierarchy containing meta-nodes,
-  // it should be exported as a graph without meta-nodes and meta-edges
-  // as the nodes and edges contained in those are not elements of the
-  // exported graph.
-  // So we remove meta information in the exported graph in order to successfully
-  // tests its equality with the imported graph.
-  if (original != original->getSuperGraph() && original->numberOfSubGraphs() == 0 &&
-      original->existProperty("viewMetaGraph")) {
-    GraphProperty *viewMetaGraph = original->getGraphProperty("viewMetaGraph");
-    viewMetaGraph->setAllNodeValue(nullptr, original);
-    viewMetaGraph->setAllEdgeValue(set<edge>(), original);
+  for (auto ext : exts) {
+
+    string exportFilename = exportBaseFilename + "." + ext;
+
+    tlp::saveGraph(original, exportFilename);
+
+    Graph *imported = tlp::loadGraph(exportFilename);
+
+    // When exporting a leaf subgraph in the hierarchy containing meta-nodes,
+    // it should be exported as a graph without meta-nodes and meta-edges
+    // as the nodes and edges contained in those are not elements of the
+    // exported graph.
+    // So we remove meta information in the exported graph in order to successfully
+    // tests its equality with the imported graph.
+    if (original != original->getSuperGraph() && original->numberOfSubGraphs() == 0 &&
+        original->existProperty("viewMetaGraph")) {
+      GraphProperty *viewMetaGraph = original->getGraphProperty("viewMetaGraph");
+      viewMetaGraph->setAllNodeValue(nullptr, original);
+      viewMetaGraph->setAllEdgeValue(set<edge>(), original);
+    }
+
+    testGraphsAreEqual(original, imported);
+
+    delete imported;
   }
-
-  testGraphsAreEqual(original, imported);
-
-  delete imported;
 }
 
 void ImportExportTest::exportGraph(tlp::Graph *graph, const std::string &exportPluginName,
@@ -465,11 +476,9 @@ void ImportExportTest::exportGraph(tlp::Graph *graph, const std::string &exportP
   if ((filename.rfind(".gz") == (filename.length() - 3)) ||
       (filename.rfind(".tlpz") == (filename.length() - 5)) ||
       (filename.rfind(".tlpbz") == (filename.length() - 6))) {
-    os = tlp::getOgzstream(filename);
-  } else if (exportPluginName != "TLPB Export") {
-    os = tlp::getOutputFileStream(filename);
+    os = tlp::getZlibOutputFileStream(filename);
   } else {
-    os = tlp::getOutputFileStream(filename, ios::out | ios::binary);
+    os = tlp::getOutputFileStream(filename);
   }
 
   DataSet set;

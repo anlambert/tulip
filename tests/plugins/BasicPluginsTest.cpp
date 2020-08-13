@@ -11,6 +11,7 @@
  *
  */
 
+#include <list>
 #include <sstream>
 
 #include "BasicPluginsTest.h"
@@ -170,8 +171,7 @@ void BasicPluginsTest::testExportImportTLPB() {
   ds.set("file::filename", string("data/tlp_importexport_test.tlp"));
   Graph *g = importGraph("TLP Import", ds, nullptr, graph);
   CPPUNIT_ASSERT(g == graph);
-  std::ostream *os =
-      tlp::getOutputFileStream("tlpb_importexport_test.tlpb", std::ios::out | std::ios::binary);
+  std::ostream *os = tlp::getOutputFileStream("tlpb_importexport_test.tlpb");
   CPPUNIT_ASSERT(exportGraph(graph, *os, "TLPB Export", ds, nullptr));
   delete os;
   tearDown();
@@ -224,18 +224,16 @@ void BasicPluginsTest::testImportAdjacencyMatrix() {
 //==========================================================
 void BasicPluginsTest::testImportPajek() {
   // test all data/*.net files
-  const char *net_files[] = {"data/NDActors.net", "data/NDwww.net", "data/netscience.net", nullptr};
-  const char **files = &net_files[0];
+  list<string> net_files = {"data/NDactors.net", "data/NDwww.net", "data/netscience.net"};
 
-  while (files[0]) {
+  for (const auto &file : net_files) {
     DataSet ds;
-    ds.set("file::filename", string(files[0]));
-    std::cout << "importing Pajek file: " << files[0] << "...";
+    ds.set("file::filename", string(file));
+    std::cout << "importing Pajek file: " << file << "...";
     Graph *g = importGraph("Pajek", ds, nullptr, graph);
     CPPUNIT_ASSERT(g == graph);
     std::cout << " OK" << std::endl;
     g->clear();
-    files += 1;
   }
 }
 //==========================================================

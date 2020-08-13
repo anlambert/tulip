@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -97,53 +97,17 @@ static int parse_end_array(void *ctx) {
   return 1;
 }
 
-void YajlParseFacade::parse(std::string filename) {
-  // check if file exists
-  tlp_stat_t infoEntry;
-  bool result = tlp::statPath(filename, &infoEntry) == 0;
-
-  if (!result) {
-    std::stringstream ess;
-    ess << filename.c_str() << ": " << strerror(errno);
-    _errorMessage = ess.str();
-    _parsingSucceeded = false;
-    return;
-  }
-
-  // open a stream
-  std::istream *ifs = tlp::getInputFileStream(filename.c_str(), std::ifstream::in |
-                                                                    // consider file is binary
-                                                                    // to avoid pb using tellg
-                                                                    // on the input stream
-                                                                    std::ifstream::binary);
-
-  // get length of file:
-  ifs->seekg(0, std::ios::end);
-  int fileLength = ifs->tellg();
-  ifs->seekg(0, std::ios::beg);
-
-  // allocate memory:
-  char *fileData = new char[fileLength];
-
-  // read data as a block:
-  ifs->read(fileData, fileLength);
-  delete ifs;
-
-  parse(reinterpret_cast<const unsigned char *>(fileData), fileLength);
-
-  delete[] fileData;
-}
-
-void YajlParseFacade::parse(const unsigned char *data, int length) {
+void YajlParseFacade::parse(const char *data, int length) {
   const yajl_callbacks callbacks = {parse_null,        parse_boolean,  parse_integer,
                                     parse_double,      nullptr,        parse_string,
                                     parse_start_map,   parse_map_key,  parse_end_map,
                                     parse_start_array, parse_end_array};
   yajl_handle hand = yajl_alloc(&callbacks, nullptr, this);
-  yajl_status stat = yajl_parse(hand, data, length);
+  yajl_status stat = yajl_parse(hand, reinterpret_cast<const unsigned char *>(data), length);
 
   if (stat != yajl_status_ok) {
-    unsigned char *str = yajl_get_error(hand, 1, data, length);
+    unsigned char *str =
+        yajl_get_error(hand, 1, reinterpret_cast<const unsigned char *>(data), length);
     _parsingSucceeded = false;
     _errorMessage = std::string(reinterpret_cast<const char *>(str));
     yajl_free_error(hand, str);

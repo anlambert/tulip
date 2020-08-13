@@ -80,9 +80,7 @@ public:
   }
 
   std::list<std::string> fileExtensions() const override {
-    std::list<std::string> l;
-    l.push_back("gexf");
-    return l;
+    return {"gexf"};
   }
 
   // import plugins must implement bool importGraph()

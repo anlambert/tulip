@@ -34,15 +34,14 @@ public:
 
   virtual ~YajlParseFacade() {}
   /**
-   * @brief Parses a JSON file.
-   * Once this function is called, the callbacks (all the parse* functions) will get called when the
-   *corresponding event happens.
+   * @brief Parses JSON data.
+   * Once this function is called, the callbacks (all the parse*
+   * functions) will get called when the corresponding event happens.
    *
-   * @param filename The file to parse.
-   * @return void
+   * @param jsonData JSON data to parse
+   * @param length JSON data length in bytes
    **/
-  void parse(std::string filename);
-  void parse(const unsigned char *data, int length);
+  void parse(const char *jsonData, int length);
 
   virtual void parseNull();
   virtual void parseBoolean(bool boolVal);

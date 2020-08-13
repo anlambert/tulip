@@ -16,7 +16,7 @@ yum -y install centos-release-scl
 yum -y install devtoolset-8-gcc devtoolset-8-gcc-c++
 
 # install talipot deps
-yum -y install zlib-devel qhull-devel yajl-devel binutils-devel
+yum -y install zlib-devel libzstd-devel qhull-devel yajl-devel binutils-devel
 yum -y install freetype-devel glew-devel
 yum -y install python36-devel python36-pip
 yum -y install qt5-qtbase-devel qt5-qtimageformats qt5-qtsvg quazip-qt5-devel qt5-qtwebkit-devel

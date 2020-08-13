@@ -207,9 +207,7 @@ public:
                     "(<b>http://www.analytictech.com/ucinet/documentation/reference.rtf</b></p>)",
                     "1.0", "File")
   std::list<std::string> fileExtensions() const override {
-    std::list<std::string> l;
-    l.push_back("txt");
-    return l;
+    return {"txt"};
   }
   ImportUCINET(const tlp::PluginContext *context)
       : ImportModule(context), nbNodes(0), defaultMetric("weight"), n(0), nr(0), nc(0), nm(0),
@@ -942,17 +940,14 @@ public:
   }
 
   bool importGraph() override {
-    string filename;
 
-    dataSet->get<string>("file::filename", filename);
-    dataSet->get<string>("Default metric", defaultMetric);
+    auto inputData = getInputData();
 
-    if (filename.empty()) {
-      pluginProgress->setError("Filename is empty.");
+    if (!inputData.valid()) {
       return false;
     }
 
-    std::istream *in = tlp::getInputFileStream(filename.c_str());
+    dataSet->get<string>("Default metric", defaultMetric);
 
     stringstream errors;
     size_t lineNumber = 0;
@@ -971,7 +966,7 @@ public:
     const std::vector<node> &nodes = graph->nodes();
     std::string line;
 
-    while (!in->eof() && std::getline(*in, line)) {
+    while (!inputData.is->eof() && std::getline(*inputData.is, line)) {
       bool result = false;
 
       ++lineNumber;
@@ -1067,25 +1062,21 @@ public:
 
       if (result == false) {
         errors << endl;
-        errors << "error found while parsing file : " << filename << endl;
+        errors << "error found while parsing file : " << inputData.filename << endl;
         errors << "at line " << lineNumber << endl;
 
         if (pluginProgress) {
           pluginProgress->setError(errors.str());
         }
-
-        delete in;
         return false;
       }
 
       if (pluginProgress && ((lineNumber % 100) == 0) &&
           (pluginProgress->progress(lineNumber, 3 * nbNodes) != TLP_CONTINUE)) {
-        delete in;
         return false;
       }
     }
 
-    delete in;
     return true;
   }
 };

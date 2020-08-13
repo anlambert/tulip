@@ -92,25 +92,6 @@ inline std::string demangleTlpClassName(const char *className) {
 }
 
 /**
- * @brief Returns an istream to read from a gzipped file (uses gzstream lib).
- * The stream has to be deleted after use.
- * @param name The name of the file to read from.
- * @param open_mode The mode to open the file with. Defaults to std::ios::in.
- * @return istream gzipped input stream from a file.
- */
-TLP_SCOPE std::istream *getIgzstream(const std::string &name, int open_mode = std::ios::in);
-
-/**
- * @brief Returns an ostream to write to a gzipped file (uses gzstream lib).
- * The stream has to be deleted after use.
- * @warning Don't forget to check the stream with ios::bad()!
- * @param name The name of the file to write to.
- * @param open_mode The mode to open the file with. Defaults to std::ios::out.
- * @return ostream gzipped output stream to a file.
- */
-TLP_SCOPE std::ostream *getOgzstream(const std::string &name, int open_mode = std::ios::out);
-
-/**
  * @brief Gives the value of the seed used for further initialization
  * of a random sequence (with further calls to rand() or random()).
  * @param seed the value of the seed.
@@ -148,34 +129,88 @@ TLP_SCOPE unsigned int randomUnsignedInteger(unsigned int max);
 TLP_SCOPE double randomDouble(double max = 1.0);
 
 /**
- * @brief Cross-platform function to stat a path on a filesystem. Its purpose is to support
- * paths on windows platform containing non-ascii characters.
+ * @brief Cross-platform function to stat a path on a filesystem.
+ *
+ * Its purpose is to support paths on windows platform containing non-ascii characters.
+ *
  * @param pathname an utf-8 encoded string containing the path name to stat
  * @param buf a pointer to a tlp_stat_t structure (a typedef for struct stat)
  */
 TLP_SCOPE int statPath(const std::string &pathname, tlp_stat_t *buf);
 
 /**
- * @brief Cross-platform function to get an input file stream. Its purpose is to support
- * paths on windows platform containing non-ascii characters.
- * @param filename an utf-8 encoded string containing the path of the file to open for performing
- * input operations
- * @param open_mode the stream opening mode flags (bitwise combination of std::ios_base::openmode
- * constants).
+ * @brief Cross-platform function to get an input file stream.
+ *
+ * Its purpose is to support paths on windows platform containing non-ascii characters.
+ *
+ * @param filename an utf-8 encoded string containing the path of the file to open
+ * for performing input operation
+ * @param mode the stream opening mode flags (bitwise combination of
+ * std::ios_base::openmode constants)
  */
 TLP_SCOPE std::istream *getInputFileStream(const std::string &filename,
-                                           std::ios_base::openmode open_mode = std::ios::in);
+                                           std::ios_base::openmode mode = std::ios::in |
+                                                                          std::ios::binary);
 
 /**
- * @brief Cross-platform function to get an output file stream. Its purpose is to support
- * paths on windows platform containing non-ascii characters.
- * @param filename an utf-8 encoded string containing the path of the file to open for performing
- * output operations
- * @param open_mode the stream opening mode flags (bitwise combination of std::ios_base::openmode
- * constants).
+ * @brief Cross-platform function to get an output file stream.
+ *
+ * Its purpose is to support paths on windows platform containing non-ascii characters.
+ *
+ * @param filename an utf-8 encoded string containing the path of the file to open
+ * for performing output operations
+ * @param mode the stream opening mode flags (bitwise combination of
+ * std::ios_base::openmode constants)
  */
 TLP_SCOPE std::ostream *getOutputFileStream(const std::string &filename,
-                                            std::ios_base::openmode open_mode = std::ios::out);
+                                            std::ios_base::openmode mode = std::ios::out |
+                                                                           std::ios::binary);
+
+/**
+ * @brief Returns an input stream to read from a zlib compressed file
+ * (uses gzstream lib, a C++ stream wrapper around zlib).
+ *
+ * The stream has to be deleted after use.
+ *
+ * @param filename the name of the file to read from
+ * @return input stream for a zlib compressed file
+ */
+TLP_SCOPE std::istream *getZlibInputFileStream(const std::string &filename);
+
+/**
+ * @brief Returns an output stream to write to a zlib compressed file
+ * (uses gzstream lib, a C++ stream wrapper around zlib).
+ *
+ * The stream has to be deleted after use.
+ *
+ * @param filename the name of the file to write to
+ * @return output stream for a zlib compressed file
+ */
+TLP_SCOPE std::ostream *getZlibOutputFileStream(const std::string &filename);
+
+/**
+ * @brief Returns an input stream to read from a Zstandard compressed file
+ * (uses ZstdStream, a C++ stream wrapper around zstd).
+ *
+ * The stream has to be deleted after use.
+ *
+ * @param filename the name of the file to read from
+ * @return input stream for a Zstandard compressed file
+ */
+TLP_SCOPE std::istream *getZstdInputFileStream(const std::string &filename);
+
+/**
+ * @brief Returns an output stream to write to a Zstandard compressed file
+ * (uses ZstdStream, a C++ stream wrapper around zstd).
+ *
+ * The stream has to be deleted after use.
+ *
+ * @param filename the name of the file to write to
+ * @param compressionLevel zstd compression level to used (1 to 22)
+ * @return output stream for a Zstandard compressed file
+ */
+TLP_SCOPE std::ostream *getZstdOutputFileStream(const std::string &filename,
+                                                int compressionLevel = 3);
 
 }
 #endif // TALIPOT_TLP_TOOLS_H

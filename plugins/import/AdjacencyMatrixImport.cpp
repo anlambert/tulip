@@ -134,7 +134,7 @@ Defines a graph with 3 nodes and 3 edges, the edge between A and C is named E an
       return false;
     }
 
-    std::istream *in = tlp::getInputFileStream(name2.c_str());
+    std::istream *in = tlp::getInputFileStream(name2);
     unsigned int curLine = 0;
     DoubleProperty *metric = graph->getDoubleProperty("viewMetric");
     StringProperty *stringP = graph->getStringProperty("viewLabel");

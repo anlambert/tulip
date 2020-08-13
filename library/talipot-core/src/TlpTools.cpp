@@ -42,6 +42,8 @@
 #endif
 
 #include <gzstream.h>
+#include <zststream.h>
+
 #include <talipot/Exception.h>
 #include <talipot/TlpTools.h>
 #include <talipot/Plugin.h>
@@ -325,25 +327,6 @@ static std::wstring u16stringToWstring(const std::u16string &s) {
 }
 #endif
 
-//=========================================================
-std::istream *tlp::getIgzstream(const std::string &name, int open_mode) {
-#if defined(WIN32) && ZLIB_VERNUM >= 0x1270
-  std::wstring utf16name = u16stringToWstring(utf8::utf8to16(name));
-  return new igzstream(utf16name.c_str(), open_mode);
-#else
-  return new igzstream(name.c_str(), open_mode);
-#endif
-}
-
-std::ostream *tlp::getOgzstream(const std::string &name, int open_mode) {
-#if defined(WIN32) && ZLIB_VERNUM >= 0x1270
-  std::wstring utf16name = u16stringToWstring(utf8::utf8to16(name));
-  return new ogzstream(utf16name.c_str(), open_mode);
-#else
-  return new ogzstream(name.c_str(), open_mode);
-#endif
-}
-
 // random sequence management
 //=========================================================
 
@@ -403,6 +386,7 @@ double tlp::randomDouble(double max) {
   return dist(mt);
 }
 
+// file streams management
 //=========================================================
 
 int tlp::statPath(const std::string &pathname, tlp_stat_t *buf) {
@@ -529,26 +513,57 @@ std::istream *tlp::getInputFileStream(const std::string &filename, std::ios_base
 
 //=========================================================
 
-std::ostream *tlp::getOutputFileStream(const std::string &filename,
-                                       std::ios_base::openmode open_mode) {
+std::ostream *tlp::getOutputFileStream(const std::string &filename, std::ios_base::openmode mode) {
 #ifndef WIN32
   // On Linux and Mac OS, UTF-8 encoded paths are supported by std::ofstream
-  return new std::ofstream(filename.c_str(), open_mode);
+  return new std::ofstream(filename.c_str(), mode);
 #else
   // On Windows, the path name (possibly containing non ascii characters) has to be converted to
   // UTF-16 in order to open a stream
   std::wstring utf16filename = u16stringToWstring(utf8::utf8to16(filename));
 #ifdef __GLIBCXX__
   // With MinGW, it's a little bit tricky to get an output stream
-  return new wofilestream(utf16filename, open_mode);
+  return new wofilestream(utf16filename, mode);
 #elif defined(_MSC_VER)
   // Visual Studio has wide char version of std::ofstream
-  return new std::ofstream(utf16filename.c_str(), open_mode);
+  return new std::ofstream(utf16filename.c_str(), mode);
 #else
   // Fallback
-  return new std::ofstream(filename.c_str(), open_mode);
+  return new std::ofstream(filename.c_str(), mode);
 #endif
 #endif
 }
 
 //=========================================================
+
+std::istream *tlp::getZlibInputFileStream(const std::string &filename) {
+#if defined(WIN32) && ZLIB_VERNUM >= 0x1270
+  std::wstring utf16filename = u16stringToWstring(utf8::utf8to16(filename));
+  return new igzstream(utf16filename.c_str(), ios::in | ios::binary);
+#else
+  return new igzstream(filename.c_str(), ios::in | ios::binary);
+#endif
+}
+
+//=========================================================
+
+std::ostream *tlp::getZlibOutputFileStream(const std::string &filename) {
+#if defined(WIN32) && ZLIB_VERNUM >= 0x1270
+  std::wstring utf16filename = u16stringToWstring(utf8::utf8to16(filename));
+  return new ogzstream(utf16filename.c_str(), ios::out | ios::binary);
+#else
+  return new ogzstream(filename.c_str(), ios::out | ios::binary);
+#endif
+}
+
+//=========================================================
+
+std::istream *tlp::getZstdInputFileStream(const std::string &filename) {
+  return new zstd::ZstdIStream(getInputFileStream(filename));
+}
+
+//=========================================================
+
+std::ostream *tlp::getZstdOutputFileStream(const std::string &filename, int compressionLevel) {
+  return new zstd::ZstdOStream(getOutputFileStream(filename), compressionLevel);
+}

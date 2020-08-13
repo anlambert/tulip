@@ -30,6 +30,7 @@ SET(talipot_LIB_SRCS
     GraphView.cpp
     IconicFont.cpp
     IdManager.cpp
+    ImportModule.cpp
     IntegerProperty.cpp
     LayoutProperty.cpp
     MapIterator.cpp
@@ -110,7 +111,9 @@ INCLUDE_DIRECTORIES(
   ${YAJL_INCLUDE_DIRS}
   ${QHULL_INCLUDE_DIRS}
   ${GZStreamInclude}
-  ${UTF8CppInclude})
+  ${UTF8CppInclude}
+  ${zstd_INCLUDE_DIRS}
+  ${ZstdStreamInclude})
 
 ADD_CUSTOM_COMMAND(
   OUTPUT
@@ -140,8 +143,10 @@ SET_SOURCE_FILES_PROPERTIES(
 ADD_LIBRARY(${LibTalipotCoreName} SHARED ${talipot_LIB_SRCS}
                                          ../include/talipot/Release.h)
 
-TARGET_LINK_LIBRARIES(${LibTalipotCoreName} ${GZStreamLibrary}
-                      ${YAJL_LIBRARIES} ${QHULL_LIBRARIES} ${CMAKE_DL_LIBS})
+TARGET_LINK_LIBRARIES(
+  ${LibTalipotCoreName} ${GZStreamLibrary} ${YAJL_LIBRARIES} ${QHULL_LIBRARIES}
+  ${zstd_LIBRARIES} ${CMAKE_DL_LIBS})
+
 IF(WIN32)
   IF(MSVC)
     TARGET_LINK_LIBRARIES(${LibTalipotCoreName} Dbghelp)

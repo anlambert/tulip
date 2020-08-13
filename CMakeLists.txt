@@ -237,6 +237,9 @@ IF(NOT EMSCRIPTEN)
 
 ENDIF(NOT EMSCRIPTEN)
 
+# Zstd
+FIND_PACKAGE(Zstd REQUIRED)
+
 # Qhull
 FIND_PACKAGE(Qhull)
 
@@ -283,6 +286,7 @@ INCLUDE(cmake/TalipotPython.cmake)
 # ========================================================
 SET(GZStreamInclude ${PROJECT_SOURCE_DIR}/thirdparty/gzstream/)
 SET(GZStreamLibrary gzstream-talipot-${TalipotMMVersion})
+SET(ZstdStreamInclude ${PROJECT_SOURCE_DIR}/thirdparty/ZstdStream/)
 IF(NOT TALIPOT_BUILD_CORE_ONLY OR TALIPOT_BUILD_OGL)
   SET(FTGLInclude ${PROJECT_SOURCE_DIR}/thirdparty/ftgl/)
   SET(FTGLLibrary ftgl-talipot-${TalipotMMVersion})

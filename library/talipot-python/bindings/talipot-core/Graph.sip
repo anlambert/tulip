@@ -4035,23 +4035,37 @@ Creates and returns a new empty graph.
 
 //===========================================================================================
 
-tlp::Graph *loadGraph(const std::string &filename, tlp::Graph *newGraph);
+tlp::Graph *loadGraph(const std::string &filename, tlp::Graph *graph);
 %Docstring
-tlp.loadGraph(filename, graph=None)
+tlp.loadGraph(filename, graph)
 
-Loads a graph in the TLP format from a file (extension can be .tlp, .tlp.gz, or .tlpz).
-Returns the graph (a new graph if none is provided) or :const:`None` if the import fails.
+Loads a graph serialized in a file through one of the available
+Talipot import plugins into an existing :class:`tlp.Graph` instance.
+
+The selection of the import plugin is based on the provided filename extension.
+The graph file formats that can be imported from a standard Talipot installation
+are: TLP (*.tlp), TLP Binary (*.tlpb), TLP JSON (*.json), Gephi (*.gexf),
+Pajek (*.net, *.paj), GML (*.gml), Graphviz (*.dot) and UCINET (*.txt).
+
+Apart for the Gephi and Graphviz formats, the function can also import a graph
+file compressed with zlib (filename must be suffixed by ".gz" or "z") or Zstandard
+(filename must be suffixed by ".zst" or "zst").
+
+The import will fail if the selected import plugin is not loaded.
+
+As a fallback, the function uses the "TLP Import" import plugin
+(always loaded as it is contained in the talipot-core library).
+
+Returns the provided graph or :const:`None` if the import fails.
 
 :param filename: the path to the tlp file
 :type filename: string
-:param graph: if provided, import new graph elements in that already existing graph
-:type newGraph: :class:`tlp.Graph`
+:param graph: import new graph elements in that graph
+:type graph: :class:`tlp.Graph`
 :rtype: :class:`tlp.Graph`
 %End
 %MethodCode
-  tlp::DataSet dataSet;
-  dataSet.set<std::string>("file::filename", *a0);
-  sipRes = tlp::importGraph("TLP Import", dataSet, 0, a1);
+  sipRes = tlp::loadGraph(*a0, nullptr, a1);
 %End
 
 //===========================================================================================
@@ -4060,19 +4074,26 @@ tlp::Graph *loadGraph(const std::string &filename) /TransferBack/;
 %Docstring
 tlp.loadGraph(fileName)
 
-Loads a graph serialized in a file trough one the available Talipot import plugins based on its extension.
+Loads a graph serialized in a file through one of the available
+Talipot import plugins.
 
 The selection of the import plugin is based on the provided filename extension.
-The import will fail if the selected import plugin is not loaded.
-The graph file formats that can currently be imported are : TLP (.tlp, .tlp.gz, .tlpz), TLP Binary (.tlpb, .tlpb.gz, .tlpbz), TLP JSON (.json),
-Gephi (.gexf), Pajek (.net, .paj), GML (.gml), Graphviz (.dot) and UCINET (.txt).
+The graph file formats that can be imported from a standard Talipot installation
+are: TLP (*.tlp), TLP Binary (*.tlpb), TLP JSON (*.json), Gephi (*.gexf),
+Pajek (*.net, *.paj), GML (*.gml), Graphviz (*.dot) and UCINET (*.txt).
 
-As a fallback, this function uses the "TLP Import" import plugin
-(always loaded as it is linked into the talipot-core library).
+Apart for the Gephi and Graphviz formats, the function can also import a graph
+file compressed with zlib (filename must be suffixed by ".gz" or "z") or Zstandard
+(filename must be suffixed by ".zst" or "zst").
+
+The import will fail if the selected import plugin is not loaded.
+
+As a fallback, the function uses the "TLP Import" import plugin
+(always loaded as it is contained in the talipot-core library).
 
 Returns a new graph or :const:`None` if the import fails.
 
-:param filename: the path to the file in one of the supported formats to parse.
+:param filename: the path to the graph file to import
 :type filename: string
 :rtype: :class:`tlp.Graph`
 %End
@@ -4255,7 +4276,7 @@ Exports a graph to a file using a Talipot :ref:`export plugin <exportpluginsdoc>
 
 %MethodCode
   if (pluginExists<tlp::ExportModule>(*a0)) {
-    std::ostream *ofs = tlp::getOutputFileStream((*a2).c_str());
+    std::ostream *ofs = tlp::getOutputFileStream(*a2);
     if (ofs->good()) {
       tlp::DataSet *params = prepareAlgorithmParameters(*a0, a1, a3, a3Wrapper);
       if (params) {

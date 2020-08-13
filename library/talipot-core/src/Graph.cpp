@@ -226,26 +226,15 @@ Graph *tlp::newGraph() {
   return g;
 }
 //=========================================================
-Graph *tlp::loadGraph(const std::string &filename, PluginProgress *progress) {
+Graph *tlp::loadGraph(const std::string &filename, PluginProgress *progress, Graph *g) {
   DataSet dataSet;
   std::string importPluginName = "TLP Import";
 
-  list<string> importPlugins = PluginsManager::availablePlugins<ImportModule>();
-
-  for (const string &pluginName : importPlugins) {
+  for (const string &pluginName : PluginsManager::availablePlugins<ImportModule>()) {
     const ImportModule &importPlugin =
         static_cast<const ImportModule &>(PluginsManager::pluginInformation(pluginName));
-    list<string> extensions(importPlugin.fileExtensions());
 
-    for (const string &ext : extensions) {
-      if (filename.rfind(ext) == (filename.size() - ext.size())) {
-        importPluginName = importPlugin.name();
-        break;
-      }
-    }
-
-    extensions = importPlugin.gzipFileExtensions();
-    for (const string &ext : extensions) {
+    for (const string &ext : importPlugin.allFileExtensions()) {
       if (filename.rfind(ext) == (filename.size() - ext.size())) {
         importPluginName = importPlugin.name();
         break;
@@ -254,40 +243,47 @@ Graph *tlp::loadGraph(const std::string &filename, PluginProgress *progress) {
   }
 
   dataSet.set("file::filename", filename);
-  Graph *graph = tlp::importGraph(importPluginName, dataSet, progress);
+  Graph *graph = tlp::importGraph(importPluginName, dataSet, progress, g);
   return graph;
 }
 //=========================================================
 bool tlp::saveGraph(Graph *graph, const std::string &filename, PluginProgress *progress,
-                    DataSet *data) {
+                    DataSet *parameters) {
   ostream *os;
 
   bool gzip = false;
+  bool zstd = false;
 
   string exportPluginName;
-  list<string> exportPlugins = PluginsManager::availablePlugins<ExportModule>();
 
-  for (const string &pluginName : exportPlugins) {
-    ExportModule *exportPlugin = PluginsManager::getPluginObject<ExportModule>(pluginName);
-    string ext(exportPlugin->fileExtension());
+  for (const string &pluginName : PluginsManager::availablePlugins<ExportModule>()) {
+    const ExportModule &exportPlugin =
+        static_cast<const ExportModule &>(PluginsManager::pluginInformation(pluginName));
+    string ext = exportPlugin.fileExtension();
 
     if (filename.rfind(ext) != string::npos &&
         filename.rfind(ext) == (filename.length() - ext.length())) {
-      exportPluginName = exportPlugin->name();
-      delete exportPlugin;
+      exportPluginName = exportPlugin.name();
       break;
     } else {
-      list<string> extensions(exportPlugin->gzipFileExtensions());
-
-      for (const string &zext : exportPlugin->gzipFileExtensions()) {
+      for (const string &zext : exportPlugin.gzipFileExtensions()) {
         if (filename.rfind(zext) == filename.length() - zext.length()) {
-          exportPluginName = exportPlugin->name();
+          exportPluginName = exportPlugin.name();
           gzip = true;
           break;
         }
       }
-      delete exportPlugin;
       if (gzip) {
+        break;
+      }
+      for (const string &zstext : exportPlugin.zstdFileExtensions()) {
+        if (filename.rfind(zstext) == filename.length() - zstext.length()) {
+          exportPluginName = exportPlugin.name();
+          zstd = true;
+          break;
+        }
+      }
+      if (zstd) {
         break;
       }
     }
@@ -305,22 +301,18 @@ bool tlp::saveGraph(Graph *graph, const std::string &filename, PluginProgress *p
   }
 
   if (gzip) {
-    os = tlp::getOgzstream(filename);
+    os = tlp::getZlibOutputFileStream(filename);
+  } else if (zstd) {
+    os = tlp::getZstdOutputFileStream(filename);
   } else {
-    std::ios_base::openmode openMode = ios::out;
-
-    if (exportPluginName == "TLPB Export") {
-      openMode |= ios::binary;
-    }
-
-    os = tlp::getOutputFileStream(filename, openMode);
+    os = tlp::getOutputFileStream(filename);
   }
 
   bool result;
   DataSet ds;
 
-  if (data != nullptr) {
-    ds = *data;
+  if (parameters != nullptr) {
+    ds = *parameters;
   }
 
   ds.set("file", filename);
@@ -329,7 +321,7 @@ bool tlp::saveGraph(Graph *graph, const std::string &filename, PluginProgress *p
   return result;
 }
 //=========================================================
-Graph *tlp::importGraph(const std::string &format, DataSet &dataSet, PluginProgress *progress,
+Graph *tlp::importGraph(const std::string &format, DataSet &parameters, PluginProgress *progress,
                         Graph *graph) {
 
   if (!PluginsManager::pluginExists(format)) {
@@ -355,7 +347,7 @@ Graph *tlp::importGraph(const std::string &format, DataSet &dataSet, PluginProgr
     tmpProgress = progress;
   }
 
-  AlgorithmContext *tmp = new AlgorithmContext(graph, &dataSet, tmpProgress);
+  AlgorithmContext *tmp = new AlgorithmContext(graph, &parameters, tmpProgress);
   ImportModule *newImportModule = PluginsManager::getPluginObject<ImportModule>(format, tmp);
   assert(newImportModule != nullptr);
 
@@ -372,7 +364,7 @@ Graph *tlp::importGraph(const std::string &format, DataSet &dataSet, PluginProgr
   } else {
     std::string filename;
 
-    if (dataSet.get("file::filename", filename)) {
+    if (parameters.get("file::filename", filename)) {
       graph->setAttribute("file", filename);
     }
 
@@ -384,14 +376,14 @@ Graph *tlp::importGraph(const std::string &format, DataSet &dataSet, PluginProgr
   }
 
   delete newImportModule;
-  dataSet = *tmp->dataSet;
+  parameters = *tmp->dataSet;
   delete tmp;
 
   return graph;
 }
 //=========================================================
 bool tlp::exportGraph(Graph *graph, std::ostream &outputStream, const std::string &format,
-                      DataSet &dataSet, PluginProgress *progress) {
+                      DataSet &parameters, PluginProgress *progress) {
   if (!PluginsManager::pluginExists(format)) {
     tlp::warning() << __FUNCTION__ << ": export plugin \"" << format
                    << "\" does not exist (or is not loaded)" << endl;
@@ -409,12 +401,12 @@ bool tlp::exportGraph(Graph *graph, std::ostream &outputStream, const std::strin
     tmpProgress = progress;
   }
 
-  AlgorithmContext *context = new AlgorithmContext(graph, &dataSet, tmpProgress);
+  AlgorithmContext *context = new AlgorithmContext(graph, &parameters, tmpProgress);
   ExportModule *newExportModule = PluginsManager::getPluginObject<ExportModule>(format, context);
   assert(newExportModule != nullptr);
   std::string filename;
 
-  if (dataSet.get("file", filename)) {
+  if (parameters.get("file", filename)) {
     graph->setAttribute("file", filename);
   }
 

@@ -85,20 +85,14 @@ static bool talipotCanOpenFile(const QString &path) {
     return true;
   }
 
-  std::list<std::string> imports = PluginsManager::availablePlugins<ImportModule>();
-
-  for (auto &import : imports) {
-    ImportModule *m = PluginsManager::getPluginObject<ImportModule>(import);
-    std::list<std::string> fileExtensions(m->allFileExtensions());
-
-    for (auto &ext : fileExtensions) {
+  for (auto &pluginName : PluginsManager::availablePlugins<ImportModule>()) {
+    const ImportModule &importPlugin =
+        static_cast<const ImportModule &>(PluginsManager::pluginInformation(pluginName));
+    for (auto &ext : importPlugin.allFileExtensions()) {
       if (path.endsWith(tlpStringToQString(ext))) {
-        delete m;
         return true;
       }
     }
-
-    delete m;
   }
 
   return false;
@@ -200,14 +194,10 @@ TalipotMainWindow::TalipotMainWindow()
   _ui->searchButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Magnify, Qt::white));
 
   _ui->actionNewProject->setIcon(getFileNewIcon());
-  _ui->actionOpen_Project->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::FileImport));
-  _ui->menuOpen_recent_file->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Clock));
-  _ui->actionSave_Project->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::FileExport));
-  _ui->actionSave_Project_as->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::FileExport));
+  _ui->actionOpen_Project->setIcon(FontIconManager::icon(MaterialDesignIcons::FileImport));
+  _ui->menuOpen_recent_file->setIcon(FontIconManager::icon(MaterialDesignIcons::Clock));
+  _ui->actionSave_Project->setIcon(FontIconManager::icon(MaterialDesignIcons::FileExport));
+  _ui->actionSave_Project_as->setIcon(FontIconManager::icon(MaterialDesignIcons::FileExport));
   _ui->actionImport->setIcon(FontIconManager::icon(MaterialDesignIcons::Import));
   _ui->actionImport_CSV->setIcon(FontIconManager::icon(MaterialDesignIcons::Table));
   _ui->actionNew_graph->setIcon(getFileNewIcon());
@@ -216,47 +206,32 @@ TalipotMainWindow::TalipotMainWindow()
   _ui->actionUndo->setIcon(FontIconManager::icon(MaterialDesignIcons::Reply));
   _ui->actionRedo->setIcon(FontIconManager::icon(MaterialDesignIcons::Share));
   _ui->actionCut->setIcon(FontIconManager::icon(MaterialDesignIcons::ContentCut));
-  _ui->actionPaste->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::ContentPaste));
+  _ui->actionPaste->setIcon(FontIconManager::icon(MaterialDesignIcons::ContentPaste));
   _ui->actionCopy->setIcon(FontIconManager::icon(MaterialDesignIcons::ContentCopy));
   _ui->actionDelete->setIcon(FontIconManager::icon(MaterialDesignIcons::Delete));
-  _ui->actionSelect_All->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::SelectAll));
-  _ui->actionInvert_selection->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::SelectInverse));
-  _ui->actionCancel_selection->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::SelectOff));
-  _ui->actionGroup_elements->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Group));
+  _ui->actionSelect_All->setIcon(FontIconManager::icon(MaterialDesignIcons::SelectAll));
+  _ui->actionInvert_selection->setIcon(FontIconManager::icon(MaterialDesignIcons::SelectInverse));
+  _ui->actionCancel_selection->setIcon(FontIconManager::icon(MaterialDesignIcons::SelectOff));
+  _ui->actionGroup_elements->setIcon(FontIconManager::icon(MaterialDesignIcons::Group));
   _ui->actionPreferences->setIcon(FontIconManager::icon(MaterialDesignIcons::Cog));
-  _ui->actionFull_screen->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Fullscreen));
-  _ui->action_Close_All->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::WindowClose));
-  _ui->actionMessages_log->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Information));
+  _ui->actionFull_screen->setIcon(FontIconManager::icon(MaterialDesignIcons::Fullscreen));
+  _ui->action_Close_All->setIcon(FontIconManager::icon(MaterialDesignIcons::WindowClose));
+  _ui->actionMessages_log->setIcon(FontIconManager::icon(MaterialDesignIcons::Information));
   _ui->actionGraphs->setIcon(FontIconManager::icon(MaterialDesignIcons::Graph));
   _ui->actionAlgorithms->setIcon(FontIconManager::icon(MaterialDesignIcons::Cogs));
   _ui->actionSearch->setIcon(FontIconManager::icon(MaterialDesignIcons::Magnify));
-  _ui->actionAlgorithms->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Magnify));
-  _ui->actionAbout_us->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::InformationOutline));
+  _ui->actionAlgorithms->setIcon(FontIconManager::icon(MaterialDesignIcons::Magnify));
+  _ui->actionAbout_us->setIcon(FontIconManager::icon(MaterialDesignIcons::InformationOutline));
   _ui->actionShowUserDocumentation->setIcon(
       FontIconManager::icon(MaterialDesignIcons::BookOpenVariant));
-  _ui->actionShowAPIDocumentation->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::LanguageCpp));
+  _ui->actionShowAPIDocumentation->setIcon(FontIconManager::icon(MaterialDesignIcons::LanguageCpp));
   _ui->actionShowPythonDocumentation->setIcon(
       FontIconManager::icon(MaterialDesignIcons::LanguagePython));
-  _ui->actionPython_IDE->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::LanguagePython));
-  _ui->actionPlugins_Center->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::ArrowDownBoldBox));
+  _ui->actionPython_IDE->setIcon(FontIconManager::icon(MaterialDesignIcons::LanguagePython));
+  _ui->actionPlugins_Center->setIcon(FontIconManager::icon(MaterialDesignIcons::ArrowDownBoldBox));
   _ui->menuSelect->setIcon(FontIconManager::icon(MaterialDesignIcons::SelectAll));
-  _ui->actionSelect_All_Edges->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::SelectAll));
-  _ui->actionSelect_All_Nodes->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::SelectAll));
+  _ui->actionSelect_All_Edges->setIcon(FontIconManager::icon(MaterialDesignIcons::SelectAll));
+  _ui->actionSelect_All_Nodes->setIcon(FontIconManager::icon(MaterialDesignIcons::SelectAll));
   _ui->menuDelete->setIcon(FontIconManager::icon(MaterialDesignIcons::Delete));
   _ui->actionDelete_all->setIcon(FontIconManager::icon(MaterialDesignIcons::Delete));
   _ui->actionDelete_from_the_root_graph->setIcon(
@@ -269,8 +244,7 @@ TalipotMainWindow::TalipotMainWindow()
       FontIconManager::icon(MaterialDesignIcons::Tournament, textColor(), 1.0, -90));
   _ui->actionCreate_empty_sub_graph->setIcon(
       FontIconManager::icon(MaterialDesignIcons::Tournament, textColor(), 1.0, -90));
-  _ui->actionColor_scales_management->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Palette));
+  _ui->actionColor_scales_management->setIcon(FontIconManager::icon(MaterialDesignIcons::Palette));
   _ui->actionReverse_selected_edges->setIcon(getReverseSelectedEdgesIcon());
   _ui->actionMake_selection_a_graph->setIcon(getMakeSelectionAGraphIcon());
 
@@ -511,9 +485,9 @@ void TalipotMainWindow::buildRecentDocumentsMenu() {
       continue;
     }
 
-    QAction *action = _ui->menuOpen_recent_file->addAction(
-        FontIconManager::icon(MaterialDesignIcons::Archive), s, this,
-        &TalipotMainWindow::openRecentFile);
+    QAction *action =
+        _ui->menuOpen_recent_file->addAction(FontIconManager::icon(MaterialDesignIcons::Archive), s,
+                                             this, &TalipotMainWindow::openRecentFile);
     action->setData(s);
   }
 
@@ -988,18 +962,16 @@ bool TalipotMainWindow::saveAs(const QString &path) {
 
 void TalipotMainWindow::open(QString fileName) {
   QMap<std::string, std::string> modules;
-  std::list<std::string> imports = PluginsManager::availablePlugins<ImportModule>();
 
   std::string filters("Talipot project (*.tlpx);;");
   std::string filterAny("Any supported format (");
 
-  for (auto &import : imports) {
-    ImportModule *m = PluginsManager::getPluginObject<ImportModule>(import);
-    std::list<std::string> fileExtension(m->allFileExtensions());
-
+  for (auto &pluginName : PluginsManager::availablePlugins<ImportModule>()) {
+    const ImportModule &importPlugin =
+        static_cast<const ImportModule &>(PluginsManager::pluginInformation(pluginName));
     std::string currentFilter;
 
-    for (auto &ext : fileExtension) {
+    for (auto &ext : importPlugin.allFileExtensions()) {
 
       if (ext.empty())
         continue;
@@ -1007,13 +979,11 @@ void TalipotMainWindow::open(QString fileName) {
       filterAny += "*." + ext + " ";
       currentFilter += "*." + ext + " ";
 
-      modules[ext] = import;
+      modules[ext] = pluginName;
     }
 
     if (!currentFilter.empty())
-      filters += import + "(" + currentFilter + ");;";
-
-    delete m;
+      filters += pluginName + "(" + currentFilter + ");;";
   }
 
   filterAny += " *.tlpx);;";

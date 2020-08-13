@@ -350,17 +350,17 @@ QMap<QString, tlp::Graph *> GraphHierarchiesModel::readProject(tlp::Project *pro
 
   for (const QString &entry :
        project->entryList(GRAPHS_PATH, QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name)) {
-    QString file = GRAPHS_PATH + entry + "/graph.tlp";
-
-    if (!project->exists(file)) {
-      file = GRAPHS_PATH + entry + "/graph.tlpb";
-
-      if (!project->exists(file)) {
+    QString filename;
+    for (const QString &path : {"/graph.tlp", "/graph.tlp.zst", "/graph.tlpb", "/graph.tlpb.zst"}) {
+      filename = GRAPHS_PATH + entry + path;
+      if (!project->exists(filename)) {
         continue;
+      } else {
+        break;
       }
     }
 
-    QString absolutePath = project->toAbsolutePath(file);
+    QString absolutePath = project->toAbsolutePath(filename);
     Graph *g = loadGraph(QStringToTlpString(absolutePath), progress);
 
     if (g) {
@@ -396,13 +396,14 @@ QMap<tlp::Graph *, QString> GraphHierarchiesModel::writeProject(tlp::Project *pr
   for (auto g : _graphs) {
     rootIds[g] = QString::number(i);
     QString folder = GRAPHS_PATH + "/" + QString::number(i++) + "/";
+    project->removeAllDir(folder);
     project->mkpath(folder);
 
     if (!Settings::instance().isUseTlpbFileFormat()) {
-      tlp::saveGraph(g, QStringToTlpString(project->toAbsolutePath(folder + "graph.tlp")),
+      tlp::saveGraph(g, QStringToTlpString(project->toAbsolutePath(folder + "graph.tlp.zst")),
                      progress);
     } else {
-      tlp::saveGraph(g, QStringToTlpString(project->toAbsolutePath(folder + "graph.tlpb")),
+      tlp::saveGraph(g, QStringToTlpString(project->toAbsolutePath(folder + "graph.tlpb.zst")),
                      progress);
     }
   }

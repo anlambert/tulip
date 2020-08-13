@@ -117,10 +117,7 @@ public:
                     "supported.</p>",
                     "1.0", "File")
   std::list<std::string> fileExtensions() const override {
-    std::list<std::string> l;
-    l.push_back("net");
-    l.push_back("paj");
-    return l;
+    return {"net", "paj"};
   }
 
   ImportPajek(const tlp::PluginContext *context)
@@ -500,16 +497,11 @@ public:
   }
 
   bool importGraph() override {
-    string filename;
+    auto inputData = getInputData();
 
-    dataSet->get<string>("file::filename", filename);
-
-    if (filename.empty()) {
-      pluginProgress->setError("Filename is empty.");
+    if (!inputData.valid()) {
       return false;
     }
-
-    std::istream *in = tlp::getInputFileStream(filename.c_str());
 
     labels = graph->getStringProperty("viewLabel");
     weights = graph->getDoubleProperty("weights");
@@ -532,30 +524,27 @@ public:
 
     string line;
 
-    while (!in->eof() && std::getline(*in, line)) {
+    while (!inputData.is->eof() && std::getline(*inputData.is, line)) {
 
       ++lineNumber;
 
       if (!treatLine(line)) {
-        errors << "An error occurs while parsing file : " << filename << endl;
+        errors << "An error occurs while parsing file : " << inputData.filename << endl;
         errors << "[ERROR] at line " << lineNumber << endl;
 
         if (pluginProgress) {
           pluginProgress->setError(errors.str());
         }
 
-        delete in;
         return false;
       }
 
       if (pluginProgress && ((lineNumber % 100) == 0) &&
           (pluginProgress->progress(lineNumber, 3 * nbNodes) != TLP_CONTINUE)) {
-        delete in;
         return false;
       }
     }
 
-    delete in;
     return true;
   }
 };

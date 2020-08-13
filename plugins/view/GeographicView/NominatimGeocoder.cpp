@@ -78,8 +78,7 @@ vector<NominatimGeocoderResult> NominatimGeocoder::getLatLngForAddress(const str
   QByteArray jsonData = reply->readAll();
 
   NominatimResultsParser nominatimParser;
-  nominatimParser.parse(reinterpret_cast<const unsigned char *>(jsonData.constData()),
-                        jsonData.size());
+  nominatimParser.parse(jsonData.constData(), jsonData.size());
 
   unsigned int nbResults = nominatimParser.addresses.size();
 

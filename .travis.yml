@@ -44,6 +44,7 @@ jobs:
             - libpython2.7-dev
             - libcppunit-dev
             - binutils-dev
+            - libzstd-dev
       env:
         # use Python 2.7
         - PYTHON_EXECUTABLE=/usr/bin/python2.7
@@ -86,6 +87,7 @@ jobs:
             - libpython3-dev
             - libcppunit-dev
             - binutils-dev
+            - libzstd-dev
       env:
         # use Python 3.8
         - PYTHON_EXECUTABLE=/usr/bin/python3
@@ -134,6 +136,7 @@ jobs:
             - libpython2.7-dev
             - libcppunit-dev
             - binutils-dev
+            - libzstd-dev
             - qt5-default
             - libqt5webkit5-dev
             - libquazip5-dev
@@ -189,6 +192,7 @@ jobs:
             - libpython3-dev
             - libcppunit-dev
             - binutils-dev
+            - libzstd-dev
             - qt5-default
             - libqt5webkit5-dev
             - libquazip5-dev
@@ -327,6 +331,7 @@ jobs:
         - sudo port -N install ninja
         - sudo port -N install qhull
         - sudo port -N install yajl
+        - sudo port -N install zstd
         - sudo port -N install freetype
         - sudo port -N install glew
         - sudo port -N install pkgconfig
@@ -375,6 +380,7 @@ jobs:
             - llvm
             - qhull
             - yajl
+            - zstd
             - cppunit
             - pkg-config
 
@@ -426,6 +432,7 @@ jobs:
         - sudo port -N install glew
         - sudo port -N install qhull
         - sudo port -N install yajl
+        - sudo port -N install zstd
         - sudo port -N install pkgconfig
         - sudo port -N install cppunit
         - curl -O https://bootstrap.pypa.io/get-pip.py
@@ -493,6 +500,7 @@ jobs:
             - llvm
             - qhull
             - yajl
+            - zstd
             - cppunit
             - pkg-config
             - glew
@@ -548,6 +556,7 @@ jobs:
         - sudo port -N install ninja
         - sudo port -N install qhull
         - sudo port -N install yajl
+        - sudo port -N install zstd
         - curl -LO https://www.python.org/ftp/python/2.7.17/python-2.7.17-macosx10.9.pkg
         - sudo installer -pkg python-2.7.17-macosx10.9.pkg -target /
         - sudo /Library/Frameworks/Python.framework/Versions/2.7/bin/pip install wheel

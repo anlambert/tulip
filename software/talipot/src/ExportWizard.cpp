@@ -113,16 +113,13 @@ void ExportWizard::pathChanged(QString s) {
   _ui->algFrame->setEnabled(!s.isEmpty());
   button(QWizard::FinishButton)->setEnabled(!s.isEmpty());
 
-  auto modules = PluginsManager::availablePlugins<ExportModule>();
+  for (const auto &pluginName : PluginsManager::availablePlugins<ExportModule>()) {
+    const ExportModule &exportPlugin =
+        static_cast<const ExportModule &>(PluginsManager::pluginInformation(pluginName));
 
-  for (const auto &m : modules) {
-    ExportModule *p = PluginsManager::getPluginObject<ExportModule>(m);
-    auto extensions = p->allFileExtensions();
-
-    for (const auto &ext : extensions) {
+    for (const auto &ext : exportPlugin.allFileExtensions()) {
       if (s.endsWith(ext.c_str())) {
-        selectedExport = m.c_str();
-        delete p;
+        selectedExport = pluginName.c_str();
         break;
       }
     }
@@ -152,21 +149,19 @@ void ExportWizard::pathChanged(QString s) {
 void ExportWizard::browseButtonClicked() {
   QString filter;
   QString all = "all supported formats (";
-  auto modules = PluginsManager::availablePlugins<ExportModule>();
 
-  for (const auto &m : modules) {
-    ExportModule *p = PluginsManager::getPluginObject<ExportModule>(m);
-    auto extensions = p->allFileExtensions();
-    filter += tlpStringToQString(p->name()) + " (";
+  for (const auto &pluginName : PluginsManager::availablePlugins<ExportModule>()) {
+    const ExportModule &exportPlugin =
+        static_cast<const ExportModule &>(PluginsManager::pluginInformation(pluginName));
+    filter += tlpStringToQString(exportPlugin.name()) + " (";
 
-    for (const auto &ext : extensions) {
+    for (const auto &ext : exportPlugin.allFileExtensions()) {
       filter += "*." + tlpStringToQString(ext) + " ";
       all += "*." + tlpStringToQString(ext) + " ";
     }
 
     filter.resize(filter.length() - 1);
     filter += ");;";
-    delete p;
   }
 
   filter.resize(filter.length() - 2);

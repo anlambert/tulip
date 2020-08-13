@@ -535,9 +535,7 @@ public:
                     "1.0", "File")
 
   std::list<std::string> fileExtensions() const override {
-    std::list<std::string> l;
-    l.push_back("json");
-    return l;
+    return {"json"};
   }
 
   TlpJsonImport(tlp::PluginContext *context) : ImportModule(context) {
@@ -550,21 +548,22 @@ public:
   }
 
   bool importGraph() override {
-    Observable::holdObservers();
-    std::string filename;
-
     if (_progress) {
       _progress->progress(0, 0);
     }
 
-    if (dataSet->exists("file::filename")) {
-      dataSet->get<string>("file::filename", filename);
+    auto inputData = getInputData();
 
-      _proxy = new YajlParseFacade(_progress);
-      parse(filename);
+    if (!inputData.valid()) {
+      return false;
     }
 
-    Observable::unholdObservers();
+    // read data as a block:
+    string jsonData(istreambuf_iterator<char>(*inputData.is), {});
+
+    _proxy = new YajlParseFacade(_progress);
+
+    parse(jsonData.c_str(), jsonData.length());
 
     if (!_proxy->parsingSucceeded()) {
       _parsingSucceeded = false;
@@ -572,6 +571,7 @@ public:
     }
 
     pluginProgress->setError(_errorMessage);
+
     return _parsingSucceeded;
   }
 

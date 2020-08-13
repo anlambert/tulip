@@ -35,7 +35,8 @@ public:
 protected:
   void updateIdProperty(tlp::Graph *graph) const;
   tlp::Graph *createSimpleGraph() const;
-  void importExportGraph(tlp::Graph *original, const std::string &exportFilename = "graph_export");
+  void exportImportGraph(tlp::Graph *original,
+                         const std::string &exportBaseFilename = "graph_export");
   void exportGraph(tlp::Graph *graph, const std::string &exportPluginName,
                    const std::string &filename);
   tlp::Graph *importGraph(const std::string &importPluginName, const std::string &filename);

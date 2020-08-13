@@ -582,33 +582,21 @@ public:
                     "<b>www.infosun.fmi.uni-passau.de/Graphlet/GML/</b> for details.</p>",
                     "1.1", "File")
   std::list<std::string> fileExtensions() const override {
-    std::list<std::string> l;
-    l.push_back("gml");
-    return l;
+    return {"gml"};
   }
   GMLImport(PluginContext *context) : ImportModule(context) {
     addInParameter<string>("file::filename", paramHelp[0], "");
   }
   ~GMLImport() override {}
   bool importGraph() override {
-    string filename;
+    auto inputData = getInputData();
 
-    if (!dataSet->get<string>("file::filename", filename)) {
+    if (!inputData.valid()) {
       return false;
     }
 
-    tlp_stat_t infoEntry;
-    int result = statPath(filename, &infoEntry);
-
-    if (result == -1) {
-      pluginProgress->setError(strerror(errno));
-      return false;
-    }
-
-    istream *myFile = tlp::getInputFileStream(filename.c_str());
-    GMLParser<true> myParser(*myFile, new GMLGraphBuilder(graph));
+    GMLParser<true> myParser(*inputData.is, new GMLGraphBuilder(graph));
     myParser.parse();
-    delete myFile;
     return true;
   }
 };

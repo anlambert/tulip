@@ -971,20 +971,6 @@ bool TLPGraphBuilder::addStruct(const std::string &structName, TLPBuilder *&newB
 
   return true;
 }
-//================================================================================
-
-// Function to retrieve the original size of a file compressed with gzip.
-// The uncompressed file size (modulo 2^32) is stored in the last four bytes of a Gzip file.
-// So that method is unreliable if the original file size was greater than 4GB (which is pretty rare
-// for TLP files ...).
-static int getUncompressedSizeOfGzipFile(const std::string &gzipFilePath) {
-  std::istream *is = tlp::getInputFileStream(gzipFilePath.c_str(), std::ifstream::binary);
-  is->seekg(-4, is->end);
-  int uncompressedSize = 0;
-  is->read(reinterpret_cast<char *>(&uncompressedSize), 4);
-  delete is;
-  return uncompressedSize;
-}
 
 //================================================================================
 
@@ -1006,16 +992,7 @@ public:
                     "description.",
                     "1.0", "File")
   std::list<std::string> fileExtensions() const override {
-    std::list<std::string> l;
-    l.push_back("tlp");
-    return l;
-  }
-
-  std::list<std::string> gzipFileExtensions() const override {
-    std::list<std::string> ext;
-    ext.push_back("tlp.gz");
-    ext.push_back("tlpz");
-    return ext;
+    return {"tlp"};
   }
 
   TLPImport(tlp::PluginContext *context) : ImportModule(context) {
@@ -1028,71 +1005,24 @@ public:
   }
 
   bool importGraph() override {
-    std::string filename;
-    std::string data;
-    std::stringstream *tmpss = nullptr;
-    int size;
-    std::istream *input;
-    bool result;
 
-    if (dataSet->exists("file::filename")) {
-      dataSet->get<std::string>("file::filename", filename);
-      tlp_stat_t infoEntry;
-      result = (statPath(filename, &infoEntry) == 0);
+    auto inputData = getInputData();
 
-      if (!result) {
-        std::stringstream ess;
-        ess << filename.c_str() << ": " << strerror(errno);
-        pluginProgress->setError(ess.str());
-        tlp::warning() << pluginProgress->getError() << std::endl;
-        return false;
-      }
-
-      size = infoEntry.st_size;
-
-      std::list<std::string> gext(gzipFileExtensions());
-      bool gzip(false);
-
-      for (const auto &it : gext) {
-        if (filename.rfind(it) == (filename.length() - it.length())) {
-          size = getUncompressedSizeOfGzipFile(filename);
-          input = tlp::getIgzstream(filename);
-          gzip = true;
-          break;
-        }
-      }
-
-      if (!gzip) {
-        input = tlp::getInputFileStream(filename, std::ifstream::in |
-                                                      // consider file has binary
-                                                      // to avoid pb using tellg
-                                                      // on the input stream
-                                                      std::ifstream::binary);
-      }
-
-    } else {
-      dataSet->get<std::string>("file::data", data);
-      size = data.size();
-      tmpss = new std::stringstream;
-      (*tmpss) << data;
-      input = tmpss;
+    if (!inputData.valid()) {
+      return false;
     }
 
     pluginProgress->showPreview(false);
-    pluginProgress->setComment(std::string("Loading ") + filename + "...");
-    TLPParser myParser(*input, new TLPGraphBuilder(graph, dataSet), pluginProgress, size);
-    result = myParser.parse();
+    pluginProgress->setComment(std::string("Loading ") + inputData.filename + "...");
+    TLPParser myParser(*inputData.is, new TLPGraphBuilder(graph, dataSet), pluginProgress,
+                       inputData.size);
+    bool result = myParser.parse();
 
     if (!result) {
-      pluginProgress->setError(filename + ": " + pluginProgress->getError());
+      pluginProgress->setError(inputData.filename + ": " + pluginProgress->getError());
       tlp::warning() << pluginProgress->getError() << std::endl;
     }
 
-    if (tmpss) {
-      delete tmpss;
-    }
-
-    delete input;
     return result;
   }
 };

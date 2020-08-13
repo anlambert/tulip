@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -74,12 +74,6 @@ public:
 
   string fileExtension() const override {
     return "svg";
-  }
-
-  list<string> gzipFileExtensions() const override {
-    list<string> ext;
-    ext.push_back("svgz");
-    return ext;
   }
 
   SvgExport(tlp::PluginContext *context) : tlp::ExportModule(context) {

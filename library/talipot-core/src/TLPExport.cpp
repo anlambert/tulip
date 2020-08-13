@@ -78,13 +78,6 @@ public:
     return "tlp";
   }
 
-  list<string> gzipFileExtensions() const override {
-    list<string> ext;
-    ext.push_back("tlp.gz");
-    ext.push_back("tlpz");
-    return ext;
-  }
-
   DataSet controller;
   int progress;
 

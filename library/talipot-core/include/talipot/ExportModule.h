@@ -68,7 +68,19 @@ public:
    * @return :string the extension that this export module saves to.
    **/
   virtual std::list<std::string> gzipFileExtensions() const {
-    return std::list<std::string>();
+    std::list<std::string> gzipExtensions;
+    for (const std::string &gzExt : {".gz", "z"}) {
+      gzipExtensions.push_back(fileExtension() + gzExt);
+    }
+    return gzipExtensions;
+  }
+
+  virtual std::list<std::string> zstdFileExtensions() const {
+    std::list<std::string> zstdExtensions;
+    for (const std::string &zstExt : {".zst", "zst"}) {
+      zstdExtensions.push_back(fileExtension() + zstExt);
+    }
+    return zstdExtensions;
   }
 
   /**
@@ -79,7 +91,9 @@ public:
    */
   std::list<std::string> allFileExtensions() const {
     std::list<std::string> ext(gzipFileExtensions());
+    std::list<std::string> zstext(zstdFileExtensions());
     ext.push_back(fileExtension());
+    ext.splice(ext.end(), zstext);
     return ext;
   }
 

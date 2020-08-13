@@ -52,7 +52,7 @@ static void getInfoLog(GLuint obj, ObjectType objectType, string &logStr) {
 }
 
 static void readShaderSourceFile(const string &vertexShaderSourceFilePath, char **shader) {
-  istream *ifs = tlp::getInputFileStream(vertexShaderSourceFilePath.c_str());
+  istream *ifs = tlp::getInputFileStream(vertexShaderSourceFilePath);
 
   if (!ifs->good()) {
     delete ifs;

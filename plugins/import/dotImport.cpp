@@ -62,9 +62,7 @@ public:
                     "input format.</p>",
                     "1.0", "File")
   std::list<std::string> fileExtensions() const override {
-    std::list<std::string> l;
-    l.push_back("dot");
-    return l;
+    return {"dot"};
   }
   DotImport(tlp::PluginContext *context) : ImportModule(context) {
     addInParameter<string>("file::filename", paramHelp[0], "");
