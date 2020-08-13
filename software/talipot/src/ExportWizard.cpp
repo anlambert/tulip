@@ -160,8 +160,8 @@ void ExportWizard::browseButtonClicked() {
     filter += tlpStringToQString(p->name()) + " (";
 
     for (const auto &ext : extensions) {
-      filter += ext.c_str() + QString(" ");
-      all += ext.c_str() + QString(" ");
+      filter += "*." + tlpStringToQString(ext) + " ";
+      all += "*." + tlpStringToQString(ext) + " ";
     }
 
     filter.resize(filter.length() - 1);
