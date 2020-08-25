@@ -2,6 +2,7 @@ INSTALL(
   FILES talipot/AbstractGlCurve.h
         talipot/Camera.h
         talipot/Curves.h
+        talipot/Font.h
         talipot/Gl2DRect.h
         talipot/GlAbstractPolygon.h
         talipot/GlAxis.h

@@ -15,6 +15,8 @@
 #define TALIPOT_FONT_DIALOG_H
 
 #include <QDialog>
+#include <QMap>
+#include <QVector>
 
 #include <talipot/config.h>
 #include <talipot/Font.h>
@@ -29,8 +31,11 @@ class TLP_QT_SCOPE FontDialog : public QDialog {
   Q_OBJECT
 
   Ui::FontDialog *_ui;
-  Font previousFont;
-  int ok;
+  Font _previousFont;
+  int _ok;
+  bool _styleUpdate;
+
+  QMap<QString, QVector<Font>> _fonts;
 
 public:
   explicit FontDialog(QWidget *parent = nullptr);
@@ -38,15 +43,13 @@ public:
   Font font() const;
   int fontSize() const;
   void done(int res) override {
-    ok = res;
+    _ok = res;
     QDialog::done(res);
   }
   Font getSelectedFont() const {
-    return ok == QDialog::Accepted ? font() : previousFont;
+    return _ok == QDialog::Accepted ? font() : _previousFont;
   }
   void showEvent(QShowEvent *ev) override;
-
-  static Font getFont(QWidget *parent = nullptr, const Font &selectedFont = Font());
 
 public slots:
   void selectFont(const Font &);

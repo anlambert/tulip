@@ -64,7 +64,6 @@ SET(SRCS
     GlOverviewGraphicsItem.cpp
     SceneConfigWidget.cpp
     QuickAccessBar.cpp
-    Font.cpp
     FontDialog.cpp
     WorkspaceExposeWidget.cpp
     GraphTableItemDelegate.cpp
@@ -207,7 +206,6 @@ QTX_WRAP_CPP(
   ../include/talipot/StringsListSelectionDialog.h
   ../include/talipot/TextureFileDialog.h
   ../include/talipot/TreeViewComboBox.h
-  ../include/talipot/Font.h
   ../include/talipot/FontDialog.h
   ../include/talipot/ItemDelegate.h
   ../include/talipot/Mimes.h

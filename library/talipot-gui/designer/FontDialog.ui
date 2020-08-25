@@ -67,46 +67,8 @@
           <item>
            <widget class="QListWidget" name="styleList">
             <property name="currentRow">
-             <number>0</number>
+             <number>-1</number>
             </property>
-            <item>
-             <property name="text">
-              <string>Regular</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Bold</string>
-             </property>
-             <property name="font">
-              <font>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Italic</string>
-             </property>
-             <property name="font">
-              <font>
-               <italic>true</italic>
-              </font>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Bold Italic</string>
-             </property>
-             <property name="font">
-              <font>
-               <weight>75</weight>
-               <italic>true</italic>
-               <bold>true</bold>
-              </font>
-             </property>
-            </item>
            </widget>
           </item>
          </layout>

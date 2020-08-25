@@ -12,6 +12,7 @@
  */
 
 #include <talipot/TlpTools.h>
+#include <talipot/TlpQtTools.h>
 #include <talipot/FontDialog.h>
 #include "ui_FontDialog.h"
 
@@ -22,11 +23,14 @@
 using namespace tlp;
 
 FontDialog::FontDialog(QWidget *parent)
-    : QDialog(parent), _ui(new Ui::FontDialog), ok(QDialog::Rejected) {
+    : QDialog(parent), _ui(new Ui::FontDialog), _ok(QDialog::Rejected), _styleUpdate(false) {
   _ui->setupUi(this);
 
-  for (const QString &font : Font::installedFontNames()) {
-    _ui->nameList->addItem(font);
+  for (const auto &itFamily : Font::availableFonts()) {
+    _ui->nameList->addItem(tlpStringToQString(itFamily.first));
+    for (const auto &itStyle : itFamily.second) {
+      _fonts[tlpStringToQString(itFamily.first)].append(itStyle.second);
+    }
   }
 
   bool hasFont = _ui->nameList->count() > 0;
@@ -35,6 +39,7 @@ FontDialog::FontDialog(QWidget *parent)
 
   if (hasFont) {
     _ui->nameList->setCurrentItem(_ui->nameList->item(0));
+    _ui->sizeList->setCurrentItem(_ui->sizeList->item(10));
     fontChanged();
   }
 }
@@ -44,68 +49,50 @@ FontDialog::~FontDialog() {
 }
 
 Font FontDialog::font() const {
-  Font result;
-  result.setFontName(_ui->nameList->currentItem()->text());
-  result.setBold(_ui->styleList->currentIndex().row() == 1 ||
-                 _ui->styleList->currentIndex().row() == 3);
-  result.setItalic(_ui->styleList->currentIndex().row() == 2 ||
-                   _ui->styleList->currentIndex().row() == 3);
-  return result;
+  return _fonts[_ui->nameList->currentItem()->text()][_ui->styleList->currentRow()];
 }
 
 void FontDialog::fontChanged() {
-  if (_ui->nameList->currentItem() == nullptr || _ui->styleList->currentItem() == nullptr) {
-    return;
+  if (sender() == _ui->nameList && _ui->nameList->currentItem() != nullptr) {
+    _styleUpdate = true;
+    _ui->styleList->clear();
+    for (auto &f : _fonts[_ui->nameList->currentItem()->text()]) {
+      _ui->styleList->addItem(tlpStringToQString(f.fontStyle()));
+    }
+    _styleUpdate = false;
+    _ui->styleList->setCurrentItem(_ui->styleList->item(0));
+  } else if (sender() == _ui->sizeList) {
+    _ui->sizeSpin->setValue(_ui->sizeList->currentItem()->text().toInt());
   }
 
-  if (sender() == _ui->sizeList) {
-    _ui->sizeSpin->setValue(_ui->sizeList->currentItem()->text().toInt());
+  if (_styleUpdate || _ui->nameList->currentItem() == nullptr ||
+      _ui->styleList->currentItem() == nullptr) {
     return;
   }
 
   Font selectedFont = font();
-  _ui->preview->setStyleSheet("font-family: " + selectedFont.fontFamily() + "; " +
-                              (selectedFont.isItalic() ? "font-style: italic; " : "") +
-                              (selectedFont.isBold() ? "font-weight: bold; " : "") +
-                              "font-size: " + QString::number(_ui->sizeSpin->value()) + "px; ");
+  QFontDatabase fontDb;
+  _ui->preview->setFont(fontDb.font(tlpStringToQString(selectedFont.fontFamily()),
+                                    tlpStringToQString(selectedFont.fontStyle()),
+                                    _ui->sizeSpin->value()));
 }
 int FontDialog::fontSize() const {
   return _ui->sizeSpin->value();
 }
 
 void FontDialog::selectFont(const Font &f) {
-  QList<QListWidgetItem *> items = _ui->nameList->findItems(f.fontName(), Qt::MatchExactly);
-
-  previousFont = f;
+  QList<QListWidgetItem *> items =
+      _ui->nameList->findItems(tlpStringToQString(f.fontFamily()), Qt::MatchExactly);
 
   if (items.empty()) {
     return;
   }
-
   _ui->nameList->setCurrentItem(items[0]);
-
-  if (f.isBold()) {
-    if (f.isItalic()) {
-      _ui->styleList->setCurrentRow(3);
-    } else {
-      _ui->styleList->setCurrentRow(1);
-    }
-  } else if (f.isItalic()) {
-    _ui->styleList->setCurrentRow(2);
-  } else {
-    _ui->styleList->setCurrentRow(0);
+  items = _ui->styleList->findItems(tlpStringToQString(f.fontStyle()), Qt::MatchExactly);
+  if (items.empty()) {
+    return;
   }
-}
-
-Font FontDialog::getFont(QWidget * /*parent*/, const Font &selectedFont) {
-  FontDialog dlg;
-  dlg.selectFont(selectedFont);
-
-  if (dlg.exec() != QDialog::Accepted || !dlg.font().exists()) {
-    return Font();
-  } else {
-    return dlg.font();
-  }
+  _ui->styleList->setCurrentItem(items[0]);
 }
 
 void FontDialog::showEvent(QShowEvent *ev) {

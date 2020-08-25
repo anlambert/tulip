@@ -554,9 +554,9 @@ GlScene *QuickAccessBar::scene() const {
 
 void QuickAccessBarImpl::selectFont() {
   FontDialog dlg(_mainView->graphicsView()->window());
-  dlg.selectFont(Font::fromFile(inputData()->getElementFont()->getNodeDefaultValue().c_str()));
+  dlg.selectFont(Font::fromName(inputData()->getElementFont()->getNodeDefaultValue()));
 
-  if (dlg.exec() != QDialog::Accepted || !dlg.font().exists()) {
+  if (dlg.exec() != QDialog::Accepted) {
     return;
   }
 
@@ -564,10 +564,8 @@ void QuickAccessBarImpl::selectFont() {
 
   Observable::holdObservers();
 
-  inputData()->getElementFont()->setAllNodeValue(QStringToTlpString(dlg.font().fontFile()),
-                                                 _mainView->graph());
-  inputData()->getElementFont()->setAllEdgeValue(QStringToTlpString(dlg.font().fontFile()),
-                                                 _mainView->graph());
+  inputData()->getElementFont()->setAllNodeValue(dlg.font().fontName(), _mainView->graph());
+  inputData()->getElementFont()->setAllEdgeValue(dlg.font().fontName(), _mainView->graph());
   inputData()->getElementFontSize()->setAllNodeValue(dlg.fontSize(), _mainView->graph());
   inputData()->getElementFontSize()->setAllEdgeValue(dlg.fontSize(), _mainView->graph());
 
@@ -578,9 +576,9 @@ void QuickAccessBarImpl::selectFont() {
 }
 
 void QuickAccessBarImpl::updateFontButtonStyle() {
-  QString fontFile = inputData()->getElementFont()->getNodeDefaultValue().c_str();
-  Font selectedFont = Font::fromFile(fontFile);
-  _ui->fontButton->setStyleSheet("font-family: " + selectedFont.fontFamily() + "; " +
-                                 (selectedFont.isItalic() ? "font-style: italic; " : "") +
-                                 (selectedFont.isBold() ? "font-weight: bold; " : ""));
+  std::string fontName = inputData()->getElementFont()->getNodeDefaultValue();
+  Font selectedFont = Font::fromName(fontName);
+  QFontDatabase fontDb;
+  _ui->fontButton->setFont(fontDb.font(tlpStringToQString(selectedFont.fontFamily()),
+                                       tlpStringToQString(selectedFont.fontStyle()), 10));
 }

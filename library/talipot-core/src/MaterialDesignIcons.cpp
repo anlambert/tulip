@@ -30,15 +30,15 @@ static vector<string> iconsNames;
 #include "MaterialDesignIconsData.cpp"
 
 string MaterialDesignIcons::getTTFLocation() {
-  return TalipotBitmapDir + "fonts/MaterialDesignIcons/" + "materialdesignicons-webfont.ttf";
+  return TalipotShareDir + "fonts/MaterialDesignIcons/" + "materialdesignicons-webfont.ttf";
 }
 
 string MaterialDesignIcons::getWOFFLocation() {
-  return TalipotBitmapDir + "fonts/MaterialDesignIcons/" + "materialdesignicons-webfont.woff";
+  return TalipotShareDir + "fonts/MaterialDesignIcons/" + "materialdesignicons-webfont.woff";
 }
 
 string MaterialDesignIcons::getWOFF2Location() {
-  return TalipotBitmapDir + "fonts/MaterialDesignIcons/" + "materialdesignicons-webfont.woff2";
+  return TalipotShareDir + "fonts/MaterialDesignIcons/" + "materialdesignicons-webfont.woff2";
 }
 
 bool MaterialDesignIcons::isIconSupported(const string &iconName) {

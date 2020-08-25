@@ -34,17 +34,17 @@ static map<string, string>
 
 string FontAwesome::getTTFLocation(const string &iconName) {
   initIconCodePoints();
-  return TalipotBitmapDir + "fonts/FontAwesome/" + getIconFamily(iconName) + ".ttf";
+  return TalipotShareDir + "fonts/FontAwesome/" + getIconFamily(iconName) + ".ttf";
 }
 
 string FontAwesome::getWOFFLocation(const string &iconName) {
   initIconCodePoints();
-  return TalipotBitmapDir + "fonts/FontAwesome/" + getIconFamily(iconName) + ".woff";
+  return TalipotShareDir + "fonts/FontAwesome/" + getIconFamily(iconName) + ".woff";
 }
 
 string FontAwesome::getWOFF2Location(const string &iconName) {
   initIconCodePoints();
-  return TalipotBitmapDir + "fonts/FontAwesome/" + getIconFamily(iconName) + ".woff2";
+  return TalipotShareDir + "fonts/FontAwesome/" + getIconFamily(iconName) + ".woff2";
 }
 
 bool FontAwesome::isIconSupported(const string &iconName) {

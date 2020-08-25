@@ -64,6 +64,7 @@ The following dependencies are required to build Talipot:
   [Clang](https://clang.llvm.org) >= 3.3 or
   [Microsoft Visual Studio](https://www.visualstudio.com) >= 2013
   * [FreeType](https://www.freetype.org)
+  * [Fontconfig](https://www.freedesktop.org/wiki/Software/fontconfig/)
   * [zlib](https://zlib.net)
   * [zstd](https://github.com/facebook/zstd)
   * [Qt](https://www.qt.io) >= 5.7.0

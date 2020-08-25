@@ -101,7 +101,7 @@ public:
   void setCurrentGraph(tlp::Graph *);
   tlp::Graph *currentGraph() const;
 
-  void clear();
+  void clear(tlp::Project *);
 
 signals:
   void currentGraphChanged(tlp::Graph *);

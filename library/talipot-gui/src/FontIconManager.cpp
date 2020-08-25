@@ -64,10 +64,9 @@ QFont &FontIconEngine::init(const QString &iconName) {
     // load the font file
     auto fontId = QFontDatabase::addApplicationFont(fontFile);
     if (fontId == -1) {
-      qDebug() << "Error when loading font file " << fontFile;
+      qDebug() << "Error when loading font file" << fontFile;
       return nullFont;
     }
-
     QStringList fontFamilies = QFontDatabase::applicationFontFamilies(fontId);
     if (!fontFamilies.empty()) {
       qFonts[fontFile] = QFont(fontFamilies.at(0));

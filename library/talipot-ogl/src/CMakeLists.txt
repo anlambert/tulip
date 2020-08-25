@@ -7,6 +7,7 @@ SET(talipot-ogl_LIB_SRCS
     edgeExtremityArrow.cpp
     EdgeExtremityGlyph.cpp
     EdgeExtremityGlyphManager.cpp
+    Font.cpp
     Gl2DRect.cpp
     GlAbstractPolygon.cpp
     GlAxis.cpp
@@ -74,7 +75,8 @@ INCLUDE_DIRECTORIES(
   ${PROJECT_SOURCE_DIR}
   ${FTGLInclude}
   ${FREETYPE_INCLUDE_DIRS}
-  ${UTF8CppInclude})
+  ${UTF8CppInclude}
+  ${FONTCONFIG_INCLUDE_DIR})
 
 INCLUDE_DIRECTORIES(${OPENGL_INCLUDE_DIR} ${GLEW_INCLUDE_DIR} ${StbInclude}
                     ${Tess2Include})
@@ -88,7 +90,8 @@ TARGET_LINK_LIBRARIES(
   ${LibTalipotCoreName}
   ${OPENGL_gl_LIBRARY}
   ${FREETYPE_LIBRARY}
-  ${Tess2Library})
+  ${Tess2Library}
+  ${FONTCONFIG_LIBRARIES})
 
 INSTALL(
   TARGETS ${LibTalipotOGLName}

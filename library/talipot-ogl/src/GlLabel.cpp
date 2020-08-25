@@ -70,24 +70,6 @@ static FTGLOutlineFont *getOutlineFont(const std::string &name) {
   return itf->second.get();
 }
 
-static void initFont(std::string &fontName, FTGLPolygonFont *&font, FTOutlineFont *&borderFont,
-                     int &fontSize) {
-  TLP_LOCK_SECTION(init_talipot_font) {
-    fontName = TalipotBitmapDir + "font.ttf";
-    font = getPolygonFont(fontName);
-
-    if (font->Error() == 0) { // no error
-      borderFont = getOutlineFont(fontName);
-    } else {
-      tlp::error() << "Error when loading font file (" << fontName << ") for rendering labels"
-                   << endl;
-    }
-
-    fontSize = 20;
-  }
-  TLP_UNLOCK_SECTION(init_talipot_font);
-}
-
 static const int SpaceBetweenLine = 5;
 
 GlLabel::GlLabel() : leftAlign(false), oldCamera(nullptr) {
@@ -102,8 +84,9 @@ GlLabel::GlLabel(Coord centerPosition, Size size, Color fontColor, bool leftAlig
 GlLabel::~GlLabel() {}
 //============================================================
 void GlLabel::init() {
-  initFont(fontName, font, borderFont, fontSize);
-
+  font = Font::defaultFont();
+  initFont();
+  fontSize = 20;
   outlineColor.set(0, 0, 0, 255);
   outlineSize = 1.;
   renderingMode = 0;
@@ -125,17 +108,33 @@ void GlLabel::init() {
   oldLod = -1;
 }
 //============================================================
+void GlLabel::initFont() {
+  TLP_LOCK_SECTION(init_talipot_font) {
+    ftglPolygonFont = getPolygonFont(font.fontFile());
+
+    if (ftglPolygonFont->Error() == 0) { // no error
+      ftglOutlineFont = getOutlineFont(font.fontFile());
+    } else {
+      if (ftglPolygonFont->Error() || ftglOutlineFont->Error()) {
+        tlp::warning() << "Error in font loading: \"" << font.fontFile() << "\" cannot be loaded "
+                       << endl;
+      }
+    }
+  }
+  TLP_UNLOCK_SECTION(init_talipot_font);
+}
+//============================================================
 void GlLabel::setText(const string &text) {
 
   this->text = text;
 
-  if (font->Error()) {
+  if (ftglPolygonFont->Error()) {
     return;
   }
 
-  if (font->FaceSize() != uint(fontSize)) {
-    font->FaceSize(fontSize);
-    borderFont->FaceSize(fontSize);
+  if (ftglPolygonFont->FaceSize() != uint(fontSize)) {
+    ftglPolygonFont->FaceSize(fontSize);
+    ftglOutlineFont->FaceSize(fontSize);
   }
 
   // split each line
@@ -161,14 +160,14 @@ void GlLabel::setText(const string &text) {
 
   // After we compute width of text
   for (auto it = textVector.begin(); it != textVector.end(); ++it) {
-    font->BBox(it->c_str(), x1, y1, z1, x2, y2, z2);
+    ftglPolygonFont->BBox(it->c_str(), x1, y1, z1, x2, y2, z2);
     textWidthVector.push_back(x2 - x1);
 
     if (it == textVector.begin()) {
       textBoundingBox.expand(Coord(0, y1, z1));
       textBoundingBox.expand(Coord(x2 - x1, y2, z2));
     } else {
-      font->BBox(it->c_str(), x1, y1, z1, x2, y2, z2);
+      ftglPolygonFont->BBox(it->c_str(), x1, y1, z1, x2, y2, z2);
 
       if (x2 - x1 > textBoundingBox[1][0]) {
         textBoundingBox[1][0] = (x2 - x1);
@@ -188,36 +187,12 @@ BoundingBox GlLabel::getBoundingBox() {
   }
 }
 //============================================================
-void GlLabel::setBoldFont() {
-  setFontName(TalipotBitmapDir + "fontb.ttf");
-  fontSize = 18;
-}
-//============================================================
-void GlLabel::setPlainFont() {
-  setFontName(TalipotBitmapDir + "font.ttf");
-  fontSize = 18;
-}
-//============================================================
 void GlLabel::setFontName(const std::string &name) {
-  if (fontName == name || name.empty()) {
+  if (font.fontName() == name || name.empty()) {
     return;
   }
-
-  fontName = name;
-
-  font = getPolygonFont(fontName);
-  borderFont = getOutlineFont(fontName);
-
-  if (font->Error() || borderFont->Error()) {
-    if (fontName.empty()) {
-      tlp::warning() << "Error in font loading: no font name" << endl;
-    } else {
-      tlp::warning() << "Error in font loading: " << fontName << " cannot be loaded" << endl;
-    }
-
-    font = getPolygonFont((TalipotBitmapDir + "font.ttf"));
-    borderFont = getOutlineFont((TalipotBitmapDir + "font.ttf"));
-  }
+  font = Font::fromName(name);
+  initFont();
 }
 //============================================================
 void GlLabel::setFontNameSizeAndColor(const std::string &name, const int &size,
@@ -251,7 +226,7 @@ float GlLabel::getHeightAfterScale() {
 //============================================================
 void GlLabel::draw(float, Camera *camera) {
 
-  if (fontSize <= 0 || font->Error()) {
+  if (fontSize <= 0 || ftglPolygonFont->Error()) {
     return;
   }
 
@@ -712,7 +687,7 @@ void GlLabel::draw(float, Camera *camera) {
     auto itW = textWidthVector.begin();
 
     for (const auto &text : textVector) {
-      font->BBox(text.c_str(), x1, y1, z1, x2, y2, z2);
+      ftglPolygonFont->BBox(text.c_str(), x1, y1, z1, x2, y2, z2);
 
       FTPoint shift(-(textBoundingBox[1][0] - textBoundingBox[0][0]) / 2. - x1 +
                         ((textBoundingBox[1][0] - textBoundingBox[0][0]) - (*itW)) * xAlignFactor +
@@ -726,7 +701,7 @@ void GlLabel::draw(float, Camera *camera) {
 
       setMaterial(color);
 
-      font->Render(text.c_str(), -1, shift);
+      ftglPolygonFont->Render(text.c_str(), -1, shift);
 
       if (!textureName.empty()) {
         GlTextureManager::deactivateTexture();
@@ -741,7 +716,7 @@ void GlLabel::draw(float, Camera *camera) {
 
         setMaterial(outlineColor);
 
-        borderFont->Render(text.c_str(), -1, shift);
+        ftglOutlineFont->Render(text.c_str(), -1, shift);
       }
 
       yShift -= fontSize + 5;
@@ -764,12 +739,11 @@ void GlLabel::rotate(float xRot, float yRot, float zRot) {
 }
 //===========================================================
 void GlLabel::getXML(string &outString) {
-
   GlXMLTools::createProperty(outString, "type", "GlLabel", "GlEntity");
 
   GlXMLTools::getXML(outString, "text", text);
   GlXMLTools::getXML(outString, "renderingMode", renderingMode);
-  GlXMLTools::getXML(outString, "fontName", fontName);
+  GlXMLTools::getXML(outString, "fontName", font.fontName());
   GlXMLTools::getXML(outString, "centerPosition", centerPosition);
   GlXMLTools::getXML(outString, "translationAfterRotation", translationAfterRotation);
   GlXMLTools::getXML(outString, "size", size);
@@ -790,7 +764,7 @@ void GlLabel::getXML(string &outString) {
 }
 //============================================================
 void GlLabel::setWithXML(const string &inString, unsigned int &currentPosition) {
-
+  string fontName;
   GlXMLTools::setWithXML(inString, currentPosition, "text", text);
   GlXMLTools::setWithXML(inString, currentPosition, "renderingMode", renderingMode);
   GlXMLTools::setWithXML(inString, currentPosition, "fontName", fontName);
@@ -812,5 +786,6 @@ void GlLabel::setWithXML(const string &inString, unsigned int &currentPosition) 
   GlXMLTools::setWithXML(inString, currentPosition, "outlineColor", outlineColor);
   GlXMLTools::setWithXML(inString, currentPosition, "outlineSize", outlineSize);
   GlXMLTools::setWithXML(inString, currentPosition, "textureName", textureName);
+  setFontName(fontName);
 }
 }

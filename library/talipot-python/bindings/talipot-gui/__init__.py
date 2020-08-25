@@ -1,4 +1,4 @@
-# Copyright (C) 2019  The Talipot developers
+# Copyright (C) 2019-2020  The Talipot developers
 #
 # Talipot is a fork of Tulip, created by David Auber
 # and the Tulip development Team from LaBRI, University of Bordeaux
@@ -38,17 +38,6 @@ if platform.system() == 'Windows':
     os.environ['PATH'] = '%s;%s../../../;%s' % (
         _talipotGuiNativeLibsPath, _talipotGuiNativeLibsPath,
         os.environ['PATH'])
-
-if not sys.argv[0] == 'talipot':
-    # when the talipotgui module is installed from the Python Packaging Index
-    # modify the TalipotBitmapDir variable as it is different from
-    # the default one
-    bitmapDir = '%s/share/bitmaps/' % os.path.dirname(__file__)
-    if os.path.isdir(bitmapDir):
-        tlp.TalipotBitmapDir = bitmapDir
-        tlp.TalipotPluginsPath = _talipotGuiNativePluginsPath
-        tlp.ViewSettings.instance().setDefaultFontFile(
-            '%sfont.ttf' % tlp.TalipotBitmapDir)
 
 
 import _talipotgui # noqa

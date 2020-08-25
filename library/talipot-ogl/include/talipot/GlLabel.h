@@ -19,6 +19,7 @@
 #include <talipot/Size.h>
 #include <talipot/Camera.h>
 #include <talipot/GlEntity.h>
+#include <talipot/Font.h>
 
 class FTGLPolygonFont;
 class FTOutlineFont;
@@ -43,6 +44,7 @@ class TLP_GL_SCOPE GlLabel final : public GlEntity {
    *
    */
   void init();
+  void initFont();
 
 public:
   /**
@@ -236,16 +238,6 @@ public:
   void setWithXML(const std::string &inString, unsigned int &currentPosition) override;
 
   /**
-   * @brief Switch to bold font
-   */
-  void setBoldFont();
-
-  /**
-   * @brief Switch to plain font
-   */
-  void setPlainFont();
-
-  /**
    * @brief Change font name
    */
   void setFontName(const std::string &name);
@@ -429,11 +421,11 @@ public:
 
 private:
   std::string text;
-  std::string fontName;
+  Font font;
   int fontSize;
   int renderingMode;
-  FTGLPolygonFont *font;
-  FTOutlineFont *borderFont;
+  FTGLPolygonFont *ftglPolygonFont;
+  FTOutlineFont *ftglOutlineFont;
   Coord centerPosition;
   Coord translationAfterRotation;
   Size size;
