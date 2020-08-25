@@ -238,6 +238,8 @@ struct TLP_QT_SCOPE FontEditorCreator : public tlp::ItemEditorCreator {
   void setEditorData(QWidget *, const QVariant &, bool, tlp::Graph *) override;
   QVariant editorData(QWidget *, tlp::Graph *) override;
   QString displayText(const QVariant &) const override;
+  bool paint(QPainter *, const QStyleOptionViewItem &, const QVariant &,
+             const QModelIndex &index) const override;
 };
 
 class TLP_QT_SCOPE LabelPositionEditorCreator : public tlp::ItemEditorCreator {

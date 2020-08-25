@@ -27,6 +27,7 @@ class QMainWindow;
 
 namespace tlp {
 
+class Font;
 struct PluginLoader;
 
 TLP_QT_SCOPE bool getColorDialog(const QColor &color, QWidget *parent, const QString &title,
@@ -135,6 +136,10 @@ TLP_QT_SCOPE const QColor &backgroundColor();
 TLP_QT_SCOPE const QColor &textColor();
 
 extern TLP_QT_SCOPE const QColor darkColor;
+
+TLP_QT_SCOPE void addFontToQFontDatabase(const Font &font);
+
+TLP_QT_SCOPE void removeFontFromQFontDatabase(const std::string &fontFile);
 
 }
 

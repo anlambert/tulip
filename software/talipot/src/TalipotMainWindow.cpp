@@ -1776,9 +1776,9 @@ void TalipotMainWindow::cleanProject() {
     }
 
     _pythonIDE->clearPythonCodeEditors();
-    _project->clearProject();
-    _graphs->clear();
   }
+  _graphs->clear(_project);
+  _project->clearProject();
 }
 
 void TalipotMainWindow::showFullScreen(bool f) {

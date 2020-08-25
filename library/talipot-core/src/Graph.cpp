@@ -119,8 +119,8 @@ static void setViewPropertiesDefaults(Graph *g) {
   }
 
   if (!g->existProperty(fonts)) {
-    g->getStringProperty(fonts)->setAllNodeValue(ViewSettings::instance().defaultFontFile());
-    g->getStringProperty(fonts)->setAllEdgeValue(ViewSettings::instance().defaultFontFile());
+    g->getStringProperty(fonts)->setAllNodeValue(ViewSettings::instance().defaultFont());
+    g->getStringProperty(fonts)->setAllEdgeValue(ViewSettings::instance().defaultFont());
   }
 
   if (!g->existProperty(fontSizes)) {

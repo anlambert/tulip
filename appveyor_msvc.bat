@@ -40,7 +40,7 @@ if "%TALIPOT_BUILD_CORE_ONLY%" == "0" (
 :install_complete_talipot_build_dependencies
 
 rem install talipot complete build dependencies
-vcpkg install --triplet x64-windows freetype glew
+vcpkg install --triplet x64-windows freetype glew fontconfig
 
 rem get, compile and install quazip
 cd C:/talipot_dependencies

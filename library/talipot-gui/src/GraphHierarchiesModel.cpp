@@ -35,6 +35,7 @@
 #include <talipot/GraphNeedsSavingObserver.h>
 #include <talipot/TlpQtTools.h>
 #include <talipot/StableIterator.h>
+#include <talipot/Font.h>
 
 #include <fstream>
 
@@ -49,6 +50,7 @@ using namespace tlp;
 // Serialization
 static QString GRAPHS_PATH("/graphs/");
 static QString TEXTURES_PATH("/textures/");
+static QString FONTS_PATH("/fonts/");
 
 static void copyTextureFileInProject(const QString &textureFilePath, tlp::Project *project,
                                      QStringList &projectTexturesFolders,
@@ -275,6 +277,88 @@ static void restoreTextureFilesFromProjectIfNeeded(tlp::Graph *g, tlp::Project *
   }
 }
 
+static void copyFontFileInProject(const string &fontName, tlp::Project *project,
+                                  QStringList &projectFontFiles) {
+  const Font &font = Font::fromName(fontName);
+  if (font.fontName() == Font::defaultFont().fontName()) {
+    return;
+  }
+
+  QFileInfo fileInfo(tlpStringToQString(font.fontFile()));
+  if (!fileInfo.exists() || projectFontFiles.contains(fileInfo.fileName())) {
+    return;
+  }
+
+  if (!project->exists(FONTS_PATH)) {
+    project->mkpath(FONTS_PATH);
+  }
+
+  project->copy(fileInfo.absoluteFilePath(), FONTS_PATH + fileInfo.fileName());
+  projectFontFiles.append(fileInfo.fileName());
+}
+
+// Function for copying nodes and edges fonts in the project to make it portable across computers
+static void writeFontFilesInProject(const QList<tlp::Graph *> &graphs, tlp::Project *project,
+                                    tlp::PluginProgress *progress) {
+  if (progress) {
+    progress->progress(0, 0);
+    progress->setComment(
+        "Writing font files into project to ensure its portability across computers ...");
+  }
+
+  QStringList projectFontFiles;
+
+  // gather list of font filenames already present in the project
+  for (const QString &fontFile : project->entryList(FONTS_PATH, QDir::Files)) {
+    projectFontFiles.append(fontFile);
+  }
+
+  for (auto g : graphs) {
+    // Process the viewFont default node value
+    StringProperty *viewFont = g->getStringProperty("viewFont");
+    copyFontFileInProject(viewFont->getNodeDefaultValue(), project, projectFontFiles);
+
+    // Process the non default valuated nodes in the viewFont property
+    for (auto n : viewFont->getNonDefaultValuatedNodes()) {
+      copyFontFileInProject(viewFont->getNodeValue(n), project, projectFontFiles);
+    }
+
+    // Process the viewFont default edge value
+    copyFontFileInProject(viewFont->getEdgeDefaultValue(), project, projectFontFiles);
+
+    // Process the non default valuated nodes in the viewFont property
+    for (auto e : viewFont->getNonDefaultValuatedEdges()) {
+      copyFontFileInProject(viewFont->getEdgeValue(e), project, projectFontFiles);
+    }
+  }
+}
+
+static void restoreFontsFromProject(tlp::Project *project, tlp::PluginProgress *progress) {
+  if (!project->exists(FONTS_PATH)) {
+    return;
+  }
+  if (progress) {
+    progress->progress(0, 0);
+    progress->setComment("Restoring fonts from project ...");
+  }
+  auto fonts = Font::addFontsFromDir(QStringToTlpString(project->toAbsolutePath(FONTS_PATH)));
+  for (const auto &font : fonts) {
+    addFontToQFontDatabase(font);
+  }
+}
+
+static void removeFontsFromProject(tlp::Project *project) {
+  if (!project->exists(FONTS_PATH)) {
+    return;
+  }
+  QString fontsPath = project->toAbsolutePath(FONTS_PATH);
+  for (const QString &fontFile : project->entryList(FONTS_PATH, QDir::Files)) {
+    string fontFilePath = QStringToTlpString(fontsPath + "/" + fontFile);
+    removeFontFromQFontDatabase(fontFilePath);
+    Font::removeFont(fontFilePath);
+  }
+}
+
 GraphHierarchiesModel::GraphHierarchiesModel(QObject *parent)
     : Model(parent), _currentGraph(nullptr) {}
 
@@ -380,6 +464,8 @@ QMap<QString, tlp::Graph *> GraphHierarchiesModel::readProject(tlp::Project *pro
     }
   }
 
+  restoreFontsFromProject(project, progress);
+
   QDir::setCurrent(QFileInfo(project->projectFile()).absolutePath());
 
   return rootIds;
@@ -409,6 +495,7 @@ QMap<tlp::Graph *, QString> GraphHierarchiesModel::writeProject(tlp::Project *pr
   }
 
   writeTextureFilesInProject(_graphs, project, progress);
+  writeFontFilesInProject(_graphs, project, progress);
 
   for (GraphNeedsSavingObserver *observer : _saveNeeded) {
     observer->saved();
@@ -874,8 +961,9 @@ void GraphHierarchiesModel::treatEvents(const std::vector<tlp::Event> &) {
   _graphsChanged.clear();
 }
 
-void GraphHierarchiesModel::clear() {
+void GraphHierarchiesModel::clear(tlp::Project *project) {
   _indexCache.clear();
   _saveNeeded.clear();
   _currentGraph = nullptr;
+  removeFontsFromProject(project);
 }

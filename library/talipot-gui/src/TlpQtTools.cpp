@@ -32,6 +32,7 @@
 #include <QStandardPaths>
 #include <QMainWindow>
 #include <QPalette>
+#include <QFontDatabase>
 
 #include <talipot/DataSet.h>
 #include <talipot/Settings.h>
@@ -57,6 +58,7 @@
 #include <talipot/FileDownloader.h>
 #include <talipot/ItemEditorCreators.h>
 #include <talipot/GlOffscreenRenderer.h>
+#include <talipot/Font.h>
 
 /**
  * For openDataSetDialog function : see OpenDataSet.cpp
@@ -296,6 +298,13 @@ void initTalipotSoftware(tlp::PluginLoader *loader) {
   // Explicitely create a shared OpenGL context to
   // ensure it is initialized before using it
   GlOffscreenRenderer::instance().getOpenGLContext();
+
+  const auto &fonts = Font::availableFonts();
+  for (const auto &itFamily : fonts) {
+    for (const auto &itStyle : itFamily.second) {
+      addFontToQFontDatabase(itStyle.second);
+    }
+  }
 }
 
 // tlp::debug redirection
@@ -503,6 +512,24 @@ const QColor &backgroundColor() {
 
 const QColor &textColor() {
   return QApplication::palette().color(QPalette::WindowText);
+}
+
+static unordered_map<string, int> fontIds;
+
+void addFontToQFontDatabase(const Font &font) {
+  QFontDatabase fontDb;
+  if (!fontDb.styles(tlpStringToQString(font.fontFamily()))
+           .contains(tlpStringToQString(font.fontStyle()))) {
+    fontIds[font.fontFile()] = fontDb.addApplicationFont(tlpStringToQString(font.fontFile()));
+  }
+}
+
+void removeFontFromQFontDatabase(const string &fontFile) {
+  QFontDatabase fontDb;
+  if (fontIds.find(fontFile) != fontIds.end()) {
+    fontDb.removeApplicationFont(fontIds[fontFile]);
+    fontIds.erase(fontFile);
+  }
 }
 
 }

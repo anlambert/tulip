@@ -319,7 +319,7 @@ QVariant GraphModel::nodeValue(unsigned int id, PropertyInterface *prop) {
   } else if (dynamic_cast<StringProperty *>(prop) != nullptr) {
     if (prop->getName() == "viewFont") {
       return QVariant::fromValue<Font>(
-          Font::fromFile(tlpStringToQString(static_cast<StringProperty *>(prop)->getNodeValue(n))));
+          Font::fromName(static_cast<StringProperty *>(prop)->getNodeValue(n)));
     }
 
     if (prop->getName() == "viewIcon") {
@@ -366,8 +366,8 @@ QVariant GraphModel::nodeDefaultValue(PropertyInterface *prop) {
     return QVariant::fromValue<int>(static_cast<IntegerProperty *>(prop)->getNodeDefaultValue());
   } else if (dynamic_cast<StringProperty *>(prop) != nullptr) {
     if (prop->getName() == "viewFont") {
-      return QVariant::fromValue<Font>(Font::fromFile(
-          tlpStringToQString(static_cast<StringProperty *>(prop)->getNodeDefaultValue())));
+      return QVariant::fromValue<Font>(
+          Font::fromName(static_cast<StringProperty *>(prop)->getNodeDefaultValue()));
     }
 
     if (prop->getName() == "viewIcon") {
@@ -411,8 +411,7 @@ bool GraphModel::setAllNodeValue(PropertyInterface *prop, QVariant v, const Grap
     }
   } else if (dynamic_cast<StringProperty *>(prop) != nullptr) {
     if (prop->getName() == "viewFont") {
-      static_cast<StringProperty *>(prop)->setAllNodeValue(
-          QStringToTlpString(v.value<Font>().fontFile()), graph);
+      static_cast<StringProperty *>(prop)->setAllNodeValue(v.value<Font>().fontName(), graph);
     } else if (prop->getName() == "viewIcon") {
       static_cast<StringProperty *>(prop)->setAllNodeValue(
           QStringToTlpString(v.value<FontIcon>().iconName), graph);
@@ -452,8 +451,7 @@ bool GraphModel::setNodeValue(unsigned int id, PropertyInterface *prop, QVariant
     }
   } else if (dynamic_cast<StringProperty *>(prop) != nullptr) {
     if (prop->getName() == "viewFont") {
-      static_cast<StringProperty *>(prop)->setNodeValue(
-          n, QStringToTlpString(v.value<Font>().fontFile()));
+      static_cast<StringProperty *>(prop)->setNodeValue(n, v.value<Font>().fontName());
     } else if (prop->getName() == "viewIcon") {
       static_cast<StringProperty *>(prop)->setNodeValue(
           n, QStringToTlpString(v.value<FontIcon>().iconName));
@@ -491,8 +489,7 @@ bool GraphModel::setNodeDefaultValue(PropertyInterface *prop, QVariant v) {
     }
   } else if (dynamic_cast<StringProperty *>(prop) != nullptr) {
     if (prop->getName() == "viewFont") {
-      static_cast<StringProperty *>(prop)->setNodeDefaultValue(
-          QStringToTlpString(v.value<Font>().fontFile()));
+      static_cast<StringProperty *>(prop)->setNodeDefaultValue(v.value<Font>().fontName());
     } else if (prop->getName() == "viewIcon") {
       static_cast<StringProperty *>(prop)->setNodeDefaultValue(
           QStringToTlpString(v.value<FontIcon>().iconName));
@@ -549,7 +546,7 @@ QVariant GraphModel::edgeValue(unsigned int id, PropertyInterface *prop) {
   } else if (dynamic_cast<StringProperty *>(prop) != nullptr) {
     if (prop->getName() == "viewFont") {
       return QVariant::fromValue<Font>(
-          Font::fromFile(tlpStringToQString(static_cast<StringProperty *>(prop)->getEdgeValue(e))));
+          Font::fromName(static_cast<StringProperty *>(prop)->getEdgeValue(e)));
     }
 
     if (prop->getName() == "viewIcon") {
@@ -609,7 +606,7 @@ QVariant GraphModel::edgeDefaultValue(PropertyInterface *prop) {
   } else if (dynamic_cast<StringProperty *>(prop) != nullptr) {
     if (prop->getName() == "viewFont") {
       return QVariant::fromValue<Font>(
-          Font::fromFile(static_cast<StringProperty *>(prop)->getEdgeDefaultValue().c_str()));
+          Font::fromName(static_cast<StringProperty *>(prop)->getEdgeDefaultValue().c_str()));
     }
 
     if (prop->getName() == "viewIcon") {
@@ -664,8 +661,7 @@ bool GraphModel::setEdgeValue(unsigned int id, PropertyInterface *prop, QVariant
     }
   } else if (dynamic_cast<StringProperty *>(prop) != nullptr) {
     if (prop->getName() == "viewFont") {
-      static_cast<StringProperty *>(prop)->setEdgeValue(
-          e, QStringToTlpString(v.value<Font>().fontFile()));
+      static_cast<StringProperty *>(prop)->setEdgeValue(e, v.value<Font>().fontName());
     } else if (prop->getName() == "viewIcon") {
       static_cast<StringProperty *>(prop)->setEdgeValue(
           e, QStringToTlpString(v.value<FontIcon>().iconName));
@@ -713,8 +709,7 @@ bool GraphModel::setEdgeDefaultValue(PropertyInterface *prop, QVariant v) {
     }
   } else if (dynamic_cast<StringProperty *>(prop) != nullptr) {
     if (prop->getName() == "viewFont") {
-      static_cast<StringProperty *>(prop)->setEdgeDefaultValue(
-          QStringToTlpString(v.value<Font>().fontFile()));
+      static_cast<StringProperty *>(prop)->setEdgeDefaultValue(v.value<Font>().fontName());
     } else if (prop->getName() == "viewIcon") {
       static_cast<StringProperty *>(prop)->setEdgeDefaultValue(
           QStringToTlpString(v.value<FontIcon>().iconName));
@@ -759,8 +754,7 @@ bool GraphModel::setAllEdgeValue(PropertyInterface *prop, QVariant v, const Grap
     }
   } else if (dynamic_cast<StringProperty *>(prop) != nullptr) {
     if (prop->getName() == "viewFont") {
-      static_cast<StringProperty *>(prop)->setAllEdgeValue(
-          QStringToTlpString(v.value<Font>().fontFile()), graph);
+      static_cast<StringProperty *>(prop)->setAllEdgeValue(v.value<Font>().fontName(), graph);
 
     } else if (prop->getName() == "viewIcon") {
       static_cast<StringProperty *>(prop)->setAllEdgeValue(

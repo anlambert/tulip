@@ -146,8 +146,8 @@ public:
   Size defaultEdgeExtremityTgtSize() const;
   void setDefaultEdgeExtremityTgtSize(const Size &size);
 
-  std::string defaultFontFile() const;
-  void setDefaultFontFile(const std::string &fontFile);
+  std::string defaultFont() const;
+  void setDefaultFont(const std::string &fontFile);
 
   int defaultFontSize() const;
   void setDefaultFontSize(int fontSize);

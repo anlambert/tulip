@@ -21,6 +21,7 @@
 #include <QMainWindow>
 #include <QFileDialog>
 #include <QHBoxLayout>
+#include <QFontDatabase>
 
 #include <talipot/TlpTools.h>
 #include <talipot/ColorScaleButton.h>
@@ -838,17 +839,22 @@ QVariant FontEditorCreator::editorData(QWidget *editor, tlp::Graph *) {
 
 QString FontEditorCreator::displayText(const QVariant &data) const {
   Font font = data.value<Font>();
-  QString text(font.fontName());
+  return tlpStringToQString(font.fontFamily()) + " " + tlpStringToQString(font.fontStyle());
+}
 
-  if (font.isBold()) {
-    text += " bold";
+bool FontEditorCreator::paint(QPainter *painter, const QStyleOptionViewItem &option,
+                              const QVariant &v, const QModelIndex &index) const {
+  ItemEditorCreator::paint(painter, option, v, index);
+  Font font = v.value<Font>();
+  QFont qFont = option.font;
+  qFont.setFamily(tlpStringToQString(font.fontFamily()));
+  qFont.setStyleName(tlpStringToQString(font.fontStyle()));
+  painter->setFont(qFont);
+  if (option.state.testFlag(QStyle::State_Selected) && option.showDecorationSelected) {
+    painter->setPen(option.palette.highlightedText().color());
   }
-
-  if (font.isItalic()) {
-    text += " italic";
-  }
-
-  return text;
+  painter->drawText(option.rect, displayText(v), QTextOption(Qt::AlignCenter));
+  return true;
 }
 
 QWidget *LabelPositionEditorCreator::createWidget(QWidget *parent) const {

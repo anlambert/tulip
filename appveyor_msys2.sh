@@ -34,6 +34,7 @@ export TALIPOT_BUILD_DOC=OFF
 if [[ "$TALIPOT_BUILD_CORE_ONLY" == "0" ]]
 then
   # Install Talipot complete build dependencies
+  pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-fontconfig
   pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-freetype
   pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-glew
   pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-qt5

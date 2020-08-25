@@ -142,6 +142,7 @@ jobs:
             - libquazip5-dev
             - libglew-dev
             - libfreetype6-dev
+            - libfontconfig-dev
       install:
         # install latest sphinx version for generating the documentation
         - sudo pip install "sphinx<3"
@@ -198,6 +199,7 @@ jobs:
             - libquazip5-dev
             - libglew-dev
             - libfreetype6-dev
+            - libfontconfig-dev
       env:
         # use Python 3.8
         - PYTHON_EXECUTABLE=/usr/bin/python3
@@ -495,6 +497,7 @@ jobs:
         - sudo port -N install qt5-qtwebkit
         - sudo port -N install quazip
         - sudo port -N install freetype
+        - sudo port -N install fontconfig
         - sudo port -N install glew
         - sudo port -N install qhull
         - sudo port -N install yajl
@@ -571,6 +574,7 @@ jobs:
             - pkg-config
             - glew
             - freetype
+            - fontconfig
             - qt5
             - quazip
 

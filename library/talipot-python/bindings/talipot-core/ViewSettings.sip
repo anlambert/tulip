@@ -175,9 +175,9 @@ public:
 
   void setDefaultEdgeExtremityTgtSize(const tlp::Size &size);
 
-  std::string defaultFontFile() const;
+  std::string defaultFont() const;
 
-  void setDefaultFontFile(const std::string &fontFile);
+  void setDefaultFont(const std::string &fontFile);
 
   int defaultFontSize() const;
 

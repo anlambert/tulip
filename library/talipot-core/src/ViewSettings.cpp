@@ -36,7 +36,7 @@ static int _defaultEdgeExtremitySrcShape(EdgeExtremityShape::None);
 static int _defaultEdgeExtremityTgtShape(EdgeExtremityShape::Arrow);
 static Size _defaultEdgeExtremitySrcSize(1, 1, 0);
 static Size _defaultEdgeExtremityTgtSize(1, 1, 0);
-static std::string _defaultFontFile;
+static std::string _defaultFont("DejaVu Sans-Book");
 static int _defaultFontSize(18);
 
 Color ViewSettings::defaultColor(ElementType elem) const {
@@ -212,17 +212,12 @@ void ViewSettings::setDefaultEdgeExtremityTgtSize(const Size &size) {
   _defaultEdgeExtremityTgtSize = size;
 }
 
-std::string ViewSettings::defaultFontFile() const {
-  // _defaultFontFile initialization must be delayed
-  // until TalipotBitmapDir is set
-  if (_defaultFontFile.empty()) {
-    _defaultFontFile = tlp::TalipotBitmapDir + "font.ttf";
-  }
-  return _defaultFontFile;
+std::string ViewSettings::defaultFont() const {
+  return _defaultFont;
 }
 
-void ViewSettings::setDefaultFontFile(const std::string &fontFile) {
-  _defaultFontFile = fontFile;
+void ViewSettings::setDefaultFont(const std::string &fontFile) {
+  _defaultFont = fontFile;
 }
 
 int ViewSettings::defaultFontSize() const {
