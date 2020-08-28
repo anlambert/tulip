@@ -112,7 +112,7 @@ INCLUDE_DIRECTORIES(
   ${QHULL_INCLUDE_DIRS}
   ${GZStreamInclude}
   ${UTF8CppInclude}
-  ${zstd_INCLUDE_DIRS}
+  ${Zstd_INCLUDE_DIRS}
   ${ZstdStreamInclude})
 
 ADD_CUSTOM_COMMAND(
@@ -145,7 +145,7 @@ ADD_LIBRARY(${LibTalipotCoreName} SHARED ${talipot_LIB_SRCS}
 
 TARGET_LINK_LIBRARIES(
   ${LibTalipotCoreName} ${GZStreamLibrary} ${YAJL_LIBRARIES} ${QHULL_LIBRARIES}
-  ${zstd_LIBRARIES} ${CMAKE_DL_LIBS})
+  ${Zstd_LIBRARIES} ${CMAKE_DL_LIBS})
 
 IF(WIN32)
   IF(MSVC)
