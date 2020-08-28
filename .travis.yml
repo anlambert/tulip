@@ -24,7 +24,7 @@ jobs:
   #=============================================================================================
     # Talipot core build stage on Linux
     - stage: Talipot core build (Linux)
-      if: commit_message !~ /\[ci-macos-only\]$/
+      if: commit_message !~ /\[ci-(macos|windows)-only\]$/
     # legacy Talipot core build on Linux
       os: linux
       dist: bionic
@@ -69,7 +69,7 @@ jobs:
     #-------------------------------------------------------------------------------------------
     # modern Talipot core build on Linux
     -
-      if: commit_message !~ /\[ci-macos-only\]$/
+      if: commit_message !~ /\[ci-(macos|windows)-only\]$/
       os: linux
       dist: focal
       compiler: gcc
@@ -114,7 +114,7 @@ jobs:
     # Talipot complete build stage on Linux
     - stage: Talipot complete build (Linux)
       # legacy Talipot complete build on Linux, we also build the documentation in this one
-      if: commit_message !~ /\[ci-macos-only\]$/
+      if: commit_message !~ /\[ci-(macos|windows)-only\]$/
       os: linux
       dist: bionic
       compiler: gcc
@@ -169,7 +169,7 @@ jobs:
     #-------------------------------------------------------------------------------------------
     # modern Talipot complete build on Linux
     -
-      if: commit_message !~ /\[ci-macos-only\]$/
+      if: commit_message !~ /\[ci-(macos|windows)-only\]$/
       os: linux
       dist: focal
       compiler: gcc
@@ -221,7 +221,7 @@ jobs:
   #==============================================================================================================================================================
     # Talipot-Python wheel build on manylinux2010
     - stage: Talipot-Python wheels build (manylinux2010)
-      if: commit_message !~ /\[ci-macos-only\]$/
+      if: commit_message !~ /\[ci-(macos|windows)-only\]$/
       os: linux
       dist: bionic
       addons:
@@ -274,7 +274,7 @@ jobs:
     # Talipot AppImage build on CentOS
     - stage: Talipot AppImage build (CentOS)
       # Talipot x86_64 AppImage build on CentOS 7
-      if: commit_message !~ /\[ci-macos-only\]$/
+      if: commit_message !~ /\[ci-(macos|windows)-only\]$/
       os: linux
       dist: bionic
       cache:
@@ -315,6 +315,7 @@ jobs:
   #=============================================================================================
     # Talipot core build stage on Mac OS
     - stage: Talipot core build (Mac OS)
+      if: commit_message !~ /\[ci-(windows)-only\]$/
     # Talipot core build on Mac OS (MacPorts)
       os: osx
       osx_image: xcode9.4
@@ -365,6 +366,7 @@ jobs:
     #-------------------------------------------------------------------------------------------
     # Talipot core build on Mac OS (Homebrew)
     -
+      if: commit_message !~ /\[ci-(windows)-only\]$/
       os: osx
       osx_image: xcode11.3
       compiler: clang
@@ -408,6 +410,7 @@ jobs:
   #=============================================================================================
     # Talipot complete build stage on Mac OS
     - stage: Talipot complete build (Mac OS)
+      if: commit_message !~ /\[ci-(windows)-only\]$/
     # Talipot complete build on Mac OS (MacPorts)
       os: osx
       osx_image: xcode9.4
@@ -485,6 +488,7 @@ jobs:
     #-------------------------------------------------------------------------------------------
     # Talipot complete build on Mac OS (Homebrew)
     -
+      if: commit_message !~ /\[ci-(windows)-only\]$/
       os: osx
       osx_image: xcode11.3
       compiler: clang
@@ -534,6 +538,7 @@ jobs:
   #=============================================================================================
     # Talipot-Python wheel build on MacOS
     - stage: Talipot-Python wheels build (Mac OS)
+      if: commit_message !~ /\[ci-(windows)-only\]$/
       os: osx
       osx_image: xcode9.4
       compiler: clang
@@ -615,6 +620,7 @@ jobs:
           fi
 
     - stage: Talipot-Python wheel installation tests (macos)
+      if: commit_message !~ /\[ci-(windows)-only\]$/
       os: osx
       osx_image: xcode9.4
       env:
@@ -629,6 +635,7 @@ jobs:
         - TALIPOT_BUILD_DIR= python -m unittest discover
 
     -
+      if: commit_message !~ /\[ci-(windows)-only\]$/
       os: osx
       osx_image: xcode10
       env:
@@ -649,6 +656,7 @@ jobs:
         - TALIPOT_BUILD_DIR= python3.7 -m unittest discover
 
     -
+      if: commit_message !~ /\[ci-(windows)-only\]$/
       os: osx
       osx_image: xcode11
       env:
@@ -672,6 +680,7 @@ jobs:
         - TALIPOT_BUILD_DIR= python3.7 -m unittest discover
 
     -
+      if: commit_message !~ /\[ci-(windows)-only\]$/
       os: osx
       osx_image: xcode11
       env:
