@@ -25,14 +25,12 @@ environment:
     # GCC core build
     - MSYS2_ARCH: x86_64
       MSYSTEM: MINGW64
-      PYTHON2_HOME: "C:/Python27-x64"
-      PYTHON3_HOME: "C:/Python37-x64"
+      PYTHON_HOME: "C:/Python37-x64"
 
     # GCC complete build
     - MSYS2_ARCH: x86_64
       MSYSTEM: MINGW64
-      PYTHON2_HOME: "C:/Python27-x64"
-      PYTHON3_HOME: "C:/Python37-x64"
+      PYTHON_HOME: "C:/Python37-x64"
 
     # MSVC core build
     - CMAKE_VS_GENERATOR: "Visual Studio 15 2017 Win64"

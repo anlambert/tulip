@@ -73,29 +73,13 @@ bash -lc "env"
 rem Install Inetc plugin for NSIS
 bash -lc "unzip bundlers/win/Inetc.zip -d\"C:\Program Files (x86)\NSIS\""
 
-rem Install sphinx for Python 3
-set PATH=%PYTHON3_HOME%;%PYTHON3_HOME%/Scripts;%PATH%
+rem Install sphinx
+set PATH=%PYTHON_HOME%;%PYTHON_HOME%/Scripts;%PATH%
 pip install "sphinx<3"
 
-rem Build Talipot with Python 3, run its unit tests and package it
+rem Build Talipot, run its unit tests and package it
 bash -lc "mkdir build"
-bash -lc "cd build && cmake -G \"MSYS Makefiles\" -DCMAKE_BUILD_TYPE=Release -DCMAKE_NEED_RESPONSE=ON -DCMAKE_INSTALL_PREFIX=%APPVEYOR_BUILD_FOLDER%/build/install -DTALIPOT_BUILD_CORE_ONLY=%TALIPOT_BUILD_CORE_ONLY% -DTALIPOT_BUILD_DOC=%TALIPOT_BUILD_DOC% -DTALIPOT_BUILD_TESTS=ON -DTALIPOT_USE_CCACHE=ON -DPYTHON_EXECUTABLE=%PYTHON3_HOME%/python.exe .."
-if %errorlevel% neq 0 exit /b %errorlevel%
-bash -lc "cd build && make -j4 install"
-if %errorlevel% neq 0 exit /b %errorlevel%
-bash -lc "cd build && make runTests"
-if %errorlevel% neq 0 exit /b %errorlevel%
-
-if "%TALIPOT_BUILD_CORE_ONLY%" == "0" (
-  bash -lc "cd build && make bundle"
-)
-
-rem Install sphinx for Python 2
-set PATH=%PYTHON2_HOME%;%PYTHON2_HOME%/Scripts;%PATH%
-pip install "sphinx<3"
-
-rem Build Talipot with Python 2, run its unit tests and package it
-bash -lc "cd build && cmake -G \"MSYS Makefiles\" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PWD/install -DCMAKE_NEED_RESPONSE=ON -DTALIPOT_BUILD_CORE_ONLY=%TALIPOT_BUILD_CORE_ONLY% -DTALIPOT_BUILD_DOC=%TALIPOT_BUILD_DOC% -DTALIPOT_BUILD_TESTS=ON -DTALIPOT_USE_CCACHE=ON -DPYTHON_EXECUTABLE=%PYTHON2_HOME%/python.exe .."
+bash -lc "cd build && cmake -G \"MSYS Makefiles\" -DCMAKE_BUILD_TYPE=Release -DCMAKE_NEED_RESPONSE=ON -DCMAKE_INSTALL_PREFIX=%APPVEYOR_BUILD_FOLDER%/build/install -DTALIPOT_BUILD_CORE_ONLY=%TALIPOT_BUILD_CORE_ONLY% -DTALIPOT_BUILD_DOC=%TALIPOT_BUILD_DOC% -DTALIPOT_BUILD_TESTS=ON -DTALIPOT_USE_CCACHE=ON -DPYTHON_EXECUTABLE=%PYTHON_HOME%/python.exe .."
 if %errorlevel% neq 0 exit /b %errorlevel%
 bash -lc "cd build && make -j4 install"
 if %errorlevel% neq 0 exit /b %errorlevel%
