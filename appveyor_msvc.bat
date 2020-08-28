@@ -135,7 +135,7 @@ cd %APPVEYOR_BUILD_FOLDER%
 md build && cd build
 cmake -G "%CMAKE_VS_GENERATOR%" -DCMAKE_INSTALL_PREFIX="C:/talipot" -DCMAKE_INCLUDE_PATH="C:/talipot_dependencies/include" -DCMAKE_LIBRARY_PATH="C:/talipot_dependencies/lib;C:/talipot_dependencies/bin" -DCMAKE_PREFIX_PATH="%QT5_DIR%" -DPYTHON_EXECUTABLE="%PYTHON_EXECUTABLE%" -DTALIPOT_BUILD_CORE_ONLY=%TALIPOT_BUILD_CORE_ONLY% -DTALIPOT_BUILD_TESTS=ON ..
 if %errorlevel% neq 0 exit /b %errorlevel%
-msbuild INSTALL.vcxproj /m /p:Configuration=Release %CLCACHE_MSBUILD_CONF%
+msbuild INSTALL.vcxproj /verbosity:minimal /m /p:Configuration=Release %CLCACHE_MSBUILD_CONF%
 if %errorlevel% neq 0 exit /b %errorlevel%
 rem finally run Talipot tests
 ctest --force-new-ctest-process --output-on-failure --build-config "Release"
