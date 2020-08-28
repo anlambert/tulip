@@ -37,7 +37,7 @@ RequestExecutionLevel admin
 
 ; Setup file
 !ifndef OUT_FILE
-!define OUT_FILE "@CMAKE_BINARY_DIR@/Talipot-@TalipotVersion@_x64_python@PYTHON_VERSION_NO_DOT@@SUFFIX@_setup.exe"
+!define OUT_FILE "@CMAKE_BINARY_DIR@/Talipot-@TalipotVersion@_x64@SUFFIX@_setup.exe"
 !endif
 OutFile "${OUT_FILE}"
 
