@@ -31,6 +31,7 @@
 #include <QApplication>
 #include <QStandardPaths>
 #include <QMainWindow>
+#include <QPalette>
 
 #include <talipot/DataSet.h>
 #include <talipot/Settings.h>
@@ -56,10 +57,6 @@
 #include <talipot/FileDownloader.h>
 #include <talipot/ItemEditorCreators.h>
 #include <talipot/GlOffscreenRenderer.h>
-
-#ifdef Q_OS_MAC
-extern bool qt_mac_applicationIsInDarkMode();
-#endif
 
 /**
  * For openDataSetDialog function : see OpenDataSet.cpp
@@ -495,30 +492,17 @@ QMainWindow *getMainWindow() {
 }
 
 bool applicationIsInDarkMode() {
-#ifdef Q_OS_MAC
-  return qt_mac_applicationIsInDarkMode();
-#else
-  return false;
-#endif
+  return backgroundColor().lightnessF() < 0.5;
 }
 
 const QColor darkColor = QColor(50, 50, 50);
-const QColor lightColor = Qt::white;
 
 const QColor &backgroundColor() {
-  if (applicationIsInDarkMode()) {
-    return darkColor;
-  } else {
-    return lightColor;
-  }
+  return QApplication::palette().color(QPalette::Window);
 }
 
 const QColor &textColor() {
-  if (applicationIsInDarkMode()) {
-    return lightColor;
-  } else {
-    return darkColor;
-  }
+  return QApplication::palette().color(QPalette::WindowText);
 }
 
 }

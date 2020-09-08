@@ -134,7 +134,6 @@ TLP_QT_SCOPE const QColor &backgroundColor();
 
 TLP_QT_SCOPE const QColor &textColor();
 
-extern TLP_QT_SCOPE const QColor lightColor;
 extern TLP_QT_SCOPE const QColor darkColor;
 
 }
