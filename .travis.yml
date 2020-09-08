@@ -329,7 +329,6 @@ jobs:
         - sudo port -N install cmake
         - sudo port -N install clang-10
         - sudo port -N install ccache
-        - sudo port -N install ninja
         - sudo port -N install qhull
         - sudo port -N install yajl
         - sudo port -N install zstd
@@ -344,8 +343,7 @@ jobs:
         # create build directory
         - mkdir build && cd build
         # configure Talipot core build using cmake
-        - cmake .. -G Ninja
-            -DCMAKE_BUILD_TYPE=Release
+        - cmake .. -DCMAKE_BUILD_TYPE=Release
             -DCMAKE_INSTALL_PREFIX=$PWD/install
             -DCMAKE_C_COMPILER=/opt/local/bin/clang-mp-10
             -DCMAKE_CXX_COMPILER=/opt/local/bin/clang++-mp-10
@@ -357,11 +355,10 @@ jobs:
             -DTALIPOT_USE_CCACHE=ON
             -DTALIPOT_BUILD_CORE_ONLY=ON
             -DTALIPOT_BUILD_OGL=ON || travis_terminate 1
-        # compile Talipot using ninja for faster builds
-        - ninja -j4 || travis_terminate 1
-        - ninja -j4 install || travis_terminate 1
+        - make -j4 || travis_terminate 1
+        - make -j4 install || travis_terminate 1
         # run Talipot unit tests
-        - ninja runTests
+        - make runTests
 
     #-------------------------------------------------------------------------------------------
     # Talipot core build on Mac OS (Homebrew)
@@ -378,7 +375,6 @@ jobs:
           packages:
             - ccache
             - cmake
-            - ninja
             - llvm
             - qhull
             - yajl
@@ -392,8 +388,7 @@ jobs:
         # create build directory
         - mkdir build && cd build
         # configure Talipot core build using cmake
-        - cmake .. -G Ninja
-            -DCMAKE_BUILD_TYPE=Release
+        - cmake .. -DCMAKE_BUILD_TYPE=Release
             -DCMAKE_INSTALL_PREFIX=$PWD/install
             -DCMAKE_C_COMPILER=/usr/local/opt/llvm/bin/clang
             -DCMAKE_CXX_COMPILER=/usr/local/opt/llvm/bin/clang++
@@ -401,11 +396,10 @@ jobs:
             -DTALIPOT_BUILD_CORE_ONLY=ON
             -DTALIPOT_BUILD_TESTS=ON
             -DTALIPOT_USE_CCACHE=ON || travis_terminate 1
-        # compile Talipot using ninja for faster builds
-        - ninja -j4 || travis_terminate 1
-        - ninja -j4 install || travis_terminate 1
+        - make -j4 || travis_terminate 1
+        - make -j4 install || travis_terminate 1
         # run Talipot unit tests
-        - ninja runTests
+        - make runTests
 
   #=============================================================================================
     # Talipot complete build stage on Mac OS
@@ -426,7 +420,6 @@ jobs:
         - sudo port -N install cmake
         - sudo port -N install clang-10
         - sudo port -N install ccache
-        - sudo port -N install ninja
         - sudo port -N install qt5-qtbase
         - sudo port -N install qt5-qttools
         - sudo port -N install qt5-qtwebkit
@@ -448,8 +441,7 @@ jobs:
         # create build directory
         - mkdir build && cd build
         # configure Talipot complete build using cmake
-        - cmake .. -G Ninja
-            -DCMAKE_BUILD_TYPE=Release
+        - cmake .. -DCMAKE_BUILD_TYPE=Release
             -DCMAKE_INSTALL_PREFIX=$PWD/install
             -DCMAKE_C_COMPILER=/opt/local/bin/clang-mp-10
             -DCMAKE_CXX_COMPILER=/opt/local/bin/clang++-mp-10
@@ -459,11 +451,10 @@ jobs:
             -DZLIB_INCLUDE_DIR=/opt/local/include
             -DZLIB_LIBRARY_RELEASE=/opt/local/lib/libz.dylib
             -DGLEW_SHARED_LIBRARY_RELEASE=/opt/local/lib/libGLEW.dylib
-        # compile Talipot using ninja for faster builds
-        - ninja -j4
-        - ninja -j4 install
+        - make -j4
+        - make -j4 install
         # run Talipot unit tests
-        - ninja runTests
+        - make runTests
         # compute overall build time
         - end_time=$(travis_nanoseconds)
         - build_time=$(( (end_time-start_time) / (6 * (10 ** 10)) ))
@@ -472,7 +463,7 @@ jobs:
           if (( build_time <= 40 ))
           then
             # build Talipot bundle
-            ninja bundle
+            make bundle
           fi
         - cd ..
 
@@ -500,7 +491,6 @@ jobs:
           packages:
             - ccache
             - cmake
-            - ninja
             - llvm
             - qhull
             - yajl
@@ -519,8 +509,7 @@ jobs:
         # create build directory
         - mkdir build && cd build
         # configure Talipot build using cmake
-        - cmake .. -G Ninja
-            -DCMAKE_BUILD_TYPE=Release
+        - cmake .. -DCMAKE_BUILD_TYPE=Release
             -DCMAKE_INSTALL_PREFIX=$PWD/install
             -DCMAKE_C_COMPILER=/usr/local/opt/llvm/bin/clang
             -DCMAKE_CXX_COMPILER=/usr/local/opt/llvm/bin/clang++
@@ -529,11 +518,10 @@ jobs:
             -DTALIPOT_BUILD_TESTS=ON
             -DTALIPOT_BUILD_DOC=OFF
             -DTALIPOT_USE_CCACHE=ON || travis_terminate 1
-        # compile Talipot using ninja for faster builds
-        - ninja -j4 || travis_terminate 1
-        - ninja -j4 install || travis_terminate 1
+        - make -j4 || travis_terminate 1
+        - make -j4 install || travis_terminate 1
         # run Talipot unit tests
-        - ninja runTests
+        - make runTests
 
   #=============================================================================================
     # Talipot-Python wheel build on MacOS
@@ -558,7 +546,6 @@ jobs:
         - sudo port -N install cmake
         - sudo port -N install clang-10
         - sudo port -N install ccache
-        - sudo port -N install ninja
         - sudo port -N install qhull
         - sudo port -N install yajl
         - sudo port -N install zstd
@@ -594,8 +581,7 @@ jobs:
           fi
           echo current wheel dev version = $DEV_VERSION
         - mkdir build && cd build
-        - cmake .. -G Ninja
-          -DCMAKE_BUILD_TYPE=Release
+        - cmake .. -DCMAKE_BUILD_TYPE=Release
           -DCMAKE_INSTALL_PREFIX=$PWD/install
           -DCMAKE_C_COMPILER=/opt/local/bin/clang-mp-10
           -DCMAKE_CXX_COMPILER=/opt/local/bin/clang++-mp-10
@@ -606,17 +592,17 @@ jobs:
           -DZLIB_LIBRARY_RELEASE=/opt/local/lib/libz.dylib
           -DTALIPOT_USE_CCACHE=ON
           -DTALIPOT_BUILD_CORE_ONLY=ON || travis_terminate 1
-        - ninja -j4 test-wheel || travis_terminate 1
-        - cmake .. -G Ninja
+        - make -j4 test-wheel || travis_terminate 1
+        - cmake ..
           -DPYTHON_EXECUTABLE=/Library/Frameworks/Python.framework/Versions/3.7/bin/python3 || travis_terminate 1
-        - ninja -j4 test-wheel || travis_terminate 1
-        - cmake .. -G Ninja
+        - make -j4 test-wheel || travis_terminate 1
+        - cmake ..
           -DPYTHON_EXECUTABLE=/Library/Frameworks/Python.framework/Versions/3.8/bin/python3 || travis_terminate 1
-        - ninja -j4 test-wheel || travis_terminate 1
+        - make -j4 test-wheel || travis_terminate 1
         - |
           if [ "$TRAVIS_BRANCH" == "master" ]
           then
-            ninja -v test-wheel-upload
+            make -v test-wheel-upload
           fi
 
     - stage: Talipot-Python wheel installation tests (macos)
