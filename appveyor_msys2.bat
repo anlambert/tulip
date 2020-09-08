@@ -35,7 +35,8 @@ rem Always install latest GCC toolchain in order to detect possible build failur
 rem when its version evolves
 bash -lc "pacman --noconfirm -S --needed mingw-w64-%MSYS2_ARCH%-toolchain"
 
-rem Install the relevant native dependencies
+rem Install Talipot build dependencies
+bash -lc "pacman --noconfirm -S --needed mingw-w64-%MSYS2_ARCH%-cmake"
 bash -lc "pacman --noconfirm -S --needed mingw-w64-%MSYS2_ARCH%-ccache"
 bash -lc "pacman --noconfirm -S --needed mingw-w64-%MSYS2_ARCH%-yajl"
 bash -lc "pacman --noconfirm -S --needed mingw-w64-%MSYS2_ARCH%-zstd"
