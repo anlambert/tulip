@@ -5,7 +5,7 @@
 # the staged changes.
 
 maj_min=3
-maj_max=6
+maj_max=20
 
 base=clang-format
 format=""
@@ -22,6 +22,8 @@ if [ -z "$format" ]
 then
     for j in `seq $maj_max -1 $maj_min`
     do
+        type "$base-$j" >/dev/null 2>&1 && format="$base-$j.$i" && break
+        [ -z "$format" ] || break
         for i in `seq 9 -1 0`
         do
             type "$base-$j.$i" >/dev/null 2>&1 && format="$base-$j.$i" && break
