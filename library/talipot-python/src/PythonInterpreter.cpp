@@ -205,7 +205,7 @@ PythonInterpreter::PythonInterpreter()
   if (!_wasInit) {
 
 #if defined(__MINGW32__)
-    // When using MSYS2 platform to compile Tulip, force the dynamic loading of
+    // When using MSYS2 platform to compile Talipot, force the dynamic loading of
     // OpenSSL libraries Qt was compiled against before Python initialization to
     // avoid a DLL Hell on windows
     QSslSocket::supportsSsl();
