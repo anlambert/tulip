@@ -6,7 +6,7 @@ PLUGIN_NAME = TestPlugins
 TALIPOT_VERSION = $(shell talipot-config --version)
 LIB_EXTENSION = $(shell talipot-config --pluginextension)
 
-TARGET_LIB = lib${PLUGIN_NAME}-${TALIPOT_VERSION}.${LIB_EXTENSION}
+TARGET_LIB = lib${PLUGIN_NAME}-talipot-${TALIPOT_VERSION}.${LIB_EXTENSION}
 
 SRCS = TestPlugins.cpp
 OBJS = $(SRCS:.cpp=.o)

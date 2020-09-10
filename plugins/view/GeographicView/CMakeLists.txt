@@ -40,7 +40,7 @@ QTX_WRAP_CPP(
   LeafletMaps.h)
 
 IF(WIN32)
-  SET(GEOVIEW_DLL "GeographicView-${TalipotVersion}.dll")
+  SET(GEOVIEW_DLL "GeographicView-talipot-${TalipotVersion}.dll")
   IF(NOT MSVC)
     SET(GEOVIEW_DLL "lib${GEOVIEW_DLL}")
   ENDIF(NOT MSVC)
@@ -51,17 +51,20 @@ IF(WIN32)
              "${CMAKE_INSTALL_PREFIX}/lib/talipot/view/${GEOVIEW_DLL}")
 ENDIF(WIN32)
 
-ADD_LIBRARY(GeographicView-${TalipotVersion} SHARED
-            ${LIB_SRCS} ${LIB_UI_HEADERS} ${LIB_MOC_SRCS} ${LIB_RCC_SRCS})
-
-TARGET_LINK_LIBRARIES(
-  GeographicView-${TalipotVersion}
+TALIPOT_ADD_PLUGIN(
+  NAME
+  GeographicView
+  SRCS
+  ${LIB_SRCS}
+  ${LIB_UI_HEADERS}
+  ${LIB_MOC_SRCS}
+  ${LIB_RCC_SRCS}
+  LINKS
   ${LibTalipotCoreName}
   ${LibTalipotOGLName}
   ${LibTalipotGUIName}
   ${OPENGL_gl_LIBRARY}
   ${QT_LIBRARIES}
-  ${QT_WEB_LIBRARIES})
-
-TALIPOT_INSTALL_PLUGIN(GeographicView-${TalipotVersion}
-                       ${TalipotViewPluginsInstallDir})
+  ${QT_WEB_LIBRARIES}
+  INSTALL_DIR
+  ${TalipotViewPluginsInstallDir})

@@ -33,12 +33,19 @@ QTX_WRAP_CPP(LIB_MOC_SRCS ColorScalePreview.h ComputeSOMWidget.h
 
 QTX_ADD_RESOURCES(LIB_RCC_SRCS SOMViewResource.qrc)
 
-ADD_LIBRARY(SOMView-${TalipotVersion} SHARED ${LIB_SRCS} ${LIB_UI_HEADERS}
-                                             ${LIB_MOC_SRCS} ${LIB_RCC_SRCS})
-
-TARGET_LINK_LIBRARIES(
-  SOMView-${TalipotVersion} som ${LibTalipotCoreName} ${LibTalipotOGLName}
-  ${LibTalipotGUIName} ${OPENGL_gl_LIBRARY})
-
-TALIPOT_INSTALL_PLUGIN(SOMView-${TalipotVersion}
-                       ${TalipotViewPluginsInstallDir})
+TALIPOT_ADD_PLUGIN(
+  NAME
+  SOMView
+  SRCS
+  ${LIB_SRCS}
+  ${LIB_UI_HEADERS}
+  ${LIB_MOC_SRCS}
+  ${LIB_RCC_SRCS}
+  LINKS
+  som
+  ${LibTalipotCoreName}
+  ${LibTalipotOGLName}
+  ${LibTalipotGUIName}
+  ${OPENGL_gl_LIBRARY}
+  INSTALL_DIR
+  ${TalipotViewPluginsInstallDir})

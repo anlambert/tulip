@@ -47,12 +47,17 @@ QTX_WRAP_CPP(
 
 QTX_ADD_RESOURCES(LIB_RCC_SRCS resources/ParallelResource.qrc)
 
-ADD_LIBRARY(ParallelCoordinatesView-${TalipotVersion} SHARED
-            ${LIB_SRCS} ${LIB_UI_HEADERS} ${LIB_MOC_SRCS} ${LIB_RCC_SRCS})
-
-TARGET_LINK_LIBRARIES(
-  ParallelCoordinatesView-${TalipotVersion} ${LibTalipotCoreName}
-  ${LibTalipotOGLName} ${LibTalipotGUIName})
-
-TALIPOT_INSTALL_PLUGIN(ParallelCoordinatesView-${TalipotVersion}
-                       ${TalipotViewPluginsInstallDir})
+TALIPOT_ADD_PLUGIN(
+  NAME
+  ParallelCoordinatesView
+  SRCS
+  ${LIB_SRCS}
+  ${LIB_UI_HEADERS}
+  ${LIB_MOC_SRCS}
+  ${LIB_RCC_SRCS}
+  LINKS
+  ${LibTalipotCoreName}
+  ${LibTalipotOGLName}
+  ${LibTalipotGUIName}
+  INSTALL_DIR
+  ${TalipotViewPluginsInstallDir})

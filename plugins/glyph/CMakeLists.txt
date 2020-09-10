@@ -2,12 +2,18 @@ INCLUDE_DIRECTORIES(
   ${TalipotCoreBuildInclude} ${TalipotCoreInclude} ${TalipotOGLInclude}
   ${GLEW_INCLUDE_DIR} ${FTGLInclude} ${FREETYPE_INCLUDE_DIRS})
 
-MACRO(GLYPH name source)
-  ADD_LIBRARY(${name}-${TalipotVersion} SHARED ${source})
-  TARGET_LINK_LIBRARIES(${name}-${TalipotVersion} ${LibTalipotCoreName}
-                        ${LibTalipotOGLName})
-  TALIPOT_INSTALL_PLUGIN(${name}-${TalipotVersion}
-                         ${TalipotGlyphPluginsInstallDir})
+MACRO(GLYPH NAME SRCS)
+  TALIPOT_ADD_PLUGIN(
+    NAME
+    ${NAME}
+    SRCS
+    ${SRCS}
+    LINKS
+    ${LibTalipotCoreName}
+    ${LibTalipotOGLName}
+    ${FTGLLibrary}
+    INSTALL_DIR
+    ${TalipotGlyphPluginsInstallDir})
 ENDMACRO(GLYPH)
 
 GLYPH(Cone cone.cpp)
@@ -30,8 +36,6 @@ GLYPH(GlowSphere glowsphere.cpp)
 GLYPH(ShadowedSphere shadowedsphere.cpp)
 GLYPH(Star star.cpp)
 GLYPH(FontIcon fonticon.cpp)
-
-TARGET_LINK_LIBRARIES(FontIcon-${TalipotVersion} ${FTGLLibrary})
 
 INSTALL(FILES radialGradientTexture.png bottomShadowTexture.png
               leftBottomShadowTexture.png rightBottomShadowTexture.png

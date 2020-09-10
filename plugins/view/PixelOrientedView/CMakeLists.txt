@@ -43,14 +43,20 @@ QTX_WRAP_CPP(
   PixelOrientedOptionsWidget.h
   PixelOrientedViewQuickAccessBar.h)
 
-QTX_ADD_RESOURCES(RCC_SRCS PixelOrientedView.qrc)
+QTX_ADD_RESOURCES(LIB_RCC_SRCS PixelOrientedView.qrc)
 
-ADD_LIBRARY(PixelOrientedView-${TalipotVersion} SHARED
-            ${LIB_SRCS} ${LIB_UI_HEADERS} ${LIB_MOC_SRCS} ${RCC_SRCS})
-
-TARGET_LINK_LIBRARIES(
-  PixelOrientedView-${TalipotVersion} ${LibTalipotCoreName}
-  ${LibTalipotOGLName} ${LibTalipotGUIName} ${OPENGL_gl_LIBRARY})
-
-TALIPOT_INSTALL_PLUGIN(PixelOrientedView-${TalipotVersion}
-                       ${TalipotViewPluginsInstallDir})
+TALIPOT_ADD_PLUGIN(
+  NAME
+  PixelOrientedView
+  SRCS
+  ${LIB_SRCS}
+  ${LIB_UI_HEADERS}
+  ${LIB_MOC_SRCS}
+  ${LIB_RCC_SRCS}
+  LINKS
+  ${LibTalipotCoreName}
+  ${LibTalipotOGLName}
+  ${LibTalipotGUIName}
+  ${OPENGL_gl_LIBRARY}
+  INSTALL_DIR
+  ${TalipotViewPluginsInstallDir})

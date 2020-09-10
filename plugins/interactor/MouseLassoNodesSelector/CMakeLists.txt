@@ -7,13 +7,15 @@ INCLUDE_DIRECTORIES(
   ${TalipotGUIInclude}
   ${OPENGL_INCLUDE_DIR})
 
-SET(LIB_SRCS MouseLassoNodesSelector.cpp)
-
-ADD_LIBRARY(MouseLassoNodesSelector-${TalipotVersion} SHARED ${LIB_SRCS})
-
-TARGET_LINK_LIBRARIES(
-  MouseLassoNodesSelector-${TalipotVersion} ${LibTalipotCoreName}
-  ${LibTalipotOGLName} ${LibTalipotGUIName} ${OPENGL_gl_LIBRARY})
-
-TALIPOT_INSTALL_PLUGIN(MouseLassoNodesSelector-${TalipotVersion}
-                       ${TalipotInteractorPluginsInstallDir})
+TALIPOT_ADD_PLUGIN(
+  NAME
+  MouseLassoNodesSelector
+  SRCS
+  MouseLassoNodesSelector.cpp
+  LINKS
+  ${LibTalipotCoreName}
+  ${LibTalipotOGLName}
+  ${LibTalipotGUIName}
+  ${OPENGL_gl_LIBRARY}
+  INSTALL_DIR
+  ${TalipotInteractorPluginsInstallDir})

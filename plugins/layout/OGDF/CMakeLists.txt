@@ -24,13 +24,19 @@ SET(PLUGINS_SRCS
 
 DISABLE_COMPILER_WARNINGS()
 
-FOREACH(OGDFPlugin ${PLUGINS_SRCS})
-  STRING(REGEX REPLACE ".cpp" "" PLUGIN_NAME ${OGDFPlugin})
-  STRING(REGEX REPLACE ".*/" "" PLUGIN_NAME ${PLUGIN_NAME})
-  ADD_LIBRARY(${PLUGIN_NAME}-${TalipotVersion} SHARED ${OGDFPlugin})
-  TARGET_LINK_LIBRARIES(${PLUGIN_NAME}-${TalipotVersion} ${LibTalipotCoreName}
-                        ${LibTalipotOGDFName} ${OGDF_LIBRARY})
+FOREACH(OGDF_PLUGIN_SRC ${PLUGINS_SRCS})
+  STRING(REGEX REPLACE ".cpp" "" OGDF_PLUGIN_NAME ${OGDF_PLUGIN_SRC})
+  STRING(REGEX REPLACE ".*/" "" OGDF_PLUGIN_NAME ${OGDF_PLUGIN_NAME})
 
-  TALIPOT_INSTALL_PLUGIN(${PLUGIN_NAME}-${TalipotVersion}
-                         ${TalipotPluginsInstallDir})
+  TALIPOT_ADD_PLUGIN(
+    NAME
+    ${OGDF_PLUGIN_NAME}
+    SRCS
+    ${OGDF_PLUGIN_SRC}
+    LINKS
+    ${LibTalipotCoreName}
+    ${LibTalipotOGDFName}
+    ${OGDF_LIBRARY}
+    INSTALL_DIR
+    ${TalipotPluginsInstallDir})
 ENDFOREACH()

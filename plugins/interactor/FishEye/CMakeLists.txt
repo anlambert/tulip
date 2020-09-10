@@ -8,11 +8,16 @@ QTX_WRAP_UI(LIB_UI_HEADERS FishEyeConfigWidget.ui)
 
 QTX_WRAP_CPP(LIB_MOC_SRCS)
 
-ADD_LIBRARY(FishEyeInteractor-${TalipotVersion} SHARED
-            ${LIB_SRCS} ${LIB_UI_HEADERS} ${LIB_MOC_SRCS})
-
-TARGET_LINK_LIBRARIES(FishEyeInteractor-${TalipotVersion} ${LibTalipotCoreName}
-                      ${LibTalipotOGLName} ${LibTalipotGUIName})
-
-TALIPOT_INSTALL_PLUGIN(FishEyeInteractor-${TalipotVersion}
-                       ${TalipotInteractorPluginsInstallDir})
+TALIPOT_ADD_PLUGIN(
+  NAME
+  FishEyeInteractor
+  SRCS
+  ${LIB_SRCS}
+  ${LIB_UI_HEADERS}
+  ${LIB_MOC_SRCS}
+  LINKS
+  ${LibTalipotCoreName}
+  ${LibTalipotOGLName}
+  ${LibTalipotGUIName}
+  INSTALL_DIR
+  ${TalipotInteractorPluginsInstallDir})

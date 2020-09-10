@@ -12,12 +12,17 @@ QTX_WRAP_UI(LIB_UI_HEADERS NeighborhoodHighlighterConfigWidget.ui)
 QTX_WRAP_CPP(LIB_MOC_SRCS NeighborhoodHighlighterInteractor.h
              NeighborhoodHighlighterConfigWidget.h)
 
-ADD_LIBRARY(NeighborhoodHighlighter-${TalipotVersion} SHARED
-            ${LIB_SRCS} ${LIB_UI_HEADERS} ${LIB_MOC_SRCS})
-
-TARGET_LINK_LIBRARIES(
-  NeighborhoodHighlighter-${TalipotVersion} ${LibTalipotCoreName}
-  ${LibTalipotOGLName} ${LibTalipotGUIName} ${OPENGL_gl_LIBRARY})
-
-TALIPOT_INSTALL_PLUGIN(NeighborhoodHighlighter-${TalipotVersion}
-                       ${TalipotInteractorPluginsInstallDir})
+TALIPOT_ADD_PLUGIN(
+  NAME
+  NeighborhoodHighlighter
+  SRCS
+  ${LIB_SRCS}
+  ${LIB_UI_HEADERS}
+  ${LIB_MOC_SRCS}
+  LINKS
+  ${LibTalipotCoreName}
+  ${LibTalipotOGLName}
+  ${LibTalipotGUIName}
+  ${OPENGL_gl_LIBRARY}
+  INSTALL_DIR
+  ${TalipotInteractorPluginsInstallDir})

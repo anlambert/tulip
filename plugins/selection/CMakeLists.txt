@@ -1,60 +1,82 @@
 INCLUDE_DIRECTORIES(${TalipotCoreBuildInclude} ${TalipotCoreInclude})
 
 # ------------------------------------------------------------------------------
-ADD_LIBRARY(SpanningDagSelection-${TalipotVersion} SHARED
-            SpanningDagSelection.cpp SpanningDagSelection.h)
-TARGET_LINK_LIBRARIES(SpanningDagSelection-${TalipotVersion}
-                      ${LibTalipotCoreName})
-
+TALIPOT_ADD_PLUGIN(
+  NAME
+  SpanningDagSelection
+  SRCS
+  SpanningDagSelection.cpp
+  LINKS
+  ${LibTalipotCoreName}
+  INSTALL_DIR
+  ${TalipotPluginsInstallDir})
 # ------------------------------------------------------------------------------
-ADD_LIBRARY(ReachableSubGraphSelection-${TalipotVersion} SHARED
-            ReachableSubGraphSelection.h ReachableSubGraphSelection.cpp)
-TARGET_LINK_LIBRARIES(ReachableSubGraphSelection-${TalipotVersion}
-                      ${LibTalipotCoreName})
-
+TALIPOT_ADD_PLUGIN(
+  NAME
+  ReachableSubGraphSelection
+  SRCS
+  ReachableSubGraphSelection.cpp
+  LINKS
+  ${LibTalipotCoreName}
+  INSTALL_DIR
+  ${TalipotPluginsInstallDir})
 # ------------------------------------------------------------------------------
-ADD_LIBRARY(SpanningTreeSelection-${TalipotVersion} SHARED
-            SpanningTreeSelection.cpp SpanningTreeSelection.h)
-TARGET_LINK_LIBRARIES(SpanningTreeSelection-${TalipotVersion}
-                      ${LibTalipotCoreName})
-
+TALIPOT_ADD_PLUGIN(
+  NAME
+  SpanningTreeSelection
+  SRCS
+  SpanningTreeSelection.cpp
+  LINKS
+  ${LibTalipotCoreName}
+  INSTALL_DIR
+  ${TalipotPluginsInstallDir})
 # ------------------------------------------------------------------------------
-ADD_LIBRARY(InducedSubGraphSelection-${TalipotVersion} SHARED
-            InducedSubGraphSelection.cpp InducedSubGraphSelection.h)
-TARGET_LINK_LIBRARIES(InducedSubGraphSelection-${TalipotVersion}
-                      ${LibTalipotCoreName})
-
+TALIPOT_ADD_PLUGIN(
+  NAME
+  InducedSubGraphSelection
+  SRCS
+  InducedSubGraphSelection.cpp
+  LINKS
+  ${LibTalipotCoreName}
+  INSTALL_DIR
+  ${TalipotPluginsInstallDir})
 # ------------------------------------------------------------------------------
-ADD_LIBRARY(LoopSelection-${TalipotVersion} SHARED LoopSelection.cpp
-                                                   LoopSelection.h)
-TARGET_LINK_LIBRARIES(LoopSelection-${TalipotVersion} ${LibTalipotCoreName})
-
+TALIPOT_ADD_PLUGIN(
+  NAME
+  LoopSelection
+  SRCS
+  LoopSelection.cpp
+  LINKS
+  ${LibTalipotCoreName}
+  INSTALL_DIR
+  ${TalipotPluginsInstallDir})
 # ------------------------------------------------------------------------------
-ADD_LIBRARY(MultipleSelection-${TalipotVersion} SHARED MultipleEdgeSelection.cpp
-                                                       MultipleEdgeSelection.h)
-TARGET_LINK_LIBRARIES(MultipleSelection-${TalipotVersion} ${LibTalipotCoreName})
-
+TALIPOT_ADD_PLUGIN(
+  NAME
+  MultipleEdgeSelection
+  SRCS
+  MultipleEdgeSelection.cpp
+  LINKS
+  ${LibTalipotCoreName}
+  INSTALL_DIR
+  ${TalipotPluginsInstallDir})
 # ------------------------------------------------------------------------------
-ADD_LIBRARY(Kruskal-${TalipotVersion} SHARED Kruskal.cpp Kruskal.h)
-TARGET_LINK_LIBRARIES(Kruskal-${TalipotVersion} ${LibTalipotCoreName})
-
+TALIPOT_ADD_PLUGIN(
+  NAME
+  Kruskal
+  SRCS
+  Kruskal.cpp
+  LINKS
+  ${LibTalipotCoreName}
+  INSTALL_DIR
+  ${TalipotPluginsInstallDir})
 # ------------------------------------------------------------------------------
-ADD_LIBRARY(MakeGraph-${TalipotVersion} SHARED MakeSelectionGraph.cpp
-                                               MakeSelectionGraph.h)
-TARGET_LINK_LIBRARIES(MakeGraph-${TalipotVersion} ${LibTalipotCoreName})
-
-# ------------------------------------------------------------------------------
-TALIPOT_INSTALL_PLUGIN(SpanningDagSelection-${TalipotVersion}
-                       ${TalipotPluginsInstallDir})
-TALIPOT_INSTALL_PLUGIN(ReachableSubGraphSelection-${TalipotVersion}
-                       ${TalipotPluginsInstallDir})
-TALIPOT_INSTALL_PLUGIN(SpanningTreeSelection-${TalipotVersion}
-                       ${TalipotPluginsInstallDir})
-TALIPOT_INSTALL_PLUGIN(InducedSubGraphSelection-${TalipotVersion}
-                       ${TalipotPluginsInstallDir})
-TALIPOT_INSTALL_PLUGIN(LoopSelection-${TalipotVersion}
-                       ${TalipotPluginsInstallDir})
-TALIPOT_INSTALL_PLUGIN(MultipleSelection-${TalipotVersion}
-                       ${TalipotPluginsInstallDir})
-TALIPOT_INSTALL_PLUGIN(Kruskal-${TalipotVersion} ${TalipotPluginsInstallDir})
-TALIPOT_INSTALL_PLUGIN(MakeGraph-${TalipotVersion} ${TalipotPluginsInstallDir})
+TALIPOT_ADD_PLUGIN(
+  NAME
+  MakeSelectionGraph
+  SRCS
+  MakeSelectionGraph.cpp
+  LINKS
+  ${LibTalipotCoreName}
+  INSTALL_DIR
+  ${TalipotPluginsInstallDir})

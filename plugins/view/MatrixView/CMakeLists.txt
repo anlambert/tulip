@@ -17,14 +17,20 @@ QTX_WRAP_UI(LIB_UI_HEADERS MatrixViewConfigurationWidget.ui)
 QTX_WRAP_CPP(LIB_MOC_SRCS MatrixView.h MatrixViewConfigurationWidget.h
              MatrixViewQuickAccessBar.h)
 
-QTX_ADD_RESOURCES(RCC_SRCS MatrixView.qrc)
+QTX_ADD_RESOURCES(LIB_RCC_SRCS MatrixView.qrc)
 
-ADD_LIBRARY(MatrixView-${TalipotVersion} SHARED ${LIB_SRCS} ${LIB_UI_HEADERS}
-                                                ${LIB_MOC_SRCS} ${RCC_SRCS})
-
-TARGET_LINK_LIBRARIES(
-  MatrixView-${TalipotVersion} ${LibTalipotCoreName} ${LibTalipotOGLName}
-  ${LibTalipotGUIName} ${OPENGL_gl_LIBRARY})
-
-TALIPOT_INSTALL_PLUGIN(MatrixView-${TalipotVersion}
-                       ${TalipotViewPluginsInstallDir})
+TALIPOT_ADD_PLUGIN(
+  NAME
+  MatrixView
+  SRCS
+  ${LIB_SRCS}
+  ${LIB_UI_HEADERS}
+  ${LIB_MOC_SRCS}
+  ${LIB_RCC_SRCS}
+  LINKS
+  ${LibTalipotCoreName}
+  ${LibTalipotOGLName}
+  ${LibTalipotGUIName}
+  ${OPENGL_gl_LIBRARY}
+  INSTALL_DIR
+  ${TalipotViewPluginsInstallDir})

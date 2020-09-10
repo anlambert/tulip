@@ -40,12 +40,18 @@ QTX_WRAP_CPP(
 
 QTX_ADD_RESOURCES(LIB_RCC_SRCS HistogramResource.qrc)
 
-ADD_LIBRARY(HistogramView-${TalipotVersion} SHARED
-            ${LIB_SRCS} ${LIB_UI_HEADERS} ${LIB_MOC_SRCS} ${LIB_RCC_SRCS})
-
-TARGET_LINK_LIBRARIES(
-  HistogramView-${TalipotVersion} ${LibTalipotCoreName} ${LibTalipotOGLName}
-  ${LibTalipotGUIName} ${OPENGL_gl_LIBRARY})
-
-TALIPOT_INSTALL_PLUGIN(HistogramView-${TalipotVersion}
-                       ${TalipotViewPluginsInstallDir})
+TALIPOT_ADD_PLUGIN(
+  NAME
+  HistogramView
+  SRCS
+  ${LIB_SRCS}
+  ${LIB_UI_HEADERS}
+  ${LIB_MOC_SRCS}
+  ${LIB_RCC_SRCS}
+  LINKS
+  ${LibTalipotCoreName}
+  ${LibTalipotOGLName}
+  ${LibTalipotGUIName}
+  ${OPENGL_gl_LIBRARY}
+  INSTALL_DIR
+  ${TalipotViewPluginsInstallDir})

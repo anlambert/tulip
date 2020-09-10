@@ -1,15 +1,23 @@
 INCLUDE_DIRECTORIES(${TalipotCoreBuildInclude} ${TalipotCoreInclude}
                     ${TalipotOGLInclude})
 
+# -----------------------------------------------------------------------------
+TALIPOT_ADD_PLUGIN(
+  NAME
+  MetricSizeMapping
+  SRCS
+  SizeMapping.cpp
+  LINKS
+  ${LibTalipotCoreName}
+  INSTALL_DIR
+  ${TalipotPluginsInstallDir})
 # ------------------------------------------------------------------------------
-ADD_LIBRARY(MetricSizeMapping-${TalipotVersion} SHARED SizeMapping.cpp)
-TARGET_LINK_LIBRARIES(MetricSizeMapping-${TalipotVersion} ${LibTalipotCoreName})
-
-# ------------------------------------------------------------------------------
-ADD_LIBRARY(AutoSize-${TalipotVersion} SHARED AutoSize.cpp)
-TARGET_LINK_LIBRARIES(AutoSize-${TalipotVersion} ${LibTalipotCoreName})
-
-# ------------------------------------------------------------------------------
-TALIPOT_INSTALL_PLUGIN(MetricSizeMapping-${TalipotVersion}
-                       ${TalipotPluginsInstallDir})
-TALIPOT_INSTALL_PLUGIN(AutoSize-${TalipotVersion} ${TalipotPluginsInstallDir})
+TALIPOT_ADD_PLUGIN(
+  NAME
+  AutoSize
+  SRCS
+  AutoSize.cpp
+  LINKS
+  ${LibTalipotCoreName}
+  INSTALL_DIR
+  ${TalipotPluginsInstallDir})

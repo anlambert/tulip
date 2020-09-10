@@ -4,17 +4,23 @@ INCLUDE_DIRECTORIES(
 
 SET(LIB_SRCS TableView.cpp PropertiesEditor.cpp NavigableTableView.cpp)
 
-QTX_WRAP_UI(UI_SRCS TableView.ui PropertiesEditor.ui)
+QTX_WRAP_UI(LIB_UI_HEADERS TableView.ui PropertiesEditor.ui)
 
-QTX_WRAP_CPP(MOC_SRCS TableView.h PropertiesEditor.h NavigableTableView.h)
+QTX_WRAP_CPP(LIB_MOC_SRCS TableView.h PropertiesEditor.h NavigableTableView.h)
 
-QTX_ADD_RESOURCES(RCC_SRCS TableView.qrc)
+QTX_ADD_RESOURCES(LIB_RCC_SRCS TableView.qrc)
 
-ADD_LIBRARY(TableView-${TalipotVersion} SHARED ${LIB_SRCS} ${MOC_SRCS}
-                                               ${UI_SRCS} ${RCC_SRCS})
-
-TARGET_LINK_LIBRARIES(TableView-${TalipotVersion} ${LibTalipotCoreName}
-                      ${LibTalipotOGLName} ${LibTalipotGUIName})
-
-TALIPOT_INSTALL_PLUGIN(TableView-${TalipotVersion}
-                       ${TalipotViewPluginsInstallDir})
+TALIPOT_ADD_PLUGIN(
+  NAME
+  TableView
+  SRCS
+  ${LIB_SRCS}
+  ${LIB_UI_HEADERS}
+  ${LIB_MOC_SRCS}
+  ${LIB_RCC_SRCS}
+  LINKS
+  ${LibTalipotCoreName}
+  ${LibTalipotOGLName}
+  ${LibTalipotGUIName}
+  INSTALL_DIR
+  ${TalipotViewPluginsInstallDir})
