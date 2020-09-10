@@ -85,6 +85,7 @@ msbuild INSTALL.vcxproj /verbosity:minimal /m /p:Configuration=Release %CLCACHE_
 if %errorlevel% neq 0 exit /b %errorlevel%
 rem finally run Talipot tests
 ctest --force-new-ctest-process --output-on-failure --build-config "Release"
+if %errorlevel% neq 0 exit /b %errorlevel%
 
 if "%TALIPOT_BUILD_CORE_ONLY%" == "0" (
   msbuild bundlers/win/bundle.vcxproj /m /p:Configuration=Release %CLCACHE_MSBUILD_CONF%
