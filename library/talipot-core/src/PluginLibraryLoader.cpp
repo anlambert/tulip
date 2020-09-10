@@ -21,6 +21,7 @@
 #include <sstream>
 #include <set>
 #include <vector>
+#include <regex>
 
 #ifdef _WIN32
 #include <stdio.h>
@@ -79,6 +80,25 @@ void PluginLibraryLoader::loadPlugins(PluginLoader *loader, const std::string &f
 
   // restore original pluginPath value
   _pluginPath = currentPluginPath;
+}
+
+static std::pair<bool, std::string> isTalipotPluginFile(const std::string &libFilename) {
+  std::string regExprStr(R"(.*-talipot-([0-9]+)[\._]([0-9]+)[\._]([0-9]+).*\.[so|dylib|dll])");
+  std::regex rgx(regExprStr);
+  std::smatch smatch;
+
+  std::string mmVersion;
+  bool ok = false;
+
+  if (std::regex_search(libFilename, smatch, rgx)) {
+    ok = true;
+#ifdef _MSC_VER
+    mmVersion = smatch[1].str() + "_" + smatch[2].str();
+#else
+    mmVersion = smatch[1].str() + "." + smatch[2].str();
+#endif
+  }
+  return std::make_pair(ok, mmVersion);
 }
 
 void PluginLibraryLoader::loadPluginsFromDir(const std::string &rootPath, PluginLoader *loader,
@@ -240,8 +260,9 @@ bool PluginLibraryLoader::initPluginDir(PluginLoader *loader, bool recursive,
       return false;
     }
 
-    if (loader != nullptr)
+    if (loader != nullptr) {
       loader->start(_pluginPath.c_str());
+    }
 
     SetCurrentDirectory(_pluginPath.c_str());
     hFind = FindFirstFile("*.dll", &findData);
@@ -250,15 +271,17 @@ bool PluginLibraryLoader::initPluginDir(PluginLoader *loader, bool recursive,
       // count files loop
       unsigned long nbFiles = 0;
 
-      if (hFind != INVALID_HANDLE_VALUE)
+      if (hFind != INVALID_HANDLE_VALUE) {
         nbFiles = 1;
+      }
 
       while (FindNextFile(hFind, &findData)) {
         ++nbFiles;
       }
 
-      if (hFind != INVALID_HANDLE_VALUE)
+      if (hFind != INVALID_HANDLE_VALUE) {
         FindClose(hFind);
+      }
 
       loader->numberOfFiles(nbFiles);
       hFind = FindFirstFile("*.dll", &findData);
@@ -277,11 +300,11 @@ bool PluginLibraryLoader::initPluginDir(PluginLoader *loader, bool recursive,
         continue;
       }
 
-      // looking for a suffix matching -A.B.C.dll
-      size_t idx = lib.rfind('.');
+      // looking for a suffix matching -talipot-X.Y.Z.dll
+      auto pluginFileCheck = isTalipotPluginFile(lib);
 
-      if (idx != std::string::npos) {
-        if (idx == (lib.find(talipot_mm_version) + talipot_version.size())) {
+      if (pluginFileCheck.first) {
+        if (pluginFileCheck.second == talipot_mm_version) {
           // if a user local plugin with the same name exists
           // we do not try to load the current one
           if (!userPluginsPath.empty()) {
@@ -291,18 +314,17 @@ bool PluginLibraryLoader::initPluginDir(PluginLoader *loader, bool recursive,
               continue;
             }
           }
-          if (loader)
+          if (loader) {
             loader->loading(findData.cFileName);
+          }
 
           loadPluginLibrary(_currentPluginLibrary, loader);
-        } else if (loader)
+        } else if (loader) {
           loader->aborted(_currentPluginLibrary, _currentPluginLibrary +
                                                      " is not compatible with Talipot " +
                                                      TALIPOT_VERSION);
-      } else if (loader)
-        loader->aborted(_currentPluginLibrary,
-                        _currentPluginLibrary + " is not a Talipot plugin library");
-
+        }
+      }
       success = FindNextFile(hFind, &findData);
     }
 
@@ -328,8 +350,9 @@ bool PluginLibraryLoader::initPluginDir(PluginLoader *loader, bool recursive,
         }
       }
 
-      if (hFind != INVALID_HANDLE_VALUE)
+      if (hFind != INVALID_HANDLE_VALUE) {
         FindClose(hFind);
+      }
     }
 
     SetCurrentDirectory(currentDirectory);
@@ -376,11 +399,11 @@ bool PluginLibraryLoader::initPluginDir(PluginLoader *loader, bool recursive,
     }
 
     _currentPluginLibrary = _pluginPath + "/" + lib;
-    // looking for a suffix matching -A.B.C.(so/dylib)
-    unsigned long idx = lib.rfind('.');
+    // looking for a suffix matching -talipot-X.Y.Z.(so/dylib)
+    auto pluginFileCheck = isTalipotPluginFile(lib);
 
-    if (idx != std::string::npos) {
-      if (idx == (lib.find(talipot_mm_version) + talipot_version.size())) {
+    if (pluginFileCheck.first) {
+      if (pluginFileCheck.second == talipot_mm_version) {
         // if a user local plugin with the same name exists
         // we do not try to load the current one
         if (!userPluginsPath.empty()) {
@@ -396,47 +419,14 @@ bool PluginLibraryLoader::initPluginDir(PluginLoader *loader, bool recursive,
 
         loadPluginLibrary(_currentPluginLibrary, loader);
         continue;
-      }
-
-      std::string suffix = lib.substr(idx + 1);
-      idx = suffix.find('.');
-
-      if (idx != std::string::npos) {
-        bool isNumber = true;
-
-        for (unsigned long i = 0; i < idx; ++i) {
-          if (!isdigit(suffix[i])) {
-            isNumber = false;
-            break;
-          }
-        }
-
-        if (isNumber && suffix.size() > idx + 1) {
-          suffix = suffix.substr(idx + 1);
-          idx = suffix.find(STRINGIFY(VERSION_SEPARATOR));
-
-          if (idx != std::string::npos) {
-            for (unsigned long i = 0; i < idx; ++i) {
-              if (!isdigit(suffix[i])) {
-                isNumber = false;
-                break;
-              }
-            }
-
-            if (isNumber && loader) {
-              loader->aborted(_currentPluginLibrary, _currentPluginLibrary +
-                                                         " is not compatible with Talipot " +
-                                                         TALIPOT_VERSION);
-              return n > 0;
-            }
-          }
+      } else {
+        if (loader) {
+          loader->aborted(_currentPluginLibrary, _currentPluginLibrary +
+                                                     " is not compatible with Talipot " +
+                                                     TALIPOT_VERSION);
+          return n > 0;
         }
       }
-    }
-
-    if (loader) {
-      loader->aborted(_currentPluginLibrary,
-                      _currentPluginLibrary + " is not a Talipot plugin library");
     }
   }
 
