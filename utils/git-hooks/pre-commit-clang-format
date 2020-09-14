@@ -22,7 +22,7 @@ if [ -z "$format" ]
 then
     for j in `seq $maj_max -1 $maj_min`
     do
-        type "$base-$j" >/dev/null 2>&1 && format="$base-$j.$i" && break
+        type "$base-$j" >/dev/null 2>&1 && format="$base-$j" && break
         [ -z "$format" ] || break
         for i in `seq 9 -1 0`
         do
