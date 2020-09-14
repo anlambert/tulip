@@ -37,8 +37,7 @@
 #include <sstream>
 
 using namespace std;
-
-namespace tlp {
+using namespace tlp;
 
 GlOffscreenRenderer::GlOffscreenRenderer()
     : glContext(nullptr), offscreenSurface(nullptr), vPWidth(512), vPHeight(512),
@@ -304,6 +303,4 @@ void GlOffscreenRenderer::renderGlMainWidget(GlMainWidget *glWidget, bool redraw
   glFrameBuf2->release();
 }
 
-INSTANTIATE_DLL_TEMPLATE(Singleton<GlOffscreenRenderer>, TLP_QT_TEMPLATE_DEFINE_SCOPE)
-
-}
+INSTANTIATE_DLL_TEMPLATE(tlp::Singleton<tlp::GlOffscreenRenderer>, TLP_QT_TEMPLATE_DEFINE_SCOPE)

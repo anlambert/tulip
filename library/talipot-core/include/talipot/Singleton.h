@@ -43,7 +43,7 @@ public:
     return *(_instance.get());
   }
 
-  static void destroyInstance() {
+  void deleteEarly() {
     _instance.reset(nullptr);
   }
 };

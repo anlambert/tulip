@@ -230,12 +230,12 @@ int main(int argc, char **argv) {
 
   int result = talipot.exec();
 
-  mainWindow.destroyInstance();
+  mainWindow.deleteEarly();
 
   // We need to clear allocated OpenGL resources to avoid a
   // segfault when we close talipot
   GlTextureManager::deleteAllTextures();
-  GlOffscreenRenderer::destroyInstance();
+  GlOffscreenRenderer::instance().deleteEarly();
 
   return result;
 }

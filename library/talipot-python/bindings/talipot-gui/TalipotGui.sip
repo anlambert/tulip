@@ -203,7 +203,7 @@ Closes and destroys all the views associated to a particular graph.
     if (tvm.areViewsVisible()) {
       QApplication::exec();
     }
-    tlp::GlOffscreenRenderer::destroyInstance();
+    tlp::GlOffscreenRenderer::instance().deleteEarly();
 %End
 
 };
