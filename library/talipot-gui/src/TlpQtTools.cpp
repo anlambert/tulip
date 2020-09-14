@@ -498,7 +498,7 @@ bool applicationIsInDarkMode() {
 const QColor darkColor = QColor(50, 50, 50);
 
 const QColor &backgroundColor() {
-  return QApplication::palette().color(QPalette::Window);
+  return QApplication::palette().color(QPalette::Base);
 }
 
 const QColor &textColor() {
