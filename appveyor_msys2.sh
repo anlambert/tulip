@@ -13,8 +13,8 @@ set -e
 
 cd $APPVEYOR_BUILD_FOLDER
 
-# Install required tools
-pacman --noconfirm -S --needed base-devel unzip
+# Install development tools
+pacman --noconfirm -S --needed base-devel
 
 # Always install latest GCC toolchain in order to detect possible build failures
 # when its version evolves
@@ -26,6 +26,7 @@ pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-ccache
 pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-yajl
 pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-zstd
 pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-qhull
+pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-python
 pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-cppunit
 
 export TALIPOT_BUILD_DOC=OFF
@@ -38,9 +39,8 @@ then
   pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-qt5
   pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-quazip
   pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-qtwebkit
+  pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-python-sphinx
   export TALIPOT_BUILD_DOC=ON
-  # Install Inetc plugin for NSIS
-  unzip bundlers/win/Inetc.zip -d"C:\Program Files (x86)\NSIS"
 fi
 
 # Build Talipot, run its unit tests and package it
@@ -52,8 +52,7 @@ cmake -G "MSYS Makefiles" \
   -DTALIPOT_BUILD_CORE_ONLY=$TALIPOT_BUILD_CORE_ONLY \
   -DTALIPOT_BUILD_DOC=$TALIPOT_BUILD_DOC \
   -DTALIPOT_BUILD_TESTS=ON \
-  -DTALIPOT_USE_CCACHE=ON \
-  -DPYTHON_EXECUTABLE=$PYTHON_HOME/python.exe ..
+  -DTALIPOT_USE_CCACHE=ON ..
 make -j4 install
 make runTests
 

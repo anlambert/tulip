@@ -2,14 +2,8 @@
 set NSIS_PATH=%1
 set TALIPOT_DIR=%2
 set DEST_DIR=%3
-if [%4] NEQ [] (
-  if "%4" == "TRUE" (
-    set DEBUG_MODE=%4
-  ) else if NOT "%4" == "FALSE" (
-    set OUT_FILE=%4
-  )
-)
-SET MINGW=%5
+set PYTHON_STDLIB_DIR=%4
+set PYTHON_VERSION=%5
 set SRC_DIR=%cd%
 
 echo 'Wiping destination directory'
@@ -21,33 +15,38 @@ if EXIST "%DEST_DIR%\\files" (
 echo 'Copying Talipot files'
 xcopy "%TALIPOT_DIR%" "%DEST_DIR%\\files" /E /Q
 
-if NOT "%DEBUG_MODE%" == "TRUE" (
-echo 'Removing debug libs'
-del /Q /F /S "%DEST_DIR%\\files\\bin\\Qt5*d.dll" >nul 2>&1
-del /Q /F /S "%DEST_DIR%\\files\\bin\\imageformats\\q*d.dll" >nul 2>&1
-del /Q /F /S "%DEST_DIR%\\files\\bin\\imageformats\\q*d.pdb" >nul 2>&1
-del /Q /F /S "%DEST_DIR%\\files\\bin\\platforms\\qdirect2dd.dll" >nul 2>&1
-del /Q /F /S "%DEST_DIR%\\files\\bin\\platforms\\qminimald.dll" >nul 2>&1
-del /Q /F /S "%DEST_DIR%\\files\\bin\\platforms\\qoffscreend.dll" >nul 2>&1
-del /Q /F /S "%DEST_DIR%\\files\\bin\\platforms\\qwebgld.dll" >nul 2>&1
-del /Q /F /S "%DEST_DIR%\\files\\bin\\platforms\\qwindowsd.dll" >nul 2>&1
-del /Q /F /S "%DEST_DIR%\\files\\bin\\platforms\\q*d.pdb" >nul 2>&1
-del /Q /F /S "%DEST_DIR%\\files\\bin\\styles\\q*d.dll" >nul 2>&1
-del /Q /F /S "%DEST_DIR%\\files\\bin\\styles\\q*d.pdb" >nul 2>&1
+echo 'Copying Python standard library'
+if EXIST "%PYTHON_STDLIB_DIR%\\lib-dynload" (
+  set PYTHON_STD_LIB_DEST_DIR="%DEST_DIR%\\files\\lib\\python%PYTHON_VERSION%"
+) else (
+  set PYTHON_STD_LIB_DEST_DIR="%DEST_DIR%\\files\\lib"
 )
 
-echo 'Removing not needed dlls copied by fixup_bundle'
-del /Q /F /S "%DEST_DIR%\\files\\bin\\python*.dll" >nul 2>&1
-del /Q /F /S "%DEST_DIR%\\files\\bin\\opengl*.dll" >nul 2>&1
-if "%MINGW%" == "TRUE" (
-  del /Q /F /S "%DEST_DIR%\\files\\bin\\vc*.dll" >nul 2>&1
+mkdir "%PYTHON_STD_LIB_DEST_DIR%" >nul 2>&1
+xcopy "%PYTHON_STDLIB_DIR%" "%PYTHON_STD_LIB_DEST_DIR%" /E /Q
+
+set PYTHON_DLLS_LIB_DEST_DIR="%DEST_DIR%\\files\\DLLs"
+mkdir "%PYTHON_DLLS_LIB_DEST_DIR%"
+xcopy "%PYTHON_STDLIB_DIR%\\..\\DLLs" "%PYTHON_DLLS_LIB_DEST_DIR%" /E /Q 2>&1
+set DLLS_FILES=
+for /f "delims=" %%a in ('dir /b "%PYTHON_DLLS_LIB_DEST_DIR%"') do set DLLS_FILES="%%a"
+IF {%DLLS_FILES%}=={} (
+  rmdir "%PYTHON_DLLS_LIB_DEST_DIR%"
 )
+
+if EXIST "%PYTHON_STD_LIB_DEST_DIR%\\site-packages" (
+  del /s /f /q "%PYTHON_STD_LIB_DEST_DIR%\\site-packages\\*.*" >nul 2>&1
+  for /f %%f in ('dir /ad /b "%PYTHON_STD_LIB_DEST_DIR%\\site-packages"') do rd /s /q "%PYTHON_STD_LIB_DEST_DIR%\\site-packages\\%%f"
+)
+for /d /r "%PYTHON_STD_LIB_DEST_DIR%" %%d in (__pycache__) do @if exist "%%d" rd /s /q "%%d"
+
+echo 'Removing not needed dlls copied by fixup_bundle'
+del /Q /F /S "%DEST_DIR%\\files\\bin\\opengl*.dll" >nul 2>&1
 
 echo 'Removing non dll files from lib directory'
 del /Q /F /S "%DEST_DIR%\\files\\lib\\*.dll.a" >nul 2>&1
 
 echo 'Copying NSIS script and licence'
-
 copy "%SRC_DIR%\\Talipot.nsi" "%DEST_DIR%\\"
 copy "%SRC_DIR%\\LICENSE" "%DEST_DIR%\\"
 
