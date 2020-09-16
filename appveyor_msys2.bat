@@ -17,9 +17,5 @@ bash -lc "pacman --noconfirm -Sydd pacman"
 rem Upgrade MSYS2 platform
 bash -lc "pacman --noconfirm -Syu"
 
-rem Install sphinx
-set PATH=%PYTHON_HOME%;%PYTHON_HOME%/Scripts;%PATH%
-pip install "sphinx<3"
-
 rem Execute build script
 bash -l "%APPVEYOR_BUILD_FOLDER%/appveyor_msys2.sh"

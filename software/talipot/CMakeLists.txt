@@ -106,21 +106,6 @@ INSTALL(
 
 IF(WIN32)
 
-  IF(NOT MSYS2_PYTHON)
-    ADD_EXECUTABLE(getpythonhome src/getpythonhome.cpp)
-    TARGET_LINK_LIBRARIES(
-      getpythonhome ${LibTalipotCoreName} ${LibTalipotOGLName}
-      ${LibTalipotGUIName} ${QT_LIBRARIES})
-
-    INSTALL(
-      TARGETS getpythonhome
-      RUNTIME DESTINATION ${TalipotBinInstallDir}
-      LIBRARY DESTINATION ${TalipotLibInstallDir}
-      ARCHIVE DESTINATION ${TalipotLibInstallDir})
-
-    INSTALL(FILES src/talipot.bat DESTINATION ${TalipotBinInstallDir})
-  ENDIF(NOT MSYS2_PYTHON)
-
   SET(TALIPOT_FIXUP_BUNDLE
       ON
       CACHE

@@ -83,54 +83,40 @@ ENDIF(NSIS_PATH_EMPTY)
 
 IF(NOT NSIS_PATH_EMPTY)
 
-  IF(EXISTS "${NSIS_PATH}/Plugins/inetc.dll"
-     OR EXISTS "${NSIS_PATH}/Plugins/x86-ansi/inetc.dll")
+  STRING(REPLACE "/" "\\" NSIS_PATH "${NSIS_PATH}")
+  STRING(REPLACE "/" "\\" BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}")
+  STRING(REPLACE "/" "\\" TLP_DIR "${CMAKE_INSTALL_PREFIX}")
+  STRING(REPLACE "/" "\\" QTX_PLUGINS_DIR "${QT_PLUGINS_DIR}")
 
-    STRING(REPLACE "/" "\\" NSIS_PATH "${NSIS_PATH}")
-    STRING(REPLACE "/" "\\" BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}")
-    STRING(REPLACE "/" "\\" TLP_DIR "${CMAKE_INSTALL_PREFIX}")
-    STRING(REPLACE "/" "\\" QTX_PLUGINS_DIR "${QT_PLUGINS_DIR}")
+  IF(TalipotBuildIsRelease OR MSVC)
+    SET(DEBUG_MODE "FALSE")
+  ELSE(TalipotBuildIsRelease OR MSVC)
+    SET(DEBUG_MODE "TRUE")
+  ENDIF(TalipotBuildIsRelease OR MSVC)
 
-    IF(TalipotBuildIsRelease OR MSVC)
-      SET(DEBUG_MODE "FALSE")
-    ELSE(TalipotBuildIsRelease OR MSVC)
-      SET(DEBUG_MODE "TRUE")
-    ENDIF(TalipotBuildIsRelease OR MSVC)
+  IF(MINGW)
+    SET(BUNDLE_COMMAND
+        cmd //C win_bundle.bat \"${NSIS_PATH}\" \"${TLP_DIR}\"
+        \"${BINARY_DIR}\" \"${PYTHON_STDLIB_DIR}\" \"${PYTHON_VERSION}\")
+  ELSE(MINGW)
+    SET(BUNDLE_COMMAND
+        cmd /C
+        "\"win_bundle.bat \"${NSIS_PATH}\" \"${TLP_DIR}\" \"${BINARY_DIR}\" \"${PYTHON_STDLIB_DIR}\" \"${PYTHON_VERSION}\"\""
+    )
+  ENDIF(MINGW)
 
-    IF(MINGW)
-      SET(MINGW_BUILD "TRUE")
-      SET(BUNDLE_COMMAND cmd //C win_bundle.bat \"${NSIS_PATH}\" \"${TLP_DIR}\"
-                         \"${BINARY_DIR}\" ${DEBUG_MODE} ${MINGW_BUILD})
-    ELSE(MINGW)
-      SET(MINGW_BUILD "FALSE")
-      SET(BUNDLE_COMMAND
-          cmd /C
-          "\"win_bundle.bat \"${NSIS_PATH}\" \"${TLP_DIR}\" \"${BINARY_DIR}\" ${DEBUG_MODE} ${MINGW_BUILD}\""
-      )
-    ENDIF(MINGW)
-
-    ADD_CUSTOM_TARGET(
-      bundle
-      COMMAND ${CMAKE_COMMAND} -P ${CMAKE_BINARY_DIR}/cmake_install.cmake
-      COMMAND
-        ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/win_bundle.bat
-        ${CMAKE_CURRENT_BINARY_DIR}/win_bundle.bat
-      COMMAND
-        ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/FileAssociation.nsh
-        ${CMAKE_CURRENT_BINARY_DIR}/FileAssociation.nsh
-      COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/LICENSE
-              ${CMAKE_CURRENT_BINARY_DIR}/LICENSE
-      COMMAND ${BUNDLE_COMMAND}
-      WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
-
-  ELSE(EXISTS "${NSIS_PATH}/Plugins/inetc.dll"
-       OR EXISTS "${NSIS_PATH}/Plugins/x86-ansi/inetc.dll")
-
-    MESSAGE("NSIS Inetc plugin is required to build the Talipot installer.")
-    MESSAGE("Extract ${CMAKE_CURRENT_SOURCE_DIR}/Inetc.zip in ${NSIS_PATH}.")
-
-  ENDIF(EXISTS "${NSIS_PATH}/Plugins/inetc.dll"
-        OR EXISTS "${NSIS_PATH}/Plugins/x86-ansi/inetc.dll")
+  ADD_CUSTOM_TARGET(
+    bundle
+    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_BINARY_DIR}/cmake_install.cmake
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/win_bundle.bat
+            ${CMAKE_CURRENT_BINARY_DIR}/win_bundle.bat
+    COMMAND
+      ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/FileAssociation.nsh
+      ${CMAKE_CURRENT_BINARY_DIR}/FileAssociation.nsh
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/LICENSE
+            ${CMAKE_CURRENT_BINARY_DIR}/LICENSE
+    COMMAND ${BUNDLE_COMMAND}
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
 
 ELSE(NOT NSIS_PATH_EMPTY)
 

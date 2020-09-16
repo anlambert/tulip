@@ -8,7 +8,7 @@ Function .onInit
   ${If} ${RunningX64}
    Goto Yes
   ${Else}
-    MessageBox MB_OK "You cannot install the 64 bit version of Talipot @TalipotVersion@ on a Windows 32 bit system. Use the 32 bit version of Talipot @TalipotVersion@ instead."
+    MessageBox MB_OK "You cannot install the 64 bit version of Talipot @TalipotVersion@ on a Windows 32 bit system."
     Abort
   ${Endif}
 Yes:
@@ -41,30 +41,6 @@ RequestExecutionLevel admin
 !endif
 OutFile "${OUT_FILE}"
 
-Function CheckAndInstallPython
-  SetRegView 64
-  ReadRegStr $0 HKCU SOFTWARE\Python\PythonCore\@PYTHON_VERSION@\InstallPath ""
-  IfErrors +2 0
-  IfFileExists $0\python.exe end 0
-  ReadRegStr $0 HKLM SOFTWARE\Python\PythonCore\@PYTHON_VERSION@\InstallPath ""
-  IfErrors install 0
-  IfFileExists $0\python.exe end install
-  install:
-        MessageBox MB_OK "Your system does not appear to have Python @PYTHON_VERSION@ (x86-64) installed.$\n$\nIt is now required to run Talipot @TalipotVersion@.$\n$\nPress OK to download https://www.python.org/ftp/python/@PYTHON_VERSION_WITH_PATCH@/@PYTHON_INSTALLER@$\n$\nand install Python @PYTHON_VERSION@ (x86-64)."
-        inetc::get "https://www.python.org/ftp/python/@PYTHON_VERSION_WITH_PATCH@/@PYTHON_INSTALLER@" "python-@PYTHON_VERSION_WITH_PATCH@.@PYTHON_INSTALLER_EXT@"
-!if ${PYTHON_INSTALLER_EXT} == "msi"
-        ExecWait '"msiexec" /i "python-@PYTHON_VERSION_WITH_PATCH@.@PYTHON_INSTALLER_EXT@"' $0
-!else
-	ExecWait '"python-@PYTHON_VERSION_WITH_PATCH@.@PYTHON_INSTALLER_EXT@"' $0
-!endif
-        Delete python-@PYTHON_VERSION_WITH_PATCH@.@PYTHON_INSTALLER_EXT@
-		${If} $0 != 0
-		   DetailPrint "MSI return code was $0"
-		   MessageBox MB_OK "Python @PYTHON_VERSION@ (x86-64) installation failed. Talipot @TalipotVersion@ installation will proceed$\n$\nbut Talipot will not work, until Python @PYTHON_VERSION@ (x86-64) is installed."
-		${EndIf}
-  end:
-FunctionEnd
-
 !define SHCNE_ASSOCCHANGED 0x08000000
 !define SHCNF_IDLIST 0
 
@@ -84,24 +60,23 @@ Section "Talipot"
   SetShellVarContext all
   SetOutPath $INSTDIR
   SetRegView 64
-  Call CheckAndInstallPython
 
   File /r files\*.*
 
   CreateDirectory "$SMPROGRAMS\Talipot-@TalipotVersion@ (x64)"
-  CreateShortCut "$SMPROGRAMS\Talipot-@TalipotVersion@ (x64)\Talipot-@TalipotVersion@ (x64).lnk" "$INSTDIR\bin\talipot.bat" "" "$INSTDIR\share\talipot\bitmaps\talipot.ico"
+  CreateShortCut "$SMPROGRAMS\Talipot-@TalipotVersion@ (x64)\Talipot-@TalipotVersion@ (x64).lnk" "$INSTDIR\bin\talipot.exe" "" "$INSTDIR\share\talipot\bitmaps\talipot.ico"
   CreateShortCut "$SMPROGRAMS\Talipot-@TalipotVersion@ (x64)\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
-  CreateShortCut "$DESKTOP\Talipot-@TalipotVersion@ (x64).lnk" "$INSTDIR\bin\talipot.bat" "" "$INSTDIR\share\talipot\bitmaps\talipot.ico"
+  CreateShortCut "$DESKTOP\Talipot-@TalipotVersion@ (x64).lnk" "$INSTDIR\bin\talipot.exe" "" "$INSTDIR\share\talipot\bitmaps\talipot.ico"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Talipot-@TalipotVersion@" "DisplayName" "Talipot-@TalipotVersion@ (x64)"
 
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Talipot-@TalipotVersion@" "UninstallString" "$INSTDIR\Uninstall.exe"
   WriteUninstaller "$INSTDIR\Uninstall.exe"
 
-  ${registerExtension} "$INSTDIR\bin\talipot.bat" ".tlp" "Talipot.File" "Talipot Graph File" "$INSTDIR\share\talipot\bitmaps\talipot-file-icon.ico"
-  ${registerExtension} "$INSTDIR\bin\talipot.bat" ".tlpb" "Talipot.BinaryFile" "Talipot Graph Binary File" "$INSTDIR\share\talipot\bitmaps\talipot-file-icon.ico"
-  ${registerExtension} "$INSTDIR\bin\talipot.bat" ".tlpz" "Talipot.File.Gzip" "Talipot Graph File (gzipped)" "$INSTDIR\share\talipot\bitmaps\talipot-file-icon.ico"
-  ${registerExtension} "$INSTDIR\bin\talipot.bat" ".tlpbz" "Talipot.BinaryFile.Gzip" "Talipot Graph Binary File (gzipped)" "$INSTDIR\share\talipot\bitmaps\talipot-file-icon.ico"
-  ${registerExtension} "$INSTDIR\bin\talipot.bat" ".tlpx" "Talipot.ProjectFile" "Talipot Project File" "$INSTDIR\share\talipot\bitmaps\talipot-file-icon.ico"
+  ${registerExtension} "$INSTDIR\bin\talipot.exe" ".tlp" "Talipot.File" "Talipot Graph File" "$INSTDIR\share\talipot\bitmaps\talipot-file-icon.ico"
+  ${registerExtension} "$INSTDIR\bin\talipot.exe" ".tlpb" "Talipot.BinaryFile" "Talipot Graph Binary File" "$INSTDIR\share\talipot\bitmaps\talipot-file-icon.ico"
+  ${registerExtension} "$INSTDIR\bin\talipot.exe" ".tlpz" "Talipot.File.Gzip" "Talipot Graph File (gzipped)" "$INSTDIR\share\talipot\bitmaps\talipot-file-icon.ico"
+  ${registerExtension} "$INSTDIR\bin\talipot.exe" ".tlpbz" "Talipot.BinaryFile.Gzip" "Talipot Graph Binary File (gzipped)" "$INSTDIR\share\talipot\bitmaps\talipot-file-icon.ico"
+  ${registerExtension} "$INSTDIR\bin\talipot.exe" ".tlpx" "Talipot.ProjectFile" "Talipot Project File" "$INSTDIR\share\talipot\bitmaps\talipot-file-icon.ico"
 
   Call RefreshShellIcons
 

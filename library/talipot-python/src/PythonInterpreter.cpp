@@ -21,6 +21,9 @@
 #include "ConsoleHandlers.h"
 
 #include <sstream>
+#include <locale>
+#include <codecvt>
+#include <string>
 
 #include <QMessageBox>
 #include <QApplication>
@@ -88,14 +91,10 @@ def printObjectClass(obj):
         print(type)
 )";
 
-#if PY_MAJOR_VERSION >= 3
-static QString convertPythonUnicodeObjectToQString(PyObject *pyUnicodeObj) {
-  PyObject *utf8Str = PyUnicode_AsUTF8String(pyUnicodeObj);
-  QString ret = QString::fromUtf8(PyBytes_AsString(utf8Str));
-  decrefPyObject(utf8Str);
-  return ret;
+std::wstring stringToWString(const std::string &s) {
+  std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+  return converter.from_bytes(s);
 }
-#endif
 
 static bool scriptPaused = false;
 static bool processQtEvents = false;
@@ -195,7 +194,8 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD ul_reason_for_call, LPVOID lpReserve
 #endif
 
 PythonInterpreter::PythonInterpreter()
-    : _wasInit(false), _runningScript(false), _defaultConsoleWidget(nullptr), _outputEnabled(true),
+    : _wasInit(false), _runningScript(false), _defaultConsoleWidget(nullptr),
+      _pythonVersion(PythonVersionChecker::compiledVersion()), _outputEnabled(true),
       _errorOutputEnabled(true) {
 
   if (Py_IsInitialized()) {
@@ -214,25 +214,24 @@ PythonInterpreter::PythonInterpreter()
     int argc = 1;
 #if PY_MAJOR_VERSION >= 3
     static const std::wstring argv0 = L"talipot";
-    wchar_t *argv[1];
-    argv[0] = const_cast<wchar_t *>(argv0.c_str());
+    const wchar_t *argv[1];
+    argv[0] = argv0.c_str();
 #else
     static const std::string argv0 = "talipot";
-    char *argv[1];
-    argv[0] = const_cast<char *>(argv0.c_str());
+    const char *argv[1];
+    argv[0] = argv0.c_str();
 #endif
 
     Py_OptimizeFlag = 1;
     Py_NoSiteFlag = 1;
 
-// Fix for GDB debugging on windows when compiling with MinGW.
-// GDB contains an embedded Python interpreter that messes up Python Home value.
-// When Talipot is compiled with a version of Python different from the one embedded in GDB,
-// it crashes at startup when running it through GDB.
-// So reset correct one to be able to debug it.
 #ifdef __MINGW32__
+    // Fix for GDB debugging on windows when compiling with MinGW.
+    // GDB contains an embedded Python interpreter that messes up Python Home value.
+    // When Talipot is compiled with a version of Python different from the one embedded in GDB,
+    // it crashes at startup when running it through GDB.
+    // So reset correct one to be able to debug it.
     QString pythonHome = PythonVersionChecker::getPythonHome();
-
     if (!pythonHome.isEmpty()) {
 #if PY_MAJOR_VERSION >= 3
       static std::wstring pythonHomeWString = pythonHome.toStdWString();
@@ -242,16 +241,31 @@ PythonInterpreter::PythonInterpreter()
       Py_SetPythonHome(const_cast<char *>(pythonHomeString.c_str()));
 #endif
     }
-
 #endif
+
+    // Adjust Python home when Talipot has been installed through a Windows installer,
+    // a MacOS dmg bundle or an AppImage for linux in order to locate standard library
+    static const std::string tlpPythonHome = tlp::TalipotLibDir + "/..";
+    static const std::wstring tlpPythonHomeW = stringToWString(tlpPythonHome);
+    if (QDir(tlpStringToQString(tlpPythonHome) + "/lib/python" + _pythonVersion).exists() ||
+        QDir(tlpStringToQString(tlpPythonHome) + "/DLLs").exists()) {
+#if PY_MAJOR_VERSION >= 3
+      Py_SetPythonHome(const_cast<wchar_t *>(tlpPythonHomeW.c_str()));
+#else
+      Py_SetPythonHome(const_cast<char *>(tlpPythonHome.c_str()));
+#endif
+    }
 
     // register Talipot builtin Python modules
     PyImport_AppendInittab("consoleutils", initconsoleutils);
     PyImport_AppendInittab("talipotutils", inittalipotutils);
 
     Py_InitializeEx(0);
-
-    PySys_SetArgv(argc, argv);
+#if PY_MAJOR_VERSION >= 3
+    PySys_SetArgv(argc, const_cast<wchar_t **>(argv));
+#else
+    PySys_SetArgv(argc, const_cast<char **>(argv));
+#endif
 
     PyEval_InitThreads();
     mainThreadState = PyEval_SaveThread();
@@ -260,23 +274,6 @@ PythonInterpreter::PythonInterpreter()
   holdGIL();
 
   importModule("sys");
-
-#if PY_MAJOR_VERSION >= 3
-  PyObject *pName = PyUnicode_FromString("__main__");
-#else
-  PyObject *pName = PyString_FromString("__main__");
-#endif
-  PyObject *pMainModule = PyImport_Import(pName);
-  decrefPyObject(pName);
-  PyObject *pMainDict = PyModule_GetDict(pMainModule);
-  PyObject *pVersion = PyRun_String("str(sys.version_info[0])+\".\"+str(sys.version_info[1])",
-                                    Py_eval_input, pMainDict, pMainDict);
-
-#if PY_MAJOR_VERSION >= 3
-  _pythonVersion = convertPythonUnicodeObjectToQString(pVersion);
-#else
-  _pythonVersion = QString(PyString_AsString(pVersion));
-#endif
 
   if (!_wasInit) {
 
@@ -437,7 +434,11 @@ bool PythonInterpreter::registerNewModuleFromString(const QString &moduleName,
   } else {
 
     PyObject *pmod =
+#if PY_MAJOR_VERSION >= 3
+        PyImport_ExecCodeModule(QStringToTlpString(moduleName).c_str(), pycomp);
+#else
         PyImport_ExecCodeModule(const_cast<char *>(QStringToTlpString(moduleName).c_str()), pycomp);
+#endif
 
     if (pmod == nullptr) {
       PyErr_Print();
