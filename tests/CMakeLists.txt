@@ -23,8 +23,22 @@ MACRO(UNIT_TEST)
     # otherwise this is a Python test
   ELSE()
     SET(PYTHON_TEST_MODULE ${ARGV1})
-    ADD_TEST(NAME ${TEST_NAME} COMMAND ${PYTHON_EXECUTABLE} -m unittest
-                                       ${PYTHON_TEST_MODULE})
+    ADD_TEST(NAME ${TEST_NAME} COMMAND ${PYTHON_EXECUTABLE} -c "
+import os
+import platform
+import sys
+import unittest
+
+if platform.system() == 'Windows' and sys.version_info >= (3, 8):
+    for path in os.environ['PATH'].split(';'):
+        path = os.path.abspath(path)
+        if os.path.exists(path):
+            os.add_dll_directory(path)
+
+import ${PYTHON_TEST_MODULE}
+tests = unittest.defaultTestLoader.loadTestsFromModule(${PYTHON_TEST_MODULE})
+runner = unittest.TextTestRunner()
+runner.run(tests)")
   ENDIF()
   # In order to run the tests on windows, we need to add the paths of the dll
   # depencencies (cppunit, tulip, gzstream, yajl) in the PATH environment
@@ -53,7 +67,7 @@ MACRO(UNIT_TEST)
         "${CppUnitDllDir};${CMAKE_LIBRARY_PATH};${QT_BINARY_DIR};${PYTHON_HOME_PATH};${CMAKE_BINARY_DIR}/thirdparty/gzstream/;${CMAKE_BINARY_DIR}/thirdparty/yajl/src;${CMAKE_BINARY_DIR}/thirdparty/quazip;${CMAKE_BINARY_DIR}/thirdparty/ftgl"
     )
     SET(NEWPATH
-        "${NEWPATH};${CMAKE_BINARY_DIR}/library/talipot-core/src;${CMAKE_BINARY_DIR}/library/talipot-ogl/src;${CMAKE_BINARY_DIR}/library/talipot-gui/src;$ENV{PATH}"
+        "${NEWPATH};${CMAKE_BINARY_DIR}/library/talipot-core/src;${CMAKE_BINARY_DIR}/library/talipot-ogl/src;${CMAKE_BINARY_DIR}/library/talipot-gui/src"
     )
     SET(NEWPATH
         "${NEWPATH};${CMAKE_BINARY_DIR}/thirdparty/libtess2;${CMAKE_BINARY_DIR}/thirdparty/OGDF;${CMAKE_BINARY_DIR}/library/talipot-ogdf;${CMAKE_BINARY_DIR}/library/talipot-python/src;$ENV{PATH}"
