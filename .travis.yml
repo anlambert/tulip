@@ -313,6 +313,78 @@ jobs:
         user: "anlambert"
         key: "${BINTRAY_API_KEY}"
   #=============================================================================================
+    # Talipot thirdparty build stage on Mac OS
+    - stage: Talipot thirdparty build (Mac OS)
+      if: commit_message !~ /\[ci-(windows)-only\]$/
+    # Talipot core build on Mac OS (MacPorts)
+      os: osx
+      osx_image: xcode9.4
+      compiler: clang
+      cache: ccache
+      install:
+        # install MacPorts in order to easily retrieve Talipot dependencies
+        - curl -LO https://raw.githubusercontent.com/GiovanniBussi/macports-ci/master/macports-ci
+        - source ./macports-ci install
+        # install Talipot core build dependencies
+        - sudo port -N install cmake
+        - sudo port -N install clang-10
+        - sudo port -N install ccache
+        - sudo port -N install qhull
+        - sudo port -N install yajl
+        - sudo port -N install zstd
+      env:
+        - ENV="MacOS 10.13, LLVM Clang, MacPorts"
+
+      script:
+        # create build directory
+        - mkdir build && cd build
+        # configure Talipot core build using cmake
+        - cmake .. -DCMAKE_BUILD_TYPE=Release
+            -DCMAKE_INSTALL_PREFIX=$PWD/install
+            -DCMAKE_C_COMPILER=/opt/local/bin/clang-mp-10
+            -DCMAKE_CXX_COMPILER=/opt/local/bin/clang++-mp-10
+            -DPYTHON_EXECUTABLE=/usr/bin/python2.7
+            -DZLIB_INCLUDE_DIR=/opt/local/include
+            -DZLIB_LIBRARY_RELEASE=/opt/local/lib/libz.dylib
+            -DTALIPOT_USE_CCACHE=ON
+            -DTALIPOT_BUILD_CORE_ONLY=ON || travis_terminate 1
+        - make -j4 -C thirdparty || travis_terminate 1
+
+    #-------------------------------------------------------------------------------------------
+    # Talipot thirdparty build on Mac OS (Homebrew)
+    -
+      if: commit_message !~ /\[ci-(windows)-only\]$/
+      os: osx
+      osx_image: xcode11.3
+      compiler: clang
+      cache: ccache
+      addons:
+        homebrew:
+          update: true
+          # install Talipot core build dependencies
+          packages:
+            - ccache
+            - cmake
+            - llvm
+            - qhull
+            - yajl
+            - zstd
+
+      env:
+        - ENV="MacOS 10.14, LLVM Clang, Homebrew"
+      script:
+        # create build directory
+        - mkdir build && cd build
+        # configure Talipot core build using cmake
+        - cmake .. -DCMAKE_BUILD_TYPE=Release
+            -DCMAKE_INSTALL_PREFIX=$PWD/install
+            -DCMAKE_C_COMPILER=/usr/local/opt/llvm/bin/clang
+            -DCMAKE_CXX_COMPILER=/usr/local/opt/llvm/bin/clang++
+            -DPYTHON_EXECUTABLE=/usr/bin/python2.7
+            -DTALIPOT_BUILD_CORE_ONLY=ON
+            -DTALIPOT_USE_CCACHE=ON || travis_terminate 1
+        - make -j4 -C thirdparty || travis_terminate 1
+  #=============================================================================================
     # Talipot core build stage on Mac OS
     - stage: Talipot core build (Mac OS)
       if: commit_message !~ /\[ci-(windows)-only\]$/
@@ -332,8 +404,6 @@ jobs:
         - sudo port -N install qhull
         - sudo port -N install yajl
         - sudo port -N install zstd
-        - sudo port -N install freetype
-        - sudo port -N install glew
         - sudo port -N install pkgconfig
         - sudo port -N install cppunit
       env:
@@ -350,11 +420,9 @@ jobs:
             -DPYTHON_EXECUTABLE=/usr/bin/python2.7
             -DZLIB_INCLUDE_DIR=/opt/local/include
             -DZLIB_LIBRARY_RELEASE=/opt/local/lib/libz.dylib
-            -DGLEW_SHARED_LIBRARY_RELEASE=/opt/local/lib/libGLEW.dylib
             -DTALIPOT_BUILD_TESTS=ON
             -DTALIPOT_USE_CCACHE=ON
-            -DTALIPOT_BUILD_CORE_ONLY=ON
-            -DTALIPOT_BUILD_OGL=ON || travis_terminate 1
+            -DTALIPOT_BUILD_CORE_ONLY=ON || travis_terminate 1
         - make -j4 || travis_terminate 1
         - make -j4 install || travis_terminate 1
         # run Talipot unit tests
