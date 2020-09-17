@@ -474,7 +474,7 @@ TalipotMainWindow::TalipotMainWindow()
   // set a default position and size that works seamlessly on all platforms
   move(0, 0);
   resize(QDesktopWidget().availableGeometry(this).size() * 0.9);
-  _ui->mainSplitter->setSizes({int(0.3 * width()), int(0.7 * width())});
+  _ui->mainSplitter->setSizes({int(0.25 * width()), int(0.75 * width())});
 }
 
 void TalipotMainWindow::buildRecentDocumentsMenu() {
