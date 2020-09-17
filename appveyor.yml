@@ -49,11 +49,19 @@ environment:
 
 # build script that simply call the right batch script depending on the compiler used
 build_script:
-  - if defined MSYS2_ARCH ("%APPVEYOR_BUILD_FOLDER%\appveyor_msys2.bat") else ("%APPVEYOR_BUILD_FOLDER%\appveyor_msvc.bat")
+  - if defined MSYS2_ARCH (
+      "%APPVEYOR_BUILD_FOLDER%\appveyor_msys2.bat"
+    ) else (
+      "%APPVEYOR_BUILD_FOLDER%\appveyor_msvc.bat"
+    )
 
 # get the Talipot version for deployment
 after_build:
-  - ps: "$env:TALIPOT_VERSION = (((Get-Content ($env:APPVEYOR_BUILD_FOLDER + '/build/library/talipot-core/include/talipot/Release.h') | %{ if ($_ -match '^#   define TALIPOT_VERSION.*$') { $_; } }) -replace '#   define TALIPOT_VERSION ', '') -replace '\"', '' -replace '_', '.')"
+  - ps: "$env:TALIPOT_VERSION = (((Get-Content ($env:APPVEYOR_BUILD_FOLDER +
+         '/build/library/talipot-core/include/talipot/Release.h') |
+         %{ if ($_ -match '^#   define TALIPOT_VERSION.*$') { $_; } })
+         -replace '#   define TALIPOT_VERSION ', '') -replace '\"', ''
+         -replace '_', '.')"
 
 # set generated installers as artifacts to deploy
 artifacts:
