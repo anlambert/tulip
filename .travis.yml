@@ -670,7 +670,7 @@ jobs:
         - |
           if [ "$TRAVIS_BRANCH" == "master" ]
           then
-            make -v test-wheel-upload
+            make test-wheel-upload
           fi
 
     - stage: Talipot-Python wheel installation tests (macos)
