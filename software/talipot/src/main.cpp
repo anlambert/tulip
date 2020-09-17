@@ -94,11 +94,11 @@ public:
                      const QWidget *widget = nullptr) const override {
     switch (standardIcon) {
     case QStyle::SP_DialogCancelButton:
-      return FontIconManager::icon(MaterialDesignIcons::Cancel, QColor(50, 50, 50), 0.8);
+      return FontIconManager::icon(MaterialDesignIcons::Cancel, textColor(), 0.8);
     case QStyle::SP_DialogCloseButton:
       return FontIconManager::icon(MaterialDesignIcons::Close);
     case QStyle::SP_DialogDiscardButton:
-      return FontIconManager::icon(MaterialDesignIcons::Cancel, QColor(50, 50, 50), 0.8);
+      return FontIconManager::icon(MaterialDesignIcons::Cancel, textColor(), 0.8);
     case QStyle::SP_DialogNoButton:
       return FontIconManager::icon(MaterialDesignIcons::Close);
     case QStyle::SP_DialogOkButton:
