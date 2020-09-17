@@ -17,5 +17,11 @@ bash -lc "pacman --noconfirm -Sydd pacman"
 rem Upgrade MSYS2 platform
 bash -lc "pacman --noconfirm -Syu"
 
+set BUILD_WHEELS=%1
+
 rem Execute build script
-bash -l "%APPVEYOR_BUILD_FOLDER%/appveyor_msys2.sh"
+if "%BUILD_WHEELS%" == "true" (
+  bash -l "%APPVEYOR_BUILD_FOLDER%/bundlers/win/talipot_python_wheels_win_amd64.sh"
+) else (
+  bash -l "%APPVEYOR_BUILD_FOLDER%/appveyor_msys2.sh"
+)
