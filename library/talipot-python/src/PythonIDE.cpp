@@ -1941,8 +1941,7 @@ void PythonIDE::stopCurrentScript() {
   _pythonInterpreter->stopCurrentScript();
 }
 
-bool PythonIDE::closeEditorTabRequested(PythonEditorsTabWidget *tabWidget, int idx,
-                                        bool mayCancel) {
+bool PythonIDE::closeEditorTabRequested(PythonEditorsTabWidget *tabWidget, int idx) {
   QString curTabText = tabWidget->tabText(idx);
 
   // workaround a Qt5 bug on linux
@@ -1966,9 +1965,7 @@ bool PythonIDE::closeEditorTabRequested(PythonEditorsTabWidget *tabWidget, int i
                                   (fileName.isEmpty() ? curTabText : fileName) +
                                   QString("\n has been edited but has not been saved to disk.\n"
                                           "Do you want to save it to disk ?"),
-                              QMessageBox::Save | QMessageBox::Discard |
-                                  (mayCancel ? QMessageBox::Cancel : QMessageBox::Save),
-                              QMessageBox::Save);
+                              QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
 
     if (button == QMessageBox::Save) {
       if (fileName.isEmpty()) {
@@ -1986,7 +1983,13 @@ bool PythonIDE::closeEditorTabRequested(PythonEditorsTabWidget *tabWidget, int i
       }
     }
 
-    return button != QMessageBox::Cancel;
+    bool close = button != QMessageBox::Cancel;
+
+    if (close) {
+      tabWidget->closeTab(idx);
+    }
+
+    return close;
   }
 
   return true;
