@@ -55,11 +55,14 @@ cp -r "${TALIPOT_DIR}"/* .
 mv lib/*.dylib Frameworks/
 rm -rf include
 rm -rf lib/cmake
-rm lib/talipot/python/*.pyc lib/talipot/python/*.pyo 2>/dev/null
-rm lib/talipot/python/talipot/*.pyc lib/talipot/python/talipot/*.pyo 2>/dev/null
-rm lib/talipot/python/talipotgui/*.pyc lib/talipot/python/talipotgui/*.pyo 2>/dev/null
+find lib/talipot/python/ | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf
 
-echo 'Copying license'
+echo 'Copying Python Framework'
+mkdir -p Frameworks/Python.framework/Versions/@PYTHON_VERSION@
+cp -r @PYTHON_STDLIB_DIR@/../../* Frameworks/Python.framework/Versions/@PYTHON_VERSION@/
+find Frameworks/Python.framework/ | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf
+
+echo 'Copying License'
 cd "${DEST_DIR}/application"
 cp "${SRC_DIR}/../../LICENSE" .
 
