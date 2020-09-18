@@ -404,6 +404,7 @@ jobs:
         - sudo port -N install qhull
         - sudo port -N install yajl
         - sudo port -N install zstd
+        - sudo port -N install python38
         - sudo port -N install pkgconfig
         - sudo port -N install cppunit
       env:
@@ -417,7 +418,7 @@ jobs:
             -DCMAKE_INSTALL_PREFIX=$PWD/install
             -DCMAKE_C_COMPILER=/opt/local/bin/clang-mp-10
             -DCMAKE_CXX_COMPILER=/opt/local/bin/clang++-mp-10
-            -DPYTHON_EXECUTABLE=/usr/bin/python2.7
+            -DPYTHON_EXECUTABLE=/opt/local/bin/python3.8
             -DZLIB_INCLUDE_DIR=/opt/local/include
             -DZLIB_LIBRARY_RELEASE=/opt/local/lib/libz.dylib
             -DTALIPOT_BUILD_TESTS=ON
@@ -447,6 +448,7 @@ jobs:
             - qhull
             - yajl
             - zstd
+            - python3
             - cppunit
             - pkg-config
 
@@ -460,7 +462,7 @@ jobs:
             -DCMAKE_INSTALL_PREFIX=$PWD/install
             -DCMAKE_C_COMPILER=/usr/local/opt/llvm/bin/clang
             -DCMAKE_CXX_COMPILER=/usr/local/opt/llvm/bin/clang++
-            -DPYTHON_EXECUTABLE=/usr/bin/python2.7
+            -DPYTHON_EXECUTABLE=/usr/local/bin/python3
             -DTALIPOT_BUILD_CORE_ONLY=ON
             -DTALIPOT_BUILD_TESTS=ON
             -DTALIPOT_USE_CCACHE=ON || travis_terminate 1
@@ -497,6 +499,7 @@ jobs:
         - sudo port -N install qhull
         - sudo port -N install yajl
         - sudo port -N install zstd
+        - sudo port -N install python38
         - sudo port -N install pkgconfig
         - sudo port -N install cppunit
         - curl -O https://bootstrap.pypa.io/get-pip.py
@@ -513,7 +516,7 @@ jobs:
             -DCMAKE_INSTALL_PREFIX=$PWD/install
             -DCMAKE_C_COMPILER=/opt/local/bin/clang-mp-10
             -DCMAKE_CXX_COMPILER=/opt/local/bin/clang++-mp-10
-            -DPYTHON_EXECUTABLE=/usr/bin/python2.7
+            -DPYTHON_EXECUTABLE=/opt/local/bin/python3.8
             -DTALIPOT_BUILD_TESTS=ON
             -DTALIPOT_USE_CCACHE=ON
             -DZLIB_INCLUDE_DIR=/opt/local/include
@@ -563,6 +566,7 @@ jobs:
             - qhull
             - yajl
             - zstd
+            - python3
             - cppunit
             - pkg-config
             - glew
@@ -581,7 +585,7 @@ jobs:
             -DCMAKE_INSTALL_PREFIX=$PWD/install
             -DCMAKE_C_COMPILER=/usr/local/opt/llvm/bin/clang
             -DCMAKE_CXX_COMPILER=/usr/local/opt/llvm/bin/clang++
-            -DPYTHON_EXECUTABLE=/usr/bin/python2.7
+            -DPYTHON_EXECUTABLE=/usr/local/bin/python3
             -DCMAKE_PREFIX_PATH=/usr/local/opt/qt
             -DTALIPOT_BUILD_TESTS=ON
             -DTALIPOT_BUILD_DOC=OFF
