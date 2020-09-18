@@ -98,13 +98,13 @@ public:
     case QStyle::SP_DialogCloseButton:
       return FontIconManager::icon(MaterialDesignIcons::Close);
     case QStyle::SP_DialogDiscardButton:
-      return FontIconManager::icon(MaterialDesignIcons::Cancel, textColor(), 0.8);
+      return FontIconManager::icon(MaterialDesignIcons::TrashCanOutline);
     case QStyle::SP_DialogNoButton:
       return FontIconManager::icon(MaterialDesignIcons::Close);
     case QStyle::SP_DialogOkButton:
       return FontIconManager::icon(MaterialDesignIcons::Check);
     case QStyle::SP_DialogSaveButton:
-      return FontIconManager::icon(MaterialDesignIcons::FileExport);
+      return FontIconManager::icon(MaterialDesignIcons::FileExportOutline);
     case QStyle::SP_DialogYesButton:
       return FontIconManager::icon(MaterialDesignIcons::Check);
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))

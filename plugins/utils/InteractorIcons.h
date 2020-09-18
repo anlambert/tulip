@@ -43,7 +43,7 @@ static QIcon interactorIcon(InteractorType interactorType, const QColor &iconCol
     break;
   }
   case DeleteElement: {
-    icon = FontIconManager::icon(MaterialDesignIcons::Delete, iconColor);
+    icon = FontIconManager::icon(MaterialDesignIcons::DeleteOutline, iconColor);
     break;
   }
   case EditEdgeBends: {

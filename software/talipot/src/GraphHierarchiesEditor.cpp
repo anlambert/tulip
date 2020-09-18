@@ -122,14 +122,15 @@ GraphHierarchiesEditor::GraphHierarchiesEditor(QWidget *parent)
   _ui->actionDelete_All->setShortcutContext(Qt::WidgetWithChildrenShortcut);
   _ui->actionCreate_panel->setIcon(FontIconManager::icon(MaterialDesignIcons::PlusBox));
   _ui->actionExport->setIcon(FontIconManager::icon(MaterialDesignIcons::Export));
-  _ui->actionSave_to_file->setIcon(FontIconManager::icon(MaterialDesignIcons::FileExport));
+  _ui->actionSave_to_file->setIcon(FontIconManager::icon(MaterialDesignIcons::FileExportOutline));
   _ui->actionRename->setIcon(FontIconManager::icon(MaterialDesignIcons::RenameBox));
-  _ui->actionDelete_graph->setIcon(FontIconManager::icon(MaterialDesignIcons::Delete));
-  _ui->actionDelete_All->setIcon(FontIconManager::icon(MaterialDesignIcons::Delete));
-  _ui->actionDelete_all_nodes->setIcon(FontIconManager::icon(MaterialDesignIcons::Delete));
-  _ui->actionDelete_all_edges->setIcon(FontIconManager::icon(MaterialDesignIcons::Delete));
-  _ui->actionDelete_selection->setIcon(FontIconManager::icon(MaterialDesignIcons::Delete));
-  _ui->actionDelete_selection_from_root_graph->setIcon(FontIconManager::icon(MaterialDesignIcons::Delete));
+  _ui->actionDelete_graph->setIcon(FontIconManager::icon(MaterialDesignIcons::DeleteOutline));
+  _ui->actionDelete_All->setIcon(FontIconManager::icon(MaterialDesignIcons::DeleteOutline));
+  _ui->actionDelete_all_nodes->setIcon(FontIconManager::icon(MaterialDesignIcons::DeleteOutline));
+  _ui->actionDelete_all_edges->setIcon(FontIconManager::icon(MaterialDesignIcons::DeleteOutline));
+  _ui->actionDelete_selection->setIcon(FontIconManager::icon(MaterialDesignIcons::DeleteOutline));
+  _ui->actionDelete_selection_from_root_graph->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::DeleteOutline));
   _ui->actionAdd_sub_graph->setIcon(
       FontIconManager::icon(MaterialDesignIcons::Tournament, textColor(), 1.0, -90));
   _ui->actionClone_subgraph->setIcon(

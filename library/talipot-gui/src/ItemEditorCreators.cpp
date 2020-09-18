@@ -472,10 +472,10 @@ bool FileDescriptorEditorCreator::paint(QPainter *painter, const QStyleOptionVie
     icon = imageIcon;
     text = fileInfo.fileName();
   } else if (fileInfo.isFile()) {
-    icon = FontIconManager::icon(MaterialDesignIcons::File);
+    icon = FontIconManager::icon(MaterialDesignIcons::FileOutline);
     text = fileInfo.fileName();
   } else if (fileInfo.isDir()) {
-    icon = FontIconManager::icon(MaterialDesignIcons::Folder);
+    icon = FontIconManager::icon(MaterialDesignIcons::FolderOutline);
     QDir d1 = fileInfo.dir();
     d1.cdUp();
     text = fileInfo.absoluteFilePath().remove(0, d1.absolutePath().length() - 1);

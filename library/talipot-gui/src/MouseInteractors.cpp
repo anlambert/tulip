@@ -143,7 +143,7 @@ bool MouseElementDeleter::eventFilter(QObject *widget, QEvent *e) {
 
     if (e->type() == QEvent::MouseMove) {
       if (glMainWidget->pickNodesEdges(qMouseEv->x(), qMouseEv->y(), selectedEntity)) {
-        QIcon icon = FontIconManager::icon(MaterialDesignIcons::Delete);
+        QIcon icon = FontIconManager::icon(MaterialDesignIcons::DeleteOutline);
         glMainWidget->setCursor(icon.pixmap(32, 32));
       } else {
         glMainWidget->setCursor(Qt::ArrowCursor);
