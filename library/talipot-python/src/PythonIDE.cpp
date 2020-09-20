@@ -371,9 +371,6 @@ PythonIDE::PythonIDE(QWidget *parent)
       FontIconManager::icon(MaterialDesignIcons::FileExport, Qt::white));
   _ui->newStringModuleButton->setIcon(
       FontIconManager::icon(MaterialDesignIcons::FilePlus, Qt::white));
-  _ui->newModuleButton->setIcon(FontIconManager::icon(MaterialDesignIcons::File, Qt::white));
-  _ui->loadModuleButton->setIcon(FontIconManager::icon(MaterialDesignIcons::FileImport, Qt::white));
-  _ui->saveModuleButton->setIcon(FontIconManager::icon(MaterialDesignIcons::FileExport, Qt::white));
   _ui->newPluginButton->setIcon(FontIconManager::icon(MaterialDesignIcons::File, Qt::white));
   _ui->loadPluginButton->setIcon(FontIconManager::icon(MaterialDesignIcons::FileImport, Qt::white));
   _ui->savePluginButton->setIcon(FontIconManager::icon(MaterialDesignIcons::FileExport, Qt::white));
@@ -431,10 +428,10 @@ PythonIDE::PythonIDE(QWidget *parent)
 
   connect(_ui->newModuleButton, &QAbstractButton::clicked, this, &PythonIDE::newFileModule);
   connect(_ui->newStringModuleButton, &QAbstractButton::clicked, this, &PythonIDE::newStringModule);
-  connect(_ui->loadMainScriptButton, &QAbstractButton::clicked, this,
-          QOverload<>::of(&PythonIDE::loadScript));
-  connect(_ui->saveMainScriptButton, &QAbstractButton::clicked, this,
-          QOverload<>::of(&PythonIDE::saveScript));
+  connect(_ui->loadModuleButton, &QAbstractButton::clicked, this,
+          QOverload<>::of(&PythonIDE::loadModule));
+  connect(_ui->saveModuleButton, &QAbstractButton::clicked, this,
+          QOverload<>::of(&PythonIDE::saveModule));
   connect(_ui->newPluginButton, &QAbstractButton::clicked, this, &PythonIDE::newPythonPlugin);
   connect(_ui->loadPluginButton, &QAbstractButton::clicked, this,
           QOverload<>::of(&PythonIDE::loadPythonPlugin));
@@ -584,13 +581,9 @@ void PythonIDE::saveModule(int tabIdx) {
     QString moduleNameExt = _ui->modulesTabWidget->tabText(tabIdx);
     QString moduleName;
 
-    if (moduleNameExt[moduleNameExt.size() - 1] == '*') {
-      moduleName = moduleNameExt.mid(0, moduleNameExt.size() - 4);
-    } else {
-      moduleName = moduleNameExt.mid(0, moduleNameExt.size() - 3);
-    }
+    moduleName = moduleNameExt.mid(0, moduleNameExt.indexOf("."));
 
-    // workaround a Qt5 bug on linux
+    // remove character added by qt
     moduleName = moduleName.replace("&", "");
 
     _pythonInterpreter->deleteModule(moduleName);
@@ -682,13 +675,9 @@ bool PythonIDE::reloadAllModules() const {
     QString moduleNameExt = _ui->modulesTabWidget->tabText(i);
     QString moduleName;
 
-    if (moduleNameExt[moduleNameExt.size() - 1] == '*') {
-      moduleName = moduleNameExt.mid(0, moduleNameExt.size() - 4);
-    } else {
-      moduleName = moduleNameExt.mid(0, moduleNameExt.size() - 3);
-    }
+    moduleName = moduleNameExt.mid(0, moduleNameExt.indexOf("."));
 
-    // workaround a Qt5 bug on linux
+    // remove character added by qt
     moduleName = moduleName.replace("&", "");
 
     _pythonInterpreter->deleteModule(moduleName);
@@ -962,13 +951,9 @@ void PythonIDE::savePythonPlugin(int tabIdx) {
     QString moduleNameExt = _ui->pluginsTabWidget->tabText(tabIdx);
     QString moduleName;
 
-    if (moduleNameExt[moduleNameExt.size() - 1] == '*') {
-      moduleName = moduleNameExt.mid(0, moduleNameExt.size() - 4);
-    } else {
-      moduleName = moduleNameExt.mid(0, moduleNameExt.size() - 3);
-    }
+    moduleName = moduleNameExt.mid(0, moduleNameExt.indexOf("."));
 
-    // workaround a Qt5 bug on linux
+    // remove character added by qt
     moduleName = moduleName.replace("&", "");
 
     _ui->pluginsTabWidget->setTabText(tabIdx, moduleName + ".py");
@@ -1005,15 +990,9 @@ void PythonIDE::registerPythonPlugin(bool clear) {
   moduleNameExt = moduleNameExt.mid(moduleNameExt.lastIndexOf("]") + 2);
   QString moduleName;
 
-  if (moduleNameExt[moduleNameExt.size() - 1] == '*') {
-    moduleName = moduleNameExt.mid(0, moduleNameExt.size() - 4);
-  } else {
-    moduleName = moduleNameExt.mid(0, moduleNameExt.size() - 3);
-  }
+  moduleName = moduleNameExt.mid(0, moduleNameExt.indexOf("."));
 
-  moduleName = moduleName.replace(".py", "");
-
-  // workaround a Qt5 bug on linux
+  // remove character added by qt
   moduleName = moduleName.replace("&", "");
 
   QString pluginCode = getPluginEditor(tabIdx)->getCleanCode();
@@ -1732,7 +1711,7 @@ void PythonIDE::saveScript(int tabIdx, bool clear, bool showFileDialog) {
 
     QString tabText = _ui->mainScriptsTabWidget->tabText(tabIdx);
 
-    // workaround a Qt5 bug on linux
+    // remove character added by qt
     tabText = tabText.replace("&", "");
 
     if (mainScriptFileName.isEmpty() && showFileDialog) {
@@ -1942,13 +1921,14 @@ void PythonIDE::stopCurrentScript() {
 }
 
 bool PythonIDE::closeEditorTabRequested(PythonEditorsTabWidget *tabWidget, int idx) {
+  bool close = true;
   QString curTabText = tabWidget->tabText(idx);
 
-  // workaround a Qt5 bug on linux
+  // remove character added by qt
   curTabText = curTabText.replace("&", "");
 
   if (curTabText.isEmpty()) {
-    return true;
+    return close;
   }
 
   PythonCodeEditor *editor = tabWidget->getEditor(idx);
@@ -1983,16 +1963,20 @@ bool PythonIDE::closeEditorTabRequested(PythonEditorsTabWidget *tabWidget, int i
       }
     }
 
-    bool close = button != QMessageBox::Cancel;
+    close = button != QMessageBox::Cancel;
 
-    if (close) {
-      tabWidget->closeTab(idx);
-    }
-
-    return close;
+  } else {
+    QMessageBox::StandardButton button = QMessageBox::question(
+        QApplication::activeWindow(), QString("Close Python code editor"),
+        "Are you sure you want to close that code editor ?", QMessageBox::Ok | QMessageBox::Cancel);
+    close = button != QMessageBox::Cancel;
   }
 
-  return true;
+  if (close) {
+    tabWidget->closeTab(idx);
+  }
+
+  return close;
 }
 
 void PythonIDE::graphComboBoxIndexChanged() {
@@ -2082,18 +2066,18 @@ void PythonIDE::closeScriptTabRequested(int idx) {
     return;
   }
 
-  closeEditorTabRequested(_ui->mainScriptsTabWidget, idx);
+  if (closeEditorTabRequested(_ui->mainScriptsTabWidget, idx)) {
+    if (_project) {
 
-  if (_project) {
+      writeScriptsFilesList(idx);
 
-    writeScriptsFilesList(idx);
-
-    if (_project->exists(projectFile)) {
-      _project->removeFile(projectFile);
+      if (_project->exists(projectFile)) {
+        _project->removeFile(projectFile);
+      }
     }
   }
 
-  if (_ui->mainScriptsTabWidget->count() == 1) {
+  if (_ui->mainScriptsTabWidget->count() == 0) {
     _ui->runScriptButton->setEnabled(false);
   }
 }
@@ -2124,7 +2108,7 @@ void PythonIDE::closePluginTabRequested(int idx) {
     }
   }
 
-  if (_ui->pluginsTabWidget->count() == 1) {
+  if (_ui->pluginsTabWidget->count() == 0) {
     _ui->registerPluginButton->setEnabled(false);
     _ui->removePluginButton->setEnabled(false);
   }

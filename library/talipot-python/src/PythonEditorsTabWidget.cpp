@@ -197,11 +197,7 @@ void PythonEditorsTabWidget::saveEditorContentToFile(int editorIdx) {
 
     if (!moduleNameExt.contains("no file")) {
 
-      if (moduleNameExt[moduleNameExt.size() - 1] == '*') {
-        moduleName = moduleNameExt.mid(0, moduleNameExt.size() - 4);
-      } else {
-        moduleName = moduleNameExt.mid(0, moduleNameExt.size() - 3);
-      }
+      moduleName = moduleNameExt.mid(0, moduleNameExt.indexOf("."));
 
       // workaround a Qt5 bug on linux
       moduleName = moduleName.replace("&", "");
