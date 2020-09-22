@@ -140,13 +140,6 @@ protected:
   }
 };
 
-static QIcon getFileNewIcon() {
-  QIcon backIcon = FontIconManager::icon(MaterialDesignIcons::File);
-  QIcon frontIcon =
-      FontIconManager::icon(MaterialDesignIcons::Plus, Qt::white, 0.7, 0, QPointF(0, 10));
-  return FontIconManager::stackIcons(backIcon, frontIcon);
-}
-
 static QIcon getMakeSelectionAGraphIcon() {
   QIcon backIcon = FontIconManager::icon(MaterialDesignIcons::Select);
   QIcon frontIcon = FontIconManager::icon(MaterialDesignIcons::VectorPolyline, textColor(), 0.7);
