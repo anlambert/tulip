@@ -1066,6 +1066,14 @@ void PythonCodeEditor::keyPressEvent(QKeyEvent *e) {
     if (pressKey) {
       QPlainTextEdit::keyPressEvent(e);
     }
+  } else if (e->key() == Qt::Key_Backspace &&
+             (textBeforeCursor.lastIndexOf(_indentPattern) ==
+              (textBeforeCursor.length() - _indentPattern.length())) &&
+             (textBeforeCursor.length() % _indentPattern.length() == 0)) {
+    int line = 0, col = 0;
+    getCursorPosition(line, col);
+    setSelection(line, col, line, col - _indentPattern.length());
+    removeSelectedText();
   } else {
     QPlainTextEdit::keyPressEvent(e);
 
@@ -1577,14 +1585,12 @@ void PythonCodeEditor::indentSelectedCode() {
     QTextCursor currentCursor = textCursor();
     int line = 0, col = 0;
     getCursorPosition(line, col);
-    setSelection(line, col, line, col + _indentPattern.length());
-
-    if (selectedText() != _indentPattern) {
-      insertAt(_indentPattern, currentCursor.blockNumber(), 0);
-      setTextCursor(currentCursor);
-    } else {
-      setCursorPosition(line, col + _indentPattern.length());
+    setSelection(0, col, line, col);
+    if (selectedText().trimmed().isEmpty() &&
+        selectedText().length() % _indentPattern.length() == 0) {
+      col = 0;
     }
+    insertAt(_indentPattern, currentCursor.blockNumber(), col);
   }
 }
 
