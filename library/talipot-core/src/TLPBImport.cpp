@@ -388,7 +388,7 @@ bool TLPBImport::importGraph() {
         if (size && canUsePubSetBuf) {
           // as the size of any value is fixed
           // we can use a buffer to limit the number of disk reads
-          unique_ptr<char> vBuf;
+          unique_ptr<char[]> vBuf;
 
           if (numValues < MAX_VALUES_TO_READ) {
             vBuf.reset(new char[numValues * (sizeof(unsigned int) + size)]);
@@ -489,7 +489,7 @@ bool TLPBImport::importGraph() {
         if (size && canUsePubSetBuf) {
           // as the size of any value is fixed
           // we can use a buffer to limit the number of disk reads
-          unique_ptr<char> vBuf;
+          unique_ptr<char[]> vBuf;
 
           if (numValues < MAX_VALUES_TO_READ) {
             vBuf.reset(new char[numValues * (sizeof(unsigned int) + size)]);

@@ -244,9 +244,6 @@ TalipotMainWindow::TalipotMainWindow()
   _ui->actionMake_selection_a_graph->setIcon(getMakeSelectionAGraphIcon());
 
   _pythonIDE = new PythonIDE();
-  QVBoxLayout *dialogLayout = new QVBoxLayout();
-  dialogLayout->addWidget(_pythonIDE);
-  dialogLayout->setContentsMargins(0, 0, 0, 0);
 
   currentGraphChanged(nullptr);
   // set win/Mac dependent tooltips with ctrl shortcut

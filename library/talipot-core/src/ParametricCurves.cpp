@@ -120,27 +120,17 @@ static map<unsigned int, unsigned int> computedCoefficients;
 static void computeCoefficients(double t, unsigned int nbControlPoints) {
   double s = (1.0 - t);
   TLP_LOCK_SECTION(computeCoefficients) {
-    if (tCoeffs.find(t) == tCoeffs.end()) {
-      vector<double> tCoeff, sCoeff;
-
-      for (size_t i = 0; i < nbControlPoints; ++i) {
+    auto &tCoeff = tCoeffs[t];
+    auto &sCoeff = sCoeffs[t];
+    // preallocate vectors to avoid heap-use-after-free due to vectors growth
+    // when computing Bézier points with multiple threads
+    tCoeff.reserve(256);
+    sCoeff.reserve(256);
+    if (tCoeff.size() < nbControlPoints) {
+      size_t oldSize = tCoeff.size();
+      for (size_t i = oldSize; i < nbControlPoints; ++i) {
         tCoeff.push_back(pow(t, double(i)));
         sCoeff.push_back(pow(s, double(i)));
-      }
-
-      tCoeffs[t] = tCoeff;
-      sCoeffs[t] = sCoeff;
-    } else {
-      vector<double> &tCoeff = tCoeffs[t];
-      vector<double> &sCoeff = sCoeffs[t];
-
-      if (tCoeff.size() < nbControlPoints) {
-        size_t oldSize = tCoeff.size();
-
-        for (size_t i = oldSize; i < nbControlPoints; ++i) {
-          tCoeff.push_back(pow(t, double(i)));
-          sCoeff.push_back(pow(s, double(i)));
-        }
       }
     }
   }
@@ -195,8 +185,7 @@ void computeBezierPoints(const vector<Coord> &controlPoints, vector<Coord> &curv
     curvePoints.resize(nbCurvePoints);
     float h = 1.0 / float(nbCurvePoints - 1);
     TLP_PARALLEL_MAP_INDICES(nbCurvePoints, [&](unsigned int i) {
-      float curStep = i * h;
-      curvePoints[i] = computeBezierPoint(controlPoints, curStep);
+      curvePoints[i] = computeBezierPoint(controlPoints, i * h);
     });
   }
 }
