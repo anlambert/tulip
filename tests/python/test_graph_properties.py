@@ -1,4 +1,4 @@
-# Copyright (C) 2019  The Talipot developers
+# Copyright (C) 2019-2020  The Talipot developers
 #
 # Talipot is a fork of Tulip, created by David Auber
 # and the Tulip development Team from LaBRI, University of Bordeaux
@@ -197,8 +197,13 @@ class TestGraphProperties(unittest.TestCase):
             return
 
         # test that the property can be automatically created by type inference
-        self.graph[self.prop_name][self.graph.getRandomNode()] = node_value
         self.prop = self.graph[self.prop_name]
+        self.prop[self.graph.getRandomNode()] = node_value
+        self.prop[self.graph.getRandomEdge()] = edge_value
+        self.prop.setAllNodeValue(node_value)
+        self.prop.setAllEdgeValue(edge_value)
+        self.assertEqual(self.prop[self.graph.getRandomNode()], node_value)
+        self.assertEqual(self.prop[self.graph.getRandomEdge()], edge_value)
         self.assertTrue(
             isinstance(self.graph.getProperty(self.prop_name), prop_type))
         self.assertTrue(self.graph.existProperty(self.prop_name))

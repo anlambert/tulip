@@ -325,7 +325,7 @@ PyObject* evalPythonStatement(const std::string &pythonStatement) {
 }
 
 bool isTupleAndCanConvertToVec3fType(PyObject *pyObj) {
-  if (!PyTuple_Check(pyObj) || PyTuple_GET_SIZE(pyObj) < 2) {
+  if (!PyTuple_Check(pyObj) || PyTuple_GET_SIZE(pyObj) < 2 || PyTuple_GET_SIZE(pyObj) > 3) {
     return false;
   }
 

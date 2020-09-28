@@ -265,8 +265,13 @@ void tlp::PropertyProxy::setEdgeValue(const tlp::edge &e, const std::string &val
 
 void tlp::PropertyProxy::setEdgeValue(const tlp::edge &e, const std::vector<tlp::Coord> &val) {
   if (val.size() == 0) return;
-  _property = _graph->getLayoutProperty(_propertyName);
-  static_cast<tlp::LayoutProperty*>(_property)->setEdgeValue(e, val);
+  if (_property && dynamic_cast<tlp::CoordVectorProperty *>(_property)) {
+    static_cast<tlp::CoordVectorProperty*>(_property)->setEdgeValue(e, val);
+  } else {
+    _property = _graph->getLayoutProperty(_propertyName);
+    static_cast<tlp::LayoutProperty*>(_property)->setEdgeValue(e, val);
+  }
+
 }
 
 void tlp::PropertyProxy::setEdgeValue(const tlp::edge &e, const tlp::Size &val) {
@@ -414,8 +419,12 @@ void tlp::PropertyProxy::setAllEdgeValue(const std::string &val) {
 
 void tlp::PropertyProxy::setAllEdgeValue(const std::vector<tlp::Coord> &val) {
   if (val.size() == 0) return;
-  _property = _graph->getLayoutProperty(_propertyName);
-  static_cast<tlp::LayoutProperty*>(_property)->setAllEdgeValue(val);
+  if (_property && dynamic_cast<tlp::CoordVectorProperty *>(_property)) {
+    static_cast<tlp::CoordVectorProperty*>(_property)->setAllEdgeValue(val);
+  } else {
+    _property = _graph->getLayoutProperty(_propertyName);
+    static_cast<tlp::LayoutProperty*>(_property)->setAllEdgeValue(val);
+  }
 }
 
 void tlp::PropertyProxy::setAllEdgeValue(const tlp::Size &val) {
@@ -960,7 +969,7 @@ void setAllNodeValue(SIP_PYOBJECT val);
   #else
     PyObject *pName = PyString_FromString("__getitem__");
   #endif
-    sipRes = PyObject_CallMethodObjArgs(pyProp, pName, a0Wrapper);
+    sipRes = PyObject_CallMethodObjArgs(pyProp, pName, a0Wrapper, NULL);
     Py_XDECREF(pName);
     Py_XDECREF(pyProp);
   } else {
@@ -978,7 +987,7 @@ void setAllNodeValue(SIP_PYOBJECT val);
   #else
     PyObject *pName = PyString_FromString("__getitem__");
   #endif
-    sipRes = PyObject_CallMethodObjArgs(pyProp, pName, a0Wrapper);
+    sipRes = PyObject_CallMethodObjArgs(pyProp, pName, a0Wrapper, NULL);
     Py_XDECREF(pName);
     Py_XDECREF(pyProp);
   } else {
