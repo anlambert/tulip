@@ -107,7 +107,7 @@ void Settings::addToRecentDocuments(const QString &name) {
 
   recentDocumentsValue.push_front(name);
 
-  while (recentDocumentsValue.size() > 5) {
+  while (recentDocumentsValue.size() > 20) {
     recentDocumentsValue.pop_back();
   }
 
