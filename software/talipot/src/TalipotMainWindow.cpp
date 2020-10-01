@@ -561,20 +561,22 @@ TalipotMainWindow::~TalipotMainWindow() {
 
 bool TalipotMainWindow::terminated() {
 
-  _pythonIDE->savePythonFilesAndWriteToProject(true);
-  _pythonIDE->hide();
-
   if (_graphs->needsSaving() || isWindowModified()) {
     QString message("The project has been modified (loaded graphs or Python files opened in the "
                     "IDE).\nDo you want to save your changes?");
     QMessageBox::StandardButton answer = QMessageBox::question(
-        this, "Save", message,
+        this, "Save project ?", message,
         QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel | QMessageBox::Escape);
 
-    if ((answer == QMessageBox::Yes && !save()) || (answer == QMessageBox::Cancel)) {
+    if (answer == QMessageBox::Cancel) {
       return false;
+    } else if (answer == QMessageBox::Yes) {
+      _pythonIDE->savePythonFilesAndWriteToProject(true);
+      return save();
     }
   }
+
+  _pythonIDE->hide();
 
   // force workspace and views destruction here to avoid hanging on exit
   // when linking against QtWebEngine binaries provided by qt.io
