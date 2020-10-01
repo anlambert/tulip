@@ -16,14 +16,17 @@ MACRO(UNIT_TEST)
       ${CMAKE_SOURCE_DIR}/tests/include)
     LINK_DIRECTORIES(${CppUnit_LIBRARY_DIRS})
     ADD_EXECUTABLE(${TEST_NAME} ${TEST_SRCS})
-    ADD_DEPENDENCIES(runTests ${TEST_NAME})
+    ADD_DEPENDENCIES(tests ${TEST_NAME})
     TARGET_LINK_LIBRARIES(${TEST_NAME} ${LibTalipotCoreName}
                           ${CppUnit_LIBRARIES})
     ADD_TEST(NAME ${TEST_NAME} COMMAND ${TEST_NAME} ${TEST_NAME})
     # otherwise this is a Python test
   ELSE()
     SET(PYTHON_TEST_MODULE ${ARGV1})
-    ADD_TEST(NAME ${TEST_NAME} COMMAND ${PYTHON_EXECUTABLE} -c "
+    ADD_TEST(
+      NAME ${TEST_NAME}
+      COMMAND
+        ${PYTHON_EXECUTABLE} -c "
 import os
 import platform
 import sys

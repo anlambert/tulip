@@ -64,7 +64,7 @@ jobs:
         - ninja -j4 || travis_terminate 1
         - ninja -j4 install || travis_terminate 1
         # run Talipot unit tests
-        - ninja runTests
+        - ninja tests
 
     #-------------------------------------------------------------------------------------------
     # modern Talipot core build on Linux
@@ -108,7 +108,7 @@ jobs:
         - ninja -j4  || travis_terminate 1
         - ninja -j4 install || travis_terminate 1
         # run Talipot unit tests
-        - ninja runTests
+        - ninja tests
 
   #=============================================================================================
     # Talipot complete build stage on Linux
@@ -165,7 +165,7 @@ jobs:
         - ninja -j4 || travis_terminate 1
         - ninja -j4 install || travis_terminate 1
         # run Talipot unit tests
-        - ninja runTests
+        - ninja tests
 
     #-------------------------------------------------------------------------------------------
     # modern Talipot complete build on Linux
@@ -219,7 +219,7 @@ jobs:
         - ninja -j4  || travis_terminate 1
         - ninja -j4 install || travis_terminate 1
         # run Talipot unit tests
-        - ninja runTests
+        - ninja tests
   #==============================================================================================================================================================
     # Talipot-Python wheel build on manylinux2010
     - stage: Talipot-Python wheels build (manylinux2010)
@@ -429,7 +429,7 @@ jobs:
         - make -j4 || travis_terminate 1
         - make -j4 install || travis_terminate 1
         # run Talipot unit tests
-        - make runTests
+        - make tests
 
     #-------------------------------------------------------------------------------------------
     # Talipot core build on Mac OS (Homebrew)
@@ -471,7 +471,7 @@ jobs:
         - make -j4 || travis_terminate 1
         - make -j4 install || travis_terminate 1
         # run Talipot unit tests
-        - make runTests
+        - make tests
 
   #=============================================================================================
     # Talipot complete build stage on Mac OS
@@ -528,7 +528,7 @@ jobs:
         - make -j4
         - make -j4 install
         # run Talipot unit tests
-        - make runTests
+        - make tests
         # compute overall build time
         - end_time=$(travis_nanoseconds)
         - build_time=$(( (end_time-start_time) / (6 * (10 ** 10)) ))
@@ -597,7 +597,7 @@ jobs:
         - make -j4 || travis_terminate 1
         - make -j4 install || travis_terminate 1
         # run Talipot unit tests
-        - make runTests
+        - make tests
 
   #=============================================================================================
     # Talipot-Python wheel build on MacOS
