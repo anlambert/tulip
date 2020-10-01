@@ -66,7 +66,6 @@ class TalipotMainWindow : public QMainWindow,
   TalipotLogger *_logger;
 
   QString _lastOpenLocation;
-  QString _recentDocumentsSettingsKey;
   QString _title;
 
   bool _maximized;

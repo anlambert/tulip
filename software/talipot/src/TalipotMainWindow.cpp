@@ -154,8 +154,7 @@ static QIcon getReverseSelectedEdgesIcon() {
 
 TalipotMainWindow::TalipotMainWindow()
     : _ui(new Ui::TalipotMainWindow), _graphs(new GraphHierarchiesModel(this)),
-      _project(Project::newProject()), _pluginsCenter(new PluginsCenter()),
-      _recentDocumentsSettingsKey("talipot/recent_files"), _maximized(false) {
+      _project(Project::newProject()), _pluginsCenter(new PluginsCenter()), _maximized(false) {
   Q_INIT_RESOURCE(TalipotApp);
   _ui->setupUi(this);
 
@@ -472,46 +471,39 @@ TalipotMainWindow::TalipotMainWindow()
 void TalipotMainWindow::buildRecentDocumentsMenu() {
   _ui->menuOpen_recent_file->clear();
 
-  for (const QString &s : Settings::instance().recentDocuments()) {
-    if (!QFileInfo(s).exists() || !talipotCanOpenFile(s)) {
+  QStringList nonProjectFiles;
+
+  for (const QString &file : Settings::instance().recentDocuments()) {
+    if (!QFileInfo(file).exists() || !talipotCanOpenFile(file)) {
       continue;
     }
 
-    QAction *action =
-        _ui->menuOpen_recent_file->addAction(FontIconManager::icon(MaterialDesignIcons::Archive), s,
-                                             this, &TalipotMainWindow::openRecentFile);
-    action->setData(s);
+    if (file.endsWith(".tlpx")) {
+      QAction *action =
+          _ui->menuOpen_recent_file->addAction(FontIconManager::icon(MaterialDesignIcons::Archive),
+                                               file, this, &TalipotMainWindow::openRecentFile);
+      action->setData(file);
+    } else {
+      nonProjectFiles.append(file);
+    }
   }
 
   _ui->menuOpen_recent_file->addSeparator();
 
-  for (const QString &s : Settings::instance().value(_recentDocumentsSettingsKey).toStringList()) {
-    if (!QFileInfo(s).exists() || !talipotCanOpenFile(s)) {
-      continue;
-    }
-
+  for (const QString &file : nonProjectFiles) {
     QAction *action = _ui->menuOpen_recent_file->addAction(
-        FontIconManager::icon(MaterialDesignIcons::FileOutline), s, this,
+        FontIconManager::icon(MaterialDesignIcons::FileOutline), file, this,
         &TalipotMainWindow::openRecentFile);
-    action->setData(s);
+    action->setData(file);
   }
   _ui->menuOpen_recent_file->setEnabled(!_ui->menuOpen_recent_file->isEmpty());
 }
 
 void TalipotMainWindow::addRecentDocument(const QString &path) {
-  QStringList recents = Settings::instance().value(_recentDocumentsSettingsKey).toStringList();
-
-  if (recents.contains(path) || !talipotCanOpenFile(path)) {
+  if (!talipotCanOpenFile(path)) {
     return;
   }
-
-  recents += path;
-
-  if (recents.size() > 10) {
-    recents.pop_front();
-  }
-
-  Settings::instance().setValue(_recentDocumentsSettingsKey, recents);
+  Settings::instance().addToRecentDocuments(path);
   Settings::instance().sync();
   buildRecentDocumentsMenu();
 }
@@ -919,7 +911,7 @@ bool TalipotMainWindow::saveAs(const QString &path) {
   bool ret = _project->write(path, &progress);
 
   if (ret) {
-    Settings::instance().addToRecentDocuments(path);
+    addRecentDocument(path);
   }
 
   return ret;
@@ -929,7 +921,7 @@ void TalipotMainWindow::open(QString fileName) {
 
   if (fileName.endsWith(".tlpx")) {
     openProjectFile(fileName);
-    Settings::instance().addToRecentDocuments(QFileInfo(fileName).absoluteFilePath());
+    addRecentDocument(QFileInfo(fileName).absoluteFilePath());
     return;
   }
 
