@@ -55,7 +55,7 @@ cmake -G "MSYS Makefiles" \
   -DTALIPOT_BUILD_TESTS=ON \
   -DTALIPOT_USE_CCACHE=ON ..
 make -j4 install
-make runTests
+make tests
 
 if [[ "$TALIPOT_BUILD_CORE_ONLY" == "0" ]]
 then

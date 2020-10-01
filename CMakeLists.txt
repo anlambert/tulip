@@ -484,12 +484,12 @@ IF(TALIPOT_BUILD_TESTS)
   ENABLE_TESTING()
   IF(CMAKE_CONFIGURATION_TYPES)
     ADD_CUSTOM_TARGET(
-      runTests COMMAND ${CMAKE_CTEST_COMMAND} --force-new-ctest-process
-                       --output-on-failure --build-config "$<CONFIGURATION>")
+      tests COMMAND ${CMAKE_CTEST_COMMAND} --force-new-ctest-process
+                    --output-on-failure --build-config "$<CONFIGURATION>")
   ELSE(CMAKE_CONFIGURATION_TYPES)
     ADD_CUSTOM_TARGET(
-      runTests COMMAND ${CMAKE_CTEST_COMMAND} --force-new-ctest-process
-                       --output-on-failure)
+      tests COMMAND ${CMAKE_CTEST_COMMAND} --force-new-ctest-process
+                    --output-on-failure)
   ENDIF(CMAKE_CONFIGURATION_TYPES)
   ADD_SUBDIRECTORY(tests)
 ENDIF(TALIPOT_BUILD_TESTS)
