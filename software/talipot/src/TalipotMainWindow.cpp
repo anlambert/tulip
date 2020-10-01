@@ -661,38 +661,11 @@ void TalipotMainWindow::redrawPanels(bool center) {
 
 void TalipotMainWindow::start(const QString &inputFilePath) {
 
-  PluginProgress *pluginProgress = progress(ProgressOptions(IsStoppable | IsCancellable));
-
-  if (!inputFilePath.isEmpty() && inputFilePath.endsWith(".tlpx")) {
-    if (!_project->openProjectFile(inputFilePath, pluginProgress)) {
-      _project->clearProject();
-    }
-  }
-
-  // Open project with model
-  QMap<QString, tlp::Graph *> rootIds;
-
-  if (!_project->projectFile().isEmpty()) {
-    rootIds = _graphs->readProject(_project, pluginProgress);
-
-    if (rootIds.empty())
-      QMessageBox::critical(this,
-                            QString("Error while loading project ").append(_project->projectFile()),
-                            QString("The Talipot project file is probably corrupted.<br>") +
-                                tlpStringToQString(pluginProgress->getError()));
-  }
-
   // these ui initializations are needed here
   // in case of a call to showStartPanels in the open method
   _ui->graphHierarchiesEditor->setModel(_graphs);
   _ui->workspace->setModel(_graphs);
-
-  if (!rootIds.empty())
-    _ui->workspace->readProject(_project, rootIds, pluginProgress);
-
   _ui->searchWidget->setModel(_graphs);
-
-  delete pluginProgress;
 
   connect(_ui->developButton, &QAbstractButton::clicked, this, &TalipotMainWindow::showPythonIDE);
   _pythonIDE->setGraphsModel(_graphs);
@@ -702,6 +675,8 @@ void TalipotMainWindow::start(const QString &inputFilePath) {
 
   if (!inputFilePath.isEmpty() && QFileInfo(inputFilePath).exists()) {
     open(inputFilePath);
+  } else {
+    projectFileChanged();
   }
 
   connect(_ui->sidebarButton, &QAbstractButton::clicked, [this] { showHideSideBar(); });
@@ -716,8 +691,6 @@ void TalipotMainWindow::start(const QString &inputFilePath) {
   buildRecentDocumentsMenu();
 
   logCleared();
-
-  projectFileChanged();
 }
 
 tlp::GraphHierarchiesModel *TalipotMainWindow::model() const {
@@ -953,6 +926,13 @@ bool TalipotMainWindow::saveAs(const QString &path) {
 }
 
 void TalipotMainWindow::open(QString fileName) {
+
+  if (fileName.endsWith(".tlpx")) {
+    openProjectFile(fileName);
+    Settings::instance().addToRecentDocuments(QFileInfo(fileName).absoluteFilePath());
+    return;
+  }
+
   QMap<std::string, std::string> modules;
 
   std::string filters("Talipot project (*.tlpx);;");
@@ -994,11 +974,7 @@ void TalipotMainWindow::open(QString fileName) {
     _lastOpenLocation = fileInfo.absolutePath();
 
     for (const std::string &extension : modules.keys()) {
-      if (fileName.endsWith(".tlpx")) {
-        openProjectFile(fileName);
-        Settings::instance().addToRecentDocuments(fileInfo.absoluteFilePath());
-        break;
-      } else if (fileName.endsWith(QString::fromStdString(extension))) {
+      if (fileName.endsWith(QString::fromStdString(extension))) {
         DataSet params;
         params.set("file::filename", QStringToTlpString(fileName));
         addRecentDocument(fileName);
@@ -1017,6 +993,7 @@ void TalipotMainWindow::openProjectFile(const QString &path) {
     _ui->workspace->readProject(_project, rootIds, prg);
     QTimer::singleShot(100, this, &TalipotMainWindow::initPythonIDE);
   } else {
+    _project->clearProject();
     QMessageBox::critical(this,
                           QString("Error while loading project ").append(_project->projectFile()),
                           QString("The Talipot project file is probably corrupted:<br>") +
