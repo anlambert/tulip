@@ -133,7 +133,7 @@ public:
    *
    * @param v The value to set to all nodes.
    * @param graph An optional descendant graph from the one associated
-   * to that property (itself included). If provided, only the nodes from
+   * to that property. If provided, only the nodes from
    * that graph will have their value modified and the default node value
    * will not be modified.
    *
@@ -175,7 +175,7 @@ public:
    *
    * @param v The value to set to all edges.
    * @param graph An optional descendant graph from the one associated
-   * to that property (itself included). If provided, only the edges
+   * to that property. If provided, only the edges
    * from that graph will have their value modified and the default edge
    * value will not be modified.
    *

@@ -160,7 +160,7 @@ template <class NodeType, class EdgeType, class PropType>
 void tlp::AbstractProperty<NodeType, EdgeType, PropType>::setAllNodeValue(
     typename tlp::StoredType<typename NodeType::RealType>::ReturnedConstValue v,
     const Graph *graph) {
-  if (graph && (this->getGraph() == graph || this->getGraph()->isDescendantGraph(graph))) {
+  if (graph && this->getGraph()->isDescendantGraph(graph)) {
     for (auto n : graph->nodes()) {
       setNodeValue(n, v);
     }
@@ -217,7 +217,7 @@ template <class NodeType, class EdgeType, class PropType>
 void tlp::AbstractProperty<NodeType, EdgeType, PropType>::setAllEdgeValue(
     typename tlp::StoredType<typename EdgeType::RealType>::ReturnedConstValue v,
     const Graph *graph) {
-  if (graph && (this->getGraph() == graph || this->getGraph()->isDescendantGraph(graph))) {
+  if (graph && this->getGraph()->isDescendantGraph(graph)) {
     for (auto e : graph->edges()) {
       setEdgeValue(e, v);
     }
@@ -444,8 +444,8 @@ bool tlp::AbstractProperty<NodeType, EdgeType, PropType>::readEdgeValue(std::ist
 //============================================================
 template <typename NodeType, typename EdgeType, typename PropType>
 tlp::AbstractProperty<NodeType, EdgeType, PropType> &
-tlp::AbstractProperty<NodeType, EdgeType, PropType>::
-operator=(tlp::AbstractProperty<NodeType, EdgeType, PropType> &prop) {
+tlp::AbstractProperty<NodeType, EdgeType, PropType>::operator=(
+    tlp::AbstractProperty<NodeType, EdgeType, PropType> &prop) {
   if (this != &prop) {
     if (PropType::graph == nullptr) {
       PropType::graph = prop.PropType::graph;

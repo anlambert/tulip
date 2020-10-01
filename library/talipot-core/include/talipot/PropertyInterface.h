@@ -229,7 +229,7 @@ public:
    *
    * @param value A string representing the new value to set on all the nodes.
    * @param graph An optional descendant graph from the one associated to that
-   * property (itself included). If provided, only the nodes from that graph
+   * property. If provided, only the nodes from that graph
    * will have their value modified and the default node value will not be modified.
    *
    * @warning If the provided graph is not a descendant of the one associated to that
@@ -260,7 +260,7 @@ public:
    *
    * @param value A string representing the new value to set on all the edges.
    * @param graph An optional descendant graph from the one associated to that
-   * property (itself included). If provided, only the edges from that graph
+   * property. If provided, only the edges from that graph
    * will have their value modified and the default edge value will not be modified.
    *
    * @warning If the provided graph is not a descendant of the one associated to

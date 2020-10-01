@@ -211,7 +211,7 @@ All previous values are lost and the represented value is assigned as
 the default one to the future added nodes.
 
 An optional descendant graph from the one associated to that property
-(itself included) can also be provided. In that case only the nodes
+can also be provided. In that case only the nodes
 from that graph will have their value modified and the default node
 value will not be modified.
 
@@ -256,7 +256,7 @@ All previous values are lost and the represented value is assigned as
 the default one to the future added edges.
 
 An optional descendant graph from the one associated to that property
-(itself included) can also be provided. In that case only the edges
+can also be provided. In that case only the edges
 from that graph will have their value modified and the default edge value
 will not be modified.
 
