@@ -89,7 +89,7 @@ static void copyTextureFileInProject(const QString &textureFilePath, tlp::Projec
   }
 }
 
-// Method for copying nodes and edges textures in the project to make it portable across computers
+// Function for copying nodes and edges textures in the project to make it portable across computers
 static void writeTextureFilesInProject(const QList<tlp::Graph *> &graphs, tlp::Project *project,
                                        tlp::PluginProgress *progress) {
   if (progress) {
@@ -148,11 +148,10 @@ static void writeTextureFilesInProject(const QList<tlp::Graph *> &graphs, tlp::P
   }
 }
 
-// Method for restoring nodes and edges textures possibly bundled in the project if the original
-// texture files
-// are not present on the computer loading the project
-static void restoreTextureFilesFromProjectIfNeeded(tlp::Graph *g, tlp::Project *project,
-                                                   tlp::PluginProgress *progress) {
+// Function for restoring nodes and edges textures possibly bundled in the project if the original
+// texture files are not present on the computer loading the project
+static void restoreTextureFilesFromProject(tlp::Graph *g, tlp::Project *project,
+                                           tlp::PluginProgress *progress) {
   if (progress) {
     progress->progress(0, 0);
     progress->setComment("Checking if texture files can be restored from project if needed ...");
@@ -449,7 +448,7 @@ QMap<QString, tlp::Graph *> GraphHierarchiesModel::readProject(tlp::Project *pro
 
     if (g) {
       rootIds[entry] = g;
-      restoreTextureFilesFromProjectIfNeeded(g, project, progress);
+      restoreTextureFilesFromProject(g, project, progress);
       addGraph(g);
     } else {
       // failure when loading a graph
