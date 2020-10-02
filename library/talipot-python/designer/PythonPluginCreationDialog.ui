@@ -36,6 +36,9 @@ skeleton of the Talipot Python plugin to create.</string>
      <property name="title">
       <string>Required fields</string>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
      <layout class="QFormLayout" name="formLayout_2">
       <property name="fieldGrowthPolicy">
        <enum>QFormLayout::ExpandingFieldsGrow</enum>
@@ -151,6 +154,9 @@ skeleton of the Talipot Python plugin to create.</string>
     <widget class="QGroupBox" name="groupBox_2">
      <property name="title">
       <string>Optional fields</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
      <layout class="QFormLayout" name="formLayout">
       <item row="0" column="0">

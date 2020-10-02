@@ -28,7 +28,7 @@ p, li { white-space: pre-wrap; }
    <item>
     <widget class="QRadioButton" name="addressLocRB">
      <property name="text">
-      <string>&amp;By address:</string>
+      <string>By a&amp;ddress:</string>
      </property>
      <property name="checked">
       <bool>true</bool>
@@ -206,7 +206,10 @@ p, li { white-space: pre-wrap; }
       <bool>false</bool>
      </property>
      <property name="title">
-      <string>edges pat&amp;hs</string>
+      <string>ed&amp;ges paths</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
      <property name="checkable">
       <bool>true</bool>

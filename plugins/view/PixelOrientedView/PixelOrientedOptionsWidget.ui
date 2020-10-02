@@ -153,6 +153,9 @@
         <property name="title">
          <string>Layout</string>
         </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
           <widget class="QComboBox" name="layoutTypeCB">

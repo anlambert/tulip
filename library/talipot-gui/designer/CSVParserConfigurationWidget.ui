@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>657</width>
-    <height>240</height>
+    <height>277</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,6 +33,9 @@
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
       <string>File</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
@@ -175,6 +178,9 @@
     <widget class="QGroupBox" name="groupBox_2">
      <property name="title">
       <string>Delimiters</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
      <property name="flat">
       <bool>false</bool>

@@ -37,6 +37,9 @@
      <property name="title">
       <string>General draw parameters : </string>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <property name="sizeConstraint">
        <enum>QLayout::SetNoConstraint</enum>
@@ -57,6 +60,9 @@
        <widget class="QGroupBox" name="groupBox_4">
         <property name="title">
          <string>Lines colors alpha value :</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
         <layout class="QGridLayout" name="gridLayout">
          <property name="sizeConstraint">
@@ -83,7 +89,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>viewColor value</string>
+            <string>v&amp;iewColor value</string>
            </property>
            <property name="checked">
             <bool>true</bool>
@@ -99,7 +105,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>user value                                                                                 </string>
+            <string>&amp;user value                                                                                 </string>
            </property>
           </widget>
          </item>
@@ -258,10 +264,10 @@
       </size>
      </property>
      <property name="title">
-      <string>Draw nodes on axis : </string>
+      <string>&amp;Draw nodes on axis : </string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      <set>Qt::AlignCenter</set>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -284,6 +290,9 @@
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
       <string>viewSize Mapping configuration</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
@@ -388,7 +397,10 @@
       </size>
      </property>
      <property name="title">
-      <string>Apply texture on lines :  </string>
+      <string>Apply texture on &amp;lines :  </string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -418,7 +430,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Use talipot default texture</string>
+         <string>Use &amp;talipot default texture</string>
         </property>
         <property name="checked">
          <bool>true</bool>
@@ -434,7 +446,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Use texture from file :</string>
+         <string>Use te&amp;xture from file :</string>
         </property>
        </widget>
       </item>

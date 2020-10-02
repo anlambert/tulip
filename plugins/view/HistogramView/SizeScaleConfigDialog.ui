@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>301</width>
-    <height>290</height>
+    <width>276</width>
+    <height>322</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,41 +19,37 @@
      <property name="title">
       <string>Do mapping on :</string>
      </property>
-     <widget class="QRadioButton" name="viewSizeRB">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>30</y>
-        <width>251</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>viewSize</string>
-      </property>
-      <property name="checked">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QRadioButton" name="viewBorderWidthRB">
-      <property name="geometry">
-       <rect>
-        <x>120</x>
-        <y>30</y>
-        <width>141</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>viewBorderWidth</string>
-      </property>
-     </widget>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QRadioButton" name="viewSizeRB">
+        <property name="text">
+         <string>v&amp;iewSize</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="viewBorderWidthRB">
+        <property name="text">
+         <string>viewBor&amp;derWidth</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
    <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
       <string>Size mapping parameters</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0">
@@ -100,6 +96,9 @@
     <widget class="QGroupBox" name="dimensionsMappingGB">
      <property name="title">
       <string>Apply size mapping on dimensions :</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>

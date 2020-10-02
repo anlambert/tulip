@@ -37,6 +37,9 @@
        <property name="title">
         <string>Property options</string>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
          <widget class="QFrame" name="frame_3">
@@ -137,6 +140,9 @@
       <widget class="QGroupBox" name="groupBox_2">
        <property name="title">
         <string>Value options</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>

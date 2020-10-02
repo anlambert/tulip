@@ -137,6 +137,9 @@
      <property name="title">
       <string>Scatterplot matrix cells background color</string>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <property name="bottomMargin">
        <number>0</number>
@@ -146,7 +149,7 @@
         <item>
          <widget class="QRadioButton" name="uniformBackgroundRB">
           <property name="text">
-           <string>Same as scene</string>
+           <string>Same as sce&amp;ne</string>
           </property>
           <property name="checked">
            <bool>false</bool>
@@ -161,7 +164,7 @@
          <string>use a color scale to show the computed plot correlation between the current properties</string>
         </property>
         <property name="text">
-         <string>Mapped  to correlation coefficient &amp;value</string>
+         <string>&amp;Mapped  to correlation coefficient value</string>
         </property>
         <property name="checked">
          <bool>true</bool>
@@ -270,6 +273,9 @@
      </property>
      <property name="title">
       <string>Size mapping</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <property name="leftMargin">
@@ -402,6 +408,9 @@
      <property name="title">
       <string>X axis</string>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
      <layout class="QVBoxLayout" name="verticalLayout_5">
       <property name="bottomMargin">
        <number>0</number>
@@ -485,6 +494,9 @@
     <widget class="QGroupBox" name="yAxisGroupBox">
      <property name="title">
       <string>Y axis</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_6">
       <property name="bottomMargin">

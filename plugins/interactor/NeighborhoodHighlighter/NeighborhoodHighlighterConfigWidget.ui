@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>517</width>
-    <height>506</height>
+    <width>377</width>
+    <height>511</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -25,6 +25,9 @@
      <property name="title">
       <string>Highlight node neighbors linked by:</string>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QRadioButton" name="outputEdgesRB">
@@ -39,14 +42,14 @@
       <item>
        <widget class="QRadioButton" name="inputEdgesRB">
         <property name="text">
-         <string>input edges (&amp;reverse-directed)</string>
+         <string>&amp;input edges (reverse-directed)</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QRadioButton" name="allEdgesRB">
         <property name="text">
-         <string>all edges (undirected)</string>
+         <string>&amp;all edges (undirected)</string>
         </property>
         <property name="checked">
          <bool>true</bool>
@@ -126,54 +129,51 @@ and reachable nodes:</string>
       <string>Nodes to bring</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      <set>Qt::AlignCenter</set>
      </property>
-     <widget class="QWidget" name="layoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>30</y>
-        <width>273</width>
-        <height>92</height>
-       </rect>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_5">
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_3">
-         <item>
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>property</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_3">
-           <property name="text">
-            <string>Number of nodes</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_4">
-         <item>
-          <widget class="QComboBox" name="propertyName"/>
-         </item>
-         <item>
-          <widget class="QSpinBox" name="nodesNumber"/>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
+     <layout class="QVBoxLayout" name="verticalLayout_5">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>property</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Number of nodes</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <widget class="QComboBox" name="propertyName"/>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="nodesNumber"/>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+     </layout>
     </widget>
    </item>
    <item>
     <widget class="QGroupBox" name="groupBox_2">
      <property name="title">
       <string>Bring and Go animation :</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>

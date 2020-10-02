@@ -47,11 +47,14 @@
      <property name="title">
       <string>Direction</string>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
        <widget class="QRadioButton" name="forwardRB">
         <property name="text">
-         <string>Fo&amp;rward</string>
+         <string>Forwar&amp;d</string>
         </property>
         <property name="checked">
          <bool>true</bool>
@@ -72,6 +75,9 @@
     <widget class="QGroupBox" name="groupBox_2">
      <property name="title">
       <string>Options</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="0">

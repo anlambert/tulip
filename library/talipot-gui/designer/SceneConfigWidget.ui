@@ -58,7 +58,7 @@
         <x>0</x>
         <y>0</y>
         <width>357</width>
-        <height>680</height>
+        <height>690</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -629,6 +629,9 @@
             <property name="title">
              <string>Font size limits</string>
             </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
             <layout class="QHBoxLayout" name="horizontalLayout">
              <property name="spacing">
               <number>0</number>
@@ -722,6 +725,9 @@
            <widget class="QGroupBox" name="groupBox_2">
             <property name="title">
              <string>Visibility</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
             </property>
             <layout class="QGridLayout" name="gridLayout">
              <property name="leftMargin">
@@ -871,7 +877,7 @@
 to draw the graph in the center of the panel.</string>
               </property>
               <property name="text">
-               <string>Always center scene &amp;when changing graph</string>
+               <string>&amp;Always center scene when changing graph</string>
               </property>
              </widget>
             </item>
@@ -883,7 +889,7 @@ of the previously displayed graph, the point of view
 of the scene remains unchanged.</string>
               </property>
               <property name="text">
-               <string>K&amp;eep same point of view for subgraphs</string>
+               <string>&amp;Keep same point of view for subgraphs</string>
               </property>
              </widget>
             </item>
@@ -959,7 +965,7 @@ of the scene remains unchanged.</string>
                <string>&lt;p&gt;As in the human view perception,&lt;br/&gt;parallel lines are not necessarily represented as parallel&lt;br/&gt;and closer the nodes are, the bigger they are represented.&lt;/p&gt;</string>
               </property>
               <property name="text">
-               <string>Central &amp;perspective (shape distorsion)</string>
+               <string>&amp;Central perspective (shape distorsion)</string>
               </property>
              </widget>
             </item>

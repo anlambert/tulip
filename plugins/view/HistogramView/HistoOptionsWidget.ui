@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>381</width>
-    <height>565</height>
+    <height>578</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -176,6 +176,9 @@
         <property name="title">
          <string>X axis</string>
         </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <property name="bottomMargin">
           <number>0</number>
@@ -308,6 +311,9 @@
        <widget class="QGroupBox" name="yAxisGroupBox">
         <property name="title">
          <string>Y axis</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_5">
          <property name="bottomMargin">

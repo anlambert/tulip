@@ -40,13 +40,25 @@
        </font>
       </property>
       <property name="title">
-       <string>Mean and standard deviation</string>
+       <string>&amp;Mean and standard deviation</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
       <property name="checkable">
        <bool>true</bool>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
-       <property name="margin">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
         <number>0</number>
        </property>
        <item>
@@ -88,7 +100,10 @@
        <item>
         <widget class="QGroupBox" name="nodesSelectionGB">
          <property name="title">
-          <string>Select nodes in range :</string>
+          <string>Select &amp;nodes in range :</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
          <property name="checkable">
           <bool>true</bool>
@@ -155,7 +170,10 @@
        </font>
       </property>
       <property name="title">
-       <string>Density Estimation :</string>
+       <string>&amp;Density Estimation :</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
       <property name="checkable">
        <bool>true</bool>
@@ -164,7 +182,16 @@
        <bool>false</bool>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
-       <property name="margin">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
         <number>0</number>
        </property>
        <item>
@@ -222,6 +249,9 @@
         <widget class="QGroupBox" name="groupBox_3">
          <property name="title">
           <string>Kernel function :</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>

@@ -35,7 +35,7 @@ p, li { white-space: pre-wrap; }
    <item>
     <widget class="QRadioButton" name="inverseColorRadio">
      <property name="text">
-      <string>Inverse of widget background color</string>
+      <string>&amp;Inverse of widget background color</string>
      </property>
      <property name="checked">
       <bool>false</bool>
@@ -50,7 +50,7 @@ p, li { white-space: pre-wrap; }
      <item>
       <widget class="QRadioButton" name="solidColorRadio">
        <property name="text">
-        <string>Solid color</string>
+        <string>So&amp;lid color</string>
        </property>
        <property name="checked">
         <bool>false</bool>
@@ -66,6 +66,9 @@ p, li { white-space: pre-wrap; }
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
       <string>Alpha channel</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
