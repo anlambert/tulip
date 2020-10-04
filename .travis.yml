@@ -334,6 +334,7 @@ jobs:
         - sudo port -N install qhull
         - sudo port -N install yajl
         - sudo port -N install zstd
+        - sudo port -N install python38
       env:
         - ENV="MacOS 10.13, LLVM Clang, MacPorts"
 
@@ -345,7 +346,7 @@ jobs:
             -DCMAKE_INSTALL_PREFIX=$PWD/install
             -DCMAKE_C_COMPILER=/opt/local/bin/clang-mp-10
             -DCMAKE_CXX_COMPILER=/opt/local/bin/clang++-mp-10
-            -DPYTHON_EXECUTABLE=/usr/bin/python2.7
+            -DPYTHON_EXECUTABLE=/opt/local/bin/python3.8
             -DZLIB_INCLUDE_DIR=/opt/local/include
             -DZLIB_LIBRARY_RELEASE=/opt/local/lib/libz.dylib
             -DTALIPOT_USE_CCACHE=ON
@@ -371,6 +372,7 @@ jobs:
             - qhull
             - yajl
             - zstd
+            - python3
 
       env:
         - ENV="MacOS 10.14, LLVM Clang, Homebrew"
@@ -382,7 +384,7 @@ jobs:
             -DCMAKE_INSTALL_PREFIX=$PWD/install
             -DCMAKE_C_COMPILER=/usr/local/opt/llvm/bin/clang
             -DCMAKE_CXX_COMPILER=/usr/local/opt/llvm/bin/clang++
-            -DPYTHON_EXECUTABLE=/usr/bin/python2.7
+            -DPYTHON_EXECUTABLE=/usr/local/bin/python3
             -DTALIPOT_BUILD_CORE_ONLY=ON
             -DTALIPOT_USE_CCACHE=ON || travis_terminate 1
         - make -j4 -C thirdparty || travis_terminate 1
@@ -503,11 +505,10 @@ jobs:
         - sudo port -N install yajl
         - sudo port -N install zstd
         - sudo port -N install python38
+        - sudo port -N install py38-pip
         - sudo port -N install pkgconfig
         - sudo port -N install cppunit
-        - curl -O https://bootstrap.pypa.io/get-pip.py
-        - sudo python get-pip.py
-        - sudo pip install "sphinx<3" --ignore-installed six
+        - sudo pip-3.8 install "sphinx<3"
       env:
         - ENV="MacOS 10.13, LLVM Clang, MacPorts"
 
