@@ -86,7 +86,7 @@ SET(TalipotBitmapInstallDir ${TalipotShareInstallDir}/bitmaps)
 # ========================================================
 SET(TalipotMajorVersion 1)
 SET(TalipotMinorVersion 0)
-SET(TalipotReleaseVersion "0-dev")
+SET(TalipotReleaseVersion "0-alpha1-dev")
 SET(TalipotVersionSeparator .)
 IF(MSVC) # specific options for Visual Studio
   SET(TalipotVersionSeparator _)
