@@ -166,12 +166,7 @@ TalipotMainWindow::TalipotMainWindow()
   _title = "Talipot ";
   QString iconPath;
 
-  // show patch number only if needed
-  if (TALIPOT_INT_VERSION % 10) {
-    _title += TALIPOT_VERSION;
-  } else {
-    _title += TALIPOT_MM_VERSION;
-  }
+  _title += TALIPOT_VERSION;
 
   setWindowTitle(_title);
 
