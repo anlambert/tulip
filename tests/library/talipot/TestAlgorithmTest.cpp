@@ -251,6 +251,14 @@ void TestAlgorithmTest::testConnected() {
   CPPUNIT_ASSERT_EQUAL(size_t(1), addedEdge.size());
   graph->delEdge(addedEdge[0]);
   CPPUNIT_ASSERT_EQUAL(2u, ConnectedTest::numberOfConnectedComponents(graph));
+
+  graph->delEdges(graph->edges());
+  node n4 = graph->addNode();
+  graph->addEdge(n1, n1);
+  graph->addEdge(n1, n2);
+  graph->addEdge(n3, n4);
+  CPPUNIT_ASSERT(!ConnectedTest::isConnected(graph));
+  CPPUNIT_ASSERT_EQUAL(2u, ConnectedTest::numberOfConnectedComponents(graph));
 }
 //==========================================================
 const std::string GRAPHPATH = "./DATA/graphs/";

@@ -50,18 +50,6 @@ static unsigned int connectedTest(const Graph *const graph, node n,
   return count;
 }
 //=================================================================
-#ifndef NDEBUG
-static bool connectedTest(const Graph *const graph) {
-  if (graph->isEmpty())
-    return true;
-
-  NodeStaticProperty<bool> visited(graph);
-  visited.setAll(false);
-  unsigned int count = connectedTest(graph, graph->getOneNode(), visited);
-  return (count == graph->numberOfNodes());
-}
-#endif
-//=================================================================
 bool ConnectedTest::isConnected(const tlp::Graph *const graph) {
   if (instance.resultsBuffer.find(graph) != instance.resultsBuffer.end()) {
     return instance.resultsBuffer[graph];
@@ -69,6 +57,11 @@ bool ConnectedTest::isConnected(const tlp::Graph *const graph) {
 
   if (graph->isEmpty()) {
     return true;
+  }
+
+  // graph can not be connected with that configuration
+  if (graph->numberOfEdges() < graph->numberOfNodes() - 1) {
+    return false;
   }
 
   NodeStaticProperty<bool> visited(graph);
@@ -89,7 +82,7 @@ void ConnectedTest::makeConnected(Graph *graph, vector<edge> &addedEdges) {
     addedEdges.push_back(graph->addEdge(toLink[i - 1], toLink[i]));
   }
 
-  assert(connectedTest(graph));
+  assert(isConnected(graph));
 }
 //=================================================================
 unsigned int ConnectedTest::numberOfConnectedComponents(const tlp::Graph *const graph) {
