@@ -76,6 +76,7 @@ cmake -G "%CMAKE_VS_GENERATOR%"^
   -DCMAKE_PREFIX_PATH="%QT5_DIR%"^
   -DPYTHON_EXECUTABLE="%PYTHON_EXECUTABLE%"^
   -DTALIPOT_BUILD_CORE_ONLY=%TALIPOT_BUILD_CORE_ONLY%^
+  -DTALIPOT_BUILD_DOC=OFF^
   -DTALIPOT_BUILD_TESTS=ON ..
 if %errorlevel% neq 0 exit /b %errorlevel%
 msbuild INSTALL.vcxproj /verbosity:minimal /m /p:Configuration=Release %CLCACHE_MSBUILD_CONF%
