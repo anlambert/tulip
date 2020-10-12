@@ -129,14 +129,26 @@ if(BUILD_SHARED_LIBS)
 endif()
 
 # autogen header variables for SSE3
-include(check-sse3)
-if(has_sse3_intrin)
-  set(OGDF_SSE3_EXTENSIONS <intrin.h>)
-elseif(has_sse3_pmmintrin)
-  set(OGDF_SSE3_EXTENSIONS <pmmintrin.h>)
-else()
-  message(STATUS "SSE3 could not be activated")
-endif()
+INCLUDE(check-sse3)
+IF(has_sse3_intrin)
+  SET(OGDF_SSE3_EXTENSIONS <intrin.h>)
+  IF(NOT MSVC)
+    SET_PROPERTY(
+      TARGET ${OGDFLibrary}
+      APPEND_STRING
+      PROPERTY COMPILE_FLAGS " -sse3")
+  ENDIF()
+ELSEIF(has_sse3_pmmintrin)
+  SET(OGDF_SSE3_EXTENSIONS <pmmintrin.h>)
+  IF(NOT MSVC)
+    SET_PROPERTY(
+      TARGET ${OGDFLibrary}
+      APPEND_STRING
+      PROPERTY COMPILE_FLAGS " -msse3")
+  ENDIF()
+ELSE()
+  MESSAGE(STATUS "SSE3 could not be activated")
+ENDIF()
 
 # autogen header variables for Linux-specific CPU_SET, etc.
 include(check-cpu-macros)

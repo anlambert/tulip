@@ -12,11 +12,11 @@ if(MSVC)
   set(COIN_LIBRARY_TYPE STATIC)
 endif()
 
-# use native arch (ie, activate things like SSE)
-if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang" AND NOT APPLE)
-  # cannot use add_definitions() here because it does not work with check-sse3.cmake
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
-endif()
+# # use native arch (ie, activate things like SSE)
+# if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+#   # cannot use add_definitions() here because it does not work with check-sse3.cmake
+#   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
+# endif()
 
 # set default warning flags for OGDF and tests
 set(available_default_warning_flags "")
