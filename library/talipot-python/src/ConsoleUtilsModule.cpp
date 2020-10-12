@@ -205,14 +205,14 @@ static PyTypeObject consoleutils_ConsoleOutputType = {
     0,
     0,
     0
-#if PY_MAJOR_VERSION >= 3 && PY_MINOR_VERSION >= 4
-    ,
-    0
+#if PY_VERSION_HEX >= 0x03040000
+    ,0
 #endif
-#if PY_MAJOR_VERSION >= 3 && PY_MINOR_VERSION >= 8
-    ,
-    0,
-    0
+#if PY_VERSION_HEX >= 0x03080000
+    ,0
+#endif
+#if PY_VERSION_HEX >= 0x03080000 && PY_VERSION_HEX < 0x03090000
+    ,0
 #endif
 };
 
@@ -309,14 +309,14 @@ static PyTypeObject consoleutils_ConsoleInputType = {
     0,
     0,
     0
-#if PY_MAJOR_VERSION >= 3 && PY_MINOR_VERSION >= 4
-    ,
-    0
+#if PY_VERSION_HEX >= 0x03040000
+    ,0
 #endif
-#if PY_MAJOR_VERSION >= 3 && PY_MINOR_VERSION >= 8
-    ,
-    0,
-    0
+#if PY_VERSION_HEX >= 0x03080000
+    ,0
+#endif
+#if PY_VERSION_HEX >= 0x03080000 && PY_VERSION_HEX < 0x03090000
+    ,0
 #endif
 };
 
