@@ -139,14 +139,23 @@ int main(int argc, char **argv) {
 
   QFile talipotQssFile(":/talipot/app/style/talipot.qss");
   talipotQssFile.open(QIODevice::ReadOnly | QIODevice::Text);
-  QString talipotQss = QString("AlgorithmRunner #contents,\n"
-                               "QDialog,\n"
-                               "QGroupBox,\n"
-                               "QFrame,\n"
-                               "QHeaderView::section {\n"
-                               "  background: %1;\n"
-                               "}\n")
-                           .arg(backgroundColor().name());
+  QString talipotQss = QString(R"(
+AlgorithmRunner #contents,
+QDialog,
+QGroupBox,
+QFrame,
+QWizard QHeaderView::section {
+  background: %1;
+}
+QHeaderView {
+  background: %2;
+}
+QWizard QHeaderView,
+AlgorithmRunner QHeaderView,
+AlgorithmRunner QHeaderView::section {
+  background: %1;
+})");
+  talipotQss = talipotQss.arg(backgroundColor().name(), alternateBackgroundColor().name());
   talipotQss += talipotQssFile.readAll();
   if (applicationIsInDarkMode()) {
     QFile talipotDarkQssFile(":/talipot/app/style/talipotDark.qss");

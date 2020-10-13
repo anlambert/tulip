@@ -133,6 +133,8 @@ TLP_QT_SCOPE bool applicationIsInDarkMode();
 
 TLP_QT_SCOPE const QColor &backgroundColor();
 
+TLP_QT_SCOPE const QColor &alternateBackgroundColor();
+
 TLP_QT_SCOPE const QColor &textColor();
 
 extern TLP_QT_SCOPE const QColor darkColor;

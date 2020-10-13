@@ -510,6 +510,10 @@ const QColor &backgroundColor() {
   return QApplication::palette().color(QPalette::Base);
 }
 
+const QColor &alternateBackgroundColor() {
+  return QApplication::palette().color(QPalette::AlternateBase);
+}
+
 const QColor &textColor() {
   return QApplication::palette().color(QPalette::WindowText);
 }
