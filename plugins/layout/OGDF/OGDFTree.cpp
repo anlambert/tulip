@@ -15,6 +15,7 @@
 
 #include <talipot/OGDFLayoutPluginBase.h>
 #include <talipot/StringCollection.h>
+#include <talipot/TreeTest.h>
 
 #define ELT_ORIENTATION "Orientation"
 #define ELT_ORIENTATIONLIST "topToBottom;bottomToTop;leftToRight;rightToLeft"
@@ -136,6 +137,14 @@ public:
         }
       }
     }
+  }
+
+  bool check(std::string &errorMsg) {
+    if (!tlp::TreeTest::isTree(graph)) {
+      errorMsg = "The graph must be a tree.";
+      return false;
+    }
+    return true;
   }
 };
 
