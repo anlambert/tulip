@@ -68,13 +68,14 @@ ENDMACRO(SETUP_QT_LIBRARIES)
 FIND_PACKAGE(Qt5Widgets 5.7 REQUIRED)
 FIND_PACKAGE(Qt5Network 5.7 REQUIRED)
 
-STRING(REGEX MATCH "[0-9]\\.[0-9]+" QT_VERSION "${Qt5Widgets_VERSION_STRING}")
+STRING(REGEX MATCH "[0-9]\\.[0-9]+\\.[0-9]+" QT_VERSION
+             "${Qt5Widgets_VERSION_STRING}")
 # Qt5Widgets_VERSION_STRING has been deprecated in favor of Qt5Widgets_VERSION
 # since a few releases of Qt5 and seems to have been removed in some Linux
 # distributions (experienced on KDE Neon Developer edition that now uses Qt 5.9)
-IF(NOT QT_VERSION MATCHES "[0-9]\\.[0-9]+")
+IF(NOT QT_VERSION MATCHES "[0-9]\\.[0-9]+\\.[0-9]+")
   STRING(REGEX MATCH "[0-9]\\.[0-9]+" QT_VERSION "${Qt5Widgets_VERSION}")
-ENDIF(NOT QT_VERSION MATCHES "[0-9]\\.[0-9]+")
+ENDIF(NOT QT_VERSION MATCHES "[0-9]\\.[0-9]+\\.[0-9]+")
 
 IF(NOT "${QT_VERSION}" STREQUAL "${LAST_FOUND_QT_VERSION}")
   MESSAGE(STATUS "Found Qt5 (version ${QT_VERSION})")
