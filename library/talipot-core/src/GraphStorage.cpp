@@ -217,32 +217,26 @@ Iterator<edge> *GraphStorage::getInOutEdges(const node n) const {
   return stlIterator(nodeData[n.id].edges);
 }
 //=======================================================
-bool GraphStorage::getEdges(const node src, const node tgt, bool directed,
-                            std::vector<edge> &vEdges, const Graph *sg, bool onlyFirst) const {
-  edge previous;
+std::vector<edge> GraphStorage::getEdges(const node src, const node tgt, bool directed,
+                                         const Graph *sg) const {
+
+  std::vector<edge> edges;
 
   for (auto e : nodeData[src.id].edges) {
-    // loops appear twice
-    // be aware that we assume that the second instance of the loop
-    // immediately appears after the first one
-    if (e != previous) {
-      const std::pair<node, node> &eEnds = edgeEnds[e.id];
+    const std::pair<node, node> &eEnds = edgeEnds[e.id];
 
-      if (((eEnds.second == tgt && eEnds.first == src) ||
-           (!directed && eEnds.first == tgt && eEnds.second == src)) &&
-          (!sg || sg->isElement(e))) {
-        vEdges.push_back(e);
-
-        if (onlyFirst) {
-          return true;
-        }
-      }
+    if (((eEnds.second == tgt && eEnds.first == src) ||
+         (!directed && eEnds.first == tgt && eEnds.second == src)) &&
+        (!sg || sg->isElement(e))) {
+      edges.push_back(e);
     }
-
-    previous = e;
   }
 
-  return !vEdges.empty();
+  // remove possible duplicates due to self loops appearing twid
+  std::sort(edges.begin(), edges.end());
+  edges.erase(std::unique(edges.begin(), edges.end()), edges.end());
+
+  return edges;
 }
 //=======================================================
 Iterator<edge> *GraphStorage::getOutEdges(const node n) const {

@@ -116,9 +116,8 @@ edge GraphView::existEdge(const node src, const node tgt, bool directed) const {
     return edge();
   }
 
-  std::vector<edge> ee;
-
-  return getRootImpl()->getEdges(src, tgt, directed, ee, this, true) ? ee[0] : edge();
+  std::vector<edge> ee = getRootImpl()->getEdges(src, tgt, directed, this);
+  return !ee.empty() ? ee[0] : edge();
 }
 //----------------------------------------------------------------
 void GraphView::reverseInternal(const edge e, const node src, const node tgt) {
@@ -511,7 +510,7 @@ std::vector<edge> GraphView::getEdges(const node src, const node tgt, bool direc
   std::vector<edge> ee;
 
   if (isElement(src) && isElement(tgt)) {
-    getRootImpl()->getEdges(src, tgt, directed, ee, this);
+    ee = getRootImpl()->getEdges(src, tgt, directed, this);
   }
 
   return ee;

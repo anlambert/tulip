@@ -398,7 +398,12 @@ Information about the graph structure
 
 .. automethod:: talipot::tlp.Graph.isMetaEdge
 
+.. automethod:: talipot::tlp.Graph.hasEdge
+
 .. automethod:: talipot::tlp.Graph.existEdge
+
+.. automethod:: talipot::tlp.Graph.getEdges
+  :noindex:
 
 .. automethod:: talipot::tlp.Graph.getSource
 

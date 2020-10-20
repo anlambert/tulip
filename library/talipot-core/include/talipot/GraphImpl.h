@@ -88,9 +88,9 @@ public:
   Iterator<edge> *getInOutEdges(const node) const override;
   std::vector<edge> getEdges(const node source, const node target,
                              bool directed = true) const override;
-  bool getEdges(const node source, const node target, bool directed, std::vector<edge> &edges,
-                const Graph *sg = nullptr, bool onlyFirst = false) const {
-    return storage.getEdges(source, target, directed, edges, sg, onlyFirst);
+  std::vector<edge> getEdges(const node source, const node target, bool directed,
+                             const Graph *sg = nullptr) const {
+    return storage.getEdges(source, target, directed, sg);
   }
   const std::vector<edge> &allEdges(const node n) const override {
     return storage.adj(n);

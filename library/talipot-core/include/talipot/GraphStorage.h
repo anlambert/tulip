@@ -181,8 +181,8 @@ public:
    * @param onlyFirst If true only the first edge found will be returned
    * @return true if an edge has been bound
    */
-  bool getEdges(const node src, const node tgt, bool directed, std::vector<edge> &edges,
-                const Graph *sg = nullptr, bool onlyFirst = false) const;
+  std::vector<edge> getEdges(const node src, const node tgt, bool directed,
+                             const Graph *sg = nullptr) const;
 
   //=======================================================
   /**

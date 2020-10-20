@@ -68,8 +68,8 @@ void GraphImpl::clear() {
 }
 //----------------------------------------------------------------
 edge GraphImpl::existEdge(const node src, const node tgt, bool directed) const {
-  std::vector<edge> edges;
-  return storage.getEdges(src, tgt, directed, edges, nullptr, true) ? edges[0] : edge();
+  std::vector<edge> edges = storage.getEdges(src, tgt, directed, nullptr);
+  return !edges.empty() ? edges[0] : edge();
 }
 //----------------------------------------------------------------
 unsigned int GraphImpl::getSubGraphId(unsigned int id) {
@@ -285,9 +285,7 @@ Iterator<edge> *GraphImpl::getInOutEdges(const node n) const {
 }
 //----------------------------------------------------------------
 std::vector<edge> GraphImpl::getEdges(const node src, const node tgt, bool directed) const {
-  std::vector<edge> edges;
-  storage.getEdges(src, tgt, directed, edges);
-  return edges;
+  return storage.getEdges(src, tgt, directed);
 }
 //----------------------------------------------------------------
 void GraphImpl::reverse(const edge e) {

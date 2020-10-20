@@ -2230,7 +2230,7 @@ If no edge is found, returns edges is empty.
 :type node2: :class:`tlp.node`
 :param directed: indicates if the direction of the edge (from source to target) must be taken in to account
 :type directed: boolean
-:rtype: boolean
+:rtype: list of :class:`tlp.edge`
 :throws: an exception if one of the nodes does not belong to the graph
 %End
 
