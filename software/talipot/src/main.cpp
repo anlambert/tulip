@@ -51,6 +51,7 @@
 #include "TalipotMainWindow.h"
 #include "SplashScreen.h"
 #include "PluginsCenter.h"
+#include "ThemeUtils.h"
 
 #include <iostream>
 
@@ -94,7 +95,7 @@ public:
                      const QWidget *widget = nullptr) const override {
     switch (standardIcon) {
     case QStyle::SP_DialogCancelButton:
-      return FontIconManager::icon(MaterialDesignIcons::Cancel, textColor(), 0.8);
+      return FontIconManager::icon(MaterialDesignIcons::Cancel, 0.8);
     case QStyle::SP_DialogCloseButton:
       return FontIconManager::icon(MaterialDesignIcons::Close);
     case QStyle::SP_DialogDiscardButton:
@@ -137,42 +138,15 @@ int main(int argc, char **argv) {
   QApplication talipot(argc, argv);
   talipot.setApplicationName("Talipot");
 
-  QFile talipotQssFile(":/talipot/app/style/talipot.qss");
-  talipotQssFile.open(QIODevice::ReadOnly | QIODevice::Text);
-  QString talipotQss = QString(R"(
-AlgorithmRunner #contents,
-QDialog,
-QGroupBox,
-QFrame,
-QWizard QHeaderView::section {
-  background: %1;
-}
-QHeaderView {
-  background: %2;
-}
-QWizard QHeaderView,
-AlgorithmRunner QHeaderView,
-AlgorithmRunner QHeaderView::section {
-  background: %1;
-})");
-  talipotQss = talipotQss.arg(backgroundColor().name(), alternateBackgroundColor().name());
-  talipotQss += talipotQssFile.readAll();
-  if (applicationIsInDarkMode()) {
-    QFile talipotDarkQssFile(":/talipot/app/style/talipotDark.qss");
-    talipotDarkQssFile.open(QIODevice::ReadOnly | QIODevice::Text);
-    talipotQss += talipotDarkQssFile.readAll();
-    talipotDarkQssFile.close();
-  }
-  talipot.setStyleSheet(talipotQss);
-  talipotQssFile.close();
-
-#if defined(Q_OS_MAC)
-  // Use Qt Fusion widgets style on MacOS as default OS theme
+#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
+  // Use Qt Fusion widgets style on MacOS / Windows as default style
   // does not integrate nicely with Talipot custom stylesheet
   talipot.setStyle(new TalipotProxyStyle("Fusion"));
 #else
   talipot.setStyle(new TalipotProxyStyle(talipot.style()));
 #endif
+
+  setApplicationGuiTheme(Settings::instance().guiTheme());
 
   // Check arguments
   QString inputFilePath;

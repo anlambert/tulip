@@ -132,20 +132,21 @@ GraphHierarchiesEditor::GraphHierarchiesEditor(QWidget *parent)
   _ui->actionDelete_selection_from_root_graph->setIcon(
       FontIconManager::icon(MaterialDesignIcons::DeleteOutline));
   _ui->actionAdd_sub_graph->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Tournament, textColor(), 1.0, -90));
+      FontIconManager::icon(MaterialDesignIcons::Tournament, 1.0, -90));
   _ui->actionClone_subgraph->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Tournament, textColor(), 1.0, -90));
+      FontIconManager::icon(MaterialDesignIcons::Tournament, 1.0, -90));
   _ui->actionCreate_induced_sub_graph->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Tournament, textColor(), 1.0, -90));
+      FontIconManager::icon(MaterialDesignIcons::Tournament, 1.0, -90));
   _ui->actionClone_sibling->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Tournament, textColor(), 1.0, -90));
+      FontIconManager::icon(MaterialDesignIcons::Tournament, 1.0, -90));
   _ui->actionClone_sibling_with_properties->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Tournament, textColor(), 1.0, -90));
+      FontIconManager::icon(MaterialDesignIcons::Tournament, 1.0, -90));
   _ui->actionExpand_hierarchy->setIcon(FontIconManager::icon(MaterialDesignIcons::FileTree));
 
   QToolButton *linkButton = new QToolButton();
   linkButton->setObjectName("linkButton");
-  linkButton->setIcon(FontIconManager::icon(MaterialDesignIcons::LinkVariant, Qt::white, 0.8));
+  linkButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::LinkVariant, QColor(Qt::white), 0.8));
   linkButton->setToolTip("Click here to disable the synchronization with workspace active "
                          "panel.\nWhen synchronization is enabled, the graph currently "
                          "displayed\nin the active panel, becomes the current one in the Graphs "
@@ -466,14 +467,15 @@ void GraphHierarchiesEditor::saveGraphHierarchyInTlpFile() {
 
 void GraphHierarchiesEditor::toggleSynchronization(bool f) {
   if (f) {
-    _linkButton->setIcon(FontIconManager::icon(MaterialDesignIcons::LinkVariant, Qt::white, 0.8));
+    _linkButton->setIcon(
+        FontIconManager::icon(MaterialDesignIcons::LinkVariant, QColor(Qt::white), 0.8));
     _linkButton->setToolTip("Click here to disable the synchronization with workspace active "
                             "panel.\nWhen synchronization is enabled, the graph currently "
                             "displayed\nin the active panel, becomes the current one in the Graphs "
                             "panel.");
   } else {
     _linkButton->setIcon(
-        FontIconManager::icon(MaterialDesignIcons::LinkVariantOff, Qt::white, 0.8));
+        FontIconManager::icon(MaterialDesignIcons::LinkVariantOff, QColor(Qt::white), 0.8));
     _linkButton->setToolTip("Click here to enable the synchronization with workspace active "
                             "panel.\nWhen synchronization is enabled, the graph currently "
                             "displayed\nin the active panel, becomes the current one in the Graphs "

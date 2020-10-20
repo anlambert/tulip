@@ -33,6 +33,7 @@
 #include <QMainWindow>
 #include <QPalette>
 #include <QFontDatabase>
+#include <QLayout>
 
 #include <talipot/DataSet.h>
 #include <talipot/Settings.h>
@@ -500,7 +501,7 @@ QMainWindow *getMainWindow() {
   return nullptr;
 }
 
-bool applicationIsInDarkMode() {
+bool applicationHasDarkGuiTheme() {
   return backgroundColor().lightnessF() < 0.5;
 }
 
@@ -533,6 +534,20 @@ void removeFontFromQFontDatabase(const string &fontFile) {
   if (fontIds.find(fontFile) != fontIds.end()) {
     fontDb.removeApplicationFont(fontIds[fontFile]);
     fontIds.erase(fontFile);
+  }
+}
+
+void clearLayout(QLayout *layout, bool deleteWidgets) {
+  while (QLayoutItem *item = layout->takeAt(0)) {
+    if (deleteWidgets) {
+      if (QWidget *widget = item->widget()) {
+        delete widget;
+      }
+    } else if (QLayout *childLayout = item->layout()) {
+      clearLayout(childLayout, deleteWidgets);
+    }
+
+    delete item;
   }
 }
 

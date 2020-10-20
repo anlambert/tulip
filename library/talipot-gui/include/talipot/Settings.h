@@ -147,6 +147,9 @@ public:
   bool pythonIDEAnchored() const;
   void setPythonIDEAnchored(bool);
 
+  QString guiTheme() const;
+  void setGuiTheme(const QString &guiTheme);
+
   void treatEvent(const Event &message) override;
 
 private:

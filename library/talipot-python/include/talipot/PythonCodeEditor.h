@@ -222,6 +222,8 @@ public:
 
   void resetFindReplaceDialog();
 
+  void guiThemeChanged();
+
   static void deleteStaticResources() {
     delete _autoCompletionDb;
     delete _autoCompletionList;

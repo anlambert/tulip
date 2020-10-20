@@ -452,6 +452,7 @@ AutoCompletionDataBase *PythonCodeEditor::_autoCompletionDb = nullptr;
 
 PythonCodeEditor::PythonCodeEditor(QWidget *parent)
     : QPlainTextEdit(parent), _highlighter(nullptr), _tooltipActive(false), _indentPattern(4, ' ') {
+  setObjectName("PythonCodeEditor");
   installEventFilter(&keyboardFocusEventFilter);
   setAutoIndentation(true);
   setIndentationGuides(true);
@@ -473,10 +474,6 @@ PythonCodeEditor::PythonCodeEditor(QWidget *parent)
   _currentFont.setFamily("Monospace");
   _currentFont.setPointSize(8);
 #endif
-
-  setStyleSheet(QString("QFrame { background: white; color: %1; }"
-                        "QPlainTextEdit { selection-background-color: #C0C0C0; }")
-                    .arg(darkColor.name()));
 
   format.setFont(_currentFont);
   setCurrentCharFormat(format);
@@ -593,7 +590,7 @@ void PythonCodeEditor::resizeEvent(QResizeEvent *e) {
 
 void PythonCodeEditor::lineNumberAreaPaintEvent(QPaintEvent *event) {
   QPainter painter(_lineNumberArea);
-  painter.fillRect(event->rect(), Qt::lightGray);
+  painter.fillRect(event->rect(), alternateBackgroundColor());
 
   QTextBlock block = firstVisibleBlock();
   int blockNumber = block.blockNumber();
@@ -603,7 +600,6 @@ void PythonCodeEditor::lineNumberAreaPaintEvent(QPaintEvent *event) {
   while (block.isValid() && top <= event->rect().bottom()) {
     if (block.isVisible() && bottom >= event->rect().top()) {
       QString number = QString::number(blockNumber + 1);
-      painter.setPen(Qt::black);
       painter.setFont(_currentFont);
       painter.drawText(0, top, _lineNumberArea->width(), fontMetrics().height(),
                        Qt::AlignRight | Qt::AlignCenter, number);
@@ -696,8 +692,9 @@ void PythonCodeEditor::paintEvent(QPaintEvent *event) {
 #else
     QRect tooltipRect(tPos, tPos + QPoint(width + 2 * charWidth(' '), height));
 #endif
+    painter.setPen(palette().color(QPalette::ToolTipText));
+    painter.setBrush(palette().color(QPalette::ToolTipBase));
     painter.drawRect(tooltipRect);
-    painter.fillRect(tooltipRect, QColor(249, 251, 100, 200));
 #ifndef __APPLE__
     painter.drawText(tooltipRect, _toolTipText);
 #else
@@ -716,9 +713,7 @@ void PythonCodeEditor::paintEvent(QPaintEvent *event) {
 
   int bottom = top + int(blockBoundingRect(block).height());
 
-  QPen pen;
-  pen.setBrush(Qt::gray);
-  painter.setPen(pen);
+  painter.setPen(textColor());
 
   while (block.isValid() && top <= event->rect().bottom()) {
     if (block.isVisible() && bottom >= event->rect().top()) {
@@ -905,9 +900,8 @@ void PythonCodeEditor::highlightCurrentLine() {
 
   if (highlightEditedLine() && !isReadOnly() && selectedText().isEmpty()) {
     QTextEdit::ExtraSelection selection;
-    QColor lineColor = QColor(Qt::yellow).lighter(160);
     selection.format = textCursor().block().charFormat();
-    selection.format.setBackground(lineColor);
+    selection.format.setBackground(alternateBackgroundColor());
     selection.format.setProperty(QTextFormat::FullWidthSelection, true);
     selection.cursor = textCursor();
     selections.append(selection);
@@ -1774,4 +1768,10 @@ int PythonCodeEditor::textWidth(const QString &text) const {
 #else
   return fontMetrics().horizontalAdvance(QString(text).replace('\t', "    "));
 #endif
+}
+
+void PythonCodeEditor::guiThemeChanged() {
+  _highlighter->buildHighlightingRules();
+  _highlighter->rehighlight();
+  highlightCurrentLine();
 }

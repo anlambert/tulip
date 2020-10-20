@@ -57,11 +57,7 @@ public slots:
     if (errorOutput) {
       brush.setColor(Qt::red);
     } else {
-      if (textBrowser) {
-        brush.setColor(tlp::textColor());
-      } else {
-        brush.setColor(tlp::darkColor);
-      }
+      brush.setColor(tlp::textColor());
     }
 
     QTextCursor cursor;

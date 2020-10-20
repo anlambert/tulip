@@ -14,7 +14,8 @@ SET(SRCS
     src/SearchWidget.cpp
     src/SplashScreen.cpp
     src/TalipotLogger.cpp
-    src/TalipotMainWindow.cpp)
+    src/TalipotMainWindow.cpp
+    src/ThemeUtils.cpp)
 
 QTX_SET_INCLUDES_AND_DEFINITIONS()
 

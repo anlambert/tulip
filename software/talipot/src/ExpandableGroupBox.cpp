@@ -15,6 +15,7 @@
 
 #include <QApplication>
 #include <QVBoxLayout>
+#include <QStyle>
 
 ExpandableGroupBox::ExpandableGroupBox(QWidget *parent, const QString &title)
     : QGroupBox(title, parent), _expanded(true), _widget(nullptr) {
@@ -34,9 +35,9 @@ ExpandableGroupBox::~ExpandableGroupBox() {}
 
 void ExpandableGroupBox::setExpanded(bool e) {
   _expanded = e;
-  // As told in Qt stylesheet reference, this force recomputation of stylesheet
-  // based on dynamic properties
-  setStyleSheet(qApp->styleSheet());
+  // force recomputation of stylesheet based on dynamic properties
+  qApp->style()->unpolish(this);
+  qApp->style()->polish(this);
 
   if (_widget) {
     _widget->setVisible(e);

@@ -24,11 +24,8 @@ using namespace tlp;
 unique_ptr<QPixmap> ClearableLineEdit::CLEAR_PIXMAP;
 
 void ClearableLineEdit::initPixmap() {
-  if (!CLEAR_PIXMAP.get()) {
-    CLEAR_PIXMAP.reset(new QPixmap(FontIconManager::icon(MaterialDesignIcons::Backspace,
-                                                         textColor(), 0.5, 0, QPointF(5, 0))
-                                       .pixmap(32, 32)));
-  }
+  CLEAR_PIXMAP.reset(new QPixmap(
+      FontIconManager::icon(MaterialDesignIcons::Backspace, 0.5, 0, QPointF(5, 0)).pixmap(32, 32)));
 }
 
 ClearableLineEdit::ClearableLineEdit(QWidget *parent)
@@ -45,7 +42,6 @@ void ClearableLineEdit::paintEvent(QPaintEvent *ev) {
 }
 
 QRect ClearableLineEdit::pixmapRect() {
-  initPixmap();
   QRect pixmapRect(width() - CLEAR_PIXMAP->width() - 5, height() / 2 - CLEAR_PIXMAP->height() / 2,
                    CLEAR_PIXMAP->width(), CLEAR_PIXMAP->height());
   return pixmapRect;

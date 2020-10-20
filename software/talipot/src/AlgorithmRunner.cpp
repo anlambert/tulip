@@ -23,6 +23,7 @@
 
 #include <talipot/Mimes.h>
 #include <talipot/Settings.h>
+#include <talipot/TlpQtTools.h>
 
 struct FavoriteBox : public ExpandableGroupBox {
   bool _droppingFavorite;
@@ -188,7 +189,7 @@ AlgorithmRunner::AlgorithmRunner(QWidget *parent)
   _storeResultAsLocalButton->setMaximumSize(23, 23);
   _storeResultAsLocalButton->setMinimumSize(23, 23);
   _storeResultAsLocalButton->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Tournament, Qt::white, 0.7, -90));
+      FontIconManager::icon(MaterialDesignIcons::Tournament, QColor(Qt::white), 0.7, -90));
   _storeResultAsLocalButton->setIconSize(QSize(23, 23));
   _storeResultAsLocalButton->setStyleSheet("QToolButton::menu-indicator { image: none; }");
   _storeResultAsLocalButton->setToolTip(
@@ -215,6 +216,15 @@ AlgorithmRunner::AlgorithmRunner(QWidget *parent)
   connect(resultMenu, &QMenu::triggered, this,
           QOverload<QAction *>::of(&AlgorithmRunner::setStoreResultAsLocal));
 
+  buildPluginsList();
+
+  connect(_ui->header, &HeaderFrame::expanded, this, &AlgorithmRunner::expanded);
+}
+
+void AlgorithmRunner::buildPluginsList() {
+  clearLayout(_ui->contents->layout(), true);
+  clearLayout(_ui->favoritesBox->widget()->layout(), true);
+  _favorites.clear();
   PluginModel<tlp::Algorithm> model;
   buildTreeUi(_ui->contents, &model, QModelIndex(), true);
   _ui->contents->layout()->addItem(
@@ -227,8 +237,6 @@ AlgorithmRunner::AlgorithmRunner(QWidget *parent)
   for (const QString &a : Settings::instance().favoriteAlgorithms()) {
     addFavorite(a);
   }
-
-  connect(_ui->header, &HeaderFrame::expanded, this, &AlgorithmRunner::expanded);
 }
 
 AlgorithmRunner::~AlgorithmRunner() {

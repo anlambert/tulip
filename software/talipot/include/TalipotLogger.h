@@ -61,6 +61,8 @@ public:
 
   void setGeometry(int x, int y, int w, int h);
 
+  void updateLogItemsBackgroundColor();
+
 public slots:
   void setAnchored(bool anchored);
 

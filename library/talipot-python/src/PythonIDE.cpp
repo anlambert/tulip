@@ -364,41 +364,52 @@ PythonIDE::PythonIDE(QWidget *parent)
   _ui->header->setTitle("Python " + pythonVersion);
   _ui->header->setExpandable(false);
 
-  _ui->newMainScriptButton->setIcon(FontIconManager::icon(MaterialDesignIcons::File, Qt::white));
+  _ui->newMainScriptButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::File, QColor(Qt::white)));
   _ui->loadMainScriptButton->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::FileImport, Qt::white));
+      FontIconManager::icon(MaterialDesignIcons::FileImport, QColor(Qt::white)));
   _ui->saveMainScriptButton->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::FileExport, Qt::white));
+      FontIconManager::icon(MaterialDesignIcons::FileExport, QColor(Qt::white)));
   _ui->newStringModuleButton->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::FilePlus, Qt::white));
-  _ui->newPluginButton->setIcon(FontIconManager::icon(MaterialDesignIcons::File, Qt::white));
-  _ui->loadPluginButton->setIcon(FontIconManager::icon(MaterialDesignIcons::FileImport, Qt::white));
-  _ui->savePluginButton->setIcon(FontIconManager::icon(MaterialDesignIcons::FileExport, Qt::white));
-  _ui->newModuleButton->setIcon(FontIconManager::icon(MaterialDesignIcons::File, Qt::white));
-  _ui->loadModuleButton->setIcon(FontIconManager::icon(MaterialDesignIcons::FileImport, Qt::white));
-  _ui->saveModuleButton->setIcon(FontIconManager::icon(MaterialDesignIcons::FileExport, Qt::white));
+      FontIconManager::icon(MaterialDesignIcons::FilePlus, QColor(Qt::white)));
+  _ui->newPluginButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::File, QColor(Qt::white)));
+  _ui->loadPluginButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::FileImport, QColor(Qt::white)));
+  _ui->savePluginButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::FileExport, QColor(Qt::white)));
+  _ui->newModuleButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::File, QColor(Qt::white)));
+  _ui->loadModuleButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::FileImport, QColor(Qt::white)));
+  _ui->saveModuleButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::FileExport, QColor(Qt::white)));
   _ui->decreaseFontSizeButton->setIcon(
       FontIconManager::icon(MaterialDesignIcons::MinusCircle, Qt::black));
   _ui->increaseFontSizeButton->setIcon(
       FontIconManager::icon(MaterialDesignIcons::PlusCircle, Qt::black));
-  _ui->runScriptButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Play, Qt::white));
-  _ui->pauseScriptButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Pause, Qt::white));
-  _ui->stopScriptButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Stop, Qt::white));
+  _ui->runScriptButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Play, QColor(Qt::white)));
+  _ui->pauseScriptButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Pause, QColor(Qt::white)));
+  _ui->stopScriptButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Stop, QColor(Qt::white)));
   _ui->decreaseFontSizeButton->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Minus, Qt::white));
-  _ui->increaseFontSizeButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Plus, Qt::white));
+      FontIconManager::icon(MaterialDesignIcons::Minus, QColor(Qt::white)));
+  _ui->increaseFontSizeButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Plus, QColor(Qt::white)));
   _ui->decreaseFontSizeButton_2->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Minus, Qt::white));
+      FontIconManager::icon(MaterialDesignIcons::Minus, QColor(Qt::white)));
   _ui->increaseFontSizeButton_2->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Plus, Qt::white));
+      FontIconManager::icon(MaterialDesignIcons::Plus, QColor(Qt::white)));
   _ui->decreaseFontSizeButton_3->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Minus, Qt::white));
+      FontIconManager::icon(MaterialDesignIcons::Minus, QColor(Qt::white)));
   _ui->increaseFontSizeButton_3->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Plus, Qt::white));
+      FontIconManager::icon(MaterialDesignIcons::Plus, QColor(Qt::white)));
   _ui->registerPluginButton->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::DatabaseRefresh, Qt::white));
+      FontIconManager::icon(MaterialDesignIcons::DatabaseRefresh, QColor(Qt::white)));
   _ui->removePluginButton->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::DatabaseRemove, Qt::white));
+      FontIconManager::icon(MaterialDesignIcons::DatabaseRemove, QColor(Qt::white)));
   useUndoToggled(_ui->useUndoCB->isChecked());
   connect(_ui->useUndoCB, &QAbstractButton::toggled, this, &PythonIDE::useUndoToggled);
 
@@ -2273,10 +2284,10 @@ void PythonIDE::setAnchored(bool anchored) {
   QIcon icon;
   QString tooltip;
   if (anchored) {
-    icon = FontIconManager::icon(MaterialDesignIcons::WindowRestore, Qt::white);
+    icon = FontIconManager::icon(MaterialDesignIcons::WindowRestore, QColor(Qt::white));
     tooltip = "Display the Python IDE in a separate window";
   } else {
-    icon = FontIconManager::icon(MaterialDesignIcons::DockLeft, Qt::white);
+    icon = FontIconManager::icon(MaterialDesignIcons::DockLeft, QColor(Qt::white));
     tooltip = "Dock the Python IDE to the left of Talipot window";
   }
   _ui->anchoredCB->setIcon(icon);
@@ -2310,12 +2321,12 @@ bool PythonIDE::isAnchored() const {
 
 void PythonIDE::useUndoToggled(bool useUndo) {
   static QIcon baseIcon =
-      FontIconManager::icon(MaterialDesignIcons::Reply, Qt::white, 0.8, 0, QPoint(0, -2));
+      FontIconManager::icon(MaterialDesignIcons::Reply, QColor(Qt::white), 0.8, 0, QPoint(0, -2));
   if (useUndo) {
     _ui->useUndoCB->setIcon(baseIcon);
   } else {
     static QIcon icon = FontIconManager::stackIcons(
-        baseIcon, FontIconManager::icon(MaterialDesignIcons::WindowClose, Qt::black));
+        baseIcon, FontIconManager::icon(MaterialDesignIcons::WindowClose, QColor(Qt::black)));
     _ui->useUndoCB->setIcon(icon);
   }
 }

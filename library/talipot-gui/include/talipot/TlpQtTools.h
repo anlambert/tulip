@@ -24,6 +24,7 @@
 class QWidget;
 class QString;
 class QMainWindow;
+class QLayout;
 
 namespace tlp {
 
@@ -129,7 +130,7 @@ TLP_QT_SCOPE void enableQtUserInput();
 
 TLP_QT_SCOPE QMainWindow *getMainWindow();
 
-TLP_QT_SCOPE bool applicationIsInDarkMode();
+TLP_QT_SCOPE bool applicationHasDarkGuiTheme();
 
 TLP_QT_SCOPE const QColor &backgroundColor();
 
@@ -142,6 +143,8 @@ extern TLP_QT_SCOPE const QColor darkColor;
 TLP_QT_SCOPE void addFontToQFontDatabase(const Font &font);
 
 TLP_QT_SCOPE void removeFontFromQFontDatabase(const std::string &fontFile);
+
+TLP_QT_SCOPE void clearLayout(QLayout *layout, bool deleteWidgets = true);
 
 }
 

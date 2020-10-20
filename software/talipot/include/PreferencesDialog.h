@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -35,6 +35,8 @@ public slots:
   void cellChanged(int row, int column);
   void randomSeedCheckChanged(int);
   void showGraphDefaultsContextMenu(const QPoint &);
+  void guiThemeChanged(const QString &guiTheme);
+  void reject() override;
 
 private slots:
   void resetToTalipotDefaults(int row = -1, int updateMode = 0);

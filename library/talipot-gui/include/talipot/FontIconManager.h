@@ -25,7 +25,10 @@ namespace tlp {
 class TLP_QT_SCOPE FontIconManager {
 
 public:
-  static const QIcon &icon(const QString &iconName, const QColor &color = tlp::textColor(),
+  static const QIcon &icon(const QString &iconName, const double scaleFactor = 1.0,
+                           const double rotation = 0, const QPointF &translation = QPointF(0, 0));
+
+  static const QIcon &icon(const QString &iconName, const QColor &color,
                            const double scaleFactor = 1.0, const double rotation = 0,
                            const QPointF &translation = QPointF(0, 0));
 

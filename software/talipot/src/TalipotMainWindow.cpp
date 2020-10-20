@@ -18,6 +18,7 @@
 #include <talipot/SimplePluginProgressWidget.h>
 
 #include "TalipotMainWindow.h"
+#include "ThemeUtils.h"
 
 #include <QMessageBox>
 #include <QDesktopServices>
@@ -114,6 +115,15 @@ static void logMsgToStdErr(const QString &msg) {
 }
 
 static void talipotLogger(QtMsgType type, const QMessageLogContext &context, const QString &msg) {
+  QStringList msgPrefixToFilter;
+  msgPrefixToFilter.append("QGraphicsScene::sendEvent");
+  msgPrefixToFilter.append("QXcbConnection: XCB error:");
+
+  for (const auto &prefix : msgPrefixToFilter) {
+    if (msg.startsWith(prefix)) {
+      return;
+    }
+  }
   logMsgToStdErr(msg);
   TalipotMainWindow::instance().log(type, context, msg);
 }
@@ -142,13 +152,13 @@ protected:
 
 static QIcon getMakeSelectionAGraphIcon() {
   QIcon backIcon = FontIconManager::icon(MaterialDesignIcons::Select);
-  QIcon frontIcon = FontIconManager::icon(MaterialDesignIcons::VectorPolyline, textColor(), 0.7);
+  QIcon frontIcon = FontIconManager::icon(MaterialDesignIcons::VectorPolyline, 0.7);
   return FontIconManager::stackIcons(backIcon, frontIcon);
 }
 
 static QIcon getReverseSelectedEdgesIcon() {
   QIcon backIcon = FontIconManager::icon(MaterialDesignIcons::Select);
-  QIcon frontIcon = FontIconManager::icon(MaterialDesignIcons::SwapHorizontal, textColor(), 0.8);
+  QIcon frontIcon = FontIconManager::icon(MaterialDesignIcons::SwapHorizontal, 0.8);
   return FontIconManager::stackIcons(backIcon, frontIcon);
 }
 
@@ -171,14 +181,16 @@ TalipotMainWindow::TalipotMainWindow()
   setWindowTitle(_title);
 
   _ui->developButton->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::LanguagePython, Qt::white));
-  _ui->graphsButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Graph, Qt::white));
-  _ui->algorithmsButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Cogs, Qt::white));
-  _ui->importButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Import, Qt::white));
-  _ui->exportButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Export, Qt::white));
-  _ui->undoButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Reply, Qt::white));
-  _ui->redoButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Share, Qt::white));
-  _ui->searchButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Magnify, Qt::white));
+      FontIconManager::icon(MaterialDesignIcons::LanguagePython, QColor(Qt::white)));
+  _ui->graphsButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Graph, QColor(Qt::white)));
+  _ui->algorithmsButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Cogs, QColor(Qt::white)));
+  _ui->importButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Import, QColor(Qt::white)));
+  _ui->exportButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Export, QColor(Qt::white)));
+  _ui->undoButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Reply, QColor(Qt::white)));
+  _ui->redoButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Share, QColor(Qt::white)));
+  _ui->searchButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::Magnify, QColor(Qt::white)));
 
   _ui->actionNewProject->setIcon(FontIconManager::icon(MaterialDesignIcons::FilePlusOutline));
   _ui->actionOpen_Project->setIcon(FontIconManager::icon(MaterialDesignIcons::FileImportOutline));
@@ -224,14 +236,13 @@ TalipotMainWindow::TalipotMainWindow()
   _ui->actionDelete_all->setIcon(FontIconManager::icon(MaterialDesignIcons::DeleteOutline));
   _ui->actionDelete_from_the_root_graph->setIcon(
       FontIconManager::icon(MaterialDesignIcons::DeleteOutline));
-  _ui->menuCreate->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Tournament, textColor(), 1.0, -90));
+  _ui->menuCreate->setIcon(FontIconManager::icon(MaterialDesignIcons::Tournament, 1.0, -90));
   _ui->actionClone_sub_graph->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Tournament, textColor(), 1.0, -90));
+      FontIconManager::icon(MaterialDesignIcons::Tournament, 1.0, -90));
   _ui->actionCreate_sub_graph->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Tournament, textColor(), 1.0, -90));
+      FontIconManager::icon(MaterialDesignIcons::Tournament, 1.0, -90));
   _ui->actionCreate_empty_sub_graph->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::Tournament, textColor(), 1.0, -90));
+      FontIconManager::icon(MaterialDesignIcons::Tournament, 1.0, -90));
   _ui->actionColor_scales_management->setIcon(
       FontIconManager::icon(MaterialDesignIcons::PaletteOutline));
   _ui->actionReverse_selected_edges->setIcon(getReverseSelectedEdgesIcon());

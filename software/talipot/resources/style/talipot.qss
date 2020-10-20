@@ -11,6 +11,25 @@
  *
  */
 
+AlgorithmRunner #contents,
+QDialog,
+QGroupBox,
+QFrame,
+QWizard QHeaderView::section {
+  background: %1;
+}
+
+QHeaderView {
+  background: %2;
+}
+
+QWizard QHeaderView,
+AlgorithmRunner QHeaderView,
+AlgorithmRunner QHeaderView::section,
+#PreferencesDialog QHeaderView::section {
+  background: %1;
+}
+
 QLabel {
   background: transparent;
 }
@@ -660,6 +679,10 @@ QFrame[header="true"] QComboBox QAbstractItemView {
   font: bold 11px;
 }
 
+#PythonIDE QTabWidget QPlainTextEdit {
+  background: %1;
+}
+
 ExpandableGroupBox[expanded="true"] {
   margin-top: 1.5px;
 }
@@ -736,6 +759,10 @@ AlgorithmRunner #searchBox {
   border: none;
 }
 
+#AlgorithmRunnerItem #playButton {
+  text-align: left;
+}
+
 #AlgorithmRunnerItem QCheckBox {
   spacing: 0px;
 }
@@ -764,7 +791,7 @@ AlgorithmRunner #searchBox {
 #AlgorithmRunnerItem QHeaderView::section {
   padding-left: 4px;
   padding-right: 4px;
-  border: 1px solid #c9c9c9;
+  border: none;
   font: bold;
 }
 
@@ -847,7 +874,7 @@ QWizard QTreeView::branch:open:has-children:has-siblings  {
 QWizard QHeaderView::section {
   padding-left: 4px;
   padding-right: 4px;
-  border: 1px solid #c9c9c9;
+  border: none;
   font: bold 12px;
 }
 

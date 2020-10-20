@@ -132,6 +132,9 @@ void FontIconEngine::paint(QPainter *painter, const QRect &rect, QIcon::Mode mod
   painter->save();
 
   QColor color = optionValueForModeAndState("color", mode, state, _options).value<QColor>();
+  if (!color.isValid()) {
+    color = textColor();
+  }
 
   painter->setPen(color);
 
@@ -187,6 +190,13 @@ static QString getOptionsString(const QColor &color, const QColor &colorDisabled
          QString::number(translation.y());
 }
 
+const QIcon &FontIconManager::icon(const QString &iconName, const double scaleFactor,
+                                   const double rotation, const QPointF &translation) {
+  static QColor invalidColor;
+  return icon(iconName, invalidColor, invalidColor, invalidColor, invalidColor, scaleFactor,
+              rotation, translation);
+}
+
 const QIcon &FontIconManager::icon(const QString &iconName, const QColor &color,
                                    const double scaleFactor, const double rotation,
                                    const QPointF &translation) {
@@ -203,7 +213,6 @@ const QIcon &FontIconManager::icon(const QString &iconName, const QColor &color,
 
   QString optionsString = getOptionsString(color, colorDisabled, colorActive, colorSelected,
                                            scaleFactor, rotation, translation);
-
   QString iconCacheKey = iconName + optionsString;
   if (fontIconsCache.find(iconCacheKey) == fontIconsCache.end()) {
     QIcon icon = QIcon(new FontIconEngine(iconName, options));
@@ -214,7 +223,6 @@ const QIcon &FontIconManager::icon(const QString &iconName, const QColor &color,
     }
     fontIconsCache[iconCacheKey] = icon;
   }
-
   return fontIconsCache[iconCacheKey];
 }
 

@@ -62,6 +62,7 @@ static const QString TS_SeedForRandomSequence = "graph/auto/seed";
 
 static const QString TS_LoggerAnchored = "app/gui/logger_anchored";
 static const QString TS_PythonIDEAnchored = "app/gui/python_ide_anchored";
+static const QString TS_GuiTheme = "app/gui/theme";
 
 Settings::Settings() : QSettings("TalipotFramework", "Talipot") {
   ViewSettings::instance().addListener(this);
@@ -372,6 +373,14 @@ bool Settings::pythonIDEAnchored() const {
 
 void Settings::setPythonIDEAnchored(bool f) {
   setValue(TS_PythonIDEAnchored, f);
+}
+
+QString Settings::guiTheme() const {
+  return value(TS_GuiTheme, "Light").toString();
+}
+
+void Settings::setGuiTheme(const QString &guiTheme) {
+  setValue(TS_GuiTheme, guiTheme);
 }
 
 void Settings::treatEvent(const Event &message) {

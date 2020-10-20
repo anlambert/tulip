@@ -42,24 +42,22 @@ public:
   LinkWidget() : QWidget(), linked(true), alwaysLinked(false) {
     installEventFilter(this);
     QLabel *topLabel = new QLabel();
-    QPixmap topPixmap = FontIconManager::icon(MaterialDesignIcons::AlphaL, textColor(), 1.0,
-                                              0.0, QPointF(-1, -6))
-                            .pixmap(20, 20)
-                            .transformed(QTransform().scale(-1, -1));
+    QPixmap topPixmap =
+        FontIconManager::icon(MaterialDesignIcons::AlphaL, 1.0, 0.0, QPointF(-1, -6))
+            .pixmap(20, 20)
+            .transformed(QTransform().scale(-1, -1));
     topLabel->setPixmap(topPixmap);
     QLabel *bottomLabel = new QLabel();
-    QPixmap bottomPixmap = FontIconManager::icon(MaterialDesignIcons::AlphaL, textColor(),
-                                                 1.0, 0.0, QPointF(-1, -6))
-                               .pixmap(20, 20)
-                               .transformed(QTransform().scale(-1, 1));
+    QPixmap bottomPixmap =
+        FontIconManager::icon(MaterialDesignIcons::AlphaL, 1.0, 0.0, QPointF(-1, -6))
+            .pixmap(20, 20)
+            .transformed(QTransform().scale(-1, 1));
     bottomLabel->setPixmap(bottomPixmap);
     linkLabel = new QLabel();
-    linkPixmap = FontIconManager::icon(MaterialDesignIcons::Link, textColor(), 1.0, 0.0,
-                                       QPointF(0, -3))
+    linkPixmap = FontIconManager::icon(MaterialDesignIcons::Link, 1.0, 0.0, QPointF(0, -3))
                      .pixmap(20, 20)
                      .transformed(QTransform().rotate(90));
-    unlinkPixmap = FontIconManager::icon(MaterialDesignIcons::LinkOff, textColor(), 1.0, 0.0,
-                                         QPointF(0, -3))
+    unlinkPixmap = FontIconManager::icon(MaterialDesignIcons::LinkOff, 1.0, 0.0, QPointF(0, -3))
                        .pixmap(20, 20)
                        .transformed(QTransform().rotate(90));
     linkLabel->setPixmap(linkPixmap);

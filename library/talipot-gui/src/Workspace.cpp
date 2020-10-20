@@ -49,9 +49,10 @@ Workspace::Workspace(QWidget *parent)
   _ui->previousPageButton->setVisible(false);
   _ui->importButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Import));
   _ui->startupButton->setIcon(FontIconManager::icon(MaterialDesignIcons::PlusBox));
-  _ui->addPanelButton->setIcon(FontIconManager::icon(MaterialDesignIcons::PlusBox, Qt::white));
+  _ui->addPanelButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::PlusBox, QColor(Qt::white)));
   _ui->exposeButton->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::ViewGridOutline, Qt::white));
+      FontIconManager::icon(MaterialDesignIcons::ViewGridOutline, QColor(Qt::white)));
   _ui->startupMainFrame->hide();
   _ui->workspaceContents->setCurrentWidget(_ui->startupPage);
   connect(_ui->addPanelButton, &QAbstractButton::clicked, [this] { addPanelRequest(); });

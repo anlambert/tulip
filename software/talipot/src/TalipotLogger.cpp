@@ -38,9 +38,10 @@ TalipotLogger::TalipotLogger(QWidget *parent)
   _ui->setupUi(this);
   _ui->listWidget->installEventFilter(this);
   _ui->listWidget->setContextMenuPolicy(Qt::CustomContextMenu);
-  _ui->copyButton->setIcon(FontIconManager::icon(MaterialDesignIcons::ContentCopy, Qt::white));
-  _ui->clearButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Broom, Qt::white));
-  _ui->closeButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Close, Qt::white));
+  _ui->copyButton->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::ContentCopy, QColor(Qt::white)));
+  _ui->clearButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Broom, QColor(Qt::white)));
+  _ui->closeButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Close, QColor(Qt::white)));
   _ui->copyButton->setToolTip("Copy the selected lines into the clipboard");
   _ui->clearButton->setToolTip("Remove all messages");
   _ui->closeButton->setToolTip("Close this window");
@@ -96,16 +97,6 @@ void TalipotLogger::logImpl(QtMsgType type, const QString &msg) {
     return;
   }
 
-  QList<QString> msgPrefixToFilter;
-  msgPrefixToFilter.append("QGraphicsScene::sendEvent");
-  msgPrefixToFilter.append("QXcbConnection: XCB error:");
-
-  for (const auto &prefix : msgPrefixToFilter) {
-    if (msg.startsWith(prefix)) {
-      return;
-    }
-  }
-
   if (type == QtFatalMsg) {
     std::cerr << tlp::QStringToTlpString(msg) << std::endl;
     abort();
@@ -143,7 +134,7 @@ QIcon TalipotLogger::icon(LogType logType) const {
   QIcon icon;
   switch (logType) {
   case Python:
-    icon = FontIconManager::icon(MaterialDesignIcons::LanguagePython, Qt::gray);
+    icon = FontIconManager::icon(MaterialDesignIcons::LanguagePython, QColor(Qt::gray));
     break;
 
   case Info:
@@ -242,7 +233,7 @@ void TalipotLogger::setAnchored(bool anchored) {
   QString tooltip;
 
   if (_anchored) {
-    icon = FontIconManager::icon(MaterialDesignIcons::WindowRestore, Qt::white);
+    icon = FontIconManager::icon(MaterialDesignIcons::WindowRestore, QColor(Qt::white));
     tooltip = "Display the logger in a separate window";
     setAttribute(Qt::WA_X11NetWmWindowTypeDialog, false);
     setWindowFlags(Qt::Popup | Qt::FramelessWindowHint);
@@ -250,7 +241,7 @@ void TalipotLogger::setAnchored(bool anchored) {
     setMaximumSize(size());
     emit resetLoggerPosition();
   } else {
-    icon = FontIconManager::icon(MaterialDesignIcons::DockBottom, Qt::white);
+    icon = FontIconManager::icon(MaterialDesignIcons::DockBottom, QColor(Qt::white));
     tooltip = "Dock the logger to the bottom of Talipot window";
     setAttribute(Qt::WA_X11NetWmWindowTypeDialog, true);
     setWindowFlags(Qt::Dialog);
@@ -266,5 +257,12 @@ void TalipotLogger::setAnchored(bool anchored) {
   // force the update of the window after modifying its flags
   if (visible) {
     show();
+  }
+}
+
+void TalipotLogger::updateLogItemsBackgroundColor() {
+  for (int i = 0; i < _nbLog; ++i) {
+    QBrush c = (i % 2 == 0) ? palette().base() : palette().alternateBase();
+    _ui->listWidget->item(i)->setBackground(c);
   }
 }

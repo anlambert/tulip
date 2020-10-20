@@ -11,6 +11,8 @@
  *
  */
 
+#include <talipot/TlpQtTools.h>
+
 #include "talipot/PythonInterpreter.h"
 #include "talipot/PythonCodeHighlighter.h"
 #include "talipot/APIDataBase.h"
@@ -21,19 +23,25 @@ using namespace tlp;
 
 PythonCodeHighlighter::PythonCodeHighlighter(QTextDocument *parent)
     : QSyntaxHighlighter(parent), _shellMode(false) {
+  buildHighlightingRules();
+}
+
+void PythonCodeHighlighter::buildHighlightingRules() {
+  bool darkTheme = applicationHasDarkGuiTheme();
+
+  _highlightingRules.clear();
 
   QTextCharFormat builtinFormat;
-  builtinFormat.setForeground(QColor(0, 87, 187));
+  builtinFormat.setForeground(darkTheme ? QColor("#8ab1b0") : QColor(0, 87, 187));
 
   HighlightingRule rule;
 
-  _commentFormat.setForeground(Qt::darkGreen);
+  _commentFormat.setForeground(darkTheme ? QColor("#6a9955") : QColor(Qt::darkGreen));
   _functionFormat.setFontWeight(QFont::Bold);
-  _functionFormat.setForeground(Qt::darkCyan);
+  _functionFormat.setForeground(darkTheme ? QColor("#dcdcaa") : QColor(Qt::darkCyan));
   _tlpApiFormat.setForeground(QColor(128, 128, 0));
   _classFormat.setFontWeight(QFont::Bold);
-  _classFormat.setForeground(Qt::blue);
-  _qtApiFormat.setForeground(QColor(0, 110, 40));
+  _classFormat.setForeground(darkTheme ? QColor("#4ec9b0") : QColor(Qt::blue));
 
   rule.pattern = QRegExp("def [A-Za-z_][A-Za-z0-9_]+(?=\\()");
   rule.format = _functionFormat;
@@ -51,7 +59,7 @@ PythonCodeHighlighter::PythonCodeHighlighter(QTextDocument *parent)
   rule.format = builtinFormat;
   _highlightingRules.append(rule);
 
-  _keywordFormat.setForeground(Qt::darkBlue);
+  _keywordFormat.setForeground(darkTheme ? QColor("#c586c0") : QColor(Qt::darkBlue));
   _keywordFormat.setFontWeight(QFont::Bold);
   QStringList keywordPatterns;
   int i = 0;
@@ -122,7 +130,7 @@ PythonCodeHighlighter::PythonCodeHighlighter(QTextDocument *parent)
     _highlightingRules.append(rule);
   }
 
-  _numberFormat.setForeground(Qt::darkCyan);
+  _numberFormat.setForeground(darkTheme ? QColor("#b5cea8") : QColor(Qt::darkCyan));
   rule.pattern = QRegExp("\\b[0-9]+[lL]?\\b");
   rule.format = _numberFormat;
   _highlightingRules.append(rule);
@@ -131,7 +139,7 @@ PythonCodeHighlighter::PythonCodeHighlighter(QTextDocument *parent)
   rule.pattern = QRegExp("\\b[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\\b");
   _highlightingRules.append(rule);
 
-  _quotationFormat.setForeground(Qt::darkMagenta);
+  _quotationFormat.setForeground(darkTheme ? QColor("#ce9178") : QColor(Qt::darkMagenta));
 }
 
 void PythonCodeHighlighter::highlightBlock(const QString &text) {
@@ -213,33 +221,6 @@ void PythonCodeHighlighter::highlightBlock(const QString &text) {
     }
   }
 
-  QRegExp qtApiRegexp("\\bQ[A-Za-z_.]+\\b");
-  int index = qtApiRegexp.indexIn(text);
-
-  while (index >= 0) {
-    int length = qtApiRegexp.matchedLength();
-    QString expr = text.mid(index, length);
-
-    if (APIDataBase::instance().typeExists(expr) ||
-        !APIDataBase::instance().getFullTypeName(expr).isEmpty()) {
-      setFormat(index, length, _qtApiFormat);
-    } else if (expr.indexOf(".") != -1) {
-      QString type = expr.mid(0, expr.lastIndexOf("."));
-
-      if (!APIDataBase::instance().getFullTypeName(type).isEmpty()) {
-        type = APIDataBase::instance().getFullTypeName(type);
-      }
-
-      QString entry = expr.mid(expr.lastIndexOf(".") + 1);
-
-      if (APIDataBase::instance().dictEntryExists(type, entry)) {
-        setFormat(index, length, _qtApiFormat);
-      }
-    }
-
-    index = qtApiRegexp.indexIn(text, index + length);
-  }
-
   setCurrentBlockState(0);
 
   static QRegExp triSingleQuote("'''");
@@ -253,7 +234,7 @@ void PythonCodeHighlighter::highlightBlock(const QString &text) {
   }
 
   QRegExp commentRegexp("#[^\n]*");
-  index = commentRegexp.indexIn(text);
+  int index = commentRegexp.indexIn(text);
 
   while (index >= 0 && currentBlockState() == 0) {
     int nbQuotes = 0;

@@ -128,7 +128,7 @@
              <string>Colors</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             <set>Qt::AlignHCenter|Qt::AlignTop</set>
             </property>
            </widget>
           </item>
@@ -287,7 +287,7 @@
                <string>Edges</string>
               </property>
               <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+               <set>Qt::AlignHCenter|Qt::AlignTop</set>
               </property>
              </widget>
             </item>
@@ -435,6 +435,9 @@
             <property name="text">
              <string>Elements ordering</string>
             </property>
+            <property name="alignment">
+             <set>Qt::AlignHCenter|Qt::AlignTop</set>
+            </property>
            </widget>
           </item>
           <item>
@@ -542,7 +545,7 @@
              <string>Labels</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             <set>Qt::AlignHCenter|Qt::AlignTop</set>
             </property>
            </widget>
           </item>
@@ -866,7 +869,7 @@
                <string>Graph changing</string>
               </property>
               <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+               <set>Qt::AlignHCenter|Qt::AlignTop</set>
               </property>
              </widget>
             </item>
@@ -945,7 +948,7 @@ of the scene remains unchanged.</string>
                <string>Projection</string>
               </property>
               <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+               <set>Qt::AlignHCenter|Qt::AlignTop</set>
               </property>
              </widget>
             </item>

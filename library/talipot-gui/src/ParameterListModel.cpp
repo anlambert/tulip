@@ -25,16 +25,13 @@
 namespace tlp {
 
 static QIcon bracketIcon() {
-  static QIcon icon;
-  if (icon.isNull()) {
-    QPixmap tmp = FontIconManager::icon(MaterialDesignIcons::CodeBrackets, Qt::darkGray, 1.4)
-                      .pixmap(128, 128);
-    QPainter painter(&tmp);
-    painter.fillRect(0, 0, 64, 128, backgroundColor());
-    painter.end();
-    icon = tmp;
-  }
-  return icon;
+  QPixmap pixmap =
+      FontIconManager::icon(MaterialDesignIcons::CodeBrackets, QColor(Qt::darkGray), 1.4)
+          .pixmap(128, 128);
+  QPainter painter(&pixmap);
+  painter.fillRect(0, 0, 64, 128, backgroundColor());
+  painter.end();
+  return QIcon(pixmap);
 }
 
 static QIcon inputIcon() {
@@ -44,14 +41,14 @@ static QIcon inputIcon() {
 
 static QIcon outputIcon() {
   return FontIconManager::stackIcons(
-      bracketIcon(), FontIconManager::icon(MaterialDesignIcons::ArrowLeftBold, Qt::red));
+      bracketIcon(), FontIconManager::icon(MaterialDesignIcons::ArrowLeftBold, QColor(Qt::red)));
 }
 
 static QIcon inputOutputIcon() {
   const QIcon &rightArrow = FontIconManager::icon(MaterialDesignIcons::ArrowRightBold,
                                                   QColor("#0d93f7"), 1, 0, QPointF(0, -20));
-  const QIcon &leftArrow =
-      FontIconManager::icon(MaterialDesignIcons::ArrowLeftBold, Qt::red, 1, 0, QPointF(0, 20));
+  const QIcon &leftArrow = FontIconManager::icon(MaterialDesignIcons::ArrowLeftBold,
+                                                 QColor(Qt::red), 1, 0, QPointF(0, 20));
   QIcon tmp = FontIconManager::stackIcons(bracketIcon(), rightArrow);
   return FontIconManager::stackIcons(tmp, leftArrow);
 }

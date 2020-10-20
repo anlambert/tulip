@@ -27,6 +27,7 @@
 #include <QVBoxLayout>
 #include <QScrollBar>
 #include <QPropertyAnimation>
+#include <QLayout>
 
 #include <talipot/MetaTypes.h>
 #include <talipot/ProcessingAnimationItem.h>
@@ -80,10 +81,11 @@ WorkspacePanel::WorkspacePanel(tlp::View *view, QWidget *parent)
       _viewConfigurationTabWidgetProxy(nullptr), _viewConfigurationExpanded(false) {
   _ui->setupUi(this);
   _ui->linkButton->setIcon(
-      FontIconManager::icon(MaterialDesignIcons::LinkVariantOff, Qt::white, 0.8));
+      FontIconManager::icon(MaterialDesignIcons::LinkVariantOff, QColor(Qt::white), 0.8));
   _ui->dragHandle->setPixmap(
-      FontIconManager::icon(MaterialDesignIcons::CursorMove, Qt::white).pixmap(QSize(16, 16)));
-  _ui->closeButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Close, Qt::white));
+      FontIconManager::icon(MaterialDesignIcons::CursorMove, QColor(Qt::white))
+          .pixmap(QSize(16, 16)));
+  _ui->closeButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Close, QColor(Qt::white)));
   _ui->actionClose->setShortcutContext(Qt::WidgetWithChildrenShortcut);
   _ui->interactorsFrame->installEventFilter(this);
   _ui->dragHandle->setPanel(this);
@@ -334,20 +336,6 @@ void WorkspacePanel::hideConfigurationTab() {
   setConfigurationTabExpanded(false);
 }
 
-void clearLayout(QLayout *layout, bool deleteWidgets = true) {
-  while (QLayoutItem *item = layout->takeAt(0)) {
-    if (deleteWidgets) {
-      if (QWidget *widget = item->widget()) {
-        delete widget;
-      }
-    } else if (QLayout *childLayout = item->layout()) {
-      clearLayout(childLayout, deleteWidgets);
-    }
-
-    delete item;
-  }
-}
-
 void WorkspacePanel::refreshInteractorsToolbar() {
   _actionTriggers.clear();
   auto compatibleInteractors = _view->interactors();
@@ -588,14 +576,14 @@ bool WorkspacePanel::isGraphSynchronized() const {
 void WorkspacePanel::toggleSynchronization(bool f) {
   if (f) {
     _ui->linkButton->setIcon(
-        FontIconManager::icon(MaterialDesignIcons::LinkVariant, Qt::white, 0.8));
+        FontIconManager::icon(MaterialDesignIcons::LinkVariant, QColor(Qt::white), 0.8));
     _ui->linkButton->setToolTip("Click here to disable the synchronization with the Graphs "
                                 "panel.\nWhen synchronization is enabled, the current graph of the "
                                 "Graphs panel,\nbecomes the current one in the workspace active "
                                 "panel.");
   } else {
     _ui->linkButton->setIcon(
-        FontIconManager::icon(MaterialDesignIcons::LinkVariantOff, Qt::white, 0.8));
+        FontIconManager::icon(MaterialDesignIcons::LinkVariantOff, QColor(Qt::white), 0.8));
     _ui->linkButton->setToolTip("Click here to enable the synchronization with the Graphs "
                                 "panel.\nWhen synchronization is enabled, the current graph of the "
                                 "Graphs panel,\nbecomes the current one in the workspace active "

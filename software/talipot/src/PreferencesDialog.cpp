@@ -13,10 +13,12 @@
 
 #include <QMenu>
 #include "PreferencesDialog.h"
+#include "ThemeUtils.h"
 
 #include "ui_PreferencesDialog.h"
 
 #include <talipot/TlpTools.h>
+#include <talipot/TlpQtTools.h>
 #include <talipot/Settings.h>
 #include <talipot/ItemDelegate.h>
 #include <talipot/MetaTypes.h>
@@ -38,6 +40,8 @@ PreferencesDialog::PreferencesDialog(QWidget *parent)
           &PreferencesDialog::randomSeedCheckChanged);
   connect(_ui->resetAllDrawingDefaultsButton, &QAbstractButton::released,
           [this] { resetToTalipotDefaults(); });
+  connect(_ui->guiThemeCB, &QComboBox::currentTextChanged, this,
+          &PreferencesDialog::guiThemeChanged);
 
   // disable edition for title items (in column 0)
   for (int i = 0; i < _ui->graphDefaultsTable->rowCount(); ++i) {
@@ -242,6 +246,7 @@ void PreferencesDialog::writeSettings() {
   }
 
   Settings::instance().setSeedOfRandomSequence(tlp::getSeedOfRandomSequence());
+  Settings::instance().setGuiTheme(_ui->guiThemeCB->currentText());
 }
 
 void PreferencesDialog::readSettings() {
@@ -334,6 +339,8 @@ void PreferencesDialog::readSettings() {
   _ui->randomSeedCheck->setChecked(!isSeedRandom);
   _ui->randomSeedEdit->setEnabled(!isSeedRandom);
   _ui->randomSeedEdit->setText(isSeedRandom ? QString() : QString::number(seed));
+
+  _ui->guiThemeCB->setCurrentText(Settings::instance().guiTheme());
 }
 
 void PreferencesDialog::cellChanged(int row, int column) {
@@ -479,4 +486,13 @@ void PreferencesDialog::showGraphDefaultsContextMenu(const QPoint &p) {
       resetToTalipotDefaults(row, action->data().toInt());
     }
   }
+}
+
+void PreferencesDialog::guiThemeChanged(const QString &guiTheme) {
+  setApplicationGuiTheme(guiTheme, true);
+}
+
+void PreferencesDialog::reject() {
+  setApplicationGuiTheme(Settings::instance().guiTheme(), true);
+  QDialog::reject();
 }

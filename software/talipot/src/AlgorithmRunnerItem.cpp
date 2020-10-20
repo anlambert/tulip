@@ -49,12 +49,11 @@ AlgorithmRunnerItem::AlgorithmRunnerItem(QString pluginName, QWidget *parent)
   _ui->setupUi(this);
   connect(_ui->favoriteCheck, &QAbstractButton::toggled, this, &AlgorithmRunnerItem::favorized);
   _ui->settingsButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Cog, QColor("#5c8ec8")));
-  _ui->playButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Play, Qt::green));
+  _ui->playButton->setIcon(FontIconManager::icon(MaterialDesignIcons::Play, QColor(Qt::green)));
   const Plugin &plugin = PluginsManager::pluginInformation(QStringToTlpString(pluginName));
   // split pluginName after the second word if needed
   QStringList words = pluginName.split(' ');
   _ui->playButton->setText(pluginName);
-  _ui->playButton->setStyleSheet("text-align: left");
   QString tooltip(QString("Apply '") + pluginName + "'");
   // initialize parameters only if needed
   _ui->parameters->setVisible(false);
@@ -94,7 +93,7 @@ AlgorithmRunnerItem::AlgorithmRunnerItem(QString pluginName, QWidget *parent)
 
   connect(_ui->favoriteCheck, &QCheckBox::stateChanged, this,
           &AlgorithmRunnerItem::favoriteChanged);
-  QIcon icon = FontIconManager::icon(iconName, textColor(), 0.6);
+  QIcon icon = FontIconManager::icon(iconName, 0.6);
   _ui->languageLabel->setPixmap(icon.pixmap(_ui->languageLabel->size()));
   _ui->languageLabel->setToolTip(tooltip);
 }

@@ -82,9 +82,9 @@ void ScatterPlot2DInteractorTrendLine::construct() {
 
 ScatterPlot2DInteractorCorrelCoeffSelector::ScatterPlot2DInteractorCorrelCoeffSelector(
     const tlp::PluginContext *)
-    : ScatterPlot2DInteractor(FontIconManager::icon(MaterialDesignIcons::AutoFix, Qt::white),
-                              "Correlation Coefficient Selector",
-                              StandardInteractorPriority::ViewInteractor2),
+    : ScatterPlot2DInteractor(
+          FontIconManager::icon(MaterialDesignIcons::AutoFix, QColor(Qt::white)),
+          "Correlation Coefficient Selector", StandardInteractorPriority::ViewInteractor2),
       optionsWidget(nullptr) {}
 
 void ScatterPlot2DInteractorCorrelCoeffSelector::construct() {
