@@ -15,9 +15,10 @@
 #include <talipot/StringCollection.h>
 #include <talipot/GraphParallelTools.h>
 
+#include <libvpsc/generate-constraints.h>
+#include <libvpsc/remove_rectangle_overlap.h>
+
 #include "FastOverlapRemoval.h"
-#include "generate-constraints.h"
-#include "remove_rectangle_overlap.h"
 
 using namespace std;
 using namespace tlp;

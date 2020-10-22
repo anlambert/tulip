@@ -1,5 +1,3 @@
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
-
 SET(LIB_SRCS
     block.cpp
     blocks.cpp

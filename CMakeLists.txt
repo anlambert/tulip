@@ -302,7 +302,7 @@ ENDIF(NOT TALIPOT_BUILD_CORE_ONLY OR TALIPOT_BUILD_OGL)
 SET(OGDFInclude ${PROJECT_SOURCE_DIR}/thirdparty/OGDF/include)
 SET(OGDFLibrary OGDF-talipot-${TalipotMMVersion})
 
-SET(VPSCInclude ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/libvpsc)
+SET(VPSCInclude ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/)
 SET(VPSCLibrary vpsc)
 
 SET(UTF8CppInclude ${PROJECT_SOURCE_DIR}/thirdparty/utf8-cpp)
