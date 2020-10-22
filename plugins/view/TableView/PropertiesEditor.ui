@@ -218,6 +218,9 @@ contains the given pattern</string>
         <property name="cornerButtonEnabled">
          <bool>false</bool>
         </property>
+        <attribute name="horizontalHeaderHighlightSections">
+         <bool>false</bool>
+        </attribute>
         <attribute name="horizontalHeaderMinimumSectionSize">
          <number>50</number>
         </attribute>
@@ -225,6 +228,9 @@ contains the given pattern</string>
          <bool>true</bool>
         </attribute>
         <attribute name="verticalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="verticalHeaderHighlightSections">
          <bool>false</bool>
         </attribute>
        </widget>
