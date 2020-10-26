@@ -232,7 +232,7 @@ std::vector<edge> GraphStorage::getEdges(const node src, const node tgt, bool di
     }
   }
 
-  // remove possible duplicates due to self loops appearing twid
+  // remove possible duplicates due to self loops appearing twice
   std::sort(edges.begin(), edges.end());
   edges.erase(std::unique(edges.begin(), edges.end()), edges.end());
 
