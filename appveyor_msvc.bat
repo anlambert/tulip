@@ -49,6 +49,7 @@ curl -LO https://github.com/stachenov/quazip/archive/v0.9.1.zip
 cd quazip-0.9.1
 md build && cd build
 cmake -G "%CMAKE_VS_GENERATOR%"^
+  -A "%MSVC_ARCH%"^
   -DCMAKE_INSTALL_PREFIX="C:/talipot_dependencies"^
   -DCMAKE_PREFIX_PATH="%QT5_DIR%"^
   -DCMAKE_INCLUDE_PATH="C:/Tools/vcpkg/installed/x64-windows/include"^
@@ -70,6 +71,7 @@ C:/Tools/vcpkg/installed/x64-windows/lib;^
 C:/talipot_dependencies/lib;^
 C:/talipot_dependencies/bin
 cmake -G "%CMAKE_VS_GENERATOR%"^
+  -A "%MSVC_ARCH%"^
   -DCMAKE_INSTALL_PREFIX="C:/talipot"^
   -DCMAKE_INCLUDE_PATH="%INCLUDE_PATH%"^
   -DCMAKE_LIBRARY_PATH="%LIBRARY_PATH%"^
