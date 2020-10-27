@@ -999,6 +999,10 @@ void TalipotMainWindow::initPythonIDE() {
     _pythonIDE->setParent(nullptr);
     _ui->docksWidget->addWidget(_pythonIDE);
     _ui->developButton->setCheckable(true);
+  } else {
+    auto desktopSize = QDesktopWidget().availableGeometry(this).size();
+    _pythonIDE->resize(desktopSize.width() * 0.3, desktopSize.height() * 0.7);
+    _pythonIDE->move(0, 0);
   }
 }
 
@@ -1020,6 +1024,8 @@ void TalipotMainWindow::anchoredPythonIDE(bool anchored) {
     _ui->docksWidget->setCurrentIndex(0);
     _ui->docksWidget->removeWidget(_pythonIDE);
     _pythonIDE->setParent(nullptr);
+    auto desktopSize = QDesktopWidget().availableGeometry(this).size();
+    _pythonIDE->resize(desktopSize.width() * 0.3, desktopSize.height() * 0.7);
     _pythonIDE->show();
     _ui->mainSplitter->setCollapsible(1, false);
   }
