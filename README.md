@@ -1,4 +1,4 @@
-# Talipot [![license](https://img.shields.io/github/license/anlambert/talipot.svg)](https://www.gnu.org/licenses/gpl-3.0.html) [![Build Status](https://travis-ci.org/anlambert/talipot.svg?branch=master)](https://travis-ci.org/anlambert/talipot) [![Build Status](https://ci.appveyor.com/api/projects/status/github/anlambert/talipot?branch=master&svg=true)](https://ci.appveyor.com/project/anlambert/talipot) [![Download](https://api.bintray.com/packages/anlambert/talipot_binaries/Talipot/images/download.svg?version=1.0.0-alpha1-dev) ](https://bintray.com/anlambert/talipot_binaries/Talipot/1.0.0-alpha1-dev/link)
+# Talipot [![license](https://img.shields.io/github/license/anlambert/talipot.svg)](https://www.gnu.org/licenses/gpl-3.0.html) [![Build Status](https://travis-ci.com/anlambert/talipot.svg?branch=master)](https://travis-ci.com/anlambert/talipot) [![Build Status](https://ci.appveyor.com/api/projects/status/github/anlambert/talipot?branch=master&svg=true)](https://ci.appveyor.com/project/anlambert/talipot) [![Download](https://api.bintray.com/packages/anlambert/talipot_binaries/Talipot/images/download.svg?version=1.0.0-alpha1-dev) ](https://bintray.com/anlambert/talipot_binaries/Talipot/1.0.0-alpha1-dev/link)
 
 
 Talipot is an open source, cross-platform, data visualization framework mainly dedicated to the analysis,
@@ -90,7 +90,7 @@ If you are a MacOS user, we recommend to use [MacPorts](https://www.macports.org
 If you are a Windows user, we recommend to use [MSYS2](https://www.msys2.org) as it greatly facilitates the build of Talipot on
 that platform (notably by providing up to date compilers and precompiled dependencies).
 
-Hints on how to build Talipot for these three platforms can be found in the continuous integration setup for [TravisCI](https://travis-ci.org) and
+Hints on how to build Talipot for these three platforms can be found in the continuous integration setup for [TravisCI](https://travis-ci.com) and
 [AppVeyor](https://www.appveyor.com):
 
   * [.travis.yml](.travis.yml)
