@@ -4,8 +4,8 @@
 #   - Microsoft Visual Studio 2015 compiler
 # C++11 standard, Qt >= 5.9 and Python 3.7 will be used to build Talipot with both compilers.
 
-# use Visual Studio 2017 appveyor image for the builds
-os: Visual Studio 2017
+# use Visual Studio 2019 appveyor image for the builds
+os: Visual Studio 2019
 
 # Use build caches that will be saved and restored between build jobs.
 # Those caches will hold ccache content for gcc builds and clcache content for msvc builds
@@ -23,31 +23,27 @@ init:
 # define build jobs
 environment:
   matrix:
-    # GCC core build
-    - MSYS2_ARCH: x86_64
-      MSYSTEM: MINGW64
-      PYTHON_HOME: "C:/Python38-x64"
-      BUILD_WHEELS: false
+    # # GCC core build
+    # - MSYS2_ARCH: x86_64
+    #   MSYSTEM: MINGW64
+    #   BUILD_WHEELS: false
 
-    # GCC complete build
-    - MSYS2_ARCH: x86_64
-      MSYSTEM: MINGW64
-      PYTHON_HOME: "C:/Python38-x64"
-      BUILD_WHEELS: false
+    # # GCC complete build
+    # - MSYS2_ARCH: x86_64
+    #   MSYSTEM: MINGW64
+    #   BUILD_WHEELS: false
 
     # MSVC core build
-    - CMAKE_VS_GENERATOR: "Visual Studio 15 2017 Win64"
-      MSVC_PLATFORM: "x64"
-      MSVC_PLATFORM_TOOLSET: "v141"
-      QT5_DIR: "C:/Qt/5.13/msvc2017_64"
-      PYTHON_EXECUTABLE: "C:/Python38-x64/python.exe"
+    - CMAKE_VS_GENERATOR: "Visual Studio 16 2019"
+      MSVC_ARCH: "x64"
+      QT5_DIR: "C:/Qt/5.15/msvc2019_64"
+      PYTHON_EXECUTABLE: "C:/Python39-x64/python.exe"
 
     # MSVC complete build
-    - CMAKE_VS_GENERATOR: "Visual Studio 15 2017 Win64"
-      MSVC_PLATFORM: "x64"
-      MSVC_PLATFORM_TOOLSET: "v141"
-      QT5_DIR: "C:/Qt/5.13/msvc2017_64"
-      PYTHON_EXECUTABLE: "C:/Python38-x64/python.exe"
+    - CMAKE_VS_GENERATOR: "Visual Studio 16 2019"
+      MSVC_ARCH: "x64"
+      QT5_DIR: "C:/Qt/5.15/msvc2019_64"
+      PYTHON_EXECUTABLE: "C:/Python39-x64/python.exe"
 
     # GCC Python wheels build
     - MSYS2_ARCH: x86_64
