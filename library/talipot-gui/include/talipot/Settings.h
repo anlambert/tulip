@@ -61,38 +61,6 @@ public:
     */
   void addToRecentDocuments(const QString &);
 
-  /**
-    @brief Check recently opened documents list and remove non-existing ones
-    */
-  void checkRecentDocuments();
-
-  /**
-   * @brief Adds a remote location from which to list plugins.
-   *
-   * @param remoteLocation The URL of the plugin server.
-   * @return void
-   **/
-  void addRemoteLocation(const QString &remoteLocation);
-
-  /**
-   * @brief Removes a location from which to list plugins.
-   *
-   * @param remoteLocation The URL of the plugin server.
-   * @return void
-   **/
-  void removeRemoteLocation(const QString &remoteLocation);
-
-  /**
-   * @brief Retrieves the list of locations from which to list plugins.
-   *
-   * @return const QStringList
-   **/
-  const QStringList remoteLocations() const;
-  const QStringList pluginsToRemove() const;
-
-  void markPluginForRemoval(const QString &pluginLibrary);
-  void unmarkPluginForRemoval(const QString &pluginLibrary);
-
   tlp::Color defaultColor(tlp::ElementType elem, bool talipotDefault = false);
   void setDefaultColor(tlp::ElementType elem, const tlp::Color &color);
 
@@ -172,9 +140,6 @@ public:
   unsigned int seedOfRandomSequence() const;
   void setSeedOfRandomSequence(unsigned int);
   void initSeedOfRandomSequence();
-
-  bool warnUserAboutGraphicsCard() const;
-  void setWarnUserAboutGraphicsCard(bool);
 
   bool loggerAnchored() const;
   void setLoggerAnchored(bool);

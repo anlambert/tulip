@@ -22,15 +22,12 @@
 #include <talipot/TlpTools.h>
 #include <talipot/TlpQtTools.h>
 
-#include <QtCore/QFileInfo>
-#include <QtCore/QStringList>
+#include <QStringList>
 
 using namespace tlp;
 using namespace std;
 
-static const QString TS_RemoteLocations = "app/remote_locations";
 static const QString TS_RecentDocuments = "app/recent_documents";
-static const QString TS_PluginsToRemove = "app/pluginsToRemove";
 static const QString TS_DefaultColor = "graph/defaults/color/";
 static const QString TS_DefaultLabelColor = "graph/defaults/color/labels";
 static const QString TS_DefaultSize = "graph/defaults/size/";
@@ -63,7 +60,6 @@ static const QString TS_LogPluginCall = "graph/auto/log";
 static const QString TS_UseTlpbFileFormat = "graph/auto/usetlpb";
 static const QString TS_SeedForRandomSequence = "graph/auto/seed";
 
-static const QString TS_WarnUserAboutGraphicsCard = "app/warn_about_graphics_card";
 static const QString TS_LoggerAnchored = "app/gui/logger_anchored";
 static const QString TS_PythonIDEAnchored = "app/gui/python_ide_anchored";
 
@@ -86,18 +82,6 @@ QStringList Settings::recentDocuments() const {
   return value(TS_RecentDocuments).toStringList();
 }
 
-void Settings::checkRecentDocuments() {
-  QList<QVariant> recentDocumentsValue = value(TS_RecentDocuments).toList();
-
-  for (const QVariant &doc : recentDocumentsValue) {
-    if (!QFileInfo(doc.toString()).exists()) {
-      recentDocumentsValue.removeAll(doc);
-    }
-  }
-
-  setValue(TS_RecentDocuments, recentDocumentsValue);
-}
-
 void Settings::addToRecentDocuments(const QString &name) {
   QList<QVariant> recentDocumentsValue = value(TS_RecentDocuments).toList();
 
@@ -112,54 +96,6 @@ void Settings::addToRecentDocuments(const QString &name) {
   }
 
   setValue(TS_RecentDocuments, recentDocumentsValue);
-}
-
-void Settings::addRemoteLocation(const QString &remoteLocation) {
-  QStringList remoteLocations = value(TS_RemoteLocations).toStringList();
-
-  if (!remoteLocations.contains(remoteLocation)) {
-    remoteLocations.append(remoteLocation);
-  }
-
-  setValue(TS_RemoteLocations, remoteLocations);
-}
-
-void Settings::removeRemoteLocation(const QString &remoteLocation) {
-  QStringList remoteLocations = value(TS_RemoteLocations).toStringList();
-
-  if (remoteLocations.contains(remoteLocation)) {
-    remoteLocations.removeOne(remoteLocation);
-  }
-
-  setValue(TS_RemoteLocations, remoteLocations);
-}
-
-const QStringList Settings::remoteLocations() const {
-  return value(TS_RemoteLocations).toStringList();
-}
-
-const QStringList Settings::pluginsToRemove() const {
-  return value(TS_PluginsToRemove).toStringList();
-}
-
-void Settings::markPluginForRemoval(const QString &pluginLibrary) {
-  QStringList markedPlugins = value(TS_PluginsToRemove).toStringList();
-
-  if (!markedPlugins.contains(pluginLibrary)) {
-    markedPlugins.append(pluginLibrary);
-  }
-
-  setValue(TS_PluginsToRemove, markedPlugins);
-}
-
-void Settings::unmarkPluginForRemoval(const QString &pluginLibrary) {
-  QStringList markedPlugins = value(TS_PluginsToRemove).toStringList();
-
-  if (markedPlugins.contains(pluginLibrary)) {
-    markedPlugins.removeAll(pluginLibrary);
-  }
-
-  setValue(TS_PluginsToRemove, markedPlugins);
 }
 
 QString Settings::elementKey(const QString &configEntry, tlp::ElementType elem) {
@@ -420,14 +356,6 @@ void Settings::setSeedOfRandomSequence(unsigned int seed) {
 
 void Settings::initSeedOfRandomSequence() {
   tlp::setSeedOfRandomSequence(seedOfRandomSequence());
-}
-
-bool Settings::warnUserAboutGraphicsCard() const {
-  return value(TS_WarnUserAboutGraphicsCard, true).toBool();
-}
-
-void Settings::setWarnUserAboutGraphicsCard(bool f) {
-  setValue(TS_WarnUserAboutGraphicsCard, f);
 }
 
 bool Settings::loggerAnchored() const {
