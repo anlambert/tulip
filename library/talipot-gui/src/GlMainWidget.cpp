@@ -70,7 +70,7 @@ GlMainWidget::GlMainWidget(QWidget *parent, View *view)
   format.setOption(QSurfaceFormat::DebugContext);
 #endif
   setFormat(format);
-  getScene()->setViewOrtho(Settings::instance().isViewOrtho());
+  getScene()->setViewOrtho(Settings::isViewOrtho());
   OpenGlConfigManager::initExtensions();
   doneCurrent();
 }

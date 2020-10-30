@@ -118,124 +118,114 @@ inline void setDefaultEdgeValueInProperty(const std::string &propertyName, const
 }
 
 void PreferencesDialog::writeSettings() {
-  Settings::instance().setProxyEnabled(_ui->proxyCheck->isChecked());
+  Settings::setProxyEnabled(_ui->proxyCheck->isChecked());
 
   switch (_ui->proxyType->currentIndex()) {
   case 0:
-    Settings::instance().setProxyType(QNetworkProxy::Socks5Proxy);
+    Settings::setProxyType(QNetworkProxy::Socks5Proxy);
     break;
 
   case 1:
-    Settings::instance().setProxyType(QNetworkProxy::HttpProxy);
+    Settings::setProxyType(QNetworkProxy::HttpProxy);
     break;
 
   case 2:
-    Settings::instance().setProxyType(QNetworkProxy::HttpCachingProxy);
+    Settings::setProxyType(QNetworkProxy::HttpCachingProxy);
     break;
 
   case 3:
-    Settings::instance().setProxyType(QNetworkProxy::FtpCachingProxy);
+    Settings::setProxyType(QNetworkProxy::FtpCachingProxy);
     break;
 
   default:
     break;
   }
 
-  Settings::instance().setProxyHost(_ui->proxyAddr->text());
-  Settings::instance().setProxyPort(_ui->proxyPort->value());
-  Settings::instance().setUseProxyAuthentification(_ui->proxyAuthCheck->isChecked());
-  Settings::instance().setProxyUsername(_ui->proxyUser->text());
-  Settings::instance().setProxyPassword(_ui->proxyPassword->text());
+  Settings::setProxyHost(_ui->proxyAddr->text());
+  Settings::setProxyPort(_ui->proxyPort->value());
+  Settings::setUseProxyAuthentification(_ui->proxyAuthCheck->isChecked());
+  Settings::setProxyUsername(_ui->proxyUser->text());
+  Settings::setProxyPassword(_ui->proxyPassword->text());
 
   QAbstractItemModel *model = _ui->graphDefaultsTable->model();
   bool applyDrawingDefaults = _ui->applyDrawingDefaultsCheck->isChecked();
   bool graphPush = true;
 
-  if (Settings::instance().defaultColor(tlp::NODE) !=
-      model->data(model->index(0, 1)).value<tlp::Color>()) {
-    Settings::instance().setDefaultColor(tlp::NODE,
-                                         model->data(model->index(0, 1)).value<tlp::Color>());
+  if (Settings::defaultColor(tlp::NODE) != model->data(model->index(0, 1)).value<tlp::Color>()) {
+    Settings::setDefaultColor(tlp::NODE, model->data(model->index(0, 1)).value<tlp::Color>());
 
     if (applyDrawingDefaults) {
-      setDefaultNodeValueInProperty<ColorProperty>(
-          "viewColor", Settings::instance().defaultColor(tlp::NODE), graphPush);
+      setDefaultNodeValueInProperty<ColorProperty>("viewColor", Settings::defaultColor(tlp::NODE),
+                                                   graphPush);
     }
   }
 
-  if (Settings::instance().defaultColor(tlp::EDGE) !=
-      model->data(model->index(0, 2)).value<tlp::Color>()) {
-    Settings::instance().setDefaultColor(tlp::EDGE,
-                                         model->data(model->index(0, 2)).value<tlp::Color>());
+  if (Settings::defaultColor(tlp::EDGE) != model->data(model->index(0, 2)).value<tlp::Color>()) {
+    Settings::setDefaultColor(tlp::EDGE, model->data(model->index(0, 2)).value<tlp::Color>());
 
     if (applyDrawingDefaults) {
-      setDefaultEdgeValueInProperty<ColorProperty>(
-          "viewColor", Settings::instance().defaultColor(tlp::EDGE), graphPush);
+      setDefaultEdgeValueInProperty<ColorProperty>("viewColor", Settings::defaultColor(tlp::EDGE),
+                                                   graphPush);
     }
   }
 
-  if (Settings::instance().defaultSize(tlp::NODE) !=
-      model->data(model->index(1, 1)).value<tlp::Size>()) {
-    Settings::instance().setDefaultSize(tlp::NODE,
-                                        model->data(model->index(1, 1)).value<tlp::Size>());
-    setDefaultNodeValueInProperty<SizeProperty>(
-        "viewSize", Settings::instance().defaultSize(tlp::NODE), graphPush);
+  if (Settings::defaultSize(tlp::NODE) != model->data(model->index(1, 1)).value<tlp::Size>()) {
+    Settings::setDefaultSize(tlp::NODE, model->data(model->index(1, 1)).value<tlp::Size>());
+    setDefaultNodeValueInProperty<SizeProperty>("viewSize", Settings::defaultSize(tlp::NODE),
+                                                graphPush);
   }
 
-  if (Settings::instance().defaultSize(tlp::EDGE) !=
-      model->data(model->index(1, 2)).value<tlp::Size>()) {
-    Settings::instance().setDefaultSize(tlp::EDGE,
-                                        model->data(model->index(1, 2)).value<tlp::Size>());
+  if (Settings::defaultSize(tlp::EDGE) != model->data(model->index(1, 2)).value<tlp::Size>()) {
+    Settings::setDefaultSize(tlp::EDGE, model->data(model->index(1, 2)).value<tlp::Size>());
 
     if (applyDrawingDefaults) {
-      setDefaultEdgeValueInProperty<SizeProperty>(
-          "viewSize", Settings::instance().defaultSize(tlp::EDGE), graphPush);
+      setDefaultEdgeValueInProperty<SizeProperty>("viewSize", Settings::defaultSize(tlp::EDGE),
+                                                  graphPush);
     }
   }
 
-  if (Settings::instance().defaultShape(tlp::NODE) !=
+  if (Settings::defaultShape(tlp::NODE) !=
       model->data(model->index(2, 1)).value<NodeShape::NodeShapes>()) {
-    Settings::instance().setDefaultShape(
-        tlp::NODE, model->data(model->index(2, 1)).value<NodeShape::NodeShapes>());
+    Settings::setDefaultShape(tlp::NODE,
+                              model->data(model->index(2, 1)).value<NodeShape::NodeShapes>());
 
     if (applyDrawingDefaults) {
-      setDefaultNodeValueInProperty<IntegerProperty>(
-          "viewShape", Settings::instance().defaultShape(tlp::NODE), graphPush);
+      setDefaultNodeValueInProperty<IntegerProperty>("viewShape", Settings::defaultShape(tlp::NODE),
+                                                     graphPush);
     }
   }
 
-  if (Settings::instance().defaultShape(tlp::EDGE) !=
+  if (Settings::defaultShape(tlp::EDGE) !=
       int(model->data(model->index(2, 2)).value<EdgeShape::EdgeShapes>())) {
-    Settings::instance().setDefaultShape(
-        tlp::EDGE, int(model->data(model->index(2, 2)).value<EdgeShape::EdgeShapes>()));
-    setDefaultEdgeValueInProperty<IntegerProperty>(
-        "viewShape", Settings::instance().defaultShape(tlp::EDGE), graphPush);
+    Settings::setDefaultShape(tlp::EDGE,
+                              int(model->data(model->index(2, 2)).value<EdgeShape::EdgeShapes>()));
+    setDefaultEdgeValueInProperty<IntegerProperty>("viewShape", Settings::defaultShape(tlp::EDGE),
+                                                   graphPush);
   }
 
-  if (Settings::instance().defaultLabelColor() !=
-      model->data(model->index(4, 1)).value<tlp::Color>()) {
-    Settings::instance().setDefaultLabelColor(model->data(model->index(4, 1)).value<tlp::Color>());
+  if (Settings::defaultLabelColor() != model->data(model->index(4, 1)).value<tlp::Color>()) {
+    Settings::setDefaultLabelColor(model->data(model->index(4, 1)).value<tlp::Color>());
 
     if (applyDrawingDefaults) {
-      setDefaultNodeValueInProperty<ColorProperty>(
-          "viewLabelColor", Settings::instance().defaultLabelColor(), graphPush);
-      setDefaultEdgeValueInProperty<ColorProperty>(
-          "viewLabelColor", Settings::instance().defaultLabelColor(), graphPush);
+      setDefaultNodeValueInProperty<ColorProperty>("viewLabelColor", Settings::defaultLabelColor(),
+                                                   graphPush);
+      setDefaultEdgeValueInProperty<ColorProperty>("viewLabelColor", Settings::defaultLabelColor(),
+                                                   graphPush);
     }
   }
 
-  Settings::instance().setDefaultSelectionColor(
-      model->data(model->index(3, 1)).value<tlp::Color>());
+  Settings::setDefaultSelectionColor(model->data(model->index(3, 1)).value<tlp::Color>());
 
-  Settings::instance().applyProxySettings();
+  Settings::applyProxySettings();
 
-  Settings::instance().setDisplayDefaultViews(_ui->displayDefaultViews->isChecked());
-  Settings::instance().setAutomaticMapMetric(_ui->colorMappingCheck->isChecked());
-  Settings::instance().setAutomaticRatio(_ui->aspectRatioCheck->isChecked());
-  Settings::instance().setAutomaticCentering(_ui->centerViewCheck->isChecked());
-  Settings::instance().setViewOrtho(_ui->viewOrthoCheck->isChecked());
-  Settings::instance().setResultPropertyStored(_ui->resultPropertyStoredCheck->isChecked());
-  Settings::instance().setLogPluginCall(_ui->logCombo->currentIndex());
-  Settings::instance().setUseTlpbFileFormat(_ui->usetlpbformat->isChecked());
+  Settings::setDisplayDefaultViews(_ui->displayDefaultViews->isChecked());
+  Settings::setAutomaticMapMetric(_ui->colorMappingCheck->isChecked());
+  Settings::setAutomaticRatio(_ui->aspectRatioCheck->isChecked());
+  Settings::setAutomaticCentering(_ui->centerViewCheck->isChecked());
+  Settings::setViewOrtho(_ui->viewOrthoCheck->isChecked());
+  Settings::setResultPropertyStored(_ui->resultPropertyStoredCheck->isChecked());
+  Settings::setLogPluginCall(_ui->logCombo->currentIndex());
+  Settings::setUseTlpbFileFormat(_ui->usetlpbformat->isChecked());
 
   if (_ui->randomSeedCheck->isChecked()) {
     bool ok = true;
@@ -245,20 +235,20 @@ void PreferencesDialog::writeSettings() {
     tlp::setSeedOfRandomSequence();
   }
 
-  Settings::instance().setSeedOfRandomSequence(tlp::getSeedOfRandomSequence());
-  Settings::instance().setGuiTheme(_ui->guiThemeCB->currentText());
+  Settings::setSeedOfRandomSequence(tlp::getSeedOfRandomSequence());
+  Settings::setGuiTheme(_ui->guiThemeCB->currentText());
 }
 
 void PreferencesDialog::readSettings() {
-  _ui->proxyCheck->setChecked(Settings::instance().isProxyEnabled());
+  _ui->proxyCheck->setChecked(Settings::isProxyEnabled());
 
-  if (Settings::instance().isProxyEnabled()) {
+  if (Settings::isProxyEnabled()) {
     _ui->networkFrame1->setEnabled(true);
     _ui->networkFrame2->setEnabled(true);
     _ui->networkFrame3->setEnabled(true);
   }
 
-  switch (Settings::instance().proxyType()) {
+  switch (Settings::proxyType()) {
   case QNetworkProxy::Socks5Proxy:
     _ui->proxyType->setCurrentIndex(0);
     break;
@@ -279,68 +269,68 @@ void PreferencesDialog::readSettings() {
     break;
   }
 
-  _ui->proxyAddr->setText(Settings::instance().proxyHost());
-  _ui->proxyPort->setValue(Settings::instance().proxyPort());
-  _ui->proxyAuthCheck->setChecked(Settings::instance().isUseProxyAuthentification());
+  _ui->proxyAddr->setText(Settings::proxyHost());
+  _ui->proxyPort->setValue(Settings::proxyPort());
+  _ui->proxyAuthCheck->setChecked(Settings::isUseProxyAuthentification());
 
-  if (Settings::instance().isUseProxyAuthentification()) {
+  if (Settings::isUseProxyAuthentification()) {
     _ui->proxyUser->setEnabled(true);
     _ui->proxyPassword->setEnabled(true);
   }
 
-  _ui->proxyUser->setText(Settings::instance().proxyUsername());
-  _ui->proxyPassword->setText(Settings::instance().proxyPassword());
+  _ui->proxyUser->setText(Settings::proxyUsername());
+  _ui->proxyPassword->setText(Settings::proxyPassword());
 
   QAbstractItemModel *model = _ui->graphDefaultsTable->model();
   model->setData(model->index(0, 1),
-                 QVariant::fromValue<tlp::Color>(Settings::instance().defaultColor(tlp::NODE)));
+                 QVariant::fromValue<tlp::Color>(Settings::defaultColor(tlp::NODE)));
   model->setData(model->index(0, 2),
-                 QVariant::fromValue<tlp::Color>(Settings::instance().defaultColor(tlp::EDGE)));
+                 QVariant::fromValue<tlp::Color>(Settings::defaultColor(tlp::EDGE)));
   model->setData(model->index(1, 1),
-                 QVariant::fromValue<tlp::Size>(Settings::instance().defaultSize(tlp::NODE)));
+                 QVariant::fromValue<tlp::Size>(Settings::defaultSize(tlp::NODE)));
   model->setData(model->index(1, 2),
-                 QVariant::fromValue<tlp::Size>(Settings::instance().defaultSize(tlp::EDGE)));
+                 QVariant::fromValue<tlp::Size>(Settings::defaultSize(tlp::EDGE)));
   model->setData(model->index(2, 1),
-                 QVariant::fromValue<NodeShape::NodeShapes>(static_cast<NodeShape::NodeShapes>(
-                     Settings::instance().defaultShape(tlp::NODE))));
+                 QVariant::fromValue<NodeShape::NodeShapes>(
+                     static_cast<NodeShape::NodeShapes>(Settings::defaultShape(tlp::NODE))));
   model->setData(model->index(2, 2),
-                 QVariant::fromValue<EdgeShape::EdgeShapes>(static_cast<EdgeShape::EdgeShapes>(
-                     Settings::instance().defaultShape(tlp::EDGE))));
+                 QVariant::fromValue<EdgeShape::EdgeShapes>(
+                     static_cast<EdgeShape::EdgeShapes>(Settings::defaultShape(tlp::EDGE))));
   model->setData(model->index(3, 1),
-                 QVariant::fromValue<tlp::Color>(Settings::instance().defaultSelectionColor()));
+                 QVariant::fromValue<tlp::Color>(Settings::defaultSelectionColor()));
   model->setData(model->index(3, 2),
-                 QVariant::fromValue<tlp::Color>(Settings::instance().defaultSelectionColor()));
+                 QVariant::fromValue<tlp::Color>(Settings::defaultSelectionColor()));
   model->setData(model->index(4, 1),
-                 QVariant::fromValue<tlp::Color>(Settings::instance().defaultLabelColor()));
+                 QVariant::fromValue<tlp::Color>(Settings::defaultLabelColor()));
   model->setData(model->index(4, 2),
-                 QVariant::fromValue<tlp::Color>(Settings::instance().defaultLabelColor()));
+                 QVariant::fromValue<tlp::Color>(Settings::defaultLabelColor()));
   // edges selection color is not editable
   //_ui->graphDefaultsTable->item(3,2)->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
   _ui->applyDrawingDefaultsCheck->setChecked(false);
   _ui->applyDrawingDefaultsCheck->setEnabled(!iteratorEmpty(tlp::getRootGraphs()));
 
-  _ui->displayDefaultViews->setChecked(Settings::instance().displayDefaultViews());
-  _ui->aspectRatioCheck->setChecked(Settings::instance().isAutomaticRatio());
-  _ui->centerViewCheck->setChecked(Settings::instance().isAutomaticCentering());
-  _ui->viewOrthoCheck->setChecked(Settings::instance().isViewOrtho());
-  _ui->resultPropertyStoredCheck->setChecked(Settings::instance().isResultPropertyStored());
-  _ui->colorMappingCheck->setChecked(Settings::instance().isAutomaticMapMetric());
-  _ui->logCombo->setCurrentIndex(Settings::instance().logPluginCall());
+  _ui->displayDefaultViews->setChecked(Settings::displayDefaultViews());
+  _ui->aspectRatioCheck->setChecked(Settings::isAutomaticRatio());
+  _ui->centerViewCheck->setChecked(Settings::isAutomaticCentering());
+  _ui->viewOrthoCheck->setChecked(Settings::isViewOrtho());
+  _ui->resultPropertyStoredCheck->setChecked(Settings::isResultPropertyStored());
+  _ui->colorMappingCheck->setChecked(Settings::isAutomaticMapMetric());
+  _ui->logCombo->setCurrentIndex(Settings::logPluginCall());
 
-  if (Settings::instance().isUseTlpbFileFormat()) {
+  if (Settings::isUseTlpbFileFormat()) {
     _ui->usetlpbformat->setChecked(true);
   }
 
   // initialize seed according to settings
   unsigned int seed;
-  tlp::setSeedOfRandomSequence(seed = Settings::instance().seedOfRandomSequence());
+  tlp::setSeedOfRandomSequence(seed = Settings::seedOfRandomSequence());
   // UINT_MAX seed value means the seed is random
   bool isSeedRandom = (seed == UINT_MAX);
   _ui->randomSeedCheck->setChecked(!isSeedRandom);
   _ui->randomSeedEdit->setEnabled(!isSeedRandom);
   _ui->randomSeedEdit->setText(isSeedRandom ? QString() : QString::number(seed));
 
-  _ui->guiThemeCB->setCurrentText(Settings::instance().guiTheme());
+  _ui->guiThemeCB->setCurrentText(Settings::guiTheme());
 }
 
 void PreferencesDialog::cellChanged(int row, int column) {
@@ -377,18 +367,18 @@ void PreferencesDialog::resetToTalipotDefaults(int row, int updateMode) {
 
   QAbstractItemModel *model = _ui->graphDefaultsTable->model();
   model->setData(model->index(4, 1),
-                 QVariant::fromValue<tlp::Color>(Settings::instance().defaultLabelColor()));
+                 QVariant::fromValue<tlp::Color>(Settings::defaultLabelColor()));
   model->setData(model->index(4, 2),
-                 QVariant::fromValue<tlp::Color>(Settings::instance().defaultLabelColor()));
+                 QVariant::fromValue<tlp::Color>(Settings::defaultLabelColor()));
 
   switch (row) {
   case 0: // default color
     if (updateMode == RESET_NODE) {
       model->setData(model->index(0, 1),
-                     QVariant::fromValue<tlp::Color>(Settings::instance().defaultColor(tlp::NODE)));
+                     QVariant::fromValue<tlp::Color>(Settings::defaultColor(tlp::NODE)));
     } else {
       model->setData(model->index(0, 2),
-                     QVariant::fromValue<tlp::Color>(Settings::instance().defaultColor(tlp::EDGE)));
+                     QVariant::fromValue<tlp::Color>(Settings::defaultColor(tlp::EDGE)));
     }
 
     break;
@@ -396,10 +386,10 @@ void PreferencesDialog::resetToTalipotDefaults(int row, int updateMode) {
   case 1: // default size
     if (updateMode == RESET_NODE) {
       model->setData(model->index(1, 1),
-                     QVariant::fromValue<tlp::Size>(Settings::instance().defaultSize(tlp::NODE)));
+                     QVariant::fromValue<tlp::Size>(Settings::defaultSize(tlp::NODE)));
     } else {
       model->setData(model->index(1, 2),
-                     QVariant::fromValue<tlp::Size>(Settings::instance().defaultSize(tlp::EDGE)));
+                     QVariant::fromValue<tlp::Size>(Settings::defaultSize(tlp::EDGE)));
     }
 
     break;
@@ -407,12 +397,12 @@ void PreferencesDialog::resetToTalipotDefaults(int row, int updateMode) {
   case 2: // default shape
     if (updateMode == RESET_NODE) {
       model->setData(model->index(2, 1),
-                     QVariant::fromValue<NodeShape::NodeShapes>(static_cast<NodeShape::NodeShapes>(
-                         Settings::instance().defaultShape(tlp::NODE))));
+                     QVariant::fromValue<NodeShape::NodeShapes>(
+                         static_cast<NodeShape::NodeShapes>(Settings::defaultShape(tlp::NODE))));
     } else {
       model->setData(model->index(2, 2),
-                     QVariant::fromValue<EdgeShape::EdgeShapes>(static_cast<EdgeShape::EdgeShapes>(
-                         Settings::instance().defaultShape(tlp::EDGE))));
+                     QVariant::fromValue<EdgeShape::EdgeShapes>(
+                         static_cast<EdgeShape::EdgeShapes>(Settings::defaultShape(tlp::EDGE))));
     }
 
     break;
@@ -420,10 +410,10 @@ void PreferencesDialog::resetToTalipotDefaults(int row, int updateMode) {
   case 3: // default selection color
     if (updateMode == RESET_NODE) {
       model->setData(model->index(3, 1),
-                     QVariant::fromValue<tlp::Color>(Settings::instance().defaultSelectionColor()));
+                     QVariant::fromValue<tlp::Color>(Settings::defaultSelectionColor()));
     } else {
       model->setData(model->index(3, 2),
-                     QVariant::fromValue<tlp::Color>(Settings::instance().defaultSelectionColor()));
+                     QVariant::fromValue<tlp::Color>(Settings::defaultSelectionColor()));
     }
 
     break;
@@ -431,10 +421,10 @@ void PreferencesDialog::resetToTalipotDefaults(int row, int updateMode) {
   case 4: // default label color
     if (updateMode == RESET_NODE) {
       model->setData(model->index(4, 1),
-                     QVariant::fromValue<tlp::Color>(Settings::instance().defaultLabelColor()));
+                     QVariant::fromValue<tlp::Color>(Settings::defaultLabelColor()));
     } else {
       model->setData(model->index(4, 2),
-                     QVariant::fromValue<tlp::Color>(Settings::instance().defaultLabelColor()));
+                     QVariant::fromValue<tlp::Color>(Settings::defaultLabelColor()));
     }
 
   default:
@@ -493,6 +483,6 @@ void PreferencesDialog::guiThemeChanged(const QString &guiTheme) {
 }
 
 void PreferencesDialog::reject() {
-  setApplicationGuiTheme(Settings::instance().guiTheme(), true);
+  setApplicationGuiTheme(Settings::guiTheme(), true);
   QDialog::reject();
 }

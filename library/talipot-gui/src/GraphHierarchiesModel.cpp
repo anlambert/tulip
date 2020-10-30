@@ -484,7 +484,7 @@ QMap<tlp::Graph *, QString> GraphHierarchiesModel::writeProject(tlp::Project *pr
     project->removeAllDir(folder);
     project->mkpath(folder);
 
-    if (!Settings::instance().isUseTlpbFileFormat()) {
+    if (!Settings::isUseTlpbFileFormat()) {
       tlp::saveGraph(g, QStringToTlpString(project->toAbsolutePath(folder + "graph.tlp.zst")),
                      progress);
     } else {

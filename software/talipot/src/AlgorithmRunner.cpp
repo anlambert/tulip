@@ -234,7 +234,7 @@ void AlgorithmRunner::buildPluginsList() {
     connect(i, &AlgorithmRunnerItem::favorized, this, &AlgorithmRunner::favorized);
   }
 
-  for (const QString &a : Settings::instance().favoriteAlgorithms()) {
+  for (const QString &a : Settings::favoriteAlgorithms()) {
     addFavorite(a);
   }
 }
@@ -390,7 +390,7 @@ void AlgorithmRunner::removeFavorite(const QString &algName) {
     }
   }
 
-  Settings::instance().removeFavoriteAlgorithm(algName);
+  Settings::removeFavoriteAlgorithm(algName);
 
   if (_favorites.isEmpty()) {
     _ui->favoritesBox->widget()->setMinimumHeight(45);
@@ -402,7 +402,7 @@ void AlgorithmRunner::addFavorite(const QString &algName, const DataSet &data) {
     return;
   }
 
-  Settings::instance().addFavoriteAlgorithm(algName);
+  Settings::addFavoriteAlgorithm(algName);
 
   for (auto i : _favorites) {
     if (i->name() == algName)

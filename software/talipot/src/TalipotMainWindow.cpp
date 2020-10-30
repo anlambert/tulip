@@ -368,7 +368,7 @@ TalipotMainWindow::TalipotMainWindow()
   _ui->menuHelp->setToolTipsVisible(true);
   _ui->menuWindow->setToolTipsVisible(true);
 
-  Settings::instance().synchronizeViewSettings();
+  Settings::synchronizeViewSettings();
 
   qInstallMessageHandler(talipotLogger);
 
@@ -479,7 +479,7 @@ void TalipotMainWindow::buildRecentDocumentsMenu() {
 
   QStringList nonProjectFiles;
 
-  for (const QString &file : Settings::instance().recentDocuments()) {
+  for (const QString &file : Settings::recentDocuments()) {
     if (!QFileInfo(file).exists() || !talipotCanOpenFile(file)) {
       continue;
     }
@@ -509,7 +509,7 @@ void TalipotMainWindow::addRecentDocument(const QString &path) {
   if (!talipotCanOpenFile(path)) {
     return;
   }
-  Settings::instance().addToRecentDocuments(path);
+  Settings::addToRecentDocuments(path);
   Settings::instance().sync();
   buildRecentDocumentsMenu();
 }
@@ -732,11 +732,11 @@ void TalipotMainWindow::exportGraph(Graph *g) {
                               tlp::tlpStringToQString(prg->getError()) + "</b>");
   } else {
     // log export plugin call
-    if (Settings::instance().logPluginCall() != Settings::NoLog) {
+    if (Settings::logPluginCall() != Settings::NoLog) {
       std::stringstream log;
       log << exportPluginName.c_str() << " - " << data.toString().c_str();
 
-      if (Settings::instance().logPluginCall() == Settings::LogCallWithExecutionTime) {
+      if (Settings::logPluginCall() == Settings::LogCallWithExecutionTime) {
         log << ": " << start.msecsTo(QTime::currentTime()) << "ms";
       }
 
@@ -797,11 +797,11 @@ void TalipotMainWindow::importGraph(const std::string &module, DataSet &data) {
     delete prg;
 
     // log import plugin call
-    if (Settings::instance().logPluginCall() != Settings::NoLog) {
+    if (Settings::logPluginCall() != Settings::NoLog) {
       std::stringstream log;
       log << module.c_str() << " import - " << data.toString().c_str();
 
-      if (Settings::instance().logPluginCall() == Settings::LogCallWithExecutionTime) {
+      if (Settings::logPluginCall() == Settings::LogCallWithExecutionTime) {
         log << ": " << start.msecsTo(QTime::currentTime()) << "ms";
       }
 
@@ -1004,8 +1004,8 @@ void TalipotMainWindow::openProjectFile(const QString &path) {
 
 void TalipotMainWindow::initPythonIDE() {
   _pythonIDE->setProject(_project);
-  _pythonIDE->setAnchored(Settings::instance().pythonIDEAnchored());
-  if (Settings::instance().pythonIDEAnchored()) {
+  _pythonIDE->setAnchored(Settings::pythonIDEAnchored());
+  if (Settings::pythonIDEAnchored()) {
     _pythonIDE->setVisible(false);
     _pythonIDE->setParent(nullptr);
     _ui->docksWidget->addWidget(_pythonIDE);
@@ -1019,7 +1019,7 @@ void TalipotMainWindow::initPythonIDE() {
 
 void TalipotMainWindow::anchoredPythonIDE(bool anchored) {
   _ui->developButton->setCheckable(anchored);
-  Settings::instance().setPythonIDEAnchored(anchored);
+  Settings::setPythonIDEAnchored(anchored);
   if (anchored) {
     _pythonIDE->hide();
     _pythonIDE->setParent(nullptr);
@@ -1453,7 +1453,7 @@ void TalipotMainWindow::CSVImport() {
 }
 
 void TalipotMainWindow::showStartPanels(Graph *g) {
-  if (Settings::instance().displayDefaultViews() == false) {
+  if (Settings::displayDefaultViews() == false) {
     return;
   }
 

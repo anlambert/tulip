@@ -51,7 +51,7 @@ TalipotLogger::TalipotLogger(QWidget *parent)
   connect(_ui->clearButton, &QAbstractButton::clicked, this, &TalipotLogger::clear);
   connect(_ui->closeButton, &QAbstractButton::clicked, this, &QWidget::hide);
   connect(_ui->anchoredCB, &QAbstractButton::toggled, this, &TalipotLogger::setAnchored);
-  _ui->anchoredCB->setChecked(tlp::Settings::instance().loggerAnchored());
+  _ui->anchoredCB->setChecked(tlp::Settings::loggerAnchored());
 }
 
 TalipotLogger::~TalipotLogger() {
@@ -252,7 +252,7 @@ void TalipotLogger::setAnchored(bool anchored) {
   _ui->anchoredCB->setIcon(icon);
   _ui->anchoredCB->setToolTip(tooltip);
 
-  tlp::Settings::instance().setLoggerAnchored(anchored);
+  tlp::Settings::setLoggerAnchored(anchored);
 
   // force the update of the window after modifying its flags
   if (visible) {

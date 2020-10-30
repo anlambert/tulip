@@ -270,8 +270,8 @@ public:
 void initTalipotSoftware(tlp::PluginLoader *loader) {
 
   QLocale::setDefault(QLocale(QLocale::English));
-  Settings::instance().applyProxySettings();
-  Settings::instance().initSeedOfRandomSequence();
+  Settings::applyProxySettings();
+  Settings::initSeedOfRandomSequence();
 
   QDir::home().mkpath(tlp::localPluginsPath());
   QLocale::setDefault(QLocale(QLocale::English));

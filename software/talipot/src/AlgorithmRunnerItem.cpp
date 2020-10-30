@@ -422,7 +422,7 @@ void AlgorithmRunnerItem::run(Graph *g) {
       // restore it in the dataset
       dataSet.set(opp.name, opp.dest);
 
-      if (opp.name == "result" && Settings::instance().isResultPropertyStored()) {
+      if (opp.name == "result" && Settings::isResultPropertyStored()) {
         // store the result property values in an automatically named property
         std::string storedResultName =
             algorithm + " - " + originalDataSet.toString() + "(" + opp.dest->getName() + ")";
@@ -433,11 +433,11 @@ void AlgorithmRunnerItem::run(Graph *g) {
     }
 
     // display spentTime if needed
-    if (Settings::instance().logPluginCall() != Settings::NoLog) {
+    if (Settings::logPluginCall() != Settings::NoLog) {
       std::stringstream log;
       log << algorithm.c_str() << " - " << dataSet.toString().c_str();
 
-      if (Settings::instance().logPluginCall() == Settings::LogCallWithExecutionTime) {
+      if (Settings::logPluginCall() == Settings::LogCallWithExecutionTime) {
         log << ": " << spentTime << "ms";
       }
 
@@ -534,7 +534,7 @@ void AlgorithmRunnerItem::afterRun(Graph *g, const tlp::DataSet &dataSet) {
   std::string stdName = QStringToTlpString(name());
 
   if (PluginsManager::pluginExists<LayoutAlgorithm>(stdName)) {
-    if (Settings::instance().isAutomaticRatio()) {
+    if (Settings::isAutomaticRatio()) {
       LayoutProperty *prop = nullptr;
       dataSet.get<LayoutProperty *>("result", prop);
 
@@ -543,16 +543,15 @@ void AlgorithmRunnerItem::afterRun(Graph *g, const tlp::DataSet &dataSet) {
       }
     }
 
-    if (Settings::instance().isAutomaticCentering()) {
+    if (Settings::isAutomaticCentering()) {
       TalipotMainWindow::instance().centerPanelsForGraph(g);
     }
-  } else if (Settings::instance().isAutomaticCentering() &&
-             PluginsManager::pluginExists<Algorithm>(stdName) &&
+  } else if (Settings::isAutomaticCentering() && PluginsManager::pluginExists<Algorithm>(stdName) &&
              !PluginsManager::pluginExists<PropertyAlgorithm>(stdName) &&
              !PluginsManager::pluginExists<GraphTest>(stdName)) {
     TalipotMainWindow::instance().centerPanelsForGraph(g);
   } else if (PluginsManager::pluginExists<DoubleAlgorithm>(stdName) &&
-             Settings::instance().isAutomaticMapMetric()) {
+             Settings::isAutomaticMapMetric()) {
     DoubleProperty *prop = nullptr;
     dataSet.get<DoubleProperty *>("result", prop);
 

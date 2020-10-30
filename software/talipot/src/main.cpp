@@ -146,7 +146,7 @@ int main(int argc, char **argv) {
   talipot.setStyle(new TalipotProxyStyle(talipot.style()));
 #endif
 
-  setApplicationGuiTheme(Settings::instance().guiTheme());
+  setApplicationGuiTheme(Settings::guiTheme());
 
   // Check arguments
   QString inputFilePath;
@@ -208,8 +208,8 @@ int main(int argc, char **argv) {
   mainWindow.show();
   mainWindow.start(inputFilePath);
 
-  Settings::instance().setFirstRun(false);
-  Settings::instance().setFirstTalipotMMRun(false);
+  Settings::setFirstRun(false);
+  Settings::setFirstTalipotMMRun(false);
 
   int result = talipot.exec();
 

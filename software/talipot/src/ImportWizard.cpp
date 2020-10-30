@@ -51,7 +51,7 @@ ImportWizard::ImportWizard(QWidget *parent) : QWizard(parent), _ui(new Ui::Impor
                       "needed.<br/>Click <b>Ok</b> to import your graph, then visualize it using "
                       "the ");
 
-  if (Settings::instance().displayDefaultViews()) {
+  if (Settings::displayDefaultViews()) {
     importLabel += "<b>Node Link Diagram</b> and <b>Spreadsheet</b> (automatically opened) views.";
   } else {
     importLabel += "<b>Add panel</b> button to open specific views on it.";

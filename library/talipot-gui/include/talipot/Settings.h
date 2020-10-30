@@ -45,112 +45,112 @@ class TLP_QT_SCOPE Settings : public QSettings, public Observable, public Single
 public:
   static QString elementKey(const QString &configEntry, tlp::ElementType elem);
 
-  void synchronizeViewSettings();
+  static void synchronizeViewSettings();
 
   /**
     @brief Retrieves the list of documents recently opened with talipot.
     */
-  QStringList recentDocuments() const;
+  static QStringList recentDocuments();
 
   /**
     @brief Registers a file in the list of recently opened documents.
-    If the list already contains 5 elements, the last one (in chronological order) will be removed.
+    If the list already contains 20 elements, the last one (in chronological order) will be removed.
     */
-  void addToRecentDocuments(const QString &);
+  static void addToRecentDocuments(const QString &);
 
-  tlp::Color defaultColor(tlp::ElementType elem);
-  void setDefaultColor(tlp::ElementType elem, const tlp::Color &color);
+  static tlp::Color defaultColor(tlp::ElementType elem);
+  static void setDefaultColor(tlp::ElementType elem, const tlp::Color &color);
 
-  tlp::Color defaultLabelColor();
-  void setDefaultLabelColor(const tlp::Color &color);
+  static tlp::Color defaultLabelColor();
+  static void setDefaultLabelColor(const tlp::Color &color);
 
-  tlp::Size defaultSize(tlp::ElementType elem);
-  void setDefaultSize(tlp::ElementType elem, const tlp::Size &size);
+  static tlp::Size defaultSize(tlp::ElementType elem);
+  static void setDefaultSize(tlp::ElementType elem, const tlp::Size &size);
 
-  int defaultShape(tlp::ElementType elem);
-  void setDefaultShape(tlp::ElementType elem, int shape);
+  static int defaultShape(tlp::ElementType elem);
+  static void setDefaultShape(tlp::ElementType elem, int shape);
 
-  tlp::Color defaultSelectionColor() const;
-  void setDefaultSelectionColor(const tlp::Color &color);
+  static tlp::Color defaultSelectionColor();
+  static void setDefaultSelectionColor(const tlp::Color &color);
 
-  QSet<QString> favoriteAlgorithms() const;
-  void addFavoriteAlgorithm(const QString &name);
-  void removeFavoriteAlgorithm(const QString &name);
+  static QSet<QString> favoriteAlgorithms();
+  static void addFavoriteAlgorithm(const QString &name);
+  static void removeFavoriteAlgorithm(const QString &name);
 
   // Proxy settings
-  bool isProxyEnabled() const;
-  void setProxyEnabled(bool);
+  static bool isProxyEnabled();
+  static void setProxyEnabled(bool);
 
-  QNetworkProxy::ProxyType proxyType() const;
-  void setProxyType(QNetworkProxy::ProxyType);
+  static QNetworkProxy::ProxyType proxyType();
+  static void setProxyType(QNetworkProxy::ProxyType);
 
-  QString proxyHost() const;
-  void setProxyHost(const QString &);
+  static QString proxyHost();
+  static void setProxyHost(const QString &);
 
-  unsigned int proxyPort() const;
-  void setProxyPort(unsigned int);
+  static unsigned int proxyPort();
+  static void setProxyPort(unsigned int);
 
-  bool isUseProxyAuthentification() const;
-  void setUseProxyAuthentification(bool);
+  static bool isUseProxyAuthentification();
+  static void setUseProxyAuthentification(bool);
 
-  QString proxyUsername() const;
-  void setProxyUsername(const QString &);
+  static QString proxyUsername();
+  static void setProxyUsername(const QString &);
 
-  QString proxyPassword() const;
-  void setProxyPassword(const QString &);
+  static QString proxyPassword();
+  static void setProxyPassword(const QString &);
 
-  void applyProxySettings();
+  static void applyProxySettings();
 
-  bool isFirstRun() const;
-  void setFirstRun(bool);
+  static bool isFirstRun();
+  static void setFirstRun(bool);
 
-  bool isFirstTalipotMMRun() const;
-  void setFirstTalipotMMRun(bool);
+  static bool isFirstTalipotMMRun();
+  static void setFirstTalipotMMRun(bool);
 
-  bool displayDefaultViews() const;
-  void setDisplayDefaultViews(bool);
+  static bool displayDefaultViews();
+  static void setDisplayDefaultViews(bool);
 
-  bool isAutomaticMapMetric() const;
-  void setAutomaticMapMetric(bool);
+  static bool isAutomaticMapMetric();
+  static void setAutomaticMapMetric(bool);
 
-  bool isAutomaticCentering() const;
-  void setAutomaticCentering(bool);
+  static bool isAutomaticCentering();
+  static void setAutomaticCentering(bool);
 
-  bool isAutomaticRatio() const;
-  void setAutomaticRatio(bool);
+  static bool isAutomaticRatio();
+  static void setAutomaticRatio(bool);
 
-  bool isViewOrtho() const;
-  void setViewOrtho(bool);
+  static bool isViewOrtho();
+  static void setViewOrtho(bool);
 
-  bool isResultPropertyStored() const;
-  void setResultPropertyStored(bool);
+  static bool isResultPropertyStored();
+  static void setResultPropertyStored(bool);
 
   enum LogPluginCall { NoLog = 0, LogCall = 1, LogCallWithExecutionTime = 2 };
-  unsigned int logPluginCall() const;
-  void setLogPluginCall(unsigned int);
+  static unsigned int logPluginCall();
+  static void setLogPluginCall(unsigned int);
 
-  bool isUseTlpbFileFormat() const;
-  void setUseTlpbFileFormat(bool);
+  static bool isUseTlpbFileFormat();
+  static void setUseTlpbFileFormat(bool);
 
-  unsigned int seedOfRandomSequence() const;
-  void setSeedOfRandomSequence(unsigned int);
-  void initSeedOfRandomSequence();
+  static unsigned int seedOfRandomSequence();
+  static void setSeedOfRandomSequence(unsigned int);
+  static void initSeedOfRandomSequence();
 
-  bool loggerAnchored() const;
-  void setLoggerAnchored(bool);
+  static bool loggerAnchored();
+  static void setLoggerAnchored(bool);
 
-  bool pythonIDEAnchored() const;
-  void setPythonIDEAnchored(bool);
+  static bool pythonIDEAnchored();
+  static void setPythonIDEAnchored(bool);
 
-  QString guiTheme() const;
-  void setGuiTheme(const QString &guiTheme);
+  static QString guiTheme();
+  static void setGuiTheme(const QString &guiTheme);
 
   void treatEvent(const Event &message) override;
 
 private:
   Settings();
 
-  void setFavoriteAlgorithms(const QSet<QString> &lst);
+  static void setFavoriteAlgorithms(const QSet<QString> &lst);
 };
 }
 #endif // TALIPOT_SETTINGS_H

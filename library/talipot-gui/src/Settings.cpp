@@ -77,12 +77,12 @@ void Settings::synchronizeViewSettings() {
   ViewSettings::setDefaultSelectionColor(defaultSelectionColor());
 }
 
-QStringList Settings::recentDocuments() const {
-  return value(TS_RecentDocuments).toStringList();
+QStringList Settings::recentDocuments() {
+  return instance().value(TS_RecentDocuments).toStringList();
 }
 
 void Settings::addToRecentDocuments(const QString &name) {
-  QList<QVariant> recentDocumentsValue = value(TS_RecentDocuments).toList();
+  QList<QVariant> recentDocumentsValue = instance().value(TS_RecentDocuments).toList();
 
   if (recentDocumentsValue.contains(name)) {
     recentDocumentsValue.removeAll(name);
@@ -94,7 +94,7 @@ void Settings::addToRecentDocuments(const QString &name) {
     recentDocumentsValue.pop_back();
   }
 
-  setValue(TS_RecentDocuments, recentDocumentsValue);
+  instance().setValue(TS_RecentDocuments, recentDocumentsValue);
 }
 
 QString Settings::elementKey(const QString &configEntry, tlp::ElementType elem) {
@@ -102,8 +102,9 @@ QString Settings::elementKey(const QString &configEntry, tlp::ElementType elem) 
 }
 
 tlp::Color Settings::defaultColor(tlp::ElementType elem) {
-  QString val = value(elementKey(TS_DefaultColor, elem),
-                      ColorType::toString(ViewSettings::defaultColor(elem)).c_str())
+  QString val = instance()
+                    .value(elementKey(TS_DefaultColor, elem),
+                           ColorType::toString(ViewSettings::defaultColor(elem)).c_str())
                     .toString();
   Color result;
   ColorType::fromString(result, QStringToTlpString(val));
@@ -112,14 +113,15 @@ tlp::Color Settings::defaultColor(tlp::ElementType elem) {
 
 void Settings::setDefaultColor(tlp::ElementType elem, const tlp::Color &color) {
   QString value = tlp::ColorType::toString(color).c_str();
-  setValue(elementKey(TS_DefaultColor, elem), value);
+  instance().setValue(elementKey(TS_DefaultColor, elem), value);
   ViewSettings::setDefaultColor(elem, color);
 }
 
 Color Settings::defaultLabelColor() {
-  QString val =
-      value(TS_DefaultLabelColor, ColorType::toString(ViewSettings::defaultLabelColor()).c_str())
-          .toString();
+  QString val = instance()
+                    .value(TS_DefaultLabelColor,
+                           ColorType::toString(ViewSettings::defaultLabelColor()).c_str())
+                    .toString();
   Color result;
   ColorType::fromString(result, QStringToTlpString(val));
   return result;
@@ -127,13 +129,14 @@ Color Settings::defaultLabelColor() {
 
 void Settings::setDefaultLabelColor(const Color &color) {
   QString value = tlp::ColorType::toString(color).c_str();
-  setValue(TS_DefaultLabelColor, value);
+  instance().setValue(TS_DefaultLabelColor, value);
   ViewSettings::setDefaultLabelColor(color);
 }
 
 tlp::Size Settings::defaultSize(tlp::ElementType elem) {
-  QString val = value(elementKey(TS_DefaultSize, elem),
-                      SizeType::toString(ViewSettings::defaultSize(elem)).c_str())
+  QString val = instance()
+                    .value(elementKey(TS_DefaultSize, elem),
+                           SizeType::toString(ViewSettings::defaultSize(elem)).c_str())
                     .toString();
   Size result;
   SizeType::fromString(result, QStringToTlpString(val));
@@ -142,22 +145,25 @@ tlp::Size Settings::defaultSize(tlp::ElementType elem) {
 
 void Settings::setDefaultSize(tlp::ElementType elem, const tlp::Size &size) {
   QString value = tlp::SizeType::toString(size).c_str();
-  setValue(elementKey(TS_DefaultSize, elem), value);
+  instance().setValue(elementKey(TS_DefaultSize, elem), value);
   ViewSettings::setDefaultSize(elem, size);
 }
 
 int Settings::defaultShape(tlp::ElementType elem) {
-  return value(elementKey(TS_DefaultShape, elem), ViewSettings::defaultShape(elem)).toInt();
+  return instance()
+      .value(elementKey(TS_DefaultShape, elem), ViewSettings::defaultShape(elem))
+      .toInt();
 }
 
 void Settings::setDefaultShape(tlp::ElementType elem, int shape) {
-  setValue(elementKey(TS_DefaultShape, elem), shape);
+  instance().setValue(elementKey(TS_DefaultShape, elem), shape);
   ViewSettings::setDefaultShape(elem, shape);
 }
 
-tlp::Color Settings::defaultSelectionColor() const {
-  QString val = value(TS_DefaultSelectionColor,
-                      ColorType::toString(ViewSettings::defaultSelectionColor()).c_str())
+tlp::Color Settings::defaultSelectionColor() {
+  QString val = instance()
+                    .value(TS_DefaultSelectionColor,
+                           ColorType::toString(ViewSettings::defaultSelectionColor()).c_str())
                     .toString();
   Color result;
   ColorType::fromString(result, QStringToTlpString(val));
@@ -166,12 +172,12 @@ tlp::Color Settings::defaultSelectionColor() const {
 
 void Settings::setDefaultSelectionColor(const tlp::Color &color) {
   QString value = tlp::ColorType::toString(color).c_str();
-  setValue(TS_DefaultSelectionColor, value);
+  instance().setValue(TS_DefaultSelectionColor, value);
   ViewSettings::setDefaultSelectionColor(color);
 }
 
-QSet<QString> Settings::favoriteAlgorithms() const {
-  QStringList list = value(TS_FavoriteAlgorithms, QStringList()).toStringList();
+QSet<QString> Settings::favoriteAlgorithms() {
+  QStringList list = instance().value(TS_FavoriteAlgorithms, QStringList()).toStringList();
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
   return QSet<QString>(list.begin(), list.end());
 #else
@@ -191,60 +197,60 @@ void Settings::removeFavoriteAlgorithm(const QString &name) {
   setFavoriteAlgorithms(favAlgs);
 }
 
-bool Settings::isProxyEnabled() const {
-  return value(TS_ProxyEnabled).toBool();
+bool Settings::isProxyEnabled() {
+  return instance().value(TS_ProxyEnabled).toBool();
 }
 
 void Settings::setProxyEnabled(bool f) {
-  setValue(TS_ProxyEnabled, f);
+  instance().setValue(TS_ProxyEnabled, f);
 }
 
-QNetworkProxy::ProxyType Settings::proxyType() const {
-  return static_cast<QNetworkProxy::ProxyType>(value(TS_ProxyType).toInt());
+QNetworkProxy::ProxyType Settings::proxyType() {
+  return static_cast<QNetworkProxy::ProxyType>(instance().value(TS_ProxyType).toInt());
 }
 
 void Settings::setProxyType(QNetworkProxy::ProxyType t) {
-  setValue(TS_ProxyType, int(t));
+  instance().setValue(TS_ProxyType, int(t));
 }
 
-QString Settings::proxyHost() const {
-  return value(TS_ProxyHost).toString();
+QString Settings::proxyHost() {
+  return instance().value(TS_ProxyHost).toString();
 }
 
 void Settings::setProxyHost(const QString &h) {
-  setValue(TS_ProxyHost, h);
+  instance().setValue(TS_ProxyHost, h);
 }
 
-unsigned int Settings::proxyPort() const {
-  return value(TS_ProxyPort).toUInt();
+unsigned int Settings::proxyPort() {
+  return instance().value(TS_ProxyPort).toUInt();
 }
 
 void Settings::setProxyPort(unsigned int p) {
-  setValue(TS_ProxyPort, p);
+  instance().setValue(TS_ProxyPort, p);
 }
 
-bool Settings::isUseProxyAuthentification() const {
-  return value(TS_ProxyUseAuth).toBool();
+bool Settings::isUseProxyAuthentification() {
+  return instance().value(TS_ProxyUseAuth).toBool();
 }
 
 void Settings::setUseProxyAuthentification(bool f) {
-  setValue(TS_ProxyUseAuth, f);
+  instance().setValue(TS_ProxyUseAuth, f);
 }
 
-QString Settings::proxyUsername() const {
-  return value(TS_ProxyUsername).toString();
+QString Settings::proxyUsername() {
+  return instance().value(TS_ProxyUsername).toString();
 }
 
 void Settings::setProxyUsername(const QString &s) {
-  setValue(TS_ProxyUsername, s);
+  instance().setValue(TS_ProxyUsername, s);
 }
 
-QString Settings::proxyPassword() const {
-  return value(TS_ProxyPassword).toString();
+QString Settings::proxyPassword() {
+  return instance().value(TS_ProxyPassword).toString();
 }
 
 void Settings::setProxyPassword(const QString &s) {
-  setValue(TS_ProxyPassword, s);
+  instance().setValue(TS_ProxyPassword, s);
 }
 
 void Settings::applyProxySettings() {
@@ -261,124 +267,124 @@ void Settings::applyProxySettings() {
   }
 }
 
-bool Settings::isFirstRun() const {
-  return contains(TS_FirstRun) == false;
+bool Settings::isFirstRun() {
+  return !instance().contains(TS_FirstRun);
 }
 
 void Settings::setFirstRun(bool f) {
-  setValue(TS_FirstRun, f);
+  instance().setValue(TS_FirstRun, f);
 }
 
-bool Settings::isFirstTalipotMMRun() const {
-  return contains(TS_FirstRunMM) == false;
+bool Settings::isFirstTalipotMMRun() {
+  return !instance().contains(TS_FirstRunMM);
 }
 
 void Settings::setFirstTalipotMMRun(bool f) {
-  setValue(TS_FirstRunMM, f);
+  instance().setValue(TS_FirstRunMM, f);
 }
 
-bool Settings::displayDefaultViews() const {
-  return value(TS_AutomaticDisplayDefaultViews, true).toBool();
+bool Settings::displayDefaultViews() {
+  return instance().value(TS_AutomaticDisplayDefaultViews, true).toBool();
 }
 
 void Settings::setDisplayDefaultViews(bool f) {
-  setValue(TS_AutomaticDisplayDefaultViews, f);
+  instance().setValue(TS_AutomaticDisplayDefaultViews, f);
 }
 
-bool Settings::isAutomaticMapMetric() const {
-  return value(TS_AutomaticMapMetric, false).toBool();
+bool Settings::isAutomaticMapMetric() {
+  return instance().value(TS_AutomaticMapMetric, false).toBool();
 }
 
 void Settings::setAutomaticMapMetric(bool f) {
-  setValue(TS_AutomaticMapMetric, f);
+  instance().setValue(TS_AutomaticMapMetric, f);
 }
 
-bool Settings::isAutomaticRatio() const {
-  return value(TS_AutomaticPerfectAspectRatio, false).toBool();
+bool Settings::isAutomaticRatio() {
+  return instance().value(TS_AutomaticPerfectAspectRatio, false).toBool();
 }
 
 void Settings::setAutomaticRatio(bool f) {
-  setValue(TS_AutomaticPerfectAspectRatio, f);
+  instance().setValue(TS_AutomaticPerfectAspectRatio, f);
 }
 
-bool Settings::isAutomaticCentering() const {
-  return value(TS_AutomaticCentering, true).toBool();
+bool Settings::isAutomaticCentering() {
+  return instance().value(TS_AutomaticCentering, true).toBool();
 }
 
 void Settings::setAutomaticCentering(bool f) {
-  setValue(TS_AutomaticCentering, f);
+  instance().setValue(TS_AutomaticCentering, f);
 }
 
-bool Settings::isViewOrtho() const {
-  return value(TS_ViewOrtho, true).toBool();
+bool Settings::isViewOrtho() {
+  return instance().value(TS_ViewOrtho, true).toBool();
 }
 
 void Settings::setViewOrtho(bool f) {
-  setValue(TS_ViewOrtho, f);
+  instance().setValue(TS_ViewOrtho, f);
 }
 
 void Settings::setFavoriteAlgorithms(const QSet<QString> &lst) {
-  setValue(TS_FavoriteAlgorithms, static_cast<QStringList>(lst.values()));
+  instance().setValue(TS_FavoriteAlgorithms, static_cast<QStringList>(lst.values()));
 }
 
-bool Settings::isResultPropertyStored() const {
-  return value(TS_ResultPropertyStored, false).toBool();
+bool Settings::isResultPropertyStored() {
+  return instance().value(TS_ResultPropertyStored, false).toBool();
 }
 
 void Settings::setResultPropertyStored(bool f) {
-  setValue(TS_ResultPropertyStored, f);
+  instance().setValue(TS_ResultPropertyStored, f);
 }
 
-unsigned int Settings::logPluginCall() const {
-  return value(TS_LogPluginCall, NoLog).toUInt();
+unsigned int Settings::logPluginCall() {
+  return instance().value(TS_LogPluginCall, NoLog).toUInt();
 }
 
 void Settings::setLogPluginCall(unsigned int val) {
-  setValue(TS_LogPluginCall, val);
+  instance().setValue(TS_LogPluginCall, val);
 }
 
-bool Settings::isUseTlpbFileFormat() const {
-  return value(TS_UseTlpbFileFormat, true).toBool();
+bool Settings::isUseTlpbFileFormat() {
+  return instance().value(TS_UseTlpbFileFormat, true).toBool();
 }
 
 void Settings::setUseTlpbFileFormat(bool f) {
-  setValue(TS_UseTlpbFileFormat, f);
+  instance().setValue(TS_UseTlpbFileFormat, f);
 }
 
-unsigned int Settings::seedOfRandomSequence() const {
-  return value(TS_SeedForRandomSequence, tlp::getSeedOfRandomSequence()).toUInt();
+unsigned int Settings::seedOfRandomSequence() {
+  return instance().value(TS_SeedForRandomSequence, tlp::getSeedOfRandomSequence()).toUInt();
 }
 
 void Settings::setSeedOfRandomSequence(unsigned int seed) {
-  setValue(TS_SeedForRandomSequence, seed);
+  instance().setValue(TS_SeedForRandomSequence, seed);
 }
 
 void Settings::initSeedOfRandomSequence() {
   tlp::setSeedOfRandomSequence(seedOfRandomSequence());
 }
 
-bool Settings::loggerAnchored() const {
-  return value(TS_LoggerAnchored, true).toBool();
+bool Settings::loggerAnchored() {
+  return instance().value(TS_LoggerAnchored, true).toBool();
 }
 
 void Settings::setLoggerAnchored(bool f) {
-  setValue(TS_LoggerAnchored, f);
+  instance().setValue(TS_LoggerAnchored, f);
 }
 
-bool Settings::pythonIDEAnchored() const {
-  return value(TS_PythonIDEAnchored, true).toBool();
+bool Settings::pythonIDEAnchored() {
+  return instance().value(TS_PythonIDEAnchored, true).toBool();
 }
 
 void Settings::setPythonIDEAnchored(bool f) {
-  setValue(TS_PythonIDEAnchored, f);
+  instance().setValue(TS_PythonIDEAnchored, f);
 }
 
-QString Settings::guiTheme() const {
-  return value(TS_GuiTheme, "Light").toString();
+QString Settings::guiTheme() {
+  return instance().value(TS_GuiTheme, "Light").toString();
 }
 
 void Settings::setGuiTheme(const QString &guiTheme) {
-  setValue(TS_GuiTheme, guiTheme);
+  instance().setValue(TS_GuiTheme, guiTheme);
 }
 
 void Settings::treatEvent(const Event &message) {
