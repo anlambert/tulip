@@ -22,7 +22,7 @@ echo current wheel dev version = $DEV_VERSION
 # Build wheels for each supported Python version
 cd $APPVEYOR_BUILD_FOLDER
 mkdir build && cd build
-for pyVersion in 27 35 36 37 38
+for pyVersion in 27 35 36 37 38 39
 do
   export PATH=/c/Python$pyVersion-x64/:/c/Python$pyVersion-x64/Scripts/:$PATH
   pip install wheel twine
