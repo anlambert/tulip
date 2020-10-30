@@ -525,18 +525,6 @@ private:
   NumericProperty *_elementOrderingProperty;
 };
 
-/** \brief Class to get the default selection color
- */
-class TLP_GL_SCOPE GlDefaultSelectionColorManager {
-public:
-  static void setManager(GlDefaultSelectionColorManager *);
-  static tlp::Color getDefaultSelectionColor();
-  virtual tlp::Color defaultSelectionColor(bool talipotDefault = false) = 0;
-
-private:
-  static GlDefaultSelectionColorManager *manager;
-};
-
 }
 
 #endif // TALIPOT_GL_GRAPH_RENDERING_PARAMETERS_H

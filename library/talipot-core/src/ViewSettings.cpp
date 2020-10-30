@@ -18,6 +18,7 @@ namespace tlp {
 
 INSTANTIATE_DLL_TEMPLATE(Singleton<ViewSettings>, TLP_TEMPLATE_DEFINE_SCOPE)
 
+static Color _defaultSelectionColor = {23, 81, 228};
 static Color _defaultNodeColor(Color::Red);
 static Color _defaultEdgeColor(Color::Black);
 static Color _defaultNodeBorderColor(Color::Black);
@@ -38,6 +39,18 @@ static Size _defaultEdgeExtremitySrcSize(1, 1, 0);
 static Size _defaultEdgeExtremityTgtSize(1, 1, 0);
 static std::string _defaultFont("DejaVu Sans-Book");
 static int _defaultFontSize(18);
+
+Color ViewSettings::defaultSelectionColor() const {
+  return _defaultSelectionColor;
+}
+
+void ViewSettings::setDefaultSelectionColor(const Color &color) {
+  if (color == defaultSelectionColor()) {
+    return;
+  }
+  _defaultSelectionColor = color;
+  sendEvent(ViewSettingsEvent(color, ViewSettingsEvent::TLP_DEFAULT_SELECTION_COLOR_MODIFIED));
+}
 
 Color ViewSettings::defaultColor(ElementType elem) const {
   if (elem == NODE) {
@@ -103,7 +116,7 @@ void ViewSettings::setDefaultLabelColor(const Color &color) {
   }
 
   _defaultLabelColor = color;
-  sendEvent(ViewSettingsEvent(color));
+  sendEvent(ViewSettingsEvent(color, ViewSettingsEvent::TLP_DEFAULT_LABEL_COLOR_MODIFIED));
 }
 
 Color ViewSettings::defaultLabelBorderColor() const {

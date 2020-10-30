@@ -1543,21 +1543,6 @@ void TalipotMainWindow::openPreferences() {
 
   if (dlg.exec() == QDialog::Accepted) {
     dlg.writeSettings();
-
-    for (auto v : _ui->workspace->panels()) {
-      GlMainView *glMainView = dynamic_cast<tlp::GlMainView *>(v);
-
-      if (glMainView != nullptr) {
-        if (glMainView->getGlMainWidget() != nullptr) {
-          glMainView->getGlMainWidget()
-              ->getScene()
-              ->getGlGraphComposite()
-              ->getRenderingParametersPointer()
-              ->setSelectionColor(Settings::instance().defaultSelectionColor());
-          glMainView->redraw();
-        }
-      }
-    }
   }
 }
 

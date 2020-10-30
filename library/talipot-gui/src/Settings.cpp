@@ -33,8 +33,6 @@ static const QString TS_DefaultLabelColor = "graph/defaults/color/labels";
 static const QString TS_DefaultSize = "graph/defaults/size/";
 static const QString TS_DefaultShape = "graph/defaults/shape/";
 static const QString TS_DefaultSelectionColor = "graph/defaults/selectioncolor/";
-// add a specific key which must never exists in user settings
-static const QString TS_DefaultOfDefault = "never written in user file";
 static const QString TS_FavoriteAlgorithms = "app/algorithms/favorites";
 
 static const QString TS_FirstRun = "app/talipot/firstRun";
@@ -66,7 +64,6 @@ static const QString TS_GuiTheme = "app/gui/theme";
 
 Settings::Settings() : QSettings("TalipotFramework", "Talipot") {
   ViewSettings::instance().addListener(this);
-  GlDefaultSelectionColorManager::setManager(this);
 }
 
 void Settings::synchronizeViewSettings() {
@@ -77,6 +74,7 @@ void Settings::synchronizeViewSettings() {
   ViewSettings::instance().setDefaultShape(NODE, defaultShape(NODE));
   ViewSettings::instance().setDefaultShape(EDGE, defaultShape(EDGE));
   ViewSettings::instance().setDefaultLabelColor(defaultLabelColor());
+  ViewSettings::instance().setDefaultSelectionColor(defaultSelectionColor());
 }
 
 QStringList Settings::recentDocuments() const {
@@ -103,9 +101,9 @@ QString Settings::elementKey(const QString &configEntry, tlp::ElementType elem) 
   return configEntry + (elem == tlp::NODE ? "node" : "edge");
 }
 
-tlp::Color Settings::defaultColor(tlp::ElementType elem, bool talipotDefault) {
-  QString val = value(elementKey(talipotDefault ? TS_DefaultOfDefault : TS_DefaultColor, elem),
-                      (elem == tlp::NODE ? "(255, 95, 95)" : "(180,180,180)"))
+tlp::Color Settings::defaultColor(tlp::ElementType elem) {
+  QString val = value(elementKey(TS_DefaultColor, elem),
+                      ColorType::toString(ViewSettings::instance().defaultColor(elem)).c_str())
                     .toString();
   Color result;
   ColorType::fromString(result, QStringToTlpString(val));
@@ -118,9 +116,10 @@ void Settings::setDefaultColor(tlp::ElementType elem, const tlp::Color &color) {
   ViewSettings::instance().setDefaultColor(elem, color);
 }
 
-Color Settings::defaultLabelColor(bool talipotDefault) {
-  QString val =
-      value(talipotDefault ? TS_DefaultOfDefault : TS_DefaultLabelColor, "(0, 0, 0)").toString();
+Color Settings::defaultLabelColor() {
+  QString val = value(TS_DefaultLabelColor,
+                      ColorType::toString(ViewSettings::instance().defaultLabelColor()).c_str())
+                    .toString();
   Color result;
   ColorType::fromString(result, QStringToTlpString(val));
   return result;
@@ -132,9 +131,9 @@ void Settings::setDefaultLabelColor(const Color &color) {
   ViewSettings::instance().setDefaultLabelColor(color);
 }
 
-tlp::Size Settings::defaultSize(tlp::ElementType elem, bool talipotDefault) {
-  QString val = value(elementKey(talipotDefault ? TS_DefaultOfDefault : TS_DefaultSize, elem),
-                      (elem == tlp::NODE ? "(1,1,1)" : "(0.125,0.125,0.5)"))
+tlp::Size Settings::defaultSize(tlp::ElementType elem) {
+  QString val = value(elementKey(TS_DefaultSize, elem),
+                      SizeType::toString(ViewSettings::instance().defaultSize(elem)).c_str())
                     .toString();
   Size result;
   SizeType::fromString(result, QStringToTlpString(val));
@@ -147,9 +146,8 @@ void Settings::setDefaultSize(tlp::ElementType elem, const tlp::Size &size) {
   ViewSettings::instance().setDefaultSize(elem, size);
 }
 
-int Settings::defaultShape(tlp::ElementType elem, bool talipotDefault) {
-  return value(elementKey(talipotDefault ? TS_DefaultOfDefault : TS_DefaultShape, elem),
-               (elem == tlp::NODE ? int(NodeShape::Circle) : int(EdgeShape::Polyline)))
+int Settings::defaultShape(tlp::ElementType elem) {
+  return value(elementKey(TS_DefaultShape, elem), ViewSettings::instance().defaultShape(elem))
       .toInt();
 }
 
@@ -158,10 +156,10 @@ void Settings::setDefaultShape(tlp::ElementType elem, int shape) {
   ViewSettings::instance().setDefaultShape(elem, shape);
 }
 
-tlp::Color Settings::defaultSelectionColor(bool talipotDefault) {
-  QString val =
-      value(talipotDefault ? TS_DefaultOfDefault : TS_DefaultSelectionColor, "(23, 81, 228)")
-          .toString();
+tlp::Color Settings::defaultSelectionColor() const {
+  QString val = value(TS_DefaultSelectionColor,
+                      ColorType::toString(ViewSettings::instance().defaultSelectionColor()).c_str())
+                    .toString();
   Color result;
   ColorType::fromString(result, QStringToTlpString(val));
   return result;
@@ -170,6 +168,7 @@ tlp::Color Settings::defaultSelectionColor(bool talipotDefault) {
 void Settings::setDefaultSelectionColor(const tlp::Color &color) {
   QString value = tlp::ColorType::toString(color).c_str();
   setValue(TS_DefaultSelectionColor, value);
+  ViewSettings::instance().setDefaultSelectionColor(color);
 }
 
 QSet<QString> Settings::favoriteAlgorithms() const {

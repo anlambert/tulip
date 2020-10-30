@@ -16,6 +16,7 @@
 #include <talipot/GlGraphRenderingParameters.h>
 #include <talipot/TlpTools.h>
 #include <talipot/NumericProperty.h>
+#include <talipot/ViewSettings.h>
 
 using namespace tlp;
 
@@ -31,7 +32,7 @@ GlGraphRenderingParameters::GlGraphRenderingParameters()
       _labelFixedFontSize(false), _labelMinSize(4), _labelMaxSize(30), _labelsDensity(0),
       _labelsAreBillboarded(false), _fontsPath(tlp::TalipotBitmapDir), _texturePath(""),
       _edgesMaxSizeToNodesSize(true),
-      _selectionColor(GlDefaultSelectionColorManager::getDefaultSelectionColor()),
+      _selectionColor(ViewSettings::instance().defaultSelectionColor()),
       _displayFilteringProperty(nullptr), _elementOrderingProperty(nullptr) {}
 // This function should rewritten completely
 DataSet GlGraphRenderingParameters::getParameters() const {
@@ -492,15 +493,4 @@ void GlGraphRenderingParameters::setElementOrderingProperty(tlp::NumericProperty
 }
 tlp::NumericProperty *GlGraphRenderingParameters::getElementOrderingProperty() const {
   return _elementOrderingProperty;
-}
-//====================================================
-GlDefaultSelectionColorManager *GlDefaultSelectionColorManager::manager = nullptr;
-
-void GlDefaultSelectionColorManager::setManager(GlDefaultSelectionColorManager *mgr) {
-  manager = mgr;
-}
-
-tlp::Color GlDefaultSelectionColorManager::getDefaultSelectionColor() {
-  static Color selectionColor = {23, 81, 228};
-  return manager ? manager->defaultSelectionColor() : selectionColor;
 }

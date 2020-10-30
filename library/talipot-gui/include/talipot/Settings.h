@@ -36,10 +36,7 @@ DECLARE_DLL_TEMPLATE_INSTANCE(Singleton<Settings>, TLP_QT_TEMPLATE_DECLARE_SCOPE
  * This object does not mask any method from the QSettings class, which mean that the user can
  * still access custom keys by invoking the QSettings::value method.
  */
-class TLP_QT_SCOPE Settings : public QSettings,
-                              public GlDefaultSelectionColorManager,
-                              public Observable,
-                              public Singleton<Settings> {
+class TLP_QT_SCOPE Settings : public QSettings, public Observable, public Singleton<Settings> {
   Q_OBJECT
   Q_ENUMS(DisplayProperty)
 
@@ -61,21 +58,19 @@ public:
     */
   void addToRecentDocuments(const QString &);
 
-  tlp::Color defaultColor(tlp::ElementType elem, bool talipotDefault = false);
+  tlp::Color defaultColor(tlp::ElementType elem);
   void setDefaultColor(tlp::ElementType elem, const tlp::Color &color);
 
-  tlp::Color defaultLabelColor(bool talipotDefault = false);
+  tlp::Color defaultLabelColor();
   void setDefaultLabelColor(const tlp::Color &color);
 
-  tlp::Size defaultSize(tlp::ElementType elem, bool talipotDefault = false);
+  tlp::Size defaultSize(tlp::ElementType elem);
   void setDefaultSize(tlp::ElementType elem, const tlp::Size &size);
 
-  int defaultShape(tlp::ElementType elem, bool talipotDefault = false);
+  int defaultShape(tlp::ElementType elem);
   void setDefaultShape(tlp::ElementType elem, int shape);
 
-  // in GlDefaultSelectionColorManager interface
-  tlp::Color defaultSelectionColor(bool talipotDefault = false) override;
-
+  tlp::Color defaultSelectionColor() const;
   void setDefaultSelectionColor(const tlp::Color &color);
 
   QSet<QString> favoriteAlgorithms() const;

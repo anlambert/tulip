@@ -384,22 +384,22 @@ void PreferencesDialog::resetToTalipotDefaults(int row, int updateMode) {
   switch (row) {
   case 0: // default color
     if (updateMode == RESET_NODE) {
-      model->setData(model->index(0, 1), QVariant::fromValue<tlp::Color>(
-                                             Settings::instance().defaultColor(tlp::NODE, true)));
+      model->setData(model->index(0, 1),
+                     QVariant::fromValue<tlp::Color>(Settings::instance().defaultColor(tlp::NODE)));
     } else {
-      model->setData(model->index(0, 2), QVariant::fromValue<tlp::Color>(
-                                             Settings::instance().defaultColor(tlp::EDGE, true)));
+      model->setData(model->index(0, 2),
+                     QVariant::fromValue<tlp::Color>(Settings::instance().defaultColor(tlp::EDGE)));
     }
 
     break;
 
   case 1: // default size
     if (updateMode == RESET_NODE) {
-      model->setData(model->index(1, 1), QVariant::fromValue<tlp::Size>(
-                                             Settings::instance().defaultSize(tlp::NODE, true)));
+      model->setData(model->index(1, 1),
+                     QVariant::fromValue<tlp::Size>(Settings::instance().defaultSize(tlp::NODE)));
     } else {
-      model->setData(model->index(1, 2), QVariant::fromValue<tlp::Size>(
-                                             Settings::instance().defaultSize(tlp::EDGE, true)));
+      model->setData(model->index(1, 2),
+                     QVariant::fromValue<tlp::Size>(Settings::instance().defaultSize(tlp::EDGE)));
     }
 
     break;
@@ -408,22 +408,22 @@ void PreferencesDialog::resetToTalipotDefaults(int row, int updateMode) {
     if (updateMode == RESET_NODE) {
       model->setData(model->index(2, 1),
                      QVariant::fromValue<NodeShape::NodeShapes>(static_cast<NodeShape::NodeShapes>(
-                         Settings::instance().defaultShape(tlp::NODE, true))));
+                         Settings::instance().defaultShape(tlp::NODE))));
     } else {
       model->setData(model->index(2, 2),
                      QVariant::fromValue<EdgeShape::EdgeShapes>(static_cast<EdgeShape::EdgeShapes>(
-                         Settings::instance().defaultShape(tlp::EDGE, true))));
+                         Settings::instance().defaultShape(tlp::EDGE))));
     }
 
     break;
 
   case 3: // default selection color
     if (updateMode == RESET_NODE) {
-      model->setData(model->index(3, 1), QVariant::fromValue<tlp::Color>(
-                                             Settings::instance().defaultSelectionColor(true)));
+      model->setData(model->index(3, 1),
+                     QVariant::fromValue<tlp::Color>(Settings::instance().defaultSelectionColor()));
     } else {
-      model->setData(model->index(3, 2), QVariant::fromValue<tlp::Color>(
-                                             Settings::instance().defaultSelectionColor(true)));
+      model->setData(model->index(3, 2),
+                     QVariant::fromValue<tlp::Color>(Settings::instance().defaultSelectionColor()));
     }
 
     break;
@@ -431,10 +431,10 @@ void PreferencesDialog::resetToTalipotDefaults(int row, int updateMode) {
   case 4: // default label color
     if (updateMode == RESET_NODE) {
       model->setData(model->index(4, 1),
-                     QVariant::fromValue<tlp::Color>(Settings::instance().defaultLabelColor(true)));
+                     QVariant::fromValue<tlp::Color>(Settings::instance().defaultLabelColor()));
     } else {
       model->setData(model->index(4, 2),
-                     QVariant::fromValue<tlp::Color>(Settings::instance().defaultLabelColor(true)));
+                     QVariant::fromValue<tlp::Color>(Settings::instance().defaultLabelColor()));
     }
 
   default:

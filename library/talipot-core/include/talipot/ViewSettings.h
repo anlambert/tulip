@@ -107,6 +107,9 @@ public:
 
   static labelmap POSITION_LABEL_MAP;
 
+  Color defaultSelectionColor() const;
+  void setDefaultSelectionColor(const Color &color);
+
   Color defaultColor(ElementType elem) const;
   void setDefaultColor(ElementType elem, const Color &color);
 
@@ -163,8 +166,12 @@ public:
     TLP_DEFAULT_COLOR_MODIFIED,
     TLP_DEFAULT_SHAPE_MODIFIED,
     TLP_DEFAULT_SIZE_MODIFIED,
-    TLP_DEFAULT_LABEL_COLOR_MODIFIED
+    TLP_DEFAULT_LABEL_COLOR_MODIFIED,
+    TLP_DEFAULT_SELECTION_COLOR_MODIFIED,
   };
+
+  ViewSettingsEvent(const Color &color, ViewSettingsEventType type)
+      : Event(ViewSettings::instance(), Event::TLP_MODIFICATION), _type(type), _color(color) {}
 
   ViewSettingsEvent(ElementType elem, const Color &color)
       : Event(ViewSettings::instance(), Event::TLP_MODIFICATION), _type(TLP_DEFAULT_COLOR_MODIFIED),
@@ -177,10 +184,6 @@ public:
   ViewSettingsEvent(ElementType elem, int shape)
       : Event(ViewSettings::instance(), Event::TLP_MODIFICATION), _type(TLP_DEFAULT_SHAPE_MODIFIED),
         _elem(elem), _shape(shape) {}
-
-  ViewSettingsEvent(const Color &labelColor)
-      : Event(ViewSettings::instance(), Event::TLP_MODIFICATION),
-        _type(TLP_DEFAULT_LABEL_COLOR_MODIFIED), _color(labelColor) {}
 
   ViewSettingsEventType getType() const {
     return _type;
