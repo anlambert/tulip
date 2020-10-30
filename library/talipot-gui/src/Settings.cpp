@@ -67,14 +67,14 @@ Settings::Settings() : QSettings("TalipotFramework", "Talipot") {
 }
 
 void Settings::synchronizeViewSettings() {
-  ViewSettings::instance().setDefaultColor(NODE, defaultColor(NODE));
-  ViewSettings::instance().setDefaultColor(EDGE, defaultColor(EDGE));
-  ViewSettings::instance().setDefaultSize(NODE, defaultSize(NODE));
-  ViewSettings::instance().setDefaultSize(EDGE, defaultSize(EDGE));
-  ViewSettings::instance().setDefaultShape(NODE, defaultShape(NODE));
-  ViewSettings::instance().setDefaultShape(EDGE, defaultShape(EDGE));
-  ViewSettings::instance().setDefaultLabelColor(defaultLabelColor());
-  ViewSettings::instance().setDefaultSelectionColor(defaultSelectionColor());
+  ViewSettings::setDefaultColor(NODE, defaultColor(NODE));
+  ViewSettings::setDefaultColor(EDGE, defaultColor(EDGE));
+  ViewSettings::setDefaultSize(NODE, defaultSize(NODE));
+  ViewSettings::setDefaultSize(EDGE, defaultSize(EDGE));
+  ViewSettings::setDefaultShape(NODE, defaultShape(NODE));
+  ViewSettings::setDefaultShape(EDGE, defaultShape(EDGE));
+  ViewSettings::setDefaultLabelColor(defaultLabelColor());
+  ViewSettings::setDefaultSelectionColor(defaultSelectionColor());
 }
 
 QStringList Settings::recentDocuments() const {
@@ -103,7 +103,7 @@ QString Settings::elementKey(const QString &configEntry, tlp::ElementType elem) 
 
 tlp::Color Settings::defaultColor(tlp::ElementType elem) {
   QString val = value(elementKey(TS_DefaultColor, elem),
-                      ColorType::toString(ViewSettings::instance().defaultColor(elem)).c_str())
+                      ColorType::toString(ViewSettings::defaultColor(elem)).c_str())
                     .toString();
   Color result;
   ColorType::fromString(result, QStringToTlpString(val));
@@ -113,13 +113,13 @@ tlp::Color Settings::defaultColor(tlp::ElementType elem) {
 void Settings::setDefaultColor(tlp::ElementType elem, const tlp::Color &color) {
   QString value = tlp::ColorType::toString(color).c_str();
   setValue(elementKey(TS_DefaultColor, elem), value);
-  ViewSettings::instance().setDefaultColor(elem, color);
+  ViewSettings::setDefaultColor(elem, color);
 }
 
 Color Settings::defaultLabelColor() {
-  QString val = value(TS_DefaultLabelColor,
-                      ColorType::toString(ViewSettings::instance().defaultLabelColor()).c_str())
-                    .toString();
+  QString val =
+      value(TS_DefaultLabelColor, ColorType::toString(ViewSettings::defaultLabelColor()).c_str())
+          .toString();
   Color result;
   ColorType::fromString(result, QStringToTlpString(val));
   return result;
@@ -128,12 +128,12 @@ Color Settings::defaultLabelColor() {
 void Settings::setDefaultLabelColor(const Color &color) {
   QString value = tlp::ColorType::toString(color).c_str();
   setValue(TS_DefaultLabelColor, value);
-  ViewSettings::instance().setDefaultLabelColor(color);
+  ViewSettings::setDefaultLabelColor(color);
 }
 
 tlp::Size Settings::defaultSize(tlp::ElementType elem) {
   QString val = value(elementKey(TS_DefaultSize, elem),
-                      SizeType::toString(ViewSettings::instance().defaultSize(elem)).c_str())
+                      SizeType::toString(ViewSettings::defaultSize(elem)).c_str())
                     .toString();
   Size result;
   SizeType::fromString(result, QStringToTlpString(val));
@@ -143,22 +143,21 @@ tlp::Size Settings::defaultSize(tlp::ElementType elem) {
 void Settings::setDefaultSize(tlp::ElementType elem, const tlp::Size &size) {
   QString value = tlp::SizeType::toString(size).c_str();
   setValue(elementKey(TS_DefaultSize, elem), value);
-  ViewSettings::instance().setDefaultSize(elem, size);
+  ViewSettings::setDefaultSize(elem, size);
 }
 
 int Settings::defaultShape(tlp::ElementType elem) {
-  return value(elementKey(TS_DefaultShape, elem), ViewSettings::instance().defaultShape(elem))
-      .toInt();
+  return value(elementKey(TS_DefaultShape, elem), ViewSettings::defaultShape(elem)).toInt();
 }
 
 void Settings::setDefaultShape(tlp::ElementType elem, int shape) {
   setValue(elementKey(TS_DefaultShape, elem), shape);
-  ViewSettings::instance().setDefaultShape(elem, shape);
+  ViewSettings::setDefaultShape(elem, shape);
 }
 
 tlp::Color Settings::defaultSelectionColor() const {
   QString val = value(TS_DefaultSelectionColor,
-                      ColorType::toString(ViewSettings::instance().defaultSelectionColor()).c_str())
+                      ColorType::toString(ViewSettings::defaultSelectionColor()).c_str())
                     .toString();
   Color result;
   ColorType::fromString(result, QStringToTlpString(val));
@@ -168,7 +167,7 @@ tlp::Color Settings::defaultSelectionColor() const {
 void Settings::setDefaultSelectionColor(const tlp::Color &color) {
   QString value = tlp::ColorType::toString(color).c_str();
   setValue(TS_DefaultSelectionColor, value);
-  ViewSettings::instance().setDefaultSelectionColor(color);
+  ViewSettings::setDefaultSelectionColor(color);
 }
 
 QSet<QString> Settings::favoriteAlgorithms() const {

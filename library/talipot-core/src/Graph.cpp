@@ -99,18 +99,18 @@ static void setViewPropertiesDefaults(Graph *g) {
                     texture = "viewTexture", tgtAnchorSize = "viewTgtAnchorSize";
 
   if (!g->existProperty(shapes)) {
-    g->getIntegerProperty(shapes)->setAllNodeValue(ViewSettings::instance().defaultShape(NODE));
-    g->getIntegerProperty(shapes)->setAllEdgeValue(ViewSettings::instance().defaultShape(EDGE));
+    g->getIntegerProperty(shapes)->setAllNodeValue(ViewSettings::defaultShape(NODE));
+    g->getIntegerProperty(shapes)->setAllEdgeValue(ViewSettings::defaultShape(EDGE));
   }
 
   if (!g->existProperty(colors)) {
-    g->getColorProperty(colors)->setAllNodeValue(ViewSettings::instance().defaultColor(NODE));
-    g->getColorProperty(colors)->setAllEdgeValue(ViewSettings::instance().defaultColor(EDGE));
+    g->getColorProperty(colors)->setAllNodeValue(ViewSettings::defaultColor(NODE));
+    g->getColorProperty(colors)->setAllEdgeValue(ViewSettings::defaultColor(EDGE));
   }
 
   if (!g->existProperty(sizes)) {
-    g->getSizeProperty(sizes)->setAllNodeValue(ViewSettings::instance().defaultSize(NODE));
-    g->getSizeProperty(sizes)->setAllEdgeValue(ViewSettings::instance().defaultSize(EDGE));
+    g->getSizeProperty(sizes)->setAllNodeValue(ViewSettings::defaultSize(NODE));
+    g->getSizeProperty(sizes)->setAllEdgeValue(ViewSettings::defaultSize(EDGE));
   }
 
   if (!g->existProperty(metrics)) {
@@ -119,63 +119,53 @@ static void setViewPropertiesDefaults(Graph *g) {
   }
 
   if (!g->existProperty(fonts)) {
-    g->getStringProperty(fonts)->setAllNodeValue(ViewSettings::instance().defaultFont());
-    g->getStringProperty(fonts)->setAllEdgeValue(ViewSettings::instance().defaultFont());
+    g->getStringProperty(fonts)->setAllNodeValue(ViewSettings::defaultFont());
+    g->getStringProperty(fonts)->setAllEdgeValue(ViewSettings::defaultFont());
   }
 
   if (!g->existProperty(fontSizes)) {
-    g->getIntegerProperty(fontSizes)->setAllNodeValue(ViewSettings::instance().defaultFontSize());
-    g->getIntegerProperty(fontSizes)->setAllEdgeValue(ViewSettings::instance().defaultFontSize());
+    g->getIntegerProperty(fontSizes)->setAllNodeValue(ViewSettings::defaultFontSize());
+    g->getIntegerProperty(fontSizes)->setAllEdgeValue(ViewSettings::defaultFontSize());
   }
 
   if (!g->existProperty(borderWidth)) {
-    g->getDoubleProperty(borderWidth)
-        ->setAllNodeValue(ViewSettings::instance().defaultBorderWidth(NODE));
-    g->getDoubleProperty(borderWidth)
-        ->setAllEdgeValue(ViewSettings::instance().defaultBorderWidth(EDGE));
+    g->getDoubleProperty(borderWidth)->setAllNodeValue(ViewSettings::defaultBorderWidth(NODE));
+    g->getDoubleProperty(borderWidth)->setAllEdgeValue(ViewSettings::defaultBorderWidth(EDGE));
   }
 
   if (!g->existProperty(borderColor)) {
-    g->getColorProperty(borderColor)
-        ->setAllNodeValue(ViewSettings::instance().defaultBorderColor(NODE));
-    g->getColorProperty(borderColor)
-        ->setAllEdgeValue(ViewSettings::instance().defaultBorderColor(EDGE));
+    g->getColorProperty(borderColor)->setAllNodeValue(ViewSettings::defaultBorderColor(NODE));
+    g->getColorProperty(borderColor)->setAllEdgeValue(ViewSettings::defaultBorderColor(EDGE));
   }
 
   if (!g->existProperty(tgtShape)) {
-    g->getIntegerProperty(tgtShape)->setAllEdgeValue(
-        ViewSettings::instance().defaultEdgeExtremityTgtShape());
+    g->getIntegerProperty(tgtShape)->setAllEdgeValue(ViewSettings::defaultEdgeExtremityTgtShape());
   }
 
   if (!g->existProperty(srcShape)) {
-    g->getIntegerProperty(srcShape)->setAllEdgeValue(
-        ViewSettings::instance().defaultEdgeExtremitySrcShape());
+    g->getIntegerProperty(srcShape)->setAllEdgeValue(ViewSettings::defaultEdgeExtremitySrcShape());
   }
 
   if (!g->existProperty(labelColor)) {
-    g->getColorProperty(labelColor)->setAllNodeValue(ViewSettings::instance().defaultLabelColor());
-    g->getColorProperty(labelColor)->setAllEdgeValue(ViewSettings::instance().defaultLabelColor());
+    g->getColorProperty(labelColor)->setAllNodeValue(ViewSettings::defaultLabelColor());
+    g->getColorProperty(labelColor)->setAllEdgeValue(ViewSettings::defaultLabelColor());
   }
 
   if (!g->existProperty(labelBorderColor)) {
-    g->getColorProperty(labelBorderColor)
-        ->setAllNodeValue(ViewSettings::instance().defaultLabelBorderColor());
-    g->getColorProperty(labelBorderColor)
-        ->setAllEdgeValue(ViewSettings::instance().defaultLabelBorderColor());
+    g->getColorProperty(labelBorderColor)->setAllNodeValue(ViewSettings::defaultLabelBorderColor());
+    g->getColorProperty(labelBorderColor)->setAllEdgeValue(ViewSettings::defaultLabelBorderColor());
   }
 
   if (!g->existProperty(labelBorderWidth)) {
     g->getDoubleProperty(labelBorderWidth)
-        ->setAllNodeValue(ViewSettings::instance().defaultLabelBorderWidth());
+        ->setAllNodeValue(ViewSettings::defaultLabelBorderWidth());
     g->getDoubleProperty(labelBorderWidth)
-        ->setAllEdgeValue(ViewSettings::instance().defaultLabelBorderWidth());
+        ->setAllEdgeValue(ViewSettings::defaultLabelBorderWidth());
   }
 
   if (!g->existProperty(labelPosition)) {
-    g->getIntegerProperty(labelPosition)
-        ->setAllNodeValue(ViewSettings::instance().defaultLabelPosition());
-    g->getIntegerProperty(labelPosition)
-        ->setAllEdgeValue(ViewSettings::instance().defaultLabelPosition());
+    g->getIntegerProperty(labelPosition)->setAllNodeValue(ViewSettings::defaultLabelPosition());
+    g->getIntegerProperty(labelPosition)->setAllEdgeValue(ViewSettings::defaultLabelPosition());
   }
 
   if (!g->existProperty(layout)) {
@@ -189,13 +179,11 @@ static void setViewPropertiesDefaults(Graph *g) {
   }
 
   if (!g->existProperty(srcAnchorSize)) {
-    g->getSizeProperty(srcAnchorSize)
-        ->setAllEdgeValue(ViewSettings::instance().defaultEdgeExtremitySrcSize());
+    g->getSizeProperty(srcAnchorSize)->setAllEdgeValue(ViewSettings::defaultEdgeExtremitySrcSize());
   }
 
   if (!g->existProperty(tgtAnchorSize)) {
-    g->getSizeProperty(tgtAnchorSize)
-        ->setAllEdgeValue(ViewSettings::instance().defaultEdgeExtremityTgtSize());
+    g->getSizeProperty(tgtAnchorSize)->setAllEdgeValue(ViewSettings::defaultEdgeExtremityTgtSize());
   }
 
   if (!g->existProperty(texture)) {

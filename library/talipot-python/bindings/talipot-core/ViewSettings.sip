@@ -121,67 +121,69 @@ class ViewSettings : tlp::Observable /NoDefaultCtors/ {
 
 public:
 
-  static tlp::ViewSettings &instance();
+  static tlp::Color defaultSelectionColor();
 
-  tlp::Color defaultColor(tlp::ElementType elem) const;
+  static void setDefaultSelectionColor(const tlp::Color& color);
 
-  void setDefaultColor(tlp::ElementType elem, const tlp::Color& color);
+  static tlp::Color defaultColor(tlp::ElementType elem);
 
-  tlp::Color defaultBorderColor(tlp::ElementType elem) const;
+  static void setDefaultColor(tlp::ElementType elem, const tlp::Color& color);
 
-  void setDefaultBorderColor(tlp::ElementType elem, const tlp::Color& color);
+  static tlp::Color defaultBorderColor(tlp::ElementType elem);
 
-  float defaultBorderWidth(tlp::ElementType elem) const;
+  static void setDefaultBorderColor(tlp::ElementType elem, const tlp::Color& color);
 
-  void setdefaultBorderWidth(tlp::ElementType elem, float borderWidth);
+  static float defaultBorderWidth(tlp::ElementType elem);
 
-  tlp::Color defaultLabelColor() const;
+  static void setdefaultBorderWidth(tlp::ElementType elem, float borderWidth);
 
-  void setDefaultLabelColor(const tlp::Color& color);
+  static tlp::Color defaultLabelColor();
 
-  tlp::Color defaultLabelBorderColor() const;
+  static void setDefaultLabelColor(const tlp::Color& color);
 
-  void setDefaultLabelBorderColor(const tlp::Color& color);
+  static tlp::Color defaultLabelBorderColor();
 
-  float defaultLabelBorderWidth() const;
+  static void setDefaultLabelBorderColor(const tlp::Color& color);
 
-  void setDefaultLabelBorderWidth(float borderWidth);
+  static float defaultLabelBorderWidth();
 
-  int defaultLabelPosition() const;
+  static void setDefaultLabelBorderWidth(float borderWidth);
 
-  void setDefaultLabelPosition(int position);
+  static int defaultLabelPosition();
 
-  tlp::Size defaultSize(tlp::ElementType elem) const;
+  static void setDefaultLabelPosition(int position);
 
-  void setDefaultSize(tlp::ElementType elem, const tlp::Size& size);
+  static tlp::Size defaultSize(tlp::ElementType elem);
 
-  int defaultShape(tlp::ElementType elem) const;
+  static void setDefaultSize(tlp::ElementType elem, const tlp::Size& size);
 
-  void setDefaultShape(tlp::ElementType elem, int shape);
+  static int defaultShape(tlp::ElementType elem);
 
-  int defaultEdgeExtremitySrcShape() const;
+  static void setDefaultShape(tlp::ElementType elem, int shape);
 
-  void setDefaultEdgeExtremitySrcShape(int shape);
+  static int defaultEdgeExtremitySrcShape();
 
-  int defaultEdgeExtremityTgtShape() const;
+  static void setDefaultEdgeExtremitySrcShape(int shape);
 
-  void setDefaultEdgeExtremityTgtShape(int shape);
+  static int defaultEdgeExtremityTgtShape();
 
-  tlp::Size defaultEdgeExtremitySrcSize() const;
+  static void setDefaultEdgeExtremityTgtShape(int shape);
 
-  void setDefaultEdgeExtremitySrcSize(const tlp::Size &size);
+  static tlp::Size defaultEdgeExtremitySrcSize();
 
-  tlp::Size defaultEdgeExtremityTgtSize() const;
+  static void setDefaultEdgeExtremitySrcSize(const tlp::Size &size);
 
-  void setDefaultEdgeExtremityTgtSize(const tlp::Size &size);
+  static tlp::Size defaultEdgeExtremityTgtSize();
 
-  std::string defaultFont() const;
+  static void setDefaultEdgeExtremityTgtSize(const tlp::Size &size);
 
-  void setDefaultFont(const std::string &fontFile);
+  static std::string defaultFont();
 
-  int defaultFontSize() const;
+  static void setDefaultFont(const std::string &fontFile);
 
-  void setDefaultFontSize(int fontSize);
+  static int defaultFontSize();
+
+  static void setDefaultFontSize(int fontSize);
 
 private:
 
@@ -211,15 +213,15 @@ public:
     TLP_DEFAULT_LABEL_COLOR_MODIFIED
   };
 
-  ViewSettingsEventType getType() const;
+  ViewSettingsEventType getType();
 
-  tlp::ElementType getElementType() const;
+  tlp::ElementType getElementType();
 
-  tlp::Color getColor() const;
+  tlp::Color getColor();
 
-  tlp::Size getSize() const;
+  tlp::Size getSize();
 
-  int getShape() const;
+  int getShape();
 
 };
 };

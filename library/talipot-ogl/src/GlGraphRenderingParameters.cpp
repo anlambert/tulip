@@ -31,8 +31,7 @@ GlGraphRenderingParameters::GlGraphRenderingParameters()
       _metaNodesLabelStencil(0xFFFF), _edgesLabelStencil(0xFFFF), _labelScaled(false),
       _labelFixedFontSize(false), _labelMinSize(4), _labelMaxSize(30), _labelsDensity(0),
       _labelsAreBillboarded(false), _fontsPath(tlp::TalipotBitmapDir), _texturePath(""),
-      _edgesMaxSizeToNodesSize(true),
-      _selectionColor(ViewSettings::instance().defaultSelectionColor()),
+      _edgesMaxSizeToNodesSize(true), _selectionColor(ViewSettings::defaultSelectionColor()),
       _displayFilteringProperty(nullptr), _elementOrderingProperty(nullptr) {}
 // This function should rewritten completely
 DataSet GlGraphRenderingParameters::getParameters() const {

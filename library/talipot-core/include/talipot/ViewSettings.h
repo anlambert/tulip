@@ -107,53 +107,53 @@ public:
 
   static labelmap POSITION_LABEL_MAP;
 
-  Color defaultSelectionColor() const;
-  void setDefaultSelectionColor(const Color &color);
+  static Color defaultSelectionColor();
+  static void setDefaultSelectionColor(const Color &color);
 
-  Color defaultColor(ElementType elem) const;
-  void setDefaultColor(ElementType elem, const Color &color);
+  static Color defaultColor(ElementType elem);
+  static void setDefaultColor(ElementType elem, const Color &color);
 
-  Color defaultBorderColor(ElementType elem) const;
-  void setDefaultBorderColor(ElementType elem, const Color &color);
+  static Color defaultBorderColor(ElementType elem);
+  static void setDefaultBorderColor(ElementType elem, const Color &color);
 
-  float defaultBorderWidth(ElementType elem) const;
-  void setdefaultBorderWidth(ElementType elem, float borderWidth);
+  static float defaultBorderWidth(ElementType elem);
+  static void setdefaultBorderWidth(ElementType elem, float borderWidth);
 
-  Color defaultLabelColor() const;
-  void setDefaultLabelColor(const Color &color);
+  static Color defaultLabelColor();
+  static void setDefaultLabelColor(const Color &color);
 
-  Color defaultLabelBorderColor() const;
-  void setDefaultLabelBorderColor(const Color &color);
+  static Color defaultLabelBorderColor();
+  static void setDefaultLabelBorderColor(const Color &color);
 
-  float defaultLabelBorderWidth() const;
-  void setDefaultLabelBorderWidth(float borderWidth);
+  static float defaultLabelBorderWidth();
+  static void setDefaultLabelBorderWidth(float borderWidth);
 
-  int defaultLabelPosition() const;
-  void setDefaultLabelPosition(int position);
+  static int defaultLabelPosition();
+  static void setDefaultLabelPosition(int position);
 
-  Size defaultSize(ElementType elem) const;
-  void setDefaultSize(ElementType elem, const Size &size);
+  static Size defaultSize(ElementType elem);
+  static void setDefaultSize(ElementType elem, const Size &size);
 
-  int defaultShape(ElementType elem) const;
-  void setDefaultShape(ElementType elem, int shape);
+  static int defaultShape(ElementType elem);
+  static void setDefaultShape(ElementType elem, int shape);
 
-  int defaultEdgeExtremitySrcShape() const;
-  void setDefaultEdgeExtremitySrcShape(int shape);
+  static int defaultEdgeExtremitySrcShape();
+  static void setDefaultEdgeExtremitySrcShape(int shape);
 
-  int defaultEdgeExtremityTgtShape() const;
-  void setDefaultEdgeExtremityTgtShape(int shape);
+  static int defaultEdgeExtremityTgtShape();
+  static void setDefaultEdgeExtremityTgtShape(int shape);
 
-  Size defaultEdgeExtremitySrcSize() const;
-  void setDefaultEdgeExtremitySrcSize(const Size &size);
+  static Size defaultEdgeExtremitySrcSize();
+  static void setDefaultEdgeExtremitySrcSize(const Size &size);
 
-  Size defaultEdgeExtremityTgtSize() const;
-  void setDefaultEdgeExtremityTgtSize(const Size &size);
+  static Size defaultEdgeExtremityTgtSize();
+  static void setDefaultEdgeExtremityTgtSize(const Size &size);
 
-  std::string defaultFont() const;
-  void setDefaultFont(const std::string &fontFile);
+  static std::string defaultFont();
+  static void setDefaultFont(const std::string &fontFile);
 
-  int defaultFontSize() const;
-  void setDefaultFontSize(int fontSize);
+  static int defaultFontSize();
+  static void setDefaultFontSize(int fontSize);
 
 private:
   ViewSettings() {}

@@ -40,7 +40,7 @@ static Size _defaultEdgeExtremityTgtSize(1, 1, 0);
 static std::string _defaultFont("DejaVu Sans-Book");
 static int _defaultFontSize(18);
 
-Color ViewSettings::defaultSelectionColor() const {
+Color ViewSettings::defaultSelectionColor() {
   return _defaultSelectionColor;
 }
 
@@ -49,10 +49,11 @@ void ViewSettings::setDefaultSelectionColor(const Color &color) {
     return;
   }
   _defaultSelectionColor = color;
-  sendEvent(ViewSettingsEvent(color, ViewSettingsEvent::TLP_DEFAULT_SELECTION_COLOR_MODIFIED));
+  instance().sendEvent(
+      ViewSettingsEvent(color, ViewSettingsEvent::TLP_DEFAULT_SELECTION_COLOR_MODIFIED));
 }
 
-Color ViewSettings::defaultColor(ElementType elem) const {
+Color ViewSettings::defaultColor(ElementType elem) {
   if (elem == NODE) {
     return _defaultNodeColor;
   } else {
@@ -71,10 +72,10 @@ void ViewSettings::setDefaultColor(ElementType elem, const Color &color) {
     _defaultEdgeColor = color;
   }
 
-  sendEvent(ViewSettingsEvent(elem, color));
+  instance().sendEvent(ViewSettingsEvent(elem, color));
 }
 
-Color ViewSettings::defaultBorderColor(ElementType elem) const {
+Color ViewSettings::defaultBorderColor(ElementType elem) {
   if (elem == NODE) {
     return _defaultNodeBorderColor;
   } else {
@@ -90,7 +91,7 @@ void ViewSettings::setDefaultBorderColor(ElementType elem, const Color &color) {
   }
 }
 
-float ViewSettings::defaultBorderWidth(ElementType elem) const {
+float ViewSettings::defaultBorderWidth(ElementType elem) {
   if (elem == NODE) {
     return _defaultNodeBorderWidth;
   } else {
@@ -106,7 +107,7 @@ void ViewSettings::setdefaultBorderWidth(ElementType elem, float borderWidth) {
   }
 }
 
-Color ViewSettings::defaultLabelColor() const {
+Color ViewSettings::defaultLabelColor() {
   return _defaultLabelColor;
 }
 
@@ -116,10 +117,11 @@ void ViewSettings::setDefaultLabelColor(const Color &color) {
   }
 
   _defaultLabelColor = color;
-  sendEvent(ViewSettingsEvent(color, ViewSettingsEvent::TLP_DEFAULT_LABEL_COLOR_MODIFIED));
+  instance().sendEvent(
+      ViewSettingsEvent(color, ViewSettingsEvent::TLP_DEFAULT_LABEL_COLOR_MODIFIED));
 }
 
-Color ViewSettings::defaultLabelBorderColor() const {
+Color ViewSettings::defaultLabelBorderColor() {
   return _defaultLabelBorderColor;
 }
 
@@ -127,7 +129,7 @@ void ViewSettings::setDefaultLabelBorderColor(const Color &color) {
   _defaultLabelBorderColor = color;
 }
 
-float ViewSettings::defaultLabelBorderWidth() const {
+float ViewSettings::defaultLabelBorderWidth() {
   return _defaultLabelBorderWidth;
 }
 
@@ -141,7 +143,7 @@ ViewSettings::labelmap ViewSettings::POSITION_LABEL_MAP = {{LabelPosition::Cente
                                                            {LabelPosition::Left, "Left"},
                                                            {LabelPosition::Right, "Right"}};
 
-int ViewSettings::defaultLabelPosition() const {
+int ViewSettings::defaultLabelPosition() {
   return _defaultLabelPosition;
 }
 
@@ -149,7 +151,7 @@ void ViewSettings::setDefaultLabelPosition(int position) {
   _defaultLabelPosition = position;
 }
 
-Size ViewSettings::defaultSize(ElementType elem) const {
+Size ViewSettings::defaultSize(ElementType elem) {
   if (elem == NODE) {
     return _defaultNodeSize;
   } else {
@@ -168,10 +170,10 @@ void ViewSettings::setDefaultSize(ElementType elem, const Size &size) {
     _defaultEdgeSize = size;
   }
 
-  sendEvent(ViewSettingsEvent(elem, size));
+  instance().sendEvent(ViewSettingsEvent(elem, size));
 }
 
-int ViewSettings::defaultShape(ElementType elem) const {
+int ViewSettings::defaultShape(ElementType elem) {
   if (elem == NODE) {
     return _defaultNodeShape;
   } else {
@@ -190,10 +192,10 @@ void ViewSettings::setDefaultShape(ElementType elem, int shape) {
     _defaultEdgeShape = shape;
   }
 
-  sendEvent(ViewSettingsEvent(elem, shape));
+  instance().sendEvent(ViewSettingsEvent(elem, shape));
 }
 
-int ViewSettings::defaultEdgeExtremitySrcShape() const {
+int ViewSettings::defaultEdgeExtremitySrcShape() {
   return _defaultEdgeExtremitySrcShape;
 }
 
@@ -201,7 +203,7 @@ void ViewSettings::setDefaultEdgeExtremitySrcShape(int shape) {
   _defaultEdgeExtremitySrcShape = shape;
 }
 
-int ViewSettings::defaultEdgeExtremityTgtShape() const {
+int ViewSettings::defaultEdgeExtremityTgtShape() {
   return _defaultEdgeExtremityTgtShape;
 }
 
@@ -209,7 +211,7 @@ void ViewSettings::setDefaultEdgeExtremityTgtShape(int shape) {
   _defaultEdgeExtremityTgtShape = shape;
 }
 
-Size ViewSettings::defaultEdgeExtremitySrcSize() const {
+Size ViewSettings::defaultEdgeExtremitySrcSize() {
   return _defaultEdgeExtremitySrcSize;
 }
 
@@ -217,7 +219,7 @@ void ViewSettings::setDefaultEdgeExtremitySrcSize(const Size &size) {
   _defaultEdgeExtremitySrcSize = size;
 }
 
-Size ViewSettings::defaultEdgeExtremityTgtSize() const {
+Size ViewSettings::defaultEdgeExtremityTgtSize() {
   return _defaultEdgeExtremityTgtSize;
 }
 
@@ -225,7 +227,7 @@ void ViewSettings::setDefaultEdgeExtremityTgtSize(const Size &size) {
   _defaultEdgeExtremityTgtSize = size;
 }
 
-std::string ViewSettings::defaultFont() const {
+std::string ViewSettings::defaultFont() {
   return _defaultFont;
 }
 
@@ -233,7 +235,7 @@ void ViewSettings::setDefaultFont(const std::string &fontFile) {
   _defaultFont = fontFile;
 }
 
-int ViewSettings::defaultFontSize() const {
+int ViewSettings::defaultFontSize() {
   return _defaultFontSize;
 }
 
