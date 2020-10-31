@@ -22,6 +22,7 @@
 #include <talipot/Settings.h>
 #include <talipot/ItemDelegate.h>
 #include <talipot/MetaTypes.h>
+#include <talipot/ViewSettings.h>
 
 #include <QMessageBox>
 
@@ -366,19 +367,15 @@ void PreferencesDialog::resetToTalipotDefaults(int row, int updateMode) {
   }
 
   QAbstractItemModel *model = _ui->graphDefaultsTable->model();
-  model->setData(model->index(4, 1),
-                 QVariant::fromValue<tlp::Color>(Settings::defaultLabelColor()));
-  model->setData(model->index(4, 2),
-                 QVariant::fromValue<tlp::Color>(Settings::defaultLabelColor()));
 
   switch (row) {
   case 0: // default color
     if (updateMode == RESET_NODE) {
       model->setData(model->index(0, 1),
-                     QVariant::fromValue<tlp::Color>(Settings::defaultColor(tlp::NODE)));
+                     QVariant::fromValue<tlp::Color>(ViewSettings::ApplicationDefault::NodeColor));
     } else {
       model->setData(model->index(0, 2),
-                     QVariant::fromValue<tlp::Color>(Settings::defaultColor(tlp::EDGE)));
+                     QVariant::fromValue<tlp::Color>(ViewSettings::ApplicationDefault::EdgeColor));
     }
 
     break;
@@ -386,10 +383,10 @@ void PreferencesDialog::resetToTalipotDefaults(int row, int updateMode) {
   case 1: // default size
     if (updateMode == RESET_NODE) {
       model->setData(model->index(1, 1),
-                     QVariant::fromValue<tlp::Size>(Settings::defaultSize(tlp::NODE)));
+                     QVariant::fromValue<tlp::Size>(ViewSettings::ApplicationDefault::NodeSize));
     } else {
       model->setData(model->index(1, 2),
-                     QVariant::fromValue<tlp::Size>(Settings::defaultSize(tlp::EDGE)));
+                     QVariant::fromValue<tlp::Size>(ViewSettings::ApplicationDefault::EdgeSize));
     }
 
     break;
@@ -397,23 +394,23 @@ void PreferencesDialog::resetToTalipotDefaults(int row, int updateMode) {
   case 2: // default shape
     if (updateMode == RESET_NODE) {
       model->setData(model->index(2, 1),
-                     QVariant::fromValue<NodeShape::NodeShapes>(
-                         static_cast<NodeShape::NodeShapes>(Settings::defaultShape(tlp::NODE))));
+                     QVariant::fromValue<NodeShape::NodeShapes>(static_cast<NodeShape::NodeShapes>(
+                         ViewSettings::ApplicationDefault::NodeShape)));
     } else {
       model->setData(model->index(2, 2),
-                     QVariant::fromValue<EdgeShape::EdgeShapes>(
-                         static_cast<EdgeShape::EdgeShapes>(Settings::defaultShape(tlp::EDGE))));
+                     QVariant::fromValue<EdgeShape::EdgeShapes>(static_cast<EdgeShape::EdgeShapes>(
+                         ViewSettings::ApplicationDefault::EdgeShape)));
     }
 
     break;
 
   case 3: // default selection color
     if (updateMode == RESET_NODE) {
-      model->setData(model->index(3, 1),
-                     QVariant::fromValue<tlp::Color>(Settings::defaultSelectionColor()));
+      model->setData(model->index(3, 1), QVariant::fromValue<tlp::Color>(
+                                             ViewSettings::ApplicationDefault::SelectionColor));
     } else {
-      model->setData(model->index(3, 2),
-                     QVariant::fromValue<tlp::Color>(Settings::defaultSelectionColor()));
+      model->setData(model->index(3, 2), QVariant::fromValue<tlp::Color>(
+                                             ViewSettings::ApplicationDefault::SelectionColor));
     }
 
     break;
@@ -421,10 +418,10 @@ void PreferencesDialog::resetToTalipotDefaults(int row, int updateMode) {
   case 4: // default label color
     if (updateMode == RESET_NODE) {
       model->setData(model->index(4, 1),
-                     QVariant::fromValue<tlp::Color>(Settings::defaultLabelColor()));
+                     QVariant::fromValue<tlp::Color>(ViewSettings::ApplicationDefault::LabelColor));
     } else {
       model->setData(model->index(4, 2),
-                     QVariant::fromValue<tlp::Color>(Settings::defaultLabelColor()));
+                     QVariant::fromValue<tlp::Color>(ViewSettings::ApplicationDefault::LabelColor));
     }
 
   default:

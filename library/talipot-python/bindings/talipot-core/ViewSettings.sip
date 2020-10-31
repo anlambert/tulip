@@ -121,6 +121,30 @@ class ViewSettings : tlp::Observable /NoDefaultCtors/ {
 
 public:
 
+  struct ApplicationDefault /NoDefaultCtors/ {
+    static const Color SelectionColor;
+    static const Color NodeColor;
+    static const Color EdgeColor;
+    static const Color NodeBorderColor;
+    static const Color EdgeBorderColor;
+    static const Color LabelColor;
+    static const Color LabelBorderColor;
+    static const float NodeBorderWidth;
+    static const float EdgeBorderWidth;
+    static const float LabelBorderWidth;
+    static const int LabelPosition;
+    static const Size NodeSize;
+    static const Size EdgeSize;
+    static const int NodeShape;
+    static const int EdgeShape;
+    static const int EdgeExtremitySrcShape;
+    static const int EdgeExtremityTgtShape;
+    static const Size EdgeExtremitySrcSize;
+    static const Size EdgeExtremityTgtSize;
+    static const std::string Font;
+    static const int FontSize;
+  };
+
   static tlp::Color defaultSelectionColor();
 
   static void setDefaultSelectionColor(const tlp::Color& color);

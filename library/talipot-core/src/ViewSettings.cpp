@@ -18,27 +18,49 @@ namespace tlp {
 
 INSTANTIATE_DLL_TEMPLATE(Singleton<ViewSettings>, TLP_TEMPLATE_DEFINE_SCOPE)
 
-static Color _defaultSelectionColor = {23, 81, 228};
-static Color _defaultNodeColor(Color::Red);
-static Color _defaultEdgeColor(Color::Black);
-static Color _defaultNodeBorderColor(Color::Black);
-static Color _defaultEdgeBorderColor(Color::Black);
-static Color _defaultLabelColor(Color::Black);
-static Color _defaultLabelBorderColor(Color::Black);
-static float _defaultNodeBorderWidth(0);
-static float _defaultEdgeBorderWidth(0);
-static float _defaultLabelBorderWidth(1);
-static int _defaultLabelPosition(LabelPosition::Center);
-static Size _defaultNodeSize(1);
-static Size _defaultEdgeSize(0.125, 0.125, 0.5);
-static int _defaultNodeShape(NodeShape::Circle);
-static int _defaultEdgeShape(EdgeShape::Polyline);
-static int _defaultEdgeExtremitySrcShape(EdgeExtremityShape::None);
-static int _defaultEdgeExtremityTgtShape(EdgeExtremityShape::Arrow);
-static Size _defaultEdgeExtremitySrcSize(1, 1, 0);
-static Size _defaultEdgeExtremityTgtSize(1, 1, 0);
-static std::string _defaultFont("DejaVu Sans-Book");
-static int _defaultFontSize(18);
+const Color ViewSettings::ApplicationDefault::SelectionColor = {23, 81, 228};
+const Color ViewSettings::ApplicationDefault::NodeColor = {255, 95, 95};
+const Color ViewSettings::ApplicationDefault::EdgeColor = {180, 180, 180};
+const Color ViewSettings::ApplicationDefault::NodeBorderColor = Color::Black;
+const Color ViewSettings::ApplicationDefault::EdgeBorderColor = Color::Black;
+const Color ViewSettings::ApplicationDefault::LabelColor = Color::Black;
+const Color ViewSettings::ApplicationDefault::LabelBorderColor = Color::Black;
+const float ViewSettings::ApplicationDefault::NodeBorderWidth = 0;
+const float ViewSettings::ApplicationDefault::EdgeBorderWidth = 0;
+const float ViewSettings::ApplicationDefault::LabelBorderWidth = 1;
+const int ViewSettings::ApplicationDefault::LabelPosition = LabelPosition::Center;
+const Size ViewSettings::ApplicationDefault::NodeSize = 1;
+const Size ViewSettings::ApplicationDefault::EdgeSize = {0.125, 0.125, 0.5};
+const int ViewSettings::ApplicationDefault::NodeShape = NodeShape::Circle;
+const int ViewSettings::ApplicationDefault::EdgeShape = EdgeShape::Polyline;
+const int ViewSettings::ApplicationDefault::EdgeExtremitySrcShape = EdgeExtremityShape::None;
+const int ViewSettings::ApplicationDefault::EdgeExtremityTgtShape = EdgeExtremityShape::Arrow;
+const Size ViewSettings::ApplicationDefault::EdgeExtremitySrcSize = {1, 1, 0};
+const Size ViewSettings::ApplicationDefault::EdgeExtremityTgtSize = {1, 1, 0};
+const std::string ViewSettings::ApplicationDefault::Font = "DejaVu Sans-Book";
+const int ViewSettings::ApplicationDefault::FontSize = 18;
+
+static Color _defaultSelectionColor = ViewSettings::ApplicationDefault::SelectionColor;
+static Color _defaultNodeColor = ViewSettings::ApplicationDefault::NodeColor;
+static Color _defaultEdgeColor = ViewSettings::ApplicationDefault::EdgeColor;
+static Color _defaultNodeBorderColor = ViewSettings::ApplicationDefault::NodeBorderColor;
+static Color _defaultEdgeBorderColor = ViewSettings::ApplicationDefault::EdgeBorderColor;
+static Color _defaultLabelColor = ViewSettings::ApplicationDefault::LabelColor;
+static Color _defaultLabelBorderColor = ViewSettings::ApplicationDefault::LabelBorderColor;
+static float _defaultNodeBorderWidth = ViewSettings::ApplicationDefault::NodeBorderWidth;
+static float _defaultEdgeBorderWidth = ViewSettings::ApplicationDefault::EdgeBorderWidth;
+static float _defaultLabelBorderWidth = ViewSettings::ApplicationDefault::LabelBorderWidth;
+static int _defaultLabelPosition = ViewSettings::ApplicationDefault::LabelPosition;
+static Size _defaultNodeSize = ViewSettings::ApplicationDefault::NodeSize;
+static Size _defaultEdgeSize = ViewSettings::ApplicationDefault::EdgeSize;
+static int _defaultNodeShape = ViewSettings::ApplicationDefault::NodeShape;
+static int _defaultEdgeShape = ViewSettings::ApplicationDefault::EdgeShape;
+static int _defaultEdgeExtremitySrcShape = ViewSettings::ApplicationDefault::EdgeExtremitySrcShape;
+static int _defaultEdgeExtremityTgtShape = ViewSettings::ApplicationDefault::EdgeExtremityTgtShape;
+static Size _defaultEdgeExtremitySrcSize = ViewSettings::ApplicationDefault::EdgeExtremitySrcSize;
+static Size _defaultEdgeExtremityTgtSize = ViewSettings::ApplicationDefault::EdgeExtremityTgtSize;
+static std::string _defaultFont = ViewSettings::ApplicationDefault::Font;
+static int _defaultFontSize = ViewSettings::ApplicationDefault::FontSize;
 
 Color ViewSettings::defaultSelectionColor() {
   return _defaultSelectionColor;

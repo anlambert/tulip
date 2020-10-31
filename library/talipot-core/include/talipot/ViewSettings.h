@@ -103,6 +103,30 @@ class TLP_SCOPE ViewSettings : public Observable, public Singleton<ViewSettings>
   friend class Singleton<ViewSettings>;
 
 public:
+  struct TLP_SCOPE ApplicationDefault {
+    static const Color SelectionColor;
+    static const Color NodeColor;
+    static const Color EdgeColor;
+    static const Color NodeBorderColor;
+    static const Color EdgeBorderColor;
+    static const Color LabelColor;
+    static const Color LabelBorderColor;
+    static const float NodeBorderWidth;
+    static const float EdgeBorderWidth;
+    static const float LabelBorderWidth;
+    static const int LabelPosition;
+    static const Size NodeSize;
+    static const Size EdgeSize;
+    static const int NodeShape;
+    static const int EdgeShape;
+    static const int EdgeExtremitySrcShape;
+    static const int EdgeExtremityTgtShape;
+    static const Size EdgeExtremitySrcSize;
+    static const Size EdgeExtremityTgtSize;
+    static const std::string Font;
+    static const int FontSize;
+  };
+
   typedef std::map<LabelPosition::LabelPositions, std::string> labelmap;
 
   static labelmap POSITION_LABEL_MAP;

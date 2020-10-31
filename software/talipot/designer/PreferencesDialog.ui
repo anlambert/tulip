@@ -339,7 +339,7 @@ If not, a new random seed will be set to initialize each new random sequence.&lt
            </column>
            <item row="0" column="0">
             <property name="text">
-             <string>Default color</string>
+             <string>Color</string>
             </property>
             <property name="font">
              <font>
@@ -351,7 +351,7 @@ If not, a new random seed will be set to initialize each new random sequence.&lt
            </item>
            <item row="1" column="0">
             <property name="text">
-             <string>Default size</string>
+             <string>Size</string>
             </property>
             <property name="font">
              <font>
@@ -363,7 +363,7 @@ If not, a new random seed will be set to initialize each new random sequence.&lt
            </item>
            <item row="2" column="0">
             <property name="text">
-             <string>Default shape</string>
+             <string>Shape</string>
             </property>
             <property name="font">
              <font>
@@ -375,7 +375,7 @@ If not, a new random seed will be set to initialize each new random sequence.&lt
            </item>
            <item row="3" column="0">
             <property name="text">
-             <string>Selection color (nodes = edges)</string>
+             <string>Selection color</string>
             </property>
             <property name="font">
              <font>
@@ -387,7 +387,7 @@ If not, a new random seed will be set to initialize each new random sequence.&lt
            </item>
            <item row="4" column="0">
             <property name="text">
-             <string>Default label color (nodes = edges)</string>
+             <string>Label color</string>
             </property>
             <property name="font">
              <font>
