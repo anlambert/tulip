@@ -170,21 +170,6 @@ IF(NOT TALIPOT_BUILD_CORE_ONLY)
     INSTALL_DIR
     ${TalipotPluginsInstallDir})
   # ----------------------------------------------------------------------------
-  QTX_WRAP_CPP(WebImport_MOC_SRCS WebImport.h)
-
-  TALIPOT_ADD_PLUGIN(
-    NAME
-    WebImport
-    SRCS
-    WebImport.cpp
-    ${WebImport_MOC_SRCS}
-    LINKS
-    ${LibTalipotCoreName}
-    ${LibTalipotGUIName}
-    ${QT_LIBRARIES}
-    INSTALL_DIR
-    ${TalipotPluginsInstallDir})
-  # ----------------------------------------------------------------------------
   TALIPOT_ADD_PLUGIN(
     NAME
     GEXFImport
