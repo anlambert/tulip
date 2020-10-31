@@ -74,7 +74,7 @@ The following dependencies are required to build Talipot:
   * [QuaZIP](https://github.com/stachenov/quazip)
   * [yajl](https://lloyd.github.io/yajl) >= 2.0
   * [Python](https://www.python.org) >= 2.6
-  * [SIP](https://www.riverbankcomputing.com/software/sip) >= 4.19.23
+  * [SIP](https://www.riverbankcomputing.com/software/sip) >= 4.19.24, < 5.0
   (if SIP can not be found or its version does not match the required one,
   it will be compiled using a copy of its source code in the Talipot tree)
 
