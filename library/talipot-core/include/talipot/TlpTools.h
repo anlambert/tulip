@@ -139,6 +139,15 @@ TLP_SCOPE double randomDouble(double max = 1.0);
 TLP_SCOPE int statPath(const std::string &pathname, tlp_stat_t *buf);
 
 /**
+ * @brief Cross-platform function to check if a path exists on a filesystem.
+ *
+ * Its purpose is to support paths on windows platform containing non-ascii characters.
+ *
+ * @param pathname an utf-8 encoded string containing the path to check
+ */
+TLP_SCOPE bool pathExists(const std::string &pathname);
+
+/**
  * @brief Cross-platform function to get an input file stream.
  *
  * Its purpose is to support paths on windows platform containing non-ascii characters.

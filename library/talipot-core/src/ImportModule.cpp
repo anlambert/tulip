@@ -41,9 +41,9 @@ ImportModule::InputData ImportModule::getInputData() const {
   if (dataSet->exists("file::filename")) {
     dataSet->get("file::filename", filename);
     tlp_stat_t infoEntry;
-    bool result = (statPath(filename, &infoEntry) == 0);
+    bool pathExists = (statPath(filename, &infoEntry) == 0);
 
-    if (!result) {
+    if (!pathExists) {
       stringstream ess;
       ess << filename << ": " << strerror(errno);
       pluginProgress->setError(ess.str());

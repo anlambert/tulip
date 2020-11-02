@@ -13,7 +13,6 @@
 
 #include <fstream>
 #include <cerrno>
-#include <sys/stat.h>
 #include <talipot/TLPBExportImport.h>
 #include <talipot/TlpTools.h>
 #include <talipot/GraphAbstract.h>

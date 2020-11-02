@@ -141,9 +141,7 @@ static void checkDirectory(std::string dir, bool tlpDirSet, bool throwEx) {
     dir.erase(dir.length() - 1);
   }
 
-  tlp_stat_t infoEntry;
-
-  if (statPath(dir, &infoEntry) != 0) {
+  if (!pathExists(dir)) {
     std::stringstream ess;
     ess << "Error - " << dir << ":" << std::endl << strerror(errno) << std::endl;
     if (tlpDirSet) {
@@ -244,8 +242,7 @@ void tlp::initTalipotLib(const char *appDirPath) {
 #ifndef _WIN32
   // special case for Debian when Talipot install prefix is /usr
   // as libraries are installed in <prefix>/lib/<arch>
-  tlp_stat_t statInfo;
-  if (statPath(curDir, &statInfo) != 0) {
+  if (!pathExists(curDir) != 0) {
     pos = TalipotLibDir.rfind("/", pos - 1);
     curDir = TalipotLibDir.substr(0, pos + 1) + "share/talipot/";
   }
@@ -386,7 +383,7 @@ double tlp::randomDouble(double max) {
   return dist(mt);
 }
 
-// file streams management
+// files management
 //=========================================================
 
 int tlp::statPath(const std::string &pathname, tlp_stat_t *buf) {
@@ -398,6 +395,12 @@ int tlp::statPath(const std::string &pathname, tlp_stat_t *buf) {
 #endif
 }
 
+bool tlp::pathExists(const std::string &pathname) {
+  tlp_stat_t infoEntry;
+  return statPath(pathname, &infoEntry) == 0;
+}
+
+// file streams management
 //=========================================================
 
 #if defined(WIN32) && defined(__GLIBCXX__)

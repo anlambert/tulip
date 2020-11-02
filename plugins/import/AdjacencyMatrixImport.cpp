@@ -126,10 +126,7 @@ Defines a graph with 3 nodes and 3 edges, the edge between A and C is named E an
       return false;
     }
 
-    tlp_stat_t infoEntry;
-    int result = statPath(name2, &infoEntry);
-
-    if (result == -1) {
+    if (!pathExists(name2)) {
       pluginProgress->setError(strerror(errno));
       return false;
     }

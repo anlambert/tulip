@@ -100,8 +100,7 @@ bool GlTextureLoader::loadTexture(const string &filename, GlTexture &texture) {
 
   TextureInfo texti;
 
-  tlp_stat_t buf;
-  if (tlp::statPath(filename.c_str(), &buf) < 0) {
+  if (!tlp::pathExists(filename)) {
     tlp::error() << "Image file " << filename << " does not exist." << std::endl;
     return false;
   }
