@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Script to build and upload Talipot Python wheels on AppVeyor
 
 # Abort script on first error
@@ -12,17 +14,19 @@ let DEV_VERSION+=1
 echo current wheel dev version = $DEV_VERSION
 
 # Install build tools and dependencies
-pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-toolchain
-pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-cmake
-pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-ccache
-pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-yajl
-pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-zstd
-pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-qhull
+pacman --noconfirm -S --needed \
+  mingw-w64-$MSYS2_ARCH-toolchain \
+  mingw-w64-$MSYS2_ARCH-cmake \
+  mingw-w64-$MSYS2_ARCH-ccache \
+  mingw-w64-$MSYS2_ARCH-zlib \
+  mingw-w64-$MSYS2_ARCH-yajl \
+  mingw-w64-$MSYS2_ARCH-zstd \
+  mingw-w64-$MSYS2_ARCH-qhull
 
 # Build wheels for each supported Python version
 cd $APPVEYOR_BUILD_FOLDER
 mkdir build && cd build
-for pyVersion in 27 35 36 37 38 39
+for pyVersion in 27 36 37 38 39
 do
   export PATH=/c/Python$pyVersion-x64/:/c/Python$pyVersion-x64/Scripts/:$PATH
   pip install wheel twine
@@ -45,11 +49,31 @@ from platform import python_version
 print('Talipot %s successfully imported in Python %s' %
       (tlp.getRelease(), python_version()))
 "
+  pip uninstall -y talipot
   popd
 
 done
 
+# Upload wheels
 if [ "$APPVEYOR_REPO_BRANCH" == "master" ]
 then
   make test-wheel-upload
 fi
+
+# Test uploaded wheels in clean environement
+# Install build tools and dependencies
+pacman --noconfirm -Rc \
+  mingw-w64-$MSYS2_ARCH-toolchain \
+  mingw-w64-$MSYS2_ARCH-cmake \
+  mingw-w64-$MSYS2_ARCH-ccache \
+  mingw-w64-$MSYS2_ARCH-zlib \
+  mingw-w64-$MSYS2_ARCH-yajl \
+  mingw-w64-$MSYS2_ARCH-zstd \
+  mingw-w64-$MSYS2_ARCH-qhull
+
+for pyVersion in 27 36 37 38 39
+do
+  export PATH=/c/Python$pyVersion-x64/:/c/Python$pyVersion-x64/Scripts/:$PATH
+  pip install --index-url https://test.pypi.org/simple/ talipot
+  python -c "from talipot import tlp; print(tlp.getLayoutAlgorithmPluginsList())"
+done

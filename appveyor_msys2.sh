@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Check which type of Talipot build to perform based on the job number
 #   - odd number = core build
 #   - even number = complete build
@@ -21,26 +23,28 @@ pacman --noconfirm -S --needed base-devel
 pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-toolchain
 
 # Install Talipot core build dependencies
-pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-cmake
-pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-ccache
-pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-yajl
-pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-zstd
-pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-qhull
-pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-python
-pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-cppunit
+pacman --noconfirm -S --needed \
+  mingw-w64-$MSYS2_ARCH-cmake \
+  mingw-w64-$MSYS2_ARCH-ccache \
+  mingw-w64-$MSYS2_ARCH-yajl \
+  mingw-w64-$MSYS2_ARCH-zstd \
+  mingw-w64-$MSYS2_ARCH-qhull \
+  mingw-w64-$MSYS2_ARCH-python \
+  mingw-w64-$MSYS2_ARCH-cppunit
 
 export TALIPOT_BUILD_DOC=OFF
 
 if [[ "$TALIPOT_BUILD_CORE_ONLY" == "0" ]]
 then
   # Install Talipot complete build dependencies
-  pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-fontconfig
-  pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-freetype
-  pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-glew
-  pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-qt5
-  pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-quazip
-  pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-qtwebkit
-  pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-python-sphinx
+  pacman --noconfirm -S --needed \
+    mingw-w64-$MSYS2_ARCH-fontconfig \
+    mingw-w64-$MSYS2_ARCH-freetype \
+    mingw-w64-$MSYS2_ARCH-glew \
+    mingw-w64-$MSYS2_ARCH-qt5 \
+    mingw-w64-$MSYS2_ARCH-quazip \
+    mingw-w64-$MSYS2_ARCH-qtwebkit \
+    mingw-w64-$MSYS2_ARCH-python-sphinx
   export TALIPOT_BUILD_DOC=ON
 fi
 
