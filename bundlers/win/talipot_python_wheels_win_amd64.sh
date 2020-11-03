@@ -3,6 +3,14 @@
 # Abort script on first error
 set -e
 
+JSON=$(curl -s https://test.pypi.org/pypi/talipot/json)
+LAST_VERSION=$(echo $JSON | python -c "
+import sys, json
+print(json.load(sys.stdin)['info']['version'])" 2>/dev/null)
+DEV_VERSION=$(echo $LAST_VERSION | cut -f4 -d '.' | sed 's/dev//')
+let DEV_VERSION+=1
+echo current wheel dev version = $DEV_VERSION
+
 # Install build tools and dependencies
 pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-toolchain
 pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-cmake
@@ -10,14 +18,6 @@ pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-ccache
 pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-yajl
 pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-zstd
 pacman --noconfirm -S --needed mingw-w64-$MSYS2_ARCH-qhull
-
-JSON=$(curl -s 'https://test.pypi.org/pypi/talipot/json')
-LAST_VERSION=$(echo $JSON | python -c "
-import sys, json
-print(json.load(sys.stdin)['info']['version'])" 2>/dev/null)
-DEV_VERSION=$(echo $LAST_VERSION | cut -f4 -d '.' | sed 's/dev//')
-let DEV_VERSION+=1
-echo current wheel dev version = $DEV_VERSION
 
 # Build wheels for each supported Python version
 cd $APPVEYOR_BUILD_FOLDER
