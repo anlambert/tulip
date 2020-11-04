@@ -268,8 +268,9 @@ PythonInterpreter::PythonInterpreter()
 #else
     PySys_SetArgv(argc, const_cast<char **>(argv));
 #endif
-
+#if PY_VERSION_HEX < 0x03090000
     PyEval_InitThreads();
+#endif
     mainThreadState = PyEval_SaveThread();
   }
 
@@ -390,7 +391,6 @@ PythonInterpreter::~PythonInterpreter() {
     consoleOuputString = "";
     runString(
         "sys.stdout = sys.__stdout__; sys.stderr = sys.__stderr__; sys.stdin = sys.__stdin__\n");
-    PyEval_ReleaseLock();
     PyEval_RestoreThread(mainThreadState);
 
     holdGIL();
