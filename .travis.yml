@@ -339,7 +339,7 @@ jobs:
         - sudo port -N install qhull
         - sudo port -N install yajl
         - sudo port -N install zstd
-        - sudo port -N install python38
+        - sudo port -N install python39
       env:
         - ENV="MacOS 10.13, LLVM Clang, MacPorts"
 
@@ -351,7 +351,7 @@ jobs:
             -DCMAKE_INSTALL_PREFIX=$PWD/install
             -DCMAKE_C_COMPILER=/opt/local/bin/clang-mp-10
             -DCMAKE_CXX_COMPILER=/opt/local/bin/clang++-mp-10
-            -DPYTHON_EXECUTABLE=/opt/local/bin/python3.8
+            -DPYTHON_EXECUTABLE=/opt/local/bin/python3.9
             -DZLIB_INCLUDE_DIR=/opt/local/include
             -DZLIB_LIBRARY_RELEASE=/opt/local/lib/libz.dylib
             -DTALIPOT_USE_CCACHE=ON
@@ -415,7 +415,7 @@ jobs:
         - sudo port -N install qhull
         - sudo port -N install yajl
         - sudo port -N install zstd
-        - sudo port -N install python38
+        - sudo port -N install python39
         - sudo port -N install pkgconfig
         - sudo port -N install cppunit
       env:
@@ -429,7 +429,7 @@ jobs:
             -DCMAKE_INSTALL_PREFIX=$PWD/install
             -DCMAKE_C_COMPILER=/opt/local/bin/clang-mp-10
             -DCMAKE_CXX_COMPILER=/opt/local/bin/clang++-mp-10
-            -DPYTHON_EXECUTABLE=/opt/local/bin/python3.8
+            -DPYTHON_EXECUTABLE=/opt/local/bin/python3.9
             -DZLIB_INCLUDE_DIR=/opt/local/include
             -DZLIB_LIBRARY_RELEASE=/opt/local/lib/libz.dylib
             -DTALIPOT_BUILD_TESTS=ON
@@ -513,11 +513,11 @@ jobs:
         - sudo port -N install qhull
         - sudo port -N install yajl
         - sudo port -N install zstd
-        - sudo port -N install python38
-        - sudo port -N install py38-pip
+        - sudo port -N install python39
+        - sudo port -N install py39-pip
         - sudo port -N install pkgconfig
         - sudo port -N install cppunit
-        - pip-3.8 install sphinx
+        - pip-3.9 install sphinx
       env:
         - ENV="MacOS 10.13, LLVM Clang, MacPorts"
 
@@ -529,7 +529,7 @@ jobs:
             -DCMAKE_INSTALL_PREFIX=$PWD/install
             -DCMAKE_C_COMPILER=/opt/local/bin/clang-mp-10
             -DCMAKE_CXX_COMPILER=/opt/local/bin/clang++-mp-10
-            -DPYTHON_EXECUTABLE=/opt/local/bin/python3.8
+            -DPYTHON_EXECUTABLE=/opt/local/bin/python3.9
             -DTALIPOT_BUILD_TESTS=ON
             -DTALIPOT_USE_CCACHE=ON
             -DZLIB_INCLUDE_DIR=/opt/local/include
