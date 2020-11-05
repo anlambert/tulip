@@ -241,7 +241,7 @@ void WorkspacePanel::showEvent(QShowEvent *event) {
     }
 
     // set event filter for the new scene
-    _view->graphicsView()->scene()->installEventFilter(this);
+    _view->graphicsView()->installEventFilter(this);
     // restore any specific behavior of the QGraphicsScene
     _view->resetGraphicsScene();
 
@@ -263,9 +263,8 @@ bool WorkspacePanel::eventFilter(QObject *obj, QEvent *ev) {
   // because of possible mis-synchronization of Qt events
   if (_ui != nullptr) {
     if (_view != nullptr) {
-      if (ev->type() == QEvent::GraphicsSceneContextMenu) {
-        _view->showContextMenu(QCursor::pos(),
-                               static_cast<QGraphicsSceneContextMenuEvent *>(ev)->scenePos());
+      if (ev->type() == QEvent::ContextMenu) {
+        _view->showContextMenu(QCursor::pos(), static_cast<QContextMenuEvent *>(ev)->pos());
       } else if (_viewConfigurationTabWidgetProxy != nullptr &&
                  _viewConfigurationTabWidget->indexOf(qobject_cast<QWidget *>(obj)) != -1) {
         ev->accept();
