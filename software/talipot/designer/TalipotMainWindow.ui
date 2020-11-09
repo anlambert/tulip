@@ -969,6 +969,18 @@
           <number>3</number>
          </property>
          <widget class="QStackedWidget" name="docksWidget">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>400</width>
+            <height>0</height>
+           </size>
+          </property>
           <widget class="GraphHierarchiesEditor" name="graphHierarchiesEditor"/>
           <widget class="SearchWidget" name="searchWidget"/>
           <widget class="AlgorithmRunner" name="algorithmRunner"/>
