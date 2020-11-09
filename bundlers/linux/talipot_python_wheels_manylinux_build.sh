@@ -55,7 +55,7 @@ fi
 # iterate on available Python versions
 for CPYBIN in /opt/python/cp*/bin
 do
-  if [[ $CPYBIN == *"cp34"* ]]
+  if [[ $CPYBIN == *"cp34"* ]] || [[ $CPYBIN == *"cp35"* ]]
   then
     continue
   fi
