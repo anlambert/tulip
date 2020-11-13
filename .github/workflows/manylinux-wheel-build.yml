@@ -1,0 +1,66 @@
+name: manylinux-wheel-build
+on: [push, pull_request]
+jobs:
+  manylinux:
+    name: Talipot manylinux Python wheel build on CentOS 6.10
+    runs-on: ubuntu-18.04
+    env:
+      DOCKER_IMAGE: quay.io/pypa/manylinux2010_x86_64
+    steps:
+      - name: Checkout Talipot code
+        uses: actions/checkout@v2
+      - name: Get current date
+        id: get-current-date
+        run: |
+          echo "::set-output name=date::$(date -u "+%Y-%m-%d-%H-%m-%S")"
+        shell: bash
+      - name: Cache files
+        uses: actions/cache@v2
+        with:
+          path: ~/ccache
+          key: manylinux2010-ccache-${{ steps.get-current-date.outputs.date }}
+          restore-keys: |
+            manylinux2010-ccache-
+      - name: Pull ${{ env.DOCKER_IMAGE }} docker image
+        run: sudo docker pull ${DOCKER_IMAGE}
+      - name: Create ccache docker volume
+        run: sudo docker create
+          -v ~/ccache:/ccache
+          --name ccache
+          ${DOCKER_IMAGE}
+      - name: Get new wheel dev version
+        id: get-wheel-dev-version
+        run: |
+          JSON=$(curl -s 'https://test.pypi.org/pypi/talipot/json')
+          LAST_VERSION=$(echo $JSON | python -c "
+          import sys, json
+          print(json.load(sys.stdin)['info']['version'])" 2>/dev/null)
+          DEV_VERSION=$(echo $LAST_VERSION | cut -f4 -d '.' | sed 's/dev//')
+          let DEV_VERSION+=1
+          echo "::set-output name=version::$DEV_VERSION"
+        shell: bash
+      - name: Build and upload Talipot Python wheel
+        run: sudo docker run
+          -e CCACHE_DIR=/ccache
+          --volumes-from ccache
+          -v `pwd`:/talipot:rw
+          ${DOCKER_IMAGE}
+          /bin/bash -c
+          "bash -xe /talipot/bundlers/linux/talipot_python_wheels_manylinux_build.sh
+          dev${{ steps.get-wheel-dev-version.outputs.version }}
+          ${{ secrets.TEST_PYPI_API_TOKEN }}
+          ${{ github.ref }}"
+      - name: Install pip
+        run: sudo apt install python-pip python3-pip
+      - name: Test uploaded wheel
+        working-directory: tests/python
+        run: |
+          pip2 install --upgrade pip --user
+          pip2 install --index-url https://test.pypi.org/simple/ talipot --user
+          python -c "from talipot import tlp; print(tlp.getLayoutAlgorithmPluginsList())"
+          TALIPOT_BUILD_DIR= python -m unittest discover
+
+          pip3 install --upgrade pip --user
+          pip3 install --index-url https://test.pypi.org/simple/ talipot --user
+          python3 -c "from talipot import tlp; print(tlp.getLayoutAlgorithmPluginsList())"
+          TALIPOT_BUILD_DIR= python3 -m unittest discover

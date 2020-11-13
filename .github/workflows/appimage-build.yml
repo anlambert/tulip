@@ -1,0 +1,54 @@
+name: appimage-build
+on: [push, pull_request]
+jobs:
+  appimage:
+    name: Talipot AppImage build on CentOS 7
+    runs-on: ubuntu-18.04
+    env:
+      DOCKER_IMAGE: centos:7
+    steps:
+      - name: Checkout Talipot code
+        uses: actions/checkout@v2
+      - name: Get current date
+        id: get-current-date
+        run: |
+          echo "::set-output name=date::$(date -u "+%Y-%m-%d-%H-%m-%S")"
+        shell: bash
+      - name: Cache files
+        uses: actions/cache@v2
+        with:
+          path: ~/ccache
+          key: appimage-ccache-${{ steps.get-current-date.outputs.date }}
+          restore-keys: |
+            appimage-ccache-
+      - name: Pull ${{ env.DOCKER_IMAGE }} docker image
+        run: sudo docker pull ${DOCKER_IMAGE}
+      - name: Create ccache docker volume
+        run: sudo docker create
+          -v ~/ccache:/ccache
+          --name ccache
+          ${DOCKER_IMAGE}
+      - name: Build Talipot AppImage in CentOS
+        run: sudo docker run
+          -e CCACHE_DIR=/ccache
+          --volumes-from ccache
+          -v `pwd`:/talipot:rw
+          ${DOCKER_IMAGE}
+          /bin/bash -c "bash -xe /talipot/bundlers/linux/talipot_appimage_centos7_build.sh CCACHE RUN_TESTS"
+      - name: Get Talipot version
+        id: get-talipot-version
+        run: |
+          echo "::set-output name=version::$(bash build/talipot-config --version)"
+        shell: bash
+      - if: github.ref == 'refs/heads/master'
+        name: Upload Taliot AppImage to Bintray
+        uses: masofcon/upload-to-bintray-github-action@master
+        with:
+          source_path: ./build/Talipot-${{ steps.get-talipot-version.outputs.version }}-x86_64.AppImage
+          api_user: anlambert
+          api_key: ${{ secrets.BINTRAY_API_KEY }}
+          repository: talipot_binaries
+          package: Talipot
+          version: ${{ steps.get-talipot-version.outputs.version }}
+          publish: true
+          override: 1

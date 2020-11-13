@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# this script should only be run in a centos:7 docker image
+
 cd
 
 # clean packages cache
@@ -31,8 +33,8 @@ yum -y install fuse fuse-libs file
 yum -y install doxygen graphviz
 pip3.6 install sphinx
 
-# needed to build tests
-yum -y install cppunit-devel
+# needed to build and run tests
+yum -y install cppunit-devel xorg-x11-server-Xvfb
 
 # build and install talipot
 if [ -d /talipot/build ]; then
@@ -66,7 +68,7 @@ make -j4 install
 
 # run unit tests
 if [ "$2" == "RUN_TESTS" ]; then
-  make tests
+  xvfb-run make tests
 fi
 
 # build a bundle dir suitable for AppImageKit
@@ -78,7 +80,7 @@ chmod a+x appimagetool-$(uname -p).AppImage
 
 # finally build the portable app
 TALIPOT_APPIMAGE=Talipot-$(sh talipot-config --version)-$(uname -p).AppImage
-./appimagetool-$(uname -p).AppImage --appimage-extract-and-run Talipot.AppDir Talipot-$(sh talipot-config --version)-$(uname -p).AppImage $TALIPOT_APPIMAGE
+./appimagetool-$(uname -p).AppImage --appimage-extract-and-run Talipot.AppDir $TALIPOT_APPIMAGE
 chmod +x $TALIPOT_APPIMAGE
 
 if [ -d /talipot_host_build ]; then
