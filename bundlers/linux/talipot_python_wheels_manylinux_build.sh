@@ -29,7 +29,7 @@ if [ -d /talipot ]
 then
   TALIPOT_SRC=/talipot
 else
-# talipot sources install
+  # talipot sources install
   cd /tmp
   git clone https://github.com/anlambert/talipot.git
   TALIPOT_SRC=/tmp/talipot
@@ -99,7 +99,7 @@ done
 
 if [ -n "$TALIPOT_PYTHON_TEST_WHEEL_SUFFIX" ]
 then
-  if [ "$3" == "master" ]
+  if [ "$3" == "refs/heads/master" ]
   then
     make test-wheel-upload
   fi
