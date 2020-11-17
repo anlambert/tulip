@@ -57,12 +57,12 @@ usage()
     cat <<EOF
 Usage: talipot-config [OPTIONS]
 Options:
-	--version (return the current version of Talipot)
-	--libs (return the whole Talipot libs)
-	--cxxflags (return the Talipot needed cxx flags)
-	--plugincxxflags (return the Talipot plugin cxx flags)
-	--pluginextension (return the plugin file extension)
-	--pluginldflags (return the plugin loader flags)
+  --version (return the current version of Talipot)
+  --libs (return the whole Talipot libs)
+  --cxxflags (return the Talipot needed cxx flags)
+  --plugincxxflags (return the Talipot plugin cxx flags)
+  --pluginextension (return the plugin file extension)
+  --pluginldflags (return the plugin loader flags)
   --pluginpath (return the path for installation of Talipot plugins)
   --sharepath (return the path where share data are installed)
 
@@ -71,7 +71,7 @@ EOF
 }
 
 if test $# -eq 0; then
-	usage 1 1>&2
+  usage 1 1>&2
 fi
 
 OUTPUT=
