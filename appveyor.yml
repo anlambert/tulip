@@ -89,11 +89,10 @@ for:
 
     # get the Talipot version for deployment
     after_build:
-      - ps: '$env:TALIPOT_VERSION = (((Get-Content ($env:APPVEYOR_BUILD_FOLDER +
-          ''/build/library/talipot-core/include/talipot/Release.h'') |
-          %{ if ($_ -match ''^#   define TALIPOT_VERSION.*$'') { $_; } })
-          -replace ''#   define TALIPOT_VERSION '', '''') -replace ''"'', ''''
-          -replace ''_'', ''.'')'
+      - ps: |
+          $env:PATH="C:/msys64/usr/bin;$env:PATH"
+          $env:TALIPOT_VERSION=(bash build/talipot-config --version)
+          echo TALIPOT_VERSION=$env:TALIPOT_VERSION
 
     # set generated installers as artifacts to deploy
     artifacts:
@@ -121,10 +120,9 @@ for:
 
     # get the Talipot version for deployment
     after_build:
-      - export TALIPOT_VERSION=$(grep "define TALIPOT_VERSION"
-        $APPVEYOR_BUILD_FOLDER/build/library/talipot-core/include/talipot/Release.h |
-        cut -c29- | sed 's/"//')
-      - echo TALIPOT_VERSION=$TALIPOT_VERSION
+      - |
+        export TALIPOT_VERSION=$(bash build/talipot-config --version)
+        echo TALIPOT_VERSION=$TALIPOT_VERSION
 
     # set generated bundle as artifacts to deploy
     artifacts:
