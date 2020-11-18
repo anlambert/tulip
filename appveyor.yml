@@ -91,7 +91,7 @@ for:
     after_build:
       - ps: |
           $env:PATH="C:/msys64/usr/bin;$env:PATH"
-          $env:TALIPOT_VERSION=(bash build/talipot-config --version)
+          $env:TALIPOT_VERSION=(bash -c "bash build/talipot-config --version | sed 's/_/./g'")
           echo TALIPOT_VERSION=$env:TALIPOT_VERSION
 
     # set generated installers as artifacts to deploy
