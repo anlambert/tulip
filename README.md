@@ -90,12 +90,12 @@ If you are a MacOS user, we recommend to use [MacPorts](https://www.macports.org
 If you are a Windows user, we recommend to use [MSYS2](https://www.msys2.org) as it greatly facilitates the build of Talipot on
 that platform (notably by providing up to date compilers and precompiled dependencies).
 
-Hints on how to build Talipot for these three platforms can be found in the continuous integration setup for [TravisCI](https://travis-ci.com) and
+Hints on how to build Talipot for these three platforms can be found in the continuous integration setup for [GitHub Actions](https://github.com/features/actions) and
 [AppVeyor](https://www.appveyor.com):
 
-  * [.travis.yml](.travis.yml)
-  * [appveyor.yml](appveyor.yml)
-  * [appveyor_msys2.bat](appveyor_msys2.bat)
+  * [ubuntu-build.yml](.github/workflows/ubuntu-build.yml)
+  * [appveyor_msys2.sh](appveyor_msys2.sh)
+  * [appveyor_macos.sh](appveyor_macos.sh)
   * [appveyor_msvc.bat](appveyor_msvc.bat)
 
 
