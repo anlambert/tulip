@@ -391,9 +391,7 @@ PythonInterpreter::~PythonInterpreter() {
     consoleOuputString = "";
     runString(
         "sys.stdout = sys.__stdout__; sys.stderr = sys.__stderr__; sys.stdin = sys.__stdin__\n");
-#if PY_VERSION_HEX < 0x03090000
     PyEval_ReleaseLock();
-#endif
     PyEval_RestoreThread(mainThreadState);
 
     holdGIL();
