@@ -67,14 +67,19 @@ runner.run(tests)")
       ENDIF(CppUnitDllPath)
     ENDIF()
     SET(NEWPATH
-        "${CppUnitDllDir};${CMAKE_LIBRARY_PATH};${QT_BINARY_DIR};${PYTHON_HOME_PATH};${CMAKE_BINARY_DIR}/thirdparty/gzstream/;${CMAKE_BINARY_DIR}/thirdparty/yajl/src;${CMAKE_BINARY_DIR}/thirdparty/quazip;${CMAKE_BINARY_DIR}/thirdparty/ftgl"
-    )
-    SET(NEWPATH
-        "${NEWPATH};${CMAKE_BINARY_DIR}/library/talipot-core/src;${CMAKE_BINARY_DIR}/library/talipot-ogl/src;${CMAKE_BINARY_DIR}/library/talipot-gui/src"
-    )
-    SET(NEWPATH
-        "${NEWPATH};${CMAKE_BINARY_DIR}/thirdparty/libtess2;${CMAKE_BINARY_DIR}/thirdparty/OGDF;${CMAKE_BINARY_DIR}/library/talipot-ogdf;${CMAKE_BINARY_DIR}/library/talipot-python/src;$ENV{PATH}"
-    )
+        ${CppUnitDllDir}
+        ${CMAKE_LIBRARY_PATH}
+        ${QT_BINARY_DIR}
+        ${PYTHON_HOME_PATH};${CMAKE_BINARY_DIR}/thirdparty/gzstream/
+        ${CMAKE_BINARY_DIR}/thirdparty/ftgl
+        ${CMAKE_BINARY_DIR}/library/talipot-core/src
+        ${CMAKE_BINARY_DIR}/library/talipot-ogl/src
+        ${CMAKE_BINARY_DIR}/library/talipot-gui/src
+        ${CMAKE_BINARY_DIR}/thirdparty/libtess2
+        ${CMAKE_BINARY_DIR}/thirdparty/OGDF
+        ${CMAKE_BINARY_DIR}/library/talipot-ogdf
+        ${CMAKE_BINARY_DIR}/library/talipot-python/src
+        $ENV{PATH})
     STRING(REPLACE "\\;" ";" NEWPATH "${NEWPATH}")
     STRING(REPLACE ";" "\\;" NEWPATH "${NEWPATH}")
   ELSE(WIN32)
@@ -82,8 +87,11 @@ runner.run(tests)")
   ENDIF(WIN32)
   # add Talipot modules path to PYTHONPATH in order to run the Python tests
   SET(PYTHONPATH
-      "${CMAKE_CURRENT_SOURCE_DIR};${CMAKE_SOURCE_DIR}/library/talipot-python/modules/;${TALIPOT_PYTHON_ROOT_FOLDER};${TALIPOTGUI_PYTHON_ROOT_FOLDER};${CMAKE_BINARY_DIR}/thirdparty/sip-${SIP_VERSION_STR}/siplib"
-  )
+      ${CMAKE_CURRENT_SOURCE_DIR}
+      ${CMAKE_SOURCE_DIR}/library/talipot-python/modules/
+      ${TALIPOT_PYTHON_ROOT_FOLDER}
+      ${TALIPOTGUI_PYTHON_ROOT_FOLDER}
+      ${CMAKE_BINARY_DIR}/thirdparty/sip-${SIP_VERSION_STR}/siplib)
   IF(WIN32)
     STRING(REPLACE "\\;" ";" PYTHONPATH "${PYTHONPATH}")
     STRING(REPLACE ";" "\\;" PYTHONPATH "${PYTHONPATH}")
