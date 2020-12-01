@@ -10,13 +10,6 @@
 from talipot import tlp
 import talipotplugins
 
-talipotGuiOk = True
-
-try:
-    from talipotgui import tlpgui
-except Exception:
-    talipotGuiOk = False
-
 
 class H3LayoutHelper(tlp.Algorithm):
     def __init__(self, context):
@@ -57,7 +50,8 @@ class H3LayoutHelper(tlp.Algorithm):
             s = min(w, h)
             self.graph['viewSize'][n] = (s, s, s)
 
-        if talipotGuiOk:
+        try:
+            from talipotgui import tlpgui
             for v in tlpgui.getViewsOfGraph(self.graph):
                 if isinstance(v, tlpgui.NodeLinkDiagramView):
                     rp = v.getRenderingParameters()
@@ -65,6 +59,8 @@ class H3LayoutHelper(tlp.Algorithm):
                     rp.setViewArrow(True)
                     rp.setLabelsAreBillboarded(True)
                     v.setRenderingParameters(rp)
+        except Exception:
+            pass
 
         return True
 
