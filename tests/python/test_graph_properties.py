@@ -123,9 +123,12 @@ def random_string_list():
 
 class TestGraphProperties(unittest.TestCase):
 
-    def setUp(self):
+    @classmethod
+    def setUpClass(cls):
         tlp.loadTalipotPluginsFromDir(
             os.environ['TALIPOT_BUILD_DIR'] + '/plugins/import')
+
+    def setUp(self):
         self.prop_name = 'test_prop'
         self.prop = None
         self.graph = tlp.importGraph('Grid')

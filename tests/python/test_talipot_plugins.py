@@ -15,7 +15,8 @@ from talipot import tlp
 
 class TestTalipotPlugins(unittest.TestCase):
 
-    def setUp(self):
+    @classmethod
+    def setUpClass(cls):
         if 'TALIPOT_BUILD_DIR' in os.environ:
             talipot_build_dir = os.environ['TALIPOT_BUILD_DIR']
             if talipot_build_dir:
