@@ -208,11 +208,13 @@ void tlp::initTalipotLib(const char *appDirPath) {
     curDir += '/';
   }
 
-  // check that TalipotLibDir exists
   bool tlpDirSet = (getEnvTlp != nullptr);
   bool throwExOnCheck = appDirPath != nullptr;
 
-  checkDirectory(TalipotLibDir = curDir, tlpDirSet, throwExOnCheck);
+  TalipotLibDir = curDir;
+  if (!TalipotLibDir.empty()) {
+    checkDirectory(TalipotLibDir, tlpDirSet, throwExOnCheck);
+  }
 
   getEnvTlp = getenv(TALIPOT_PLUGINS_PATH_VARIABLE);
 
@@ -255,13 +257,16 @@ void tlp::initTalipotLib(const char *appDirPath) {
   OpenMPLock::registerExitHandler();
 #endif
 
-  // check that TalipotShareDir exists
-  checkDirectory(TalipotShareDir = curDir, tlpDirSet, throwExOnCheck);
+  TalipotShareDir = curDir;
+  if (!TalipotLibDir.empty()) {
+    checkDirectory(TalipotShareDir, tlpDirSet, throwExOnCheck);
+  }
 
-  curDir = TalipotShareDir + "bitmaps/";
+  TalipotBitmapDir = TalipotShareDir + "bitmaps/";
 
-  // check that TalipotBitmapDir exists
-  checkDirectory(TalipotBitmapDir = curDir, tlpDirSet, throwExOnCheck);
+  if (!TalipotLibDir.empty()) {
+    checkDirectory(TalipotBitmapDir, tlpDirSet, throwExOnCheck);
+  }
 
   // initialize serializers
   initTypeSerializers();
