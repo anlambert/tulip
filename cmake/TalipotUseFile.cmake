@@ -30,6 +30,12 @@ IF(NOT LINUX)
   ENDIF()
 ENDIF(NOT LINUX)
 
+IF(APPLE)
+  EXECUTE_PROCESS(COMMAND sw_vers -productVersion OUTPUT_VARIABLE MACOS_VERSION)
+  STRING(REPLACE "\n" "" MACOS_VERSION "${MACOS_VERSION}")
+  STRING(REGEX MATCH "[0-9]+\\.[0-9]+" MACOS_VERSION "${MACOS_VERSION}")
+ENDIF(APPLE)
+
 # ========================================================
 # Toolchains options and defintions
 # ========================================================
