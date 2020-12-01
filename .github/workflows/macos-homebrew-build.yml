@@ -79,3 +79,6 @@ jobs:
       - name: Run Talipot complete build unit tests
         working-directory: ./build
         run: make tests
+      - name: Generate Talipot dmg bundle
+        working-directory: ./build
+        run: make bundle
