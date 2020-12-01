@@ -82,3 +82,30 @@ jobs:
       - name: Generate Talipot dmg bundle
         working-directory: ./build
         run: make bundle
+      - name: Get Talipot version
+        id: get-talipot-version
+        run: |
+          echo "::set-output name=version::$(bash build/talipot-config --version)"
+        shell: bash
+      - name: Get macOS version
+        id: get-macos-version
+        run: |
+          version=$(sw_vers -productVersion)
+          major_version=$(echo $version | cut -d. -f1)
+          minor_version=$(echo $version | cut -d. -f2)
+          echo "::set-output name=version::$major_version.$minor_version"
+        shell: bash
+      - if: github.ref == 'refs/heads/master'
+        name: Upload Taliot dmg bundle to Bintray
+        uses: masofcon/upload-to-bintray-github-action@master
+        with:
+          source_path:
+            ./build/Talipot-${{ steps.get-talipot-version.outputs.version }}
+            -macOS-${{ steps.get-macos-version.outputs.version }}.dmg
+          api_user: anlambert
+          api_key: ${{ secrets.BINTRAY_API_KEY }}
+          repository: talipot_binaries
+          package: Talipot
+          version: ${{ steps.get-talipot-version.outputs.version }}
+          publish: true
+          override: 1
