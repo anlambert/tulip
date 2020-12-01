@@ -10,8 +10,8 @@ jobs:
         config:
           - name: Talipot build on MacOS 10.15
             os: macos-10.15
-          # - name: Talipot build on MacOS 11.0
-          #   os: macos-11.0
+          - name: Talipot build on MacOS 11.0
+            os: macos-11.0
     steps:
       - name: Checkout Talipot code
         uses: actions/checkout@v2
