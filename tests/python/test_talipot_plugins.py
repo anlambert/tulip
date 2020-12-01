@@ -20,10 +20,12 @@ class TestTalipotPlugins(unittest.TestCase):
         if 'TALIPOT_BUILD_DIR' in os.environ:
             talipot_build_dir = os.environ['TALIPOT_BUILD_DIR']
             if talipot_build_dir:
-                tlp.loadPluginsFromDir(os.path.join(talipot_build_dir,
-                                                    'plugins'))
-                tlp.loadPluginsFromDir(os.path.join(talipot_build_dir,
-                                                    'library/talipot-python'))
+                for pluginsPath in (
+                    'plugins/clustering', 'plugins/general',
+                    'plugins/import', 'library/talipot-python'
+                ):
+                    tlp.loadPluginsFromDir(
+                        os.path.join(talipot_build_dir, pluginsPath))
 
     def test_cpp_plugins_loaded(self):
         self.assertTrue('Edge bundling' in tlp.getAlgorithmPluginsList())
