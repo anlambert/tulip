@@ -524,7 +524,8 @@ static unordered_map<string, int> fontIds;
 void addFontToQFontDatabase(const Font &font) {
   QFontDatabase fontDb;
   if (!fontDb.styles(tlpStringToQString(font.fontFamily()))
-           .contains(tlpStringToQString(font.fontStyle()))) {
+           .contains(tlpStringToQString(font.fontStyle())) &&
+      fontIds.find(font.fontFile()) == fontIds.end()) {
     fontIds[font.fontFile()] = fontDb.addApplicationFont(tlpStringToQString(font.fontFile()));
   }
 }
