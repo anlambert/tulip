@@ -91,9 +91,7 @@ sudo port -N -f uninstall \
   clang-${CLANG_VERSION} \
   ccache \
   qhull \
-  yajl \
-  zlib \
-  zstd
+  yajl
 
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 sudo python get-pip.py
