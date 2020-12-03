@@ -73,7 +73,7 @@ QSplitter::handle:vertical {
 
 QFrame[bottomFrame="true"] {
   border: none;
-  border-top: 2px solid black;
+  border-top: 1px solid black;
   background: #323232;
 }
 
@@ -110,6 +110,10 @@ QFrame[header="true"] QLabel {
   color: white;
 }
 
+QFrame[header="true"] {
+  border-top: 1px solid black;
+}
+
 QFrame[header="true"] QComboBox:hover,
 QFrame[header="true"] QToolButton:hover,
 QFrame[header="true"] QPushButton:hover {
@@ -139,7 +143,7 @@ QFrame[header="true"] QComboBox::down-arrow {
   image: url(":/talipot/gui/icons/svg/menu-down-white.svg");
 }
 
-QFrame[header="true"] QComboBox:drop-down {
+QFrame[header="true"] QComboBox::drop-down {
   subcontrol-origin: padding;
   subcontrol-position: top right;
   border-left: none;
@@ -153,12 +157,13 @@ QFrame[header="true"] QComboBox QAbstractItemView {
 
 #TalipotMainWindow #modeSwitcherPanel {
   border: none;
-  border-right: 2px solid black;
+  border-top: 1px solid black;
+  border-right: 1px solid black;
   background: #323232;
 }
 
 #TalipotMainWindow #modeSwitcherPanel #frame {
-  border-top: 2px solid black;
+  border-top: 1px solid black;
 }
 
 #TalipotMainWindow #modeSwitcherPanel #line,
@@ -374,8 +379,8 @@ QFrame[header="true"] QComboBox QAbstractItemView {
   height: 1px;
 }
 
-#Workspace #workspaceContents {
-  border: none;
+#workspaceContents {
+  border-top: 1px solid black;
 }
 
 #Workspace #exposeMode {
@@ -424,14 +429,6 @@ QFrame[header="true"] QComboBox QAbstractItemView {
 
 #WorkspacePanel QComboBox::down-arrow {
   image: url(":/talipot/gui/icons/svg/menu-down-white.svg");
-}
-
-#WorkspacePanel QComboBox:drop-down {
-  subcontrol-origin: padding;
-  subcontrol-position: top right;
-  border-left: none;
-  border-top-right-radius: 1px;
-  border-bottom-right-radius: 1px;
 }
 
 #WorkspacePanel QComboBox QAbstractItemView {
@@ -670,7 +667,7 @@ QFrame[header="true"] QComboBox QAbstractItemView {
 
 #PythonIDE QWidget[pythonIDEBottomWidget="true"] {
   border: none;
-  border-top: 2px solid black;
+  border-top: 1px solid black;
   background: #323232;
 }
 

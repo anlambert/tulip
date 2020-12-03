@@ -966,7 +966,7 @@
           <enum>Qt::Horizontal</enum>
          </property>
          <property name="handleWidth">
-          <number>3</number>
+          <number>2</number>
          </property>
          <widget class="QStackedWidget" name="docksWidget">
           <property name="sizePolicy">
