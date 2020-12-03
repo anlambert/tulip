@@ -191,7 +191,7 @@
             <widget class="QFrame" name="parametersFrame">
              <layout class="QVBoxLayout" name="rLayout2">
               <property name="spacing">
-               <number>6</number>
+               <number>0</number>
               </property>
               <property name="leftMargin">
                <number>0</number>

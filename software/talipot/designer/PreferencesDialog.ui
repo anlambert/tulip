@@ -286,10 +286,10 @@ If not, a new random seed will be set to initialize each new random sequence.&lt
             <set>QAbstractItemView::AllEditTriggers</set>
            </property>
            <property name="showGrid">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="cornerButtonEnabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <attribute name="horizontalHeaderDefaultSectionSize">
             <number>200</number>

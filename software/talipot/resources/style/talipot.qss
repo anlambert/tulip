@@ -251,7 +251,6 @@ QFrame[header="true"] QComboBox QAbstractItemView {
 #PreferencesDialog #graphDefaultsTable QHeaderView::section {
   height: 30px;
   font: bold 12px;
-  border: none;
 }
 
 #PreferencesDialog #graphDefaultsTable QTableView {
@@ -788,7 +787,6 @@ AlgorithmRunner #searchBox {
 #AlgorithmRunnerItem QHeaderView::section {
   padding-left: 4px;
   padding-right: 4px;
-  border: none;
   font: bold;
 }
 
@@ -871,7 +869,6 @@ QWizard QTreeView::branch:open:has-children:has-siblings  {
 QWizard QHeaderView::section {
   padding-left: 4px;
   padding-right: 4px;
-  border: none;
   font: bold 12px;
 }
 
