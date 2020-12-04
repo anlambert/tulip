@@ -646,21 +646,6 @@ public:
   const std::vector<edge> &edges() const {
     return _edges;
   }
-//=======================================================
-#ifndef NDEBUG
-  /**
-   * these two functions are used internally to insure that property has been allocated in debug
-   * mode
-   * @warning never used these function directly even in debug mode !!!
-   */
-  bool isNodeAttr(VectorGraphValues *values) {
-    return (_nodeValues.find(values) != _nodeValues.end());
-  }
-
-  bool isEdgeAttr(VectorGraphValues *values) {
-    return (_edgeValues.find(values) != _edgeValues.end());
-  }
-#endif
   //=============================================================
   /**
    * output the graph in a very simple way for debugging
@@ -750,29 +735,5 @@ private:
   //=======================================================
 };
 
-#ifndef NDEBUG // these two functions are used to insure that property has been allocated in debug
-               // mode
-template <typename TYPE>
-bool NodeProperty<TYPE>::isValid() const {
-  if (this->_graph == 0)
-    return false;
-
-  if (this->_values == 0)
-    return false;
-
-  return this->_graph->isNodeAttr(this->_values);
-}
-
-template <typename TYPE>
-bool EdgeProperty<TYPE>::isValid() const {
-  if (this->_graph == 0)
-    return false;
-
-  if (this->_values == 0)
-    return false;
-
-  return this->_graph->isEdgeAttr(this->_values);
-}
-#endif
 }
 #endif // TALIPOT_VECTOR_GRAPH_H

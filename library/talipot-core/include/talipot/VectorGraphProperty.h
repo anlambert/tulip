@@ -77,7 +77,6 @@ public:
    * return the value of the ith element and enables to modify it.
    */
   typename std::vector<TYPE>::reference operator[](const size_t id) {
-    // assert(isValid());
     assert(id < _values->size());
     return (*_values)[id];
   }
@@ -87,7 +86,6 @@ public:
    * return the value of the ith element.
    */
   typename std::vector<TYPE>::const_reference operator[](const size_t id) const {
-    // assert(isValid());
     assert(id < _values->size());
     return (*_values)[id];
   }
@@ -121,9 +119,6 @@ public:
   typename std::vector<TYPE>::const_reference get(const size_t id) const {
     return (*this)[id];
   }
-#ifndef NDEBUG
-  virtual bool isValid() const = 0;
-#endif
 
   void swap(VectorGraphProperty<TYPE> &v) {
     assert(_values && (_graph == v._graph));
@@ -183,9 +178,6 @@ public:
   EdgeProperty() : VectorGraphProperty<TYPE>() {}
   EdgeProperty(const EdgeProperty &obj) : VectorGraphProperty<TYPE>(obj) {}
   EdgeProperty &operator=(const EdgeProperty &) = default;
-#ifndef NDEBUG
-  bool isValid() const;
-#endif
 
 private:
   EdgeProperty(typename VectorGraphProperty<TYPE>::ValuesImpl *values, VectorGraph *graph)
@@ -233,9 +225,6 @@ public:
   NodeProperty() : VectorGraphProperty<TYPE>() {}
   NodeProperty(const NodeProperty &obj) : VectorGraphProperty<TYPE>(obj) {}
   NodeProperty &operator=(const NodeProperty &) = default;
-#ifndef NDEBUG
-  bool isValid() const;
-#endif
 
 private:
   NodeProperty(typename VectorGraphProperty<TYPE>::ValuesImpl *values, VectorGraph *graph)
