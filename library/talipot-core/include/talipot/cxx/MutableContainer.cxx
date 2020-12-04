@@ -22,7 +22,7 @@ tlp::MutableContainer<TYPE>::MutableContainer()
       compressing(false) {}
 //===================================================================
 template <typename TYPE>
-tlp::MutableContainer<TYPE>::~MutableContainer() {
+tlp::MutableContainer<TYPE>::~MutableContainer<TYPE>() {
   switch (state) {
   case VECT:
 
@@ -563,7 +563,7 @@ void tlp::MutableContainer<TYPE>::compress(unsigned int min, unsigned int max,
 }
 
 template <typename TYPE>
-typename tlp::StoredType<TYPE>::ReturnedConstValue tlp::MutableContainer<TYPE>::
-operator[](const unsigned int i) const {
+typename tlp::StoredType<TYPE>::ReturnedConstValue
+tlp::MutableContainer<TYPE>::operator[](const unsigned int i) const {
   return get(i);
 }

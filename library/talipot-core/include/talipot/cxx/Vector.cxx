@@ -391,7 +391,7 @@ TEMPLATEVECTOR
 DTYPE VECTORTLP::dist(const VECTOR &c) const {
   switch (SIZE) {
   case 1:
-    return static_cast<TYPE>(fabs((*this)[0] - c[0]));
+    return static_cast<DTYPE>((*this)[0] > c[0] ? (*this)[0] - c[0] : c[0] - (*this)[0]);
 
   case 2:
     return tlpsqrt<DTYPE, OTYPE>(tlpsqr<DTYPE, OTYPE>((*this)[0] - c[0]) +
