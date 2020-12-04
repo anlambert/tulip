@@ -34,8 +34,6 @@ namespace tlp {
 // stored in a MutableContainer for the GraphUpdatesRecorder
 class IteratorValue : public Iterator<unsigned int> {
 public:
-  IteratorValue() {}
-  ~IteratorValue() override {}
   virtual unsigned int nextValue(DataMem &) = 0;
 };
 //===================================================================

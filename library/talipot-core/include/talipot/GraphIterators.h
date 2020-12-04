@@ -25,58 +25,54 @@ class GraphView;
 
 //============================================================
 /// Out node iterator for GraphView
-class TLP_SCOPE OutNodesIterator : public FactorNodeIterator, public MemoryPool<OutNodesIterator> {
+class TLP_SCOPE OutNodesIterator : public NodeIterator, public MemoryPool<OutNodesIterator> {
 private:
-  Iterator<edge> *it;
-#if !defined(NDEBUG) && !defined(_OPENMP)
   const GraphView *sg;
-#endif
+  Iterator<edge> *it;
+
 public:
-  OutNodesIterator(const GraphView *sG, node n);
+  OutNodesIterator(const GraphView *sg, node n);
   ~OutNodesIterator() override;
   node next() override;
   bool hasNext() override;
 };
 //============================================================
 /// In node iterator for GraphView
-class InNodesIterator : public FactorNodeIterator, public MemoryPool<InNodesIterator> {
+class InNodesIterator : public NodeIterator, public MemoryPool<InNodesIterator> {
 private:
-  Iterator<edge> *it;
-#if !defined(NDEBUG) && !defined(_OPENMP)
   const GraphView *sg;
-#endif
+  Iterator<edge> *it;
+
 public:
-  InNodesIterator(const GraphView *sG, node n);
+  InNodesIterator(const GraphView *sg, node n);
   ~InNodesIterator() override;
   node next() override;
   bool hasNext() override;
 };
 //============================================================
 /// In Out node iterator for GraphView
-class TLP_SCOPE InOutNodesIterator : public FactorNodeIterator,
-                                     public MemoryPool<InOutNodesIterator> {
+class TLP_SCOPE InOutNodesIterator : public NodeIterator, public MemoryPool<InOutNodesIterator> {
 private:
+  const GraphView *sg;
   Iterator<edge> *it;
   node n;
-#if !defined(NDEBUG) && !defined(_OPENMP)
-  const GraphView *sg;
-#endif
+
 public:
-  InOutNodesIterator(const GraphView *sG, node n);
+  InOutNodesIterator(const GraphView *sg, node n);
   ~InOutNodesIterator() override;
   node next() override;
   bool hasNext() override;
 };
 //============================================================
 /// Out edge iterator for GraphView
-class TLP_SCOPE OutEdgesIterator : public FactorEdgeIterator, public MemoryPool<OutEdgesIterator> {
+class TLP_SCOPE OutEdgesIterator : public EdgeIterator, public MemoryPool<OutEdgesIterator> {
 private:
+  const GraphView *sg;
   Iterator<edge> *it;
   edge curEdge;
-  const GraphView *sg;
 
 public:
-  OutEdgesIterator(const GraphView *sG, node n);
+  OutEdgesIterator(const GraphView *sg, node n);
   ~OutEdgesIterator() override;
   edge next() override;
   bool hasNext() override;
@@ -86,14 +82,14 @@ protected:
 };
 //============================================================
 /// In edge iterator for GraphView
-class TLP_SCOPE InEdgesIterator : public FactorEdgeIterator, public MemoryPool<InEdgesIterator> {
+class TLP_SCOPE InEdgesIterator : public EdgeIterator, public MemoryPool<InEdgesIterator> {
 private:
+  const GraphView *sg;
   Iterator<edge> *it;
   edge curEdge;
-  const GraphView *sg;
 
 public:
-  InEdgesIterator(const GraphView *sG, node n);
+  InEdgesIterator(const GraphView *sg, node n);
   ~InEdgesIterator() override;
   edge next() override;
   bool hasNext() override;
@@ -103,15 +99,14 @@ protected:
 };
 //============================================================
 /// In Out edge iterator for GraphView
-class TLP_SCOPE InOutEdgesIterator : public FactorEdgeIterator,
-                                     public MemoryPool<InOutEdgesIterator> {
+class TLP_SCOPE InOutEdgesIterator : public EdgeIterator, public MemoryPool<InOutEdgesIterator> {
 private:
+  const GraphView *sg;
   Iterator<edge> *it;
   edge curEdge;
-  const GraphView *sg;
 
 public:
-  InOutEdgesIterator(const GraphView *sG, node n);
+  InOutEdgesIterator(const GraphView *sg, node n);
   ~InOutEdgesIterator() override;
   edge next() override;
   bool hasNext() override;
@@ -119,50 +114,5 @@ public:
 protected:
   void prepareNext();
 };
-
-//============================================================
-// Iterator for the Graph
-//============================================================
-class TLP_SCOPE GraphNodeIterator : public NodeIterator
-#if defined(NDEBUG) || defined(_OPENMP)
-    ,
-                                    public MemoryPool<GraphNodeIterator>
-#endif
-{
-private:
-#if !defined(NDEBUG) && !defined(_OPENMP)
-  const Graph *graph;
-  void *ito;
-#endif
-  Iterator<node> *itId;
-
-public:
-  GraphNodeIterator(const Graph *g, Iterator<node> *it);
-  ~GraphNodeIterator() override;
-  node next() override;
-  bool hasNext() override;
-};
-//=============================================================
-/// Edge iterator for data sg
-class TLP_SCOPE GraphEdgeIterator : public EdgeIterator
-#if defined(NDEBUG) || defined(_OPENMP)
-    ,
-                                    public MemoryPool<GraphEdgeIterator>
-#endif
-{
-private:
-#if !defined(NDEBUG) && !defined(_OPENMP)
-  const Graph *graph;
-  void *ito;
-#endif
-  Iterator<edge> *itId;
-
-public:
-  GraphEdgeIterator(const Graph *g, Iterator<edge> *it);
-  ~GraphEdgeIterator() override;
-  edge next() override;
-  bool hasNext() override;
-};
-//============================================================
 }
 #endif // TALIPOT_GRAPH_ITERATORS_H

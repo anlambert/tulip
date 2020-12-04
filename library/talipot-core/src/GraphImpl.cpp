@@ -253,35 +253,35 @@ void GraphImpl::delEdge(const edge e, bool) {
 }
 //----------------------------------------------------------------
 Iterator<node> *GraphImpl::getNodes() const {
-  return new GraphNodeIterator(this, storage.getNodes());
+  return storage.getNodes();
 }
 //----------------------------------------------------------------
 Iterator<node> *GraphImpl::getInNodes(const node n) const {
-  return new GraphNodeIterator(this, storage.getInNodes(n));
+  return storage.getInNodes(n);
 }
 //----------------------------------------------------------------
 Iterator<node> *GraphImpl::getOutNodes(const node n) const {
-  return new GraphNodeIterator(this, storage.getOutNodes(n));
+  return storage.getOutNodes(n);
 }
 //----------------------------------------------------------------
 Iterator<node> *GraphImpl::getInOutNodes(const node n) const {
-  return new GraphNodeIterator(this, storage.getInOutNodes(n));
+  return storage.getInOutNodes(n);
 }
 //----------------------------------------------------------------
 Iterator<edge> *GraphImpl::getEdges() const {
-  return new GraphEdgeIterator(this, storage.getEdges());
+  return storage.getEdges();
 }
 //----------------------------------------------------------------
 Iterator<edge> *GraphImpl::getInEdges(const node n) const {
-  return new GraphEdgeIterator(this, storage.getInEdges(n));
+  return storage.getInEdges(n);
 }
 //----------------------------------------------------------------
 Iterator<edge> *GraphImpl::getOutEdges(const node n) const {
-  return new GraphEdgeIterator(this, storage.getOutEdges(n));
+  return storage.getOutEdges(n);
 }
 //----------------------------------------------------------------
 Iterator<edge> *GraphImpl::getInOutEdges(const node n) const {
-  return new GraphEdgeIterator(this, storage.getInOutEdges(n));
+  return storage.getInOutEdges(n);
 }
 //----------------------------------------------------------------
 std::vector<edge> GraphImpl::getEdges(const node src, const node tgt, bool directed) const {

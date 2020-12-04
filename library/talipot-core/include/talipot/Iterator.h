@@ -24,10 +24,6 @@
 
 namespace tlp {
 
-extern TLP_SCOPE void incrNumIterators();
-extern TLP_SCOPE void decrNumIterators();
-extern TLP_SCOPE int getNumIterators();
-
 /**
  * @brief Interface for Talipot iterators.
  * Allows basic iteration operations only.
@@ -56,18 +52,8 @@ extern TLP_SCOPE int getNumIterators();
  **/
 template <typename T>
 struct Iterator {
-  ///
-  Iterator() {
-#ifndef NDEBUG
-    incrNumIterators();
-#endif
-  }
-  ///
-  virtual ~Iterator() {
-#ifndef NDEBUG
-    decrNumIterators();
-#endif
-  }
+
+  virtual ~Iterator() = default;
   /**
    * @brief Moves the Iterator on the next element.
    *

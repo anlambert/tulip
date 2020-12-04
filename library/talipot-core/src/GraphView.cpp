@@ -475,35 +475,35 @@ void GraphView::delEdge(const edge e, bool deleteInAllGraphs) {
 }
 //----------------------------------------------------------------
 Iterator<node> *GraphView::getNodes() const {
-  return new GraphNodeIterator(this, stlIterator(_nodes));
+  return stlIterator(_nodes);
 }
 //----------------------------------------------------------------
 Iterator<node> *GraphView::getInNodes(const node n) const {
-  return (new InNodesIterator(this, n));
+  return new InNodesIterator(this, n);
 }
 //----------------------------------------------------------------
 Iterator<node> *GraphView::getOutNodes(const node n) const {
-  return (new OutNodesIterator(this, n));
+  return new OutNodesIterator(this, n);
 }
 //----------------------------------------------------------------
 Iterator<node> *GraphView::getInOutNodes(const node n) const {
-  return (new InOutNodesIterator(this, n));
+  return new InOutNodesIterator(this, n);
 }
 //----------------------------------------------------------------
 Iterator<edge> *GraphView::getEdges() const {
-  return new GraphEdgeIterator(this, stlIterator(_edges));
+  return stlIterator(_edges);
 }
 //----------------------------------------------------------------
 Iterator<edge> *GraphView::getInEdges(const node n) const {
-  return (new InEdgesIterator(this, n));
+  return new InEdgesIterator(this, n);
 }
 //----------------------------------------------------------------
 Iterator<edge> *GraphView::getOutEdges(const node n) const {
-  return (new OutEdgesIterator(this, n));
+  return new OutEdgesIterator(this, n);
 }
 //----------------------------------------------------------------
 Iterator<edge> *GraphView::getInOutEdges(const node n) const {
-  return (new InOutEdgesIterator(this, n));
+  return new InOutEdgesIterator(this, n);
 }
 //----------------------------------------------------------------
 std::vector<edge> GraphView::getEdges(const node src, const node tgt, bool directed) const {
