@@ -12,25 +12,8 @@
  */
 
 #ifndef TALIPOT_VERSION
-#   define TALIPOT_VERSION "@TalipotVersion@"
-#   define TALIPOT_MM_VERSION "@TalipotMMVersion@"
-#   define TALIPOT_INT_VERSION @TalipotIntVersion@
-#   define TALIPOT_INT_MM_VERSION @TalipotIntMMVersion@
-
-// This does not work with Visual Studio
-#ifndef _MSC_VER
-// The debug and release modes are not binary compatible, so we cause an error when compiling a debug plugin against release library and vice-versa.
-#   if @TalipotBuildIsRelease@
-#       define TALIPOT_BUILD_RELEASE
-#   else
-#       define TALIPOT_BUILD_DEBUG
-#   endif
-
-#   if (defined(TALIPOT_BUILD_RELEASE) and !defined(NDEBUG) )
-#       error "You are trying to compile a plugin in Debug against a Talipot library compiled in Release. This will cause crashes."
-#   elif defined(TALIPOT_BUILD_DEBUG) and defined(NDEBUG)
-#       error "You are trying to compile a plugin in Release against a Talipot library compiled in Debug. This will cause crashes."
-#   endif
-#endif
-
+#define TALIPOT_VERSION "@TalipotVersion@"
+#define TALIPOT_MM_VERSION "@TalipotMMVersion@"
+#define TALIPOT_INT_VERSION @TalipotIntVersion @
+#define TALIPOT_INT_MM_VERSION @TalipotIntMMVersion @
 #endif
