@@ -72,13 +72,13 @@ void TreeViewComboBox::showPopup() {
 }
 
 void TreeViewComboBox::hidePopup() {
-  auto mousePos = QWidget::mapFromGlobal(QCursor::pos());
-  QComboBox::hidePopup();
+  auto mousePos = view()->mapFromGlobal(QCursor::pos());
   _popupVisible = false;
   QModelIndex index = view()->indexAt(mousePos);
   if (view()->visualRect(index).contains(mousePos)) {
     selectIndex(view()->currentIndex());
   }
+  QComboBox::hidePopup();
 }
 
 void TreeViewComboBox::selectIndex(const QModelIndex &index) {
