@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2020  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -265,13 +265,13 @@ public:
 
   /**
    * @brief gets the number of sent events.
-   * @return the number of sent events (0 when compiling with -DNDEBUG).
+   * @return the number of sent events
    */
   unsigned int getSent() const;
 
   /**
    * @brief get the number of received events.
-   * @return the number of received events (0 when compiling with -DNDEBUG).
+   * @return the number of received events
    */
   unsigned int getReceived() const;
 
@@ -422,7 +422,7 @@ private:
    * @brief _n The node that represents this object in the ObservableGraph.
    */
   tlp::node _n;
-#ifndef NDEBUG
+
   /**
    * @brief sent The number of sent events
    */
@@ -432,7 +432,6 @@ private:
    * @brief received The number of received events.
    */
   unsigned int received;
-#endif
 
   /**
    * @brief return an Iterator on all Onlookers

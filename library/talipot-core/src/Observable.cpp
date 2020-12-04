@@ -118,17 +118,11 @@ node Observable::getBoundNode() {
 }
 //----------------------------------
 unsigned int Observable::getSent() const {
-#ifndef NDEBUG
   return sent;
-#endif
-  return 0;
 }
 //----------------------------------
 unsigned int Observable::getReceived() const {
-#ifndef NDEBUG
   return received;
-#endif
-  return 0;
 }
 //----------------------------------
 bool Observable::isAlive(tlp::node n) {
@@ -196,15 +190,11 @@ void Observable::treatEvent(const Event &) {
 }
 //=================================
 Observable::Observable() : deleteMsgSent(false), queuedEvent(false), _n(node()) {
-#ifndef NDEBUG
   sent = received = 0;
-#endif
 }
 //----------------------------------
 Observable::Observable(const Observable &) : deleteMsgSent(false), queuedEvent(false), _n(node()) {
-#ifndef NDEBUG
   sent = received = 0;
-#endif
 }
 //----------------------------------
 Observable &Observable::operator=(const Observable &) {
@@ -313,9 +303,7 @@ void Observable::unholdObservers() {
 
           if (_oAlive[it.first]) {
             Observable *obs = static_cast<Observable *>(_oPointer[it.first]);
-#ifndef NDEBUG
             ++(obs->received);
-#endif
             obs->treatEvents(it.second);
           }
         }
@@ -486,9 +474,7 @@ void Observable::sendEvent(const Event &message) {
 
     if (_oAlive[obs.second]) { // other listeners/observers could be destroyed during the treat
                                // event
-#ifndef NDEBUG
       ++(obs.first->received);
-#endif
       obs.first->treatEvent(message);
     }
 
@@ -524,9 +510,7 @@ void Observable::sendEvent(const Event &message) {
 
       if (_oAlive[obs.second]) { // other listeners/observers could be destroyed during the treat
                                  // event
-#ifndef NDEBUG
         ++(obs.first->received);
-#endif
         obs.first->treatEvents(tmp);
       }
 
@@ -544,9 +528,7 @@ void Observable::sendEvent(const Event &message) {
     }
   }
 
-#ifndef NDEBUG
   ++sent;
-#endif
   --_oNotifying;
 
   if (!observerTonotify.empty() || !listenerTonotify.empty() ||
