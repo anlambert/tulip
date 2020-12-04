@@ -95,8 +95,8 @@ struct PageRank : public DoubleAlgorithm {
     NodeStaticProperty<double> deg(graph);
     tlp::degree(graph, deg, directed ? DIRECTED : UNDIRECTED, weight, false);
 
-    auto getNodes = getNodesIterator(directed ? DIRECTED : UNDIRECTED);
-    auto getEdges = getEdgesIterator(directed ? DIRECTED : UNDIRECTED);
+    auto getNodes = getNodesIterator(directed ? INV_DIRECTED : UNDIRECTED);
+    auto getEdges = getEdgesIterator(directed ? INV_DIRECTED : UNDIRECTED);
 
     for (unsigned int k = 0; k < kMax + 1; ++k) {
       if (!weight) {
