@@ -106,7 +106,6 @@ QFrame[header="true"] QLabel {
   border-image: none;
   background: #323232;
   border: none;
-  border-bottom: 2px solid black;
   color: white;
 }
 
@@ -745,9 +744,9 @@ AlgorithmRunner #favoritesBox::title {
 }
 
 AlgorithmRunner #searchBox {
-  border-left: 1px solid #c9c9c9;
-  border-right: 0px;
-  border-top: 0px;
+  border-left: none;
+  border-right: none;
+  border-top: none;
   border-bottom: 1px solid #c9c9c9;
 }
 
