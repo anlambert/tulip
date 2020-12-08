@@ -462,16 +462,13 @@ TalipotMainWindow::TalipotMainWindow()
     _ui->actionShowAPIDocumentation->setVisible(false);
   }
 
-  _ui->mainSplitter->setCollapsible(0, false);
-  _ui->mainSplitter->setCollapsible(1, false);
-
   connect(_project, &Project::projectFileChanged, this, &TalipotMainWindow::projectFileChanged);
   connect(this, &TalipotMainWindow::resetWindowTitle, [this] { projectFileChanged(); });
 
   // set a default position and size that works seamlessly on all platforms
   move(0, 0);
   resize(QDesktopWidget().availableGeometry(this).size() * 0.9);
-  _ui->mainSplitter->setSizes({int(0.25 * width()), int(0.75 * width())});
+  _ui->mainSplitter->setSizes({int(0.29 * width()), int(0.71 * width())});
 }
 
 void TalipotMainWindow::buildRecentDocumentsMenu() {
@@ -1038,7 +1035,6 @@ void TalipotMainWindow::anchoredPythonIDE(bool anchored) {
     auto desktopSize = QDesktopWidget().availableGeometry(this).size();
     _pythonIDE->resize(desktopSize.width() * 0.3, desktopSize.height() * 0.7);
     _pythonIDE->show();
-    _ui->mainSplitter->setCollapsible(1, false);
   }
   _pythonIDE->setAnchored(anchored);
   showPythonIDE();

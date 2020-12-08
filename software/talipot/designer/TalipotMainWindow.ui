@@ -977,7 +977,13 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>400</width>
+            <width>200</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>0</width>
             <height>0</height>
            </size>
           </property>
