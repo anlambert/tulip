@@ -103,7 +103,7 @@ if platform.system() == 'Windows':
     p = subprocess.call(command, shell=True)
 elif platform.system() == 'Darwin':
     talipot_native_libs = ['native/*.so', 'native/*.dylib',
-                         'native/plugins/*.dylib']
+                           'native/plugins/*.dylib']
 elif platform.system() == 'Linux':
     talipot_native_libs = ['native/*.so*', 'native/plugins/*.so']
 
@@ -153,9 +153,10 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
     ],
 
     keywords='graph theory algorithms visualization',
@@ -164,10 +165,10 @@ setup(
 
     package_data={
         'talipot': talipot_native_libs + ['plugins/color/*',
-                                      'plugins/general/*',
-                                      'plugins/import/*',
-                                      'plugins/layout/H3Layout.py',
-                                      'plugins/layout/h3/*'],
+                                          'plugins/general/*',
+                                          'plugins/import/*',
+                                          'plugins/layout/H3Layout.py',
+                                          'plugins/layout/h3/*'],
     },
 
     include_package_data=True,
