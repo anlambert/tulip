@@ -10,7 +10,18 @@ LAST_VERSION=$(echo $JSON | python -c "
 import sys, json
 print(json.load(sys.stdin)['info']['version'])" 2>/dev/null)
 DEV_VERSION=$(echo $LAST_VERSION | cut -f4 -d '.' | sed 's/dev//')
-let DEV_VERSION+=1
+echo last wheel dev version = $LAST_VERSION
+
+# check if dev wheel version needs to be incremented
+VERSION_INCREMENT=$(echo $JSON | python -c "
+import sys, json
+releases = json.load(sys.stdin)['releases']['$LAST_VERSION']
+print(any(['win_amd64' in r['filename'] for r in releases]))")
+
+if [ "$VERSION_INCREMENT" == "True" ]
+then
+  let DEV_VERSION+=1
+fi
 echo current wheel dev version = $DEV_VERSION
 
 # Install build tools and dependencies

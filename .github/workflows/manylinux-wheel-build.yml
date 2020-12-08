@@ -36,7 +36,14 @@ jobs:
           import sys, json
           print(json.load(sys.stdin)['info']['version'])" 2>/dev/null)
           DEV_VERSION=$(echo $LAST_VERSION | cut -f4 -d '.' | sed 's/dev//')
-          let DEV_VERSION+=1
+          VERSION_INCREMENT=$(echo $JSON | python -c "
+          import sys, json
+          releases = json.load(sys.stdin)['releases']['$LAST_VERSION']
+          print(any(['manylinux' in r['filename'] for r in releases]))")
+          if [ "$VERSION_INCREMENT" == "True" ]
+          then
+            let DEV_VERSION+=1
+          fi
           echo "::set-output name=version::$DEV_VERSION"
         shell: bash
       - name: Build and upload Talipot Python wheel
