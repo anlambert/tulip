@@ -242,10 +242,6 @@ at the shell prompt to perform that task::
     >>> from talipot import tlp
     >>> from talipotgui import tlpgui
 
-.. note::
-  If you have installed Talipot from a Windows installer or a Mac OS bundle, the Talipot-Python modules were built against Python 2.7
-  and you need to use the same Python version in order to be able to import them.
-
 Customizing the Python environment
 ----------------------------------
 

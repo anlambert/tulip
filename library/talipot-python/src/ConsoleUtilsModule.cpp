@@ -35,11 +35,7 @@ typedef struct {
 } consoleutils_ConsoleOutput;
 
 static void consoleutils_ConsoleOutput_dealloc(consoleutils_ConsoleOutput *self) {
-#if PY_MAJOR_VERSION >= 3
   Py_TYPE(self)->tp_free(reinterpret_cast<PyObject *>(self));
-#else
-  self->ob_type->tp_free(reinterpret_cast<PyObject *>(self));
-#endif
 }
 
 static PyObject *consoleutils_ConsoleOutput_new(PyTypeObject *type, PyObject *, PyObject *) {
@@ -154,11 +150,8 @@ static PyMethodDef consoleutils_ConsoleOutput_methods[] = {
 };
 
 static PyTypeObject consoleutils_ConsoleOutputType = {
-#if PY_MAJOR_VERSION >= 3
     PyVarObject_HEAD_INIT(NULL, 0)
-#else
-    PyObject_HEAD_INIT(NULL) 0, /*ob_size*/
-#endif
+
         "consoleutils.ConsoleOutput",                                 /*tp_name*/
     sizeof(consoleutils_ConsoleOutput),                               /*tp_basicsize*/
     0,                                                                /*tp_itemsize*/
@@ -206,13 +199,16 @@ static PyTypeObject consoleutils_ConsoleOutputType = {
     0,
     0
 #if PY_VERSION_HEX >= 0x03040000
-    ,0
+    ,
+    0
 #endif
 #if PY_VERSION_HEX >= 0x03080000
-    ,0
+    ,
+    0
 #endif
 #if PY_VERSION_HEX >= 0x03080000 && PY_VERSION_HEX < 0x03090000
-    ,0
+    ,
+    0
 #endif
 };
 
@@ -221,11 +217,7 @@ typedef struct {
 } consoleutils_ConsoleInput;
 
 static void consoleutils_ConsoleInput_dealloc(consoleutils_ConsoleInput *self) {
-#if PY_MAJOR_VERSION >= 3
   Py_TYPE(self)->tp_free(reinterpret_cast<PyObject *>(self));
-#else
-  self->ob_type->tp_free(reinterpret_cast<PyObject *>(self));
-#endif
 }
 
 static PyObject *consoleutils_ConsoleInput_new(PyTypeObject *type, PyObject *, PyObject *) {
@@ -239,11 +231,7 @@ static int consoleutils_ConsoleInput_init(consoleutils_ConsoleInput *, PyObject 
 /* This redirects stdin from the calling script. */
 static PyObject *consoleutils_ConsoleInput_readline(PyObject *, PyObject *) {
   QString line = PythonInterpreter::instance().readLineFromConsole();
-#if PY_MAJOR_VERSION >= 3
   PyObject *obj = PyUnicode_FromString(line.toLatin1().data());
-#else
-  PyObject *obj = PyString_FromString(line.toLatin1().data());
-#endif
   return obj;
 }
 
@@ -258,11 +246,8 @@ static PyMethodDef consoleutils_ConsoleInput_methods[] = {
 };
 
 static PyTypeObject consoleutils_ConsoleInputType = {
-#if PY_MAJOR_VERSION >= 3
     PyVarObject_HEAD_INIT(NULL, 0)
-#else
-    PyObject_HEAD_INIT(NULL) 0, /*ob_size*/
-#endif
+
         "consoleutils.ConsoleInput",                                 /*tp_name*/
     sizeof(consoleutils_ConsoleInput),                               /*tp_basicsize*/
     0,                                                               /*tp_itemsize*/
@@ -310,17 +295,19 @@ static PyTypeObject consoleutils_ConsoleInputType = {
     0,
     0
 #if PY_VERSION_HEX >= 0x03040000
-    ,0
+    ,
+    0
 #endif
 #if PY_VERSION_HEX >= 0x03080000
-    ,0
+    ,
+    0
 #endif
 #if PY_VERSION_HEX >= 0x03080000 && PY_VERSION_HEX < 0x03090000
-    ,0
+    ,
+    0
 #endif
 };
 
-#if PY_MAJOR_VERSION >= 3
 static struct PyModuleDef consoleutilsModuleDef = {
     PyModuleDef_HEAD_INIT,
     "consoleutils", /* m_name */
@@ -332,7 +319,6 @@ static struct PyModuleDef consoleutilsModuleDef = {
     NULL,           /* m_clear */
     NULL,           /* m_free */
 };
-#endif
 
 // This is called via the PyImport_AppendInittab mechanism called
 // during interpreter initialization, to make the built-in consoleutils
@@ -346,20 +332,16 @@ PyMODINIT_FUNC initconsoleutils(void) {
   PyType_Ready(&consoleutils_ConsoleOutputType);
   PyType_Ready(&consoleutils_ConsoleInputType);
 
-#if PY_MAJOR_VERSION >= 3
   m = PyModule_Create(&consoleutilsModuleDef);
-#else
-  m = Py_InitModule("consoleutils", NULL);
-#endif
+
   PyObject *cot = reinterpret_cast<PyObject *>(&consoleutils_ConsoleOutputType);
   Py_INCREF(cot);
   PyModule_AddObject(m, "ConsoleOutput", cot);
   PyObject *cit = reinterpret_cast<PyObject *>(&consoleutils_ConsoleInputType);
   Py_INCREF(cit);
   PyModule_AddObject(m, "ConsoleInput", cit);
-#if PY_MAJOR_VERSION >= 3
+
   return m;
-#endif
 }
 
 #ifdef __GNUC__

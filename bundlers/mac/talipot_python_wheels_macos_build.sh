@@ -42,9 +42,6 @@ sudo port -N install \
   zstd
 
 # install Python versions from which to build wheels against
-curl -LO https://www.python.org/ftp/python/2.7.17/python-2.7.17-macosx10.9.pkg
-sudo installer -pkg python-2.7.17-macosx10.9.pkg -target /
-sudo /Library/Frameworks/Python.framework/Versions/2.7/bin/pip install wheel
 curl -LO https://www.python.org/ftp/python/3.7.6/python-3.7.6-macosx10.9.pkg
 sudo installer -pkg python-3.7.6-macosx10.9.pkg -target /
 sudo /Library/Frameworks/Python.framework/Versions/3.7/bin/pip3 install wheel
@@ -59,23 +56,19 @@ sudo /Library/Frameworks/Python.framework/Versions/3.9/bin/pip3 install twine
 # configure and build wheels for all supported Python versions
 cd $APPVEYOR_BUILD_FOLDER
 mkdir build && cd build
-cmake .. -DCMAKE_BUILD_TYPE=Release \
-  -DCMAKE_INSTALL_PREFIX=$PWD/install \
-  -DCMAKE_C_COMPILER=/opt/local/bin/clang-mp-${CLANG_VERSION} \
-  -DCMAKE_CXX_COMPILER=/opt/local/bin/clang++-mp-${CLANG_VERSION} \
-  -DTALIPOT_ACTIVATE_PYTHON_WHEEL_TARGET=ON \
-  -DTALIPOT_PYTHON_TEST_WHEEL_SUFFIX=dev$DEV_VERSION \
-  -DPYTHON_EXECUTABLE=/Library/Frameworks/Python.framework/Versions/2.7/bin/python \
-  -DTALIPOT_USE_CCACHE=ON \
-  -DTALIPOT_BUILD_CORE_ONLY=ON \
-  -DTALIPOT_BUILD_DOC=OFF
-
-make -j4 test-wheel
 
 for py3Version in 3.7 3.8 3.9
 do
-  cmake .. \
-    -DPYTHON_EXECUTABLE=/Library/Frameworks/Python.framework/Versions/$py3Version/bin/python3
+  cmake .. -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=$PWD/install \
+    -DCMAKE_C_COMPILER=/opt/local/bin/clang-mp-${CLANG_VERSION} \
+    -DCMAKE_CXX_COMPILER=/opt/local/bin/clang++-mp-${CLANG_VERSION} \
+    -DTALIPOT_ACTIVATE_PYTHON_WHEEL_TARGET=ON \
+    -DTALIPOT_PYTHON_TEST_WHEEL_SUFFIX=dev$DEV_VERSION \
+    -DPYTHON_EXECUTABLE=/Library/Frameworks/Python.framework/Versions/$py3Version/bin/python3 \
+    -DTALIPOT_USE_CCACHE=ON \
+    -DTALIPOT_BUILD_CORE_ONLY=ON \
+    -DTALIPOT_BUILD_DOC=OFF
   make -j4 test-wheel
 done
 
@@ -93,15 +86,14 @@ sudo port -N -f uninstall \
   qhull \
   yajl
 
-curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-sudo python get-pip.py
-sudo pip install --index-url https://test.pypi.org/simple/ talipot
-python -c "from talipot import tlp; print(tlp.getLayoutAlgorithmPluginsList())"
+sudo pip3.7 install --index-url https://test.pypi.org/simple/ talipot
+python3.7 -c "from talipot import tlp; print(tlp.getLayoutAlgorithmPluginsList())"
 
-sudo port -N install python39
-sudo port -N install py39-pip
+sudo port -N install \
+  python39 \
+  py39-pip
+
 sudo pip-3.9 install --index-url https://test.pypi.org/simple/ talipot
 python3.9 -c "from talipot import tlp; print(tlp.getLayoutAlgorithmPluginsList())"
 
-sudo pip3.7 install --index-url https://test.pypi.org/simple/ talipot
-python3.7 -c "from talipot import tlp; print(tlp.getLayoutAlgorithmPluginsList())"
+

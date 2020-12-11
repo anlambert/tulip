@@ -4,8 +4,6 @@ IF(PYTHONLIBS_FOUND)
     IF(WIN32)
       TALIPOT_SET_CXX_FLAGS("-DDLL_TALIPOT_PYTHON")
     ELSE(WIN32)
-      # to disable deprecated register warnings with Python 2.7.13 headers
-      TALIPOT_SET_CXX_FLAGS("-Wno-register")
       IF(APPLE)
         TALIPOT_SET_CXX_FLAGS("-Wno-deprecated-declarations")
       ENDIF(APPLE)

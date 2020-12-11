@@ -22,7 +22,8 @@ yum -y install zlib-devel libzstd-devel qhull-devel ccache
 
 # ensure python library from based system is present, even if we do
 # not link to it, as cmake will fail to find PythonLibs otherwise
-yum -y install python-devel
+yum -y install rh-python36
+scl enable rh-python36 bash
 
 # get talipot source dir
 if [ -d /talipot ]
@@ -55,7 +56,7 @@ fi
 # iterate on available Python versions
 for CPYBIN in /opt/python/cp*/bin
 do
-  if [[ $CPYBIN == *"cp34"* ]] || [[ $CPYBIN == *"cp35"* ]]
+  if [[ $CPYBIN == *"cp27"* ]] || [[ $CPYBIN == *"cp34"* ]] || [[ $CPYBIN == *"cp35"* ]]
   then
     continue
   fi
@@ -65,6 +66,8 @@ do
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX=/tmp/talipot_install \
         -DPYTHON_EXECUTABLE=${CPYBIN}/python \
+        -DCMAKE_INCLUDE_PATH=/opt/rh/rh-python36/root/usr/include/ \
+        -DCMAKE_LIBRARY_PATH=/opt/rh/rh-python36/root/usr/lib/ \
         -DTALIPOT_ACTIVATE_PYTHON_WHEEL_TARGET=ON \
         -DTALIPOT_PYTHON_TEST_WHEEL_SUFFIX=${TALIPOT_PYTHON_TEST_WHEEL_SUFFIX} \
         -DTALIPOT_BUILD_DOC=OFF \

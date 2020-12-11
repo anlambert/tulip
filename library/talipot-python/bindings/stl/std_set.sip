@@ -370,11 +370,7 @@ template<TYPE*>
     PyObject *iterator = PyObject_GetIter(sipPy);
     PyObject *item = NULL;
     while (item = PyIter_Next(iterator)) {
-#if PY_MAJOR_VERSION >= 3
       if (!PyLong_Check(item)) {
-#else
-      if (!PyLong_Check(item) && !PyInt_Check(item)) {
-#endif
         //printErrorMessage("TypeError : object in list of type " + std::string(item->ob_type->tp_name) + " can not be converted to int");
         Py_DECREF(item);
         Py_DECREF(iterator);
@@ -392,15 +388,7 @@ template<TYPE*>
   PyObject *iterator = PyObject_GetIter(sipPy);
   PyObject *item = NULL;
   while (item = PyIter_Next(iterator)) {
-#if PY_MAJOR_VERSION >= 3
     s->insert(int(PyLong_AsLong(item)));
-#else
-    if (PyLong_Check(item)) {
-      s->insert(int(PyLong_AsLong(item)));
-    } else {
-      s->insert(int(PyInt_AsLong(item)));
-    }
-#endif
     Py_DECREF(item);
   }
 
@@ -444,11 +432,7 @@ template<TYPE*>
     PyObject *iterator = PyObject_GetIter(sipPy);
     PyObject *item = NULL;
     while (item = PyIter_Next(iterator)) {
-#if PY_MAJOR_VERSION >= 3
       if (!PyLong_Check(item)) {
-#else
-      if (!PyLong_Check(item) && !PyInt_Check(item)) {
-#endif
         //printErrorMessage("TypeError : object in list of type " + std::string(item->ob_type->tp_name) + " can not be converted to long");
         Py_DECREF(item);
         Py_DECREF(iterator);
@@ -466,15 +450,7 @@ template<TYPE*>
   PyObject *iterator = PyObject_GetIter(sipPy);
   PyObject *item = NULL;
   while (item = PyIter_Next(iterator)) {
-#if PY_MAJOR_VERSION >= 3
     s->insert(PyLong_AsLong(item));
-#else
-    if (PyLong_Check(item)) {
-      s->insert(PyLong_AsLong(item));
-    } else {
-      s->insert(PyInt_AsLong(item));
-    }
-#endif
     Py_DECREF(item);
   }
 
@@ -518,11 +494,7 @@ template<TYPE*>
     PyObject *iterator = PyObject_GetIter(sipPy);
     PyObject *item = NULL;
     while (item = PyIter_Next(iterator)) {
-#if PY_MAJOR_VERSION >= 3
       if (!PyLong_Check(item)) {
-#else
-      if (!PyLong_Check(item) && !PyInt_Check(item)) {
-#endif
         //printErrorMessage("TypeError : object in list of type " + std::string(item->ob_type->tp_name) + " can not be converted to unsigned int");
         Py_DECREF(item);
         Py_DECREF(iterator);
@@ -540,15 +512,7 @@ template<TYPE*>
   PyObject *iterator = PyObject_GetIter(sipPy);
   PyObject *item = NULL;
   while (item = PyIter_Next(iterator)) {
-#if PY_MAJOR_VERSION >= 3
     s->insert(uint(PyLong_AsUnsignedLong(item)));
-#else
-    if (PyLong_Check(item)) {
-      s->insert(uint(PyLong_AsUnsignedLong(item)));
-    } else {
-      s->insert(uint(PyInt_AsUnsignedLongMask(item)));
-    }
-#endif
     Py_DECREF(item);
   }
   Py_DECREF(iterator);
@@ -591,11 +555,7 @@ template<TYPE*>
     PyObject *iterator = PyObject_GetIter(sipPy);
     PyObject *item = NULL;
     while (item = PyIter_Next(iterator)) {
-#if PY_MAJOR_VERSION >= 3
       if (!PyLong_Check(item)) {
-#else
-      if (!PyLong_Check(item) && !PyInt_Check(item)) {
-#endif
         //printErrorMessage("TypeError : object in list of type " + std::string(item->ob_type->tp_name) + " can not be converted to unsigned long");
         Py_DECREF(item);
         Py_DECREF(iterator);
@@ -613,15 +573,7 @@ template<TYPE*>
   PyObject *iterator = PyObject_GetIter(sipPy);
   PyObject *item = NULL;
   while (item = PyIter_Next(iterator)) {
-#if PY_MAJOR_VERSION >= 3
     s->insert(PyLong_AsUnsignedLong(item));
-#else
-    if (PyLong_Check(item)) {
-      s->insert(PyLong_AsUnsignedLong(item));
-    } else {
-      s->insert(PyInt_AsUnsignedLongMask(item));
-    }
-#endif
     Py_DECREF(item);
   }
   Py_DECREF(iterator);

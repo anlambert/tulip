@@ -10,10 +10,8 @@ jobs:
         config:
           - name: Talipot build on Ubuntu 18.04
             os: ubuntu-18.04
-            pip_package: python-pip
           - name: Talipot build on Ubuntu 20.04
             os: ubuntu-20.04
-            pip_package: python3-pip
     steps:
       - name: Checkout Talipot code
         uses: actions/checkout@v2
@@ -30,7 +28,6 @@ jobs:
           ninja-build
           libqhull-dev
           libyajl-dev
-          libpython2.7-dev
           libpython3-dev
           libcppunit-dev
           binutils-dev
@@ -41,7 +38,8 @@ jobs:
           libglew-dev
           libfreetype6-dev
           libfontconfig-dev
-          ${{ matrix.config.pip_package }}
+          python3
+          python3-pip
           doxygen
           graphviz
       - name: Prepare ccache timestamp

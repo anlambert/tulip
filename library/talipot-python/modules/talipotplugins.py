@@ -1,4 +1,4 @@
-# Copyright (C) 2019  The Talipot developers
+# Copyright (C) 2019-2020  The Talipot developers
 #
 # Talipot is a fork of Tulip, created by David Auber
 # and the Tulip development Team from LaBRI, University of Bordeaux
@@ -15,10 +15,9 @@ in Python in the plugins database.
 import atexit
 import sys
 import traceback
-if sys.version_info[0] == 3:
-    from imp import reload # noqa
+from imp import reload # noqa
 
-from talipot import tlp # noqa
+from talipot import tlp
 
 pluginFactory = {}
 pluginModules = {}
@@ -32,10 +31,7 @@ def setTestMode(mode):
 
 def getCallingModuleName():
     import sys
-    if sys.version_info[0] == 3:
-        frames = list(sys._current_frames().values())
-    else:
-        frames = sys._current_frames().values()
+    frames = list(sys._current_frames().values())
     for i in range(len(frames)):
         f = frames[i]
         if f.f_globals['__name__'] == 'talipotplugins':

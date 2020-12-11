@@ -127,7 +127,6 @@ static PyMethodDef talipotUtilsMethods[] = {
     {NULL, NULL, 0, NULL} /* Sentinel */
 };
 
-#if PY_MAJOR_VERSION >= 3
 static struct PyModuleDef TalipotUtilsModuleDef = {
     PyModuleDef_HEAD_INIT,
     "talipotutils",      /* m_name */
@@ -139,17 +138,12 @@ static struct PyModuleDef TalipotUtilsModuleDef = {
     NULL,                /* m_clear */
     NULL,                /* m_free */
 };
-#endif
 
 // This is called via the PyImport_AppendInittab mechanism called
 // during interpreter initialization, to make the built-in talipotutils
 // module known to Python
 PyMODINIT_FUNC inittalipotutils(void) {
-#if PY_MAJOR_VERSION >= 3
   return PyModule_Create(&TalipotUtilsModuleDef);
-#else
-  Py_InitModule("talipotutils", talipotUtilsMethods);
-#endif
 }
 
 #ifdef __GNUC__

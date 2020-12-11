@@ -37,7 +37,7 @@ pacman --noconfirm -S --needed \
 # Build wheels for each supported Python version
 cd $APPVEYOR_BUILD_FOLDER
 mkdir build && cd build
-for pyVersion in 27 36 37 38 39
+for pyVersion in 36 37 38 39
 do
   export PATH=/c/Python$pyVersion-x64/:/c/Python$pyVersion-x64/Scripts/:$PATH
   pip install wheel twine
@@ -83,7 +83,7 @@ pacman --noconfirm -Rc \
   mingw-w64-$MSYS2_ARCH-zstd \
   mingw-w64-$MSYS2_ARCH-qhull
 
-for pyVersion in 27 36 37 38 39
+for pyVersion in 36 37 38 39
 do
   export PATH=/c/Python$pyVersion-x64/:/c/Python$pyVersion-x64/Scripts/:$PATH
   pip install --index-url https://test.pypi.org/simple/ talipot

@@ -340,11 +340,7 @@ template<TYPE>
     }
     for (SIP_SSIZE_T i = 0; i < PyList_GET_SIZE(sipPy); ++i) {
       PyObject *item = PyList_GET_ITEM(sipPy, i);
-#if PY_MAJOR_VERSION >= 3
       if (!PyLong_Check(item)) {
-#else
-        if (!PyLong_Check(item) && !PyInt_Check(item)) {
-#endif
           //printErrorMessage("TypeError : object in list of type " + std::string(item->ob_type->tp_name) + " can not be converted to int");
           return 0;
         }
@@ -355,16 +351,7 @@ template<TYPE>
     // Convert Python list of integers to a std::vector<int>
     std::list<int> *v = new std::list<int>();
     for (SIP_SSIZE_T i = 0; i < PyList_GET_SIZE(sipPy); ++i) {
-#if PY_MAJOR_VERSION >= 3
       v->push_back(int(PyLong_AsLong(PyList_GET_ITEM(sipPy, i))));
-#else
-      PyObject *item = PyList_GET_ITEM(sipPy, i);
-      if (PyLong_Check(item)) {
-        v->push_back(int(PyLong_AsLong(item)));
-      } else {
-        v->push_back(int(PyInt_AsLong(item)));
-      }
-#endif
     }
 
     *sipCppPtr = v;
@@ -410,11 +397,7 @@ template<TYPE>
     }
     for (SIP_SSIZE_T i = 0; i < PyList_GET_SIZE(sipPy); ++i) {
       PyObject *item = PyList_GET_ITEM(sipPy, i);
-#if PY_MAJOR_VERSION >= 3
       if (!PyLong_Check(item)) {
-#else
-        if (!PyLong_Check(item) && !PyInt_Check(item)) {
-#endif
           //printErrorMessage("TypeError : object in list of type " + std::string(item->ob_type->tp_name) + " can not be converted to int");
           return 0;
         }
@@ -425,16 +408,7 @@ template<TYPE>
     // Convert Python list of integers to a std::vector<int>
     std::list<unsigned int> *v = new std::list<unsigned int>();
     for (SIP_SSIZE_T i = 0; i < PyList_GET_SIZE(sipPy); ++i) {
-#if PY_MAJOR_VERSION >= 3
       v->push_back(uint(PyLong_AsUnsignedLong(PyList_GET_ITEM(sipPy, i))));
-#else
-      PyObject *item = PyList_GET_ITEM(sipPy, i);
-      if (PyLong_Check(item)) {
-        v->push_back(uint(PyLong_AsUnsignedLong(item)));
-      } else {
-        v->push_back(uint(PyInt_AsUnsignedLongMask(item)));
-      }
-#endif
     }
 
     *sipCppPtr = v;
@@ -480,11 +454,7 @@ template<TYPE>
     }
     for (SIP_SSIZE_T i = 0; i < PyList_GET_SIZE(sipPy); ++i) {
       PyObject *item = PyList_GET_ITEM(sipPy, i);
-#if PY_MAJOR_VERSION >= 3
       if (!PyLong_Check(item)) {
-#else
-        if (!PyLong_Check(item) && !PyInt_Check(item)) {
-#endif
           //printErrorMessage("TypeError : object in list of type " + std::string(item->ob_type->tp_name) + " can not be converted to long");
           return 0;
         }
@@ -495,16 +465,7 @@ template<TYPE>
     // Convert Python list of integers to a std::vector<int>
     std::list<long> *v = new std::list<long>();
     for (SIP_SSIZE_T i = 0; i < PyList_GET_SIZE(sipPy); ++i) {
-#if PY_MAJOR_VERSION >= 3
       v->push_back(PyLong_AsLong(PyList_GET_ITEM(sipPy, i)));
-#else
-      PyObject *item = PyList_GET_ITEM(sipPy, i);
-      if (PyLong_Check(item)) {
-        v->push_back(PyLong_AsLong(item));
-      } else {
-        v->push_back(PyInt_AsLong(item));
-      }
-#endif
     }
 
     *sipCppPtr = v;
@@ -550,11 +511,7 @@ template<TYPE>
     }
     for (SIP_SSIZE_T i = 0; i < PyList_GET_SIZE(sipPy); ++i) {
       PyObject *item = PyList_GET_ITEM(sipPy, i);
-#if PY_MAJOR_VERSION >= 3
       if (!PyLong_Check(item)) {
-#else
-        if (!PyLong_Check(item) && !PyInt_Check(item)) {
-#endif
           //printErrorMessage("TypeError : object in list of type " + std::string(item->ob_type->tp_name) + " can not be converted to unsigned long");
           return 0;
         }
@@ -565,16 +522,7 @@ template<TYPE>
     // Convert Python list of integers to a std::vector<int>
     std::list<unsigned long> *v = new std::list<unsigned long>();
     for (SIP_SSIZE_T i = 0; i < PyList_GET_SIZE(sipPy); ++i) {
- #if PY_MAJOR_VERSION >= 3
       v->push_back(PyLong_AsUnsignedLong(PyList_GET_ITEM(sipPy, i)));
- #else
-      PyObject *item = PyList_GET_ITEM(sipPy, i);
-      if (PyLong_Check(item)) {
-        v->push_back(PyLong_AsUnsignedLong(item));
-      } else {
-        v->push_back(PyInt_AsUnsignedLongMask(item));
-      }
- #endif
     }
 
     *sipCppPtr = v;

@@ -1,4 +1,4 @@
-# Copyright (C) 2019  The Talipot developers
+# Copyright (C) 2019-2020  The Talipot developers
 #
 # Talipot is a fork of Tulip, created by David Auber
 # and the Tulip development Team from LaBRI, University of Bordeaux
@@ -361,10 +361,8 @@ class TestPluginParameters(unittest.TestCase):
                          tlp.ColorScale(color_scale_default_value_dict))
 
         self.assertIn(int_param_name, plugin_default_params)
-        if sys.version_info >= (3,):
-            self.assertEqual(type(plugin_default_params[int_param_name]), int)
-        else:
-            self.assertEqual(type(plugin_default_params[int_param_name]), long) # noqa
+        self.assertEqual(type(plugin_default_params[int_param_name]), int)
+
         self.assertEqual(plugin_default_params[int_param_name],
                          int_param_default_value)
 

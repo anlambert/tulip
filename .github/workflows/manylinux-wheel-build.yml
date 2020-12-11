@@ -65,11 +65,6 @@ jobs:
           # wait one minute to ensure freshly uploaded wheels are registered on PyPI
           sleep 60
 
-          pip2 install --upgrade pip --user
-          pip2 install --index-url https://test.pypi.org/simple/ talipot --user
-          python -c "from talipot import tlp; print(tlp.getLayoutAlgorithmPluginsList())"
-          TALIPOT_BUILD_DIR= python -m unittest discover
-
           pip3 install --upgrade pip --user
           pip3 install --index-url https://test.pypi.org/simple/ talipot --user
           python3 -c "from talipot import tlp; print(tlp.getLayoutAlgorithmPluginsList())"

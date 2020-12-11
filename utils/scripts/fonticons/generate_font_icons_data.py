@@ -43,9 +43,7 @@ def version_tuple(v):
 
 path = os.path.dirname(__file__)
 
-open_kwargs = {}
-if sys.version_info >= (3,):
-    open_kwargs['encoding'] = 'utf-8'
+open_kwargs = {'encoding': 'utf-8'}
 
 # Font Awesome metadata file copied from
 # https://github.com/FortAwesome/Font-Awesome/blob/master/metadata/icons.json
