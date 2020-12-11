@@ -62,8 +62,8 @@ jobs:
       - name: Test uploaded wheel
         working-directory: tests/python
         run: |
-          # wait thirty seconds to ensure freshly uploaded wheels are registered on PyPI
-          sleep 30
+          # wait one minute to ensure freshly uploaded wheels are registered on PyPI
+          sleep 60
 
           pip2 install --upgrade pip --user
           pip2 install --index-url https://test.pypi.org/simple/ talipot --user
