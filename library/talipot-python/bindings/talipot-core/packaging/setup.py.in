@@ -136,7 +136,7 @@ setup(
 
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
-        'Development Status :: 5 - Production/Stable',
+        'Development Status :: 3 - Alpha',
 
         'Intended Audience :: Developers',
         'Intended Audience :: Education',
@@ -147,7 +147,7 @@ setup(
         'Topic :: Scientific/Engineering :: Mathematics',
         'Topic :: Scientific/Engineering :: Visualization',
 
-        'License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)', # noqa
+        'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
 
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: 2',
