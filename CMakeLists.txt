@@ -117,16 +117,21 @@ ELSE(TalipotReleaseVersion MATCHES "^[0-9]+$")
   # just a hack to force the display of the full Talipot version in window title
   # bar when it contains non digit characters (like alpha, beta, dev, ...)
   SET(TalipotIntVersion "${TalipotMajorVersion}${TalipotMinorVersion}1")
-  INCLUDE(cmake/GetGitRevisionDescription.cmake)
-  IF(EXISTS ${PROJECT_SOURCE_DIR}/.git AND NOT TALIPOT_BUILD_FOR_APPIMAGE)
-    SET(TALIPOT_SOURCE_DIR ${PROJECT_SOURCE_DIR})
-    GET_GIT_HEAD_REVISION(TALIPOT_REFSPEC TALIPOT_GIT_REVISION)
-    CONFIGURE_FILE(utils/cmake-templates/GIT_COMMIT.in
-                   ${CMAKE_CURRENT_BINARY_DIR}/GIT_COMMIT)
-    INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/GIT_COMMIT
-            DESTINATION ${TalipotShareInstallDir})
-  ENDIF(EXISTS ${PROJECT_SOURCE_DIR}/.git AND NOT TALIPOT_BUILD_FOR_APPIMAGE)
+
 ENDIF(TalipotReleaseVersion MATCHES "^[0-9]+$")
+
+# ========================================================
+# Dump git commit id to file
+# ========================================================
+INCLUDE(cmake/GetGitRevisionDescription.cmake)
+IF(EXISTS ${PROJECT_SOURCE_DIR}/.git)
+  SET(TALIPOT_SOURCE_DIR ${PROJECT_SOURCE_DIR})
+  GET_GIT_HEAD_REVISION(TALIPOT_REFSPEC TALIPOT_GIT_REVISION)
+  CONFIGURE_FILE(utils/cmake-templates/GIT_COMMIT.in
+                 ${CMAKE_CURRENT_BINARY_DIR}/GIT_COMMIT)
+  INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/GIT_COMMIT
+          DESTINATION ${TalipotShareInstallDir})
+ENDIF(EXISTS ${PROJECT_SOURCE_DIR}/.git)
 
 # ========================================================
 # Talipot libraries names
