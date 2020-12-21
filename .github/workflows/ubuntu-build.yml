@@ -20,7 +20,8 @@ jobs:
         run: |
           wget -qO - http://archive.neon.kde.org/public.key | sudo apt-key add -
           sudo add-apt-repository http://archive.neon.kde.org/user/
-          sudo apt update
+      - name: Apt update
+        run: sudo apt update
       - name: Install Talipot build dependencies
         run: sudo apt install
           cmake
