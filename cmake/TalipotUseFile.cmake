@@ -122,26 +122,10 @@ MACRO(TALIPOT_SET_COMPILER_OPTIONS_AND_DEFINITIONS)
   STRING(FIND "${CMAKE_CXX_COMPILER_ID}" "Clang" CLANG_POS)
   STRING(COMPARE NOTEQUAL "${CLANG_POS}" "-1" CLANG)
 
-  # enable C++11 (not required for GCC >= 6.1 as the standard is enabled by
-  # default) set -std=c++11 only if no other standard (eg. c++14, c++17,
-  # gnu++11, gnu++14, gnu++1z) has already been manually specified
-  STRING(FIND "${CMAKE_CXX_FLAGS}" "-std=" STD_POS)
-  IF(${STD_POS} EQUAL -1)
-    IF(CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.7)
-      TALIPOT_SET_CXX_FLAGS("-std=c++0x")
-    ELSE(CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS
-                                      4.7)
-      IF((CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS
-                                       6.1) OR CLANG)
-        TALIPOT_SET_CXX_FLAGS("-std=c++11")
-      ENDIF((CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION
-                                          VERSION_LESS 6.1) OR CLANG)
-    ENDIF(CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS
-                                       4.7)
-    IF(CLANG AND APPLE)
-      TALIPOT_SET_CXX_FLAGS("-stdlib=libc++")
-    ENDIF(CLANG AND APPLE)
-  ENDIF(${STD_POS} EQUAL -1)
+  # Enable C++11 standard
+  SET(CMAKE_CXX_STANDARD 11)
+  SET(CMAKE_CXX_STANDARD_REQUIRED ON)
+  SET(CMAKE_CXX_EXTENSIONS OFF)
 
   IF(NOT MSVC) # Visual Studio does not recognize these options
     TALIPOT_SET_CXX_FLAGS(
