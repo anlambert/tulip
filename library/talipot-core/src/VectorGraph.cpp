@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -21,6 +21,7 @@
 #include <talipot/Node.h>
 #include <talipot/Edge.h>
 #include <talipot/StlIterator.h>
+#include <talipot/TlpTools.h>
 
 using namespace std;
 using namespace tlp;
@@ -548,14 +549,14 @@ void VectorGraph::setEnds(const edge e, const node src, const node tgt) {
 }
 //=======================================================
 void VectorGraph::shuffleNodes() {
-  random_shuffle(_nodes.begin(), _nodes.end());
+  shuffle(_nodes.begin(), _nodes.end(), getRandomNumberGenerator());
 
   // recompute indices of nodes
   _nodes.reIndex();
 }
 //=======================================================
 void VectorGraph::shuffleEdges() {
-  random_shuffle(_edges.begin(), _edges.end());
+  shuffle(_edges.begin(), _edges.end(), getRandomNumberGenerator());
 
   // recompute indices of edges
   _edges.reIndex();

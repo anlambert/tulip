@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -16,6 +16,8 @@
 
 #include <iostream>
 #include <climits>
+#include <random>
+
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <talipot/config.h>
@@ -111,6 +113,11 @@ TLP_SCOPE unsigned int getSeedOfRandomSequence();
  * that sequence
  */
 TLP_SCOPE void initRandomSequence();
+
+/**
+ * @brief Returns C++11 random number generator.
+ */
+TLP_SCOPE std::mt19937 &getRandomNumberGenerator();
 
 /**
  * @brief Returns a random integer in the range [0, max] if max is positive or in the range [max, 0]

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -23,44 +23,20 @@
 
 #include <functional>
 
-// use compose2 implementation from boost
-
-/* class for the compose_f_gx_hx adapter
- */
-template <class OP1, class OP2, class OP3>
-class compose_f_gx_hx_t
-    : public std::unary_function<typename OP2::argument_type, typename OP1::result_type> {
-private:
-  OP1 op1; // process: op1(op2(x),op3(x))
-  OP2 op2;
-  OP3 op3;
-
-public:
-  // constructor
-  compose_f_gx_hx_t(const OP1 &o1, const OP2 &o2, const OP3 &o3) : op1(o1), op2(o2), op3(o3) {}
-
-  // function call
-  typename OP1::result_type operator()(const typename OP2::argument_type &x) const {
-    return op1(op2(x), op3(x));
-  }
-};
-
-/* convenience functions for the compose_f_gx_hx adapter
- */
-template <class OP1, class OP2, class OP3>
-inline compose_f_gx_hx_t<OP1, OP2, OP3> compose_f_gx_hx(const OP1 &o1, const OP2 &o2,
-                                                        const OP3 &o3) {
-  return compose_f_gx_hx_t<OP1, OP2, OP3>(o1, o2, o3);
-}
-
-#define compose_fn compose_f_gx_hx
-
 #include "HistogramStatistics.h"
 
 using namespace std;
 
+// return f(g(x), h(x))
+template <class F, class G, class H>
+auto compose_fn(F f, G g, H h) {
+  return [f, g, h](auto &&... args) {
+    return f(g(forward<decltype(args)>(args)...), h(forward<decltype(args)>(args)...));
+  };
+}
+
 template <class K, class V>
-class map_value_greater_equal : public unary_function<pair<K, V>, bool> {
+class map_value_greater_equal {
 private:
   V value;
 
@@ -73,7 +49,7 @@ public:
 };
 
 template <class K, class V>
-class map_value_less_equal : public unary_function<pair<K, V>, bool> {
+class map_value_less_equal {
 private:
   V value;
 

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -18,7 +18,6 @@
 #include <sstream>
 #include <clocale>
 #include <cerrno>
-#include <random>
 #include <chrono>
 
 #ifndef _WIN32
@@ -360,6 +359,10 @@ void tlp::initRandomSequence() {
   } else {
     mt.seed(randomSeed);
   }
+}
+
+TLP_SCOPE std::mt19937 &tlp::getRandomNumberGenerator() {
+  return mt;
 }
 
 int tlp::randomInteger(int max) {

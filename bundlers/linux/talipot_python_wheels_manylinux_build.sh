@@ -5,15 +5,22 @@
 
 TALIPOT_PYTHON_TEST_WHEEL_SUFFIX=$1
 
-# install cmake 3.x
 yum -y install epel-release
-yum -y install cmake3
+# compile and install cmake 3.19 to get C++17 support
+yum -y install wget openssl-devel
+wget https://github.com/Kitware/CMake/releases/download/v3.19.2/cmake-3.19.2.tar.gz
+tar -xvzf cmake-3.19.2.tar.gz > /dev/null
+cd cmake-3.19.2
+./bootstrap
+make -j4
+make -j4 install
+cd ..
 
 # build upstream yajl as CentOS 6 package for it is way outdated
 git clone https://github.com/lloyd/yajl.git
 mkdir yajl_build
 cd yajl_build
-cmake3 -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr ../yajl
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr ../yajl
 make -j4 install
 cd ..
 
@@ -62,7 +69,7 @@ do
   fi
   ${CPYBIN}/pip install twine
   # configure and build python wheel with specific Python version
-  cmake3 ${TALIPOT_SRC} \
+  cmake ${TALIPOT_SRC} \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX=/tmp/talipot_install \
         -DPYTHON_EXECUTABLE=${CPYBIN}/python \

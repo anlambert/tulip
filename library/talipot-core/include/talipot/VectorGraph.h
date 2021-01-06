@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -433,7 +433,7 @@ public:
   }
   //=======================================================
   /**
-   * @brief Reconnect the edeg e to have the new given extremities
+   * @brief Reconnect the edge e to have the new given extremities
    * @warning That operation modify the array of neighbours of extrmities of edges, thus
    * it devalidates iterators on adjacency for the nodes at the extremities of the modified
    * edges and nodes.
@@ -443,13 +443,13 @@ public:
   //=======================================================
   /**
    * @brief Shuffle the array of graph nodes
-   * @remark dependent of stl::random_shuffle algorithm (should be o(N))
+   * @remark dependent of std::shuffle algorithm (should be o(N))
    */
   void shuffleNodes();
   //=======================================================
   /**
    * @brief Shuffle the array of graph edges
-   * @remark dependent of stl::random_shuffle algorithm (should be o(E))
+   * @remark dependent of std::shuffle algorithm (should be o(E))
    */
   void shuffleEdges();
   //=======================================================

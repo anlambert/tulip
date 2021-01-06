@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -19,9 +19,6 @@
 #include <cstdlib>
 #include <iostream>
 #include <tuple>
-
-using namespace tlp;
-using namespace std;
 
 // Current Python versions
 static const char *pythonVersion[] = {"3.9", "3.8", "3.7", "3.6", "3.5",  "3.4",
@@ -193,10 +190,10 @@ static QString getDefaultPythonVersionIfAny() {
 }
 #endif
 
-QStringList PythonVersionChecker::_installedVersions;
-bool PythonVersionChecker::_installedVersionsChecked(false);
+QStringList tlp::PythonVersionChecker::_installedVersions;
+bool tlp::PythonVersionChecker::_installedVersionsChecked(false);
 
-QStringList PythonVersionChecker::installedVersions() {
+QStringList tlp::PythonVersionChecker::installedVersions() {
 
   if (!_installedVersionsChecked) {
 
@@ -243,16 +240,16 @@ QStringList PythonVersionChecker::installedVersions() {
   return _installedVersions;
 }
 
-QString PythonVersionChecker::compiledVersion() {
+QString tlp::PythonVersionChecker::compiledVersion() {
   return TLP_PYTHON;
 }
 
-bool PythonVersionChecker::isPythonVersionMatching() {
+bool tlp::PythonVersionChecker::isPythonVersionMatching() {
   return installedVersions().contains(compiledVersion());
 }
 
 #ifdef WIN32
-QString PythonVersionChecker::getPythonHome() {
+QString tlp::PythonVersionChecker::getPythonHome() {
   if (isPythonVersionMatching()) {
     QString pythonHomeDir = pythonHome(compiledVersion());
 // This is a hack for MinGW to allow the debugging of Tulip through GDB when compiled with Python

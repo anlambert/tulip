@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -43,8 +43,7 @@ namespace tlp {
 
 PLUGIN(ScatterPlot2DView)
 
-class map_pair_string_key_contains
-    : public unary_function<pair<pair<string, string>, ScatterPlot2D *>, bool> {
+class map_pair_string_key_contains {
 
 public:
   map_pair_string_key_contains(const string &pairValueToFind) : pairValueToFind(pairValueToFind) {}

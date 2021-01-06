@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -110,13 +110,13 @@ PixelOrientedOverview::~PixelOrientedOverview() {
   reset(true);
 }
 
-struct NodeCoordXOrdering : public binary_function<pair<node, Coord>, pair<node, Coord>, bool> {
+struct NodeCoordXOrdering {
   bool operator()(pair<node, Coord> p1, pair<node, Coord> p2) {
     return p1.second.getX() < p2.second.getX();
   }
 };
 
-struct NodeCoordYOrdering : public binary_function<pair<node, Coord>, pair<node, Coord>, bool> {
+struct NodeCoordYOrdering {
   bool operator()(pair<node, Coord> p1, pair<node, Coord> p2) {
     return p1.second.getY() > p2.second.getY();
   }

@@ -60,9 +60,9 @@ Talipot can be easily compiled on every supported platforms. However, that proce
 The following dependencies are required to build Talipot:
 
   * [CMake](https://cmake.org) >= 3.1
-  * A [C++11](https://en.wikipedia.org/wiki/C%2B%2B11) compiler : [GCC](https://gcc.gnu.org) >= 4.8.1,
-  [Clang](https://clang.llvm.org) >= 3.3 or
-  [Microsoft Visual Studio](https://www.visualstudio.com) >= 2013
+  * A [C++17](https://en.wikipedia.org/wiki/C%2B%2B17) compiler : [GCC](https://gcc.gnu.org) >= 8
+  [Clang](https://clang.llvm.org) >= 5 or
+  [Microsoft Visual Studio](https://www.visualstudio.com) >= 2017
   * [FreeType](https://www.freetype.org)
   * [Fontconfig](https://www.freedesktop.org/wiki/Software/fontconfig/)
   * [zlib](https://zlib.net)

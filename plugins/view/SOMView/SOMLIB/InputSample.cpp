@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -12,9 +12,12 @@
  */
 
 #include <algorithm>
-#include "InputSample.h"
+
 #include <talipot/Iterator.h>
 #include <talipot/StlIterator.h>
+#include <talipot/TlpTools.h>
+
+#include "InputSample.h"
 
 using namespace std;
 using namespace tlp;
@@ -303,7 +306,7 @@ tlp::Iterator<tlp::node> *InputSample::getNodes() {
 tlp::Iterator<tlp::node> *InputSample::getRandomNodeOrder() {
   if (rootGraph) {
     randomVector = rootGraph->nodes();
-    random_shuffle(randomVector.begin(), randomVector.end());
+    shuffle(randomVector.begin(), randomVector.end(), getRandomNumberGenerator());
 
     return stlIterator(randomVector);
   } else {

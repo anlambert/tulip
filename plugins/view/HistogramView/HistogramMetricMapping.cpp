@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -41,7 +41,7 @@ std::string getStringFromNumber(T number, unsigned int precision = 5) {
 
 namespace tlp {
 
-struct CoordXOrdering : public binary_function<Coord, Coord, bool> {
+struct CoordXOrdering {
   bool operator()(Coord c1, Coord c2) {
     return c1.getX() < c2.getX();
   }

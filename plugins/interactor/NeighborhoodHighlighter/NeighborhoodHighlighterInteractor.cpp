@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -80,7 +80,7 @@ private:
   LayoutProperty *srcLayout, *destLayout, *viewLayout;
 };
 
-class NeighborNodesEdgeLengthOrdering : public binary_function<node, node, bool> {
+class NeighborNodesEdgeLengthOrdering {
 
 public:
   NeighborNodesEdgeLengthOrdering(node centralNode, LayoutProperty *layout)
