@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -86,7 +86,7 @@ bool MouseEdgeBuilder::eventFilter(QObject *widget, QEvent *e) {
       return true;
     }
 
-    if (qMouseEv->buttons() == Qt::MidButton) {
+    if (qMouseEv->buttons() == Qt::MiddleButton) {
       _bends.clear();
       _started = false;
       _source = node();

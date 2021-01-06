@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2020  The Talipot developers
+ * Copyright (C) 2020-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -35,13 +35,11 @@ static QString currentGuiTheme;
 static QPalette darkPalette() {
   QPalette palette;
   palette.setColor(QPalette::Active, QPalette::AlternateBase, "#303030");
-  palette.setColor(QPalette::Active, QPalette::Background, "#302f2f");
   palette.setColor(QPalette::Active, QPalette::Base, "#201f1f");
   palette.setColor(QPalette::Active, QPalette::BrightText, "#ffffff");
   palette.setColor(QPalette::Active, QPalette::Button, "#403f3e");
   palette.setColor(QPalette::Active, QPalette::ButtonText, "#e8e6e3");
   palette.setColor(QPalette::Active, QPalette::Dark, "#1c1b1b");
-  palette.setColor(QPalette::Active, QPalette::Foreground, "#e0dedb");
   palette.setColor(QPalette::Active, QPalette::Highlight, "#184880");
   palette.setColor(QPalette::Active, QPalette::HighlightedText, "#ffffff");
   palette.setColor(QPalette::Active, QPalette::Light, "#484646");
@@ -56,13 +54,11 @@ static QPalette darkPalette() {
   palette.setColor(QPalette::Active, QPalette::Window, "#302f2f");
   palette.setColor(QPalette::Active, QPalette::WindowText, "#e0dedb");
   palette.setColor(QPalette::Disabled, QPalette::AlternateBase, "#1f1e1e");
-  palette.setColor(QPalette::Disabled, QPalette::Background, "#2a2929");
   palette.setColor(QPalette::Disabled, QPalette::Base, "#1c1b1b");
   palette.setColor(QPalette::Disabled, QPalette::BrightText, "#ffffff");
   palette.setColor(QPalette::Disabled, QPalette::Button, "#383736");
   palette.setColor(QPalette::Disabled, QPalette::ButtonText, "#6c6a69");
   palette.setColor(QPalette::Disabled, QPalette::Dark, "#181818");
-  palette.setColor(QPalette::Disabled, QPalette::Foreground, "#605f5e");
   palette.setColor(QPalette::Disabled, QPalette::Highlight, "#2a2929");
   palette.setColor(QPalette::Disabled, QPalette::HighlightedText, "#605f5e");
   palette.setColor(QPalette::Disabled, QPalette::Light, "#434242");
@@ -77,13 +73,11 @@ static QPalette darkPalette() {
   palette.setColor(QPalette::Disabled, QPalette::Window, "#2a2929");
   palette.setColor(QPalette::Disabled, QPalette::WindowText, "#605f5e");
   palette.setColor(QPalette::Inactive, QPalette::AlternateBase, "#303030");
-  palette.setColor(QPalette::Inactive, QPalette::Background, "#302f2f");
   palette.setColor(QPalette::Inactive, QPalette::Base, "#201f1f");
   palette.setColor(QPalette::Inactive, QPalette::BrightText, "#ffffff");
   palette.setColor(QPalette::Inactive, QPalette::Button, "#403f3e");
   palette.setColor(QPalette::Inactive, QPalette::ButtonText, "#e8e6e3");
   palette.setColor(QPalette::Inactive, QPalette::Dark, "#1c1b1b");
-  palette.setColor(QPalette::Inactive, QPalette::Foreground, "#e0dedb");
   palette.setColor(QPalette::Inactive, QPalette::Highlight, "#19395f");
   palette.setColor(QPalette::Inactive, QPalette::HighlightedText, "#e0dedb");
   palette.setColor(QPalette::Inactive, QPalette::Light, "#484646");
@@ -98,13 +92,11 @@ static QPalette darkPalette() {
   palette.setColor(QPalette::Inactive, QPalette::Window, "#302f2f");
   palette.setColor(QPalette::Inactive, QPalette::WindowText, "#e0dedb");
   palette.setColor(QPalette::Normal, QPalette::AlternateBase, "#303030");
-  palette.setColor(QPalette::Normal, QPalette::Background, "#302f2f");
   palette.setColor(QPalette::Normal, QPalette::Base, "#201f1f");
   palette.setColor(QPalette::Normal, QPalette::BrightText, "#ffffff");
   palette.setColor(QPalette::Normal, QPalette::Button, "#403f3e");
   palette.setColor(QPalette::Normal, QPalette::ButtonText, "#e8e6e3");
   palette.setColor(QPalette::Normal, QPalette::Dark, "#1c1b1b");
-  palette.setColor(QPalette::Normal, QPalette::Foreground, "#e0dedb");
   palette.setColor(QPalette::Normal, QPalette::Highlight, "#184880");
   palette.setColor(QPalette::Normal, QPalette::HighlightedText, "#ffffff");
   palette.setColor(QPalette::Normal, QPalette::Light, "#484646");
@@ -124,13 +116,11 @@ static QPalette darkPalette() {
 static QPalette lightPalette() {
   QPalette palette;
   palette.setColor(QPalette::Active, QPalette::AlternateBase, "#f8f7f6");
-  palette.setColor(QPalette::Active, QPalette::Background, "#eff0f1");
   palette.setColor(QPalette::Active, QPalette::Base, "#fcfcfc");
   palette.setColor(QPalette::Active, QPalette::BrightText, "#ffffff");
   palette.setColor(QPalette::Active, QPalette::Button, "#eff0f1");
   palette.setColor(QPalette::Active, QPalette::ButtonText, "#31363b");
   palette.setColor(QPalette::Active, QPalette::Dark, "#888e93");
-  palette.setColor(QPalette::Active, QPalette::Foreground, "#31363b");
   palette.setColor(QPalette::Active, QPalette::Highlight, "#3daee9");
   palette.setColor(QPalette::Active, QPalette::HighlightedText, "#fcfcfc");
   palette.setColor(QPalette::Active, QPalette::Light, "#ffffff");
@@ -145,13 +135,11 @@ static QPalette lightPalette() {
   palette.setColor(QPalette::Active, QPalette::Window, "#eff0f1");
   palette.setColor(QPalette::Active, QPalette::WindowText, "#31363b");
   palette.setColor(QPalette::Disabled, QPalette::AlternateBase, "#eeece9");
-  palette.setColor(QPalette::Disabled, QPalette::Background, "#e3e5e7");
   palette.setColor(QPalette::Disabled, QPalette::Base, "#f1f1f1");
   palette.setColor(QPalette::Disabled, QPalette::BrightText, "#ffffff");
   palette.setColor(QPalette::Disabled, QPalette::Button, "#e3e5e7");
   palette.setColor(QPalette::Disabled, QPalette::ButtonText, "#a5a7a9");
   palette.setColor(QPalette::Disabled, QPalette::Dark, "#82878c");
-  palette.setColor(QPalette::Disabled, QPalette::Foreground, "#a5a7a9");
   palette.setColor(QPalette::Disabled, QPalette::Highlight, "#e3e5e7");
   palette.setColor(QPalette::Disabled, QPalette::HighlightedText, "#a5a7a9");
   palette.setColor(QPalette::Disabled, QPalette::Light, "#ffffff");
@@ -166,13 +154,11 @@ static QPalette lightPalette() {
   palette.setColor(QPalette::Disabled, QPalette::Window, "#e3e5e7");
   palette.setColor(QPalette::Disabled, QPalette::WindowText, "#a5a7a9");
   palette.setColor(QPalette::Inactive, QPalette::AlternateBase, "#f8f7f6");
-  palette.setColor(QPalette::Inactive, QPalette::Background, "#eff0f1");
   palette.setColor(QPalette::Inactive, QPalette::Base, "#fcfcfc");
   palette.setColor(QPalette::Inactive, QPalette::BrightText, "#ffffff");
   palette.setColor(QPalette::Inactive, QPalette::Button, "#eff0f1");
   palette.setColor(QPalette::Inactive, QPalette::ButtonText, "#31363b");
   palette.setColor(QPalette::Inactive, QPalette::Dark, "#888e93");
-  palette.setColor(QPalette::Inactive, QPalette::Foreground, "#31363b");
   palette.setColor(QPalette::Inactive, QPalette::Highlight, "#c2e0f5");
   palette.setColor(QPalette::Inactive, QPalette::HighlightedText, "#31363b");
   palette.setColor(QPalette::Inactive, QPalette::Light, "#ffffff");
@@ -187,13 +173,12 @@ static QPalette lightPalette() {
   palette.setColor(QPalette::Inactive, QPalette::Window, "#eff0f1");
   palette.setColor(QPalette::Inactive, QPalette::WindowText, "#31363b");
   palette.setColor(QPalette::Normal, QPalette::AlternateBase, "#f8f7f6");
-  palette.setColor(QPalette::Normal, QPalette::Background, "#eff0f1");
+
   palette.setColor(QPalette::Normal, QPalette::Base, "#fcfcfc");
   palette.setColor(QPalette::Normal, QPalette::BrightText, "#ffffff");
   palette.setColor(QPalette::Normal, QPalette::Button, "#eff0f1");
   palette.setColor(QPalette::Normal, QPalette::ButtonText, "#31363b");
   palette.setColor(QPalette::Normal, QPalette::Dark, "#888e93");
-  palette.setColor(QPalette::Normal, QPalette::Foreground, "#31363b");
   palette.setColor(QPalette::Normal, QPalette::Highlight, "#3daee9");
   palette.setColor(QPalette::Normal, QPalette::HighlightedText, "#fcfcfc");
   palette.setColor(QPalette::Normal, QPalette::Light, "#ffffff");
