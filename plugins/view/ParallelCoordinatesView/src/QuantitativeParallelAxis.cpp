@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -164,7 +164,6 @@ void QuantitativeParallelAxis::computeBoxPlotCoords() {
 
     double highBorder = (thirdQuartile + (1.5 * (thirdQuartile - firstQuartile)));
     double topOutlier = 0;
-    vector<double>::reverse_iterator itr;
 
     for (auto v : reversed(propertyValuesVector)) {
       if (v < highBorder) {

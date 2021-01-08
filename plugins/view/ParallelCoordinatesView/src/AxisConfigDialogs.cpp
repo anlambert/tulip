@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -165,7 +165,6 @@ NominalAxisConfigDialog::NominalAxisConfigDialog(NominalParallelAxis *axis)
   dialogLayout->addLayout(okButtonLayout);
 
   vector<string> labelsOrder = axis->getLabelsOrder();
-  vector<string>::reverse_iterator it;
 
   for (auto l : reversed(labelsOrder)) {
     axisLabelsOrder->addItem(tlpStringToQString(l));
@@ -234,8 +233,6 @@ void NominalAxisConfigDialog::pressButtonLexOrder() {
       axisLabelsOrder->addItem(tlpStringToQString(l));
     }
   } else {
-    vector<string>::reverse_iterator it;
-
     for (auto l : reversed(labelsOrder)) {
       axisLabelsOrder->addItem(tlpStringToQString(l));
     }
