@@ -18,7 +18,6 @@
 #include <sstream>
 #include <clocale>
 #include <cerrno>
-#include <chrono>
 
 #ifndef _WIN32
 #include <unistd.h>
@@ -350,13 +349,7 @@ unsigned int tlp::getSeedOfRandomSequence() {
 void tlp::initRandomSequence() {
   // init seed from random sequence with std::random_device
   if (randomSeed == UINT_MAX) {
-#ifndef __MINGW32__
     mt.seed(rd());
-#else
-    // std::random_device implementation is deterministic in MinGW so initialize seed with current
-    // time (microsecond precision)
-    mt.seed(uint(std::chrono::high_resolution_clock::now().time_since_epoch().count()));
-#endif
   } else {
     mt.seed(randomSeed);
   }
