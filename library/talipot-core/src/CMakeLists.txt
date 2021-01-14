@@ -111,7 +111,6 @@ INCLUDE_DIRECTORIES(
   ${YAJL_INCLUDE_DIRS}
   ${QHULL_INCLUDE_DIRS}
   ${GZStreamInclude}
-  ${UTF8CppInclude}
   ${Zstd_INCLUDE_DIRS}
   ${ZstdStreamInclude})
 

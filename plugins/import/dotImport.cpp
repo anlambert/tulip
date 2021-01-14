@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -13,7 +13,10 @@
 
 #include <cstring>
 #include <cerrno>
+
 #include <talipot/PluginHeaders.h>
+#include <talipot/TlpTools.h>
+
 #include "dotImportCLUT.h"
 
 using namespace std;
@@ -21,7 +24,6 @@ using namespace tlp;
 
 #ifdef _WIN32
 #define uint unsigned int
-#include <utf8.h>
 #endif
 
 #ifdef __GNUC__
@@ -81,7 +83,7 @@ public:
 #ifndef WIN32
     FILE *fd = fopen(fn.c_str(), "r");
 #else
-    std::u16string wfn = utf8::utf8to16(fn);
+    std::wstring wfn = utf8to16(fn);
     FILE *fd = _wfopen(reinterpret_cast<const wchar_t *>(wfn.c_str()), L"r");
 #endif
 

@@ -310,7 +310,6 @@ SET(OGDFLibrary OGDF-talipot-${TalipotMMVersion})
 SET(VPSCInclude ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/)
 SET(VPSCLibrary vpsc)
 
-SET(UTF8CppInclude ${PROJECT_SOURCE_DIR}/thirdparty/utf8-cpp)
 SET(StbInclude ${PROJECT_SOURCE_DIR}/thirdparty/stb)
 
 SET(TalipotCoreInclude ${PROJECT_SOURCE_DIR}/library/talipot-core/include/)

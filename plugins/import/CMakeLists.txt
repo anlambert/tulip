@@ -1,9 +1,8 @@
 ADD_SUBDIRECTORY(SocialNetwork)
 ADD_SUBDIRECTORY(BibTeX)
 
-INCLUDE_DIRECTORIES(
-  ${CMAKE_CURRENT_SOURCE_DIR} ${TalipotCoreBuildInclude} ${TalipotCoreInclude}
-  ${TalipotGUIInclude} ${UTF8CppInclude})
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR} ${TalipotCoreBuildInclude}
+                    ${TalipotCoreInclude} ${TalipotGUIInclude})
 
 # ------------------------------------------------------------------------------
 TALIPOT_ADD_PLUGIN(

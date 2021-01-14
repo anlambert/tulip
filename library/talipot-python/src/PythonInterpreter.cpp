@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -21,8 +21,6 @@
 #include "ConsoleHandlers.h"
 
 #include <sstream>
-#include <locale>
-#include <codecvt>
 #include <string>
 
 #include <QMessageBox>
@@ -90,11 +88,6 @@ def printObjectClass(obj):
             type = type + obj.__class__.__name__
         print(type)
 )";
-
-std::wstring stringToWString(const std::string &s) {
-  std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-  return converter.from_bytes(s);
-}
 
 static bool scriptPaused = false;
 static bool processQtEvents = false;
@@ -236,7 +229,7 @@ PythonInterpreter::PythonInterpreter()
     // Adjust Python home when Talipot has been installed through a Windows installer,
     // in order to locate standard library
     static const std::string tlpPythonHome = tlp::TalipotLibDir + "/..";
-    static const std::wstring tlpPythonHomeW = stringToWString(tlpPythonHome);
+    static const std::wstring tlpPythonHomeW = utf8to16(tlpPythonHome);
     if (QDir(tlpStringToQString(tlpPythonHome) + "/lib/python" + _pythonVersion).exists() ||
         QDir(tlpStringToQString(tlpPythonHome) + "/DLLs").exists()) {
       Py_SetPythonHome(const_cast<wchar_t *>(tlpPythonHomeW.c_str()));

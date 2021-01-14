@@ -228,5 +228,9 @@ TLP_SCOPE std::istream *getZstdInputFileStream(const std::string &filename);
 TLP_SCOPE std::ostream *getZstdOutputFileStream(const std::string &filename,
                                                 int compressionLevel = 3);
 
+TLP_SCOPE std::string utf32to8(const std::u32string &s);
+
+TLP_SCOPE std::wstring utf8to16(const std::string &s);
+
 }
 #endif // TALIPOT_TLP_TOOLS_H

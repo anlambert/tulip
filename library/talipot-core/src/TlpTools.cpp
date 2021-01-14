@@ -18,6 +18,8 @@
 #include <sstream>
 #include <clocale>
 #include <cerrno>
+#include <locale>
+#include <codecvt>
 
 #ifndef _WIN32
 #include <unistd.h>
@@ -25,9 +27,6 @@
 
 #ifdef _WIN32
 #include <windows.h>
-#include <utf8.h>
-#include <codecvt>
-#include <locale>
 #include <filesystem>
 #ifdef _MSC_VER
 #include <dbghelp.h>
@@ -320,14 +319,6 @@ std::string tlp::demangleClassName(const char *className, bool) {
 
 #endif // __EMSCRIPTEN__
 
-#ifdef _WIN32
-static std::wstring u16stringToWstring(const std::u16string &s) {
-  static std::wstring_convert<std::codecvt_utf16<wchar_t, 0x10ffff, little_endian>, wchar_t> conv;
-  return conv.from_bytes(reinterpret_cast<const char *>(&s[0]),
-                         reinterpret_cast<const char *>(&s[0] + s.size()));
-}
-#endif
-
 // random sequence management
 //=========================================================
 
@@ -392,7 +383,7 @@ int tlp::statPath(const std::string &pathname, tlp_stat_t *buf) {
 #ifndef WIN32
   return stat(pathname.c_str(), buf);
 #else
-  std::wstring utf16pathname = u16stringToWstring(utf8::utf8to16(pathname));
+  std::wstring utf16pathname = utf8to16(pathname);
   return _wstat(utf16pathname.c_str(), buf);
 #endif
 }
@@ -427,7 +418,7 @@ std::ostream *tlp::getOutputFileStream(const std::string &filename, std::ios_bas
 
 std::istream *tlp::getZlibInputFileStream(const std::string &filename) {
 #if defined(WIN32) && ZLIB_VERNUM >= 0x1270
-  std::wstring utf16filename = u16stringToWstring(utf8::utf8to16(filename));
+  std::wstring utf16filename = utf8to16(filename);
   return new igzstream(utf16filename.c_str(), ios::in | ios::binary);
 #else
   return new igzstream(filename.c_str(), ios::in | ios::binary);
@@ -438,7 +429,7 @@ std::istream *tlp::getZlibInputFileStream(const std::string &filename) {
 
 std::ostream *tlp::getZlibOutputFileStream(const std::string &filename) {
 #if defined(WIN32) && ZLIB_VERNUM >= 0x1270
-  std::wstring utf16filename = u16stringToWstring(utf8::utf8to16(filename));
+  std::wstring utf16filename = utf8to16(filename);
   return new ogzstream(utf16filename.c_str(), ios::out | ios::binary);
 #else
   return new ogzstream(filename.c_str(), ios::out | ios::binary);
@@ -455,4 +446,18 @@ std::istream *tlp::getZstdInputFileStream(const std::string &filename) {
 
 std::ostream *tlp::getZstdOutputFileStream(const std::string &filename, int compressionLevel) {
   return new zstd::ZstdOStream(getOutputFileStream(filename), compressionLevel);
+}
+
+//=========================================================
+
+string tlp::utf32to8(const u32string &s) {
+  wstring_convert<codecvt_utf8<char32_t>, char32_t> conv;
+  return conv.to_bytes(s);
+}
+
+//=========================================================
+
+wstring tlp::utf8to16(const string &s) {
+  wstring_convert<codecvt_utf8_utf16<wchar_t>, wchar_t> conv;
+  return conv.from_bytes(s);
 }
