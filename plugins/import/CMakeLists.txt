@@ -1,5 +1,6 @@
 ADD_SUBDIRECTORY(SocialNetwork)
 ADD_SUBDIRECTORY(BibTeX)
+ADD_SUBDIRECTORY(Graphviz)
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR} ${TalipotCoreBuildInclude}
                     ${TalipotCoreInclude} ${TalipotGUIInclude})
@@ -20,16 +21,6 @@ TALIPOT_ADD_PLUGIN(
   PlanarGraph
   SRCS
   PlanarGraph.cpp
-  LINKS
-  ${LibTalipotCoreName}
-  INSTALL_DIR
-  ${TalipotPluginsInstallDir})
-# ------------------------------------------------------------------------------
-TALIPOT_ADD_PLUGIN(
-  NAME
-  DotImport
-  SRCS
-  dotImport.cpp
   LINKS
   ${LibTalipotCoreName}
   INSTALL_DIR

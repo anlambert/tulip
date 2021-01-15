@@ -23,6 +23,7 @@ jobs:
           qhull
           yajl
           zstd
+          graphviz
           python3
           cppunit
           pkg-config

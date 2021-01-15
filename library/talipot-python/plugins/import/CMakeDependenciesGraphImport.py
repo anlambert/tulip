@@ -1,4 +1,4 @@
-# Copyright (C) 2019  The Talipot developers
+# Copyright (C) 2019-2021  The Talipot developers
 #
 # Talipot is a fork of Tulip, created by David Auber
 # and the Tulip development Team from LaBRI, University of Bordeaux
@@ -132,10 +132,10 @@ class CMakeDependenciesGraphImport(tlp.ImportModule):
                 return False
 
         # import the dot file in Talipot trough the graphviz import plugin
-        dotImportParams = tlp.getDefaultPluginParameters('graphviz',
+        dotImportParams = tlp.getDefaultPluginParameters('Graphviz',
                                                          self.graph)
         dotImportParams['filename'] = cmakeProjectDotFilePath
-        tlp.importGraph("graphviz", dotImportParams, self.graph)
+        tlp.importGraph('Graphviz', dotImportParams, self.graph)
 
         # set some visual attributes to the imported graph
         self.graph['viewSize'].setAllNodeValue((1, 1, 1))

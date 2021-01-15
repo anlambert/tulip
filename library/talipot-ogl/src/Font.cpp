@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -137,25 +137,6 @@ const Font &Font::font(const string &fontFamily, const string &fontStyle) {
     }
   }
   return _defaultFont;
-}
-
-static vector<string> tokenize(const string &str, const string &delimiters = " ") {
-  vector<string> tokens;
-  string::size_type lastPos = 0;
-  string::size_type pos = str.find_first_of(delimiters, lastPos);
-
-  while (string::npos != pos || string::npos != lastPos) {
-    tokens.push_back(str.substr(lastPos, pos - lastPos));
-
-    if (pos != string::npos) {
-      lastPos = pos + 1;
-    } else {
-      lastPos = string::npos;
-    }
-
-    pos = str.find_first_of(delimiters, lastPos);
-  }
-  return tokens;
 }
 
 const Font &Font::fromName(const std::string &fontName) {

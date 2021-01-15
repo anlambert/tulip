@@ -13,7 +13,6 @@ CLANG_VERSION=10
 PYTHON_VERSION=3.9
 PYTHON_VERSION_NO_DOT=$(echo $PYTHON_VERSION | sed 's/\.//')
 
-
 # install Talipot core build dependencies
 sudo port -N install \
   cmake \
@@ -23,6 +22,7 @@ sudo port -N install \
   qhull \
   yajl \
   zstd \
+  graphviz \
   python${PYTHON_VERSION_NO_DOT} \
   pkgconfig \
   cppunit

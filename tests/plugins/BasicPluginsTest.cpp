@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -119,14 +119,16 @@ void BasicPluginsTest::testImportGridApproximation() {
   CPPUNIT_ASSERT(g == graph);
 }
 //==========================================================
-void BasicPluginsTest::testImportDot() {
+void BasicPluginsTest::testImportGraphviz() {
   DataSet ds;
   ds.set("file::filename", string("data/toto.dot"));
-  Graph *g = importGraph("graphviz", ds, nullptr, graph);
+  Graph *g = importGraph("Graphviz", ds, nullptr, graph);
   CPPUNIT_ASSERT(g == nullptr);
   ds.set("file::filename", string("data/graph.dot"));
-  g = importGraph("graphviz", ds, nullptr, graph);
+  g = importGraph("Graphviz", ds, nullptr, graph);
   CPPUNIT_ASSERT(g == graph);
+  CPPUNIT_ASSERT_EQUAL(9u, graph->numberOfNodes());
+  CPPUNIT_ASSERT_EQUAL(8u, graph->numberOfEdges());
 }
 //==========================================================
 void BasicPluginsTest::testImportGml() {
