@@ -32,7 +32,8 @@ pacman --noconfirm -S --needed \
   mingw-w64-$MSYS2_ARCH-zlib \
   mingw-w64-$MSYS2_ARCH-yajl \
   mingw-w64-$MSYS2_ARCH-zstd \
-  mingw-w64-$MSYS2_ARCH-qhull
+  mingw-w64-$MSYS2_ARCH-qhull \
+  mingw-w64-$MSYS2_ARCH-graphviz
 
 # Build wheels for each supported Python version
 cd $APPVEYOR_BUILD_FOLDER
@@ -81,7 +82,8 @@ pacman --noconfirm -Rc \
   mingw-w64-$MSYS2_ARCH-zlib \
   mingw-w64-$MSYS2_ARCH-yajl \
   mingw-w64-$MSYS2_ARCH-zstd \
-  mingw-w64-$MSYS2_ARCH-qhull
+  mingw-w64-$MSYS2_ARCH-qhull \
+  mingw-w64-$MSYS2_ARCH-graphviz
 
 for pyVersion in 36 37 38 39
 do

@@ -461,3 +461,24 @@ wstring tlp::utf8to16(const string &s) {
   wstring_convert<codecvt_utf8_utf16<wchar_t>, wchar_t> conv;
   return conv.from_bytes(s);
 }
+
+//=========================================================
+
+vector<string> tlp::tokenize(const string &str, const string &delimiter) {
+  vector<string> tokens;
+  string::size_type lastPos = 0;
+  string::size_type pos = str.find_first_of(delimiter, lastPos);
+
+  while (string::npos != pos || string::npos != lastPos) {
+    tokens.push_back(str.substr(lastPos, pos - lastPos));
+
+    if (pos != string::npos) {
+      lastPos = pos + 1;
+    } else {
+      lastPos = string::npos;
+    }
+
+    pos = str.find_first_of(delimiter, lastPos);
+  }
+  return tokens;
+}

@@ -39,7 +39,8 @@ sudo port -N install \
   qhull \
   yajl \
   zlib \
-  zstd
+  zstd \
+  graphviz
 
 # install Python versions from which to build wheels against
 curl -LO https://www.python.org/ftp/python/3.7.6/python-3.7.6-macosx10.9.pkg

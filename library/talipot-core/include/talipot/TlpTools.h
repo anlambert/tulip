@@ -232,5 +232,8 @@ TLP_SCOPE std::string utf32to8(const std::u32string &s);
 
 TLP_SCOPE std::wstring utf8to16(const std::string &s);
 
+TLP_SCOPE std::vector<std::string> tokenize(const std::string &str,
+                                            const std::string &delimiter = " ");
+
 }
 #endif // TALIPOT_TLP_TOOLS_H

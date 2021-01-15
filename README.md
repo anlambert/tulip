@@ -71,6 +71,7 @@ The following dependencies are required to build Talipot:
   * [OpenGL](https://www.opengl.org) >= 2.0
   * [GLEW](https://github.com/nigels-com/glew) >= 1.4
   * [Qhull](https://github.com/qhull/qhull)
+  * [Graphviz](https://graphviz.org/)
   * [QuaZIP](https://github.com/stachenov/quazip)
   * [yajl](https://lloyd.github.io/yajl) >= 2.0
   * [Python](https://www.python.org) >= 3.0
