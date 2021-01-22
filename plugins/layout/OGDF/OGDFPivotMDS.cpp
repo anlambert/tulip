@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -12,7 +12,6 @@
  */
 
 #include <ogdf/energybased/PivotMDS.h>
-#include <ogdf/packing/ComponentSplitterLayout.h>
 
 #include <talipot/OGDFLayoutPluginBase.h>
 
@@ -37,18 +36,11 @@ public:
                     "multidimensional scaling of large data.",
                     "1.0", "Force Directed")
   OGDFPivotMDS(const tlp::PluginContext *context)
-      : OGDFLayoutPluginBase(context,
-                             tlp::getOGDFLayoutModule<ogdf::ComponentSplitterLayout>(context)),
-        pivotMds(tlp::getOGDFLayoutModule<ogdf::PivotMDS>(context)) {
+      : OGDFLayoutPluginBase(context, tlp::getOGDFLayoutModule<ogdf::PivotMDS>(context)),
+        pivotMds(static_cast<ogdf::PivotMDS *>(ogdfLayoutAlgo)) {
     addInParameter<int>("number of pivots", paramHelp[0], "250", false);
     addInParameter<bool>("use edge costs", paramHelp[1], "false", false);
     addInParameter<double>("edge costs", paramHelp[2], "100", false);
-
-    if (context) {
-      ogdf::ComponentSplitterLayout *csl =
-          static_cast<ogdf::ComponentSplitterLayout *>(ogdfLayoutAlgo);
-      csl->setLayoutModule(pivotMds);
-    }
   }
 
   void beforeCall() override {

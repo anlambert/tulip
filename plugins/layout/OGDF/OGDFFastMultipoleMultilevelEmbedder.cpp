@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -12,7 +12,6 @@
  */
 
 #include <ogdf/energybased/FastMultipoleEmbedder.h>
-#include <ogdf/packing/ComponentSplitterLayout.h>
 #include <ogdf/basic/simple_graph_alg.h>
 
 #include <talipot/SimpleTest.h>
@@ -33,17 +32,11 @@ public:
                     "which utilizes various tools to speed up the computation.",
                     "1.1", "Multilevel")
   OGDFFastMultipoleMultiLevelEmbedder(const tlp::PluginContext *context)
-      : OGDFLayoutPluginBase(context,
-                             tlp::getOGDFLayoutModule<ogdf::ComponentSplitterLayout>(context)),
-        fmme(tlp::getOGDFLayoutModule<ogdf::FastMultipoleMultilevelEmbedder>(context)) {
+      : OGDFLayoutPluginBase(
+            context, tlp::getOGDFLayoutModule<ogdf::FastMultipoleMultilevelEmbedder>(context)),
+        fmme(static_cast<ogdf::FastMultipoleMultilevelEmbedder *>(ogdfLayoutAlgo)) {
     addInParameter<int>("number of threads", paramHelp[0], "2");
     addInParameter<int>("multilevel nodes bound", paramHelp[1], "10");
-    if (context) {
-      ogdf::ComponentSplitterLayout *csl =
-          static_cast<ogdf::ComponentSplitterLayout *>(ogdfLayoutAlgo);
-      // ComponentSplitterLayout takes ownership of the FastMultipoleMultilevelEmbedder instance
-      csl->setLayoutModule(fmme);
-    }
   }
 
   void beforeCall() override {

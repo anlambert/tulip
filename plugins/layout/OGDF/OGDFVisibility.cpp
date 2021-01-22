@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -12,7 +12,6 @@
  */
 
 #include <ogdf/upward/VisibilityLayout.h>
-#include <ogdf/packing/ComponentSplitterLayout.h>
 
 #include <talipot/OGDFLayoutPluginBase.h>
 
@@ -31,17 +30,10 @@ public:
                     "representations (horizontal segments for nodes, vertical segments for edges).",
                     "1.1", "Hierarchical")
   OGDFVisibility(const tlp::PluginContext *context)
-      : OGDFLayoutPluginBase(context,
-                             tlp::getOGDFLayoutModule<ogdf::ComponentSplitterLayout>(context)),
-        visibility(tlp::getOGDFLayoutModule<ogdf::VisibilityLayout>(context)) {
+      : OGDFLayoutPluginBase(context, tlp::getOGDFLayoutModule<ogdf::VisibilityLayout>(context)),
+        visibility(static_cast<ogdf::VisibilityLayout *>(ogdfLayoutAlgo)) {
     addInParameter<int>("minimum grid distance", paramHelp[0], "1");
     addInParameter<bool>("transpose", paramHelp[1], "false");
-    if (context) {
-      ogdf::ComponentSplitterLayout *csl =
-          static_cast<ogdf::ComponentSplitterLayout *>(ogdfLayoutAlgo);
-      // ComponentSplitterLayout takes ownership of the VisibilityLayout instance
-      csl->setLayoutModule(visibility);
-    }
   }
 
   void beforeCall() override {

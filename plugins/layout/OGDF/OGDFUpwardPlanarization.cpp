@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -12,7 +12,6 @@
  */
 
 #include <ogdf/upward/UpwardPlanarizationLayout.h>
-#include <ogdf/packing/ComponentSplitterLayout.h>
 
 #include <talipot/OGDFLayoutPluginBase.h>
 
@@ -30,13 +29,8 @@ public:
                     "1.1", "Hierarchical")
   OGDFUpwardPlanarization(const tlp::PluginContext *context)
       : OGDFLayoutPluginBase(context,
-                             tlp::getOGDFLayoutModule<ogdf::ComponentSplitterLayout>(context)) {
+                             tlp::getOGDFLayoutModule<ogdf::UpwardPlanarizationLayout>(context)) {
     addInParameter<bool>("transpose", paramHelp[0], "false");
-    if (context) {
-      ogdf::ComponentSplitterLayout *csl =
-          static_cast<ogdf::ComponentSplitterLayout *>(ogdfLayoutAlgo);
-      csl->setLayoutModule(new ogdf::UpwardPlanarizationLayout());
-    }
   }
 
   void afterCall() override {

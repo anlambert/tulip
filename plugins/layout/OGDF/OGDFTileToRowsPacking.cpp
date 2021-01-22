@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -11,7 +11,7 @@
  *
  */
 
-#include <ogdf/packing/ComponentSplitterLayout.h>
+#include <ogdf/basic/LayoutModule.h>
 
 #include <talipot/OGDFLayoutPluginBase.h>
 
@@ -28,15 +28,8 @@ public:
                     "The tile-to-rows algorithm for packing drawings of connected components.",
                     "1.0", "Misc")
   OGDFTileToRowsPacking(const tlp::PluginContext *context)
-      : OGDFLayoutPluginBase(context,
-                             tlp::getOGDFLayoutModule<ogdf::ComponentSplitterLayout>(context)) {
-    if (context) {
-      ogdf::ComponentSplitterLayout *csl =
-          static_cast<ogdf::ComponentSplitterLayout *>(ogdfLayoutAlgo);
-      // ComponentSplitterLayout takes ownership of the SameLayout instance
-      csl->setLayoutModule(new SameLayout());
-    }
-  }
+      // OGDFLayoutPluginBase wraps call to ogdf::ComponentSplitterLayout
+      : OGDFLayoutPluginBase(context, tlp::getOGDFLayoutModule<SameLayout>(context)) {}
 };
 
 PLUGIN(OGDFTileToRowsPacking)

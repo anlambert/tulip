@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -19,6 +19,7 @@
 #include <ogdf/basic/Graph_d.h>
 #include <ogdf/basic/GraphAttributes.h>
 #include <ogdf/basic/LayoutModule.h>
+#include <ogdf/packing/ComponentSplitterLayout.h>
 
 #include <vector>
 #include <talipot/DrawingTools.h>
@@ -28,16 +29,21 @@ using namespace tlp;
 
 OGDFLayoutPluginBase::OGDFLayoutPluginBase(const PluginContext *context,
                                            ogdf::LayoutModule *ogdfLayoutAlgo)
-    : LayoutAlgorithm(context), tlpToOGDF(nullptr), ogdfLayoutAlgo(ogdfLayoutAlgo) {
+    : LayoutAlgorithm(context), tlpToOGDF(nullptr), ogdfLayoutAlgo(ogdfLayoutAlgo),
+      componentSplitterLayout(ogdfLayoutAlgo ? new ogdf::ComponentSplitterLayout : nullptr) {
   // convert Tulip Graph to OGDF Graph including attributes
   if (graph) {
     tlpToOGDF = new TalipotToOGDF(graph, false);
+  }
+  if (ogdfLayoutAlgo) {
+    // ComponentSplitterLayout takes ownership of the LayoutModule instance
+    componentSplitterLayout->setLayoutModule(ogdfLayoutAlgo);
   }
 }
 
 OGDFLayoutPluginBase::~OGDFLayoutPluginBase() {
   delete tlpToOGDF;
-  delete ogdfLayoutAlgo;
+  delete componentSplitterLayout;
 }
 
 bool OGDFLayoutPluginBase::run() {
@@ -117,7 +123,7 @@ bool OGDFLayoutPluginBase::run() {
 }
 
 void OGDFLayoutPluginBase::callOGDFLayoutAlgorithm(ogdf::GraphAttributes &gAttributes) {
-  ogdfLayoutAlgo->call(gAttributes);
+  componentSplitterLayout->call(gAttributes);
 }
 
 void OGDFLayoutPluginBase::transposeLayoutVertically() {

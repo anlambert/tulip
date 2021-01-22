@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -12,7 +12,6 @@
  */
 
 #include <ogdf/misclayout/BalloonLayout.h>
-#include <ogdf/packing/ComponentSplitterLayout.h>
 
 #include <talipot/OGDFLayoutPluginBase.h>
 
@@ -30,16 +29,9 @@ public:
                     "Cone Trees</b> by Carriere and Kazman. ",
                     "1.4", "Hierarchical")
   OGDFBalloon(const tlp::PluginContext *context)
-      : OGDFLayoutPluginBase(context,
-                             tlp::getOGDFLayoutModule<ogdf::ComponentSplitterLayout>(context)),
-        balloon(tlp::getOGDFLayoutModule<ogdf::BalloonLayout>(context)) {
+      : OGDFLayoutPluginBase(context, tlp::getOGDFLayoutModule<ogdf::BalloonLayout>(context)),
+        balloon(static_cast<ogdf::BalloonLayout *>(ogdfLayoutAlgo)) {
     addInParameter<bool>("Even angles", paramHelp[0], "false", false);
-    if (context) {
-      ogdf::ComponentSplitterLayout *csl =
-          static_cast<ogdf::ComponentSplitterLayout *>(ogdfLayoutAlgo);
-      // ComponentSplitterLayout takes ownership of the BalloonLayout instance
-      csl->setLayoutModule(balloon);
-    }
   }
 
   void beforeCall() override {

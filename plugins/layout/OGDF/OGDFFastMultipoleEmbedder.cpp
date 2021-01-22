@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -15,7 +15,6 @@
 #include <talipot/OGDFLayoutPluginBase.h>
 
 #include <ogdf/energybased/FastMultipoleEmbedder.h>
-#include <ogdf/packing/ComponentSplitterLayout.h>
 #include <ogdf/basic/simple_graph_alg.h>
 
 static const char *paramHelp[] = {
@@ -47,20 +46,14 @@ public:
                     "1.0", "Force Directed")
   OGDFFastMultipoleEmbedder(const tlp::PluginContext *context)
       : OGDFLayoutPluginBase(context,
-                             tlp::getOGDFLayoutModule<ogdf::ComponentSplitterLayout>(context)),
-        fme(tlp::getOGDFLayoutModule<ogdf::FastMultipoleEmbedder>(context)) {
+                             tlp::getOGDFLayoutModule<ogdf::FastMultipoleEmbedder>(context)),
+        fme(static_cast<ogdf::FastMultipoleEmbedder *>(ogdfLayoutAlgo)) {
     addInParameter<int>("number of iterations", paramHelp[0], "100");
     addInParameter<int>("number of coefficients", paramHelp[1], "5");
     addInParameter<bool>("randomize layout", paramHelp[2], "true");
     addInParameter<double>("default node size", paramHelp[3], "20.0");
     addInParameter<double>("default edge length", paramHelp[4], "1.0");
     addInParameter<int>("number of threads", paramHelp[5], "3");
-    if (context) {
-      ogdf::ComponentSplitterLayout *csl =
-          static_cast<ogdf::ComponentSplitterLayout *>(ogdfLayoutAlgo);
-      // ComponentSplitterLayout takes ownership of the FastMultipoleEmbedder instance
-      csl->setLayoutModule(fme);
-    }
   }
 
   void beforeCall() override {
