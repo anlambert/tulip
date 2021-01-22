@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -62,6 +62,7 @@
 #include <talipot/StableIterator.h>
 #include <talipot/FontIconManager.h>
 #include <talipot/MaterialDesignIcons.h>
+#include <talipot/TreeTest.h>
 
 #include "ui_TalipotMainWindow.h"
 
@@ -822,7 +823,7 @@ void TalipotMainWindow::importGraph(const std::string &module, DataSet &data) {
     // to ensure a correct loading of the associated texture files if any
     QDir::setCurrent(QFileInfo(tlpStringToQString(fileName)).absolutePath());
 
-  applyRandomLayout(g);
+  applyDefaultLayout(g);
   showStartPanels(g);
 }
 
@@ -1411,7 +1412,7 @@ void TalipotMainWindow::CSVImport() {
   } else {
     unsigned int nbLogsAfter = _logger->countByType(TalipotLogger::Error);
     nbLogsAfter += _logger->countByType(TalipotLogger::Warning);
-    applyRandomLayout(g);
+    applyDefaultLayout(g);
     bool openPanels = true;
 
     for (auto v : _ui->workspace->panels()) {
@@ -1475,13 +1476,17 @@ void TalipotMainWindow::showStartPanels(Graph *g) {
   _ui->workspace->switchToSplitHorizontalMode();
 }
 
-void TalipotMainWindow::applyRandomLayout(Graph *g) {
+void TalipotMainWindow::applyDefaultLayout(Graph *g) {
   Observable::holdObservers();
   LayoutProperty *viewLayout = g->getLayoutProperty("viewLayout");
 
   if (!viewLayout->hasNonDefaultValuatedNodes(g)) {
     std::string str;
-    g->applyPropertyAlgorithm("Random layout", viewLayout, str);
+    std::string layoutAlgorithm = "Fast Multipole Multilevel Embedder (OGDF)";
+    if (TreeTest::isTree(g)) {
+      layoutAlgorithm = "Bubble Tree";
+    }
+    g->applyPropertyAlgorithm(layoutAlgorithm, viewLayout, str);
   }
 
   Observable::unholdObservers();
