@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -28,6 +28,8 @@ using namespace std;
 PanelSelectionWizard::PanelSelectionWizard(GraphHierarchiesModel *model, QWidget *parent)
     : QWizard(parent), _ui(new Ui::PanelSelectionWizard), _model(model), _view(nullptr) {
   _ui->setupUi(this);
+  setWizardStyle(QWizard::ClassicStyle);
+
   connect(this, &QWizard::currentIdChanged, this, &PanelSelectionWizard::pageChanged);
   _ui->graphCombo->setModel(_model);
   _ui->graphCombo->selectIndex(_model->indexOf(_model->currentGraph()));

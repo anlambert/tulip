@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -150,6 +150,7 @@ CSVImportWizard::CSVImportWizard(QWidget *parent) : QWizard(parent), ui(new Ui::
   // ensure there is a Cancel button (may be hidden on Mac)
   setOptions(options() & ~QWizard::NoCancelButton);
   ui->setupUi(this);
+  setWizardStyle(QWizard::ClassicStyle);
 }
 
 CSVImportWizard::~CSVImportWizard() {
