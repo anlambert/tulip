@@ -1482,7 +1482,7 @@ void TalipotMainWindow::applyDefaultLayout(Graph *g) {
 
   if (!viewLayout->hasNonDefaultValuatedNodes(g)) {
     std::string str;
-    std::string layoutAlgorithm = "Fast Multipole Multilevel Embedder (OGDF)";
+    std::string layoutAlgorithm = "FM^3 (OGDF)";
     if (TreeTest::isTree(g)) {
       layoutAlgorithm = "Bubble Tree";
     }
