@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -72,7 +72,8 @@ bool ConnectedTest::isConnected(const tlp::Graph *const graph) {
   return instance.resultsBuffer[graph] = result;
 }
 //=================================================================
-void ConnectedTest::makeConnected(Graph *graph, vector<edge> &addedEdges) {
+vector<edge> ConnectedTest::makeConnected(Graph *graph) {
+  vector<edge> addedEdges;
   graph->removeListener(instance);
   instance.resultsBuffer.erase(graph);
   vector<node> toLink;
@@ -83,6 +84,7 @@ void ConnectedTest::makeConnected(Graph *graph, vector<edge> &addedEdges) {
   }
 
   assert(isConnected(graph));
+  return addedEdges;
 }
 //=================================================================
 unsigned int ConnectedTest::numberOfConnectedComponents(const tlp::Graph *const graph) {
@@ -106,8 +108,8 @@ unsigned int ConnectedTest::numberOfConnectedComponents(const tlp::Graph *const 
   return result;
 }
 //======================================================================
-void ConnectedTest::computeConnectedComponents(const tlp::Graph *graph,
-                                               vector<vector<node>> &components) {
+vector<vector<node>> ConnectedTest::computeConnectedComponents(const tlp::Graph *graph) {
+  vector<vector<node>> components;
   NodeStaticProperty<bool> visited(graph);
   visited.setAll(false);
   // do a bfs traversal for each node
@@ -144,6 +146,7 @@ void ConnectedTest::computeConnectedComponents(const tlp::Graph *graph,
       }
     }
   });
+  return components;
 }
 //=================================================================
 void ConnectedTest::connect(const tlp::Graph *const graph, vector<node> &toLink) {

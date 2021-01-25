@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -22,8 +22,7 @@ ConnectedComponent::ConnectedComponent(const tlp::PluginContext *context)
     : DoubleAlgorithm(context) {}
 //======================================================
 bool ConnectedComponent::run() {
-  std::vector<std::vector<node>> components;
-  ConnectedTest::computeConnectedComponents(graph, components);
+  auto components = ConnectedTest::computeConnectedComponents(graph);
 
   // assign the index of each component as value for its nodes
   for (unsigned curComponent = 0; curComponent < components.size(); ++curComponent) {

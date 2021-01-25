@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -190,10 +190,11 @@ bool BiconnectedTest::isBiconnected(const tlp::Graph *graph) {
   return instance.resultsBuffer[graph] = biconnectedTest(graph);
 }
 //=================================================================
-void BiconnectedTest::makeBiconnected(Graph *graph, vector<edge> &addedEdges) {
+vector<edge> BiconnectedTest::makeBiconnected(Graph *graph) {
   graph->removeListener(instance);
   instance.resultsBuffer.erase(graph);
-  ConnectedTest::makeConnected(graph, addedEdges);
+  vector<edge> addedEdges = ConnectedTest::makeConnected(graph);
   makeBiconnectedDFS(graph, addedEdges);
   assert(BiconnectedTest::isBiconnected(graph));
+  return addedEdges;
 }

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -83,8 +83,7 @@ static void dfs(node n, const Graph *sg, deque<node> &st, vector<node> &maxCycle
 //=======================================================================
 static vector<node> findMaxCycle(Graph *graph, PluginProgress *pluginProgress) {
   // compute the connected components's subgraphs
-  std::vector<std::vector<node>> components;
-  ConnectedTest::computeConnectedComponents(graph, components);
+  auto components = ConnectedTest::computeConnectedComponents(graph);
 
   vector<node> max;
   unsigned int nbCalls = 0;

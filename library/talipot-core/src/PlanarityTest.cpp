@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -98,8 +98,7 @@ bool PlanarityTest::isPlanar(Graph *graph) {
   }
 
   Observable::holdObservers();
-  vector<edge> addedEdges;
-  BiconnectedTest::makeBiconnected(graph, addedEdges);
+  vector<edge> addedEdges = BiconnectedTest::makeBiconnected(graph);
   PlanarityTestImpl planarTest(graph);
   instance.resultsBuffer[graph] = planarTest.isPlanar(true);
 
@@ -120,8 +119,7 @@ bool PlanarityTest::planarEmbedding(Graph *graph) {
     return false;
   }
   Observable::holdObservers();
-  vector<edge> addedEdges;
-  BiconnectedTest::makeBiconnected(graph, addedEdges);
+  vector<edge> addedEdges = BiconnectedTest::makeBiconnected(graph);
   PlanarityTestImpl planarTest(graph);
   planarTest.isPlanar(true);
 
@@ -138,9 +136,8 @@ list<edge> PlanarityTest::getObstructionsEdges(Graph *graph) {
     return list<edge>();
   }
 
-  vector<edge> addedEdges;
   Observable::holdObservers();
-  BiconnectedTest::makeBiconnected(graph, addedEdges);
+  vector<edge> addedEdges = BiconnectedTest::makeBiconnected(graph);
   PlanarityTestImpl planarTest(graph);
   planarTest.isPlanar(true);
   list<edge> tmpList = planarTest.getObstructions();

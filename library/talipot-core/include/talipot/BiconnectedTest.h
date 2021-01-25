@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -44,16 +44,15 @@ public:
 
   /**
    * If the graph is not biconnected, adds edges in order to make the graph
-   * biconnected. The new edges are added in addedEdges.
+   * biconnected. The new edges are returned.
    */
   /**
    * @brief Adds edges to make the graph biconnected.
    *
    * @param graph The graph to make biconnected.
-   * @param addedEdges The edges that were added in the process.
-   * @return void
+   * @return The edges that were added in the process.
    **/
-  static void makeBiconnected(Graph *graph, std::vector<edge> &addedEdges);
+  static std::vector<edge> makeBiconnected(Graph *graph);
 };
 }
 

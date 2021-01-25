@@ -40,7 +40,7 @@ between each pair of nodes), :const:`False` otherwise.
 
 //===========================================================================================
 
-  static void makeConnected(tlp::Graph *graph, std::vector<tlp::edge>& addedEdges /Out/);
+  static std::vector<tlp::edge> makeConnected(tlp::Graph *graph);
 %Docstring
 tlp.ConnectedTest.makeConnected(graph)
 
@@ -68,7 +68,7 @@ Returns the number of connected components in the graph.
 
 //===========================================================================================
 
-  static void computeConnectedComponents(tlp::Graph *graph, std::vector<vectorNodes>& components /Out, TypeHint="List[List[tlp.node]]"/) ;
+  static std::vector<vectorNodes> computeConnectedComponents(tlp::Graph *graph) ;
 %Docstring
 tlp.ConnectedTest.computeConnectedComponents(graph)
 

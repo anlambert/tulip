@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -361,9 +361,8 @@ void GEMLayout::arrange() {
 bool GEMLayout::run() {
   if (!ConnectedTest::isConnected(graph)) {
     // for each component draw
-    std::vector<std::vector<node>> components;
     string err;
-    ConnectedTest::computeConnectedComponents(graph, components);
+    auto components = ConnectedTest::computeConnectedComponents(graph);
 
     for (size_t i = 0; i < components.size(); ++i) {
       Graph *tmp = graph;

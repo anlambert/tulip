@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -120,8 +120,7 @@ bool Grip::run() {
     pluginProgress->showStops(false);
   }
 
-  std::vector<std::vector<node>> components;
-  ConnectedTest::computeConnectedComponents(graph, components);
+  auto components = ConnectedTest::computeConnectedComponents(graph);
 
   if (components.size() > 1) {
     for (unsigned int i = 0; i < components.size(); ++i) {

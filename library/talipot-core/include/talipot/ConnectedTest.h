@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -46,10 +46,9 @@ public:
    * @brief If the graph is not connected, adds edges to make it connected.
    *
    * @param graph The graph to make connected.
-   * @param addedEdges The edges that were added to make it connected.
-   * @return void
+   * @return The edges that were added to make it connected.
    **/
-  static void makeConnected(Graph *graph, std::vector<edge> &addedEdges);
+  static std::vector<edge> makeConnected(Graph *graph);
 
   /**
    * @brief Gets the number of connected components in the graph.
@@ -60,18 +59,12 @@ public:
   static unsigned int numberOfConnectedComponents(const Graph *const graph);
 
   /**
-   * @brief Computes the sets of connected components and stores the result in the components
-   *vector.
+   * @brief Computes the set of connected components.
    *
    * @param graph The graph on which to compute connected components.
-   * @param components The components that were found. It is passed as a reference to avoid copying
-   *the data when returning.
-   * @return void
-   * @note The components parameter can be returned with c++11 thanks to move constructors without
-   *performance loss, change this function once c++11 compilers are used.
+   * @return The components that were found as vectors of nodes.
    **/
-  static void computeConnectedComponents(const Graph *graph,
-                                         std::vector<std::vector<node>> &components);
+  static std::vector<std::vector<node>> computeConnectedComponents(const Graph *graph);
 
 private:
   /**

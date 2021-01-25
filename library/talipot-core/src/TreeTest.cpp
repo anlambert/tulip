@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -308,8 +308,7 @@ static Graph *computeTreeInternal(Graph *graph, Graph *rGraph, bool isConnected,
 
   // graph is not connected
   // compute the connected components's subgraphs
-  std::vector<std::vector<node>> components;
-  ConnectedTest::computeConnectedComponents(rGraph, components);
+  auto components = ConnectedTest::computeConnectedComponents(rGraph);
 
   for (unsigned int i = 0; i < components.size(); ++i) {
     rGraph->inducedSubGraph(components[i]);

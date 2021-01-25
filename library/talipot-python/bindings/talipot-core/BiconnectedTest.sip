@@ -34,7 +34,7 @@ to disconnect the graph), :const:`False` otherwise.
 
 //========================================================================================
 
-  static void makeBiconnected(tlp::Graph *graph, std::vector<tlp::edge>& addedEdges /Out/);
+  static std::vector<tlp::edge> makeBiconnected(tlp::Graph *graph);
 %Docstring
 tlp.BiconnectedTest.makeBiconnected(graph)
 

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -958,8 +958,7 @@ void PushPopTest::testTests() {
   CPPUNIT_ASSERT(!ConnectedTest::isConnected(graph));
 
   graph->push();
-  vector<edge> addedEdges;
-  ConnectedTest::makeConnected(graph, addedEdges);
+  vector<edge> addedEdges = ConnectedTest::makeConnected(graph);
   CPPUNIT_ASSERT(ConnectedTest::isConnected(graph));
 
   graph->pop();

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -245,8 +245,7 @@ void TestAlgorithmTest::testConnected() {
   CPPUNIT_ASSERT(ConnectedTest::isConnected(graph));
   graph->delEdge(e);
   CPPUNIT_ASSERT(!ConnectedTest::isConnected(graph));
-  vector<edge> addedEdge;
-  ConnectedTest::makeConnected(graph, addedEdge);
+  vector<edge> addedEdge = ConnectedTest::makeConnected(graph);
   CPPUNIT_ASSERT(ConnectedTest::isConnected(graph));
   CPPUNIT_ASSERT_EQUAL(size_t(1), addedEdge.size());
   graph->delEdge(addedEdge[0]);
@@ -310,8 +309,7 @@ void TestAlgorithmTest::testBiconnected() {
   // Test makeBiconnected
   graph->delEdge(e[6]);
   CPPUNIT_ASSERT(!BiconnectedTest::isBiconnected(graph));
-  vector<edge> addedEdges;
-  BiconnectedTest::makeBiconnected(graph, addedEdges);
+  vector<edge> addedEdges = BiconnectedTest::makeBiconnected(graph);
   CPPUNIT_ASSERT(BiconnectedTest::isBiconnected(graph));
   CPPUNIT_ASSERT(addedEdges.size() == 1);
   graph->delEdge(addedEdges[0]);
@@ -322,8 +320,7 @@ void TestAlgorithmTest::testBiconnected() {
   for (unsigned int i = 0; i < 5; ++i) {
     tmpGraph = tlp_loadGraph(GRAPHPATH + "planar/unbiconnected.tlp");
     CPPUNIT_ASSERT(!BiconnectedTest::isBiconnected(tmpGraph));
-    vector<edge> vEdges;
-    BiconnectedTest::makeBiconnected(tmpGraph, vEdges);
+    vector<edge> vEdges = BiconnectedTest::makeBiconnected(tmpGraph);
     CPPUNIT_ASSERT(BiconnectedTest::isBiconnected(tmpGraph));
 
     for (auto e : vEdges) {

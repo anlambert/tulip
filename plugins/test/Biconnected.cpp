@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -34,8 +34,7 @@ public:
   MakeBiconnected(const tlp::PluginContext *context) : tlp::Algorithm(context) {}
 
   bool run() override {
-    std::vector<tlp::edge> edges;
-    tlp::BiconnectedTest::makeBiconnected(graph, edges);
+    tlp::BiconnectedTest::makeBiconnected(graph);
     return true;
   }
 };

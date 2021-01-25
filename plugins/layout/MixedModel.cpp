@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -111,8 +111,7 @@ bool MixedModel::run() {
   }
 
   // compute the connected components's subgraphs
-  std::vector<std::vector<node>> components;
-  ConnectedTest::computeConnectedComponents(graph, components);
+  auto components = ConnectedTest::computeConnectedComponents(graph);
 
   for (unsigned int i = 0; i < components.size(); ++i) {
     if (pluginProgress->progress(2, 1000) != TLP_CONTINUE) {
@@ -229,7 +228,7 @@ bool MixedModel::run() {
     vector<edge> added_edges;
 
     if (!BiconnectedTest::isBiconnected(G)) {
-      BiconnectedTest::makeBiconnected(G, added_edges);
+      added_edges = BiconnectedTest::makeBiconnected(G);
     }
 
     assert(BiconnectedTest::isBiconnected(G));

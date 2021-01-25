@@ -141,8 +141,7 @@ public:
   }
 
   bool check(std::string &errorMsg) {
-    std::vector<std::vector<tlp::node>> connectedComponents;
-    tlp::ConnectedTest::computeConnectedComponents(graph, connectedComponents);
+    auto connectedComponents = tlp::ConnectedTest::computeConnectedComponents(graph);
     for (const auto &connectedComponent : connectedComponents) {
       auto sg = graph->inducedSubGraph(connectedComponent);
       if (!tlp::TreeTest::isTree(sg)) {
