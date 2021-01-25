@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -36,15 +36,6 @@ public:
       : OGDFLayoutPluginBase(context, tlp::getOGDFLayoutModule<ogdf::DominanceLayout>(context)) {
     addInParameter<int>("minimum grid distance", paramHelp[0], "1");
     addInParameter<bool>("transpose", paramHelp[1], "false");
-  }
-
-  bool check(string &error) override {
-    if (!tlp::ConnectedTest::isConnected(graph)) {
-      error += "graph is not connected";
-      return false;
-    }
-
-    return true;
   }
 
   void beforeCall() override {

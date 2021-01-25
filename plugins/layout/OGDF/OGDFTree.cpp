@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -16,6 +16,7 @@
 #include <talipot/OGDFLayoutPluginBase.h>
 #include <talipot/StringCollection.h>
 #include <talipot/TreeTest.h>
+#include <talipot/ConnectedTest.h>
 
 #define ELT_ORIENTATION "Orientation"
 #define ELT_ORIENTATIONLIST "topToBottom;bottomToTop;leftToRight;rightToLeft"
@@ -140,9 +141,16 @@ public:
   }
 
   bool check(std::string &errorMsg) {
-    if (!tlp::TreeTest::isTree(graph)) {
-      errorMsg = "The graph must be a tree.";
-      return false;
+    std::vector<std::vector<tlp::node>> connectedComponents;
+    tlp::ConnectedTest::computeConnectedComponents(graph, connectedComponents);
+    for (const auto &connectedComponent : connectedComponents) {
+      auto sg = graph->inducedSubGraph(connectedComponent);
+      if (!tlp::TreeTest::isTree(sg)) {
+        graph->delSubGraph(sg);
+        errorMsg = "Each connected component must be a tree.";
+        return false;
+      }
+      graph->delSubGraph(sg);
     }
     return true;
   }
