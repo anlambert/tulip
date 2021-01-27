@@ -40,6 +40,11 @@ IF(NOT MSVC)
   ENDIF(TALIPOT_USE_CCACHE)
 ENDIF(NOT MSVC)
 
+# set minimum macOS version target for produced binaries
+SET(CMAKE_OSX_DEPLOYMENT_TARGET
+    "10.14"
+    CACHE STRING "Minimum OS X deployment version")
+
 PROJECT(talipot)
 
 # ========================================================

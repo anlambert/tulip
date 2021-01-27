@@ -108,5 +108,5 @@ cd "${DEST_DIR}"
 sh "${SRC_DIR}/make_dmg.sh" ${APP_NAME} "@TalipotVersion@" "${DEST_DIR}/application"
 
 # rename dmg if needed
-echo "${APP_NAME}-@TalipotVersion@-macOS-@MACOS_VERSION@.dmg has been correctly generated in ${DEST_DIR}"
-mv ${APP_NAME}-@TalipotVersion@.dmg ${APP_NAME}-@TalipotVersion@-macOS-@MACOS_VERSION@.dmg
+echo "${APP_NAME}-@TalipotVersion@-macOS-@CMAKE_OSX_DEPLOYMENT_TARGET@.dmg has been correctly generated in ${DEST_DIR}"
+mv ${APP_NAME}-@TalipotVersion@.dmg ${APP_NAME}-@TalipotVersion@-macOS-@CMAKE_OSX_DEPLOYMENT_TARGET@.dmg
