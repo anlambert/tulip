@@ -102,9 +102,9 @@ bool TreeTest::isTree(const tlp::Graph *graph) {
 // Determines if a graph is a topological tree.  This means that
 // if the graph was undirected, there would be no cycle
 bool TreeTest::isFreeTree(const tlp::Graph *graph) {
-  node firstNode = graph->getOneNode();
-  return (firstNode.isValid() && isFreeTree(graph, firstNode)) ? ConnectedTest::isConnected(graph)
-                                                               : false;
+  auto nbNodes = graph->numberOfNodes();
+  auto nbEdges = graph->numberOfEdges();
+  return nbNodes && (nbEdges == nbNodes - 1) && ConnectedTest::isConnected(graph);
 }
 //====================================================================
 // simple structure to implement
@@ -122,57 +122,6 @@ struct dfsFreeTreeStruct {
     }
   }
 };
-
-// Determines if the given graph is topologically a tree
-bool TreeTest::isFreeTree(const Graph *graph, node curRoot) {
-  // do a dfs traversal from curRoot;
-  MutableContainer<bool> visited;
-  visited.setAll(false);
-  stack<dfsFreeTreeStruct> dfsLevels;
-  dfsFreeTreeStruct curParams(curRoot, curRoot, graph->getInOutNodes(curRoot));
-  dfsLevels.push(curParams);
-
-  while (!dfsLevels.empty()) {
-    curParams = dfsLevels.top();
-    curRoot = curParams.curRoot;
-    node cameFrom = curParams.cameFrom;
-    Iterator<node> *neighbours = curParams.neighbours;
-    // set neighbours member to nullptr
-    // to avoid twice deletion on exit
-    curParams.neighbours = nullptr;
-
-    if (!neighbours->hasNext()) {
-      dfsLevels.pop();
-    } else {
-      visited.set(curRoot.id, true);
-
-      // loop on remaining neighbours
-      while (neighbours->hasNext()) {
-        node curNode = neighbours->next();
-
-        // check self loop
-        if (curNode == curRoot) {
-          return false;
-        }
-
-        if (curNode != cameFrom) {
-          if (visited.get(curNode.id)) {
-            return false;
-          }
-
-          // go deeper in the dfs exploration
-          curParams.curRoot = curNode;
-          curParams.cameFrom = curRoot;
-          curParams.neighbours = graph->getInOutNodes(curNode);
-          dfsLevels.push(curParams);
-          break;
-        }
-      }
-    }
-  }
-
-  return true;
-}
 //====================================================================
 // simple structure to implement
 // the further makeRootedTree dfs loop
