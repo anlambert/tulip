@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -32,6 +32,8 @@
 namespace tlp {
 extern QString getSipVersion();
 extern QString getTalipotGitRevision();
+extern QString getCppStandard();
+extern QString getCppCompilerInfo();
 }
 
 const QString TalipotRepoUrl = "https://github.com/anlambert/talipot";
@@ -43,25 +45,27 @@ AboutPage::AboutPage(QWidget *parent) : QWidget(parent), _ui(new Ui::AboutPage()
 
   QString title("Talipot ");
   title += TALIPOT_VERSION;
-  QString git_rev(getTalipotGitRevision());
+  QString gitCommit(getTalipotGitRevision());
 
-  if (!git_rev.isEmpty()) {
-    title += "<br/>(Git commit: <a href=\"" + TalipotRepoUrl + "/commit/" + git_rev + "\">" +
-             git_rev.mid(0, 7) + "</a>)";
+  if (!gitCommit.isEmpty()) {
+    title += QString("<br/>(Git commit: <a href=\"%1/commit/%2\">%3</a>)")
+                 .arg(TalipotRepoUrl, gitCommit, gitCommit.mid(0, 7));
   }
 
+  QString titleTemplate = R"(
+<html>
+  <body>
+    <p align="center">
+      <span style="font-size: 24pt; font-weight: 600;">%1</span>
+    </p>
+    <p align="center">
+      <a href="%2">%2</a>
+    </p>
+  </body>
+</html>)";
+
   _ui->logolabel->setPixmap(QPixmap(tlpStringToQString(TalipotBitmapDir + "/logo.png")));
-  _ui->TalipotLabel->setText(
-      "<html>"
-      "  <head/>"
-      "  <body>"
-      "    <p align=\"center\"><span style=\" font-size:24pt; font-weight:600;\">" +
-      title + "</span></p>" +
-      (!git_rev.isEmpty() ? (QString("    <p align=\"center\"><a href=\"") + TalipotRepoUrl +
-                             "\">" + TalipotRepoUrl + "</a></p>")
-                          : QString()) +
-      "  </body>"
-      "</html>");
+  _ui->TalipotLabel->setText(titleTemplate.arg(title, TalipotRepoUrl));
 
   bool openGlOk = GlOffscreenRenderer::instance().getOpenGLContext()->isValid();
 
@@ -69,31 +73,53 @@ AboutPage::AboutPage(QWidget *parent) : QWidget(parent), _ui(new Ui::AboutPage()
     GlOffscreenRenderer::instance().makeOpenGLContextCurrent();
   }
 
-  QString talipotDependenciesInfo =
-      "<p style=\"font-size:12pt\">"
-      "This open source software is powered by:"
-      "<ul>"
-      "  <li> <b> Qt </b> " +
-      tlpStringToQString(qVersion()) +
-      ": <a href=\"https://www.qt.io\">https://www.qt.io</a></li>"
-      "  <li> <b> OpenGL </b> " +
+  QString depInfoTemplate = R"(
+<p style="font-size: 12pt">
+  This free and open-source software is powered by:
+  <ul>
+    <li>
+      <b> C++ </b> %1:
+      <a href="https://www.cplusplus.com/">https://www.cplusplus.com/</a>
+    </li>
+    <li>
+      <b> Qt </b> %2:
+      <a href="https://www.qt.io">https://www.qt.io</a>
+    </li>
+    <li>
+      <b> OpenGL </b> %3:
+      <a href="https://www.opengl.org">https://www.opengl.org</a>
+      <br/>
+      (from vendor %4)
+    </li>
+    <li>
+      <b>OGDF</b> v2020.02 (Catalpa):
+      <a href="http://www.ogdf.net">http://www.ogdf.net</a>
+      <br/>
+      aka the Open Graph Drawing Framework
+    </li>
+    <li>
+      <b> Python </b> %5:
+      <a href="https://www.python.org">https://www.python.org</a>
+    </li>
+    <li>
+      <b> SIP </b> %6:
+      <a href="https://www.riverbankcomputing.com/software/sip/">
+        https://www.riverbankcomputing.com/software/sip
+      </a>
+    </li>
+  </ul>
+</p>
+<p style="font-size: 12pt">
+  It has been compiled with %7.
+</p>
+)";
+
+  QString talipotDependenciesInfo = depInfoTemplate.arg(
+      getCppStandard(), tlpStringToQString(qVersion()),
       (openGlOk ? tlpStringToQString(OpenGlConfigManager::getOpenGLVersionString())
-                : QString("?.?")) +
-      " (from vendor " +
-      (openGlOk ? tlpStringToQString(OpenGlConfigManager::getOpenGLVendor()) : QString("unknown")) +
-      "): <a href=\"https://www.opengl.org\">https://www.opengl.org</a> </li>"
-      "  <li> <b>OGDF</b> v2020.02 (Catalpa) aka the Open Graph Drawing Framework : <a "
-      "href=\"http://www.ogdf.net\">http://www.ogdf.net</a> </li>"
-      "  <li> <b> Python </b> " +
-      PythonVersionChecker::compiledVersion() +
-      ": <a href=\"https://www.python.org\">https://www.python.org</a> </li>"
-      "  <li> <b> SIP </b> " +
-      getSipVersion() +
-      ": <a "
-      "href=\"https://www.riverbankcomputing.com/software/sip/\">https://"
-      "www.riverbankcomputing.com/software/sip</a> </li>"
-      "</ul>"
-      "</p>";
+                : QString("?.?")),
+      (openGlOk ? tlpStringToQString(OpenGlConfigManager::getOpenGLVendor()) : QString("unknown")),
+      PythonVersionChecker::compiledVersion(), getSipVersion(), getCppCompilerInfo());
 
   if (openGlOk) {
     GlOffscreenRenderer::instance().doneOpenGLContextCurrent();
