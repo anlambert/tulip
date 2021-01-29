@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -54,7 +54,7 @@ AlgorithmRunnerItem::AlgorithmRunnerItem(QString pluginName, QWidget *parent)
   // split pluginName after the second word if needed
   QStringList words = pluginName.split(' ');
   _ui->playButton->setText(pluginName);
-  QString tooltip(QString("Apply '") + pluginName + "'");
+  QString tooltip(QString("Apply <b>") + pluginName + "</b>");
   // initialize parameters only if needed
   _ui->parameters->setVisible(false);
 
@@ -661,4 +661,10 @@ void AlgorithmRunnerItem::initModel() {
     }
     model->setParametersValues(dataSet);
   }
+}
+
+void AlgorithmRunnerItem::elideAlgorithmButtonText(int containerWidth) {
+  int maxWidth = int(0.5 * containerWidth);
+  auto fm = fontMetrics();
+  _ui->playButton->setText(fm.elidedText(name(), Qt::ElideMiddle, maxWidth));
 }
