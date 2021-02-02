@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -30,211 +30,212 @@
 
 using namespace std;
 
-// clang-format off
+static const string outlineExtrusionVertexShaderSrc = R"(#version 120
+attribute float indice;
 
-static const string outlineExtrusionVertexShaderSrc =
-  "#version 120\n"
-  "attribute float indice;"
+void main() {
+  gl_Position = vec4(gl_Vertex.xyz, indice);
+  gl_FrontColor = gl_Color;
+}
 
-  "void main() {"
-  "	gl_Position = vec4(gl_Vertex.xyz, indice);"
-  "	gl_FrontColor = gl_Color;"
-  "}"
-  ;
+)";
 
-static const string outlineExtrusionGeometryShaderSrc =
-  "#version 120\n"
-  "#extension GL_EXT_geometry_shader4 : enable\n"
+static const string outlineExtrusionGeometryShaderSrc = R"(#version 120
+#extension GL_EXT_geometry_shader4 : enable
 
-  "#define M_PI 3.141592653589793238462643\n"
+#define M_PI 3.141592653589793238462643
 
-  "uniform vec3 firstPoint;"
-  "uniform vec3 secondPoint;"
-  "uniform vec3 lastPoint;"
+uniform vec3 firstPoint;
+uniform vec3 secondPoint;
+uniform vec3 lastPoint;
 
-  "uniform float size;"
-  "uniform int nbVertices;"
-  "uniform int outlinePos;"
-  "uniform float texFactor;"
+uniform float size;
+uniform int nbVertices;
+uniform int outlinePos;
+uniform float texFactor;
 
 
-  "float computeExtrusionAndEmitVertices(vec3 pBefore, vec3 pCurrent, vec3 pAfter, float s, float d) {"
-  "	vec3 u = pBefore - pCurrent;"
-  "	vec3 v = pAfter - pCurrent;"
-  "	vec3 xu = normalize(u);"
-  "	vec3 xv = normalize(v);"
-  "	vec3 bi_xu_xv = normalize(xu+xv);"
-  "	float angle = M_PI - acos((u[0]*v[0]+u[1]*v[1]+u[2]*v[2])/(length(u)*length(v)));"
+float computeExtrusionAndEmitVertices(vec3 pBefore, vec3 pCurrent, vec3 pAfter, float s, float d) {
+  vec3 u = pBefore - pCurrent;
+  vec3 v = pAfter - pCurrent;
+  vec3 xu = normalize(u);
+  vec3 xv = normalize(v);
+  vec3 bi_xu_xv = normalize(xu + xv);
+  float angle = M_PI - acos((u[0] * v[0] +u[1] * v[1] + u[2] * v[2]) / (length(u)*length(v)));
   // Nan check
-  "	if(angle != angle)"
-  "		angle=0.0;"
-  "	float newSize = size/cos(angle/2.0);"
-  "	float dec = 0.0;"
+  if(angle != angle) {
+    angle = 0.0;
+  }
+  float newSize = size / cos(angle / 2.0);
+  float dec = 0.0;
 
-  "	gl_FrontColor = gl_FrontColorIn[1];"
+  gl_FrontColor = gl_FrontColorIn[1];
 
-  "	if (angle < M_PI/2+M_PI/4) {"
-  "		if (cross(xu, xv)[2] > 0) {"
-  "			if (outlinePos <= 1) {"
-  "				gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent + bi_xu_xv * newSize, 1.0);"
-  "			} else {"
-  "				gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);"
-  "			}"
-  "			gl_TexCoord[0].st = vec2((s+d)*texFactor, 0.0);"
-  "			EmitVertex();"
-  "			if (outlinePos == 0) {"
-  "				gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);"
-  "			} else {"
-  "				gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent - bi_xu_xv * newSize, 1.0);"
-  "			}"
-  "			gl_TexCoord[0].st = vec2((s+d)*texFactor, 1.0);"
-  "			EmitVertex();"
-  "		} else {"
-  "			if (outlinePos <= 1) {"
-  "				gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent - bi_xu_xv * newSize, 1.0);"
-  "			} else {"
-  "				gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);"
-  "			}"
-  "			gl_TexCoord[0].st = vec2((s+d)*texFactor, 0.0);"
-  "			EmitVertex();"
-  "			if (outlinePos == 0) {"
-  "				gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);"
-  "			} else {"
-  "				gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent + bi_xu_xv * newSize, 1.0);"
-  "			}"
-  "			gl_TexCoord[0].st = vec2((s+d)*texFactor, 1.0);"
-  "			EmitVertex();"
-  "		}"
-  "	} else {"
-  "		vec3 vectUnit = vec3(-bi_xu_xv[1],bi_xu_xv[0],bi_xu_xv[2]);"
-  "		if (!(newSize > length(u) || newSize> length(v) || abs(angle-M_PI)<1E-5)) {"
-  "			if (cross(xu,xv)[2] > 0) {"
-  "				if (outlinePos <= 1) {"
-  "					gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent + bi_xu_xv * newSize, 1.0);"
-  "				} else {"
-  "					gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);"
-  "				}"
-  "				gl_TexCoord[0].st = vec2((s+d)*texFactor, 0.0);"
-  "				EmitVertex();"
-  "				if (outlinePos == 0) {"
-  "					gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);"
-  "				} else {"
-  "					gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent - vectUnit * size, 1.0);"
-  "				}"
-  "				gl_TexCoord[0].st = vec2((s+d)*texFactor, 1.0);"
-  "				EmitVertex();"
-  "				if (outlinePos <= 1) {"
-  "					gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent + bi_xu_xv * newSize, 1.0);"
-  "				} else {"
-  "					gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);"
-  "				}"
-  "				gl_TexCoord[0].st = vec2((s+d+1.0)*texFactor, 0.0);"
-  "				EmitVertex();"
-  "				if (outlinePos == 0) {"
-  "					gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);"
-  "				} else {"
-  "					gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent + vectUnit * size, 1.0);"
-  "				}"
-  "				gl_TexCoord[0].st = vec2((s+d+1.0)*texFactor, 1.0);"
-  "				EmitVertex();"
-  "				dec = 1.0;"
-  "			} else {"
-  "				if (outlinePos <= 1) {"
-  "					gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent + bi_xu_xv * newSize, 1.0);"
-  "				} else {"
-  "					gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);"
-  "				}"
-  "				gl_TexCoord[0].st = vec2((s+d)*texFactor, 0.0);"
-  "				EmitVertex();"
-  "				if (outlinePos == 0) {"
-  "					gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);"
-  "				} else {"
-  "					gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent + vectUnit * size, 1.0);"
-  "				}"
-  "				gl_TexCoord[0].st = vec2((s+d)*texFactor, 1.0);"
-  "				EmitVertex();"
-  "				if (outlinePos <= 1) {"
-  "					gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent + bi_xu_xv * newSize, 1.0);"
-  "				} else {"
-  "					gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);"
-  "				}"
-  "				gl_TexCoord[0].st = vec2((s+d+1.0)*texFactor, 0.0);"
-  "				EmitVertex();"
-  "				if (outlinePos == 0) {"
-  "					gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);"
-  "				} else {"
-  "					gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent - vectUnit * size, 1.0);"
-  "				}"
-  "				gl_TexCoord[0].st = vec2((s+d+1.0)*texFactor, 1.0);"
-  "				EmitVertex();"
-  "				dec = 1.0;"
-  "			}"
-  "		} else {"
-  "			if (cross(xu,xv)[2] > 0) {"
-  "				if (outlinePos <= 1) {"
-  "					gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent + vectUnit * size, 1.0);"
-  "				} else {"
-  "					gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);"
-  "				}"
-  "				gl_TexCoord[0].st = vec2((s+d)*texFactor, 0.0);"
-  "				EmitVertex();"
-  "				if (outlinePos == 0) {"
-  "					gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);"
-  "				} else {"
-  "					gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent - vectUnit * size, 1.0);"
-  "				}"
-  "				gl_TexCoord[0].st = vec2((s+d)*texFactor, 1.0);"
-  "				EmitVertex();"
-  "			} else {"
-  "				if (outlinePos <= 1) {"
-  "					gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent - vectUnit * size, 1.0);"
-  "				} else {"
-  "					gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);"
-  "				}"
-  "				gl_TexCoord[0].st = vec2((s+d)*texFactor, 1.0);"
-  "				EmitVertex();"
-  "				if (outlinePos == 0) {"
-  "					gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);"
-  "				} else {"
-  "					gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent + vectUnit * size, 1.0);"
-  "				}"
+  if (angle < M_PI / 2 + M_PI / 4) {
+    if (cross(xu, xv)[2] > 0) {
+      if (outlinePos <= 1) {
+        gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent + bi_xu_xv * newSize, 1.0);
+      } else {
+        gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);
+      }
+      gl_TexCoord[0].st = vec2((s + d)*texFactor, 0.0);
+      EmitVertex();
+      if (outlinePos == 0) {
+        gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);
+      } else {
+        gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent - bi_xu_xv * newSize, 1.0);
+      }
+      gl_TexCoord[0].st = vec2((s + d)*texFactor, 1.0);
+      EmitVertex();
+    } else {
+      if (outlinePos <= 1) {
+        gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent - bi_xu_xv * newSize, 1.0);
+      } else {
+        gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);
+      }
+      gl_TexCoord[0].st = vec2((s + d) * texFactor, 0.0);
+      EmitVertex();
+      if (outlinePos == 0) {
+        gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);
+      } else {
+        gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent + bi_xu_xv * newSize, 1.0);
+      }
+      gl_TexCoord[0].st = vec2((s + d) * texFactor, 1.0);
+      EmitVertex();
+    }
+  } else {
+    vec3 vectUnit = vec3(-bi_xu_xv[1], bi_xu_xv[0], bi_xu_xv[2]);
+    if (!(newSize > length(u) || newSize> length(v) || abs(angle - M_PI) < 1E-5)) {
+      if (cross(xu, xv)[2] > 0) {
+        if (outlinePos <= 1) {
+          gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent + bi_xu_xv * newSize, 1.0);
+        } else {
+          gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);
+        }
+        gl_TexCoord[0].st = vec2((s + d) * texFactor, 0.0);
+        EmitVertex();
+        if (outlinePos == 0) {
+          gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);
+        } else {
+          gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent - vectUnit * size, 1.0);
+        }
+        gl_TexCoord[0].st = vec2((s + d) * texFactor, 1.0);
+        EmitVertex();
+        if (outlinePos <= 1) {
+          gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent + bi_xu_xv * newSize, 1.0);
+        } else {
+          gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);
+        }
+        gl_TexCoord[0].st = vec2((s + d + 1.0) * texFactor, 0.0);
+        EmitVertex();
+        if (outlinePos == 0) {
+          gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);
+        } else {
+          gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent + vectUnit * size, 1.0);
+        }
+        gl_TexCoord[0].st = vec2((s + d + 1.0) * texFactor, 1.0);
+        EmitVertex();
+        dec = 1.0;
+      } else {
+        if (outlinePos <= 1) {
+          gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent + bi_xu_xv * newSize, 1.0);
+        } else {
+          gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);
+        }
+        gl_TexCoord[0].st = vec2((s + d) * texFactor, 0.0);
+        EmitVertex();
+        if (outlinePos == 0) {
+          gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);
+        } else {
+          gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent + vectUnit * size, 1.0);
+        }
+        gl_TexCoord[0].st = vec2((s + d) * texFactor, 1.0);
+        EmitVertex();
+        if (outlinePos <= 1) {
+          gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent + bi_xu_xv * newSize, 1.0);
+        } else {
+          gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);
+        }
+        gl_TexCoord[0].st = vec2((s + d + 1.0) * texFactor, 0.0);
+        EmitVertex();
+        if (outlinePos == 0) {
+          gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);
+        } else {
+          gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent - vectUnit * size, 1.0);
+        }
+        gl_TexCoord[0].st = vec2((s + d + 1.0) * texFactor, 1.0);
+        EmitVertex();
+        dec = 1.0;
+      }
+    } else {
+      if (cross(xu, xv)[2] > 0) {
+        if (outlinePos <= 1) {
+          gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent + vectUnit * size, 1.0);
+        } else {
+          gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);
+        }
+        gl_TexCoord[0].st = vec2((s + d) * texFactor, 0.0);
+        EmitVertex();
+        if (outlinePos == 0) {
+          gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);
+        } else {
+          gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent - vectUnit * size, 1.0);
+        }
+        gl_TexCoord[0].st = vec2((s + d) * texFactor, 1.0);
+        EmitVertex();
+      } else {
+        if (outlinePos <= 1) {
+          gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent - vectUnit * size, 1.0);
+        } else {
+          gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);
+        }
+        gl_TexCoord[0].st = vec2((s + d) * texFactor, 1.0);
+        EmitVertex();
+        if (outlinePos == 0) {
+          gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent, 1.0);
+        } else {
+          gl_Position = gl_ModelViewProjectionMatrix * vec4(pCurrent + vectUnit * size, 1.0);
+        }
 
-  "				gl_TexCoord[0].st = vec2((s+d)*texFactor, 0.0);"
-  "				EmitVertex();"
-  "			}"
-  "		}"
-  "	}"
-  "	return dec;"
-  "}"
+        gl_TexCoord[0].st = vec2((s + d) * texFactor, 0.0);
+        EmitVertex();
+      }
+    }
+  }
+  return dec;
+}
 
-  "void main() {"
-  "	vec3 tangent, normal;"
+void main() {
+  vec3 tangent, normal;
 
-  "	gl_TexCoord[0].z = 0.0;"
-  "	gl_TexCoord[0].w = 1.0;"
+  gl_TexCoord[0].z = 0.0;
+  gl_TexCoord[0].w = 1.0;
 
-  "	float dec = 0.0;"
+  float dec = 0.0;
 
-  "	if (int(gl_PositionIn[0].w) == 0) {"
-  "		gl_FrontColor = gl_FrontColorIn[0];"
-  "		dec = computeExtrusionAndEmitVertices(lastPoint, gl_PositionIn[0].xyz, gl_PositionIn[1].xyz, gl_PositionIn[0].w, dec);"
-  "	}"
+  if (int(gl_PositionIn[0].w) == 0) {
+    gl_FrontColor = gl_FrontColorIn[0];
+    dec = computeExtrusionAndEmitVertices(lastPoint, gl_PositionIn[0].xyz, gl_PositionIn[1].xyz,
+                                          gl_PositionIn[0].w, dec);
+  }
 
-  "	dec = computeExtrusionAndEmitVertices(gl_PositionIn[0].xyz, gl_PositionIn[1].xyz, gl_PositionIn[2].xyz, gl_PositionIn[1].w, 0.0);"
-  "	dec = computeExtrusionAndEmitVertices(gl_PositionIn[1].xyz, gl_PositionIn[2].xyz, gl_PositionIn[3].xyz, gl_PositionIn[2].w, dec);"
+  dec = computeExtrusionAndEmitVertices(gl_PositionIn[0].xyz, gl_PositionIn[1].xyz, gl_PositionIn[2].xyz,
+                                        gl_PositionIn[1].w, 0.0);
+  dec = computeExtrusionAndEmitVertices(gl_PositionIn[1].xyz, gl_PositionIn[2].xyz, gl_PositionIn[3].xyz,
+                                        gl_PositionIn[2].w, dec);
 
-  "	if (int(gl_PositionIn[3].w) == (nbVertices - 1)) {"
-  "		gl_FrontColor = gl_FrontColorIn[3];"
-  "		dec = computeExtrusionAndEmitVertices(gl_PositionIn[2].xyz, gl_PositionIn[3].xyz, firstPoint, gl_PositionIn[3].w, dec);"
-  "		dec = computeExtrusionAndEmitVertices(gl_PositionIn[3].xyz, firstPoint, secondPoint, gl_PositionIn[3].w+1, dec);"
+  if (int(gl_PositionIn[3].w) == (nbVertices - 1)) {
+    gl_FrontColor = gl_FrontColorIn[3];
+    dec = computeExtrusionAndEmitVertices(gl_PositionIn[2].xyz, gl_PositionIn[3].xyz, firstPoint,
+                                          gl_PositionIn[3].w, dec);
+    dec = computeExtrusionAndEmitVertices(gl_PositionIn[3].xyz, firstPoint, secondPoint, gl_PositionIn[3].w+1,
+                                          dec);
 
-  "	}"
-  "	EndPrimitive();"
-  "}"
+  }
+  EndPrimitive();
+}
 
-  ;
-
-// clang-format on
+)";
 
 const int nbFloatPerVertex = 5;
 

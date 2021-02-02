@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -27,131 +27,139 @@ using namespace std;
 
 namespace tlp {
 
-// clang-format off
+const string roundedBoxFragmentShaderSrc = R"(#version 120
 
-const string roundedBoxFragmentShaderSrc =
-  "uniform float boxWidth;"
-  "uniform float boxHeight;"
+uniform float boxWidth;
+uniform float boxHeight;
 
-  "uniform bool textureActivated;"
-  "uniform sampler2D texture;"
+uniform bool textureActivated;
+uniform sampler2D texture;
 
-  "void main() {"
-  "	float radius = min(boxWidth / 4.0, boxHeight / 4.0);"
-  "	float sRadius = radius / boxWidth;"
-  "	float tRadius = radius / boxHeight;"
-  "	if (gl_TexCoord[0].s < sRadius && gl_TexCoord[0].t < tRadius) {"
-  "		float dist = distance(vec2(sRadius*boxWidth, tRadius*boxHeight), gl_TexCoord[0].st * vec2(boxWidth, boxHeight));"
-  "		if (dist > radius)"
-  "			discard;"
-  "	}"
-  "	if (gl_TexCoord[0].s > (1.0 - sRadius) && gl_TexCoord[0].t > (1.0 - tRadius)) {"
-  "		float dist = distance(vec2((1.0 - sRadius)*boxWidth, (1.0 - tRadius)*boxHeight), gl_TexCoord[0].st * vec2(boxWidth, boxHeight));"
-  "		if (dist > radius)"
-  "			discard;"
-  "	}"
-  "	if (gl_TexCoord[0].s < sRadius && gl_TexCoord[0].t > (1.0 - tRadius)) {"
-  "		float dist = distance(vec2(sRadius*boxWidth, (1.0 - tRadius)*boxHeight), gl_TexCoord[0].st * vec2(boxWidth, boxHeight));"
-  "		if (dist > radius)"
-  "			discard;"
-  "	}"
-  "	if (gl_TexCoord[0].s > (1.0 - sRadius) && gl_TexCoord[0].t < tRadius) {"
-  "		float dist = distance(vec2((1.0 - sRadius)*boxWidth, tRadius*boxHeight), gl_TexCoord[0].st * vec2(boxWidth, boxHeight));"
-  "		if (dist > radius)"
-  "			discard;"
-  "	} "
-  "	gl_FragColor = gl_Color;"
-  "	if (textureActivated)"
-  "		gl_FragColor *= texture2D(texture, gl_TexCoord[0].st);"
-  "}"
-  ;
+void main() {
+  float radius = min(boxWidth / 4.0, boxHeight / 4.0);
+  float sRadius = radius / boxWidth;
+  float tRadius = radius / boxHeight;
+  if (gl_TexCoord[0].s < sRadius && gl_TexCoord[0].t < tRadius) {
+    float dist = distance(vec2(sRadius*boxWidth, tRadius*boxHeight),
+                          gl_TexCoord[0].st * vec2(boxWidth, boxHeight));
+    if (dist > radius) {
+      discard;
+    }
+  }
+  if (gl_TexCoord[0].s > (1.0 - sRadius) && gl_TexCoord[0].t > (1.0 - tRadius)) {
+    float dist = distance(vec2((1.0 - sRadius)*boxWidth, (1.0 - tRadius)*boxHeight),
+                          gl_TexCoord[0].st * vec2(boxWidth, boxHeight));
+    if (dist > radius) {
+      discard;
+    }
+  }
+  if (gl_TexCoord[0].s < sRadius && gl_TexCoord[0].t > (1.0 - tRadius)) {
+    float dist = distance(vec2(sRadius*boxWidth, (1.0 - tRadius)*boxHeight),
+                          gl_TexCoord[0].st * vec2(boxWidth, boxHeight));
+    if (dist > radius) {
+      discard;
+    }
+  }
+  if (gl_TexCoord[0].s > (1.0 - sRadius) && gl_TexCoord[0].t < tRadius) {
+    float dist = distance(vec2((1.0 - sRadius)*boxWidth, tRadius*boxHeight),
+                          gl_TexCoord[0].st * vec2(boxWidth, boxHeight));
+    if (dist > radius) {
+      discard;
+    }
+  }
+  gl_FragColor = gl_Color;
+  if (textureActivated) {
+    gl_FragColor *= texture2D(texture, gl_TexCoord[0].st);
+  }
+}
 
-const string roundedBoxOutlineVertexShaderSrc =
-  "#version 120\n"
-  "void main() {"
-  "	gl_Position = gl_Vertex;"
-  "	gl_FrontColor = gl_Color;"
-  "}"
-  ;
+)";
 
-const string roundedBoxOutlineGeometryShaderSrc =
-  "#version 120\n"
-  "#extension GL_EXT_geometry_shader4 : enable\n"
-  "#define M_PI 3.141592653589793238462643\n"
+const string roundedBoxOutlineVertexShaderSrc = R"(#version 120
 
-  "uniform float boxWidth;"
-  "uniform float boxHeight;"
+void main() {
+  gl_Position = gl_Vertex;
+  gl_FrontColor = gl_Color;
+}
 
-  "const int steps = 20;"
-  "const float delta = (M_PI/2.0) / float(steps);"
+)";
 
-  "void main() {"
-  "	float radius = min(boxWidth / 4.0, boxHeight / 4.0);"
-  "	float radiusL = radius / boxWidth;"
-  "	float radiusH = radius / boxHeight;"
-  "	float wi = 1.0 - 2*radiusL;"
-  "	float hi = 1.0 - 2*radiusH;"
-  "	vec3 P1 = gl_PositionIn[0].xyz + vec3(radiusL, -radiusH, 0.0);"
-  "	vec3 P2 = P1 + vec3(wi, 0.0, 0.0);"
-  "	vec3 P3 = P2 + vec3(0.0, -hi, 0.0);"
-  "	vec3 P4 = P1 + vec3(0.0, -hi, 0.0);"
+const string roundedBoxOutlineGeometryShaderSrc = R"(#version 120
+#extension GL_EXT_geometry_shader4 : enable
+#define M_PI 3.141592653589793238462643
 
-  "	float w = 0.0;"
-  "	float x = 0.0;"
-  "	float y = 0.0;"
-  "	vec3 p = vec3(0.0);"
+uniform float boxWidth;
+uniform float boxHeight;
 
-  "	gl_FrontColor = gl_FrontColorIn[0];"
-  "	for (int i = 0 ; i < steps; ++i ) {"
-  "		w = delta + float(i) * delta;"
-  "		x = -cos(w);"
-  "		y = sin(w);"
-  "		p = P1 + vec3(x, y, 0.0) * vec3(radiusL, radiusH, 0.0);"
-  "		gl_Position = gl_ModelViewProjectionMatrix * vec4(p, 1.0);"
-  "		EmitVertex();"
-  "	}"
+const int steps = 20;
+const float delta = (M_PI / 2.0) / float(steps);
 
-  "	gl_FrontColor = gl_FrontColorIn[1];"
-  "	for (int i = 0 ; i < steps; ++i ) {"
-  "		w = delta + float(steps - i - 1) * delta;"
-  "		x = cos(w);"
-  "		y = sin(w);"
-  "		p = P2 + vec3(x, y, 0.0) * vec3(radiusL, radiusH, 0.0);"
-  "		gl_Position = gl_ModelViewProjectionMatrix * vec4(p, 1.0);"
-  "		EmitVertex();"
-  "	}"
+void main() {
+  float radius = min(boxWidth / 4.0, boxHeight / 4.0);
+  float radiusL = radius / boxWidth;
+  float radiusH = radius / boxHeight;
+  float wi = 1.0 - 2.0 * radiusL;
+  float hi = 1.0 - 2.0 * radiusH;
+  vec3 P1 = gl_PositionIn[0].xyz + vec3(radiusL, -radiusH, 0.0);
+  vec3 P2 = P1 + vec3(wi, 0.0, 0.0);
+  vec3 P3 = P2 + vec3(0.0, -hi, 0.0);
+  vec3 P4 = P1 + vec3(0.0, -hi, 0.0);
 
-  "	gl_FrontColor = gl_FrontColorIn[2];"
-  "	for (int i = 0 ; i < steps; ++i ) {"
-  "		w = delta + float(i) * delta;"
-  "		x = cos(w);"
-  "		y = -sin(w);"
-  "		p = P3 + vec3(x, y, 0.0) * vec3(radiusL, radiusH, 0.0);"
-  "		gl_Position = gl_ModelViewProjectionMatrix * vec4(p, 1.0);"
-  "		EmitVertex();"
-  "	}"
+  float w = 0.0;
+  float x = 0.0;
+  float y = 0.0;
+  vec3 p = vec3(0.0);
 
-  "	gl_FrontColor = gl_FrontColorIn[3];"
-  "	for (int i = 0 ; i < steps; ++i ) {"
-  "		float w = delta + float(steps - i - 1) * delta;"
-  "		float x = -cos(w);"
-  "		float y = -sin(w);"
-  "		p = P4 + vec3(x, y, 0.0) * vec3(radiusL, radiusH, 0.0);"
-  "		gl_Position = gl_ModelViewProjectionMatrix * vec4(p, 1.0);"
-  "		EmitVertex();"
-  "	}"
+  gl_FrontColor = gl_FrontColorIn[0];
+  for (int i = 0; i < steps; ++i) {
+    w = delta + float(i) * delta;
+    x = -cos(w);
+    y = sin(w);
+    p = P1 + vec3(x, y, 0.0) * vec3(radiusL, radiusH, 0.0);
+    gl_Position = gl_ModelViewProjectionMatrix * vec4(p, 1.0);
+    EmitVertex();
+  }
 
-  "	w = delta;"
-  "	x = -cos(w);"
-  "	y = sin(w);"
+  gl_FrontColor = gl_FrontColorIn[1];
+  for (int i = 0; i < steps; ++i) {
+    w = delta + float(steps - i - 1) * delta;
+    x = cos(w);
+    y = sin(w);
+    p = P2 + vec3(x, y, 0.0) * vec3(radiusL, radiusH, 0.0);
+    gl_Position = gl_ModelViewProjectionMatrix * vec4(p, 1.0);
+    EmitVertex();
+  }
 
-  "	p = P1 + vec3(x, y, 0.0) * vec3(radiusL, radiusH, 0.0);"
-  "	gl_Position = gl_ModelViewProjectionMatrix * vec4(p, 1.0);"
-  "	EmitVertex();"
-  "}"
-  ;
+  gl_FrontColor = gl_FrontColorIn[2];
+  for (int i = 0; i < steps; ++i) {
+    w = delta + float(i) * delta;
+    x = cos(w);
+    y = -sin(w);
+    p = P3 + vec3(x, y, 0.0) * vec3(radiusL, radiusH, 0.0);
+    gl_Position = gl_ModelViewProjectionMatrix * vec4(p, 1.0);
+    EmitVertex();
+  }
 
-// clang-format on
+  gl_FrontColor = gl_FrontColorIn[3];
+  for (int i = 0; i < steps; ++i) {
+    float w = delta + float(steps - i - 1) * delta;
+    float x = -cos(w);
+    float y = -sin(w);
+    p = P4 + vec3(x, y, 0.0) * vec3(radiusL, radiusH, 0.0);
+    gl_Position = gl_ModelViewProjectionMatrix * vec4(p, 1.0);
+    EmitVertex();
+  }
+
+  w = delta;
+  x = -cos(w);
+  y = sin(w);
+
+  p = P1 + vec3(x, y, 0.0) * vec3(radiusL, radiusH, 0.0);
+  gl_Position = gl_ModelViewProjectionMatrix * vec4(p, 1.0);
+  EmitVertex();
+}
+
+)";
 
 /** @addtogroup glyph */
 

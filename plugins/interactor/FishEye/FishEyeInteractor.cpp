@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -31,44 +31,43 @@
 using namespace std;
 using namespace tlp;
 
-// clang-format off
+static const string fisheyeVertexProgram = R"(#version 120
 
-string fisheyeVertexProgram =
-  "#version 120\n"
-  "uniform vec4 center;"
-  "uniform float radius;"
-  "uniform float height;"
-  "uniform int fisheyeType;"
-  ""
-  "void main() {"
-  "gl_Position = gl_ModelViewMatrix * gl_Vertex;"
-  "float dist = distance(center, gl_Position);"
-  ""
-  "if (fisheyeType == 1) {"
-  "	if (dist < radius) {"
-  "		float coeff = (height + 1.) * dist / (height * dist/ radius + 1.);"
-  "		vec4 dir = normalize(gl_Position - center) * coeff;"
-  "		gl_Position = gl_ProjectionMatrix * (center + dir);"
-  "	} else {"
-  "		gl_Position = ftransform();"
-  "	}"
-  "} else if (fisheyeType == 2) {"
-  "	float coeff = dist+dist*radius/(dist*dist+1.+radius/height);"
-  "	vec4 dir = normalize(gl_Position - center) * coeff;"
-  "	gl_Position = gl_ProjectionMatrix * (center + dir);"
-  "} else {"
-  "	if (dist < radius) {"
-  "		gl_Position = gl_ProjectionMatrix * (center + height * (gl_Position - center));"
-  "	} else {"
-  "		gl_Position = gl_ProjectionMatrix * (center + (1. + radius * (height - 1.) / dist) * (gl_Position - center));"
-  "	}"
-  "}"
-  ""
-  "gl_FrontColor =  gl_Color;"
-  "gl_TexCoord[0] = gl_MultiTexCoord0;"
-  "}";
+uniform vec4 center;
+uniform float radius;
+uniform float height;
+uniform int fisheyeType;
 
-// clang-format on
+void main() {
+  gl_Position = gl_ModelViewMatrix * gl_Vertex;
+  float dist = distance(center, gl_Position);
+
+  if (fisheyeType == 1) {
+    if (dist < radius) {
+      float coeff = (height + 1.) * dist / (height * dist/ radius + 1.);
+      vec4 dir = normalize(gl_Position - center) * coeff;
+      gl_Position = gl_ProjectionMatrix * (center + dir);
+    } else {
+      gl_Position = ftransform();
+    }
+  } else if (fisheyeType == 2) {
+    float coeff = dist + dist * radius / (dist * dist + 1. + radius / height);
+    vec4 dir = normalize(gl_Position - center) * coeff;
+    gl_Position = gl_ProjectionMatrix * (center + dir);
+  } else {
+    if (dist < radius) {
+      gl_Position = gl_ProjectionMatrix * (center + height * (gl_Position - center));
+    } else {
+      gl_Position = gl_ProjectionMatrix * (center + (1. + radius * (height - 1.) / dist)
+                    * (gl_Position - center));
+    }
+  }
+
+  gl_FrontColor =  gl_Color;
+  gl_TexCoord[0] = gl_MultiTexCoord0;
+}
+
+)";
 
 FishEyeInteractor::FishEyeInteractor(const PluginContext *)
     : GLInteractorComposite(interactorIcon(InteractorType::FishEye), "Fisheye"),

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -21,56 +21,53 @@
 
 using namespace std;
 
-// clang-format off
+static string glyphShaderSrc = R"(#version 120
 
-static string glyphShaderSrc =
-  "#version 120\n"
+uniform vec3 pos;
+uniform vec3 size;
+uniform vec3 rotVector;
+uniform float rotAngle;
 
-  "uniform vec3 pos;"
-  "uniform vec3 size;"
-  "uniform vec3 rotVector;"
-  "uniform float rotAngle;"
+mat4 scaleMatrix() {
+  mat4 ret = mat4(1.0);
+  ret[0][0] = size[0];
+  ret[1][1] = size[1];
+  ret[2][2] = size[2];
+  return ret;
+}
 
-  "mat4 scaleMatrix() {"
-  "   mat4 ret = mat4(1.0);"
-  "   ret[0][0] = size[0];"
-  "   ret[1][1] = size[1];"
-  "   ret[2][2] = size[2];"
-  "   return ret;"
-  "}"
+mat4 translationMatrix() {
+  mat4 ret = mat4(1.0);
+  ret[3][0] = pos[0];
+  ret[3][1] = pos[1];
+  ret[3][2] = pos[2];
+  return ret;
+}
 
-  "mat4 translationMatrix() {"
-  "   mat4 ret = mat4(1.0);"
-  "   ret[3][0] = pos[0];"
-  "   ret[3][1] = pos[1];"
-  "   ret[3][2] = pos[2];"
-  "   return ret;"
-  "}"
+mat4 rotationMatrix() {
+  mat4 ret = mat4(1.0);
+  float c = cos(rotAngle);
+  float s = sin(rotAngle);
+  ret[0][0] = rotVector[0] * rotVector[0] * (1.0 - c) + c;
+  ret[1][0] = rotVector[0] * rotVector[1] * (1.0 - c) - rotVector[2] * s;
+  ret[2][0] = rotVector[0] * rotVector[2] * (1.0 - c) + rotVector[1] * s;
+  ret[0][1] = rotVector[1] * rotVector[0] * (1.0 - c) + rotVector[2] * s;
+  ret[1][1] = rotVector[1] * rotVector[1] * (1.0 - c) + c;
+  ret[2][1] = rotVector[1] * rotVector[2] * (1.0 - c) - rotVector[0] * s;
+  ret[0][2] = rotVector[0] * rotVector[2] * (1.0 - c) - rotVector[1] * s;
+  ret[1][2] = rotVector[1] * rotVector[2] * (1.0 - c) + rotVector[0] * s;
+  ret[2][2] = rotVector[2] * rotVector[2] * (1.0 - c) + c;
+  return ret;
+}
 
-  "mat4 rotationMatrix() {"
-  "   mat4 ret = mat4(1.0);"
-  "   float c = cos(rotAngle);"
-  "   float s = sin(rotAngle);"
-  "   ret[0][0] = rotVector[0]*rotVector[0]*(1.0 - c) + c;"
-  "   ret[1][0] = rotVector[0]*rotVector[1]*(1.0 - c) - rotVector[2]*s;"
-  "   ret[2][0] = rotVector[0]*rotVector[2]*(1.0 - c) + rotVector[1]*s;"
-  "   ret[0][1] = rotVector[1]*rotVector[0]*(1.0 - c) + rotVector[2]*s;"
-  "   ret[1][1] = rotVector[1]*rotVector[1]*(1.0 - c) + c;"
-  "   ret[2][1] = rotVector[1]*rotVector[2]*(1.0 - c) - rotVector[0]*s;"
-  "   ret[0][2] = rotVector[0]*rotVector[2]*(1.0 - c) - rotVector[1]*s;"
-  "   ret[1][2] = rotVector[1]*rotVector[2]*(1.0 - c) + rotVector[0]*s;"
-  "   ret[2][2] = rotVector[2]*rotVector[2]*(1.0 - c) + c;"
-  "   return ret;"
-  "}"
+void main() {
+  gl_Position = gl_ModelViewProjectionMatrix * translationMatrix() * rotationMatrix()
+                * scaleMatrix() * gl_Vertex;
+  gl_FrontColor = gl_Color;
+  gl_TexCoord[0] = gl_MultiTexCoord0;
+}
 
-  "void main() {"
-  "   gl_Position = gl_ModelViewProjectionMatrix * translationMatrix() * rotationMatrix() * scaleMatrix() * gl_Vertex;"
-  "	  gl_FrontColor = gl_Color;"
-  "   gl_TexCoord[0] = gl_MultiTexCoord0;"
-  "}"
-  ;
-
-// clang-format on
+)";
 
 namespace tlp {
 
