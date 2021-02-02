@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -21,7 +21,7 @@
 using namespace tlp;
 
 GlGraphRenderingParameters::GlGraphRenderingParameters()
-    : _antialiased(true), _viewArrow(false), _viewNodeLabel(true), _viewEdgeLabel(false),
+    : _antialiased(true), _viewArrow(true), _viewNodeLabel(true), _viewEdgeLabel(false),
       _viewMetaLabel(false), _viewOutScreenLabel(false), _elementOrdered(false),
       _elementOrderedDescending(true), _edgeColorInterpolate(true), _edge3D(false),
       _edgeSizeInterpolate(true), _edgeFrontDisplay(true), _displayEdges(true), _displayNodes(true),
