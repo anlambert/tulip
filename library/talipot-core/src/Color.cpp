@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -172,34 +172,32 @@ long tlp::Color::getTrueColor() {
   return ret;
 }
 
-// clang-format off
-
 // HSV accessors
-#define HSVGet(P)                                                                                  \
-int tlp::Color::get##P() const {                                                                 \
-  int H, S, V;                                                                                   \
-  RGBtoHSV((*this)[0], (*this)[1], (*this)[2], H, S, V);                                         \
-  return P;                                                                                      \
-}
+#define HSVGet(P)                                          \
+  int tlp::Color::get##P() const {                         \
+    int H, S, V;                                           \
+    RGBtoHSV((*this)[0], (*this)[1], (*this)[2], H, S, V); \
+    return P;                                              \
+  }
 
 HSVGet(H) HSVGet(S) HSVGet(V)
 #undef HSVGet
 
-#define HSVSet(P)                                                                                  \
-void tlp::Color::set##P(int val) {                                                               \
-  int H, S, V;                                                                                   \
-  RGBtoHSV((*this)[0], (*this)[1], (*this)[2], H, S, V);                                         \
-  P = val;                                                                                       \
-  HSVtoRGB(H, S, V, (*this)[0], (*this)[1], (*this)[2]);                                         \
-}
+#define HSVSet(P)                                          \
+  void tlp::Color::set##P(int val) {                       \
+    int H, S, V;                                           \
+    RGBtoHSV((*this)[0], (*this)[1], (*this)[2], H, S, V); \
+    P = val;                                               \
+    HSVtoRGB(H, S, V, (*this)[0], (*this)[1], (*this)[2]); \
+  }
 
-HSVSet(H) HSVSet(S) HSVSet(V)
+    HSVSet(H) HSVSet(S) HSVSet(V)
 #undef HSVSet
 
-//=================================================================
+    //=================================================================
 
-// static RGB<->HSV conversion functions
-void RGBtoHSV(unsigned char r, unsigned char g, unsigned char b, int &h, int &s, int &v) {
+    // static RGB<->HSV conversion functions
+    void RGBtoHSV(unsigned char r, unsigned char g, unsigned char b, int &h, int &s, int &v) {
   int theMin, theMax, delta;
   theMin = std::min(std::min(r, g), b); //  r <? g <? b
   theMax = std::max(std::max(r, g), b); //  r >? g >? b
@@ -222,13 +220,11 @@ void RGBtoHSV(unsigned char r, unsigned char g, unsigned char b, int &h, int &s,
     h = int(60 * (2.0f + (b - r) / float(delta))); // between cyan & yellow
   } else {
     h = int(60 * (4.0f + (r - g) / float(delta))); // between magenta & cyan
-
-}
+  }
 
   if (h < 0) {
     h += 360;
-
-}
+  }
 }
 
 void HSVtoRGB(int h, int s, int v, unsigned char &r, unsigned char &g, unsigned char &b) {
@@ -240,15 +236,13 @@ void HSVtoRGB(int h, int s, int v, unsigned char &r, unsigned char &g, unsigned 
     v = 0;
   } else if (v > 255) {
     v = 255;
-
-}
+  }
 
   if (s < 0) {
     s = 0;
   } else if (s > 255) {
     s = 255;
-
-}
+  }
 
   //   h %= 360;
   //   if (h<0) h+=360;
@@ -304,5 +298,3 @@ void HSVtoRGB(int h, int s, int v, unsigned char &r, unsigned char &g, unsigned 
   }
 }
 //=================================================================
-
-// clang-format on
