@@ -7,6 +7,14 @@
   "author": "Michael Richins",
   "version": "4.0.96"
 }, {
+  "id": "5B09B959-4A49-4674-9035-6CFD3D157C3F",
+  "name": "abacus",
+  "codepoint": "F16E0",
+  "aliases": [],
+  "tags": ["Math"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
   "id": "E20665F3-5354-46C2-9162-4202B20DCA05",
   "name": "abjad-arabic",
   "codepoint": "F1328",
@@ -974,6 +982,22 @@
   "tags": [],
   "author": "Michael Richins",
   "version": "2.0.46"
+}, {
+  "id": "E328D226-0D09-402D-BCAA-A7630396F168",
+  "name": "alarm-light-off",
+  "codepoint": "F171E",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "5.9.55"
+}, {
+  "id": "70D649B6-0FA1-4465-A92C-BB362D4D5FAD",
+  "name": "alarm-light-off-outline",
+  "codepoint": "F171F",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "5.9.55"
 }, {
   "id": "F6F4DACD-B15B-49FD-8ACC-FAE0E994435A",
   "name": "alarm-light-outline",
@@ -4226,7 +4250,7 @@
   "id": "2AAC06E6-8ABD-418B-B9A4-8554B62D7C04",
   "name": "backspace",
   "codepoint": "F006E",
-  "aliases": [],
+  "aliases": ["erase", "clear"],
   "tags": [],
   "author": "Google",
   "version": "1.5.54"
@@ -4234,7 +4258,7 @@
   "id": "7CD351DA-560B-42B5-86F3-7F782EA70FEA",
   "name": "backspace-outline",
   "codepoint": "F0B5C",
-  "aliases": [],
+  "aliases": ["erase-outline", "clear-outline"],
   "tags": [],
   "author": "Google",
   "version": "3.0.39"
@@ -4242,7 +4266,7 @@
   "id": "49AA61F3-2E3D-4EEA-BFB1-32D59C6906F0",
   "name": "backspace-reverse",
   "codepoint": "F0E7E",
-  "aliases": [],
+  "aliases": ["clear-reverse", "erase-reverse"],
   "tags": [],
   "author": "Michael Irigoyen",
   "version": "3.7.94"
@@ -4250,7 +4274,7 @@
   "id": "287700E2-130D-484B-B56D-0162BE6DEEEE",
   "name": "backspace-reverse-outline",
   "codepoint": "F0E7F",
-  "aliases": [],
+  "aliases": ["clear-reverse-outline", "erase-reverse-outline"],
   "tags": [],
   "author": "Michael Irigoyen",
   "version": "3.7.94"
@@ -7575,6 +7599,22 @@
   "author": "Michael Irigoyen",
   "version": "3.3.92"
 }, {
+  "id": "F5E24182-366C-4D23-BA0E-8D2E25B88230",
+  "name": "broadcast",
+  "codepoint": "F1720",
+  "aliases": ["signal"],
+  "tags": ["Weather"],
+  "author": "Google",
+  "version": "5.9.55"
+}, {
+  "id": "E1851914-B294-4FC0-A94B-C5C8D0F52DCB",
+  "name": "broadcast-off",
+  "codepoint": "F1721",
+  "aliases": ["signal-off"],
+  "tags": ["Weather"],
+  "author": "Google",
+  "version": "5.9.55"
+}, {
   "id": "8159ED8F-4D1C-4845-8297-0FE41260D199",
   "name": "broom",
   "codepoint": "F00E2",
@@ -8038,6 +8078,14 @@
   "tags": ["Date \/ Time"],
   "author": "Austin Andrews",
   "version": "1.5.54"
+}, {
+  "id": "9101C5D4-90CA-4C18-B66E-611B3B0A3877",
+  "name": "calendar-clock-outline",
+  "codepoint": "F16E1",
+  "aliases": [],
+  "tags": [],
+  "author": "GreenTurtwig",
+  "version": "5.9.55"
 }, {
   "id": "A5F0BBFB-DA5E-4068-B2D5-3C0F3EB26B14",
   "name": "calendar-cursor",
@@ -9629,7 +9677,8 @@
   "aliases": ["local-atm", "money-usd"],
   "tags": ["Currency", "Banking"],
   "author": "Michael Irigoyen",
-  "version": "4.4.95"
+  "version": "4.4.95",
+  "deprecated": true
 }, {
   "id": "219B8956-E48B-4D11-9257-422E563955DB",
   "name": "cash-usd-outline",
@@ -9637,7 +9686,8 @@
   "aliases": ["local-atm", "money-usd"],
   "tags": ["Currency", "Banking"],
   "author": "Google",
-  "version": "1.5.54"
+  "version": "1.5.54",
+  "deprecated": true
 }, {
   "id": "EF35081A-EABF-4C6B-B858-7F2177B60F95",
   "name": "cassette",
@@ -10297,6 +10347,22 @@
   "author": "Michael Irigoyen",
   "version": "4.8.95"
 }, {
+  "id": "8B7833C6-EB36-4F0C-A554-AF7189A7AB34",
+  "name": "chat-question",
+  "codepoint": "F1738",
+  "aliases": [],
+  "tags": [],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "7EC5A46D-1E6A-475C-A76F-19F9F4B9CD90",
+  "name": "chat-question-outline",
+  "codepoint": "F1739",
+  "aliases": [],
+  "tags": [],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
   "id": "3C021F95-3463-45CD-9908-A0D84B2793FB",
   "name": "chat-remove",
   "codepoint": "F1411",
@@ -10392,6 +10458,14 @@
   "tags": [],
   "author": "Michael Richins",
   "version": "2.0.46"
+}, {
+  "id": "1CAE9177-18C6-497A-B6B9-900C00A14D0E",
+  "name": "check-decagram-outline",
+  "codepoint": "F1740",
+  "aliases": [],
+  "tags": [],
+  "author": "Jeff Hilnbrand",
+  "version": "5.9.55"
 }, {
   "id": "F1CE2683-FE3F-4AA1-89A2-A935D6FD403C",
   "name": "check-network",
@@ -11360,6 +11434,22 @@
   "tags": [],
   "author": "James Coyle",
   "version": "2.2.43"
+}, {
+  "id": "E276DDBC-9E61-4CE3-8168-6E896E6ADD98",
+  "name": "clipboard-clock",
+  "codepoint": "F16E2",
+  "aliases": [],
+  "tags": [],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "D9132053-ADBE-417D-A00B-207B8F1C85A7",
+  "name": "clipboard-clock-outline",
+  "codepoint": "F16E3",
+  "aliases": [],
+  "tags": [],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
 }, {
   "id": "BA08B631-B169-4C0F-A99B-BBECC9F18CAA",
   "name": "clipboard-edit",
@@ -13449,6 +13539,22 @@
   "author": "Colton Wiscombe",
   "version": "5.8.55"
 }, {
+  "id": "9DEBBFC6-6734-4D46-A7C0-3A11793C4708",
+  "name": "cookie-clock",
+  "codepoint": "F16E4",
+  "aliases": ["biscuit-clock"],
+  "tags": ["Food \/ Drink"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "5F7A7D4A-D4ED-4AE6-987D-A735A7403C00",
+  "name": "cookie-clock-outline",
+  "codepoint": "F16E5",
+  "aliases": ["biscuit-clock-outline"],
+  "tags": ["Food \/ Drink"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
   "id": "5923CF0C-4D34-4BF1-8401-3AEEDC0DE9BC",
   "name": "cookie-cog",
   "codepoint": "F16D4",
@@ -13465,6 +13571,38 @@
   "author": "Colton Wiscombe",
   "version": "5.8.55"
 }, {
+  "id": "E36B77B1-913A-45CC-A23B-02EA12161352",
+  "name": "cookie-edit",
+  "codepoint": "F16E6",
+  "aliases": ["biscuit-edit"],
+  "tags": ["Food \/ Drink"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "0A7C1A34-8BC9-4A44-93F3-59F9235274AB",
+  "name": "cookie-edit-outline",
+  "codepoint": "F16E7",
+  "aliases": ["biscuit-edit-outline"],
+  "tags": ["Food \/ Drink"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "FD4F6EA6-712D-4E1E-AF1E-25CB27AE66CE",
+  "name": "cookie-lock",
+  "codepoint": "F16E8",
+  "aliases": ["biscuit-lock"],
+  "tags": ["Food \/ Drink"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "CB5D57DF-BA59-4C98-9FA7-96536EF9FAA0",
+  "name": "cookie-lock-outline",
+  "codepoint": "F16E9",
+  "aliases": ["biscuit-lock-outline"],
+  "tags": ["Food \/ Drink"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
   "id": "215F338E-A35C-4C54-9AC7-C4F4BB9A7206",
   "name": "cookie-minus",
   "codepoint": "F16DA",
@@ -13480,6 +13618,22 @@
   "tags": ["Food \/ Drink"],
   "author": "Colton Wiscombe",
   "version": "5.8.55"
+}, {
+  "id": "9B401BB3-9510-457F-9C35-BAC5A30BF91F",
+  "name": "cookie-off",
+  "codepoint": "F16EA",
+  "aliases": ["biscuit-off"],
+  "tags": ["Food \/ Drink"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "4355ECEC-E157-4BC8-AF80-45FAC597F188",
+  "name": "cookie-off-outline",
+  "codepoint": "F16EB",
+  "aliases": ["biscuit-off-outline"],
+  "tags": ["Food \/ Drink"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
 }, {
   "id": "AF77B3DF-8565-4A84-A58F-83FD2E55EB10",
   "name": "cookie-outline",
@@ -13504,6 +13658,22 @@
   "tags": ["Food \/ Drink"],
   "author": "Colton Wiscombe",
   "version": "5.8.55"
+}, {
+  "id": "184857B9-228F-4DD2-AF53-603277AEEB7F",
+  "name": "cookie-refresh",
+  "codepoint": "F16EC",
+  "aliases": ["biscuit-refresh"],
+  "tags": ["Food \/ Drink"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "CA84B827-73C5-4C28-AC8B-82AADD5469E9",
+  "name": "cookie-refresh-outline",
+  "codepoint": "F16ED",
+  "aliases": ["biscuit-refresh-outline"],
+  "tags": ["Food \/ Drink"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
 }, {
   "id": "25272102-387C-4333-BF16-3308E6EFF94F",
   "name": "cookie-remove",
@@ -14343,7 +14513,8 @@
   "aliases": ["coin"],
   "tags": ["Banking", "Currency"],
   "author": "Michael Richins",
-  "version": "4.4.95"
+  "version": "4.4.95",
+  "deprecated": true
 }, {
   "id": "42F0733E-F36F-491B-ADC9-AC8ABAF2C0B7",
   "name": "currency-usd-circle-outline",
@@ -14351,7 +14522,8 @@
   "aliases": ["coin-outline"],
   "tags": ["Currency", "Banking"],
   "author": "Austin Andrews",
-  "version": "1.5.54"
+  "version": "1.5.54",
+  "deprecated": true
 }, {
   "id": "5E9D35E4-9487-4A9B-9D4B-E1BBCA52AE0C",
   "name": "currency-usd-off",
@@ -15859,6 +16031,14 @@
   "author": "Nick",
   "version": "2.6.95"
 }, {
+  "id": "74FE76CF-E5A5-42F3-97BD-0BCDF17DBFFF",
+  "name": "dog-side-off",
+  "codepoint": "F16EE",
+  "aliases": [],
+  "tags": ["Animal"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
   "id": "FE71CD75-B2E7-49A5-B00B-732BACB52F6F",
   "name": "dolby",
   "codepoint": "F06B3",
@@ -16310,7 +16490,7 @@
   "id": "E792948B-8E66-49B5-83E7-8CDF1ECE6C5D",
   "name": "dumbbell",
   "codepoint": "F01E6",
-  "aliases": ["weights", "fitness-center"],
+  "aliases": ["weights", "fitness-center", "gym", "barbell"],
   "tags": ["Sport"],
   "author": "Google",
   "version": "1.5.54"
@@ -16894,7 +17074,7 @@
   "id": "E8F2B8BE-F4EC-4B9C-BB15-001752B29FFD",
   "name": "emoticon",
   "codepoint": "F0C68",
-  "aliases": ["smiley"],
+  "aliases": ["smiley", "face"],
   "tags": ["Emoji"],
   "author": "Google",
   "version": "3.2.89"
@@ -16902,7 +17082,7 @@
   "id": "5DD5C53F-8D3F-43DE-81B9-667A5372A808",
   "name": "emoticon-angry",
   "codepoint": "F0C69",
-  "aliases": ["smiley-angry"],
+  "aliases": ["smiley-angry", "face-angry"],
   "tags": ["Emoji"],
   "author": "Michael Irigoyen",
   "version": "3.2.89"
@@ -16910,7 +17090,7 @@
   "id": "EEE3E9C1-D1B5-4D57-AD8B-7F6AD4852EE6",
   "name": "emoticon-angry-outline",
   "codepoint": "F0C6A",
-  "aliases": ["smiley-angry-outline"],
+  "aliases": ["smiley-angry-outline", "face-angry-outline"],
   "tags": ["Emoji"],
   "author": "Michael Irigoyen",
   "version": "3.2.89"
@@ -16918,7 +17098,7 @@
   "id": "DD5A65E9-E309-457F-9662-94AAB236A703",
   "name": "emoticon-confused",
   "codepoint": "F10DE",
-  "aliases": [],
+  "aliases": ["face-confused"],
   "tags": ["Emoji"],
   "author": "Michael Richins",
   "version": "4.3.95"
@@ -16926,7 +17106,7 @@
   "id": "CB195387-50AC-46A3-B1C4-F3DA96E0EE42",
   "name": "emoticon-confused-outline",
   "codepoint": "F10DF",
-  "aliases": [],
+  "aliases": ["face-confused-outline"],
   "tags": ["Emoji"],
   "author": "Michael Richins",
   "version": "4.3.95"
@@ -16934,7 +17114,7 @@
   "id": "77FAFB8C-4322-4A18-8E92-0CE311F775D3",
   "name": "emoticon-cool",
   "codepoint": "F0C6B",
-  "aliases": ["smiley-cool"],
+  "aliases": ["smiley-cool", "face-cool", "face-sunglasses"],
   "tags": ["Emoji"],
   "author": "Michael Irigoyen",
   "version": "3.2.89"
@@ -16942,7 +17122,7 @@
   "id": "62BB1B4E-67AC-4DFE-B37C-65D0F04F71D0",
   "name": "emoticon-cool-outline",
   "codepoint": "F01F3",
-  "aliases": ["smiley-cool-outline"],
+  "aliases": ["smiley-cool-outline", "face-cool-outline", "face-sunglasses-outline"],
   "tags": ["Emoji"],
   "author": "Austin Andrews",
   "version": "1.5.54"
@@ -16950,7 +17130,7 @@
   "id": "39704938-DF4F-4E60-8C20-0569B4B1819C",
   "name": "emoticon-cry",
   "codepoint": "F0C6C",
-  "aliases": ["smiley-cry"],
+  "aliases": ["smiley-cry", "face-cry"],
   "tags": ["Emoji"],
   "author": "Michael Irigoyen",
   "version": "3.2.89"
@@ -16958,7 +17138,7 @@
   "id": "BA4B161E-72CB-476B-9894-20A90B28B4A3",
   "name": "emoticon-cry-outline",
   "codepoint": "F0C6D",
-  "aliases": ["smiley-cry-outline"],
+  "aliases": ["smiley-cry-outline", "face-cry-outline"],
   "tags": ["Emoji"],
   "author": "Michael Irigoyen",
   "version": "3.2.89"
@@ -16966,7 +17146,7 @@
   "id": "187185AC-5567-44DC-AC70-14B0D89C270C",
   "name": "emoticon-dead",
   "codepoint": "F0C6E",
-  "aliases": ["smiley-dead"],
+  "aliases": ["smiley-dead", "face-dead"],
   "tags": ["Emoji"],
   "author": "Google",
   "version": "3.2.89"
@@ -16974,7 +17154,7 @@
   "id": "47AD308C-C9D8-43DB-8E92-B0FB02B906CF",
   "name": "emoticon-dead-outline",
   "codepoint": "F069B",
-  "aliases": ["smiley-dead-outline"],
+  "aliases": ["smiley-dead-outline", "face-dead-outline"],
   "tags": ["Emoji"],
   "author": "Google",
   "version": "1.7.12"
@@ -16982,7 +17162,7 @@
   "id": "7781F4B7-849F-42A4-82B1-791DBDE91295",
   "name": "emoticon-devil",
   "codepoint": "F0C6F",
-  "aliases": ["smiley-devil"],
+  "aliases": ["smiley-devil", "face-devil"],
   "tags": ["Emoji"],
   "author": "Austin Andrews",
   "version": "3.2.89"
@@ -16990,7 +17170,7 @@
   "id": "916B1319-9E91-48C0-AD65-B21B599D8FCA",
   "name": "emoticon-devil-outline",
   "codepoint": "F01F4",
-  "aliases": ["smiley-devil-outline"],
+  "aliases": ["smiley-devil-outline", "face-devil-outline"],
   "tags": ["Emoji"],
   "author": "Austin Andrews",
   "version": "1.5.54"
@@ -16998,7 +17178,7 @@
   "id": "86E664CC-39C1-4E36-81BB-AC3BFFE65281",
   "name": "emoticon-excited",
   "codepoint": "F0C70",
-  "aliases": ["smiley-excited"],
+  "aliases": ["smiley-excited", "face-excited"],
   "tags": ["Emoji"],
   "author": "Google",
   "version": "3.2.89"
@@ -17006,7 +17186,7 @@
   "id": "828FF1EE-1B9B-4407-A45B-A071FA938158",
   "name": "emoticon-excited-outline",
   "codepoint": "F069C",
-  "aliases": ["smiley-excited-outline"],
+  "aliases": ["smiley-excited-outline", "face-excited-outline"],
   "tags": ["Emoji"],
   "author": "Google",
   "version": "1.7.12"
@@ -17014,7 +17194,7 @@
   "id": "D5AC778B-0269-4AC5-A2D8-FD5F4D27785F",
   "name": "emoticon-frown",
   "codepoint": "F0F4C",
-  "aliases": [],
+  "aliases": ["face-frown"],
   "tags": ["Emoji"],
   "author": "Michael Irigoyen",
   "version": "3.9.97"
@@ -17022,7 +17202,7 @@
   "id": "AE6333C6-8334-4F90-9230-6527F3A38C8A",
   "name": "emoticon-frown-outline",
   "codepoint": "F0F4D",
-  "aliases": [],
+  "aliases": ["face-frown-outline"],
   "tags": ["Emoji"],
   "author": "Google",
   "version": "3.9.97"
@@ -17030,7 +17210,7 @@
   "id": "CCA0187D-B8BA-4AC3-8523-B6B8F05EA5BA",
   "name": "emoticon-happy",
   "codepoint": "F0C71",
-  "aliases": ["smiley-happy"],
+  "aliases": ["smiley-happy", "face-happy"],
   "tags": ["Emoji"],
   "author": "Michael Irigoyen",
   "version": "3.2.89"
@@ -17038,7 +17218,7 @@
   "id": "F51C2659-3EE9-471C-A919-190D3C1A9681",
   "name": "emoticon-happy-outline",
   "codepoint": "F01F5",
-  "aliases": ["smiley-happy-outline"],
+  "aliases": ["smiley-happy-outline", "face-happy-outline"],
   "tags": ["Emoji"],
   "author": "Gabriel",
   "version": "1.5.54"
@@ -17046,7 +17226,7 @@
   "id": "01F0C520-7626-4BA6-A678-1EAB14AE2C1B",
   "name": "emoticon-kiss",
   "codepoint": "F0C72",
-  "aliases": ["smiley-kiss"],
+  "aliases": ["smiley-kiss", "face-kiss"],
   "tags": ["Emoji"],
   "author": "Michael Irigoyen",
   "version": "3.2.89"
@@ -17054,7 +17234,7 @@
   "id": "806569AC-841D-4B4E-849E-43BACC3D2268",
   "name": "emoticon-kiss-outline",
   "codepoint": "F0C73",
-  "aliases": ["smiley-kiss-outline"],
+  "aliases": ["smiley-kiss-outline", "face-kiss-outline"],
   "tags": ["Emoji"],
   "author": "Michael Irigoyen",
   "version": "3.2.89"
@@ -17062,7 +17242,7 @@
   "id": "11CEDEB3-DB1A-45F4-92C9-6AF6FCEE4FC5",
   "name": "emoticon-lol",
   "codepoint": "F1214",
-  "aliases": [],
+  "aliases": ["face-lol"],
   "tags": ["Emoji"],
   "author": "Michael Richins",
   "version": "4.6.95"
@@ -17070,7 +17250,7 @@
   "id": "2A7BA4B1-C436-4EE6-BF5A-34B150A9A746",
   "name": "emoticon-lol-outline",
   "codepoint": "F1215",
-  "aliases": [],
+  "aliases": ["face-lol-outline"],
   "tags": ["Emoji"],
   "author": "Michael Richins",
   "version": "4.6.95"
@@ -17078,7 +17258,7 @@
   "id": "922B06B7-9C78-452C-AF29-79A47F0F6931",
   "name": "emoticon-neutral",
   "codepoint": "F0C74",
-  "aliases": ["smiley-neutral"],
+  "aliases": ["smiley-neutral", "face-neutral"],
   "tags": ["Emoji"],
   "author": "Michael Irigoyen",
   "version": "3.2.89"
@@ -17086,7 +17266,7 @@
   "id": "17F30B32-37E2-41BB-876C-70E568D04623",
   "name": "emoticon-neutral-outline",
   "codepoint": "F01F6",
-  "aliases": ["smiley-neutral-outline"],
+  "aliases": ["smiley-neutral-outline", "face-neutral-outline"],
   "tags": ["Emoji"],
   "author": "Austin Andrews",
   "version": "1.5.54"
@@ -17094,7 +17274,7 @@
   "id": "69AAECAA-0B17-4C53-8345-4F172B7FEF50",
   "name": "emoticon-outline",
   "codepoint": "F01F2",
-  "aliases": ["insert-emoticon", "mood", "sentiment-very-satisfied", "tag-faces", "smiley-outline"],
+  "aliases": ["insert-emoticon", "mood", "sentiment-very-satisfied", "tag-faces", "smiley-outline", "face-outline"],
   "tags": ["Emoji"],
   "author": "Google",
   "version": "1.5.54"
@@ -17102,7 +17282,7 @@
   "id": "968319FB-0E94-4F04-A6D8-9E71DF200E1F",
   "name": "emoticon-poop",
   "codepoint": "F01F7",
-  "aliases": ["smiley-poop"],
+  "aliases": ["smiley-poop", "face-poop"],
   "tags": ["Emoji"],
   "author": "Austin Andrews",
   "version": "1.5.54"
@@ -17110,7 +17290,7 @@
   "id": "1E402C80-69DB-432F-BB0F-C05ACB6A7839",
   "name": "emoticon-poop-outline",
   "codepoint": "F0C75",
-  "aliases": [],
+  "aliases": ["face-poop-outline"],
   "tags": ["Emoji"],
   "author": "Michael Irigoyen",
   "version": "3.2.89"
@@ -17118,7 +17298,7 @@
   "id": "CDA3C920-C286-4000-A7FC-C530CBC62CF7",
   "name": "emoticon-sad",
   "codepoint": "F0C76",
-  "aliases": ["smiley-sad"],
+  "aliases": ["smiley-sad", "face-sad"],
   "tags": ["Emoji"],
   "author": "Michael Irigoyen",
   "version": "3.2.89"
@@ -17126,7 +17306,7 @@
   "id": "6D8A3A11-7A90-424C-82A6-93C455379743",
   "name": "emoticon-sad-outline",
   "codepoint": "F01F8",
-  "aliases": ["smiley-sad-outline"],
+  "aliases": ["smiley-sad-outline", "face-sad-outline"],
   "tags": ["Emoji"],
   "author": "Gabriel",
   "version": "1.5.54"
@@ -17134,7 +17314,7 @@
   "id": "523F5AB1-3598-40F1-AAB5-6DF361FF6970",
   "name": "emoticon-sick",
   "codepoint": "F157C",
-  "aliases": [],
+  "aliases": ["face-sick", "fever"],
   "tags": ["Emoji", "Medical \/ Hospital"],
   "author": "Google",
   "version": "5.5.55"
@@ -17142,7 +17322,7 @@
   "id": "CBB4F1C3-3479-4F94-9F15-3D844889609A",
   "name": "emoticon-sick-outline",
   "codepoint": "F157D",
-  "aliases": [],
+  "aliases": ["face-sick-outline", "fever-outline"],
   "tags": ["Emoji", "Medical \/ Hospital"],
   "author": "Google",
   "version": "5.5.55"
@@ -17150,7 +17330,7 @@
   "id": "57288378-59EE-4705-ACD5-3B424ACA70C1",
   "name": "emoticon-tongue",
   "codepoint": "F01F9",
-  "aliases": ["smiley-tongue"],
+  "aliases": ["smiley-tongue", "face-tongue"],
   "tags": ["Emoji"],
   "author": "Austin Andrews",
   "version": "1.5.54"
@@ -17158,7 +17338,7 @@
   "id": "A08556AE-A0AD-4C7E-9A14-0CD05EE66E03",
   "name": "emoticon-tongue-outline",
   "codepoint": "F0C77",
-  "aliases": ["smiley-tongue-outline"],
+  "aliases": ["smiley-tongue-outline", "face-tongue-outline"],
   "tags": ["Emoji"],
   "author": "Michael Irigoyen",
   "version": "3.2.89"
@@ -17166,7 +17346,7 @@
   "id": "652D2244-1764-4B42-B04D-157DDD9DC464",
   "name": "emoticon-wink",
   "codepoint": "F0C78",
-  "aliases": ["smiley-wink"],
+  "aliases": ["smiley-wink", "face-wink"],
   "tags": ["Emoji"],
   "author": "Michael Irigoyen",
   "version": "3.2.89"
@@ -17174,7 +17354,7 @@
   "id": "C8E56EC6-52DA-4BC7-81C0-1E5B14509086",
   "name": "emoticon-wink-outline",
   "codepoint": "F0C79",
-  "aliases": ["smiley-wink-outline"],
+  "aliases": ["smiley-wink-outline", "face-wink-outline"],
   "tags": ["Emoji"],
   "author": "Michael Irigoyen",
   "version": "3.2.89"
@@ -17866,6 +18046,14 @@
   "tags": ["Home Automation", "Alert \/ Error"],
   "author": "Michael Irigoyen",
   "version": "5.2.45"
+}, {
+  "id": "E695511A-9F45-44DC-9F98-9E946CC02ECC",
+  "name": "fan-auto",
+  "codepoint": "F171D",
+  "aliases": [],
+  "tags": [],
+  "author": "Contributors",
+  "version": "5.9.55"
 }, {
   "id": "33DAA830-9E16-4AF0-A1B8-F44EA4EF9787",
   "name": "fan-chevron-down",
@@ -19259,6 +19447,14 @@
   "author": "Michael Irigoyen",
   "version": "4.4.95"
 }, {
+  "id": "DAB67757-2065-4741-A03A-563D0EA202E0",
+  "name": "fire-off",
+  "codepoint": "F1722",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "5.9.55"
+}, {
   "id": "1C8EC9A6-0545-4A59-B9F8-5E498E40529D",
   "name": "fire-truck",
   "codepoint": "F08AB",
@@ -19306,6 +19502,14 @@
   "tags": ["Holiday"],
   "author": "Augustin Ursu",
   "version": "3.6.95"
+}, {
+  "id": "16CFC5D9-C749-4148-BF17-D002AFFF9D09",
+  "name": "firework-off",
+  "codepoint": "F1723",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "5.9.55"
 }, {
   "id": "91D8C321-95BC-4AC6-9B3E-D38D457BFF75",
   "name": "fish",
@@ -20578,6 +20782,14 @@
   "tags": ["Food \/ Drink"],
   "author": "Michael Irigoyen",
   "version": "5.2.45"
+}, {
+  "id": "D5900301-8742-4D92-8E56-525DCDE97E0F",
+  "name": "food-turkey",
+  "codepoint": "F171C",
+  "aliases": ["dinner", "thanksgiving"],
+  "tags": ["Food \/ Drink", "Holiday"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
 }, {
   "id": "1D25DDEC-2656-4729-BEBD-BB17F972DD09",
   "name": "food-variant",
@@ -22486,15 +22698,47 @@
   "id": "62403C7B-F20E-489B-8835-28F7544D9712",
   "name": "gift",
   "codepoint": "F0E44",
-  "aliases": [],
+  "aliases": ["present", "package", "donate"],
   "tags": ["Holiday"],
   "author": "Simran",
   "version": "3.6.95"
 }, {
+  "id": "17729CE1-90B8-4C63-A142-99056CDDC860",
+  "name": "gift-off",
+  "codepoint": "F16EF",
+  "aliases": ["present-off", "package-off", "donate-off"],
+  "tags": ["Holiday"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "E1260280-2F0F-4D7D-AA15-0322C8699541",
+  "name": "gift-off-outline",
+  "codepoint": "F16F0",
+  "aliases": ["present-off-outline", "package-off-outline", "donate-off-outline"],
+  "tags": ["Holiday"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "04D976AC-875C-42F1-A9F6-B86FDAAD6990",
+  "name": "gift-open",
+  "codepoint": "F16F1",
+  "aliases": ["present-open", "package-open"],
+  "tags": ["Holiday"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "64BCFFC7-8E6B-4644-B14D-5B1F9EF16899",
+  "name": "gift-open-outline",
+  "codepoint": "F16F2",
+  "aliases": ["present-open-outline", "package-open-outline"],
+  "tags": ["Holiday"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
   "id": "22D0C782-CD05-4FEB-845F-BBA7126C7326",
   "name": "gift-outline",
   "codepoint": "F02A1",
-  "aliases": ["donate", "present"],
+  "aliases": ["donate-outline", "present-outline", "package-outline"],
   "tags": ["Shopping", "Holiday"],
   "author": "Austin Andrews",
   "version": "1.5.54"
@@ -24297,7 +24541,8 @@
   "aliases": [],
   "tags": ["Banking"],
   "author": "Nick",
-  "version": "2.2.43"
+  "version": "2.2.43",
+  "deprecated": true
 }, {
   "id": "6D381D99-24F0-46B5-AD04-F527B97830AE",
   "name": "home-edit",
@@ -25038,7 +25283,7 @@
   "id": "58048473-346E-4473-A18D-36C29B789322",
   "name": "identifier",
   "codepoint": "F0EFE",
-  "aliases": [],
+  "aliases": ["key"],
   "tags": ["Developer \/ Languages"],
   "author": "Austin Andrews",
   "version": "3.8.95"
@@ -25150,7 +25395,7 @@
   "id": "DD2262AA-A145-4788-899D-46D807B4FC0D",
   "name": "image-album",
   "codepoint": "F02EA",
-  "aliases": ["photo-album"],
+  "aliases": ["photo-album", "book-image"],
   "tags": [],
   "author": "Google",
   "version": "1.5.54"
@@ -25843,6 +26088,14 @@
   "author": "Nick",
   "version": "3.9.97"
 }, {
+  "id": "30064882-D796-4A8E-8BD1-CAED8C9A49DA",
+  "name": "kettle-pour-over",
+  "codepoint": "F173C",
+  "aliases": [],
+  "tags": [],
+  "author": "nilsfast",
+  "version": "5.9.55"
+}, {
   "id": "B976C4B0-D50C-49ED-B072-CD8E8A38A4AF",
   "name": "kettle-steam",
   "codepoint": "F1319",
@@ -25982,7 +26235,7 @@
   "id": "21C8B558-8398-43E8-A79A-8BA99BE693D6",
   "name": "keyboard-backspace",
   "codepoint": "F030D",
-  "aliases": [],
+  "aliases": ["keyboard-clear", "keyboard-erase"],
   "tags": [],
   "author": "Google",
   "version": "1.5.54"
@@ -26218,6 +26471,14 @@
   "tags": ["Gaming \/ RPG"],
   "author": "Simran",
   "version": "2.5.94"
+}, {
+  "id": "180CACBF-4272-4D07-B9A0-63A5625DCB0C",
+  "name": "koala",
+  "codepoint": "F173F",
+  "aliases": [],
+  "tags": [],
+  "author": "Contributors",
+  "version": "5.9.55"
 }, {
   "id": "AD953D07-5F33-439B-895F-7AD5615EA14A",
   "name": "kodi",
@@ -28742,6 +29003,22 @@
   "author": "Michael Irigoyen",
   "version": "4.4.95"
 }, {
+  "id": "088D1765-3A4B-4BCB-A17B-B07970B3DDAA",
+  "name": "message-question",
+  "codepoint": "F173A",
+  "aliases": [],
+  "tags": [],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "32AA3ACF-FADE-4ECB-8A16-DECB4CB9ECB9",
+  "name": "message-question-outline",
+  "codepoint": "F173B",
+  "aliases": [],
+  "tags": [],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
   "id": "6657779A-7238-4686-B3D5-1244862D7B2C",
   "name": "message-reply",
   "codepoint": "F0367",
@@ -28750,6 +29027,14 @@
   "author": "Google",
   "version": "1.5.54"
 }, {
+  "id": "9B0263DD-74DB-4AC6-BF1C-0C7C0170C845",
+  "name": "message-reply-outline",
+  "codepoint": "F173D",
+  "aliases": [],
+  "tags": [],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
   "id": "FF34C5A8-4433-4B47-A9E5-EB836CFFCEC9",
   "name": "message-reply-text",
   "codepoint": "F0368",
@@ -28757,6 +29042,14 @@
   "tags": [],
   "author": "Google",
   "version": "1.5.54"
+}, {
+  "id": "56D756E1-57CB-4EA5-9AC3-409D0046C643",
+  "name": "message-reply-text-outline",
+  "codepoint": "F173E",
+  "aliases": [],
+  "tags": [],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
 }, {
   "id": "4B15BF16-CD96-4427-9EA4-5A8B09F3A2B6",
   "name": "message-settings",
@@ -29862,10 +30155,42 @@
   "author": "Google",
   "version": "1.5.54"
 }, {
+  "id": "8B5A9F9F-D0F3-4B9A-844F-D6EE34154837",
+  "name": "movie-check",
+  "codepoint": "F16F3",
+  "aliases": ["slate-check", "clapperboard-check", "film-check"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "74A2D617-040C-4313-9D9B-CDB2FFDCC0D7",
+  "name": "movie-check-outline",
+  "codepoint": "F16F4",
+  "aliases": ["slate-check-outline", "clapperboard-check-outline", "film-check-outline"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "B06E7709-247C-4F57-BFA6-345C1ABAE8C3",
+  "name": "movie-cog",
+  "codepoint": "F16F5",
+  "aliases": ["slate-cog", "clapperboard-cog", "film-cog"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "388C5417-3BC7-491F-B708-AD81DCB237C8",
+  "name": "movie-cog-outline",
+  "codepoint": "F16F6",
+  "aliases": ["slate-cog-outline", "clapperboard-cog-outline", "film-cog-outline"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
   "id": "EBABD564-B269-4D31-995B-062C7EBEFC15",
   "name": "movie-edit",
   "codepoint": "F1122",
-  "aliases": [],
+  "aliases": ["slate-edit", "clapperboard-edit", "film-edit"],
   "tags": ["Video \/ Movie", "Edit \/ Modify"],
   "author": "Christopher Schreiner",
   "version": "4.3.95"
@@ -29873,7 +30198,7 @@
   "id": "16912257-3D89-4630-9CC5-1FB0EB4A112C",
   "name": "movie-edit-outline",
   "codepoint": "F1123",
-  "aliases": [],
+  "aliases": ["slate-edit-outline", "clapperboard-edit-outline", "film-edit-outline"],
   "tags": ["Video \/ Movie", "Edit \/ Modify"],
   "author": "Christopher Schreiner",
   "version": "4.3.95"
@@ -29894,6 +30219,38 @@
   "author": "Google",
   "version": "4.3.95"
 }, {
+  "id": "8437938B-8D4E-4CE9-BE88-D5BBBC39140A",
+  "name": "movie-minus",
+  "codepoint": "F16F7",
+  "aliases": ["slate-minus", "clapperboard-minus", "film-minus"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "44B3B4FB-C569-4D4D-A463-C2F6B87A584C",
+  "name": "movie-minus-outline",
+  "codepoint": "F16F8",
+  "aliases": ["slate-minus-outline", "clapperboard-minus-outline", "film-minus-outline"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "2260571C-D9DD-4720-AFB7-C54A32585767",
+  "name": "movie-off",
+  "codepoint": "F16F9",
+  "aliases": ["slate-off", "clapperboard-off", "film-off"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "6E94BD0C-39BF-4D74-99BB-738062232A19",
+  "name": "movie-off-outline",
+  "codepoint": "F16FA",
+  "aliases": ["slate-off-outline", "clapperboard-off-outline", "film-off-outline"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
   "id": "F23718ED-A1EE-42D7-84B2-773E110AAB63",
   "name": "movie-open",
   "codepoint": "F0FCE",
@@ -29901,6 +30258,86 @@
   "tags": ["Video \/ Movie"],
   "author": "GreenTurtwig",
   "version": "4.0.96"
+}, {
+  "id": "C3078403-9C18-4F30-983B-E755B9CBA37B",
+  "name": "movie-open-check",
+  "codepoint": "F16FB",
+  "aliases": ["slate-open-check", "clapperboard-open-check", "film-open-check"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "3CA87DEB-5A40-4DAF-960B-2AA9A4385F1D",
+  "name": "movie-open-check-outline",
+  "codepoint": "F16FC",
+  "aliases": ["slate-open-check-outline", "clapperboard-open-check-outline", "film-open-check-outline"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "20ADB8D7-DA55-463B-A523-9FA0377A1C74",
+  "name": "movie-open-cog",
+  "codepoint": "F16FD",
+  "aliases": ["slate-open-cog", "clapperboard-open-cog", "film-open-cog"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "F4936EA7-C151-4D41-84CC-4E02BCA4E01B",
+  "name": "movie-open-cog-outline",
+  "codepoint": "F16FE",
+  "aliases": ["slate-open-cog-outline", "clapperboard-open-cog-outline", "film-open-cog-outline"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "BC0C6C6B-C6BE-4E96-BFAF-782866BCF8C2",
+  "name": "movie-open-edit",
+  "codepoint": "F16FF",
+  "aliases": ["slate-open-edit", "clapperboard-open-edit", "film-open-edit"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "83B13E8A-4202-47CF-B67E-34335B0E5B29",
+  "name": "movie-open-edit-outline",
+  "codepoint": "F1700",
+  "aliases": ["slate-open-edit-outline", "clapperboard-open-edit-outline", "film-open-edit-outline"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "6AF20375-5B60-41D4-B63C-7572F590741C",
+  "name": "movie-open-minus",
+  "codepoint": "F1701",
+  "aliases": ["slate-open-minus", "clapperboard-open-minus", "film-open-minus"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "61DDE079-6865-4609-B2F6-2770A3A039E1",
+  "name": "movie-open-minus-outline",
+  "codepoint": "F1702",
+  "aliases": ["slate-open-minus-outline", "clapperboard-open-minus-outline", "film-open-minus-outline"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "A58F23CF-24CA-42B3-B877-FA9DEA317A3B",
+  "name": "movie-open-off",
+  "codepoint": "F1703",
+  "aliases": ["slate-open-off", "clapperboard-open-off", "film-open-off"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "AF946982-D5F6-4E17-8B0A-B091A873F86E",
+  "name": "movie-open-off-outline",
+  "codepoint": "F1704",
+  "aliases": ["slate-open-off-outline", "clapperboard-open-off-outline", "film-open-off-outline"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
 }, {
   "id": "17E4DACC-FDBF-4206-9F03-428157B91803",
   "name": "movie-open-outline",
@@ -29910,6 +30347,86 @@
   "author": "GreenTurtwig",
   "version": "4.0.96"
 }, {
+  "id": "F3CB37FD-2C97-4CD1-83C0-18677B81DAC6",
+  "name": "movie-open-play",
+  "codepoint": "F1705",
+  "aliases": ["slate-open-play", "clapperboard-open-play", "film-open-play"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "C855F888-FB96-40F5-9346-6B7A993C960A",
+  "name": "movie-open-play-outline",
+  "codepoint": "F1706",
+  "aliases": ["slate-open-play-outline", "clapperboard-open-play-outline", "film-open-play-outline"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "C9068163-63A6-44B7-BE11-2FCE6B427CF6",
+  "name": "movie-open-plus",
+  "codepoint": "F1707",
+  "aliases": ["clapperboard-open-plus", "slate-open-plus", "flim-open-plus"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "A060D40D-A702-4EA0-9B66-95C31103C223",
+  "name": "movie-open-plus-outline",
+  "codepoint": "F1708",
+  "aliases": ["slate-open-plus-outline", "clapperboard-open-plus-outline", "film-open-plus-outline"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "1AA27DAA-CD6F-41C5-BB25-8860B368DC0B",
+  "name": "movie-open-remove",
+  "codepoint": "F1709",
+  "aliases": ["slate-open-remove", "clapperboard-open-remove", "film-open-remove"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "320C9DCC-5845-46F6-B3E6-412D22B8BF47",
+  "name": "movie-open-remove-outline",
+  "codepoint": "F170A",
+  "aliases": ["slate-open-remove-outline", "clapperboard-open-remove-outline", "film-open-remove-outline"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "FC6ECE54-744A-4A77-B032-897B24064048",
+  "name": "movie-open-settings",
+  "codepoint": "F170B",
+  "aliases": ["slate-open-settings", "clapperboard-open-settings", "film-open-settings"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "C481209F-DE3F-4D25-8C4F-0D21CB8D3385",
+  "name": "movie-open-settings-outline",
+  "codepoint": "F170C",
+  "aliases": ["slate-open-settings-outline", "clapperboard-open-settings-outline", "film-open-settings-outline"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "D370E43D-3692-4654-B67E-12AA40956EF3",
+  "name": "movie-open-star",
+  "codepoint": "F170D",
+  "aliases": ["slate-open-star", "clapperboard-open-star", "film-open-star"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "85F303FB-9847-450E-BF4B-7A38C86386AF",
+  "name": "movie-open-star-outline",
+  "codepoint": "F170E",
+  "aliases": ["slate-open-star-outline", "clapperboard-open-star-outline", "film-open-star-outline"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
   "id": "8198AA61-F267-4A56-B9D8-5D492B519545",
   "name": "movie-outline",
   "codepoint": "F0DDD",
@@ -29917,6 +30434,54 @@
   "tags": ["Video \/ Movie"],
   "author": "Google",
   "version": "3.5.94"
+}, {
+  "id": "44B019DA-A010-4B5F-AF03-61DBCC6206DD",
+  "name": "movie-play",
+  "codepoint": "F170F",
+  "aliases": ["slate-play", "clapperboard-play", "film-play"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "48071069-C2BD-4B35-97A1-0167DB7B1B13",
+  "name": "movie-play-outline",
+  "codepoint": "F1710",
+  "aliases": ["slate-play-outline", "clapperboard-play-outline", "film-play-outline"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "543E83B1-B4CD-4D26-9813-A7F23C44AC5F",
+  "name": "movie-plus",
+  "codepoint": "F1711",
+  "aliases": ["slate-plus", "clapperboard-plus", "film-plus"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "1171D3A1-94AD-4DF5-81E0-D7800C05A0AC",
+  "name": "movie-plus-outline",
+  "codepoint": "F1712",
+  "aliases": ["slate-plus-outline", "clapperboard-plus-outline", "film-plus-outline"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "A55FA4A8-DD49-4A4E-8DC0-ED7979F2469B",
+  "name": "movie-remove",
+  "codepoint": "F1713",
+  "aliases": ["slate-remove", "clapperboard-remove", "film-remove"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "6FC268E0-F315-4818-B25F-0576DA4B9A84",
+  "name": "movie-remove-outline",
+  "codepoint": "F1714",
+  "aliases": ["slate-remove-outline", "clapperboard-remove-outline", "film-remove-outline"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
 }, {
   "id": "21D0F9FB-6814-4CE7-B37D-FC97EBF1D0D2",
   "name": "movie-roll",
@@ -29941,6 +30506,38 @@
   "tags": [],
   "author": "frankgrinaert",
   "version": "4.5.95"
+}, {
+  "id": "0A90A107-BB52-4DBA-BC4F-E285D87EB4DF",
+  "name": "movie-settings",
+  "codepoint": "F1715",
+  "aliases": ["slate-settings", "clapperboard-settings", "film-settings"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "D90C8E93-5B99-4604-A597-5DA45FC3CEB2",
+  "name": "movie-settings-outline",
+  "codepoint": "F1716",
+  "aliases": ["slate-settings-outline", "clapperboard-settings-outline", "film-settings-outline"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "07D0534A-0D01-428A-8915-0C3930BE8C41",
+  "name": "movie-star",
+  "codepoint": "F1717",
+  "aliases": ["slate-star", "clapperboard-star", "film-star"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "31542EFD-68FE-435F-8B00-1BDFB218D9E2",
+  "name": "movie-star-outline",
+  "codepoint": "F1718",
+  "aliases": ["slate-star-outline", "clapperboard-star-outline", "film-star-outline"],
+  "tags": ["Video \/ Movie"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
 }, {
   "id": "27842852-CDEB-4575-AAEB-D7F15F0928F8",
   "name": "mower",
@@ -34639,6 +35236,14 @@
   "author": "Simran",
   "version": "1.5.54"
 }, {
+  "id": "F2AC4968-73F6-4D91-BF2B-D8653E6863E2",
+  "name": "projector-screen-outline",
+  "codepoint": "F1724",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "5.9.55"
+}, {
   "id": "F6911BCA-14B1-4DD4-9407-20E138FAB878",
   "name": "propane-tank",
   "codepoint": "F1357",
@@ -36159,6 +36764,22 @@
   "author": "Colton Wiscombe",
   "version": "5.8.55"
 }, {
+  "id": "6AE4D050-1B64-4AAB-B57B-DD738276E82F",
+  "name": "robot-happy",
+  "codepoint": "F1719",
+  "aliases": [],
+  "tags": [],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "62023A79-6DF7-4B3B-BDCA-FEEAE73C9F89",
+  "name": "robot-happy-outline",
+  "codepoint": "F171A",
+  "aliases": [],
+  "tags": [],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
   "id": "C008FBCE-4D0A-4003-8811-FF15D08C3313",
   "name": "robot-industrial",
   "codepoint": "F0B46",
@@ -36674,7 +37295,7 @@
   "id": "438888DA-342B-4861-95EA-026A3F4E2F95",
   "name": "safety-goggles",
   "codepoint": "F0D30",
-  "aliases": [],
+  "aliases": ["safety-glasses"],
   "tags": ["Science"],
   "author": "Michael Irigoyen",
   "version": "3.3.92"
@@ -36983,6 +37604,22 @@
   "author": "Michael Irigoyen",
   "version": "3.0.39"
 }, {
+  "id": "2789A595-8195-448F-BD8A-2FB71B712BD8",
+  "name": "script-text-key",
+  "codepoint": "F1725",
+  "aliases": [],
+  "tags": [],
+  "author": "Contributors",
+  "version": "5.9.55"
+}, {
+  "id": "1343F1A4-86DB-432D-BE9D-F3EFEB1321F8",
+  "name": "script-text-key-outline",
+  "codepoint": "F1726",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "5.9.55"
+}, {
   "id": "DF9F9175-8E37-4241-8AFD-360606A444A5",
   "name": "script-text-outline",
   "codepoint": "F0BC3",
@@ -36990,6 +37627,22 @@
   "tags": ["Gaming \/ RPG"],
   "author": "Austin Andrews",
   "version": "3.0.39"
+}, {
+  "id": "0F931BB6-3336-430E-85C2-9EDEDCC4E9B4",
+  "name": "script-text-play",
+  "codepoint": "F1727",
+  "aliases": [],
+  "tags": [],
+  "author": "Contributors",
+  "version": "5.9.55"
+}, {
+  "id": "7357F674-281E-49F1-8161-424877AC6DD3",
+  "name": "script-text-play-outline",
+  "codepoint": "F1728",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "5.9.55"
 }, {
   "id": "68B68EDB-6CDA-4488-A213-5E6DF4146EA6",
   "name": "sd",
@@ -40383,6 +41036,22 @@
   "author": "Colton Wiscombe",
   "version": "5.7.55"
 }, {
+  "id": "18267D80-A569-4013-84F4-7024F3990F47",
+  "name": "star-shooting",
+  "codepoint": "F1741",
+  "aliases": [],
+  "tags": [],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "27A6F1B6-E095-494B-8CC7-660695DC6E70",
+  "name": "star-shooting-outline",
+  "codepoint": "F1742",
+  "aliases": [],
+  "tags": [],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
   "id": "815B35DE-0C4D-46AD-90EC-2AFEE0A5FC17",
   "name": "star-three-points",
   "codepoint": "F0AE4",
@@ -40831,6 +41500,14 @@
   "author": "Austin Andrews",
   "version": "2.0.46"
 }, {
+  "id": "901A06AA-7C77-43B3-90CD-10B329C42DB7",
+  "name": "surround-sound-2-1",
+  "codepoint": "F1729",
+  "aliases": [],
+  "tags": [],
+  "author": "GreenTurtwig",
+  "version": "5.9.55"
+}, {
   "id": "4B744BE0-A739-44FF-ADA6-CFC9BC520B1D",
   "name": "surround-sound-3-1",
   "codepoint": "F07F1",
@@ -40846,6 +41523,14 @@
   "tags": ["Audio"],
   "author": "Austin Andrews",
   "version": "2.0.46"
+}, {
+  "id": "0CA5BC19-D66A-4126-B2DB-A90546826760",
+  "name": "surround-sound-5-1-2",
+  "codepoint": "F172A",
+  "aliases": [],
+  "tags": [],
+  "author": "GreenTurtwig",
+  "version": "5.9.55"
 }, {
   "id": "BC85CD47-E52C-4A7D-8E05-DD45596C5822",
   "name": "surround-sound-7-1",
@@ -41383,6 +42068,14 @@
   "author": "Michael Irigoyen",
   "version": "5.1.45"
 }, {
+  "id": "68ABC903-3D76-4C38-8165-4DB5F0353A20",
+  "name": "table-picnic",
+  "codepoint": "F1743",
+  "aliases": [],
+  "tags": [],
+  "author": "Jeff Hilnbrand",
+  "version": "5.9.55"
+}, {
   "id": "4547E3CF-042C-431F-8B99-4DBE22F1ADEC",
   "name": "table-plus",
   "codepoint": "F0A75",
@@ -41551,6 +42244,70 @@
   "tags": [],
   "author": "Google",
   "version": "1.5.54"
+}, {
+  "id": "141B8C02-DA96-4054-AA99-C83CF2B10118",
+  "name": "tag-arrow-down",
+  "codepoint": "F172B",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "5.9.55"
+}, {
+  "id": "8C304479-B37A-4837-8887-F4880359C9BB",
+  "name": "tag-arrow-down-outline",
+  "codepoint": "F172C",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "5.9.55"
+}, {
+  "id": "56E3ECFD-CE76-4CE2-9075-7673ABEA78D1",
+  "name": "tag-arrow-left",
+  "codepoint": "F172D",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "5.9.55"
+}, {
+  "id": "BCD665AC-5B08-4E99-8BF4-7F43030447F6",
+  "name": "tag-arrow-left-outline",
+  "codepoint": "F172E",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "5.9.55"
+}, {
+  "id": "98AEA4C4-D0E2-4B94-9EE3-47F97A7AFC0D",
+  "name": "tag-arrow-right",
+  "codepoint": "F172F",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "5.9.55"
+}, {
+  "id": "B9FED1D0-B219-4483-A30E-AA201561DCB4",
+  "name": "tag-arrow-right-outline",
+  "codepoint": "F1730",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "5.9.55"
+}, {
+  "id": "5040B027-3283-413C-8424-E2E02108E69D",
+  "name": "tag-arrow-up",
+  "codepoint": "F1731",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "5.9.55"
+}, {
+  "id": "A632F2B8-4D1B-4F60-AB06-EB79D45E13A3",
+  "name": "tag-arrow-up-outline",
+  "codepoint": "F1732",
+  "aliases": [],
+  "tags": [],
+  "author": "Michael Irigoyen",
+  "version": "5.9.55"
 }, {
   "id": "5DCE0F4D-F740-4D9A-AC93-281D3477E9AF",
   "name": "tag-faces",
@@ -43132,7 +43889,7 @@
   "id": "B6E1232A-3A43-4200-BE34-1BC436B34BF1",
   "name": "train",
   "codepoint": "F052C",
-  "aliases": ["directions-railway"],
+  "aliases": ["directions-railway", "locomotive", "railroad"],
   "tags": ["Navigation", "Transportation + Other"],
   "author": "Google",
   "version": "1.5.54"
@@ -43145,10 +43902,42 @@
   "author": "Google",
   "version": "3.0.39"
 }, {
+  "id": "04821E67-5037-46E7-8F5E-740C7EBFAC1D",
+  "name": "train-car-passenger",
+  "codepoint": "F1733",
+  "aliases": [],
+  "tags": ["Transportation + Other"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "9F9E31CB-361B-40D6-8754-157401124ED2",
+  "name": "train-car-passenger-door",
+  "codepoint": "F1734",
+  "aliases": [],
+  "tags": ["Transportation + Other"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "042CE4C4-087F-49EC-9F67-A5467318C068",
+  "name": "train-car-passenger-door-open",
+  "codepoint": "F1735",
+  "aliases": [],
+  "tags": ["Transportation + Other"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
+  "id": "1A9FFFAE-5581-4E22-B87C-3798A9E97FD1",
+  "name": "train-car-passenger-variant",
+  "codepoint": "F1736",
+  "aliases": [],
+  "tags": ["Transportation + Other"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
   "id": "C0A4E604-3829-4605-A7BC-CA0BFF138B18",
   "name": "train-variant",
   "codepoint": "F08C4",
-  "aliases": [],
+  "aliases": ["locomotive-variant", "railroad-variant"],
   "tags": ["Transportation + Other"],
   "author": "Google",
   "version": "2.2.43"
@@ -43652,7 +44441,7 @@
   "id": "B1F7C2ED-4017-4162-A4C7-31D8761D8DC3",
   "name": "tune",
   "codepoint": "F062E",
-  "aliases": ["mixer-settings", "equaliser"],
+  "aliases": ["mixer-settings", "equaliser", "settings"],
   "tags": ["Settings", "Audio"],
   "author": "Google",
   "version": "1.6.50"
@@ -43660,7 +44449,7 @@
   "id": "B0AFC3B0-B718-407F-A51C-F4D932D7FCB2",
   "name": "tune-variant",
   "codepoint": "F1542",
-  "aliases": [],
+  "aliases": ["settings", "equalizer"],
   "tags": ["Audio"],
   "author": "Colton Wiscombe",
   "version": "5.4.55"
@@ -43668,7 +44457,7 @@
   "id": "AB147073-9D20-4DA1-A108-3856FC1764C1",
   "name": "tune-vertical",
   "codepoint": "F066A",
-  "aliases": ["equaliser-vertical", "instant-mix"],
+  "aliases": ["equaliser-vertical", "instant-mix", "settings-vertical", "mixer-settings-vertical"],
   "tags": ["Settings", "Audio"],
   "author": "Google",
   "version": "1.6.50"
@@ -43676,10 +44465,18 @@
   "id": "FF706504-28DF-4752-BD75-E50FFE794421",
   "name": "tune-vertical-variant",
   "codepoint": "F1543",
-  "aliases": [],
+  "aliases": ["settings-vertical", "equalizer-vertical"],
   "tags": ["Audio"],
   "author": "Colton Wiscombe",
   "version": "5.4.55"
+}, {
+  "id": "2BD0CF2B-70B8-4CFB-9350-A613C189EE7D",
+  "name": "turkey",
+  "codepoint": "F171B",
+  "aliases": ["thanksgiving"],
+  "tags": ["Animal", "Holiday"],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
 }, {
   "id": "40E06CC0-82EE-4EE0-976B-C6388BBFDD9D",
   "name": "turnstile",
@@ -45889,6 +46686,14 @@
   "author": "Chris Litherland",
   "version": "1.5.54"
 }, {
+  "id": "F8D156C4-16AA-47AD-B06B-970E27F30FE6",
+  "name": "webcam-off",
+  "codepoint": "F1737",
+  "aliases": [],
+  "tags": [],
+  "author": "Colton Wiscombe",
+  "version": "5.9.55"
+}, {
   "id": "5B415522-B2A4-4D34-BEE3-D81D607BBD0B",
   "name": "webhook",
   "codepoint": "F062F",
@@ -45948,7 +46753,7 @@
   "id": "4ECFBE4E-52B2-4A60-BD6C-9B7DAB38E7A5",
   "name": "weight-lifter",
   "codepoint": "F115D",
-  "aliases": ["barbell", "crossfit"],
+  "aliases": ["crossfit", "gym", "fitness-center", "human-barbell"],
   "tags": ["Sport"],
   "author": "Michael Irigoyen",
   "version": "4.4.95"
