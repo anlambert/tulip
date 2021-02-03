@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -142,6 +142,8 @@ GraphHierarchiesEditor::GraphHierarchiesEditor(QWidget *parent)
   _ui->actionClone_sibling_with_properties->setIcon(
       FontIconManager::icon(MaterialDesignIcons::Tournament, 1.0, -90));
   _ui->actionExpand_hierarchy->setIcon(FontIconManager::icon(MaterialDesignIcons::FileTree));
+  _ui->actionCollapse_hierarchy->setIcon(
+      FontIconManager::icon(MaterialDesignIcons::ArrowCollapseUp));
 
   QToolButton *linkButton = new QToolButton();
   linkButton->setObjectName("linkButton");
