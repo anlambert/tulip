@@ -246,14 +246,14 @@ void GraphHierarchiesEditor::clicked(const QModelIndex &index) {
   _contextGraph = nullptr;
 }
 
-void GraphHierarchiesEditor::doubleClicked(const QModelIndex &index) {
+void GraphHierarchiesEditor::doubleClicked(const QModelIndex &idx) {
+  QModelIndex index = idx.sibling(idx.row(), 0);
   if (!index.isValid() || index.internalPointer() == nullptr) {
     return;
   }
-
   _contextGraph = index.data(tlp::Model::GraphRole).value<tlp::Graph *>();
   _model->setCurrentGraph(_contextGraph);
-  createPanel();
+  _ui->hierarchiesTree->setAllHierarchyVisible(index, !_ui->hierarchiesTree->isExpanded(index));
   _contextGraph = nullptr;
 }
 
