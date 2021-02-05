@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -11,7 +11,7 @@
  *
  */
 
-#include <map>
+#include <QMap>
 
 #include <talipot/Node.h>
 #include <talipot/Edge.h>
@@ -23,15 +23,15 @@
 #include <talipot/ViewSettings.h>
 #include <talipot/EdgeExtremityGlyph.h>
 #include <talipot/Camera.h>
+#include <talipot/TlpQtTools.h>
 
 using namespace tlp;
 using namespace std;
 
-QPixmap GlyphRenderer::render(int glyphId) {
-  static std::unordered_map<int, QPixmap> previews;
-  static bool inited = false;
-  if (!inited) {
-    inited = true;
+QPixmap GlyphRenderer::render(int glyphId, const QColor &backgroundColor) {
+  QString glyphKey = QString::number(glyphId) + backgroundColor.name();
+  static QMap<QString, QPixmap> previews;
+  if (!previews.contains(glyphKey)) {
     // Init graph parameters.
     GlGraphRenderingParameters parameters;
     auto graph = newGraph();
@@ -42,41 +42,38 @@ QPixmap GlyphRenderer::render(int glyphId) {
       GlGraphInputData inputData(graph, &parameters);
       inputData.getElementSize()->setAllNodeValue(Size(1, 1, 1));
       inputData.getElementColor()->setAllNodeValue(Color(192, 192, 192));
-      inputData.getElementBorderColor()->setAllNodeValue(Color(0, 0, 0));
+      inputData.getElementBorderColor()->setAllNodeValue(QColorToColor(textColor()));
       inputData.getElementBorderWidth()->setAllNodeValue(1);
 
       GlOffscreenRenderer &renderer = GlOffscreenRenderer::instance();
       renderer.setViewPortSize(16, 16);
       renderer.clearScene();
+      renderer.setSceneBackgroundColor(QColorToColor(backgroundColor));
       renderer.addGraphToScene(graph);
       renderer.getScene()->centerScene();
       renderer.getScene()->getGraphCamera().setZoomFactor(0.9);
       // init previews
-      for (const std::string &glyphName : PluginsManager::availablePlugins<Glyph>()) {
+      for (const string &glyphName : PluginsManager::availablePlugins<Glyph>()) {
         auto glId = GlyphManager::glyphId(glyphName);
         // Create the glyph preview
         graph->getIntegerProperty("viewShape")->setNodeValue(node, glId);
         renderer.renderScene(false, true);
-        previews[glId] = QPixmap::fromImage(renderer.getImage());
+        QString glKey = QString::number(glId) + backgroundColor.name();
+        previews[glKey] = QPixmap::fromImage(renderer.getImage());
       }
       renderer.clearScene(true);
     }
     // graph is no longer needed
     delete graph;
   }
-  auto it = previews.find(glyphId);
-  if (it == previews.end()) {
-    return QPixmap();
-  }
-  return it->second;
+  return previews[glyphKey];
 }
 
-QPixmap EdgeExtremityGlyphRenderer::render(int glyphId) {
-  static std::unordered_map<int, QPixmap> previews;
-  static bool inited = false;
-  if (!inited) {
-    inited = true;
-    previews[EdgeExtremityShape::None] = QPixmap();
+QPixmap EdgeExtremityGlyphRenderer::render(int glyphId, const QColor &backgroundColor) {
+  static QMap<QString, QPixmap> previews;
+  QString glyphKey = QString::number(glyphId) + backgroundColor.name();
+  if (!previews.contains(glyphKey)) {
+    previews[QString::number(EdgeExtremityShape::None) + backgroundColor.name()] = QPixmap();
     // Init graph parameters.
     GlGraphRenderingParameters parameters;
     auto graph = newGraph();
@@ -87,13 +84,12 @@ QPixmap EdgeExtremityGlyphRenderer::render(int glyphId) {
       // need a block to ensure inputData
       // will be destroyed before graph
       GlGraphInputData inputData(graph, &parameters);
-      Color white = {255, 255, 255, 0}, black = {0, 0, 0, 0};
       inputData.getElementSize()->setAllNodeValue(Size(0.01f, 0.2f, 0.1f));
       inputData.getElementSize()->setAllEdgeValue(Size(0.125f, 0.125f, 0.125f));
-      inputData.getElementColor()->setAllNodeValue(white);
-      inputData.getElementBorderColor()->setAllNodeValue(white);
+      inputData.getElementColor()->setAllNodeValue(QColorToColor(tlp::backgroundColor()));
+      inputData.getElementBorderColor()->setAllNodeValue(QColorToColor(tlp::backgroundColor()));
       inputData.getElementColor()->setAllEdgeValue(Color(192, 192, 192));
-      inputData.getElementBorderColor()->setAllEdgeValue(black);
+      inputData.getElementBorderColor()->setAllEdgeValue(QColorToColor(textColor()));
       inputData.getElementLayout()->setNodeValue(n1, Coord(0, 0, 0));
       inputData.getElementLayout()->setNodeValue(n2, Coord(0.3f, 0, 0));
       vector<Coord> bends;
@@ -106,6 +102,7 @@ QPixmap EdgeExtremityGlyphRenderer::render(int glyphId) {
       GlOffscreenRenderer &renderer = GlOffscreenRenderer::instance();
       renderer.setViewPortSize(16, 16);
       renderer.clearScene();
+      renderer.setSceneBackgroundColor(QColorToColor(backgroundColor));
       renderer.addGraphToScene(graph);
       GlGraphRenderingParameters renderingParamerters =
           renderer.getScene()->getGlGraphComposite()->getRenderingParameters();
@@ -114,22 +111,20 @@ QPixmap EdgeExtremityGlyphRenderer::render(int glyphId) {
       renderingParamerters.setViewArrow(true);
       renderer.getScene()->getGlGraphComposite()->setRenderingParameters(renderingParamerters);
       // init previews
-      for (std::string glyphName : PluginsManager::availablePlugins<EdgeExtremityGlyph>()) {
-        const tlp::Plugin &info = PluginsManager::pluginInformation(glyphName);
+      for (string glyphName : PluginsManager::availablePlugins<EdgeExtremityGlyph>()) {
+        const Plugin &info = PluginsManager::pluginInformation(glyphName);
         int glId = info.id();
         // Create the glyph preview
         graph->getIntegerProperty("viewTgtAnchorShape")->setEdgeValue(e, glId);
         renderer.renderScene(true);
-        previews[glId] = QPixmap::fromImage(renderer.getImage());
+        QString glKey = QString::number(glId) + backgroundColor.name();
+        previews[glKey] = QPixmap::fromImage(renderer.getImage());
       }
       renderer.clearScene(true);
     }
     // graph is no longer needed
     delete graph;
   }
-  auto it = previews.find(glyphId);
-  if (it == previews.end()) {
-    return QPixmap();
-  }
-  return it->second;
+
+  return previews[glyphKey];
 }

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -671,7 +671,7 @@ QWidget *NodeShapeEditorCreator::createWidget(QWidget *parent) const {
 
   for (const auto &glyph : glyphs) {
     QString shapeName = tlpStringToQString(glyph);
-    QPixmap pixmap = GlyphRenderer::render(GlyphManager::glyphId(glyph));
+    QPixmap pixmap = GlyphRenderer::render(GlyphManager::glyphId(glyph), backgroundColor());
     shapes.push_back({shapeName, pixmap});
   }
 
@@ -698,7 +698,8 @@ QString NodeShapeEditorCreator::displayText(const QVariant &data) const {
 QSize NodeShapeEditorCreator::sizeHint(const QStyleOptionViewItem &option,
                                        const QModelIndex &index) const {
   QVariant data = index.model()->data(index);
-  static QPixmap pixmap = GlyphRenderer::render(data.value<NodeShape::NodeShapes>());
+  static QPixmap pixmap =
+      GlyphRenderer::render(data.value<NodeShape::NodeShapes>(), backgroundColor());
   QFontMetrics fontMetrics(option.font);
   return QSize(pixmap.width() + fontMetrics.boundingRect(displayText(data)).width() + 20,
                pixmap.height());
@@ -708,7 +709,9 @@ bool NodeShapeEditorCreator::paint(QPainter *painter, const QStyleOptionViewItem
                                    const QVariant &data, const QModelIndex &index) const {
   ItemEditorCreator::paint(painter, option, data, index);
 
-  QPixmap pixmap = GlyphRenderer::render(data.value<NodeShape::NodeShapes>());
+  QPixmap pixmap = GlyphRenderer::render(data.value<NodeShape::NodeShapes>(),
+                                         (index.row() % 2) ? option.palette.alternateBase().color()
+                                                           : option.palette.base().color());
 
   QStyleOptionViewItem opt = option;
   opt.features |= QStyleOptionViewItem::HasDecoration;
@@ -735,7 +738,8 @@ QWidget *EdgeExtremityShapeEditorCreator::createWidget(QWidget *parent) const {
 
   for (const auto &glyph : glyphs) {
     QString shapeName = tlpStringToQString(glyph);
-    QPixmap pixmap = EdgeExtremityGlyphRenderer::render(EdgeExtremityGlyphManager::glyphId(glyph));
+    QPixmap pixmap = EdgeExtremityGlyphRenderer::render(EdgeExtremityGlyphManager::glyphId(glyph),
+                                                        backgroundColor());
     shapes.push_back({shapeName, pixmap});
   }
 
@@ -768,8 +772,9 @@ bool EdgeExtremityShapeEditorCreator::paint(QPainter *painter, const QStyleOptio
                                             const QVariant &data, const QModelIndex &index) const {
   ItemEditorCreator::paint(painter, option, data, index);
 
-  QPixmap pixmap =
-      EdgeExtremityGlyphRenderer::render(data.value<EdgeExtremityShape::EdgeExtremityShapes>());
+  QPixmap pixmap = EdgeExtremityGlyphRenderer::render(
+      data.value<EdgeExtremityShape::EdgeExtremityShapes>(),
+      (index.row() % 2) ? option.palette.alternateBase().color() : option.palette.base().color());
 
   QStyleOptionViewItem opt = option;
   opt.features |= QStyleOptionViewItem::HasDecoration;
@@ -786,8 +791,8 @@ bool EdgeExtremityShapeEditorCreator::paint(QPainter *painter, const QStyleOptio
 QSize EdgeExtremityShapeEditorCreator::sizeHint(const QStyleOptionViewItem &option,
                                                 const QModelIndex &index) const {
   QVariant data = index.model()->data(index);
-  static QPixmap pixmap =
-      EdgeExtremityGlyphRenderer::render(data.value<EdgeExtremityShape::EdgeExtremityShapes>());
+  static QPixmap pixmap = EdgeExtremityGlyphRenderer::render(
+      data.value<EdgeExtremityShape::EdgeExtremityShapes>(), backgroundColor());
   QFontMetrics fontMetrics(option.font);
   return QSize(pixmap.width() + fontMetrics.boundingRect(displayText(data)).width() + 40,
                pixmap.height());
