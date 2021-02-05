@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -387,11 +387,23 @@ void WorkspacePanel::actionChanged() {
 void WorkspacePanel::scrollInteractorsRight() {
   QScrollBar *scrollBar = _ui->scrollArea->horizontalScrollBar();
   scrollBar->setSliderPosition(scrollBar->sliderPosition() + scrollBar->singleStep());
+  if (scrollBar->sliderPosition() == scrollBar->maximum()) {
+    _ui->interactorsRight->setEnabled(false);
+  }
+  if (scrollBar->sliderPosition() > scrollBar->minimum()) {
+    _ui->interactorsLeft->setEnabled(true);
+  }
 }
 
 void WorkspacePanel::scrollInteractorsLeft() {
   QScrollBar *scrollBar = _ui->scrollArea->horizontalScrollBar();
   scrollBar->setSliderPosition(scrollBar->sliderPosition() - scrollBar->singleStep());
+  if (scrollBar->sliderPosition() < scrollBar->maximum()) {
+    _ui->interactorsRight->setEnabled(true);
+  }
+  if (scrollBar->sliderPosition() == scrollBar->minimum()) {
+    _ui->interactorsLeft->setEnabled(false);
+  }
 }
 
 void WorkspacePanel::resetInteractorsScrollButtonsVisibility() {
@@ -399,6 +411,8 @@ void WorkspacePanel::resetInteractorsScrollButtonsVisibility() {
   bool interactorScrollBtnVisible = scrollBar->minimum() != scrollBar->maximum();
   _ui->interactorsLeft->setVisible(interactorScrollBtnVisible);
   _ui->interactorsRight->setVisible(interactorScrollBtnVisible);
+  _ui->interactorsRight->setEnabled(scrollBar->sliderPosition() != scrollBar->maximum());
+  _ui->interactorsLeft->setEnabled(scrollBar->sliderPosition() != scrollBar->minimum());
 }
 
 void WorkspacePanel::setGraphsModel(tlp::GraphHierarchiesModel *model) {
