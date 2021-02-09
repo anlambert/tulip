@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -21,6 +21,7 @@
 #include <QComboBox>
 #include <QPainter>
 #include <QDoubleSpinBox>
+#include <QKeyEvent>
 
 #include <talipot/DataSet.h>
 #include <talipot/VectorEditor.h>
@@ -105,9 +106,25 @@ QVariant LineEditEditorCreator<T>::editorData(QWidget *editor, tlp::Graph *) {
   return result;
 }
 
+class MultiLineTextEdit : public QTextEdit {
+public:
+  MultiLineTextEdit(QWidget *parent) : QTextEdit(parent) {}
+
+  void keyPressEvent(QKeyEvent *event) override {
+    // only insert a line break when hitting return key with a modifier,
+    // validate entered text otherwise
+    if (event->key() == Qt::Key_Return && event->modifiers() == Qt::NoModifier) {
+      close();
+      static_cast<QWidget *>(parent())->setFocus(Qt::MouseFocusReason);
+    } else {
+      QTextEdit::keyPressEvent(event);
+    }
+  }
+};
+
 template <typename T>
 QWidget *MultiLinesEditEditorCreator<T>::createWidget(QWidget *parent) const {
-  QTextEdit *edit = new QTextEdit(parent);
+  QTextEdit *edit = new MultiLineTextEdit(parent);
   edit->setFocusPolicy(Qt::StrongFocus);
   edit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   edit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
