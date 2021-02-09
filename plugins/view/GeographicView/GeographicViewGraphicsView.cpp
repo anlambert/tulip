@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -426,6 +426,7 @@ GeographicViewGraphicsView::GeographicViewGraphicsView(GeographicView *geoView,
   leafletMaps = new LeafletMaps();
   leafletMaps->setMouseTracking(false);
   leafletMaps->resize(512, 512);
+  leafletMaps->installEventFilter(this);
   progressWidget = new ProgressWidgetGraphicsProxy();
   progressWidget->hide();
   progressWidget->setZValue(2);
@@ -1315,6 +1316,14 @@ void GeographicViewGraphicsView::updateMapTexture() {
   fboPainter.drawImage(QRect(0, 0, width, height), image);
   fboPainter.end();
   renderFbo->release();
+}
+
+bool GeographicViewGraphicsView::eventFilter(QObject *, QEvent *e) {
+  if (e->type() == QEvent::ContextMenu) {
+    _geoView->showContextMenu(QCursor::pos(), static_cast<QContextMenuEvent *>(e)->pos());
+    return true;
+  }
+  return false;
 }
 
 }
