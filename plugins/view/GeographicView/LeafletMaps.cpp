@@ -23,133 +23,134 @@ using namespace std;
 
 namespace tlp {
 
-const string htmlMap =
-    ""
-    "<html>"
-    "<head>"
+static const QString htmlMap =
+    QString(R"(
+<html>
+<head>
+)") +
 #ifdef QT_HAS_WEBENGINE
-    "<script type=\"text/javascript\" src=\"qrc:///qtwebchannel/qwebchannel.js\"></script>"
+    R"(<script type="text/javascript" src="qrc:///qtwebchannel/qwebchannel.js"></script>)" +
 #endif
-    "<link rel=\"stylesheet\" href=\"qrc:///talipot/view/geographic/leaflet/leaflet.css\" />"
-    "<script src=\"qrc:///talipot/view/geographic/leaflet/leaflet.js\"></script>"
-    "<script type=\"text/javascript\">"
-    "var map;"
-    "var mapBounds;"
-    "var osm;"
-    "var esriSatellite;"
-    "var esriTerrain;"
-    "var esriGrayCanvas;"
-    "var currentLayer;"
-    "function refreshMap() {"
-    "  leafletMapsQObject.refreshMap();"
-    "}"
-    "function refreshMapWithDelay() {"
-    "  setTimeout(function() {"
-    "    leafletMapsQObject.refreshMap();"
-    "  }, 500);"
-    "}"
-    "function addEventHandlersToLayer(layer) {"
-    "  layer.on('tileload', refreshMapWithDelay);"
-    "  layer.on('load', refreshMapWithDelay);"
-    "}"
-    "function init(lat, lng, zoom) { "
-    "  map = L.map('map_canvas', {"
-    "    zoomControl: false"
-    "  });"
-    "  osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {"
-    "     attribution: '&copy; <a "
-    "href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors'"
-    "  });"
-    "  addEventHandlersToLayer(osm);"
-    "  osm.addTo(map);"
-    "  esriSatellite = "
-    "    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/"
-    "tile/{z}/{y}/{x}', {"
-    "      attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, "
-    "Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'"
-    "  });"
-    "  addEventHandlersToLayer(esriSatellite);"
-    "  esriTerrain = "
-    "    "
-    "L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/"
-    "tile/{z}/{y}/{x}', {"
-    "      attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, "
-    "USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China "
-    "(Hong Kong), and the GIS User Community'"
-    "  });"
-    "  addEventHandlersToLayer(esriTerrain);"
-    "  esriGrayCanvas = "
-    "    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/"
-    "World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {"
-    "      attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',"
-    "      maxZoom: 16"
-    "  });"
-    "  addEventHandlersToLayer(esriGrayCanvas);"
-    "  currentLayer = osm;"
-    "  map.setView(L.latLng(lat, lng), zoom);"
-    "  map.on('zoomstart', refreshMap);"
-    "  map.on('zoom', refreshMap);"
-    "  map.on('zoomend', refreshMap);"
-    "  map.on('movestart', refreshMap);"
-    "  map.on('move', refreshMap);"
-    "  map.on('moveend', refreshMap);"
-    "}"
-    "function setMapBounds(latLngArray) {"
-    "  var latLngBounds = L.latLngBounds();"
-    "  for (var i = 0 ; i < latLngArray.length ; ++i) {"
-    "    latLngBounds.extend(latLngArray[i]);"
-    "  }"
-    "  map.flyToBounds(latLngBounds);"
-    "}"
-    "function switchToOpenStreetMap() {"
-    "  map.removeLayer(currentLayer);"
-    "  map.addLayer(osm);"
-    "  currentLayer = osm;"
-    "  refreshMap();"
-    "}"
-    "function switchToEsriSatellite() {"
-    "  map.removeLayer(currentLayer);"
-    "  map.addLayer(esriSatellite);"
-    "  currentLayer = esriSatellite;"
-    "  refreshMap();"
-    "}"
-    "function switchToEsriTerrain() {"
-    "  map.removeLayer(currentLayer);"
-    "  map.addLayer(esriTerrain);"
-    "  currentLayer = esriTerrain;"
-    "  refreshMap();"
-    "}"
-    "function switchToEsriGrayCanvas() {"
-    "  map.removeLayer(currentLayer);"
-    "  map.addLayer(esriGrayCanvas);"
-    "  currentLayer = esriGrayCanvas;"
-    "  refreshMap();"
-    "}"
-    "function switchToCustomTileLayer(customTileLayerUrl) {"
-    "  map.removeLayer(currentLayer);"
-    "  var customTileLayer = L.tileLayer(customTileLayerUrl, {"
-    "      attribution: customTileLayerUrl,"
-    "      errorTileUrl: 'qrc:///talipot/view/geographic/leaflet/no-tile.png'"
-    "  });"
-    "  addEventHandlersToLayer(customTileLayer);"
-    "  map.addLayer(customTileLayer);"
-    "  currentLayer = customTileLayer;"
-    "  refreshMap();"
-    "}"
+    R"(
+<link rel="stylesheet" href="qrc:///talipot/view/geographic/leaflet/leaflet.css" />
+<script src="qrc:///talipot/view/geographic/leaflet/leaflet.js"></script>
+<script type="text/javascript">
+var map;
+var mapBounds;
+var osm;
+var esriSatellite;
+var esriTerrain;
+var esriGrayCanvas;
+var currentLayer;
+var esriBaseUrl = 'https://server.arcgisonline.com/ArcGIS/rest/services/';
+function refreshMap() {
+  leafletMapsQObject.refreshMap();
+}
+function refreshMapWithDelay() {
+  setTimeout(function() {
+    leafletMapsQObject.refreshMap();
+  }, 500);
+}
+function addEventHandlersToLayer(layer) {
+  layer.on('tileload', refreshMapWithDelay);
+  layer.on('load', refreshMapWithDelay);
+}
+function init(lat, lng, zoom) {
+  map = L.map('map_canvas', {
+    zoomControl: false
+  });
+  osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <ahref="https://www.openstreetmap.org/copyright">' +
+                 'OpenStreetMap</a> contributors'
+  });
+  addEventHandlersToLayer(osm);
+  osm.addTo(map);
+  esriSatellite = L.tileLayer(esriBaseUrl + 'World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, ' +
+                  'Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+  });
+  addEventHandlersToLayer(esriSatellite);
+  esriTerrain = L.tileLayer(esriBaseUrl + 'World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, ' +
+                  'USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, ' +
+                  'METI, Esri China (Hong Kong), and the GIS User Community'
+  });
+  addEventHandlersToLayer(esriTerrain);
+  esriGrayCanvas = L.tileLayer(esriBaseUrl + 'Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+    maxZoom: 16
+  });
+  addEventHandlersToLayer(esriGrayCanvas);
+  currentLayer = osm;
+  map.setView(L.latLng(lat, lng), zoom);
+  map.on('zoomstart', refreshMap);
+  map.on('zoom', refreshMap);
+  map.on('zoomend', refreshMap);
+  map.on('movestart', refreshMap);
+  map.on('move', refreshMap);
+  map.on('moveend', refreshMap);
+}
+function setMapBounds(latLngArray) {
+  var latLngBounds = L.latLngBounds();
+  for (var i = 0 ; i < latLngArray.length ; ++i) {
+    latLngBounds.extend(latLngArray[i]);
+  }
+  map.flyToBounds(latLngBounds);
+}
+function switchToOpenStreetMap() {
+  map.removeLayer(currentLayer);
+  map.addLayer(osm);
+  currentLayer = osm;
+  refreshMap();
+}
+function switchToEsriSatellite() {
+  map.removeLayer(currentLayer);
+  map.addLayer(esriSatellite);
+  currentLayer = esriSatellite;
+  refreshMap();
+}
+function switchToEsriTerrain() {
+  map.removeLayer(currentLayer);
+  map.addLayer(esriTerrain);
+  currentLayer = esriTerrain;
+  refreshMap();
+}
+function switchToEsriGrayCanvas() {
+  map.removeLayer(currentLayer);
+  map.addLayer(esriGrayCanvas);
+  currentLayer = esriGrayCanvas;
+  refreshMap();
+}
+function switchToCustomTileLayer(customTileLayerUrl) {
+  map.removeLayer(currentLayer);
+  var customTileLayer = L.tileLayer(customTileLayerUrl, {
+      attribution: customTileLayerUrl,
+      errorTileUrl: 'qrc:///talipot/view/geographic/leaflet/no-tile.png'
+  });
+  addEventHandlersToLayer(customTileLayer);
+  map.addLayer(customTileLayer);
+  currentLayer = customTileLayer;
+  refreshMap();
+}
+)" +
 #ifdef QT_HAS_WEBENGINE
-    "document.addEventListener(\"DOMContentLoaded\", function () {"
-    "  new QWebChannel(qt.webChannelTransport, function (channel) {"
-    "    leafletMapsQObject = channel.objects.leafletMapsQObject;"
-    "    refreshMap();"
-    "  });"
-    "});"
+    R"(
+document.addEventListener("DOMContentLoaded", function () {
+  new QWebChannel(qt.webChannelTransport, function (channel) {
+    leafletMapsQObject = channel.objects.leafletMapsQObject;
+    refreshMap();
+  });
+});
+)" +
 #endif
-    "</script>"
-    "</head>"
-    "<body style=\"margin:0px; padding:0px;\" >"
-    "<div id=\"map_canvas\" style=\"width:100%; height:100%\"></div>"
-    "</body>"
-    "</html>";
+    R"(
+</script>
+</head>
+<body style="margin:0px; padding:0px;" >
+<div id="map_canvas" style="width:100%; height:100%"></div>
+</body>
+</html>
+)";
 
 #ifdef QT_HAS_WEBENGINE
 
@@ -166,7 +167,6 @@ LeafletMaps::LeafletMaps(QWidget *parent) : QWebView(parent), init(false) {
 #else
 LeafletMaps::LeafletMaps(QWidget *parent) : QWebEngineView(parent), init(false) {
 #endif
-  QString content(htmlMap.c_str());
 #ifdef QT_HAS_WEBKIT
   frame = page()->mainFrame();
   frame->setScrollBarPolicy(Qt::Vertical, Qt::ScrollBarAlwaysOff);
@@ -179,7 +179,7 @@ LeafletMaps::LeafletMaps(QWidget *parent) : QWebEngineView(parent), init(false) 
   frame->setWebChannel(channel);
   channel->registerObject(QStringLiteral("leafletMapsQObject"), mapRefresher);
 #endif
-  frame->setHtml(content);
+  frame->setHtml(htmlMap);
   QTimer::singleShot(500, this, &LeafletMaps::triggerLoading);
 }
 
