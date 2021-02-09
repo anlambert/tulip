@@ -215,153 +215,6 @@ GlComposite *readCsvFile(QString fileName) {
   return composite;
 }
 
-void simplifyPolyFile(QString fileName, float definition) {
-
-  map<string, vector<vector<Coord>>> clearPolygons;
-
-  QFile file(fileName);
-
-  if (!file.open(QIODevice::ReadOnly)) {
-    return;
-  }
-
-  string polygonName = "";
-  vector<vector<Coord>> datas;
-  vector<Coord> currentVector;
-  bool ok;
-
-  while (!file.atEnd()) {
-    QString line(file.readLine());
-
-    if (line.isEmpty() || line == "\n") {
-      continue;
-    }
-
-    line.toUInt(&ok);
-
-    if (ok) {
-      if (!currentVector.empty()) {
-        datas.push_back(currentVector);
-      }
-
-      currentVector.clear();
-      continue;
-    }
-
-    if (line == "END\n") {
-      continue;
-    }
-
-    QStringList strList = line.split(" ");
-
-    bool findLng = false;
-    bool findLat = false;
-    float lng;
-    float lat;
-
-    for (const auto &s : strList) {
-      s.toDouble(&ok);
-
-      if (ok) {
-        if (!findLng) {
-          findLng = true;
-          lng = s.toDouble();
-        } else {
-          findLat = true;
-          lat = s.toDouble();
-        }
-      }
-    }
-
-    if (!findLat) {
-
-      if (!polygonName.empty()) {
-
-        if (!currentVector.empty()) {
-          datas.push_back(currentVector);
-        }
-
-        if (!datas.empty()) {
-
-          clearPolygons[polygonName] = datas;
-          datas.clear();
-          currentVector.clear();
-        }
-      }
-
-      polygonName = QStringToTlpString(line);
-      continue;
-    }
-
-    double mercatorLatitude = lat * 2. / 360. * M_PI;
-    mercatorLatitude = sin(abs(mercatorLatitude));
-    mercatorLatitude = log((1. + mercatorLatitude) / (1. - mercatorLatitude)) / 2.;
-
-    if (lat < 0) {
-      mercatorLatitude = 0. - mercatorLatitude;
-    }
-
-    currentVector.push_back(Coord(lng, lat, 0));
-  }
-
-  if (!polygonName.empty()) {
-    if (!currentVector.empty()) {
-      datas.push_back(currentVector);
-    }
-
-    clearPolygons[polygonName] = datas;
-  }
-
-  unordered_map<Coord, Coord> simplifiedCoord;
-
-  QString newName(fileName);
-  newName.replace(".poly", QString("_") + QString::number(definition) + ".poly");
-  QFile fileW(newName);
-
-  if (!fileW.open(QIODevice::WriteOnly | QIODevice::Text)) {
-    return;
-  }
-
-  QTextStream out(&fileW);
-
-  Coord *lastCoord = nullptr;
-
-  for (auto &it1 : clearPolygons) {
-    out << it1.first.c_str();
-
-    unsigned int i = 1;
-
-    for (auto &it2 : it1.second) {
-      out << i << "\n";
-
-      for (auto &c : it2) {
-        if (lastCoord == nullptr) {
-          out << c[0] << " " << c[1] << "\n";
-          lastCoord = &c;
-        } else {
-          if ((*lastCoord).dist(c) > definition) {
-            if (simplifiedCoord.count(c) == 0) {
-              out << c[0] << " " << c[1] << "\n";
-              lastCoord = &c;
-            } else {
-              lastCoord = &simplifiedCoord[c];
-              out << (*lastCoord)[0] << " " << (*lastCoord)[1] << "\n";
-            }
-          } else {
-            if (simplifiedCoord.count(c) == 0) {
-              simplifiedCoord[c] = *lastCoord;
-            }
-          }
-        }
-      }
-
-      out << "END\n";
-
-      ++i;
-    }
-  }
-}
-
 static inline double toRadian(double val) {
   return val * M_PI / 360.;
 }
@@ -411,10 +264,9 @@ GeographicViewGraphicsView::GeographicViewGraphicsView(GeographicView *geoView,
                                                        QWidget *parent)
     : QGraphicsView(graphicsScene, parent), _geoView(geoView), graph(nullptr), leafletMaps(nullptr),
       globeCameraBackup(nullptr, true), mapCameraBackup(nullptr, true), geoLayout(nullptr),
-      geoViewSize(nullptr), geoViewShape(nullptr), geoLayoutBackup(nullptr),
-      mapTranslationBlocked(false), geocodingActive(false), cancelGeocoding(false),
-      polygonEntity(nullptr), planisphereEntity(nullptr), noLayoutMsgBox(nullptr),
-      firstGlobeSwitch(true), geoLayoutComputed(false), renderFbo(nullptr),
+      geoViewSize(nullptr), geoViewShape(nullptr), geoLayoutBackup(nullptr), geocodingActive(false),
+      cancelGeocoding(false), polygonEntity(nullptr), planisphereEntity(nullptr),
+      noLayoutMsgBox(nullptr), firstGlobeSwitch(true), geoLayoutComputed(false), renderFbo(nullptr),
       latitudeProperty(nullptr), longitudeProperty(nullptr) {
   mapTextureId = "leafletMap" + to_string(reinterpret_cast<uintptr_t>(this));
   setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing |
@@ -693,8 +545,6 @@ void GeographicViewGraphicsView::loadPolyFile(QString fileName) {
 
   polygonEntity = readPolyFile(fileName);
 
-  // simplifyPolyFile(fileName,0.025);
-  // simplifyPolyFile(fileName,0.05);
   if (!polygonEntity) {
     QMessageBox::critical(nullptr, "Can't read .poly file",
                           "We can't read .poly file : " + fileName + "\nVerify the file.");
@@ -1018,20 +868,11 @@ void GeographicViewGraphicsView::refreshMap() {
   scene()->update();
 }
 
-void GeographicViewGraphicsView::setMapTranslationBlocked(const bool translationBlocked) {
-  mapTranslationBlocked = translationBlocked;
-}
-
 void GeographicViewGraphicsView::centerView() {
   if (leafletMaps->isVisible()) {
     leafletMaps->setMapBounds(graph, nodeLatLng);
   } else {
     glMainWidget->centerScene();
-  }
-}
-void GeographicViewGraphicsView::centerMapOnNode(const node n) {
-  if (nodeLatLng.find(n) != nodeLatLng.end()) {
-    leafletMaps->setMapCenter(nodeLatLng[n].first, nodeLatLng[n].second);
   }
 }
 

@@ -50,28 +50,12 @@ public:
 
   GlGraphComposite *getGlGraphComposite() const;
 
-  std::pair<double, double> getLatLngForNode(node n) {
-    return nodeLatLng[n];
-  }
-
-  void setNodeLatLng(node n, const std::pair<double, double> &latLng) {
-    nodeLatLng[n] = latLng;
-  }
-
-  void setEdgeBendsLatLng(edge e, const std::vector<std::pair<double, double>> &bendsLatLng) {
-    edgeBendsLatLng[e] = bendsLatLng;
-  }
-
   void draw() {
     glWidgetItem->setRedrawNeeded(true);
     scene()->update();
   }
 
-  void setMapTranslationBlocked(const bool mapTranslationBlocked);
-
   void centerView();
-
-  void centerMapOnNode(const node n);
 
   GlMainWidget *getGlMainWidget() {
     return glMainWidget;
@@ -96,10 +80,6 @@ public:
   void setGeoShape(IntegerProperty *);
 
   void treatEvent(const Event &ev) override;
-
-  GlMainWidgetGraphicsItem *getGlMainWidgetItem() {
-    return glWidgetItem;
-  }
 
   QGraphicsRectItem *getPlaceHolderItem() const {
     return _placeholderItem;
@@ -157,8 +137,6 @@ private:
   SizeProperty *geoViewSize;
   IntegerProperty *geoViewShape;
   LayoutProperty *geoLayoutBackup;
-
-  bool mapTranslationBlocked;
 
   bool geocodingActive;
   bool cancelGeocoding;

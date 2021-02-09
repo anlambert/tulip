@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -100,10 +100,6 @@ const string htmlMap =
     "    latLngBounds.extend(latLngArray[i]);"
     "  }"
     "  map.flyToBounds(latLngBounds);"
-    "}"
-    "function getWorldWidth() {"
-    "  var bounds = map.getPixelWorldBounds();"
-    "  return bounds.getTopRight().x - bounds.getTopLeft().x;"
     "}"
     "function switchToOpenStreetMap() {"
     "  map.removeLayer(currentLayer);"
@@ -275,16 +271,6 @@ Coord LeafletMaps::getPixelPosOnScreenForLatLng(double lat, double lng) {
   return Coord(xStr.toDouble(&ok), yStr.toDouble(&ok), 0);
 }
 
-Coord LeafletMaps::mercatorProjection(const Coord &swPixel, const Coord &nePixel,
-                                      const double latitude, const double longitude) {
-  double dLng = longitude + 180.0;
-  double latRadians = M_PI * latitude / 180.0;
-  double worldHeight = nePixel[1] - swPixel[1];
-  double worldWidth = nePixel[0] - swPixel[0];
-  double y = worldHeight / 2.0 + log(tan(M_PI / 4.0 + latRadians / 2.0)) * worldWidth / (2 * M_PI);
-  return Coord(swPixel.getX() + (dLng / 360.0) * worldWidth, swPixel.getY() + y);
-}
-
 std::pair<double, double> LeafletMaps::getLatLngForPixelPosOnScreen(int x, int y) {
   QString code = "map.containerPointToLatLng(L.point(%1, %2)).toString();";
   QVariant ret = executeJavascript(code.arg(x).arg(y));
@@ -295,13 +281,6 @@ std::pair<double, double> LeafletMaps::getLatLngForPixelPosOnScreen(int x, int y
   pos = latLngStr.lastIndexOf(',') + 1;
   QString lngStr = latLngStr.mid(pos, latLngStr.lastIndexOf(')') - pos);
   return make_pair(latStr.toDouble(), lngStr.toDouble());
-}
-
-int LeafletMaps::getWorldWidth() {
-  QString code = "getWorldWidth();";
-  QVariant ret = executeJavascript(code);
-  QString retStr = ret.toString();
-  return int(retStr.toDouble() + 1);
 }
 
 int LeafletMaps::getCurrentMapZoom() {
@@ -361,55 +340,6 @@ void LeafletMaps::setMapBounds(Graph *graph,
     code += "setMapBounds(mapBounds);";
     executeJavascript(code);
   }
-}
-
-void LeafletMaps::setMapBounds(Coord nw, Coord se) {
-  QString code = "mapBounds = [];";
-  code += QString("mapBounds.push(L.latLng(%1, %2));").arg(nw[1]).arg(nw[0]);
-  code += QString("mapBounds.push(L.latLng(%1, %2));").arg(se[1]).arg(se[0]);
-  code += "setMapBounds(mapBounds);";
-  executeJavascript(code);
-}
-
-void LeafletMaps::panMap(int dx, int dy) {
-  QString code = "map.panBy(L.point(%1, %2));";
-  executeJavascript(code.arg(dx).arg(dy));
-}
-
-pair<double, double> LeafletMaps::getMapCurrentSouthWestLatLng() {
-  QString code = "map.getBounds().getSouthWest().toString();";
-  QVariant ret = executeJavascript(code);
-
-  pair<double, double> latLng;
-
-  if (!ret.isNull()) {
-    QString pointStr = ret.toString();
-    int pos = pointStr.indexOf('(') + 1;
-    QString xStr = pointStr.mid(pos, pointStr.lastIndexOf(',') - pos);
-    pos = pointStr.lastIndexOf(',') + 1;
-    QString yStr = pointStr.mid(pos, pointStr.lastIndexOf(')') - pos);
-    latLng = make_pair(xStr.toDouble(), yStr.toDouble());
-  }
-
-  return latLng;
-}
-
-pair<double, double> LeafletMaps::getMapCurrentNorthEastLatLng() {
-  QString code = "map.getBounds().getNorthEast().toString();";
-  QVariant ret = executeJavascript(code);
-
-  pair<double, double> latLng;
-
-  if (!ret.isNull()) {
-    QString pointStr = ret.toString();
-    int pos = pointStr.indexOf('(') + 1;
-    QString xStr = pointStr.mid(pos, pointStr.lastIndexOf(',') - pos);
-    pos = pointStr.lastIndexOf(',') + 1;
-    QString yStr = pointStr.mid(pos, pointStr.lastIndexOf(')') - pos);
-    latLng = make_pair(xStr.toDouble(), yStr.toDouble());
-  }
-
-  return latLng;
 }
 
 }

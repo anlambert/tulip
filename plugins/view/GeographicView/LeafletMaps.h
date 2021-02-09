@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -73,9 +73,6 @@ public:
 
   Coord getPixelPosOnScreenForLatLng(double lat, double lng);
 
-  Coord mercatorProjection(const Coord &swPixel, const Coord &nePixel, const double latitude,
-                           const double longitude);
-
   std::pair<double, double> getLatLngForPixelPosOnScreen(int x, int y);
 
   bool pageInit() const {
@@ -84,16 +81,6 @@ public:
 
   void setMapBounds(Graph *graph,
                     const std::unordered_map<node, std::pair<double, double>> &nodesLatLngs);
-
-  void setMapBounds(Coord nw, Coord se);
-
-  void panMap(int dx, int dy);
-
-  std::pair<double, double> getMapCurrentSouthWestLatLng();
-
-  std::pair<double, double> getMapCurrentNorthEastLatLng();
-
-  int getWorldWidth();
 
   void switchToOpenStreetMap();
 
