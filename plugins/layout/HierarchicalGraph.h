@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -14,7 +14,9 @@
 #ifndef HIERARCHICAL_GRAPH_H
 #define HIERARCHICAL_GRAPH_H
 
+#include <memory>
 #include <unordered_map>
+
 #include <talipot/PluginHeaders.h>
 
 class LessThanNode2 {
@@ -56,7 +58,7 @@ public:
 private:
   void DagLevelSpanningTree(tlp::Graph *sg, tlp::DoubleProperty *embedding);
   std::vector<std::vector<tlp::node>> grid;
-  tlp::DoubleProperty *embedding;
+  std::unique_ptr<tlp::DoubleProperty> embedding;
   void twoLayerCrossReduction(tlp::Graph *sg, unsigned int freeLayer);
   void crossReduction(tlp::Graph *sg);
   void computeEdgeBends(const tlp::Graph *mySGraph, tlp::LayoutProperty &tmpLayout,

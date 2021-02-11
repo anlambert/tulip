@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -866,7 +866,7 @@ void tlp::AbstractVectorProperty<VecType, EltType, PropType>::setNodeEltValue(
     typename tlp::StoredType<typename EltType::RealType>::ReturnedConstValue v) {
   assert(n.isValid());
   bool isNotDefault;
-  typename VecType::RealType &vect =
+  typename tlp::StoredType<typename VecType::RealType>::ReturnedValue vect =
       AbstractProperty<VecType, VecType, PropType>::nodeProperties.get(n, isNotDefault);
   assert(vect.size() > i);
   this->PropType::notifyBeforeSetNodeValue(n);
@@ -887,7 +887,7 @@ typename tlp::StoredType<typename EltType::RealType>::ReturnedConstValue
 tlp::AbstractVectorProperty<VecType, EltType, PropType>::getNodeEltValue(const node n,
                                                                          unsigned int i) const {
   assert(n.isValid());
-  const typename VecType::RealType &vect =
+  typename tlp::StoredType<typename VecType::RealType>::ReturnedConstValue vect =
       AbstractProperty<VecType, VecType, PropType>::nodeProperties.get(n);
   assert(vect.size() > i);
   return vect[i];
@@ -898,7 +898,7 @@ void tlp::AbstractVectorProperty<VecType, EltType, PropType>::pushBackNodeEltVal
     const node n, typename tlp::StoredType<typename EltType::RealType>::ReturnedConstValue v) {
   assert(n.isValid());
   bool isNotDefault;
-  typename VecType::RealType &vect =
+  typename tlp::StoredType<typename VecType::RealType>::ReturnedValue vect =
       AbstractProperty<VecType, VecType, PropType>::nodeProperties.get(n, isNotDefault);
   this->PropType::notifyBeforeSetNodeValue(n);
 
@@ -917,7 +917,7 @@ template <typename VecType, typename EltType, typename PropType>
 void tlp::AbstractVectorProperty<VecType, EltType, PropType>::popBackNodeEltValue(const node n) {
   assert(n.isValid());
   bool isNotDefault;
-  typename VecType::RealType &vect =
+  typename tlp::StoredType<typename VecType::RealType>::ReturnedValue vect =
       AbstractProperty<VecType, VecType, PropType>::nodeProperties.get(n, isNotDefault);
   this->PropType::notifyBeforeSetNodeValue(n);
   assert(isNotDefault);
@@ -930,7 +930,7 @@ void tlp::AbstractVectorProperty<VecType, EltType, PropType>::resizeNodeValue(
     const node n, size_t size, typename EltType::RealType elt) {
   assert(n.isValid());
   bool isNotDefault;
-  typename VecType::RealType &vect =
+  typename tlp::StoredType<typename VecType::RealType>::ReturnedValue vect =
       AbstractProperty<VecType, VecType, PropType>::nodeProperties.get(n, isNotDefault);
   assert(isNotDefault);
   this->PropType::notifyBeforeSetNodeValue(n);
@@ -944,7 +944,7 @@ void tlp::AbstractVectorProperty<VecType, EltType, PropType>::setEdgeEltValue(
     typename tlp::StoredType<typename EltType::RealType>::ReturnedConstValue v) {
   assert(e.isValid());
   bool isNotDefault;
-  typename VecType::RealType &vect =
+  typename tlp::StoredType<typename VecType::RealType>::ReturnedValue vect =
       AbstractProperty<VecType, VecType, PropType>::edgeProperties.get(e, isNotDefault);
   assert(vect.size() > i);
   this->PropType::notifyBeforeSetEdgeValue(e);
@@ -965,7 +965,7 @@ typename tlp::StoredType<typename EltType::RealType>::ReturnedConstValue
 tlp::AbstractVectorProperty<VecType, EltType, PropType>::getEdgeEltValue(const edge e,
                                                                          unsigned int i) const {
   assert(e.isValid());
-  const typename VecType::RealType &vect =
+  typename tlp::StoredType<typename VecType::RealType>::ReturnedConstValue vect =
       AbstractProperty<VecType, VecType, PropType>::edgeProperties.get(e);
   assert(vect.size() > i);
   return vect[i];
@@ -975,7 +975,7 @@ void tlp::AbstractVectorProperty<VecType, EltType, PropType>::pushBackEdgeEltVal
     const edge e, typename tlp::StoredType<typename EltType::RealType>::ReturnedConstValue v) {
   assert(e.isValid());
   bool isNotDefault;
-  typename VecType::RealType &vect =
+  typename tlp::StoredType<typename VecType::RealType>::ReturnedValue vect =
       AbstractProperty<VecType, VecType, PropType>::edgeProperties.get(e, isNotDefault);
   this->PropType::notifyBeforeSetEdgeValue(e);
 
@@ -994,7 +994,7 @@ template <typename VecType, typename EltType, typename PropType>
 void tlp::AbstractVectorProperty<VecType, EltType, PropType>::popBackEdgeEltValue(const edge e) {
   assert(e.isValid());
   bool isNotDefault;
-  typename VecType::RealType &vect =
+  typename tlp::StoredType<typename VecType::RealType>::ReturnedValue vect =
       AbstractProperty<VecType, VecType, PropType>::edgeProperties.get(e, isNotDefault);
   this->PropType::notifyBeforeSetEdgeValue(e);
   assert(isNotDefault);
@@ -1007,7 +1007,7 @@ void tlp::AbstractVectorProperty<VecType, EltType, PropType>::resizeEdgeValue(
     const edge e, size_t size, typename EltType::RealType elt) {
   assert(e.isValid());
   bool isNotDefault;
-  typename VecType::RealType &vect =
+  typename tlp::StoredType<typename VecType::RealType>::ReturnedValue vect =
       AbstractProperty<VecType, VecType, PropType>::edgeProperties.get(e, isNotDefault);
   assert(isNotDefault);
   this->PropType::notifyBeforeSetEdgeValue(e);

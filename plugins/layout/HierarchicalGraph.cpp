@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -323,26 +323,24 @@ bool HierarchicalGraph::run() {
   std::unordered_map<edge, edge> replacedEdges;
   IntegerProperty *edgeLength = nullptr;
 
+  embedding.reset(new DoubleProperty(mySGraph));
+
   if (!TreeTest::isTree(mySGraph)) {
     // We transform the dag in a proper dag
     edgeLength = new IntegerProperty(mySGraph);
     tlp::makeProperDag(mySGraph, properAddedNodes, replacedEdges, edgeLength);
     // we compute metric for cross reduction
-    DoubleProperty embed(mySGraph);
-    embedding = &embed;
-    lessNode.metric = embedding;
+    lessNode.metric = embedding.get();
     buildGrid(mySGraph);
     crossReduction(mySGraph);
     for (auto n : graph->nodes()) {
-      vector<edge> order =
-          iteratorVector(new SortTargetEdgeIterator(mySGraph->getOutEdges(n), mySGraph, embedding));
+      vector<edge> order = iteratorVector(
+          new SortTargetEdgeIterator(mySGraph->getOutEdges(n), mySGraph, embedding.get()));
       mySGraph->setEdgeOrder(n, order);
     }
     // We extract a spanning tree from the proper dag.
-    DagLevelSpanningTree(mySGraph, &embed);
+    DagLevelSpanningTree(mySGraph, embedding.get());
   } else {
-    DoubleProperty embed(mySGraph);
-    embedding = &embed;
     buildGrid(mySGraph);
   }
 

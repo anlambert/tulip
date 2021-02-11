@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -16,6 +16,7 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
+#include <memory>
 
 #include <talipot/GlShaderProgram.h>
 #include <talipot/OpenGlConfigManager.h>
@@ -51,24 +52,22 @@ static void getInfoLog(GLuint obj, ObjectType objectType, string &logStr) {
   }
 }
 
-static void readShaderSourceFile(const string &vertexShaderSourceFilePath, char **shader) {
-  istream *ifs = tlp::getInputFileStream(vertexShaderSourceFilePath);
+static string readShaderSourceFile(const string &vertexShaderSourceFilePath) {
+  unique_ptr<istream> ifs(tlp::getInputFileStream(vertexShaderSourceFilePath));
+
+  string shaderCode;
 
   if (!ifs->good()) {
-    delete ifs;
     tlp::warning() << "Error opening file : " << vertexShaderSourceFilePath << endl;
-    return;
+    return shaderCode;
   }
 
   ifs->seekg(0, ios::end);
-  unsigned int length = uint(ifs->tellg());
+  shaderCode.reserve(ifs->tellg());
   ifs->seekg(0, ios::beg);
 
-  *shader = new char[length + 1];
-
-  ifs->read(*shader, length);
-  (*shader)[length] = '\0';
-  delete ifs;
+  shaderCode.assign((std::istreambuf_iterator<char>(*ifs)), std::istreambuf_iterator<char>());
+  return shaderCode;
 }
 
 namespace tlp {
@@ -103,12 +102,10 @@ void GlShader::compileFromSourceCode(const std::string &shaderSrc) {
 }
 
 void GlShader::compileFromSourceFile(const std::string &shaderSrcFilename) {
-  char *shaderSrcCode = nullptr;
-  readShaderSourceFile(shaderSrcFilename, &shaderSrcCode);
+  string shaderSrcCode = readShaderSourceFile(shaderSrcFilename);
 
-  if (shaderSrcCode) {
-    compileShaderObject(shaderSrcCode);
-    delete[] shaderSrcCode;
+  if (!shaderSrcCode.empty()) {
+    compileShaderObject(shaderSrcCode.c_str());
   }
 }
 

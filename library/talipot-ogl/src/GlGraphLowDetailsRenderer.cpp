@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -66,11 +66,11 @@ void GlGraphLowDetailsRenderer::initEdgesArray() {
 
     indices[i_indices++] = i_point;
     colors[i_col++] = a;
-    auto &srcCoord = layout->getNodeValue(ends.first);
+    const auto &srcCoord = layout->getNodeValue(ends.first);
     points[i_point][0] = srcCoord[0];
     points[i_point++][1] = srcCoord[1];
 
-    auto &bends = layout->getEdgeValue(e);
+    const auto &bends = layout->getEdgeValue(e);
 
     for (size_t j = 0; j < bends.size(); ++j) {
       Vec4f tmp(ca - cb);
@@ -86,7 +86,7 @@ void GlGraphLowDetailsRenderer::initEdgesArray() {
 
     indices[i_indices++] = i_point;
     colors[i_col++] = b;
-    auto &tgtCoord = layout->getNodeValue(ends.second);
+    const auto &tgtCoord = layout->getNodeValue(ends.second);
     points[i_point][0] = tgtCoord[0];
     points[i_point++][1] = tgtCoord[1];
   }
