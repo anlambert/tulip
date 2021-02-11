@@ -79,11 +79,11 @@ public:
   /**
    * Activate a texture with given name
    */
-  static bool activateTexture(const std::string &);
+  static bool activateTexture(const std::string &, int textureUnit = 0);
   /**
    * Disable texture with given name
    */
-  static void deactivateTexture();
+  static void deactivateTexture(int textureUnit = 0);
 
   /**
    * Clear vector of textures with error

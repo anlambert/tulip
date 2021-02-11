@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -192,12 +192,14 @@ void GlTextureManager::beginNewTexture(const string &) {
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 }
 //====================================================================
-bool GlTextureManager::activateTexture(const string &filename) {
+bool GlTextureManager::activateTexture(const string &filename, int textureUnit) {
   if (texturesWithError.count(filename) != 0) {
     return false;
   }
 
   bool loadOk = true;
+
+  glActiveTexture(GL_TEXTURE0 + textureUnit);
 
   if (texturesMap.find(filename) == texturesMap.end()) {
     loadOk = loadTexture(filename);
@@ -215,7 +217,9 @@ bool GlTextureManager::activateTexture(const string &filename) {
   return true;
 }
 //====================================================================
-void GlTextureManager::deactivateTexture() {
+void GlTextureManager::deactivateTexture(int textureUnit) {
+  glActiveTexture(GL_TEXTURE0 + textureUnit);
+  glBindTexture(GL_TEXTURE_2D, 0);
   glDisable(GL_TEXTURE_2D);
 }
 //====================================================================
