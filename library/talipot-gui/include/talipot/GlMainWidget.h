@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -261,6 +261,10 @@ public:
    * when changing between graphs belonging to the same hierarchy
    */
   bool keepScenePointOfViewOnSubgraphChanging() const;
+
+  const std::string &getSceneTextureId() const {
+    return sceneTextureId;
+  }
 
 private:
   void createFramebuffers(int width, int height);
