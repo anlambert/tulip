@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -17,8 +17,11 @@
 #include <talipot/Glyph.h>
 #include <talipot/ViewSettings.h>
 
+#include <memory>
+
 using namespace tlp;
 using namespace std;
+
 class GlArrow2DEdgeExtremity : public EdgeExtremityGlyph {
 public:
   GLYPHINFORMATION("2D - Arrow", "Jonathan Dubois", "09/04/09", "Edge Extremity with 2D arrow",
@@ -28,16 +31,16 @@ public:
   void draw(edge e, node n, const Color &glyphColor, const Color &borderColor, float lod) override;
 
 protected:
-  static GlTriangle *triangle;
+  static unique_ptr<GlTriangle> triangle;
 };
 
 PLUGIN(GlArrow2DEdgeExtremity)
 
-GlTriangle *GlArrow2DEdgeExtremity::triangle = nullptr;
+unique_ptr<GlTriangle> GlArrow2DEdgeExtremity::triangle;
 
 GlArrow2DEdgeExtremity::GlArrow2DEdgeExtremity(tlp::PluginContext *gc) : EdgeExtremityGlyph(gc) {
-  if (!triangle) {
-    triangle = new GlTriangle(Coord(0, 0, 0), Size(0.5, 0.5, 0.5));
+  if (!triangle.get()) {
+    triangle.reset(new GlTriangle(Coord(0, 0, 0), Size(0.5, 0.5, 0.5)));
     triangle->setLightingMode(false);
     triangle->setStartAngle(0);
   }

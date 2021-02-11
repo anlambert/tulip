@@ -71,8 +71,8 @@ void main() {
 
 namespace tlp {
 
-GlShaderProgram *GlGlyphRenderer::_glyphShader(nullptr);
-GlBox *GlGlyphRenderer::_selectionBox(nullptr);
+unique_ptr<GlShaderProgram> GlGlyphRenderer::_glyphShader;
+unique_ptr<GlBox> GlGlyphRenderer::_selectionBox;
 
 void GlGlyphRenderer::startRendering() {
   _nodeGlyphsToRender.clear();
@@ -80,8 +80,8 @@ void GlGlyphRenderer::startRendering() {
   _nodeGlyphsToRender.reserve(_inputData->getGraph()->numberOfNodes());
   _edgeExtremityGlyphsToRender.reserve(_inputData->getGraph()->numberOfEdges());
 
-  if (GlShaderProgram::shaderProgramsSupported() && _glyphShader == nullptr) {
-    _glyphShader = new GlShaderProgram();
+  if (GlShaderProgram::shaderProgramsSupported() && _glyphShader.get() == nullptr) {
+    _glyphShader.reset(new GlShaderProgram("glyph"));
     _glyphShader->addShaderFromSourceCode(Vertex, glyphShaderSrc);
     _glyphShader->link();
     _glyphShader->printInfoLog();
@@ -115,9 +115,9 @@ void GlGlyphRenderer::endRendering() {
     return;
   }
 
-  if (!_selectionBox) {
-    _selectionBox = new GlBox(Coord(0, 0, 0), Size(1, 1, 1), Color(0, 0, 255, 255),
-                              Color(0, 255, 0, 255), false, true);
+  if (!_selectionBox.get()) {
+    _selectionBox.reset(new GlBox(Coord(0, 0, 0), Size(1, 1, 1), Color(0, 0, 255, 255),
+                                  Color(0, 255, 0, 255), false, true));
     _selectionBox->setOutlineSize(3);
   }
 

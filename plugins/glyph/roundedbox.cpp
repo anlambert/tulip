@@ -11,6 +11,8 @@
  *
  */
 
+#include <memory>
+
 #include <GL/glew.h>
 
 #include <talipot/Glyph.h>
@@ -183,10 +185,9 @@ public:
   void getIncludeBoundingBox(BoundingBox &boundingBox, node) override;
 
 private:
-  void initRoundedSquare();
   GlPolygon *createRoundedRect(const Size &size);
 
-  static GlPolygon *roundedSquare;
+  static unique_ptr<GlPolygon> roundedSquare;
   static Coord minIncludeBBSquare;
   static Coord maxIncludeBBSquare;
 };
@@ -197,7 +198,7 @@ static Coord computeCircleArcMidPoint(const Coord &start, const Coord &end, cons
   return Coord(center.x() + radius * cos(c), center.y() + radius * sin(c));
 }
 
-GlPolygon *RoundedBox::roundedSquare = nullptr;
+unique_ptr<GlPolygon> RoundedBox::roundedSquare;
 Coord RoundedBox::minIncludeBBSquare;
 Coord RoundedBox::maxIncludeBBSquare;
 
@@ -205,10 +206,6 @@ RoundedBox::RoundedBox(const tlp::PluginContext *context) : Glyph(context) {
   minIncludeBBSquare =
       computeCircleArcMidPoint(Coord(-0.25, -0.5), Coord(-0.5, -0.25), Coord(-0.25, -0.25));
   maxIncludeBBSquare = -minIncludeBBSquare;
-}
-
-void RoundedBox::initRoundedSquare() {
-  roundedSquare = createRoundedRect(Size(1, 1, 1));
 }
 
 void RoundedBox::getIncludeBoundingBox(BoundingBox &boundingBox, node n) {
@@ -297,8 +294,8 @@ const float outlineVeticesData[8] = {-0.5f, 0.5f, 0.5f, 0.5f, 0.5f, -0.5f, -0.5f
 
 void RoundedBox::draw(node n, float lod) {
 
-  static GlShaderProgram *roundedBoxShader = nullptr;
-  static GlShaderProgram *roundedBoxOutlineShader = nullptr;
+  static unique_ptr<GlShaderProgram> roundedBoxShader;
+  static unique_ptr<GlShaderProgram> roundedBoxOutlineShader;
 
 // don't use geometry shader rendering on MacOS as that feature does seem stable on that platform
 #ifndef __APPLE__
@@ -306,14 +303,14 @@ void RoundedBox::draw(node n, float lod) {
   static bool glVendorOk =
       (glVendor.find("NVIDIA") != string::npos) || (glVendor.find("ATI") != string::npos);
 
-  if (roundedBoxShader == nullptr && glVendorOk && GlShaderProgram::shaderProgramsSupported() &&
-      GlShaderProgram::geometryShaderSupported()) {
-    roundedBoxShader = new GlShaderProgram();
+  if (roundedBoxShader.get() == nullptr && glVendorOk &&
+      GlShaderProgram::shaderProgramsSupported() && GlShaderProgram::geometryShaderSupported()) {
+    roundedBoxShader.reset(new GlShaderProgram());
     roundedBoxShader->addShaderFromSourceCode(Fragment, roundedBoxFragmentShaderSrc);
     roundedBoxShader->link();
     roundedBoxShader->printInfoLog();
 
-    roundedBoxOutlineShader = new GlShaderProgram();
+    roundedBoxOutlineShader.reset(new GlShaderProgram());
     roundedBoxOutlineShader->addShaderFromSourceCode(Vertex, roundedBoxOutlineVertexShaderSrc);
     roundedBoxOutlineShader->addGeometryShaderFromSourceCode(roundedBoxOutlineGeometryShaderSrc,
                                                              GL_LINES_ADJACENCY_EXT, GL_LINE_STRIP);
@@ -331,11 +328,11 @@ void RoundedBox::draw(node n, float lod) {
 
   if (roundedBoxShader == nullptr || !roundedBoxShader->isLinked() ||
       !roundedBoxOutlineShader->isLinked() || GlShaderProgram::getCurrentActiveShader()) {
-    if (roundedSquare == nullptr) {
-      initRoundedSquare();
+    if (roundedSquare.get() == nullptr) {
+      roundedSquare.reset(createRoundedRect(Size(1, 1, 1)));
     }
 
-    GlPolygon *polygon = roundedSquare;
+    GlPolygon *polygon = roundedSquare.get();
 
     if (size[0] != size[1]) {
       polygon = createRoundedRect(size);
@@ -347,7 +344,7 @@ void RoundedBox::draw(node n, float lod) {
     polygon->setTextureName(texture);
     polygon->draw(lod, nullptr);
 
-    if (polygon != roundedSquare) {
+    if (polygon != roundedSquare.get()) {
       // because createRoundedRect() creates a new GlPolygon
       delete polygon;
     }

@@ -447,8 +447,8 @@ bool FindReplaceDialog::eventFilter(QObject *, QEvent *evt) {
   return false;
 }
 
-AutoCompletionList *PythonCodeEditor::_autoCompletionList = nullptr;
-AutoCompletionDataBase *PythonCodeEditor::_autoCompletionDb = nullptr;
+unique_ptr<AutoCompletionList> PythonCodeEditor::_autoCompletionList;
+unique_ptr<AutoCompletionDataBase> PythonCodeEditor::_autoCompletionDb;
 
 PythonCodeEditor::PythonCodeEditor(QWidget *parent)
     : QPlainTextEdit(parent), _highlighter(nullptr), _tooltipActive(false), _indentPattern(4, ' ') {
@@ -487,9 +487,9 @@ PythonCodeEditor::PythonCodeEditor(QWidget *parent)
   _parenHighlighter = new ParenMatcherHighlighter(document());
   _highlighter = new PythonCodeHighlighter(document());
 
-  if (_autoCompletionList == nullptr) {
-    _autoCompletionList = new AutoCompletionList();
-    _autoCompletionDb = new AutoCompletionDataBase(&APIDataBase::instance());
+  if (_autoCompletionList.get() == nullptr) {
+    _autoCompletionList.reset(new AutoCompletionList());
+    _autoCompletionDb.reset(new AutoCompletionDataBase(&APIDataBase::instance()));
 
     // Hack to get a pointer on the main window
     // in order for the autocompletion dialog to catch
@@ -498,7 +498,7 @@ PythonCodeEditor::PythonCodeEditor(QWidget *parent)
     _mainWindow = getMainWindow();
 
     if (_mainWindow) {
-      _mainWindow->installEventFilter(_autoCompletionList);
+      _mainWindow->installEventFilter(_autoCompletionList.get());
     }
   }
 
@@ -521,7 +521,7 @@ PythonCodeEditor::PythonCodeEditor(QWidget *parent)
 }
 
 PythonCodeEditor::~PythonCodeEditor() {
-  removeEventFilter(_autoCompletionList);
+  removeEventFilter(_autoCompletionList.get());
 }
 
 void PythonCodeEditor::resetFindReplaceDialog() {

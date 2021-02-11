@@ -103,7 +103,7 @@ QWidget *FishEyeInteractor::configurationWidget() const {
 
 PLUGIN(FishEyeInteractor)
 
-GlShaderProgram *FishEyeInteractorComponent::fisheyeShader(nullptr);
+unique_ptr<GlShaderProgram> FishEyeInteractorComponent::fisheyeShader;
 
 FishEyeInteractorComponent::FishEyeInteractorComponent(FishEyeConfigWidget *configWidget)
     : configWidget(configWidget), activateFishEye(false) {}
@@ -184,8 +184,8 @@ bool FishEyeInteractorComponent::eventFilter(QObject *obj, QEvent *e) {
 bool FishEyeInteractorComponent::draw(GlMainWidget *glWidget) {
   Camera *camera = &glWidget->getScene()->getGraphCamera();
 
-  if (GlShaderProgram::shaderProgramsSupported() && !fisheyeShader) {
-    fisheyeShader = new GlShaderProgram("fisheye");
+  if (GlShaderProgram::shaderProgramsSupported() && !fisheyeShader.get()) {
+    fisheyeShader.reset(new GlShaderProgram("fisheye"));
     fisheyeShader->addShaderFromSourceCode(Vertex, fisheyeVertexProgram);
     fisheyeShader->link();
   }

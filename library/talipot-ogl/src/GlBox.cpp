@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -384,10 +384,8 @@ void GlBox::clearGenerated() {
   delete[] newCubeCoordArrays;
   newCubeCoordArrays = nullptr;
 
-  if (OpenGlConfigManager::hasVertexBufferObject()) {
-    if (generated) {
-      glDeleteBuffers(5, buffers);
-    }
+  if (generated) {
+    glDeleteBuffers(5, buffers);
   }
 
   generated = false;

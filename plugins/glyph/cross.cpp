@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -11,6 +11,7 @@
  *
  */
 
+#include <memory>
 #include <vector>
 
 #include <talipot/Coord.h>
@@ -31,9 +32,9 @@ using namespace tlp;
 
 namespace tlp {
 
-static GlComplexPolygon *cross = nullptr;
+static unique_ptr<GlComplexPolygon> cross;
 static void initCross() {
-  if (!cross) {
+  if (!cross.get()) {
     float bWidth = 0.1f;
     vector<Coord> points;
     points.push_back({-bWidth, 0.5});
@@ -48,7 +49,7 @@ static void initCross() {
     points.push_back({-0.5, -bWidth});
     points.push_back({-0.5, bWidth});
     points.push_back({-bWidth, bWidth});
-    cross = new GlComplexPolygon(points, Color());
+    cross.reset(new GlComplexPolygon(points, Color()));
   }
 }
 void drawCross(const Color &fillColor, const Color &borderColor, float borderWidth,

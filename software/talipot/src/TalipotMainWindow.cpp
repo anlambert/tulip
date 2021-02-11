@@ -557,8 +557,6 @@ TalipotMainWindow::~TalipotMainWindow() {
     delete graph;
   }
 
-  PythonCodeEditor::deleteStaticResources();
-
   delete _project;
   delete _ui;
 }

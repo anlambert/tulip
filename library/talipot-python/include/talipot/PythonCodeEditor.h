@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -20,6 +20,8 @@
 #include <QListWidget>
 #include <QPlainTextEdit>
 #include <QDialog>
+
+#include <memory>
 
 namespace Ui {
 class FindReplaceDialog;
@@ -211,7 +213,7 @@ public:
   void analyseScriptCode(const bool wholeText = false);
 
   AutoCompletionDataBase *getAutoCompletionDb() const {
-    return _autoCompletionDb;
+    return _autoCompletionDb.get();
   }
 
   void setPlainText(const QString &text);
@@ -223,11 +225,6 @@ public:
   void resetFindReplaceDialog();
 
   void guiThemeChanged();
-
-  static void deleteStaticResources() {
-    delete _autoCompletionDb;
-    delete _autoCompletionList;
-  }
 
 protected:
   void resizeEvent(QResizeEvent *event) override;
@@ -275,8 +272,8 @@ protected:
   QFont _currentFont;
   QVector<int> _currentErrorLines;
 
-  static AutoCompletionList *_autoCompletionList;
-  static AutoCompletionDataBase *_autoCompletionDb;
+  static std::unique_ptr<AutoCompletionList> _autoCompletionList;
+  static std::unique_ptr<AutoCompletionDataBase> _autoCompletionDb;
 
   FindReplaceDialog *_findReplaceDialog;
 

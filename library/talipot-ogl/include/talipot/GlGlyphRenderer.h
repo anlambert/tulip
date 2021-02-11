@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -20,6 +20,7 @@
 #include <talipot/Node.h>
 #include <talipot/Edge.h>
 
+#include <memory>
 #include <vector>
 
 namespace tlp {
@@ -94,8 +95,8 @@ private:
   bool _renderingStarted;
   std::vector<NodeGlyphData> _nodeGlyphsToRender;
   std::vector<EdgeExtremityGlyphData> _edgeExtremityGlyphsToRender;
-  static GlShaderProgram *_glyphShader;
-  static GlBox *_selectionBox;
+  static std::unique_ptr<GlShaderProgram> _glyphShader;
+  static std::unique_ptr<GlBox> _selectionBox;
 };
 }
 

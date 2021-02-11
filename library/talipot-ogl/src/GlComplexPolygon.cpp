@@ -28,6 +28,8 @@
 #include <talipot/GlShaderProgram.h>
 #include <talipot/GlXMLTools.h>
 
+#include <memory>
+
 using namespace std;
 
 static const string outlineExtrusionVertexShaderSrc = R"(#version 120
@@ -488,10 +490,10 @@ void GlComplexPolygon::draw(float, Camera *) {
       if (GlShaderProgram::shaderProgramsSupported() &&
           GlShaderProgram::geometryShaderSupported()) {
 
-        static GlShaderProgram *outlineExtrusionShader = nullptr;
+        static unique_ptr<GlShaderProgram> outlineExtrusionShader;
 
-        if (!outlineExtrusionShader) {
-          outlineExtrusionShader = new GlShaderProgram();
+        if (!outlineExtrusionShader.get()) {
+          outlineExtrusionShader.reset(new GlShaderProgram());
           outlineExtrusionShader->addShaderFromSourceCode(Vertex, outlineExtrusionVertexShaderSrc);
           outlineExtrusionShader->addGeometryShaderFromSourceCode(
               outlineExtrusionGeometryShaderSrc, GL_LINES_ADJACENCY_EXT, GL_TRIANGLE_STRIP);

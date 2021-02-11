@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -18,6 +18,7 @@
 #include <ostream>
 #include <ios>
 #include <unordered_map>
+#include <memory>
 
 #include <QDebug>
 #include <QColorDialog>
@@ -343,11 +344,11 @@ public:
   QDebugOStream() : std::ostream(&qDebugBuf) {}
 };
 
-static QDebugOStream *qDebugStream = nullptr;
+static unique_ptr<QDebugOStream> qDebugStream;
 
 void redirectDebugOutputToQDebug() {
-  if (qDebugStream == nullptr) {
-    qDebugStream = new QDebugOStream();
+  if (qDebugStream.get() == nullptr) {
+    qDebugStream.reset(new QDebugOStream());
   }
 
   tlp::setDebugOutput(*qDebugStream);
@@ -388,11 +389,11 @@ public:
   QWarningOStream() : std::ostream(&qWarningBuf) {}
 };
 
-static QWarningOStream *qWarningStream = nullptr;
+static unique_ptr<QWarningOStream> qWarningStream;
 
 void redirectWarningOutputToQWarning() {
-  if (qWarningStream == nullptr) {
-    qWarningStream = new QWarningOStream();
+  if (qWarningStream.get() == nullptr) {
+    qWarningStream.reset(new QWarningOStream());
   }
 
   tlp::setWarningOutput(*qWarningStream);
@@ -433,11 +434,11 @@ public:
   QErrorOStream() : std::ostream(&qErrorBuf) {}
 };
 
-static QErrorOStream *qErrorStream = nullptr;
+static unique_ptr<QErrorOStream> qErrorStream;
 
 void redirectErrorOutputToQCritical() {
-  if (qErrorStream == nullptr) {
-    qErrorStream = new QErrorOStream();
+  if (qErrorStream.get() == nullptr) {
+    qErrorStream.reset(new QErrorOStream());
   }
 
   tlp::setErrorOutput(*qErrorStream);
@@ -445,50 +446,45 @@ void redirectErrorOutputToQCritical() {
 
 class NoQtUserInputFilter : public QObject {
 protected:
-  bool eventFilter(QObject *obj, QEvent *event) override;
+  bool eventFilter(QObject *, QEvent *event) override {
+    switch (event->type()) {
+    case QEvent::KeyPress:
+    case QEvent::KeyRelease:
+    case QEvent::MouseButtonPress:
+    case QEvent::MouseButtonDblClick:
+    case QEvent::MouseMove:
+    case QEvent::HoverEnter:
+    case QEvent::HoverLeave:
+    case QEvent::HoverMove:
+    case QEvent::DragEnter:
+    case QEvent::DragLeave:
+    case QEvent::DragMove:
+    case QEvent::Drop:
+      return true;
+
+    default:
+      return false;
+    }
+  }
 };
 
-bool NoQtUserInputFilter::eventFilter(QObject *, QEvent *event) {
-  switch (event->type()) {
-  case QEvent::KeyPress:
-  case QEvent::KeyRelease:
-  case QEvent::MouseButtonPress:
-  case QEvent::MouseButtonDblClick:
-  case QEvent::MouseMove:
-  case QEvent::HoverEnter:
-  case QEvent::HoverLeave:
-  case QEvent::HoverMove:
-  case QEvent::DragEnter:
-  case QEvent::DragLeave:
-  case QEvent::DragMove:
-  case QEvent::Drop:
-    return true;
-
-  default:
-    return false;
-  }
-}
-
-static NoQtUserInputFilter *disableQtUserInputFilter = nullptr;
+static unique_ptr<NoQtUserInputFilter> disableQtUserInputFilter;
 
 void disableQtUserInput() {
-  if (disableQtUserInputFilter) {
-    return;
+  if (!disableQtUserInputFilter.get()) {
+    disableQtUserInputFilter.reset(new NoQtUserInputFilter());
   }
 
-  disableQtUserInputFilter = new NoQtUserInputFilter();
-  QCoreApplication::instance()->installEventFilter(disableQtUserInputFilter);
+  QCoreApplication::instance()->installEventFilter(disableQtUserInputFilter.get());
   QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 }
 
 void enableQtUserInput() {
-  if (!disableQtUserInputFilter) {
+  if (!disableQtUserInputFilter.get()) {
     return;
   }
 
-  QCoreApplication::instance()->removeEventFilter(disableQtUserInputFilter);
-  delete disableQtUserInputFilter;
-  disableQtUserInputFilter = nullptr;
+  QCoreApplication::instance()->removeEventFilter(disableQtUserInputFilter.get());
   QApplication::restoreOverrideCursor();
 }
 

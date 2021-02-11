@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -16,6 +16,7 @@
 
 #include <talipot/OpenGlIncludes.h>
 
+#include <memory>
 #include <unordered_map>
 
 #include <talipot/Color.h>
@@ -109,20 +110,19 @@ protected:
 
   void initShader(const std::string &shaderProgramName, const std::string &curveSpecificShaderCode);
 
-  static std::unordered_map<unsigned int, GLfloat *> curveVertexBuffersData;
-  static std::unordered_map<unsigned int, std::vector<GLushort *>> curveVertexBuffersIndices;
-  static std::unordered_map<unsigned int, GLuint *> curveVertexBuffersObject;
-  static std::unordered_map<std::string, GlShaderProgram *> curvesShadersMap;
-  static std::unordered_map<std::string, GlShaderProgram *> curvesBillboardShadersMap;
-  static GlShader *curveVertexShaderNormalMain;
-  static GlShader *curveVertexShaderBillboardMain;
-  static GlShader *fisheyeDistortionVertexShader;
-  static GlShader *curveFragmentShader;
+  static std::unordered_map<unsigned int, std::vector<GLfloat>> curveVertexBuffersData;
+  static std::unordered_map<unsigned int, std::vector<std::vector<GLushort>>>
+      curveVertexBuffersIndices;
+  static std::unordered_map<unsigned int, std::vector<GLuint>> curveVertexBuffersObject;
+  static std::unordered_map<std::string, std::unique_ptr<GlShaderProgram>> curvesShadersMap;
+  static std::unordered_map<std::string, std::unique_ptr<GlShaderProgram>>
+      curvesBillboardShadersMap;
   static bool canUseGeometryShader;
-  static std::unordered_map<std::string, std::pair<GlShaderProgram *, GlShaderProgram *>>
+  static std::unordered_map<
+      std::string, std::pair<std::unique_ptr<GlShaderProgram>, std::unique_ptr<GlShaderProgram>>>
       curvesGeometryShadersMap;
-  static GlShader *curveVertexGeometryShaderNormalMain;
-  static std::unordered_map<std::string, std::pair<GlShaderProgram *, GlShaderProgram *>>
+  static std::unordered_map<
+      std::string, std::pair<std::unique_ptr<GlShaderProgram>, std::unique_ptr<GlShaderProgram>>>
       curvesBillboardGeometryShadersMap;
 
   std::string shaderProgramName;

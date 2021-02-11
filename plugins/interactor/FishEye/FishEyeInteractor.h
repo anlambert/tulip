@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -13,6 +13,8 @@
 
 #ifndef FISH_EYE_INTERACTOR_H
 #define FISH_EYE_INTERACTOR_H
+
+#include <memory>
 
 #include <talipot/GLInteractor.h>
 #include <talipot/Coord.h>
@@ -43,7 +45,7 @@ public:
 private:
   FishEyeConfigWidget *configWidget;
   Coord fisheyeCenter;
-  static GlShaderProgram *fisheyeShader;
+  static std::unique_ptr<GlShaderProgram> fisheyeShader;
   bool activateFishEye;
 };
 
