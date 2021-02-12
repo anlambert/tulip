@@ -1457,7 +1457,7 @@ void TalipotMainWindow::showStartPanels(Graph *g) {
   _ui->workspace->hideExposeMode();
   View *firstPanel = nullptr;
 
-  for (auto panelName : {"Spreadsheet", "Node Link Diagram"}) {
+  for (auto panelName : {"Node Link Diagram", "Spreadsheet"}) {
     View *view = PluginsManager::getPluginObject<View>(panelName);
 
     if (firstPanel == nullptr) {
