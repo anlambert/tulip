@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -571,6 +571,11 @@ public:
   // performance).
   void setMaxGeometryShaderOutputVertices(const int maxOutputVertices);
 
+  void setVertexAttribPointer(const std::string &variableName, GLint size, GLenum type,
+                              GLboolean normalized, GLsizei stride, const GLvoid *pointer);
+
+  void disableAttributesArrays();
+
 private:
   GLint getUniformVariableLocation(const std::string &variableName);
   GLint getAttributeVariableLocation(const std::string &variableName);
@@ -583,6 +588,8 @@ private:
 
   std::vector<GlShader *> attachedShaders;
   int maxGeometryShaderOutputVertices;
+
+  std::vector<GLint> activeAttributesArrays;
 
   static GlShaderProgram *currentActiveShaderProgram;
 };

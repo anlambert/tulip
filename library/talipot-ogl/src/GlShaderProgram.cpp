@@ -871,4 +871,22 @@ void GlShaderProgram::getUniformVec4BoolVariableValue(const std::string &variabl
 void GlShaderProgram::setMaxGeometryShaderOutputVertices(const int maxOutputVertices) {
   maxGeometryShaderOutputVertices = maxOutputVertices;
 }
+
+void GlShaderProgram::setVertexAttribPointer(const std::string &variableName, GLint size,
+                                             GLenum type, GLboolean normalized, GLsizei stride,
+                                             const GLvoid *pointer) {
+  GLint attributeIndex = getAttributeVariableLocation(variableName);
+  if (attributeIndex >= 0) {
+    activeAttributesArrays.push_back(attributeIndex);
+    glVertexAttribPointer(attributeIndex, size, type, normalized, stride, pointer);
+    glEnableVertexAttribArray(attributeIndex);
+  }
+}
+
+void GlShaderProgram::disableAttributesArrays() {
+  for (size_t i = 0; i < activeAttributesArrays.size(); ++i) {
+    glDisableVertexAttribArray(activeAttributesArrays[i]);
+  }
+  activeAttributesArrays.clear();
+}
 }
