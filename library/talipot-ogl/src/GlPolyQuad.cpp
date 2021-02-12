@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -76,14 +76,6 @@ void GlPolyQuad::draw(float, Camera *) {
   unsigned int nbSubdivisionsPerSegment = 1;
   unsigned int nbVertices = polyQuadEdges.size();
   vector<Coord> *vertices = &polyQuadEdges;
-  GlShaderProgram *currentShader = GlShaderProgram::getCurrentActiveShader();
-
-  if (currentShader != nullptr && currentShader->getName() == "fisheye") {
-    nbSubdivisionsPerSegment = 20;
-    vertices = &vertexArray;
-    nbVertices = ((polyQuadEdges.size() / 2) - 1) * nbSubdivisionsPerSegment * 2;
-    vertexArray.reserve(nbVertices);
-  }
 
   texCoordsArray.reserve(nbVertices * 2);
   colorsArray.reserve(nbVertices);

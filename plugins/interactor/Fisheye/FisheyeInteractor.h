@@ -21,16 +21,19 @@
 
 #include "../../utils/StandardInteractorPriority.h"
 
+class QOpenGLFramebufferObject;
+
 namespace tlp {
 
-class FishEyeConfigWidget;
+class FisheyeConfigWidget;
 class GlShaderProgram;
 
-class FishEyeInteractorComponent : public GLInteractorComponent {
+class FisheyeInteractorComponent : public GLInteractorComponent {
 
 public:
-  FishEyeInteractorComponent(FishEyeConfigWidget *configWidget);
-  FishEyeInteractorComponent(const FishEyeInteractorComponent &fisheyeInteractorComponent);
+  FisheyeInteractorComponent(FisheyeConfigWidget *configWidget);
+  FisheyeInteractorComponent(const FisheyeInteractorComponent &fisheyeInteractorComponent);
+  ~FisheyeInteractorComponent();
 
   bool eventFilter(QObject *widget, QEvent *e) override;
 
@@ -43,10 +46,17 @@ public:
   bool draw(GlMainWidget *glMainWidget) override;
 
 private:
-  FishEyeConfigWidget *configWidget;
-  Coord fisheyeCenter;
+  void generateFisheyeTexture(GlMainWidget *glWidget);
+
+  FisheyeConfigWidget *_configWidget;
+  bool _activateFisheye;
+  int _x;
+  int _y;
+  QOpenGLFramebufferObject *_fbo = nullptr;
+  QOpenGLFramebufferObject *_fbo2 = nullptr;
+  std::string _fboTextureId;
   static std::unique_ptr<GlShaderProgram> fisheyeShader;
-  bool activateFishEye;
+  inline static int _maxTextureSize = 0;
 };
 
 /*@{*/
@@ -61,14 +71,14 @@ private:
  *
  *
  */
-class FishEyeInteractor : public GLInteractorComposite {
+class FisheyeInteractor : public GLInteractorComposite {
 
 public:
-  PLUGININFORMATION("FishEyeInteractor", "Antoine Lambert", "29/05/2009", "FishEye Interactor",
+  PLUGININFORMATION("FisheyeInteractor", "Antoine Lambert", "29/05/2009", "Fisheye Interactor",
                     "1.0", "Visualization")
 
-  FishEyeInteractor(const PluginContext *);
-  ~FishEyeInteractor() override;
+  FisheyeInteractor(const PluginContext *);
+  ~FisheyeInteractor() override;
 
   void construct() override;
 
@@ -77,13 +87,13 @@ public:
   QWidget *configurationWidget() const override;
 
   unsigned int priority() const override {
-    return StandardInteractorPriority::FishEye;
+    return StandardInteractorPriority::Fisheye;
   }
 
   bool isCompatible(const std::string &viewName) const override;
 
 private:
-  FishEyeConfigWidget *fisheyeConfigWidget;
+  FisheyeConfigWidget *fisheyeConfigWidget;
 };
 }
 

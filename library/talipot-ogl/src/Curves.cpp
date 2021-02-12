@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -491,29 +491,6 @@ void polyQuad(const vector<Coord> &vertices, const Color &c1, const Color &c2, f
   vector<Coord> quadVertices;
 
   buildCurvePoints(vertices, sizes, startN, endN, quadVertices);
-
-  if (GlShaderProgram::getCurrentActiveShader() &&
-      GlShaderProgram::getCurrentActiveShader()->getName() == "fisheye") {
-    const unsigned int nbQuads_div2 = quadVertices.size() / 2;
-    const float nbSubDiv = 20.f;
-    vector<Coord> newVertices;
-    newVertices.reserve((nbQuads_div2 - 1) * 19 * 2 + 2);
-    newVertices.push_back(quadVertices[0]);
-    newVertices.push_back(quadVertices[1]);
-
-    for (size_t i = 0; i < nbQuads_div2 - 1; ++i) {
-      for (float j = 1; j < nbSubDiv; ++j) {
-        newVertices.push_back(quadVertices[2 * i] +
-                              (j / (nbSubDiv - 1)) *
-                                  (quadVertices[2 * (i + 1)] - quadVertices[2 * i]));
-        newVertices.push_back(quadVertices[2 * i + 1] +
-                              (j / (nbSubDiv - 1)) *
-                                  (quadVertices[2 * (i + 1) + 1] - quadVertices[2 * i + 1]));
-      }
-    }
-
-    quadVertices.swap(newVertices);
-  }
 
   float length = 0;
   const unsigned int nbQuads_div2 = quadVertices.size() / 2;

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -340,9 +340,6 @@ void GlEdge::drawEdge(const Coord &srcNodePos, const Coord &tgtNodePos, const Co
       curve = &bspline;
     }
 
-    bool fisheyeActivated = GlShaderProgram::getCurrentActiveShader() &&
-                            GlShaderProgram::getCurrentActiveShader()->getName() == "fisheye";
-
     curve->setLineCurve(false);
     curve->setOutlined(false);
     curve->setOutlineColor(borderColor);
@@ -357,12 +354,10 @@ void GlEdge::drawEdge(const Coord &srcNodePos, const Coord &tgtNodePos, const Co
 
     float startSize = size[0] * 0.5f, endSize = size[1] * 0.5f;
 
-    if (!fisheyeActivated && lod > -5 && lod < 5) {
+    if (lod > -5 && lod < 5) {
       curve->setLineCurve(true);
       curve->setCurveLineWidth(1.4f);
-    }
-
-    else if (fisheyeActivated || lod > 5 || lod < -5) {
+    } else {
       curve->setOutlined(outlineWidth > 0);
       curve->setCurveQuadBordersWidth(outlineWidth);
     }
