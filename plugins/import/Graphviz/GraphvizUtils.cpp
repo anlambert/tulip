@@ -783,7 +783,7 @@ bool decodeGraphvizColor(Color &outColor, const string &inValue) {
 
 bool getCoordFromGraphvizPos(Coord &outCoord, const string &inValue) {
   int n = sscanf(inValue.c_str(), "%f,%f,%f", &outCoord[0], &outCoord[1], &outCoord[2]);
-  return n >= 2 || n <= 3;
+  return n >= 2;
 }
 
 bool getCoordsFromGraphvizPos(vector<Coord> &outCoords, const string &inValue) {
