@@ -216,6 +216,7 @@ bool LeafletMaps::mapLoaded() {
 void LeafletMaps::triggerLoading() {
   if (!pageLoaded()) {
     QTimer::singleShot(500, this, &LeafletMaps::triggerLoading);
+    return;
   }
 #ifdef QT_HAS_WEBKIT
   frame->addToJavaScriptWindowObject("leafletMapsQObject", this);
