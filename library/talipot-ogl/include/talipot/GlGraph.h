@@ -36,7 +36,7 @@ class GlGraphRenderer;
  * To visualize graph you have to create a new GlGraph and add it to a GlLayer of a GlScene
  * After that you can change some visualize parameters throw GlGraphRenderingParameters class
  * @see GlGraphRenderingParameters
- * @see getRenderingParametersPointer()
+ * @see getRenderingParameters()
  *
  * To render the graph in OpenGL, GlGraph use a GlGraphRenderer. So if you want to change
  * the system to render the graph, you have to create a new GlGraphRender
@@ -68,22 +68,15 @@ public:
   ~GlGraph() override;
 
   /**
-   * @brief Return a copy of rendering parameters use for rendering
+   * @brief Return a copy of rendering parameters used for rendering
    *
-   * So after you have to call setRenderingParameters
    */
-  const GlGraphRenderingParameters &getRenderingParameters();
+  const GlGraphRenderingParameters &getRenderingParameters() const;
+  GlGraphRenderingParameters &getRenderingParameters();
   /**
-   * @brief Set the rendering parameters use for rendering
+   * @brief Set the rendering parameters used for rendering
    */
   void setRenderingParameters(const GlGraphRenderingParameters &parameter);
-
-  /**
-   * @brief Return a pointer on rendering parameters used for rendering
-   *
-   * With this function you don't have to call setRenderingParameters() function
-   */
-  GlGraphRenderingParameters *getRenderingParametersPointer();
 
   /**
    * @brief Return the inputData use by the composite

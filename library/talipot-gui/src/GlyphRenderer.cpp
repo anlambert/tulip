@@ -104,12 +104,12 @@ QPixmap EdgeExtremityGlyphRenderer::render(int glyphId, const QColor &background
       renderer.clearScene();
       renderer.setSceneBackgroundColor(QColorToColor(backgroundColor));
       renderer.addGraphToScene(graph);
-      GlGraphRenderingParameters renderingParamerters =
+      GlGraphRenderingParameters &renderingParamerters =
           renderer.getScene()->getGlGraph()->getRenderingParameters();
       renderingParamerters.setEdgeColorInterpolate(false);
       renderingParamerters.setEdgeSizeInterpolate(false);
       renderingParamerters.setViewArrow(true);
-      renderer.getScene()->getGlGraph()->setRenderingParameters(renderingParamerters);
+
       // init previews
       for (string glyphName : PluginsManager::availablePlugins<EdgeExtremityGlyph>()) {
         const Plugin &info = PluginsManager::pluginInformation(glyphName);

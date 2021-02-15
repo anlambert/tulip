@@ -43,7 +43,7 @@ namespace tlp {
 int ScatterPlot2D::overviewCpt(0);
 
 static void setGraphView(GlGraph *glGraph, bool displayEdges, bool nodelabel, bool scale) {
-  GlGraphRenderingParameters param = glGraph->getRenderingParameters();
+  GlGraphRenderingParameters &param = glGraph->getRenderingParameters();
   param.setAntialiasing(true);
   param.setViewNodeLabel(nodelabel);
   param.setFontsType(2);
@@ -56,7 +56,6 @@ static void setGraphView(GlGraph *glGraph, bool displayEdges, bool nodelabel, bo
   param.setDisplayNodes(true);
   param.setDisplayMetaNodes(true);
   param.setLabelScaled(scale);
-  glGraph->setRenderingParameters(param);
 }
 
 ScatterPlot2D::ScatterPlot2D(Graph *graph, Graph *edgeGraph,

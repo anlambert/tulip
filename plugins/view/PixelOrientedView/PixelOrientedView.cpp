@@ -44,7 +44,7 @@
 using namespace std;
 
 static void setGraphView(tlp::GlGraph *glGraph, bool displayNodes) {
-  tlp::GlGraphRenderingParameters param = glGraph->getRenderingParameters();
+  tlp::GlGraphRenderingParameters &param = glGraph->getRenderingParameters();
   param.setAntialiasing(true);
   param.setViewNodeLabel(true);
   param.setFontsType(2);
@@ -54,7 +54,6 @@ static void setGraphView(tlp::GlGraph *glGraph, bool displayNodes) {
   param.setDisplayEdges(false);
   param.setDisplayNodes(displayNodes);
   param.setDisplayMetaNodes(displayNodes);
-  glGraph->setRenderingParameters(param);
 }
 
 const string propertiesTypes[] = {"double", "int"};

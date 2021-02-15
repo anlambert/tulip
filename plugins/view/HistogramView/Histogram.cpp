@@ -40,7 +40,7 @@ std::string getStringFromNumber(T number, unsigned int precision = 5) {
 namespace tlp {
 
 static void setGraphView(GlGraph *glGraph, bool displayEdges) {
-  GlGraphRenderingParameters param = glGraph->getRenderingParameters();
+  GlGraphRenderingParameters &param = glGraph->getRenderingParameters();
   param.setAntialiasing(true);
   param.setViewNodeLabel(true);
   param.setFontsType(2);
@@ -52,7 +52,6 @@ static void setGraphView(GlGraph *glGraph, bool displayEdges) {
   param.setSelectedEdgesStencil(1);
   param.setDisplayNodes(true);
   param.setDisplayMetaNodes(true);
-  glGraph->setRenderingParameters(param);
 }
 
 int Histogram::overviewCpt(0);

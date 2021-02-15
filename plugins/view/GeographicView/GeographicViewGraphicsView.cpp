@@ -1117,8 +1117,8 @@ void GeographicViewGraphicsView::switchViewType() {
     planisphereEntity->setVisible(enablePlanisphere);
   }
 
-  glMainWidget->getScene()->getGlGraph()->getRenderingParametersPointer()->setEdge3D(
-      viewType == GeographicView::Globe);
+  glMainWidget->getScene()->getGlGraph()->getRenderingParameters().setEdge3D(viewType ==
+                                                                             GeographicView::Globe);
 
   Observable::unholdObservers();
 

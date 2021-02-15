@@ -174,11 +174,11 @@ tlp::DataSet NodeLinkDiagramView::state() const {
   return data;
 }
 
-void NodeLinkDiagramView::initRenderingParameters(GlGraphRenderingParameters *rp) {
-  rp->setViewNodeLabel(true);
-  rp->setEdgeColorInterpolate(false);
-  rp->setNodesStencil(0x0002);
-  rp->setNodesLabelStencil(0x0001);
+void NodeLinkDiagramView::initRenderingParameters(GlGraphRenderingParameters &rp) {
+  rp.setViewNodeLabel(true);
+  rp.setEdgeColorInterpolate(false);
+  rp.setNodesStencil(0x0002);
+  rp.setNodesLabelStencil(0x0001);
 }
 
 //==================================================
@@ -213,7 +213,7 @@ void NodeLinkDiagramView::createScene(Graph *graph, DataSet dataSet) {
     scene->addExistingLayer(foregroundLayer);
     GlGraph *glGraph = new GlGraph(graph, scene);
     scene->getLayer("Main")->addGlEntity(glGraph, "graph");
-    initRenderingParameters(glGraph->getRenderingParametersPointer());
+    initRenderingParameters(glGraph->getRenderingParameters());
     scene->centerScene();
   } else {
     size_t pos = sceneInput.find("TalipotBitmapDir/");
@@ -236,7 +236,7 @@ void NodeLinkDiagramView::createScene(Graph *graph, DataSet dataSet) {
   if (dataSet.exists("Display")) {
     DataSet renderingParameters;
     dataSet.get("Display", renderingParameters);
-    GlGraphRenderingParameters rp = scene->getGlGraph()->getRenderingParameters();
+    GlGraphRenderingParameters &rp = scene->getGlGraph()->getRenderingParameters();
     rp.setParameters(renderingParameters);
 
     string s;
@@ -244,8 +244,6 @@ void NodeLinkDiagramView::createScene(Graph *graph, DataSet dataSet) {
     if (renderingParameters.get("elementsOrderingPropertyName", s) && !s.empty()) {
       rp.setElementOrderingProperty(dynamic_cast<tlp::NumericProperty *>(graph->getProperty(s)));
     }
-
-    scene->getGlGraph()->setRenderingParameters(rp);
   }
 
   useHulls(true);
@@ -302,12 +300,11 @@ void NodeLinkDiagramView::loadGraphOnScene(Graph *graph) {
     return;
   }
 
-  GlGraphRenderingParameters param = oldGlGraph->getRenderingParameters();
   GlMetaNodeRenderer *metaNodeRenderer = oldGlGraph->getInputData()->getMetaNodeRenderer();
   // prevent deletion of MetaNodeRenderer when deleting oldGlGraph
   oldGlGraph->getInputData()->setMetaNodeRenderer(nullptr, false);
   GlGraph *glGraph = new GlGraph(graph);
-  glGraph->setRenderingParameters(param);
+  glGraph->setRenderingParameters(oldGlGraph->getRenderingParameters());
 
   metaNodeRenderer->setInputData(glGraph->getInputData());
 
@@ -345,8 +342,7 @@ void NodeLinkDiagramView::registerTriggers() {
 }
 
 void NodeLinkDiagramView::setZOrdering(bool f) {
-  getGlMainWidget()->getScene()->getGlGraph()->getRenderingParametersPointer()->setElementZOrdered(
-      f);
+  getGlMainWidget()->getScene()->getGlGraph()->getRenderingParameters().setElementZOrdered(f);
   centerView();
 }
 
@@ -544,11 +540,8 @@ void NodeLinkDiagramView::fillContextMenu(QMenu *menu, const QPointF &point) {
     action->setToolTip(
         "The graph elements are displayed according the ordering of their z coordinate");
     action->setCheckable(true);
-    action->setChecked(getGlMainWidget()
-                           ->getScene()
-                           ->getGlGraph()
-                           ->getRenderingParametersPointer()
-                           ->isElementZOrdered());
+    action->setChecked(
+        getGlMainWidget()->getScene()->getGlGraph()->getRenderingParameters().isElementZOrdered());
     connect(action, &QAction::triggered, this, &NodeLinkDiagramView::setZOrdering);
     action = menu->addAction("Grid display parameters", [this] { showGridControl(); });
     action->setToolTip("Display the grid setup wizard");

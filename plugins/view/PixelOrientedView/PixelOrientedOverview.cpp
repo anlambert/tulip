@@ -32,7 +32,7 @@ std::string getStringFromNumber(T number) {
 }
 
 static void setGraphView(tlp::GlGraph *glGraph) {
-  tlp::GlGraphRenderingParameters param = glGraph->getRenderingParameters();
+  tlp::GlGraphRenderingParameters &param = glGraph->getRenderingParameters();
   param.setAntialiasing(true);
   param.setViewNodeLabel(false);
   param.setFontsType(2);
@@ -41,7 +41,6 @@ static void setGraphView(tlp::GlGraph *glGraph) {
   param.setNodesLabelStencil(0xFFFF);
   param.setDisplayEdges(false);
   param.setDisplayNodes(true);
-  glGraph->setRenderingParameters(param);
 }
 
 namespace tlp {

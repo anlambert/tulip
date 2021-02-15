@@ -158,14 +158,14 @@ void SOMView::initGlMainViews() {
   glGraph = new GlGraph(tlp::newGraph());
   mainLayer->addGlEntity(glGraph, "graph");
 
-  GlGraphRenderingParameters *renderingParameters = glGraph->getRenderingParametersPointer();
-  renderingParameters->setFontsType(0);
+  GlGraphRenderingParameters &renderingParameters = glGraph->getRenderingParameters();
+  renderingParameters.setFontsType(0);
 
   // map
-  renderingParameters->setDisplayEdges(false);
-  renderingParameters->setViewEdgeLabel(false);
-  renderingParameters->setViewNodeLabel(false);
-  renderingParameters->setViewMetaLabel(false);
+  renderingParameters.setDisplayEdges(false);
+  renderingParameters.setViewEdgeLabel(false);
+  renderingParameters.setViewNodeLabel(false);
+  renderingParameters.setViewMetaLabel(false);
 }
 
 void SOMView::initMenu() {
@@ -254,13 +254,12 @@ void SOMView::changeMapViewGraph(tlp::Graph *graph) {
   scene->addExistingLayer(mainLayer);
   GlGraph *glGraph = new GlGraph(graph);
   mainLayer->addGlEntity(glGraph, "graph");
-  GlGraphRenderingParameters p = mapWidget->getScene()->getGlGraph()->getRenderingParameters();
+  GlGraphRenderingParameters &p = mapWidget->getScene()->getGlGraph()->getRenderingParameters();
   p.setDisplayEdges(false);
   p.setViewEdgeLabel(false);
   p.setViewMetaLabel(false);
   p.setViewNodeLabel(true);
   p.setFontsType(0);
-  mapWidget->getScene()->getGlGraph()->setRenderingParameters(p);
   glGraph = mapWidget->getScene()->getGlGraph();
 
   if (graphLayoutProperty) {

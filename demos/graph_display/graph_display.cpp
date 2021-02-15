@@ -92,15 +92,15 @@ void setTreeVisualProperties(Graph *tree) {
 
 // That function sets some rendering parameters on the graph to visualize
 void setGraphRenderingParameters(GlGraph *glGraph) {
-  GlGraphRenderingParameters *renderingParameters = glGraph->getRenderingParametersPointer();
+  GlGraphRenderingParameters &renderingParameters = glGraph->getRenderingParameters();
   // Activate the display of edge extremities (arrows by default)
-  renderingParameters->setViewArrow(true);
+  renderingParameters.setViewArrow(true);
   // No color interpolation for the edges
-  renderingParameters->setEdgeColorInterpolate(false);
+  renderingParameters.setEdgeColorInterpolate(false);
   // Size interpolation for the edges
-  renderingParameters->setEdgeSizeInterpolate(true);
+  renderingParameters.setEdgeSizeInterpolate(true);
   // Scale labels to node sizes
-  renderingParameters->setLabelScaled(true);
+  renderingParameters.setLabelScaled(true);
 }
 
 int main(int argc, char **argv) {

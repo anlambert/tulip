@@ -75,8 +75,8 @@ void SceneConfigWidget::resetChanges() {
   }
 
   Graph *graph = _glMainWidget->getScene()->getGlGraph()->getGraph();
-  GlGraphRenderingParameters *renderingParameters =
-      _glMainWidget->getScene()->getGlGraph()->getRenderingParametersPointer();
+  const GlGraphRenderingParameters &renderingParameters =
+      _glMainWidget->getScene()->getGlGraph()->getRenderingParameters();
 
   // NODES
   delete _ui->labelsOrderingCombo->model();
@@ -84,33 +84,33 @@ void SceneConfigWidget::resetChanges() {
       new GraphPropertiesModel<NumericProperty>("Disable ordering", graph);
   _ui->labelsOrderingCombo->setModel(model);
 
-  if (renderingParameters->getElementOrderingProperty() == nullptr) {
+  if (renderingParameters.getElementOrderingProperty() == nullptr) {
     _ui->labelsOrderingCombo->setCurrentIndex(0);
   } else {
     _ui->labelsOrderingCombo->setCurrentIndex(
-        model->rowOf(renderingParameters->getElementOrderingProperty()));
+        model->rowOf(renderingParameters.getElementOrderingProperty()));
   }
 
-  _ui->descendingCB->setChecked(renderingParameters->isElementOrderedDescending());
+  _ui->descendingCB->setChecked(renderingParameters.isElementOrderedDescending());
 
-  _ui->labelsFitCheck->setChecked(renderingParameters->isLabelScaled());
-  _ui->labelsBillboardedCheck->setChecked(renderingParameters->getLabelsAreBillboarded());
-  _ui->fixedFontSizeRB->setChecked(renderingParameters->isLabelFixedFontSize());
-  _ui->dynamicFontSizeRB->setChecked(!renderingParameters->isLabelFixedFontSize());
-  _ui->labelsDensitySlider->setValue(renderingParameters->getLabelsDensity());
-  _ui->labelSizesRangeSlider->setLowerValue(renderingParameters->getMinSizeOfLabel());
-  _ui->labelSizesRangeSlider->setUpperValue(renderingParameters->getMaxSizeOfLabel());
+  _ui->labelsFitCheck->setChecked(renderingParameters.isLabelScaled());
+  _ui->labelsBillboardedCheck->setChecked(renderingParameters.getLabelsAreBillboarded());
+  _ui->fixedFontSizeRB->setChecked(renderingParameters.isLabelFixedFontSize());
+  _ui->dynamicFontSizeRB->setChecked(!renderingParameters.isLabelFixedFontSize());
+  _ui->labelsDensitySlider->setValue(renderingParameters.getLabelsDensity());
+  _ui->labelSizesRangeSlider->setLowerValue(renderingParameters.getMinSizeOfLabel());
+  _ui->labelSizesRangeSlider->setUpperValue(renderingParameters.getMaxSizeOfLabel());
 
   // EDGES
-  _ui->edges3DCheck->setChecked(renderingParameters->isEdge3D());
-  _ui->edgesArrowCheck->setChecked(renderingParameters->isViewArrow());
-  _ui->edgesColorInterpolationCheck->setChecked(renderingParameters->isEdgeColorInterpolate());
-  _ui->edgesSizeInterpolationCheck->setChecked(renderingParameters->isEdgeSizeInterpolate());
-  _ui->edgesFrontCheck->setChecked(renderingParameters->isEdgeFrontDisplay());
+  _ui->edges3DCheck->setChecked(renderingParameters.isEdge3D());
+  _ui->edgesArrowCheck->setChecked(renderingParameters.isViewArrow());
+  _ui->edgesColorInterpolationCheck->setChecked(renderingParameters.isEdgeColorInterpolate());
+  _ui->edgesSizeInterpolationCheck->setChecked(renderingParameters.isEdgeSizeInterpolate());
+  _ui->edgesFrontCheck->setChecked(renderingParameters.isEdgeFrontDisplay());
 
   // COLORS
   _ui->backgroundColorButton->setColor(_glMainWidget->getScene()->getBackgroundColor());
-  _ui->selectionColorButton->setColor(renderingParameters->getSelectionColor());
+  _ui->selectionColorButton->setColor(renderingParameters.getSelectionColor());
 
   // PROJECTION
   if (_glMainWidget->getScene()->isViewOrtho()) {
@@ -154,39 +154,39 @@ void SceneConfigWidget::applySettings() {
     return;
   }
 
-  GlGraphRenderingParameters *renderingParameters =
-      _glMainWidget->getScene()->getGlGraph()->getRenderingParametersPointer();
+  GlGraphRenderingParameters &renderingParameters =
+      _glMainWidget->getScene()->getGlGraph()->getRenderingParameters();
 
   // NODES
   if (_ui->labelsOrderingCombo->currentIndex() == 0) {
-    renderingParameters->setElementOrderingProperty(nullptr);
+    renderingParameters.setElementOrderingProperty(nullptr);
   } else {
     GraphPropertiesModel<NumericProperty> *model =
         static_cast<GraphPropertiesModel<NumericProperty> *>(_ui->labelsOrderingCombo->model());
-    renderingParameters->setElementOrderingProperty(
+    renderingParameters.setElementOrderingProperty(
         dynamic_cast<NumericProperty *>(model->index(_ui->labelsOrderingCombo->currentIndex(), 0)
                                             .data(Model::PropertyRole)
                                             .value<PropertyInterface *>()));
   }
 
-  renderingParameters->setElementOrderedDescending(_ui->descendingCB->isChecked());
+  renderingParameters.setElementOrderedDescending(_ui->descendingCB->isChecked());
 
-  renderingParameters->setLabelScaled(_ui->labelsFitCheck->isChecked());
-  renderingParameters->setLabelsAreBillboarded(_ui->labelsBillboardedCheck->isChecked());
-  renderingParameters->setLabelFixedFontSize(_ui->fixedFontSizeRB->isChecked());
-  renderingParameters->setLabelsDensity(_ui->labelsDensitySlider->value());
-  renderingParameters->setMinSizeOfLabel(_ui->labelSizesRangeSlider->lowerValue());
-  renderingParameters->setMaxSizeOfLabel(_ui->labelSizesRangeSlider->upperValue());
+  renderingParameters.setLabelScaled(_ui->labelsFitCheck->isChecked());
+  renderingParameters.setLabelsAreBillboarded(_ui->labelsBillboardedCheck->isChecked());
+  renderingParameters.setLabelFixedFontSize(_ui->fixedFontSizeRB->isChecked());
+  renderingParameters.setLabelsDensity(_ui->labelsDensitySlider->value());
+  renderingParameters.setMinSizeOfLabel(_ui->labelSizesRangeSlider->lowerValue());
+  renderingParameters.setMaxSizeOfLabel(_ui->labelSizesRangeSlider->upperValue());
 
   // EDGES
-  renderingParameters->setEdge3D(_ui->edges3DCheck->isChecked());
-  renderingParameters->setViewArrow(_ui->edgesArrowCheck->isChecked());
-  renderingParameters->setEdgeColorInterpolate(_ui->edgesColorInterpolationCheck->isChecked());
-  renderingParameters->setEdgeSizeInterpolate(_ui->edgesSizeInterpolationCheck->isChecked());
-  renderingParameters->setEdgeFrontDisplay(_ui->edgesFrontCheck->isChecked());
+  renderingParameters.setEdge3D(_ui->edges3DCheck->isChecked());
+  renderingParameters.setViewArrow(_ui->edgesArrowCheck->isChecked());
+  renderingParameters.setEdgeColorInterpolate(_ui->edgesColorInterpolationCheck->isChecked());
+  renderingParameters.setEdgeSizeInterpolate(_ui->edgesSizeInterpolationCheck->isChecked());
+  renderingParameters.setEdgeFrontDisplay(_ui->edgesFrontCheck->isChecked());
 
   // COLORS
-  renderingParameters->setSelectionColor(_ui->selectionColorButton->talipotColor());
+  renderingParameters.setSelectionColor(_ui->selectionColorButton->talipotColor());
   _glMainWidget->getScene()->setBackgroundColor(_ui->backgroundColorButton->talipotColor());
 
   // PROJECTION

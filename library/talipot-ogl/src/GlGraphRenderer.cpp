@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -28,8 +28,8 @@ using namespace std;
 namespace tlp {
 
 GlGraphRenderer::GlGraphRenderer(const GlGraphInputData *inputData)
-    : inputData(inputData), graphModified(true), selectionDrawActivate(false),
-      selectionIdMap(nullptr), selectionCurrentId(nullptr) {}
+    : inputData(inputData), selectionDrawActivate(false), selectionIdMap(nullptr),
+      selectionCurrentId(nullptr) {}
 
 void GlGraphRenderer::visitGraph(GlSceneVisitor *visitor, bool visitHiddenEntities) {
   Graph *graph = inputData->getGraph();

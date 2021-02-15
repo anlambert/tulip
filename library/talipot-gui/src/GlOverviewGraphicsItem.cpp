@@ -185,13 +185,12 @@ void GlOverviewGraphicsItem::draw(bool generatePixmap) {
   }
 
   if (generatePixmap) {
-    bool edgesLabels = baseScene.getGlGraph()->getRenderingParametersPointer()->isViewEdgeLabel();
-    bool nodesLabels = baseScene.getGlGraph()->getRenderingParametersPointer()->isViewNodeLabel();
-    bool metaNodesLabels =
-        baseScene.getGlGraph()->getRenderingParametersPointer()->isViewMetaLabel();
-    baseScene.getGlGraph()->getRenderingParametersPointer()->setViewEdgeLabel(false);
-    baseScene.getGlGraph()->getRenderingParametersPointer()->setViewNodeLabel(false);
-    baseScene.getGlGraph()->getRenderingParametersPointer()->setViewMetaLabel(false);
+    bool edgesLabels = baseScene.getGlGraph()->getRenderingParameters().isViewEdgeLabel();
+    bool nodesLabels = baseScene.getGlGraph()->getRenderingParameters().isViewNodeLabel();
+    bool metaNodesLabels = baseScene.getGlGraph()->getRenderingParameters().isViewMetaLabel();
+    baseScene.getGlGraph()->getRenderingParameters().setViewEdgeLabel(false);
+    baseScene.getGlGraph()->getRenderingParameters().setViewNodeLabel(false);
+    baseScene.getGlGraph()->getRenderingParameters().setViewMetaLabel(false);
 
     vector<bool> layersVisibility;
 
@@ -224,10 +223,10 @@ void GlOverviewGraphicsItem::draw(bool generatePixmap) {
       ++itTmp;
     }
 
-    GlGraphRenderingParameters *param = baseScene.getGlGraph()->getRenderingParametersPointer();
-    param->setViewEdgeLabel(edgesLabels);
-    param->setViewNodeLabel(nodesLabels);
-    param->setViewMetaLabel(metaNodesLabels);
+    GlGraphRenderingParameters &param = baseScene.getGlGraph()->getRenderingParameters();
+    param.setViewEdgeLabel(edgesLabels);
+    param.setViewNodeLabel(nodesLabels);
+    param.setViewMetaLabel(metaNodesLabels);
   }
 
   // invert applied camera transformations

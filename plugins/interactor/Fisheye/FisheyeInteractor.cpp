@@ -241,7 +241,7 @@ void FisheyeInteractorComponent::generateFisheyeTexture(GlMainWidget *glWidget) 
   int labelMinSizeBackup = 0;
   if (glGraph) {
     labelMinSizeBackup = glGraph->getRenderingParameters().getMinSizeOfLabel();
-    glGraph->getRenderingParametersPointer()->setMinSizeOfLabel(labelMinSizeBackup + factor * 3);
+    glGraph->getRenderingParameters().setMinSizeOfLabel(labelMinSizeBackup + factor * 3);
   }
 
   _fbo->bind();
@@ -254,7 +254,7 @@ void FisheyeInteractorComponent::generateFisheyeTexture(GlMainWidget *glWidget) 
   QOpenGLFramebufferObject::blitFramebuffer(_fbo2, _fbo, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
   if (glGraph) {
-    glGraph->getRenderingParametersPointer()->setMinSizeOfLabel(labelMinSizeBackup);
+    glGraph->getRenderingParameters().setMinSizeOfLabel(labelMinSizeBackup);
   }
 
   glScene->setViewport(viewport);

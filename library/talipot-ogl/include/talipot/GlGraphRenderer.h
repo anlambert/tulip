@@ -76,20 +76,11 @@ public:
    */
   virtual void visitGraph(GlSceneVisitor *visitor, bool visitHiddenEntities = false);
 
-  /**
-   * @brief This function set if the content of the graph is modified
-   */
-  void setGraphModified(bool graphModified) {
-    this->graphModified = graphModified;
-  }
-
 protected:
   void visitNodes(Graph *graph, GlSceneVisitor *visitor);
   void visitEdges(Graph *graph, GlSceneVisitor *visitor);
 
   const GlGraphInputData *inputData;
-
-  bool graphModified;
 
   bool selectionDrawActivate;
   RenderingEntitiesFlag selectionType;

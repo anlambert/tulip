@@ -188,47 +188,47 @@ QVariant SceneLayersModel::data(const QModelIndex &index, int role) const {
 
   if (GRAPH_COMPOSITE_IDS.contains(index.internalId())) {
     quint32 id = index.internalId();
-    GlGraphRenderingParameters *parameters = _scene->getGlGraph()->getRenderingParametersPointer();
+    const GlGraphRenderingParameters &parameters = _scene->getGlGraph()->getRenderingParameters();
     QString display;
     int stencil = NO_STENCIL;
     bool visible = false;
 
     if (id == NODES_ID) {
       display = "Nodes";
-      stencil = parameters->getNodesStencil();
-      visible = parameters->isDisplayNodes();
+      stencil = parameters.getNodesStencil();
+      visible = parameters.isDisplayNodes();
     } else if (id == EDGES_ID) {
       display = "Edges";
-      stencil = parameters->getEdgesStencil();
-      visible = parameters->isDisplayEdges();
+      stencil = parameters.getEdgesStencil();
+      visible = parameters.isDisplayEdges();
     } else if (id == SELECTED_NODES_ID) {
       display = "Selected nodes";
-      stencil = parameters->getSelectedNodesStencil();
-      visible = parameters->isDisplayNodes();
+      stencil = parameters.getSelectedNodesStencil();
+      visible = parameters.isDisplayNodes();
     } else if (id == SELECTED_EDGES_ID) {
       display = "Selected edges";
-      stencil = parameters->getSelectedEdgesStencil();
-      visible = parameters->isDisplayEdges();
+      stencil = parameters.getSelectedEdgesStencil();
+      visible = parameters.isDisplayEdges();
     } else if (id == META_NODES_ID) {
       display = "Meta nodes content";
-      stencil = parameters->getMetaNodesStencil();
-      visible = parameters->isDisplayMetaNodes();
+      stencil = parameters.getMetaNodesStencil();
+      visible = parameters.isDisplayMetaNodes();
     } else if (id == SELECTED_META_NODES_ID) {
       display = "Selected meta nodes";
-      stencil = parameters->getSelectedMetaNodesStencil();
-      visible = parameters->isDisplayMetaNodes();
+      stencil = parameters.getSelectedMetaNodesStencil();
+      visible = parameters.isDisplayMetaNodes();
     } else if (id == META_NODE_LABELS_ID) {
       display = "Meta node content labels";
-      stencil = parameters->getMetaNodesLabelStencil();
-      visible = parameters->isViewMetaLabel();
+      stencil = parameters.getMetaNodesLabelStencil();
+      visible = parameters.isViewMetaLabel();
     } else if (id == NODE_LABELS_ID) {
       display = "Node labels";
-      stencil = parameters->getNodesLabelStencil();
-      visible = parameters->isViewNodeLabel();
+      stencil = parameters.getNodesLabelStencil();
+      visible = parameters.isViewNodeLabel();
     } else if (id == EDGE_LABELS_ID) {
       display = "Edge labels";
-      stencil = parameters->getEdgesLabelStencil();
-      visible = parameters->isViewEdgeLabel();
+      stencil = parameters.getEdgesLabelStencil();
+      visible = parameters.isViewEdgeLabel();
     }
 
     if (role == Qt::DisplayRole && index.column() == 0) {
@@ -300,45 +300,45 @@ bool SceneLayersModel::setData(const QModelIndex &index, const QVariant &value, 
 
   if (GRAPH_COMPOSITE_IDS.contains(index.internalId())) {
     quint32 id = index.internalId();
-    GlGraphRenderingParameters *p = _scene->getGlGraph()->getRenderingParametersPointer();
+    GlGraphRenderingParameters &parameters = _scene->getGlGraph()->getRenderingParameters();
 
     if (index.column() == 1) {
       bool visible = value.value<int>() == int(Qt::Checked);
 
       if (id == NODES_ID) {
-        p->setDisplayNodes(visible);
+        parameters.setDisplayNodes(visible);
       } else if (id == EDGES_ID) {
-        p->setDisplayEdges(visible);
+        parameters.setDisplayEdges(visible);
       } else if (id == META_NODES_ID) {
-        p->setDisplayMetaNodes(visible);
+        parameters.setDisplayMetaNodes(visible);
       } else if (id == NODE_LABELS_ID) {
-        p->setViewNodeLabel(visible);
+        parameters.setViewNodeLabel(visible);
       } else if (id == EDGE_LABELS_ID) {
-        p->setViewEdgeLabel(visible);
+        parameters.setViewEdgeLabel(visible);
       } else if (id == META_NODE_LABELS_ID) {
-        p->setViewMetaLabel(visible);
+        parameters.setViewMetaLabel(visible);
       }
     } else if (index.column() == 2) {
       int stencil = (value.value<int>() == int(Qt::Checked) ? FULL_STENCIL : NO_STENCIL);
 
       if (id == NODES_ID) {
-        p->setNodesStencil(stencil);
+        parameters.setNodesStencil(stencil);
       } else if (id == EDGES_ID) {
-        p->setEdgesStencil(stencil);
+        parameters.setEdgesStencil(stencil);
       } else if (id == SELECTED_NODES_ID) {
-        p->setSelectedNodesStencil(stencil);
+        parameters.setSelectedNodesStencil(stencil);
       } else if (id == SELECTED_EDGES_ID) {
-        p->setSelectedEdgesStencil(stencil);
+        parameters.setSelectedEdgesStencil(stencil);
       } else if (id == META_NODES_ID) {
-        p->setMetaNodesStencil(stencil);
+        parameters.setMetaNodesStencil(stencil);
       } else if (id == SELECTED_META_NODES_ID) {
-        p->setSelectedMetaNodesStencil(stencil);
+        parameters.setSelectedMetaNodesStencil(stencil);
       } else if (id == META_NODE_LABELS_ID) {
-        p->setMetaNodesLabelStencil(stencil);
+        parameters.setMetaNodesLabelStencil(stencil);
       } else if (id == NODE_LABELS_ID) {
-        p->setNodesLabelStencil(stencil);
+        parameters.setNodesLabelStencil(stencil);
       } else if (id == EDGE_LABELS_ID) {
-        p->setEdgesLabelStencil(stencil);
+        parameters.setEdgesLabelStencil(stencil);
       }
     }
 

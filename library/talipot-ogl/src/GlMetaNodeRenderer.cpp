@@ -71,22 +71,22 @@ void GlMetaNodeRenderer::render(node n, float, Camera *camera) {
     metaGraph->addListener(this);
   }
 
-  scene->getGlGraph()->setRenderingParameters(*(_inputData->renderingParameters()));
   int metaStencil = _inputData->renderingParameters()->getMetaNodesStencil();
   int metaSelectedStencil = _inputData->renderingParameters()->getSelectedMetaNodesStencil();
   int metaLabelStencil = _inputData->renderingParameters()->getMetaNodesLabelStencil();
-  scene->getGlGraph()->getRenderingParametersPointer()->setDisplayNodes(viewMeta);
-  scene->getGlGraph()->getRenderingParametersPointer()->setDisplayEdges(viewMeta);
-  scene->getGlGraph()->getRenderingParametersPointer()->setViewEdgeLabel(viewMetaLabels);
-  scene->getGlGraph()->getRenderingParametersPointer()->setViewNodeLabel(viewMetaLabels);
-  scene->getGlGraph()->getRenderingParametersPointer()->setNodesStencil(metaStencil);
-  scene->getGlGraph()->getRenderingParametersPointer()->setEdgesStencil(metaStencil);
-  scene->getGlGraph()->getRenderingParametersPointer()->setSelectedNodesStencil(
-      metaSelectedStencil);
-  scene->getGlGraph()->getRenderingParametersPointer()->setSelectedEdgesStencil(
-      metaSelectedStencil);
-  scene->getGlGraph()->getRenderingParametersPointer()->setNodesLabelStencil(metaLabelStencil);
-  scene->getGlGraph()->getRenderingParametersPointer()->setEdgesLabelStencil(metaLabelStencil);
+  scene->getGlGraph()->setRenderingParameters(*(_inputData->renderingParameters()));
+
+  auto &renderingParameters = scene->getGlGraph()->getRenderingParameters();
+  renderingParameters.setDisplayNodes(viewMeta);
+  renderingParameters.setDisplayEdges(viewMeta);
+  renderingParameters.setViewEdgeLabel(viewMetaLabels);
+  renderingParameters.setViewNodeLabel(viewMetaLabels);
+  renderingParameters.setNodesStencil(metaStencil);
+  renderingParameters.setEdgesStencil(metaStencil);
+  renderingParameters.setSelectedNodesStencil(metaSelectedStencil);
+  renderingParameters.setSelectedEdgesStencil(metaSelectedStencil);
+  renderingParameters.setNodesLabelStencil(metaLabelStencil);
+  renderingParameters.setEdgesLabelStencil(metaLabelStencil);
 
   GlNode glNode(n, metaGraph);
 

@@ -93,21 +93,16 @@ void GlGraph::selectEntities(Camera *camera, RenderingEntitiesFlag type, int x, 
   graphRenderer->selectEntities(camera, type, x, y, w, h, selectedEntities);
 }
 //===================================================================
-const GlGraphRenderingParameters &GlGraph::getRenderingParameters() {
+const GlGraphRenderingParameters &GlGraph::getRenderingParameters() const {
   return parameters;
 }
 //===================================================================
 void GlGraph::setRenderingParameters(const GlGraphRenderingParameters &parameter) {
-  if (parameters.isElementOrdered() != parameter.isElementOrdered()) {
-    parameters = parameter;
-    graphRenderer->setGraphModified(true);
-  } else {
-    parameters = parameter;
-  }
+  parameters = parameter;
 }
 //===================================================================
-GlGraphRenderingParameters *GlGraph::getRenderingParametersPointer() {
-  return &parameters;
+GlGraphRenderingParameters &GlGraph::getRenderingParameters() {
+  return parameters;
 }
 //===================================================================
 GlGraphInputData *GlGraph::getInputData() {
@@ -129,14 +124,12 @@ void GlGraph::treatEvent(const Event &evt) {
     case GraphEvent::TLP_ADD_NODE:
     case GraphEvent::TLP_DEL_NODE:
       nodesModified = true;
-      graphRenderer->setGraphModified(true);
       break;
 
     case GraphEvent::TLP_ADD_EDGE:
     case GraphEvent::TLP_DEL_EDGE:
     case GraphEvent::TLP_REVERSE_EDGE:
     case GraphEvent::TLP_AFTER_SET_ENDS:
-      graphRenderer->setGraphModified(true);
       break;
 
     default:

@@ -47,7 +47,7 @@ const vector<string> propertiesTypesFilter(propertiesTypes, propertiesTypes + nb
 namespace tlp {
 
 static void toggleGraphView(GlGraph *glGraph, bool displayNodes) {
-  GlGraphRenderingParameters param = glGraph->getRenderingParameters();
+  GlGraphRenderingParameters &param = glGraph->getRenderingParameters();
   param.setAntialiasing(true);
   param.setNodesStencil(2);
   param.setNodesLabelStencil(2);
@@ -55,7 +55,6 @@ static void toggleGraphView(GlGraph *glGraph, bool displayNodes) {
   param.setDisplayEdges(false);
   param.setDisplayNodes(displayNodes);
   param.setFontsType(2);
-  glGraph->setRenderingParameters(param);
 }
 
 PLUGIN(ParallelCoordinatesView)
@@ -124,7 +123,7 @@ void ParallelCoordinatesView::initGlWidget() {
   glGraph = new GlGraph(axisPointsGraph);
   mainLayer->addGlEntity(glGraph, "graph");
   axisSelectionLayer = new GlLayer("Axis selection layer");
-  GlGraphRenderingParameters param = scene->getGlGraph()->getRenderingParameters();
+  GlGraphRenderingParameters &param = scene->getGlGraph()->getRenderingParameters();
   param.setAntialiasing(true);
   param.setNodesStencil(2);
   param.setNodesLabelStencil(1);
@@ -133,7 +132,6 @@ void ParallelCoordinatesView::initGlWidget() {
   param.setDisplayNodes(true);
   param.setViewNodeLabel(false);
   param.setFontsType(2);
-  scene->getGlGraph()->setRenderingParameters(param);
   getGlMainWidget()->setMouseTracking(true);
 }
 
@@ -729,7 +727,7 @@ void ParallelCoordinatesView::setupAndDrawView() {
     parallelCoordsDrawing->setLayoutType(getLayoutType());
     parallelCoordsDrawing->setLinesType(getLinesType());
     parallelCoordsDrawing->setLinesThickness(getLinesThickness());
-    scene->getGlGraph()->getRenderingParametersPointer()->setViewNodeLabel(
+    scene->getGlGraph()->getRenderingParameters().setViewNodeLabel(
         drawConfigWidget->displayNodeLabels());
 
     if (graphProxy->getUnhighlightedEltsColorAlphaValue() !=

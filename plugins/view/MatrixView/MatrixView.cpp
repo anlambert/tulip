@@ -119,17 +119,13 @@ void MatrixView::setState(const DataSet &ds) {
 }
 
 void MatrixView::showEdges(bool show) {
-  getGlMainWidget()->getScene()->getGlGraph()->getRenderingParametersPointer()->setDisplayEdges(
-      show);
+  getGlMainWidget()->getScene()->getGlGraph()->getRenderingParameters().setDisplayEdges(show);
   emit drawNeeded();
 }
 
 void MatrixView::enableEdgeColorInterpolation(bool flag) {
-  getGlMainWidget()
-      ->getScene()
-      ->getGlGraph()
-      ->getRenderingParametersPointer()
-      ->setEdgeColorInterpolate(flag);
+  getGlMainWidget()->getScene()->getGlGraph()->getRenderingParameters().setEdgeColorInterpolate(
+      flag);
   emit drawNeeded();
 }
 
@@ -174,16 +170,13 @@ void MatrixView::graphChanged(Graph *) {
 
 DataSet MatrixView::state() const {
   DataSet ds;
-  ds.set("show Edges", getGlMainWidget()
-                           ->getScene()
-                           ->getGlGraph()
-                           ->getRenderingParametersPointer()
-                           ->isDisplayEdges());
+  ds.set("show Edges",
+         getGlMainWidget()->getScene()->getGlGraph()->getRenderingParameters().isDisplayEdges());
   ds.set("edge color interpolation", getGlMainWidget()
                                          ->getScene()
                                          ->getGlGraph()
-                                         ->getRenderingParametersPointer()
-                                         ->isEdgeColorInterpolate());
+                                         ->getRenderingParameters()
+                                         .isEdgeColorInterpolate());
   ds.set("ascending order", _configurationWidget->ascendingOrder());
   ds.set("Grid mode", _configurationWidget->gridDisplayMode());
   ds.set("Background Color", getGlMainWidget()->getScene()->getBackgroundColor());
@@ -325,10 +318,10 @@ void MatrixView::initDisplayedGraph() {
       _graphEntitiesToDisplayedNodes, _displayedNodesAreNodes, _displayedNodesToGraphEntities,
       _displayedEdgesToGraphEdges, _edgesMap);
 
-  GlGraphRenderingParameters *renderingParameters =
-      getGlMainWidget()->getScene()->getGlGraph()->getRenderingParametersPointer();
-  renderingParameters->setLabelScaled(true);
-  renderingParameters->setLabelsDensity(100);
+  GlGraphRenderingParameters &renderingParameters =
+      getGlMainWidget()->getScene()->getGlGraph()->getRenderingParameters();
+  renderingParameters.setLabelScaled(true);
+  renderingParameters.setLabelsDensity(100);
 
   _configurationWidget->setBackgroundColor(
       colorToQColor(getGlMainWidget()->getScene()->getBackgroundColor()));

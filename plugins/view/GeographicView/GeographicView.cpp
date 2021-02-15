@@ -176,7 +176,7 @@ void GeographicView::setState(const DataSet &dataSet) {
   }
 
   GlGraph *glGraph = geoViewGraphicsView->getGlMainWidget()->getScene()->getGlGraph();
-  GlGraphRenderingParameters rp = glGraph->getRenderingParameters();
+  GlGraphRenderingParameters &rp = glGraph->getRenderingParameters();
 
   if (dataSet.exists("renderingParameters")) {
     DataSet renderingParameters;
@@ -189,10 +189,9 @@ void GeographicView::setState(const DataSet &dataSet) {
     }
   } else {
     // same default initialization as NodeLinkDiagramView
-    NodeLinkDiagramView::initRenderingParameters(&rp);
+    NodeLinkDiagramView::initRenderingParameters(rp);
   }
 
-  glGraph->setRenderingParameters(rp);
   sceneConfigurationWidget->resetChanges();
 
   View::setState(dataSet);

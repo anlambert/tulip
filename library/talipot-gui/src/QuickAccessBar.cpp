@@ -541,7 +541,7 @@ void QuickAccessBarImpl::setLabelsScaled(bool v) {
 }
 
 GlGraphRenderingParameters *QuickAccessBar::renderingParameters() const {
-  return scene()->getGlGraph()->getRenderingParametersPointer();
+  return &scene()->getGlGraph()->getRenderingParameters();
 }
 
 GlGraphInputData *QuickAccessBar::inputData() const {

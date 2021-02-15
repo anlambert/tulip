@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -63,7 +63,7 @@ public:
   tlp::DataSet state() const override;
   // default initialization of scene rendering parameters
   // can be used by other view
-  static void initRenderingParameters(tlp::GlGraphRenderingParameters *);
+  static void initRenderingParameters(tlp::GlGraphRenderingParameters &);
 
 public slots:
   void draw() override;
