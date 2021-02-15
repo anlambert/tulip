@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -54,7 +54,7 @@ PLUGIN(HistogramView)
 HistogramView::HistogramView(const PluginContext *)
     : GlMainView(true), propertiesSelectionWidget(nullptr), histoOptionsWidget(nullptr),
       xAxisDetail(nullptr), yAxisDetail(nullptr), _histoGraph(nullptr), emptyGraph(nullptr),
-      emptyGlGraphComposite(nullptr), histogramsComposite(nullptr), labelsComposite(nullptr),
+      emptyGlGraph(nullptr), histogramsComposite(nullptr), labelsComposite(nullptr),
       axisComposite(nullptr), smallMultiplesView(true), mainLayer(nullptr),
       detailedHistogram(nullptr), sceneRadiusBak(0), zoomFactorBak(0), noDimsLabel(nullptr),
       noDimsLabel1(nullptr), noDimsLabel2(nullptr), emptyRect(nullptr), emptyRect2(nullptr),
@@ -69,7 +69,7 @@ HistogramView::~HistogramView() {
 
     delete propertiesSelectionWidget;
     delete histoOptionsWidget;
-    delete emptyGlGraphComposite;
+    delete emptyGlGraph;
     delete histogramsComposite;
     delete labelsComposite;
     delete emptyGraph;
@@ -94,12 +94,12 @@ void HistogramView::initGlWidget(Graph *) {
 
   cleanupGlScene();
 
-  if (emptyGlGraphComposite == nullptr) {
+  if (emptyGlGraph == nullptr) {
     emptyGraph = newGraph();
-    emptyGlGraphComposite = new GlGraphComposite(emptyGraph);
+    emptyGlGraph = new GlGraph(emptyGraph);
   }
 
-  mainLayer->addGlEntity(emptyGlGraphComposite, "graph");
+  mainLayer->addGlEntity(emptyGlGraph, "graph");
 
   if (histogramsComposite == nullptr) {
     histogramsComposite = new GlComposite();
@@ -808,7 +808,7 @@ void HistogramView::switchFromSmallMultiplesToDetailedView(Histogram *histogramT
   mainLayer->addGlEntity(emptyRect, "emptyRect");
   mainLayer->addGlEntity(emptyRect2, "emptyRect2");
 
-  mainLayer->addGlEntity(histogramToDetail->getGlGraphComposite(), "graph");
+  mainLayer->addGlEntity(histogramToDetail->getGlGraph(), "graph");
 
   toggleInteractors(true);
 
@@ -851,7 +851,7 @@ void HistogramView::switchFromDetailedViewToSmallMultiples() {
     updateHistograms();
   }
 
-  mainLayer->addGlEntity(emptyGlGraphComposite, "graph");
+  mainLayer->addGlEntity(emptyGlGraph, "graph");
 
   mainLayer->deleteGlEntity(axisComposite);
   mainLayer->deleteGlEntity(emptyRect);

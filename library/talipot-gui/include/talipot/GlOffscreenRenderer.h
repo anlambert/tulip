@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -29,7 +29,7 @@ class QOpenGLFramebufferObject;
 namespace tlp {
 
 class GlEntity;
-class GlGraphComposite;
+class GlGraph;
 class GlMainWidget;
 
 class GlOffscreenRenderer;
@@ -88,10 +88,10 @@ public:
   /**
    * @brief Add a graph composite to the scene. The scene become the owner of the object.
    **/
-  void addGraphCompositeToScene(GlGraphComposite *graphComposite);
+  void addGlGraphToScene(GlGraph *glGraph);
 
   /**
-   * @brief Add a graph to the scene. Just create a new GraphComposite and call GlGraphComposite.
+   * @brief Add a graph to the scene. Just create a new GlGraph and call GlGraph.
    **/
   void addGraphToScene(Graph *graph);
 

@@ -9,7 +9,7 @@
 #include <talipot/DoubleProperty.h>
 #include <talipot/IntegerProperty.h>
 #include <talipot/ViewSettings.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/GlGraphRenderingParameters.h>
 
 #include <QApplication>
@@ -91,9 +91,8 @@ void setTreeVisualProperties(Graph *tree) {
 }
 
 // That function sets some rendering parameters on the graph to visualize
-void setGraphRenderingParameters(GlGraphComposite *glGraphComposite) {
-  GlGraphRenderingParameters *renderingParameters =
-      glGraphComposite->getRenderingParametersPointer();
+void setGraphRenderingParameters(GlGraph *glGraph) {
+  GlGraphRenderingParameters *renderingParameters = glGraph->getRenderingParametersPointer();
   // Activate the display of edge extremities (arrows by default)
   renderingParameters->setViewArrow(true);
   // No color interpolation for the edges
@@ -143,7 +142,7 @@ int main(int argc, char **argv) {
   mainLayer->addGraph(g, "graph");
 
   // Sets some rendering parameters on the graph to visualize
-  setGraphRenderingParameters(mainWidget->getScene()->getGlGraphComposite());
+  setGraphRenderingParameters(mainWidget->getScene()->getGlGraph());
 
   // Display the widget
   mainWidget->show();

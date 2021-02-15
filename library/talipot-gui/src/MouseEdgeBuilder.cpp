@@ -20,7 +20,7 @@
 #include <talipot/GlMainView.h>
 #include <talipot/GlTools.h>
 #include <talipot/GlLine.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/MouseEdgeBuilder.h>
 #include <talipot/Camera.h>
 
@@ -43,7 +43,7 @@ bool MouseEdgeBuilder::eventFilter(QObject *widget, QEvent *e) {
     QMouseEvent *qMouseEv = static_cast<QMouseEvent *>(e);
 
     SelectedEntity selectedEntity;
-    GlGraphInputData *inputData = glMainWidget->getScene()->getGlGraphComposite()->getInputData();
+    GlGraphInputData *inputData = glMainWidget->getScene()->getGlGraph()->getInputData();
     Graph *_graph = inputData->getGraph();
 
     LayoutProperty *mLayout = inputData->getElementLayout();
@@ -201,10 +201,10 @@ void MouseEdgeBuilder::clear() {
 
 void MouseEdgeBuilder::addLink(const node &source, const node &target) {
   assert(glMainWidget);
-  Graph *g = glMainWidget->getScene()->getGlGraphComposite()->getInputData()->getGraph();
+  Graph *g = glMainWidget->getScene()->getGlGraph()->getInputData()->getGraph();
 
   LayoutProperty *mLayout =
-      glMainWidget->getScene()->getGlGraphComposite()->getInputData()->getElementLayout();
+      glMainWidget->getScene()->getGlGraph()->getInputData()->getElementLayout();
   edge newEdge = g->addEdge(source, target);
   mLayout->setEdgeValue(newEdge, bends());
   _bends.clear();

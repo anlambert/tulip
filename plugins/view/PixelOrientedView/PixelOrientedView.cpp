@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -19,7 +19,7 @@
 #include <talipot/Graph.h>
 #include <talipot/GlMainWidget.h>
 #include <talipot/GlRect.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/GlLayer.h>
 #include <talipot/GlProgressBar.h>
 #include <talipot/GlLabel.h>
@@ -43,7 +43,7 @@
 
 using namespace std;
 
-static void setGraphView(tlp::GlGraphComposite *glGraph, bool displayNodes) {
+static void setGraphView(tlp::GlGraph *glGraph, bool displayNodes) {
   tlp::GlGraphRenderingParameters param = glGraph->getRenderingParameters();
   param.setAntialiasing(true);
   param.setViewNodeLabel(true);
@@ -66,7 +66,7 @@ namespace tlp {
 PLUGIN(PixelOrientedView)
 
 PixelOrientedView::PixelOrientedView(const PluginContext *)
-    : GlMainView(true), pixelOrientedGraph(nullptr), graphComposite(nullptr), mainLayer(nullptr),
+    : GlMainView(true), pixelOrientedGraph(nullptr), glGraph(nullptr), mainLayer(nullptr),
       overviewsComposite(nullptr), optionsWidget(nullptr), propertiesSelectionWidget(nullptr),
       pixelOrientedMediator(nullptr), lastNbNodes(0), overviewWidth(0), overviewHeight(0),
       minWidth(0), refSize(0), hilbertLayout(nullptr), squareLayout(nullptr),
@@ -88,7 +88,7 @@ PixelOrientedView::~PixelOrientedView() {
   delete pixelOrientedMediator;
   delete propertiesSelectionWidget;
   delete optionsWidget;
-  delete graphComposite;
+  delete glGraph;
 }
 
 QList<QWidget *> PixelOrientedView::configurationWidgets() const {
@@ -104,12 +104,11 @@ void PixelOrientedView::initGlWidget() {
   }
 
   if (mainLayer->findGlEntity("graph")) {
-    GlGraphComposite *lastGraphComposite =
-        static_cast<GlGraphComposite *>(mainLayer->findGlEntity("graph"));
-    Graph *theGraph = lastGraphComposite->getInputData()->getGraph();
+    GlGraph *lastGlGraph = static_cast<GlGraph *>(mainLayer->findGlEntity("graph"));
+    Graph *theGraph = lastGlGraph->getInputData()->getGraph();
 
     if (theGraph) {
-      theGraph->removeListener(lastGraphComposite);
+      theGraph->removeListener(lastGlGraph);
     }
   }
 
@@ -125,9 +124,9 @@ void PixelOrientedView::initGlWidget() {
 
   detailViewLabel = nullptr;
 
-  graphComposite = new GlGraphComposite(pixelOrientedGraph);
-  mainLayer->addGlEntity(graphComposite, "graph");
-  setGraphView(graphComposite, false);
+  glGraph = new GlGraph(pixelOrientedGraph);
+  mainLayer->addGlEntity(glGraph, "graph");
+  setGraphView(glGraph, false);
 }
 
 void PixelOrientedView::setColorFunction(ColorFunction *colorFunction) {
@@ -463,7 +462,7 @@ void PixelOrientedView::addEmptyViewLabel() {
   noDimsLabel2->setText("Go to the \"Properties\" tab in top right corner.");
   mainLayer->addGlEntity(noDimsLabel2, "no dimensions label 2");
 
-  mainLayer->deleteGlEntity(graphComposite);
+  mainLayer->deleteGlEntity(glGraph);
 }
 
 void PixelOrientedView::removeEmptyViewLabel() {
@@ -479,7 +478,7 @@ void PixelOrientedView::removeEmptyViewLabel() {
     mainLayer->deleteGlEntity(noDimsLabel2);
     delete noDimsLabel2;
 
-    mainLayer->addGlEntity(graphComposite, "graph");
+    mainLayer->addGlEntity(glGraph, "graph");
   }
 }
 
@@ -615,7 +614,7 @@ void PixelOrientedView::updateOverviews(const bool updateAll) {
   if (smallMultiplesView) {
     mainLayer->deleteGlEntity(overviewsComposite);
   } else {
-    setGraphView(graphComposite, false);
+    setGraphView(glGraph, false);
     mainLayer->deleteGlEntity(detailViewLabel);
   }
 
@@ -668,7 +667,7 @@ void PixelOrientedView::updateOverviews(const bool updateAll) {
   if (smallMultiplesView) {
     mainLayer->addGlEntity(overviewsComposite, "overviews composite");
   } else {
-    setGraphView(graphComposite, true);
+    setGraphView(glGraph, true);
     mainLayer->addGlEntity(detailViewLabel, "dimension label");
   }
 
@@ -713,14 +712,14 @@ void PixelOrientedView::switchFromSmallMultiplesToDetailView(PixelOrientedOvervi
   }
 
   mainLayer->deleteGlEntity(overviewsComposite);
-  GlGraphInputData *inputData = graphComposite->getInputData();
+  GlGraphInputData *inputData = glGraph->getInputData();
   inputData->setElementLayout(pixelOverview->getPixelViewLayout());
   inputData->setElementSize(pixelOverview->getPixelViewSize());
 
-  setGraphView(graphComposite, true);
+  setGraphView(glGraph, true);
 
   GlBoundingBoxSceneVisitor glBBSV(inputData);
-  graphComposite->acceptVisitor(&glBBSV);
+  glGraph->acceptVisitor(&glBBSV);
   BoundingBox graphBoundingBox = glBBSV.getBoundingBox();
 
   delete detailViewLabel;
@@ -750,7 +749,7 @@ void PixelOrientedView::switchFromDetailViewToSmallMultiples() {
     smallMultiplesNeedUpdate = false;
   }
 
-  setGraphView(graphComposite, false);
+  setGraphView(glGraph, false);
   mainLayer->deleteGlEntity(detailViewLabel);
   mainLayer->addGlEntity(overviewsComposite, "overviews composite");
   getGlMainWidget()->getScene()->getGraphCamera().setSceneRadius(sceneRadiusBak);
@@ -799,11 +798,11 @@ void PixelOrientedView::applySettings() {
 
     if (!smallMultiplesView) {
       mainLayer->deleteGlEntity(detailViewLabel);
-      GlGraphInputData *inputData = graphComposite->getInputData();
+      GlGraphInputData *inputData = glGraph->getInputData();
       inputData->setElementLayout(detailOverview->getPixelViewLayout());
       inputData->setElementSize(detailOverview->getPixelViewSize());
       GlBoundingBoxSceneVisitor glBBSV(inputData);
-      graphComposite->acceptVisitor(&glBBSV);
+      glGraph->acceptVisitor(&glBBSV);
       BoundingBox graphBoundingBox = glBBSV.getBoundingBox();
 
       detailViewLabel->setPosition(

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -25,7 +25,7 @@
 #include <talipot/GlMainWidget.h>
 #include <talipot/TlpQtTools.h>
 #include <talipot/GlLabel.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/GlyphManager.h>
 #include <talipot/ParametricCurves.h>
 #include <talipot/ViewSettings.h>
@@ -119,18 +119,15 @@ void MatrixView::setState(const DataSet &ds) {
 }
 
 void MatrixView::showEdges(bool show) {
-  getGlMainWidget()
-      ->getScene()
-      ->getGlGraphComposite()
-      ->getRenderingParametersPointer()
-      ->setDisplayEdges(show);
+  getGlMainWidget()->getScene()->getGlGraph()->getRenderingParametersPointer()->setDisplayEdges(
+      show);
   emit drawNeeded();
 }
 
 void MatrixView::enableEdgeColorInterpolation(bool flag) {
   getGlMainWidget()
       ->getScene()
-      ->getGlGraphComposite()
+      ->getGlGraph()
       ->getRenderingParametersPointer()
       ->setEdgeColorInterpolate(flag);
   emit drawNeeded();
@@ -179,12 +176,12 @@ DataSet MatrixView::state() const {
   DataSet ds;
   ds.set("show Edges", getGlMainWidget()
                            ->getScene()
-                           ->getGlGraphComposite()
+                           ->getGlGraph()
                            ->getRenderingParametersPointer()
                            ->isDisplayEdges());
   ds.set("edge color interpolation", getGlMainWidget()
                                          ->getScene()
-                                         ->getGlGraphComposite()
+                                         ->getGlGraph()
                                          ->getRenderingParametersPointer()
                                          ->isEdgeColorInterpolate());
   ds.set("ascending order", _configurationWidget->ascendingOrder());
@@ -309,8 +306,7 @@ void MatrixView::initDisplayedGraph() {
   }
   Observable::unholdObservers();
 
-  GlGraphInputData *inputData =
-      getGlMainWidget()->getScene()->getGlGraphComposite()->getInputData();
+  GlGraphInputData *inputData = getGlMainWidget()->getScene()->getGlGraph()->getInputData();
   _sourceToTargetProperties.clear();
   _sourceToTargetProperties.insert(inputData->getElementColor()->getName());
   _sourceToTargetProperties.insert(inputData->getElementShape()->getName());
@@ -330,7 +326,7 @@ void MatrixView::initDisplayedGraph() {
       _displayedEdgesToGraphEdges, _edgesMap);
 
   GlGraphRenderingParameters *renderingParameters =
-      getGlMainWidget()->getScene()->getGlGraphComposite()->getRenderingParametersPointer();
+      getGlMainWidget()->getScene()->getGlGraph()->getRenderingParametersPointer();
   renderingParameters->setLabelScaled(true);
   renderingParameters->setLabelsDensity(100);
 
@@ -358,9 +354,9 @@ void MatrixView::normalizeSizes(double maxVal) {
 
   float maxWidth = FLT_MIN, maxHeight = FLT_MIN;
   SizeProperty *originalSizes =
-      getGlMainWidget()->getScene()->getGlGraphComposite()->getInputData()->getElementSize();
+      getGlMainWidget()->getScene()->getGlGraph()->getInputData()->getElementSize();
   SizeProperty *matrixSizes =
-      getGlMainWidget()->getScene()->getGlGraphComposite()->getInputData()->getElementSize();
+      getGlMainWidget()->getScene()->getGlGraph()->getInputData()->getElementSize();
 
   for (auto n : graph()->nodes()) {
     const Size &s = originalSizes->getNodeValue(n);
@@ -428,7 +424,7 @@ void MatrixView::addEdge(tlp::Graph *g, const tlp::edge e) {
 
   ColorProperty *originalColors = graph()->getColorProperty("viewColor");
   ColorProperty *colors =
-      getGlMainWidget()->getScene()->getGlGraphComposite()->getInputData()->getElementColor();
+      getGlMainWidget()->getScene()->getGlGraph()->getInputData()->getElementColor();
 
   colors->setEdgeValue(dispEdge, originalColors->getEdgeValue(e));
 }
@@ -551,13 +547,10 @@ void MatrixView::updateLayout() {
   updateNodesOrder();
 
   LayoutProperty *layout =
-      getGlMainWidget()->getScene()->getGlGraphComposite()->getInputData()->getElementLayout();
+      getGlMainWidget()->getScene()->getGlGraph()->getInputData()->getElementLayout();
   Coord horiz = {1, 0, 0}, vert = {0, -1, 0};
-  IntegerProperty *position = getGlMainWidget()
-                                  ->getScene()
-                                  ->getGlGraphComposite()
-                                  ->getInputData()
-                                  ->getElementLabelPosition();
+  IntegerProperty *position =
+      getGlMainWidget()->getScene()->getGlGraph()->getInputData()->getElementLabelPosition();
 
   for (auto _on : _orderedNodes) {
     const vector<int> &dispNodes = _graphEntitiesToDisplayedNodes->getNodeValue(node(_on));
@@ -570,7 +563,7 @@ void MatrixView::updateLayout() {
   }
 
   IntegerProperty *shapes =
-      getGlMainWidget()->getScene()->getGlGraphComposite()->getInputData()->getElementShape();
+      getGlMainWidget()->getScene()->getGlGraph()->getInputData()->getElementShape();
   int shape = GlyphManager::glyphId("2D - Square");
   for (auto e : graph()->edges()) {
     auto eEnds = graph()->ends(e);

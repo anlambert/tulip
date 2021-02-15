@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -27,10 +27,10 @@ class Camera;
 
 /**
  * @ingroup OpenGL
- * @brief Class used by GlGraphComposite to render the graph in OpenGL
+ * @brief Class used by GlGraph to render the graph in OpenGL
  *
  * To create a graph renderer, you have to implement two functions : draw() and selectEntities()
- * @see GlGraphComposite
+ * @see GlGraph
  */
 class TLP_GL_SCOPE GlGraphRenderer {
 
@@ -49,7 +49,7 @@ public:
   virtual ~GlGraphRenderer() {}
 
   /**
-   * @brief This function is call by GlGraphComposite to draw the graph
+   * @brief This function is call by GlGraph to draw the graph
    *
    * If you reimplement this function you have to render nodes/edges. It's the most important
    * function of GlGraphRenderer
@@ -60,7 +60,7 @@ public:
   virtual void draw(float lod, Camera *camera) = 0;
 
   /**
-   * @brief This function is call by GlGraphComposite to selected entities into the graph
+   * @brief This function is call by GlGraph to selected entities into the graph
    * \param type : type of selected entities
    * \param x : x of the selected zone
    * \param y : y of the selected zone

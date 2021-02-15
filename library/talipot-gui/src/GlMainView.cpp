@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -29,7 +29,7 @@
 #include <talipot/GlOverviewGraphicsItem.h>
 #include <talipot/QuickAccessBar.h>
 #include <talipot/QtGlSceneZoomAndPanAnimator.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/Gl2DRect.h>
 #include <talipot/ViewActionsManager.h>
 #include <talipot/FontIconManager.h>
@@ -479,7 +479,7 @@ void GlMainView::zoomAndPanAnimation(const tlp::BoundingBox &boundingBox, const 
     bb = boundingBox;
   } else {
     auto scene = getGlMainWidget()->getScene();
-    GlGraphInputData *inputData = scene->getGlGraphComposite()->getInputData();
+    GlGraphInputData *inputData = scene->getGlGraph()->getInputData();
     GlBoundingBoxSceneVisitor bbVisitor(inputData);
     scene->getLayer("Main")->acceptVisitor(&bbVisitor);
     bb = bbVisitor.getBoundingBox();

@@ -18,7 +18,7 @@ INSTALL(
         talipot/GlEdge.h
         talipot/GlEntity.h
         talipot/GlGlyphRenderer.h
-        talipot/GlGraphComposite.h
+        talipot/GlGraph.h
         talipot/GlGraphInputData.h
         talipot/GlGraphRenderingParameters.h
         talipot/GlGrid.h

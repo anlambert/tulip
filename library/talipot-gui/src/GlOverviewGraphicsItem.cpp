@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -21,7 +21,7 @@
 #include <talipot/GlOffscreenRenderer.h>
 #include <talipot/GlMainWidget.h>
 #include <talipot/GlMainView.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/GlOffscreenRenderer.h>
 
 using namespace std;
@@ -185,15 +185,13 @@ void GlOverviewGraphicsItem::draw(bool generatePixmap) {
   }
 
   if (generatePixmap) {
-    bool edgesLabels =
-        baseScene.getGlGraphComposite()->getRenderingParametersPointer()->isViewEdgeLabel();
-    bool nodesLabels =
-        baseScene.getGlGraphComposite()->getRenderingParametersPointer()->isViewNodeLabel();
+    bool edgesLabels = baseScene.getGlGraph()->getRenderingParametersPointer()->isViewEdgeLabel();
+    bool nodesLabels = baseScene.getGlGraph()->getRenderingParametersPointer()->isViewNodeLabel();
     bool metaNodesLabels =
-        baseScene.getGlGraphComposite()->getRenderingParametersPointer()->isViewMetaLabel();
-    baseScene.getGlGraphComposite()->getRenderingParametersPointer()->setViewEdgeLabel(false);
-    baseScene.getGlGraphComposite()->getRenderingParametersPointer()->setViewNodeLabel(false);
-    baseScene.getGlGraphComposite()->getRenderingParametersPointer()->setViewMetaLabel(false);
+        baseScene.getGlGraph()->getRenderingParametersPointer()->isViewMetaLabel();
+    baseScene.getGlGraph()->getRenderingParametersPointer()->setViewEdgeLabel(false);
+    baseScene.getGlGraph()->getRenderingParametersPointer()->setViewNodeLabel(false);
+    baseScene.getGlGraph()->getRenderingParametersPointer()->setViewMetaLabel(false);
 
     vector<bool> layersVisibility;
 
@@ -226,8 +224,7 @@ void GlOverviewGraphicsItem::draw(bool generatePixmap) {
       ++itTmp;
     }
 
-    GlGraphRenderingParameters *param =
-        baseScene.getGlGraphComposite()->getRenderingParametersPointer();
+    GlGraphRenderingParameters *param = baseScene.getGlGraph()->getRenderingParametersPointer();
     param->setViewEdgeLabel(edgesLabels);
     param->setViewNodeLabel(nodesLabels);
     param->setViewMetaLabel(metaNodesLabels);

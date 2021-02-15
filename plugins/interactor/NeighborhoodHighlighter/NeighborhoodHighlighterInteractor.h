@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -21,7 +21,7 @@
 #include <QObject>
 
 #include <talipot/GLInteractor.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/GlLayer.h>
 #include <talipot/GlScene.h>
 
@@ -117,10 +117,10 @@ private:
   void checkIfGraphHasChanged();
 
   Graph *originalGraph;
-  GlGraphComposite *originalGlGraphComposite;
+  GlGraph *originalGlGraph;
   node selectedNode;
   NodeNeighborhoodView *neighborhoodGraph;
-  GlGraphComposite *glNeighborhoodGraph;
+  GlGraph *glNeighborhoodGraph;
   Coord circleCenter;
 
   node neighborhoodGraphCentralNode;

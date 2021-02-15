@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -15,7 +15,7 @@
 
 #include <talipot/GlLayer.h>
 #include <talipot/GlScene.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/GlXMLTools.h>
 
 #include <algorithm>
@@ -134,11 +134,11 @@ void GlComposite::addGlEntity(GlEntity *entity, const string &key) {
     }
   }
 
-  GlGraphComposite *graphComposite = dynamic_cast<GlGraphComposite *>(entity);
+  GlGraph *glGraph = dynamic_cast<GlGraph *>(entity);
 
-  if (graphComposite) {
+  if (glGraph) {
     for (auto l : layerParents) {
-      l->glGraphCompositeAdded(graphComposite);
+      l->glGraphAdded(glGraph);
     }
   }
 }
@@ -164,11 +164,11 @@ void GlComposite::deleteGlEntity(const string &key, bool informTheEntity) {
     }
   }
 
-  GlGraphComposite *glGraphComposite = dynamic_cast<GlGraphComposite *>(entity);
+  GlGraph *glGraph = dynamic_cast<GlGraph *>(entity);
 
-  if (glGraphComposite) {
+  if (glGraph) {
     for (auto l : layerParents) {
-      l->glGraphCompositeRemoved(glGraphComposite);
+      l->glGraphRemoved(glGraph);
     }
   }
 

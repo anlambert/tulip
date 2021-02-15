@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -22,7 +22,7 @@
 #include <talipot/BooleanProperty.h>
 #include <talipot/GlComplexPolygon.h>
 #include <talipot/GlMainView.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/GlNode.h>
 #include <talipot/NodeLinkDiagramView.h>
 
@@ -125,8 +125,7 @@ void MouseLassoNodesSelectorInteractorComponent::selectGraphElementsUnderPolygon
 
     for (unsigned int i = 0; i < tmpNodes.size(); ++i) {
       glNode.n = node(tmpNodes[i].getComplexEntityId());
-      BoundingBox nodeBB(
-          glNode.getBoundingBox(glWidget->getScene()->getGlGraphComposite()->getInputData()));
+      BoundingBox nodeBB(glNode.getBoundingBox(glWidget->getScene()->getGlGraph()->getInputData()));
       float dx = nodeBB[1][0] - nodeBB[0][0];
       float dy = nodeBB[1][1] - nodeBB[0][1];
       float dz = nodeBB[1][2] - nodeBB[0][2];
@@ -217,7 +216,7 @@ bool MouseLassoNodesSelectorInteractorComponent::eventFilter(QObject *obj, QEven
   }
 
   camera = &glWidget->getScene()->getLayer("Main")->getCamera();
-  graph = glWidget->getScene()->getGlGraphComposite()->getInputData()->getGraph();
+  graph = glWidget->getScene()->getGlGraph()->getInputData()->getGraph();
   viewSelection = graph->getBooleanProperty("viewSelection");
 
   currentPointerScreenCoord = Coord(me->x(), glWidget->height() - me->y());

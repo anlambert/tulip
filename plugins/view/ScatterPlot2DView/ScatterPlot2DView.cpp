@@ -13,7 +13,7 @@
 
 #include <talipot/GlTextureManager.h>
 #include <talipot/GlMainWidget.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/GlQuantitativeAxis.h>
 #include <talipot/GlLabel.h>
 #include <talipot/GlLine.h>
@@ -64,7 +64,7 @@ const vector<string> propertiesTypesFilter(propertiesTypes, propertiesTypes + nb
 
 ScatterPlot2DView::ScatterPlot2DView(const PluginContext *)
     : GlMainView(true), propertiesSelectionWidget(nullptr), optionsWidget(nullptr),
-      scatterPlotGraph(nullptr), emptyGraph(nullptr), mainLayer(nullptr), glGraphComposite(nullptr),
+      scatterPlotGraph(nullptr), emptyGraph(nullptr), mainLayer(nullptr), glGraph(nullptr),
       scatterPlotSize(nullptr), matrixComposite(nullptr), axisComposite(nullptr),
       labelsComposite(nullptr), detailedScatterPlot(nullptr),
       detailedScatterPlotPropertyName(make_pair("", "")), center(false), matrixView(true),
@@ -75,7 +75,7 @@ ScatterPlot2DView::ScatterPlot2DView(const PluginContext *)
 ScatterPlot2DView::~ScatterPlot2DView() {
   delete propertiesSelectionWidget;
   delete optionsWidget;
-  delete glGraphComposite;
+  delete glGraph;
   delete matrixComposite;
   delete axisComposite;
   delete emptyGraph;
@@ -96,8 +96,8 @@ void ScatterPlot2DView::initGlWidget(Graph *) {
 
   if (emptyGraph == nullptr) {
     emptyGraph = newGraph();
-    glGraphComposite = new GlGraphComposite(emptyGraph);
-    mainLayer->addGlEntity(glGraphComposite, "graph");
+    glGraph = new GlGraph(emptyGraph);
+    mainLayer->addGlEntity(glGraph, "graph");
   }
 
   if (matrixComposite == nullptr) {
@@ -429,7 +429,7 @@ void ScatterPlot2DView::computeNodeSizes() {
     scatterPlotSize->setNodeValue(n, adjustedNodeSize);
   }
 
-  GlGraphInputData *glGraphInputData = glGraphComposite->getInputData();
+  GlGraphInputData *glGraphInputData = glGraph->getInputData();
   glGraphInputData->setElementSize(scatterPlotSize);
 }
 
@@ -756,7 +756,7 @@ void ScatterPlot2DView::destroyOverviewsIfNeeded() {
           detailedScatterPlot = nullptr;
 
           if (!matrixView) {
-            GlGraphInputData *glGraphInputData = glGraphComposite->getInputData();
+            GlGraphInputData *glGraphInputData = glGraph->getInputData();
             glGraphInputData->setElementLayout(scatterPlotGraph->getLayoutProperty("viewLayout"));
           }
         }
@@ -793,7 +793,7 @@ void ScatterPlot2DView::destroyOverviews() {
   matrixComposite->deleteGlEntity(grid);
   delete grid;
   labelsComposite->reset(true);
-  mainLayer->addGlEntity(glGraphComposite, "graph");
+  mainLayer->addGlEntity(glGraph, "graph");
 }
 
 void ScatterPlot2DView::generateScatterPlots() {
@@ -808,7 +808,7 @@ void ScatterPlot2DView::generateScatterPlots() {
     mainLayer->deleteGlEntity(matrixComposite);
   } else {
     mainLayer->deleteGlEntity(axisComposite);
-    mainLayer->addGlEntity(glGraphComposite, "graph");
+    mainLayer->addGlEntity(glGraph, "graph");
     coeffLabel = dynamic_cast<GlLabel *>(mainLayer->findGlEntity("coeffLabel"));
     mainLayer->deleteGlEntity("coeffLabel");
   }
@@ -874,7 +874,7 @@ void ScatterPlot2DView::generateScatterPlots() {
       mainLayer->addGlEntity(coeffLabel, "coeffLabel");
     }
 
-    mainLayer->addGlEntity(detailedScatterPlot->getGlGraphComposite(), "graph");
+    mainLayer->addGlEntity(detailedScatterPlot->getGlGraph(), "graph");
   }
 
   getGlMainWidget()->getScene()->getGraphCamera().setSceneRadius(sceneRadiusBak);
@@ -913,7 +913,7 @@ void ScatterPlot2DView::switchFromMatrixToDetailView(ScatterPlot2D *scatterPlot,
   oss << "correlation coefficient = " << scatterPlot->getCorrelationCoefficient();
   coeffLabel->setText(oss.str());
   mainLayer->addGlEntity(coeffLabel, "coeffLabel");
-  mainLayer->addGlEntity(scatterPlot->getGlGraphComposite(), "graph");
+  mainLayer->addGlEntity(scatterPlot->getGlGraph(), "graph");
   toggleInteractors(true);
   matrixView = false;
   detailedScatterPlot = scatterPlot;
@@ -943,7 +943,7 @@ void ScatterPlot2DView::switchFromDetailViewToMatrixView() {
     matrixUpdateNeeded = false;
   }
 
-  mainLayer->addGlEntity(glGraphComposite, "graph");
+  mainLayer->addGlEntity(glGraph, "graph");
   mainLayer->addGlEntity(matrixComposite, "matrix composite");
   GlScene *scene = getGlMainWidget()->getScene();
   Camera &cam = scene->getGraphCamera();

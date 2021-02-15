@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -20,7 +20,7 @@
 #include <talipot/GlMainWidget.h>
 #include <talipot/View.h>
 #include <talipot/Observable.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/GlMainView.h>
 #include <talipot/GlBoundingBoxSceneVisitor.h>
 #include <talipot/DrawingTools.h>
@@ -153,7 +153,7 @@ bool MouseElementDeleter::eventFilter(QObject *widget, QEvent *e) {
     } else if (e->type() == QEvent::MouseButtonPress && qMouseEv->button() == Qt::LeftButton) {
       if (glMainWidget->pickNodesEdges(qMouseEv->x(), qMouseEv->y(), selectedEntity)) {
         Observable::holdObservers();
-        Graph *graph = glMainWidget->getScene()->getGlGraphComposite()->getInputData()->getGraph();
+        Graph *graph = glMainWidget->getScene()->getGlGraph()->getInputData()->getGraph();
         // allow to undo
         graph->push();
         delElement(graph, selectedEntity);
@@ -370,7 +370,7 @@ bool MouseNKeysNavigator::eventFilter(QObject *widget, QEvent *e) {
   QMouseEvent *qMouseEv = static_cast<QMouseEvent *>(e);
 
   if (e->type() == QEvent::MouseButtonDblClick && qMouseEv->button() == Qt::LeftButton) {
-    Graph *graph = glmainwidget->getScene()->getGlGraphComposite()->getInputData()->getGraph();
+    Graph *graph = glmainwidget->getScene()->getGlGraph()->getInputData()->getGraph();
 
     if (qMouseEv->modifiers() != Qt::ControlModifier) {
       vector<SelectedEntity> tmpNodes;
@@ -429,8 +429,7 @@ bool MouseNKeysNavigator::eventFilter(QObject *widget, QEvent *e) {
             camera.getZoomFactor());
         glmainwidget->draw(false);
 
-        GlBoundingBoxSceneVisitor visitor(
-            glmainwidget->getScene()->getGlGraphComposite()->getInputData());
+        GlBoundingBoxSceneVisitor visitor(glmainwidget->getScene()->getGlGraph()->getInputData());
         glmainwidget->getScene()->getLayer("Main")->acceptVisitor(&visitor);
         BoundingBox boundingBox(visitor.getBoundingBox());
 

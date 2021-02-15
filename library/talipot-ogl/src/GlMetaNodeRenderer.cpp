@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -16,7 +16,7 @@
 #include <talipot/GlScene.h>
 #include <talipot/GlCPULODCalculator.h>
 #include <talipot/GlNode.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/Glyph.h>
 #include <talipot/Camera.h>
 
@@ -71,24 +71,22 @@ void GlMetaNodeRenderer::render(node n, float, Camera *camera) {
     metaGraph->addListener(this);
   }
 
-  scene->getGlGraphComposite()->setRenderingParameters(*(_inputData->renderingParameters()));
+  scene->getGlGraph()->setRenderingParameters(*(_inputData->renderingParameters()));
   int metaStencil = _inputData->renderingParameters()->getMetaNodesStencil();
   int metaSelectedStencil = _inputData->renderingParameters()->getSelectedMetaNodesStencil();
   int metaLabelStencil = _inputData->renderingParameters()->getMetaNodesLabelStencil();
-  scene->getGlGraphComposite()->getRenderingParametersPointer()->setDisplayNodes(viewMeta);
-  scene->getGlGraphComposite()->getRenderingParametersPointer()->setDisplayEdges(viewMeta);
-  scene->getGlGraphComposite()->getRenderingParametersPointer()->setViewEdgeLabel(viewMetaLabels);
-  scene->getGlGraphComposite()->getRenderingParametersPointer()->setViewNodeLabel(viewMetaLabels);
-  scene->getGlGraphComposite()->getRenderingParametersPointer()->setNodesStencil(metaStencil);
-  scene->getGlGraphComposite()->getRenderingParametersPointer()->setEdgesStencil(metaStencil);
-  scene->getGlGraphComposite()->getRenderingParametersPointer()->setSelectedNodesStencil(
+  scene->getGlGraph()->getRenderingParametersPointer()->setDisplayNodes(viewMeta);
+  scene->getGlGraph()->getRenderingParametersPointer()->setDisplayEdges(viewMeta);
+  scene->getGlGraph()->getRenderingParametersPointer()->setViewEdgeLabel(viewMetaLabels);
+  scene->getGlGraph()->getRenderingParametersPointer()->setViewNodeLabel(viewMetaLabels);
+  scene->getGlGraph()->getRenderingParametersPointer()->setNodesStencil(metaStencil);
+  scene->getGlGraph()->getRenderingParametersPointer()->setEdgesStencil(metaStencil);
+  scene->getGlGraph()->getRenderingParametersPointer()->setSelectedNodesStencil(
       metaSelectedStencil);
-  scene->getGlGraphComposite()->getRenderingParametersPointer()->setSelectedEdgesStencil(
+  scene->getGlGraph()->getRenderingParametersPointer()->setSelectedEdgesStencil(
       metaSelectedStencil);
-  scene->getGlGraphComposite()->getRenderingParametersPointer()->setNodesLabelStencil(
-      metaLabelStencil);
-  scene->getGlGraphComposite()->getRenderingParametersPointer()->setEdgesLabelStencil(
-      metaLabelStencil);
+  scene->getGlGraph()->getRenderingParametersPointer()->setNodesLabelStencil(metaLabelStencil);
+  scene->getGlGraph()->getRenderingParametersPointer()->setEdgesLabelStencil(metaLabelStencil);
 
   GlNode glNode(n, metaGraph);
 
@@ -173,8 +171,8 @@ GlScene *GlMetaNodeRenderer::createScene(Graph *metaGraph) const {
   GlScene *scene = new GlScene(new GlCPULODCalculator());
   GlLayer *layer = new GlLayer("Main");
   scene->addExistingLayer(layer);
-  GlGraphComposite *graphComposite = new GlGraphComposite(metaGraph, scene);
-  layer->addGlEntity(graphComposite, "graph");
+  GlGraph *glGraph = new GlGraph(metaGraph, scene);
+  layer->addGlEntity(glGraph, "graph");
   return scene;
 }
 

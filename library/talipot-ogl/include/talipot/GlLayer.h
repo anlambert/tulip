@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -22,7 +22,7 @@ namespace tlp {
 class Graph;
 class GlScene;
 class GlSceneVisitor;
-class GlGraphComposite;
+class GlGraph;
 
 /**
  * @ingroup OpenGL
@@ -129,7 +129,7 @@ public:
   /**
    * @brief A Convenience function that adds a graph to the layer
    *
-   * This method will automatically create a GlGraphComposite entity and add it to the layer.
+   * This method will automatically create a GlGraph entity and add it to the layer.
    */
   void addGraph(tlp::Graph *graph, const std::string &name);
 
@@ -206,16 +206,16 @@ public:
   void setWithXML(const std::string &inString, unsigned int &currentPosition);
 
   /**
-   * This function is automatically call when a GlGraphComposite is added in this layer
+   * This function is automatically call when a GlGraph is added in this layer
    * You don't have to call this function
    */
-  void glGraphCompositeAdded(GlGraphComposite *composite);
+  void glGraphAdded(GlGraph *composite);
 
   /**
-   * This function is automatically call when a GlGraphComposite is removed in this layer
+   * This function is automatically call when a GlGraph is removed in this layer
    * You don't have to call this function
    */
-  void glGraphCompositeRemoved(GlGraphComposite *composite);
+  void glGraphRemoved(GlGraph *composite);
 
   /**
    * function used by visitors to visit this layer

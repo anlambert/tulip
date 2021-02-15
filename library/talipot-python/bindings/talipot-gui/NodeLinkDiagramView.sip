@@ -19,7 +19,7 @@ namespace tlp {
 class NodeLinkDiagramView : tlp::GlMainView  /NoDefaultCtors/ {
 %TypeHeaderCode
 #include <talipot/NodeLinkDiagramView.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 %End
 
 %Docstring
@@ -46,7 +46,7 @@ Returns the current rendering input data for the node link diagram view.
 %End
 
 %MethodCode
-    sipRes = sipCpp->getGlMainWidget()->getScene()->getGlGraphComposite()->getInputData();
+    sipRes = sipCpp->getGlMainWidget()->getScene()->getGlGraph()->getInputData();
 %End
 
 // =======================================================================================
@@ -61,7 +61,7 @@ Returns a copy of the current rendering parameters for the node link diagram vie
 %End
 
 %MethodCode
-    sipRes = new tlp::GlGraphRenderingParameters(sipCpp->getGlMainWidget()->getScene()->getGlGraphComposite()->getRenderingParameters());
+    sipRes = new tlp::GlGraphRenderingParameters(sipCpp->getGlMainWidget()->getScene()->getGlGraph()->getRenderingParameters());
 %End
 
 // =======================================================================================
@@ -77,7 +77,7 @@ Sets the rendering parameters for the node link diagram view.
 %End
 
 %MethodCode
-    sipCpp->getGlMainWidget()->getScene()->getGlGraphComposite()->setRenderingParameters(*a0);
+    sipCpp->getGlMainWidget()->getScene()->getGlGraph()->setRenderingParameters(*a0);
     sipCpp->draw();
     QApplication::processEvents();
 %End

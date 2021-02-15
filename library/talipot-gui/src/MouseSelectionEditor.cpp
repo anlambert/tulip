@@ -22,7 +22,7 @@
 #include <talipot/SizeProperty.h>
 #include <talipot/GlMainWidget.h>
 #include <talipot/DrawingTools.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/TlpQtTools.h>
 
 #include <cmath>
@@ -472,7 +472,7 @@ void MouseSelectionEditor::stopEdition() {
 }
 //========================================================================================
 void MouseSelectionEditor::initProxies(GlMainWidget *glMainWidget) {
-  GlGraphInputData *inputData = glMainWidget->getScene()->getGlGraphComposite()->getInputData();
+  GlGraphInputData *inputData = glMainWidget->getScene()->getGlGraph()->getInputData();
   _graph = inputData->getGraph();
   _layout = inputData->getElementLayout();
   _selection = inputData->getElementSelected();
@@ -781,8 +781,8 @@ void MouseSelectionEditor::mAlign(EditOperation operation, GlMainWidget *) {
 }
 //========================================================================================
 bool MouseSelectionEditor::computeFFD(GlMainWidget *glMainWidget) {
-  if (!glMainWidget->getScene()->getGlGraphComposite() ||
-      !glMainWidget->getScene()->getGlGraphComposite()->getInputData()->getGraph()) {
+  if (!glMainWidget->getScene()->getGlGraph() ||
+      !glMainWidget->getScene()->getGlGraph()->getInputData()->getGraph()) {
     return false;
   }
 

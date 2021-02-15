@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -25,7 +25,7 @@
 #include <talipot/ItemDelegate.h>
 #include <talipot/ParameterListModel.h>
 #include <talipot/GlMainWidget.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/GlGraphInputData.h>
 #include <talipot/Gl2DRect.h>
 #include <talipot/GlVertexArrayManager.h>
@@ -88,8 +88,7 @@ void NodeLinkDiagramView::updateGrid() {
   gridData.get<bool>("Y grid", only);
   gridData.get<bool>("Z grid", onZ);
 
-  GlGraphInputData *inputData =
-      getGlMainWidget()->getScene()->getGlGraphComposite()->getInputData();
+  GlGraphInputData *inputData = getGlMainWidget()->getScene()->getGlGraph()->getInputData();
   BoundingBox graphBB =
       computeBoundingBox(graph(), inputData->getElementLayout(), inputData->getElementSize(),
                          inputData->getElementRotation());
@@ -153,7 +152,7 @@ void NodeLinkDiagramView::setState(const tlp::DataSet &data) {
 }
 
 void NodeLinkDiagramView::graphChanged(tlp::Graph *graph) {
-  GlGraphComposite *composite = getGlMainWidget()->getScene()->getGlGraphComposite();
+  GlGraph *composite = getGlMainWidget()->getScene()->getGlGraph();
   Graph *oldGraph = composite ? composite->getGraph() : nullptr;
   loadGraphOnScene(graph);
   registerTriggers();
@@ -212,9 +211,9 @@ void NodeLinkDiagramView::createScene(Graph *graph, DataSet dataSet) {
     scene->addExistingLayer(backgroundLayer);
     scene->addExistingLayer(layer);
     scene->addExistingLayer(foregroundLayer);
-    GlGraphComposite *graphComposite = new GlGraphComposite(graph, scene);
-    scene->getLayer("Main")->addGlEntity(graphComposite, "graph");
-    initRenderingParameters(graphComposite->getRenderingParametersPointer());
+    GlGraph *glGraph = new GlGraph(graph, scene);
+    scene->getLayer("Main")->addGlEntity(glGraph, "graph");
+    initRenderingParameters(glGraph->getRenderingParametersPointer());
     scene->centerScene();
   } else {
     size_t pos = sceneInput.find("TalipotBitmapDir/");
@@ -237,7 +236,7 @@ void NodeLinkDiagramView::createScene(Graph *graph, DataSet dataSet) {
   if (dataSet.exists("Display")) {
     DataSet renderingParameters;
     dataSet.get("Display", renderingParameters);
-    GlGraphRenderingParameters rp = scene->getGlGraphComposite()->getRenderingParameters();
+    GlGraphRenderingParameters rp = scene->getGlGraph()->getRenderingParameters();
     rp.setParameters(renderingParameters);
 
     string s;
@@ -246,7 +245,7 @@ void NodeLinkDiagramView::createScene(Graph *graph, DataSet dataSet) {
       rp.setElementOrderingProperty(dynamic_cast<tlp::NumericProperty *>(graph->getProperty(s)));
     }
 
-    scene->getGlGraphComposite()->setRenderingParameters(rp);
+    scene->getGlGraph()->setRenderingParameters(rp);
   }
 
   useHulls(true);
@@ -264,7 +263,7 @@ void NodeLinkDiagramView::createScene(Graph *graph, DataSet dataSet) {
 DataSet NodeLinkDiagramView::sceneData() const {
   GlScene *scene = getGlMainWidget()->getScene();
   DataSet outDataSet = GlMainView::state();
-  outDataSet.set("Display", scene->getGlGraphComposite()->getRenderingParameters().getParameters());
+  outDataSet.set("Display", scene->getGlGraph()->getRenderingParameters().getParameters());
   std::string out;
   scene->getXML(out);
   size_t pos = out.find(TalipotBitmapDir);
@@ -295,39 +294,37 @@ void NodeLinkDiagramView::loadGraphOnScene(Graph *graph) {
     manager->setGraph(graph);
   }
 
-  GlGraphComposite *oldGraphComposite =
-      static_cast<GlGraphComposite *>(scene->getLayer("Main")->findGlEntity("graph"));
+  GlGraph *oldGlGraph = static_cast<GlGraph *>(scene->getLayer("Main")->findGlEntity("graph"));
 
-  if (!oldGraphComposite) {
+  if (!oldGlGraph) {
     createScene(graph, DataSet());
 
     return;
   }
 
-  GlGraphRenderingParameters param = oldGraphComposite->getRenderingParameters();
-  GlMetaNodeRenderer *metaNodeRenderer = oldGraphComposite->getInputData()->getMetaNodeRenderer();
-  // prevent deletion of MetaNodeRenderer when deleting oldGraphComposite
-  oldGraphComposite->getInputData()->setMetaNodeRenderer(nullptr, false);
-  GlGraphComposite *graphComposite = new GlGraphComposite(graph);
-  graphComposite->setRenderingParameters(param);
+  GlGraphRenderingParameters param = oldGlGraph->getRenderingParameters();
+  GlMetaNodeRenderer *metaNodeRenderer = oldGlGraph->getInputData()->getMetaNodeRenderer();
+  // prevent deletion of MetaNodeRenderer when deleting oldGlGraph
+  oldGlGraph->getInputData()->setMetaNodeRenderer(nullptr, false);
+  GlGraph *glGraph = new GlGraph(graph);
+  glGraph->setRenderingParameters(param);
 
-  metaNodeRenderer->setInputData(graphComposite->getInputData());
+  metaNodeRenderer->setInputData(glGraph->getInputData());
 
-  graphComposite->getInputData()->setMetaNodeRenderer(metaNodeRenderer);
+  glGraph->getInputData()->setMetaNodeRenderer(metaNodeRenderer);
 
-  if (oldGraphComposite->getInputData()->graph == graph) {
-    delete graphComposite->getInputData()->getGlVertexArrayManager();
-    graphComposite->getInputData()->setGlVertexArrayManager(
-        oldGraphComposite->getInputData()->getGlVertexArrayManager());
-    // prevent deletion of GlVertexArrayManager when deleting oldGraphComposite
-    oldGraphComposite->getInputData()->setGlVertexArrayManager(nullptr);
-    graphComposite->getInputData()->getGlVertexArrayManager()->setInputData(
-        graphComposite->getInputData());
+  if (oldGlGraph->getInputData()->graph == graph) {
+    delete glGraph->getInputData()->getGlVertexArrayManager();
+    glGraph->getInputData()->setGlVertexArrayManager(
+        oldGlGraph->getInputData()->getGlVertexArrayManager());
+    // prevent deletion of GlVertexArrayManager when deleting oldGlGraph
+    oldGlGraph->getInputData()->setGlVertexArrayManager(nullptr);
+    glGraph->getInputData()->getGlVertexArrayManager()->setInputData(glGraph->getInputData());
   }
 
-  scene->getLayer("Main")->addGlEntity(graphComposite, "graph");
+  scene->getLayer("Main")->addGlEntity(glGraph, "graph");
 
-  delete oldGraphComposite;
+  delete oldGlGraph;
   getGlMainWidget()->emitGraphChanged();
 }
 
@@ -338,9 +335,9 @@ void NodeLinkDiagramView::registerTriggers() {
     return;
   }
 
-  addRedrawTrigger(getGlMainWidget()->getScene()->getGlGraphComposite()->getGraph());
+  addRedrawTrigger(getGlMainWidget()->getScene()->getGlGraph()->getGraph());
   std::set<tlp::PropertyInterface *> properties =
-      getGlMainWidget()->getScene()->getGlGraphComposite()->getInputData()->properties();
+      getGlMainWidget()->getScene()->getGlGraph()->getInputData()->properties();
 
   for (auto p : properties) {
     addRedrawTrigger(p);
@@ -348,11 +345,8 @@ void NodeLinkDiagramView::registerTriggers() {
 }
 
 void NodeLinkDiagramView::setZOrdering(bool f) {
-  getGlMainWidget()
-      ->getScene()
-      ->getGlGraphComposite()
-      ->getRenderingParametersPointer()
-      ->setElementZOrdered(f);
+  getGlMainWidget()->getScene()->getGlGraph()->getRenderingParametersPointer()->setElementZOrdered(
+      f);
   centerView();
 }
 
@@ -552,7 +546,7 @@ void NodeLinkDiagramView::fillContextMenu(QMenu *menu, const QPointF &point) {
     action->setCheckable(true);
     action->setChecked(getGlMainWidget()
                            ->getScene()
-                           ->getGlGraphComposite()
+                           ->getGlGraph()
                            ->getRenderingParametersPointer()
                            ->isElementZOrdered());
     connect(action, &QAction::triggered, this, &NodeLinkDiagramView::setZOrdering);
@@ -839,38 +833,29 @@ void NodeLinkDiagramView::editValue(PropertyInterface *pi) {
 }
 
 void NodeLinkDiagramView::editColor() {
-  editValue(
-      getGlMainWidget()->getScene()->getGlGraphComposite()->getInputData()->getElementColor());
+  editValue(getGlMainWidget()->getScene()->getGlGraph()->getInputData()->getElementColor());
 }
 
 void NodeLinkDiagramView::editLabel() {
-  editValue(
-      getGlMainWidget()->getScene()->getGlGraphComposite()->getInputData()->getElementLabel());
+  editValue(getGlMainWidget()->getScene()->getGlGraph()->getInputData()->getElementLabel());
 }
 
 void NodeLinkDiagramView::editShape() {
-  editValue(
-      getGlMainWidget()->getScene()->getGlGraphComposite()->getInputData()->getElementShape());
+  editValue(getGlMainWidget()->getScene()->getGlGraph()->getInputData()->getElementShape());
 }
 
 void NodeLinkDiagramView::editSize() {
-  editValue(getGlMainWidget()->getScene()->getGlGraphComposite()->getInputData()->getElementSize());
+  editValue(getGlMainWidget()->getScene()->getGlGraph()->getInputData()->getElementSize());
 }
 
 const Camera &NodeLinkDiagramView::goInsideItem(node meta) {
   Graph *metaGraph = graph()->getNodeMetaInfo(meta);
-  Size size = getGlMainWidget()
-                  ->getScene()
-                  ->getGlGraphComposite()
-                  ->getInputData()
-                  ->getElementSize()
-                  ->getNodeValue(meta);
-  Coord coord = getGlMainWidget()
-                    ->getScene()
-                    ->getGlGraphComposite()
-                    ->getInputData()
-                    ->getElementLayout()
-                    ->getNodeValue(meta);
+  Size size =
+      getGlMainWidget()->getScene()->getGlGraph()->getInputData()->getElementSize()->getNodeValue(
+          meta);
+  Coord coord =
+      getGlMainWidget()->getScene()->getGlGraph()->getInputData()->getElementLayout()->getNodeValue(
+          meta);
   BoundingBox bb;
   bb.expand(coord - size / 2.f);
   bb.expand(coord + size / 2.f);
@@ -904,15 +889,15 @@ void NodeLinkDiagramView::useHulls(bool hasHulls) {
     GlScene *scene = getGlMainWidget()->getScene();
 
     manager = new GlCompositeHierarchyManager(
-        scene->getGlGraphComposite()->getInputData()->getGraph(), scene->getLayer("Main"), "Hulls",
-        scene->getGlGraphComposite()->getInputData()->getElementLayout(),
-        scene->getGlGraphComposite()->getInputData()->getElementSize(),
-        scene->getGlGraphComposite()->getInputData()->getElementRotation());
-    // Now we remove and add GlGraphComposite to be sure of the order (first Hulls and after
-    // GraphComposite)
+        scene->getGlGraph()->getInputData()->getGraph(), scene->getLayer("Main"), "Hulls",
+        scene->getGlGraph()->getInputData()->getElementLayout(),
+        scene->getGlGraph()->getInputData()->getElementSize(),
+        scene->getGlGraph()->getInputData()->getElementRotation());
+    // Now we remove and add GlGraph to be sure of the order (first Hulls and after
+    // GlGraph)
     // This code doesn't affect the behavior of talipot but the tlp file is modified
-    scene->getLayer("Main")->deleteGlEntity(scene->getGlGraphComposite());
-    scene->getLayer("Main")->addGlEntity(scene->getGlGraphComposite(), "graph");
+    scene->getLayer("Main")->deleteGlEntity(scene->getGlGraph());
+    scene->getLayer("Main")->addGlEntity(scene->getGlGraph(), "graph");
   }
 }
 

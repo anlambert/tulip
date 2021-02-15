@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -26,7 +26,7 @@
 #include <talipot/GlBoundingBoxSceneVisitor.h>
 #include <talipot/Camera.h>
 #include <talipot/GlEntity.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/GlSceneObserver.h>
 
 using namespace std;
@@ -77,8 +77,8 @@ struct entityWithDistanceCompare {
 //====================================================
 
 GlScene::GlScene(GlLODCalculator *calculator)
-    : backgroundColor(255, 255, 255, 255), viewOrtho(true), glGraphComposite(nullptr),
-      graphLayer(nullptr), clearBufferAtDraw(true), inDraw(false), clearDepthBufferAtDraw(true),
+    : backgroundColor(255, 255, 255, 255), viewOrtho(true), glGraph(nullptr), graphLayer(nullptr),
+      clearBufferAtDraw(true), inDraw(false), clearDepthBufferAtDraw(true),
       clearStencilBufferAtDraw(true) {
 
   if (calculator != nullptr) {
@@ -184,8 +184,7 @@ void GlScene::draw() {
     }
 
     // Draw simple entities
-    if (getGlGraphComposite() &&
-        !getGlGraphComposite()->getInputData()->parameters->isElementZOrdered()) {
+    if (getGlGraph() && !getGlGraph()->getInputData()->parameters->isElementZOrdered()) {
       for (const auto &it : itLayer.entitiesLODVector) {
         if (it.lod < 0) {
           continue;
@@ -196,7 +195,7 @@ void GlScene::draw() {
       }
     } else {
 
-      entityWithDistanceCompare::inputData = glGraphComposite->getInputData();
+      entityWithDistanceCompare::inputData = glGraph->getInputData();
       multiset<EntityWithDistance, entityWithDistanceCompare> entitiesSet;
       Coord camPos = camera->getEyes();
       BoundingBox bb;
@@ -471,8 +470,8 @@ void GlScene::computeAdjustSceneToSize(int width, int height, Coord *center, Coo
 
   GlBoundingBoxSceneVisitor *visitor;
 
-  if (glGraphComposite) {
-    visitor = new GlBoundingBoxSceneVisitor(glGraphComposite->getInputData());
+  if (glGraph) {
+    visitor = new GlBoundingBoxSceneVisitor(glGraph->getInputData());
   } else {
     visitor = new GlBoundingBoxSceneVisitor(nullptr);
   }
@@ -664,18 +663,18 @@ void GlScene::rotateCamera(const int x, const int y, const int z) {
   }
 }
 //========================================================================================================
-void GlScene::glGraphCompositeAdded(GlLayer *layer, GlGraphComposite *glGraphComposite) {
+void GlScene::glGraphAdded(GlLayer *layer, GlGraph *glGraph) {
   this->graphLayer = layer;
-  this->glGraphComposite = glGraphComposite;
+  this->glGraph = glGraph;
 }
 //========================================================================================================
-void GlScene::glGraphCompositeRemoved(GlLayer *layer, GlGraphComposite *glGraphComposite) {
-  if (this->glGraphComposite == glGraphComposite) {
+void GlScene::glGraphRemoved(GlLayer *layer, GlGraph *glGraph) {
+  if (this->glGraph == glGraph) {
     // fixes unused warning in release
     (void)layer;
     assert(graphLayer == layer);
     graphLayer = nullptr;
-    this->glGraphComposite = nullptr;
+    this->glGraph = nullptr;
   }
 }
 
@@ -770,7 +769,7 @@ bool GlScene::selectEntities(RenderingEntitiesFlag type, int x, int y, int w, in
   for (const auto &itLayer : layersLODVector) {
     Camera *camera = itLayer.camera;
 
-    vector<GlGraphComposite *> compositesToRender;
+    vector<GlGraph *> compositesToRender;
 
     const Vec4i &viewport = camera->getViewport();
 
@@ -835,7 +834,7 @@ bool GlScene::selectEntities(RenderingEntitiesFlag type, int x, int y, int w, in
           continue;
         }
 
-        GlGraphComposite *composite = dynamic_cast<GlGraphComposite *>(it.entity);
+        GlGraph *composite = dynamic_cast<GlGraph *>(it.entity);
 
         if (composite) {
           compositesToRender.push_back(composite);
@@ -958,7 +957,7 @@ void GlScene::getXMLOnlyForCameras(string &out) {
 void GlScene::setWithXML(string &in, Graph *graph) {
 
   if (graph) {
-    glGraphComposite = new GlGraphComposite(graph);
+    glGraph = new GlGraph(graph);
   }
 
   assert(in.substr(0, 7) == "<scene>");
@@ -992,7 +991,7 @@ void GlScene::setWithXML(string &in, Graph *graph) {
   }
 
   if (graph) {
-    getLayer("Main")->addGlEntity(glGraphComposite, "graph");
+    getLayer("Main")->addGlEntity(glGraph, "graph");
   }
 }
 

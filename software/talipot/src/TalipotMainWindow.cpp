@@ -50,7 +50,7 @@
 #include <talipot/GraphPropertiesModel.h>
 #include <talipot/GlMainView.h>
 #include <talipot/GlMainWidget.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/Settings.h>
 #include <talipot/PluginsManager.h>
 #include <talipot/TlpQtTools.h>
@@ -1526,7 +1526,7 @@ bool TalipotMainWindow::setGlMainViewPropertiesForGraph(
     if (v->graph() == g && glMainView != nullptr) {
       if (glMainView->getGlMainWidget()
               ->getScene()
-              ->getGlGraphComposite()
+              ->getGlGraph()
               ->getInputData()
               ->installProperties(propsMap))
         result = true;

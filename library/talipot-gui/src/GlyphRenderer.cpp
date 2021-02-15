@@ -19,7 +19,7 @@
 #include <talipot/GlyphManager.h>
 #include <talipot/Graph.h>
 #include <talipot/GlOffscreenRenderer.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/ViewSettings.h>
 #include <talipot/EdgeExtremityGlyph.h>
 #include <talipot/Camera.h>
@@ -105,11 +105,11 @@ QPixmap EdgeExtremityGlyphRenderer::render(int glyphId, const QColor &background
       renderer.setSceneBackgroundColor(QColorToColor(backgroundColor));
       renderer.addGraphToScene(graph);
       GlGraphRenderingParameters renderingParamerters =
-          renderer.getScene()->getGlGraphComposite()->getRenderingParameters();
+          renderer.getScene()->getGlGraph()->getRenderingParameters();
       renderingParamerters.setEdgeColorInterpolate(false);
       renderingParamerters.setEdgeSizeInterpolate(false);
       renderingParamerters.setViewArrow(true);
-      renderer.getScene()->getGlGraphComposite()->setRenderingParameters(renderingParamerters);
+      renderer.getScene()->getGlGraph()->setRenderingParameters(renderingParamerters);
       // init previews
       for (string glyphName : PluginsManager::availablePlugins<EdgeExtremityGlyph>()) {
         const Plugin &info = PluginsManager::pluginInformation(glyphName);

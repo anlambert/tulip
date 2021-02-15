@@ -17,7 +17,7 @@
 #include <talipot/GlProgressBar.h>
 #include <talipot/GlMainWidget.h>
 #include <talipot/GlOffscreenRenderer.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 
 #include "PixelOrientedOverview.h"
 
@@ -31,7 +31,7 @@ std::string getStringFromNumber(T number) {
   return oss.str();
 }
 
-static void setGraphView(tlp::GlGraphComposite *glGraph) {
+static void setGraphView(tlp::GlGraph *glGraph) {
   tlp::GlGraphRenderingParameters param = glGraph->getRenderingParameters();
   param.setAntialiasing(true);
   param.setViewNodeLabel(false);
@@ -72,9 +72,9 @@ PixelOrientedOverview::PixelOrientedOverview(GraphDimension *data,
   Graph *graph = data->getGraph();
   pixelLayout = new LayoutProperty(graph);
   pixelSize = new SizeProperty(graph);
-  graphComposite = new GlGraphComposite(graph);
-  setGraphView(graphComposite);
-  GlGraphInputData *glGraphInputData = graphComposite->getInputData();
+  glGraph = new GlGraph(graph);
+  setGraphView(glGraph);
+  GlGraphInputData *glGraphInputData = glGraph->getInputData();
   glGraphInputData->setElementLayout(pixelLayout);
   glGraphInputData->setElementSize(pixelSize);
 
@@ -199,7 +199,7 @@ void PixelOrientedOverview::computePixelView(GlMainWidget *glWidget) {
   glOffscreenRenderer.setViewPortSize(width, height);
   glOffscreenRenderer.clearScene();
   glOffscreenRenderer.setSceneBackgroundColor(backgroundColor);
-  glOffscreenRenderer.addGraphCompositeToScene(graphComposite);
+  glOffscreenRenderer.addGlGraphToScene(glGraph);
   glOffscreenRenderer.renderScene(true);
 
   if (glWidget != nullptr) {

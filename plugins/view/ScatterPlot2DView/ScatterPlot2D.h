@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -24,7 +24,7 @@ class SizeProperty;
 class LayoutProperty;
 class GlMainWidget;
 class GlQuantitativeAxis;
-class GlGraphComposite;
+class GlGraph;
 class GlRect;
 class GlLabel;
 class GlProgressBar;
@@ -118,8 +118,8 @@ public:
     return correlationCoeff;
   }
 
-  GlGraphComposite *getGlGraphComposite() const {
-    return glGraphComposite;
+  GlGraph *getGlGraph() const {
+    return glGraph;
   }
   void setDisplayGraphEdges(const bool displayGraphEdges) {
     displayEdges = displayGraphEdges;
@@ -151,7 +151,7 @@ private:
   Coord blCorner;
   unsigned int size;
   Graph *graph;
-  GlGraphComposite *glGraphComposite;
+  GlGraph *glGraph;
   LayoutProperty *scatterLayout, *scatterEdgeLayout;
   GlQuantitativeAxis *xAxis, *yAxis;
   std::string textureName;

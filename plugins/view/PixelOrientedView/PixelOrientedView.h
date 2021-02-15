@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -126,7 +126,7 @@ private:
   Color getTextColor() const;
 
   Graph *pixelOrientedGraph;
-  GlGraphComposite *graphComposite;
+  GlGraph *glGraph;
   GlLayer *mainLayer;
   GlComposite *overviewsComposite;
 

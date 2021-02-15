@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -26,7 +26,7 @@
 #include <talipot/GraphModel.h>
 #include <talipot/FontDialog.h>
 #include <talipot/ColorProperty.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/GlGraphRenderingParameters.h>
 #include <talipot/TlpQtTools.h>
 #include <talipot/GlMainWidget.h>
@@ -541,11 +541,11 @@ void QuickAccessBarImpl::setLabelsScaled(bool v) {
 }
 
 GlGraphRenderingParameters *QuickAccessBar::renderingParameters() const {
-  return scene()->getGlGraphComposite()->getRenderingParametersPointer();
+  return scene()->getGlGraph()->getRenderingParametersPointer();
 }
 
 GlGraphInputData *QuickAccessBar::inputData() const {
-  return scene()->getGlGraphComposite()->getInputData();
+  return scene()->getGlGraph()->getInputData();
 }
 
 GlScene *QuickAccessBar::scene() const {

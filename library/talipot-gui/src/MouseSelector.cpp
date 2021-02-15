@@ -18,7 +18,7 @@
 #include <talipot/GlMainWidget.h>
 #include <talipot/GlTools.h>
 #include <talipot/MouseSelector.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 
 #include <talipot/OpenGlIncludes.h>
 
@@ -34,7 +34,7 @@ MouseSelector::MouseSelector(Qt::MouseButton button, Qt::KeyboardModifier modifi
 bool MouseSelector::eventFilter(QObject *widget, QEvent *e) {
   QMouseEvent *qMouseEv = static_cast<QMouseEvent *>(e);
   GlMainWidget *glMainWidget = static_cast<GlMainWidget *>(widget);
-  Graph *g = glMainWidget->getScene()->getGlGraphComposite()->getInputData()->getGraph();
+  Graph *g = glMainWidget->getScene()->getGlGraph()->getInputData()->getGraph();
 
   if (e->type() == QEvent::MouseButtonPress) {
 
@@ -115,7 +115,7 @@ bool MouseSelector::eventFilter(QObject *widget, QEvent *e) {
     if (started) {
       Observable::holdObservers();
       BooleanProperty *selection =
-          glMainWidget->getScene()->getGlGraphComposite()->getInputData()->getElementSelected();
+          glMainWidget->getScene()->getGlGraph()->getInputData()->getElementSelected();
       bool revertSelection = false; // add to selection
       bool boolVal = true;
       bool needPush = true; // undo management
@@ -257,7 +257,7 @@ bool MouseSelector::draw(GlMainWidget *glMainWidget) {
     return false;
   }
 
-  if (glMainWidget->getScene()->getGlGraphComposite()->getInputData()->getGraph() != graph) {
+  if (glMainWidget->getScene()->getGlGraph()->getInputData()->getGraph() != graph) {
     graph = nullptr;
     started = false;
   }

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -29,7 +29,7 @@ class QMenu;
 namespace tlp {
 
 struct SelectedEntity;
-class GlGraphComposite;
+class GlGraph;
 class ViewGraphPropertiesSelectionWidget;
 class ParallelCoordinatesViewQuickAccessBar;
 class ParallelCoordsDrawConfigWidget;
@@ -213,7 +213,7 @@ private:
   GlLayer *mainLayer;
   GlLayer *axisSelectionLayer;
 
-  GlGraphComposite *glGraphComposite;
+  GlGraph *glGraph;
   Graph *axisPointsGraph;
   DataSet *dataSet;
 

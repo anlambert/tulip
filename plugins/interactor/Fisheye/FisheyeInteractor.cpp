@@ -30,7 +30,7 @@
 #include <talipot/NodeLinkDiagramView.h>
 #include <talipot/OpenGlConfigManager.h>
 #include <talipot/GlTextureManager.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/GlSceneZoomAndPan.h>
 
 using namespace std;
@@ -237,7 +237,7 @@ void FisheyeInteractorComponent::generateFisheyeTexture(GlMainWidget *glWidget) 
 
   BoundingBox bb = {bbMin, bbMax};
 
-  GlGraphComposite *glGraph = glScene->getGlGraphComposite();
+  GlGraph *glGraph = glScene->getGlGraph();
   int labelMinSizeBackup = 0;
   if (glGraph) {
     labelMinSizeBackup = glGraph->getRenderingParameters().getMinSizeOfLabel();

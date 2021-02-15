@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -33,7 +33,7 @@
 #include <talipot/GlLabel.h>
 #include <talipot/LayoutProperty.h>
 #include <talipot/GlMainWidget.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 
 #include <QMenu>
 #include <QToolTip>
@@ -46,14 +46,13 @@ using namespace tlp;
 PLUGIN(SOMView)
 
 SOMView::SOMView(PluginContext *)
-    : GlMainView(true), graphComposite(nullptr), graphLayoutProperty(nullptr),
-      graphSizeProperty(nullptr), mask(nullptr), somMask(nullptr), mapCompositeElements(nullptr),
-      som(nullptr), previewWidget(nullptr), mapWidget(nullptr), isDetailledMode(false),
-      mappingIsVisible(false), hideMappingAction(nullptr), showMappingAction(nullptr),
-      computeMappingAction(nullptr), updateNodesColorAction(nullptr),
-      addSelectionToMaskAction(nullptr), clearMaskAction(nullptr), invertMaskAction(nullptr),
-      selectNodesInMaskAction(nullptr), properties(nullptr), destruct(false), somMapIsBuild(false),
-      isConstruct(false) {
+    : GlMainView(true), glGraph(nullptr), graphLayoutProperty(nullptr), graphSizeProperty(nullptr),
+      mask(nullptr), somMask(nullptr), mapCompositeElements(nullptr), som(nullptr),
+      previewWidget(nullptr), mapWidget(nullptr), isDetailledMode(false), mappingIsVisible(false),
+      hideMappingAction(nullptr), showMappingAction(nullptr), computeMappingAction(nullptr),
+      updateNodesColorAction(nullptr), addSelectionToMaskAction(nullptr), clearMaskAction(nullptr),
+      invertMaskAction(nullptr), selectNodesInMaskAction(nullptr), properties(nullptr),
+      destruct(false), somMapIsBuild(false), isConstruct(false) {
   addDependency("Grid", "2.0");
 }
 
@@ -145,8 +144,8 @@ void SOMView::initGlMainViews() {
   }
 
   // No graph to print
-  GlGraphComposite *graphComposite = new GlGraphComposite(tlp::newGraph());
-  mainLayer->addGlEntity(graphComposite, "graph");
+  GlGraph *glGraph = new GlGraph(tlp::newGraph());
+  mainLayer->addGlEntity(glGraph, "graph");
   // activate hover
 
   mainLayer = mapWidget->getScene()->getLayer("Main");
@@ -156,10 +155,10 @@ void SOMView::initGlMainViews() {
     mapWidget->getScene()->addExistingLayer(mainLayer);
   }
 
-  graphComposite = new GlGraphComposite(tlp::newGraph());
-  mainLayer->addGlEntity(graphComposite, "graph");
+  glGraph = new GlGraph(tlp::newGraph());
+  mainLayer->addGlEntity(glGraph, "graph");
 
-  GlGraphRenderingParameters *renderingParameters = graphComposite->getRenderingParametersPointer();
+  GlGraphRenderingParameters *renderingParameters = glGraph->getRenderingParametersPointer();
   renderingParameters->setFontsType(0);
 
   // map
@@ -253,17 +252,16 @@ void SOMView::changeMapViewGraph(tlp::Graph *graph) {
   scene->clearLayersList();
   GlLayer *mainLayer = new GlLayer("Main");
   scene->addExistingLayer(mainLayer);
-  GlGraphComposite *glGraphComposite = new GlGraphComposite(graph);
-  mainLayer->addGlEntity(glGraphComposite, "graph");
-  GlGraphRenderingParameters p =
-      mapWidget->getScene()->getGlGraphComposite()->getRenderingParameters();
+  GlGraph *glGraph = new GlGraph(graph);
+  mainLayer->addGlEntity(glGraph, "graph");
+  GlGraphRenderingParameters p = mapWidget->getScene()->getGlGraph()->getRenderingParameters();
   p.setDisplayEdges(false);
   p.setViewEdgeLabel(false);
   p.setViewMetaLabel(false);
   p.setViewNodeLabel(true);
   p.setFontsType(0);
-  mapWidget->getScene()->getGlGraphComposite()->setRenderingParameters(p);
-  graphComposite = mapWidget->getScene()->getGlGraphComposite();
+  mapWidget->getScene()->getGlGraph()->setRenderingParameters(p);
+  glGraph = mapWidget->getScene()->getGlGraph();
 
   if (graphLayoutProperty) {
     delete graphLayoutProperty;
@@ -275,11 +273,11 @@ void SOMView::changeMapViewGraph(tlp::Graph *graph) {
 
   graphLayoutProperty = new LayoutProperty(graph);
   graphLayoutProperty->setAllNodeValue(Coord(0, 0, 0));
-  graphComposite->getInputData()->setElementLayout(graphLayoutProperty);
+  glGraph->getInputData()->setElementLayout(graphLayoutProperty);
 
   graphSizeProperty = new SizeProperty(graph);
   graphSizeProperty->setAllNodeValue(Size(0, 0, 0));
-  graphComposite->getInputData()->setElementSize(graphSizeProperty);
+  glGraph->getInputData()->setElementSize(graphSizeProperty);
 }
 
 DataSet SOMView::state() const {
@@ -444,14 +442,14 @@ void SOMView::refreshSOMMap() {
 
     /*mapCompositeElements->setVisible(true);
     if (mappingIsVisible)
-      graphComposite->setVisible(true);*/
+      glGraph->setVisible(true);*/
 
     ColorProperty *cp = propertyToColorProperty[selection];
     setColorToMap(cp);
 
   } else {
     /*mapCompositeElements->setVisible(false);
-    graphComposite->setVisible(false);*/
+    glGraph->setVisible(false);*/
   }
 }
 
@@ -867,14 +865,14 @@ bool SOMView::eventFilter(QObject *obj, QEvent *event) {
 
 void SOMView::showMapping() {
   if (!mappingIsVisible) {
-    graphComposite->setVisible(true);
+    glGraph->setVisible(true);
     mappingIsVisible = true;
     mapWidget->draw();
   }
 }
 void SOMView::hideMapping() {
   if (mappingIsVisible) {
-    graphComposite->setVisible(false);
+    glGraph->setVisible(false);
     mappingIsVisible = false;
     mapWidget->draw();
   }
@@ -1118,8 +1116,7 @@ void SOMView::internalSwitchToDetailledMode(SOMPreviewComposite *preview, bool a
   assert(preview);
 
   if (animation) {
-    GlBoundingBoxSceneVisitor bbsv(
-        previewWidget->getScene()->getGlGraphComposite()->getInputData());
+    GlBoundingBoxSceneVisitor bbsv(previewWidget->getScene()->getGlGraph()->getInputData());
     preview->acceptVisitor(&bbsv);
     tlp::zoomOnScreenRegion(previewWidget, bbsv.getBoundingBox(), true,
                             properties->getAnimationDuration());
@@ -1137,7 +1134,7 @@ void SOMView::internalSwitchToPreviewMode(bool animation) {
 
   copyToGlMainWidget(previewWidget);
   previewWidget->draw();
-  GlBoundingBoxSceneVisitor bbsv(previewWidget->getScene()->getGlGraphComposite()->getInputData());
+  GlBoundingBoxSceneVisitor bbsv(previewWidget->getScene()->getGlGraph()->getInputData());
 
   for (const auto &it : propertyToPreviews) {
     it.second->acceptVisitor(&bbsv);

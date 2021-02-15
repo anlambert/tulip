@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -19,7 +19,7 @@
 #include <talipot/LayoutProperty.h>
 #include <talipot/ColorProperty.h>
 #include <talipot/GlMainWidget.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/GlMainView.h>
 #include <talipot/Camera.h>
 
@@ -54,8 +54,7 @@ bool MouseNodeBuilder::eventFilter(QObject *widget, QEvent *e) {
           return true;
         }
 
-        GlGraphInputData *inputData =
-            glMainWidget->getScene()->getGlGraphComposite()->getInputData();
+        GlGraphInputData *inputData = glMainWidget->getScene()->getGlGraph()->getInputData();
         Graph *_graph = inputData->getGraph();
         LayoutProperty *mLayout = inputData->getElementLayout();
         // allow to undo

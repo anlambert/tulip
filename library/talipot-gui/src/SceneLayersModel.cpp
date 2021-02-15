@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -17,7 +17,7 @@
 #include <QVector>
 
 #include <talipot/GlScene.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/GlSceneObserver.h>
 
 using namespace tlp;
@@ -62,7 +62,7 @@ QModelIndex SceneLayersModel::index(int row, int column, const QModelIndex &pare
     composite = static_cast<GlComposite *>(parent.internalPointer());
   }
 
-  if (_scene->getGlGraphComposite() == composite) {
+  if (_scene->getGlGraph() == composite) {
     return createIndex(row, column, GRAPH_COMPOSITE_IDS[row]);
   }
 
@@ -78,7 +78,7 @@ QModelIndex SceneLayersModel::index(int row, int column, const QModelIndex &pare
   return QModelIndex();
 }
 
-QModelIndex SceneLayersModel::graphCompositeIndex() const {
+QModelIndex SceneLayersModel::glGraphIndex() const {
   const auto &layers = _scene->getLayersList();
 
   for (const auto &it : layers) {
@@ -87,8 +87,8 @@ QModelIndex SceneLayersModel::graphCompositeIndex() const {
     const auto &entities = composite->getGlEntities();
 
     for (const auto &it : entities) {
-      if (it.second == _scene->getGlGraphComposite()) {
-        return createIndex(row, 0, _scene->getGlGraphComposite());
+      if (it.second == _scene->getGlGraph()) {
+        return createIndex(row, 0, _scene->getGlGraph());
       }
 
       row++;
@@ -104,7 +104,7 @@ QModelIndex SceneLayersModel::parent(const QModelIndex &child) const {
   }
 
   if (GRAPH_COMPOSITE_IDS.contains(child.internalId())) {
-    return graphCompositeIndex();
+    return glGraphIndex();
   }
 
   const auto &layers = _scene->getLayersList();
@@ -166,7 +166,7 @@ int SceneLayersModel::rowCount(const QModelIndex &parent) const {
 
   GlEntity *entity = static_cast<GlEntity *>(parent.internalPointer());
 
-  if (_scene->getGlGraphComposite() == entity) {
+  if (_scene->getGlGraph() == entity) {
     return GRAPH_COMPOSITE_IDS.size();
   }
 
@@ -188,8 +188,7 @@ QVariant SceneLayersModel::data(const QModelIndex &index, int role) const {
 
   if (GRAPH_COMPOSITE_IDS.contains(index.internalId())) {
     quint32 id = index.internalId();
-    GlGraphRenderingParameters *parameters =
-        _scene->getGlGraphComposite()->getRenderingParametersPointer();
+    GlGraphRenderingParameters *parameters = _scene->getGlGraph()->getRenderingParametersPointer();
     QString display;
     int stencil = NO_STENCIL;
     bool visible = false;
@@ -301,7 +300,7 @@ bool SceneLayersModel::setData(const QModelIndex &index, const QVariant &value, 
 
   if (GRAPH_COMPOSITE_IDS.contains(index.internalId())) {
     quint32 id = index.internalId();
-    GlGraphRenderingParameters *p = _scene->getGlGraphComposite()->getRenderingParametersPointer();
+    GlGraphRenderingParameters *p = _scene->getGlGraph()->getRenderingParametersPointer();
 
     if (index.column() == 1) {
       bool visible = value.value<int>() == int(Qt::Checked);

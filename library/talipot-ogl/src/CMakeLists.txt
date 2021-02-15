@@ -26,7 +26,7 @@ SET(talipot-ogl_LIB_SRCS
     GlCurve.cpp
     GlEdge.cpp
     GlGlyphRenderer.cpp
-    GlGraphComposite.cpp
+    GlGraph.cpp
     GlGraphRenderer.cpp
     GlGraphHighDetailsRenderer.cpp
     GlGraphLowDetailsRenderer.cpp

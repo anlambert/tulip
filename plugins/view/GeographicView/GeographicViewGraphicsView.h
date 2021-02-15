@@ -18,7 +18,7 @@
 
 #include "LeafletMaps.h"
 
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/GlMainWidget.h>
 #include <talipot/GlMainWidgetGraphicsItem.h>
 #include <talipot/Camera.h>
@@ -48,7 +48,7 @@ public:
                                const std::string &longitudePropertyName,
                                const std::string &edgesPathsPropertyName);
 
-  GlGraphComposite *getGlGraphComposite() const;
+  GlGraph *getGlGraph() const;
 
   void draw() {
     glWidgetItem->setRedrawNeeded(true);

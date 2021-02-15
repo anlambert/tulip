@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -175,9 +175,8 @@ void GeographicView::setState(const DataSet &dataSet) {
     computeGeoLayout();
   }
 
-  GlGraphComposite *graphComposite =
-      geoViewGraphicsView->getGlMainWidget()->getScene()->getGlGraphComposite();
-  GlGraphRenderingParameters rp = graphComposite->getRenderingParameters();
+  GlGraph *glGraph = geoViewGraphicsView->getGlMainWidget()->getScene()->getGlGraph();
+  GlGraphRenderingParameters rp = glGraph->getRenderingParameters();
 
   if (dataSet.exists("renderingParameters")) {
     DataSet renderingParameters;
@@ -193,7 +192,7 @@ void GeographicView::setState(const DataSet &dataSet) {
     NodeLinkDiagramView::initRenderingParameters(&rp);
   }
 
-  graphComposite->setRenderingParameters(rp);
+  glGraph->setRenderingParameters(rp);
   sceneConfigurationWidget->resetChanges();
 
   View::setState(dataSet);
@@ -225,7 +224,7 @@ DataSet GeographicView::state() const {
   dataSet.set("mapZoom", geoViewGraphicsView->getLeafletMapsPage()->getCurrentMapZoom());
   dataSet.set("renderingParameters", geoViewGraphicsView->getGlMainWidget()
                                          ->getScene()
-                                         ->getGlGraphComposite()
+                                         ->getGlGraph()
                                          ->getRenderingParameters()
                                          .getParameters());
 
@@ -319,7 +318,7 @@ void GeographicView::applySettings() {
 
 void GeographicView::updateSharedProperties() {
   GlGraphInputData *inputData =
-      geoViewGraphicsView->getGlMainWidget()->getScene()->getGlGraphComposite()->getInputData();
+      geoViewGraphicsView->getGlMainWidget()->getScene()->getGlGraph()->getInputData();
 
   if (useSharedLayoutProperty != geoViewConfigWidget->useSharedLayoutProperty()) {
     useSharedLayoutProperty = geoViewConfigWidget->useSharedLayoutProperty();
@@ -423,11 +422,10 @@ void GeographicView::registerTriggers() {
     return;
   }
 
-  addRedrawTrigger(
-      geoViewGraphicsView->getGlMainWidget()->getScene()->getGlGraphComposite()->getGraph());
+  addRedrawTrigger(geoViewGraphicsView->getGlMainWidget()->getScene()->getGlGraph()->getGraph());
   auto properties = geoViewGraphicsView->getGlMainWidget()
                         ->getScene()
-                        ->getGlGraphComposite()
+                        ->getGlGraph()
                         ->getInputData()
                         ->properties();
 

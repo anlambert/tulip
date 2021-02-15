@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -16,7 +16,7 @@
 #include <talipot/GlEdge.h>
 #include <talipot/GlComplexPolygon.h>
 #include <talipot/GlMainWidget.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/GlQuantitativeAxis.h>
 #include <talipot/GlLabel.h>
 
@@ -213,7 +213,7 @@ bool ScatterPlotCorrelCoeffSelector::eventFilter(QObject *obj, QEvent *e) {
   GlMainWidget *glWidget = static_cast<GlMainWidget *>(obj);
 
   Camera &camera = glWidget->getScene()->getLayer("Main")->getCamera();
-  Graph *graph = glWidget->getScene()->getGlGraphComposite()->getInputData()->getGraph();
+  Graph *graph = glWidget->getScene()->getGlGraph()->getInputData()->getGraph();
   BooleanProperty *viewSelection = graph->getBooleanProperty("viewSelection");
 
   if (!glWidget->hasMouseTracking()) {
@@ -507,7 +507,7 @@ void ScatterPlotCorrelCoeffSelector::getPolygonAndPointUnderPointerIfAny(
 void ScatterPlotCorrelCoeffSelector::mapPolygonColorToCorrelCoeffOfData(
     GlEditableComplexPolygon *polygon, GlMainWidget *glWidget) {
 
-  Graph *graph = glWidget->getScene()->getGlGraphComposite()->getInputData()->getGraph();
+  Graph *graph = glWidget->getScene()->getGlGraph()->getInputData()->getGraph();
   Camera &camera = glWidget->getScene()->getLayer("Main")->getCamera();
 
   BoundingBox polygonSceneBB = polygon->getBoundingBox();
@@ -540,8 +540,7 @@ void ScatterPlotCorrelCoeffSelector::mapPolygonColorToCorrelCoeffOfData(
 
     for (size_t i = 0; i < tmpNodes.size(); ++i) {
       glNode.n = node(tmpNodes[i].getComplexEntityId());
-      BoundingBox nodeBB(
-          glNode.getBoundingBox(glWidget->getScene()->getGlGraphComposite()->getInputData()));
+      BoundingBox nodeBB(glNode.getBoundingBox(glWidget->getScene()->getGlGraph()->getInputData()));
       float dx = nodeBB[1][0] - nodeBB[0][0];
       float dy = nodeBB[1][1] - nodeBB[0][1];
       float dz = nodeBB[1][2] - nodeBB[0][2];

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -54,7 +54,7 @@ class ScatterPlot2D;
 class GlLayer;
 class GlComposite;
 class SizeProperty;
-class GlGraphComposite;
+class GlGraph;
 class ScatterPlot2DOptionsWidget;
 class ViewGraphPropertiesSelectionWidget;
 class ScatterPlotQuickAccessBar;
@@ -167,7 +167,7 @@ private:
 
   Graph *scatterPlotGraph, *emptyGraph;
   GlLayer *mainLayer;
-  GlGraphComposite *glGraphComposite;
+  GlGraph *glGraph;
   SizeProperty *scatterPlotSize;
   std::vector<std::string> selectedGraphProperties;
   GlComposite *matrixComposite, *axisComposite, *labelsComposite;

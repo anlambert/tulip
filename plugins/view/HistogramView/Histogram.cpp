@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -39,7 +39,7 @@ std::string getStringFromNumber(T number, unsigned int precision = 5) {
 
 namespace tlp {
 
-static void setGraphView(GlGraphComposite *glGraph, bool displayEdges) {
+static void setGraphView(GlGraph *glGraph, bool displayEdges) {
   GlGraphRenderingParameters param = glGraph->getRenderingParameters();
   param.setAntialiasing(true);
   param.setViewNodeLabel(true);
@@ -75,17 +75,17 @@ Histogram::Histogram(Graph *graph, Graph *edgeGraph, std::unordered_map<edge, no
       initYAxisScale(make_pair(0, 0)) {
 
   if (dataLocation == NODE) {
-    graphComposite = new GlGraphComposite(graph);
-    GlGraphInputData *glGraphInputData = graphComposite->getInputData();
+    glGraph = new GlGraph(graph);
+    GlGraphInputData *glGraphInputData = glGraph->getInputData();
     glGraphInputData->setElementLayout(histogramLayout);
     glGraphInputData->setElementSize(histogramSize);
   } else {
-    graphComposite = new GlGraphComposite(edgeAsNodeGraph);
-    GlGraphInputData *glGraphInputData = graphComposite->getInputData();
+    glGraph = new GlGraph(edgeAsNodeGraph);
+    GlGraphInputData *glGraphInputData = glGraph->getInputData();
     glGraphInputData->setElementLayout(histogramEdgeLayout);
   }
 
-  setGraphView(graphComposite, (dataLocation == NODE) ? displayEdges : false);
+  setGraphView(glGraph, (dataLocation == NODE) ? displayEdges : false);
   overviewId = overviewCpt++;
   textureName = propertyName + " histo texture " + getStringFromNumber(overviewId);
   update();
@@ -97,25 +97,25 @@ Histogram::~Histogram() {
   delete histogramEdgeLayout;
   delete histogramSize;
   delete histoBinsComposite;
-  delete graphComposite;
+  delete glGraph;
   delete xAxis;
   delete yAxis;
 }
 
 void Histogram::setDataLocation(const ElementType &dataLocation) {
   if (dataLocation != this->dataLocation) {
-    delete graphComposite;
+    delete glGraph;
     xAxisScaleDefined = false;
     yAxisScaleDefined = false;
 
     if (dataLocation == NODE) {
-      graphComposite = new GlGraphComposite(graph);
-      GlGraphInputData *glGraphInputData = graphComposite->getInputData();
+      glGraph = new GlGraph(graph);
+      GlGraphInputData *glGraphInputData = glGraph->getInputData();
       glGraphInputData->setElementLayout(histogramLayout);
       glGraphInputData->setElementSize(histogramSize);
     } else {
-      graphComposite = new GlGraphComposite(edgeAsNodeGraph);
-      GlGraphInputData *glGraphInputData = graphComposite->getInputData();
+      glGraph = new GlGraph(edgeAsNodeGraph);
+      GlGraphInputData *glGraphInputData = glGraph->getInputData();
       glGraphInputData->setElementLayout(histogramEdgeLayout);
     }
   }
@@ -691,7 +691,7 @@ void Histogram::update() {
     delete cumulativeHistogram;
   }
 
-  setGraphView(graphComposite, (dataLocation == NODE) ? displayEdges : false);
+  setGraphView(glGraph, (dataLocation == NODE) ? displayEdges : false);
 
   GlOffscreenRenderer &glOffscreenRenderer = GlOffscreenRenderer::instance();
   glOffscreenRenderer.setViewPortSize(size, size);
@@ -700,7 +700,7 @@ void Histogram::update() {
   glOffscreenRenderer.addGlEntityToScene(xAxis);
   glOffscreenRenderer.addGlEntityToScene(yAxis);
   glOffscreenRenderer.addGlEntityToScene(histoBinsComposite);
-  glOffscreenRenderer.addGraphCompositeToScene(graphComposite);
+  glOffscreenRenderer.addGlGraphToScene(glGraph);
   glOffscreenRenderer.renderScene(true);
   GLuint textureId = glOffscreenRenderer.getGLTexture(true);
   GlTextureManager::deleteTexture(textureName);

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -33,39 +33,39 @@ class GlGraphRenderer;
  * @see GlEntity
  * @see GlScene
  *
- * To visualize graph you have to create a new GlGraphComposite and add it to a GlLayer of a GlScene
+ * To visualize graph you have to create a new GlGraph and add it to a GlLayer of a GlScene
  * After that you can change some visualize parameters throw GlGraphRenderingParameters class
  * @see GlGraphRenderingParameters
  * @see getRenderingParametersPointer()
  *
- * To render the graph in OpenGL, GlGraphComposite use a GlGraphRenderer. So if you want to change
+ * To render the graph in OpenGL, GlGraph use a GlGraphRenderer. So if you want to change
  * the system to render the graph, you have to create a new GlGraphRender
  * @see GlGraphRenderer
  */
-class TLP_GL_SCOPE GlGraphComposite : public GlComposite, public Observable {
+class TLP_GL_SCOPE GlGraph : public GlComposite, public Observable {
 
 public:
   /**
-   * @brief Build a GlGraphComposite with the graph data
+   * @brief Build a GlGraph with the graph data
    *
    * You can specify a GlGraphRenderer, if you don't do this a GlGraphHighDetailsRenderer will be
    * used to display the graph
    */
-  GlGraphComposite(Graph *graph, GlGraphRenderer *graphRenderer = nullptr);
+  GlGraph(Graph *graph, GlGraphRenderer *graphRenderer = nullptr);
 
   /**
-   * @brief Build a GlGraphComposite with the graph data
+   * @brief Build a GlGraph with the graph data
    *
    * Is better to use the other one constructor
    *
    * This graph composite is associated to the scene passed in parameter
    */
-  GlGraphComposite(Graph *graph, GlScene *scene);
+  GlGraph(Graph *graph, GlScene *scene);
 
   /**
    * @brief Destructor
    */
-  ~GlGraphComposite() override;
+  ~GlGraph() override;
 
   /**
    * @brief Return a copy of rendering parameters use for rendering
@@ -93,7 +93,7 @@ public:
   GlGraphInputData *getInputData();
 
   /**
-   * @brief Return the graph used by this GlGraphComposite
+   * @brief Return the graph used by this GlGraph
    */
   Graph *getGraph() {
     return inputData.getGraph();

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -11,7 +11,7 @@
  *
  */
 
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/GraphProperty.h>
 #include <talipot/GlXMLTools.h>
 #include <talipot/GlTools.h>
@@ -25,7 +25,7 @@ using namespace std;
 
 namespace tlp {
 
-GlGraphComposite::GlGraphComposite(Graph *graph, GlGraphRenderer *graphRenderer)
+GlGraph::GlGraph(Graph *graph, GlGraphRenderer *graphRenderer)
     : inputData(graph, &parameters), graphRenderer(graphRenderer), nodesModified(true) {
   if (graphRenderer == nullptr) {
     this->graphRenderer = new GlGraphHighDetailsRenderer(&inputData);
@@ -46,7 +46,7 @@ GlGraphComposite::GlGraphComposite(Graph *graph, GlGraphRenderer *graphRenderer)
   }
 }
 
-GlGraphComposite::GlGraphComposite(Graph *graph, GlScene *scene)
+GlGraph::GlGraph(Graph *graph, GlScene *scene)
     : inputData(graph, &parameters), nodesModified(true) {
   this->graphRenderer = new GlGraphHighDetailsRenderer(&inputData, scene);
 
@@ -65,11 +65,11 @@ GlGraphComposite::GlGraphComposite(Graph *graph, GlScene *scene)
   }
 }
 
-GlGraphComposite::~GlGraphComposite() {
+GlGraph::~GlGraph() {
   delete graphRenderer;
 }
 
-void GlGraphComposite::acceptVisitor(GlSceneVisitor *visitor) {
+void GlGraph::acceptVisitor(GlSceneVisitor *visitor) {
   GlBoundingBoxSceneVisitor bbVisitor(&inputData);
   graphRenderer->visitGraph(&bbVisitor);
   boundingBox = bbVisitor.getBoundingBox();
@@ -79,25 +79,25 @@ void GlGraphComposite::acceptVisitor(GlSceneVisitor *visitor) {
   }
 }
 
-void GlGraphComposite::acceptVisitorOnGraph(GlSceneVisitor *visitor) {
+void GlGraph::acceptVisitorOnGraph(GlSceneVisitor *visitor) {
   graphRenderer->visitGraph(visitor);
 }
 
 //===================================================================
-void GlGraphComposite::draw(float lod, Camera *camera) {
+void GlGraph::draw(float lod, Camera *camera) {
   graphRenderer->draw(lod, camera);
 }
 //===================================================================
-void GlGraphComposite::selectEntities(Camera *camera, RenderingEntitiesFlag type, int x, int y,
-                                      int w, int h, vector<SelectedEntity> &selectedEntities) {
+void GlGraph::selectEntities(Camera *camera, RenderingEntitiesFlag type, int x, int y, int w, int h,
+                             vector<SelectedEntity> &selectedEntities) {
   graphRenderer->selectEntities(camera, type, x, y, w, h, selectedEntities);
 }
 //===================================================================
-const GlGraphRenderingParameters &GlGraphComposite::getRenderingParameters() {
+const GlGraphRenderingParameters &GlGraph::getRenderingParameters() {
   return parameters;
 }
 //===================================================================
-void GlGraphComposite::setRenderingParameters(const GlGraphRenderingParameters &parameter) {
+void GlGraph::setRenderingParameters(const GlGraphRenderingParameters &parameter) {
   if (parameters.isElementOrdered() != parameter.isElementOrdered()) {
     parameters = parameter;
     graphRenderer->setGraphModified(true);
@@ -106,21 +106,21 @@ void GlGraphComposite::setRenderingParameters(const GlGraphRenderingParameters &
   }
 }
 //===================================================================
-GlGraphRenderingParameters *GlGraphComposite::getRenderingParametersPointer() {
+GlGraphRenderingParameters *GlGraph::getRenderingParametersPointer() {
   return &parameters;
 }
 //===================================================================
-GlGraphInputData *GlGraphComposite::getInputData() {
+GlGraphInputData *GlGraph::getInputData() {
   return &inputData;
 }
 //====================================================
-void GlGraphComposite::getXML(string &outString) {
-  GlXMLTools::createProperty(outString, "type", "GlGraphComposite", "GlEntity");
+void GlGraph::getXML(string &outString) {
+  GlXMLTools::createProperty(outString, "type", "GlGraph", "GlEntity");
 }
 //====================================================
-void GlGraphComposite::setWithXML(const string &, unsigned int &) {}
+void GlGraph::setWithXML(const string &, unsigned int &) {}
 
-void GlGraphComposite::treatEvent(const Event &evt) {
+void GlGraph::treatEvent(const Event &evt) {
   const GraphEvent *graphEvent = dynamic_cast<const GraphEvent *>(&evt);
 
   if (graphEvent) {
@@ -157,7 +157,7 @@ void GlGraphComposite::treatEvent(const Event &evt) {
   }
 }
 
-void GlGraphComposite::setRenderer(tlp::GlGraphRenderer *renderer) {
+void GlGraph::setRenderer(tlp::GlGraphRenderer *renderer) {
   delete graphRenderer;
 
   if (renderer == nullptr) {

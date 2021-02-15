@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -12,7 +12,7 @@
  */
 
 #include <talipot/GlMainWidget.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 
 #include "ParallelCoordsGlEntitiesSelector.h"
 #include "ParallelCoordinatesView.h"
@@ -38,7 +38,7 @@ bool ParallelCoordsGlEntitiesSelector::eventFilter(QObject *widget, QEvent *e) {
         w = 0;
         h = 0;
         started = true;
-        graph = glMainWidget->getScene()->getGlGraphComposite()->getInputData()->getGraph();
+        graph = glMainWidget->getScene()->getGlGraph()->getInputData()->getGraph();
       }
 
       return true;

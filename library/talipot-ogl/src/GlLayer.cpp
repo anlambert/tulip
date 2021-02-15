@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -16,7 +16,7 @@
 #include <talipot/Camera.h>
 #include <talipot/GlSceneVisitor.h>
 #include <talipot/GlScene.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 
 using namespace std;
 
@@ -107,8 +107,8 @@ void GlLayer::addGlEntity(GlEntity *entity, const std::string &name) {
 }
 
 void GlLayer::addGraph(tlp::Graph *graph, const string &name) {
-  GlGraphComposite *graphComposite = new GlGraphComposite(graph, scene);
-  addGlEntity(graphComposite, name);
+  GlGraph *glGraph = new GlGraph(graph, scene);
+  addGlEntity(glGraph, name);
 }
 
 void GlLayer::deleteGlEntity(const std::string &key) {
@@ -191,13 +191,13 @@ void GlLayer::setWithXML(const string &inString, unsigned int &currentPosition) 
   }
 }
 
-void GlLayer::glGraphCompositeAdded(GlGraphComposite *composite) {
+void GlLayer::glGraphAdded(GlGraph *composite) {
   assert(scene);
-  scene->glGraphCompositeAdded(this, composite);
+  scene->glGraphAdded(this, composite);
 }
 
-void GlLayer::glGraphCompositeRemoved(GlGraphComposite *composite) {
+void GlLayer::glGraphRemoved(GlGraph *composite) {
   assert(scene);
-  scene->glGraphCompositeRemoved(this, composite);
+  scene->glGraphRemoved(this, composite);
 }
 }

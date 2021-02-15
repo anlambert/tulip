@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -32,7 +32,7 @@
 #include <talipot/GlMainWidget.h>
 #include <talipot/Interactor.h>
 #include <talipot/GlTextureManager.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/PropertyInterface.h>
 #include <talipot/TlpQtTools.h>
 
@@ -46,7 +46,7 @@ const vector<string> propertiesTypesFilter(propertiesTypes, propertiesTypes + nb
 
 namespace tlp {
 
-static void toggleGraphView(GlGraphComposite *glGraph, bool displayNodes) {
+static void toggleGraphView(GlGraph *glGraph, bool displayNodes) {
   GlGraphRenderingParameters param = glGraph->getRenderingParameters();
   param.setAntialiasing(true);
   param.setNodesStencil(2);
@@ -69,11 +69,11 @@ ParallelCoordinatesView::ParallelCoordinatesView(const PluginContext *)
       removeAxisAction(nullptr), highlightMenuSeparator(nullptr),
       selectHighlightedElements(nullptr), addSelectHighlightedElements(nullptr),
       removeSelectHighlightedElements(nullptr), resetHightlightedElements(nullptr),
-      mainLayer(nullptr), axisSelectionLayer(nullptr), glGraphComposite(nullptr),
-      axisPointsGraph(nullptr), graphProxy(nullptr), parallelCoordsDrawing(nullptr),
-      dataConfigWidget(nullptr), drawConfigWidget(nullptr), firstSet(true),
-      lastNbSelectedProperties(0), center(false), lastViewWindowWidth(0), lastViewWindowHeight(0),
-      isConstruct(false), dontCenterViewAfterConfLoaded(false), needDraw(false) {}
+      mainLayer(nullptr), axisSelectionLayer(nullptr), glGraph(nullptr), axisPointsGraph(nullptr),
+      graphProxy(nullptr), parallelCoordsDrawing(nullptr), dataConfigWidget(nullptr),
+      drawConfigWidget(nullptr), firstSet(true), lastNbSelectedProperties(0), center(false),
+      lastViewWindowWidth(0), lastViewWindowHeight(0), isConstruct(false),
+      dontCenterViewAfterConfLoaded(false), needDraw(false) {}
 
 ParallelCoordinatesView::~ParallelCoordinatesView() {
   for (auto obs : triggers()) {
@@ -121,10 +121,10 @@ void ParallelCoordinatesView::initGlWidget() {
   }
 
   axisPointsGraph = tlp::newGraph();
-  glGraphComposite = new GlGraphComposite(axisPointsGraph);
-  mainLayer->addGlEntity(glGraphComposite, "graph");
+  glGraph = new GlGraph(axisPointsGraph);
+  mainLayer->addGlEntity(glGraph, "graph");
   axisSelectionLayer = new GlLayer("Axis selection layer");
-  GlGraphRenderingParameters param = scene->getGlGraphComposite()->getRenderingParameters();
+  GlGraphRenderingParameters param = scene->getGlGraph()->getRenderingParameters();
   param.setAntialiasing(true);
   param.setNodesStencil(2);
   param.setNodesLabelStencil(1);
@@ -133,7 +133,7 @@ void ParallelCoordinatesView::initGlWidget() {
   param.setDisplayNodes(true);
   param.setViewNodeLabel(false);
   param.setFontsType(2);
-  scene->getGlGraphComposite()->setRenderingParameters(param);
+  scene->getGlGraph()->setRenderingParameters(param);
   getGlMainWidget()->setMouseTracking(true);
 }
 
@@ -397,9 +397,9 @@ void ParallelCoordinatesView::updateWithoutProgressBar() {
 void ParallelCoordinatesView::updateWithProgressBar() {
   if (parallelCoordsDrawing) {
     setOverviewVisible(false);
-    toggleGraphView(glGraphComposite, false);
+    toggleGraphView(glGraph, false);
     parallelCoordsDrawing->update(getGlMainWidget());
-    toggleGraphView(glGraphComposite, true);
+    toggleGraphView(glGraph, true);
     centerView();
     getGlMainWidget()->draw();
     setOverviewVisible(true);
@@ -431,7 +431,7 @@ void ParallelCoordinatesView::addEmptyViewLabel() {
   noDimsLabel2->setText("Go to the \"Properties\" tab in top right corner.");
   mainLayer->addGlEntity(noDimsLabel2, "no dimensions label 2");
   mainLayer->deleteGlEntity(parallelCoordsDrawing);
-  mainLayer->deleteGlEntity(glGraphComposite);
+  mainLayer->deleteGlEntity(glGraph);
 }
 
 void ParallelCoordinatesView::removeEmptyViewLabel() {
@@ -451,7 +451,7 @@ void ParallelCoordinatesView::removeEmptyViewLabel() {
       mainLayer->addGlEntity(parallelCoordsDrawing, "Parallel Coordinates");
     }
 
-    mainLayer->addGlEntity(glGraphComposite, "graph");
+    mainLayer->addGlEntity(glGraph, "graph");
   }
 }
 
@@ -729,7 +729,7 @@ void ParallelCoordinatesView::setupAndDrawView() {
     parallelCoordsDrawing->setLayoutType(getLayoutType());
     parallelCoordsDrawing->setLinesType(getLinesType());
     parallelCoordsDrawing->setLinesThickness(getLinesThickness());
-    scene->getGlGraphComposite()->getRenderingParametersPointer()->setViewNodeLabel(
+    scene->getGlGraph()->getRenderingParametersPointer()->setViewNodeLabel(
         drawConfigWidget->displayNodeLabels());
 
     if (graphProxy->getUnhighlightedEltsColorAlphaValue() !=

@@ -19,7 +19,7 @@
 #include <talipot/DrawingTools.h>
 #include <talipot/QtGlSceneZoomAndPanAnimator.h>
 #include <talipot/GlBoundingBoxSceneVisitor.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/Camera.h>
 #include <talipot/MouseBoxZoomer.h>
 
@@ -35,7 +35,7 @@ MouseBoxZoomer::~MouseBoxZoomer() {}
 //=====================================================================
 bool MouseBoxZoomer::eventFilter(QObject *widget, QEvent *e) {
   GlMainWidget *glw = static_cast<GlMainWidget *>(widget);
-  GlGraphInputData *inputData = glw->getScene()->getGlGraphComposite()->getInputData();
+  GlGraphInputData *inputData = glw->getScene()->getGlGraph()->getInputData();
 
   if (e->type() == QEvent::MouseButtonPress) {
     QMouseEvent *qMouseEv = static_cast<QMouseEvent *>(e);
@@ -148,7 +148,7 @@ bool MouseBoxZoomer::draw(GlMainWidget *glw) {
     return false;
   }
 
-  if (glw->getScene()->getGlGraphComposite()->getInputData()->getGraph() != graph) {
+  if (glw->getScene()->getGlGraph()->getInputData()->getGraph() != graph) {
     graph = nullptr;
     started = false;
   }

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -16,7 +16,7 @@
 #include <talipot/Gl2DRect.h>
 #include <talipot/GlOffscreenRenderer.h>
 #include <talipot/GlGraphRenderingParameters.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/GlLabel.h>
 #include <talipot/GlProgressBar.h>
 #include <talipot/GlQuantitativeAxis.h>
@@ -42,7 +42,7 @@ namespace tlp {
 
 int ScatterPlot2D::overviewCpt(0);
 
-static void setGraphView(GlGraphComposite *glGraph, bool displayEdges, bool nodelabel, bool scale) {
+static void setGraphView(GlGraph *glGraph, bool displayEdges, bool nodelabel, bool scale) {
   GlGraphRenderingParameters param = glGraph->getRenderingParameters();
   param.setAntialiasing(true);
   param.setViewNodeLabel(nodelabel);
@@ -74,19 +74,18 @@ ScatterPlot2D::ScatterPlot2D(Graph *graph, Graph *edgeGraph,
       displayEdges(false), displaylabels(true), scale(true) {
 
   if (dataLocation == NODE) {
-    glGraphComposite = new GlGraphComposite(graph);
-    GlGraphInputData *glGraphInputData = glGraphComposite->getInputData();
+    glGraph = new GlGraph(graph);
+    GlGraphInputData *glGraphInputData = glGraph->getInputData();
     glGraphInputData->setElementLayout(scatterLayout);
     glGraphInputData->setElementSize(graph->getSizeProperty("viewSize"));
   } else {
-    glGraphComposite = new GlGraphComposite(edgeAsNodeGraph);
-    GlGraphInputData *glGraphInputData = glGraphComposite->getInputData();
+    glGraph = new GlGraph(edgeAsNodeGraph);
+    GlGraphInputData *glGraphInputData = glGraph->getInputData();
     glGraphInputData->setElementLayout(scatterEdgeLayout);
     glGraphInputData->setElementSize(edgeAsNodeGraph->getSizeProperty("viewSize"));
   }
 
-  setGraphView(glGraphComposite, (dataLocation == NODE) ? displayEdges : false, displaylabels,
-               scale);
+  setGraphView(glGraph, (dataLocation == NODE) ? displayEdges : false, displaylabels, scale);
   backgroundRect = new GlRect(Coord(blCorner.getX(), blCorner.getY() + size),
                               Coord(blCorner.getX() + size, blCorner.getY()), backgroundColor,
                               backgroundColor, true, false);
@@ -102,7 +101,7 @@ ScatterPlot2D::ScatterPlot2D(Graph *graph, Graph *edgeGraph,
 
 ScatterPlot2D::~ScatterPlot2D() {
   clean();
-  delete glGraphComposite;
+  delete glGraph;
   delete scatterLayout;
   delete scatterEdgeLayout;
   GlTextureManager::deleteTexture(textureName);
@@ -116,18 +115,18 @@ void ScatterPlot2D::setBLCorner(const Coord &blCorner) {
 
 void ScatterPlot2D::setDataLocation(const ElementType &dataLocation) {
   if (dataLocation != this->dataLocation) {
-    delete glGraphComposite;
+    delete glGraph;
     xAxisScaleDefined = false;
     yAxisScaleDefined = false;
 
     if (dataLocation == NODE) {
-      glGraphComposite = new GlGraphComposite(graph);
-      GlGraphInputData *glGraphInputData = glGraphComposite->getInputData();
+      glGraph = new GlGraph(graph);
+      GlGraphInputData *glGraphInputData = glGraph->getInputData();
       glGraphInputData->setElementLayout(scatterLayout);
       glGraphInputData->setElementSize(graph->getSizeProperty("viewSize"));
     } else {
-      glGraphComposite = new GlGraphComposite(edgeAsNodeGraph);
-      GlGraphInputData *glGraphInputData = glGraphComposite->getInputData();
+      glGraph = new GlGraph(edgeAsNodeGraph);
+      GlGraphInputData *glGraphInputData = glGraph->getInputData();
       glGraphInputData->setElementLayout(scatterEdgeLayout);
       glGraphInputData->setElementSize(edgeAsNodeGraph->getSizeProperty("viewSize"));
     }
@@ -184,10 +183,10 @@ void ScatterPlot2D::generateOverview(GlMainWidget *glWidget, LayoutProperty *rev
     backgroundLayer->addGlEntity(background, "background");
   }
 
-  setGraphView(glGraphComposite, displayEdges, displaylabels, scale);
+  setGraphView(glGraph, displayEdges, displaylabels, scale);
 
   glOffscreenRenderer.setSceneBackgroundColor(backgroundColor);
-  glOffscreenRenderer.addGraphCompositeToScene(glGraphComposite);
+  glOffscreenRenderer.addGlGraphToScene(glGraph);
   glOffscreenRenderer.addGlEntityToScene(xAxis);
   glOffscreenRenderer.addGlEntityToScene(yAxis);
   glOffscreenRenderer.renderScene(true);
@@ -310,7 +309,7 @@ void ScatterPlot2D::createAxis() {
 
 void ScatterPlot2D::computeScatterPlotLayout(GlMainWidget *glWidget,
                                              LayoutProperty *reverseLayout) {
-  Graph *_graph = glGraphComposite->getGraph();
+  Graph *_graph = glGraph->getGraph();
   double sumxiyi = 0.0, sumxi = 0.0, sumyi = 0.0, sumxi2 = 0.0, sumyi2 = 0.0;
   unsigned int nbGraphNodes = _graph->numberOfNodes();
 

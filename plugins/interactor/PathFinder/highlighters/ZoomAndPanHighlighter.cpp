@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -20,7 +20,7 @@
 #include <talipot/Coord.h>
 #include <talipot/BoundingBox.h>
 #include <talipot/DrawingTools.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/GlMainWidget.h>
 #include <talipot/QtGlSceneZoomAndPanAnimator.h>
 
@@ -30,7 +30,7 @@ using namespace tlp;
 void ZoomAndPanHighlighter::highlight(const PathFinder *, GlMainWidget *glMainWidget,
                                       BooleanProperty *selection, node, node) {
   GlGraphInputData *inputData(getInputData(glMainWidget));
-  Graph *graph = glMainWidget->getScene()->getGlGraphComposite()->getGraph();
+  Graph *graph = glMainWidget->getScene()->getGlGraph()->getGraph();
   LayoutProperty *layout = inputData->getElementLayout();
   BoundingBox bbox(computeBoundingBox(graph, layout, inputData->getElementSize(),
                                       inputData->getElementRotation(), selection));

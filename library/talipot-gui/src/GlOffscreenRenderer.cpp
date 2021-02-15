@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -30,7 +30,7 @@
 #include <talipot/GlOffscreenRenderer.h>
 #include <talipot/GlMainWidget.h>
 #include <talipot/GlVertexArrayManager.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/OpenGlConfigManager.h>
 #include <talipot/GlTools.h>
 
@@ -87,10 +87,10 @@ void GlOffscreenRenderer::addGlEntityToScene(GlEntity *entity) {
 }
 
 void GlOffscreenRenderer::addGraphToScene(Graph *graph) {
-  addGraphCompositeToScene(new GlGraphComposite(graph));
+  addGlGraphToScene(new GlGraph(graph));
 }
 
-void GlOffscreenRenderer::addGraphCompositeToScene(GlGraphComposite *graphComposite) {
+void GlOffscreenRenderer::addGlGraphToScene(GlGraph *glGraph) {
   // Delete old composite if it exist
   GlEntity *oldComposite = mainLayer->findGlEntity("graph");
 
@@ -98,10 +98,9 @@ void GlOffscreenRenderer::addGraphCompositeToScene(GlGraphComposite *graphCompos
     mainLayer->deleteGlEntity(oldComposite);
   }
 
-  GlVertexArrayManager *vertexArrayManager =
-      graphComposite->getInputData()->getGlVertexArrayManager();
+  GlVertexArrayManager *vertexArrayManager = glGraph->getInputData()->getGlVertexArrayManager();
   vertexArrayManager->setHaveToComputeAll(true);
-  mainLayer->addGlEntity(graphComposite, "graph");
+  mainLayer->addGlEntity(glGraph, "graph");
 }
 
 void GlOffscreenRenderer::clearScene(bool deleteGlEntities) {

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -29,7 +29,7 @@ class TLP_QT_SCOPE SceneLayersModel : public Model, tlp::Observable {
 
   tlp::GlScene *_scene;
 
-  QModelIndex graphCompositeIndex() const;
+  QModelIndex glGraphIndex() const;
 
 public:
   explicit SceneLayersModel(tlp::GlScene *scene, QObject *parent = nullptr);

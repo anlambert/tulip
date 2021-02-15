@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -17,7 +17,7 @@
 #include <QMainWindow>
 #include <QApplication>
 
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/GlMainWidget.h>
 #include <talipot/Settings.h>
 #include <talipot/GraphPropertiesModel.h>
@@ -69,14 +69,14 @@ void SceneConfigWidget::resetChanges() {
 
   _ui->scrollArea->setEnabled(_glMainWidget != nullptr);
 
-  if (_glMainWidget == nullptr || _glMainWidget->getScene()->getGlGraphComposite() == nullptr ||
-      _glMainWidget->getScene()->getGlGraphComposite()->getGraph() == nullptr) {
+  if (_glMainWidget == nullptr || _glMainWidget->getScene()->getGlGraph() == nullptr ||
+      _glMainWidget->getScene()->getGlGraph()->getGraph() == nullptr) {
     return;
   }
 
-  Graph *graph = _glMainWidget->getScene()->getGlGraphComposite()->getGraph();
+  Graph *graph = _glMainWidget->getScene()->getGlGraph()->getGraph();
   GlGraphRenderingParameters *renderingParameters =
-      _glMainWidget->getScene()->getGlGraphComposite()->getRenderingParametersPointer();
+      _glMainWidget->getScene()->getGlGraph()->getRenderingParametersPointer();
 
   // NODES
   delete _ui->labelsOrderingCombo->model();
@@ -150,12 +150,12 @@ bool SceneConfigWidget::eventFilter(QObject *obj, QEvent *ev) {
 }
 
 void SceneConfigWidget::applySettings() {
-  if (_resetting || !_glMainWidget->getScene()->getGlGraphComposite()) {
+  if (_resetting || !_glMainWidget->getScene()->getGlGraph()) {
     return;
   }
 
   GlGraphRenderingParameters *renderingParameters =
-      _glMainWidget->getScene()->getGlGraphComposite()->getRenderingParametersPointer();
+      _glMainWidget->getScene()->getGlGraph()->getRenderingParametersPointer();
 
   // NODES
   if (_ui->labelsOrderingCombo->currentIndex() == 0) {

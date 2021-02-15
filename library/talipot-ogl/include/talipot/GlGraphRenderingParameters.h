@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -25,9 +25,9 @@ class BooleanProperty;
 
 /**
  * @ingroup OpenGL
- * @brief That class defines all the parameters used by GlGraphComposite to render a graph
+ * @brief That class defines all the parameters used by GlGraph to render a graph
  *
- * @see GlGraphComposite
+ * @see GlGraph
  */
 class TLP_GL_SCOPE GlGraphRenderingParameters {
 

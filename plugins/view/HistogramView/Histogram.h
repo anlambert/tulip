@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -15,7 +15,7 @@
 #define HISTOGRAM_H
 
 #include <talipot/GlComposite.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/GlQuantitativeAxis.h>
 #include <talipot/LayoutProperty.h>
 #include <talipot/SizeProperty.h>
@@ -51,8 +51,8 @@ public:
   SizeProperty *getHistogramSize() const {
     return histogramSize;
   }
-  GlGraphComposite *getGlGraphComposite() const {
-    return graphComposite;
+  GlGraph *getGlGraph() const {
+    return glGraph;
   }
 
   void setNbHistogramBins(const unsigned int nbHistogramBins) {
@@ -208,7 +208,7 @@ private:
   bool cumulativeFreqHisto, lastCumulHisto;
   std::unordered_map<unsigned int, std::pair<double, double>> binMinMaxMap;
   std::string textureName;
-  GlGraphComposite *graphComposite;
+  GlGraph *glGraph;
   Graph *edgeAsNodeGraph;
   std::unordered_map<edge, node> &edgeToNode;
   Color backgroundColor;

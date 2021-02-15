@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -29,7 +29,7 @@
 #include <talipot/GlProgressBar.h>
 #include <talipot/GlScene.h>
 #include <talipot/GlGraphRenderingParameters.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/GlMainWidget.h>
 #include <talipot/ViewSettings.h>
 #include <talipot/TlpQtTools.h>
@@ -267,8 +267,7 @@ void ParallelCoordinatesDrawing::plotAllData(GlMainWidget *glWidget, GlProgressB
         color.setA(linesColorAlphaValue);
       }
     } else {
-      color =
-          glWidget->getScene()->getGlGraphComposite()->getRenderingParameters().getSelectionColor();
+      color = glWidget->getScene()->getGlGraph()->getRenderingParameters().getSelectionColor();
     }
 
     plotData(dataId, color);

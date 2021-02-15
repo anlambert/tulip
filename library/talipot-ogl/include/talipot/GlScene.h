@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -25,7 +25,7 @@ namespace tlp {
 
 class GlEntity;
 class Graph;
-class GlGraphComposite;
+class GlGraph;
 
 /**
  * @ingroup OpenGL
@@ -137,8 +137,8 @@ protected:
  *
  * \code
  * GlLayer *mainLayer=new GlLayer("Main");
- * GlGraphComposite *graphComposite=new GlGraphComposite(graph);
- * mainLayer->addGlEntity(graphComposite,"graph");
+ * GlGraph *glGraph=new GlGraph(graph);
+ * mainLayer->addGlEntity(glGraph,"graph");
  * GlLayer *otherLayer=new GlLayer("Other");
  * GlCircle *circle=new GlCircle();
  * otherLayer->addGlEntity(circle,"circle");
@@ -450,14 +450,14 @@ public:
   BoundingBox getBoundingBox();
 
   /**
-   * @brief Return the current GlGraphComposite used by the scene
+   * @brief Return the current GlGraph used by the scene
    */
-  GlGraphComposite *getGlGraphComposite() {
-    return glGraphComposite;
+  GlGraph *getGlGraph() {
+    return glGraph;
   }
 
   /**
-   * @brief Return the layer containing the current GlGraphComposite
+   * @brief Return the layer containing the current GlGraph
    */
   GlLayer *getGraphLayer() {
     return graphLayer;
@@ -530,7 +530,7 @@ private:
   Color backgroundColor;
   bool viewOrtho;
 
-  GlGraphComposite *glGraphComposite;
+  GlGraph *glGraph;
   GlLayer *graphLayer;
 
   bool clearBufferAtDraw;
@@ -544,17 +544,17 @@ private:
 public:
   /**
    * @brief You don't have to call this function
-   * This function is automatically call when a GlGraphComposite is added in a layer in the scene
+   * This function is automatically call when a GlGraph is added in a layer in the scene
    * You don't have to call this function
    */
-  void glGraphCompositeAdded(GlLayer *layer, GlGraphComposite *composite);
+  void glGraphAdded(GlLayer *layer, GlGraph *composite);
 
   /**
    * @brief You don't have to call this function
-   * This function is automatically call when a GlGraphComposite is added in a layer in the scene
+   * This function is automatically call when a GlGraph is added in a layer in the scene
    * You don't have to call this function
    */
-  void glGraphCompositeRemoved(GlLayer *layer, GlGraphComposite *composite);
+  void glGraphRemoved(GlLayer *layer, GlGraph *composite);
 
   /**
    * @brief You don't have to call this function

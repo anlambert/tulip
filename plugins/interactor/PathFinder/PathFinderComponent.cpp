@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -14,7 +14,7 @@
 #include "PathFinderComponent.h"
 
 #include <talipot/GlMainWidget.h>
-#include <talipot/GlGraphComposite.h>
+#include <talipot/GlGraph.h>
 #include <talipot/GlMainView.h>
 
 #include "highlighters/PathHighlighter.h"
@@ -58,7 +58,7 @@ bool PathFinderComponent::eventFilter(QObject *obj, QEvent *event) {
     Observable::holdObservers();
 
     BooleanProperty *selectionProperty =
-        glw->getScene()->getGlGraphComposite()->getInputData()->getElementSelected();
+        glw->getScene()->getGlGraph()->getInputData()->getElementSelected();
     selectionProperty->setAllNodeValue(false);
     selectionProperty->setAllEdgeValue(false);
 
@@ -86,7 +86,7 @@ bool PathFinderComponent::eventFilter(QObject *obj, QEvent *event) {
       Observable::holdObservers();
 
       BooleanProperty *selectionProperty =
-          glw->getScene()->getGlGraphComposite()->getInputData()->getElementSelected();
+          glw->getScene()->getGlGraph()->getInputData()->getElementSelected();
       selectionProperty->setAllNodeValue(false);
       selectionProperty->setAllEdgeValue(false);
       // select it
@@ -109,10 +109,10 @@ bool PathFinderComponent::eventFilter(QObject *obj, QEvent *event) {
       Observable::holdObservers();
 
       BooleanProperty *selectionProperty =
-          glw->getScene()->getGlGraphComposite()->getInputData()->getElementSelected();
+          glw->getScene()->getGlGraph()->getInputData()->getElementSelected();
       selectionProperty->setAllNodeValue(false);
       selectionProperty->setAllEdgeValue(false);
-      selectPath(glw, glw->getScene()->getGlGraphComposite()->getGraph());
+      selectPath(glw, glw->getScene()->getGlGraph()->getGraph());
 
       Observable::unholdObservers();
 
@@ -125,7 +125,7 @@ bool PathFinderComponent::eventFilter(QObject *obj, QEvent *event) {
 }
 
 void PathFinderComponent::selectPath(GlMainWidget *glMainWidget, Graph *graph) {
-  GlGraphInputData *inputData = glMainWidget->getScene()->getGlGraphComposite()->getInputData();
+  GlGraphInputData *inputData = glMainWidget->getScene()->getGlGraph()->getInputData();
 
   BooleanProperty *selection = inputData->getElementSelected();
 
@@ -165,7 +165,7 @@ void PathFinderComponent::selectPath(GlMainWidget *glMainWidget, Graph *graph) {
 
 void PathFinderComponent::runHighlighters(GlMainWidget *glMainWidget, BooleanProperty *selection,
                                           node src, node tgt) {
-  glMainWidget->getScene()->getGlGraphComposite()->getGraph()->push(true);
+  glMainWidget->getScene()->getGlGraph()->getGraph()->push(true);
   graphPopable = true;
   vector<string> activeHighlighters(parent->getActiveHighlighters());
 
@@ -179,8 +179,8 @@ void PathFinderComponent::runHighlighters(GlMainWidget *glMainWidget, BooleanPro
 }
 
 void PathFinderComponent::clearHighlighters(GlMainWidget *glMainWidget) {
-  if (graphPopable && glMainWidget->getScene()->getGlGraphComposite()->getGraph()->canPop()) {
-    glMainWidget->getScene()->getGlGraphComposite()->getGraph()->pop(false);
+  if (graphPopable && glMainWidget->getScene()->getGlGraph()->getGraph()->canPop()) {
+    glMainWidget->getScene()->getGlGraph()->getGraph()->pop(false);
     graphPopable = false;
   }
 
