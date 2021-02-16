@@ -472,7 +472,7 @@ void MouseSelectionEditor::stopEdition() {
 }
 //========================================================================================
 void MouseSelectionEditor::initProxies(GlMainWidget *glMainWidget) {
-  GlGraphInputData *inputData = glMainWidget->getScene()->getGlGraph()->getInputData();
+  GlGraphInputData *inputData = glMainWidget->getGlGraphInputData();
   _graph = inputData->getGraph();
   _layout = inputData->getElementLayout();
   _selection = inputData->getElementSelected();
@@ -781,8 +781,7 @@ void MouseSelectionEditor::mAlign(EditOperation operation, GlMainWidget *) {
 }
 //========================================================================================
 bool MouseSelectionEditor::computeFFD(GlMainWidget *glMainWidget) {
-  if (!glMainWidget->getScene()->getGlGraph() ||
-      !glMainWidget->getScene()->getGlGraph()->getInputData()->getGraph()) {
+  if (!glMainWidget->getScene()->getGlGraph() || !glMainWidget->getGlGraphInputData()->getGraph()) {
     return false;
   }
 

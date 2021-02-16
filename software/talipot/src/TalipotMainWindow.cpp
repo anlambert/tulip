@@ -1524,11 +1524,7 @@ bool TalipotMainWindow::setGlMainViewPropertiesForGraph(
     GlMainView *glMainView = dynamic_cast<tlp::GlMainView *>(v);
 
     if (v->graph() == g && glMainView != nullptr) {
-      if (glMainView->getGlMainWidget()
-              ->getScene()
-              ->getGlGraph()
-              ->getInputData()
-              ->installProperties(propsMap))
+      if (glMainView->getGlMainWidget()->getGlGraphInputData()->installProperties(propsMap))
         result = true;
     }
   }

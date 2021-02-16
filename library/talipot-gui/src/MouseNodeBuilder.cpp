@@ -54,7 +54,7 @@ bool MouseNodeBuilder::eventFilter(QObject *widget, QEvent *e) {
           return true;
         }
 
-        GlGraphInputData *inputData = glMainWidget->getScene()->getGlGraph()->getInputData();
+        GlGraphInputData *inputData = glMainWidget->getGlGraphInputData();
         Graph *_graph = inputData->getGraph();
         LayoutProperty *mLayout = inputData->getElementLayout();
         // allow to undo

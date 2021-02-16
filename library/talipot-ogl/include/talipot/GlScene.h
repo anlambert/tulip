@@ -452,7 +452,7 @@ public:
   /**
    * @brief Return the current GlGraph used by the scene
    */
-  GlGraph *getGlGraph() {
+  GlGraph *getGlGraph() const {
     return glGraph;
   }
 

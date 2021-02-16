@@ -83,7 +83,7 @@ public:
    *
    * In GlGraphInputData you have properties used to render the graph
    */
-  GlGraphInputData *getInputData();
+  GlGraphInputData *getInputData() const;
 
   /**
    * @brief Return the graph used by this GlGraph

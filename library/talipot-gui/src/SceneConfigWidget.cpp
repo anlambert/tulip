@@ -76,7 +76,7 @@ void SceneConfigWidget::resetChanges() {
 
   Graph *graph = _glMainWidget->getScene()->getGlGraph()->getGraph();
   const GlGraphRenderingParameters &renderingParameters =
-      _glMainWidget->getScene()->getGlGraph()->getRenderingParameters();
+      _glMainWidget->getGlGraphRenderingParameters();
 
   // NODES
   delete _ui->labelsOrderingCombo->model();
@@ -154,8 +154,7 @@ void SceneConfigWidget::applySettings() {
     return;
   }
 
-  GlGraphRenderingParameters &renderingParameters =
-      _glMainWidget->getScene()->getGlGraph()->getRenderingParameters();
+  GlGraphRenderingParameters &renderingParameters = _glMainWidget->getGlGraphRenderingParameters();
 
   // NODES
   if (_ui->labelsOrderingCombo->currentIndex() == 0) {

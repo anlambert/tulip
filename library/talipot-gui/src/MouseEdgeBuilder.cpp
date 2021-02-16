@@ -43,7 +43,7 @@ bool MouseEdgeBuilder::eventFilter(QObject *widget, QEvent *e) {
     QMouseEvent *qMouseEv = static_cast<QMouseEvent *>(e);
 
     SelectedEntity selectedEntity;
-    GlGraphInputData *inputData = glMainWidget->getScene()->getGlGraph()->getInputData();
+    GlGraphInputData *inputData = glMainWidget->getGlGraphInputData();
     Graph *_graph = inputData->getGraph();
 
     LayoutProperty *mLayout = inputData->getElementLayout();
@@ -201,10 +201,9 @@ void MouseEdgeBuilder::clear() {
 
 void MouseEdgeBuilder::addLink(const node &source, const node &target) {
   assert(glMainWidget);
-  Graph *g = glMainWidget->getScene()->getGlGraph()->getInputData()->getGraph();
+  Graph *g = glMainWidget->getGlGraphInputData()->getGraph();
 
-  LayoutProperty *mLayout =
-      glMainWidget->getScene()->getGlGraph()->getInputData()->getElementLayout();
+  LayoutProperty *mLayout = glMainWidget->getGlGraphInputData()->getElementLayout();
   edge newEdge = g->addEdge(source, target);
   mLayout->setEdgeValue(newEdge, bends());
   _bends.clear();

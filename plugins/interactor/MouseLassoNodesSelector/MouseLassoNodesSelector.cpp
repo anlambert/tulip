@@ -125,7 +125,7 @@ void MouseLassoNodesSelectorInteractorComponent::selectGraphElementsUnderPolygon
 
     for (unsigned int i = 0; i < tmpNodes.size(); ++i) {
       glNode.n = node(tmpNodes[i].getComplexEntityId());
-      BoundingBox nodeBB(glNode.getBoundingBox(glWidget->getScene()->getGlGraph()->getInputData()));
+      BoundingBox nodeBB(glNode.getBoundingBox(glWidget->getGlGraphInputData()));
       float dx = nodeBB[1][0] - nodeBB[0][0];
       float dy = nodeBB[1][1] - nodeBB[0][1];
       float dz = nodeBB[1][2] - nodeBB[0][2];
@@ -216,7 +216,7 @@ bool MouseLassoNodesSelectorInteractorComponent::eventFilter(QObject *obj, QEven
   }
 
   camera = &glWidget->getScene()->getLayer("Main")->getCamera();
-  graph = glWidget->getScene()->getGlGraph()->getInputData()->getGraph();
+  graph = glWidget->getGlGraphInputData()->getGraph();
   viewSelection = graph->getBooleanProperty("viewSelection");
 
   currentPointerScreenCoord = Coord(me->x(), glWidget->height() - me->y());

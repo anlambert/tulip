@@ -463,4 +463,13 @@ void GlMainWidget::setKeepScenePointOfViewOnSubgraphChanging(bool k) {
 bool GlMainWidget::keepScenePointOfViewOnSubgraphChanging() const {
   return keepPointOfViewOnSubgraphChanging;
 }
+
+GlGraphRenderingParameters &GlMainWidget::getGlGraphRenderingParameters() {
+  return scene.getGlGraph()->getRenderingParameters();
+}
+
+GlGraphInputData *GlMainWidget::getGlGraphInputData() const {
+  return scene.getGlGraph()->getInputData();
+}
+
 }

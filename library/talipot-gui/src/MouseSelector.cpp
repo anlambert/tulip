@@ -34,7 +34,7 @@ MouseSelector::MouseSelector(Qt::MouseButton button, Qt::KeyboardModifier modifi
 bool MouseSelector::eventFilter(QObject *widget, QEvent *e) {
   QMouseEvent *qMouseEv = static_cast<QMouseEvent *>(e);
   GlMainWidget *glMainWidget = static_cast<GlMainWidget *>(widget);
-  Graph *g = glMainWidget->getScene()->getGlGraph()->getInputData()->getGraph();
+  Graph *g = glMainWidget->getGlGraphInputData()->getGraph();
 
   if (e->type() == QEvent::MouseButtonPress) {
 
@@ -114,8 +114,7 @@ bool MouseSelector::eventFilter(QObject *widget, QEvent *e) {
 
     if (started) {
       Observable::holdObservers();
-      BooleanProperty *selection =
-          glMainWidget->getScene()->getGlGraph()->getInputData()->getElementSelected();
+      BooleanProperty *selection = glMainWidget->getGlGraphInputData()->getElementSelected();
       bool revertSelection = false; // add to selection
       bool boolVal = true;
       bool needPush = true; // undo management
@@ -257,7 +256,7 @@ bool MouseSelector::draw(GlMainWidget *glMainWidget) {
     return false;
   }
 
-  if (glMainWidget->getScene()->getGlGraph()->getInputData()->getGraph() != graph) {
+  if (glMainWidget->getGlGraphInputData()->getGraph() != graph) {
     graph = nullptr;
     started = false;
   }

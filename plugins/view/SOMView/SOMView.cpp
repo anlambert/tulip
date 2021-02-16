@@ -254,7 +254,7 @@ void SOMView::changeMapViewGraph(tlp::Graph *graph) {
   scene->addExistingLayer(mainLayer);
   GlGraph *glGraph = new GlGraph(graph);
   mainLayer->addGlEntity(glGraph, "graph");
-  GlGraphRenderingParameters &p = mapWidget->getScene()->getGlGraph()->getRenderingParameters();
+  GlGraphRenderingParameters &p = mapWidget->getGlGraphRenderingParameters();
   p.setDisplayEdges(false);
   p.setViewEdgeLabel(false);
   p.setViewMetaLabel(false);
@@ -1115,7 +1115,7 @@ void SOMView::internalSwitchToDetailledMode(SOMPreviewComposite *preview, bool a
   assert(preview);
 
   if (animation) {
-    GlBoundingBoxSceneVisitor bbsv(previewWidget->getScene()->getGlGraph()->getInputData());
+    GlBoundingBoxSceneVisitor bbsv(previewWidget->getGlGraphInputData());
     preview->acceptVisitor(&bbsv);
     tlp::zoomOnScreenRegion(previewWidget, bbsv.getBoundingBox(), true,
                             properties->getAnimationDuration());
@@ -1133,7 +1133,7 @@ void SOMView::internalSwitchToPreviewMode(bool animation) {
 
   copyToGlMainWidget(previewWidget);
   previewWidget->draw();
-  GlBoundingBoxSceneVisitor bbsv(previewWidget->getScene()->getGlGraph()->getInputData());
+  GlBoundingBoxSceneVisitor bbsv(previewWidget->getGlGraphInputData());
 
   for (const auto &it : propertyToPreviews) {
     it.second->acceptVisitor(&bbsv);

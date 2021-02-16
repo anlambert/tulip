@@ -450,7 +450,7 @@ void GeographicViewGraphicsView::setGraph(Graph *graph) {
     GlGraphRenderingParameters rp;
 
     if (this->graph) {
-      rp = glMainWidget->getScene()->getGlGraph()->getRenderingParameters();
+      rp = glMainWidget->getGlGraphRenderingParameters();
     } else {
       rp.setNodesLabelStencil(1);
       rp.setLabelsAreBillboarded(true);
@@ -883,19 +883,19 @@ void GeographicViewGraphicsView::setGeoLayout(LayoutProperty *property) {
   }
   geoLayout = property;
   geoLayout->addListener(this);
-  glMainWidget->getScene()->getGlGraph()->getInputData()->setElementLayout(geoLayout);
+  glMainWidget->getGlGraphInputData()->setElementLayout(geoLayout);
 }
 
 void GeographicViewGraphicsView::setGeoSizes(SizeProperty *property) {
   *property = *geoViewSize;
   geoViewSize = property;
-  glMainWidget->getScene()->getGlGraph()->getInputData()->setElementSize(geoViewSize);
+  glMainWidget->getGlGraphInputData()->setElementSize(geoViewSize);
 }
 
 void GeographicViewGraphicsView::setGeoShape(IntegerProperty *property) {
   *property = *geoViewShape;
   geoViewShape = property;
-  glMainWidget->getScene()->getGlGraph()->getInputData()->setElementShape(geoViewShape);
+  glMainWidget->getGlGraphInputData()->setElementShape(geoViewShape);
 }
 
 void GeographicViewGraphicsView::treatEvent(const Event &ev) {
@@ -1117,8 +1117,7 @@ void GeographicViewGraphicsView::switchViewType() {
     planisphereEntity->setVisible(enablePlanisphere);
   }
 
-  glMainWidget->getScene()->getGlGraph()->getRenderingParameters().setEdge3D(viewType ==
-                                                                             GeographicView::Globe);
+  glMainWidget->getGlGraphRenderingParameters().setEdge3D(viewType == GeographicView::Globe);
 
   Observable::unholdObservers();
 

@@ -88,7 +88,7 @@ void NodeLinkDiagramView::updateGrid() {
   gridData.get<bool>("Y grid", only);
   gridData.get<bool>("Z grid", onZ);
 
-  GlGraphInputData *inputData = getGlMainWidget()->getScene()->getGlGraph()->getInputData();
+  GlGraphInputData *inputData = getGlMainWidget()->getGlGraphInputData();
   BoundingBox graphBB =
       computeBoundingBox(graph(), inputData->getElementLayout(), inputData->getElementSize(),
                          inputData->getElementRotation());
@@ -334,7 +334,7 @@ void NodeLinkDiagramView::registerTriggers() {
 
   addRedrawTrigger(getGlMainWidget()->getScene()->getGlGraph()->getGraph());
   std::set<tlp::PropertyInterface *> properties =
-      getGlMainWidget()->getScene()->getGlGraph()->getInputData()->properties();
+      getGlMainWidget()->getGlGraphInputData()->properties();
 
   for (auto p : properties) {
     addRedrawTrigger(p);
@@ -342,7 +342,7 @@ void NodeLinkDiagramView::registerTriggers() {
 }
 
 void NodeLinkDiagramView::setZOrdering(bool f) {
-  getGlMainWidget()->getScene()->getGlGraph()->getRenderingParameters().setElementZOrdered(f);
+  getGlMainWidget()->getGlGraphRenderingParameters().setElementZOrdered(f);
   centerView();
 }
 
@@ -540,8 +540,7 @@ void NodeLinkDiagramView::fillContextMenu(QMenu *menu, const QPointF &point) {
     action->setToolTip(
         "The graph elements are displayed according the ordering of their z coordinate");
     action->setCheckable(true);
-    action->setChecked(
-        getGlMainWidget()->getScene()->getGlGraph()->getRenderingParameters().isElementZOrdered());
+    action->setChecked(getGlMainWidget()->getGlGraphRenderingParameters().isElementZOrdered());
     connect(action, &QAction::triggered, this, &NodeLinkDiagramView::setZOrdering);
     action = menu->addAction("Grid display parameters", [this] { showGridControl(); });
     action->setToolTip("Display the grid setup wizard");
@@ -826,29 +825,25 @@ void NodeLinkDiagramView::editValue(PropertyInterface *pi) {
 }
 
 void NodeLinkDiagramView::editColor() {
-  editValue(getGlMainWidget()->getScene()->getGlGraph()->getInputData()->getElementColor());
+  editValue(getGlMainWidget()->getGlGraphInputData()->getElementColor());
 }
 
 void NodeLinkDiagramView::editLabel() {
-  editValue(getGlMainWidget()->getScene()->getGlGraph()->getInputData()->getElementLabel());
+  editValue(getGlMainWidget()->getGlGraphInputData()->getElementLabel());
 }
 
 void NodeLinkDiagramView::editShape() {
-  editValue(getGlMainWidget()->getScene()->getGlGraph()->getInputData()->getElementShape());
+  editValue(getGlMainWidget()->getGlGraphInputData()->getElementShape());
 }
 
 void NodeLinkDiagramView::editSize() {
-  editValue(getGlMainWidget()->getScene()->getGlGraph()->getInputData()->getElementSize());
+  editValue(getGlMainWidget()->getGlGraphInputData()->getElementSize());
 }
 
 const Camera &NodeLinkDiagramView::goInsideItem(node meta) {
   Graph *metaGraph = graph()->getNodeMetaInfo(meta);
-  Size size =
-      getGlMainWidget()->getScene()->getGlGraph()->getInputData()->getElementSize()->getNodeValue(
-          meta);
-  Coord coord =
-      getGlMainWidget()->getScene()->getGlGraph()->getInputData()->getElementLayout()->getNodeValue(
-          meta);
+  Size size = getGlMainWidget()->getGlGraphInputData()->getElementSize()->getNodeValue(meta);
+  Coord coord = getGlMainWidget()->getGlGraphInputData()->getElementLayout()->getNodeValue(meta);
   BoundingBox bb;
   bb.expand(coord - size / 2.f);
   bb.expand(coord + size / 2.f);

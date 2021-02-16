@@ -90,9 +90,13 @@ public:
    * @see GlScene::createLayer(const std::string &name)
    * @see GlLayer::addGlEntity(GlEntity *entity,const std::string& name)
    */
-  tlp::GlScene *getScene() {
+  GlScene *getScene() {
     return &scene;
   }
+
+  GlGraphRenderingParameters &getGlGraphRenderingParameters();
+
+  GlGraphInputData *getGlGraphInputData() const;
 
   /** @brief Select nodes and edges in a region of the screen
    *
@@ -106,7 +110,7 @@ public:
    */
   void pickNodesEdges(const int x, const int y, const int width, const int height,
                       std::vector<SelectedEntity> &selectedNodes,
-                      std::vector<SelectedEntity> &selectedEdges, tlp::GlLayer *layer = nullptr,
+                      std::vector<SelectedEntity> &selectedEdges, GlLayer *layer = nullptr,
                       bool pickNodes = true, bool pickEdges = true);
 
   /** @brief Select a node or edge at a screen point
@@ -118,7 +122,7 @@ public:
    *  @return true if something has been found, false otherwise
    */
   bool pickNodesEdges(const int x, const int y, SelectedEntity &selectedEntity,
-                      tlp::GlLayer *layer = nullptr, bool pickNodes = true, bool pickEdges = true);
+                      GlLayer *layer = nullptr, bool pickNodes = true, bool pickEdges = true);
 
   /**
    * @brief convert a screen measure into a viewport measure
@@ -204,7 +208,7 @@ public:
    * @param layer if you want to do the selection only on one GlLayer
    */
   bool pickGlEntities(const int x, const int y, const int width, const int height,
-                      std::vector<SelectedEntity> &pickedEntities, tlp::GlLayer *layer = nullptr);
+                      std::vector<SelectedEntity> &pickedEntities, GlLayer *layer = nullptr);
   /**
    * @brief Function to do picking on entities.
    * It just calls selectEntities on the GlScene instance with a small window of twelve pixels.
@@ -214,7 +218,7 @@ public:
    * @param layer if you want to do the selection only on one GlLayer
    */
   bool pickGlEntities(const int x, const int y, std::vector<SelectedEntity> &pickedEntities,
-                      tlp::GlLayer *layer = nullptr);
+                      GlLayer *layer = nullptr);
 
   /**
    * Override default makeCurrent/doneCurrent behavior to activate deactivate
@@ -270,7 +274,7 @@ private:
   void createFramebuffers(int width, int height);
   void deleteFramebuffers();
 
-  tlp::GlScene scene;
+  GlScene scene;
   QRegion _visibleArea;
   View *view;
   int widthStored;

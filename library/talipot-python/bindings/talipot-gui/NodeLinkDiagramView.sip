@@ -46,7 +46,7 @@ Returns the current rendering input data for the node link diagram view.
 %End
 
 %MethodCode
-    sipRes = sipCpp->getGlMainWidget()->getScene()->getGlGraph()->getInputData();
+    sipRes = sipCpp->getGlMainWidget()->getGlGraphInputData();
 %End
 
 // =======================================================================================
@@ -61,7 +61,7 @@ Returns a copy of the current rendering parameters for the node link diagram vie
 %End
 
 %MethodCode
-    sipRes = new tlp::GlGraphRenderingParameters(sipCpp->getGlMainWidget()->getScene()->getGlGraph()->getRenderingParameters());
+    sipRes = new tlp::GlGraphRenderingParameters(sipCpp->getGlMainWidget()->getGlGraphRenderingParameters());
 %End
 
 // =======================================================================================

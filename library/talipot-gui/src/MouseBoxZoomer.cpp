@@ -35,7 +35,7 @@ MouseBoxZoomer::~MouseBoxZoomer() {}
 //=====================================================================
 bool MouseBoxZoomer::eventFilter(QObject *widget, QEvent *e) {
   GlMainWidget *glw = static_cast<GlMainWidget *>(widget);
-  GlGraphInputData *inputData = glw->getScene()->getGlGraph()->getInputData();
+  GlGraphInputData *inputData = glw->getGlGraphInputData();
 
   if (e->type() == QEvent::MouseButtonPress) {
     QMouseEvent *qMouseEv = static_cast<QMouseEvent *>(e);
@@ -148,7 +148,7 @@ bool MouseBoxZoomer::draw(GlMainWidget *glw) {
     return false;
   }
 
-  if (glw->getScene()->getGlGraph()->getInputData()->getGraph() != graph) {
+  if (glw->getGlGraphInputData()->getGraph() != graph) {
     graph = nullptr;
     started = false;
   }

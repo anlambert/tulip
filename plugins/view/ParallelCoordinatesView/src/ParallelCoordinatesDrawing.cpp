@@ -267,7 +267,7 @@ void ParallelCoordinatesDrawing::plotAllData(GlMainWidget *glWidget, GlProgressB
         color.setA(linesColorAlphaValue);
       }
     } else {
-      color = glWidget->getScene()->getGlGraph()->getRenderingParameters().getSelectionColor();
+      color = glWidget->getGlGraphRenderingParameters().getSelectionColor();
     }
 
     plotData(dataId, color);

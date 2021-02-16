@@ -30,7 +30,7 @@ PathHighlighter::~PathHighlighter() {
 }
 
 GlGraphInputData *PathHighlighter::getInputData(GlMainWidget *glMainWidget) {
-  return glMainWidget->getScene()->getGlGraph()->getInputData();
+  return glMainWidget->getGlGraphInputData();
 }
 
 GlLayer *PathHighlighter::getWorkingLayer(GlScene *scene) {

@@ -119,13 +119,12 @@ void MatrixView::setState(const DataSet &ds) {
 }
 
 void MatrixView::showEdges(bool show) {
-  getGlMainWidget()->getScene()->getGlGraph()->getRenderingParameters().setDisplayEdges(show);
+  getGlMainWidget()->getGlGraphRenderingParameters().setDisplayEdges(show);
   emit drawNeeded();
 }
 
 void MatrixView::enableEdgeColorInterpolation(bool flag) {
-  getGlMainWidget()->getScene()->getGlGraph()->getRenderingParameters().setEdgeColorInterpolate(
-      flag);
+  getGlMainWidget()->getGlGraphRenderingParameters().setEdgeColorInterpolate(flag);
   emit drawNeeded();
 }
 
@@ -170,13 +169,9 @@ void MatrixView::graphChanged(Graph *) {
 
 DataSet MatrixView::state() const {
   DataSet ds;
-  ds.set("show Edges",
-         getGlMainWidget()->getScene()->getGlGraph()->getRenderingParameters().isDisplayEdges());
-  ds.set("edge color interpolation", getGlMainWidget()
-                                         ->getScene()
-                                         ->getGlGraph()
-                                         ->getRenderingParameters()
-                                         .isEdgeColorInterpolate());
+  ds.set("show Edges", getGlMainWidget()->getGlGraphRenderingParameters().isDisplayEdges());
+  ds.set("edge color interpolation",
+         getGlMainWidget()->getGlGraphRenderingParameters().isEdgeColorInterpolate());
   ds.set("ascending order", _configurationWidget->ascendingOrder());
   ds.set("Grid mode", _configurationWidget->gridDisplayMode());
   ds.set("Background Color", getGlMainWidget()->getScene()->getBackgroundColor());
@@ -299,7 +294,7 @@ void MatrixView::initDisplayedGraph() {
   }
   Observable::unholdObservers();
 
-  GlGraphInputData *inputData = getGlMainWidget()->getScene()->getGlGraph()->getInputData();
+  GlGraphInputData *inputData = getGlMainWidget()->getGlGraphInputData();
   _sourceToTargetProperties.clear();
   _sourceToTargetProperties.insert(inputData->getElementColor()->getName());
   _sourceToTargetProperties.insert(inputData->getElementShape()->getName());
@@ -319,7 +314,7 @@ void MatrixView::initDisplayedGraph() {
       _displayedEdgesToGraphEdges, _edgesMap);
 
   GlGraphRenderingParameters &renderingParameters =
-      getGlMainWidget()->getScene()->getGlGraph()->getRenderingParameters();
+      getGlMainWidget()->getGlGraphRenderingParameters();
   renderingParameters.setLabelScaled(true);
   renderingParameters.setLabelsDensity(100);
 
@@ -346,10 +341,8 @@ void MatrixView::normalizeSizes(double maxVal) {
   }
 
   float maxWidth = FLT_MIN, maxHeight = FLT_MIN;
-  SizeProperty *originalSizes =
-      getGlMainWidget()->getScene()->getGlGraph()->getInputData()->getElementSize();
-  SizeProperty *matrixSizes =
-      getGlMainWidget()->getScene()->getGlGraph()->getInputData()->getElementSize();
+  SizeProperty *originalSizes = getGlMainWidget()->getGlGraphInputData()->getElementSize();
+  SizeProperty *matrixSizes = getGlMainWidget()->getGlGraphInputData()->getElementSize();
 
   for (auto n : graph()->nodes()) {
     const Size &s = originalSizes->getNodeValue(n);
@@ -416,8 +409,7 @@ void MatrixView::addEdge(tlp::Graph *g, const tlp::edge e) {
   _displayedEdgesToGraphEdges->setEdgeValue(dispEdge, e.id);
 
   ColorProperty *originalColors = graph()->getColorProperty("viewColor");
-  ColorProperty *colors =
-      getGlMainWidget()->getScene()->getGlGraph()->getInputData()->getElementColor();
+  ColorProperty *colors = getGlMainWidget()->getGlGraphInputData()->getElementColor();
 
   colors->setEdgeValue(dispEdge, originalColors->getEdgeValue(e));
 }
@@ -539,11 +531,9 @@ void MatrixView::updateLayout() {
   holdObservers();
   updateNodesOrder();
 
-  LayoutProperty *layout =
-      getGlMainWidget()->getScene()->getGlGraph()->getInputData()->getElementLayout();
+  LayoutProperty *layout = getGlMainWidget()->getGlGraphInputData()->getElementLayout();
   Coord horiz = {1, 0, 0}, vert = {0, -1, 0};
-  IntegerProperty *position =
-      getGlMainWidget()->getScene()->getGlGraph()->getInputData()->getElementLabelPosition();
+  IntegerProperty *position = getGlMainWidget()->getGlGraphInputData()->getElementLabelPosition();
 
   for (auto _on : _orderedNodes) {
     const vector<int> &dispNodes = _graphEntitiesToDisplayedNodes->getNodeValue(node(_on));
@@ -555,8 +545,7 @@ void MatrixView::updateLayout() {
     vert[1] -= 1;
   }
 
-  IntegerProperty *shapes =
-      getGlMainWidget()->getScene()->getGlGraph()->getInputData()->getElementShape();
+  IntegerProperty *shapes = getGlMainWidget()->getGlGraphInputData()->getElementShape();
   int shape = GlyphManager::glyphId("2D - Square");
   for (auto e : graph()->edges()) {
     auto eEnds = graph()->ends(e);

@@ -105,8 +105,8 @@ GlGraphRenderingParameters &GlGraph::getRenderingParameters() {
   return parameters;
 }
 //===================================================================
-GlGraphInputData *GlGraph::getInputData() {
-  return &inputData;
+GlGraphInputData *GlGraph::getInputData() const {
+  return const_cast<GlGraphInputData *>(&inputData);
 }
 //====================================================
 void GlGraph::getXML(string &outString) {

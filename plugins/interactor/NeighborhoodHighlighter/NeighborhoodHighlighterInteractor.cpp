@@ -685,8 +685,7 @@ bool NeighborhoodHighlighter::draw(GlMainWidget *glMainWidget) {
                     true, 0.0, 60);
     circle.draw(0, nullptr);
 
-    GlGraphRenderingParameters renderingParameters =
-        glWidget->getScene()->getGlGraph()->getRenderingParameters();
+    GlGraphRenderingParameters renderingParameters = glWidget->getGlGraphRenderingParameters();
     renderingParameters.setNodesStencil(1);
     renderingParameters.setNodesLabelStencil(1);
     renderingParameters.setDisplayEdges(configWidget->isdisplayEdgesCBChecked());

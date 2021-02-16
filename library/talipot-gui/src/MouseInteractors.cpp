@@ -153,7 +153,7 @@ bool MouseElementDeleter::eventFilter(QObject *widget, QEvent *e) {
     } else if (e->type() == QEvent::MouseButtonPress && qMouseEv->button() == Qt::LeftButton) {
       if (glMainWidget->pickNodesEdges(qMouseEv->x(), qMouseEv->y(), selectedEntity)) {
         Observable::holdObservers();
-        Graph *graph = glMainWidget->getScene()->getGlGraph()->getInputData()->getGraph();
+        Graph *graph = glMainWidget->getGlGraphInputData()->getGraph();
         // allow to undo
         graph->push();
         delElement(graph, selectedEntity);
@@ -370,7 +370,7 @@ bool MouseNKeysNavigator::eventFilter(QObject *widget, QEvent *e) {
   QMouseEvent *qMouseEv = static_cast<QMouseEvent *>(e);
 
   if (e->type() == QEvent::MouseButtonDblClick && qMouseEv->button() == Qt::LeftButton) {
-    Graph *graph = glmainwidget->getScene()->getGlGraph()->getInputData()->getGraph();
+    Graph *graph = glmainwidget->getGlGraphInputData()->getGraph();
 
     if (qMouseEv->modifiers() != Qt::ControlModifier) {
       vector<SelectedEntity> tmpNodes;
@@ -429,7 +429,7 @@ bool MouseNKeysNavigator::eventFilter(QObject *widget, QEvent *e) {
             camera.getZoomFactor());
         glmainwidget->draw(false);
 
-        GlBoundingBoxSceneVisitor visitor(glmainwidget->getScene()->getGlGraph()->getInputData());
+        GlBoundingBoxSceneVisitor visitor(glmainwidget->getGlGraphInputData());
         glmainwidget->getScene()->getLayer("Main")->acceptVisitor(&visitor);
         BoundingBox boundingBox(visitor.getBoundingBox());
 

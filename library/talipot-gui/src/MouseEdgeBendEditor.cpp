@@ -291,7 +291,7 @@ bool MouseEdgeBendEditor::draw(GlMainWidget *) {
 }
 //========================================================================================
 void MouseEdgeBendEditor::initProxies(GlMainWidget *glMainWidget) {
-  GlGraphInputData *inputData = glMainWidget->getScene()->getGlGraph()->getInputData();
+  GlGraphInputData *inputData = glMainWidget->getGlGraphInputData();
   _graph = inputData->getGraph();
   _layout = inputData->getElementLayout();
   _selection = inputData->getElementSelected();
