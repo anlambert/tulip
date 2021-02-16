@@ -36,7 +36,6 @@ then
     freetype \
     fontconfig \
     glew \
-    jpeg \
     qt5-qtbase \
     qt5-qttools \
     qt5-qtwebkit \
