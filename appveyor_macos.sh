@@ -9,7 +9,7 @@ set -e
 curl -LO https://raw.githubusercontent.com/GiovanniBussi/macports-ci/master/macports-ci
 source ./macports-ci install
 
-CLANG_VERSION=10
+CLANG_VERSION=11
 PYTHON_VERSION=3.9
 PYTHON_VERSION_NO_DOT=$(echo $PYTHON_VERSION | sed 's/\.//')
 
