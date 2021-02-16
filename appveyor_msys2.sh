@@ -45,9 +45,8 @@ then
     mingw-w64-$MSYS2_ARCH-qt5 \
     mingw-w64-$MSYS2_ARCH-quazip \
     mingw-w64-$MSYS2_ARCH-qtwebkit \
-    mingw-w64-$MSYS2_ARCH-python-pip
+    mingw-w64-$MSYS2_ARCH-python-sphinx
   export TALIPOT_BUILD_DOC=ON
-  pip3 install sphinx
 fi
 
 # Build Talipot, run its unit tests and package it
