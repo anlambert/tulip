@@ -38,7 +38,7 @@ then
     glew \
     qt5-qtbase \
     qt5-qttools \
-    qt5-qtwebkit \
+    qt5-qtwebengine \
     quazip \
     py${PYTHON_VERSION_NO_DOT}-pip
   pip-${PYTHON_VERSION} install sphinx
