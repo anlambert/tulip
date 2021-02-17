@@ -190,7 +190,7 @@ QList<QWidget *> MatrixView::configurationWidgets() const {
 }
 
 void MatrixView::fillContextMenu(QMenu *menu, const QPointF &point) {
-  GlMainView::fillContextMenu(menu, point);
+  GlView::fillContextMenu(menu, point);
   // Check if a node/edge is under the mouse pointer
   SelectedEntity entity;
 

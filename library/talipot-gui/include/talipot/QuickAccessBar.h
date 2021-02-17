@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -28,7 +28,7 @@ class QuickAccessBar;
 }
 
 namespace tlp {
-class GlMainView;
+class GlView;
 class GlGraphRenderingParameters;
 class GlGraphInputData;
 class GlScene;
@@ -42,7 +42,7 @@ class TLP_QT_SCOPE QuickAccessBar : public QWidget {
   Q_OBJECT
 
 protected:
-  GlMainView *_mainView;
+  GlView *_mainView;
   GlScene *scene() const;
   GlGraphInputData *inputData() const;
   GlGraphRenderingParameters *renderingParameters() const;
@@ -50,7 +50,7 @@ protected:
 public:
   QuickAccessBar(QWidget *parent = nullptr);
 public slots:
-  void setGlMainView(tlp::GlMainView *);
+  void setGlView(tlp::GlView *);
   virtual void reset() = 0;
 
 signals:

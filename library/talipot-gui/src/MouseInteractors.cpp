@@ -21,7 +21,7 @@
 #include <talipot/View.h>
 #include <talipot/Observable.h>
 #include <talipot/GlGraph.h>
-#include <talipot/GlMainView.h>
+#include <talipot/GlView.h>
 #include <talipot/GlBoundingBoxSceneVisitor.h>
 #include <talipot/DrawingTools.h>
 #include <talipot/QtGlSceneZoomAndPanAnimator.h>

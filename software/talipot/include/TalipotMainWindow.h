@@ -125,14 +125,13 @@ public slots:
   void showPythonDocumentation();
 
   void redrawPanels(bool center = false);
-  void centerPanelsForGraph(tlp::Graph *, bool graphChanged, bool onlyGlMainView);
+  void centerPanelsForGraph(tlp::Graph *, bool graphChanged, bool onlyGlView);
   void centerPanelsForGraph(tlp::Graph *g) {
     centerPanelsForGraph(g, false, false);
   }
   void closePanelsForGraph(tlp::Graph *g = nullptr);
-  bool
-  setGlMainViewPropertiesForGraph(tlp::Graph *g,
-                                  const std::map<std::string, tlp::PropertyInterface *> &propsMap);
+  bool setGlViewPropertiesForGraph(tlp::Graph *g,
+                                   const std::map<std::string, tlp::PropertyInterface *> &propsMap);
   void openPreferences();
 
   void setAutoCenterPanelsOnDraw(bool f);

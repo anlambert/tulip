@@ -48,7 +48,7 @@
 #include <talipot/GraphModel.h>
 #include <talipot/GraphTableItemDelegate.h>
 #include <talipot/GraphPropertiesModel.h>
-#include <talipot/GlMainView.h>
+#include <talipot/GlView.h>
 #include <talipot/GlWidget.h>
 #include <talipot/GlGraph.h>
 #include <talipot/Settings.h>
@@ -1490,10 +1490,9 @@ void TalipotMainWindow::applyDefaultLayout(Graph *g) {
   Observable::unholdObservers();
 }
 
-void TalipotMainWindow::centerPanelsForGraph(tlp::Graph *g, bool graphChanged,
-                                             bool onlyGlMainView) {
+void TalipotMainWindow::centerPanelsForGraph(tlp::Graph *g, bool graphChanged, bool onlyGlView) {
   for (auto v : _ui->workspace->panels()) {
-    if ((v->graph() == g) && (!onlyGlMainView || dynamic_cast<tlp::GlMainView *>(v)))
+    if ((v->graph() == g) && (!onlyGlView || dynamic_cast<tlp::GlView *>(v)))
       v->centerView(graphChanged);
   }
 }
@@ -1516,15 +1515,15 @@ void TalipotMainWindow::closePanelsForGraph(tlp::Graph *g) {
   }
 }
 
-bool TalipotMainWindow::setGlMainViewPropertiesForGraph(
+bool TalipotMainWindow::setGlViewPropertiesForGraph(
     tlp::Graph *g, const std::map<std::string, tlp::PropertyInterface *> &propsMap) {
   bool result = false;
 
   for (auto v : _ui->workspace->panels()) {
-    GlMainView *glMainView = dynamic_cast<tlp::GlMainView *>(v);
+    GlView *glView = dynamic_cast<tlp::GlView *>(v);
 
-    if (v->graph() == g && glMainView != nullptr) {
-      if (glMainView->getGlWidget()->getGlGraphInputData()->installProperties(propsMap))
+    if (v->graph() == g && glView != nullptr) {
+      if (glView->getGlWidget()->getGlGraphInputData()->installProperties(propsMap))
         result = true;
     }
   }

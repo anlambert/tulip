@@ -210,7 +210,7 @@ public:
       }
 
       // restore initial properties
-      TalipotMainWindow::instance().setGlMainViewPropertiesForGraph(graph, outPropsMap);
+      TalipotMainWindow::instance().setGlViewPropertiesForGraph(graph, outPropsMap);
     }
   }
 
@@ -229,7 +229,7 @@ public:
 
       if (!outPropsMap.empty() &&
           // set temporary properties as drawing properties
-          (TalipotMainWindow::instance().setGlMainViewPropertiesForGraph(graph, outPropsMap) ==
+          (TalipotMainWindow::instance().setGlViewPropertiesForGraph(graph, outPropsMap) ==
            false)) {
         // clear map if there is nothing to do
         outPropsMap.clear();

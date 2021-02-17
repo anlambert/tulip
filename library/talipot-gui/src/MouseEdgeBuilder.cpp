@@ -17,7 +17,7 @@
 #include <talipot/LayoutProperty.h>
 #include <talipot/ColorProperty.h>
 #include <talipot/GlWidget.h>
-#include <talipot/GlMainView.h>
+#include <talipot/GlView.h>
 #include <talipot/GlTools.h>
 #include <talipot/GlLine.h>
 #include <talipot/GlGraph.h>

@@ -21,7 +21,7 @@
 #include <talipot/MouseInteractors.h>
 #include <talipot/BooleanProperty.h>
 #include <talipot/GlComplexPolygon.h>
-#include <talipot/GlMainView.h>
+#include <talipot/GlView.h>
 #include <talipot/GlGraph.h>
 #include <talipot/GlNode.h>
 #include <talipot/NodeLinkDiagramView.h>

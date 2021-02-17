@@ -21,7 +21,7 @@
 #include <talipot/PluginHeaders.h>
 #include <talipot/MouseInteractors.h>
 #include <talipot/GlWidget.h>
-#include <talipot/GlMainView.h>
+#include <talipot/GlView.h>
 #include <talipot/GlCircle.h>
 #include <talipot/OcclusionTest.h>
 #include <talipot/GlBoundingBoxSceneVisitor.h>
@@ -176,7 +176,7 @@ void NeighborhoodHighlighter::viewChanged(View *view) {
     return;
   }
 
-  GlMainView *glView = static_cast<GlMainView *>(view);
+  GlView *glView = static_cast<GlView *>(view);
   glWidget = glView->getGlWidget();
 }
 

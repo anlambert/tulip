@@ -13,9 +13,9 @@
 
 namespace tlp {
 
-class GlMainView : tlp::View /Abstract/ {
+class GlView : tlp::View /Abstract/ {
 %TypeHeaderCode
-#include <talipot/GlMainView.h>
+#include <talipot/GlView.h>
 #include <vector>
 %End
 
@@ -27,12 +27,12 @@ This is the based class of Talipot OpenGL views.
 
 public:
 
-  GlMainView();
-  virtual ~GlMainView();
+  GlView();
+  virtual ~GlView();
 
   bool overviewVisible() const;
 %Docstring
-tlpgui.GlMainView.overviewVisible()
+tlpgui.GlView.overviewVisible()
 
 Returns the visibility state of the overview window.
 
@@ -43,7 +43,7 @@ Returns the visibility state of the overview window.
 
   void setOverviewVisible(bool);
 %Docstring
-tlpgui.GlMainView.setOverviewVisible(state)
+tlpgui.GlView.setOverviewVisible(state)
 
 Sets the visibility state of the overview window.
 
@@ -55,7 +55,7 @@ Sets the visibility state of the overview window.
 
   bool quickAccessBarVisible() const;
 %Docstring
-tlpgui.GlMainView.quickAccessBarVisible()
+tlpgui.GlView.quickAccessBarVisible()
 
 Returns the visibility state of the quick access bar.
 
@@ -66,7 +66,7 @@ Returns the visibility state of the quick access bar.
 
   void setQuickAccessBarVisible(bool);
 %Docstring
-tlpgui.GlMainView.setQuickAccessBarVisible(state)
+tlpgui.GlView.setQuickAccessBarVisible(state)
 
 Allows to control the quiack access bar visibility.
 
@@ -78,7 +78,7 @@ Allows to control the quiack access bar visibility.
 
   virtual void drawOverview(bool generatePixmap=true);
 %Docstring
-tlpgui.GlMainView.drawOverview()
+tlpgui.GlView.drawOverview()
 
 Forces the redraw of the overview window.
 %End
@@ -87,7 +87,7 @@ Forces the redraw of the overview window.
 
   virtual void centerView(bool graphChanged = false);
 %Docstring
-tlpgui.GlMainView.centerView()
+tlpgui.GlView.centerView()
 
 Centers the OpenGL scene in the view window.
 %End
@@ -97,7 +97,7 @@ Centers the OpenGL scene in the view window.
 
   void setViewOrtho(bool);
 %Docstring
-tlpgui.GlMainView.setViewOrtho(state)
+tlpgui.GlView.setViewOrtho(state)
 
 Activates/deactivate the orthogonal projection for OpenGL rendering.
 Perspective projection is used when orthogonal one is disabled.
@@ -110,7 +110,7 @@ Perspective projection is used when orthogonal one is disabled.
 
   bool pickNodeEdge(int x, int y, tlp::node &n /Out/, tlp::edge &e /Out/, bool pickNode = true, bool pickEdge = true)/TypeHint="Tuple[bool, node, edge]"/ ;
 %Docstring
-tlpgui.GlMainView.pickNodeEdge(x, y, pickNode, pickEdge)
+tlpgui.GlView.pickNodeEdge(x, y, pickNode, pickEdge)
 
 Returns a tuple of 3 elements. The first one is a bool indicating if a node/edge has been found found at the (x,y) position in the view, the second element is the node found, the third the edge found.
 
@@ -129,7 +129,7 @@ Returns a tuple of 3 elements. The first one is a bool indicating if a node/edge
 
   void rotateCamera(int x, int y, int z);
 %Docstring
-tlpgui.GlMainView.rotateCamera(x, y, z)
+tlpgui.GlView.rotateCamera(x, y, z)
 
 Rotate the view camera by (x, y, z)
 
@@ -145,7 +145,7 @@ Rotate the view camera by (x, y, z)
 
   void translateCamera(int x, int y, int z);
 %Docstring
-tlpgui.GlMainView.translateCamera(x, y, z)
+tlpgui.GlView.translateCamera(x, y, z)
 
 Translate the view camera by (x, y, z)
 
@@ -161,7 +161,7 @@ Translate the view camera by (x, y, z)
 
   Coord viewToWorld(const Coord &vpos);
 %Docstring
-tlpgui.GlMainView.viewToWorld(vpos)
+tlpgui.GlView.viewToWorld(vpos)
 
 Return the 3D world position for the given view position
 
@@ -173,7 +173,7 @@ Return the 3D world position for the given view position
 
   Coord worldToView(const Coord &wpos);
 %Docstring
-tlpgui.GlMainView.viewToWorld(wpos)
+tlpgui.GlView.viewToWorld(wpos)
 
 Return the view position for the given 3D position
 
@@ -185,7 +185,7 @@ Return the view position for the given 3D position
 
   void zoomXY(int step, int x, int y);
 %Docstring
-tlpgui.GlMainView.zoomXY(step, x, y)
+tlpgui.GlView.zoomXY(step, x, y)
 
 Zoom by step to the given (x,y) view position
 
@@ -201,7 +201,7 @@ Zoom by step to the given (x,y) view position
 
   void zoom(int step);
 %Docstring
-tlpgui.GlMainView.zoom(step)
+tlpgui.GlView.zoom(step)
 
 Zoom by step
 
@@ -213,7 +213,7 @@ Zoom by step
 
   void zoomFactor(float factor);
 %Docstring
-tlpgui.GlMainView.zoom(factor)
+tlpgui.GlView.zoom(factor)
 
 Zoom by factor
 
@@ -225,7 +225,7 @@ Zoom by factor
 
   void zoomAndPanAnimation(const tlp::BoundingBox &bb, double duration = 1000.);
 %Docstring
-tlpgui.GlMainView.zoomAndPanAnimation(bb, duration)
+tlpgui.GlView.zoomAndPanAnimation(bb, duration)
 
 Do a zoom and pan animation during a specific duration.
 At the end of the animation, the view will be zoomed and centered on the content of the given bounding box.
@@ -240,7 +240,7 @@ At the end of the animation, the view will be zoomed and centered on the content
 
   PyObject *getRGBImage(int &width /Out/, int &height /Out/);
 %Docstring
-tlpgui.GlMainView.getRGBImage()
+tlpgui.GlView.getRGBImage()
 
 Return a tuple of 3 elements. The first element is the image in RGB format (3 bytes per pixel) as a bytearray object; the second is the width of the image and the third is its height.
 

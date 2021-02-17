@@ -17,7 +17,7 @@
 #include <unordered_map>
 
 #include <talipot/Graph.h>
-#include <talipot/GlMainView.h>
+#include <talipot/GlView.h>
 #include <talipot/BoundingBox.h>
 #include <talipot/Coord.h>
 
@@ -59,7 +59,7 @@ class ScatterPlot2DOptionsWidget;
 class ViewGraphPropertiesSelectionWidget;
 class ScatterPlotQuickAccessBar;
 
-class ScatterPlot2DView : public GlMainView {
+class ScatterPlot2DView : public GlView {
 
   Q_OBJECT
 
@@ -147,7 +147,7 @@ public slots:
   void init();
   void viewConfigurationChanged();
 
-  // inherited from GlMainView
+  // inherited from GlView
   void centerView(bool graphChanged = false) override;
   void applySettings() override;
 

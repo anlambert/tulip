@@ -14,7 +14,7 @@
 #include "talipot/SceneLayersConfigWidget.h"
 #include "ui_SceneLayersConfigWidget.h"
 
-#include <talipot/GlMainView.h>
+#include <talipot/GlView.h>
 #include <talipot/GlWidget.h>
 #include <talipot/SceneLayersModel.h>
 

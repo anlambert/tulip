@@ -20,7 +20,7 @@
 #include <talipot/ColorProperty.h>
 #include <talipot/GlWidget.h>
 #include <talipot/GlGraph.h>
-#include <talipot/GlMainView.h>
+#include <talipot/GlView.h>
 #include <talipot/Camera.h>
 
 using namespace tlp;

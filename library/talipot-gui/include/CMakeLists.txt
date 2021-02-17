@@ -2,7 +2,7 @@ INSTALL(
   FILES talipot/CaptionItem.h
         talipot/ColorScaleConfigDialog.h
         talipot/GLInteractor.h
-        talipot/GlMainView.h
+        talipot/GlView.h
         talipot/GlWidget.h
         talipot/GlOffscreenRenderer.h
         talipot/GraphPropertiesSelectionWidget.h

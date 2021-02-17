@@ -21,7 +21,7 @@
 
 #include "../../utils/PluginNames.h"
 
-#include <talipot/GlMainView.h>
+#include <talipot/GlView.h>
 #include <talipot/Graph.h>
 
 class QMenu;
@@ -63,7 +63,7 @@ class QuantitativeParallelAxis;
  *
  *
  */
-class ParallelCoordinatesView : public GlMainView {
+class ParallelCoordinatesView : public GlView {
 
   Q_OBJECT
 

@@ -20,7 +20,7 @@
 
 #include <talipot/GlOffscreenRenderer.h>
 #include <talipot/GlWidget.h>
-#include <talipot/GlMainView.h>
+#include <talipot/GlView.h>
 #include <talipot/GlGraph.h>
 #include <talipot/GlOffscreenRenderer.h>
 
@@ -28,7 +28,7 @@ using namespace std;
 
 namespace tlp {
 
-GlOverviewGraphicsItem::GlOverviewGraphicsItem(GlMainView *view, GlScene &scene)
+GlOverviewGraphicsItem::GlOverviewGraphicsItem(GlView *view, GlScene &scene)
     : QGraphicsRectItem(0, 0, 128, 128), view(view), baseScene(scene), width(128), height(128),
       mouseClicked(false), _frameColor(Color::Gray), _frameWidth(2) {}
 

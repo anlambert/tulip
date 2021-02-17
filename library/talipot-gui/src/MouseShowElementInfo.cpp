@@ -22,7 +22,7 @@
 
 #include <talipot/GraphElementModel.h>
 #include <talipot/ItemDelegate.h>
-#include <talipot/GlMainView.h>
+#include <talipot/GlView.h>
 #include <talipot/GlWidget.h>
 #include <talipot/GlScene.h>
 #include <talipot/MouseShowElementInfo.h>

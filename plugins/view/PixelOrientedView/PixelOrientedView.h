@@ -14,7 +14,7 @@
 #ifndef PIXEL_ORIENTED_VIEW_H
 #define PIXEL_ORIENTED_VIEW_H
 
-#include <talipot/GlMainView.h>
+#include <talipot/GlView.h>
 
 #include <QWidget>
 
@@ -55,7 +55,7 @@ class PixelOrientedViewQuickAccessBar;
  *
  *
  */
-class PixelOrientedView : public GlMainView {
+class PixelOrientedView : public GlView {
 
   static const unsigned int MIN_IMAGE_WIDTH = 512;
   static const unsigned int MIN_IMAGE_HEIGHT = 512;
@@ -112,7 +112,7 @@ public slots:
   void graphChanged(Graph *graph) override;
   void init();
   void applySettings() override;
-  // inherited from GlMainView
+  // inherited from GlView
   void centerView(bool = false) override;
 
 private:

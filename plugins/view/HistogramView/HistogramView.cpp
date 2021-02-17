@@ -52,7 +52,7 @@ namespace tlp {
 PLUGIN(HistogramView)
 
 HistogramView::HistogramView(const PluginContext *)
-    : GlMainView(true), propertiesSelectionWidget(nullptr), histoOptionsWidget(nullptr),
+    : GlView(true), propertiesSelectionWidget(nullptr), histoOptionsWidget(nullptr),
       xAxisDetail(nullptr), yAxisDetail(nullptr), _histoGraph(nullptr), emptyGraph(nullptr),
       emptyGlGraph(nullptr), histogramsComposite(nullptr), labelsComposite(nullptr),
       axisComposite(nullptr), smallMultiplesView(true), mainLayer(nullptr),
@@ -161,7 +161,7 @@ void HistogramView::setState(const DataSet &dataSet) {
     histoOptionsWidget->setWidgetEnabled(false);
   }
 
-  GlMainView::setState(dataSet);
+  GlView::setState(dataSet);
 
   Graph *lastGraph = _histoGraph;
   _histoGraph = graph();
@@ -358,7 +358,7 @@ DataSet HistogramView::state() const {
   vector<string> selectedPropertiesTmp = vector<string>(selectedProperties);
   map<string, Histogram *> histogramsMapTmp = map<string, Histogram *>(histogramsMap);
 
-  DataSet dataSet = GlMainView::state();
+  DataSet dataSet = GlView::state();
   dataSet.set("Nodes/Edges", static_cast<unsigned>(dataLocation));
 
   for (size_t i = 0; i < selectedPropertiesTmp.size(); ++i) {
@@ -443,7 +443,7 @@ bool HistogramView::eventFilter(QObject *object, QEvent *event) {
     return true;
   }
 
-  return GlMainView::eventFilter(object, event);
+  return GlView::eventFilter(object, event);
 }
 
 void HistogramView::addEmptyViewLabel() {

@@ -30,7 +30,7 @@
 #include <talipot/GlGraphRenderingParameters.h>
 #include <talipot/TlpQtTools.h>
 #include <talipot/GlWidget.h>
-#include <talipot/GlMainView.h>
+#include <talipot/GlView.h>
 #include <talipot/GlGraphInputData.h>
 #include <talipot/SnapshotDialog.h>
 #include <talipot/ItemDelegate.h>
@@ -219,7 +219,7 @@ QuickAccessBarImpl::~QuickAccessBarImpl() {
   delete _ui;
 }
 
-void QuickAccessBar::setGlMainView(GlMainView *v) {
+void QuickAccessBar::setGlView(GlView *v) {
   _mainView = v;
   reset();
 }

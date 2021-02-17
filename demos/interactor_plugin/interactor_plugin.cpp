@@ -5,7 +5,7 @@
 
 #include <talipot/MouseInteractors.h>
 #include <talipot/Interactor.h>
-#include <talipot/GlMainView.h>
+#include <talipot/GlView.h>
 #include <talipot/GlWidget.h>
 #include <talipot/GlScene.h>
 
@@ -64,7 +64,7 @@ public:
     QMouseEvent *qMouseEv = dynamic_cast<QMouseEvent *>(e);
 
     if (qMouseEv != nullptr) {
-      GlMainView *glMainView = static_cast<GlMainView *>(view());
+      GlView *glView = static_cast<GlView *>(view());
 
       /*
       Check if event is a left mouse button press
@@ -86,8 +86,7 @@ public:
           */
           SelectedEntity selectedEntity;
 
-          if (glMainView->getGlWidget()->pickNodesEdges(qMouseEv->x(), qMouseEv->y(),
-                                                        selectedEntity)) {
+          if (glView->getGlWidget()->pickNodesEdges(qMouseEv->x(), qMouseEv->y(), selectedEntity)) {
 
             /*
             Change text of the information label with

@@ -24,7 +24,7 @@
 
 #include <talipot/PluginHeaders.h>
 #include <talipot/MouseInteractors.h>
-#include <talipot/GlMainView.h>
+#include <talipot/GlView.h>
 #include <talipot/GlShaderProgram.h>
 #include <talipot/GlWidget.h>
 #include <talipot/NodeLinkDiagramView.h>
@@ -141,7 +141,7 @@ void FisheyeInteractorComponent::viewChanged(View *view) {
     return;
   }
 
-  GlMainView *glView = static_cast<GlMainView *>(view);
+  GlView *glView = static_cast<GlView *>(view);
   GlWidget *glWidget = glView->getGlWidget();
 
   if (!glWidget->hasMouseTracking()) {

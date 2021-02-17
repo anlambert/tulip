@@ -16,7 +16,7 @@
 %End
 
 namespace tlp {
-class NodeLinkDiagramView : tlp::GlMainView  /NoDefaultCtors/ {
+class NodeLinkDiagramView : tlp::GlView  /NoDefaultCtors/ {
 %TypeHeaderCode
 #include <talipot/NodeLinkDiagramView.h>
 #include <talipot/GlGraph.h>
@@ -24,7 +24,7 @@ class NodeLinkDiagramView : tlp::GlMainView  /NoDefaultCtors/ {
 
 %Docstring
 
-Bases: :class:`tlpgui.GlMainView`
+Bases: :class:`tlpgui.GlView`
 
 That class represents the main type of view offered by Talipot : a node link diagram.
 %End

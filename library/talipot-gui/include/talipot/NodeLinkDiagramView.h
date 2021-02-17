@@ -14,7 +14,7 @@
 #ifndef TALIPOT_NODE_LINK_DIAGRAM_VIEW_H
 #define TALIPOT_NODE_LINK_DIAGRAM_VIEW_H
 
-#include <talipot/GlMainView.h>
+#include <talipot/GlView.h>
 #include <talipot/Camera.h>
 
 namespace Ui {
@@ -31,7 +31,7 @@ class GlGraphRenderingParameters;
 class PropertyInterface;
 class StringProperty;
 
-class TLP_QT_SCOPE NodeLinkDiagramView : public tlp::GlMainView {
+class TLP_QT_SCOPE NodeLinkDiagramView : public tlp::GlView {
   Q_OBJECT
 
   GlGrid *_grid;

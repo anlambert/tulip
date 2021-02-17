@@ -18,7 +18,7 @@
 #include "../../utils/InteractorIcons.h"
 
 #include <talipot/GlRect.h>
-#include <talipot/GlMainView.h>
+#include <talipot/GlView.h>
 #include <talipot/GlTextureManager.h>
 #include <talipot/MouseInteractors.h>
 #include <talipot/GlTools.h>
@@ -282,7 +282,7 @@ void MouseMagnifyingGlassInteractorComponent::viewChanged(View *view) {
     return;
   }
 
-  GlMainView *glView = dynamic_cast<GlMainView *>(view);
+  GlView *glView = dynamic_cast<GlView *>(view);
   glWidget = glView->getGlWidget();
   radius = glWidget->screenToViewport(glWidget->width()) / 4;
   camera = &glWidget->getScene()->getLayer("Main")->getCamera();

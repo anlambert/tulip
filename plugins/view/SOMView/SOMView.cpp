@@ -46,7 +46,7 @@ using namespace tlp;
 PLUGIN(SOMView)
 
 SOMView::SOMView(PluginContext *)
-    : GlMainView(true), glGraph(nullptr), graphLayoutProperty(nullptr), graphSizeProperty(nullptr),
+    : GlView(true), glGraph(nullptr), graphLayoutProperty(nullptr), graphSizeProperty(nullptr),
       mask(nullptr), somMask(nullptr), mapCompositeElements(nullptr), som(nullptr),
       previewWidget(nullptr), mapWidget(nullptr), isDetailledMode(false), mappingIsVisible(false),
       hideMappingAction(nullptr), showMappingAction(nullptr), computeMappingAction(nullptr),
@@ -109,7 +109,7 @@ void SOMView::construct(QWidget *) {
   mapWidget = new GlWidget(nullptr, this);
   mapWidget->installEventFilter(this);
 
-  initGlMainViews();
+  initGlViews();
   mapWidget->installEventFilter(this);
 
   isDetailledMode = false;
@@ -131,7 +131,7 @@ void SOMView::construct(QWidget *) {
   som = nullptr;
 }
 
-void SOMView::initGlMainViews() {
+void SOMView::initGlViews() {
 
   // Gl view initialisation
   // miniatures
@@ -243,7 +243,7 @@ void SOMView::setState(const DataSet &dataSet) {
 
   registerTriggers();
 
-  GlMainView::setState(dataSet);
+  GlView::setState(dataSet);
 }
 
 void SOMView::changeMapViewGraph(tlp::Graph *graph) {
@@ -280,7 +280,7 @@ void SOMView::changeMapViewGraph(tlp::Graph *graph) {
 }
 
 DataSet SOMView::state() const {
-  DataSet dataSet = GlMainView::state();
+  DataSet dataSet = GlView::state();
   // Store configurationWidget state.
   dataSet.set("propertiesWidget", properties->getData());
   return dataSet;
@@ -313,7 +313,7 @@ void SOMView::fillContextMenu(QMenu *menu, const QPointF &point) {
   }
 
   menu->addSeparator();
-  GlMainView::fillContextMenu(menu, point);
+  GlView::fillContextMenu(menu, point);
 }
 
 void SOMView::createPicture(const std::string &pictureName, int width, int height) {
@@ -859,7 +859,7 @@ bool SOMView::eventFilter(QObject *obj, QEvent *event) {
     }
   }
 
-  return GlMainView::eventFilter(obj, event);
+  return GlView::eventFilter(obj, event);
 }
 
 void SOMView::showMapping() {

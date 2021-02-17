@@ -40,7 +40,7 @@
 #include <talipot/Settings.h>
 #include <talipot/WorkspacePanel.h>
 #include <talipot/View.h>
-#include <talipot/GlMainView.h>
+#include <talipot/GlView.h>
 #include <talipot/GlWidget.h>
 #include <talipot/PythonInterpreter.h>
 #include <talipot/GlOffscreenRenderer.h>

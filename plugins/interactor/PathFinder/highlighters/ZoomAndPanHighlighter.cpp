@@ -14,7 +14,7 @@
 #include "ZoomAndPanHighlighter.h"
 
 #include <talipot/Graph.h>
-#include <talipot/GlMainView.h>
+#include <talipot/GlView.h>
 #include <talipot/GlGraphInputData.h>
 #include <talipot/LayoutProperty.h>
 #include <talipot/Coord.h>

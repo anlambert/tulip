@@ -165,7 +165,7 @@ namespace tlp {
 
 %Include Interactor.sip
 %Include View.sip
-%Include GlMainView.sip
+%Include GlView.sip
 %Include GlGraphRenderingParameters.sip
 %Include GlGraphInputData.sip
 %Include NodeLinkDiagramView.sip

@@ -21,7 +21,7 @@
 
 namespace tlp {
 class Graph;
-class GlMainView;
+class GlView;
 class BooleanProperty;
 class DoubleProperty;
 

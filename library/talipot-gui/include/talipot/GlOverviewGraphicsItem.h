@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -25,7 +25,7 @@
 
 namespace tlp {
 
-class GlMainView;
+class GlView;
 class GlScene;
 
 class TLP_QT_SCOPE GlOverviewGraphicsItem : public QObject, public QGraphicsRectItem {
@@ -33,7 +33,7 @@ class TLP_QT_SCOPE GlOverviewGraphicsItem : public QObject, public QGraphicsRect
   Q_OBJECT
 
 public:
-  GlOverviewGraphicsItem(GlMainView *view, GlScene &scene);
+  GlOverviewGraphicsItem(GlView *view, GlScene &scene);
   ~GlOverviewGraphicsItem() override;
 
   void setSize(unsigned int width, unsigned int height);
@@ -64,7 +64,7 @@ private:
   void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
   void setScenePosition(QPointF pos);
 
-  GlMainView *view;
+  GlView *view;
   GlScene &baseScene;
   unsigned int width, height;
 

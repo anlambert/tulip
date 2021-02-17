@@ -2,7 +2,7 @@ SET(TALIPOT_GUI_SIP_FILES
     Interactor.sip
     Module.sip
     View.sip
-    GlMainView.sip
+    GlView.sip
     NodeLinkDiagramView.sip
     TalipotGui.sip
     ColorScalesManager.sip)

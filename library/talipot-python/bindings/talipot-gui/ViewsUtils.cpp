@@ -17,7 +17,7 @@
 
 #include <talipot/PluginsManager.h>
 #include <talipot/WorkspacePanel.h>
-#include <talipot/GlMainView.h>
+#include <talipot/GlView.h>
 #include <talipot/GlWidget.h>
 
 #include "ViewsUtils.h"
@@ -250,7 +250,7 @@ void ViewsManager::resizeView(tlp::View *view, int width, int height) {
 
   if (!workspace) {
     viewToWindow[view]->resize(width, height);
-    tlp::GlMainView *glView = dynamic_cast<tlp::GlMainView *>(view);
+    tlp::GlView *glView = dynamic_cast<tlp::GlView *>(view);
     if (glView) {
       glView->getGlWidget()->resize(width, height);
       glView->getGlWidget()->resizeGL(width, height);

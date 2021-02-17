@@ -19,7 +19,7 @@
 #include <talipot/SceneLayersConfigWidget.h>
 #include <talipot/Interactor.h>
 #include <talipot/View.h>
-#include <talipot/GlMainView.h>
+#include <talipot/GlView.h>
 #include <talipot/ViewActionsManager.h>
 
 #include <QGraphicsScene>
@@ -121,7 +121,7 @@ public:
   }
 
   bool getNodeOrEdgeAtViewportPos(int x, int y, node &n, edge &e) const override {
-    return GlMainView::getNodeOrEdgeAtViewportPos(geoViewGraphicsView->getGlWidget(), x, y, n, e);
+    return GlView::getNodeOrEdgeAtViewportPos(geoViewGraphicsView->getGlWidget(), x, y, n, e);
   }
 
   GeographicViewConfigWidget *getConfigWidget() const {

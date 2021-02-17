@@ -15,7 +15,7 @@
 
 #include <talipot/GlWidget.h>
 #include <talipot/GlGraph.h>
-#include <talipot/GlMainView.h>
+#include <talipot/GlView.h>
 
 #include "highlighters/PathHighlighter.h"
 #include "PathFinder.h"
@@ -211,6 +211,6 @@ QSet<PathHighlighter *> PathFinderComponent::getHighlighters() {
 }
 
 void PathFinderComponent::clear() {
-  GlMainView *glMainView = static_cast<GlMainView *>(view());
-  glMainView->getGlWidget()->setCursor(QCursor());
+  GlView *glView = static_cast<GlView *>(view());
+  glView->getGlWidget()->setCursor(QCursor());
 }

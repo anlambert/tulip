@@ -46,7 +46,7 @@ using namespace std;
 const string NodeLinkDiagramView::viewName("Node Link Diagram");
 
 NodeLinkDiagramView::NodeLinkDiagramView(const tlp::PluginContext *)
-    : GlMainView(true), _grid(nullptr), _gridOptions(nullptr), manager(nullptr), _hasHulls(false),
+    : GlView(true), _grid(nullptr), _gridOptions(nullptr), manager(nullptr), _hasHulls(false),
       grid_ui(nullptr) {}
 
 NodeLinkDiagramView::~NodeLinkDiagramView() {
@@ -113,7 +113,7 @@ void NodeLinkDiagramView::updateGrid() {
 
 void NodeLinkDiagramView::draw() {
   updateGrid();
-  GlMainView::draw();
+  GlView::draw();
 }
 
 void NodeLinkDiagramView::setState(const tlp::DataSet &data) {
@@ -135,7 +135,7 @@ void NodeLinkDiagramView::setState(const tlp::DataSet &data) {
 
   setOverviewVisible(true);
   setQuickAccessBarVisible(true);
-  GlMainView::setState(data);
+  GlView::setState(data);
 
   bool keepSPOV = false;
   data.get<bool>("keepScenePointOfViewOnSubgraphChanging", keepSPOV);
@@ -260,7 +260,7 @@ void NodeLinkDiagramView::createScene(Graph *graph, DataSet dataSet) {
 //==================================================
 DataSet NodeLinkDiagramView::sceneData() const {
   GlScene *scene = getGlWidget()->getScene();
-  DataSet outDataSet = GlMainView::state();
+  DataSet outDataSet = GlView::state();
   outDataSet.set("Display", scene->getGlGraph()->getRenderingParameters().getParameters());
   std::string out;
   scene->getXML(out);
@@ -534,7 +534,7 @@ void NodeLinkDiagramView::fillContextMenu(QMenu *menu, const QPointF &point) {
       View::fillContextMenu(menu, edge(entity.getComplexEntityId()));
     }
   } else {
-    GlMainView::fillContextMenu(menu, point);
+    GlView::fillContextMenu(menu, point);
 
     QAction *action = menu->addAction("Use Z ordering");
     action->setToolTip(

@@ -12,7 +12,7 @@ SET(SRCS
     DownloadManager.cpp
     DragHandle.cpp
     GlCompositeHierarchyManager.cpp
-    GlMainView.cpp
+    GlView.cpp
     GlWidget.cpp
     GlOffscreenRenderer.cpp
     GraphPropertiesSelectionWidget.cpp
@@ -182,7 +182,7 @@ QTX_WRAP_CPP(
   ../include/talipot/DragHandle.h
   ../include/talipot/FileDownloader.h
   ../include/talipot/GLInteractor.h
-  ../include/talipot/GlMainView.h
+  ../include/talipot/GlView.h
   ../include/talipot/GlWidget.h
   ../include/talipot/GlWidgetGraphicsItem.h
   ../include/talipot/GlOverviewGraphicsItem.h

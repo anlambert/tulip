@@ -63,7 +63,7 @@ const unsigned int nbPropertiesTypes = sizeof(propertiesTypes) / sizeof(string);
 const vector<string> propertiesTypesFilter(propertiesTypes, propertiesTypes + nbPropertiesTypes);
 
 ScatterPlot2DView::ScatterPlot2DView(const PluginContext *)
-    : GlMainView(true), propertiesSelectionWidget(nullptr), optionsWidget(nullptr),
+    : GlView(true), propertiesSelectionWidget(nullptr), optionsWidget(nullptr),
       scatterPlotGraph(nullptr), emptyGraph(nullptr), mainLayer(nullptr), glGraph(nullptr),
       scatterPlotSize(nullptr), matrixComposite(nullptr), axisComposite(nullptr),
       labelsComposite(nullptr), detailedScatterPlot(nullptr),
@@ -333,11 +333,11 @@ void ScatterPlot2DView::setState(const DataSet &dataSet) {
     setQuickAccessBarVisible(true);
   }
 
-  GlMainView::setState(dataSet);
+  GlView::setState(dataSet);
 }
 
 DataSet ScatterPlot2DView::state() const {
-  DataSet dataSet = GlMainView::state();
+  DataSet dataSet = GlView::state();
   DataSet selectedGraphPropertiesDataSet;
 
   for (size_t i = 0; i < selectedGraphProperties.size(); ++i) {

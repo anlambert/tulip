@@ -14,7 +14,7 @@
 #ifndef HISTOGRAM_VIEW_H
 #define HISTOGRAM_VIEW_H
 
-#include <talipot/GlMainView.h>
+#include <talipot/GlView.h>
 
 #include <vector>
 #include <unordered_map>
@@ -53,7 +53,7 @@ class QuickAccessBarImpl;
  *
  *
  */
-class HistogramView : public GlMainView {
+class HistogramView : public GlView {
 
   Q_OBJECT
 

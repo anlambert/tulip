@@ -46,10 +46,10 @@ tlpgui.View
 .. autoclass:: talipotgui::tlpgui.View
         :members:
 
-tlpgui.GlMainView
+tlpgui.GlView
 ------------------
 
-.. autoclass:: talipotgui::tlpgui.GlMainView
+.. autoclass:: talipotgui::tlpgui.GlView
         :members:
 
 tlpgui.NodeLinkDiagramView

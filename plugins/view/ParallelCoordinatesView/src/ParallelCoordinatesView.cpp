@@ -60,7 +60,7 @@ static void toggleGraphView(GlGraph *glGraph, bool displayNodes) {
 PLUGIN(ParallelCoordinatesView)
 
 ParallelCoordinatesView::ParallelCoordinatesView(const PluginContext *)
-    : GlMainView(true), viewSetupMenu(nullptr), classicLayout(nullptr), circularLayout(nullptr),
+    : GlView(true), viewSetupMenu(nullptr), classicLayout(nullptr), circularLayout(nullptr),
       straightLinesType(nullptr), catmullRomSplineLinesType(nullptr),
       cubicBSplineInterpolationLinesType(nullptr), thickLines(nullptr), thinLines(nullptr),
       addRemoveDataFromSelection(nullptr), selectData(nullptr), deleteData(nullptr),
@@ -153,7 +153,7 @@ void ParallelCoordinatesView::setState(const DataSet &dataSet) {
     isConstruct = true;
   }
 
-  GlMainView::setState(dataSet);
+  GlView::setState(dataSet);
 
   removeTriggers();
 
@@ -336,7 +336,7 @@ void ParallelCoordinatesView::setState(const DataSet &dataSet) {
 
 DataSet ParallelCoordinatesView::state() const {
 
-  DataSet dataSet = GlMainView::state();
+  DataSet dataSet = GlView::state();
 
   string sceneOut;
   getGlWidget()->getScene()->getXMLOnlyForCameras(sceneOut);
@@ -531,7 +531,7 @@ bool ParallelCoordinatesView::eventFilter(QObject *obj, QEvent *event) {
     Observable::unholdObservers();
   }
 
-  return GlMainView::eventFilter(obj, event);
+  return GlView::eventFilter(obj, event);
 }
 
 bool ParallelCoordinatesView::getNodeOrEdgeAtViewportPos(int x, int y, node &n, edge &e) const {
@@ -640,7 +640,7 @@ void ParallelCoordinatesView::buildContextMenu() {
 }
 
 void ParallelCoordinatesView::fillContextMenu(QMenu *menu, const QPointF &point) {
-  GlMainView::fillContextMenu(menu, point);
+  GlView::fillContextMenu(menu, point);
   menu->addAction(viewSetupMenu->menuAction());
 
   axisUnderPointer = getAxisUnderPointer(point.x(), point.y());

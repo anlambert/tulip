@@ -34,7 +34,7 @@ class ViewActionsManager;
  *
  * @brief An abstract view that displays a GlWidget as its central widget.
  *
- * The GlMainView subclasses ViewWidget and always uses a GlWidget as the central widget of the
+ * The GlView subclasses ViewWidget and always uses a GlWidget as the central widget of the
  panel. It also adds the following features:
  * @list
  * @li An overview of the scene that can be toggled on or off.
@@ -44,22 +44,22 @@ class ViewActionsManager;
  * @li The possibility to make snapshots of the current scene
  * @endlist
  *
- * Subclassing GlMainView means you will only want to display graphs in a single GlWidget.
+ * Subclassing GlView means you will only want to display graphs in a single GlWidget.
  Switching the central widget can only be achieved from the ViewWidget class.
  *
  * @warning It is strongly unadvised to re-implement methods already implemented into tlp::View or
  tlp::ViewWidget. If you have to add custom behavior to those method, make sure to call the
  upper-class methods first:
  @code
- void MyView::setupWidget() { // Where MyView is a subclass of tlp::GlMainView
-   GlMainView::setupWidget(); // call this first
+ void MyView::setupWidget() { // Where MyView is a subclass of tlp::GlView
+   GlView::setupWidget(); // call this first
    // insert custom behavior here
  }
  @endcode
 
  * @see tlp::ViewWidget
  */
-class TLP_QT_SCOPE GlMainView : public tlp::ViewWidget {
+class TLP_QT_SCOPE GlView : public tlp::ViewWidget {
 
   Q_OBJECT
 
@@ -84,8 +84,8 @@ public:
     OVERVIEW_BOTTOM_RIGHT
   };
 
-  GlMainView(bool needTooltipAndUrlManager = false);
-  ~GlMainView() override;
+  GlView(bool needTooltipAndUrlManager = false);
+  ~GlView() override;
   tlp::GlWidget *getGlWidget() const;
   QList<QWidget *> configurationWidgets() const override;
   bool overviewVisible() const;
@@ -201,7 +201,7 @@ public slots:
   void refresh() override;
 
   /**
-   * @brief Force the overview to be redrawn. Since GlMainView already detects graph's
+   * @brief Force the overview to be redrawn. Since GlView already detects graph's
    * modifications, this method should not be called manually to avoid extra rendering.
    */
   virtual void drawOverview(bool generatePixmap = true);
@@ -245,7 +245,7 @@ public slots:
   QImage getRGBImage() const;
 
 protected slots:
-  virtual void glMainViewDrawn(bool graphChanged);
+  virtual void glViewDrawn(bool graphChanged);
   virtual void sceneRectChanged(const QRectF &);
   void fillContextMenu(QMenu *menu, const QPointF &) override;
 

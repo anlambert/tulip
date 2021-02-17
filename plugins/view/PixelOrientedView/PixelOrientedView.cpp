@@ -65,7 +65,7 @@ namespace tlp {
 PLUGIN(PixelOrientedView)
 
 PixelOrientedView::PixelOrientedView(const PluginContext *)
-    : GlMainView(true), pixelOrientedGraph(nullptr), glGraph(nullptr), mainLayer(nullptr),
+    : GlView(true), pixelOrientedGraph(nullptr), glGraph(nullptr), mainLayer(nullptr),
       overviewsComposite(nullptr), optionsWidget(nullptr), propertiesSelectionWidget(nullptr),
       pixelOrientedMediator(nullptr), lastNbNodes(0), overviewWidth(0), overviewHeight(0),
       minWidth(0), refSize(0), hilbertLayout(nullptr), squareLayout(nullptr),
@@ -148,7 +148,7 @@ void PixelOrientedView::setState(const DataSet &dataSet) {
     setOverviewVisible(true);
   }
 
-  GlMainView::setState(dataSet);
+  GlView::setState(dataSet);
 
   Graph *lastGraph = this->pixelOrientedGraph;
 
@@ -282,7 +282,7 @@ void PixelOrientedView::setState(const DataSet &dataSet) {
 }
 
 DataSet PixelOrientedView::state() const {
-  DataSet dataSet = GlMainView::state();
+  DataSet dataSet = GlView::state();
   DataSet selectedGraphPropertiesDataSet;
 
   for (size_t i = 0; i < selectedGraphProperties.size(); ++i) {
