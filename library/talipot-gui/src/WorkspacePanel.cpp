@@ -614,6 +614,6 @@ void WorkspacePanel::updateCurrentInteractorButtonText() {
   }
   auto interactor = _view->currentInteractor();
   auto text = fm.elidedText(interactor->action()->text() + QString(30, ' '), Qt::ElideRight,
-                            _ui->currentInteractorWidget->width());
+                            _ui->currentInteractorWidget->width() - 5);
   _ui->currentInteractorButton->setText(text.replace(" …", "  "));
 }
