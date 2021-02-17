@@ -210,7 +210,7 @@ void tlp::initTalipotLib(const char *appDirPath) {
   bool throwExOnCheck = appDirPath != nullptr;
 
   TalipotLibDir = curDir;
-  if (!TalipotLibDir.empty()) {
+  if (!TalipotLibDir.empty() && TalipotLibDir != "/") {
     checkDirectory(TalipotLibDir, tlpDirSet, throwExOnCheck);
   }
 
@@ -256,13 +256,13 @@ void tlp::initTalipotLib(const char *appDirPath) {
 #endif
 
   TalipotShareDir = curDir;
-  if (!TalipotLibDir.empty()) {
+  if (!TalipotLibDir.empty() && TalipotLibDir != "/") {
     checkDirectory(TalipotShareDir, tlpDirSet, throwExOnCheck);
   }
 
   TalipotBitmapDir = TalipotShareDir + "bitmaps/";
 
-  if (!TalipotLibDir.empty()) {
+  if (!TalipotLibDir.empty() && TalipotLibDir != "/") {
     checkDirectory(TalipotBitmapDir, tlpDirSet, throwExOnCheck);
   }
 
