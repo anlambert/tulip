@@ -18,7 +18,7 @@
 #include <talipot/config.h>
 #include <talipot/GlLabel.h>
 #include <talipot/GlNode.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/ColorScalesManager.h>
 
 #include <QToolTip>
@@ -643,7 +643,7 @@ HistogramMetricMapping::~HistogramMetricMapping() {
   delete selectedAnchor;
 }
 
-bool HistogramMetricMapping::compute(GlMainWidget *) {
+bool HistogramMetricMapping::compute(GlWidget *) {
   initInteractor();
   return false;
 }
@@ -682,17 +682,17 @@ void HistogramMetricMapping::initInteractor() {
   }
 
   if (colorScaleConfigDialog == nullptr) {
-    colorScaleConfigDialog = new ColorScaleConfigDialog(*colorScale, histoView->getGlMainWidget());
+    colorScaleConfigDialog = new ColorScaleConfigDialog(*colorScale, histoView->getGlWidget());
     dialogColorScale = *colorScale = colorScaleConfigDialog->getColorScale();
     colorScale->setColorMapTransparency(200);
   }
 
   if (sizeScaleConfigDialog == nullptr) {
-    sizeScaleConfigDialog = new SizeScaleConfigDialog(histoView->getGlMainWidget());
+    sizeScaleConfigDialog = new SizeScaleConfigDialog(histoView->getGlWidget());
   }
 
   if (glyphScaleConfigDialog == nullptr) {
-    glyphScaleConfigDialog = new GlyphScaleConfigDialog(histoView->getGlMainWidget());
+    glyphScaleConfigDialog = new GlyphScaleConfigDialog(histoView->getGlWidget());
   }
 
   histoXAxis = histoView->getDetailedHistogram()->getXAxis();
@@ -783,7 +783,7 @@ bool HistogramMetricMapping::eventFilter(QObject *widget, QEvent *e) {
 
   bool ret = false;
 
-  GlMainWidget *glWidget = static_cast<GlMainWidget *>(widget);
+  GlWidget *glWidget = static_cast<GlWidget *>(widget);
 
   if (!glWidget->hasMouseTracking()) {
     glWidget->setMouseTracking(true);
@@ -966,9 +966,9 @@ bool HistogramMetricMapping::eventFilter(QObject *widget, QEvent *e) {
   return ret;
 }
 
-bool HistogramMetricMapping::draw(GlMainWidget *glMainWidget) {
+bool HistogramMetricMapping::draw(GlWidget *glWidget) {
   if (curve != nullptr) {
-    Camera &camera = glMainWidget->getScene()->getLayer("Main")->getCamera();
+    Camera &camera = glWidget->getScene()->getLayer("Main")->getCamera();
     camera.initGl();
     float xStart = 0, yEnd = 0;
     glEnable(GL_BLEND);

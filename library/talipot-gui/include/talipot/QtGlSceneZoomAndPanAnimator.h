@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -20,13 +20,13 @@
 
 namespace tlp {
 
-class GlMainWidget;
+class GlWidget;
 
 /**
- * \brief A convenient class to perform a Zoom and Pan animation on a GlMainWidget
+ * \brief A convenient class to perform a Zoom and Pan animation on a GlWidget
  *
  * This class allows to perform a Zoom and Pan animation on the Talipot OpenGL scene associated with
- * a GlMainWidget The algorithm used to perform this task is the one published in : Jarke J. van
+ * a GlWidget The algorithm used to perform this task is the one published in : Jarke J. van
  * Wijk and Wim A.A. Nuij, "Smooth and efficient zooming and panning" For more details, the paper
  * can be downloaded at the following url : www.win.tue.nl/~vanwijk/zoompan.pdf
  */
@@ -47,7 +47,7 @@ public:
    * \param velocity animation speed parameter, adjust it according to your needs
    * \param p zoom/pan trade-off parameter, adjust it according to your needs
    */
-  QtGlSceneZoomAndPanAnimator(GlMainWidget *glWidget, const BoundingBox &boundingBox,
+  QtGlSceneZoomAndPanAnimator(GlWidget *glWidget, const BoundingBox &boundingBox,
                               const double duration = 1000., const std::string &layerName = "Main",
                               const bool optimalPath = true, const double velocity = 1.1,
                               const double p = sqrt(1.6));
@@ -62,7 +62,7 @@ protected slots:
   virtual void zoomAndPanAnimStepSlot(int animationStep);
 
 protected:
-  GlMainWidget *glWidget;
+  GlWidget *glWidget;
   double animationDurationMsec;
 };
 }

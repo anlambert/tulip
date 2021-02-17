@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -153,7 +153,7 @@ void trans(Coord &c1, Coord &c2, float angle1, float angle2) {
 
 bool GeographicViewNavigator::eventFilter(QObject *widget, QEvent *e) {
   GeographicView *geoView = static_cast<GeographicView *>(view());
-  GlMainWidget *g = static_cast<GlMainWidget *>(widget);
+  GlWidget *g = static_cast<GlWidget *>(widget);
   QMouseEvent *qMouseEv = dynamic_cast<QMouseEvent *>(e);
   QWheelEvent *qWheelEv = dynamic_cast<QWheelEvent *>(e);
 

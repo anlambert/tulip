@@ -49,7 +49,7 @@
 #include <talipot/GraphTableItemDelegate.h>
 #include <talipot/GraphPropertiesModel.h>
 #include <talipot/GlMainView.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/GlGraph.h>
 #include <talipot/Settings.h>
 #include <talipot/PluginsManager.h>
@@ -1524,7 +1524,7 @@ bool TalipotMainWindow::setGlMainViewPropertiesForGraph(
     GlMainView *glMainView = dynamic_cast<tlp::GlMainView *>(v);
 
     if (v->graph() == g && glMainView != nullptr) {
-      if (glMainView->getGlMainWidget()->getGlGraphInputData()->installProperties(propsMap))
+      if (glMainView->getGlWidget()->getGlGraphInputData()->installProperties(propsMap))
         result = true;
     }
   }

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -82,13 +82,13 @@ public:
   ParallelCoordsAxisSliders();
   ~ParallelCoordsAxisSliders() override;
   bool eventFilter(QObject *, QEvent *) override;
-  bool draw(GlMainWidget *glMainWidget) override;
-  bool compute(GlMainWidget *glMainWidget) override;
+  bool draw(GlWidget *glWidget) override;
+  bool compute(GlWidget *glWidget) override;
   void viewChanged(View *view) override;
 
 private:
   void initOrUpdateSliders();
-  AxisSlider *getSliderUnderPointer(GlMainWidget *glWidget, ParallelAxis *axis, int x, int y);
+  AxisSlider *getSliderUnderPointer(GlWidget *glWidget, ParallelAxis *axis, int x, int y);
   void updateOtherAxisSliders();
   void buildGlSliders(std::vector<ParallelAxis *> axis);
   void deleteGlSliders();

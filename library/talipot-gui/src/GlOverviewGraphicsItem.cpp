@@ -19,7 +19,7 @@
 #include <QPen>
 
 #include <talipot/GlOffscreenRenderer.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/GlMainView.h>
 #include <talipot/GlGraph.h>
 #include <talipot/GlOffscreenRenderer.h>
@@ -344,6 +344,6 @@ void GlOverviewGraphicsItem::setScenePosition(QPointF pos) {
 
   baseScene.setViewport(backupViewport);
 
-  view->getGlMainWidget()->draw(false);
+  view->getGlWidget()->draw(false);
 }
 }

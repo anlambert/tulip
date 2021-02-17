@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -11,7 +11,7 @@
  *
  */
 
-#include "talipot/GlMainWidgetGraphicsItem.h"
+#include "talipot/GlWidgetGraphicsItem.h"
 
 #include <QGraphicsSceneMouseEvent>
 #include <QApplication>
@@ -23,15 +23,14 @@
 #include <talipot/GlTextureManager.h>
 #include <talipot/GlQuad.h>
 #include <talipot/GlTools.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/GlOffscreenRenderer.h>
 
 using namespace std;
 using namespace tlp;
 
-GlMainWidgetGraphicsItem::GlMainWidgetGraphicsItem(GlMainWidget *glMainWidget, int width,
-                                                   int height)
-    : QGraphicsObject(), glMainWidget(glMainWidget), _redrawNeeded(true), _graphChanged(true) {
+GlWidgetGraphicsItem::GlWidgetGraphicsItem(GlWidget *glWidget, int width, int height)
+    : QGraphicsObject(), glWidget(glWidget), _redrawNeeded(true), _graphChanged(true) {
 
   setFlag(QGraphicsItem::ItemIsSelectable, true);
   setFlag(QGraphicsItem::ItemIsFocusable, true);
@@ -39,63 +38,56 @@ GlMainWidgetGraphicsItem::GlMainWidgetGraphicsItem(GlMainWidget *glMainWidget, i
   setHandlesChildEvents(false);
   setAcceptDrops(true);
 
-  connect(glMainWidget, &GlMainWidget::viewDrawn, this,
-          &GlMainWidgetGraphicsItem::glMainWidgetDraw);
-  connect(glMainWidget, &GlMainWidget::viewRedrawn, this,
-          &GlMainWidgetGraphicsItem::glMainWidgetRedraw);
+  connect(glWidget, &GlWidget::viewDrawn, this, &GlWidgetGraphicsItem::glWidgetDraw);
+  connect(glWidget, &GlWidget::viewRedrawn, this, &GlWidgetGraphicsItem::glWidgetRedraw);
 
   resize(width, height);
-  glMainWidget->installEventFilter(this);
+  glWidget->installEventFilter(this);
   setHandlesChildEvents(false);
 }
 
-void GlMainWidgetGraphicsItem::setGlMainWidget(GlMainWidget *glmw) {
+void GlWidgetGraphicsItem::setGlWidget(GlWidget *glmw) {
   if (glmw) {
-    disconnect(glMainWidget, &GlMainWidget::viewDrawn, this,
-               &GlMainWidgetGraphicsItem::glMainWidgetDraw);
-    disconnect(glMainWidget, &GlMainWidget::viewRedrawn, this,
-               &GlMainWidgetGraphicsItem::glMainWidgetRedraw);
-    glMainWidget->removeEventFilter(this);
-    glMainWidget = glmw;
-    connect(glMainWidget, &GlMainWidget::viewDrawn, this,
-            &GlMainWidgetGraphicsItem::glMainWidgetDraw);
-    connect(glMainWidget, &GlMainWidget::viewRedrawn, this,
-            &GlMainWidgetGraphicsItem::glMainWidgetRedraw);
-    glMainWidget->installEventFilter(this);
+    disconnect(glWidget, &GlWidget::viewDrawn, this, &GlWidgetGraphicsItem::glWidgetDraw);
+    disconnect(glWidget, &GlWidget::viewRedrawn, this, &GlWidgetGraphicsItem::glWidgetRedraw);
+    glWidget->removeEventFilter(this);
+    glWidget = glmw;
+    connect(glWidget, &GlWidget::viewDrawn, this, &GlWidgetGraphicsItem::glWidgetDraw);
+    connect(glWidget, &GlWidget::viewRedrawn, this, &GlWidgetGraphicsItem::glWidgetRedraw);
+    glWidget->installEventFilter(this);
   }
 }
 
-GlMainWidgetGraphicsItem::~GlMainWidgetGraphicsItem() {
-  delete glMainWidget;
+GlWidgetGraphicsItem::~GlWidgetGraphicsItem() {
+  delete glWidget;
 }
 
-QRectF GlMainWidgetGraphicsItem::boundingRect() const {
+QRectF GlWidgetGraphicsItem::boundingRect() const {
   return QRectF(0, 0, width, height);
 }
 
-void GlMainWidgetGraphicsItem::resize(int width, int height) {
+void GlWidgetGraphicsItem::resize(int width, int height) {
 
   this->width = width;
   this->height = height;
-  glMainWidget->resize(width, height);
-  glMainWidget->resizeGL(width, height);
+  glWidget->resize(width, height);
+  glWidget->resizeGL(width, height);
   _redrawNeeded = true;
   _graphChanged = true;
   prepareGeometryChange();
 }
 
-void GlMainWidgetGraphicsItem::glMainWidgetDraw(GlMainWidget *, bool graphChanged) {
+void GlWidgetGraphicsItem::glWidgetDraw(GlWidget *, bool graphChanged) {
   _redrawNeeded = true;
   _graphChanged = graphChanged;
   update();
 }
 
-void GlMainWidgetGraphicsItem::glMainWidgetRedraw(GlMainWidget *) {
+void GlWidgetGraphicsItem::glWidgetRedraw(GlWidget *) {
   update();
 }
 
-void GlMainWidgetGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
-                                     QWidget *) {
+void GlWidgetGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
 
   if (_redrawNeeded) {
     emit widgetPainted(_graphChanged);
@@ -104,44 +96,44 @@ void GlMainWidgetGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphi
   GlOffscreenRenderer::instance().setViewPortSize(width, height);
 
   if (_redrawNeeded) {
-    GlOffscreenRenderer::instance().renderGlMainWidget(glMainWidget);
+    GlOffscreenRenderer::instance().renderGlWidget(glWidget);
     _redrawNeeded = false;
   } else {
-    GlOffscreenRenderer::instance().renderGlMainWidget(glMainWidget, false);
+    GlOffscreenRenderer::instance().renderGlWidget(glWidget, false);
   }
 
   painter->drawImage(QRect(0, 0, width, height), GlOffscreenRenderer::instance().getImage());
 }
 
-void GlMainWidgetGraphicsItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
+void GlWidgetGraphicsItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
   QMouseEvent eventModif(QEvent::MouseMove, QPoint(event->pos().x(), event->pos().y()),
                          Qt::NoButton, event->buttons(), event->modifiers());
-  QApplication::sendEvent(glMainWidget, &eventModif);
+  QApplication::sendEvent(glWidget, &eventModif);
   event->setAccepted(eventModif.isAccepted());
 }
 
-void GlMainWidgetGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
+void GlWidgetGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
   QMouseEvent eventModif(QEvent::MouseButtonPress, QPoint(event->pos().x(), event->pos().y()),
                          event->button(), event->buttons(), event->modifiers());
-  QApplication::sendEvent(glMainWidget, &eventModif);
+  QApplication::sendEvent(glWidget, &eventModif);
   event->setAccepted(eventModif.isAccepted());
 }
 
-void GlMainWidgetGraphicsItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
+void GlWidgetGraphicsItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
   QMouseEvent eventModif(QEvent::MouseButtonDblClick, QPoint(event->pos().x(), event->pos().y()),
                          event->button(), event->buttons(), event->modifiers());
-  QApplication::sendEvent(glMainWidget, &eventModif);
+  QApplication::sendEvent(glWidget, &eventModif);
   event->setAccepted(eventModif.isAccepted());
 }
 
-void GlMainWidgetGraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
+void GlWidgetGraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
   QMouseEvent eventModif(QEvent::MouseButtonRelease, QPoint(event->pos().x(), event->pos().y()),
                          event->button(), event->buttons(), event->modifiers());
-  QApplication::sendEvent(glMainWidget, &eventModif);
+  QApplication::sendEvent(glWidget, &eventModif);
   event->setAccepted(eventModif.isAccepted());
 }
 
-void GlMainWidgetGraphicsItem::wheelEvent(QGraphicsSceneWheelEvent *event) {
+void GlWidgetGraphicsItem::wheelEvent(QGraphicsSceneWheelEvent *event) {
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
   QPoint angleDelta =
       event->orientation() == Qt::Vertical ? QPoint(0, event->delta()) : QPoint(event->delta(), 0);
@@ -152,61 +144,61 @@ void GlMainWidgetGraphicsItem::wheelEvent(QGraphicsSceneWheelEvent *event) {
                          event->buttons(), event->modifiers(), event->orientation());
 #endif
 
-  QApplication::sendEvent(glMainWidget, &eventModif);
+  QApplication::sendEvent(glWidget, &eventModif);
   event->setAccepted(eventModif.isAccepted());
 }
 
-void GlMainWidgetGraphicsItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event) {
+void GlWidgetGraphicsItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event) {
   QMouseEvent eventModif(QEvent::MouseMove, QPoint(event->pos().x(), event->pos().y()),
                          Qt::NoButton, Qt::NoButton, event->modifiers());
-  QApplication::sendEvent(glMainWidget, &eventModif);
+  QApplication::sendEvent(glWidget, &eventModif);
   event->setAccepted(eventModif.isAccepted());
 }
 
-void GlMainWidgetGraphicsItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event) {
+void GlWidgetGraphicsItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event) {
   QContextMenuEvent eventModif(static_cast<QContextMenuEvent::Reason>(event->reason()),
                                QPoint(event->pos().x(), event->pos().y()));
-  QApplication::sendEvent(glMainWidget, &eventModif);
+  QApplication::sendEvent(glWidget, &eventModif);
   event->setAccepted(eventModif.isAccepted());
 }
 
-void GlMainWidgetGraphicsItem::keyReleaseEvent(QKeyEvent *event) {
+void GlWidgetGraphicsItem::keyReleaseEvent(QKeyEvent *event) {
   QKeyEvent eventModif(event->type(), event->key(), event->modifiers(), event->text(),
                        event->isAutoRepeat(), event->count());
-  QApplication::sendEvent(glMainWidget, &eventModif);
+  QApplication::sendEvent(glWidget, &eventModif);
   event->setAccepted(eventModif.isAccepted());
 }
 
-void GlMainWidgetGraphicsItem::keyPressEvent(QKeyEvent *event) {
+void GlWidgetGraphicsItem::keyPressEvent(QKeyEvent *event) {
   QKeyEvent eventModif(event->type(), event->key(), event->modifiers(), event->text(),
                        event->isAutoRepeat(), event->count());
-  QApplication::sendEvent(glMainWidget, &eventModif);
+  QApplication::sendEvent(glWidget, &eventModif);
   event->setAccepted(eventModif.isAccepted());
 }
 
-void GlMainWidgetGraphicsItem::dragEnterEvent(QGraphicsSceneDragDropEvent *event) {
-  if (glMainWidget->isEnabled() && glMainWidget->acceptDrops()) {
+void GlWidgetGraphicsItem::dragEnterEvent(QGraphicsSceneDragDropEvent *event) {
+  if (glWidget->isEnabled() && glWidget->acceptDrops()) {
     QDragEnterEvent proxyDragEnter(event->pos().toPoint(), event->dropAction(), event->mimeData(),
                                    event->buttons(), event->modifiers());
     proxyDragEnter.setAccepted(event->isAccepted());
-    QApplication::sendEvent(glMainWidget, &proxyDragEnter);
+    QApplication::sendEvent(glWidget, &proxyDragEnter);
     event->setAccepted(proxyDragEnter.isAccepted());
     event->setDropAction(proxyDragEnter.dropAction());
   } else {
     event->ignore();
   }
 }
-void GlMainWidgetGraphicsItem::dragLeaveEvent(QGraphicsSceneDragDropEvent *event) {
+void GlWidgetGraphicsItem::dragLeaveEvent(QGraphicsSceneDragDropEvent *event) {
   QDragLeaveEvent proxyDragLeave;
-  QApplication::sendEvent(glMainWidget, &proxyDragLeave);
+  QApplication::sendEvent(glWidget, &proxyDragLeave);
   event->setAccepted(proxyDragLeave.isAccepted());
 }
 
-void GlMainWidgetGraphicsItem::dragMoveEvent(QGraphicsSceneDragDropEvent *event) {
-  if (glMainWidget->isEnabled() && glMainWidget->acceptDrops()) {
+void GlWidgetGraphicsItem::dragMoveEvent(QGraphicsSceneDragDropEvent *event) {
+  if (glWidget->isEnabled() && glWidget->acceptDrops()) {
     QDragMoveEvent dragMove(event->pos().toPoint(), event->possibleActions(), event->mimeData(),
                             event->buttons(), event->modifiers());
-    QApplication::sendEvent(glMainWidget, &dragMove);
+    QApplication::sendEvent(glWidget, &dragMove);
     event->setAccepted(dragMove.isAccepted());
     event->setDropAction(dragMove.dropAction());
   } else {
@@ -214,29 +206,29 @@ void GlMainWidgetGraphicsItem::dragMoveEvent(QGraphicsSceneDragDropEvent *event)
   }
 }
 
-void GlMainWidgetGraphicsItem::dropEvent(QGraphicsSceneDragDropEvent *event) {
+void GlWidgetGraphicsItem::dropEvent(QGraphicsSceneDragDropEvent *event) {
   QDropEvent dropEvent(event->pos().toPoint(), event->possibleActions(), event->mimeData(),
                        event->buttons(), event->modifiers());
-  QApplication::sendEvent(glMainWidget, &dropEvent);
+  QApplication::sendEvent(glWidget, &dropEvent);
   event->setAccepted(dropEvent.isAccepted());
 }
 
-bool GlMainWidgetGraphicsItem::eventFilter(QObject *, QEvent *evt) {
+bool GlWidgetGraphicsItem::eventFilter(QObject *, QEvent *evt) {
   if (evt->type() == QEvent::CursorChange) {
-    setCursor(glMainWidget->cursor());
+    setCursor(glWidget->cursor());
   }
 
 // There is a bug with Qt5 on windows that leads to an incorrect viewport size of 160x160
 // when initializing a Tulip OpenGL view.
-// Seems that a delayed resize event is sent to the GlMainWidget, don't really know why ...
-// In the context of a GlMainWidgetGraphicsItem, the internally used GlMainWidget is hidden,
+// Seems that a delayed resize event is sent to the GlWidget, don't really know why ...
+// In the context of a GlWidgetGraphicsItem, the internally used GlWidget is hidden,
 // so it should not receive that event but it does once after it has been created.
 // As a workaround to fix that annoying behaviour, catch that resize event, discard it
 // and restore the correct size that was previously set.
 #if defined(WIN32)
 
   if (evt->type() == QEvent::Resize) {
-    glMainWidget->resize(width, height);
+    glWidget->resize(width, height);
     return true;
   }
 

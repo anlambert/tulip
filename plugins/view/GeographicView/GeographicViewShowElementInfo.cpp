@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -111,10 +111,8 @@ GeographicViewShowElementInfo::~GeographicViewShowElementInfo() {
 }
 
 void GeographicViewShowElementInfo::clear() {
-  static_cast<GeographicView *>(view())
-      ->getGeographicViewGraphicsView()
-      ->getGlMainWidget()
-      ->setCursor(QCursor());
+  static_cast<GeographicView *>(view())->getGeographicViewGraphicsView()->getGlWidget()->setCursor(
+      QCursor());
   _informationWidgetItem->setVisible(false);
 }
 
@@ -146,9 +144,9 @@ bool GeographicViewShowElementInfo::eventFilter(QObject *widget, QEvent *e) {
 
     if (e->type() == QEvent::MouseMove) {
       if (pick(qMouseEv->x(), qMouseEv->y(), selectedEntity)) {
-        geoView->getGeographicViewGraphicsView()->getGlMainWidget()->setCursor(Qt::WhatsThisCursor);
+        geoView->getGeographicViewGraphicsView()->getGlWidget()->setCursor(Qt::WhatsThisCursor);
       } else {
-        geoView->getGeographicViewGraphicsView()->getGlMainWidget()->setCursor(QCursor());
+        geoView->getGeographicViewGraphicsView()->getGlWidget()->setCursor(QCursor());
       }
 
       return false;
@@ -262,15 +260,15 @@ bool GeographicViewShowElementInfo::eventFilter(QObject *widget, QEvent *e) {
 bool GeographicViewShowElementInfo::pick(int x, int y, SelectedEntity &selectedEntity) {
   GeographicView *geoView = static_cast<GeographicView *>(view());
 
-  if (geoView->getGeographicViewGraphicsView()->getGlMainWidget()->pickNodesEdges(x, y,
-                                                                                  selectedEntity)) {
+  if (geoView->getGeographicViewGraphicsView()->getGlWidget()->pickNodesEdges(x, y,
+                                                                              selectedEntity)) {
     return true;
   }
 
   vector<SelectedEntity> selectedEntities;
 
-  if (geoView->getGeographicViewGraphicsView()->getGlMainWidget()->pickGlEntities(
-          x, y, selectedEntities)) {
+  if (geoView->getGeographicViewGraphicsView()->getGlWidget()->pickGlEntities(x, y,
+                                                                              selectedEntities)) {
     selectedEntity = selectedEntities[0];
     return true;
   }

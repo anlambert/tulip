@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -35,8 +35,8 @@ public:
   MouseSelectionEditor();
   ~MouseSelectionEditor() override;
   void clear() override;
-  bool compute(GlMainWidget *glMainWidget) override;
-  bool draw(GlMainWidget *) override;
+  bool compute(GlWidget *glWidget) override;
+  bool draw(GlWidget *) override;
   bool eventFilter(QObject *, QEvent *) override;
 
 private:
@@ -57,10 +57,10 @@ private:
   };
   enum OperationTarget { COORD = 0, SIZE, COORD_AND_SIZE };
 
-  GlMainWidget *glMainWidget;
+  GlWidget *glWidget;
   DoubleProperty *_rotation;
 
-  void initProxies(GlMainWidget *glMainWidget);
+  void initProxies(GlWidget *glWidget);
   void initEdition();
   void undoEdition();
   void stopEdition();
@@ -75,7 +75,7 @@ private:
   GlRect advRect;
   Coord _layoutCenter;
 
-  bool computeFFD(GlMainWidget *);
+  bool computeFFD(GlWidget *);
   void getOperation(GlEntity *select);
 
 protected:
@@ -90,10 +90,10 @@ protected:
   SizeProperty *_sizes;
   Coord editLayoutCenter;
 
-  virtual void mMouseTranslate(double, double, GlMainWidget *);
-  virtual void mMouseRotate(double, double, GlMainWidget *);
-  virtual void mMouseStretchAxis(double, double, GlMainWidget *);
-  virtual void mAlign(EditOperation operation, GlMainWidget *);
+  virtual void mMouseTranslate(double, double, GlWidget *);
+  virtual void mMouseRotate(double, double, GlWidget *);
+  virtual void mMouseStretchAxis(double, double, GlWidget *);
+  virtual void mAlign(EditOperation operation, GlWidget *);
 };
 }
 

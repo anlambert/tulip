@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -15,7 +15,7 @@
 #include <talipot/GlLine.h>
 #include <talipot/DoubleProperty.h>
 #include <talipot/GlQuantitativeAxis.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/GlLabel.h>
 
 #include <QEvent>
@@ -67,7 +67,7 @@ bool ScatterPlotTrendLine::eventFilter(QObject *, QEvent *e) {
   return false;
 }
 
-bool ScatterPlotTrendLine::draw(GlMainWidget *glMainWidget) {
+bool ScatterPlotTrendLine::draw(GlWidget *glWidget) {
 
   ScatterPlot2D *currentScatterPlot = scatterView->getDetailedScatterPlot();
 
@@ -83,7 +83,7 @@ bool ScatterPlotTrendLine::draw(GlMainWidget *glMainWidget) {
   float yStart = a * xStart + b;
   float yEnd = a * xEnd + b;
 
-  Camera &camera = glMainWidget->getScene()->getLayer("Main")->getCamera();
+  Camera &camera = glWidget->getScene()->getLayer("Main")->getCamera();
   camera.initGl();
 
   GlLine trendLine;
@@ -110,12 +110,12 @@ bool ScatterPlotTrendLine::draw(GlMainWidget *glMainWidget) {
   ostringstream oss;
   oss << "y = " << a << " * x + " << b;
   lineEquationLabel.setText(oss.str());
-  lineEquationLabel.draw(0, &glMainWidget->getScene()->getLayer("Main")->getCamera());
+  lineEquationLabel.draw(0, &glWidget->getScene()->getLayer("Main")->getCamera());
 
   return true;
 }
 
-bool ScatterPlotTrendLine::compute(GlMainWidget *) {
+bool ScatterPlotTrendLine::compute(GlWidget *) {
   ScatterPlot2D *currentScatterPlot = scatterView->getDetailedScatterPlot();
 
   if (currentScatterPlot == nullptr) {

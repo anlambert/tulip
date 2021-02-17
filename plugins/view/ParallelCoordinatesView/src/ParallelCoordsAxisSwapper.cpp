@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -16,7 +16,7 @@
 #include <talipot/GlRect.h>
 #include <talipot/GlCircle.h>
 #include <talipot/GlQuad.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/Camera.h>
 
 #include "ParallelTools.h"
@@ -47,7 +47,7 @@ void ParallelCoordsAxisSwapper::viewChanged(View *view) {
 
 bool ParallelCoordsAxisSwapper::eventFilter(QObject *widget, QEvent *e) {
 
-  GlMainWidget *glWidget = static_cast<GlMainWidget *>(widget);
+  GlWidget *glWidget = static_cast<GlWidget *>(widget);
   QMouseEvent *me = static_cast<QMouseEvent *>(e);
 
   mouseMove = false;
@@ -93,7 +93,7 @@ bool ParallelCoordsAxisSwapper::eventFilter(QObject *widget, QEvent *e) {
       initialSelectedAxisRotAngle = selectedAxis->getRotationAngle();
       selectedAxis->setRotationAngle(0.0f);
       initialSelectedAxisCoord = selectedAxis->getBaseCoord();
-      parallelView->getGlMainWidget()->draw();
+      parallelView->getGlWidget()->draw();
     }
 
     return true;
@@ -126,11 +126,11 @@ bool ParallelCoordsAxisSwapper::eventFilter(QObject *widget, QEvent *e) {
   return false;
 }
 
-bool ParallelCoordsAxisSwapper::draw(GlMainWidget *glMainWidget) {
+bool ParallelCoordsAxisSwapper::draw(GlWidget *glWidget) {
 
   if (selectedAxis != nullptr) {
 
-    glMainWidget->getScene()->getLayer("Main")->getCamera().initGl();
+    glWidget->getScene()->getLayer("Main")->getCamera().initGl();
 
     GlQuad *axisHighlightRect = nullptr;
     BoundingBox axisBB;
@@ -159,7 +159,7 @@ bool ParallelCoordsAxisSwapper::draw(GlMainWidget *glMainWidget) {
 
     if (dragStarted && mouseMove) {
       selectedAxis->disableTrickForSelection();
-      selectedAxis->draw(0, &glMainWidget->getScene()->getLayer("Main")->getCamera());
+      selectedAxis->draw(0, &glWidget->getScene()->getLayer("Main")->getCamera());
       selectedAxis->enableTrickForSelection();
     }
 

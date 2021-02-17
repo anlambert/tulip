@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -19,13 +19,13 @@
 #include <talipot/config.h>
 
 namespace tlp {
-class GlMainWidget;
+class GlWidget;
 
-class TLP_QT_SCOPE GlMainWidgetGraphicsItem : public QGraphicsObject {
+class TLP_QT_SCOPE GlWidgetGraphicsItem : public QGraphicsObject {
   Q_OBJECT
 public:
-  GlMainWidgetGraphicsItem(tlp::GlMainWidget *glMainWidget, int width, int height);
-  ~GlMainWidgetGraphicsItem() override;
+  GlWidgetGraphicsItem(tlp::GlWidget *glWidget, int width, int height);
+  ~GlWidgetGraphicsItem() override;
 
   void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
@@ -37,11 +37,11 @@ public:
     this->_redrawNeeded = redrawNeeded;
   }
 
-  tlp::GlMainWidget *getGlMainWidget() {
-    return glMainWidget;
+  tlp::GlWidget *getGlWidget() {
+    return glWidget;
   }
 
-  void setGlMainWidget(tlp::GlMainWidget *);
+  void setGlWidget(tlp::GlWidget *);
 
   bool eventFilter(QObject *, QEvent *evt) override;
 
@@ -65,11 +65,11 @@ protected:
   void dropEvent(QGraphicsSceneDragDropEvent *event) override;
 
 protected slots:
-  void glMainWidgetDraw(GlMainWidget *, bool);
-  void glMainWidgetRedraw(GlMainWidget *);
+  void glWidgetDraw(GlWidget *, bool);
+  void glWidgetRedraw(GlWidget *);
 
 private:
-  tlp::GlMainWidget *glMainWidget;
+  tlp::GlWidget *glWidget;
   bool _redrawNeeded;
   bool _graphChanged;
   int width, height;

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -22,7 +22,7 @@
 
 namespace tlp {
 
-class GlMainWidget;
+class GlWidget;
 class GlProgressBar;
 class ParallelCoordinatesGraphProxy;
 class ParallelAxis;
@@ -95,7 +95,7 @@ public:
   void resetAxisLayoutNextUpdate() {
     resetAxisLayout = true;
   }
-  void update(GlMainWidget *glWidget, bool updateWithoutProgressBar = false);
+  void update(GlWidget *glWidget, bool updateWithoutProgressBar = false);
   void updateWithAxisSlidersRange(ParallelAxis *axis,
                                   HighlightedEltsSetOp highlightedEltsSetOp = NONE);
 
@@ -107,9 +107,9 @@ public:
 
 private:
   void computeResizeFactor();
-  void createAxis(GlMainWidget *glWidget, GlProgressBar *progressBar);
+  void createAxis(GlWidget *glWidget, GlProgressBar *progressBar);
   void destroyAxisIfNeeded();
-  void plotAllData(GlMainWidget *glWidget, GlProgressBar *progressBar);
+  void plotAllData(GlWidget *glWidget, GlProgressBar *progressBar);
   void plotData(const unsigned int dataIdx, const Color &color);
 
   void erase();

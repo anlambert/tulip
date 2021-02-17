@@ -28,7 +28,7 @@
 
 #include <talipot/Camera.h>
 #include <talipot/GlOffscreenRenderer.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/GlVertexArrayManager.h>
 #include <talipot/GlGraph.h>
 #include <talipot/OpenGlConfigManager.h>
@@ -288,15 +288,15 @@ void GlOffscreenRenderer::doneOpenGLContextCurrent() {
   getOpenGLContext()->doneCurrent();
 }
 
-void GlOffscreenRenderer::renderGlMainWidget(GlMainWidget *glWidget, bool redrawNeeded) {
+void GlOffscreenRenderer::renderGlWidget(GlWidget *glWidget, bool redrawNeeded) {
   makeOpenGLContextCurrent();
   initFrameBuffers(true);
   glFrameBuf2->bind();
   glPushAttrib(GL_ALL_ATTRIB_BITS);
   if (redrawNeeded) {
-    glWidget->render(GlMainWidget::RenderingOptions(GlMainWidget::RenderScene), false);
+    glWidget->render(GlWidget::RenderingOptions(GlWidget::RenderScene), false);
   } else {
-    glWidget->render(GlMainWidget::RenderingOptions(), false);
+    glWidget->render(GlWidget::RenderingOptions(), false);
   }
   glPopAttrib();
   glFrameBuf2->release();

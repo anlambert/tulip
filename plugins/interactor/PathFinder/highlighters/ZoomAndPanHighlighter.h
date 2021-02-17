@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -23,9 +23,9 @@ namespace tlp {
 class ZoomAndPanHighlighter : public PathHighlighter, public QObject {
 public:
   ZoomAndPanHighlighter() : PathHighlighter("Zoom and pan") {}
-  void highlight(const PathFinder *parent, tlp::GlMainWidget *glMainWidget,
-                 tlp::BooleanProperty *selection, tlp::node src, tlp::node tgt) override;
-  void draw(tlp::GlMainWidget *glMainWidget) override;
+  void highlight(const PathFinder *parent, tlp::GlWidget *glWidget, tlp::BooleanProperty *selection,
+                 tlp::node src, tlp::node tgt) override;
+  void draw(tlp::GlWidget *glWidget) override;
   bool isConfigurable() const override;
   QWidget *getConfigurationWidget() override;
 };

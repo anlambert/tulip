@@ -24,7 +24,7 @@
 #include <talipot/DrawingTools.h>
 #include <talipot/ItemDelegate.h>
 #include <talipot/ParameterListModel.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/GlGraph.h>
 #include <talipot/GlGraphInputData.h>
 #include <talipot/Gl2DRect.h>
@@ -88,7 +88,7 @@ void NodeLinkDiagramView::updateGrid() {
   gridData.get<bool>("Y grid", only);
   gridData.get<bool>("Z grid", onZ);
 
-  GlGraphInputData *inputData = getGlMainWidget()->getGlGraphInputData();
+  GlGraphInputData *inputData = getGlWidget()->getGlGraphInputData();
   BoundingBox graphBB =
       computeBoundingBox(graph(), inputData->getElementLayout(), inputData->getElementSize(),
                          inputData->getElementRotation());
@@ -107,8 +107,8 @@ void NodeLinkDiagramView::updateGrid() {
   displays[2] = onZ;
 
   _grid = new GlGrid(bottomLeft, topRight, gridSize, gridColor, displays);
-  getGlMainWidget()->getScene()->getLayer("Main")->addGlEntity(_grid,
-                                                               "Node Link Diagram Component grid");
+  getGlWidget()->getScene()->getLayer("Main")->addGlEntity(_grid,
+                                                           "Node Link Diagram Component grid");
 }
 
 void NodeLinkDiagramView::draw() {
@@ -139,7 +139,7 @@ void NodeLinkDiagramView::setState(const tlp::DataSet &data) {
 
   bool keepSPOV = false;
   data.get<bool>("keepScenePointOfViewOnSubgraphChanging", keepSPOV);
-  getGlMainWidget()->setKeepScenePointOfViewOnSubgraphChanging(keepSPOV);
+  getGlWidget()->setKeepScenePointOfViewOnSubgraphChanging(keepSPOV);
 
   if (!data.empty()) {
     createScene(graph(), data);
@@ -152,13 +152,13 @@ void NodeLinkDiagramView::setState(const tlp::DataSet &data) {
 }
 
 void NodeLinkDiagramView::graphChanged(tlp::Graph *graph) {
-  GlGraph *composite = getGlMainWidget()->getScene()->getGlGraph();
+  GlGraph *composite = getGlWidget()->getScene()->getGlGraph();
   Graph *oldGraph = composite ? composite->getGraph() : nullptr;
   loadGraphOnScene(graph);
   registerTriggers();
 
   if (oldGraph == nullptr || graph == nullptr || (oldGraph->getRoot() != graph->getRoot()) ||
-      getGlMainWidget()->keepScenePointOfViewOnSubgraphChanging() == false) {
+      getGlWidget()->keepScenePointOfViewOnSubgraphChanging() == false) {
     centerView();
   }
 
@@ -169,7 +169,7 @@ void NodeLinkDiagramView::graphChanged(tlp::Graph *graph) {
 tlp::DataSet NodeLinkDiagramView::state() const {
   DataSet data = sceneData();
   data.set("keepScenePointOfViewOnSubgraphChanging",
-           getGlMainWidget()->keepScenePointOfViewOnSubgraphChanging());
+           getGlWidget()->keepScenePointOfViewOnSubgraphChanging());
 
   return data;
 }
@@ -188,7 +188,7 @@ void NodeLinkDiagramView::createScene(Graph *graph, DataSet dataSet) {
     manager = nullptr;
   }
 
-  GlScene *scene = getGlMainWidget()->getScene();
+  GlScene *scene = getGlWidget()->getScene();
   scene->clearLayersList();
 
   std::string sceneInput = "";
@@ -255,11 +255,11 @@ void NodeLinkDiagramView::createScene(Graph *graph, DataSet dataSet) {
     manager->setData(hullsSet);
   }
 
-  // getGlMainWidget()->emitGraphChanged();
+  // getGlWidget()->emitGraphChanged();
 }
 //==================================================
 DataSet NodeLinkDiagramView::sceneData() const {
-  GlScene *scene = getGlMainWidget()->getScene();
+  GlScene *scene = getGlWidget()->getScene();
   DataSet outDataSet = GlMainView::state();
   outDataSet.set("Display", scene->getGlGraph()->getRenderingParameters().getParameters());
   std::string out;
@@ -281,7 +281,7 @@ DataSet NodeLinkDiagramView::sceneData() const {
 }
 //==================================================
 void NodeLinkDiagramView::loadGraphOnScene(Graph *graph) {
-  GlScene *scene = getGlMainWidget()->getScene();
+  GlScene *scene = getGlWidget()->getScene();
 
   if (!scene->getLayer("Main")) {
     createScene(graph, DataSet());
@@ -322,7 +322,7 @@ void NodeLinkDiagramView::loadGraphOnScene(Graph *graph) {
   scene->getLayer("Main")->addGlEntity(glGraph, "graph");
 
   delete oldGlGraph;
-  getGlMainWidget()->emitGraphChanged();
+  getGlWidget()->emitGraphChanged();
 }
 
 void NodeLinkDiagramView::registerTriggers() {
@@ -332,9 +332,9 @@ void NodeLinkDiagramView::registerTriggers() {
     return;
   }
 
-  addRedrawTrigger(getGlMainWidget()->getScene()->getGlGraph()->getGraph());
+  addRedrawTrigger(getGlWidget()->getScene()->getGlGraph()->getGraph());
   std::set<tlp::PropertyInterface *> properties =
-      getGlMainWidget()->getGlGraphInputData()->properties();
+      getGlWidget()->getGlGraphInputData()->properties();
 
   for (auto p : properties) {
     addRedrawTrigger(p);
@@ -342,7 +342,7 @@ void NodeLinkDiagramView::registerTriggers() {
 }
 
 void NodeLinkDiagramView::setZOrdering(bool f) {
-  getGlMainWidget()->getGlGraphRenderingParameters().setElementZOrdered(f);
+  getGlWidget()->getGlGraphRenderingParameters().setElementZOrdered(f);
   centerView();
 }
 
@@ -368,7 +368,7 @@ void NodeLinkDiagramView::fillContextMenu(QMenu *menu, const QPointF &point) {
   // Check if a node/edge is under the mouse pointer
   bool result;
   SelectedEntity entity;
-  result = getGlMainWidget()->pickNodesEdges(point.x(), point.y(), entity);
+  result = getGlWidget()->pickNodesEdges(point.x(), point.y(), entity);
 
   if (result) {
     menu->addSeparator();
@@ -540,7 +540,7 @@ void NodeLinkDiagramView::fillContextMenu(QMenu *menu, const QPointF &point) {
     action->setToolTip(
         "The graph elements are displayed according the ordering of their z coordinate");
     action->setCheckable(true);
-    action->setChecked(getGlMainWidget()->getGlGraphRenderingParameters().isElementZOrdered());
+    action->setChecked(getGlWidget()->getGlGraphRenderingParameters().isElementZOrdered());
     connect(action, &QAction::triggered, this, &NodeLinkDiagramView::setZOrdering);
     action = menu->addAction("Grid display parameters", [this] { showGridControl(); });
     action->setToolTip("Display the grid setup wizard");
@@ -804,9 +804,9 @@ void NodeLinkDiagramView::deleteItem() {
 }
 
 void NodeLinkDiagramView::editValue(PropertyInterface *pi) {
-  ItemDelegate tid(getGlMainWidget());
+  ItemDelegate tid(getGlWidget());
   QVariant val = ItemDelegate::showEditorDialog(isNode ? NODE : EDGE, pi, graph(), &tid,
-                                                getGlMainWidget(), itemId);
+                                                getGlWidget(), itemId);
 
   // Check if edition has been cancelled
   if (!val.isValid()) {
@@ -825,36 +825,36 @@ void NodeLinkDiagramView::editValue(PropertyInterface *pi) {
 }
 
 void NodeLinkDiagramView::editColor() {
-  editValue(getGlMainWidget()->getGlGraphInputData()->getElementColor());
+  editValue(getGlWidget()->getGlGraphInputData()->getElementColor());
 }
 
 void NodeLinkDiagramView::editLabel() {
-  editValue(getGlMainWidget()->getGlGraphInputData()->getElementLabel());
+  editValue(getGlWidget()->getGlGraphInputData()->getElementLabel());
 }
 
 void NodeLinkDiagramView::editShape() {
-  editValue(getGlMainWidget()->getGlGraphInputData()->getElementShape());
+  editValue(getGlWidget()->getGlGraphInputData()->getElementShape());
 }
 
 void NodeLinkDiagramView::editSize() {
-  editValue(getGlMainWidget()->getGlGraphInputData()->getElementSize());
+  editValue(getGlWidget()->getGlGraphInputData()->getElementSize());
 }
 
 const Camera &NodeLinkDiagramView::goInsideItem(node meta) {
   Graph *metaGraph = graph()->getNodeMetaInfo(meta);
-  Size size = getGlMainWidget()->getGlGraphInputData()->getElementSize()->getNodeValue(meta);
-  Coord coord = getGlMainWidget()->getGlGraphInputData()->getElementLayout()->getNodeValue(meta);
+  Size size = getGlWidget()->getGlGraphInputData()->getElementSize()->getNodeValue(meta);
+  Coord coord = getGlWidget()->getGlGraphInputData()->getElementLayout()->getNodeValue(meta);
   BoundingBox bb;
   bb.expand(coord - size / 2.f);
   bb.expand(coord + size / 2.f);
-  QtGlSceneZoomAndPanAnimator zoomAnPan(getGlMainWidget(), bb);
+  QtGlSceneZoomAndPanAnimator zoomAnPan(getGlWidget(), bb);
   zoomAnPan.animateZoomAndPan();
   loadGraphOnScene(metaGraph);
   registerTriggers();
   emit graphSet(metaGraph);
   centerView();
   draw();
-  return getGlMainWidget()->getScene()->getLayer("Main")->getCamera();
+  return getGlWidget()->getScene()->getLayer("Main")->getCamera();
 }
 
 void NodeLinkDiagramView::goInsideItem() {
@@ -874,7 +874,7 @@ void NodeLinkDiagramView::useHulls(bool hasHulls) {
   _hasHulls = hasHulls;
 
   if (_hasHulls) {
-    GlScene *scene = getGlMainWidget()->getScene();
+    GlScene *scene = getGlWidget()->getScene();
 
     manager = new GlCompositeHierarchyManager(
         scene->getGlGraph()->getInputData()->getGraph(), scene->getLayer("Main"), "Hulls",

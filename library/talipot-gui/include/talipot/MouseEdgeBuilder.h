@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -22,7 +22,7 @@
 namespace tlp {
 class Graph;
 class LayoutProperty;
-class GlMainWidget;
+class GlWidget;
 
 class TLP_QT_SCOPE MouseEdgeBuilder : public GLInteractorComponent, public Observable {
 private:
@@ -32,7 +32,7 @@ private:
   std::vector<Coord> _bends;
   Graph *_graph;
   LayoutProperty *_layoutProperty;
-  GlMainWidget *glMainWidget;
+  GlWidget *glWidget;
 
 protected:
   /**
@@ -65,7 +65,7 @@ protected:
 
 public:
   MouseEdgeBuilder();
-  bool draw(GlMainWidget *) override;
+  bool draw(GlWidget *) override;
   bool eventFilter(QObject *, QEvent *) override;
   void initObserver(Graph *);
   void clearObserver();

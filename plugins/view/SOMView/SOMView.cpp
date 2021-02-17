@@ -32,7 +32,7 @@
 #include <talipot/GlLODCalculator.h>
 #include <talipot/GlLabel.h>
 #include <talipot/LayoutProperty.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/GlGraph.h>
 
 #include <QMenu>
@@ -81,7 +81,7 @@ SOMView::~SOMView() {
   delete graphLayoutProperty;
   delete properties;
 
-  if (previewWidget && previewWidget == getGlMainWidget()) {
+  if (previewWidget && previewWidget == getGlWidget()) {
     delete mapWidget;
   } else {
     delete previewWidget;
@@ -103,10 +103,10 @@ void SOMView::construct(QWidget *) {
   // Properties initialiaztion
   properties = new SOMPropertiesWidget(this, nullptr);
 
-  previewWidget = new GlMainWidget(nullptr, nullptr);
+  previewWidget = new GlWidget(nullptr, nullptr);
   previewWidget->installEventFilter(this);
 
-  mapWidget = new GlMainWidget(nullptr, this);
+  mapWidget = new GlWidget(nullptr, this);
   mapWidget->installEventFilter(this);
 
   initGlMainViews();
@@ -200,7 +200,7 @@ void SOMView::setState(const DataSet &dataSet) {
   }
 
   isDetailledMode = false;
-  assignNewGlMainWidget(previewWidget, false);
+  assignNewGlWidget(previewWidget, false);
 
   previewWidget->makeCurrent();
 
@@ -503,11 +503,11 @@ void SOMView::draw() {
     addEmptyViewLabel();
   }
 
-  getGlMainWidget()->draw(true);
+  getGlWidget()->draw(true);
 }
 
 void SOMView::refresh() {
-  getGlMainWidget()->redraw();
+  getGlWidget()->redraw();
 }
 
 void SOMView::buildSOMMap() {
@@ -735,7 +735,7 @@ void SOMView::addPropertyToSelection(const string &propertyName) {
     selection = propertyName;
     // mainWidget->currentPropertyNameLabel->setText(QString::fromStdString(propertyName));
     refreshSOMMap();
-    getGlMainWidget()->getScene()->centerScene();
+    getGlWidget()->getScene()->centerScene();
 
     auto it = propertyToPreviews.find(propertyName);
     assert(it != propertyToPreviews.end() && it->second);
@@ -827,7 +827,7 @@ bool SOMView::eventFilter(QObject *obj, QEvent *event) {
       if (me->button() == Qt::LeftButton) {
         vector<SOMPreviewComposite *> properties;
         Coord screenCoords = Coord(me->x(), me->y());
-        Coord viewportCoords = getGlMainWidget()->screenToViewport(screenCoords);
+        Coord viewportCoords = getGlWidget()->screenToViewport(screenCoords);
         getPreviewsAtViewportCoord(viewportCoords.x(), viewportCoords.y(), properties);
 
         if (!properties.empty()) {
@@ -842,7 +842,7 @@ bool SOMView::eventFilter(QObject *obj, QEvent *event) {
       QHelpEvent *he = static_cast<QHelpEvent *>(event);
       vector<SOMPreviewComposite *> properties;
       Coord screenCoords = Coord(he->x(), he->y(), 0.0f);
-      Coord viewportCoords = getGlMainWidget()->screenToViewport(screenCoords);
+      Coord viewportCoords = getGlWidget()->screenToViewport(screenCoords);
       getPreviewsAtViewportCoord(viewportCoords.x(), viewportCoords.y(), properties);
 
       if (!properties.empty()) {
@@ -1102,9 +1102,9 @@ void SOMView::switchToPreviewMode() {
   properties->configurationWidgets()[0]->parentWidget()->parentWidget()->setVisible(true);
 }
 
-void SOMView::copyToGlMainWidget(GlMainWidget *widget) {
+void SOMView::copyToGlWidget(GlWidget *widget) {
   widget->getScene()->centerScene();
-  assignNewGlMainWidget(widget, false);
+  assignNewGlWidget(widget, false);
 }
 
 void SOMView::internalSwitchToDetailledMode(SOMPreviewComposite *preview, bool animation) {
@@ -1121,7 +1121,7 @@ void SOMView::internalSwitchToDetailledMode(SOMPreviewComposite *preview, bool a
                             properties->getAnimationDuration());
   }
 
-  copyToGlMainWidget(mapWidget);
+  copyToGlWidget(mapWidget);
   isDetailledMode = true;
   toggleInteractors(true);
 }
@@ -1131,7 +1131,7 @@ void SOMView::internalSwitchToPreviewMode(bool animation) {
     return;
   }
 
-  copyToGlMainWidget(previewWidget);
+  copyToGlWidget(previewWidget);
   previewWidget->draw();
   GlBoundingBoxSceneVisitor bbsv(previewWidget->getGlGraphInputData());
 

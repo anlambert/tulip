@@ -309,12 +309,12 @@ GeographicViewGraphicsView::GeographicViewGraphicsView(GeographicView *geoView,
   proxyGM->setPos(0, 0);
   proxyGM->setParentItem(_placeholderItem);
 
-  glMainWidget = new GlMainWidget(nullptr, geoView);
-  delete glMainWidget->getScene()->getCalculator();
-  glMainWidget->getScene()->setCalculator(new GlCPULODCalculator());
-  glMainWidget->getScene()->setBackgroundColor(Color::White);
+  glWidget = new GlWidget(nullptr, geoView);
+  delete glWidget->getScene()->getCalculator();
+  glWidget->getScene()->setCalculator(new GlCPULODCalculator());
+  glWidget->getScene()->setBackgroundColor(Color::White);
 
-  glWidgetItem = new GlMainWidgetGraphicsItem(glMainWidget, 512, 512);
+  glWidgetItem = new GlWidgetGraphicsItem(glWidget, 512, 512);
   glWidgetItem->setPos(0, 0);
 
   // disable user input
@@ -422,7 +422,7 @@ GeographicViewGraphicsView::~GeographicViewGraphicsView() {
 void GeographicViewGraphicsView::cleanup() {
   if (graph) {
 
-    GlScene *scene = glMainWidget->getScene();
+    GlScene *scene = glWidget->getScene();
     scene->clearLayersList();
 
     if (geoLayout != graph->getLayoutProperty("viewLayout")) {
@@ -450,7 +450,7 @@ void GeographicViewGraphicsView::setGraph(Graph *graph) {
     GlGraphRenderingParameters rp;
 
     if (this->graph) {
-      rp = glMainWidget->getGlGraphRenderingParameters();
+      rp = glWidget->getGlGraphRenderingParameters();
     } else {
       rp.setNodesLabelStencil(1);
       rp.setLabelsAreBillboarded(true);
@@ -459,7 +459,7 @@ void GeographicViewGraphicsView::setGraph(Graph *graph) {
     cleanup();
     this->graph = graph;
 
-    GlScene *scene = glMainWidget->getScene();
+    GlScene *scene = glWidget->getScene();
     GlGraph *glGraph = new GlGraph(graph);
     glGraph->setVisible(false);
     glGraph->setRenderingParameters(rp);
@@ -507,7 +507,7 @@ void GeographicViewGraphicsView::loadDefaultMap() {
   polygonEntity = readCsvFile(":/talipot/view/geographic/MAPAGR4.txt");
   polygonEntity->setVisible(oldPolyVisible);
 
-  GlScene *scene = glMainWidget->getScene();
+  GlScene *scene = glWidget->getScene();
   GlLayer *layer = scene->getLayer("Main");
   layer->addGlEntity(polygonEntity, "polygonMap");
 }
@@ -530,7 +530,7 @@ void GeographicViewGraphicsView::loadCsvFile(QString fileName) {
 
   polygonEntity->setVisible(oldPolyVisible);
 
-  GlScene *scene = glMainWidget->getScene();
+  GlScene *scene = glWidget->getScene();
   GlLayer *layer = scene->getLayer("Main");
   layer->addGlEntity(polygonEntity, "polygonMap");
 }
@@ -553,7 +553,7 @@ void GeographicViewGraphicsView::loadPolyFile(QString fileName) {
 
   polygonEntity->setVisible(oldPolyVisible);
 
-  GlScene *scene = glMainWidget->getScene();
+  GlScene *scene = glWidget->getScene();
   GlLayer *layer = scene->getLayer("Main");
   layer->addGlEntity(polygonEntity, "polygonMap");
 }
@@ -626,7 +626,7 @@ void GeographicViewGraphicsView::currentZoomChanged() {
 }
 
 GlGraph *GeographicViewGraphicsView::getGlGraph() const {
-  return glMainWidget->getScene()->getGlGraph();
+  return glWidget->getScene()->getGlGraph();
 }
 
 void GeographicViewGraphicsView::createLayoutWithAddresses(const string &addressPropertyName,
@@ -858,7 +858,7 @@ void GeographicViewGraphicsView::refreshMap() {
     bb.expand(Coord(
         middleLng + mapWidth / 2.,
         latitudeToMercator(leafletMaps->getLatLngForPixelPosOnScreen(width(), height()).first), 0));
-    GlSceneZoomAndPan sceneZoomAndPan(glMainWidget->getScene(), bb, "Main", 1);
+    GlSceneZoomAndPan sceneZoomAndPan(glWidget->getScene(), bb, "Main", 1);
     sceneZoomAndPan.zoomAndPanAnimationStep(1);
   }
 
@@ -872,7 +872,7 @@ void GeographicViewGraphicsView::centerView() {
   if (leafletMaps->isVisible()) {
     leafletMaps->setMapBounds(graph, nodeLatLng);
   } else {
-    glMainWidget->centerScene();
+    glWidget->centerScene();
   }
 }
 
@@ -883,19 +883,19 @@ void GeographicViewGraphicsView::setGeoLayout(LayoutProperty *property) {
   }
   geoLayout = property;
   geoLayout->addListener(this);
-  glMainWidget->getGlGraphInputData()->setElementLayout(geoLayout);
+  glWidget->getGlGraphInputData()->setElementLayout(geoLayout);
 }
 
 void GeographicViewGraphicsView::setGeoSizes(SizeProperty *property) {
   *property = *geoViewSize;
   geoViewSize = property;
-  glMainWidget->getGlGraphInputData()->setElementSize(geoViewSize);
+  glWidget->getGlGraphInputData()->setElementSize(geoViewSize);
 }
 
 void GeographicViewGraphicsView::setGeoShape(IntegerProperty *property) {
   *property = *geoViewShape;
   geoViewShape = property;
-  glMainWidget->getGlGraphInputData()->setElementShape(geoViewShape);
+  glWidget->getGlGraphInputData()->setElementShape(geoViewShape);
 }
 
 void GeographicViewGraphicsView::treatEvent(const Event &ev) {
@@ -970,9 +970,9 @@ void GeographicViewGraphicsView::switchViewType() {
   }
 
   if (planisphereEntity && planisphereEntity->isVisible()) {
-    globeCameraBackup = glMainWidget->getScene()->getGraphCamera();
+    globeCameraBackup = glWidget->getScene()->getGraphCamera();
   } else {
-    mapCameraBackup = glMainWidget->getScene()->getGraphCamera();
+    mapCameraBackup = glWidget->getScene()->getGraphCamera();
   }
 
   if (geoLayout && geoLayoutBackup != nullptr && geoLayoutComputed) {
@@ -981,7 +981,7 @@ void GeographicViewGraphicsView::switchViewType() {
     geoLayoutBackup = nullptr;
   }
 
-  GlLayer *layer = glMainWidget->getScene()->getLayer("Main");
+  GlLayer *layer = glWidget->getScene()->getLayer("Main");
 
   if (geoLayout == graph->getLayoutProperty("viewLayout") && geoLayoutComputed) {
     graph->push();
@@ -996,7 +996,7 @@ void GeographicViewGraphicsView::switchViewType() {
     polygonEntity->setVisible(enablePolygon);
   }
 
-  layer->setCamera(new Camera(glMainWidget->getScene()));
+  layer->setCamera(new Camera(glWidget->getScene()));
 
   if (viewType != GeographicView::Globe && geoLayoutComputed) {
     geoLayout->removeListener(this);
@@ -1030,7 +1030,7 @@ void GeographicViewGraphicsView::switchViewType() {
 
     geoLayout->addListener(this);
 
-    Camera &camera = glMainWidget->getScene()->getGraphCamera();
+    Camera &camera = glWidget->getScene()->getGraphCamera();
     camera.setEyes(mapCameraBackup.getEyes());
     camera.setCenter(mapCameraBackup.getCenter());
     camera.setUp(mapCameraBackup.getUp());
@@ -1044,7 +1044,7 @@ void GeographicViewGraphicsView::switchViewType() {
       GlOffscreenRenderer::instance().makeOpenGLContextCurrent();
       GlTextureManager::loadTexture(planisphereTextureId);
       planisphereEntity = new GlSphere(Coord(0., 0., 0.), 50., planisphereTextureId, 255, 0, 0, 90);
-      glMainWidget->getScene()->getLayer("Main")->addGlEntity(planisphereEntity, "globeMap");
+      glWidget->getScene()->getLayer("Main")->addGlEntity(planisphereEntity, "globeMap");
     }
 
     if (geoLayoutComputed) {
@@ -1094,8 +1094,8 @@ void GeographicViewGraphicsView::switchViewType() {
     if (firstGlobeSwitch) {
       firstGlobeSwitch = false;
 
-      glMainWidget->getScene()->centerScene();
-      Camera &camera = glMainWidget->getScene()->getGraphCamera();
+      glWidget->getScene()->centerScene();
+      Camera &camera = glWidget->getScene()->getGraphCamera();
       float centerEyeDistance = (camera.getEyes() - camera.getCenter()).norm();
       camera.setCenter(Coord(0, 0, 0));
       camera.setEyes(Coord(centerEyeDistance, 0, 0));
@@ -1104,7 +1104,7 @@ void GeographicViewGraphicsView::switchViewType() {
       globeCameraBackup = camera;
 
     } else {
-      Camera &camera = glMainWidget->getScene()->getGraphCamera();
+      Camera &camera = glWidget->getScene()->getGraphCamera();
       camera.setEyes(globeCameraBackup.getEyes());
       camera.setCenter(globeCameraBackup.getCenter());
       camera.setUp(globeCameraBackup.getUp());
@@ -1117,7 +1117,7 @@ void GeographicViewGraphicsView::switchViewType() {
     planisphereEntity->setVisible(enablePlanisphere);
   }
 
-  glMainWidget->getGlGraphRenderingParameters().setEdge3D(viewType == GeographicView::Globe);
+  glWidget->getGlGraphRenderingParameters().setEdge3D(viewType == GeographicView::Globe);
 
   Observable::unholdObservers();
 
@@ -1129,7 +1129,7 @@ void GeographicViewGraphicsView::switchViewType() {
 void GeographicViewGraphicsView::setGeoLayoutComputed() {
   geoLayoutComputed = true;
   noLayoutMsgBox->setVisible(false);
-  glMainWidget->getScene()->getGlGraph()->setVisible(true);
+  glWidget->getScene()->getGlGraph()->setVisible(true);
 }
 
 void GeographicViewGraphicsView::updateMapTexture() {

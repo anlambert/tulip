@@ -12,7 +12,7 @@
  */
 
 #include <talipot/GlTextureManager.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/Camera.h>
 #include <talipot/GlTools.h>
 #include <talipot/Interactor.h>
@@ -76,16 +76,16 @@ void GeographicView::setupUi() {
           &GeographicView::computeGeoLayout);
 
   sceneConfigurationWidget = new SceneConfigWidget();
-  sceneConfigurationWidget->setGlMainWidget(geoViewGraphicsView->getGlMainWidget());
+  sceneConfigurationWidget->setGlWidget(geoViewGraphicsView->getGlWidget());
 
   sceneLayersConfigurationWidget = new SceneLayersConfigWidget();
-  sceneLayersConfigurationWidget->setGlMainWidget(geoViewGraphicsView->getGlMainWidget());
+  sceneLayersConfigurationWidget->setGlWidget(geoViewGraphicsView->getGlWidget());
 
   centerViewAction = new QAction("Center view", this);
   connect(centerViewAction, &QAction::triggered, [this] { centerView(); });
 
-  activateTooltipAndUrlManager(geoViewGraphicsView->getGlMainWidget());
-  _viewActionsManager = new ViewActionsManager(this, geoViewGraphicsView->getGlMainWidget(), true);
+  activateTooltipAndUrlManager(geoViewGraphicsView->getGlWidget());
+  _viewActionsManager = new ViewActionsManager(this, geoViewGraphicsView->getGlWidget(), true);
 }
 
 void GeographicView::viewTypeChanged(int idx) {
@@ -154,8 +154,8 @@ void GeographicView::setState(const DataSet &dataSet) {
 
   viewTypeChanged(viewTypeName.c_str());
 
-  sceneLayersConfigurationWidget->setGlMainWidget(geoViewGraphicsView->getGlMainWidget());
-  sceneConfigurationWidget->setGlMainWidget(geoViewGraphicsView->getGlMainWidget());
+  sceneLayersConfigurationWidget->setGlWidget(geoViewGraphicsView->getGlWidget());
+  sceneConfigurationWidget->setGlWidget(geoViewGraphicsView->getGlWidget());
 
   registerTriggers();
 
@@ -175,7 +175,7 @@ void GeographicView::setState(const DataSet &dataSet) {
     computeGeoLayout();
   }
 
-  GlGraph *glGraph = geoViewGraphicsView->getGlMainWidget()->getScene()->getGlGraph();
+  GlGraph *glGraph = geoViewGraphicsView->getGlWidget()->getScene()->getGlGraph();
   GlGraphRenderingParameters &rp = glGraph->getRenderingParameters();
 
   if (dataSet.exists("renderingParameters")) {
@@ -221,9 +221,8 @@ DataSet GeographicView::state() const {
   dataSet.set("mapCenterLatitude", mapCenter.first);
   dataSet.set("mapCenterLongitude", mapCenter.second);
   dataSet.set("mapZoom", geoViewGraphicsView->getLeafletMapsPage()->getCurrentMapZoom());
-  dataSet.set(
-      "renderingParameters",
-      geoViewGraphicsView->getGlMainWidget()->getGlGraphRenderingParameters().getParameters());
+  dataSet.set("renderingParameters",
+              geoViewGraphicsView->getGlWidget()->getGlGraphRenderingParameters().getParameters());
 
   saveStoredPolyInformation(dataSet);
 
@@ -314,7 +313,7 @@ void GeographicView::applySettings() {
 }
 
 void GeographicView::updateSharedProperties() {
-  GlGraphInputData *inputData = geoViewGraphicsView->getGlMainWidget()->getGlGraphInputData();
+  GlGraphInputData *inputData = geoViewGraphicsView->getGlWidget()->getGlGraphInputData();
 
   if (useSharedLayoutProperty != geoViewConfigWidget->useSharedLayoutProperty()) {
     useSharedLayoutProperty = geoViewConfigWidget->useSharedLayoutProperty();
@@ -418,8 +417,8 @@ void GeographicView::registerTriggers() {
     return;
   }
 
-  addRedrawTrigger(geoViewGraphicsView->getGlMainWidget()->getScene()->getGlGraph()->getGraph());
-  auto properties = geoViewGraphicsView->getGlMainWidget()->getGlGraphInputData()->properties();
+  addRedrawTrigger(geoViewGraphicsView->getGlWidget()->getScene()->getGlGraph()->getGraph());
+  auto properties = geoViewGraphicsView->getGlWidget()->getGlGraphInputData()->properties();
 
   for (auto p : properties) {
     addRedrawTrigger(p);

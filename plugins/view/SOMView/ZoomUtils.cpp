@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -14,20 +14,20 @@
 #include "ZoomUtils.h"
 
 #include <talipot/QtGlSceneZoomAndPanAnimator.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/Camera.h>
 
 using namespace std;
 
 namespace tlp {
-void zoomOnScreenRegion(GlMainWidget *glWidget, const BoundingBox &boundingBox,
-                        const bool optimalPath, const double velocity, const double p) {
+void zoomOnScreenRegion(GlWidget *glWidget, const BoundingBox &boundingBox, const bool optimalPath,
+                        const double velocity, const double p) {
   QtGlSceneZoomAndPanAnimator animator(glWidget, boundingBox, 1000, "Main", optimalPath, velocity,
                                        p);
   animator.animateZoomAndPan();
 }
 
-void zoomOnScreenRegionWithoutAnimation(GlMainWidget *glWidget, const BoundingBox &boundingBox) {
+void zoomOnScreenRegionWithoutAnimation(GlWidget *glWidget, const BoundingBox &boundingBox) {
   Camera &camera = glWidget->getScene()->getGraphCamera();
   Coord bbScreenFirst = camera.worldTo2DViewport(Coord(boundingBox[0]));
   Coord bbScreenSecond = camera.worldTo2DViewport(Coord(boundingBox[1]));

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -12,7 +12,7 @@
  */
 
 #include <talipot/QtGlSceneZoomAndPanAnimator.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/Camera.h>
 
 #include "HistogramViewNavigator.h"
@@ -35,7 +35,7 @@ void HistogramViewNavigator::viewChanged(View *view) {
 
 bool HistogramViewNavigator::eventFilter(QObject *widget, QEvent *e) {
 
-  GlMainWidget *glWidget = static_cast<GlMainWidget *>(widget);
+  GlWidget *glWidget = static_cast<GlWidget *>(widget);
 
   if (!glWidget->hasMouseTracking()) {
     glWidget->setMouseTracking(true);

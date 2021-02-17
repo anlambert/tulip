@@ -11,7 +11,7 @@
  *
  */
 
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/GlGraph.h>
 
 #include "ParallelCoordsGlEntitiesSelector.h"
@@ -24,7 +24,7 @@ namespace tlp {
 bool ParallelCoordsGlEntitiesSelector::eventFilter(QObject *widget, QEvent *e) {
 
   ParallelCoordinatesView *parallelView = static_cast<ParallelCoordinatesView *>(view());
-  GlMainWidget *glMainWidget = static_cast<GlMainWidget *>(widget);
+  GlWidget *glWidget = static_cast<GlWidget *>(widget);
 
   if (e->type() == QEvent::MouseButtonPress) {
 
@@ -38,7 +38,7 @@ bool ParallelCoordsGlEntitiesSelector::eventFilter(QObject *widget, QEvent *e) {
         w = 0;
         h = 0;
         started = true;
-        graph = glMainWidget->getGlGraphInputData()->getGraph();
+        graph = glWidget->getGlGraphInputData()->getGraph();
       }
 
       return true;
@@ -50,11 +50,11 @@ bool ParallelCoordsGlEntitiesSelector::eventFilter(QObject *widget, QEvent *e) {
     QMouseEvent *qMouseEv = static_cast<QMouseEvent *>(e);
 
     if (qMouseEv->buttons() & Qt::LeftButton && started) {
-      if ((qMouseEv->x() > 0) && (qMouseEv->x() < glMainWidget->width())) {
+      if ((qMouseEv->x() > 0) && (qMouseEv->x() < glWidget->width())) {
         w = qMouseEv->x() - x;
       }
 
-      if ((qMouseEv->y() > 0) && (qMouseEv->y() < glMainWidget->height())) {
+      if ((qMouseEv->y() > 0) && (qMouseEv->y() < glWidget->height())) {
         h = qMouseEv->y() - y;
       }
 

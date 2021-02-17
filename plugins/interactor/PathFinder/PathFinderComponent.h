@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -61,11 +61,11 @@ private:
   bool graphPopable;
 
   QSet<PathHighlighter *> highlighters;
-  void runHighlighters(tlp::GlMainWidget *glMainWidget, tlp::BooleanProperty *selection,
-                       tlp::node src, tlp::node tgt);
-  void clearHighlighters(tlp::GlMainWidget *glMainWidget);
+  void runHighlighters(tlp::GlWidget *glWidget, tlp::BooleanProperty *selection, tlp::node src,
+                       tlp::node tgt);
+  void clearHighlighters(tlp::GlWidget *glWidget);
 
-  void selectPath(GlMainWidget *glMainWidget, tlp::Graph *graph);
+  void selectPath(GlWidget *glWidget, tlp::Graph *graph);
   PathHighlighter *findHighlighter(const std::string &name);
 };
 }

@@ -30,7 +30,7 @@
 #include <talipot/GlScene.h>
 #include <talipot/GlGraphRenderingParameters.h>
 #include <talipot/GlGraph.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/ViewSettings.h>
 #include <talipot/TlpQtTools.h>
 
@@ -68,7 +68,7 @@ ParallelCoordinatesDrawing::ParallelCoordinatesDrawing(ParallelCoordinatesGraphP
 
 ParallelCoordinatesDrawing::~ParallelCoordinatesDrawing() {}
 
-void ParallelCoordinatesDrawing::createAxis(GlMainWidget *glWidget, GlProgressBar *progressBar) {
+void ParallelCoordinatesDrawing::createAxis(GlWidget *glWidget, GlProgressBar *progressBar) {
 
   glWidget->makeCurrent();
 
@@ -240,7 +240,7 @@ void ParallelCoordinatesDrawing::destroyAxisIfNeeded() {
   }
 }
 
-void ParallelCoordinatesDrawing::plotAllData(GlMainWidget *glWidget, GlProgressBar *progressBar) {
+void ParallelCoordinatesDrawing::plotAllData(GlWidget *glWidget, GlProgressBar *progressBar) {
   Color color;
   computeResizeFactor();
 
@@ -501,7 +501,7 @@ bool ParallelCoordinatesDrawing::getDataIdFromAxisPoint(node axisPoint, unsigned
   return dataMatch;
 }
 
-void ParallelCoordinatesDrawing::update(GlMainWidget *glWidget, bool updateWithoutProgressBar) {
+void ParallelCoordinatesDrawing::update(GlWidget *glWidget, bool updateWithoutProgressBar) {
 
   deleteGlEntity(axisPlotComposite);
   deleteGlEntity(dataPlotComposite);

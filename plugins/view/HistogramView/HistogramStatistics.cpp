@@ -13,7 +13,7 @@
 
 #include <talipot/OpenGlConfigManager.h>
 #include <talipot/GlLines.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/Camera.h>
 
 #include <QEvent>
@@ -472,9 +472,9 @@ void HistogramStatistics::computeAndDrawInteractor() {
   histoView->refresh();
 }
 
-bool HistogramStatistics::draw(GlMainWidget *glMainWidget) {
+bool HistogramStatistics::draw(GlWidget *glWidget) {
 
-  Camera &camera = glMainWidget->getScene()->getLayer("Main")->getCamera();
+  Camera &camera = glWidget->getScene()->getLayer("Main")->getCamera();
   camera.initGl();
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

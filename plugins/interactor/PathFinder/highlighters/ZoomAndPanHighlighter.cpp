@@ -21,25 +21,25 @@
 #include <talipot/BoundingBox.h>
 #include <talipot/DrawingTools.h>
 #include <talipot/GlGraph.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/QtGlSceneZoomAndPanAnimator.h>
 
 using namespace std;
 using namespace tlp;
 
-void ZoomAndPanHighlighter::highlight(const PathFinder *, GlMainWidget *glMainWidget,
+void ZoomAndPanHighlighter::highlight(const PathFinder *, GlWidget *glWidget,
                                       BooleanProperty *selection, node, node) {
-  GlGraphInputData *inputData(getInputData(glMainWidget));
-  Graph *graph = glMainWidget->getScene()->getGlGraph()->getGraph();
+  GlGraphInputData *inputData(getInputData(glWidget));
+  Graph *graph = glWidget->getScene()->getGlGraph()->getGraph();
   LayoutProperty *layout = inputData->getElementLayout();
   BoundingBox bbox(computeBoundingBox(graph, layout, inputData->getElementSize(),
                                       inputData->getElementRotation(), selection));
 
-  QtGlSceneZoomAndPanAnimator animator(glMainWidget, bbox);
+  QtGlSceneZoomAndPanAnimator animator(glWidget, bbox);
   animator.animateZoomAndPan();
 }
 
-void ZoomAndPanHighlighter::draw(GlMainWidget *) {}
+void ZoomAndPanHighlighter::draw(GlWidget *) {}
 
 bool ZoomAndPanHighlighter::isConfigurable() const {
   return false;

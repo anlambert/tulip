@@ -26,7 +26,7 @@
 #include <talipot/MouseInteractors.h>
 #include <talipot/GlMainView.h>
 #include <talipot/GlShaderProgram.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/NodeLinkDiagramView.h>
 #include <talipot/OpenGlConfigManager.h>
 #include <talipot/GlTextureManager.h>
@@ -142,7 +142,7 @@ void FisheyeInteractorComponent::viewChanged(View *view) {
   }
 
   GlMainView *glView = static_cast<GlMainView *>(view);
-  GlMainWidget *glWidget = glView->getGlMainWidget();
+  GlWidget *glWidget = glView->getGlWidget();
 
   if (!glWidget->hasMouseTracking()) {
     glWidget->setMouseTracking(true);
@@ -156,7 +156,7 @@ void FisheyeInteractorComponent::viewChanged(View *view) {
 
 bool FisheyeInteractorComponent::eventFilter(QObject *obj, QEvent *e) {
 
-  GlMainWidget *glWidget = static_cast<GlMainWidget *>(obj);
+  GlWidget *glWidget = static_cast<GlWidget *>(obj);
 
   _activateFisheye = false;
 
@@ -195,7 +195,7 @@ bool FisheyeInteractorComponent::eventFilter(QObject *obj, QEvent *e) {
   return _activateFisheye;
 }
 
-void FisheyeInteractorComponent::generateFisheyeTexture(GlMainWidget *glWidget) {
+void FisheyeInteractorComponent::generateFisheyeTexture(GlWidget *glWidget) {
   if (_maxTextureSize == 0) {
     glGetIntegerv(GL_MAX_TEXTURE_SIZE, &_maxTextureSize);
     if (_maxTextureSize > 4096) {
@@ -261,7 +261,7 @@ void FisheyeInteractorComponent::generateFisheyeTexture(GlMainWidget *glWidget) 
   *camera = camBackup;
 }
 
-bool FisheyeInteractorComponent::draw(GlMainWidget *glWidget) {
+bool FisheyeInteractorComponent::draw(GlWidget *glWidget) {
 
   if (!fisheyeShader.get()) {
     fisheyeShader.reset(new GlShaderProgram("fisheye"));

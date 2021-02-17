@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -79,14 +79,13 @@ public:
   ~ScatterPlotCorrelCoeffSelector() override;
 
   bool eventFilter(QObject *, QEvent *) override;
-  bool draw(GlMainWidget *glMainWidget) override;
-  bool compute(GlMainWidget *glMainWidget) override;
+  bool draw(GlWidget *glWidget) override;
+  bool compute(GlWidget *glWidget) override;
   void viewChanged(View *view) override;
 
 private:
   void getPolygonAndPointUnderPointerIfAny(const Coord &pointerSceneCoord, Camera *camera);
-  void mapPolygonColorToCorrelCoeffOfData(GlEditableComplexPolygon *polygon,
-                                          GlMainWidget *glWidget);
+  void mapPolygonColorToCorrelCoeffOfData(GlEditableComplexPolygon *polygon, GlWidget *glWidget);
 
   ScatterPlotCorrelCoeffSelectorOptionsWidget *optionsWidget;
   ScatterPlot2DView *scatterView;

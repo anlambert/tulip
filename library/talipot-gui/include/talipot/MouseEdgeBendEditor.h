@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -65,8 +65,8 @@ class TLP_QT_SCOPE MouseEdgeBendEditor : public GLInteractorComponent {
 public:
   MouseEdgeBendEditor();
   ~MouseEdgeBendEditor() override;
-  bool compute(GlMainWidget *glMainWidget) override;
-  bool draw(GlMainWidget *) override;
+  bool compute(GlWidget *glWidget) override;
+  bool draw(GlWidget *) override;
   void clear() override;
   bool eventFilter(QObject *, QEvent *) override;
 
@@ -87,7 +87,7 @@ private:
   enum OperationTarget { COORD = 0, SIZE, COORD_AND_SIZE };
 
   Graph *_graph;
-  GlMainWidget *glMainWidget;
+  GlWidget *glWidget;
   LayoutProperty *_layout;
   BooleanProperty *_selection;
   DoubleProperty *_rotation;
@@ -95,7 +95,7 @@ private:
   IntegerProperty *_shape;
   CoordVectorProperty *_coordsVectorProperty;
 
-  void initProxies(GlMainWidget *glMainWidget);
+  void initProxies(GlWidget *glWidget);
 
   EditOperation _operation;
   OperationTarget mode;
@@ -117,13 +117,13 @@ private:
   Coord start, end;
   std::string selectedEntity;
   bool mouseButtonPressOnEdge;
-  bool belong(Coord, Coord, Coord, GlMainWidget *);
-  bool haveSelection(GlMainWidget *);
-  void computeSrcTgtEntities(GlMainWidget *);
-  bool computeBendsCircles(GlMainWidget *);
-  void mMouseTranslate(int, int, GlMainWidget *);
+  bool belong(Coord, Coord, Coord, GlWidget *);
+  bool haveSelection(GlWidget *);
+  void computeSrcTgtEntities(GlWidget *);
+  bool computeBendsCircles(GlWidget *);
+  void mMouseTranslate(int, int, GlWidget *);
   void mMouseDelete();
-  void mMouseCreate(int, int, GlMainWidget *);
+  void mMouseCreate(int, int, GlWidget *);
 };
 }
 

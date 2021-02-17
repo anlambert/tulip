@@ -3,7 +3,7 @@ INSTALL(
         talipot/ColorScaleConfigDialog.h
         talipot/GLInteractor.h
         talipot/GlMainView.h
-        talipot/GlMainWidget.h
+        talipot/GlWidget.h
         talipot/GlOffscreenRenderer.h
         talipot/GraphPropertiesSelectionWidget.h
         talipot/Interactor.h

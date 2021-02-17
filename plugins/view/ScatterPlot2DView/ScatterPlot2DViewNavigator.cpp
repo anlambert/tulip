@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -12,7 +12,7 @@
  */
 
 #include <talipot/QtGlSceneZoomAndPanAnimator.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/Camera.h>
 
 #include <QMouseEvent>
@@ -37,7 +37,7 @@ void ScatterPlot2DViewNavigator::viewChanged(View *view) {
 bool ScatterPlot2DViewNavigator::eventFilter(QObject *widget, QEvent *e) {
 
   if (glWidget == nullptr) {
-    glWidget = static_cast<GlMainWidget *>(widget);
+    glWidget = static_cast<GlWidget *>(widget);
   }
 
   if (glWidget != nullptr) {

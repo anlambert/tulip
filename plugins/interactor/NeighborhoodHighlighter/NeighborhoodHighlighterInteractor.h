@@ -76,7 +76,7 @@ public:
 
   bool eventFilter(QObject *widget, QEvent *e) override;
 
-  bool draw(GlMainWidget *glMainWidget) override;
+  bool draw(GlWidget *glWidget) override;
 
   void viewChanged(View *view) override;
 
@@ -91,7 +91,7 @@ public slots:
   void morphCircleAlphaAnimStep(int animStep);
 
 private:
-  node selectNodeInOriginalGraph(GlMainWidget *glWidget, int x, int y);
+  node selectNodeInOriginalGraph(GlWidget *glWidget, int x, int y);
 
   void buildNeighborhoodGraph(node n, Graph *g);
 
@@ -132,7 +132,7 @@ private:
 
   bool centralNodeLocked;
   bool circleLayoutSet;
-  GlMainWidget *glWidget;
+  GlWidget *glWidget;
   node selectedNeighborNode;
   unsigned int neighborhoodDist;
 

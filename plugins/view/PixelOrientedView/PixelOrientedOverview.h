@@ -21,7 +21,7 @@
 #include <talipot/GlBoundingBoxSceneVisitor.h>
 #include <talipot/Graph.h>
 #include <talipot/GlRect.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/GlLabel.h>
 
 #include <string>
@@ -55,7 +55,7 @@ public:
 
   void setBLCorner(const Coord &blCorner);
 
-  void computePixelView(GlMainWidget *glWidget = nullptr);
+  void computePixelView(GlWidget *glWidget = nullptr);
 
   bool overviewGenerated() const {
     return overviewGen;

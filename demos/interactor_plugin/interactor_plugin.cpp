@@ -6,7 +6,7 @@
 #include <talipot/MouseInteractors.h>
 #include <talipot/Interactor.h>
 #include <talipot/GlMainView.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/GlScene.h>
 
 using namespace tlp;
@@ -86,8 +86,8 @@ public:
           */
           SelectedEntity selectedEntity;
 
-          if (glMainView->getGlMainWidget()->pickNodesEdges(qMouseEv->x(), qMouseEv->y(),
-                                                            selectedEntity)) {
+          if (glMainView->getGlWidget()->pickNodesEdges(qMouseEv->x(), qMouseEv->y(),
+                                                        selectedEntity)) {
 
             /*
             Change text of the information label with

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -15,7 +15,7 @@
 #define MOUSE_LASSO_NODES_SELECTOR_H
 
 #include <talipot/NodeLinkDiagramViewInteractor.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 
 #include <vector>
 
@@ -49,11 +49,11 @@ public:
   MouseLassoNodesSelectorInteractorComponent();
   ~MouseLassoNodesSelectorInteractorComponent() override;
 
-  bool draw(GlMainWidget *glWidget) override;
+  bool draw(GlWidget *glWidget) override;
   bool eventFilter(QObject *obj, QEvent *e) override;
 
 private:
-  void selectGraphElementsUnderPolygon(GlMainWidget *glWidget);
+  void selectGraphElementsUnderPolygon(GlWidget *glWidget);
 
   std::vector<Coord> polygon;
   Coord currentPointerScreenCoord;

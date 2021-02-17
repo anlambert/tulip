@@ -20,7 +20,7 @@
 #include <talipot/GlLabel.h>
 #include <talipot/GlProgressBar.h>
 #include <talipot/GlQuantitativeAxis.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/GlTextureManager.h>
 
 #include "ScatterPlot2D.h"
@@ -134,7 +134,7 @@ void ScatterPlot2D::setDataLocation(const ElementType &dataLocation) {
   this->dataLocation = dataLocation;
 }
 
-void ScatterPlot2D::generateOverview(GlMainWidget *glWidget, LayoutProperty *reverseLayout) {
+void ScatterPlot2D::generateOverview(GlWidget *glWidget, LayoutProperty *reverseLayout) {
   clean();
   clickLabel = nullptr;
   backgroundRect = nullptr;
@@ -306,8 +306,7 @@ void ScatterPlot2D::createAxis() {
   }
 }
 
-void ScatterPlot2D::computeScatterPlotLayout(GlMainWidget *glWidget,
-                                             LayoutProperty *reverseLayout) {
+void ScatterPlot2D::computeScatterPlotLayout(GlWidget *glWidget, LayoutProperty *reverseLayout) {
   Graph *_graph = glGraph->getGraph();
   double sumxiyi = 0.0, sumxi = 0.0, sumyi = 0.0, sumxi2 = 0.0, sumyi2 = 0.0;
   unsigned int nbGraphNodes = _graph->numberOfNodes();

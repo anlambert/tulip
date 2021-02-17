@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -16,7 +16,7 @@
 
 #include <QMouseEvent>
 
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/GlEntity.h>
 #include <talipot/GlColorScale.h>
 #include <talipot/ColorScaleConfigDialog.h>
@@ -32,7 +32,7 @@ using namespace std;
 
 EditColorScaleInteractor::EditColorScaleInteractor()
     : currentProperty(nullptr), colorScale(nullptr), widthPercent(.80f), heightPercent(.1f),
-      heightPosition(.1f), glMainWidgetWidth(0), glMainWidgetHeight(0),
+      heightPosition(.1f), glWidgetWidth(0), glWidgetHeight(0),
       selectionLayer(new GlLayer("SelectionLayer")) {}
 
 EditColorScaleInteractor::~EditColorScaleInteractor() {
@@ -42,27 +42,26 @@ EditColorScaleInteractor::~EditColorScaleInteractor() {
 }
 
 bool EditColorScaleInteractor::eventFilter(QObject *obj, QEvent *event) {
-  tlp::GlMainWidget *glMainWidget = static_cast<tlp::GlMainWidget *>(obj);
+  tlp::GlWidget *glWidget = static_cast<tlp::GlWidget *>(obj);
 
   if (event->type() == QEvent::MouseButtonDblClick) {
     QMouseEvent *me = static_cast<QMouseEvent *>(event);
 
-    glMainWidget->getScene()->getGraphCamera().initGl();
+    glWidget->getScene()->getGraphCamera().initGl();
     selectionLayer->set2DMode();
-    glMainWidget->getScene()->addExistingLayer(selectionLayer);
+    glWidget->getScene()->addExistingLayer(selectionLayer);
     selectionLayer->getCamera().initGl();
     selectionLayer->addGlEntity(colorScale, "colorScale");
 
     std::vector<SelectedEntity> entities;
-    glMainWidget->getScene()->selectEntities(RenderingEntities, me->pos().x(), me->pos().y(), 2, 2,
-                                             selectionLayer, entities);
+    glWidget->getScene()->selectEntities(RenderingEntities, me->pos().x(), me->pos().y(), 2, 2,
+                                         selectionLayer, entities);
     bool foundGlColorScale = false;
 
     if (!entities.empty()) {
       for (const auto &entity : entities) {
         if (entity.getEntity() == colorScale->getGlColorScale()) {
-          ColorScaleConfigDialog dialog(*colorScale->getGlColorScale()->getColorScale(),
-                                        glMainWidget);
+          ColorScaleConfigDialog dialog(*colorScale->getGlColorScale()->getColorScale(), glWidget);
           foundGlColorScale = true;
 
           if (dialog.exec()) {
@@ -77,7 +76,7 @@ bool EditColorScaleInteractor::eventFilter(QObject *obj, QEvent *event) {
 
     // Empty layer without destructing objects.
     selectionLayer->deleteGlEntity(colorScale);
-    glMainWidget->getScene()->removeLayer(selectionLayer, false);
+    glWidget->getScene()->removeLayer(selectionLayer, false);
 
     return foundGlColorScale;
   }
@@ -89,11 +88,10 @@ void EditColorScaleInteractor::viewChanged(View *view) {
 
   if (somView != nullptr) {
     assert(colorScale == nullptr);
-    GlMainWidget *glMainWidget = somView->getMapWidget();
-    Size screenSize = {glMainWidget->width() * widthPercent,
-                       glMainWidget->height() * heightPercent};
-    Coord bottomLeftScreenCoord = {(glMainWidget->width() - screenSize.getW()) * .5f,
-                                   glMainWidget->height() * .1f};
+    GlWidget *glWidget = somView->getMapWidget();
+    Size screenSize = {glWidget->width() * widthPercent, glWidget->height() * heightPercent};
+    Coord bottomLeftScreenCoord = {(glWidget->width() - screenSize.getW()) * .5f,
+                                   glWidget->height() * .1f};
     colorScale = new GlLabelledColorScale(bottomLeftScreenCoord, screenSize,
                                           somView->getColorScale(), 0, 0, false);
 
@@ -101,7 +99,7 @@ void EditColorScaleInteractor::viewChanged(View *view) {
   }
 }
 
-bool EditColorScaleInteractor::compute(GlMainWidget *) {
+bool EditColorScaleInteractor::compute(GlWidget *) {
   SOMView *somView = static_cast<SOMView *>(view());
   assert(somView != nullptr);
 
@@ -109,7 +107,7 @@ bool EditColorScaleInteractor::compute(GlMainWidget *) {
   return true;
 }
 
-bool EditColorScaleInteractor::draw(GlMainWidget *glMainWidget) {
+bool EditColorScaleInteractor::draw(GlWidget *glWidget) {
   SOMView *somView = static_cast<SOMView *>(view());
   assert(somView != nullptr);
 
@@ -121,9 +119,9 @@ bool EditColorScaleInteractor::draw(GlMainWidget *glMainWidget) {
     }
 
     if (colorScale->isVisible()) {
-      glMainWidget->getScene()->getGraphCamera().initGl();
-      Camera camera2D = Camera(glMainWidget->getScene(), false);
-      camera2D.setScene(glMainWidget->getScene());
+      glWidget->getScene()->getGraphCamera().initGl();
+      Camera camera2D = Camera(glWidget->getScene(), false);
+      camera2D.setScene(glWidget->getScene());
       camera2D.initGl();
 
       for (const auto &it : colorScale->getGlEntities()) {
@@ -136,18 +134,17 @@ bool EditColorScaleInteractor::draw(GlMainWidget *glMainWidget) {
 }
 
 bool EditColorScaleInteractor::screenSizeChanged(SOMView *somView) {
-  GlMainWidget *glMainWidget = somView->getMapWidget();
+  GlWidget *glWidget = somView->getMapWidget();
 
-  if (glMainWidget->width() != glMainWidgetWidth || glMainWidget->height() != glMainWidgetHeight) {
+  if (glWidget->width() != glWidgetWidth || glWidget->height() != glWidgetHeight) {
     if (colorScale) {
-      Size screenSize = {glMainWidget->width() * widthPercent,
-                         glMainWidget->height() * heightPercent};
-      Coord bottomLeftScreenCoord = {(glMainWidget->width() - screenSize.getW()) * .5f,
-                                     glMainWidget->height() * .1f};
+      Size screenSize = {glWidget->width() * widthPercent, glWidget->height() * heightPercent};
+      Coord bottomLeftScreenCoord = {(glWidget->width() - screenSize.getW()) * .5f,
+                                     glWidget->height() * .1f};
       colorScale->setPosition(bottomLeftScreenCoord);
       colorScale->setSize(screenSize);
-      glMainWidgetWidth = glMainWidget->width();
-      glMainWidgetHeight = glMainWidget->height();
+      glWidgetWidth = glWidget->width();
+      glWidgetHeight = glWidget->height();
     }
 
     return true;

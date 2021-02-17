@@ -14,7 +14,7 @@
 #include <talipot/AboutPage.h>
 #include <talipot/TlpTools.h>
 #include <talipot/TlpQtTools.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/Release.h>
 #include <talipot/OpenGlConfigManager.h>
 #include <talipot/PythonVersionChecker.h>

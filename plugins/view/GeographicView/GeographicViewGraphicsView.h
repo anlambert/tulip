@@ -19,8 +19,8 @@
 #include "LeafletMaps.h"
 
 #include <talipot/GlGraph.h>
-#include <talipot/GlMainWidget.h>
-#include <talipot/GlMainWidgetGraphicsItem.h>
+#include <talipot/GlWidget.h>
+#include <talipot/GlWidgetGraphicsItem.h>
 #include <talipot/Camera.h>
 
 #include <QGraphicsView>
@@ -57,8 +57,8 @@ public:
 
   void centerView();
 
-  GlMainWidget *getGlMainWidget() {
-    return glMainWidget;
+  GlWidget *getGlWidget() {
+    return glWidget;
   }
 
   LeafletMaps *getLeafletMapsPage() const {
@@ -141,8 +141,8 @@ private:
   bool geocodingActive;
   bool cancelGeocoding;
 
-  GlMainWidget *glMainWidget;
-  GlMainWidgetGraphicsItem *glWidgetItem;
+  GlWidget *glWidget;
+  GlWidgetGraphicsItem *glWidgetItem;
   QComboBox *viewTypeComboBox;
   QPushButton *zoomOutButton;
   QPushButton *zoomInButton;

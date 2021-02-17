@@ -29,7 +29,7 @@
 #include <talipot/GlTools.h>
 #include <talipot/GlLabel.h>
 #include <talipot/GlProgressBar.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/Interactor.h>
 #include <talipot/GlTextureManager.h>
 #include <talipot/GlGraph.h>
@@ -112,7 +112,7 @@ void ParallelCoordinatesView::toggleInteractors(bool activate) {
 }
 
 void ParallelCoordinatesView::initGlWidget() {
-  GlScene *scene = getGlMainWidget()->getScene();
+  GlScene *scene = getGlWidget()->getScene();
 
   if (!mainLayer) {
     mainLayer = new GlLayer("Main");
@@ -132,7 +132,7 @@ void ParallelCoordinatesView::initGlWidget() {
   param.setDisplayNodes(true);
   param.setViewNodeLabel(false);
   param.setFontsType(2);
-  getGlMainWidget()->setMouseTracking(true);
+  getGlWidget()->setMouseTracking(true);
 }
 
 QList<QWidget *> ParallelCoordinatesView::configurationWidgets() const {
@@ -145,7 +145,7 @@ void ParallelCoordinatesView::setState(const DataSet &dataSet) {
     initGlWidget();
     buildContextMenu();
     setOverviewVisible(true);
-    getGlMainWidget()->installEventFilter(this);
+    getGlWidget()->installEventFilter(this);
 
     dataConfigWidget = new ViewGraphPropertiesSelectionWidget();
     drawConfigWidget = new ParallelCoordsDrawConfigWidget();
@@ -314,7 +314,7 @@ void ParallelCoordinatesView::setState(const DataSet &dataSet) {
     if (dataSet.exists("scene")) {
       string sceneXML;
       dataSet.get("scene", sceneXML);
-      getGlMainWidget()->getScene()->setWithXML(sceneXML, nullptr);
+      getGlWidget()->getScene()->setWithXML(sceneXML, nullptr);
       dontCenterViewAfterConfLoaded = true;
     }
 
@@ -339,7 +339,7 @@ DataSet ParallelCoordinatesView::state() const {
   DataSet dataSet = GlMainView::state();
 
   string sceneOut;
-  getGlMainWidget()->getScene()->getXMLOnlyForCameras(sceneOut);
+  getGlWidget()->getScene()->getXMLOnlyForCameras(sceneOut);
   dataSet.set("scene", sceneOut);
 
   vector<string> selectedProperties = graphProxy->getSelectedProperties();
@@ -368,8 +368,8 @@ DataSet ParallelCoordinatesView::state() const {
               drawConfigWidget->getUnhighlightedEltsColorsAlphaValue());
   dataSet.set("layoutType", int(getLayoutType()));
   dataSet.set("linesType", int(getLinesType()));
-  dataSet.set("lastViewWindowWidth", getGlMainWidget()->width());
-  dataSet.set("lastViewWindowHeight", getGlMainWidget()->height());
+  dataSet.set("lastViewWindowWidth", getGlWidget()->width());
+  dataSet.set("lastViewWindowHeight", getGlWidget()->height());
 
   if (needQuickAccessBar) {
     dataSet.set("quickAccessBarVisible", quickAccessBarVisible());
@@ -388,7 +388,7 @@ void ParallelCoordinatesView::graphChanged(tlp::Graph *) {
 
 void ParallelCoordinatesView::updateWithoutProgressBar() {
   if (parallelCoordsDrawing) {
-    parallelCoordsDrawing->update(getGlMainWidget(), true);
+    parallelCoordsDrawing->update(getGlWidget(), true);
   }
 }
 
@@ -396,17 +396,17 @@ void ParallelCoordinatesView::updateWithProgressBar() {
   if (parallelCoordsDrawing) {
     setOverviewVisible(false);
     toggleGraphView(glGraph, false);
-    parallelCoordsDrawing->update(getGlMainWidget());
+    parallelCoordsDrawing->update(getGlWidget());
     toggleGraphView(glGraph, true);
     centerView();
-    getGlMainWidget()->draw();
+    getGlWidget()->draw();
     setOverviewVisible(true);
   }
 }
 
 void ParallelCoordinatesView::addEmptyViewLabel() {
   Color backgroundColor = drawConfigWidget->getBackgroundColor();
-  getGlMainWidget()->getScene()->setBackgroundColor(backgroundColor);
+  getGlWidget()->getScene()->setBackgroundColor(backgroundColor);
 
   Color foregroundColor;
   int bgV = backgroundColor.getV();
@@ -462,8 +462,8 @@ void ParallelCoordinatesView::draw() {
       if (quickAccessBarVisible()) {
         _quickAccessBar->setEnabled(false);
       }
-      getGlMainWidget()->getScene()->centerScene();
-      getGlMainWidget()->draw();
+      getGlWidget()->getScene()->centerScene();
+      getGlWidget()->draw();
       return;
     } else {
       removeEmptyViewLabel();
@@ -487,12 +487,12 @@ void ParallelCoordinatesView::draw() {
 
       center = false;
     } else {
-      getGlMainWidget()->draw();
+      getGlWidget()->draw();
     }
 
     lastNbSelectedProperties = graphProxy->getNumberOfSelectedProperties();
   } else {
-    getGlMainWidget()->draw();
+    getGlWidget()->draw();
   }
 
   needDraw = false;
@@ -500,7 +500,7 @@ void ParallelCoordinatesView::draw() {
 
 void ParallelCoordinatesView::refresh() {
   if (!needDraw) {
-    getGlMainWidget()->redraw();
+    getGlWidget()->redraw();
   } else {
     draw();
   }
@@ -713,7 +713,7 @@ void ParallelCoordinatesView::setupAndDrawView() {
   }
 
   if (graph()) {
-    GlScene *scene = getGlMainWidget()->getScene();
+    GlScene *scene = getGlWidget()->getScene();
     graphProxy->setSelectedProperties(dataConfigWidget->getSelectedGraphProperties());
     graphProxy->setDataLocation(dataConfigWidget->getDataLocation());
     scene->setBackgroundColor(drawConfigWidget->getBackgroundColor());
@@ -777,7 +777,7 @@ bool ParallelCoordinatesView::mapGlEntitiesInRegionToData(std::set<unsigned int>
 
   mappedData.clear();
 
-  bool result = getGlMainWidget()->pickGlEntities(x, y, width, height, selectedEntities, mainLayer);
+  bool result = getGlWidget()->pickGlEntities(x, y, width, height, selectedEntities, mainLayer);
 
   if (result) {
     for (const auto &ite : selectedEntities) {
@@ -790,7 +790,7 @@ bool ParallelCoordinatesView::mapGlEntitiesInRegionToData(std::set<unsigned int>
     }
   }
 
-  getGlMainWidget()->pickNodesEdges(x, y, width, height, selectedAxisPoints, dummy, mainLayer);
+  getGlWidget()->pickNodesEdges(x, y, width, height, selectedAxisPoints, dummy, mainLayer);
 
   for (const auto &entity : selectedAxisPoints) {
     node n(entity.getComplexEntityId());
@@ -921,8 +921,7 @@ void ParallelCoordinatesView::resetHighlightedElements() {
 
 ParallelAxis *ParallelCoordinatesView::getAxisUnderPointer(const int x, const int y) const {
   vector<ParallelAxis *> allAxis(parallelCoordsDrawing->getAllAxis());
-  axisSelectionLayer->setSharedCamera(
-      &getGlMainWidget()->getScene()->getLayer("Main")->getCamera());
+  axisSelectionLayer->setSharedCamera(&getGlWidget()->getScene()->getLayer("Main")->getCamera());
   axisSelectionLayer->getComposite()->reset(false);
 
   for (size_t i = 0; i < allAxis.size(); ++i) {
@@ -931,7 +930,7 @@ ParallelAxis *ParallelCoordinatesView::getAxisUnderPointer(const int x, const in
 
   vector<SelectedEntity> pickedEntities;
 
-  if (getGlMainWidget()->pickGlEntities(x, y, pickedEntities, axisSelectionLayer)) {
+  if (getGlWidget()->pickGlEntities(x, y, pickedEntities, axisSelectionLayer)) {
     return dynamic_cast<ParallelAxis *>(pickedEntities[0].getEntity());
   }
 

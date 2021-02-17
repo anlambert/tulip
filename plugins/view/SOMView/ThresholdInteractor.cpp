@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -23,7 +23,7 @@
 #include <talipot/GlQuad.h>
 #include <talipot/GlRect.h>
 #include <talipot/GlLayer.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/BooleanProperty.h>
 
 #include <QToolTip>
@@ -298,13 +298,13 @@ void ThresholdInteractor::setView(View *view) {
   view->refresh();
 }
 
-bool ThresholdInteractor::draw(GlMainWidget *glMainWidget) {
-  EditColorScaleInteractor::draw(glMainWidget);
+bool ThresholdInteractor::draw(GlWidget *glWidget) {
+  EditColorScaleInteractor::draw(glWidget);
 
   if (layer->isVisible()) {
-    glMainWidget->getScene()->getGraphCamera().initGl();
-    Camera camera2D(glMainWidget->getScene(), false);
-    camera2D.setScene(glMainWidget->getScene());
+    glWidget->getScene()->getGraphCamera().initGl();
+    Camera camera2D(glWidget->getScene(), false);
+    camera2D.setScene(glWidget->getScene());
     camera2D.initGl();
     drawComposite(layer->getComposite(), 0, &camera2D);
   }
@@ -314,7 +314,7 @@ bool ThresholdInteractor::draw(GlMainWidget *glMainWidget) {
 
 bool ThresholdInteractor::eventFilter(QObject *widget, QEvent *event) {
 
-  GlMainWidget *glMainWidget = static_cast<GlMainWidget *>(widget);
+  GlWidget *glWidget = static_cast<GlWidget *>(widget);
   SOMView *somView = static_cast<SOMView *>(view());
 
   QMouseEvent *me = static_cast<QMouseEvent *>(event);
@@ -326,10 +326,10 @@ bool ThresholdInteractor::eventFilter(QObject *widget, QEvent *event) {
 
     // Update Camera for selection
     layer->set2DMode();
-    glMainWidget->getScene()->addExistingLayer(layer);
-    glMainWidget->getScene()->selectEntities(RenderingEntities, me->x(), me->y(), 0, 0, layer,
-                                             selectedEntities);
-    glMainWidget->getScene()->removeLayer(layer, false);
+    glWidget->getScene()->addExistingLayer(layer);
+    glWidget->getScene()->selectEntities(RenderingEntities, me->x(), me->y(), 0, 0, layer,
+                                         selectedEntities);
+    glWidget->getScene()->removeLayer(layer, false);
 
     if (!selectedEntities.empty()) {
 
@@ -363,13 +363,13 @@ bool ThresholdInteractor::eventFilter(QObject *widget, QEvent *event) {
       // assert(!finalSelectedEntities.empty());
 
       if (!startDrag) {
-        glMainWidget->setMouseTracking(true);
+        glWidget->setMouseTracking(true);
         startDrag = true;
         // mouvingSlider = *finalSelectedEntities.begin();
         assert(mouvingSlider);
         mouvingSlider->beginShift();
         XPosCursor = me->x();
-        glMainWidget->getScene()->getGraphCamera().initGl();
+        glWidget->getScene()->getGraphCamera().initGl();
 
         layer->setVisible(false);
         colorScale->setVisible(false);
@@ -402,7 +402,7 @@ bool ThresholdInteractor::eventFilter(QObject *widget, QEvent *event) {
   if (event->type() == QEvent::MouseButtonRelease && startDrag) {
     SOMMap *som = somView->getSOM();
     assert(mouvingSlider != nullptr);
-    glMainWidget->setMouseTracking(false);
+    glWidget->setMouseTracking(false);
     startDrag = false;
     mouvingSlider->endShift();
     mouvingSlider = nullptr;

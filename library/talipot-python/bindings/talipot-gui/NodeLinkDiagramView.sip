@@ -12,7 +12,7 @@
  */
 
 %ModuleHeaderCode
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 %End
 
 namespace tlp {
@@ -46,7 +46,7 @@ Returns the current rendering input data for the node link diagram view.
 %End
 
 %MethodCode
-    sipRes = sipCpp->getGlMainWidget()->getGlGraphInputData();
+    sipRes = sipCpp->getGlWidget()->getGlGraphInputData();
 %End
 
 // =======================================================================================
@@ -61,7 +61,7 @@ Returns a copy of the current rendering parameters for the node link diagram vie
 %End
 
 %MethodCode
-    sipRes = new tlp::GlGraphRenderingParameters(sipCpp->getGlMainWidget()->getGlGraphRenderingParameters());
+    sipRes = new tlp::GlGraphRenderingParameters(sipCpp->getGlWidget()->getGlGraphRenderingParameters());
 %End
 
 // =======================================================================================
@@ -77,7 +77,7 @@ Sets the rendering parameters for the node link diagram view.
 %End
 
 %MethodCode
-    sipCpp->getGlMainWidget()->getScene()->getGlGraph()->setRenderingParameters(*a0);
+    sipCpp->getGlWidget()->getScene()->getGlGraph()->setRenderingParameters(*a0);
     sipCpp->draw();
     QApplication::processEvents();
 %End

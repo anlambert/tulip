@@ -148,7 +148,7 @@ protected:
  * glScene.draw();
  * \endcode
  *
- * If you want to create a widget with a visualisation is better to use GlMainWidget class (this
+ * If you want to create a widget with a visualisation is better to use GlWidget class (this
  * class use a GlScene inside)
  */
 class TLP_GL_SCOPE GlScene : public Observable {

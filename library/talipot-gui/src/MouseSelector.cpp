@@ -15,7 +15,7 @@
 
 #include <talipot/Graph.h>
 #include <talipot/BooleanProperty.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/GlTools.h>
 #include <talipot/MouseSelector.h>
 #include <talipot/GlGraph.h>
@@ -33,8 +33,8 @@ MouseSelector::MouseSelector(Qt::MouseButton button, Qt::KeyboardModifier modifi
 //==================================================================
 bool MouseSelector::eventFilter(QObject *widget, QEvent *e) {
   QMouseEvent *qMouseEv = static_cast<QMouseEvent *>(e);
-  GlMainWidget *glMainWidget = static_cast<GlMainWidget *>(widget);
-  Graph *g = glMainWidget->getGlGraphInputData()->getGraph();
+  GlWidget *glWidget = static_cast<GlWidget *>(widget);
+  Graph *g = glWidget->getGlGraphInputData()->getGraph();
 
   if (e->type() == QEvent::MouseButtonPress) {
 
@@ -61,7 +61,7 @@ bool MouseSelector::eventFilter(QObject *widget, QEvent *e) {
 
     if (qMouseEv->buttons() == Qt::MiddleButton) {
       started = false;
-      glMainWidget->redraw();
+      glWidget->redraw();
       return true;
     }
   }
@@ -87,17 +87,17 @@ bool MouseSelector::eventFilter(QObject *widget, QEvent *e) {
         clampedY = 0;
       }
 
-      if (clampedX > glMainWidget->width()) {
-        clampedX = glMainWidget->width();
+      if (clampedX > glWidget->width()) {
+        clampedX = glWidget->width();
       }
 
-      if (clampedY > glMainWidget->height()) {
-        clampedY = glMainWidget->height();
+      if (clampedY > glWidget->height()) {
+        clampedY = glWidget->height();
       }
 
       w = clampedX - x;
       h = clampedY - y;
-      glMainWidget->redraw();
+      glWidget->redraw();
       return true;
     }
 
@@ -114,7 +114,7 @@ bool MouseSelector::eventFilter(QObject *widget, QEvent *e) {
 
     if (started) {
       Observable::holdObservers();
-      BooleanProperty *selection = glMainWidget->getGlGraphInputData()->getElementSelected();
+      BooleanProperty *selection = glWidget->getGlGraphInputData()->getElementSelected();
       bool revertSelection = false; // add to selection
       bool boolVal = true;
       bool needPush = true; // undo management
@@ -159,7 +159,7 @@ bool MouseSelector::eventFilter(QObject *widget, QEvent *e) {
 
       if ((w == 0) && (h == 0)) {
         SelectedEntity selectedEntity;
-        bool result = glMainWidget->pickNodesEdges(x, y, selectedEntity);
+        bool result = glWidget->pickNodesEdges(x, y, selectedEntity);
 
         if (result) {
           switch (selectedEntity.getEntityType()) {
@@ -215,7 +215,7 @@ bool MouseSelector::eventFilter(QObject *widget, QEvent *e) {
           y -= h;
         }
 
-        glMainWidget->pickNodesEdges(x, y, w, h, tmpSetNode, tmpSetEdge);
+        glWidget->pickNodesEdges(x, y, w, h, tmpSetNode, tmpSetEdge);
 
         if (needPush) {
           graph->push();
@@ -243,7 +243,7 @@ bool MouseSelector::eventFilter(QObject *widget, QEvent *e) {
       started = false;
       graph->popIfNoUpdates();
       Observable::unholdObservers();
-      glMainWidget->redraw();
+      glWidget->redraw();
       return true;
     }
   }
@@ -251,22 +251,22 @@ bool MouseSelector::eventFilter(QObject *widget, QEvent *e) {
   return false;
 }
 //==================================================================
-bool MouseSelector::draw(GlMainWidget *glMainWidget) {
+bool MouseSelector::draw(GlWidget *glWidget) {
   if (!started) {
     return false;
   }
 
-  if (glMainWidget->getGlGraphInputData()->getGraph() != graph) {
+  if (glWidget->getGlGraphInputData()->getGraph() != graph) {
     graph = nullptr;
     started = false;
   }
 
-  float yy = glMainWidget->height() - y;
+  float yy = glWidget->height() - y;
   glPushAttrib(GL_ALL_ATTRIB_BITS);
   glMatrixMode(GL_PROJECTION);
   glPushMatrix();
   glLoadIdentity();
-  glOrtho(0, glMainWidget->width(), 0, glMainWidget->height(), -1, 1);
+  glOrtho(0, glWidget->width(), 0, glWidget->height(), -1, 1);
   glMatrixMode(GL_MODELVIEW);
   glPushMatrix();
   glLoadIdentity();

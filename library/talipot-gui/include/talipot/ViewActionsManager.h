@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -19,14 +19,14 @@
 
 #include <talipot/View.h>
 #include <talipot/DataSet.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 
 namespace tlp {
 class TLP_QT_SCOPE ViewActionsManager : public QObject {
   Q_OBJECT
 
   View *_view;
-  GlMainWidget *_glMainWidget;
+  GlWidget *_glWidget;
   bool _keepSizeRatio;
   QAction *_centerViewAction;
   QAction *_forceRedrawAction;
@@ -34,7 +34,7 @@ class TLP_QT_SCOPE ViewActionsManager : public QObject {
   QAction *_snapshotAction;
 
 public:
-  ViewActionsManager(View *view, GlMainWidget *widget, bool keepRatio);
+  ViewActionsManager(View *view, GlWidget *widget, bool keepRatio);
 
   // the function below must be called by the associated view
   // when overloading the View class corresponding method

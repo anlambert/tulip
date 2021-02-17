@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -15,7 +15,7 @@
 #define MOUSE_MAGNIFYING_GLASS_H
 
 #include <talipot/GLInteractor.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 
 #include "../../utils/StandardInteractorPriority.h"
 
@@ -33,11 +33,11 @@ public:
 
   bool eventFilter(QObject *widget, QEvent *e) override;
 
-  bool compute(GlMainWidget *) override {
+  bool compute(GlWidget *) override {
     return false;
   }
 
-  bool draw(GlMainWidget *glWidget) override;
+  bool draw(GlWidget *glWidget) override;
 
   void viewChanged(View *view) override;
 
@@ -46,7 +46,7 @@ private:
 
   QOpenGLFramebufferObject *fbo;
   QOpenGLFramebufferObject *fbo2;
-  GlMainWidget *glWidget;
+  GlWidget *glWidget;
   Camera *camera;
   Coord boxCenter;
   bool drawInteractor;

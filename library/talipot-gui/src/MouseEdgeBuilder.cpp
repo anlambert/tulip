@@ -16,7 +16,7 @@
 #include <talipot/Graph.h>
 #include <talipot/LayoutProperty.h>
 #include <talipot/ColorProperty.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/GlMainView.h>
 #include <talipot/GlTools.h>
 #include <talipot/GlLine.h>
@@ -29,28 +29,28 @@ using namespace tlp;
 
 MouseEdgeBuilder::MouseEdgeBuilder()
     : _source(node()), _started(false), _graph(nullptr), _layoutProperty(nullptr),
-      glMainWidget(nullptr) {}
+      glWidget(nullptr) {}
 
 bool MouseEdgeBuilder::eventFilter(QObject *widget, QEvent *e) {
 
-  if (glMainWidget == nullptr) {
-    glMainWidget = dynamic_cast<GlMainWidget *>(widget);
+  if (glWidget == nullptr) {
+    glWidget = dynamic_cast<GlWidget *>(widget);
   }
 
-  assert(glMainWidget);
+  assert(glWidget);
 
   if (e->type() == QEvent::MouseButtonPress) {
     QMouseEvent *qMouseEv = static_cast<QMouseEvent *>(e);
 
     SelectedEntity selectedEntity;
-    GlGraphInputData *inputData = glMainWidget->getGlGraphInputData();
+    GlGraphInputData *inputData = glWidget->getGlGraphInputData();
     Graph *_graph = inputData->getGraph();
 
     LayoutProperty *mLayout = inputData->getElementLayout();
 
     if (qMouseEv->buttons() == Qt::LeftButton) {
       if (!_started) {
-        bool result = glMainWidget->pickNodesEdges(qMouseEv->x(), qMouseEv->y(), selectedEntity);
+        bool result = glWidget->pickNodesEdges(qMouseEv->x(), qMouseEv->y(), selectedEntity);
 
         if (result && (selectedEntity.getEntityType() == SelectedEntity::NODE_SELECTED)) {
           _started = true;
@@ -62,7 +62,7 @@ bool MouseEdgeBuilder::eventFilter(QObject *widget, QEvent *e) {
 
         return false;
       } else {
-        bool result = glMainWidget->pickNodesEdges(qMouseEv->x(), qMouseEv->y(), selectedEntity);
+        bool result = glWidget->pickNodesEdges(qMouseEv->x(), qMouseEv->y(), selectedEntity);
 
         if (result && (selectedEntity.getEntityType() == SelectedEntity::NODE_SELECTED)) {
           Observable::holdObservers();
@@ -76,10 +76,10 @@ bool MouseEdgeBuilder::eventFilter(QObject *widget, QEvent *e) {
           Observable::unholdObservers();
 
         } else {
-          Coord point = {glMainWidget->width() - float(qMouseEv->x()), float(qMouseEv->y())};
-          _bends.push_back(glMainWidget->getScene()->getGraphCamera().viewportTo3DWorld(
-              glMainWidget->screenToViewport(point)));
-          glMainWidget->redraw();
+          Coord point = {glWidget->width() - float(qMouseEv->x()), float(qMouseEv->y())};
+          _bends.push_back(glWidget->getScene()->getGraphCamera().viewportTo3DWorld(
+              glWidget->screenToViewport(point)));
+          glWidget->redraw();
         }
       }
 
@@ -91,7 +91,7 @@ bool MouseEdgeBuilder::eventFilter(QObject *widget, QEvent *e) {
       _started = false;
       _source = node();
       clearObserver();
-      glMainWidget->draw();
+      glWidget->draw();
       return true;
     }
   }
@@ -102,30 +102,30 @@ bool MouseEdgeBuilder::eventFilter(QObject *widget, QEvent *e) {
     if (!_started) {
       SelectedEntity selectedEntity;
       bool hoveringOverNode =
-          glMainWidget->pickNodesEdges(qMouseEv->x(), qMouseEv->y(), selectedEntity) &&
+          glWidget->pickNodesEdges(qMouseEv->x(), qMouseEv->y(), selectedEntity) &&
           selectedEntity.getEntityType() == SelectedEntity::NODE_SELECTED;
 
       if (!hoveringOverNode) {
-        glMainWidget->setCursor(QCursor(Qt::ArrowCursor));
+        glWidget->setCursor(QCursor(Qt::ArrowCursor));
         return false;
       } else {
-        glMainWidget->setCursor(QCursor(Qt::CrossCursor));
+        glWidget->setCursor(QCursor(Qt::CrossCursor));
       }
     } else {
       SelectedEntity selectedEntity;
 
-      if (glMainWidget->pickNodesEdges(qMouseEv->x(), qMouseEv->y(), selectedEntity) &&
+      if (glWidget->pickNodesEdges(qMouseEv->x(), qMouseEv->y(), selectedEntity) &&
           selectedEntity.getEntityType() == SelectedEntity::NODE_SELECTED) {
-        glMainWidget->setCursor(QCursor(Qt::CrossCursor));
+        glWidget->setCursor(QCursor(Qt::CrossCursor));
       } else {
-        glMainWidget->setCursor(QCursor(Qt::ArrowCursor));
+        glWidget->setCursor(QCursor(Qt::ArrowCursor));
       }
 
-      Coord point = Coord(glMainWidget->width() - qMouseEv->x(), qMouseEv->y());
-      point = glMainWidget->getScene()->getGraphCamera().viewportTo3DWorld(
-          glMainWidget->screenToViewport(point));
+      Coord point = Coord(glWidget->width() - qMouseEv->x(), qMouseEv->y());
+      point = glWidget->getScene()->getGraphCamera().viewportTo3DWorld(
+          glWidget->screenToViewport(point));
       _curPos.set(point[0], point[1], point[2]);
-      glMainWidget->redraw();
+      glWidget->redraw();
     }
 
     return true;
@@ -134,13 +134,13 @@ bool MouseEdgeBuilder::eventFilter(QObject *widget, QEvent *e) {
   return false;
 }
 
-bool MouseEdgeBuilder::draw(GlMainWidget *glMainWidget) {
+bool MouseEdgeBuilder::draw(GlWidget *glWidget) {
   if (!_started) {
     return false;
   }
 
   glDisable(GL_STENCIL_TEST);
-  glMainWidget->getScene()->getGraphCamera().initGl();
+  glWidget->getScene()->getGraphCamera().initGl();
   vector<Coord> lineVertices;
   lineVertices.push_back(_startPos);
   lineVertices.insert(lineVertices.end(), _bends.begin(), _bends.end());
@@ -194,16 +194,16 @@ void MouseEdgeBuilder::treatEvent(const Event &evt) {
 }
 
 void MouseEdgeBuilder::clear() {
-  if (glMainWidget) {
-    glMainWidget->setCursor(QCursor());
+  if (glWidget) {
+    glWidget->setCursor(QCursor());
   }
 }
 
 void MouseEdgeBuilder::addLink(const node &source, const node &target) {
-  assert(glMainWidget);
-  Graph *g = glMainWidget->getGlGraphInputData()->getGraph();
+  assert(glWidget);
+  Graph *g = glWidget->getGlGraphInputData()->getGraph();
 
-  LayoutProperty *mLayout = glMainWidget->getGlGraphInputData()->getElementLayout();
+  LayoutProperty *mLayout = glWidget->getGlGraphInputData()->getElementLayout();
   edge newEdge = g->addEdge(source, target);
   mLayout->setEdgeValue(newEdge, bends());
   _bends.clear();

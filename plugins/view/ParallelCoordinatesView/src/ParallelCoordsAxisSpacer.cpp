@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -13,7 +13,7 @@
 
 #include <talipot/GlLine.h>
 #include <talipot/Camera.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 
 #include "ParallelCoordsAxisSpacer.h"
 #include "ParallelTools.h"
@@ -32,7 +32,7 @@ ParallelCoordsAxisSpacer::ParallelCoordsAxisSpacer()
 
 bool ParallelCoordsAxisSpacer::eventFilter(QObject *widget, QEvent *e) {
 
-  GlMainWidget *glWidget = static_cast<GlMainWidget *>(widget);
+  GlWidget *glWidget = static_cast<GlWidget *>(widget);
   QMouseEvent *me = static_cast<QMouseEvent *>(e);
 
   if (e->type() == QEvent::MouseMove) {
@@ -137,9 +137,9 @@ bool ParallelCoordsAxisSpacer::eventFilter(QObject *widget, QEvent *e) {
   return false;
 }
 
-bool ParallelCoordsAxisSpacer::draw(GlMainWidget *glMainWidget) {
+bool ParallelCoordsAxisSpacer::draw(GlWidget *glWidget) {
   if (selectedAxis != nullptr) {
-    glMainWidget->getScene()->getLayer("Main")->getCamera().initGl();
+    glWidget->getScene()->getLayer("Main")->getCamera().initGl();
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     Array<Coord, 4> axisBP(selectedAxis->getBoundingPolygonCoords());

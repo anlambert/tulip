@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -17,7 +17,7 @@
 #include <talipot/GlQuad.h>
 #include <talipot/GlLines.h>
 #include <talipot/GlEntity.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 
 #include "ParallelCoordinatesView.h"
 #include "ParallelTools.h"
@@ -322,7 +322,7 @@ void ParallelCoordsAxisBoxPlot::viewChanged(View *view) {
   initOrUpdateBoxPlots();
 }
 
-bool ParallelCoordsAxisBoxPlot::compute(GlMainWidget *) {
+bool ParallelCoordsAxisBoxPlot::compute(GlWidget *) {
   initOrUpdateBoxPlots();
   return true;
 }
@@ -371,7 +371,7 @@ void ParallelCoordsAxisBoxPlot::deleteGlAxisPlot() {
 
 bool ParallelCoordsAxisBoxPlot::eventFilter(QObject *widget, QEvent *e) {
 
-  GlMainWidget *glWidget = static_cast<GlMainWidget *>(widget);
+  GlWidget *glWidget = static_cast<GlWidget *>(widget);
 
   if (!glWidget) {
     return false;
@@ -426,9 +426,9 @@ bool ParallelCoordsAxisBoxPlot::eventFilter(QObject *widget, QEvent *e) {
   return false;
 }
 
-bool ParallelCoordsAxisBoxPlot::draw(GlMainWidget *glMainWidget) {
+bool ParallelCoordsAxisBoxPlot::draw(GlWidget *glWidget) {
 
-  Camera &camera = glMainWidget->getScene()->getLayer("Main")->getCamera();
+  Camera &camera = glWidget->getScene()->getLayer("Main")->getCamera();
   camera.initGl();
 
   for (const auto &it : axisBoxPlotMap) {

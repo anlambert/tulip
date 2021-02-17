@@ -13,7 +13,7 @@ SET(SRCS
     DragHandle.cpp
     GlCompositeHierarchyManager.cpp
     GlMainView.cpp
-    GlMainWidget.cpp
+    GlWidget.cpp
     GlOffscreenRenderer.cpp
     GraphPropertiesSelectionWidget.cpp
     HeaderFrame.cpp
@@ -50,7 +50,7 @@ SET(SRCS
     Model.cpp
     ColorScaleButton.cpp
     View.cpp
-    GlMainWidgetGraphicsItem.cpp
+    GlWidgetGraphicsItem.cpp
     ViewWidget.cpp
     InteractorComposite.cpp
     GLInteractor.cpp
@@ -183,8 +183,8 @@ QTX_WRAP_CPP(
   ../include/talipot/FileDownloader.h
   ../include/talipot/GLInteractor.h
   ../include/talipot/GlMainView.h
-  ../include/talipot/GlMainWidget.h
-  ../include/talipot/GlMainWidgetGraphicsItem.h
+  ../include/talipot/GlWidget.h
+  ../include/talipot/GlWidgetGraphicsItem.h
   ../include/talipot/GlOverviewGraphicsItem.h
   ../include/talipot/GlEntityItemModel.h
   ../include/talipot/GraphHierarchiesModel.h

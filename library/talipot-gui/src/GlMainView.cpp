@@ -21,8 +21,8 @@
 #include <QPushButton>
 #include <QTimer>
 
-#include <talipot/GlMainWidgetGraphicsItem.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidgetGraphicsItem.h>
+#include <talipot/GlWidget.h>
 #include <talipot/SceneConfigWidget.h>
 #include <talipot/SceneLayersConfigWidget.h>
 #include <talipot/GlBoundingBoxSceneVisitor.h>
@@ -38,7 +38,7 @@
 using namespace tlp;
 
 GlMainView::GlMainView(bool needtturlManager)
-    : _glMainWidget(nullptr), _overviewItem(nullptr), _viewActionsManager(nullptr),
+    : _glWidget(nullptr), _overviewItem(nullptr), _viewActionsManager(nullptr),
       _showOvButton(nullptr), _showQabButton(nullptr), needQuickAccessBar(false),
       _needTooltipAndUrlManager(needtturlManager), _quickAccessBarItem(nullptr),
       _quickAccessBar(nullptr), _sceneConfigurationWidget(nullptr),
@@ -53,15 +53,15 @@ GlMainView::~GlMainView() {
 }
 
 void GlMainView::draw() {
-  _glMainWidget->draw();
+  _glWidget->draw();
 }
 
 void GlMainView::redraw() {
-  _glMainWidget->redraw();
+  _glWidget->redraw();
 }
 
 void GlMainView::refresh() {
-  _glMainWidget->draw(false);
+  _glWidget->draw(false);
 }
 
 void GlMainView::setOverviewPosition(const OverviewPosition &position) {
@@ -111,7 +111,7 @@ tlp::DataSet GlMainView::state() const {
 
 void GlMainView::drawOverview(bool generatePixmap) {
   if (_overviewItem == nullptr) {
-    _overviewItem = new GlOverviewGraphicsItem(this, *_glMainWidget->getScene());
+    _overviewItem = new GlOverviewGraphicsItem(this, *_glWidget->getScene());
     addToScene(_overviewItem);
     generatePixmap = true;
     // used to set the overview at the right place
@@ -123,29 +123,28 @@ void GlMainView::drawOverview(bool generatePixmap) {
   }
 }
 
-void GlMainView::assignNewGlMainWidget(GlMainWidget *glMainWidget, bool deleteOldGlMainWidget) {
-  _glMainWidget = glMainWidget;
+void GlMainView::assignNewGlWidget(GlWidget *glWidget, bool deleteOldGlWidget) {
+  _glWidget = glWidget;
 
   if (_sceneLayersConfigurationWidget == nullptr) {
     _sceneLayersConfigurationWidget = new SceneLayersConfigWidget();
   }
 
-  _sceneLayersConfigurationWidget->setGlMainWidget(_glMainWidget);
+  _sceneLayersConfigurationWidget->setGlWidget(_glWidget);
   connect(_sceneLayersConfigurationWidget, &SceneLayersConfigWidget::drawNeeded, this,
           &View::drawNeeded);
 
-  setCentralWidget(_glMainWidget, deleteOldGlMainWidget);
-  GlMainWidgetGraphicsItem *glMainWidgetGraphicsItem =
-      static_cast<GlMainWidgetGraphicsItem *>(centralItem());
+  setCentralWidget(_glWidget, deleteOldGlWidget);
+  GlWidgetGraphicsItem *glWidgetGraphicsItem = static_cast<GlWidgetGraphicsItem *>(centralItem());
   delete _sceneConfigurationWidget;
   _sceneConfigurationWidget = new SceneConfigWidget();
-  _sceneConfigurationWidget->setGlMainWidget(_glMainWidget);
+  _sceneConfigurationWidget->setGlWidget(_glWidget);
 
-  connect(glMainWidgetGraphicsItem, &GlMainWidgetGraphicsItem::widgetPainted, this,
+  connect(glWidgetGraphicsItem, &GlWidgetGraphicsItem::widgetPainted, this,
           &GlMainView::glMainViewDrawn);
   // Tooltip events and url management
   if (_needTooltipAndUrlManager) {
-    activateTooltipAndUrlManager(_glMainWidget);
+    activateTooltipAndUrlManager(_glWidget);
   }
 }
 
@@ -155,12 +154,12 @@ GlOverviewGraphicsItem *GlMainView::overviewItem() const {
 
 void GlMainView::setupWidget() {
   graphicsView()->viewport()->parentWidget()->installEventFilter(this);
-  assignNewGlMainWidget(new GlMainWidget(nullptr, this), true);
-  _viewActionsManager = new ViewActionsManager(this, _glMainWidget, false);
+  assignNewGlWidget(new GlWidget(nullptr, this), true);
+  _viewActionsManager = new ViewActionsManager(this, _glWidget, false);
 }
 
-GlMainWidget *GlMainView::getGlMainWidget() const {
-  return _glMainWidget;
+GlWidget *GlMainView::getGlWidget() const {
+  return _glWidget;
 }
 
 void GlMainView::centerView(bool graphChanged) {
@@ -168,7 +167,7 @@ void GlMainView::centerView(bool graphChanged) {
   float gvWidth = graphicsView()->width();
   // we apply a zoom factor to preserve a 50 px margin width
   // to ensure the scene will not be drawn under the configuration tabs title
-  getGlMainWidget()->centerScene(graphChanged, (gvWidth - 50) / gvWidth);
+  getGlWidget()->centerScene(graphChanged, (gvWidth - 50) / gvWidth);
 
   if (_overviewItem && _overviewItem->isVisible()) {
     drawOverview(graphChanged);
@@ -239,8 +238,8 @@ bool GlMainView::overviewVisible() const {
 }
 
 void GlMainView::setViewOrtho(bool viewOrtho) {
-  getGlMainWidget()->getScene()->setViewOrtho(viewOrtho);
-  _glMainWidget->draw(false);
+  getGlWidget()->getScene()->setViewOrtho(viewOrtho);
+  _glWidget->draw(false);
 }
 
 void GlMainView::updateShowQuickAccessBarButton() {
@@ -343,31 +342,30 @@ void GlMainView::sceneRectChanged(const QRectF &rect) {
 }
 
 QPixmap GlMainView::snapshot(const QSize &outputSize) const {
-  if (_glMainWidget == nullptr) {
+  if (_glWidget == nullptr) {
     return QPixmap();
   }
 
   QSize realSize = outputSize;
 
   if (!realSize.isValid()) {
-    realSize = _glMainWidget->size();
+    realSize = _glWidget->size();
   }
 
-  return QPixmap::fromImage(
-      _glMainWidget->createPicture(realSize.width(), realSize.height(), false));
+  return QPixmap::fromImage(_glWidget->createPicture(realSize.width(), realSize.height(), false));
 }
 
 QImage GlMainView::getRGBImage() const {
-  QSize currentSize = _glMainWidget->size();
-  return _glMainWidget->createPicture(currentSize.width(), currentSize.height(), false,
-                                      QImage::Format_RGB888);
+  QSize currentSize = _glWidget->size();
+  return _glWidget->createPicture(currentSize.width(), currentSize.height(), false,
+                                  QImage::Format_RGB888);
 }
 
 void GlMainView::undoCallback() {
   float gvWidth = graphicsView()->width();
   // we apply a zoom factor to preserve a 50 px margin width
   // to ensure the scene will not be drawn under the configuration tabs title
-  getGlMainWidget()->centerScene(true, (gvWidth - 50) / gvWidth);
+  getGlWidget()->centerScene(true, (gvWidth - 50) / gvWidth);
   draw();
 }
 
@@ -377,7 +375,7 @@ void GlMainView::fillContextMenu(QMenu *menu, const QPointF &pf) {
   QAction *viewOrtho = menu->addAction("Use orthogonal projection");
   viewOrtho->setToolTip("Enable to switch between true perspective and orthogonal");
   viewOrtho->setCheckable(true);
-  viewOrtho->setChecked(_glMainWidget->getScene()->isViewOrtho());
+  viewOrtho->setChecked(_glWidget->getScene()->isViewOrtho());
   connect(viewOrtho, &QAction::triggered, this, &GlMainView::setViewOrtho);
 
   menu->addSeparator();
@@ -434,7 +432,7 @@ bool GlMainView::eventFilter(QObject *obj, QEvent *event) {
   return ViewWidget::eventFilter(obj, event);
 }
 
-bool GlMainView::getNodeOrEdgeAtViewportPos(GlMainWidget *glw, int x, int y, node &n, edge &e) {
+bool GlMainView::getNodeOrEdgeAtViewportPos(GlWidget *glw, int x, int y, node &n, edge &e) {
   SelectedEntity type;
   if (glw->pickNodesEdges(x, y, type)) {
     node tmpNode = type.getNode();
@@ -457,7 +455,7 @@ bool GlMainView::pickNodeEdge(const int x, const int y, node &n, edge &e, bool p
                               bool pickEdge) {
   SelectedEntity selectedEntity;
   bool foundEntity =
-      getGlMainWidget()->pickNodesEdges(x, y, selectedEntity, nullptr, pickNode, pickEdge);
+      getGlWidget()->pickNodesEdges(x, y, selectedEntity, nullptr, pickNode, pickEdge);
   n = node();
   e = edge();
   if (foundEntity) {
@@ -478,12 +476,12 @@ void GlMainView::zoomAndPanAnimation(const tlp::BoundingBox &boundingBox, const 
   if (bb.isValid()) {
     bb = boundingBox;
   } else {
-    auto scene = getGlMainWidget()->getScene();
+    auto scene = getGlWidget()->getScene();
     GlGraphInputData *inputData = scene->getGlGraph()->getInputData();
     GlBoundingBoxSceneVisitor bbVisitor(inputData);
     scene->getLayer("Main")->acceptVisitor(&bbVisitor);
     bb = bbVisitor.getBoundingBox();
   }
-  QtGlSceneZoomAndPanAnimator zoomAnPan(getGlMainWidget(), bb, duration);
+  QtGlSceneZoomAndPanAnimator zoomAnPan(getGlWidget(), bb, duration);
   zoomAnPan.animateZoomAndPan();
 }

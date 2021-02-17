@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -29,10 +29,10 @@ public:
   ~ScatterPlot2DViewNavigator() override;
 
   bool eventFilter(QObject *, QEvent *) override;
-  bool draw(GlMainWidget *) override {
+  bool draw(GlWidget *) override {
     return false;
   }
-  bool compute(GlMainWidget *) override {
+  bool compute(GlWidget *) override {
     return false;
   }
   void viewChanged(View *view) override;
@@ -43,7 +43,7 @@ private:
   ScatterPlot2DView *scatterPlot2dView;
   ScatterPlot2D *selectedScatterPlotOverview;
 
-  GlMainWidget *glWidget;
+  GlWidget *glWidget;
 };
 }
 

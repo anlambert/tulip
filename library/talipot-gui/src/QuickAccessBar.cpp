@@ -29,7 +29,7 @@
 #include <talipot/GlGraph.h>
 #include <talipot/GlGraphRenderingParameters.h>
 #include <talipot/TlpQtTools.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/GlMainView.h>
 #include <talipot/GlGraphInputData.h>
 #include <talipot/SnapshotDialog.h>
@@ -549,7 +549,7 @@ GlGraphInputData *QuickAccessBar::inputData() const {
 }
 
 GlScene *QuickAccessBar::scene() const {
-  return _mainView->getGlMainWidget()->getScene();
+  return _mainView->getGlWidget()->getScene();
 }
 
 void QuickAccessBarImpl::selectFont() {

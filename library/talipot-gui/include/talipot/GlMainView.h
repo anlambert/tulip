@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -15,7 +15,7 @@
 #define TALIPOT_GL_MAIN_VIEW_H
 
 #include <talipot/ViewWidget.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 
 class QGraphicsProxyWidget;
 class QAction;
@@ -32,9 +32,9 @@ class ViewActionsManager;
 /**
  * @ingroup Plugins
  *
- * @brief An abstract view that displays a GlMainWidget as its central widget.
+ * @brief An abstract view that displays a GlWidget as its central widget.
  *
- * The GlMainView subclasses ViewWidget and always uses a GlMainWidget as the central widget of the
+ * The GlMainView subclasses ViewWidget and always uses a GlWidget as the central widget of the
  panel. It also adds the following features:
  * @list
  * @li An overview of the scene that can be toggled on or off.
@@ -44,7 +44,7 @@ class ViewActionsManager;
  * @li The possibility to make snapshots of the current scene
  * @endlist
  *
- * Subclassing GlMainView means you will only want to display graphs in a single GlMainWidget.
+ * Subclassing GlMainView means you will only want to display graphs in a single GlWidget.
  Switching the central widget can only be achieved from the ViewWidget class.
  *
  * @warning It is strongly unadvised to re-implement methods already implemented into tlp::View or
@@ -63,7 +63,7 @@ class TLP_QT_SCOPE GlMainView : public tlp::ViewWidget {
 
   Q_OBJECT
 
-  tlp::GlMainWidget *_glMainWidget;
+  tlp::GlWidget *_glWidget;
   tlp::GlOverviewGraphicsItem *_overviewItem;
   tlp::ViewActionsManager *_viewActionsManager;
 
@@ -86,7 +86,7 @@ public:
 
   GlMainView(bool needTooltipAndUrlManager = false);
   ~GlMainView() override;
-  tlp::GlMainWidget *getGlMainWidget() const;
+  tlp::GlWidget *getGlWidget() const;
   QList<QWidget *> configurationWidgets() const override;
   bool overviewVisible() const;
   bool quickAccessBarVisible() const;
@@ -123,7 +123,7 @@ public:
    * @param z rotation around Z axis in degree
    */
   void rotateCamera(int x, int y, int z) {
-    getGlMainWidget()->getScene()->rotateCamera(x, y, z);
+    getGlWidget()->getScene()->rotateCamera(x, y, z);
   }
 
   /**
@@ -133,21 +133,21 @@ public:
    * @param z offset along the Z axis
    */
   void translateCamera(int x, int y, int z) {
-    getGlMainWidget()->getScene()->translateCamera(x, y, z);
+    getGlWidget()->getScene()->translateCamera(x, y, z);
   }
 
   /**
    * @brief Return the 3D world position for the given view position
    */
   Coord viewToWorld(const Coord &vpos) const {
-    return getGlMainWidget()->getScene()->getGraphCamera().viewportTo3DWorld(vpos);
+    return getGlWidget()->getScene()->getGraphCamera().viewportTo3DWorld(vpos);
   }
 
   /**
    * @brief Return the view position for the given 3D position
    */
   Coord worldToView(const Coord &wpos) const {
-    return getGlMainWidget()->getScene()->getGraphCamera().worldTo2DViewport(wpos);
+    return getGlWidget()->getScene()->getGraphCamera().worldTo2DViewport(wpos);
   }
 
   /**
@@ -155,7 +155,7 @@ public:
    * @param step of zoom
    */
   void zoomXY(int step, const int x, const int y) {
-    getGlMainWidget()->getScene()->zoomXY(step, x, y);
+    getGlWidget()->getScene()->zoomXY(step, x, y);
   }
 
   /**
@@ -163,7 +163,7 @@ public:
    * @param step of zoom
    */
   void zoom(int step) {
-    getGlMainWidget()->getScene()->zoom(step);
+    getGlWidget()->getScene()->zoom(step);
   }
 
   /**
@@ -171,7 +171,7 @@ public:
    * @param factor of zoom
    */
   void zoomFactor(float factor) {
-    getGlMainWidget()->getScene()->zoomFactor(factor);
+    getGlWidget()->getScene()->zoomFactor(factor);
   }
 
   /**
@@ -186,17 +186,17 @@ public:
 
 public slots:
   /**
-   * @brief Calls GlMainWidget::draw();
+   * @brief Calls GlWidget::draw();
    */
   void draw() override;
 
   /**
-   * @brief Calls GlMainWidget::redraw();
+   * @brief Calls GlWidget::redraw();
    */
   void redraw();
 
   /**
-   * @brief Calls GlMainWidget::redraw();
+   * @brief Calls GlWidget::redraw();
    */
   void refresh() override;
 
@@ -233,14 +233,14 @@ public slots:
 
   void undoCallback() override;
 
-  static bool getNodeOrEdgeAtViewportPos(GlMainWidget *glw, int x, int y, node &n, edge &e);
+  static bool getNodeOrEdgeAtViewportPos(GlWidget *glw, int x, int y, node &n, edge &e);
 
   bool getNodeOrEdgeAtViewportPos(int x, int y, node &n, edge &e) const override {
-    return getNodeOrEdgeAtViewportPos(_glMainWidget, x, y, n, e);
+    return getNodeOrEdgeAtViewportPos(_glWidget, x, y, n, e);
   }
 
   /**
-   * @brief Return the glMainWidget current display in the RGB888 format.
+   * @brief Return the glWidget current display in the RGB888 format.
    */
   QImage getRGBImage() const;
 
@@ -251,7 +251,7 @@ protected slots:
 
 protected:
   void setupWidget() override;
-  void assignNewGlMainWidget(GlMainWidget *glMainWidget, bool deleteOldGlMainWidget = true);
+  void assignNewGlWidget(GlWidget *glWidget, bool deleteOldGlWidget = true);
   bool eventFilter(QObject *obj, QEvent *event) override;
 
   tlp::GlOverviewGraphicsItem *overviewItem() const;

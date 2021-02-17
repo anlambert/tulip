@@ -17,7 +17,7 @@
 
 #include <talipot/TlpTools.h>
 #include <talipot/Graph.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/GlRect.h>
 #include <talipot/GlGraph.h>
 #include <talipot/GlLayer.h>
@@ -95,11 +95,11 @@ QList<QWidget *> PixelOrientedView::configurationWidgets() const {
 }
 
 void PixelOrientedView::initGlWidget() {
-  mainLayer = getGlMainWidget()->getScene()->getLayer("Main");
+  mainLayer = getGlWidget()->getScene()->getLayer("Main");
 
   if (mainLayer == nullptr) {
     mainLayer = new GlLayer("Main");
-    getGlMainWidget()->getScene()->addExistingLayer(mainLayer);
+    getGlWidget()->getScene()->addExistingLayer(mainLayer);
   }
 
   if (mainLayer->findGlEntity("graph")) {
@@ -258,7 +258,7 @@ void PixelOrientedView::setState(const DataSet &dataSet) {
 
   if (haveSelectedGraphProperties) {
     updateOverviews(true);
-    getGlMainWidget()->centerScene();
+    getGlWidget()->centerScene();
   }
 
   bool quickAccessBarVisible = false;
@@ -300,8 +300,8 @@ DataSet PixelOrientedView::state() const {
     dataSet.set(selectedGraphProperties[i], tmpOverviewGenMap[selectedGraphProperties[i]]);
   }
 
-  dataSet.set("lastViewWindowWidth", getGlMainWidget()->width());
-  dataSet.set("lastViewWindowHeight", getGlMainWidget()->height());
+  dataSet.set("lastViewWindowWidth", getGlWidget()->width());
+  dataSet.set("lastViewWindowHeight", getGlWidget()->height());
   dataSet.set("detail overview  name", detailOverviewPropertyName);
   dataSet.set("background color", optionsWidget->getBackgroundColor());
 
@@ -447,7 +447,7 @@ void PixelOrientedView::destroyData() {
 
 void PixelOrientedView::addEmptyViewLabel() {
   Color backgroundColor = {optionsWidget->getBackgroundColor()};
-  getGlMainWidget()->getScene()->setBackgroundColor(backgroundColor);
+  getGlWidget()->getScene()->setBackgroundColor(backgroundColor);
 
   Color textColor = getTextColor();
 
@@ -482,13 +482,13 @@ void PixelOrientedView::removeEmptyViewLabel() {
 }
 
 void PixelOrientedView::generatePixelOverview(PixelOrientedOverview *pixelOverview,
-                                              GlMainWidget *glWidget) {
+                                              GlWidget *glWidget) {
   pixelOverview->computePixelView(glWidget);
   overviewGenMap[pixelOverview->getDimensionName()] = true;
 }
 
 void PixelOrientedView::draw() {
-  GlMainWidget *glw = getGlMainWidget();
+  GlWidget *glw = getGlWidget();
   GlScene *scene = glw->getScene();
 
   if (pixelOrientedGraph != nullptr) {
@@ -567,7 +567,7 @@ void PixelOrientedView::draw() {
 }
 
 void PixelOrientedView::refresh() {
-  getGlMainWidget()->redraw();
+  getGlWidget()->redraw();
 }
 
 void PixelOrientedView::init() {
@@ -590,22 +590,21 @@ Color PixelOrientedView::getTextColor() const {
 }
 
 void PixelOrientedView::centerView(bool) {
-  if (!getGlMainWidget()->isVisible()) {
+  if (!getGlWidget()->isVisible()) {
     if (lastViewWindowWidth != 0 && lastViewWindowHeight != 0) {
-      getGlMainWidget()->getScene()->adjustSceneToSize(lastViewWindowWidth, lastViewWindowHeight);
+      getGlWidget()->getScene()->adjustSceneToSize(lastViewWindowWidth, lastViewWindowHeight);
     } else {
-      getGlMainWidget()->getScene()->centerScene();
+      getGlWidget()->getScene()->centerScene();
     }
   } else {
-    getGlMainWidget()->getScene()->adjustSceneToSize(getGlMainWidget()->width(),
-                                                     getGlMainWidget()->height());
+    getGlWidget()->getScene()->adjustSceneToSize(getGlWidget()->width(), getGlWidget()->height());
   }
 
   // we apply a zoom factor to preserve a 50 px margin height
   // to ensure the scene will not be drawn under the configuration tabs title
   float glHeight = graphicsView()->width();
-  getGlMainWidget()->getScene()->zoomFactor((glHeight - 50) / glHeight);
-  getGlMainWidget()->draw();
+  getGlWidget()->getScene()->zoomFactor((glHeight - 50) / glHeight);
+  getGlWidget()->draw();
 }
 
 void PixelOrientedView::updateOverviews(const bool updateAll) {
@@ -619,7 +618,7 @@ void PixelOrientedView::updateOverviews(const bool updateAll) {
 
   unsigned int nbOverviews = selectedGraphProperties.size();
   unsigned currentStep = 0;
-  Camera &cam = getGlMainWidget()->getScene()->getGraphCamera();
+  Camera &cam = getGlWidget()->getScene()->getGraphCamera();
   double sceneRadiusBak = cam.getSceneRadius();
   double zoomFactorBak = cam.getZoomFactor();
   Coord eyesBak = cam.getEyes();
@@ -635,7 +634,7 @@ void PixelOrientedView::updateOverviews(const bool updateAll) {
   progressBar->setComment("Updating pixel oriented view...");
   progressBar->progress(currentStep, nbOverviews);
   mainLayer->addGlEntity(progressBar, "progress bar");
-  getGlMainWidget()->draw();
+  getGlWidget()->draw();
 
   // disable user input
   tlp::disableQtUserInput();
@@ -651,7 +650,7 @@ void PixelOrientedView::updateOverviews(const bool updateAll) {
       }
 
       progressBar->progress(++currentStep, nbOverviews);
-      getGlMainWidget()->draw();
+      getGlWidget()->draw();
       // needed to display progressBar
       QApplication::processEvents();
     }
@@ -676,7 +675,7 @@ void PixelOrientedView::updateOverviews(const bool updateAll) {
   cam.setCenter(centerBak);
   cam.setUp(upBak);
 
-  getGlMainWidget()->draw();
+  getGlWidget()->draw();
 }
 
 vector<PixelOrientedOverview *> PixelOrientedView::getOverviews() {
@@ -703,11 +702,11 @@ QuickAccessBar *PixelOrientedView::getQuickAccessBarImpl() {
 void PixelOrientedView::switchFromSmallMultiplesToDetailView(PixelOrientedOverview *pixelOverview) {
 
   if (smallMultiplesView) {
-    sceneRadiusBak = getGlMainWidget()->getScene()->getGraphCamera().getSceneRadius();
-    zoomFactorBak = getGlMainWidget()->getScene()->getGraphCamera().getZoomFactor();
-    eyesBak = getGlMainWidget()->getScene()->getGraphCamera().getEyes();
-    centerBak = getGlMainWidget()->getScene()->getGraphCamera().getCenter();
-    upBak = getGlMainWidget()->getScene()->getGraphCamera().getUp();
+    sceneRadiusBak = getGlWidget()->getScene()->getGraphCamera().getSceneRadius();
+    zoomFactorBak = getGlWidget()->getScene()->getGraphCamera().getZoomFactor();
+    eyesBak = getGlWidget()->getScene()->getGraphCamera().getEyes();
+    centerBak = getGlWidget()->getScene()->getGraphCamera().getCenter();
+    upBak = getGlWidget()->getScene()->getGraphCamera().getUp();
   }
 
   mainLayer->deleteGlEntity(overviewsComposite);
@@ -751,17 +750,17 @@ void PixelOrientedView::switchFromDetailViewToSmallMultiples() {
   setGraphView(glGraph, false);
   mainLayer->deleteGlEntity(detailViewLabel);
   mainLayer->addGlEntity(overviewsComposite, "overviews composite");
-  getGlMainWidget()->getScene()->getGraphCamera().setSceneRadius(sceneRadiusBak);
-  getGlMainWidget()->getScene()->getGraphCamera().setZoomFactor(zoomFactorBak);
-  getGlMainWidget()->getScene()->getGraphCamera().setEyes(eyesBak);
-  getGlMainWidget()->getScene()->getGraphCamera().setCenter(centerBak);
-  getGlMainWidget()->getScene()->getGraphCamera().setUp(upBak);
+  getGlWidget()->getScene()->getGraphCamera().setSceneRadius(sceneRadiusBak);
+  getGlWidget()->getScene()->getGraphCamera().setZoomFactor(zoomFactorBak);
+  getGlWidget()->getScene()->getGraphCamera().setEyes(eyesBak);
+  getGlWidget()->getScene()->getGraphCamera().setCenter(centerBak);
+  getGlWidget()->getScene()->getGraphCamera().setUp(upBak);
   smallMultiplesView = true;
   toggleInteractors(false);
   detailOverview = nullptr;
   detailOverviewPropertyName = "";
   propertiesSelectionWidget->setEnabled(true);
-  getGlMainWidget()->draw();
+  getGlWidget()->draw();
 }
 
 BoundingBox PixelOrientedView::getSmallMultiplesViewBoundingBox() {

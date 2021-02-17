@@ -14,7 +14,7 @@
 #include <QMouseEvent>
 
 #include <talipot/Graph.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/GlTools.h>
 #include <talipot/DrawingTools.h>
 #include <talipot/QtGlSceneZoomAndPanAnimator.h>
@@ -34,7 +34,7 @@ MouseBoxZoomer::MouseBoxZoomer(Qt::MouseButton button, Qt::KeyboardModifier modi
 MouseBoxZoomer::~MouseBoxZoomer() {}
 //=====================================================================
 bool MouseBoxZoomer::eventFilter(QObject *widget, QEvent *e) {
-  GlMainWidget *glw = static_cast<GlMainWidget *>(widget);
+  GlWidget *glw = static_cast<GlWidget *>(widget);
   GlGraphInputData *inputData = glw->getGlGraphInputData();
 
   if (e->type() == QEvent::MouseButtonPress) {
@@ -143,7 +143,7 @@ bool MouseBoxZoomer::eventFilter(QObject *widget, QEvent *e) {
   return false;
 }
 //=====================================================================
-bool MouseBoxZoomer::draw(GlMainWidget *glw) {
+bool MouseBoxZoomer::draw(GlWidget *glw) {
   if (!started) {
     return false;
   }

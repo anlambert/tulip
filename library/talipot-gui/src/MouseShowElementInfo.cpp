@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -23,7 +23,7 @@
 #include <talipot/GraphElementModel.h>
 #include <talipot/ItemDelegate.h>
 #include <talipot/GlMainView.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/GlScene.h>
 #include <talipot/MouseShowElementInfo.h>
 #include <talipot/MetaTypes.h>
@@ -33,7 +33,7 @@ using namespace tlp;
 
 MouseShowElementInfo::MouseShowElementInfo(const bool showVisualPropButton)
     : _ui(new Ui::ElementInformationWidget), _informationWidget(new QWidget()),
-      _informationWidgetItem(new QGraphicsProxyWidget()), glMainWidget(nullptr), _show(true) {
+      _informationWidgetItem(new QGraphicsProxyWidget()), glWidget(nullptr), _show(true) {
   _informationWidget->installEventFilter(this);
   _ui->setupUi(_informationWidget);
   tableView()->setItemDelegate(new ItemDelegate(tableView()));
@@ -72,8 +72,8 @@ void MouseShowElementInfo::hideInfos() {
 void MouseShowElementInfo::clear() {
   _informationWidgetItem->setVisible(false);
 
-  if (glMainWidget) {
-    glMainWidget->setCursor(QCursor());
+  if (glWidget) {
+    glWidget->setCursor(QCursor());
   }
 }
 
@@ -114,19 +114,19 @@ bool MouseShowElementInfo::eventFilter(QObject *widget, QEvent *e) {
   QMouseEvent *qMouseEv = dynamic_cast<QMouseEvent *>(e);
 
   if (qMouseEv != nullptr) {
-    if (glMainWidget == nullptr) {
-      glMainWidget = dynamic_cast<GlMainWidget *>(widget);
+    if (glWidget == nullptr) {
+      glWidget = dynamic_cast<GlWidget *>(widget);
     }
 
-    assert(glMainWidget);
+    assert(glWidget);
 
     SelectedEntity selectedEntity;
 
     if (e->type() == QEvent::MouseMove) {
       if (pick(qMouseEv->x(), qMouseEv->y(), selectedEntity)) {
-        glMainWidget->setCursor(Qt::WhatsThisCursor);
+        glWidget->setCursor(Qt::WhatsThisCursor);
       } else {
-        glMainWidget->setCursor(QCursor());
+        glWidget->setCursor(QCursor());
       }
 
       return false;
@@ -195,8 +195,8 @@ bool MouseShowElementInfo::eventFilter(QObject *widget, QEvent *e) {
 }
 
 bool MouseShowElementInfo::pick(int x, int y, SelectedEntity &selectedEntity) {
-  assert(glMainWidget);
-  return glMainWidget->pickNodesEdges(x, y, selectedEntity);
+  assert(glWidget);
+  return glWidget->pickNodesEdges(x, y, selectedEntity);
 }
 
 void MouseShowElementInfo::viewChanged(View *view) {

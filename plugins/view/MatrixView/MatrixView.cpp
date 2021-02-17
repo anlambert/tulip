@@ -22,7 +22,7 @@
 
 #include <talipot/Graph.h>
 #include <talipot/IntegerProperty.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/TlpQtTools.h>
 #include <talipot/GlLabel.h>
 #include <talipot/GlGraph.h>
@@ -86,7 +86,7 @@ void MatrixView::setState(const DataSet &ds) {
   ds.get("ascending order", status);
   _configurationWidget->setAscendingOrder(status);
 
-  Color c = getGlMainWidget()->getScene()->getBackgroundColor();
+  Color c = getGlWidget()->getScene()->getBackgroundColor();
   ds.get("Background Color", c);
   _configurationWidget->setBackgroundColor(tlp::colorToQColor(c));
 
@@ -119,12 +119,12 @@ void MatrixView::setState(const DataSet &ds) {
 }
 
 void MatrixView::showEdges(bool show) {
-  getGlMainWidget()->getGlGraphRenderingParameters().setDisplayEdges(show);
+  getGlWidget()->getGlGraphRenderingParameters().setDisplayEdges(show);
   emit drawNeeded();
 }
 
 void MatrixView::enableEdgeColorInterpolation(bool flag) {
-  getGlMainWidget()->getGlGraphRenderingParameters().setEdgeColorInterpolate(flag);
+  getGlWidget()->getGlGraphRenderingParameters().setEdgeColorInterpolate(flag);
   emit drawNeeded();
 }
 
@@ -169,12 +169,12 @@ void MatrixView::graphChanged(Graph *) {
 
 DataSet MatrixView::state() const {
   DataSet ds;
-  ds.set("show Edges", getGlMainWidget()->getGlGraphRenderingParameters().isDisplayEdges());
+  ds.set("show Edges", getGlWidget()->getGlGraphRenderingParameters().isDisplayEdges());
   ds.set("edge color interpolation",
-         getGlMainWidget()->getGlGraphRenderingParameters().isEdgeColorInterpolate());
+         getGlWidget()->getGlGraphRenderingParameters().isEdgeColorInterpolate());
   ds.set("ascending order", _configurationWidget->ascendingOrder());
   ds.set("Grid mode", _configurationWidget->gridDisplayMode());
-  ds.set("Background Color", getGlMainWidget()->getScene()->getBackgroundColor());
+  ds.set("Background Color", getGlWidget()->getScene()->getBackgroundColor());
   ds.set("ordering", _configurationWidget->orderingProperty());
   ds.set("oriented", _isOriented);
 
@@ -194,7 +194,7 @@ void MatrixView::fillContextMenu(QMenu *menu, const QPointF &point) {
   // Check if a node/edge is under the mouse pointer
   SelectedEntity entity;
 
-  if (getGlMainWidget()->pickNodesEdges(point.x(), point.y(), entity)) {
+  if (getGlWidget()->pickNodesEdges(point.x(), point.y(), entity)) {
     menu->addSeparator();
     isNode = entity.getEntityType() == SelectedEntity::NODE_SELECTED;
     itemId = entity.getComplexEntityId();
@@ -238,11 +238,11 @@ void MatrixView::draw() {
     _mustUpdateLayout = false;
   }
 
-  getGlMainWidget()->draw();
+  getGlWidget()->draw();
 }
 
 void MatrixView::refresh() {
-  getGlMainWidget()->redraw();
+  getGlWidget()->redraw();
 }
 
 void MatrixView::deleteDisplayedGraph() {
@@ -294,7 +294,7 @@ void MatrixView::initDisplayedGraph() {
   }
   Observable::unholdObservers();
 
-  GlGraphInputData *inputData = getGlMainWidget()->getGlGraphInputData();
+  GlGraphInputData *inputData = getGlWidget()->getGlGraphInputData();
   _sourceToTargetProperties.clear();
   _sourceToTargetProperties.insert(inputData->getElementColor()->getName());
   _sourceToTargetProperties.insert(inputData->getElementShape()->getName());
@@ -313,13 +313,12 @@ void MatrixView::initDisplayedGraph() {
       _graphEntitiesToDisplayedNodes, _displayedNodesAreNodes, _displayedNodesToGraphEntities,
       _displayedEdgesToGraphEdges, _edgesMap);
 
-  GlGraphRenderingParameters &renderingParameters =
-      getGlMainWidget()->getGlGraphRenderingParameters();
+  GlGraphRenderingParameters &renderingParameters = getGlWidget()->getGlGraphRenderingParameters();
   renderingParameters.setLabelScaled(true);
   renderingParameters.setLabelsDensity(100);
 
   _configurationWidget->setBackgroundColor(
-      colorToQColor(getGlMainWidget()->getScene()->getBackgroundColor()));
+      colorToQColor(getGlWidget()->getScene()->getBackgroundColor()));
   addGridBackground();
 
   if (_mustUpdateSizes) {
@@ -341,8 +340,8 @@ void MatrixView::normalizeSizes(double maxVal) {
   }
 
   float maxWidth = FLT_MIN, maxHeight = FLT_MIN;
-  SizeProperty *originalSizes = getGlMainWidget()->getGlGraphInputData()->getElementSize();
-  SizeProperty *matrixSizes = getGlMainWidget()->getGlGraphInputData()->getElementSize();
+  SizeProperty *originalSizes = getGlWidget()->getGlGraphInputData()->getElementSize();
+  SizeProperty *matrixSizes = getGlWidget()->getGlGraphInputData()->getElementSize();
 
   for (auto n : graph()->nodes()) {
     const Size &s = originalSizes->getNodeValue(n);
@@ -409,7 +408,7 @@ void MatrixView::addEdge(tlp::Graph *g, const tlp::edge e) {
   _displayedEdgesToGraphEdges->setEdgeValue(dispEdge, e.id);
 
   ColorProperty *originalColors = graph()->getColorProperty("viewColor");
-  ColorProperty *colors = getGlMainWidget()->getGlGraphInputData()->getElementColor();
+  ColorProperty *colors = getGlWidget()->getGlGraphInputData()->getElementColor();
 
   colors->setEdgeValue(dispEdge, originalColors->getEdgeValue(e));
 }
@@ -531,9 +530,9 @@ void MatrixView::updateLayout() {
   holdObservers();
   updateNodesOrder();
 
-  LayoutProperty *layout = getGlMainWidget()->getGlGraphInputData()->getElementLayout();
+  LayoutProperty *layout = getGlWidget()->getGlGraphInputData()->getElementLayout();
   Coord horiz = {1, 0, 0}, vert = {0, -1, 0};
-  IntegerProperty *position = getGlMainWidget()->getGlGraphInputData()->getElementLabelPosition();
+  IntegerProperty *position = getGlWidget()->getGlGraphInputData()->getElementLabelPosition();
 
   for (auto _on : _orderedNodes) {
     const vector<int> &dispNodes = _graphEntitiesToDisplayedNodes->getNodeValue(node(_on));
@@ -545,7 +544,7 @@ void MatrixView::updateLayout() {
     vert[1] -= 1;
   }
 
-  IntegerProperty *shapes = getGlMainWidget()->getGlGraphInputData()->getElementShape();
+  IntegerProperty *shapes = getGlWidget()->getGlGraphInputData()->getElementShape();
   int shape = GlyphManager::glyphId("2D - Square");
   for (auto e : graph()->edges()) {
     auto eEnds = graph()->ends(e);
@@ -592,7 +591,7 @@ void MatrixView::updateLayout() {
 }
 
 void MatrixView::setBackgroundColor(QColor c) {
-  getGlMainWidget()->getScene()->setBackgroundColor(QColorToColor(c));
+  getGlWidget()->getScene()->setBackgroundColor(QColorToColor(c));
   emit drawNeeded();
 }
 
@@ -635,19 +634,18 @@ void MatrixView::registerTriggers() {
 
 void MatrixView::addGridBackground() {
   removeGridBackground();
-  GlLayer *backgroundLayer = getGlMainWidget()->getScene()->getLayer("MatrixView_Background");
+  GlLayer *backgroundLayer = getGlWidget()->getScene()->getLayer("MatrixView_Background");
   backgroundLayer->addGlEntity(new GlMatrixBackgroundGrid(this), "MatrixView_backgroundGrid");
 }
 
 void MatrixView::removeGridBackground() {
-  GlLayer *backgroundLayer = getGlMainWidget()->getScene()->getLayer("MatrixView_Background");
+  GlLayer *backgroundLayer = getGlWidget()->getScene()->getLayer("MatrixView_Background");
 
   if (!backgroundLayer) {
-    backgroundLayer =
-        new GlLayer("MatrixView_Background",
-                    &(getGlMainWidget()->getScene()->getLayer("Main")->getCamera()), true);
+    backgroundLayer = new GlLayer(
+        "MatrixView_Background", &(getGlWidget()->getScene()->getLayer("Main")->getCamera()), true);
     backgroundLayer->clear();
-    getGlMainWidget()->getScene()->addExistingLayerBefore(backgroundLayer, "Main");
+    getGlWidget()->getScene()->addExistingLayerBefore(backgroundLayer, "Main");
   } else {
     GlEntity *entity = backgroundLayer->findGlEntity("MatrixView_backgroundGrid");
     delete entity;

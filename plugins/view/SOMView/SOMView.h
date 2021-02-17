@@ -158,7 +158,7 @@ public:
     return mask;
   }
 
-  tlp::GlMainWidget *getMapWidget() {
+  tlp::GlWidget *getMapWidget() {
     return mapWidget;
   }
 
@@ -220,7 +220,7 @@ protected slots:
   void fillContextMenu(QMenu *menu, const QPointF &) override;
 
 private:
-  void copyToGlMainWidget(GlMainWidget *widget);
+  void copyToGlWidget(GlWidget *widget);
 
   void addEmptyViewLabel();
   void removeEmptyViewLabel();
@@ -228,7 +228,7 @@ private:
   void registerTriggers();
 
   /**
-   * Init the GlMainWidget object. At this time only init the previewWidget as the mapWidget is
+   * Init the GlWidget object. At this time only init the previewWidget as the mapWidget is
    * initialized when a new graph is given in the function changeMapViewGraph.
    */
   void initGlMainViews();
@@ -341,8 +341,8 @@ private:
   std::unordered_map<std::string, ColorProperty *> propertyToColorProperty;
   std::unordered_map<std::string, SOMPreviewComposite *> propertyToPreviews;
 
-  GlMainWidget *previewWidget;
-  GlMainWidget *mapWidget;
+  GlWidget *previewWidget;
+  GlWidget *mapWidget;
 
   bool isDetailledMode;
 

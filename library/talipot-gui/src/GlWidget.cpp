@@ -13,7 +13,7 @@
 
 #include <GL/glew.h>
 
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 
 // remove warnings about qt5/glew incompatibility
 // as we do not rely on QOpenGLFunctions for rendering
@@ -49,10 +49,10 @@ using namespace std;
 
 namespace tlp {
 
-bool GlMainWidget::inRendering = false;
+bool GlWidget::inRendering = false;
 
 //==================================================
-GlMainWidget::GlMainWidget(QWidget *parent, View *view)
+GlWidget::GlWidget(QWidget *parent, View *view)
     : QOpenGLWidget(parent), scene(new GlQuadTreeLODCalculator), view(view), widthStored(0),
       heightStored(0), glFrameBuf(nullptr), glFrameBuf2(nullptr),
       keepPointOfViewOnSubgraphChanging(false),
@@ -75,12 +75,12 @@ GlMainWidget::GlMainWidget(QWidget *parent, View *view)
   doneCurrent();
 }
 //==================================================
-GlMainWidget::~GlMainWidget() {
+GlWidget::~GlWidget() {
   delete glFrameBuf;
   delete glFrameBuf2;
 }
 //==================================================
-void GlMainWidget::paintEvent(QPaintEvent *) {
+void GlWidget::paintEvent(QPaintEvent *) {
   QRegion rect = this->visibleRegion();
 
   // If the visible are changed we need to draw the entire scene
@@ -96,11 +96,11 @@ void GlMainWidget::paintEvent(QPaintEvent *) {
   _visibleArea = rect; // Save the new visible area.
 }
 //==================================================
-void GlMainWidget::closeEvent(QCloseEvent *e) {
+void GlWidget::closeEvent(QCloseEvent *e) {
   emit closing(this, e);
 }
 //==================================================
-void GlMainWidget::createFramebuffers(int width, int height) {
+void GlWidget::createFramebuffers(int width, int height) {
 
   if (!glFrameBuf || glFrameBuf->size().width() != width || glFrameBuf->size().height() != height) {
     makeCurrent();
@@ -116,7 +116,7 @@ void GlMainWidget::createFramebuffers(int width, int height) {
   }
 }
 //==================================================
-void GlMainWidget::deleteFramebuffers() {
+void GlWidget::deleteFramebuffers() {
   delete glFrameBuf;
   glFrameBuf = nullptr;
   delete glFrameBuf2;
@@ -124,7 +124,7 @@ void GlMainWidget::deleteFramebuffers() {
 }
 
 //==================================================
-void GlMainWidget::render(RenderingOptions options, bool checkVisibility) {
+void GlWidget::render(RenderingOptions options, bool checkVisibility) {
 
   if ((isVisible() || !checkVisibility) && !inRendering) {
 
@@ -199,17 +199,17 @@ void GlMainWidget::render(RenderingOptions options, bool checkVisibility) {
   }
 }
 //==================================================
-void GlMainWidget::redraw() {
+void GlWidget::redraw() {
   render(SwapBuffers);
   emit viewRedrawn(this);
 }
 //==================================================
-void GlMainWidget::draw(bool graphChanged) {
+void GlWidget::draw(bool graphChanged) {
   render(RenderingOptions(RenderScene | SwapBuffers));
   emit viewDrawn(this, graphChanged);
 }
 //==================================================
-void GlMainWidget::computeInteractors() {
+void GlWidget::computeInteractors() {
   if (!view) {
     return;
   }
@@ -224,7 +224,7 @@ void GlMainWidget::computeInteractors() {
   interactor->compute(this);
 }
 //==================================================
-void GlMainWidget::drawInteractors() {
+void GlWidget::drawInteractors() {
   if (!view) {
     return;
   }
@@ -241,7 +241,7 @@ void GlMainWidget::drawInteractors() {
 //==================================================
 // QGLWidget slots
 //==================================================
-void GlMainWidget::resizeGL(int w, int h) {
+void GlWidget::resizeGL(int w, int h) {
 
   if (w == 0 || h == 0) {
     return;
@@ -257,7 +257,7 @@ void GlMainWidget::resizeGL(int w, int h) {
   emit glResized(w, h);
 }
 //==================================================
-void GlMainWidget::makeCurrent() {
+void GlWidget::makeCurrent() {
   if (isVisible()) {
     QOpenGLWidget::makeCurrent();
     int width = contentsRect().width();
@@ -268,7 +268,7 @@ void GlMainWidget::makeCurrent() {
   }
 }
 //==================================================
-void GlMainWidget::doneCurrent() {
+void GlWidget::doneCurrent() {
   if (isVisible()) {
     QOpenGLWidget::doneCurrent();
   } else {
@@ -276,8 +276,8 @@ void GlMainWidget::doneCurrent() {
   }
 }
 //==================================================
-bool GlMainWidget::pickGlEntities(const int x, const int y, const int width, const int height,
-                                  std::vector<SelectedEntity> &pickedEntities, GlLayer *layer) {
+bool GlWidget::pickGlEntities(const int x, const int y, const int width, const int height,
+                              std::vector<SelectedEntity> &pickedEntities, GlLayer *layer) {
   makeCurrent();
   return scene.selectEntities(
       static_cast<RenderingEntitiesFlag>(RenderingEntities | RenderingWithoutRemove),
@@ -285,15 +285,15 @@ bool GlMainWidget::pickGlEntities(const int x, const int y, const int width, con
       layer, pickedEntities);
 }
 //==================================================
-bool GlMainWidget::pickGlEntities(const int x, const int y,
-                                  std::vector<SelectedEntity> &pickedEntities, GlLayer *layer) {
+bool GlWidget::pickGlEntities(const int x, const int y, std::vector<SelectedEntity> &pickedEntities,
+                              GlLayer *layer) {
   return pickGlEntities(x, y, 2, 2, pickedEntities, layer);
 }
 //==================================================
-void GlMainWidget::pickNodesEdges(const int x, const int y, const int width, const int height,
-                                  std::vector<SelectedEntity> &selectedNodes,
-                                  std::vector<SelectedEntity> &selectedEdges, GlLayer *layer,
-                                  bool pickNodes, bool pickEdges) {
+void GlWidget::pickNodesEdges(const int x, const int y, const int width, const int height,
+                              std::vector<SelectedEntity> &selectedNodes,
+                              std::vector<SelectedEntity> &selectedEdges, GlLayer *layer,
+                              bool pickNodes, bool pickEdges) {
   makeCurrent();
 
   if (pickNodes) {
@@ -311,8 +311,8 @@ void GlMainWidget::pickNodesEdges(const int x, const int y, const int width, con
   }
 }
 //=====================================================
-bool GlMainWidget::pickNodesEdges(const int x, const int y, SelectedEntity &selectedEntity,
-                                  GlLayer *layer, bool pickNodes, bool pickEdges) {
+bool GlWidget::pickNodesEdges(const int x, const int y, SelectedEntity &selectedEntity,
+                              GlLayer *layer, bool pickNodes, bool pickEdges) {
   makeCurrent();
   vector<SelectedEntity> selectedEntities;
 
@@ -335,8 +335,8 @@ bool GlMainWidget::pickNodesEdges(const int x, const int y, SelectedEntity &sele
   return false;
 }
 //=====================================================
-void GlMainWidget::getTextureRealSize(int width, int height, int &textureRealWidth,
-                                      int &textureRealHeight) {
+void GlWidget::getTextureRealSize(int width, int height, int &textureRealWidth,
+                                  int &textureRealHeight) {
   textureRealWidth = 1;
   textureRealHeight = 1;
 
@@ -359,12 +359,11 @@ void GlMainWidget::getTextureRealSize(int width, int height, int &textureRealWid
   }
 }
 //=====================================================
-void GlMainWidget::createPicture(const std::string &pictureName, int width, int height,
-                                 bool center) {
+void GlWidget::createPicture(const std::string &pictureName, int width, int height, bool center) {
   createPicture(width, height, center).save(tlp::tlpStringToQString(pictureName));
 }
 //=====================================================
-QImage GlMainWidget::createPicture(int width, int height, bool center, QImage::Format format) {
+QImage GlWidget::createPicture(int width, int height, bool center, QImage::Format format) {
 
   QImage resultImage;
 
@@ -441,7 +440,7 @@ QImage GlMainWidget::createPicture(int width, int height, bool center, QImage::F
       .convertToFormat(format);
 }
 
-void GlMainWidget::centerScene(bool graphChanged, float zf) {
+void GlWidget::centerScene(bool graphChanged, float zf) {
   makeCurrent();
   scene.centerScene();
 
@@ -452,23 +451,23 @@ void GlMainWidget::centerScene(bool graphChanged, float zf) {
   draw(graphChanged);
 }
 
-void GlMainWidget::emitGraphChanged() {
+void GlWidget::emitGraphChanged() {
   emit graphChanged();
 }
 
-void GlMainWidget::setKeepScenePointOfViewOnSubgraphChanging(bool k) {
+void GlWidget::setKeepScenePointOfViewOnSubgraphChanging(bool k) {
   keepPointOfViewOnSubgraphChanging = k;
 }
 
-bool GlMainWidget::keepScenePointOfViewOnSubgraphChanging() const {
+bool GlWidget::keepScenePointOfViewOnSubgraphChanging() const {
   return keepPointOfViewOnSubgraphChanging;
 }
 
-GlGraphRenderingParameters &GlMainWidget::getGlGraphRenderingParameters() {
+GlGraphRenderingParameters &GlWidget::getGlGraphRenderingParameters() {
   return scene.getGlGraph()->getRenderingParameters();
 }
 
-GlGraphInputData *GlMainWidget::getGlGraphInputData() const {
+GlGraphInputData *GlWidget::getGlGraphInputData() const {
   return scene.getGlGraph()->getInputData();
 }
 

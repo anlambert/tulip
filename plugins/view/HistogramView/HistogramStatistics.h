@@ -46,7 +46,7 @@ public:
   ~HistogramStatistics() override;
 
   bool eventFilter(QObject *, QEvent *) override;
-  bool draw(GlMainWidget *glMainWidget) override;
+  bool draw(GlWidget *glWidget) override;
 
   void viewChanged(View *view) override;
 

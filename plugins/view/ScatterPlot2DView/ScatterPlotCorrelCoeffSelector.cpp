@@ -15,7 +15,7 @@
 #include <talipot/GlNode.h>
 #include <talipot/GlEdge.h>
 #include <talipot/GlComplexPolygon.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/GlGraph.h>
 #include <talipot/GlQuantitativeAxis.h>
 #include <talipot/GlLabel.h>
@@ -210,7 +210,7 @@ ScatterPlotCorrelCoeffSelector::ScatterPlotCorrelCoeffSelector(
 ScatterPlotCorrelCoeffSelector::~ScatterPlotCorrelCoeffSelector() {}
 
 bool ScatterPlotCorrelCoeffSelector::eventFilter(QObject *obj, QEvent *e) {
-  GlMainWidget *glWidget = static_cast<GlMainWidget *>(obj);
+  GlWidget *glWidget = static_cast<GlWidget *>(obj);
 
   Camera &camera = glWidget->getScene()->getLayer("Main")->getCamera();
   Graph *graph = glWidget->getGlGraphInputData()->getGraph();
@@ -392,8 +392,8 @@ bool ScatterPlotCorrelCoeffSelector::eventFilter(QObject *obj, QEvent *e) {
   return false;
 }
 
-bool ScatterPlotCorrelCoeffSelector::draw(GlMainWidget *glMainWidget) {
-  Camera &camera = glMainWidget->getScene()->getLayer("Main")->getCamera();
+bool ScatterPlotCorrelCoeffSelector::draw(GlWidget *glWidget) {
+  Camera &camera = glWidget->getScene()->getLayer("Main")->getCamera();
 
   glDisable(GL_STENCIL_TEST);
   glEnable(GL_BLEND);
@@ -422,7 +422,7 @@ bool ScatterPlotCorrelCoeffSelector::draw(GlMainWidget *glMainWidget) {
 
   Camera camera2D(camera.getScene(), false);
 
-  Color backgroundColor = glMainWidget->getScene()->getBackgroundColor();
+  Color backgroundColor = glWidget->getScene()->getBackgroundColor();
   Color foregroundColor;
   int bgV = backgroundColor.getV();
 
@@ -461,7 +461,7 @@ bool ScatterPlotCorrelCoeffSelector::draw(GlMainWidget *glMainWidget) {
   return true;
 }
 
-bool ScatterPlotCorrelCoeffSelector::compute(GlMainWidget *) {
+bool ScatterPlotCorrelCoeffSelector::compute(GlWidget *) {
   return false;
 }
 
@@ -505,7 +505,7 @@ void ScatterPlotCorrelCoeffSelector::getPolygonAndPointUnderPointerIfAny(
 }
 
 void ScatterPlotCorrelCoeffSelector::mapPolygonColorToCorrelCoeffOfData(
-    GlEditableComplexPolygon *polygon, GlMainWidget *glWidget) {
+    GlEditableComplexPolygon *polygon, GlWidget *glWidget) {
 
   Graph *graph = glWidget->getGlGraphInputData()->getGraph();
   Camera &camera = glWidget->getScene()->getLayer("Main")->getCamera();

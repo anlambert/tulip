@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -20,9 +20,8 @@
 
 using namespace tlp;
 
-ViewActionsManager::ViewActionsManager(View *view, GlMainWidget *widget, bool keepRatio)
-    : _view(view), _glMainWidget(widget), _keepSizeRatio(keepRatio),
-      _advAntiAliasingAction(nullptr) {
+ViewActionsManager::ViewActionsManager(View *view, GlWidget *widget, bool keepRatio)
+    : _view(view), _glWidget(widget), _keepSizeRatio(keepRatio), _advAntiAliasingAction(nullptr) {
   // create actions and add them to _view->graphicsView()
   // to enable their keyboard shortcut
   _forceRedrawAction = new QAction("Force redraw", widget);

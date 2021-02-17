@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -25,7 +25,7 @@ class QWidget;
 namespace tlp {
 class BooleanProperty;
 class GlGraphInputData;
-class GlMainWidget;
+class GlWidget;
 class GlLayer;
 class GlScene;
 class GlEntity;
@@ -40,16 +40,16 @@ public:
   std::string getName() const {
     return this->name;
   }
-  virtual void highlight(const PathFinder *parent, GlMainWidget *glMainWidget,
-                         BooleanProperty *selection, node src, node tgt) = 0;
-  virtual void draw(tlp::GlMainWidget *glMainWidget) = 0;
+  virtual void highlight(const PathFinder *parent, GlWidget *glWidget, BooleanProperty *selection,
+                         node src, node tgt) = 0;
+  virtual void draw(tlp::GlWidget *glWidget) = 0;
   void clear();
   virtual bool isConfigurable() const = 0;
   virtual QWidget *getConfigurationWidget() = 0;
 
 protected:
   tlp::GlLayer *getWorkingLayer(tlp::GlScene *scene);
-  tlp::GlGraphInputData *getInputData(tlp::GlMainWidget *glMainWidget);
+  tlp::GlGraphInputData *getInputData(tlp::GlWidget *glWidget);
   void addGlEntity(tlp::GlScene *scene, tlp::GlEntity *entity, bool deleteOnExit = true,
                    const std::string &name = "");
   void treatEvent(const Event &ev) override;

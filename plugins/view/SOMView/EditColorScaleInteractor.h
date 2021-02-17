@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -23,7 +23,7 @@
 namespace tlp {
 class GlLayer;
 class View;
-class GlMainWidget;
+class GlWidget;
 class GlLabelledColorScale;
 class NumericProperty;
 class SOMView;
@@ -34,8 +34,8 @@ public:
   ~EditColorScaleInteractor() override;
   bool eventFilter(QObject *, QEvent *) override;
   void viewChanged(View *view) override;
-  bool compute(GlMainWidget *) override;
-  bool draw(GlMainWidget *glMainWidget) override;
+  bool compute(GlWidget *) override;
+  bool draw(GlWidget *glWidget) override;
 
 protected:
   virtual void propertyChanged(SOMView *somView, const std::string &propertyName,
@@ -46,8 +46,8 @@ protected:
   float widthPercent;
   float heightPercent;
   float heightPosition;
-  int glMainWidgetWidth;
-  int glMainWidgetHeight;
+  int glWidgetWidth;
+  int glWidgetHeight;
 
   GlLayer *selectionLayer;
 };

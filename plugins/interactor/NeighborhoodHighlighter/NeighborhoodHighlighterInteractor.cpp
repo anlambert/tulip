@@ -20,7 +20,7 @@
 
 #include <talipot/PluginHeaders.h>
 #include <talipot/MouseInteractors.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/GlMainView.h>
 #include <talipot/GlCircle.h>
 #include <talipot/OcclusionTest.h>
@@ -177,7 +177,7 @@ void NeighborhoodHighlighter::viewChanged(View *view) {
   }
 
   GlMainView *glView = static_cast<GlMainView *>(view);
-  glWidget = glView->getGlMainWidget();
+  glWidget = glView->getGlWidget();
 }
 
 bool NeighborhoodHighlighter::eventFilter(QObject *, QEvent *e) {
@@ -362,7 +362,7 @@ bool NeighborhoodHighlighter::eventFilter(QObject *, QEvent *e) {
 
   return false;
 }
-node NeighborhoodHighlighter::selectNodeInOriginalGraph(GlMainWidget *glWidget, int x, int y) {
+node NeighborhoodHighlighter::selectNodeInOriginalGraph(GlWidget *glWidget, int x, int y) {
   node n;
   glWidget->makeCurrent();
   vector<SelectedEntity> selectedElements;
@@ -654,13 +654,13 @@ void NeighborhoodHighlighter::checkIfGraphHasChanged() {
   }
 }
 
-bool NeighborhoodHighlighter::draw(GlMainWidget *glMainWidget) {
+bool NeighborhoodHighlighter::draw(GlWidget *glWidget) {
 
   checkIfGraphHasChanged();
 
   if (neighborhoodGraphCentralNode.isValid() && glNeighborhoodGraph != nullptr) {
 
-    Camera *camera = &(glMainWidget->getScene()->getLayer("Main")->getCamera());
+    Camera *camera = &(glWidget->getScene()->getLayer("Main")->getCamera());
     camera->initGl();
 
     glLineWidth(1.0);

@@ -18,7 +18,7 @@
 #include <QApplication>
 
 #include <talipot/GlGraph.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/Settings.h>
 #include <talipot/GraphPropertiesModel.h>
 
@@ -27,7 +27,7 @@
 using namespace tlp;
 
 SceneConfigWidget::SceneConfigWidget(QWidget *parent)
-    : QWidget(parent), _ui(new Ui::SceneConfigWidget), _glMainWidget(nullptr), _resetting(false) {
+    : QWidget(parent), _ui(new Ui::SceneConfigWidget), _glWidget(nullptr), _resetting(false) {
   _ui->setupUi(this);
 
   connect(_ui->dynamicFontSizeRB, &QAbstractButton::toggled, this,
@@ -45,20 +45,20 @@ SceneConfigWidget::~SceneConfigWidget() {
   delete _ui;
 }
 
-void SceneConfigWidget::setGlMainWidget(tlp::GlMainWidget *glMainWidget) {
-  if (_glMainWidget != nullptr) {
-    disconnect(_glMainWidget, &GlMainWidget::graphChanged, this, &SceneConfigWidget::resetChanges);
-    disconnect(_glMainWidget, &GlMainWidget::viewDrawn, this, &SceneConfigWidget::resetChanges);
+void SceneConfigWidget::setGlWidget(tlp::GlWidget *glWidget) {
+  if (_glWidget != nullptr) {
+    disconnect(_glWidget, &GlWidget::graphChanged, this, &SceneConfigWidget::resetChanges);
+    disconnect(_glWidget, &GlWidget::viewDrawn, this, &SceneConfigWidget::resetChanges);
   }
 
-  _glMainWidget = glMainWidget;
+  _glWidget = glWidget;
 
-  if (_glMainWidget != nullptr) {
-    connect(_glMainWidget, &GlMainWidget::graphChanged, this, &SceneConfigWidget::resetChanges);
+  if (_glWidget != nullptr) {
+    connect(_glWidget, &GlWidget::graphChanged, this, &SceneConfigWidget::resetChanges);
     // we assume that if an outside action causes an update of one
     // of the rendering parameters managed in this widget, necessarily
-    // a call to _glMainWidget->draw will follow
-    connect(_glMainWidget, &GlMainWidget::viewDrawn, this, &SceneConfigWidget::resetChanges);
+    // a call to _glWidget->draw will follow
+    connect(_glWidget, &GlWidget::viewDrawn, this, &SceneConfigWidget::resetChanges);
   }
 
   resetChanges();
@@ -67,16 +67,16 @@ void SceneConfigWidget::setGlMainWidget(tlp::GlMainWidget *glMainWidget) {
 void SceneConfigWidget::resetChanges() {
   _resetting = true;
 
-  _ui->scrollArea->setEnabled(_glMainWidget != nullptr);
+  _ui->scrollArea->setEnabled(_glWidget != nullptr);
 
-  if (_glMainWidget == nullptr || _glMainWidget->getScene()->getGlGraph() == nullptr ||
-      _glMainWidget->getScene()->getGlGraph()->getGraph() == nullptr) {
+  if (_glWidget == nullptr || _glWidget->getScene()->getGlGraph() == nullptr ||
+      _glWidget->getScene()->getGlGraph()->getGraph() == nullptr) {
     return;
   }
 
-  Graph *graph = _glMainWidget->getScene()->getGlGraph()->getGraph();
+  Graph *graph = _glWidget->getScene()->getGlGraph()->getGraph();
   const GlGraphRenderingParameters &renderingParameters =
-      _glMainWidget->getGlGraphRenderingParameters();
+      _glWidget->getGlGraphRenderingParameters();
 
   // NODES
   delete _ui->labelsOrderingCombo->model();
@@ -109,18 +109,18 @@ void SceneConfigWidget::resetChanges() {
   _ui->edgesFrontCheck->setChecked(renderingParameters.isEdgeFrontDisplay());
 
   // COLORS
-  _ui->backgroundColorButton->setColor(_glMainWidget->getScene()->getBackgroundColor());
+  _ui->backgroundColorButton->setColor(_glWidget->getScene()->getBackgroundColor());
   _ui->selectionColorButton->setColor(renderingParameters.getSelectionColor());
 
   // PROJECTION
-  if (_glMainWidget->getScene()->isViewOrtho()) {
+  if (_glWidget->getScene()->isViewOrtho()) {
     _ui->orthoRadioButton->setChecked(true);
   } else {
     _ui->centralRadioButton->setChecked(true);
   }
 
   // GRAPH CHANGING
-  if (_glMainWidget->keepScenePointOfViewOnSubgraphChanging()) {
+  if (_glWidget->keepScenePointOfViewOnSubgraphChanging()) {
     _ui->keepSceneRadioButton->setChecked(true);
   } else {
     _ui->centerSceneRadioButton->setChecked(true);
@@ -150,11 +150,11 @@ bool SceneConfigWidget::eventFilter(QObject *obj, QEvent *ev) {
 }
 
 void SceneConfigWidget::applySettings() {
-  if (_resetting || !_glMainWidget->getScene()->getGlGraph()) {
+  if (_resetting || !_glWidget->getScene()->getGlGraph()) {
     return;
   }
 
-  GlGraphRenderingParameters &renderingParameters = _glMainWidget->getGlGraphRenderingParameters();
+  GlGraphRenderingParameters &renderingParameters = _glWidget->getGlGraphRenderingParameters();
 
   // NODES
   if (_ui->labelsOrderingCombo->currentIndex() == 0) {
@@ -186,15 +186,15 @@ void SceneConfigWidget::applySettings() {
 
   // COLORS
   renderingParameters.setSelectionColor(_ui->selectionColorButton->talipotColor());
-  _glMainWidget->getScene()->setBackgroundColor(_ui->backgroundColorButton->talipotColor());
+  _glWidget->getScene()->setBackgroundColor(_ui->backgroundColorButton->talipotColor());
 
   // PROJECTION
-  _glMainWidget->getScene()->setViewOrtho(_ui->orthoRadioButton->isChecked());
+  _glWidget->getScene()->setViewOrtho(_ui->orthoRadioButton->isChecked());
 
   // GRAPH CHANGINS
-  _glMainWidget->setKeepScenePointOfViewOnSubgraphChanging(_ui->keepSceneRadioButton->isChecked());
+  _glWidget->setKeepScenePointOfViewOnSubgraphChanging(_ui->keepSceneRadioButton->isChecked());
 
-  _glMainWidget->draw();
+  _glWidget->draw();
   emit settingsApplied();
 }
 

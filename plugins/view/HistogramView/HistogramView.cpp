@@ -14,7 +14,7 @@
 #include <talipot/GlQuantitativeAxis.h>
 #include <talipot/TlpTools.h>
 #include <talipot/Interactor.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/GlLabel.h>
 #include <talipot/GlRect.h>
 #include <talipot/GlTextureManager.h>
@@ -83,11 +83,11 @@ QList<QWidget *> HistogramView::configurationWidgets() const {
 }
 
 void HistogramView::initGlWidget(Graph *) {
-  GlLayer *layer = getGlMainWidget()->getScene()->getLayer("Main");
+  GlLayer *layer = getGlWidget()->getScene()->getLayer("Main");
 
   if (layer == nullptr) {
     layer = new GlLayer("Main");
-    getGlMainWidget()->getScene()->addExistingLayer(layer);
+    getGlWidget()->getScene()->addExistingLayer(layer);
   }
 
   mainLayer = layer;
@@ -148,7 +148,7 @@ QuickAccessBar *HistogramView::getQuickAccessBarImpl() {
 
 void HistogramView::setState(const DataSet &dataSet) {
 
-  GlMainWidget *gl = getGlMainWidget();
+  GlWidget *gl = getGlWidget();
 
   if (!isConstruct) {
     isConstruct = true;
@@ -405,7 +405,7 @@ DataSet HistogramView::state() const {
     dataSet.set("histo" + ss.str(), histogramParameters);
   }
 
-  dataSet.set("backgroundColor", getGlMainWidget()->getScene()->getBackgroundColor());
+  dataSet.set("backgroundColor", getGlWidget()->getScene()->getBackgroundColor());
   string histoDetailedNamed = "";
 
   if (detailedHistogram != nullptr) {
@@ -424,7 +424,7 @@ DataSet HistogramView::state() const {
 bool HistogramView::eventFilter(QObject *object, QEvent *event) {
   if (xAxisDetail != nullptr && event->type() == QEvent::ToolTip &&
       !detailedHistogram->uniformQuantificationHistogram()) {
-    GlMainWidget *glw = getGlMainWidget();
+    GlWidget *glw = getGlWidget();
     QHelpEvent *he = static_cast<QHelpEvent *>(event);
     float x = glw->width() - he->x();
     float y = he->y();
@@ -449,7 +449,7 @@ bool HistogramView::eventFilter(QObject *object, QEvent *event) {
 void HistogramView::addEmptyViewLabel() {
 
   Color backgroundColor = histoOptionsWidget->getBackgroundColor();
-  getGlMainWidget()->getScene()->setBackgroundColor(backgroundColor);
+  getGlWidget()->getScene()->setBackgroundColor(backgroundColor);
 
   Color foregroundColor;
   int bgV = backgroundColor.getV();
@@ -493,7 +493,7 @@ void HistogramView::removeEmptyViewLabel() {
 }
 
 void HistogramView::viewConfigurationChanged() {
-  getGlMainWidget()->getScene()->setBackgroundColor(histoOptionsWidget->getBackgroundColor());
+  getGlWidget()->getScene()->setBackgroundColor(histoOptionsWidget->getBackgroundColor());
   bool dataLocationChanged = propertiesSelectionWidget->getDataLocation() != dataLocation;
 
   if (dataLocationChanged) {
@@ -531,7 +531,7 @@ void HistogramView::viewConfigurationChanged() {
 }
 
 void HistogramView::draw() {
-  GlMainWidget *gl = getGlMainWidget();
+  GlWidget *gl = getGlWidget();
 
   if (selectedProperties.empty()) {
     if (!interactors().empty()) {
@@ -594,7 +594,7 @@ void HistogramView::draw() {
 }
 
 void HistogramView::refresh() {
-  getGlMainWidget()->redraw();
+  getGlWidget()->redraw();
 }
 
 void HistogramView::graphChanged(Graph *) {
@@ -612,7 +612,7 @@ void HistogramView::graphChanged(Graph *) {
 
 void HistogramView::buildHistograms() {
 
-  getGlMainWidget()->makeCurrent();
+  getGlWidget()->makeCurrent();
 
   histogramsComposite->reset(false);
   labelsComposite->reset(true);
@@ -632,7 +632,7 @@ void HistogramView::buildHistograms() {
       uint(squareRoot) + (fmod(float(selectedProperties.size()), squareRoot) == 0.f ? 0u : 1u);
 
   Color backgroundColor = histoOptionsWidget->getBackgroundColor();
-  getGlMainWidget()->getScene()->setBackgroundColor(backgroundColor);
+  getGlWidget()->getScene()->setBackgroundColor(backgroundColor);
 
   Color foregroundColor;
   int bgV = backgroundColor.getV();
@@ -713,7 +713,7 @@ void HistogramView::buildHistograms() {
 
 void HistogramView::updateHistograms(Histogram *detailOverview) {
   needUpdateHistogram = false;
-  getGlMainWidget()->makeCurrent();
+  getGlWidget()->makeCurrent();
 
   for (auto &prop : selectedProperties) {
     auto histo = histogramsMap[prop];
@@ -766,11 +766,11 @@ void HistogramView::switchFromSmallMultiplesToDetailedView(Histogram *histogramT
   }
 
   if (smallMultiplesView) {
-    sceneRadiusBak = getGlMainWidget()->getScene()->getGraphCamera().getSceneRadius();
-    zoomFactorBak = getGlMainWidget()->getScene()->getGraphCamera().getZoomFactor();
-    eyesBak = getGlMainWidget()->getScene()->getGraphCamera().getEyes();
-    centerBak = getGlMainWidget()->getScene()->getGraphCamera().getCenter();
-    upBak = getGlMainWidget()->getScene()->getGraphCamera().getUp();
+    sceneRadiusBak = getGlWidget()->getScene()->getGraphCamera().getSceneRadius();
+    zoomFactorBak = getGlWidget()->getScene()->getGraphCamera().getZoomFactor();
+    eyesBak = getGlWidget()->getScene()->getGraphCamera().getEyes();
+    centerBak = getGlWidget()->getScene()->getGraphCamera().getCenter();
+    upBak = getGlWidget()->getScene()->getGraphCamera().getUp();
   }
 
   mainLayer->deleteGlEntity(histogramsComposite);
@@ -842,7 +842,7 @@ void HistogramView::switchFromSmallMultiplesToDetailedView(Histogram *histogramT
   histoOptionsWidget->setInitXAxisScale(detailedHistogram->getInitXAxisScale());
   histoOptionsWidget->setInitYAxisScale(detailedHistogram->getInitYAxisScale());
 
-  getGlMainWidget()->draw();
+  getGlWidget()->draw();
 }
 
 void HistogramView::switchFromDetailedViewToSmallMultiples() {
@@ -867,7 +867,7 @@ void HistogramView::switchFromDetailedViewToSmallMultiples() {
 
   detailedHistogram = nullptr;
   detailedHistogramPropertyName = "";
-  GlMainWidget *gl = getGlMainWidget();
+  GlWidget *gl = getGlWidget();
   xAxisDetail = nullptr;
   yAxisDetail = nullptr;
   mainLayer->addGlEntity(histogramsComposite, "overviews composite");

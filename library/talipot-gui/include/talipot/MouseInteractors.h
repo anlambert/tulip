@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -19,7 +19,7 @@
 #include <talipot/GlScene.h>
 
 namespace tlp {
-class GlMainWidget;
+class GlWidget;
 class NodeLinkDiagramView;
 
 /** An interactor class allowing to zoom and pan using the mouse wheel.
@@ -39,14 +39,14 @@ protected:
  */
 class TLP_QT_SCOPE MouseElementDeleter : public InteractorComponent {
 public:
-  MouseElementDeleter() : glMainWidget(nullptr) {}
+  MouseElementDeleter() : glWidget(nullptr) {}
   ~MouseElementDeleter() override {}
   bool eventFilter(QObject *, QEvent *) override;
   void clear() override;
   virtual void delElement(tlp::Graph *graph, tlp::SelectedEntity &selectedEntity);
 
 private:
-  GlMainWidget *glMainWidget;
+  GlWidget *glWidget;
 };
 
 /** An interactor class to translate/rotate using keys or mouse movements,

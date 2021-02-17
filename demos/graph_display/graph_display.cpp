@@ -1,6 +1,6 @@
 #include <talipot/PluginLoaderTxt.h>
 #include <talipot/PluginLibraryLoader.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/MouseInteractors.h>
 #include <talipot/TlpQtTools.h>
 #include <talipot/LayoutProperty.h>
@@ -133,7 +133,7 @@ int main(int argc, char **argv) {
   }
 
   // Creates the main widget that will display our graph
-  GlMainWidget *mainWidget = new GlMainWidget(nullptr);
+  GlWidget *mainWidget = new GlWidget(nullptr);
 
   // Adds a layer to the scene
   GlLayer *mainLayer = mainWidget->getScene()->createLayer("Main");

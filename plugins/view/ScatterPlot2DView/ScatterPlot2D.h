@@ -22,7 +22,7 @@ namespace tlp {
 
 class SizeProperty;
 class LayoutProperty;
-class GlMainWidget;
+class GlWidget;
 class GlQuantitativeAxis;
 class GlGraph;
 class GlRect;
@@ -51,7 +51,7 @@ public:
     return backgroundColor;
   }
 
-  void generateOverview(GlMainWidget *glWidget = nullptr, LayoutProperty *reverseLayout = nullptr);
+  void generateOverview(GlWidget *glWidget = nullptr, LayoutProperty *reverseLayout = nullptr);
   bool overviewGenerated() const {
     return overviewGen;
   }
@@ -143,7 +143,7 @@ private:
   }
 
   void createAxis();
-  void computeScatterPlotLayout(GlMainWidget *glWidget, LayoutProperty *reverseLayout);
+  void computeScatterPlotLayout(GlWidget *glWidget, LayoutProperty *reverseLayout);
   void clean();
 
   std::string xDim, yDim;

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -16,7 +16,7 @@
 #include <talipot/GlCircle.h>
 #include <talipot/GlMainView.h>
 #include <talipot/GlGraphInputData.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/ColorButton.h>
 
 #include <QWidget>
@@ -77,10 +77,10 @@ EnclosingCircleHighlighter::EnclosingCircleHighlighter()
     : PathHighlighter("Enclosing circle"), circleColor(200, 200, 200), outlineColor(0, 0, 0),
       alpha(128), inversedColor(false), configurationWidget(nullptr) {}
 
-void EnclosingCircleHighlighter::highlight(const PathFinder *, GlMainWidget *glMainWidget,
+void EnclosingCircleHighlighter::highlight(const PathFinder *, GlWidget *glWidget,
                                            BooleanProperty *selection, node, node) {
-  GlGraphInputData *inputData(getInputData(glMainWidget));
-  GlScene *scene = glMainWidget->getScene();
+  GlGraphInputData *inputData(getInputData(glWidget));
+  GlScene *scene = glWidget->getScene();
   LayoutProperty *layout = inputData->getElementLayout();
   vector<Circlef> circles;
   float minDepth = -.5; // We'll draw the circle beyond the deeper node. Will work in most cases.
@@ -104,7 +104,7 @@ void EnclosingCircleHighlighter::highlight(const PathFinder *, GlMainWidget *glM
   Color inside, outline;
 
   if (inversedColor) {
-    inside = getInverseColor(glMainWidget->getScene()->getBackgroundColor());
+    inside = getInverseColor(glWidget->getScene()->getBackgroundColor());
     outline = inside;
   } else {
     inside = circleColor;
@@ -118,7 +118,7 @@ void EnclosingCircleHighlighter::highlight(const PathFinder *, GlMainWidget *glM
   addGlEntity(scene, glCircle, true, "PathFinderCircle");
 }
 
-void EnclosingCircleHighlighter::draw(GlMainWidget *) {}
+void EnclosingCircleHighlighter::draw(GlWidget *) {}
 
 bool EnclosingCircleHighlighter::isConfigurable() const {
   return true;

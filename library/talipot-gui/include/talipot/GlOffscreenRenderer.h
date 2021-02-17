@@ -30,7 +30,7 @@ namespace tlp {
 
 class GlEntity;
 class GlGraph;
-class GlMainWidget;
+class GlWidget;
 
 class GlOffscreenRenderer;
 DECLARE_DLL_TEMPLATE_INSTANCE(Singleton<GlOffscreenRenderer>, TLP_QT_TEMPLATE_DECLARE_SCOPE)
@@ -108,7 +108,7 @@ public:
 
   void renderExternalScene(GlScene *scene, const bool antialiased = false);
 
-  void renderGlMainWidget(GlMainWidget *glWidget, bool redrawNeeded = true);
+  void renderGlWidget(GlWidget *glWidget, bool redrawNeeded = true);
 
   /**
    * @brief Generate a QImage from the scene. You need to call the renderScene function before this

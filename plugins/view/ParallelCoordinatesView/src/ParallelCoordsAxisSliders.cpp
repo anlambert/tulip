@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -16,7 +16,7 @@
 #include <talipot/GlLabel.h>
 #include <talipot/GlQuad.h>
 #include <talipot/GlBoundingBoxSceneVisitor.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 
 #include "ParallelCoordinatesView.h"
 #include "ParallelTools.h"
@@ -198,7 +198,7 @@ void ParallelCoordsAxisSliders::viewChanged(View *view) {
   initOrUpdateSliders();
 }
 
-bool ParallelCoordsAxisSliders::compute(GlMainWidget *) {
+bool ParallelCoordsAxisSliders::compute(GlWidget *) {
   initOrUpdateSliders();
   return true;
 }
@@ -245,7 +245,7 @@ void ParallelCoordsAxisSliders::initOrUpdateSliders() {
 
 bool ParallelCoordsAxisSliders::eventFilter(QObject *widget, QEvent *e) {
 
-  GlMainWidget *glWidget = static_cast<GlMainWidget *>(widget);
+  GlWidget *glWidget = static_cast<GlWidget *>(widget);
 
   if (glWidget == nullptr) {
     return false;
@@ -457,8 +457,8 @@ void ParallelCoordsAxisSliders::deleteGlSliders() {
   axisSlidersMap.clear();
 }
 
-AxisSlider *ParallelCoordsAxisSliders::getSliderUnderPointer(GlMainWidget *glWidget,
-                                                             ParallelAxis *axis, int x, int y) {
+AxisSlider *ParallelCoordsAxisSliders::getSliderUnderPointer(GlWidget *glWidget, ParallelAxis *axis,
+                                                             int x, int y) {
   vector<SelectedEntity> pickedEntities;
 
   if (glWidget->pickGlEntities(x, y, pickedEntities, selectionLayer)) {
@@ -487,9 +487,9 @@ void ParallelCoordsAxisSliders::updateOtherAxisSliders() {
   }
 }
 
-bool ParallelCoordsAxisSliders::draw(GlMainWidget *glMainWidget) {
+bool ParallelCoordsAxisSliders::draw(GlWidget *glWidget) {
 
-  Camera &camera = glMainWidget->getScene()->getLayer("Main")->getCamera();
+  Camera &camera = glWidget->getScene()->getLayer("Main")->getCamera();
   camera.initGl();
 
   for (const auto &it : axisSlidersMap) {

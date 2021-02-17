@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -18,7 +18,7 @@
 #include <talipot/PluginsManager.h>
 #include <talipot/WorkspacePanel.h>
 #include <talipot/GlMainView.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 
 #include "ViewsUtils.h"
 
@@ -252,8 +252,8 @@ void ViewsManager::resizeView(tlp::View *view, int width, int height) {
     viewToWindow[view]->resize(width, height);
     tlp::GlMainView *glView = dynamic_cast<tlp::GlMainView *>(view);
     if (glView) {
-      glView->getGlMainWidget()->resize(width, height);
-      glView->getGlMainWidget()->resizeGL(width, height);
+      glView->getGlWidget()->resize(width, height);
+      glView->getGlWidget()->resizeGL(width, height);
     }
     QApplication::processEvents();
   }

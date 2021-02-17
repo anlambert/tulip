@@ -13,7 +13,7 @@
 
 #include "PathFinderComponent.h"
 
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/GlGraph.h>
 #include <talipot/GlMainView.h>
 
@@ -36,7 +36,7 @@ PathFinderComponent::~PathFinderComponent() {
 
 bool PathFinderComponent::eventFilter(QObject *obj, QEvent *event) {
   QMouseEvent *qMouseEv = static_cast<QMouseEvent *>(event);
-  GlMainWidget *glw = dynamic_cast<GlMainWidget *>(obj);
+  GlWidget *glw = dynamic_cast<GlWidget *>(obj);
 
   if (glw == nullptr) {
     return false;
@@ -121,8 +121,8 @@ bool PathFinderComponent::eventFilter(QObject *obj, QEvent *event) {
   return false;
 }
 
-void PathFinderComponent::selectPath(GlMainWidget *glMainWidget, Graph *graph) {
-  GlGraphInputData *inputData = glMainWidget->getGlGraphInputData();
+void PathFinderComponent::selectPath(GlWidget *glWidget, Graph *graph) {
+  GlGraphInputData *inputData = glWidget->getGlGraphInputData();
 
   BooleanProperty *selection = inputData->getElementSelected();
 
@@ -153,16 +153,16 @@ void PathFinderComponent::selectPath(GlMainWidget *glMainWidget, Graph *graph) {
 
     } else {
       // A path has been found: highlight it
-      runHighlighters(glMainWidget, selection, src, tgt);
+      runHighlighters(glWidget, selection, src, tgt);
     }
   } else if (src.isValid()) {
     selection->setNodeValue(src, true);
   }
 }
 
-void PathFinderComponent::runHighlighters(GlMainWidget *glMainWidget, BooleanProperty *selection,
-                                          node src, node tgt) {
-  glMainWidget->getScene()->getGlGraph()->getGraph()->push(true);
+void PathFinderComponent::runHighlighters(GlWidget *glWidget, BooleanProperty *selection, node src,
+                                          node tgt) {
+  glWidget->getScene()->getGlGraph()->getGraph()->push(true);
   graphPopable = true;
   vector<string> activeHighlighters(parent->getActiveHighlighters());
 
@@ -170,14 +170,14 @@ void PathFinderComponent::runHighlighters(GlMainWidget *glMainWidget, BooleanPro
     PathHighlighter *hler = findHighlighter(h);
 
     if (hler) {
-      hler->highlight(parent, glMainWidget, selection, src, tgt);
+      hler->highlight(parent, glWidget, selection, src, tgt);
     }
   }
 }
 
-void PathFinderComponent::clearHighlighters(GlMainWidget *glMainWidget) {
-  if (graphPopable && glMainWidget->getScene()->getGlGraph()->getGraph()->canPop()) {
-    glMainWidget->getScene()->getGlGraph()->getGraph()->pop(false);
+void PathFinderComponent::clearHighlighters(GlWidget *glWidget) {
+  if (graphPopable && glWidget->getScene()->getGlGraph()->getGraph()->canPop()) {
+    glWidget->getScene()->getGlGraph()->getGraph()->pop(false);
     graphPopable = false;
   }
 
@@ -212,5 +212,5 @@ QSet<PathHighlighter *> PathFinderComponent::getHighlighters() {
 
 void PathFinderComponent::clear() {
   GlMainView *glMainView = static_cast<GlMainView *>(view());
-  glMainView->getGlMainWidget()->setCursor(QCursor());
+  glMainView->getGlWidget()->setCursor(QCursor());
 }

@@ -15,7 +15,7 @@
 #include <talipot/Gl2DRect.h>
 #include <talipot/GlLabel.h>
 #include <talipot/GlProgressBar.h>
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/GlOffscreenRenderer.h>
 #include <talipot/GlGraph.h>
 
@@ -121,7 +121,7 @@ struct NodeCoordYOrdering {
   }
 };
 
-void PixelOrientedOverview::computePixelView(GlMainWidget *glWidget) {
+void PixelOrientedOverview::computePixelView(GlWidget *glWidget) {
 
   reset(false);
 

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -121,8 +121,7 @@ public:
   }
 
   bool getNodeOrEdgeAtViewportPos(int x, int y, node &n, edge &e) const override {
-    return GlMainView::getNodeOrEdgeAtViewportPos(geoViewGraphicsView->getGlMainWidget(), x, y, n,
-                                                  e);
+    return GlMainView::getNodeOrEdgeAtViewportPos(geoViewGraphicsView->getGlWidget(), x, y, n, e);
   }
 
   GeographicViewConfigWidget *getConfigWidget() const {
@@ -148,7 +147,7 @@ public slots:
   void updateSharedProperties();
 
   void currentInteractorChanged(tlp::Interactor *i) override {
-    i->install(geoViewGraphicsView->getGlMainWidget());
+    i->install(geoViewGraphicsView->getGlWidget());
   }
 
   void mapToPolygon() {

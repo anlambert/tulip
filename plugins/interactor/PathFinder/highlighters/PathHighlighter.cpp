@@ -13,7 +13,7 @@
 
 #include "PathHighlighter.h"
 
-#include <talipot/GlMainWidget.h>
+#include <talipot/GlWidget.h>
 #include <talipot/GlMainView.h>
 #include <talipot/GlGraph.h>
 
@@ -29,8 +29,8 @@ PathHighlighter::~PathHighlighter() {
   }
 }
 
-GlGraphInputData *PathHighlighter::getInputData(GlMainWidget *glMainWidget) {
-  return glMainWidget->getGlGraphInputData();
+GlGraphInputData *PathHighlighter::getInputData(GlWidget *glWidget) {
+  return glWidget->getGlGraphInputData();
 }
 
 GlLayer *PathHighlighter::getWorkingLayer(GlScene *scene) {

@@ -94,7 +94,7 @@ bool isPolygonAincludesInB(const vector<Coord> &A, const vector<Coord> &B) {
 }
 
 void MouseLassoNodesSelectorInteractorComponent::selectGraphElementsUnderPolygon(
-    GlMainWidget *glWidget) {
+    GlWidget *glWidget) {
   vector<Coord> polygonVprt;
   BoundingBox polygonVprtBB;
 
@@ -203,7 +203,7 @@ void MouseLassoNodesSelectorInteractorComponent::selectGraphElementsUnderPolygon
 }
 
 bool MouseLassoNodesSelectorInteractorComponent::eventFilter(QObject *obj, QEvent *e) {
-  GlMainWidget *glWidget = static_cast<GlMainWidget *>(obj);
+  GlWidget *glWidget = static_cast<GlWidget *>(obj);
 
   if (!glWidget->hasMouseTracking()) {
     glWidget->setMouseTracking(true);
@@ -276,7 +276,7 @@ bool MouseLassoNodesSelectorInteractorComponent::eventFilter(QObject *obj, QEven
   return false;
 }
 
-bool MouseLassoNodesSelectorInteractorComponent::draw(GlMainWidget *glWidget) {
+bool MouseLassoNodesSelectorInteractorComponent::draw(GlWidget *glWidget) {
 
   if (!drawInteractor) {
     return false;

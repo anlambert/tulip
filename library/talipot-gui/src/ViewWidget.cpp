@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -18,8 +18,8 @@
 #include <QGraphicsProxyWidget>
 #include <QMainWindow>
 
-#include <talipot/GlMainWidget.h>
-#include <talipot/GlMainWidgetGraphicsItem.h>
+#include <talipot/GlWidget.h>
+#include <talipot/GlWidgetGraphicsItem.h>
 #include <talipot/Interactor.h>
 #include <talipot/TlpQtTools.h>
 
@@ -45,12 +45,11 @@ struct TalipotGraphicsView : public QGraphicsView {
       scene()->setSceneRect(QRect(QPoint(0, 0), size()));
     }
 
-    GlMainWidgetGraphicsItem *glMainWidgetItem =
-        dynamic_cast<GlMainWidgetGraphicsItem *>(_centralItem);
+    GlWidgetGraphicsItem *glWidgetItem = dynamic_cast<GlWidgetGraphicsItem *>(_centralItem);
     QGraphicsProxyWidget *proxyWidget = dynamic_cast<QGraphicsProxyWidget *>(_centralItem);
 
-    if (glMainWidgetItem) {
-      glMainWidgetItem->resize(width(), height());
+    if (glWidgetItem) {
+      glWidgetItem->resize(width(), height());
     } else if (proxyWidget) {
       proxyWidget->resize(width(), height());
     }
@@ -119,32 +118,31 @@ void ViewWidget::setCentralWidget(QWidget *w, bool deleteOldCentralWidget) {
     currentInteractor()->install(w);
   }
 
-  GlMainWidget *glMainWidget = dynamic_cast<GlMainWidget *>(w);
+  GlWidget *glWidget = dynamic_cast<GlWidget *>(w);
 
-  if (glMainWidget) {
+  if (glWidget) {
     _graphicsView->setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing |
                                   QPainter::TextAntialiasing);
     _graphicsView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 
-    GlMainWidgetGraphicsItem *glMainWidgetItem =
-        dynamic_cast<GlMainWidgetGraphicsItem *>(_centralWidgetItem);
+    GlWidgetGraphicsItem *glWidgetItem = dynamic_cast<GlWidgetGraphicsItem *>(_centralWidgetItem);
 
-    if (glMainWidgetItem) {
+    if (glWidgetItem) {
       deleteOldCentralWidget = false;
-      glMainWidgetItem->setGlMainWidget(glMainWidget);
+      glWidgetItem->setGlWidget(glWidget);
     } else {
-      glMainWidgetItem = new GlMainWidgetGraphicsItem(glMainWidget, _graphicsView->width(),
-                                                      _graphicsView->height());
+      glWidgetItem =
+          new GlWidgetGraphicsItem(glWidget, _graphicsView->width(), _graphicsView->height());
 
       if (_centralWidgetItem) {
         _graphicsView->scene()->removeItem(_centralWidgetItem);
       }
 
-      _centralWidgetItem = glMainWidgetItem;
+      _centralWidgetItem = glWidgetItem;
       _graphicsView->scene()->addItem(_centralWidgetItem);
     }
 
-    glMainWidgetItem->resize(_graphicsView->width(), _graphicsView->height());
+    glWidgetItem->resize(_graphicsView->width(), _graphicsView->height());
   } else {
     _graphicsView->setRenderHints(QPainter::TextAntialiasing);
     _graphicsView->setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);

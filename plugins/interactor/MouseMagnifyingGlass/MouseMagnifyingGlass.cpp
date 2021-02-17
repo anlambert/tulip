@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -241,7 +241,7 @@ void MouseMagnifyingGlassInteractorComponent::generateMagnifyingGlassTexture(
   glViewport(viewport[0], viewport[1], viewport[2], viewport[3]);
 }
 
-bool MouseMagnifyingGlassInteractorComponent::draw(GlMainWidget *glWidget) {
+bool MouseMagnifyingGlassInteractorComponent::draw(GlWidget *glWidget) {
   if (!drawInteractor) {
     return false;
   }
@@ -283,7 +283,7 @@ void MouseMagnifyingGlassInteractorComponent::viewChanged(View *view) {
   }
 
   GlMainView *glView = dynamic_cast<GlMainView *>(view);
-  glWidget = glView->getGlMainWidget();
+  glWidget = glView->getGlWidget();
   radius = glWidget->screenToViewport(glWidget->width()) / 4;
   camera = &glWidget->getScene()->getLayer("Main")->getCamera();
 

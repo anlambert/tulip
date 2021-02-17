@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -56,9 +56,9 @@ class EnclosingCircleHighlighter : public QObject, public PathHighlighter {
 public:
   EnclosingCircleHighlighter();
   ~EnclosingCircleHighlighter() override;
-  void highlight(const PathFinder *parent, GlMainWidget *glMainWidget, BooleanProperty *selection,
+  void highlight(const PathFinder *parent, GlWidget *glWidget, BooleanProperty *selection,
                  tlp::node src, tlp::node tgt) override;
-  void draw(GlMainWidget *glMainWidget) override;
+  void draw(GlWidget *glWidget) override;
   bool isConfigurable() const override;
   QWidget *getConfigurationWidget() override;
 

@@ -32,11 +32,11 @@ class GlCompositeHierarchyManager;
  * @brief This widget provide a simple system to visualize data/graph with OpenGL 3D engine
  *
  * This widget is an interface between Qt Widget system and talipot OpenGL engine
- * The central object of GlMainWidget is the GlScene member
+ * The central object of GlWidget is the GlScene member
  * @see GlScene
  *
  * To use this class you have to :
- *   - create a GlMainWidget
+ *   - create a GlWidget
  *   - get the GlScene with getScene() function
  *   - add GlLayer and GlEntity to this scene
  *   - call centerScene() to compute a good GlCamera
@@ -49,12 +49,12 @@ class GlCompositeHierarchyManager;
  * If you only want to visualize a graph, you can call the setGraph function
  *
  *
- * After scene construction you can perform some operation on GlMainWidget :
+ * After scene construction you can perform some operation on GlWidget :
  * - Selection with selectGlEntities()
  * - Image output with getImage(), createPicture()
  * - others operation on GlScene and QOpenGLWidget
  */
-class TLP_QT_SCOPE GlMainWidget : public QOpenGLWidget {
+class TLP_QT_SCOPE GlWidget : public QOpenGLWidget {
   Q_OBJECT
 
 public:
@@ -73,17 +73,17 @@ public:
   Q_DECLARE_FLAGS(RenderingOptions, RenderingOption)
 
   /**
-   * @brief Constructor of GlMainWidget
+   * @brief Constructor of GlWidget
    *
-   * Create a GlMainWidget with the GlScene associated to it
+   * Create a GlWidget with the GlScene associated to it
    * @param parent Qt Widget parent system
-   * @param view if you want to link this GlMainWidget to a view : use this parameter
+   * @param view if you want to link this GlWidget to a view : use this parameter
    */
-  GlMainWidget(QWidget *parent = nullptr, View *view = nullptr);
-  ~GlMainWidget() override;
+  GlWidget(QWidget *parent = nullptr, View *view = nullptr);
+  ~GlWidget() override;
 
   /**
-   * @brief Get the GlScene of this GlMainWidget
+   * @brief Get the GlScene of this GlWidget
    * You have to add yours GlLayer and GlEntity to this GlScene
    * At the construction this GlScene is empty
    * @see GlScene
@@ -249,7 +249,7 @@ public:
    * @param options Configure the rendering process, see the RenderingOption documentation for more
    *information on each rendering option effect.
    * @see RenderingOption
-   * @param checkVisibility If check visibility is set as true : the engine check if GlMainWidget
+   * @param checkVisibility If check visibility is set as true : the engine check if GlWidget
    *QWidget is visible. If set at false : the engine render the scene in all cases
    **/
   void render(RenderingOptions options = RenderingOptions(RenderScene | SwapBuffers),
@@ -321,18 +321,18 @@ protected slots:
 
 signals:
   /**
-   * This signal is emit when the GlMainWidget will be deleted
+   * This signal is emit when the GlWidget will be deleted
    */
-  void closing(GlMainWidget *, QCloseEvent *);
+  void closing(GlWidget *, QCloseEvent *);
 
   /**
-   * This signal is emit when GlMainWidget::redraw() is call
+   * This signal is emit when GlWidget::redraw() is call
    */
-  void viewRedrawn(GlMainWidget *glWidget);
+  void viewRedrawn(GlWidget *glWidget);
   /**
-   * This signal is emit when GlMainWidget::draw() is call
+   * This signal is emit when GlWidget::draw() is call
    */
-  void viewDrawn(GlMainWidget *glWidget, bool graphChanged);
+  void viewDrawn(GlWidget *glWidget, bool graphChanged);
 
   void glResized(int w, int h);
 

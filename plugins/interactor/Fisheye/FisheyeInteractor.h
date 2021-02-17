@@ -37,16 +37,16 @@ public:
 
   bool eventFilter(QObject *widget, QEvent *e) override;
 
-  bool compute(GlMainWidget *) override {
+  bool compute(GlWidget *) override {
     return false;
   }
 
   void viewChanged(View *view) override;
 
-  bool draw(GlMainWidget *glMainWidget) override;
+  bool draw(GlWidget *glWidget) override;
 
 private:
-  void generateFisheyeTexture(GlMainWidget *glWidget);
+  void generateFisheyeTexture(GlWidget *glWidget);
 
   FisheyeConfigWidget *_configWidget;
   bool _activateFisheye;
