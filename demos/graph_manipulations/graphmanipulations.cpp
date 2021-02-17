@@ -5,6 +5,7 @@
 #include <talipot/ColorProperty.h>
 #include <talipot/StringProperty.h>
 #include <talipot/DoubleProperty.h>
+#include <talipot/PluginsManager.h>
 
 using namespace std;
 using namespace tlp;
