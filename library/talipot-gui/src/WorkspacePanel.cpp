@@ -296,8 +296,8 @@ bool WorkspacePanel::eventFilter(QObject *obj, QEvent *ev) {
 
 void WorkspacePanel::setCurrentInteractor(tlp::Interactor *interactor) {
   view()->setCurrentInteractor(interactor);
-  _ui->currentInteractorButton->setText(interactor->action()->text());
   _ui->currentInteractorButton->setIcon(interactor->action()->icon());
+  updateCurrentInteractorButtonText();
   _ui->currentInteractorButton->setToolTip(
       "Active tool:<br/><b>" + interactor->action()->text() +
       QString(interactor->configurationWidget()
@@ -468,6 +468,7 @@ void WorkspacePanel::resizeEvent(QResizeEvent *ev) {
   resetInteractorsScrollButtonsVisibility();
 
   QWidget::resizeEvent(ev);
+  updateCurrentInteractorButtonText();
 }
 
 void WorkspacePanel::setConfigurationTabExpanded(bool expanded, bool animate) {
@@ -604,4 +605,15 @@ void WorkspacePanel::toggleSynchronization(bool f) {
   }
 
   emit changeGraphSynchronization(f);
+}
+
+void WorkspacePanel::updateCurrentInteractorButtonText() {
+  auto fm = fontMetrics();
+  if (!_view || !_view->currentInteractor()) {
+    return;
+  }
+  auto interactor = _view->currentInteractor();
+  auto text = fm.elidedText(interactor->action()->text() + QString(30, ' '), Qt::ElideRight,
+                            _ui->currentInteractorWidget->width());
+  _ui->currentInteractorButton->setText(text.replace(" …", "  "));
 }
