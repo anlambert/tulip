@@ -468,7 +468,9 @@ TalipotMainWindow::TalipotMainWindow()
 
   // set a default position and size that works seamlessly on all platforms
   move(0, 0);
-  resize(QDesktopWidget().availableGeometry(this).size() * 0.9);
+  QSize desktopSize = QDesktopWidget().availableGeometry(this).size();
+  resize(desktopSize * 0.9);
+  _ui->workspace->setMinimumWidth(0.5 * desktopSize.width());
   _ui->mainSplitter->setSizes({int(0.29 * width()), int(0.71 * width())});
 }
 
