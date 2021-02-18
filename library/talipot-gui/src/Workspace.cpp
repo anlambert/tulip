@@ -432,6 +432,7 @@ void Workspace::updatePanels() {
     } else if (slt->widget() != _panels[i]) {
       slt->setWidget(_panels[i]);
       _panels[i]->resetInteractorsScrollButtonsVisibility();
+      _panels[i]->updateCurrentInteractorButtonText();
     }
 
     i++;

@@ -74,6 +74,7 @@ public slots:
   void setHighlightMode(bool);
   bool isGraphSynchronized() const;
   void resetInteractorsScrollButtonsVisibility();
+  void updateCurrentInteractorButtonText();
 
 signals:
   void drawNeeded();
@@ -105,8 +106,6 @@ protected:
   bool handleDropEvent(const QMimeData *mimedata);
   void showEvent(QShowEvent *event) override;
   void closeEvent(QCloseEvent *event) override;
-
-  void updateCurrentInteractorButtonText();
 };
 
 }

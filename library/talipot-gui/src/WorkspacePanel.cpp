@@ -608,12 +608,24 @@ void WorkspacePanel::toggleSynchronization(bool f) {
 }
 
 void WorkspacePanel::updateCurrentInteractorButtonText() {
-  auto fm = fontMetrics();
   if (!_view || !_view->currentInteractor()) {
     return;
   }
+  auto fm = fontMetrics();
   auto interactor = _view->currentInteractor();
-  auto text = fm.elidedText(interactor->action()->text() + QString(30, ' '), Qt::ElideRight,
-                            _ui->currentInteractorWidget->width() - 5);
-  _ui->currentInteractorButton->setText(text.replace(" …", "  "));
+  auto text = interactor->action()->text();
+  int width = _ui->sep4->pos().x() - 20;
+// QToolButton text is automatically elided by the middle on windows
+#ifndef Q_OS_WIN
+  while (fm.boundingRect(text).width() < width - 10) {
+    text += " ";
+  }
+  text = fm.elidedText(text, Qt::ElideRight, width);
+  text = text.replace("  …", "  ");
+#else
+  while (fm.boundingRect(text).width() < width - 20) {
+    text += " ";
+  }
+#endif
+  _ui->currentInteractorButton->setText(text);
 }
