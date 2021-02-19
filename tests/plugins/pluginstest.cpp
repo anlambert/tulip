@@ -25,37 +25,32 @@
 #endif
 #include <talipot/PluginLibraryLoader.h>
 
-static void loadTalipotPluginsFromDir(const std::string &pluginsDir,
-                                      tlp::PluginLoader *pluginLoader = nullptr) {
-  std::string oldTlpPluginsPath = tlp::TalipotPluginsPath;
-  tlp::TalipotPluginsPath = pluginsDir;
-  tlp::PluginLibraryLoader::loadPlugins(pluginLoader);
-  tlp::TalipotPluginsPath = oldTlpPluginsPath;
-}
+using namespace std;
+using namespace tlp;
 
-int main(int /* arg */, char ** /* argv */) {
+int main() {
 
-  std::string talipotBuildDir = TALIPOT_BUILD_DIR;
+  string talipotBuildDir = TALIPOT_BUILD_DIR;
 
-  tlp::initTalipotLib();
-  tlp::PluginLoader *pLoader = nullptr;
+  initTalipotLib();
+  PluginLoader *pLoader = nullptr;
 #ifndef NDEBUG
-  tlp::PluginLoaderTxt loader;
+  PluginLoaderTxt loader;
   pLoader = &loader;
 #endif
 
-  loadTalipotPluginsFromDir(talipotBuildDir + "/plugins/clustering", pLoader);
-  loadTalipotPluginsFromDir(talipotBuildDir + "/plugins/colors", pLoader);
-  loadTalipotPluginsFromDir(talipotBuildDir + "/plugins/export", pLoader);
-  loadTalipotPluginsFromDir(talipotBuildDir + "/plugins/import", pLoader);
-  loadTalipotPluginsFromDir(talipotBuildDir + "/plugins/import/Graphviz", pLoader);
-  loadTalipotPluginsFromDir(talipotBuildDir + "/plugins/layout", pLoader);
-  loadTalipotPluginsFromDir(talipotBuildDir + "/plugins/layout/FastOverlapRemoval", pLoader);
-  loadTalipotPluginsFromDir(talipotBuildDir + "/plugins/metric", pLoader);
-  loadTalipotPluginsFromDir(talipotBuildDir + "/plugins/selection", pLoader);
-  loadTalipotPluginsFromDir(talipotBuildDir + "/plugins/sizes", pLoader);
+  PluginLibraryLoader::loadPluginsFromDir(talipotBuildDir + "/plugins/clustering", pLoader);
+  PluginLibraryLoader::loadPluginsFromDir(talipotBuildDir + "/plugins/colors", pLoader);
+  PluginLibraryLoader::loadPluginsFromDir(talipotBuildDir + "/plugins/export", pLoader);
+  PluginLibraryLoader::loadPluginsFromDir(talipotBuildDir + "/plugins/import", pLoader);
+  PluginLibraryLoader::loadPluginsFromDir(talipotBuildDir + "/plugins/import/Graphviz", pLoader);
+  PluginLibraryLoader::loadPluginsFromDir(talipotBuildDir + "/plugins/layout", pLoader);
+  PluginLibraryLoader::loadPluginsFromDir(talipotBuildDir + "/plugins/layout/FastOverlapRemoval",
+                                          pLoader);
+  PluginLibraryLoader::loadPluginsFromDir(talipotBuildDir + "/plugins/metric", pLoader);
+  PluginLibraryLoader::loadPluginsFromDir(talipotBuildDir + "/plugins/selection", pLoader);
+  PluginLibraryLoader::loadPluginsFromDir(talipotBuildDir + "/plugins/sizes", pLoader);
 
-  // CPPUNIT_NS::QtUi::TestRunner runner;
   CPPUNIT_NS::TestResult controller;
   CPPUNIT_NS::TestResultCollector result;
   controller.addListener(&result);
@@ -64,11 +59,7 @@ int main(int /* arg */, char ** /* argv */) {
   runner.addTest(CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest());
   runner.run(controller);
 
-  std::ofstream xmlFileOut("cpptestresults.xml");
-  CPPUNIT_NS::XmlOutputter xmlOut(&result, xmlFileOut);
-  xmlOut.write();
-
-  CPPUNIT_NS::TextOutputter stdOut(&result, std::cout);
+  CPPUNIT_NS::TextOutputter stdOut(&result, cout);
   stdOut.write();
 
   return result.wasSuccessful() ? EXIT_SUCCESS : EXIT_FAILURE;

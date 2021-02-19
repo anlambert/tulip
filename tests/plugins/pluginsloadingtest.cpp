@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -23,22 +23,25 @@
 #include <talipot/PluginLibraryLoader.h>
 #include <talipot/PluginsManager.h>
 
+using namespace std;
+using namespace tlp;
+
 // Custom loader to catch if there was some issues
 // when loading plugins
-class PluginLoaderTest : public tlp::PluginLoaderTxt {
+class PluginLoaderTest : public PluginLoaderTxt {
 public:
   PluginLoaderTest() : allPluginsLoaded(true) {}
 
-  void aborted(const std::string &filename, const std::string &errormsg) override {
-    const std::string &libName = tlp::PluginLibraryLoader::getCurrentPluginFileName();
+  void aborted(const string &filename, const string &errormsg) override {
+    const string &libName = PluginLibraryLoader::getCurrentPluginFileName();
     // plugins may be loaded twice because it may exist an other version
     // of the plugins in a CMakeFiles sub dir (/CMakeRelink.dir)
     // So set the failure flag only if the plugin was not found
     // under the CMakeFiles dir
-    if (libName.find("CMakeFiles") == std::string::npos) {
+    if (libName.find("CMakeFiles") == string::npos) {
       allPluginsLoaded = false;
     }
-    tlp::PluginLoaderTxt::aborted(filename, errormsg);
+    PluginLoaderTxt::aborted(filename, errormsg);
   }
 
   bool allPluginsLoaded;
@@ -56,22 +59,22 @@ int main(int argc, char **argv) {
   QApplication app(argc, argv);
 #endif
 
-  std::string talipotPluginsDir = TALIPOT_PLUGINS_DIR;
+  string talipotPluginsDir = TALIPOT_PLUGINS_DIR;
 
   if (talipotPluginsDir.empty() && argc > 1) {
     talipotPluginsDir = argv[1];
   }
 
-  tlp::initTalipotLib();
+  initTalipotLib();
 
   // load all plugins from the Talipot build folder
   PluginLoaderTest pLoader;
-  tlp::PluginLibraryLoader::loadPluginsFromDir(talipotPluginsDir, &pLoader);
+  PluginLibraryLoader::loadPluginsFromDir(talipotPluginsDir, &pLoader);
 
   // create an instance of each of them, then destroy it
-  auto pluginNames = tlp::PluginsManager::availablePlugins();
+  auto pluginNames = PluginsManager::availablePlugins();
   for (const auto &pluginName : pluginNames) {
-    tlp::Plugin *plugin = tlp::PluginsManager::getPluginObject(pluginName);
+    Plugin *plugin = PluginsManager::getPluginObject(pluginName);
     delete plugin;
   }
 

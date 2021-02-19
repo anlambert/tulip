@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -23,10 +23,12 @@
 
 #include <talipot/TlpTools.h>
 
-int main(int argc, char **argv) {
-  tlp::initTalipotLib();
+using namespace std;
+using namespace tlp;
 
-  // CPPUNIT_NS::QtUi::TestRunner runner;
+int main() {
+  initTalipotLib();
+
   CPPUNIT_NS::TestResult controller;
   CPPUNIT_NS::TestResultCollector result;
   controller.addListener(&result);
@@ -35,20 +37,7 @@ int main(int argc, char **argv) {
   runner.addTest(CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest());
   runner.run(controller);
 
-  std::stringstream s;
-  s << "cpptestresults";
-
-  if (argc > 1) {
-    s << "-" << argv[1];
-  }
-
-  s << ".xml";
-
-  std::ofstream xmlFileOut(s.str().c_str());
-  CPPUNIT_NS::XmlOutputter xmlOut(&result, xmlFileOut);
-  xmlOut.write();
-
-  CPPUNIT_NS::TextOutputter stdOut(&result, std::cout);
+  CPPUNIT_NS::TextOutputter stdOut(&result, cout);
   stdOut.write();
 
   return result.wasSuccessful() ? EXIT_SUCCESS : EXIT_FAILURE;
