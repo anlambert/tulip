@@ -62,7 +62,7 @@ GlWidget::GlWidget(QWidget *parent, View *view)
   grabGesture(Qt::PinchGesture);
   grabGesture(Qt::PanGesture);
   grabGesture(Qt::SwipeGesture);
-  makeCurrent();
+  QOpenGLWidget::makeCurrent();
   QSurfaceFormat format;
   format.setSamples(OpenGlConfigManager::maxNumberOfSamples());
   format.setSwapBehavior(QSurfaceFormat::DoubleBuffer);
@@ -72,7 +72,7 @@ GlWidget::GlWidget(QWidget *parent, View *view)
   setFormat(format);
   getScene()->setViewOrtho(Settings::isViewOrtho());
   OpenGlConfigManager::initExtensions();
-  doneCurrent();
+  QOpenGLWidget::doneCurrent();
 }
 //==================================================
 GlWidget::~GlWidget() {
