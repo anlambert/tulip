@@ -279,10 +279,20 @@ void GlWidget::doneCurrent() {
 bool GlWidget::pickGlEntities(const int x, const int y, const int width, const int height,
                               std::vector<SelectedEntity> &pickedEntities, GlLayer *layer) {
   makeCurrent();
-  return scene.selectEntities(
+#if defined(Q_OS_MAC) && QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+  glFrameBuf->bind();
+#endif
+
+  bool pickedEntity = scene.selectEntities(
       static_cast<RenderingEntitiesFlag>(RenderingEntities | RenderingWithoutRemove),
       screenToViewport(x), screenToViewport(y), screenToViewport(width), screenToViewport(height),
       layer, pickedEntities);
+
+#if defined(Q_OS_MAC) && QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+  glFrameBuf->release();
+#endif
+
+  return pickedEntity;
 }
 //==================================================
 bool GlWidget::pickGlEntities(const int x, const int y, std::vector<SelectedEntity> &pickedEntities,
@@ -295,6 +305,9 @@ void GlWidget::pickNodesEdges(const int x, const int y, const int width, const i
                               std::vector<SelectedEntity> &selectedEdges, GlLayer *layer,
                               bool pickNodes, bool pickEdges) {
   makeCurrent();
+#if defined(Q_OS_MAC) && QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+  glFrameBuf->bind();
+#endif
 
   if (pickNodes) {
     scene.selectEntities(
@@ -309,11 +322,20 @@ void GlWidget::pickNodesEdges(const int x, const int y, const int width, const i
         screenToViewport(x), screenToViewport(y), screenToViewport(width), screenToViewport(height),
         layer, selectedEdges);
   }
+
+#if defined(Q_OS_MAC) && QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+  glFrameBuf->release();
+#endif
 }
 //=====================================================
 bool GlWidget::pickNodesEdges(const int x, const int y, SelectedEntity &selectedEntity,
                               GlLayer *layer, bool pickNodes, bool pickEdges) {
   makeCurrent();
+#if defined(Q_OS_MAC) && QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+  glFrameBuf->bind();
+#endif
+
+  bool elementPicked = false;
   vector<SelectedEntity> selectedEntities;
 
   if (pickNodes && scene.selectEntities(
@@ -321,18 +343,23 @@ bool GlWidget::pickNodesEdges(const int x, const int y, SelectedEntity &selected
                        screenToViewport(x - 1), screenToViewport(y - 1), screenToViewport(3),
                        screenToViewport(3), layer, selectedEntities)) {
     selectedEntity = selectedEntities[0];
-    return true;
+    elementPicked = true;
   }
 
-  if (pickEdges && scene.selectEntities(
-                       static_cast<RenderingEntitiesFlag>(RenderingEdges | RenderingWithoutRemove),
-                       screenToViewport(x - 1), screenToViewport(y - 1), screenToViewport(3),
-                       screenToViewport(3), layer, selectedEntities)) {
+  if (!elementPicked && pickEdges &&
+      scene.selectEntities(
+          static_cast<RenderingEntitiesFlag>(RenderingEdges | RenderingWithoutRemove),
+          screenToViewport(x - 1), screenToViewport(y - 1), screenToViewport(3),
+          screenToViewport(3), layer, selectedEntities)) {
     selectedEntity = selectedEntities[0];
-    return true;
+    elementPicked = true;
   }
 
-  return false;
+#if defined(Q_OS_MAC) && QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+  glFrameBuf->release();
+#endif
+
+  return elementPicked;
 }
 //=====================================================
 void GlWidget::getTextureRealSize(int width, int height, int &textureRealWidth,
@@ -470,5 +497,4 @@ GlGraphRenderingParameters &GlWidget::getGlGraphRenderingParameters() {
 GlGraphInputData *GlWidget::getGlGraphInputData() const {
   return scene.getGlGraph()->getInputData();
 }
-
 }
