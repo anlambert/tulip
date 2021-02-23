@@ -925,25 +925,25 @@ void GeographicViewGraphicsView::switchViewType() {
   switch (viewType) {
   case GeographicView::OpenStreetMap: {
     enableLeafletMap = true;
-    leafletMaps->switchToOpenStreetMap();
+    leafletMaps->switchToMap("OpenStreetMap");
     break;
   }
 
   case GeographicView::EsriSatellite: {
     enableLeafletMap = true;
-    leafletMaps->switchToEsriSatellite();
+    leafletMaps->switchToMap("EsriSatellite");
     break;
   }
 
   case GeographicView::EsriTerrain: {
     enableLeafletMap = true;
-    leafletMaps->switchToEsriTerrain();
+    leafletMaps->switchToMap("EsriTerrain");
     break;
   }
 
   case GeographicView::EsriGrayCanvas: {
     enableLeafletMap = true;
-    leafletMaps->switchToEsriGrayCanvas();
+    leafletMaps->switchToMap("EsriGrayCanvas");
     break;
   }
 

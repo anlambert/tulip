@@ -37,10 +37,7 @@ static const QString htmlMap =
 <script type="text/javascript">
 var map;
 var mapBounds;
-var osm;
-var esriSatellite;
-var esriTerrain;
-var esriGrayCanvas;
+var maps = {};
 var currentLayer;
 var esriBaseUrl = 'https://server.arcgisonline.com/ArcGIS/rest/services/';
 function refreshMap() {
@@ -59,28 +56,32 @@ function init(lat, lng, zoom) {
   map = L.map('map_canvas', {
     zoomControl: false
   });
-  osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <ahref="https://www.openstreetmap.org/copyright">' +
                  'OpenStreetMap</a> contributors'
   });
   addEventHandlersToLayer(osm);
   osm.addTo(map);
-  esriSatellite = L.tileLayer(esriBaseUrl + 'World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+  maps['OpenStreetMap'] = osm;
+  var esriSatellite = L.tileLayer(esriBaseUrl + 'World_Imagery/MapServer/tile/{z}/{y}/{x}', {
     attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, ' +
                   'Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
   });
   addEventHandlersToLayer(esriSatellite);
-  esriTerrain = L.tileLayer(esriBaseUrl + 'World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+  maps['EsriSatellite'] = esriSatellite;
+  var esriTerrain = L.tileLayer(esriBaseUrl + 'World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
     attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, ' +
                   'USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, ' +
                   'METI, Esri China (Hong Kong), and the GIS User Community'
   });
   addEventHandlersToLayer(esriTerrain);
-  esriGrayCanvas = L.tileLayer(esriBaseUrl + 'Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+  maps['EsriTerrain'] = esriTerrain;
+  var esriGrayCanvas = L.tileLayer(esriBaseUrl + 'Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
     attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
     maxZoom: 16
   });
   addEventHandlersToLayer(esriGrayCanvas);
+  maps['EsriGrayCanvas'] = esriGrayCanvas;
   currentLayer = osm;
   map.setView(L.latLng(lat, lng), zoom);
   map.on('zoomstart', refreshMap);
@@ -97,28 +98,10 @@ function setMapBounds(latLngArray) {
   }
   map.flyToBounds(latLngBounds);
 }
-function switchToOpenStreetMap() {
+function switchToMap(mapName) {
   map.removeLayer(currentLayer);
-  map.addLayer(osm);
-  currentLayer = osm;
-  refreshMap();
-}
-function switchToEsriSatellite() {
-  map.removeLayer(currentLayer);
-  map.addLayer(esriSatellite);
-  currentLayer = esriSatellite;
-  refreshMap();
-}
-function switchToEsriTerrain() {
-  map.removeLayer(currentLayer);
-  map.addLayer(esriTerrain);
-  currentLayer = esriTerrain;
-  refreshMap();
-}
-function switchToEsriGrayCanvas() {
-  map.removeLayer(currentLayer);
-  map.addLayer(esriGrayCanvas);
-  currentLayer = esriGrayCanvas;
+  map.addLayer(maps[mapName]);
+  currentLayer = maps[mapName];
   refreshMap();
 }
 function switchToCustomTileLayer(customTileLayerUrl) {
@@ -223,43 +206,28 @@ void LeafletMaps::triggerLoading() {
 #endif
   // map is first centered in the Atlantic Ocean
   // in order to emphasize the need to configure geolocation
-  QString code = "init(44.8084, -40, 3)";
+  static const QString code = "init(44.8084, -40, 3)";
   executeJavascript(code);
   init = true;
 }
 
-void LeafletMaps::switchToOpenStreetMap() {
-  QString code = "switchToOpenStreetMap()";
-  executeJavascript(code);
-}
-
-void LeafletMaps::switchToEsriSatellite() {
-  QString code = "switchToEsriSatellite()";
-  executeJavascript(code);
-}
-
-void LeafletMaps::switchToEsriTerrain() {
-  QString code = "switchToEsriTerrain()";
-  executeJavascript(code);
-}
-
-void LeafletMaps::switchToEsriGrayCanvas() {
-  QString code = "switchToEsriGrayCanvas()";
-  executeJavascript(code);
+void LeafletMaps::switchToMap(const QString &mapName) {
+  static const QString code = "switchToMap('%1')";
+  executeJavascript(code.arg(mapName));
 }
 
 void LeafletMaps::switchToCustomTileLayer(const QString &customTileLayerUrl) {
-  QString code = "switchToCustomTileLayer('%1')";
+  static const QString code = "switchToCustomTileLayer('%1')";
   executeJavascript(code.arg(customTileLayerUrl));
 }
 
 void LeafletMaps::setMapCenter(double latitude, double longitude) {
-  QString code = "map.setView(L.latLng(%1, %2), map.getZoom());";
+  static const QString code = "map.setView(L.latLng(%1, %2), map.getZoom());";
   executeJavascript(code.arg(latitude).arg(longitude));
 }
 
 Coord LeafletMaps::getPixelPosOnScreenForLatLng(double lat, double lng) {
-  QString code = "map.latLngToContainerPoint(L.latLng(%1, %2)).toString();";
+  static const QString code = "map.latLngToContainerPoint(L.latLng(%1, %2)).toString();";
   QVariant ret = executeJavascript(code.arg(lat).arg(lng));
 
   QString pointStr = ret.toString();
@@ -273,7 +241,7 @@ Coord LeafletMaps::getPixelPosOnScreenForLatLng(double lat, double lng) {
 }
 
 std::pair<double, double> LeafletMaps::getLatLngForPixelPosOnScreen(int x, int y) {
-  QString code = "map.containerPointToLatLng(L.point(%1, %2)).toString();";
+  static const QString code = "map.containerPointToLatLng(L.point(%1, %2)).toString();";
   QVariant ret = executeJavascript(code.arg(x).arg(y));
 
   QString latLngStr = ret.toString();
@@ -285,7 +253,7 @@ std::pair<double, double> LeafletMaps::getLatLngForPixelPosOnScreen(int x, int y
 }
 
 int LeafletMaps::getCurrentMapZoom() {
-  QString code = "map.getZoom();";
+  static const QString code = "map.getZoom();";
   QVariant ret = executeJavascript(code);
   return ret.toInt();
 }
@@ -295,13 +263,13 @@ static int clamp(int i, int minVal, int maxVal) {
 }
 
 void LeafletMaps::setCurrentZoom(int zoom) {
-  QString code = "map.setZoom(%1);";
+  static const QString code = "map.setZoom(%1);";
   executeJavascript(code.arg(clamp(zoom, 0, 20)));
   emit currentZoomChanged();
 }
 
 pair<double, double> LeafletMaps::getCurrentMapCenter() {
-  QString code = "map.getCenter().toString();";
+  static const QString code = "map.getCenter().toString();";
   QVariant ret = executeJavascript(code);
 
   pair<double, double> latLng;

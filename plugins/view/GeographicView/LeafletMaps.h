@@ -82,13 +82,7 @@ public:
   void setMapBounds(Graph *graph,
                     const std::unordered_map<node, std::pair<double, double>> &nodesLatLngs);
 
-  void switchToOpenStreetMap();
-
-  void switchToEsriSatellite();
-
-  void switchToEsriTerrain();
-
-  void switchToEsriGrayCanvas();
+  void switchToMap(const QString &mapName);
 
   void switchToCustomTileLayer(const QString &customTileLayerUrl);
 
