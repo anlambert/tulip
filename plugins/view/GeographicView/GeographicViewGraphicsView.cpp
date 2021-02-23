@@ -634,6 +634,7 @@ void GeographicViewGraphicsView::createLayoutWithAddresses(const string &address
                                                            bool resetLatAndLngValues) {
   geocodingActive = true;
   nodeLatLng.clear();
+  addressSelectionDialog->setPickFirstResult(false);
   Observable::holdObservers();
 
   if (graph->existProperty(addressPropertyName)) {
@@ -706,24 +707,27 @@ void GeographicViewGraphicsView::createLayoutWithAddresses(const string &address
               showProgressWidget = true;
             }
 
-            addressSelectionDialog->clearList();
-            addressSelectionDialog->setBaseAddress(tlpStringToQString(addr));
+            if (!addressSelectionDialog->pickFirstResult()) {
+              addressSelectionDialog->clearList();
+              addressSelectionDialog->setBaseAddress(tlpStringToQString(addr));
 
-            for (unsigned int i = 0; i < geocodingResults.size(); ++i) {
-              addressSelectionDialog->addResultToList(
-                  tlpStringToQString(geocodingResults[i].address));
+              for (unsigned int i = 0; i < geocodingResults.size(); ++i) {
+                addressSelectionDialog->addResultToList(
+                    tlpStringToQString(geocodingResults[i].address));
+              }
+
+              addressSelectionProxy->setPos(
+                  width() / 2 - addressSelectionProxy->sceneBoundingRect().width() / 2,
+                  height() / 2 - addressSelectionProxy->sceneBoundingRect().height() / 2);
+
+              addressSelectionDialog->show();
+              addressSelectionDialog->exec();
+              idx = addressSelectionDialog->getPickedResultIdx();
+              addressSelectionDialog->hide();
+
+            } else {
+              idx = 0;
             }
-
-            addressSelectionProxy->setPos(
-                width() / 2 - addressSelectionProxy->sceneBoundingRect().width() / 2,
-                height() / 2 - addressSelectionProxy->sceneBoundingRect().height() / 2);
-
-            addressSelectionDialog->show();
-
-            addressSelectionDialog->show();
-            addressSelectionDialog->exec();
-            idx = addressSelectionDialog->getPickedResultIdx();
-            addressSelectionDialog->hide();
 
             if (showProgressWidget) {
               progressWidget->show();
@@ -1165,5 +1169,4 @@ bool GeographicViewGraphicsView::eventFilter(QObject *, QEvent *e) {
   }
   return false;
 }
-
 }

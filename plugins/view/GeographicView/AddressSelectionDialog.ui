@@ -39,9 +39,15 @@
     <widget class="QListWidget" name="resultsList"/>
    </item>
    <item>
-    <widget class="QCheckBox" name="rememberChoiceCB">
+    <widget class="QCheckBox" name="pickFirstResultCB">
+     <property name="toolTip">
+      <string>Instead of selecting an address each time with that dialog,
+always pick the first result returned by the Nominatim geocoder.
+If a selected address is wrong, reset their latitude / longitude values
+to 0 and recompute geographic layout.</string>
+     </property>
      <property name="text">
-      <string>Remember my choice</string>
+      <string>Always pick first result</string>
      </property>
     </widget>
    </item>

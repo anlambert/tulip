@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -36,11 +36,14 @@ void AddressSelectionDialog::addResultToList(const QString &result) {
 
 void AddressSelectionDialog::clearList() {
   _ui->resultsList->clear();
-  _ui->rememberChoiceCB->setChecked(false);
 }
 
-bool AddressSelectionDialog::rememberAddressChoice() const {
-  return _ui->rememberChoiceCB->isChecked();
+bool AddressSelectionDialog::pickFirstResult() const {
+  return _ui->pickFirstResultCB->isChecked();
+}
+
+void AddressSelectionDialog::setPickFirstResult(bool pickFirstResult) {
+  _ui->pickFirstResultCB->setChecked(pickFirstResult);
 }
 
 int AddressSelectionDialog::getPickedResultIdx() {
