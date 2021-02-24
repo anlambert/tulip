@@ -40,12 +40,11 @@ using namespace std;
 using namespace tlp;
 
 GeographicView::GeographicView(PluginContext *)
-    : geoViewGraphicsView(nullptr), geoViewConfigWidget(nullptr),
-      geolocalisationConfigWidget(nullptr), sceneConfigurationWidget(nullptr),
-      sceneLayersConfigurationWidget(nullptr), centerViewAction(nullptr),
-      showConfPanelAction(nullptr), useSharedLayoutProperty(true), useSharedSizeProperty(true),
-      useSharedShapeProperty(true), mapCenterLatitudeInit(0), mapCenterLongitudeInit(0),
-      mapZoomInit(0), _viewActionsManager(nullptr) {
+    : geoViewGraphicsView(nullptr), geoViewConfigWidget(nullptr), geolocationConfigWidget(nullptr),
+      sceneConfigurationWidget(nullptr), sceneLayersConfigurationWidget(nullptr),
+      centerViewAction(nullptr), showConfPanelAction(nullptr), useSharedLayoutProperty(true),
+      useSharedSizeProperty(true), useSharedShapeProperty(true), mapCenterLatitudeInit(0),
+      mapCenterLongitudeInit(0), mapZoomInit(0), _viewActionsManager(nullptr) {
   _viewType = OpenStreetMap;
   _viewTypeToName[OpenStreetMap] = "Open Street Map (Leaflet)";
   _viewTypeToName[EsriSatellite] = "Esri Satellite (Leaflet)";
@@ -57,7 +56,7 @@ GeographicView::GeographicView(PluginContext *)
 }
 
 GeographicView::~GeographicView() {
-  delete geolocalisationConfigWidget;
+  delete geolocationConfigWidget;
   delete geoViewConfigWidget;
   delete sceneConfigurationWidget;
   delete sceneLayersConfigurationWidget;
@@ -71,8 +70,8 @@ void GeographicView::setupUi() {
   connect(geoViewConfigWidget, &GeographicViewConfigWidget::mapToPolygonSignal, this,
           &GeographicView::mapToPolygon);
 
-  geolocalisationConfigWidget = new GeolocalisationConfigWidget();
-  connect(geolocalisationConfigWidget, &GeolocalisationConfigWidget::computeGeoLayout, this,
+  geolocationConfigWidget = new GeolocationConfigWidget();
+  connect(geolocationConfigWidget, &GeolocationConfigWidget::computeGeoLayout, this,
           &GeographicView::computeGeoLayout);
 
   sceneConfigurationWidget = new SceneConfigWidget();
@@ -129,7 +128,7 @@ void GeographicView::fillContextMenu(QMenu *menu, const QPointF &pf) {
 }
 
 void GeographicView::setState(const DataSet &dataSet) {
-  geolocalisationConfigWidget->setGraph(graph());
+  geolocationConfigWidget->setGraph(graph());
   geoViewGraphicsView->setGraph(graph());
 
   updatePoly(true);
@@ -166,11 +165,11 @@ void GeographicView::setState(const DataSet &dataSet) {
   dataSet.get("longitudePropertyName", longitudePropName);
 
   if (graph()->existProperty(latitudePropName) && graph()->existProperty(longitudePropName)) {
-    geolocalisationConfigWidget->setLatLngGeoLocMethod(latitudePropName, longitudePropName);
+    geolocationConfigWidget->setLatLngGeoLocMethod(latitudePropName, longitudePropName);
 
     string edgesPathsPropName;
     dataSet.get("edgesPathsPropertyName", edgesPathsPropName);
-    geolocalisationConfigWidget->setEdgesPathsPropertyName(edgesPathsPropName);
+    geolocationConfigWidget->setEdgesPathsPropertyName(edgesPathsPropName);
 
     computeGeoLayout();
   }
@@ -226,8 +225,8 @@ DataSet GeographicView::state() const {
 
   saveStoredPolyInformation(dataSet);
 
-  std::string latitudePropName = geolocalisationConfigWidget->getLatitudeGraphPropertyName();
-  std::string longitudePropName = geolocalisationConfigWidget->getLongitudeGraphPropertyName();
+  std::string latitudePropName = geolocationConfigWidget->getLatitudeGraphPropertyName();
+  std::string longitudePropName = geolocationConfigWidget->getLongitudeGraphPropertyName();
 
   if (latitudePropName != longitudePropName && graph()->existProperty(latitudePropName) &&
       graph()->existProperty(longitudePropName)) {
@@ -235,7 +234,7 @@ DataSet GeographicView::state() const {
     dataSet.set("longitudePropertyName", longitudePropName);
   }
 
-  std::string edgesPathsPropName = geolocalisationConfigWidget->getEdgesPathsPropertyName();
+  std::string edgesPathsPropName = geolocationConfigWidget->getEdgesPathsPropertyName();
 
   if (graph()->existProperty(edgesPathsPropName)) {
     dataSet.set("edgesPathsPropertyName", edgesPathsPropName);
@@ -253,23 +252,23 @@ void GeographicView::refresh() {
 }
 
 void GeographicView::computeGeoLayout() {
-  if (geolocalisationConfigWidget->geolocateByAddress()) {
+  if (geolocationConfigWidget->geolocateByAddress()) {
     geoViewGraphicsView->createLayoutWithAddresses(
-        geolocalisationConfigWidget->getAddressGraphPropertyName(),
-        geolocalisationConfigWidget->createLatAndLngProperties(),
-        geolocalisationConfigWidget->resetLatAndLngValues());
+        geolocationConfigWidget->getAddressGraphPropertyName(),
+        geolocationConfigWidget->createLatAndLngProperties(),
+        geolocationConfigWidget->resetLatAndLngValues());
 
-    if (geolocalisationConfigWidget->createLatAndLngProperties()) {
-      geolocalisationConfigWidget->setGraph(graph());
-      geolocalisationConfigWidget->setLatLngGeoLocMethod("latitude", "longitude");
+    if (geolocationConfigWidget->createLatAndLngProperties()) {
+      geolocationConfigWidget->setGraph(graph());
+      geolocationConfigWidget->setLatLngGeoLocMethod("latitude", "longitude");
     }
   } else {
-    string latProp = geolocalisationConfigWidget->getLatitudeGraphPropertyName();
-    string lngProp = geolocalisationConfigWidget->getLongitudeGraphPropertyName();
+    string latProp = geolocationConfigWidget->getLatitudeGraphPropertyName();
+    string lngProp = geolocationConfigWidget->getLongitudeGraphPropertyName();
     string edgesPathsProp = "";
 
-    if (geolocalisationConfigWidget->useEdgesPaths()) {
-      edgesPathsProp = geolocalisationConfigWidget->getEdgesPathsPropertyName();
+    if (geolocationConfigWidget->useEdgesPaths()) {
+      edgesPathsProp = geolocationConfigWidget->getEdgesPathsPropertyName();
     }
 
     if (latProp != lngProp) {
@@ -303,7 +302,7 @@ void GeographicView::currentZoomChanged() {
 }
 
 QList<QWidget *> GeographicView::configurationWidgets() const {
-  return QList<QWidget *>() << geolocalisationConfigWidget << geoViewConfigWidget
+  return QList<QWidget *>() << geolocationConfigWidget << geoViewConfigWidget
                             << sceneConfigurationWidget << sceneLayersConfigurationWidget;
 }
 

@@ -14,7 +14,7 @@ QTXWEB_SET_INCLUDES_AND_DEFINITIONS()
 SET(LIB_SRCS
     GeographicView.cpp
     GeographicViewConfigWidget.cpp
-    GeolocalisationConfigWidget.cpp
+    GeolocationConfigWidget.cpp
     ProgressWidgetGraphicsProxy.cpp
     GeographicViewInteractors.cpp
     AddressSelectionDialog.cpp
@@ -24,7 +24,7 @@ SET(LIB_SRCS
     NominatimGeocoder.cpp)
 
 QTX_WRAP_UI(
-  LIB_UI_HEADERS GeolocalisationConfigWidget.ui GeographicViewConfigWidget.ui
+  LIB_UI_HEADERS GeolocationConfigWidget.ui GeographicViewConfigWidget.ui
   ProgressWidget.ui AddressSelectionDialog.ui)
 
 QTX_ADD_RESOURCES(LIB_RCC_SRCS GeographicViewResource.qrc)
@@ -36,7 +36,7 @@ QTX_WRAP_CPP(
   ProgressWidgetGraphicsProxy.h
   GeographicViewConfigWidget.h
   GeographicViewShowElementInfo.h
-  GeolocalisationConfigWidget.h
+  GeolocationConfigWidget.h
   LeafletMaps.h)
 
 IF(WIN32)

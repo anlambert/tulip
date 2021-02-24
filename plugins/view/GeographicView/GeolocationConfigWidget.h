@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -17,21 +17,21 @@
 #include <QWidget>
 
 namespace Ui {
-class GeolocalisationConfigWidget;
+class GeolocationConfigWidget;
 }
 
 namespace tlp {
 
 class Graph;
 
-class GeolocalisationConfigWidget : public QWidget {
+class GeolocationConfigWidget : public QWidget {
 
   Q_OBJECT
-  Ui::GeolocalisationConfigWidget *_ui;
+  Ui::GeolocationConfigWidget *_ui;
 
 public:
-  GeolocalisationConfigWidget(QWidget *parent = nullptr);
-  ~GeolocalisationConfigWidget() override;
+  GeolocationConfigWidget(QWidget *parent = nullptr);
+  ~GeolocationConfigWidget() override;
 
   void setGraph(Graph *graph);
 

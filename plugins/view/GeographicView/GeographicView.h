@@ -32,7 +32,7 @@
 #include <map>
 
 #include "GeographicViewConfigWidget.h"
-#include "GeolocalisationConfigWidget.h"
+#include "GeolocationConfigWidget.h"
 #include "LeafletMaps.h"
 #include "GeographicViewGraphicsView.h"
 
@@ -182,7 +182,7 @@ private:
 
   GeographicViewGraphicsView *geoViewGraphicsView;
   GeographicViewConfigWidget *geoViewConfigWidget;
-  GeolocalisationConfigWidget *geolocalisationConfigWidget;
+  GeolocationConfigWidget *geolocationConfigWidget;
   SceneConfigWidget *sceneConfigurationWidget;
   SceneLayersConfigWidget *sceneLayersConfigurationWidget;
 

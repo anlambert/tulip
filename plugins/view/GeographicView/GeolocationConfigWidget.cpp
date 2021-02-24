@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -11,8 +11,8 @@
  *
  */
 
-#include "GeolocalisationConfigWidget.h"
-#include "ui_GeolocalisationConfigWidget.h"
+#include "GeolocationConfigWidget.h"
+#include "ui_GeolocationConfigWidget.h"
 
 #include <talipot/ImportModule.h>
 #include <talipot/Graph.h>
@@ -45,24 +45,24 @@ static vector<string> getGraphPropertiesListAccordingToType(Graph *graph, const 
   return ret;
 }
 
-GeolocalisationConfigWidget::GeolocalisationConfigWidget(QWidget *parent)
-    : QWidget(parent), _ui(new Ui::GeolocalisationConfigWidget) {
+GeolocationConfigWidget::GeolocationConfigWidget(QWidget *parent)
+    : QWidget(parent), _ui(new Ui::GeolocationConfigWidget) {
   _ui->setupUi(this);
   connect(_ui->addressLocRB, &QAbstractButton::toggled, this,
-          &GeolocalisationConfigWidget::enableDisableComboBoxes);
+          &GeolocationConfigWidget::enableDisableComboBoxes);
   connect(_ui->latLngRB, &QAbstractButton::toggled, this,
-          &GeolocalisationConfigWidget::enableDisableComboBoxes);
+          &GeolocationConfigWidget::enableDisableComboBoxes);
   connect(_ui->genLayoutButton, &QAbstractButton::clicked, this,
-          &GeolocalisationConfigWidget::computeGeoLayout);
+          &GeolocationConfigWidget::computeGeoLayout);
   connect(_ui->createLatLngPropsCB, &QAbstractButton::clicked, _ui->resetLatLngValuesCB,
           &QWidget::setEnabled);
 }
 
-GeolocalisationConfigWidget::~GeolocalisationConfigWidget() {
+GeolocationConfigWidget::~GeolocationConfigWidget() {
   delete _ui;
 }
 
-void GeolocalisationConfigWidget::setGraph(Graph *graph) {
+void GeolocationConfigWidget::setGraph(Graph *graph) {
   _ui->addressPropCB->clear();
   vector<string> stringProperties = getGraphPropertiesListAccordingToType(graph, "string");
 
@@ -93,8 +93,8 @@ void GeolocalisationConfigWidget::setGraph(Graph *graph) {
   }
 }
 
-void GeolocalisationConfigWidget::setLatLngGeoLocMethod(const std::string &latitudePropertyName,
-                                                        const std::string &longitudePropertyName) {
+void GeolocationConfigWidget::setLatLngGeoLocMethod(const std::string &latitudePropertyName,
+                                                    const std::string &longitudePropertyName) {
   _ui->latLngRB->setChecked(true);
   int latPropIndex = _ui->latPropCB->findText(tlpStringToQString(latitudePropertyName));
   int lngPropIndex = _ui->lngPropCB->findText(tlpStringToQString(longitudePropertyName));
@@ -105,8 +105,7 @@ void GeolocalisationConfigWidget::setLatLngGeoLocMethod(const std::string &latit
   }
 }
 
-void GeolocalisationConfigWidget::setEdgesPathsPropertyName(
-    const std::string &edgesPathsPropertyName) {
+void GeolocationConfigWidget::setEdgesPathsPropertyName(const std::string &edgesPathsPropertyName) {
   int edgesPathsPropertyIndex =
       _ui->edgesPathsPropertyCB->findText(tlpStringToQString(edgesPathsPropertyName));
 
@@ -116,31 +115,31 @@ void GeolocalisationConfigWidget::setEdgesPathsPropertyName(
   }
 }
 
-bool GeolocalisationConfigWidget::geolocateByAddress() const {
+bool GeolocationConfigWidget::geolocateByAddress() const {
   return _ui->addressLocRB->isChecked();
 }
 
-string GeolocalisationConfigWidget::getAddressGraphPropertyName() const {
+string GeolocationConfigWidget::getAddressGraphPropertyName() const {
   return QStringToTlpString(_ui->addressPropCB->currentText());
 }
 
-string GeolocalisationConfigWidget::getLatitudeGraphPropertyName() const {
+string GeolocationConfigWidget::getLatitudeGraphPropertyName() const {
   return QStringToTlpString(_ui->latPropCB->currentText());
 }
 
-string GeolocalisationConfigWidget::getLongitudeGraphPropertyName() const {
+string GeolocationConfigWidget::getLongitudeGraphPropertyName() const {
   return QStringToTlpString(_ui->lngPropCB->currentText());
 }
 
-bool GeolocalisationConfigWidget::createLatAndLngProperties() const {
+bool GeolocationConfigWidget::createLatAndLngProperties() const {
   return _ui->createLatLngPropsCB->isChecked();
 }
 
-bool GeolocalisationConfigWidget::resetLatAndLngValues() const {
+bool GeolocationConfigWidget::resetLatAndLngValues() const {
   return _ui->resetLatLngValuesCB->isChecked();
 }
 
-void GeolocalisationConfigWidget::enableDisableComboBoxes() {
+void GeolocationConfigWidget::enableDisableComboBoxes() {
   if (_ui->addressLocRB->isChecked()) {
     _ui->addressPropCB->setEnabled(true);
     _ui->createLatLngPropsCB->setEnabled(true);
@@ -158,10 +157,10 @@ void GeolocalisationConfigWidget::enableDisableComboBoxes() {
   }
 }
 
-bool GeolocalisationConfigWidget::useEdgesPaths() const {
+bool GeolocationConfigWidget::useEdgesPaths() const {
   return _ui->edgesControlPointsGB->isChecked();
 }
 
-std::string GeolocalisationConfigWidget::getEdgesPathsPropertyName() const {
+std::string GeolocationConfigWidget::getEdgesPathsPropertyName() const {
   return QStringToTlpString(_ui->edgesPathsPropertyCB->currentText());
 }
