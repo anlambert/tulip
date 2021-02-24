@@ -157,11 +157,7 @@ bool GeographicViewNavigator::eventFilter(QObject *widget, QEvent *e) {
   QMouseEvent *qMouseEv = dynamic_cast<QMouseEvent *>(e);
   QWheelEvent *qWheelEv = dynamic_cast<QWheelEvent *>(e);
 
-  if (geoView->viewType() == GeographicView::OpenStreetMap ||
-      geoView->viewType() == GeographicView::EsriSatellite ||
-      geoView->viewType() == GeographicView::EsriTerrain ||
-      geoView->viewType() == GeographicView::EsriGrayCanvas ||
-      geoView->viewType() == GeographicView::LeafletCustomTileLayer) {
+  if (geoView->viewType() <= GeographicView::LeafletCustomTileLayer) {
     return false;
   } else if (geoView->viewType() == GeographicView::Globe) {
 
