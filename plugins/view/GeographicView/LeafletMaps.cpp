@@ -13,6 +13,7 @@
 
 #include "LeafletMaps.h"
 
+#include <QDesktopServices>
 #include <QTimer>
 
 #ifdef QT_HAS_WEBENGINE
@@ -135,14 +136,38 @@ document.addEventListener("DOMContentLoaded", function () {
 </html>
 )";
 
+class WebPage :
 #ifdef QT_HAS_WEBENGINE
+    public QWebEnginePage {
+protected:
+  bool acceptNavigationRequest(const QUrl &url, QWebEnginePage::NavigationType type,
+                               bool isMainFrame) override {
+    if (type == QWebEnginePage::NavigationTypeLinkClicked) {
+      QDesktopServices::openUrl(url);
+      return false;
+    }
+    return QWebEnginePage::acceptNavigationRequest(url, type, isMainFrame);
+  }
+#else
+    public QWebPage {
+protected:
+  bool acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request,
+                               NavigationType type) override {
+    if (type == QWebPage::NavigationTypeLinkClicked) {
+      QDesktopServices::openUrl(request.url());
+      return false;
+    }
+    return QWebPage::acceptNavigationRequest(frame, request, type);
+  }
+#endif
+};
 
+#ifdef QT_HAS_WEBENGINE
 void MapRefresher::refreshMap() {
   emit refreshMapSignal();
 }
 
 JsCallback *JsCallback::_lastCreatedInstance = nullptr;
-
 #endif
 
 #ifdef QT_HAS_WEBKIT
@@ -150,6 +175,7 @@ LeafletMaps::LeafletMaps(QWidget *parent) : QWebView(parent), init(false) {
 #else
 LeafletMaps::LeafletMaps(QWidget *parent) : QWebEngineView(parent), init(false) {
 #endif
+  setPage(new WebPage);
 #ifdef QT_HAS_WEBKIT
   frame = page()->mainFrame();
   frame->setScrollBarPolicy(Qt::Vertical, Qt::ScrollBarAlwaysOff);
