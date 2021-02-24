@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -163,10 +163,10 @@ public:
       _writer.writeArrayOpen();
 
       for (auto e : g->edges()) {
-        std::pair<node, node> ends = g->ends(e);
+        const auto &[src, tgt] = g->ends(e);
         _writer.writeArrayOpen();
-        _writer.writeInteger(graph->nodePos(ends.first));
-        _writer.writeInteger(graph->nodePos(ends.second));
+        _writer.writeInteger(graph->nodePos(src));
+        _writer.writeInteger(graph->nodePos(tgt));
         _writer.writeArrayClose();
       }
 
@@ -332,38 +332,37 @@ public:
     _writer.writeMapOpen();
     // saving attributes
     DataSet attributes = g->getAttributes();
-    for (const pair<string, DataType *> &attribute : attributes.getValues()) {
+    for (const auto &[key, value] : attributes.getValues()) {
       // If nodes and edges are stored as graph attributes
       // we need to update their id before serializing them
       // as nodes and edges have been reindexed
-      if (attribute.second->getTypeName() == string(typeid(node).name())) {
-        node *n = static_cast<node *>(attribute.second->value);
+      if (value->getTypeName() == string(typeid(node).name())) {
+        node *n = static_cast<node *>(value->value);
         n->id = graph->nodePos(*n);
-      } else if (attribute.second->getTypeName() == string(typeid(edge).name())) {
-        edge *e = static_cast<edge *>(attribute.second->value);
+      } else if (value->getTypeName() == string(typeid(edge).name())) {
+        edge *e = static_cast<edge *>(value->value);
         e->id = g->edgePos(*e);
-      } else if (attribute.second->getTypeName() == string(typeid(vector<node>).name())) {
-        vector<node> *vn = static_cast<vector<node> *>(attribute.second->value);
+      } else if (value->getTypeName() == string(typeid(vector<node>).name())) {
+        vector<node> *vn = static_cast<vector<node> *>(value->value);
 
         for (size_t i = 0; i < vn->size(); ++i) {
           (*vn)[i].id = graph->nodePos((*vn)[i]);
         }
-      } else if (attribute.second->getTypeName() == string(typeid(vector<edge>).name())) {
-        vector<edge> *ve = static_cast<vector<edge> *>(attribute.second->value);
+      } else if (value->getTypeName() == string(typeid(vector<edge>).name())) {
+        vector<edge> *ve = static_cast<vector<edge> *>(value->value);
 
         for (size_t i = 0; i < ve->size(); ++i) {
           (*ve)[i].id = graph->edgePos((*ve)[i]);
         }
       }
 
-      DataTypeSerializer *serializer =
-          DataSet::typenameToSerializer(attribute.second->getTypeName());
-      _writer.writeString(attribute.first);
+      DataTypeSerializer *serializer = DataSet::typenameToSerializer(value->getTypeName());
+      _writer.writeString(key);
       _writer.writeArrayOpen();
       _writer.writeString(serializer->outputTypeName);
 
       stringstream temp;
-      serializer->writeData(temp, attribute.second);
+      serializer->writeData(temp, value);
       _writer.writeString(temp.str());
       _writer.writeArrayClose();
     }

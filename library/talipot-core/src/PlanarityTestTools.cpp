@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -60,8 +60,8 @@ list<edge> posDFS(Graph *sG, MutableContainer<int> &dfsPos) {
 //=================================================================
 void PlanarityTestImpl::makeBidirected(Graph *sG) {
   for (auto e : stableIterator(sG->getEdges())) {
-    auto eEnds = sG->ends(e);
-    edge newEdge = sG->addEdge(eEnds.second, eEnds.first);
+    const auto &[src, tgt] = sG->ends(e);
+    edge newEdge = sG->addEdge(tgt, src);
     bidirectedEdges[newEdge] = e;
     reversalEdge[newEdge] = e;
     reversalEdge[e] = newEdge;
@@ -73,22 +73,22 @@ void PlanarityTestImpl::makeBidirected(Graph *sG) {
  *         false otherwise.
  */
 bool PlanarityTestImpl::isT0Edge(Graph *g, edge e) {
-  auto eEnds = g->ends(e);
-  edge e1 = T0EdgeIn.get(eEnds.second.id);
+  const auto &[src, tgt] = g->ends(e);
+  edge e1 = T0EdgeIn.get(tgt.id);
 
   if (e1.isValid()) {
-    auto e1Ends = g->ends(e1);
+    const auto &[src1, tgt1] = g->ends(e1);
 
-    if (e1Ends.first == eEnds.first && e1Ends.second == eEnds.second) {
+    if (src1 == src && tgt1 == tgt) {
       return true;
     }
   }
 
-  e1 = T0EdgeIn.get(eEnds.first.id);
+  e1 = T0EdgeIn.get(src.id);
 
   if (e1.isValid()) {
-    auto e1Ends = g->ends(e1);
-    return (e1Ends.second == eEnds.first && e1Ends.first == eEnds.second);
+    const auto &[src1, tgt1] = g->ends(e1);
+    return tgt1 == src && src1 == tgt;
   }
 
   return false;
@@ -165,9 +165,7 @@ void PlanarityTestImpl::preProcessing(Graph *g) {
   edgeInT0 = posDFS(g, dfsPosNum);
 
   for (auto e : edgeInT0) {
-    auto ends = g->ends(e);
-    node n = ends.first;
-    node v = ends.second;
+    const auto &[n, v] = g->ends(e);
     parent.set(v.id, n);
     T0EdgeIn.set(v.id, e);
   }

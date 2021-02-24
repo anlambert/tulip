@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -161,22 +161,19 @@ void tlp::clusteringCoefficient(const Graph *graph, tlp::NodeStaticProperty<doub
 
     auto ite = reachables.end();
 
-    for (const auto &itr : reachables) {
-      node itn = itr.first;
-
+    for (const auto &[itn, reachable] : reachables) {
       for (auto e : graph->getInOutEdges(itn)) {
-        auto eEnds = graph->ends(e);
+        auto [eSrc, eTgt] = graph->ends(e);
 
-        if ((reachables.find(eEnds.first) != ite) && (reachables.find(eEnds.second) != ite)) {
+        if ((reachables.find(eSrc) != ite) && (reachables.find(eTgt) != ite)) {
           ++nbEdge;
         }
       }
     }
 
-    double nNode = reachables.size(); //$|N_v|$
+    double nNode = reachables.size();
 
     if (reachables.size() > 1) {
-      //$e(N_v)/(\frac{k*(k-1)}{2}}$
       clusters[i] = nbEdge / (nNode * (nNode - 1));
     } else {
       clusters[i] = 0;

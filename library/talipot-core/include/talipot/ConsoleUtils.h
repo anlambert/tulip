@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -500,11 +500,11 @@ inline std::ostream &fillToEndOfLine(std::ostream &s) {
   if (processInForeground() && ((&s == &std::cout && isatty(fileno(stdout))) ||
                                 (&s == &std::cerr && isatty(fileno(stderr))))) {
 #endif
-    std::pair<int, int> cursorPos = getConsoleCursorPosition();
-    std::pair<int, int> consoleSize = getConsoleSize();
+    auto [row, col] = getConsoleCursorPosition();
+    auto [rows, cols] = getConsoleSize();
 
-    if ((cursorPos.second + consoleSize.second) != 0) {
-      for (int i = cursorPos.second; i <= consoleSize.second; ++i) {
+    if ((col + cols) != 0) {
+      for (int i = col; i <= cols; ++i) {
         s << " ";
       }
     } else {

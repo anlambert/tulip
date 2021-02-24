@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -77,8 +77,8 @@ ostream &operator<<(ostream &os, const Graph *graph) {
   os << ";(edge <edge_id> <source_id> <target_id>)" << endl;
 
   for (auto e : graph->edges()) {
-    auto ends = graph->ends(e);
-    os << "(edge " << e.id << " " << ends.first.id << " " << ends.second.id << ")" << endl;
+    const auto &[src, tgt] = graph->ends(e);
+    os << "(edge " << e.id << " " << src.id << " " << tgt.id << ")" << endl;
   }
 
   return os;
@@ -410,28 +410,26 @@ bool tlp::exportGraph(Graph *graph, std::ostream &outputStream, const std::strin
 }
 //=========================================================
 static void removeFromGraph(Graph *g, const vector<node> &nodes, const std::vector<edge> &edges) {
-  unsigned int nbNodes = nodes.size();
-  unsigned int nbEdges = edges.size();
 
   // Clean properties
   for (auto p : g->getObjectProperties()) {
-    for (unsigned int i = 0; i < nbNodes; i++) {
-      p->erase(nodes[i]);
+    for (auto n : nodes) {
+      p->erase(n);
     }
 
-    for (unsigned int i = 0; i < nbEdges; i++) {
-      p->erase(edges[i]);
+    for (auto e : edges) {
+      p->erase(e);
     }
   }
 
   // Remove edges
-  for (unsigned int i = 0; i < nbEdges; i++) {
-    g->delEdge(edges[i]);
+  for (auto e : edges) {
+    g->delEdge(e);
   }
 
   // Remove nodes
-  for (unsigned int i = 0; i < nbNodes; i++) {
-    g->delNode(nodes[i]);
+  for (auto n : nodes) {
+    g->delNode(n);
   }
 }
 
@@ -454,9 +452,9 @@ void tlp::removeFromGraph(Graph *ioG, BooleanProperty *inSel) {
       edgeA.push_back(e);
     } else {
       // unselected edge -> don't remove node ends !
-      auto ends = ioG->ends(e);
-      inSel->setNodeValue(ends.first, false);
-      inSel->setNodeValue(ends.second, false);
+      const auto &[src, tgt] = ioG->ends(e);
+      inSel->setNodeValue(src, false);
+      inSel->setNodeValue(tgt, false);
     }
   }
 
@@ -486,9 +484,9 @@ void tlp::copyToGraph(Graph *outG, const Graph *inG, BooleanProperty *inSel,
   // extend the selection to edge ends
   if (inSel) {
     for (auto e : inSel->getNonDefaultValuatedEdges(inG)) {
-      auto eEnds = inG->ends(e);
-      inSel->setNodeValue(eEnds.first, true);
-      inSel->setNodeValue(eEnds.second, true);
+      const auto &[src, tgt] = inG->ends(e);
+      inSel->setNodeValue(src, true);
+      inSel->setNodeValue(tgt, true);
     }
   }
 
@@ -526,7 +524,6 @@ void tlp::copyToGraph(Graph *outG, const Graph *inG, BooleanProperty *inSel,
       properties.push_back(std::make_pair(src, dst));
     }
   }
-  unsigned int nbProperties = properties.size();
 
   MutableContainer<node> nodeTrl;
   nodeTrl.setAll(node());
@@ -544,9 +541,8 @@ void tlp::copyToGraph(Graph *outG, const Graph *inG, BooleanProperty *inSel,
     nodeTrl.set(nIn.id, nOut);
 
     // copy node properties
-    for (unsigned int i = 0; i < nbProperties; ++i) {
-      std::pair<PropertyInterface *, PropertyInterface *> &props = properties[i];
-      props.second->copy(nOut, nIn, props.first);
+    for (const auto &[srcProp, tgtProp] : properties) {
+      tgtProp->copy(nOut, nIn, srcProp);
     }
   }
 
@@ -563,9 +559,9 @@ void tlp::copyToGraph(Graph *outG, const Graph *inG, BooleanProperty *inSel,
 
   // loop on edges
   for (auto eIn : edgeIt) {
-    const pair<node, node> &eEnds = inG->ends(eIn);
+    const auto &[src, tgt] = inG->ends(eIn);
     // add outG corresponding edge
-    edge eOut = outG->addEdge(nodeTrl.get(eEnds.first.id), nodeTrl.get(eEnds.second.id));
+    edge eOut = outG->addEdge(nodeTrl.get(src.id), nodeTrl.get(tgt.id));
 
     // select added edge
     if (outSel) {
@@ -573,9 +569,8 @@ void tlp::copyToGraph(Graph *outG, const Graph *inG, BooleanProperty *inSel,
     }
 
     // copy edge properties
-    for (unsigned int i = 0; i < nbProperties; ++i) {
-      std::pair<PropertyInterface *, PropertyInterface *> &props = properties[i];
-      props.second->copy(eOut, eIn, props.first);
+    for (const auto &[srcProp, tgtProp] : properties) {
+      tgtProp->copy(eOut, eIn, srcProp);
     }
   }
 }
@@ -1216,9 +1211,9 @@ Graph *Graph::inducedSubGraph(BooleanProperty *selection, Graph *parentSubGraph,
     nodes.push_back(n);
   }
   for (auto e : selection->getEdgesEqualTo(true, parentSubGraph)) {
-    const pair<node, node> ext = ends(e);
-    nodes.push_back(ext.first);
-    nodes.push_back(ext.second);
+    const auto &[src, tgt] = ends(e);
+    nodes.push_back(src);
+    nodes.push_back(tgt);
   }
   return inducedSubGraph(nodes, parentSubGraph, name);
 }
@@ -1294,9 +1289,7 @@ node Graph::createMetaNode(Graph *subGraph, bool multiEdges, bool edgeDelAll) {
 
   for (auto n : subGraph->nodes()) {
     for (auto e : getSuperGraph()->getInOutEdges(n)) {
-      auto eEnds = ends(e);
-      node src = eEnds.first;
-      node tgt = eEnds.second;
+      auto [src, tgt] = ends(e);
       unsigned int toDelete = isElement(src);
 
       if (toDelete && subGraph->isElement(tgt)) {
@@ -1375,9 +1368,8 @@ node Graph::createMetaNode(Graph *subGraph, bool multiEdges, bool edgeDelAll) {
   }
 
   // update metaInfo of new meta edges
-  for (const auto &it : subEdges) {
-    edge mE = it.first;
-    metaInfo->setEdgeValue(mE, it.second);
+  for (const auto &[mE, edges] : subEdges) {
+    metaInfo->setEdgeValue(mE, edges);
     // compute meta edge values
     for (PropertyInterface *property : getObjectProperties()) {
       property->computeMetaValue(mE, getEdgeMetaInfo(mE), this);
@@ -1482,53 +1474,49 @@ void Graph::openMetaNode(node metaNode, bool updateProperties) {
       std::unordered_map<node, std::unordered_map<node, set<edge>>> newMetaEdges;
 
       for (auto e : getEdgeMetaInfo(metaEdge)) {
-        auto eEnds = super->ends(e);
+        const auto &[src, tgt] = super->ends(e);
 
-        if (isElement(eEnds.first)) {
-          if (isElement(eEnds.second) && isElement(metaEdge)) {
+        if (isElement(src)) {
+          if (isElement(tgt) && isElement(metaEdge)) {
             addEdge(e);
             graphColors->setEdgeValue(e, metaColor);
-          } else if (eEnds.first != metaNode) {
-            node tgt = mappingM.get(eEnds.second.id);
+          } else if (src != metaNode) {
+            node tgt2 = mappingM.get(tgt.id);
 
             // tgt may not be valid because at this time
             // when deleting a node from a subgraph pointed
             // by a metanode we are not able to correctly
             // update the meta edges embedding the inout edges
             // of this node
-            if (tgt.isValid()) {
-              newMetaEdges[eEnds.first][tgt].insert(e);
+            if (tgt2.isValid()) {
+              newMetaEdges[src][tgt2].insert(e);
             }
           }
-        } else if (eEnds.second != metaNode) {
-          node src = mappingM.get(eEnds.first.id);
+        } else if (tgt != metaNode) {
+          node src2 = mappingM.get(src.id);
 
           // src may not be valid because at this time
           // when deleting a node from a subgraph pointed
           // by a metanode we are not able to correctly
           // update the meta edges embedding the inout edges
           // of this node
-          if (src.isValid()) {
-            newMetaEdges[src][eEnds.second].insert(e);
+          if (src2.isValid()) {
+            newMetaEdges[src2][tgt].insert(e);
           }
         }
       }
 
       // iterate on newMetaEdges
-      for (const auto &itme : newMetaEdges) {
-        node src = itme.first;
-
-        for (const auto &itnme : itme.second) {
+      for (const auto &[src, tgtEdges] : newMetaEdges) {
+        for (const auto &[tgt, edges] : tgtEdges) {
           Graph *graph = this;
-          node tgt(itnme.first);
-
           // add an edge in the relevant graph
           if (!isElement(src) || !isElement(tgt)) {
             graph = super;
           }
 
           edge mE = graph->addEdge(src, tgt);
-          metaInfo->setEdgeValue(mE, itnme.second);
+          metaInfo->setEdgeValue(mE, edges);
           // compute meta edge values
           for (PropertyInterface *property : graph->getObjectProperties()) {
             property->computeMetaValue(mE, getEdgeMetaInfo(mE), graph);
@@ -1563,14 +1551,13 @@ void Graph::openMetaNode(node metaNode, bool updateProperties) {
         continue;
       }
 
-      auto eEnds = root->ends(e);
-      unsigned int srcId = eEnds.first.id;
-      unsigned int tgtId = eEnds.second.id;
-      node sourceC = mappingC.get(srcId);
-      node targetN = mappingN.get(tgtId);
-      node sourceN = mappingN.get(srcId);
-      node targetC = mappingC.get(tgtId);
-      node src, tgt;
+      auto [src, tgt] = root->ends(e);
+
+      node sourceC = mappingC.get(src.id);
+      node targetN = mappingN.get(tgt.id);
+      node sourceN = mappingN.get(src.id);
+      node targetC = mappingC.get(tgt.id);
+
       Color edgeColor;
 
       if (sourceC.isValid() && targetN.isValid()) {
@@ -1665,9 +1652,10 @@ void Graph::createMetaNodes(Iterator<Graph *> *itS, Graph *quotientGraph, vector
       unsigned int nbEdges = edges.size();
       for (unsigned int i = 0; i < nbEdges; ++i) {
         edge e = edges[i];
-        auto eEnds = ends(e);
-        set<node> &metaSources = nMapping[eEnds.first];
-        set<node> &metaTargets = nMapping[eEnds.second];
+
+        const auto &[src, tgt] = ends(e);
+        set<node> &metaSources = nMapping[src];
+        set<node> &metaTargets = nMapping[tgt];
 
         for (auto mSource : metaSources) {
           for (auto mTarget : metaTargets) {
@@ -1692,9 +1680,8 @@ void Graph::createMetaNodes(Iterator<Graph *> *itS, Graph *quotientGraph, vector
     }
   }
   // set viewMetaGraph for added meta edges
-  for (const auto &itm : eMapping) {
-    edge mE = itm.first;
-    metaInfo->setEdgeValue(mE, itm.second);
+  for (const auto &[mE, edges] : eMapping) {
+    metaInfo->setEdgeValue(mE, edges);
     // compute meta edge values
     for (auto prop : quotientGraph->getObjectProperties()) {
       prop->computeMetaValue(mE, getRoot()->getEdgeMetaInfo(mE), quotientGraph);

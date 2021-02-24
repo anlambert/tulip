@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -151,9 +151,9 @@ edge PlanarConMap::addEdgeMap(const node v, const node w, Face f, const edge e1,
   while (nb_added != nb_edges && !(e_tmp == succ2 && e2_found)) {
     v_edges1.push_back(e_tmp);
     nbAdjFace.set(e_tmp.id, nbAdjFace.get(e_tmp.id) + 1);
-    auto eEnds = ends(e_tmp);
-    isInNewFace.set(eEnds.first.id, true);
-    isInNewFace.set(eEnds.second.id, true);
+    const auto &[src, tgt] = ends(e_tmp);
+    isInNewFace.set(src.id, true);
+    isInNewFace.set(tgt.id, true);
     ++nb_added;
 
     if (e_tmp == e2) {
@@ -167,9 +167,9 @@ edge PlanarConMap::addEdgeMap(const node v, const node w, Face f, const edge e1,
   if (e2 == succ2 && e_tmp == facesEdges[f][(i + 1) % nb_edges]) {
     v_edges1.push_back(e_tmp);
     nbAdjFace.set(e_tmp.id, nbAdjFace.get(e_tmp.id) + 1);
-    auto eEnds = ends(e_tmp);
-    isInNewFace.set(eEnds.first.id, true);
-    isInNewFace.set(eEnds.second.id, true);
+    const auto &[src, tgt] = ends(e_tmp);
+    isInNewFace.set(src.id, true);
+    isInNewFace.set(tgt.id, true);
     ++nb_added;
     i = (i + 1) % nb_edges;
   }
@@ -238,13 +238,10 @@ void PlanarConMap::delEdgeMap(edge e, Face f) {
     f = edgesFaces[e][0];
 
   Face f1, f2;
-  node n1, n2;
   vector<edge> v_edges;
   MutableContainer<bool> isInF2;
   isInF2.setAll(false);
-  auto eEnds = ends(e);
-  n1 = eEnds.first;
-  n2 = eEnds.second;
+  const auto &[n1, n2] = ends(e);
   f1 = f;
   f2 = edgesFaces[e][1] == f ? edgesFaces[e][0] : edgesFaces[e][1];
 
@@ -315,9 +312,9 @@ void PlanarConMap::delEdgeMap(edge e, Face f) {
 
     for (unsigned int i = 0; nb_added < nb_edges - 1; i = (i + 1) % nb_edges) {
       edge e_tmp = facesEdges[f2][i];
-      auto eEnds = ends(e_tmp);
-      isInF2.set(eEnds.first.id, true);
-      isInF2.set(eEnds.second.id, true);
+      const auto &[src, tgt] = ends(e_tmp);
+      isInF2.set(src.id, true);
+      isInF2.set(tgt.id, true);
 
       if (e_tmp == e) {
         found = true;
@@ -669,8 +666,8 @@ Iterator<edge> *PlanarConMap::getFaceEdges(const Face f) {
 
 //============================================================
 Face PlanarConMap::splitFace(Face f, const edge e) {
-  auto eEnds = ends(e);
-  return splitFace(f, eEnds.first, eEnds.second);
+  const auto &[src, tgt] = ends(e);
+  return splitFace(f, src, tgt);
 }
 
 //============================================================
@@ -714,15 +711,15 @@ Face PlanarConMap::splitFace(Face f, const node v, const node w, node n) {
 
   Iterator<edge> *ite = getFaceEdges(f);
   e_tmp = ite->next();
-  pair<node, node> eEnds = ends(e_tmp);
+  const auto &[src, tgt] = ends(e_tmp);
 
-  if (eEnds.first == v || eEnds.second == v) {
+  if (src == v || tgt == v) {
     first_was_v = true;
     pred_was_v = true;
     e_tmp2 = e_tmp;
   }
 
-  if (eEnds.first == w || eEnds.second == w) {
+  if (src == w || tgt == w) {
     first_was_w = true;
     pred_was_w = true;
     e_tmp2 = e_tmp;
@@ -730,22 +727,22 @@ Face PlanarConMap::splitFace(Face f, const node v, const node w, node n) {
 
   while (ite->hasNext() && !(v_found && w_found)) {
     e_tmp = ite->next();
-    eEnds = ends(e_tmp);
+    const auto &[src, tgt] = ends(e_tmp);
 
-    if (!v_found && pred_was_v && (eEnds.first == v || eEnds.second == v)) {
+    if (!v_found && pred_was_v && (src == v || tgt == v)) {
       e1 = e_tmp2;
       v_found = true;
-    } else if (!v_found && (eEnds.first == v || eEnds.second == v)) {
+    } else if (!v_found && (src == v || tgt == v)) {
       pred_was_v = true;
       e_tmp2 = e_tmp;
     } else if (!v_found) {
       pred_was_v = false;
     }
 
-    if (!w_found && pred_was_w && (eEnds.first == w || eEnds.second == w)) {
+    if (!w_found && pred_was_w && (src == w || tgt == w)) {
       e2 = e_tmp2;
       w_found = true;
-    } else if (!w_found && (eEnds.first == w || eEnds.second == w)) {
+    } else if (!w_found && (src == w || tgt == w)) {
       pred_was_w = true;
       e_tmp2 = e_tmp;
     } else if (!w_found) {
@@ -780,9 +777,9 @@ Face PlanarConMap::splitFace(Face f, const node v, const node w, node n) {
 
     for (unsigned int i = 0; i < facesEdges[f].size(); ++i) {
       edge e = facesEdges[f][i];
-      eEnds = ends(e);
-      nodeToUpdate.set(eEnds.first.id, true);
-      nodeToUpdate.set(eEnds.second.id, true);
+      const auto &[src, tgt] = ends(e);
+      nodeToUpdate.set(src.id, true);
+      nodeToUpdate.set(tgt.id, true);
 
       if ((edgesFaces[e][0] == f && edgesFaces[e][1] == new_face) ||
           (edgesFaces[e][0] == new_face && edgesFaces[e][1] == f)) {
@@ -878,9 +875,9 @@ void PlanarConMap::mergeFaces(Face f, Face g) {
 
   for (unsigned int i = 1; i < toDel.size(); ++i, cpt = (cpt + 1) % toDel.size()) {
     edge e = toDel[cpt];
-    auto eEnds = ends(e);
+    const auto &[src, tgt] = ends(e);
 
-    if (deg(eEnds.first) == 1 || deg(eEnds.second) == 1) {
+    if (deg(src) == 1 || deg(tgt) == 1) {
       delEdgeMap(e, f);
     } else {
       break;
@@ -941,12 +938,12 @@ Face PlanarConMap::getFaceContaining(node v, node w) {
   }
 
   if (cpt != 0) {
-    auto eEnds = ends(facesEdges[f_tmp][cpt - 1]);
-    return ((eEnds.first == v) || (eEnds.second == v)) ? f_tmp : f_tmp2;
+    const auto &[src, tgt] = ends(facesEdges[f_tmp][cpt - 1]);
+    return ((src == v) || (tgt == v)) ? f_tmp : f_tmp2;
   }
 
-  auto eEnds = ends(facesEdges[f_tmp][taille1 - 1]);
-  return ((eEnds.first == v) || (eEnds.second == v)) ? f_tmp : f_tmp2;
+  const auto &[src, tgt] = ends(facesEdges[f_tmp][taille1 - 1]);
+  return ((src == v) || (tgt == v)) ? f_tmp : f_tmp2;
 }
 
 //=================================================================

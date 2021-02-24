@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -301,10 +301,10 @@ bool PluginLibraryLoader::initPluginDir(PluginLoader *loader, bool recursive,
       }
 
       // looking for a suffix matching -talipot-X.Y.Z.dll
-      auto pluginFileCheck = isTalipotPluginFile(lib);
+      auto [ok, mmVersion] = isTalipotPluginFile(lib);
 
-      if (pluginFileCheck.first) {
-        if (pluginFileCheck.second == talipot_mm_version) {
+      if (ok) {
+        if (mmVersion == talipot_mm_version) {
           // if a user local plugin with the same name exists
           // we do not try to load the current one
           if (!userPluginsPath.empty()) {
@@ -400,10 +400,10 @@ bool PluginLibraryLoader::initPluginDir(PluginLoader *loader, bool recursive,
 
     _currentPluginLibrary = _pluginPath + "/" + lib;
     // looking for a suffix matching -talipot-X.Y.Z.(so/dylib)
-    auto pluginFileCheck = isTalipotPluginFile(lib);
+    auto [ok, mmVersion] = isTalipotPluginFile(lib);
 
-    if (pluginFileCheck.first) {
-      if (pluginFileCheck.second == talipot_mm_version) {
+    if (ok) {
+      if (mmVersion == talipot_mm_version) {
         // if a user local plugin with the same name exists
         // we do not try to load the current one
         if (!userPluginsPath.empty()) {

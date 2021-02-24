@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -168,10 +168,9 @@ void SizeProperty::setNodeValue(const node n, tlp::StoredType<Size>::ReturnedCon
 
     if (v != oldV) {
       // loop on subgraph min/max
-      for (const auto &it : minMaxOk) {
-        unsigned int gid = it.first;
-        const Size &minV = min[gid];
-        const Size &maxV = max[gid];
+      for (const auto &[graphId, minMax] : minMaxOk) {
+        const Size &minV = min[graphId];
+        const Size &maxV = max[graphId];
 
         // check if min or max has to be updated
         if ((v < minV) || (v > maxV) || (oldV == minV) || (oldV == maxV)) {

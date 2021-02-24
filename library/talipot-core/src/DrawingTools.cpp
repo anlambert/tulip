@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -106,7 +106,7 @@ pair<Coord, Coord> tlp::computeBoundingRadius(const Graph *graph, const LayoutPr
 
   BoundingBox boundingBox = tlp::computeBoundingBox(graph, layout, size, rotation, selection);
   Coord center = boundingBox.center();
-  result.first = result.second = center;
+  result = {center, center};
 
   double maxRad = 0;
   for (auto n : graph->nodes()) {
@@ -183,8 +183,11 @@ bool tlp::computeLinesIntersection(const std::pair<tlp::Coord, tlp::Coord> &line
                                    const std::pair<tlp::Coord, tlp::Coord> &line2,
                                    tlp::Coord &intersectionPoint) {
 
-  Coord a = line1.second - line1.first;
-  Coord b = line2.second - line2.first;
+  const auto &[line1P1, line1P2] = line1;
+  const auto &[line2P1, line2P2] = line2;
+
+  Coord a = line1P2 - line1P1;
+  Coord b = line2P2 - line2P1;
   Coord axb = a ^ b;
   float axbnorm = axb.norm();
 
@@ -193,7 +196,7 @@ bool tlp::computeLinesIntersection(const std::pair<tlp::Coord, tlp::Coord> &line
     return false;
   }
 
-  Coord c = line2.first - line1.first;
+  Coord c = line2P1 - line1P1;
   // skew lines, no intersection
   if (c.dotProduct(axb) != 0) {
     return false;
@@ -201,7 +204,7 @@ bool tlp::computeLinesIntersection(const std::pair<tlp::Coord, tlp::Coord> &line
 
   // lines intersects, compute the point
   float s = (c ^ b).dotProduct(axb) / (axbnorm * axbnorm);
-  intersectionPoint = line1.first + a * s;
+  intersectionPoint = line1P1 + a * s;
 
   return true;
 }

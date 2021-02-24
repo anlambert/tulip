@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -284,27 +284,27 @@ void Observable::unholdObservers() {
       backupEvents.swap(_oDelayedEvents);
       map<node, vector<Event>> preparedEvents;
 
-      for (auto be : backupEvents) {
-        if (_oAlive[be.first]) {
-          Observable *sender = static_cast<Observable *>(_oPointer[be.first]);
+      for (const auto &[src, tgt] : backupEvents) {
+        if (_oAlive[src]) {
+          Observable *sender = static_cast<Observable *>(_oPointer[src]);
           sender->queuedEvent = false;
-          if (_oAlive[be.second]) {
-            _oEventsToTreat[be.second] += 1;
-            preparedEvents[be.second].push_back(Event(*sender, Event::TLP_MODIFICATION));
+          if (_oAlive[tgt]) {
+            _oEventsToTreat[tgt] += 1;
+            preparedEvents[tgt].push_back(Event(*sender, Event::TLP_MODIFICATION));
           }
         }
       }
 
       {
 
-        for (const auto &it : preparedEvents) {
+        for (const auto &[n, events] : preparedEvents) {
           // treat scheduled events
-          _oEventsToTreat[it.first] -= it.second.size();
+          _oEventsToTreat[n] -= events.size();
 
-          if (_oAlive[it.first]) {
-            Observable *obs = static_cast<Observable *>(_oPointer[it.first]);
+          if (_oAlive[n]) {
+            Observable *obs = static_cast<Observable *>(_oPointer[n]);
             ++(obs->received);
-            obs->treatEvents(it.second);
+            obs->treatEvents(events);
           }
         }
       }
@@ -459,8 +459,8 @@ void Observable::sendEvent(const Event &message) {
   }
 
   // send message to listeners
-  for (auto obs : listenerTonotify) {
-    if (obs.second == backn && message.type() == Event::TLP_DELETE) {
+  for (const auto &[obs, n] : listenerTonotify) {
+    if (n == backn && message.type() == Event::TLP_DELETE) {
       tlp::debug() << "[Observable info]: An observable onlook itself Event::DELETE msg can't be "
                       "sent to it."
                    << endl;
@@ -470,12 +470,12 @@ void Observable::sendEvent(const Event &message) {
     }
 
     // treat scheduled event
-    _oEventsToTreat[obs.second] -= 1;
+    _oEventsToTreat[n] -= 1;
 
-    if (_oAlive[obs.second]) { // other listeners/observers could be destroyed during the treat
-                               // event
-      ++(obs.first->received);
-      obs.first->treatEvent(message);
+    if (_oAlive[n]) { // other listeners/observers could be destroyed during the treat
+                      // event
+      ++(obs->received);
+      obs->treatEvent(message);
     }
 
     // we decrement after treating event
@@ -495,8 +495,8 @@ void Observable::sendEvent(const Event &message) {
   if (!observerTonotify.empty()) {
     vector<Event> tmp(1, message);
 
-    for (auto obs : observerTonotify) {
-      if (obs.second == backn && message.type() == Event::TLP_DELETE) {
+    for (const auto &[obs, n] : observerTonotify) {
+      if (n == backn && message.type() == Event::TLP_DELETE) {
         tlp::debug() << "[Observable info]: An observable onlook itself Event::DELETE msg can't be "
                         "sent to it."
                      << endl;
@@ -506,12 +506,12 @@ void Observable::sendEvent(const Event &message) {
       }
 
       // treat scheduled event
-      _oEventsToTreat[obs.second] -= 1;
+      _oEventsToTreat[n] -= 1;
 
-      if (_oAlive[obs.second]) { // other listeners/observers could be destroyed during the treat
-                                 // event
-        ++(obs.first->received);
-        obs.first->treatEvents(tmp);
+      if (_oAlive[n]) { // other listeners/observers could be destroyed during the treat
+                        // event
+        ++(obs->received);
+        obs->treatEvents(tmp);
       }
 
       // we decrement after treating event

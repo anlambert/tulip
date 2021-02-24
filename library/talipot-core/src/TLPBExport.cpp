@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -40,21 +40,21 @@ void TLPBExport::writeAttributes(ostream &os, Graph *g) {
     // we need to update their ids before serializing them
     // as nodes and edges have been reindexed
 
-    for (const pair<string, DataType *> &attribute : attributes.getValues()) {
-      if (attribute.second->getTypeName() == string(typeid(node).name())) {
-        node *n = static_cast<node *>(attribute.second->value);
+    for (const auto &[key, value] : attributes.getValues()) {
+      if (value->getTypeName() == string(typeid(node).name())) {
+        node *n = static_cast<node *>(value->value);
         n->id = getNode(*n).id;
-      } else if (attribute.second->getTypeName() == string(typeid(edge).name())) {
-        edge *e = static_cast<edge *>(attribute.second->value);
+      } else if (value->getTypeName() == string(typeid(edge).name())) {
+        edge *e = static_cast<edge *>(value->value);
         e->id = getEdge(*e).id;
-      } else if (attribute.second->getTypeName() == string(typeid(vector<node>).name())) {
-        vector<node> *vn = static_cast<vector<node> *>(attribute.second->value);
+      } else if (value->getTypeName() == string(typeid(vector<node>).name())) {
+        vector<node> *vn = static_cast<vector<node> *>(value->value);
 
         for (size_t i = 0; i < vn->size(); ++i) {
           (*vn)[i].id = getNode((*vn)[i]).id;
         }
-      } else if (attribute.second->getTypeName() == string(typeid(vector<edge>).name())) {
-        vector<edge> *ve = static_cast<vector<edge> *>(attribute.second->value);
+      } else if (value->getTypeName() == string(typeid(vector<edge>).name())) {
+        vector<edge> *ve = static_cast<vector<edge> *>(value->value);
 
         for (size_t i = 0; i < ve->size(); ++i) {
           (*ve)[i].id = getEdge((*ve)[i]).id;
@@ -90,10 +90,8 @@ bool TLPBExport::exportGraph(std::ostream &os) {
     std::vector<std::pair<node, node>> vEdges(MAX_EDGES_TO_WRITE);
     unsigned int edgesToWrite = 0, nbWrittenEdges = 0;
     for (auto e : graph->edges()) {
-      std::pair<node, node> ends = graph->ends(e);
-      ends.first = getNode(ends.first);
-      ends.second = getNode(ends.second);
-      vEdges[edgesToWrite] = ends;
+      const auto &[src, tgt] = graph->ends(e);
+      vEdges[edgesToWrite] = {getNode(src), getNode(tgt)};
 
       if (++edgesToWrite == MAX_EDGES_TO_WRITE) {
         // write already buffered edges

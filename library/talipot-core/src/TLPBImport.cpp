@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -133,11 +133,13 @@ bool TLPBImport::importGraph() {
         return false;
       }
 
+      const auto &[sgId, parentId] = ids;
+
       // add subgraph
-      Graph *parent = subgraphs.get(ids.second);
-      Graph *sg = static_cast<GraphAbstract *>(parent)->addSubGraph(ids.first);
+      Graph *parent = subgraphs.get(parentId);
+      Graph *sg = static_cast<GraphAbstract *>(parent)->addSubGraph(sgId);
       // record sg
-      subgraphs.set(ids.first, sg);
+      subgraphs.set(sgId, sg);
       // read sg nodes ranges
       {
         unsigned int numRanges = 0;
@@ -164,8 +166,8 @@ bool TLPBImport::importGraph() {
 
           // loop to add nodes
           for (unsigned int i = 0; i < rangesToRead; ++i) {
-            std::pair<node, node> &range = vRanges[i];
-            sg->addNodes(new RangeIterator<node>(range.first, range.second));
+            const auto &[n1, n2] = vRanges[i];
+            sg->addNodes(new RangeIterator<node>(n1, n2));
           }
 
           numRanges -= rangesToRead;
@@ -196,8 +198,8 @@ bool TLPBImport::importGraph() {
 
           // loop to add edges
           for (unsigned int i = 0; i < rangesToRead; ++i) {
-            std::pair<edge, edge> &range = vRanges[i];
-            sg->addEdges(new RangeIterator<edge>(range.first, range.second));
+            const auto &[e1, e2] = vRanges[i];
+            sg->addEdges(new RangeIterator<edge>(e1, e2));
           }
 
           numRanges -= rangesToRead;

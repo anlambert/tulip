@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -161,26 +161,26 @@ void GraphUpdatesRecorder::deleteDeletedObjects() {
   auto &subGraphsToDelete = updatesReverted ? addedSubGraphs : deletedSubGraphs;
 
   // loop on properties
-  for (auto &itdp : propertiesToDelete) {
-    for (auto p : itdp.second) {
-      delete p;
+  for (auto &[graph, properties] : propertiesToDelete) {
+    for (auto property : properties) {
+      delete property;
     }
   }
 
   // loop on sub graphs
-  for (auto &itds : subGraphsToDelete) {
-    itds.second->clearSubGraphs();
-    delete itds.second;
+  for (auto &[g, sg] : subGraphsToDelete) {
+    sg->clearSubGraphs();
+    delete sg;
   }
 }
 
 // clean up all the MutableContainers
 void GraphUpdatesRecorder::deleteValues(
     std::unordered_map<PropertyInterface *, RecordedValues> &values) {
-  for (auto &itv : values) {
-    delete itv.second.values;
-    delete itv.second.recordedNodes;
-    delete itv.second.recordedEdges;
+  for (auto &[property, rvalues] : values) {
+    delete rvalues.values;
+    delete rvalues.recordedNodes;
+    delete rvalues.recordedEdges;
   }
 
   values.clear();
@@ -189,8 +189,8 @@ void GraphUpdatesRecorder::deleteValues(
 // delete all the DataMem referenced by a std::unordered_map
 void GraphUpdatesRecorder::deleteDefaultValues(
     std::unordered_map<PropertyInterface *, DataMem *> &values) {
-  for (auto &itv : values) {
-    delete itv.second;
+  for (auto &[property, value] : values) {
+    delete value;
   }
 
   values.clear();
@@ -277,46 +277,40 @@ void GraphUpdatesRecorder::recordNewValues(GraphImpl *g) {
     }
 
     // record new edges containers
-    for (const auto &itae : addedEdgesEnds) {
-      edge e = itae.first;
-
+    for (const auto &[e, ends] : addedEdgesEnds) {
       // e may have been deleted (see delEdge)
       if (root->isElement(e)) {
-        auto ends = itae.second;
-        recordEdgeContainer(newContainers, root, ends.first);
-        recordEdgeContainer(newContainers, root, ends.second);
+        auto [src, tgt] = ends;
+        recordEdgeContainer(newContainers, root, src);
+        recordEdgeContainer(newContainers, root, tgt);
       }
     }
 
     // record new properties default values & new values
     // loop on oldNodeDefaultValues
-    for (const auto &itdv : oldNodeDefaultValues) {
-      PropertyInterface *p = itdv.first;
-      newNodeDefaultValues[p] = p->getNodeDefaultDataMemValue();
-      recordNewNodeValues(p);
+    for (const auto &[property, defaultValue] : oldNodeDefaultValues) {
+      newNodeDefaultValues[property] = property->getNodeDefaultDataMemValue();
+      recordNewNodeValues(property);
     }
 
     // loop on node oldValues
-    for (const auto &itov : oldValues) {
-      PropertyInterface *p = itov.first;
-
-      if (itov.second.recordedNodes &&
-          (oldNodeDefaultValues.find(p) == oldNodeDefaultValues.end())) {
-        recordNewNodeValues(p);
+    for (const auto &[property, recordedValues] : oldValues) {
+      if (recordedValues.recordedNodes &&
+          (oldNodeDefaultValues.find(property) == oldNodeDefaultValues.end())) {
+        recordNewNodeValues(property);
       }
     }
 
     // loop on updatedPropsAddedNodes
-    for (const auto &itan : updatedPropsAddedNodes) {
-      PropertyInterface *p = itan.first;
-      auto itnv = newValues.find(p);
+    for (const auto &[property, nodes] : updatedPropsAddedNodes) {
+      auto itnv = newValues.find(property);
       PropertyInterface *nv;
       MutableContainer<bool> *rn;
       bool created = itnv == newValues.end();
       bool hasNewValues = false;
 
       if (created) {
-        nv = p->clonePrototype(p->getGraph(), "");
+        nv = property->clonePrototype(property->getGraph(), "");
         rn = new MutableContainer<bool>();
       } else {
         nv = itnv->second.values;
@@ -327,8 +321,8 @@ void GraphUpdatesRecorder::recordNewValues(GraphImpl *g) {
         }
       }
 
-      for (auto n : itan.second) {
-        if (nv->copy(n, n, p)) {
+      for (auto n : nodes) {
+        if (nv->copy(n, n, property)) {
           rn->set(n, true);
           hasNewValues = true;
         }
@@ -336,7 +330,7 @@ void GraphUpdatesRecorder::recordNewValues(GraphImpl *g) {
 
       if (created) {
         if (hasNewValues) {
-          newValues[p] = RecordedValues(nv, rn);
+          newValues[property] = RecordedValues(nv, rn);
         } else {
           delete nv;
           delete rn;
@@ -345,33 +339,29 @@ void GraphUpdatesRecorder::recordNewValues(GraphImpl *g) {
     }
 
     // loop on oldEdgeDefaultValues
-    for (const auto &itdv : oldEdgeDefaultValues) {
-      PropertyInterface *p = itdv.first;
-      newEdgeDefaultValues[p] = p->getEdgeDefaultDataMemValue();
-      recordNewEdgeValues(p);
+    for (const auto &[property, oldDefaultValue] : oldEdgeDefaultValues) {
+      newEdgeDefaultValues[property] = property->getEdgeDefaultDataMemValue();
+      recordNewEdgeValues(property);
     }
 
     // loop on edge oldValues
-    for (const auto &itov : oldValues) {
-      PropertyInterface *p = itov.first;
-
-      if (itov.second.recordedEdges &&
-          (oldEdgeDefaultValues.find(p) == oldEdgeDefaultValues.end())) {
-        recordNewEdgeValues(p);
+    for (const auto &[property, recordedValues] : oldValues) {
+      if (recordedValues.recordedEdges &&
+          (oldEdgeDefaultValues.find(property) == oldEdgeDefaultValues.end())) {
+        recordNewEdgeValues(property);
       }
     }
 
     // loop on updatedPropsAddedEdges
-    for (const auto &iten : updatedPropsAddedEdges) {
-      PropertyInterface *p = iten.first;
-      auto itnv = newValues.find(p);
+    for (const auto &[property, edges] : updatedPropsAddedEdges) {
+      auto itnv = newValues.find(property);
       PropertyInterface *nv;
       MutableContainer<bool> *re;
       bool created = itnv == newValues.end();
       bool hasNewValues = false;
 
       if (created) {
-        nv = p->clonePrototype(p->getGraph(), "");
+        nv = property->clonePrototype(property->getGraph(), "");
         re = new MutableContainer<bool>();
       } else {
         nv = itnv->second.values;
@@ -382,8 +372,8 @@ void GraphUpdatesRecorder::recordNewValues(GraphImpl *g) {
         }
       }
 
-      for (auto e : iten.second) {
-        if (nv->copy(e, e, p)) {
+      for (auto e : edges) {
+        if (nv->copy(e, e, property)) {
           re->set(e, true);
           hasNewValues = true;
         }
@@ -391,7 +381,7 @@ void GraphUpdatesRecorder::recordNewValues(GraphImpl *g) {
 
       if (created) {
         if (hasNewValues) {
-          newValues[p] = RecordedValues(nv, nullptr, re);
+          newValues[property] = RecordedValues(nv, nullptr, re);
         } else {
           delete nv;
           delete re;
@@ -400,14 +390,13 @@ void GraphUpdatesRecorder::recordNewValues(GraphImpl *g) {
     }
 
     // record graph attribute new values
-    for (const auto &itav : oldAttributeValues) {
-      Graph *g = itav.first;
-      const DataSet &gAttValues = g->getAttributes();
-      DataSet &nAttValues = newAttributeValues[g];
+    for (const auto &[graph, attributes] : oldAttributeValues) {
+      const DataSet &gAttValues = graph->getAttributes();
+      DataSet &nAttValues = newAttributeValues[graph];
 
-      for (const auto &pval : itav.second.getValues()) {
-        DataType *data = gAttValues.getData(pval.first);
-        nAttValues.setData(pval.first, data);
+      for (const auto &[key, val] : attributes.getValues()) {
+        DataType *data = gAttValues.getData(key);
+        nAttValues.setData(key, data);
         delete data;
       }
     }
@@ -573,9 +562,9 @@ void GraphUpdatesRecorder::restartRecording(Graph *g) {
   const set<Graph *> *newSubGraphs = nullptr;
   set<Graph *> sgSet;
 
-  for (const auto &it : addedSubGraphs) {
-    if (it.first == g) {
-      sgSet.insert(it.second);
+  for (const auto &[graph, sg] : addedSubGraphs) {
+    if (graph == g) {
+      sgSet.insert(sg);
     }
   }
 
@@ -616,21 +605,16 @@ void GraphUpdatesRecorder::doUpdates(GraphImpl *g, bool undo) {
   // loop on propsToDel
   auto &propsToDel = undo ? addedProperties : deletedProperties;
 
-  for (const auto &itpg : propsToDel) {
-    Graph *g = itpg.first;
-
-    for (auto prop : itpg.second) {
-      g->delLocalProperty(prop->getName());
+  for (const auto &[graph, properties] : propsToDel) {
+    for (auto property : properties) {
+      graph->delLocalProperty(property->getName());
     }
   }
 
   // loop on subGraphsToDel
   auto &subGraphsToDel = undo ? addedSubGraphs : deletedSubGraphs;
 
-  for (const auto &its : subGraphsToDel) {
-    Graph *g = its.first;
-    Graph *sg = its.second;
-
+  for (const auto &[g, sg] : subGraphsToDel) {
     // remove from list of subgraphs + notify observers
     g->notifyBeforeDelSubGraph(sg);
     g->setSubGraphToKeep(sg);
@@ -655,12 +639,11 @@ void GraphUpdatesRecorder::doUpdates(GraphImpl *g, bool undo) {
   // because for a coherent observation of deleted edges
   // they must be first deleted from a graph before being deleted
   // from its supergraph
-  for (const auto &itge : reversed(edgesToDel)) {
-    Graph *g = itge.first;
+  for (const auto &[graph, edges] : reversed(edgesToDel)) {
     // loop on graph's recorded edges
-    for (edge e : itge.second) {
-      if (g->isElement(e)) {
-        g->removeEdge(e);
+    for (edge e : edges) {
+      if (graph->isElement(e)) {
+        graph->removeEdge(e);
       }
     }
   }
@@ -668,21 +651,17 @@ void GraphUpdatesRecorder::doUpdates(GraphImpl *g, bool undo) {
   // loop on nodesToDel
   auto &nodesToDel = undo ? graphAddedNodes : graphDeletedNodes;
 
-  for (const auto &itgn : nodesToDel) {
-    Graph *g = itgn.first;
+  for (const auto &[graph, nodes] : nodesToDel) {
     // loop on graph's recorded nodes
-    for (node n : itgn.second) {
-      g->removeNode(n);
+    for (node n : nodes) {
+      graph->removeNode(n);
     }
   }
 
   // loop on subGraphsToAdd
   std::list<std::pair<Graph *, Graph *>> &subGraphsToAdd = undo ? deletedSubGraphs : addedSubGraphs;
 
-  for (const auto &its : subGraphsToAdd) {
-    Graph *g = its.first;
-    Graph *sg = its.second;
-
+  for (const auto &[g, sg] : subGraphsToAdd) {
     // notify its addition
     g->notifyBeforeAddSubGraph(sg);
     // restore sg as subgraph of g
@@ -704,11 +683,10 @@ void GraphUpdatesRecorder::doUpdates(GraphImpl *g, bool undo) {
   // loop on nodesToAdd
   auto &nodesToAdd = undo ? graphDeletedNodes : graphAddedNodes;
 
-  for (const auto &itgn : nodesToAdd) {
-    Graph *g = itgn.first;
+  for (const auto &[graph, nodes] : nodesToAdd) {
     // loop on graph's recorded nodes
-    for (node n : itgn.second) {
-      g->restoreNode(n);
+    for (node n : nodes) {
+      graph->restoreNode(n);
     }
   }
 
@@ -730,17 +708,17 @@ void GraphUpdatesRecorder::doUpdates(GraphImpl *g, bool undo) {
   // loop on edgesEnds
   auto &updatedEdgesEnds = undo ? oldEdgesEnds : newEdgesEnds;
 
-  for (const auto &itee : updatedEdgesEnds) {
-    g->setEnds(itee.first, itee.second.first, itee.second.second);
+  for (const auto &[e, ends] : updatedEdgesEnds) {
+    const auto &[src, tgt] = ends;
+    g->setEnds(e, src, tgt);
   }
 
   // loop on containers
   auto &containers = undo ? oldContainers : newContainers;
-  for (const auto &itc : containers) {
-    node n(itc.first);
+  for (const auto &[n, edges] : containers) {
     // n may have been deleted as a previously added node
     if (g->isElement(n)) {
-      g->storage.restoreAdj(n, itc.second);
+      g->storage.restoreAdj(n, edges);
     }
   }
 
@@ -748,15 +726,14 @@ void GraphUpdatesRecorder::doUpdates(GraphImpl *g, bool undo) {
   auto &edgesToAdd = undo ? graphDeletedEdges : graphAddedEdges;
   auto &edgesEnds = undo ? deletedEdgesEnds : addedEdgesEnds;
 
-  for (const auto &itge : edgesToAdd) {
-    Graph *g = itge.first;
+  for (const auto &[g, edges] : edgesToAdd) {
     // loop on graph's recorded edges
-    for (edge e : itge.second) {
+    for (edge e : edges) {
       auto itEnds = edgesEnds.find(e);
 
       if (itEnds != edgesEnds.end()) {
-        auto eEnds = itEnds->second;
-        g->restoreEdge(e, eEnds.first, eEnds.second);
+        auto [src, tgt] = itEnds->second;
+        g->restoreEdge(e, src, tgt);
       } else {
         // restoration of an edge in a subgraph that was already an element of the root graph
         // (i.e., not a newly added edge)
@@ -768,61 +745,55 @@ void GraphUpdatesRecorder::doUpdates(GraphImpl *g, bool undo) {
   // loop on propsToAdd
   auto &propsToAdd = undo ? deletedProperties : addedProperties;
 
-  for (const auto &itpg : propsToAdd) {
-    Graph *g = itpg.first;
-
-    for (auto prop : itpg.second) {
-      g->addLocalProperty(prop->getName(), prop);
+  for (const auto &[g, properties] : propsToAdd) {
+    for (auto property : properties) {
+      g->addLocalProperty(property->getName(), property);
     }
   }
 
   // loop on renamedProperties
   if (!renamedProperties.empty()) {
-    for (auto &itrp : renamedProperties) {
-      PropertyInterface *prop = itrp.first;
+    for (auto &[prop, name] : renamedProperties) {
       std::string newName = prop->getName();
       // switch names
-      prop->rename(itrp.second);
-      itrp.second = newName;
+      prop->rename(name);
+      name = newName;
     }
   }
 
   // loop on nodeDefaultValues
   auto &nodeDefaultValues = undo ? oldNodeDefaultValues : newNodeDefaultValues;
 
-  for (const auto &itdv : nodeDefaultValues) {
-    PropertyInterface *prop = itdv.first;
-    prop->setAllNodeDataMemValue(itdv.second);
+  for (const auto &[property, defaultValue] : nodeDefaultValues) {
+    property->setAllNodeDataMemValue(defaultValue);
   }
 
   // loop on edgeDefaultValues
   auto &edgeDefaultValues = undo ? oldEdgeDefaultValues : newEdgeDefaultValues;
 
-  for (const auto &itdv : edgeDefaultValues) {
-    PropertyInterface *prop = itdv.first;
-    prop->setAllEdgeDataMemValue(itdv.second);
+  for (const auto &[property, defaultValue] : edgeDefaultValues) {
+    property->setAllEdgeDataMemValue(defaultValue);
   }
 
   // loop on recorded values
   auto &rvalues = undo ? oldValues : newValues;
 
-  for (const auto &itrv : rvalues) {
-    PropertyInterface *prop = itrv.first;
-    PropertyInterface *nv = itrv.second.values;
+  for (const auto &[property, recordedValues] : rvalues) {
+    PropertyInterface *nv = recordedValues.values;
 
-    if (itrv.second.recordedNodes) {
+    if (recordedValues.recordedNodes) {
 
-      for (unsigned int id : itrv.second.recordedNodes->findAllValues(false, false)) {
+      for (unsigned int id : recordedValues.recordedNodes->findAllValues(false, false)) {
         node n(id);
-        prop->copy(n, n, nv);
+        property->copy(n, n, nv);
       }
     }
 
-    if (itrv.second.recordedEdges) {
+    if (recordedValues.recordedEdges) {
 
-      for (unsigned int id : itrv.second.recordedEdges->findAllValues(false, false)) {
+      for (unsigned int id : recordedValues.recordedEdges->findAllValues(false, false)) {
         edge e(id);
-        prop->copy(e, e, nv);
+        property->copy(e, e, nv);
       }
     }
   }
@@ -830,14 +801,12 @@ void GraphUpdatesRecorder::doUpdates(GraphImpl *g, bool undo) {
   // loop on attribute values to restore
   auto &attValues = undo ? oldAttributeValues : newAttributeValues;
 
-  for (const auto &itav : attValues) {
-    Graph *g = itav.first;
-
-    for (const auto &pval : itav.second.getValues()) {
-      if (pval.second) {
-        g->getNonConstAttributes().setData(pval.first, pval.second);
+  for (const auto &[g, attributes] : attValues) {
+    for (const auto &[key, val] : attributes.getValues()) {
+      if (val) {
+        g->getNonConstAttributes().setData(key, val);
       } else {
-        g->getNonConstAttributes().remove(pval.first);
+        g->getNonConstAttributes().remove(key);
       }
     }
   }
@@ -864,8 +833,8 @@ bool GraphUpdatesRecorder::hasUpdates() {
   }
 
   // check graphAddedNodes
-  for (const auto &itgn : graphAddedNodes) {
-    if (!itgn.second.empty()) {
+  for (const auto &[g, nodes] : graphAddedNodes) {
+    if (!nodes.empty()) {
       return true;
     }
   }
@@ -1001,11 +970,11 @@ void GraphUpdatesRecorder::addEdge(Graph *g, edge e) {
   }
 
   if (g == g->getRoot()) {
-    auto eEnds = g->ends(e);
-    addedEdgesEnds[e] = eEnds;
+    const auto &[src, tgt] = g->ends(e);
+    addedEdgesEnds[e] = {src, tgt};
     // record source & target old adjacencies
-    recordEdgeContainer(oldContainers, static_cast<GraphImpl *>(g), eEnds.first, e);
-    recordEdgeContainer(oldContainers, static_cast<GraphImpl *>(g), eEnds.second, e);
+    recordEdgeContainer(oldContainers, static_cast<GraphImpl *>(g), src, e);
+    recordEdgeContainer(oldContainers, static_cast<GraphImpl *>(g), tgt, e);
   }
 
   // we need to backup properties values of the newly added edge
@@ -1029,12 +998,11 @@ void GraphUpdatesRecorder::addEdges(Graph *g, unsigned int nbAdded) {
     ge.insert(e);
 
     if (g == g->getRoot()) {
-      auto eEnds = g->ends(e);
-      addedEdgesEnds[e] = eEnds;
+      const auto &[src, tgt] = g->ends(e);
+      addedEdgesEnds[e] = {src, tgt};
       // record source & target old adjacencies
-      recordEdgeContainer(oldContainers, static_cast<GraphImpl *>(g), eEnds.first, gEdges, nbAdded);
-      recordEdgeContainer(oldContainers, static_cast<GraphImpl *>(g), eEnds.second, gEdges,
-                          nbAdded);
+      recordEdgeContainer(oldContainers, static_cast<GraphImpl *>(g), src, gEdges, nbAdded);
+      recordEdgeContainer(oldContainers, static_cast<GraphImpl *>(g), tgt, gEdges, nbAdded);
     }
 
     // we need to backup properties values of the newly added edge
@@ -1113,9 +1081,9 @@ void GraphUpdatesRecorder::delEdge(Graph *g, edge e) {
       auto itEnds = addedEdgesEnds.find(e);
 
       if (itEnds != addedEdgesEnds.end()) {
-        auto eEnds = itEnds->second;
-        removeFromEdgeContainer(newContainers, e, eEnds.first);
-        removeFromEdgeContainer(newContainers, e, eEnds.second);
+        const auto &[src, tgt] = itEnds->second;
+        removeFromEdgeContainer(newContainers, e, src);
+        removeFromEdgeContainer(newContainers, e, tgt);
       }
 
       return;
@@ -1131,7 +1099,7 @@ void GraphUpdatesRecorder::delEdge(Graph *g, edge e) {
     itge->second.insert(e);
   }
 
-  auto eEnds = g->ends(e);
+  const auto &[src, tgt] = g->ends(e);
   if (deletedEdgesEnds.find(e) == deletedEdgesEnds.end()) {
     if (g == g->getRoot()) {
       // remove from revertedEdges if needed
@@ -1139,15 +1107,16 @@ void GraphUpdatesRecorder::delEdge(Graph *g, edge e) {
 
       if (it != revertedEdges.end()) {
         revertedEdges.erase(it);
-        deletedEdgesEnds[e] = make_pair(eEnds.second, eEnds.first);
+        deletedEdgesEnds[e] = {tgt, src};
       } else {
 
         const auto ite = oldEdgesEnds.find(e);
 
         if (ite == oldEdgesEnds.end()) {
-          deletedEdgesEnds[e] = eEnds;
+          deletedEdgesEnds[e] = {src, tgt};
         } else {
-          deletedEdgesEnds[e] = make_pair(ite->second.first, ite->second.second);
+          const auto &[src2, tgt2] = ite->second;
+          deletedEdgesEnds[e] = {src2, tgt2};
           // remove from oldEdgesEnds
           oldEdgesEnds.erase(ite);
           // remove from newEdgesEnds
@@ -1155,7 +1124,7 @@ void GraphUpdatesRecorder::delEdge(Graph *g, edge e) {
         }
       }
     } else {
-      deletedEdgesEnds[e] = eEnds;
+      deletedEdgesEnds[e] = {src, tgt};
     }
   }
 
@@ -1176,8 +1145,8 @@ void GraphUpdatesRecorder::delEdge(Graph *g, edge e) {
 
   if (g == g->getRoot()) {
     // record source & target old containers
-    recordEdgeContainer(oldContainers, static_cast<GraphImpl *>(g), eEnds.first);
-    recordEdgeContainer(oldContainers, static_cast<GraphImpl *>(g), eEnds.second);
+    recordEdgeContainer(oldContainers, static_cast<GraphImpl *>(g), src);
+    recordEdgeContainer(oldContainers, static_cast<GraphImpl *>(g), tgt);
   }
 }
 
@@ -1187,9 +1156,8 @@ void GraphUpdatesRecorder::reverseEdge(Graph *g, edge e) {
 
     // if it is a newly added edge revert its source and target
     if (itEnds != addedEdgesEnds.end()) {
-      node src = itEnds->second.first;
-      itEnds->second.first = itEnds->second.second;
-      itEnds->second.second = src;
+      auto &[src, tgt] = itEnds->second;
+      std::swap(src, tgt);
       return;
     }
 
@@ -1197,9 +1165,8 @@ void GraphUpdatesRecorder::reverseEdge(Graph *g, edge e) {
 
     if (itne != newEdgesEnds.end()) {
       // revert ends of itne
-      node src = itne->second.first;
-      itne->second.first = itne->second.second;
-      itne->second.second = src;
+      auto &[src, tgt] = itne->second;
+      std::swap(src, tgt);
     } else { // update reverted edges
       auto it = revertedEdges.find(e);
 
@@ -1208,9 +1175,9 @@ void GraphUpdatesRecorder::reverseEdge(Graph *g, edge e) {
       } else {
         revertedEdges.insert(e);
         // record source & target old containers
-        const pair<node, node> &eEnds = g->ends(e);
-        recordEdgeContainer(oldContainers, static_cast<GraphImpl *>(g), eEnds.first);
-        recordEdgeContainer(oldContainers, static_cast<GraphImpl *>(g), eEnds.second);
+        const auto &[src, tgt] = g->ends(e);
+        recordEdgeContainer(oldContainers, static_cast<GraphImpl *>(g), src);
+        recordEdgeContainer(oldContainers, static_cast<GraphImpl *>(g), tgt);
       }
     }
   }
@@ -1219,7 +1186,7 @@ void GraphUpdatesRecorder::reverseEdge(Graph *g, edge e) {
 void GraphUpdatesRecorder::beforeSetEnds(Graph *g, edge e) {
   if ((g == g->getRoot()) && (oldEdgesEnds.find(e) == oldEdgesEnds.end()) &&
       (addedEdgesEnds.find(e) == addedEdgesEnds.end())) {
-    auto ends = g->ends(e);
+    auto [src, tgt] = g->ends(e);
     auto it = revertedEdges.find(e);
 
     // if it is a reverted edge
@@ -1227,17 +1194,15 @@ void GraphUpdatesRecorder::beforeSetEnds(Graph *g, edge e) {
     if (it != revertedEdges.end()) {
       revertedEdges.erase(it);
       // revert ends of it
-      node tgt = ends.first;
-      ends.first = ends.second;
-      ends.second = tgt;
+      std::swap(src, tgt);
     } else {
       // record source & target old containers
-      recordEdgeContainer(oldContainers, static_cast<GraphImpl *>(g), ends.first);
-      recordEdgeContainer(oldContainers, static_cast<GraphImpl *>(g), ends.second);
+      recordEdgeContainer(oldContainers, static_cast<GraphImpl *>(g), src);
+      recordEdgeContainer(oldContainers, static_cast<GraphImpl *>(g), tgt);
     }
 
     // add e old ends in oldEdgesEnds
-    oldEdgesEnds[e] = ends;
+    oldEdgesEnds[e] = {src, tgt};
   }
 }
 

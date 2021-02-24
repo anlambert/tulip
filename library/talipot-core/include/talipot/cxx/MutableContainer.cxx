@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -99,8 +99,8 @@ void tlp::MutableContainer<TYPE>::setAll(typename StoredType<TYPE>::ReturnedCons
 
     if (StoredType<TYPE>::isPointer) {
       // delete stored values
-      for (const auto &it : *hData) {
-        StoredType<TYPE>::destroy(it.second);
+      for (const auto &[id, type] : *hData) {
+        StoredType<TYPE>::destroy(type);
       }
     }
 
@@ -519,9 +519,9 @@ void tlp::MutableContainer<TYPE>::hashtovect() {
   elementInserted = 0;
   state = VECT;
 
-  for (const auto &it : *hData) {
-    if (it.second != defaultValue) {
-      vectset(it.first, it.second);
+  for (const auto &[id, type] : *hData) {
+    if (type != defaultValue) {
+      vectset(id, type);
     }
   }
 

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -224,9 +224,8 @@ public:
 
         ++progress;
         edge e = edges[i];
-        const pair<node, node> &ends = g->ends(e);
-        os << "(edge " << i << " " << getNode(ends.first).id << " " << getNode(ends.second).id
-           << ")";
+        const auto &[src, tgt] = g->ends(e);
+        os << "(edge " << i << " " << getNode(src).id << " " << getNode(tgt).id << ")";
 
         if (i != nbElts - 1) {
           os << endl;
@@ -402,21 +401,21 @@ public:
       // If nodes and edges are stored as graph attributes
       // we need to update their id before serializing them
       // as nodes and edges have been reindexed
-      for (const pair<string, DataType *> &attribute : attributes.getValues()) {
-        if (attribute.second->getTypeName() == string(typeid(node).name())) {
-          node *n = static_cast<node *>(attribute.second->value);
+      for (const auto &[key, value] : attributes.getValues()) {
+        if (value->getTypeName() == string(typeid(node).name())) {
+          node *n = static_cast<node *>(value->value);
           n->id = getNode(*n).id;
-        } else if (attribute.second->getTypeName() == string(typeid(edge).name())) {
-          edge *e = static_cast<edge *>(attribute.second->value);
+        } else if (value->getTypeName() == string(typeid(edge).name())) {
+          edge *e = static_cast<edge *>(value->value);
           e->id = getEdge(*e).id;
-        } else if (attribute.second->getTypeName() == string(typeid(vector<node>).name())) {
-          vector<node> *vn = static_cast<vector<node> *>(attribute.second->value);
+        } else if (value->getTypeName() == string(typeid(vector<node>).name())) {
+          vector<node> *vn = static_cast<vector<node> *>(value->value);
 
           for (size_t i = 0; i < vn->size(); ++i) {
             (*vn)[i].id = getNode((*vn)[i]).id;
           }
-        } else if (attribute.second->getTypeName() == string(typeid(vector<edge>).name())) {
-          vector<edge> *ve = static_cast<vector<edge> *>(attribute.second->value);
+        } else if (value->getTypeName() == string(typeid(vector<edge>).name())) {
+          vector<edge> *ve = static_cast<vector<edge> *>(value->value);
 
           for (size_t i = 0; i < ve->size(); ++i) {
             (*ve)[i].id = getEdge((*ve)[i]).id;

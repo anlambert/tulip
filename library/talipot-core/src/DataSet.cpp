@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -59,18 +59,16 @@ DataSet::DataSet(const DataSet &set) {
 DataSet &DataSet::operator=(const DataSet &set) {
   if (this != &set) {
     data.clear();
-    for (const auto &it : set.data) {
-      data[it.first] = it.second->clone();
+    for (const auto &[key, value] : set.data) {
+      data[key] = value->clone();
     }
   }
   return *this;
 }
 
 DataSet::~DataSet() {
-  for (const auto &it : data) {
-    if (it.second) {
-      delete it.second;
-    }
+  for (const auto &[key, value] : data) {
+    delete value;
   }
 }
 
@@ -178,8 +176,8 @@ void DataSet::writeData(std::ostream &os, const std::string &prop, const DataTyp
 void DataSet::write(std::ostream &os, const DataSet &ds) {
   os << endl;
   // iterate over pair attribute/value
-  for (const pair<string, DataType *> &p : ds.getValues()) {
-    ds.writeData(os, p.first, p.second);
+  for (const auto &[key, value] : ds.getValues()) {
+    ds.writeData(os, key, value);
   }
 }
 
@@ -321,20 +319,20 @@ DataTypeSerializer *DataSet::typenameToSerializer(const std::string &name) {
 
 string DataSet::toString() const {
   stringstream ss;
-  for (const pair<string, DataType *> &p : getValues()) {
-    DataTypeSerializer *serializer = DataSet::typenameToSerializer(p.second->getTypeName());
+  for (const auto &[key, value] : getValues()) {
+    DataTypeSerializer *serializer = DataSet::typenameToSerializer(value->getTypeName());
 
     if (serializer) {
-      ss << "'" << p.first << "'=";
-      ss << serializer->toString(p.second).c_str();
+      ss << "'" << key << "'=";
+      ss << serializer->toString(value);
       ss << " ";
     } else {
-      if (p.second->isTalipotProperty()) {
-        PropertyInterface *prop = *(static_cast<PropertyInterface **>(p.second->value));
-        ss << "'" << p.first << "'=";
+      if (value->isTalipotProperty()) {
+        PropertyInterface *prop = *(static_cast<PropertyInterface **>(value->value));
+        ss << "'" << key << "'=";
 
         if (prop) {
-          ss << '"' << prop->getName().c_str() << '"';
+          ss << '"' << prop->getName() << '"';
         } else {
           ss << "None";
         }

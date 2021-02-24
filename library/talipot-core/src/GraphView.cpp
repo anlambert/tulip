@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -278,9 +278,7 @@ void GraphView::addNodes(Iterator<node> *addedNodes) {
 //----------------------------------------------------------------
 edge GraphView::addEdgeInternal(edge e) {
   _edges.add(e);
-  auto eEnds = ends(e);
-  node src = eEnds.first;
-  node tgt = eEnds.second;
+  const auto &[src, tgt] = ends(e);
   _nodeData.get(src.id)->outDegreeAdd(1);
   _nodeData.get(tgt.id)->inDegreeAdd(1);
   notifyAddEdge(e);
@@ -313,9 +311,7 @@ void GraphView::addEdgesInternal(unsigned int nbAdded, const std::vector<edge> *
     edge e = *it;
     assert(getRootImpl()->isElement(e));
     _edges.add(e);
-    auto eEnds = hasEnds ? ends[i] : this->ends(e);
-    node src = eEnds.first;
-    node tgt = eEnds.second;
+    const auto &[src, tgt] = hasEnds ? ends[i] : this->ends(e);
     _nodeData.get(src.id)->outDegreeAdd(1);
     _nodeData.get(tgt.id)->inDegreeAdd(1);
   }
@@ -443,9 +439,7 @@ void GraphView::removeEdge(const edge e) {
 
   _edges.remove(e);
   propertyContainer->erase(e);
-  const std::pair<node, node> &eEnds = ends(e);
-  node src = eEnds.first;
-  node tgt = eEnds.second;
+  const auto &[src, tgt] = ends(e);
   _nodeData.get(src.id)->outDegreeAdd(-1);
   _nodeData.get(tgt.id)->inDegreeAdd(-1);
 }

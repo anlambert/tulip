@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -39,9 +39,9 @@ PropertyManager::PropertyManager(Graph *g) : graph(g) {
 }
 //==============================================================
 PropertyManager::~PropertyManager() {
-  for (const auto &itP : localProperties) {
-    itP.second->graph = nullptr;
-    delete itP.second;
+  for (const auto &[name, property] : localProperties) {
+    property->graph = nullptr;
+    delete property;
   }
 }
 //==============================================================
@@ -232,7 +232,7 @@ void PropertyManager::delLocalProperty(const string &str) {
 
   // if found remove from local properties
   if (it != localProperties.end()) {
-    PropertyInterface *oldProp = (*it).second;
+    auto [name, oldProp] = *it;
 
     // loop in the ascendant hierarchy to get
     // an inherited property
@@ -298,14 +298,14 @@ Iterator<PropertyInterface *> *PropertyManager::getInheritedObjectProperties() {
 }
 //===============================================================
 void PropertyManager::erase(const node n) {
-  for (const auto &itP : localProperties) {
-    itP.second->erase(n);
+  for (const auto &[name, property] : localProperties) {
+    property->erase(n);
   }
 }
 //===============================================================
 void PropertyManager::erase(const edge e) {
-  for (const auto &itP : localProperties) {
-    itP.second->erase(e);
+  for (const auto &[name, property] : localProperties) {
+    property->erase(e);
   }
 }
 }

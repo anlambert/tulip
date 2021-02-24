@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -290,7 +290,7 @@ std::vector<edge> GraphImpl::getEdges(const node src, const node tgt, bool direc
 //----------------------------------------------------------------
 void GraphImpl::reverse(const edge e) {
   assert(isElement(e));
-  auto eEnds = storage.ends(e);
+  auto [src, tgt] = storage.ends(e);
 
   // notification
   notifyReverseEdge(e);
@@ -299,7 +299,7 @@ void GraphImpl::reverse(const edge e) {
 
   // propagate edge reversal on subgraphs
   for (Graph *sg : subGraphs()) {
-    static_cast<GraphView *>(sg)->reverseInternal(e, eEnds.first, eEnds.second);
+    static_cast<GraphView *>(sg)->reverseInternal(e, src, tgt);
   }
 }
 //----------------------------------------------------------------
@@ -314,9 +314,7 @@ void GraphImpl::setEnds(const edge e, const node newSrc, const node newTgt) {
 
   // be aware that newSrc or newTgt may not be valid
   // to indicate that only one of the ends has to be changed
-  std::pair<node, node> eEnds = storage.ends(e);
-  node src = eEnds.first;
-  node tgt = eEnds.second;
+  auto [src, tgt] = storage.ends(e);
 
   // nothing to do if same ends
   if (src == newSrc && tgt == newTgt) {
@@ -332,9 +330,7 @@ void GraphImpl::setEnds(const edge e, const node newSrc, const node newTgt) {
   notifyAfterSetEnds(e);
 
   // propagate edge reversal on subgraphs
-  eEnds = storage.ends(e);
-  node nSrc = eEnds.first;
-  node nTgt = eEnds.second;
+  const auto &[nSrc, nTgt] = storage.ends(e);
 
   for (Graph *sg : subGraphs()) {
     static_cast<GraphView *>(sg)->setEndsInternal(e, src, tgt, nSrc, nTgt);

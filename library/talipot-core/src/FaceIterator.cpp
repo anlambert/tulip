@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -131,30 +131,30 @@ bool FaceAdjIterator::hasNext() {
 // NodeFaceIterator
 //============================================================
 NodeFaceIterator::NodeFaceIterator(PlanarConMap *m, const Face face) : i(0) {
-  vector<edge> &e = m->facesEdges[face];
+  const vector<edge> &e = m->facesEdges[face];
   edge e1 = e[0];
   edge e2 = e[1];
   node prev;
-  pair<node, node> e1Ends = m->ends(e1);
-  const pair<node, node> &e2Ends = m->ends(e2);
+  const auto &[e1Src, e1Tgt] = m->ends(e1);
+  const auto &[e2Src, e2Tgt] = m->ends(e2);
 
-  if (e1Ends.first == e2Ends.first || e1Ends.first == e2Ends.second) {
-    prev = e1Ends.first;
+  if (e1Src == e2Src || e1Src == e2Tgt) {
+    prev = e1Src;
   } else {
-    prev = e1Ends.second;
+    prev = e1Tgt;
   }
 
   nodes.push_back(prev);
 
   for (unsigned int j = 1; j < m->facesEdges[face].size(); ++j) {
     e1 = m->facesEdges[face][j];
-    e1Ends = m->ends(e1);
+    const auto &[e1Src, e1Tgt] = m->ends(e1);
 
-    if (e1Ends.first == prev) {
-      prev = e1Ends.second;
+    if (e1Src == prev) {
+      prev = e1Tgt;
       nodes.push_back(prev);
     } else {
-      prev = e1Ends.first;
+      prev = e1Src;
       nodes.push_back(prev);
     }
   }

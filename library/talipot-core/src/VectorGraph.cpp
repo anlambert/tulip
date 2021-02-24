@@ -208,16 +208,19 @@ void VectorGraph::swapEdgeOrder(const node n, const edge e1, const edge e2) {
 
   unsigned int e1i, e2i;
 
+  auto &[src1, tgt1] = _eData[e1]._endsPos;
+  auto &[src2, tgt2] = _eData[e2]._endsPos;
+
   if (source(e1) == n) {
-    e1i = _eData[e1]._endsPos.first;
+    e1i = src1;
   } else {
-    e1i = _eData[e1]._endsPos.second;
+    e1i = tgt1;
   }
 
   if (source(e2) == n) {
-    e2i = _eData[e2]._endsPos.first;
+    e2i = src2;
   } else {
-    e2i = _eData[e2]._endsPos.second;
+    e2i = tgt2;
   }
 
   edge tmpe = _nData[n]._adje[e1i];
@@ -231,15 +234,15 @@ void VectorGraph::swapEdgeOrder(const node n, const edge e1, const edge e2) {
   _nData[n]._adjt[e2i] = tmpt;
 
   if (source(e1) == n) {
-    _eData[e1]._endsPos.first = e2i;
+    src1 = e2i;
   } else {
-    _eData[e1]._endsPos.second = e2i;
+    tgt1 = e2i;
   }
 
   if (source(e2) == n) {
-    _eData[e2]._endsPos.first = e1i;
+    src2 = e1i;
   } else {
-    _eData[e2]._endsPos.second = e1i;
+    tgt2 = e1i;
   }
 }
 //=======================================================
@@ -354,16 +357,17 @@ void VectorGraph::delNode(const node n) {
 //=======================================================
 void VectorGraph::addEdgeInternal(const edge newEdge, const node src, const node tgt) {
   _iEdges &eData = _eData[newEdge];
-  eData._ends = std::make_pair(src, tgt);
+  eData._ends = {src, tgt};
   _iNodes &srcData = _nData[src];
-  eData._endsPos.first = srcData._adje.size();
+  auto &[eSrc, eTgt] = eData._endsPos;
+  eSrc = srcData._adje.size();
 
   _iNodes &tgtData = _nData[tgt];
 
   if (src != tgt) {
-    eData._endsPos.second = tgtData._adje.size();
+    eTgt = tgtData._adje.size();
   } else {
-    eData._endsPos.second = srcData._adje.size() + 1;
+    eTgt = srcData._adje.size() + 1;
   }
 
   srcData.addEdge(true, tgt, newEdge);
@@ -411,16 +415,16 @@ void VectorGraph::addEdges(const std::vector<std::pair<node, node>> &ends,
   }
 
   for (unsigned int i = 0; i < nb; ++i) {
-    addEdgeInternal(_edges[first + i], ends[i].first, ends[i].second);
+    const auto &[src, tgt] = ends[i];
+    addEdgeInternal(_edges[first + i], src, tgt);
   }
 }
 
 //=======================================================
 void VectorGraph::delEdge(const edge e) {
   assert(isElement(e));
-  node psrc = _eData[e]._ends.first;
+  const auto &[psrc, ptgt] = _eData[e]._ends;
   _nData[psrc]._outdeg -= 1;
-  node ptgt = _eData[e]._ends.second;
   partialDelEdge(psrc, e);
 
   if (psrc != ptgt) {
@@ -481,36 +485,26 @@ node VectorGraph::opposite(const edge e, const node n) const {
   assert(isElement(e));
   assert(isElement(n));
 
-  const pair<node, node> &endsE = _eData[e]._ends;
+  const auto &[src, tgt] = _eData[e]._ends;
 
-  if (endsE.first == n) {
-    return endsE.second;
+  if (src == n) {
+    return tgt;
   } else {
-    assert(endsE.second == n);
-    return endsE.first;
+    assert(tgt == n);
+    return src;
   }
 }
 //=======================================================
 void VectorGraph::reverse(const edge e) {
   assert(isElement(e));
-
-  _iEdges &eData = _eData[e];
-  node src = eData._ends.first;
-  _iNodes &srcData = _nData[src];
-  srcData._outdeg -= 1;
-  node tgt = eData._ends.second;
-  _iNodes &tgtData = _nData[tgt];
-  tgtData._outdeg += 1;
-  eData._ends.first = tgt;
-  eData._ends.second = src;
-  std::pair<unsigned int, unsigned int> &endsPos = eData._endsPos;
-  unsigned int srcPos = endsPos.first;
-  unsigned int tgtPos = endsPos.second;
-  srcData._adjt[srcPos] = false;
-  tgtData._adjt[tgtPos] = true;
-  endsPos.first = tgtPos;
-  endsPos.second = srcPos;
-  // integrityTest();
+  auto &[src, tgt] = _eData[e]._ends;
+  _nData[src]._outdeg -= 1;
+  _nData[tgt]._outdeg += 1;
+  auto &[srcPos, tgtPos] = _eData[e]._endsPos;
+  _nData[src]._adjt[srcPos] = false;
+  _nData[tgt]._adjt[tgtPos] = true;
+  std::swap(src, tgt);
+  std::swap(srcPos, tgtPos);
 }
 //=======================================================
 void VectorGraph::setEnds(const edge e, const node src, const node tgt) {
@@ -518,13 +512,11 @@ void VectorGraph::setEnds(const edge e, const node src, const node tgt) {
   assert(isElement(src));
   assert(isElement(tgt));
 
-  _iEdges &eData = _eData[e];
-  node psrc = eData._ends.first;
-  node ptgt = eData._ends.second;
+  const auto &[psrc, ptgt] = _eData[e]._ends;
+  auto &[srcPos, tgtPos] = _eData[e]._endsPos;
 
   _nData[psrc]._outdeg -= 1;
-  _iNodes &srcData = _nData[src];
-  srcData._outdeg += 1;
+  _nData[src]._outdeg += 1;
 
   partialDelEdge(psrc, e);
 
@@ -532,20 +524,17 @@ void VectorGraph::setEnds(const edge e, const node src, const node tgt) {
     partialDelEdge(ptgt, e);
   }
 
-  eData._ends = pair<node, node>(src, tgt);
-  eData._endsPos.first = srcData._adje.size();
-  _iNodes &tgtData = _nData[tgt];
+  _eData[e]._ends = {src, tgt};
+  srcPos = _nData[src]._adje.size();
 
   if (src != tgt) {
-    eData._endsPos.second = tgtData._adje.size();
+    tgtPos = _nData[tgt]._adje.size();
   } else { // loop
-    eData._endsPos.second = srcData._adje.size() + 1;
+    tgtPos = _nData[src]._adje.size() + 1;
   }
 
-  srcData.addEdge(true, tgt, e);
-  tgtData.addEdge(false, src, e);
-
-  // integrityTest();
+  _nData[src].addEdge(true, tgt, e);
+  _nData[tgt].addEdge(false, src, e);
 }
 //=======================================================
 void VectorGraph::shuffleNodes() {
@@ -644,8 +633,7 @@ void VectorGraph::integrityTest() {
     edge e = _edges[i];
     node src = source(e);
     node tgt = target(e);
-    unsigned int srcp = _eData[e]._endsPos.first;
-    unsigned int tgtp = _eData[e]._endsPos.second;
+    const auto &[srcp, tgtp] = _eData[e]._endsPos;
     testCond("p1 :", _nData[src]._adje[srcp] == e);
     testCond("p2 :", _nData[tgt]._adje[tgtp] == e);
     testCond("p3 :", _nData[src]._adjn[srcp] == tgt);
@@ -694,11 +682,12 @@ void VectorGraph::moveEdge(node n, unsigned int a, unsigned int b) {
   }
 
   edge moved = _nData[n]._adje[a];
+  auto &[srcPos, tgtPos] = _eData[moved]._endsPos;
 
   if (_nData[n]._adjt[a]) { // if true in edges -> target
-    _eData[moved]._endsPos.first = b;
+    srcPos = b;
   } else {
-    _eData[moved]._endsPos.second = b;
+    tgtPos = b;
   }
 
   _nData[n]._adje[b] = _nData[n]._adje[a];
@@ -709,23 +698,25 @@ void VectorGraph::moveEdge(node n, unsigned int a, unsigned int b) {
 void VectorGraph::partialDelEdge(node n, edge e) {
   // e1 e2 e3 e4 e1 e6 e7 e7
   unsigned int endP = _nData[n]._adje.size() - 1;
+  const auto &[src, tgt] = _eData[e]._ends;
+  const auto &[srcPos, tgtPos] = _eData[e]._endsPos;
 
   if (endP > 0) {
-    bool loop = _eData[e]._ends.first == _eData[e]._ends.second;
+    bool loop = (src == tgt);
 
     if (loop) {
-      unsigned int i1 = std::max(_eData[e]._endsPos.first, _eData[e]._endsPos.second);
-      unsigned int i2 = std::min(_eData[e]._endsPos.first, _eData[e]._endsPos.second);
+      unsigned int i1 = std::max(srcPos, tgtPos);
+      unsigned int i2 = std::min(srcPos, tgtPos);
       moveEdge(n, endP, i1);
       --endP;
       moveEdge(n, endP, i2);
     } else {
       unsigned int i;
 
-      if (_eData[e]._ends.first == n) {
-        i = _eData[e]._endsPos.first;
+      if (src == n) {
+        i = srcPos;
       } else {
-        i = _eData[e]._endsPos.second;
+        i = tgtPos;
       }
 
       moveEdge(n, endP, i);

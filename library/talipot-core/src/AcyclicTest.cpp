@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -99,14 +99,13 @@ void AcyclicTest::makeAcyclic(Graph *graph, vector<edge> &reversed,
   unsigned int nbEdges = edges.size();
   for (unsigned int i = 0; i < nbEdges; ++i) {
     edge e = edges[i];
-    auto eEnds = graph->ends(e);
+    const auto &[src, tgt] = graph->ends(e);
 
-    if (eEnds.first == eEnds.second) {
+    if (src == tgt) {
       node n1 = graph->addNode();
       node n2 = graph->addNode();
-      selfLoops.push_back(tlp::SelfLoops(n1, n2, graph->addEdge(eEnds.first, n1),
-                                         graph->addEdge(n1, n2), graph->addEdge(eEnds.first, n2),
-                                         e));
+      selfLoops.push_back(tlp::SelfLoops(n1, n2, graph->addEdge(src, n1), graph->addEdge(n1, n2),
+                                         graph->addEdge(src, n2), e));
       edgesToDel.push_back(e);
     }
   }

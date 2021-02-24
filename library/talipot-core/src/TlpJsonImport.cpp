@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -49,12 +49,12 @@ public:
         _parsingPathViewProperty(false), _waitingForGraphId(false) {}
 
   void setGraphPropertiesValues() {
-    for (const auto &graphIterator : _graphProperties) {
-      for (const auto &propertyIterator : graphIterator.second) {
-        tlp::GraphProperty *prop = graphIterator.first->getGraphProperty(propertyIterator.first);
+    for (const auto &[graph, properties] : _graphProperties) {
+      for (const auto &[name, graphValues] : properties) {
+        tlp::GraphProperty *prop = graph->getGraphProperty(name);
 
-        for (const auto &valueIterator : propertyIterator.second) {
-          prop->setNodeValue(tlp::node(valueIterator.first), _clusterIndex[valueIterator.second]);
+        for (const auto &[nodeId, value] : graphValues) {
+          prop->setNodeValue(tlp::node(nodeId), _clusterIndex[value]);
         }
       }
     }

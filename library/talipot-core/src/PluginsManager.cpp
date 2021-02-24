@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -24,10 +24,10 @@ INSTANTIATE_DLL_TEMPLATE(tlp::Singleton<tlp::PluginsManager>, TLP_TEMPLATE_DEFIN
 PluginLoader *PluginsManager::currentLoader = nullptr;
 
 PluginsManager::~PluginsManager() {
-  for (auto &it : _plugins) {
+  for (auto &[name, pluginDescription] : _plugins) {
     // avoid double free
-    if (it.second.deprecated) {
-      it.second.info = nullptr;
+    if (pluginDescription.deprecated) {
+      pluginDescription.info = nullptr;
     }
   }
   _plugins.clear();
@@ -88,10 +88,10 @@ std::list<std::string> PluginsManager::availablePlugins() {
 
   auto &plugins = instance()._plugins;
 
-  for (const auto &it : plugins) {
+  for (const auto &[name, description] : plugins) {
     // deprecated names are not listed
-    if (it.first == it.second.info->name()) {
-      keys.push_back(it.first);
+    if (name == description.info->name()) {
+      keys.push_back(name);
     }
   }
 

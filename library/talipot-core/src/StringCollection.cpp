@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -72,8 +72,8 @@ StringCollection::StringCollection(const std::vector<string> &vectorParam,
                                    const std::string &currentString)
     : _data(vectorParam), current(0) {
 
-  for (const auto &itS : _data) {
-    if (itS == currentString) {
+  for (const auto &s : _data) {
+    if (s == currentString) {
       return;
     }
     ++current;

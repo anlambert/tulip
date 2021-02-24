@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -245,11 +245,10 @@ void tlp::MinMaxProperty<nodeType, edgeType, propType>::updateNodeValue(
 
     if (newValue != oldV) {
       // loop on subgraph min/max
-      for (const auto &it : minMaxNode) {
+      for (const auto &[graphId, minMax] : minMaxNode) {
         // if min/max is ok for the current subgraph
         // check if min or max has to be updated
-        typename nodeType::RealType minV = it.second.first;
-        typename nodeType::RealType maxV = it.second.second;
+        const auto &[minV, maxV] = minMax;
 
         // check if min or max has to be updated
         if ((newValue < minV) || (newValue > maxV) || (oldV == minV) || (oldV == maxV)) {
@@ -270,11 +269,10 @@ void tlp::MinMaxProperty<nodeType, edgeType, propType>::updateEdgeValue(
 
     if (newValue != oldV) {
       // loop on subgraph min/max
-      for (const auto &it : minMaxEdge) {
+      for (const auto &[graphId, minMax] : minMaxEdge) {
         // if min/max is ok for the current subgraph
         // check if min or max has to be updated
-        typename edgeType::RealType minV = it.second.first;
-        typename edgeType::RealType maxV = it.second.second;
+        const auto &[minV, maxV] = minMax;
 
         // check if min or max has to be updated
         if ((newValue < minV) || (newValue > maxV) || (oldV == minV) || (oldV == maxV)) {
@@ -291,11 +289,10 @@ void tlp::MinMaxProperty<nodeType, edgeType, propType>::updateAllNodesValues(
     typename nodeType::RealType newValue) {
 
   // loop on subgraph min/max
-  MINMAX_PAIR(nodeType) minmax(newValue, newValue);
+  MINMAX_PAIR(nodeType) minmax = {newValue, newValue};
 
-  for (const auto &it : minMaxNode) {
-    unsigned int gid = it.first;
-    minMaxNode[gid] = minmax;
+  for (const auto &[graphId, minMax] : minMaxNode) {
+    minMaxNode[graphId] = minmax;
   }
 }
 
@@ -303,11 +300,10 @@ template <typename nodeType, typename edgeType, typename propType>
 void tlp::MinMaxProperty<nodeType, edgeType, propType>::updateAllEdgesValues(
     typename edgeType::RealType newValue) {
   // loop on subgraph min/max
-  MINMAX_PAIR(edgeType) minmax(newValue, newValue);
+  MINMAX_PAIR(edgeType) minmax = {newValue, newValue};
 
-  for (const auto &it : minMaxEdge) {
-    unsigned int gid = it.first;
-    minMaxEdge[gid] = minmax;
+  for (const auto &[graphId, minMax] : minMaxEdge) {
+    minMaxEdge[graphId] = minmax;
   }
 }
 

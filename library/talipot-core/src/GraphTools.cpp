@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -106,14 +106,14 @@ void makeProperDag(Graph *graph, list<node> &addedNodes,
   unsigned int nbEdges = edges.size();
   for (unsigned int i = 0; i < nbEdges; ++i) {
     edge e = edges[i];
-    auto eEnds = graph->ends(e);
-    unsigned int fLevel = dLevel.getNodeValue(eEnds.first);
-    unsigned int sLevel = dLevel.getNodeValue(eEnds.second);
+    const auto &[src, tgt] = graph->ends(e);
+    unsigned int fLevel = dLevel.getNodeValue(src);
+    unsigned int sLevel = dLevel.getNodeValue(tgt);
     int delta = sLevel - fLevel;
 
     if (delta > 1) {
       node n1 = graph->addNode();
-      replacedEdges[e] = graph->addEdge(eEnds.first, n1);
+      replacedEdges[e] = graph->addEdge(src, n1);
       addedNodes.push_back(n1);
       dLevel.addNodeValue(n1, fLevel + 1);
 
@@ -130,12 +130,12 @@ void makeProperDag(Graph *graph, list<node> &addedNodes,
         n1 = n2;
       }
 
-      graph->addEdge(n1, eEnds.second);
+      graph->addEdge(n1, tgt);
     }
   }
 
-  for (const auto &it : replacedEdges) {
-    graph->delEdge(it.first);
+  for (const auto &[e, ee] : replacedEdges) {
+    graph->delEdge(e);
   }
 
   assert(AcyclicTest::isAcyclic(graph));
@@ -494,9 +494,9 @@ void selectMinimumSpanningTree(Graph *graph, BooleanProperty *selection,
     unsigned int srcClass = 0, tgtClass = 0;
 
     for (; iE < nbEdges; ++iE) {
-      auto curEnds = graph->ends(cur = sortedEdges[iE]);
+      const auto &[src, tgt] = graph->ends(cur = sortedEdges[iE]);
 
-      if ((srcClass = classes[curEnds.first]) != (tgtClass = classes[curEnds.second])) {
+      if ((srcClass = classes[src]) != (tgtClass = classes[tgt])) {
         break;
       }
     }
@@ -679,9 +679,9 @@ void buildNodesUniformQuantification(const Graph *graph, const NumericProperty *
   double cK = double(nbNodes) / double(k);
   int k2 = 0;
 
-  for (const auto &it : histogram) {
-    sum += it.second;
-    nodeMapping[it.first] = k2;
+  for (const auto &[val, count] : histogram) {
+    sum += count;
+    nodeMapping[val] = k2;
 
     if (sum > cK * (k2 + 1)) {
       k2 = ceil(sum / cK) - 1;
@@ -709,9 +709,9 @@ void buildEdgesUniformQuantification(const Graph *graph, const NumericProperty *
   double cK = double(graph->numberOfEdges()) / double(k);
   int k2 = 0;
 
-  for (const auto &it : histogram) {
-    sum += it.second;
-    edgeMapping[it.first] = k2;
+  for (const auto &[val, count] : histogram) {
+    sum += count;
+    edgeMapping[val] = k2;
 
     if (sum > cK * (k2 + 1)) {
       k2 = ceil(sum / cK) - 1;
@@ -723,14 +723,14 @@ unsigned makeSelectionGraph(const Graph *graph, BooleanProperty *selection, bool
   Observable::holdObservers();
   unsigned added = 0;
   for (auto e : selection->getEdgesEqualTo(true, graph)) {
-    auto ends = graph->ends(e);
+    const auto &[src, tgt] = graph->ends(e);
 
-    if (!selection->getNodeValue(ends.first)) {
+    if (!selection->getNodeValue(src)) {
 #ifndef NDEBUG
-      tlp::debug() << "[Make selection a graph] node #" << ends.first.id << " source of edge #"
-                   << e.id << " automatically added to selection.";
+      tlp::debug() << "[Make selection a graph] node #" << src.id << " source of edge #" << e.id
+                   << " automatically added to selection.";
 #endif
-      selection->setNodeValue(ends.first, true);
+      selection->setNodeValue(src, true);
       added++;
 
       if (test) {
@@ -739,12 +739,12 @@ unsigned makeSelectionGraph(const Graph *graph, BooleanProperty *selection, bool
       }
     }
 
-    if (!selection->getNodeValue(ends.second)) {
+    if (!selection->getNodeValue(tgt)) {
 #ifndef NDEBUG
-      tlp::debug() << "[Make selection a graph] node #" << ends.second.id << " target of edge #"
-                   << e.id << " automatically added to selection.";
+      tlp::debug() << "[Make selection a graph] node #" << tgt << " target of edge #" << e.id
+                   << " automatically added to selection.";
 #endif
-      selection->setNodeValue(ends.second, true);
+      selection->setNodeValue(tgt, true);
       added++;
 
       if (test) {

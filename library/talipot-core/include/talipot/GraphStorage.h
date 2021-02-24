@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -285,9 +285,9 @@ public:
    */
   node opposite(const edge e, const node n) const {
     assert(isElement(e));
-    const std::pair<node, node> &eEnds = edgeEnds[e.id];
-    assert((eEnds.first == n) || (eEnds.second == n));
-    return (eEnds.first == n) ? eEnds.second : eEnds.first;
+    const auto &[src, tgt] = edgeEnds[e.id];
+    assert((src == n) || (tgt == n));
+    return (src == n) ? tgt : src;
   }
 
   //=======================================================

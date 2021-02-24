@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -513,8 +513,8 @@ void LayoutProperty::computeEmbedding(const node n, Graph *sg) {
   adjCoord.sort(AngularOrder());
   vector<edge> tmpOrder;
 
-  for (const auto &it : adjCoord) {
-    tmpOrder.push_back(it.second);
+  for (const auto &[c, e] : adjCoord) {
+    tmpOrder.push_back(e);
   }
 
   sg->setEdgeOrder(n, tmpOrder);
@@ -642,9 +642,9 @@ double LayoutProperty::averageAngularResolution(const node n, const Graph *sg) c
 }
 //=================================================================================
 double LayoutProperty::edgeLength(const edge e) const {
-  auto eEnds = graph->ends(e);
-  Coord start = getNodeValue(eEnds.first);
-  const Coord &end = getNodeValue(eEnds.second);
+  const auto &[src, tgt] = graph->ends(e);
+  Coord start = getNodeValue(src);
+  const Coord &end = getNodeValue(tgt);
   double result = 0;
   const vector<Coord> &tmp = getEdgeValue(e);
 
@@ -805,9 +805,9 @@ void LayoutProperty::updateEdgeValue(tlp::edge e, tlp::LineType::RealType newVal
 
   if (!minMaxNode.empty()) {
     // loop on subgraph min/max
-    for (const auto &it : minMaxNode) {
-      const Coord &minV = it.second.first;
-      const Coord &maxV = it.second.second;
+    for (const auto &[graphId, minMax] : minMaxNode) {
+      const auto &[minV, maxV] = minMax;
+
       bool reset = false;
 
       // check if min has to be updated

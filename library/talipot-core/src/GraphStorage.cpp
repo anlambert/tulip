@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -118,15 +118,16 @@ struct IOEdgeContainerIterator : public Iterator<edge>,
   void prepareNext() {
     for (; it != itEnd; ++it) {
       curEdge = *it;
+      const auto &[curEdgeSrc, curEdgeTgt] = edges[curEdge.id];
       // note that io_type value may only be IO_IN which is null
       // or IO_OUT which is define to 1
-      node curNode = io_type != IO_IN ? edges[curEdge.id].first : edges[curEdge.id].second;
+      node curNode = io_type != IO_IN ? curEdgeSrc : curEdgeTgt;
 
       if (curNode != n) {
         continue;
       }
 
-      curNode = io_type != IO_IN ? edges[curEdge.id].second : edges[curEdge.id].first;
+      curNode = io_type != IO_IN ? curEdgeTgt : curEdgeSrc;
 
       if (curNode == n) {
         if (!loops.get(curEdge.id)) {
@@ -196,20 +197,20 @@ struct IONodesIterator : public Iterator<node>, public MemoryPool<IONodesIterato
   node next() override {
     // check hasNext()
     assert(it->hasNext());
-    const std::pair<node, node> &ends = edges[it->next()];
+    const auto &[src, tgt] = edges[it->next()];
 
     // out nodes
     if (io_type == IO_OUT) {
-      return ends.second;
+      return tgt;
     }
 
     // in nodes
     if (io_type == IO_IN) {
-      return ends.first;
+      return src;
     }
 
     // inout nodes
-    return (ends.first == n) ? ends.second : ends.first;
+    return (src == n) ? tgt : src;
   }
 };
 //=======================================================
@@ -223,10 +224,9 @@ std::vector<edge> GraphStorage::getEdges(const node src, const node tgt, bool di
   std::vector<edge> edges;
 
   for (auto e : nodeData[src.id].edges) {
-    const std::pair<node, node> &eEnds = edgeEnds[e.id];
+    const auto &[eSrc, eTgt] = edgeEnds[e.id];
 
-    if (((eEnds.second == tgt && eEnds.first == src) ||
-         (!directed && eEnds.first == tgt && eEnds.second == src)) &&
+    if (((eTgt == tgt && eSrc == src) || (!directed && eSrc == tgt && eTgt == src)) &&
         (!sg || sg->isElement(e))) {
       edges.push_back(e);
     }
@@ -265,9 +265,7 @@ Iterator<node> *GraphStorage::getOutNodes(const node n) const {
 void GraphStorage::setEnds(const edge e, const node newSrc, const node newTgt) {
 
   assert(isElement(e));
-  std::pair<node, node> &eEnds = edgeEnds[e.id];
-  node src = eEnds.first;
-  node tgt = eEnds.second;
+  auto [src, tgt] = edgeEnds[e.id];
 
   // nothing to do if same ends
   if (src == newSrc && tgt == newTgt) {
@@ -278,7 +276,7 @@ void GraphStorage::setEnds(const edge e, const node newSrc, const node newTgt) {
 
   if (newSrc.isValid() && src != newSrc) {
     assert(isElement(newSrc));
-    eEnds.first = newSrc;
+    edgeEnds[e.id].first = newSrc;
     NodeData &sCtnr = nodeData[src.id];
     NodeData &nCtnr = nodeData[newSrc.id];
     sCtnr.outDegree -= 1;
@@ -291,7 +289,7 @@ void GraphStorage::setEnds(const edge e, const node newSrc, const node newTgt) {
 
   if (newTgt.isValid() && tgt != newTgt) {
     assert(isElement(newTgt));
-    eEnds.second = newTgt;
+    edgeEnds[e.id].second = newTgt;
     nodeData[newTgt.id].edges.push_back(e);
     if (tgt != nSrc) {
       // remove edge from node data only if previous target
@@ -306,13 +304,10 @@ void GraphStorage::setEnds(const edge e, const node newSrc, const node newTgt) {
  */
 void GraphStorage::reverse(const edge e) {
   assert(isElement(e));
-  std::pair<node, node> &eEnds = edgeEnds[e.id];
-  node src = eEnds.first;
-  node tgt = eEnds.second;
-  eEnds.first = tgt;
-  eEnds.second = src;
+  auto &[src, tgt] = edgeEnds[e.id];
   nodeData[src.id].outDegree -= 1;
   nodeData[tgt.id].outDegree += 1;
+  std::swap(src, tgt);
 }
 //=======================================================
 /**
@@ -456,9 +451,7 @@ void GraphStorage::delNode(const node n) {
   const std::vector<edge> &edges = nodeData[n.id].edges;
 
   for (auto e : edges) {
-    const std::pair<node, node> &iEnds = ends(e);
-    node src = iEnds.first;
-    node tgt = iEnds.second;
+    const auto &[src, tgt] = ends(e);
 
     if (src != tgt) {
       if (src != n) {
@@ -485,9 +478,7 @@ void GraphStorage::delNode(const node n) {
  * these structures will be devalidated.
  */
 void GraphStorage::restoreEdge(const node src, const node tgt, const edge e) {
-  std::pair<node, node> &ends = edgeEnds[e.id];
-  ends.first = src;
-  ends.second = tgt;
+  edgeEnds[e.id] = {src, tgt};
   nodeData[src.id].outDegree += 1;
 }
 //=======================================================
@@ -504,9 +495,7 @@ edge GraphStorage::addEdge(const node src, const node tgt) {
     edgeEnds.resize(e.id + 1);
   }
 
-  std::pair<node, node> &ends = edgeEnds[e.id];
-  ends.first = src;
-  ends.second = tgt;
+  edgeEnds[e.id] = {src, tgt};
   NodeData &srcData = nodeData[src.id];
   srcData.outDegree += 1;
   srcData.edges.push_back(e);
@@ -541,12 +530,9 @@ void GraphStorage::addEdges(const std::vector<std::pair<node, node>> &ends,
   }
 
   for (unsigned int i = 0; i < nb; ++i) {
-    node src = ends[i].first;
-    node tgt = ends[i].second;
+    const auto &[src, tgt] = ends[i];
     edge e = edgeIds[first + i];
-    std::pair<node, node> &ends = edgeEnds[e.id];
-    ends.first = src;
-    ends.second = tgt;
+    edgeEnds[e.id] = {src, tgt};
     NodeData &srcData = nodeData[src.id];
     srcData.outDegree += 1;
     srcData.edges.push_back(e);
@@ -600,18 +586,14 @@ void GraphStorage::removeFromNodeData(NodeData &c, const edge e) {
  */
 void GraphStorage::removeFromEdges(const edge e, node end) {
   edgeIds.free(e);
-  std::pair<node, node> &eEnds = edgeEnds[e.id];
+  const auto &[src, tgt] = edgeEnds[e.id];
   // remove from source's edges
-  node n = eEnds.first;
-
-  if (n != end) {
-    removeFromNodeData(nodeData[n.id], e);
+  if (src != end) {
+    removeFromNodeData(nodeData[src.id], e);
   }
 
   // remove from target's edges
-  n = eEnds.second;
-
-  if (n != end) {
-    removeFromNodeData(nodeData[n.id], e);
+  if (tgt != end) {
+    removeFromNodeData(nodeData[tgt.id], e);
   }
 }

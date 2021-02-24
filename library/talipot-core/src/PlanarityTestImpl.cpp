@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -111,8 +111,8 @@ void PlanarityTestImpl::restore() {
     }
   }
 
-  for (const auto &it : bidirectedEdges) {
-    sg->delEdge(it.first, true);
+  for (const auto &[e, ee] : bidirectedEdges) {
+    sg->delEdge(e, true);
   }
 }
 

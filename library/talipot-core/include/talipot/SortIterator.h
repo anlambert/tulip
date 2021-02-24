@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -67,10 +67,10 @@ struct LessThanEdgeExtremitiesMetric {
   LessThanEdgeExtremitiesMetric(const Graph *sg, const tlp::NumericProperty *metric)
       : metric(metric), sg(sg) {}
   bool operator()(const edge &e1, const edge &e2) const {
-    std::pair<node, node> ends = sg->ends(e1);
-    Vec2d v1(metric->getNodeDoubleValue(ends.first), metric->getNodeDoubleValue(ends.second));
-    ends = sg->ends(e2);
-    Vec2d v2(metric->getNodeDoubleValue(ends.first), metric->getNodeDoubleValue(ends.second));
+    const auto &[src1, tgt1] = sg->ends(e1);
+    Vec2d v1 = {metric->getNodeDoubleValue(src1), metric->getNodeDoubleValue(tgt1)};
+    const auto &[src2, tgt2] = sg->ends(e2);
+    Vec2d v2 = {metric->getNodeDoubleValue(src2), metric->getNodeDoubleValue(tgt2)};
     return v1 < v2;
   }
 

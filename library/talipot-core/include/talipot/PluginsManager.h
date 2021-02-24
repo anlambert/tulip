@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -233,13 +233,13 @@ private:
   template <typename PluginType>
   std::list<std::string> availablePluginsImpl() {
     std::list<std::string> keys;
-    for (const auto &it : _plugins) {
-      PluginType *plugin = dynamic_cast<PluginType *>(it.second.info);
+    for (const auto &[pluginName, pluginDescription] : _plugins) {
+      PluginType *plugin = dynamic_cast<PluginType *>(pluginDescription.info);
 
       if (plugin != nullptr &&
           // deprecated names are not listed
-          it.first == it.second.info->name()) {
-        keys.push_back(it.first);
+          pluginName == pluginDescription.info->name()) {
+        keys.push_back(pluginName);
       }
     }
 
