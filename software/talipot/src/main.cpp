@@ -135,6 +135,10 @@ int main(int argc, char **argv) {
   QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
   QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts, true);
 
+#ifdef QT_HAS_WEBENGINE
+  QCoreApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings, true);
+#endif
+
   QApplication talipot(argc, argv);
   talipot.setApplicationName("Talipot");
 
