@@ -29,8 +29,6 @@
 #include <QThread>
 #include <QMap>
 
-#include <map>
-
 #include "GeographicViewConfigWidget.h"
 #include "GeolocationConfigWidget.h"
 #include "LeafletMaps.h"
@@ -128,6 +126,12 @@ public:
     return geoViewConfigWidget;
   }
 
+  static ViewType getViewTypeFromName(const QString &name);
+
+  static QString getViewNameFromType(ViewType viewType);
+
+  static QList<ViewType> getViewTypes();
+
 public slots:
 
   void computeGeoLayout();
@@ -161,9 +165,6 @@ public slots:
   void zoomIn();
   void zoomOut();
   void currentZoomChanged();
-
-  ViewType getViewTypeFromName(const QString &name) const;
-  QString getViewNameFromType(ViewType viewType) const;
 
 protected slots:
 
@@ -199,7 +200,7 @@ private:
   int mapZoomInit;
   ViewActionsManager *_viewActionsManager;
 
-  QMap<ViewType, QString> _viewTypeToName;
+  static const QMap<ViewType, QString> viewTypeToName;
 };
 }
 

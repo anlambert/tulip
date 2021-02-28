@@ -11,6 +11,7 @@
  *
  */
 
+#include "GeographicView.h"
 #include "LeafletMaps.h"
 
 #include <QDesktopServices>
@@ -24,21 +25,21 @@ using namespace std;
 
 namespace tlp {
 
-static const QString htmlMap =
-    QString(R"(
+static QString htmlMap() {
+  return QString(R"(
 <html>
 <head>
 )") +
 #ifdef QT_HAS_WEBENGINE
-    R"(<script type="text/javascript" src="qrc:///qtwebchannel/qwebchannel.js"></script>)" +
+         R"(<script type="text/javascript" src="qrc:///qtwebchannel/qwebchannel.js"></script>)" +
 #endif
-    R"(
+         QString(R"(
 <link rel="stylesheet" href="qrc:///talipot/view/geographic/leaflet/leaflet.css" />
 <script src="qrc:///talipot/view/geographic/leaflet/leaflet.js"></script>
 <script type="text/javascript">
 var map;
 var mapBounds;
-var maps = {};
+var layers = {};
 var currentLayer;
 var esriBaseUrl = 'https://server.arcgisonline.com/ArcGIS/rest/services/';
 function refreshMap() {
@@ -63,26 +64,26 @@ function init(lat, lng, zoom) {
   });
   addEventHandlersToLayer(osm);
   osm.addTo(map);
-  maps['OpenStreetMap'] = osm;
+  layers['%1'] = osm;
   var esriSatellite = L.tileLayer(esriBaseUrl + 'World_Imagery/MapServer/tile/{z}/{y}/{x}', {
     attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, ' +
                   'Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
   });
   addEventHandlersToLayer(esriSatellite);
-  maps['EsriSatellite'] = esriSatellite;
+  layers['%2'] = esriSatellite;
   var esriTerrain = L.tileLayer(esriBaseUrl + 'World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
     attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, ' +
                   'USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, ' +
                   'METI, Esri China (Hong Kong), and the GIS User Community'
   });
   addEventHandlersToLayer(esriTerrain);
-  maps['EsriTerrain'] = esriTerrain;
+  layers['%3'] = esriTerrain;
   var esriGrayCanvas = L.tileLayer(esriBaseUrl + 'Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
     attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
     maxZoom: 16
   });
   addEventHandlersToLayer(esriGrayCanvas);
-  maps['EsriGrayCanvas'] = esriGrayCanvas;
+  layers['%4'] = esriGrayCanvas;
   currentLayer = osm;
   map.setView(L.latLng(lat, lng), zoom);
   map.on('zoomstart', refreshMap);
@@ -99,26 +100,30 @@ function setMapBounds(latLngArray) {
   }
   map.flyToBounds(latLngBounds);
 }
-function switchToMap(mapName) {
+function switchToTileLayerName(layerName) {
+  switchToTileLayer(layers[layerName]);
+}
+function switchToTileLayer(layer) {
   map.removeLayer(currentLayer);
-  map.addLayer(maps[mapName]);
-  currentLayer = maps[mapName];
+  map.addLayer(layer);
+  currentLayer = layer;
   refreshMap();
 }
 function switchToCustomTileLayer(customTileLayerUrl) {
-  map.removeLayer(currentLayer);
   var customTileLayer = L.tileLayer(customTileLayerUrl, {
       attribution: customTileLayerUrl,
       errorTileUrl: 'qrc:///talipot/view/geographic/leaflet/no-tile.png'
   });
   addEventHandlersToLayer(customTileLayer);
-  map.addLayer(customTileLayer);
-  currentLayer = customTileLayer;
-  refreshMap();
+  switchToTileLayer(customTileLayer);
 }
-)" +
+)")
+             .arg(GeographicView::getViewNameFromType(GeographicView::OpenStreetMap),
+                  GeographicView::getViewNameFromType(GeographicView::EsriSatellite),
+                  GeographicView::getViewNameFromType(GeographicView::EsriTerrain),
+                  GeographicView::getViewNameFromType(GeographicView::EsriGrayCanvas)) +
 #ifdef QT_HAS_WEBENGINE
-    R"(
+         R"(
 document.addEventListener("DOMContentLoaded", function () {
   new QWebChannel(qt.webChannelTransport, function (channel) {
     leafletMapsQObject = channel.objects.leafletMapsQObject;
@@ -127,7 +132,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 )" +
 #endif
-    R"(
+         R"(
 </script>
 </head>
 <body style="margin:0px; padding:0px;" >
@@ -135,6 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </body>
 </html>
 )";
+}
 
 class WebPage :
 #ifdef QT_HAS_WEBENGINE
@@ -188,7 +194,7 @@ LeafletMaps::LeafletMaps(QWidget *parent) : QWebEngineView(parent), init(false) 
   frame->setWebChannel(channel);
   channel->registerObject(QStringLiteral("leafletMapsQObject"), mapRefresher);
 #endif
-  frame->setHtml(htmlMap);
+  frame->setHtml(htmlMap());
   QTimer::singleShot(500, this, &LeafletMaps::triggerLoading);
 }
 
@@ -237,9 +243,9 @@ void LeafletMaps::triggerLoading() {
   init = true;
 }
 
-void LeafletMaps::switchToMap(const QString &mapName) {
-  static const QString code = "switchToMap('%1')";
-  executeJavascript(code.arg(mapName));
+void LeafletMaps::switchToTileLayer(const QString &layerName) {
+  static const QString code = "switchToTileLayerName('%1')";
+  executeJavascript(code.arg(layerName));
 }
 
 void LeafletMaps::switchToCustomTileLayer(const QString &customTileLayerUrl) {
@@ -336,5 +342,4 @@ void LeafletMaps::setMapBounds(Graph *graph,
     executeJavascript(code);
   }
 }
-
 }

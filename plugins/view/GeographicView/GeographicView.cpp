@@ -39,6 +39,15 @@
 using namespace std;
 using namespace tlp;
 
+const QMap<GeographicView::ViewType, QString> GeographicView::viewTypeToName = {
+    {GeographicView::OpenStreetMap, "OpenStreetMap (Leaflet)"},
+    {GeographicView::EsriSatellite, "Esri Satellite (Leaflet)"},
+    {GeographicView::EsriTerrain, "Esri Terrain (Leaflet)"},
+    {GeographicView::EsriGrayCanvas, "Esri Gray Canvas (Leaflet)"},
+    {GeographicView::Polygon, "Polygon"},
+    {GeographicView::Globe, "Globe"},
+    {GeographicView::LeafletCustomTileLayer, "Custom Tile Layer (Leaflet)"}};
+
 GeographicView::GeographicView(PluginContext *)
     : geoViewGraphicsView(nullptr), geoViewConfigWidget(nullptr), geolocationConfigWidget(nullptr),
       sceneConfigurationWidget(nullptr), sceneLayersConfigurationWidget(nullptr),
@@ -46,13 +55,6 @@ GeographicView::GeographicView(PluginContext *)
       useSharedSizeProperty(true), useSharedShapeProperty(true), mapCenterLatitudeInit(0),
       mapCenterLongitudeInit(0), mapZoomInit(0), _viewActionsManager(nullptr) {
   _viewType = OpenStreetMap;
-  _viewTypeToName[OpenStreetMap] = "Open Street Map (Leaflet)";
-  _viewTypeToName[EsriSatellite] = "Esri Satellite (Leaflet)";
-  _viewTypeToName[EsriTerrain] = "Esri Terrain (Leaflet)";
-  _viewTypeToName[EsriGrayCanvas] = "Esri Gray Canvas (Leaflet)";
-  _viewTypeToName[Polygon] = "Polygon";
-  _viewTypeToName[Globe] = "Globe";
-  _viewTypeToName[LeafletCustomTileLayer] = "Custom Tile Layer (Leaflet)";
 }
 
 GeographicView::~GeographicView() {
@@ -457,20 +459,24 @@ QPixmap GeographicView::snapshot(const QSize &size) const {
       .scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 }
 
-GeographicView::ViewType GeographicView::getViewTypeFromName(const QString &name) const {
-  for (auto vt : _viewTypeToName.keys()) {
-    if (_viewTypeToName[vt] == name) {
+GeographicView::ViewType GeographicView::getViewTypeFromName(const QString &name) {
+  for (auto vt : viewTypeToName.keys()) {
+    if (viewTypeToName[vt] == name) {
       return vt;
     }
   }
-  return OpenStreetMap;
+  return GeographicView::OpenStreetMap;
 }
 
-QString GeographicView::getViewNameFromType(GeographicView::ViewType viewType) const {
-  if (_viewTypeToName.contains(viewType)) {
-    return _viewTypeToName[viewType];
+QString GeographicView::getViewNameFromType(GeographicView::ViewType viewType) {
+  if (viewTypeToName.contains(viewType)) {
+    return viewTypeToName[viewType];
   }
-  return _viewTypeToName[OpenStreetMap];
+  return viewTypeToName[GeographicView::OpenStreetMap];
+}
+
+QList<GeographicView::ViewType> GeographicView::getViewTypes() {
+  return viewTypeToName.keys();
 }
 
 PLUGIN(GeographicView)

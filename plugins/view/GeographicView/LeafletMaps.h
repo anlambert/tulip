@@ -82,7 +82,7 @@ public:
   void setMapBounds(Graph *graph,
                     const std::unordered_map<node, std::pair<double, double>> &nodesLatLngs);
 
-  void switchToMap(const QString &mapName);
+  void switchToTileLayer(const QString &layerName);
 
   void switchToCustomTileLayer(const QString &customTileLayerUrl);
 

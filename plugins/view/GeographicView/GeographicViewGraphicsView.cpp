@@ -333,15 +333,11 @@ GeographicViewGraphicsView::GeographicViewGraphicsView(GeographicView *geoView,
 
   // combo box to choose the map type
   viewTypeComboBox = new QComboBox;
-  viewTypeComboBox->addItems(
-      QStringList() << _geoView->getViewNameFromType(GeographicView::OpenStreetMap)
-                    << _geoView->getViewNameFromType(GeographicView::OpenStreetMap)
-                    << _geoView->getViewNameFromType(GeographicView::EsriSatellite)
-                    << _geoView->getViewNameFromType(GeographicView::EsriTerrain)
-                    << _geoView->getViewNameFromType(GeographicView::EsriGrayCanvas)
-                    << _geoView->getViewNameFromType(GeographicView::LeafletCustomTileLayer)
-                    << _geoView->getViewNameFromType(GeographicView::Polygon)
-                    << _geoView->getViewNameFromType(GeographicView::Globe));
+  QStringList items;
+  for (auto viewType : GeographicView::getViewTypes()) {
+    items.append(GeographicView::getViewNameFromType(viewType));
+  }
+  viewTypeComboBox->addItems(items);
   viewTypeComboBox->insertSeparator(1);
 
   QGraphicsProxyWidget *comboBoxProxy = scene()->addWidget(viewTypeComboBox);
@@ -927,29 +923,6 @@ void GeographicViewGraphicsView::switchViewType() {
   bool enablePlanisphere = false;
 
   switch (viewType) {
-  case GeographicView::OpenStreetMap: {
-    enableLeafletMap = true;
-    leafletMaps->switchToMap("OpenStreetMap");
-    break;
-  }
-
-  case GeographicView::EsriSatellite: {
-    enableLeafletMap = true;
-    leafletMaps->switchToMap("EsriSatellite");
-    break;
-  }
-
-  case GeographicView::EsriTerrain: {
-    enableLeafletMap = true;
-    leafletMaps->switchToMap("EsriTerrain");
-    break;
-  }
-
-  case GeographicView::EsriGrayCanvas: {
-    enableLeafletMap = true;
-    leafletMaps->switchToMap("EsriGrayCanvas");
-    break;
-  }
 
   case GeographicView::LeafletCustomTileLayer: {
     enableLeafletMap = true;
@@ -969,8 +942,11 @@ void GeographicViewGraphicsView::switchViewType() {
     break;
   }
 
-  default:
+  default: {
+    enableLeafletMap = true;
+    leafletMaps->switchToTileLayer(GeographicView::getViewNameFromType(viewType));
     break;
+  }
   }
 
   if (planisphereEntity && planisphereEntity->isVisible()) {
