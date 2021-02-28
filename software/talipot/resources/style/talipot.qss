@@ -974,3 +974,10 @@ QWizard QTableView {
   image: url(:/talipot/gui/icons/svg/close-pressed.svg);
   background: transparent;
 }
+
+#GeographicViewConfigWidget #scrollArea,
+#GeographicViewConfigWidget #scrollAreaWidgetContents,
+#GeolocationConfigWidget #scrollArea,
+#GeolocationConfigWidget #scrollAreaWidgetContents {
+  border: none;
+}

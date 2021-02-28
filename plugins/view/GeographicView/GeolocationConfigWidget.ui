@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Geolocation</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_3">
+  <layout class="QHBoxLayout" name="horizontalLayout_6">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -27,7 +27,7 @@
     <number>0</number>
    </property>
    <property name="bottomMargin">
-    <number>0</number>
+    <number>10</number>
    </property>
    <item>
     <widget class="QScrollArea" name="scrollArea">
@@ -266,7 +266,7 @@ p, li { white-space: pre-wrap; }
           <bool>false</bool>
          </property>
          <property name="title">
-          <string>ed&amp;ges paths</string>
+          <string>Ed&amp;ges paths</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>

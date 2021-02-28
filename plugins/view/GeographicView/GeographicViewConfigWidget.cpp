@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -19,6 +19,8 @@
 #include <QMessageBox>
 
 #include <talipot/TlpQtTools.h>
+#include <talipot/FontIconManager.h>
+#include <talipot/MaterialDesignIcons.h>
 
 using namespace std;
 using namespace tlp;
@@ -27,6 +29,8 @@ GeographicViewConfigWidget::GeographicViewConfigWidget(QWidget *parent)
     : QWidget(parent), _ui(new Ui::GeographicViewConfigWidget), _oldPolyFileType(None),
       _oldFileLoaded("") {
   _ui->setupUi(this);
+  _ui->csvFilePushButton->setIcon(FontIconManager::icon(MaterialDesignIcons::FolderOpen));
+  _ui->polyFilePushButton->setIcon(FontIconManager::icon(MaterialDesignIcons::FolderOpen));
 }
 
 GeographicViewConfigWidget::~GeographicViewConfigWidget() {
@@ -41,19 +45,6 @@ void GeographicViewConfigWidget::openCsvFileBrowser() {
 void GeographicViewConfigWidget::openPolyFileBrowser() {
   _ui->polyFile->setText(
       QFileDialog::getOpenFileName(nullptr, tr("Open .poly file"), "./", tr("Poly file (*.poly)")));
-}
-
-void GeographicViewConfigWidget::openCsvHelp() {
-  QMessageBox::about(nullptr, "Map csv file format",
-                     "If you want to import a csv file into this view, your file must be in the "
-                     "format :\nid\tlng\tlat\nid\tlng\tlat\n...\nwith id : id of the polygon");
-}
-
-void GeographicViewConfigWidget::openPolyHelp() {
-  QMessageBox::about(nullptr, "Map poly files",
-                     ".poly files format are an open street map "
-                     "format.\nYou can download .poly file on "
-                     ":\nhttp://downloads.cloudmade.com/");
 }
 
 bool GeographicViewConfigWidget::useSharedLayoutProperty() const {
