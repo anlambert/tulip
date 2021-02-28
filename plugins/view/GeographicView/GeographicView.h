@@ -71,6 +71,7 @@ public:
     EsriSatellite,
     EsriTerrain,
     EsriGrayCanvas,
+    Wikimedia,
     LeafletCustomTileLayer,
     Polygon,
     Globe

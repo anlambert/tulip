@@ -84,6 +84,13 @@ function init(lat, lng, zoom) {
   });
   addEventHandlersToLayer(esriGrayCanvas);
   layers['%4'] = esriGrayCanvas;
+  var wikiMedia = L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png', {
+	  attribution: '<a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a>',
+	  minZoom: 1,
+	  maxZoom: 19
+  });
+  addEventHandlersToLayer(wikiMedia);
+  layers['%5'] = wikiMedia;
   currentLayer = osm;
   map.setView(L.latLng(lat, lng), zoom);
   map.on('zoomstart', refreshMap);
@@ -121,7 +128,8 @@ function switchToCustomTileLayer(customTileLayerUrl) {
              .arg(GeographicView::getViewNameFromType(GeographicView::OpenStreetMap),
                   GeographicView::getViewNameFromType(GeographicView::EsriSatellite),
                   GeographicView::getViewNameFromType(GeographicView::EsriTerrain),
-                  GeographicView::getViewNameFromType(GeographicView::EsriGrayCanvas)) +
+                  GeographicView::getViewNameFromType(GeographicView::EsriGrayCanvas),
+                  GeographicView::getViewNameFromType(GeographicView::Wikimedia)) +
 #ifdef QT_HAS_WEBENGINE
          R"(
 document.addEventListener("DOMContentLoaded", function () {

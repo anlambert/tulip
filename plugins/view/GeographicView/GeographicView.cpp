@@ -44,6 +44,7 @@ const QMap<GeographicView::ViewType, QString> GeographicView::viewTypeToName = {
     {GeographicView::EsriSatellite, "Esri Satellite (Leaflet)"},
     {GeographicView::EsriTerrain, "Esri Terrain (Leaflet)"},
     {GeographicView::EsriGrayCanvas, "Esri Gray Canvas (Leaflet)"},
+    {GeographicView::Wikimedia, "Wikimedia (Leaflet)"},
     {GeographicView::Polygon, "Polygon"},
     {GeographicView::Globe, "Globe"},
     {GeographicView::LeafletCustomTileLayer, "Custom Tile Layer (Leaflet)"}};
