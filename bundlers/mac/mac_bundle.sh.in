@@ -85,7 +85,7 @@ mv MacOS/Talipot bin/talipot
 mv ${DEST_DIR}/application/Talipot.app ${DEST_DIR}/application/${APP_NAME}-@TalipotVersion@.app
 
 # create launcher
-cat > MacOs/Talipot <<EOF
+cat > MacOS/Talipot <<EOF
 #!/bin/sh
 
 wd="\${0%/*}"
