@@ -108,7 +108,6 @@ void GlScene::initGlParameters() {
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glLineWidth(1.0);
   glPointSize(1.0);
-  glEnable(GL_CULL_FACE);
   glEnable(GL_SCISSOR_TEST);
   glDepthFunc(GL_LEQUAL);
   glEnable(GL_DEPTH_TEST);
