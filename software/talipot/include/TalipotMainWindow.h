@@ -39,6 +39,7 @@ class PluginProgress;
 class Project;
 class PropertyInterface;
 class View;
+class Workspace;
 }
 
 namespace Ui {
@@ -94,6 +95,8 @@ public:
   PluginsCenter *pluginsCenter() const {
     return _pluginsCenter;
   }
+
+  tlp::Workspace *workspace() const;
 
   enum ProgressOption {
     NoProgressOption = 0x0,

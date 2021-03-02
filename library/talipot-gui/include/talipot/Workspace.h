@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -41,8 +41,6 @@ class Project;
 class TLP_QT_SCOPE Workspace : public QWidget {
   Q_OBJECT
 
-  Q_PROPERTY(bool bottomFrameVisible READ isBottomFrameVisible WRITE setBottomFrameVisible)
-
   Ui::Workspace *_ui;
   QList<WorkspacePanel *> _panels;
   int _currentPanelIndex;
@@ -64,8 +62,6 @@ public:
 
   int addPanel(tlp::View *);
   QList<tlp::View *> panels() const;
-
-  bool isBottomFrameVisible() const;
 
 public slots:
   void delView(tlp::View *view);
@@ -101,7 +97,7 @@ public slots:
   void writeProject(tlp::Project *, QMap<tlp::Graph *, QString>, tlp::PluginProgress *);
   void readProject(tlp::Project *, QMap<QString, tlp::Graph *>, tlp::PluginProgress *);
 
-  void setBottomFrameVisible(bool);
+  void setBottomFrameEnabled(bool);
   void setPageCountLabel(QLabel *l);
 
   void redrawPanels(bool center = false);

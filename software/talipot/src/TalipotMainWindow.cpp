@@ -1762,3 +1762,7 @@ void TalipotMainWindow::showPluginsCenter() {
   _pluginsCenter->setWindowIcon(windowIcon());
   _pluginsCenter->show();
 }
+
+Workspace *TalipotMainWindow::workspace() const {
+  return _ui->workspace;
+}

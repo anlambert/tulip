@@ -351,7 +351,9 @@ void Workspace::switchWorkspaceMode(QWidget *page) {
   }
 
   _ui->workspaceContents->setCurrentWidget(page);
-  _ui->bottomFrame->setEnabled(page != _ui->startupPage);
+  if (_model) {
+    setBottomFrameEnabled(!_model->empty());
+  }
   updateStartupMode();
   updatePanels();
 }
@@ -386,8 +388,10 @@ void Workspace::updateAvailableModes() {
   _ui->previousPageButton->setVisible(enableNavigation);
   _ui->nextPageButton->setEnabled(enableNavigation);
   _ui->previousPageButton->setEnabled(enableNavigation);
-  _ui->addPanelButton->setEnabled(enableNavigation);
   _ui->exposeButton->setEnabled(enableNavigation);
+  if (_model) {
+    _ui->addPanelButton->setEnabled(!_model->empty());
+  }
 }
 
 void Workspace::updatePanels() {
@@ -793,8 +797,8 @@ void Workspace::readProject(Project *project, QMap<QString, Graph *> rootIds,
   delete workspaceXml;
 }
 
-void Workspace::setBottomFrameVisible(bool f) {
-  _ui->bottomFrame->setVisible(f);
+void Workspace::setBottomFrameEnabled(bool f) {
+  _ui->bottomFrame->setEnabled(f);
 }
 
 void Workspace::setPageCountLabel(QLabel *l) {
@@ -813,10 +817,6 @@ void Workspace::redrawPanels(bool center) {
 
 void Workspace::setAutoCenterPanelsOnDraw(bool f) {
   _autoCenterViews = f;
-}
-
-bool Workspace::isBottomFrameVisible() const {
-  return _ui->bottomFrame->isVisible();
 }
 
 void Workspace::swapPanelsRequested(WorkspacePanel *panel) {

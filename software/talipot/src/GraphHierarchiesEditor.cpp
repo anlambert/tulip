@@ -31,6 +31,7 @@
 #include <talipot/GraphHierarchiesModel.h>
 #include <talipot/FontIconManager.h>
 #include <talipot/MaterialDesignIcons.h>
+#include <talipot/Workspace.h>
 
 #include "TalipotMainWindow.h"
 #include "ui_GraphHierarchiesEditor.h"
@@ -374,6 +375,7 @@ void GraphHierarchiesEditor::delAllGraph() {
       if (_model->empty()) {
         TalipotMainWindow::instance().setWindowModified(false);
         TalipotMainWindow::instance().resetTitle();
+        TalipotMainWindow::instance().workspace()->setBottomFrameEnabled(false);
       }
     }
   } else {
