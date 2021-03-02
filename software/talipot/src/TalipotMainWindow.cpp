@@ -925,12 +925,6 @@ bool TalipotMainWindow::saveAs(const QString &path) {
 
 void TalipotMainWindow::open(QString fileName) {
 
-  if (fileName.endsWith(".tlpx")) {
-    openProjectFile(fileName);
-    addRecentDocument(QFileInfo(fileName).absoluteFilePath());
-    return;
-  }
-
   QMap<std::string, std::string> modules;
 
   std::string filters("Talipot project (*.tlpx);;");
@@ -970,6 +964,12 @@ void TalipotMainWindow::open(QString fileName) {
     QFileInfo fileInfo(fileName);
 
     _lastOpenLocation = fileInfo.absolutePath();
+
+    if (fileName.endsWith(".tlpx")) {
+      openProjectFile(fileName);
+      addRecentDocument(QFileInfo(fileName).absoluteFilePath());
+      return;
+    }
 
     for (const std::string &extension : modules.keys()) {
       if (fileName.endsWith(QString::fromStdString(extension))) {
