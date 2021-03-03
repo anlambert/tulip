@@ -480,4 +480,11 @@ QList<GeographicView::ViewType> GeographicView::getViewTypes() {
   return viewTypeToName.keys();
 }
 
+void GeographicView::graphChanged(Graph *graph) {
+  setState(DataSet());
+  if (graph->isEmpty()) {
+    computeGeoLayout();
+  }
+}
+
 PLUGIN(GeographicView)
