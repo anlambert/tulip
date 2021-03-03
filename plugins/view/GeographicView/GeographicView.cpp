@@ -305,8 +305,8 @@ void GeographicView::currentZoomChanged() {
 }
 
 QList<QWidget *> GeographicView::configurationWidgets() const {
-  return QList<QWidget *>() << geolocationConfigWidget << geoViewConfigWidget
-                            << sceneConfigurationWidget << sceneLayersConfigurationWidget;
+  return {geolocationConfigWidget, geoViewConfigWidget, sceneConfigurationWidget,
+          sceneLayersConfigurationWidget};
 }
 
 void GeographicView::applySettings() {

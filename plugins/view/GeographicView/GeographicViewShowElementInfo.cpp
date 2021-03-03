@@ -40,24 +40,25 @@ class tlp::GlComplexPolygonItemEditor : public GlEntityItemEditor {
 public:
   GlComplexPolygonItemEditor(GlComplexPolygon *poly) : GlEntityItemEditor(poly) {}
 
+  GlComplexPolygon *getGlComplexPolygon() const {
+    return static_cast<GlComplexPolygon *>(entity);
+  }
+
   // redefined inherited methods from GlEntityItemEditor
   QStringList propertiesNames() const override {
-    return QStringList() << "fillColor"
-                         << "outlineColor";
+    return {"fillColor", "outlineColor"};
   }
 
   QVariantList propertiesQVariant() const override {
-    return QVariantList() << QVariant::fromValue<Color>(
-                                 static_cast<GlComplexPolygon *>(entity)->getFillColor())
-                          << QVariant::fromValue<Color>(
-                                 static_cast<GlComplexPolygon *>(entity)->getOutlineColor());
+    return {QVariant::fromValue<Color>(getGlComplexPolygon()->getFillColor()),
+            QVariant::fromValue<Color>(getGlComplexPolygon()->getOutlineColor())};
   }
 
   void setProperty(const QString &name, const QVariant &value) override {
     if (name == "fillColor") {
-      static_cast<GlComplexPolygon *>(entity)->setFillColor(value.value<Color>());
+      getGlComplexPolygon()->setFillColor(value.value<Color>());
     } else if (name == "outlineColor") {
-      static_cast<GlComplexPolygon *>(entity)->setOutlineColor(value.value<Color>());
+      getGlComplexPolygon()->setOutlineColor(value.value<Color>());
     }
   }
 };
