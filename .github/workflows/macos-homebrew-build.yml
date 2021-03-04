@@ -70,7 +70,7 @@ jobs:
         working-directory: ./build
         run: cmake .
           -DTALIPOT_BUILD_CORE_ONLY=OFF
-          -DCMAKE_PREFIX_PATH=/usr/local/opt/qt
+          -DCMAKE_PREFIX_PATH=/usr/local/opt/qt5
       - name: Talipot complete build
         working-directory: ./build
         run: make -j4
