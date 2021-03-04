@@ -30,7 +30,6 @@
 #include <QLayout>
 
 #include <talipot/MetaTypes.h>
-#include <talipot/ProcessingAnimationItem.h>
 #include <talipot/Interactor.h>
 #include <talipot/View.h>
 #include <talipot/Graph.h>

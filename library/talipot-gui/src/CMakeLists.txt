@@ -56,7 +56,6 @@ SET(SRCS
     GLInteractor.cpp
     WorkspacePanel.cpp
     Interactor.cpp
-    ProcessingAnimationItem.cpp
     Workspace.cpp
     PlaceHolderWidget.cpp
     GraphHierarchiesModel.cpp
@@ -196,7 +195,6 @@ QTX_WRAP_CPP(
   ../include/talipot/ItemsListWidget.h
   ../include/talipot/NodeLinkDiagramView.h
   ../include/talipot/PlaceHolderWidget.h
-  ../include/talipot/ProcessingAnimationItem.h
   ../include/talipot/PropertyCreationDialog.h
   ../include/talipot/QtGlSceneZoomAndPanAnimator.h
   ../include/talipot/QuickAccessBar.h
