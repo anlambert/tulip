@@ -90,8 +90,7 @@ static bool treeTest(const Graph *graph) {
 }
 //====================================================================
 bool TreeTest::isTree(const tlp::Graph *graph) {
-  auto it = instance.resultsBuffer.find(graph);
-  if (it != instance.resultsBuffer.end()) {
+  if (const auto it = instance.resultsBuffer.find(graph); it != instance.resultsBuffer.end()) {
     return it->second;
   }
 

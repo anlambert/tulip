@@ -77,17 +77,14 @@ bool DataSet::exists(const string &str) const {
 }
 
 std::string DataSet::getTypeName(const string &str) const {
-  auto it = data.find(str);
-  if (it != data.end()) {
+  if (const auto it = data.find(str); it != data.end()) {
     return it->second->getTypeName();
   }
   return "";
 }
 
 void DataSet::remove(const string &str) {
-  auto it = data.find(str);
-
-  if (it != data.end()) {
+  if (const auto it = data.find(str); it != data.end()) {
     if (it->second) {
       delete it->second;
     }
@@ -97,8 +94,7 @@ void DataSet::remove(const string &str) {
 }
 
 DataType *DataSet::getData(const string &str) const {
-  auto it = data.find(str);
-  if (it != data.end()) {
+  if (const auto it = data.find(str); it != data.end()) {
     return it->second ? it->second->clone() : nullptr;
   }
   return nullptr;
@@ -106,8 +102,7 @@ DataType *DataSet::getData(const string &str) const {
 
 void DataSet::setData(const std::string &str, const DataType *value) {
   DataType *val = value ? value->clone() : nullptr;
-  auto it = data.find(str);
-  if (it != data.end()) {
+  if (auto it = data.find(str); it != data.end()) {
     if (it->second) {
       delete it->second;
     }
@@ -138,17 +133,18 @@ DataTypeSerializerContainer DataSet::serializerContainer;
 void DataSet::registerDataTypeSerializer(const std::string &typeName, DataTypeSerializer *dts) {
 
 #ifndef NDEBUG
-  auto it = serializerContainer.tnTodts.find(typeName);
 
-  if (it != serializerContainer.tnTodts.end())
+  if (const auto it = serializerContainer.tnTodts.find(typeName);
+      it != serializerContainer.tnTodts.end()) {
     tlp::warning() << "Warning: a data type serializer is already registered for type "
-                   << demangleClassName(typeName.c_str()).c_str() << std::endl;
+                   << demangleClassName(typeName.c_str()) << std::endl;
+  }
 
-  it = serializerContainer.otnTodts.find(dts->outputTypeName);
-
-  if (it != serializerContainer.otnTodts.end())
+  if (const auto it = serializerContainer.otnTodts.find(dts->outputTypeName);
+      it != serializerContainer.otnTodts.end()) {
     tlp::warning() << "Warning: a data type serializer is already registered for read type "
                    << dts->outputTypeName << std::endl;
+  }
 
 #endif
 
@@ -157,20 +153,19 @@ void DataSet::registerDataTypeSerializer(const std::string &typeName, DataTypeSe
 
 // data write
 void DataSet::writeData(std::ostream &os, const std::string &prop, const DataType *dt) const {
-  auto it = serializerContainer.tnTodts.find(dt->getTypeName());
-
-  if (it == serializerContainer.tnTodts.end()) {
+  if (const auto it = serializerContainer.tnTodts.find(dt->getTypeName());
+      it == serializerContainer.tnTodts.end()) {
 #ifndef EMSCRIPTEN
     tlp::warning() << "Write error: No data serializer found for type "
-                   << demangleClassName(dt->getTypeName().c_str()).c_str() << std::endl;
+                   << demangleClassName(dt->getTypeName().c_str()) << std::endl;
 #endif
     return;
+  } else {
+    DataTypeSerializer *dts = (*it).second;
+    os << '(' << dts->outputTypeName << " \"" << prop << "\" ";
+    dts->writeData(os, dt);
+    os << ')' << endl;
   }
-
-  DataTypeSerializer *dts = (*it).second;
-  os << '(' << dts->outputTypeName << " \"" << prop << "\" ";
-  dts->writeData(os, dt);
-  os << ')' << endl;
 }
 
 void DataSet::write(std::ostream &os, const DataSet &ds) {
@@ -184,34 +179,33 @@ void DataSet::write(std::ostream &os, const DataSet &ds) {
 // data read
 bool DataSet::readData(std::istream &is, const std::string &prop,
                        const std::string &outputTypeName) {
-  auto it = serializerContainer.otnTodts.find(outputTypeName);
-
-  if (it == serializerContainer.otnTodts.end()) {
+  if (auto it = serializerContainer.otnTodts.find(outputTypeName);
+      it == serializerContainer.otnTodts.end()) {
     tlp::warning() << "Read error: No data type serializer found for read type " << outputTypeName
                    << std::endl;
     return false;
-  }
+  } else {
 
-  DataTypeSerializer *dts = (*it).second;
-  DataType *dt = dts->readData(is);
+    DataTypeSerializer *dts = (*it).second;
+    DataType *dt = dts->readData(is);
 
-  if (dt) {
-    // replace any preexisting value associated to prop
-    auto it = data.find(prop);
-    if (it != data.end()) {
-      if (it->second) {
-        delete it->second;
+    if (dt) {
+      // replace any preexisting value associated to prop
+      if (auto it = data.find(prop); it != data.end()) {
+        if (it->second) {
+          delete it->second;
+        }
+        it->second = dt;
+        return true;
       }
-      it->second = dt;
+
+      // no preexisting value
+      data[prop] = dt;
       return true;
     }
 
-    // no preexisting value
-    data[prop] = dt;
-    return true;
+    return false;
   }
-
-  return false;
 }
 
 bool DataSet::read(std::istream &is, DataSet &ds) {

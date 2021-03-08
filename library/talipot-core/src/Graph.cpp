@@ -685,9 +685,8 @@ bool tlp::Graph::applyPropertyAlgorithm(const std::string &algorithm, PropertyIn
     }
   }
 
-  auto it = circularCalls.find(algorithm);
-
-  if (it != circularCalls.end() && (*it).second == prop) {
+  if (const auto it = circularCalls.find(algorithm);
+      it != circularCalls.end() && (*it).second == prop) {
     errorMessage = std::string("Circular call of ") + __PRETTY_FUNCTION__;
 #ifndef NDEBUG
     tlp::error() << errorMessage << std::endl;
@@ -1662,9 +1661,8 @@ void Graph::createMetaNodes(Iterator<Graph *> *itS, Graph *quotientGraph, vector
             if (mSource != mTarget) {
               MetaEdge tmp;
               tmp.source = mSource.id, tmp.target = mTarget.id;
-              auto itm = myQuotientGraph.find(tmp);
 
-              if (itm == myQuotientGraph.end()) {
+              if (const auto itm = myQuotientGraph.find(tmp); itm == myQuotientGraph.end()) {
                 edge mE = quotientGraph->addEdge(mSource, mTarget);
                 tmp.mE = mE;
                 myQuotientGraph.insert(tmp);

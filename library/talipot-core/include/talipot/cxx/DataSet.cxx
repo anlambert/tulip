@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -15,9 +15,8 @@
 // DataSet implementation
 template <typename T>
 bool tlp::DataSet::get(const std::string &str, T &value) const {
-  auto it = data.find(str);
 
-  if (it != data.end()) {
+  if (const auto it = data.find(str); it != data.end()) {
     value = *(static_cast<T *>(it->second->value));
     return true;
   }
@@ -27,8 +26,7 @@ bool tlp::DataSet::get(const std::string &str, T &value) const {
 
 template <typename T>
 bool tlp::DataSet::getAndFree(const std::string &str, T &value) {
-  auto it = data.find(str);
-  if (it != data.end()) {
+  if (const auto it = data.find(str); it != data.end()) {
     value = *(static_cast<T *>(it->second->value));
     delete it->second;
     data.erase(it);

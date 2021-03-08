@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -162,8 +162,8 @@ unsigned int ThreadManager::getThreadNumber() {
   return omp_get_thread_num();
 #else
   tNumMtx.lock();
-  auto it = tNumMap.find(std::this_thread::get_id());
-  if (it != tNumMap.end()) {
+
+  if (const auto it = tNumMap.find(std::this_thread::get_id()); it != tNumMap.end()) {
     tNumMtx.unlock();
     return it->second;
   }

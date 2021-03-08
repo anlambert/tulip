@@ -665,9 +665,8 @@ void buildNodesUniformQuantification(const Graph *graph, const NumericProperty *
 
   for (unsigned int i = 0; i < nbNodes; ++i) {
     double value = prop->getNodeDoubleValue(nodes[i]);
-    auto it = histogram.find(value);
 
-    if (it == histogram.end()) {
+    if (auto it = histogram.find(value); it == histogram.end()) {
       histogram[value] = 1;
     } else {
       ++(it->second);
@@ -695,9 +694,8 @@ void buildEdgesUniformQuantification(const Graph *graph, const NumericProperty *
   map<double, int> histogram;
   for (auto e : graph->edges()) {
     double value = prop->getEdgeDoubleValue(e);
-    auto it = histogram.find(value);
 
-    if (it == histogram.end()) {
+    if (auto it = histogram.find(value); it == histogram.end()) {
       histogram[value] = 1;
     } else {
       ++(it->second);

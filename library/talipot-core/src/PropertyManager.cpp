@@ -50,11 +50,11 @@ bool PropertyManager::existProperty(const string &str) const {
 }
 //==============================================================
 bool PropertyManager::existLocalProperty(const string &str) const {
-  return (localProperties.find(str) != localProperties.end());
+  return localProperties.find(str) != localProperties.end();
 }
 //==============================================================
 bool PropertyManager::existInheritedProperty(const string &str) const {
-  return (inheritedProperties.find(str) != inheritedProperties.end());
+  return inheritedProperties.find(str) != inheritedProperties.end();
 }
 //==============================================================
 void PropertyManager::setLocalProperty(const string &str, PropertyInterface *p) {
@@ -228,10 +228,8 @@ PropertyInterface *PropertyManager::getInheritedProperty(const string &str) cons
 }
 //==============================================================
 void PropertyManager::delLocalProperty(const string &str) {
-  auto it = localProperties.find(str);
-
   // if found remove from local properties
-  if (it != localProperties.end()) {
+  if (const auto it = localProperties.find(str); it != localProperties.end()) {
     auto [name, oldProp] = *it;
 
     // loop in the ascendant hierarchy to get
@@ -270,10 +268,8 @@ void PropertyManager::delLocalProperty(const string &str) {
 }
 //==============================================================
 void PropertyManager::notifyBeforeDelInheritedProperty(const string &str) {
-  auto it = inheritedProperties.find(str);
-
   // if found remove from inherited properties
-  if (it != inheritedProperties.end()) {
+  if (const auto it = inheritedProperties.find(str); it != inheritedProperties.end()) {
     // graph observers notification
     static_cast<GraphAbstract *>(graph)->notifyBeforeDelInheritedProperty(str);
     // loop on subgraphs

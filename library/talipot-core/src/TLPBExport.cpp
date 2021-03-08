@@ -327,18 +327,16 @@ bool TLPBExport::exportGraph(std::ostream &os) {
 
       if (pnViewProp && !TalipotBitmapDir.empty()) {
         string defVal = prop->getNodeDefaultStringValue();
-        size_t pos = defVal.find(TalipotBitmapDir);
 
-        if (pos != string::npos) {
+        if (size_t pos = defVal.find(TalipotBitmapDir); pos != string::npos) {
           defVal.replace(pos, TalipotBitmapDir.size(), "TalipotBitmapDir/");
         }
 
         StringType::writeb(os, defVal);
 
         defVal = prop->getEdgeDefaultStringValue();
-        pos = defVal.find(TalipotBitmapDir);
 
-        if (pos != string::npos) {
+        if (size_t pos = defVal.find(TalipotBitmapDir); pos != string::npos) {
           defVal.replace(pos, TalipotBitmapDir.size(), "TalipotBitmapDir/");
         }
 
@@ -389,9 +387,8 @@ bool TLPBExport::exportGraph(std::ostream &os) {
 
           if (pnViewProp && !TalipotBitmapDir.empty()) { // viewFont || viewTexture
             string sVal = prop->getNodeStringValue(n);
-            size_t pos = sVal.find(TalipotBitmapDir);
 
-            if (pos != string::npos) {
+            if (size_t pos = sVal.find(TalipotBitmapDir); pos != string::npos) {
               sVal.replace(pos, TalipotBitmapDir.size(), "TalipotBitmapDir/");
             }
 
@@ -510,9 +507,8 @@ bool TLPBExport::exportGraph(std::ostream &os) {
 
             if (pnViewProp && !TalipotBitmapDir.empty()) { // viewFont || viewTexture
               string sVal = prop->getEdgeStringValue(e);
-              size_t pos = sVal.find(TalipotBitmapDir);
 
-              if (pos != string::npos) {
+              if (size_t pos = sVal.find(TalipotBitmapDir); pos != string::npos) {
                 sVal.replace(pos, TalipotBitmapDir.size(), "TalipotBitmapDir/");
               }
 

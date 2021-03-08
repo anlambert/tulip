@@ -181,8 +181,7 @@ bool BiconnectedTest::isBiconnected(const tlp::Graph *graph) {
     return true;
   }
 
-  auto it = instance.resultsBuffer.find(graph);
-  if (it != instance.resultsBuffer.end()) {
+  if (const auto it = instance.resultsBuffer.find(graph); it != instance.resultsBuffer.end()) {
     return it->second;
   }
 

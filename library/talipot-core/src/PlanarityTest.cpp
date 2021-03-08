@@ -80,8 +80,7 @@ void PlanarityTestListener::treatEvent(const Event &evt) {
 static PlanarityTestListener instance;
 //=================================================================
 bool PlanarityTest::isPlanar(Graph *graph) {
-  auto itr = instance.resultsBuffer.find(graph);
-  if (itr != instance.resultsBuffer.end()) {
+  if (const auto itr = instance.resultsBuffer.find(graph); itr != instance.resultsBuffer.end()) {
     return itr->second;
   }
 

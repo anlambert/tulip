@@ -220,9 +220,7 @@ public:
       string dsValue = property->getNodeDefaultStringValue();
 
       if (writingPathViewProperty && !TalipotBitmapDir.empty()) {
-        size_t pos = dsValue.find(TalipotBitmapDir);
-
-        if (pos != string::npos) {
+        if (size_t pos = dsValue.find(TalipotBitmapDir); pos != string::npos) {
           dsValue.replace(pos, TalipotBitmapDir.size(), "TalipotBitmapDir/");
         }
       }
@@ -233,9 +231,7 @@ public:
       dsValue = property->getEdgeDefaultStringValue();
 
       if (writingPathViewProperty && !TalipotBitmapDir.empty()) {
-        size_t pos = dsValue.find(TalipotBitmapDir);
-
-        if (pos != string::npos) {
+        if (size_t pos = dsValue.find(TalipotBitmapDir); pos != string::npos) {
           dsValue.replace(pos, TalipotBitmapDir.size(), "TalipotBitmapDir/");
         }
       }
@@ -265,9 +261,7 @@ public:
           _writer.writeString(temp.str());
 
           if (writingPathViewProperty && !TalipotBitmapDir.empty()) {
-            size_t pos = sValue.find(TalipotBitmapDir);
-
-            if (pos != string::npos) {
+            if (size_t pos = sValue.find(TalipotBitmapDir); pos != string::npos) {
               sValue.replace(pos, TalipotBitmapDir.size(), "TalipotBitmapDir/");
             }
           }
@@ -308,9 +302,7 @@ public:
             sValue = property->getEdgeStringValue(e);
 
             if (writingPathViewProperty && !TalipotBitmapDir.empty()) {
-              size_t pos = sValue.find(TalipotBitmapDir);
-
-              if (pos != string::npos) {
+              if (size_t pos = sValue.find(TalipotBitmapDir); pos != string::npos) {
                 sValue.replace(pos, TalipotBitmapDir.size(), "TalipotBitmapDir/");
               }
             }

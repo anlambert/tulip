@@ -290,15 +290,11 @@ public:
 
       // replace real path with symbolic one using TalipotBitmapDir
       if (isPathViewProp && !TalipotBitmapDir.empty()) {
-        size_t pos = nDefault.find(TalipotBitmapDir);
-
-        if (pos != string::npos) {
+        if (size_t pos = nDefault.find(TalipotBitmapDir); pos != string::npos) {
           nDefault.replace(pos, TalipotBitmapDir.size(), "TalipotBitmapDir/");
         }
 
-        pos = eDefault.find(TalipotBitmapDir);
-
-        if (pos != string::npos) {
+        if (size_t pos = eDefault.find(TalipotBitmapDir); pos != string::npos) {
           eDefault.replace(pos, TalipotBitmapDir.size(), "TalipotBitmapDir/");
         }
       }
@@ -316,9 +312,7 @@ public:
 
         // replace real path with symbolic one using TalipotBitmapDir
         if (isPathViewProp && !TalipotBitmapDir.empty()) {
-          size_t pos = tmp.find(TalipotBitmapDir);
-
-          if (pos != string::npos) {
+          if (size_t pos = tmp.find(TalipotBitmapDir); pos != string::npos) {
             tmp.replace(pos, TalipotBitmapDir.size(), "TalipotBitmapDir/");
           }
         } else if (g->getId() != 0 && // if it is not the real root graph
@@ -371,9 +365,7 @@ public:
           string tmp = prop->getEdgeStringValue(e);
 
           if (isPathViewProp && !TalipotBitmapDir.empty()) {
-            size_t pos = tmp.find(TalipotBitmapDir);
-
-            if (pos != string::npos) {
+            if (size_t pos = tmp.find(TalipotBitmapDir); pos != string::npos) {
               tmp.replace(pos, TalipotBitmapDir.size(), "TalipotBitmapDir/");
             }
           }

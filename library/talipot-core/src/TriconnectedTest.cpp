@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -72,8 +72,7 @@ void TriconnectedTestListener::treatEvent(const Event &evt) {
 static TriconnectedTestListener instance;
 //=================================================================
 bool TriconnectedTest::isTriconnected(Graph *graph) {
-  auto it = instance.resultsBuffer.find(graph);
-  if (it != instance.resultsBuffer.end()) {
+  if (const auto it = instance.resultsBuffer.find(graph); it != instance.resultsBuffer.end()) {
     return it->second;
   }
 

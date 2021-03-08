@@ -153,9 +153,8 @@ void tlp::PluginsManager::removePlugin(const std::string &name) {
 
 tlp::Plugin *PluginsManager::getPluginObject(const std::string &name, PluginContext *context) {
   auto &plugins = instance()._plugins;
-  auto it = plugins.find(name);
 
-  if (it != plugins.end()) {
+  if (const auto it = plugins.find(name); it != plugins.end()) {
     std::string pluginName = it->second.info->name();
     if (name != pluginName) {
       tlp::warning() << "Warning: '" << name << "' is a deprecated plugin name. Use '" << pluginName

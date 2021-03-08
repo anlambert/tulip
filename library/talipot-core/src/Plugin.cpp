@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -30,22 +30,21 @@ std::string tlp::getMinor(const std::string &release) {
 #else
   char sep = '.';
 #endif
-  size_t pos = release.find(sep);
 
   // if there is no minor version number, return a default '0'
-  if (pos == std::string::npos) {
+  if (size_t pos = release.find(sep); pos == std::string::npos) {
     return std::string("0");
+  } else {
+    size_t rpos = release.rfind(sep);
+
+    // if there is only one dot, return everything after it
+    if (pos == rpos) {
+      return release.substr(pos + 1);
+    }
+
+    // if there is more than one dot, return everything between the first and last dots
+    return release.substr(pos + 1, rpos - pos - 1);
   }
-
-  size_t rpos = release.rfind(sep);
-
-  // if there is only one dot, return everything after it
-  if (pos == rpos) {
-    return release.substr(pos + 1);
-  }
-
-  // if there is more than one dot, return everything between the first and last dots
-  return release.substr(pos + 1, rpos - pos - 1);
 }
 
 std::string tlp::getMajor(const std::string &release) {
@@ -61,8 +60,7 @@ std::string tlp::getMajor(const std::string &release) {
 #else
   char sep = '.';
 #endif
-  size_t pos = release.find(sep);
-  return release.substr(0, pos);
+  return release.substr(0, release.find(sep));
 }
 
 string Plugin::major() const {

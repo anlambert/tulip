@@ -150,8 +150,8 @@ vector<vector<node>> ConnectedTest::computeConnectedComponents(const tlp::Graph 
 }
 //=================================================================
 void ConnectedTest::connect(const tlp::Graph *const graph, vector<node> &toLink) {
-  auto it = instance.resultsBuffer.find(graph);
-  if (it != instance.resultsBuffer.end()) {
+
+  if (const auto it = instance.resultsBuffer.find(graph); it != instance.resultsBuffer.end()) {
     if (it->second) {
       return;
     }

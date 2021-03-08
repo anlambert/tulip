@@ -537,9 +537,8 @@ void PlanarConMap::computeFaces() {
     // Compute the list of adjacent faces of each edge
     for (auto e : edges()) {
       edgesFaces.insert(edgeMapEntry(e, v_faces));
-      auto itf = facesEdges.find(f);
 
-      if (itf == facesEdges.end()) {
+      if (const auto itf = facesEdges.find(f); itf == facesEdges.end()) {
         vector<edge> v_tmp;
         v_tmp.push_back(e);
         facesEdges.insert(faceMapEntry(f, v_tmp));
@@ -595,9 +594,8 @@ void PlanarConMap::computeFaces() {
             e1 = it_e.next();
             n = opposite(e1, n);
             edges.push_back(e1);
-            auto it_n = nodesFaces.find(n);
 
-            if (it_n == nodesFaces.end()) {
+            if (const auto it_n = nodesFaces.find(n); it_n == nodesFaces.end()) {
               vector<Face> v_tmp;
               v_tmp.push_back(lf);
               nodesFaces.insert(nodeMapEntry(n, v_tmp));
@@ -605,9 +603,7 @@ void PlanarConMap::computeFaces() {
               nodesFaces[n].push_back(lf);
             }
 
-            auto ite = edgesFaces.find(e1);
-
-            if (ite == edgesFaces.end()) {
+            if (const auto ite = edgesFaces.find(e1); ite == edgesFaces.end()) {
               vector<Face> v_tmp;
               v_tmp.push_back(lf);
               edgesFaces.insert(edgeMapEntry(e1, v_tmp));

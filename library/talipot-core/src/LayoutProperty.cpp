@@ -784,8 +784,7 @@ std::pair<tlp::Coord, tlp::Coord> LayoutProperty::computeMinMaxNode(const Graph 
     graph->addListener(this);
   }
 
-  std::pair<tlp::Coord, tlp::Coord> minmax(minT, maxT);
-  return minMaxNode[sgi] = minmax;
+  return minMaxNode[sgi] = {minT, maxT};
 }
 
 /**

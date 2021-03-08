@@ -317,15 +317,11 @@ bool TLPBImport::importGraph() {
         std::string value;
         StringType::readb(*inputData.is, value);
         // if needed replace symbolic path by real path
-        size_t pos = value.find(TalipotBitmapDirSym);
-
-        if (pos != std::string::npos) {
+        if (size_t pos = value.find(TalipotBitmapDirSym); pos != std::string::npos) {
           value.replace(pos, TalipotBitmapDirSym.size(), TalipotBitmapDir);
         }
 
-        pos = value.find(TulipBitmapDirSym);
-
-        if (pos != std::string::npos) {
+        if (size_t pos = value.find(TulipBitmapDirSym); pos != std::string::npos) {
           value.replace(pos, TulipBitmapDirSym.size(), TalipotBitmapDir);
         }
 
@@ -333,15 +329,11 @@ bool TLPBImport::importGraph() {
 
         StringType::readb(*inputData.is, value);
         // if needed replace symbolic path by real path
-        pos = value.find(TalipotBitmapDirSym);
-
-        if (pos != std::string::npos) {
+        if (size_t pos = value.find(TalipotBitmapDirSym); pos != std::string::npos) {
           value.replace(pos, TalipotBitmapDirSym.size(), TalipotBitmapDir);
         }
 
-        pos = value.find(TulipBitmapDirSym);
-
-        if (pos != std::string::npos) {
+        if (size_t pos = value.find(TulipBitmapDirSym); pos != std::string::npos) {
           value.replace(pos, TulipBitmapDirSym.size(), TalipotBitmapDir);
         }
 
@@ -457,15 +449,11 @@ bool TLPBImport::importGraph() {
               }
 
               // if needed replace symbolic path by real path
-              size_t pos = value.find(TalipotBitmapDirSym);
-
-              if (pos != std::string::npos) {
+              if (size_t pos = value.find(TalipotBitmapDirSym); pos != std::string::npos) {
                 value.replace(pos, TalipotBitmapDirSym.size(), TalipotBitmapDir);
               }
 
-              pos = value.find(TulipBitmapDirSym);
-
-              if (pos != std::string::npos) {
+              if (size_t pos = value.find(TulipBitmapDirSym); pos != std::string::npos) {
                 value.replace(pos, TulipBitmapDirSym.size(), TalipotBitmapDir);
               }
 
@@ -535,15 +523,11 @@ bool TLPBImport::importGraph() {
                 }
 
                 // if needed replace symbolic path by real path
-                size_t pos = value.find(TalipotBitmapDirSym);
-
-                if (pos != std::string::npos) {
+                if (size_t pos = value.find(TalipotBitmapDirSym); pos != std::string::npos) {
                   value.replace(pos, TalipotBitmapDirSym.size(), TalipotBitmapDir);
                 }
 
-                pos = value.find(TulipBitmapDirSym);
-
-                if (pos != std::string::npos) {
+                if (size_t pos = value.find(TulipBitmapDirSym); pos != std::string::npos) {
                   value.replace(pos, TulipBitmapDirSym.size(), TalipotBitmapDir);
                 }
 

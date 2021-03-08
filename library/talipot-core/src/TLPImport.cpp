@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -103,9 +103,7 @@ struct TLPGraphBuilder : public TLPTrue {
   ~TLPGraphBuilder() override {}
 
   Graph *getSubGraph(int id) {
-    auto it = clusterIndex.find(id);
-
-    if (it != clusterIndex.end()) {
+    if (const auto it = clusterIndex.find(id); it != clusterIndex.end()) {
       return it->second;
     }
 
@@ -305,15 +303,11 @@ struct TLPGraphBuilder : public TLPTrue {
 
     if (isPathViewProperty) {
       // if needed replace symbolic path by real path
-      size_t pos = value.find(TalipotBitmapDirSym);
-
-      if (pos != std::string::npos) {
+      if (size_t pos = value.find(TalipotBitmapDirSym); pos != std::string::npos) {
         value.replace(pos, TalipotBitmapDirSym.size(), TalipotBitmapDir);
       }
 
-      pos = value.find(TulipBitmapDirSym);
-
-      if (pos != std::string::npos) {
+      if (size_t pos = value.find(TulipBitmapDirSym); pos != std::string::npos) {
         value.replace(pos, TulipBitmapDirSym.size(), TalipotBitmapDir);
       }
 
@@ -353,15 +347,11 @@ struct TLPGraphBuilder : public TLPTrue {
 
     if (isPathViewProperty) {
       // if needed replace symbolic path by real path
-      size_t pos = value.find(TalipotBitmapDirSym);
-
-      if (pos != std::string::npos) {
+      if (size_t pos = value.find(TalipotBitmapDirSym); pos != std::string::npos) {
         value.replace(pos, TalipotBitmapDirSym.size(), TalipotBitmapDir);
       }
 
-      pos = value.find(TulipBitmapDirSym);
-
-      if (pos != std::string::npos) {
+      if (size_t pos = value.find(TulipBitmapDirSym); pos != std::string::npos) {
         value.replace(pos, TulipBitmapDirSym.size(), TalipotBitmapDir);
       }
 
@@ -453,15 +443,11 @@ struct TLPGraphBuilder : public TLPTrue {
 
     if (isPathViewProperty) {
       // if needed replace symbolic path by real path
-      size_t pos = value.find(TalipotBitmapDirSym);
-
-      if (pos != std::string::npos) {
+      if (size_t pos = value.find(TalipotBitmapDirSym); pos != std::string::npos) {
         value.replace(pos, TalipotBitmapDirSym.size(), TalipotBitmapDir);
       }
 
-      pos = value.find(TulipBitmapDirSym);
-
-      if (pos != std::string::npos) {
+      if (size_t pos = value.find(TulipBitmapDirSym); pos != std::string::npos) {
         value.replace(pos, TulipBitmapDirSym.size(), TalipotBitmapDir);
       }
     }
@@ -500,15 +486,11 @@ struct TLPGraphBuilder : public TLPTrue {
     } else {
       if (isPathViewProperty) {
         // if needed replace symbolic path by real path
-        size_t pos = value.find(TalipotBitmapDirSym);
-
-        if (pos != std::string::npos) {
+        if (size_t pos = value.find(TalipotBitmapDirSym); pos != std::string::npos) {
           value.replace(pos, TalipotBitmapDirSym.size(), TalipotBitmapDir);
         }
 
-        pos = value.find(TulipBitmapDirSym);
-
-        if (pos != std::string::npos) {
+        if (size_t pos = value.find(TulipBitmapDirSym); pos != std::string::npos) {
           value.replace(pos, TulipBitmapDirSym.size(), TalipotBitmapDir);
         }
       }

@@ -308,13 +308,11 @@ public:
         if (_parsingPropertyDefaultNodeValue) {
           if (_parsingPathViewProperty) {
             // if needed replace symbolic path by real path
-            size_t pos = value.find(TalipotBitmapDirSym);
-            size_t pos2 = value.find(TulipBitmapDirSym);
-            if (pos != std::string::npos) {
+            if (size_t pos = value.find(TalipotBitmapDirSym); pos != std::string::npos) {
               string dValue(value);
               dValue.replace(pos, TalipotBitmapDirSym.size(), TalipotBitmapDir);
               _currentProperty->setAllNodeStringValue(dValue);
-            } else if (pos2 != string::npos) {
+            } else if (size_t pos2 = value.find(TulipBitmapDirSym); pos2 != string::npos) {
               string dValue(value);
               dValue.replace(pos2, TulipBitmapDirSym.size(), TalipotBitmapDir);
               _currentProperty->setAllNodeStringValue(dValue);
@@ -331,13 +329,11 @@ public:
         if (_parsingPropertyDefaultEdgeValue) {
           if (_parsingPathViewProperty) {
             // if needed replace symbolic path by real path
-            size_t pos = value.find(TalipotBitmapDirSym);
-            size_t pos2 = value.find(TulipBitmapDirSym);
-            if (pos != std::string::npos) {
+            if (size_t pos = value.find(TalipotBitmapDirSym); pos != std::string::npos) {
               string dValue(value);
               dValue.replace(pos, TalipotBitmapDirSym.size(), TalipotBitmapDir);
               _currentProperty->setAllEdgeStringValue(dValue);
-            } else if (pos2 != std::string::npos) {
+            } else if (size_t pos2 = value.find(TulipBitmapDirSym); pos2 != std::string::npos) {
               string dValue(value);
               dValue.replace(pos2, TulipBitmapDirSym.size(), TalipotBitmapDir);
               _currentProperty->setAllEdgeStringValue(dValue);
@@ -366,13 +362,11 @@ public:
 
           if (_parsingPathViewProperty) {
             // if needed replace symbolic path by real path
-            size_t pos = value.find(TalipotBitmapDirSym);
-            size_t pos2 = value.find(TulipBitmapDirSym);
-            if (pos != std::string::npos) {
+            if (size_t pos = value.find(TalipotBitmapDirSym); pos != std::string::npos) {
               string nValue(value);
               nValue.replace(pos, TalipotBitmapDirSym.size(), TalipotBitmapDir);
               _currentProperty->setNodeStringValue(n, nValue);
-            } else if (pos2 != std::string::npos) {
+            } else if (size_t pos2 = value.find(TulipBitmapDirSym); pos2 != std::string::npos) {
               string nValue(value);
               nValue.replace(pos2, TulipBitmapDirSym.size(), TalipotBitmapDir);
               _currentProperty->setNodeStringValue(n, nValue);
@@ -392,12 +386,10 @@ public:
           if (_parsingPathViewProperty) {
             // if needed replace symbolic path by real path
             string eValue(value);
-            size_t pos = eValue.find(TalipotBitmapDirSym);
-            size_t pos2 = eValue.find(TulipBitmapDirSym);
-            if (pos != std::string::npos) {
+            if (size_t pos = eValue.find(TalipotBitmapDirSym); pos != std::string::npos) {
               eValue.replace(pos, TalipotBitmapDirSym.size(), TalipotBitmapDir);
             }
-            if (pos2 != std::string::npos) {
+            if (size_t pos2 = eValue.find(TulipBitmapDirSym); pos2 != std::string::npos) {
               eValue.replace(pos2, TulipBitmapDirSym.size(), TalipotBitmapDir);
             }
             _currentProperty->setEdgeStringValue(e, eValue);

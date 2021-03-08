@@ -211,14 +211,14 @@ private:
 
   template <typename PluginType>
   bool pluginExistsImpl(const std::string &pluginName) {
-    auto it = _plugins.find(pluginName);
+    const auto it = _plugins.find(pluginName);
     return (it != _plugins.end() && (dynamic_cast<const PluginType *>(it->second.info) != nullptr));
   }
 
   template <typename PluginType>
   PluginType *getPluginObjectImpl(const std::string &name, tlp::PluginContext *context = nullptr) {
-    auto it = _plugins.find(name);
-    if (it != _plugins.end() && (dynamic_cast<const PluginType *>(it->second.info) != nullptr)) {
+    if (const auto it = _plugins.find(name);
+        it != _plugins.end() && (dynamic_cast<const PluginType *>(it->second.info) != nullptr)) {
       std::string pluginName = it->second.info->name();
       if (name != pluginName) {
         tlp::warning() << "Warning: '" << name << "' is a deprecated plugin name. Use '"

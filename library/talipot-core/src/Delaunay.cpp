@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -587,27 +587,21 @@ bool tlp::voronoiDiagram(vector<Coord> &sites, VoronoiDiagram &voronoiDiagram) {
         face4 = Face(simplices[i][0], simplices[i][1], simplices[i][3]);
       }
 
-      auto it = faceToCircumCenter.find(face1);
-
-      if (it != faceToCircumCenter.end()) {
+      if (const auto it = faceToCircumCenter.find(face1); it != faceToCircumCenter.end()) {
         VoronoiDiagram::Edge edge = make_pair(circumCenterIdx, faceToCircumCenter[face1]);
         addVoronoiEdge(voronoiDiagram, face1, edge);
       } else {
         faceToCircumCenter[face1] = circumCenterIdx;
       }
 
-      it = faceToCircumCenter.find(face2);
-
-      if (it != faceToCircumCenter.end()) {
+      if (const auto it = faceToCircumCenter.find(face2); it != faceToCircumCenter.end()) {
         VoronoiDiagram::Edge edge = make_pair(circumCenterIdx, faceToCircumCenter[face2]);
         addVoronoiEdge(voronoiDiagram, face2, edge);
       } else {
         faceToCircumCenter[face2] = circumCenterIdx;
       }
 
-      it = faceToCircumCenter.find(face3);
-
-      if (it != faceToCircumCenter.end()) {
+      if (const auto it = faceToCircumCenter.find(face3); it != faceToCircumCenter.end()) {
         VoronoiDiagram::Edge edge = make_pair(circumCenterIdx, faceToCircumCenter[face3]);
         addVoronoiEdge(voronoiDiagram, face3, edge);
       } else {
@@ -617,9 +611,7 @@ bool tlp::voronoiDiagram(vector<Coord> &sites, VoronoiDiagram &voronoiDiagram) {
       // 3d voronoi case
       if (face4.isValid()) {
 
-        it = faceToCircumCenter.find(face4);
-
-        if (it != faceToCircumCenter.end()) {
+        if (const auto it = faceToCircumCenter.find(face4); it != faceToCircumCenter.end()) {
           VoronoiDiagram::Edge edge = make_pair(circumCenterIdx, faceToCircumCenter[face4]);
           addVoronoiEdge(voronoiDiagram, face4, edge);
         } else {
