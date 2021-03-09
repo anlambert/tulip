@@ -77,7 +77,7 @@ const char tlp::PATH_DELIMITER = ':';
 // A function that retrieves the Talipot libraries directory based on
 // the path of the loaded shared library libtalipot-core-X.Y.[dll, so, dylib]
 extern "C" {
-char *getTalipotLibDir(char *buf) {
+string getTalipotLibDir() {
   std::string talipotLibDir;
   std::string libTalipotName;
 
@@ -127,7 +127,7 @@ char *getTalipotLibDir(char *buf) {
   }
 
 #endif
-  return strcpy(buf, talipotLibDir.c_str());
+  return talipotLibDir;
 }
 }
 
@@ -182,9 +182,8 @@ void tlp::initTalipotLib(const char *appDirPath) {
 
 #endif
     } else {
-      char buf[1024];
       // if no appDirPath is provided, retrieve dynamically the Talipot lib dir
-      curDir = getTalipotLibDir(buf);
+      curDir = getTalipotLibDir();
     }
   } else {
     curDir = string(getEnvTlp);
