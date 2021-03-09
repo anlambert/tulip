@@ -85,8 +85,9 @@ fa_constants_path = os.path.join(
 with open(fa_constants_path, 'w', **open_kwargs) as fa_constants_h:
     fa_constants_h.write(license_header)
     fa_constants = ''
-    init_icon_code_points = ('static void initIconCodePoints() {\n'
-                             '  if (!iconCodePoint.empty()) return;\n')
+    init_icon_code_points = (
+        'static const unordered_map<string, unsigned int> iconCodePoint = {\n'
+    )
     for style in sorted(fa_icons.keys()):
         style_upper = style[0].upper() + style[1:]
         fa_constants_h.write('struct TLP_SCOPE %s {\n' % style_upper)
@@ -97,14 +98,14 @@ with open(fa_constants_path, 'w', **open_kwargs) as fa_constants_h:
             fa_constants_h.write(
                 '  static const char *%s;\n' % icon_constant_name)
             init_icon_code_points += (
-                '  iconCodePoint[FontAwesome::%s::%s] = 0x%s;\n' %
+                '  {FontAwesome::%s::%s, 0x%s},\n' %
                 (style_upper, icon_constant_name, icon_data['unicode']))
             fa_constants += ('const char *FontAwesome::%s::%s = "%s";\n' %
                              (style_upper, icon_constant_name,
                               icon_name_prefix))
         fa_constants_h.write('};\n')
 
-    init_icon_code_points += '}'
+    init_icon_code_points += '};'
 
 fa_sip_path = os.path.join(
     talipot_source_dir,

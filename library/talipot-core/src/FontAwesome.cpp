@@ -23,35 +23,29 @@
 using namespace std;
 using namespace tlp;
 
-static unordered_map<string, unsigned int> iconCodePoint;
 static vector<string> iconsNames;
-static map<string, string>
-    iconFamily({{"fab", "fa-brands-400"}, {"far", "fa-regular-400"}, {"fas", "fa-solid-900"}});
+static map<string, string> iconFamily = {
+    {"fab", "fa-brands-400"}, {"far", "fa-regular-400"}, {"fas", "fa-solid-900"}};
 
 #include "FontAwesomeData.cpp"
 
 string FontAwesome::getTTFLocation(const string &iconName) {
-  initIconCodePoints();
   return TalipotShareDir + "fonts/FontAwesome/" + getIconFamily(iconName) + ".ttf";
 }
 
 string FontAwesome::getWOFFLocation(const string &iconName) {
-  initIconCodePoints();
   return TalipotShareDir + "fonts/FontAwesome/" + getIconFamily(iconName) + ".woff";
 }
 
 string FontAwesome::getWOFF2Location(const string &iconName) {
-  initIconCodePoints();
   return TalipotShareDir + "fonts/FontAwesome/" + getIconFamily(iconName) + ".woff2";
 }
 
 bool FontAwesome::isIconSupported(const string &iconName) {
-  initIconCodePoints();
   return iconCodePoint.find(iconName) != iconCodePoint.end();
 }
 
 const vector<string> &FontAwesome::getSupportedIcons() {
-  initIconCodePoints();
   if (iconsNames.empty()) {
     iconsNames.reserve(iconCodePoint.size());
     for (auto &[iconName, codePoint] : iconCodePoint) {
@@ -62,7 +56,6 @@ const vector<string> &FontAwesome::getSupportedIcons() {
 }
 
 unsigned int FontAwesome::getIconCodePoint(const string &iconName) {
-  initIconCodePoints();
   if (const auto it = iconCodePoint.find(iconName); it != iconCodePoint.end()) {
     return it->second;
   }
@@ -70,7 +63,6 @@ unsigned int FontAwesome::getIconCodePoint(const string &iconName) {
 }
 
 string FontAwesome::getIconFamily(const string &iconName) {
-  initIconCodePoints();
   string prefix = iconName.substr(0, 3);
   if (prefix.length() == 3 && iconFamily.find(prefix) != iconFamily.end()) {
     return iconFamily[prefix];
@@ -79,6 +71,5 @@ string FontAwesome::getIconFamily(const string &iconName) {
 }
 
 string FontAwesome::getIconUtf8String(const string &iconName) {
-  initIconCodePoints();
-  return utf32to8(u32string(1, static_cast<char32_t>(iconCodePoint[iconName])));
+  return utf32to8(u32string(1, static_cast<char32_t>(iconCodePoint.at(iconName))));
 }
