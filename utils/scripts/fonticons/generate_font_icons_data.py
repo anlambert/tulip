@@ -158,21 +158,22 @@ with open(md_constants_path, 'w',
           **open_kwargs) as md_constants_h:
     md_constants_h.write(license_header)
     md_constants = ''
-    init_icon_code_points = ('static void initIconCodePoints() {\n'
-                             '  if (!iconCodePoint.empty()) return;\n')
+    init_icon_code_points = (
+        'static const unordered_map<string, unsigned int> iconCodePoint = {\n'
+    )
     for icon in md_data:
         icon_constant_name = to_upper_style(icon['name'])
         md_constants_h.write(
             'static const char *%s;\n' % icon_constant_name)
         init_icon_code_points += (
-            '  iconCodePoint[MaterialDesignIcons::%s] = 0x%s;\n' %
+            '  {MaterialDesignIcons::%s, 0x%s},\n' %
             (icon_constant_name, icon['codepoint'].lower()))
         md_constants += ('const char *MaterialDesignIcons::%s = "%s";\n' %
                          (icon_constant_name, 'md-' + icon['name']))
 
         if version_tuple(icon['version']) > version_tuple(md_version):
             md_version = icon['version']
-    init_icon_code_points += '}'
+    init_icon_code_points += '};'
 
 md_sip_path = os.path.join(
     talipot_source_dir,

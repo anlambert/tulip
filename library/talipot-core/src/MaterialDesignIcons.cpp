@@ -22,7 +22,6 @@ using namespace tlp;
 
 namespace tlp {
 
-static unordered_map<string, unsigned int> iconCodePoint;
 static vector<string> iconsNames;
 
 #include "MaterialDesignIconsData.cpp"
@@ -40,12 +39,10 @@ string MaterialDesignIcons::getWOFF2Location() {
 }
 
 bool MaterialDesignIcons::isIconSupported(const string &iconName) {
-  initIconCodePoints();
   return iconCodePoint.find(iconName) != iconCodePoint.end();
 }
 
 const vector<string> &MaterialDesignIcons::getSupportedIcons() {
-  initIconCodePoints();
   if (iconsNames.empty()) {
     iconsNames.reserve(iconCodePoint.size());
     for (auto &[iconName, codePoint] : iconCodePoint) {
@@ -56,8 +53,6 @@ const vector<string> &MaterialDesignIcons::getSupportedIcons() {
 }
 
 unsigned int MaterialDesignIcons::getIconCodePoint(const string &iconName) {
-  initIconCodePoints();
-
   if (const auto it = iconCodePoint.find(iconName); it != iconCodePoint.end()) {
     return it->second;
   }
@@ -69,7 +64,6 @@ string MaterialDesignIcons::getIconFamily(const string &) {
 }
 
 string MaterialDesignIcons::getIconUtf8String(const string &iconName) {
-  initIconCodePoints();
-  return utf32to8(u32string(1, static_cast<char32_t>(iconCodePoint[iconName.c_str()])));
+  return utf32to8(u32string(1, static_cast<char32_t>(iconCodePoint.at(iconName))));
 }
 }
