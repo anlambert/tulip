@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -84,7 +84,7 @@ class PyObjectToCppObjectConverter {
 
 public:
   bool convert(PyObject *pyObject, T &cppObject) {
-    std::string className = tlp::demangleClassName(typeid(T).name());
+    std::string className = tlp::demangleClassName<T>();
 
     void *pointer = convertSipWrapperToCppType(pyObject, className);
 
@@ -104,7 +104,7 @@ class PyObjectToCppObjectConverter<T *> {
 
 public:
   bool convert(PyObject *pyObject, T *&cppObject) {
-    std::string className = tlp::demangleClassName(typeid(T).name());
+    std::string className = tlp::demangleClassName<T>();
 
     void *cppObjPointer = convertSipWrapperToCppType(pyObject, className, true);
 
@@ -200,7 +200,7 @@ class CppObjectToPyObjectConverter {
 
 public:
   bool convert(const T &cppObject, PyObject *&pyObject) {
-    std::string className = tlp::demangleClassName(typeid(T).name());
+    std::string className = tlp::demangleClassName<T>();
 
     T *objCopy = new T(cppObject);
     PyObject *pyObj = convertCppTypeToSipWrapper(objCopy, className, true);
@@ -221,7 +221,7 @@ class CppObjectToPyObjectConverter<T *> {
 
 public:
   bool convert(T *cppObject, PyObject *&pyObject) {
-    std::string className = tlp::demangleClassName(typeid(T).name());
+    std::string className = tlp::demangleClassName<T>();
 
     PyObject *pyObj = convertCppTypeToSipWrapper(cppObject, className);
 

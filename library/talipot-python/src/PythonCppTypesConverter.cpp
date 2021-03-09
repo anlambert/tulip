@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -22,93 +22,88 @@
 
 static std::unordered_map<std::string, std::string> &getTypenamesMap() {
   static std::unordered_map<std::string, std::string> ret;
-  ret[tlp::demangleClassName(typeid(std::string).name())] = "std::string";
-  ret[tlp::demangleClassName(typeid(tlp::Vec3f).name())] = "tlp::Vec3f";
-  ret[tlp::demangleClassName(typeid(tlp::Coord).name())] = "tlp::Coord";
-  ret[tlp::demangleClassName(typeid(tlp::Size).name())] = "tlp::Size";
-  ret[tlp::demangleClassName(typeid(std::vector<int>).name())] = "std::vector<int>";
-  ret[tlp::demangleClassName(typeid(std::vector<unsigned int>).name())] = "std::vector<uint>";
-  ret[tlp::demangleClassName(typeid(std::vector<long>).name())] = "std::vector<long>";
-  ret[tlp::demangleClassName(typeid(std::vector<unsigned long>).name())] =
-      "std::vector<unsigned long>";
-  ret[tlp::demangleClassName(typeid(std::vector<float>).name())] = "std::vector<float>";
-  ret[tlp::demangleClassName(typeid(std::vector<double>).name())] = "std::vector<double>";
-  ret[tlp::demangleClassName(typeid(std::vector<bool>).name())] = "std::vector<bool>";
-  ret[tlp::demangleClassName(typeid(std::vector<std::string>).name())] = "std::vector<std::string>";
-  ret[tlp::demangleClassName(typeid(std::vector<tlp::node>).name())] = "std::vector<tlp::node>";
-  ret[tlp::demangleClassName(typeid(std::vector<tlp::edge>).name())] = "std::vector<tlp::edge>";
-  ret[tlp::demangleClassName(typeid(std::vector<tlp::Coord>).name())] = "std::vector<tlp::Coord>";
-  ret[tlp::demangleClassName(typeid(std::vector<tlp::Color>).name())] = "std::vector<tlp::Color>";
-  ret[tlp::demangleClassName(typeid(std::vector<tlp::Size>).name())] = "std::vector<tlp::Size>";
-  ret[tlp::demangleClassName(typeid(std::vector<tlp::Graph *>).name())] =
-      "std::vector<tlp::Graph*>";
-  ret[tlp::demangleClassName(typeid(std::vector<tlp::ColorScale>).name())] =
-      "std::vector<tlp::ColorScale>";
-  ret[tlp::demangleClassName(typeid(std::vector<tlp::StringCollection>).name())] =
+  ret[tlp::demangleClassName<std::string>()] = "std::string";
+  ret[tlp::demangleClassName<tlp::Vec3f>()] = "tlp::Vec3f";
+  ret[tlp::demangleClassName<tlp::Coord>()] = "tlp::Coord";
+  ret[tlp::demangleClassName<tlp::Size>()] = "tlp::Size";
+  ret[tlp::demangleClassName<std::vector<int>>()] = "std::vector<int>";
+  ret[tlp::demangleClassName<std::vector<unsigned int>>()] = "std::vector<uint>";
+  ret[tlp::demangleClassName<std::vector<long>>()] = "std::vector<long>";
+  ret[tlp::demangleClassName<std::vector<unsigned long>>()] = "std::vector<unsigned long>";
+  ret[tlp::demangleClassName<std::vector<float>>()] = "std::vector<float>";
+  ret[tlp::demangleClassName<std::vector<double>>()] = "std::vector<double>";
+  ret[tlp::demangleClassName<std::vector<bool>>()] = "std::vector<bool>";
+  ret[tlp::demangleClassName<std::vector<std::string>>()] = "std::vector<std::string>";
+  ret[tlp::demangleClassName<std::vector<tlp::node>>()] = "std::vector<tlp::node>";
+  ret[tlp::demangleClassName<std::vector<tlp::edge>>()] = "std::vector<tlp::edge>";
+  ret[tlp::demangleClassName<std::vector<tlp::Coord>>()] = "std::vector<tlp::Coord>";
+  ret[tlp::demangleClassName<std::vector<tlp::Color>>()] = "std::vector<tlp::Color>";
+  ret[tlp::demangleClassName<std::vector<tlp::Size>>()] = "std::vector<tlp::Size>";
+  ret[tlp::demangleClassName<std::vector<tlp::Graph *>>()] = "std::vector<tlp::Graph*>";
+  ret[tlp::demangleClassName<std::vector<tlp::ColorScale>>()] = "std::vector<tlp::ColorScale>";
+  ret[tlp::demangleClassName<std::vector<tlp::StringCollection>>()] =
       "std::vector<tlp::StringCollection>";
-  ret[tlp::demangleClassName(typeid(std::vector<tlp::BooleanProperty *>).name())] =
+  ret[tlp::demangleClassName<std::vector<tlp::BooleanProperty *>>()] =
       "std::vector<tlp::BooleanProperty *>";
-  ret[tlp::demangleClassName(typeid(std::vector<tlp::ColorProperty *>).name())] =
+  ret[tlp::demangleClassName<std::vector<tlp::ColorProperty *>>()] =
       "std::vector<tlp::ColorProperty *>";
-  ret[tlp::demangleClassName(typeid(std::vector<tlp::DoubleProperty *>).name())] =
+  ret[tlp::demangleClassName<std::vector<tlp::DoubleProperty *>>()] =
       "std::vector<tlp::DoubleProperty *>";
-  ret[tlp::demangleClassName(typeid(std::vector<tlp::IntegerProperty *>).name())] =
+  ret[tlp::demangleClassName<std::vector<tlp::IntegerProperty *>>()] =
       "std::vector<tlp::IntegerProperty *>";
-  ret[tlp::demangleClassName(typeid(std::vector<tlp::LayoutProperty *>).name())] =
+  ret[tlp::demangleClassName<std::vector<tlp::LayoutProperty *>>()] =
       "std::vector<tlp::LayoutProperty *>";
-  ret[tlp::demangleClassName(typeid(std::vector<tlp::SizeProperty *>).name())] =
+  ret[tlp::demangleClassName<std::vector<tlp::SizeProperty *>>()] =
       "std::vector<tlp::SizeProperty *>";
-  ret[tlp::demangleClassName(typeid(std::vector<tlp::StringProperty *>).name())] =
+  ret[tlp::demangleClassName<std::vector<tlp::StringProperty *>>()] =
       "std::vector<tlp::StringProperty *>";
-  ret[tlp::demangleClassName(typeid(std::vector<tlp::PropertyInterface *>).name())] =
+  ret[tlp::demangleClassName<std::vector<tlp::PropertyInterface *>>()] =
       "std::vector<tlp::PropertyInterface *>";
-  ret[tlp::demangleClassName(typeid(std::list<int>).name())] = "std::list<int>";
-  ret[tlp::demangleClassName(typeid(std::list<unsigned int>).name())] = "std::list<uint>";
-  ret[tlp::demangleClassName(typeid(std::list<long>).name())] = "std::list<long>";
-  ret[tlp::demangleClassName(typeid(std::list<unsigned long>).name())] = "std::list<unsigned long>";
-  ret[tlp::demangleClassName(typeid(std::list<float>).name())] = "std::list<float>";
-  ret[tlp::demangleClassName(typeid(std::list<double>).name())] = "std::list<double>";
-  ret[tlp::demangleClassName(typeid(std::list<bool>).name())] = "std::list<bool>";
-  ret[tlp::demangleClassName(typeid(std::list<std::string>).name())] = "std::list<std::string>";
-  ret[tlp::demangleClassName(typeid(std::list<tlp::node>).name())] = "std::list<tlp::node>";
-  ret[tlp::demangleClassName(typeid(std::list<tlp::edge>).name())] = "std::list<tlp::edge>";
-  ret[tlp::demangleClassName(typeid(std::list<tlp::Coord>).name())] = "std::list<tlp::Coord>";
-  ret[tlp::demangleClassName(typeid(std::list<tlp::Color>).name())] = "std::list<tlp::Color>";
-  ret[tlp::demangleClassName(typeid(std::list<tlp::Size>).name())] = "std::list<tlp::Size>";
-  ret[tlp::demangleClassName(typeid(std::list<tlp::Graph *>).name())] = "std::list<tlp::Graph*>";
-  ret[tlp::demangleClassName(typeid(std::list<tlp::ColorScale>).name())] =
-      "std::list<tlp::ColorScale>";
-  ret[tlp::demangleClassName(typeid(std::list<tlp::StringCollection>).name())] =
+  ret[tlp::demangleClassName<std::list<int>>()] = "std::list<int>";
+  ret[tlp::demangleClassName<std::list<unsigned int>>()] = "std::list<uint>";
+  ret[tlp::demangleClassName<std::list<long>>()] = "std::list<long>";
+  ret[tlp::demangleClassName<std::list<unsigned long>>()] = "std::list<unsigned long>";
+  ret[tlp::demangleClassName<std::list<float>>()] = "std::list<float>";
+  ret[tlp::demangleClassName<std::list<double>>()] = "std::list<double>";
+  ret[tlp::demangleClassName<std::list<bool>>()] = "std::list<bool>";
+  ret[tlp::demangleClassName<std::list<std::string>>()] = "std::list<std::string>";
+  ret[tlp::demangleClassName<std::list<tlp::node>>()] = "std::list<tlp::node>";
+  ret[tlp::demangleClassName<std::list<tlp::edge>>()] = "std::list<tlp::edge>";
+  ret[tlp::demangleClassName<std::list<tlp::Coord>>()] = "std::list<tlp::Coord>";
+  ret[tlp::demangleClassName<std::list<tlp::Color>>()] = "std::list<tlp::Color>";
+  ret[tlp::demangleClassName<std::list<tlp::Size>>()] = "std::list<tlp::Size>";
+  ret[tlp::demangleClassName<std::list<tlp::Graph *>>()] = "std::list<tlp::Graph*>";
+  ret[tlp::demangleClassName<std::list<tlp::ColorScale>>()] = "std::list<tlp::ColorScale>";
+  ret[tlp::demangleClassName<std::list<tlp::StringCollection>>()] =
       "std::list<tlp::StringCollection>";
-  ret[tlp::demangleClassName(typeid(std::list<tlp::BooleanProperty *>).name())] =
+  ret[tlp::demangleClassName<std::list<tlp::BooleanProperty *>>()] =
       "std::list<tlp::BooleanProperty *>";
-  ret[tlp::demangleClassName(typeid(std::list<tlp::ColorProperty *>).name())] =
+  ret[tlp::demangleClassName<std::list<tlp::ColorProperty *>>()] =
       "std::list<tlp::ColorProperty *>";
-  ret[tlp::demangleClassName(typeid(std::list<tlp::DoubleProperty *>).name())] =
+  ret[tlp::demangleClassName<std::list<tlp::DoubleProperty *>>()] =
       "std::list<tlp::DoubleProperty *>";
-  ret[tlp::demangleClassName(typeid(std::list<tlp::IntegerProperty *>).name())] =
+  ret[tlp::demangleClassName<std::list<tlp::IntegerProperty *>>()] =
       "std::list<tlp::IntegerProperty *>";
-  ret[tlp::demangleClassName(typeid(std::list<tlp::LayoutProperty *>).name())] =
+  ret[tlp::demangleClassName<std::list<tlp::LayoutProperty *>>()] =
       "std::list<tlp::LayoutProperty *>";
-  ret[tlp::demangleClassName(typeid(std::list<tlp::SizeProperty *>).name())] =
-      "std::list<tlp::SizeProperty *>";
-  ret[tlp::demangleClassName(typeid(std::list<tlp::StringProperty *>).name())] =
+  ret[tlp::demangleClassName<std::list<tlp::SizeProperty *>>()] = "std::list<tlp::SizeProperty *>";
+  ret[tlp::demangleClassName<std::list<tlp::StringProperty *>>()] =
       "std::list<tlp::StringProperty *>";
-  ret[tlp::demangleClassName(typeid(std::list<tlp::PropertyInterface *>).name())] =
+  ret[tlp::demangleClassName<std::list<tlp::PropertyInterface *>>()] =
       "std::list<tlp::PropertyInterface *>";
-  ret[tlp::demangleClassName(typeid(std::set<int>).name())] = "std::set<int>";
-  ret[tlp::demangleClassName(typeid(std::set<unsigned int>).name())] = "std::set<uint>";
-  ret[tlp::demangleClassName(typeid(std::set<long>).name())] = "std::set<long>";
-  ret[tlp::demangleClassName(typeid(std::set<unsigned long>).name())] = "std::set<unsigned long>";
-  ret[tlp::demangleClassName(typeid(std::set<float>).name())] = "std::set<float>";
-  ret[tlp::demangleClassName(typeid(std::set<double>).name())] = "std::set<double>";
-  ret[tlp::demangleClassName(typeid(std::set<std::string>).name())] = "std::set<std::string>";
-  ret[tlp::demangleClassName(typeid(std::set<tlp::node>).name())] = "std::set<tlp::node>";
-  ret[tlp::demangleClassName(typeid(std::set<tlp::edge>).name())] = "std::set<tlp::edge>";
-  ret[tlp::demangleClassName(typeid(std::set<tlp::Coord>).name())] = "std::set<tlp::Coord>";
-  ret[tlp::demangleClassName(typeid(std::set<tlp::Color>).name())] = "std::set<tlp::Color>";
-  ret[tlp::demangleClassName(typeid(std::set<tlp::Size>).name())] = "std::set<tlp::Size>";
-  ret[tlp::demangleClassName(typeid(std::set<tlp::Graph *>).name())] = "std::set<tlp::Graph*>";
+  ret[tlp::demangleClassName<std::set<int>>()] = "std::set<int>";
+  ret[tlp::demangleClassName<std::set<unsigned int>>()] = "std::set<uint>";
+  ret[tlp::demangleClassName<std::set<long>>()] = "std::set<long>";
+  ret[tlp::demangleClassName<std::set<unsigned long>>()] = "std::set<unsigned long>";
+  ret[tlp::demangleClassName<std::set<float>>()] = "std::set<float>";
+  ret[tlp::demangleClassName<std::set<double>>()] = "std::set<double>";
+  ret[tlp::demangleClassName<std::set<std::string>>()] = "std::set<std::string>";
+  ret[tlp::demangleClassName<std::set<tlp::node>>()] = "std::set<tlp::node>";
+  ret[tlp::demangleClassName<std::set<tlp::edge>>()] = "std::set<tlp::edge>";
+  ret[tlp::demangleClassName<std::set<tlp::Coord>>()] = "std::set<tlp::Coord>";
+  ret[tlp::demangleClassName<std::set<tlp::Color>>()] = "std::set<tlp::Color>";
+  ret[tlp::demangleClassName<std::set<tlp::Size>>()] = "std::set<tlp::Size>";
+  ret[tlp::demangleClassName<std::set<tlp::Graph *>>()] = "std::set<tlp::Graph*>";
   return ret;
 }
 

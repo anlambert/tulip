@@ -50,4 +50,6 @@ UNIT_TEST(FaceIteratorTest FaceIteratorTest.cpp talipotlibtest.cpp)
 UNIT_TEST(PluginsTest PluginsTest.cpp talipotlibtest.cpp)
 UNIT_TEST(IteratorTest IteratorTest.cpp talipotlibtest.cpp)
 UNIT_TEST(ParallelToolsTest ParallelToolsTest.cpp talipotlibtest.cpp)
+UNIT_TEST(TlpToolsTest TlpToolsTest.cpp talipotlibtest.cpp)
+
 SET_TESTS_PROPERTIES(PluginsTest PROPERTIES DEPENDS copyTestData)

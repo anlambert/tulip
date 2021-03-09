@@ -106,7 +106,7 @@ bool setDataSetEntryFromPyObject(tlp::DataSet *dataSet, const std::string &key, 
         msg = "Invalid type for the value provided to parameter '" + key + "' ";
         msg += "for algorithm '" + algoName + "'\n";
         msg += "Provided Python type is '" + std::string(value->ob_type->tp_name) + "'\n";
-        msg += "Expected C++ type is '" + tlp::demangleClassName(dataType->getTypeName().c_str()) + "'";
+        msg += "Expected C++ type is '" + tlp::demangleClassName(dataType->getTypeName()) + "'";
       }
       PyErr_SetString(PyExc_Exception, msg.c_str());
       ret = false;

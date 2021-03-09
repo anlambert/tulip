@@ -137,7 +137,7 @@ void DataSet::registerDataTypeSerializer(const std::string &typeName, DataTypeSe
   if (const auto it = serializerContainer.tnTodts.find(typeName);
       it != serializerContainer.tnTodts.end()) {
     tlp::warning() << "Warning: a data type serializer is already registered for type "
-                   << demangleClassName(typeName.c_str()) << std::endl;
+                   << demangleClassName(typeName) << std::endl;
   }
 
   if (const auto it = serializerContainer.otnTodts.find(dts->outputTypeName);
@@ -157,7 +157,7 @@ void DataSet::writeData(std::ostream &os, const std::string &prop, const DataTyp
       it == serializerContainer.tnTodts.end()) {
 #ifndef EMSCRIPTEN
     tlp::warning() << "Write error: No data serializer found for type "
-                   << demangleClassName(dt->getTypeName().c_str()) << std::endl;
+                   << demangleClassName(dt->getTypeName()) << std::endl;
 #endif
     return;
   } else {

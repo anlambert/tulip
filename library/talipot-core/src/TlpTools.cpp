@@ -277,33 +277,34 @@ void tlp::initTalipotLib(const char *appDirPath) {
 // tlp class names demangler
 #if defined(__GNUC__)
 #include <cxxabi.h>
-std::string tlp::demangleClassName(const char *className, bool hideTlp) {
-  static char demangleBuffer[1024];
+std::string tlp::demangleClassName(const std::string &className, bool hideTlp) {
   int status;
-  size_t length = 1024;
-  abi::__cxa_demangle(className, demangleBuffer, &length, &status);
+  std::unique_ptr<char, decltype(free) *> demangledNamePtr(
+      abi::__cxa_demangle(className.c_str(), 0, 0, &status), free);
+  std::string demangledName = demangledNamePtr.get();
 
   // skip tlp::
-  if (hideTlp && strstr(demangleBuffer, "tlp::") == demangleBuffer) {
-    return std::string(demangleBuffer + 5);
+  if (hideTlp && demangledName.find("tlp::") == 0) {
+    demangledName = demangledName.substr(5);
   }
 
-  return std::string(demangleBuffer);
+  return demangledName;
 }
 #elif defined(_MSC_VER)
 // With Visual Studio, typeid(tlp::T).name() does not return a mangled type name
 // but a human readable type name in the form "class tlp::T"
 // so just remove the first 11 characters to return T
-std::string tlp::demangleClassName(const char *className, bool hideTlp) {
-  char *clName = const_cast<char *>(className);
+std::string tlp::demangleClassName(const std::string &className, bool hideTlp) {
+  std::string demangledName = className;
+  if (demangledName.find("class ") == 0) {
+    demangledName = demangledName.substr(6);
+  }
 
-  if (strstr(className, "class ") == className)
-    clName += 6;
+  if (hideTlp && demangledName.find("tlp::") == 0) {
+    demangledName = demangledName.substr(5);
+  }
 
-  if (hideTlp && strstr(clName, "tlp::") == clName)
-    return std::string(clName + 5);
-
-  return std::string(clName);
+  return demangledName;
 }
 #else
 #error define symbols demangling function
@@ -313,8 +314,8 @@ std::string tlp::demangleClassName(const char *className, bool hideTlp) {
 
 void initTalipotLib(const char *) {}
 
-std::string tlp::demangleClassName(const char *className, bool) {
-  return std::string(className);
+std::string tlp::demangleClassName(const std::string &className, bool) {
+  return className;
 }
 
 #endif // __EMSCRIPTEN__

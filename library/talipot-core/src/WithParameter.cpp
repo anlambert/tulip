@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -69,7 +69,7 @@ static string getParameterTypename(const string &name, const string &typeId) {
   } else if (typeId == typeid(string).name()) {
     return STRING_TYPE;
   } else {
-    string typeName = demangleTlpClassName(typeId.c_str());
+    string typeName = demangleTlpClassName(typeId);
 
     // remove pointer mark if any
     if (typeName[typeName.size() - 1] == '*') {

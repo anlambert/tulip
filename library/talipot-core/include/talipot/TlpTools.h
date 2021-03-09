@@ -79,7 +79,12 @@ extern TLP_SCOPE void initTalipotLib(const char *appDirPath = nullptr);
  * @param hideTlp a flag to indicate if the 'tlp::' prefix
  * @return string The demangled name of a Talipot C++ class.
  */
-TLP_SCOPE std::string demangleClassName(const char *className, bool hideTlp = false);
+TLP_SCOPE std::string demangleClassName(const std::string &className, bool hideTlp = false);
+
+template <typename T>
+std::string demangleClassName(bool hideTlp = false) {
+  return demangleClassName(typeid(T).name(), hideTlp);
+}
 
 /**
  * @ingroup Plugins
@@ -89,8 +94,13 @@ TLP_SCOPE std::string demangleClassName(const char *className, bool hideTlp = fa
  * @return string The demangled name of a Talipot C++ class
  * without the tlp:: prefix
  */
-inline std::string demangleTlpClassName(const char *className) {
+inline std::string demangleTlpClassName(const std::string &className) {
   return demangleClassName(className, true);
+}
+
+template <typename T>
+std::string demangleTlpClassName() {
+  return demangleTlpClassName(typeid(T).name());
 }
 
 /**
