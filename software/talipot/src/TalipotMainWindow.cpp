@@ -1011,7 +1011,8 @@ void TalipotMainWindow::initPythonIDE() {
   } else {
     auto desktopSize = QDesktopWidget().availableGeometry(this).size();
     _pythonIDE->resize(desktopSize.width() * 0.3, desktopSize.height() * 0.7);
-    _pythonIDE->move(0, 0);
+    _pythonIDE->move(desktopSize.width() / 2 - _pythonIDE->width() / 2,
+                     desktopSize.height() / 2 - _pythonIDE->height() / 2);
   }
 }
 
