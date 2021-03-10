@@ -261,7 +261,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="developButton">
+        <widget class="QToolButton" name="pythonButton">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -988,8 +988,8 @@
            </size>
           </property>
           <widget class="GraphHierarchiesEditor" name="graphHierarchiesEditor"/>
-          <widget class="SearchWidget" name="searchWidget"/>
           <widget class="AlgorithmRunner" name="algorithmRunner"/>
+          <widget class="SearchWidget" name="searchWidget"/>
          </widget>
          <widget class="tlp::Workspace" name="workspace" native="true"/>
         </widget>

@@ -24,6 +24,7 @@
 class QAction;
 class QHeaderView;
 class QDialog;
+class QToolButton;
 
 class GraphHierarchiesEditor;
 class TalipotLogger;
@@ -178,10 +179,8 @@ protected slots:
   void newProject();
   void openRecentFile();
   void changeSynchronization(bool);
+  void dockButtonClicked();
   void showHideSideBar(bool forceShow = false);
-  void graphsButtonClicked();
-  void algorithmsButtonClicked();
-  void searchButtonClicked();
   void resetLoggerDialogPosition();
   void showHideLogger();
   void showHideMenuBar();
@@ -200,6 +199,7 @@ protected:
   void importGraph(const std::string &module, tlp::DataSet &data);
   void updateLogIconsAndCounters();
   void cleanProject();
+  void showHideDockWidget(QToolButton *senderObject = nullptr, bool forceShow = false);
 };
 
 #endif // TALIPOT_MAIN_WINDOW_H
