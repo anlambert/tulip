@@ -1607,13 +1607,6 @@ void TalipotMainWindow::showHideSideBar(bool forceShow) {
   if (_logger->anchored()) {
     resetLoggerDialogPosition();
   }
-
-  if (!_ui->docksWidget->isVisible()) {
-    _ui->graphsButton->setChecked(false);
-    _ui->algorithmsButton->setChecked(false);
-    _ui->searchButton->setChecked(false);
-    _ui->pythonButton->setChecked(false);
-  }
 }
 
 void TalipotMainWindow::showHideMenuBar() {
@@ -1663,7 +1656,11 @@ void TalipotMainWindow::showHideDockWidget(QToolButton *button, bool forceShow) 
   if (button == _ui->pythonButton && !_pythonIDE->isAnchored()) {
     showPythonIDE();
   } else {
-    button->setChecked(newState);
+    if (!_ui->docksWidget->isVisible() && !newState) {
+      button->setChecked(true);
+    } else {
+      button->setChecked(newState);
+    }
     showHideSideBar(newState);
     _ui->docksWidget->setCurrentIndex(dockButtons.indexOf(button));
   }
