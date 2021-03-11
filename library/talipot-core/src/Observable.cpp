@@ -435,11 +435,11 @@ void Observable::sendEvent(const Event &message) {
           // schedule event
           _oEventsToTreat[backn] += 1;
           _oEventsToTreat[src] += 1;
-          observerTonotify.push_back(make_pair(obs, src));
+          observerTonotify.push_back({obs, src});
         } else if (!queuedEvent) {
           delayedEventAdded = true;
           TLP_GLOBALLY_LOCK_SECTION(ObservableGraphUpdate) {
-            _oDelayedEvents.insert(make_pair(_n, src));
+            _oDelayedEvents.insert({_n, src});
           }
           TLP_GLOBALLY_UNLOCK_SECTION(ObservableGraphUpdate);
         }
@@ -449,7 +449,7 @@ void Observable::sendEvent(const Event &message) {
         // schedule event
         _oEventsToTreat[backn] += 1;
         _oEventsToTreat[src] += 1;
-        listenerTonotify.push_back(make_pair(obs, src));
+        listenerTonotify.push_back({obs, src});
       }
     }
   }

@@ -521,7 +521,7 @@ void tlp::copyToGraph(Graph *outG, const Graph *inG, BooleanProperty *inSel,
       const std::string &pName = src->getName();
       PropertyInterface *dst =
           outG->existProperty(pName) ? outG->getProperty(pName) : src->clonePrototype(outG, pName);
-      properties.push_back(std::make_pair(src, dst));
+      properties.push_back({src, dst});
     }
   }
 

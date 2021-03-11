@@ -1224,12 +1224,11 @@ void GraphUpdatesRecorder::addSubGraph(Graph *g, Graph *sg) {
 
 void GraphUpdatesRecorder::delSubGraph(Graph *g, Graph *sg) {
 
-  std::pair<Graph *, Graph *> p = {g, sg};
-
-  auto it = std::find(addedSubGraphs.begin(), addedSubGraphs.end(), p);
+  pair p = {g, sg};
 
   // remove sg from addedSubGraphs if it is a newly added subgraph
-  if (it != addedSubGraphs.end()) {
+  if (const auto it = std::find(addedSubGraphs.begin(), addedSubGraphs.end(), p);
+      it != addedSubGraphs.end()) {
 
     addedSubGraphs.erase(it);
 
@@ -1257,10 +1256,8 @@ void GraphUpdatesRecorder::delSubGraph(Graph *g, Graph *sg) {
 
 void GraphUpdatesRecorder::removeGraphData(Graph *g) {
   for (Graph *sg : g->subGraphs()) {
-    std::pair<Graph *, Graph *> p = {g, sg};
-    auto it = std::find(addedSubGraphs.begin(), addedSubGraphs.end(), p);
-
-    if (it != addedSubGraphs.end()) {
+    if (const auto it = std::find(addedSubGraphs.begin(), addedSubGraphs.end(), pair(g, sg));
+        it != addedSubGraphs.end()) {
       addedSubGraphs.erase(it);
     }
   }

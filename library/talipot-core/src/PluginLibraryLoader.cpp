@@ -98,7 +98,7 @@ static std::pair<bool, std::string> isTalipotPluginFile(const std::string &libFi
     mmVersion = smatch[1].str() + "." + smatch[2].str();
 #endif
   }
-  return std::make_pair(ok, mmVersion);
+  return {ok, mmVersion};
 }
 
 void PluginLibraryLoader::loadPluginsFromDir(const std::string &rootPath, PluginLoader *loader,

@@ -64,7 +64,7 @@ static std::pair<int, int> getConsoleCursorPosition() {
     resetConsoleSettings();
   }
 
-  return std::make_pair(row, col);
+  return {row, col};
 }
 
 static std::pair<int, int> getConsoleSize() {
@@ -76,7 +76,7 @@ static std::pair<int, int> getConsoleSize() {
     cols = ws.ws_col;
   }
 
-  return std::make_pair(rows, cols);
+  return {rows, cols};
 }
 
 #elif defined(WIN32)
@@ -90,7 +90,7 @@ inline std::pair<int, int> getConsoleCursorPosition() {
     col = SBInfo.dwCursorPosition.X;
   }
 
-  return std::make_pair(row, col);
+  return {row, col};
 }
 
 inline std::pair<int, int> getConsoleSize() {
@@ -102,7 +102,7 @@ inline std::pair<int, int> getConsoleSize() {
     cols = SBInfo.dwSize.X - 1;
   }
 
-  return std::make_pair(rows, cols);
+  return {rows, cols};
 }
 
 #endif

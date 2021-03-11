@@ -117,12 +117,9 @@ static bool runQHull(int dim, vector<double> &points,
         }
 
         vector<unsigned int> simplex;
-        pair<unsigned int, unsigned int> edge1 =
-            make_pair(min(pointId0, pointId1), max(pointId0, pointId1));
-        pair<unsigned int, unsigned int> edge2 =
-            make_pair(min(pointId1, pointId2), max(pointId1, pointId2));
-        pair<unsigned int, unsigned int> edge3 =
-            make_pair(min(pointId2, pointId0), max(pointId2, pointId0));
+        pair edge1 = {min(pointId0, pointId1), max(pointId0, pointId1)};
+        pair edge2 = {min(pointId1, pointId2), max(pointId1, pointId2)};
+        pair edge3 = {min(pointId2, pointId0), max(pointId2, pointId0)};
 
         if (placedEdges.find(edge1) == placedEdges.end()) {
           edges.push_back(edge1);
@@ -146,12 +143,9 @@ static bool runQHull(int dim, vector<double> &points,
 
         if (pointId3 != -1) {
           simplex.push_back(pointId3);
-          pair<unsigned int, unsigned int> edge4 =
-              make_pair(min(pointId0, pointId3), max(pointId0, pointId3));
-          pair<unsigned int, unsigned int> edge5 =
-              make_pair(min(pointId1, pointId3), max(pointId1, pointId3));
-          pair<unsigned int, unsigned int> edge6 =
-              make_pair(min(pointId2, pointId3), max(pointId2, pointId3));
+          pair edge4 = {min(pointId0, pointId3), max(pointId0, pointId3)};
+          pair edge5 = {min(pointId1, pointId3), max(pointId1, pointId3)};
+          pair edge6 = {min(pointId2, pointId3), max(pointId2, pointId3)};
 
           if (placedEdges.find(edge4) == placedEdges.end()) {
             edges.push_back(edge4);
@@ -588,22 +582,19 @@ bool tlp::voronoiDiagram(vector<Coord> &sites, VoronoiDiagram &voronoiDiagram) {
       }
 
       if (const auto it = faceToCircumCenter.find(face1); it != faceToCircumCenter.end()) {
-        VoronoiDiagram::Edge edge = make_pair(circumCenterIdx, faceToCircumCenter[face1]);
-        addVoronoiEdge(voronoiDiagram, face1, edge);
+        addVoronoiEdge(voronoiDiagram, face1, {circumCenterIdx, faceToCircumCenter[face1]});
       } else {
         faceToCircumCenter[face1] = circumCenterIdx;
       }
 
       if (const auto it = faceToCircumCenter.find(face2); it != faceToCircumCenter.end()) {
-        VoronoiDiagram::Edge edge = make_pair(circumCenterIdx, faceToCircumCenter[face2]);
-        addVoronoiEdge(voronoiDiagram, face2, edge);
+        addVoronoiEdge(voronoiDiagram, face2, {circumCenterIdx, faceToCircumCenter[face2]});
       } else {
         faceToCircumCenter[face2] = circumCenterIdx;
       }
 
       if (const auto it = faceToCircumCenter.find(face3); it != faceToCircumCenter.end()) {
-        VoronoiDiagram::Edge edge = make_pair(circumCenterIdx, faceToCircumCenter[face3]);
-        addVoronoiEdge(voronoiDiagram, face3, edge);
+        addVoronoiEdge(voronoiDiagram, face3, {circumCenterIdx, faceToCircumCenter[face3]});
       } else {
         faceToCircumCenter[face3] = circumCenterIdx;
       }
@@ -612,8 +603,7 @@ bool tlp::voronoiDiagram(vector<Coord> &sites, VoronoiDiagram &voronoiDiagram) {
       if (face4.isValid()) {
 
         if (const auto it = faceToCircumCenter.find(face4); it != faceToCircumCenter.end()) {
-          VoronoiDiagram::Edge edge = make_pair(circumCenterIdx, faceToCircumCenter[face4]);
-          addVoronoiEdge(voronoiDiagram, face4, edge);
+          addVoronoiEdge(voronoiDiagram, face4, {circumCenterIdx, faceToCircumCenter[face4]});
         } else {
           faceToCircumCenter[face4] = circumCenterIdx;
         }
