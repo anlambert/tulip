@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -276,21 +276,17 @@ VECTORTLP tlp::operator/(const VECTORTLP &u, const TYPE scalaire) {
 TEMPLATEVECTOR
 VECTORTLP tlp::operator^(const VECTORTLP &u, const VECTORTLP &v) {
 
-  switch (SIZE) {
-  case 3:
+  if constexpr (SIZE == 3) {
     return VECTORTLP(static_cast<TYPE>(static_cast<OTYPE>(u[1]) * static_cast<OTYPE>(v[2]) -
                                        static_cast<OTYPE>(u[2]) * static_cast<OTYPE>(v[1])),
                      static_cast<TYPE>(static_cast<OTYPE>(u[2]) * static_cast<OTYPE>(v[0]) -
                                        static_cast<OTYPE>(u[0]) * static_cast<OTYPE>(v[2])),
                      static_cast<TYPE>(static_cast<OTYPE>(u[0]) * static_cast<OTYPE>(v[1]) -
                                        static_cast<OTYPE>(u[1]) * static_cast<OTYPE>(v[0])));
-    break;
-
-  default:
+  } else {
     tlp::warning() << "cross product not implemented for dimension :" << SIZE << std::endl;
     VECTORTLP result;
     return result;
-    break;
   }
 }
 //======================================================
@@ -365,51 +361,41 @@ TYPE VECTORTLP::dotProduct(const VECTORTLP &v) const {
 //======================================================
 TEMPLATEVECTOR
 TYPE VECTORTLP::norm() const {
-  switch (SIZE) {
-  case 1:
+  if constexpr (SIZE == 1) {
     return (*this)[0];
-
-  case 2:
+  } else if constexpr (SIZE == 2) {
     return tlpsqrt<TYPE, OTYPE>(tlpsqr<TYPE, OTYPE>((*this)[0]) + tlpsqr<TYPE, OTYPE>((*this)[1]));
-
-  case 3:
+  } else if constexpr (SIZE == 3) {
     return tlpsqrt<TYPE, OTYPE>(tlpsqr<TYPE, OTYPE>((*this)[0]) + tlpsqr<TYPE, OTYPE>((*this)[1]) +
                                 tlpsqr<TYPE, OTYPE>((*this)[2]));
-
-  default:
+  } else {
     OTYPE tmp = tlpsqr<TYPE, OTYPE>((*this)[0]);
-
     for (size_t i = 1; i < SIZE; ++i) {
       tmp += tlpsqr<TYPE, OTYPE>((*this)[i]);
     }
-
-    return (tlpsqrt<TYPE, OTYPE>(tmp));
+    return tlpsqrt<TYPE, OTYPE>(tmp);
   }
 }
 //======================================================
 TEMPLATEVECTOR
 DTYPE VECTORTLP::dist(const VECTOR &c) const {
-  switch (SIZE) {
-  case 1:
+  if constexpr (SIZE == 1) {
     return static_cast<DTYPE>((*this)[0] > c[0] ? (*this)[0] - c[0] : c[0] - (*this)[0]);
-
-  case 2:
+  } else if constexpr (SIZE == 2) {
     return tlpsqrt<DTYPE, OTYPE>(tlpsqr<DTYPE, OTYPE>((*this)[0] - c[0]) +
                                  tlpsqr<DTYPE, OTYPE>((*this)[1] - c[1]));
 
-  case 3:
+  } else if constexpr (SIZE == 3) {
     return tlpsqrt<DTYPE, OTYPE>(tlpsqr<DTYPE, OTYPE>((*this)[0] - c[0]) +
                                  tlpsqr<DTYPE, OTYPE>((*this)[1] - c[1]) +
                                  tlpsqr<DTYPE, OTYPE>((*this)[2] - c[2]));
 
-  default:
+  } else {
     OTYPE tmp = tlpsqr<DTYPE, OTYPE>((*this)[0] - c[0]);
-
     for (size_t i = 1; i < SIZE; ++i) {
       tmp += tlpsqr<DTYPE, OTYPE>((*this)[i] - c[i]);
     }
-
-    return (tlpsqrt<DTYPE, OTYPE>(tmp));
+    return tlpsqrt<DTYPE, OTYPE>(tmp);
   }
 }
 
