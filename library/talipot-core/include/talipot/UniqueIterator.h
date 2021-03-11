@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -128,7 +128,7 @@ public:
  *
  **/
 template <typename T, typename CheckFunc = CheckAllFunctor<T>>
-inline UniqueIterator<T> *uniqueIterator(Iterator<T> *it, CheckFunc checkFunctor = CheckFunc()) {
+inline Iterator<T> *uniqueIterator(Iterator<T> *it, CheckFunc checkFunctor = CheckFunc()) {
   return new MPUniqueIterator<T, CheckFunc>(it, checkFunctor);
 }
 
@@ -146,10 +146,8 @@ inline UniqueIterator<T> *uniqueIterator(Iterator<T> *it, CheckFunc checkFunctor
  *
  **/
 template <typename Container, typename CheckFunc = CheckAllFunctor<typename Container::value_type>>
-typename std::enable_if<has_const_iterator<Container>::value,
-                        UniqueIterator<typename Container::value_type, CheckFunc>
-                            *>::type inline uniqueIterator(const Container &stlContainer,
-                                                           CheckFunc checkFunctor = CheckFunc()) {
+inline Iterator<typename Container::value_type> *
+uniqueIterator(const Container &stlContainer, CheckFunc checkFunctor = CheckFunc()) {
   return new MPUniqueIterator<typename Container::value_type, CheckFunc>(stlIterator(stlContainer),
                                                                          checkFunctor);
 }

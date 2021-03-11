@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -127,7 +127,7 @@ protected:
  * @return a StableIterator
  **/
 template <class T>
-inline StableIterator<T> *stableIterator(Iterator<T> *it) {
+inline Iterator<T> *stableIterator(Iterator<T> *it) {
   return new StableIterator<T>(it);
 }
 
@@ -141,9 +141,7 @@ inline StableIterator<T> *stableIterator(Iterator<T> *it) {
  * @return a StableIterator
  **/
 template <typename Container>
-typename std::enable_if<has_const_iterator<Container>::value,
-                        StableIterator<typename Container::value_type>
-                            *>::type inline stableIterator(const Container &stlContainer) {
+inline Iterator<typename Container::value_type> *stableIterator(const Container &stlContainer) {
   return new StableIterator<typename Container::value_type>(stlIterator(stlContainer));
 }
 }

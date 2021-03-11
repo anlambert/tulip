@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -56,19 +56,6 @@ struct MPStlIterator : public StlIterator<T, ITERATOR>,
 };
 //=================================================
 
-// Helper to determine whether there's a const_iterator for T.
-template <typename T>
-struct has_const_iterator {
-private:
-  template <typename C>
-  static char test(typename C::const_iterator *);
-  template <typename C>
-  static int test(...);
-
-public:
-  enum { value = sizeof(test<T>(0)) == sizeof(char) };
-};
-
 /**
  * @brief Convenient function for creating a StlIterator from a stl container.
  * @ingroup Iterators
@@ -79,10 +66,7 @@ public:
  * @return a StlIterator
  **/
 template <typename Container>
-typename std::enable_if<
-    has_const_iterator<Container>::value,
-    StlIterator<typename Container::value_type, typename Container::const_iterator>
-        *>::type inline stlIterator(const Container &stlContainer) {
+inline Iterator<typename Container::value_type> *stlIterator(const Container &stlContainer) {
   return new MPStlIterator<typename Container::value_type, typename Container::const_iterator>(
       stlContainer.begin(), stlContainer.end());
 }
@@ -107,8 +91,7 @@ private:
 };
 //=================================================
 template <typename Map>
-typename std::enable_if<has_const_iterator<Map>::value,
-                        StlMapIterator<Map> *>::type inline stlMapIterator(const Map &map) {
+inline StlMapIterator<Map> *stlMapIterator(const Map &map) {
   return new StlMapIterator<Map>(map.begin(), map.end());
 }
 //=================================================
@@ -132,8 +115,7 @@ private:
 };
 //=================================================
 template <typename Map>
-typename std::enable_if<has_const_iterator<Map>::value,
-                        StlMapKeyIterator<Map> *>::type inline stlMapKeyIterator(const Map &map) {
+inline StlMapKeyIterator<Map> *stlMapKeyIterator(const Map &map) {
   return new StlMapKeyIterator<Map>(map.begin(), map.end());
 }
 //=================================================
@@ -157,8 +139,7 @@ private:
 };
 //=================================================
 template <typename Map>
-typename std::enable_if<has_const_iterator<Map>::value, StlMapValueIterator<Map> *>::
-    type inline stlMapValueIterator(const Map &map) {
+inline StlMapValueIterator<Map> *stlMapValueIterator(const Map &map) {
   return new StlMapValueIterator<Map>(map.begin(), map.end());
 }
 //=================================================

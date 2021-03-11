@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -95,7 +95,7 @@ public:
  * @return a FilterIterator
  **/
 template <typename TYPE, typename FILTER>
-inline FilterIterator<TYPE, FILTER> *filterIterator(Iterator<TYPE> *it, FILTER filter) {
+inline Iterator<TYPE> *filterIterator(Iterator<TYPE> *it, FILTER filter) {
   return new MPFilterIterator<TYPE, FILTER>(it, filter);
 }
 
@@ -112,10 +112,8 @@ inline FilterIterator<TYPE, FILTER> *filterIterator(Iterator<TYPE> *it, FILTER f
  * @return a FilterIterator
  **/
 template <typename Container, typename FILTER>
-typename std::enable_if<has_const_iterator<Container>::value,
-                        MPFilterIterator<typename Container::value_type, FILTER>
-                            *>::type inline filterIterator(const Container &stlContainer,
-                                                           FILTER filter) {
+inline Iterator<typename Container::value_type> *filterIterator(const Container &stlContainer,
+                                                                FILTER filter) {
   return new MPFilterIterator<typename Container::value_type, FILTER>(stlIterator(stlContainer),
                                                                       filter);
 }

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -83,8 +83,7 @@ public:
  *
  **/
 template <typename TOUT, typename ConversionFunc, typename TIN>
-inline ConversionIterator<TIN, TOUT, ConversionFunc> *conversionIterator(tlp::Iterator<TIN> *it,
-                                                                         ConversionFunc convFunc) {
+inline Iterator<TOUT> *conversionIterator(tlp::Iterator<TIN> *it, ConversionFunc convFunc) {
   return new MPConversionIterator<TIN, TOUT, ConversionFunc>(it, convFunc);
 }
 
@@ -103,10 +102,7 @@ inline ConversionIterator<TIN, TOUT, ConversionFunc> *conversionIterator(tlp::It
  *
  **/
 template <typename TOUT, typename ConversionFunc, typename Container>
-typename std::enable_if<has_const_iterator<Container>::value,
-                        ConversionIterator<typename Container::value_type, TOUT, ConversionFunc>
-                            *>::type inline conversionIterator(const Container &stlContainer,
-                                                               ConversionFunc convFunc) {
+inline Iterator<TOUT> *conversionIterator(const Container &stlContainer, ConversionFunc convFunc) {
   return new MPConversionIterator<typename Container::value_type, TOUT, ConversionFunc>(
       stlIterator(stlContainer), convFunc);
 }

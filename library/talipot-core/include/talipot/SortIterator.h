@@ -226,7 +226,7 @@ struct SortIterator : public tlp::StableIterator<T> {
  *
  **/
 template <typename T, typename CompareFunction>
-inline SortIterator<T, CompareFunction> *sortIterator(Iterator<T> *it, CompareFunction &&compFunc) {
+inline Iterator<T> *sortIterator(Iterator<T> *it, CompareFunction &&compFunc) {
   return new SortIterator<T, CompareFunction>(it, compFunc);
 }
 
@@ -245,10 +245,8 @@ inline SortIterator<T, CompareFunction> *sortIterator(Iterator<T> *it, CompareFu
  *
  **/
 template <typename Container, typename CompareFunction>
-typename std::enable_if<has_const_iterator<Container>::value,
-                        SortIterator<typename Container::value_type, CompareFunction>
-                            *>::type inline sortIterator(const Container &stlContainer,
-                                                         CompareFunction &&compFunc) {
+inline Iterator<typename Container::value_type> *sortIterator(const Container &stlContainer,
+                                                              CompareFunction &&compFunc) {
   return new SortIterator<typename Container::value_type, CompareFunction>(
       stlIterator(stlContainer), compFunc);
 }
