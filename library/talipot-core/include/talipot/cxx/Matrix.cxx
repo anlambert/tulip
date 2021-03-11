@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -12,6 +12,7 @@
  */
 
 #include <cmath>
+#include <tuple>
 
 //===================================================================
 // Specialisation
@@ -136,18 +137,13 @@ MATRIX &MATRIX::operator/=(const Obj &obj) {
 //=====================================================================================
 template <typename Obj, size_t SIZE>
 Obj MATRIX::determinant() const {
-  switch (SIZE) {
-  case 2:
+  if constexpr (SIZE == 2) {
     return (*this)[0][0] * (*this)[1][1] - (*this)[1][0] * (*this)[0][1];
-    break;
-
-  case 3:
+  } else if constexpr (SIZE == 3) {
     return (*this)[0][0] * ((*this)[1][1] * (*this)[2][2] - (*this)[1][2] * (*this)[2][1]) -
            (*this)[0][1] * ((*this)[1][0] * (*this)[2][2] - (*this)[1][2] * (*this)[2][0]) +
            (*this)[0][2] * ((*this)[1][0] * (*this)[2][1] - (*this)[1][1] * (*this)[2][0]);
-    break;
-
-  default:
+  } else {
     int j2;
     Obj det = 0;
 
@@ -182,15 +178,12 @@ template <typename Obj, size_t SIZE>
 MATRIX MATRIX::cofactor() const {
   MATRIX result;
 
-  switch (SIZE) {
-  case 2:
+  if constexpr (SIZE == 2) {
     (result)[0][0] = (*this)[1][1];
     (result)[0][1] = -(*this)[1][0];
     (result)[1][0] = -(*this)[0][1];
     (result)[1][1] = (*this)[0][0];
-    break;
-
-  case 3:
+  } else if constexpr (SIZE == 3) {
     (result)[0][0] = (*this)[1][1] * (*this)[2][2] - (*this)[1][2] * (*this)[2][1];
     (result)[0][1] = -((*this)[1][0] * (*this)[2][2] - (*this)[2][0] * (*this)[1][2]);
     (result)[0][2] = (*this)[1][0] * (*this)[2][1] - (*this)[1][1] * (*this)[2][0];
@@ -200,9 +193,7 @@ MATRIX MATRIX::cofactor() const {
     (result)[2][0] = (*this)[0][1] * (*this)[1][2] - (*this)[0][2] * (*this)[1][1];
     (result)[2][1] = -((*this)[0][0] * (*this)[1][2] - (*this)[0][2] * (*this)[1][0]);
     (result)[2][2] = (*this)[0][0] * (*this)[1][1] - (*this)[0][1] * (*this)[1][0];
-    break;
-
-  default:
+  } else {
     int i1, j1;
     tlp::Matrix<Obj, SIZE - 1> c;
 
@@ -236,8 +227,6 @@ MATRIX MATRIX::cofactor() const {
         }
       }
     }
-
-    break;
   }
 
   return result;
@@ -361,94 +350,98 @@ tlp::Vector<Obj, SIZE> MATRIX::powerIteration(const unsigned int nIterations) co
 
 template <typename Obj, size_t SIZE>
 bool MATRIX::simplify(tlp::Matrix<Obj, 2> &simplifiedMatrix) const {
-  if (SIZE != 3) {
+  if constexpr (SIZE != 3) {
+    std::ignore = simplifiedMatrix;
     tlp::warning() << "Computation allowed only for 3x3 Matrices. Yours sizes : " << SIZE << "x"
                    << SIZE << std::endl;
 
     return false;
+  } else {
+    // We start with a matrix representing an equation system under the following form :
+    //
+    // ax + by + cz = 0
+    // dx + ey + fz = 0
+    // gx + hy + iz = 0
+    //
+    // So M looks like :
+    //
+    //     ( ax by cz )  *(e1)*
+    // M = ( dx ey fz )  *(e2)*
+    //     ( gx hy iz )  *(e3)*
+    //
+    // What we want is something like that :
+    //
+    // jx + ky = 0
+    // lx + mz = 0
+    //
+    // So to reduce the matrix, we will use the Gaussian Elimination.
+    // For the first line we will apply a Gaussian Elimination between (e1) and (e2)
+    // For the second line we will apply a Gaussian Elimination between (e1) and (e3)
+
+    float coeff;
+
+    // First Gaussian Elimination :
+    // The pivot is z
+
+    coeff = (*this)[1][2] / (*this)[0][2]; // fz / cz
+
+    // After that:
+    // jx = dx - (coeff * ax)
+    // ky = ey - (coeff * by)
+    simplifiedMatrix[0][0] = (*this)[1][0] - (coeff * (*this)[0][0]);
+    simplifiedMatrix[0][1] = (*this)[1][1] - (coeff * (*this)[0][1]);
+
+    // Second Gaussian Elimination :
+    // The pivot is y
+
+    coeff = (*this)[2][1] / (*this)[0][1]; // hy / by
+
+    // Idem :
+    // lx = gx - (coeff * ax)
+    // mz = iz - (coeff * cz)
+    simplifiedMatrix[1][0] = (*this)[2][0] - (coeff * (*this)[0][0]);
+    simplifiedMatrix[1][1] = (*this)[2][2] - (coeff * (*this)[0][2]);
+
+    return true;
   }
-
-  // We start with a matrix representing an equation system under the following form :
-  //
-  // ax + by + cz = 0
-  // dx + ey + fz = 0
-  // gx + hy + iz = 0
-  //
-  // So M looks like :
-  //
-  //     ( ax by cz )  *(e1)*
-  // M = ( dx ey fz )  *(e2)*
-  //     ( gx hy iz )  *(e3)*
-  //
-  // What we want is something like that :
-  //
-  // jx + ky = 0
-  // lx + mz = 0
-  //
-  // So to reduce the matrix, we will use the Gaussian Elimination.
-  // For the first line we will apply a Gaussian Elimination between (e1) and (e2)
-  // For the second line we will apply a Gaussian Elimination between (e1) and (e3)
-
-  float coeff;
-
-  // First Gaussian Elimination :
-  // The pivot is z
-
-  coeff = (*this)[1][2] / (*this)[0][2]; // fz / cz
-
-  // After that:
-  // jx = dx - (coeff * ax)
-  // ky = ey - (coeff * by)
-  simplifiedMatrix[0][0] = (*this)[1][0] - (coeff * (*this)[0][0]);
-  simplifiedMatrix[0][1] = (*this)[1][1] - (coeff * (*this)[0][1]);
-
-  // Second Gaussian Elimination :
-  // The pivot is y
-
-  coeff = (*this)[2][1] / (*this)[0][1]; // hy / by
-
-  // Idem :
-  // lx = gx - (coeff * ax)
-  // mz = iz - (coeff * cz)
-  simplifiedMatrix[1][0] = (*this)[2][0] - (coeff * (*this)[0][0]);
-  simplifiedMatrix[1][1] = (*this)[2][2] - (coeff * (*this)[0][2]);
-
-  return true;
 }
 
 //=====================================================================================
 
 template <typename Obj, size_t SIZE>
 bool MATRIX::computeEigenVector(const float x, tlp::Vector<Obj, 3> &eigenVector) const {
-  if (SIZE != 2) {
+  if constexpr (SIZE != 2) {
+    std::ignore = x;
+    std::ignore = eigenVector;
     tlp::warning() << "Computation allowed only for 2x2 Matrices. Yours sizes : " << SIZE << "x"
                    << SIZE << std::endl;
 
     return false;
+  } else {
+
+    eigenVector[0] = x; // Fixed by user
+
+    // We know that the matrix we are using is under that form :
+    //
+    //     ( ax   by )
+    // M = (         )
+    //     ( cx   dz )
+    //
+    // Since we have a fixed x, we can compute y and z :
+    //
+    // y = -a / b
+    // z = -c / d
+
+    float a, b, c, d;
+
+    a = (*this)[0][0];
+    b = (*this)[0][1];
+    c = (*this)[1][0];
+    d = (*this)[1][1];
+
+    eigenVector[1] = (-a * x) / b;
+    eigenVector[2] = (-c * x) / d;
+
+    return true;
   }
-
-  eigenVector[0] = x; // Fixed by user
-
-  // We know that the matrix we are using is under that form :
-  //
-  //     ( ax   by )
-  // M = (         )
-  //     ( cx   dz )
-  //
-  // Since we have a fixed x, we can compute y and z :
-  //
-  // y = -a / b
-  // z = -c / d
-
-  float a, b, c, d;
-
-  a = (*this)[0][0];
-  b = (*this)[0][1];
-  c = (*this)[1][0];
-  d = (*this)[1][1];
-
-  eigenVector[1] = (-a * x) / b;
-  eigenVector[2] = (-c * x) / d;
-
-  return true;
 }
