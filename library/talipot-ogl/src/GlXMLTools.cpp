@@ -27,7 +27,6 @@
 #include <talipot/GlSphere.h>
 #include <talipot/GlCurve.h>
 #include <talipot/GlComplexPolygon.h>
-#include <talipot/GlConvexHull.h>
 #include <talipot/GlQuad.h>
 
 using namespace std;
@@ -150,8 +149,6 @@ GlEntity *GlXMLTools::createEntity(const string &name) {
     return new GlComplexPolygon();
   } else if (name == "GlComposite") {
     return new GlComposite();
-  } else if (name == "GlConvexHull") {
-    return new GlConvexHull;
   } else if (name == "GlCurve") {
     return new GlCurve();
   } else if (name == "GlGraph" || name == "GlGraphComposite") {
