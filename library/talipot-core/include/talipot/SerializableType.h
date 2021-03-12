@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -83,11 +83,7 @@ class TLP_SCOPE SerializableVectorType : public TypeInterface<std::vector<ELT_TY
       }
 
       if (c == closeChar) {
-        if (!openChar || sepFound) {
-          return false;
-        }
-
-        return true;
+        return !(!openChar || sepFound);
       }
 
       if (c == sepChar) {
@@ -203,11 +199,7 @@ public:
       }
 
       if (c == closeChar) {
-        if (!openChar || sepFound) {
-          return false;
-        }
-
-        return true;
+        return !(!openChar || sepFound);
       }
 
       if (c == sepChar) {

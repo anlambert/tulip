@@ -32,7 +32,7 @@ GraphView::GraphView(Graph *supergraph, BooleanProperty *filter, unsigned int sg
     return;
   }
 
-  if ((filter->getGraph() == supergraph) && (filter->getNodeDefaultValue() == true) &&
+  if ((filter->getGraph() == supergraph) && filter->getNodeDefaultValue() &&
       (filter->numberOfNonDefaultValuatedNodes() == 0)) {
     // clone all supergraph nodes
     _nodes.clone(supergraph->nodes());
@@ -68,7 +68,7 @@ GraphView::GraphView(Graph *supergraph, BooleanProperty *filter, unsigned int sg
     delete iteN;
   }
 
-  if ((filter->getGraph() == supergraph) && (filter->getEdgeDefaultValue() == true) &&
+  if ((filter->getGraph() == supergraph) && (filter->getEdgeDefaultValue()) &&
       (filter->numberOfNonDefaultValuatedEdges() == 0)) {
     // clone all supergraph edges
     _edges.clone(supergraph->edges());

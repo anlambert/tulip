@@ -104,12 +104,8 @@ class MouseEventDiscardFilter : public QObject {
 
 public:
   bool eventFilter(QObject *, QEvent *event) override {
-    if (event->type() == QEvent::MouseMove || event->type() == QEvent::MouseButtonDblClick ||
-        event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonRelease) {
-      return true;
-    }
-
-    return false;
+    return event->type() == QEvent::MouseMove || event->type() == QEvent::MouseButtonDblClick ||
+           event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonRelease;
   }
 };
 

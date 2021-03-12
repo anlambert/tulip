@@ -85,7 +85,7 @@ unsigned SOMPropertiesWidget::getConnectivityIndex() const {
 }
 
 bool SOMPropertiesWidget::getOppositeConnected() const {
-  return _ui->opposedConnectedCheckBox->checkState() == Qt::Checked ? true : false;
+  return _ui->opposedConnectedCheckBox->checkState() == Qt::Checked;
 }
 
 double SOMPropertiesWidget::getLearningRateValue() const {
@@ -109,7 +109,7 @@ bool SOMPropertiesWidget::getAutoMapping() const {
 }
 
 bool SOMPropertiesWidget::getLinkColor() const {
-  return _ui->colorLinkCheckBox->checkState() == Qt::Checked ? true : false;
+  return _ui->colorLinkCheckBox->checkState() == Qt::Checked;
 }
 
 bool SOMPropertiesWidget::useAnimation() const {

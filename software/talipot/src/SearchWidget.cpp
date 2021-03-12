@@ -275,7 +275,7 @@ void SearchWidget::setGraph(Graph *g) {
 }
 
 void SearchWidget::selectionModeChanged(int index) {
-  _ui->resultsStorageCombo->setEnabled((index == 3) ? false : true);
+  _ui->resultsStorageCombo->setEnabled(index != 3);
 }
 
 void SearchWidget::search() {

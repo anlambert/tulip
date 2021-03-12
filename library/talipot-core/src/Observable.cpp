@@ -107,7 +107,7 @@ node Observable::getNode() const {
 }
 //----------------------------------
 node Observable::getBoundNode() {
-  if (_n.isValid() == false) {
+  if (!_n.isValid()) {
     _n = ObservationGraph::_oGraph.addNode();
     _oPointer[_n] = this;
     _oAlive[_n] = true;
@@ -207,7 +207,7 @@ Observable &Observable::operator=(const Observable &) {
 }
 //----------------------------------
 Observable::~Observable() {
-  if (ObservationGraph::_oGraphDestroyed || _n.isValid() == false) {
+  if (ObservationGraph::_oGraphDestroyed || !_n.isValid()) {
     return;
   }
 
@@ -229,7 +229,7 @@ Observable::~Observable() {
 
     bool noDelay = (_oNotifying == 0) && (_oUnholding == 0) && (_oHoldCounter == 0);
 
-    if ((noDelay == false) && (_oEventsToTreat[_n] == 0)) {
+    if ((!noDelay) && (_oEventsToTreat[_n] == 0)) {
       // _n cannot be deleted only if it is observed
       // then its deletion is delayed until the observers are unhold
       noDelay = true;

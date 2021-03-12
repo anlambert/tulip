@@ -455,7 +455,7 @@ void LinkCommunities::setEdgeValues(double threshold, bool group_isthmus,
         }
       }
 
-      if (component.size() >= 2 || group_isthmus == false) {
+      if (component.size() >= 2 || !group_isthmus) {
         for (auto n : component) {
           edge re = edges[n.id];
           result->setEdgeValue(re, val);

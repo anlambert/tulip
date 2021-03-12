@@ -152,7 +152,7 @@ bool SimpleTest::simpleTest(const tlp::Graph *graph, vector<edge> *multipleEdges
         }
       }
 
-      if (targeted.get(target.id) == true) {
+      if (targeted.get(target.id)) {
         if (!computeAll) {
           result = false;
           break;

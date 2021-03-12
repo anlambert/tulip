@@ -192,7 +192,7 @@ void ItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
     return;
   }
 
-  if (c->paint(painter, option, v, index) == false) {
+  if (!c->paint(painter, option, v, index)) {
     QStyledItemDelegate::paint(painter, option, index);
   }
 }

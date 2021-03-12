@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -558,7 +558,7 @@ bool BooleanVectorType::readb(istream &iss, RealType &v) {
   v.resize(vSize);
 
   for (unsigned int i = 0; i < vSize; ++i, ++data) {
-    v[i] = *data ? true : false;
+    v[i] = *data != 0;
   }
 
   return true;
@@ -961,11 +961,7 @@ bool StringVectorType::read(istream &is, RealType &v, char openChar, char sepCha
     }
 
     if (c == closeChar) {
-      if (!closeChar || sepFound) {
-        return false;
-      }
-
-      return true;
+      return !(!closeChar || sepFound);
     }
 
     if (c == sepChar) {

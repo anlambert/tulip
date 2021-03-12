@@ -1447,7 +1447,7 @@ void TalipotMainWindow::CSVImport() {
 }
 
 void TalipotMainWindow::showStartPanels(Graph *g) {
-  if (Settings::displayDefaultViews() == false) {
+  if (!Settings::displayDefaultViews()) {
     return;
   }
 

@@ -219,7 +219,7 @@ void ScatterPlot2DView::setState(const DataSet &dataSet) {
     }
   }
 
-  center = lastGraph ? false : true;
+  center = lastGraph == nullptr;
 
   dataSet.get("lastViewWindowWidth", lastViewWindowWidth);
   dataSet.get("lastViewWindowHeight", lastViewWindowHeight);

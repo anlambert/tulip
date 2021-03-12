@@ -264,7 +264,7 @@ public:
 
     while ((result = nextToken(str, " \r\t,=", token, pos)) && !token.empty()) {
       // check for dl
-      if (dl_found == false) {
+      if (!dl_found) {
         if (nocasecmp(token, "dl")) {
           dl_found = true;
           continue;
@@ -782,7 +782,7 @@ public:
         if ((embedding & DL_ROWS) && (ic == 0) && (current == 0)) {
           graph->getStringProperty("viewLabel")->setNodeValue(src, tokens[i]);
 
-          if (ir == 0 && nc == 1 && diagonal == false) {
+          if (ir == 0 && nc == 1 && !diagonal) {
             ++ir;
           } else {
             current = 1;
@@ -797,7 +797,7 @@ public:
         }
 
         // check diagonal
-        if (ir == ic && diagonal == false) {
+        if (ir == ic && !diagonal) {
           if (dataFormat == DL_LH) {
             ir = 1;
             src = nodes[nc + 1];
@@ -1060,7 +1060,7 @@ public:
         break;
       }
 
-      if (result == false) {
+      if (!result) {
         errors << endl;
         errors << "error found while parsing file : " << inputData.filename << endl;
         errors << "at line " << lineNumber << endl;

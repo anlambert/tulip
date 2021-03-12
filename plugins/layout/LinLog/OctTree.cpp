@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -285,7 +285,7 @@ void OctTree::removeNode(tlp::node oldNode, Coord oldPos, unsigned int depth) {
 
       bool endwhile = false;
 
-      while (endwhile == false) {
+      while (!endwhile) {
         if (childIndex < MAX_CHILDREN) {
           if (_children[childIndex] == nullptr) {
             std::cerr << "this part of the tree is null\n";

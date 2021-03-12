@@ -158,7 +158,7 @@ void NodeLinkDiagramView::graphChanged(tlp::Graph *graph) {
   registerTriggers();
 
   if (oldGraph == nullptr || graph == nullptr || (oldGraph->getRoot() != graph->getRoot()) ||
-      getGlWidget()->keepScenePointOfViewOnSubgraphChanging() == false) {
+      !getGlWidget()->keepScenePointOfViewOnSubgraphChanging()) {
     centerView();
   }
 
@@ -585,7 +585,7 @@ void NodeLinkDiagramView::addRemoveInNodesToSelection(bool pushGraph, bool toggl
 
   MutableContainer<bool> inNodes;
   for (auto neigh : graph()->getInNodes(node(itemId))) {
-    if (inNodes.get(neigh.id) == false) {
+    if (!inNodes.get(neigh.id)) {
       elementSelected->setNodeValue(neigh, toggleSelection ? !elementSelected->getNodeValue(neigh)
                                                            : selectValue);
       inNodes.set(neigh.id, true);
@@ -608,7 +608,7 @@ void NodeLinkDiagramView::addRemoveOutNodesToSelection(bool pushGraph, bool togg
 
   MutableContainer<bool> outNodes;
   for (auto neigh : graph()->getOutNodes(node(itemId))) {
-    if (outNodes.get(neigh.id) == false) {
+    if (!outNodes.get(neigh.id)) {
       elementSelected->setNodeValue(neigh, toggleSelection ? !elementSelected->getNodeValue(neigh)
                                                            : selectValue);
       outNodes.set(neigh.id, true);

@@ -186,7 +186,7 @@ bool ViewToolTipAndUrlManager::eventFilter(QObject *, QEvent *event) {
                                 ? nullptr
                                 : dynamic_cast<StringProperty *>(graph->getProperty(_urlPropName));
 
-  if (event->type() == QEvent::ToolTip && (_tooltips == true || urlProp != nullptr)) {
+  if (event->type() == QEvent::ToolTip && (_tooltips || urlProp != nullptr)) {
     auto *he = static_cast<QHelpEvent *>(event);
 
     node tmpNode;

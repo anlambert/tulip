@@ -453,7 +453,7 @@ void VectorGraph::delEdges(const node n) {
       if (opp != n) { // not a loop
         partialDelEdge(opp, e);
 
-        if (adjt[i] == false) {
+        if (!adjt[i]) {
           _nData[opp]._outdeg -= 1;
         }
       }
@@ -638,8 +638,8 @@ void VectorGraph::integrityTest() {
     testCond("p2 :", _nData[tgt]._adje[tgtp] == e);
     testCond("p3 :", _nData[src]._adjn[srcp] == tgt);
     testCond("p4 :", _nData[tgt]._adjn[tgtp] == src);
-    testCond("p5 :", _nData[src]._adjt[srcp] == true);
-    testCond("p6 :", _nData[tgt]._adjt[tgtp] == false);
+    testCond("p5 :", _nData[src]._adjt[srcp]);
+    testCond("p6 :", !_nData[tgt]._adjt[tgtp]);
   }
 
   testCond("Nb edges", sumDeg == (numberOfEdges() * 2));

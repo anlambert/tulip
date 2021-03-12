@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -25,22 +25,14 @@ namespace std {
 struct couple {
   int p, r;
   bool operator==(const couple d) {
-    if ((p == d.p) && (r == d.r)) {
-      return true;
-    }
-
-    return false;
+    return (p == d.p) && (r == d.r);
   }
 };
 
 template <>
 struct equal_to<couple> {
   bool operator()(const couple c, const couple d) {
-    if ((c.r == d.r) && (c.p == d.p)) {
-      return true;
-    }
-
-    return false;
+    return (c.r == d.r) && (c.p == d.p);
   }
 };
 

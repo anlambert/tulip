@@ -370,7 +370,7 @@ void PropertiesEditor::displayedPropertiesInserted(const QModelIndex &parent, in
     QModelIndex sIndex = model->mapToSource(model->index(start, 0, parent));
     auto *pi = _sourceModel->data(sIndex, Model::PropertyRole).value<PropertyInterface *>();
 
-    if (filteringProperties == false) {
+    if (!filteringProperties) {
       _sourceModel->setData(sIndex, Qt::Checked, Qt::CheckStateRole);
     }
 

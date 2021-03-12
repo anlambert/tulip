@@ -561,7 +561,7 @@ void MatrixView::updateLayout() {
     layout->setNodeValue(node(edgeNodes[0]), Coord(tgt0[0], src1[1], 0));
     shapes->setNodeValue(node(edgeNodes[0]), shape);
 
-    if (_isOriented == false) {
+    if (!_isOriented) {
       layout->setNodeValue(node(edgeNodes[1]), Coord(src0[0], tgt1[1], 0));
       shapes->setNodeValue(node(edgeNodes[1]), shape);
     }

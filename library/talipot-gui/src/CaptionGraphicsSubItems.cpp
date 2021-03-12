@@ -306,14 +306,14 @@ void CaptionGraphicsBackgroundItem::activateInteractions(bool activate) {
     emit interactionsRemoved();
   }
 
-  if (activate == false && activate != _interactionsActivated) {
+  if (!activate && activate != _interactionsActivated) {
     _endBackup = (_rangeSelector1Item->pos().y() - _captionContentPos.y() + 30) / 160.;
     _beginBackup = (_rangeSelector2Item->pos().y() - _captionContentPos.y() + 30) / 160.;
   }
 
   bool useStoredBeginEnd = false;
 
-  if (activate == true && activate != _interactionsActivated) {
+  if (activate && activate != _interactionsActivated) {
     useStoredBeginEnd = true;
   }
 

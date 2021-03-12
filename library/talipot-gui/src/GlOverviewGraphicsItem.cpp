@@ -43,7 +43,7 @@ void GlOverviewGraphicsItem::setSize(unsigned int width, unsigned int height) {
 }
 
 void GlOverviewGraphicsItem::setLayerVisible(const string &name, bool visible) {
-  if (visible == false) {
+  if (!visible) {
     _hiddenLayers.insert(name);
   } else {
     _hiddenLayers.erase(name);
@@ -216,7 +216,7 @@ void GlOverviewGraphicsItem::draw(bool generatePixmap) {
     auto itTmp = layersVisibility.begin();
 
     for (const auto &it : layersList) {
-      if ((*itTmp) == true) {
+      if (*itTmp) {
         it.second->setVisible(true);
       }
 

@@ -383,7 +383,7 @@ void CSVImportConfigurationWidget::updateWidget(const std::string &title) {
 }
 
 bool CSVImportConfigurationWidget::begin() {
-  if (keepPropertyWidgets == false) {
+  if (!keepPropertyWidgets) {
     ui->previewTableWidget->begin();
     ui->previewTableWidget->setFirstLineIndex(getFirstLineIndex());
     clearPropertiesTypeList();
@@ -567,7 +567,7 @@ void CSVImportConfigurationWidget::useFirstLineAsHeaderUpdated() {
     ui->previewTableWidget->hideRow(ui->previewTableWidget->rowCount() - 1);
   }
 
-  if (keepPropertyWidgets == false) {
+  if (!keepPropertyWidgets) {
     updateTableHeaders();
     updateLineNumbers(false);
   }

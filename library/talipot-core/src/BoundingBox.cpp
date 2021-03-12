@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -162,28 +162,24 @@ bool BoundingBox::intersect(const Coord &segStart, const Coord &segEnd) const {
 
   Coord hit;
 
-  if ((getIntersection(segStart[0] - (*this)[0][0], segEnd[0] - (*this)[0][0], segStart, segEnd,
-                       hit) &&
-       contains(hit)) ||
-      (getIntersection(segStart[1] - (*this)[0][1], segEnd[1] - (*this)[0][1], segStart, segEnd,
-                       hit) &&
-       contains(hit)) ||
-      (getIntersection(segStart[2] - (*this)[0][2], segEnd[2] - (*this)[0][2], segStart, segEnd,
-                       hit) &&
-       contains(hit)) ||
-      (getIntersection(segStart[0] - (*this)[1][0], segEnd[0] - (*this)[1][0], segStart, segEnd,
-                       hit) &&
-       contains(hit)) ||
-      (getIntersection(segStart[1] - (*this)[1][1], segEnd[1] - (*this)[1][1], segStart, segEnd,
-                       hit) &&
-       contains(hit)) ||
-      (getIntersection(segStart[2] - (*this)[1][2], segEnd[2] - (*this)[1][2], segStart, segEnd,
-                       hit) &&
-       contains(hit))) {
-    return true;
-  }
-
-  return false;
+  return (getIntersection(segStart[0] - (*this)[0][0], segEnd[0] - (*this)[0][0], segStart, segEnd,
+                          hit) &&
+          contains(hit)) ||
+         (getIntersection(segStart[1] - (*this)[0][1], segEnd[1] - (*this)[0][1], segStart, segEnd,
+                          hit) &&
+          contains(hit)) ||
+         (getIntersection(segStart[2] - (*this)[0][2], segEnd[2] - (*this)[0][2], segStart, segEnd,
+                          hit) &&
+          contains(hit)) ||
+         (getIntersection(segStart[0] - (*this)[1][0], segEnd[0] - (*this)[1][0], segStart, segEnd,
+                          hit) &&
+          contains(hit)) ||
+         (getIntersection(segStart[1] - (*this)[1][1], segEnd[1] - (*this)[1][1], segStart, segEnd,
+                          hit) &&
+          contains(hit)) ||
+         (getIntersection(segStart[2] - (*this)[1][2], segEnd[2] - (*this)[1][2], segStart, segEnd,
+                          hit) &&
+          contains(hit));
 }
 
 void BoundingBox::getCompleteBB(Coord bb[8]) const {

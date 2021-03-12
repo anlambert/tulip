@@ -28,11 +28,7 @@ using namespace tlp;
 PlanarityTestImpl::PlanarityTestImpl(Graph *sg) : sg(sg) {}
 //=================================================================
 bool PlanarityTestImpl::isPlanar(bool embedsg) {
-  if (embedsg) {
-    embed = true;
-  } else {
-    embed = false;
-  }
+  embed = embedsg;
 
   if (sg->isEmpty()) {
     return true;

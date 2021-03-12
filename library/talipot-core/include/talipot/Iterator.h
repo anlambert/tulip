@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -79,7 +79,7 @@ private:
 
     iterator_t(Iterator<T> *it, IteratorStatus iteratorStatus = End)
         : _iteratorStatus(iteratorStatus), _it(it) {
-      if ((_iteratorStatus == Begin) && (_it->hasNext() == false)) {
+      if (_iteratorStatus == Begin && !_it->hasNext()) {
         _iteratorStatus = Finished;
       }
     }

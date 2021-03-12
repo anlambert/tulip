@@ -92,7 +92,7 @@ bool LinLogAlgorithm::run() {
   } else {
     std::string err;
 
-    if (graph->applyPropertyAlgorithm("Random layout", result, err) == false) {
+    if (!graph->applyPropertyAlgorithm("Random layout", result, err)) {
       pluginProgress->setError(err);
       return false;
     }

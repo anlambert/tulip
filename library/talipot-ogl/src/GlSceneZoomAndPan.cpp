@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -76,11 +76,7 @@ GlSceneZoomAndPan::GlSceneZoomAndPan(GlScene *glScene, const BoundingBox &boundi
     S = sB + log(wm / w1) / p;
   }
 
-  if (abs(w0 - w1) > 1e-3 || u1 > 0) {
-    doZoomAndPan = true;
-  } else {
-    doZoomAndPan = false;
-  }
+  doZoomAndPan = abs(w0 - w1) > 1e-3 || u1 > 0;
 }
 
 void GlSceneZoomAndPan::setAdditionalGlSceneAnimation(

@@ -700,10 +700,6 @@ bool PlanarityTestImpl::isPlanarEmbedding(const tlp::Graph *sG) {
     }
   }
 
-  if (fc != m - n + 2) {
-    return false;
-  }
-
-  return true;
+  return fc == m - n + 2;
 }
 //=================================================================

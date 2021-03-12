@@ -129,8 +129,7 @@ bool MouseSelector::eventFilter(QObject *widget, QEvent *e) {
         if (mousePressModifier == Qt::ShiftModifier && kModifier != Qt::ShiftModifier) {
           boolVal = false;
         } else {
-          if (selection->getNodeDefaultValue() == true ||
-              selection->getEdgeDefaultValue() == true) {
+          if (selection->getNodeDefaultValue() || selection->getEdgeDefaultValue()) {
             graph->push();
             selection->setAllNodeValue(false);
             selection->setAllEdgeValue(false);

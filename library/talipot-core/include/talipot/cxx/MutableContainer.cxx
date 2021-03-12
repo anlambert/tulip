@@ -282,7 +282,7 @@ void tlp::MutableContainer<TYPE>::set(const unsigned int i,
 //===================================================================
 template <typename TYPE>
 void tlp::MutableContainer<TYPE>::add(const unsigned int i, TYPE val) {
-  if (tlp::StoredType<TYPE>::isPointer == false) {
+  if (!static_cast<bool>(tlp::StoredType<TYPE>::isPointer)) {
     if (maxIndex == UINT_MAX) {
       assert(state == VECT);
       minIndex = i;

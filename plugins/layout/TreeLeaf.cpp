@@ -58,7 +58,7 @@ float TreeLeaf::dfsPlacement(tlp::Graph *tree, tlp::node n, float x, float y, un
 
   float layerSpacing = minLayerSpacing;
 
-  if (uniformLayerDistance == false) {
+  if (!uniformLayerDistance) {
     if (depth < levelHeights.size() - 1) {
       layerSpacing += nodeSpacing;
       layerSpacing = max(minLayerSpacing, (levelHeights[depth] + levelHeights[depth + 1]) / 2);
@@ -144,7 +144,7 @@ bool TreeLeaf::run() {
 
   // check if the specified layer spacing is greater
   // than the max of the minimum layer spacing of the tree
-  if (uniformLayerDistance == true) {
+  if (uniformLayerDistance) {
     for (unsigned int i = 0; i < levelHeights.size() - 1; ++i) {
       float layerSpacing = (levelHeights[i] + levelHeights[i + 1]) / 2 + nodeSpacing;
 

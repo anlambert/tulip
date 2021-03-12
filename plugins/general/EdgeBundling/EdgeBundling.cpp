@@ -479,7 +479,7 @@ bool EdgeBundling::run() {
       }
     }
 
-    while (vertexCoverGraph->isEmpty() == false) {
+    while (!vertexCoverGraph->isEmpty()) {
       stringstream strm;
       strm << "Computing iteration " << iteration + 1 << "/" << MAX_ITER;
       pluginProgress->setComment(strm.str());

@@ -106,11 +106,7 @@ void ItemsListWidget::changeStatus(QListWidgetItem *item) {
   bool x = (hashDataBase.value(item->text())).choice;
   struct itemInfo temp;
 
-  if (x == false) {
-    temp.choice = true;
-  } else {
-    temp.choice = false;
-  }
+  temp.choice = x == false;
 
   temp.attribute = (hashDataBase.value(item->text())).attribute;
   hashDataBase.remove(item->text());

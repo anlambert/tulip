@@ -569,7 +569,7 @@ static void bfs(const Graph *graph, node root, std::vector<tlp::node> &nodes,
 
 // bfs from a root node
 void bfs(const Graph *graph, node root, std::vector<tlp::node> &nodes) {
-  if (graph->isEmpty() == false) {
+  if (!graph->isEmpty()) {
     if (!root.isValid()) {
       root = graph->getSource();
 
@@ -627,7 +627,7 @@ static void dfs(const Graph *graph, node n, std::vector<node> &nodes,
 
 // dfs from a root node
 void dfs(const Graph *graph, node root, std::vector<node> &visitedNodes) {
-  if (graph->isEmpty() == false) {
+  if (!graph->isEmpty()) {
     if (!root.isValid()) {
       root = graph->getSource();
 

@@ -1645,14 +1645,14 @@ public:
                 if (k) {
                   aName += " ";
 
-                  if (labriAuthor == false) {
+                  if (!labriAuthor) {
                     aKey += " ";
                   }
                 }
 
                 aName += firstName;
 
-                if (k == 0 || labriAuthor == false) {
+                if (k == 0 || !labriAuthor) {
                   // keep only the first letter and a dot for the key
                   firstName.resize(2);
                   firstName.replace(1, 1, ".");
@@ -1666,7 +1666,7 @@ public:
               // author must be a unique person
               authPropValue.push_back(aName);
 
-              if ((aName == "al. et") || (createAuthNodes == false)) {
+              if ((aName == "al. et") || !createAuthNodes) {
                 continue;
               }
 

@@ -56,11 +56,7 @@ bool BendsTools::straightLine(LayoutProperty *layout, const node a, const node b
   Vec2d bc = point[2] - point[1];
   Vec2d ac = point[2] - point[0];
 
-  if (fabs(ba.norm() + bc.norm() - ac.norm()) < 1E-9) {
-    return true;
-  } else {
-    return false;
-  }
+  return fabs(ba.norm() + bc.norm() - ac.norm()) < 1E-9;
 }
 //============================================
 vector<node> BendsTools::bendsSimplification(vector<node> &bends, LayoutProperty *layout) {

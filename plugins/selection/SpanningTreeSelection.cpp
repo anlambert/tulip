@@ -37,7 +37,7 @@ bool SpanningTreeSelection::run() {
     BooleanProperty *viewSelection = graph->getBooleanProperty("viewSelection");
 
     for (auto n : graph->nodes()) {
-      if (viewSelection->getNodeValue(n) == true) {
+      if (viewSelection->getNodeValue(n)) {
         result->setNodeValue(n, true);
       }
     }
