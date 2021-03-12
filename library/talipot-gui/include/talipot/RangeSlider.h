@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -40,7 +40,7 @@ class TLP_QT_SCOPE RangeSlider : public QSlider {
 public:
   explicit RangeSlider(QWidget *parent = nullptr);
   explicit RangeSlider(Qt::Orientation orientation, QWidget *parent = nullptr);
-  ~RangeSlider() override {}
+  ~RangeSlider() override = default;
 
   enum HandleMovementMode { FreeMovement, NoCrossing, NoOverlapping };
 

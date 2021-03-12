@@ -50,7 +50,7 @@ public:
       "1.3", "Misc")
 
   FastOverlapRemoval(const tlp::PluginContext *context);
-  ~FastOverlapRemoval() override {}
+  ~FastOverlapRemoval() override = default;
   bool run() override;
 };
 /*@}*/

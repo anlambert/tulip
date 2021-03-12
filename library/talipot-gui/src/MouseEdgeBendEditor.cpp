@@ -37,7 +37,7 @@ MouseEdgeBendEditor::MouseEdgeBendEditor()
   basicCircle.setStencil(0);
 }
 //========================================================================================
-MouseEdgeBendEditor::~MouseEdgeBendEditor() {}
+MouseEdgeBendEditor::~MouseEdgeBendEditor() = default;
 //========================================================================================
 void MouseEdgeBendEditor::clear() {
   if (glWidget != nullptr) {

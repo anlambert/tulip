@@ -324,7 +324,7 @@ BubbleTree::BubbleTree(const tlp::PluginContext *context) : LayoutAlgorithm(cont
   addDependency("Circular", "1.1");
 }
 
-BubbleTree::~BubbleTree() {}
+BubbleTree::~BubbleTree() = default;
 
 bool BubbleTree::run() {
 

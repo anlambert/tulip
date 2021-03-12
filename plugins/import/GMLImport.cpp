@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -51,7 +51,7 @@ void edgeAttributeError() {
 struct GMLGraphBuilder : public GMLTrue {
   Graph *_graph;
   unordered_map<int, node> nodeIndex;
-  ~GMLGraphBuilder() override {}
+  ~GMLGraphBuilder() override = default;
   GMLGraphBuilder(Graph *graph) : _graph(graph) {}
   bool addNode(int id) {
     if (nodeIndex.find(id) == nodeIndex.end()) {
@@ -459,7 +459,7 @@ struct GMLEdgeGraphicsLineBuilder : public GMLTrue {
   LineType::RealType lCoord;
   GMLEdgeGraphicsLineBuilder(GMLEdgeGraphicsBuilder *edgeGraphicsBuilder)
       : edgeGraphicsBuilder(edgeGraphicsBuilder) {}
-  ~GMLEdgeGraphicsLineBuilder() override {}
+  ~GMLEdgeGraphicsLineBuilder() override = default;
   bool addStruct(const string &structName, GMLBuilder *&newBuilder) override;
   void addPoint(const Coord &coord) {
     lCoord.push_back(coord);
@@ -587,7 +587,7 @@ public:
   GMLImport(PluginContext *context) : ImportModule(context) {
     addInParameter<string>("file::filename", paramHelp[0], "");
   }
-  ~GMLImport() override {}
+  ~GMLImport() override = default;
   bool importGraph() override {
     auto inputData = getInputData();
 

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -79,7 +79,7 @@ public:
    * @warning don't use this constructor if you want to create a complex polygon, see others
    * constructors
    */
-  GlComplexPolygon() {}
+  GlComplexPolygon() = default;
   /**
    * @brief Constructor with a vector of coords, a fill color, a polygon edges type(0 -> straight
    * lines, 1 -> catmull rom curves, 2 -> bezier curves) and a textureName if you want
@@ -108,7 +108,7 @@ public:
   GlComplexPolygon(const std::vector<std::vector<Coord>> &coords, Color fcolor, Color ocolor,
                    int polygonEdgesType = 0, const std::string &textureName = "");
 
-  ~GlComplexPolygon() override {}
+  ~GlComplexPolygon() override = default;
 
   /**
    * @brief Draw the complex polygon

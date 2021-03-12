@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -486,7 +486,7 @@ public:
    */
   class MetaValueCalculator {
   public:
-    virtual ~MetaValueCalculator() {}
+    virtual ~MetaValueCalculator() = default;
   };
 
   /**
@@ -552,7 +552,7 @@ class TLP_SCOPE VectorPropertyInterface : public PropertyInterface {
 public:
   VectorPropertyInterface() : PropertyInterface() {}
 
-  ~VectorPropertyInterface() override {}
+  ~VectorPropertyInterface() override = default;
 
   /**
    * @brief split an input string into a vector of strings

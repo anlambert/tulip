@@ -97,7 +97,7 @@ struct SortNodeIterator : public StableIterator<tlp::node> {
     copyIterator = sequenceCopy.begin();
   }
 
-  ~SortNodeIterator() override {}
+  ~SortNodeIterator() override = default;
 };
 
 /**
@@ -118,7 +118,7 @@ struct SortEdgeIterator : public StableIterator<tlp::edge> {
     copyIterator = sequenceCopy.begin();
   }
 
-  ~SortEdgeIterator() override {}
+  ~SortEdgeIterator() override = default;
 };
 
 /**
@@ -140,7 +140,7 @@ struct SortTargetEdgeIterator : public StableIterator<tlp::edge> {
     copyIterator = sequenceCopy.begin();
   }
 
-  ~SortTargetEdgeIterator() override {}
+  ~SortTargetEdgeIterator() override = default;
 };
 
 /**
@@ -162,7 +162,7 @@ struct SortSourceEdgeIterator : public StableIterator<tlp::edge> {
     copyIterator = sequenceCopy.begin();
   }
 
-  ~SortSourceEdgeIterator() override {}
+  ~SortSourceEdgeIterator() override = default;
 };
 
 /**
@@ -184,7 +184,7 @@ struct SortExtremitiesEdgeIterator : public StableIterator<tlp::edge> {
     copyIterator = sequenceCopy.begin();
   }
 
-  ~SortExtremitiesEdgeIterator() override {}
+  ~SortExtremitiesEdgeIterator() override = default;
 };
 
 /**
@@ -207,7 +207,7 @@ struct SortIterator : public tlp::StableIterator<T> {
     this->copyIterator = this->sequenceCopy.begin();
   }
 
-  ~SortIterator() {}
+  ~SortIterator() = default;
 };
 
 /**

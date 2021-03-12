@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -23,5 +23,5 @@ GlHexagon::GlHexagon(const Coord &position, const Size &size, const Color &fillC
     : GlRegularPolygon(position, size, 6, fillColor, outlineColor, filled, outlined, textureName,
                        outlineSize) {}
 //=====================================================
-GlHexagon::~GlHexagon() {}
+GlHexagon::~GlHexagon() = default;
 }

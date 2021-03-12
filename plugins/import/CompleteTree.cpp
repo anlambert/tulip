@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -44,7 +44,7 @@ public:
     addInParameter<bool>("tree layout", paramHelp[2], "false");
     addDependency("Tree Leaf", "1.0");
   }
-  ~CompleteTree() override {}
+  ~CompleteTree() override = default;
 
   bool importGraph() override {
     unsigned int degree = 2;

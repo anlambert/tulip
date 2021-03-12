@@ -27,7 +27,7 @@ namespace tlp {
 HistogramViewNavigator::HistogramViewNavigator()
     : histoView(nullptr), selectedHistoOverview(nullptr) {}
 
-HistogramViewNavigator::~HistogramViewNavigator() {}
+HistogramViewNavigator::~HistogramViewNavigator() = default;
 
 void HistogramViewNavigator::viewChanged(View *view) {
   histoView = static_cast<HistogramView *>(view);

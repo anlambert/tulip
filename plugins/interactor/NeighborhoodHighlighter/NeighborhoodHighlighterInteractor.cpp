@@ -48,7 +48,7 @@ namespace tlp {
 class GraphLayoutMorphing : public AdditionalGlSceneAnimation {
 
 public:
-  ~GraphLayoutMorphing() override {}
+  ~GraphLayoutMorphing() override = default;
   GraphLayoutMorphing(Graph *graph, LayoutProperty *srcLayout, LayoutProperty *destLayout,
                       LayoutProperty *viewLayout)
       : graph(graph), srcLayout(srcLayout), destLayout(destLayout), viewLayout(viewLayout) {}

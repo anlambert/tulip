@@ -75,7 +75,7 @@ public:
     addInParameter<string>("file::filename", paramHelp[0], "");
   }
 
-  ~GraphvizImport() override {}
+  ~GraphvizImport() override = default;
 
   string icon() const override {
     return ":/talipot/app/icons/32/import_graphviz.png";

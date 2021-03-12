@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -19,7 +19,7 @@ using namespace tlp;
 
 Model::Model(QObject *parent) : QAbstractItemModel(parent) {}
 
-Model::~Model() {}
+Model::~Model() = default;
 
 QVariant Model::headerData(int, Qt::Orientation orientation, int role) const {
   if (orientation == Qt::Horizontal && role == Qt::FontRole) {

@@ -28,7 +28,7 @@ namespace tlp {
 PixelOrientedViewNavigator::PixelOrientedViewNavigator()
     : pixelView(nullptr), selectedOverview(nullptr) {}
 
-PixelOrientedViewNavigator::~PixelOrientedViewNavigator() {}
+PixelOrientedViewNavigator::~PixelOrientedViewNavigator() = default;
 
 void PixelOrientedViewNavigator::viewChanged(View *view) {
   pixelView = static_cast<PixelOrientedView *>(view);

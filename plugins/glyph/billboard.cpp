@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -53,7 +53,7 @@ PLUGIN(Billboard)
 //===================================================================================
 Billboard::Billboard(const tlp::PluginContext *context) : NoShaderGlyph(context) {}
 //========================================================
-Billboard::~Billboard() {}
+Billboard::~Billboard() = default;
 //========================================================
 void Billboard::draw(node n, float) {
   static GlRect rect(Coord(0, 0, 0), 1., 1., Color(0, 0, 0, 255), Color(0, 0, 0, 255));

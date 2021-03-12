@@ -26,7 +26,7 @@ CliqueImport::CliqueImport(tlp::PluginContext *context) : ImportModule(context) 
   addDependency("Circular", "1.1");
 }
 
-CliqueImport::~CliqueImport() {}
+CliqueImport::~CliqueImport() = default;
 
 bool CliqueImport::importGraph() {
   // retrieve the number of nodes we need to create

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -20,8 +20,8 @@ namespace tlp {
 
 class ParallelCoordsElementDeleter : public GLInteractorComponent {
 public:
-  ParallelCoordsElementDeleter() {}
-  ~ParallelCoordsElementDeleter() override {}
+  ParallelCoordsElementDeleter() = default;
+  ~ParallelCoordsElementDeleter() override = default;
   bool eventFilter(QObject *, QEvent *) override;
 };
 }

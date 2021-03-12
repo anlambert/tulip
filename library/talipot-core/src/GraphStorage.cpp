@@ -152,7 +152,7 @@ struct IOEdgeContainerIterator : public Iterator<edge>,
     prepareNext();
   }
 
-  ~IOEdgeContainerIterator() override {}
+  ~IOEdgeContainerIterator() override = default;
 
   edge next() override {
     // check hasNext()

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -42,7 +42,7 @@
 struct FileDescriptor {
   enum FileType { File, Directory };
 
-  FileDescriptor() {}
+  FileDescriptor() = default;
   FileDescriptor(const QString &absolutePath, FileType fileType, bool existing = true)
       : absolutePath(absolutePath), type(fileType), mustExist(existing) {}
   FileDescriptor(const FileDescriptor &d) {
@@ -60,13 +60,13 @@ struct FileDescriptor {
 
 struct TextureFile {
   QString texturePath;
-  TextureFile() {}
+  TextureFile() = default;
   TextureFile(const QString &texturePath) : texturePath(texturePath) {}
 };
 
 struct FontIcon {
 
-  FontIcon() {}
+  FontIcon() = default;
 
   FontIcon(const QString &iconName) : iconName(iconName) {}
 
@@ -139,7 +139,7 @@ Q_DECLARE_METATYPE(QStringList)
 
 namespace tlp {
 class TLP_QT_SCOPE MetaTypes {
-  MetaTypes() {}
+  MetaTypes() = default;
 
   template <typename T>
   static QVariant typedVariant(tlp::DataType *dm) {

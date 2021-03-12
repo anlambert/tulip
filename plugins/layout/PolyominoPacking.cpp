@@ -108,7 +108,7 @@ private:
 class polyPerimOrdering {
 
 public:
-  polyPerimOrdering() {}
+  polyPerimOrdering() = default;
 
   bool operator()(const Polyomino &ci1, const Polyomino &ci2) const {
     return ci1.perim > ci2.perim;
@@ -125,7 +125,7 @@ PolyominoPacking::PolyominoPacking(const PluginContext *context) : LayoutAlgorit
   addInParameter<unsigned int>("increment", paramHelp[3], "1");
 }
 
-PolyominoPacking::~PolyominoPacking() {}
+PolyominoPacking::~PolyominoPacking() = default;
 
 bool PolyominoPacking::run() {
 

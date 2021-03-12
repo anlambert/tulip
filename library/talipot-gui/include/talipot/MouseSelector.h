@@ -25,7 +25,7 @@ public:
 
   MouseSelector(Qt::MouseButton button = Qt::LeftButton,
                 Qt::KeyboardModifier modifier = Qt::NoModifier, SelectionMode mode = EdgesAndNodes);
-  ~MouseSelector() override {}
+  ~MouseSelector() override = default;
   bool draw(GlWidget *) override;
   bool eventFilter(QObject *, QEvent *) override;
 

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -16,7 +16,7 @@
 TimeDecreasingFunctionSimple::TimeDecreasingFunctionSimple(double initialCoef)
     : initialCoef(initialCoef) {}
 
-TimeDecreasingFunctionSimple::~TimeDecreasingFunctionSimple() {}
+TimeDecreasingFunctionSimple::~TimeDecreasingFunctionSimple() = default;
 
 double TimeDecreasingFunctionSimple::computeCurrentTimeRate(unsigned int currentIteration,
                                                             unsigned int,

@@ -46,7 +46,7 @@ public:
   /**
    * @brief Destructor
    */
-  virtual ~GlGraphRenderer() {}
+  virtual ~GlGraphRenderer() = default;
 
   /**
    * @brief This function is call by GlGraph to draw the graph

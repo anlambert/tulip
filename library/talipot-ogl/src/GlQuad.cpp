@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -45,7 +45,7 @@ GlQuad::GlQuad(const Coord &p1, const Coord &p2, const Coord &p3, const Coord &p
   recomputeBoundingBox();
 }
 
-GlQuad::~GlQuad() {}
+GlQuad::~GlQuad() = default;
 
 void GlQuad::setColor(const Color &color) {
   setFillColor(color);

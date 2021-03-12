@@ -292,7 +292,7 @@ QVariant VectorEditorCreator<ElementType>::editorData(QWidget *editor, tlp::Grap
 template <typename T>
 struct DisplayVectorDataType : public DataType {
   DisplayVectorDataType(void *value) : DataType(value) {}
-  ~DisplayVectorDataType() override {}
+  ~DisplayVectorDataType() override = default;
   DataType *clone() const override {
     return nullptr;
   }

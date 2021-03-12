@@ -33,7 +33,7 @@ class GlBox;
 
 struct TLP_GL_SCOPE NodeGlyphData {
 
-  NodeGlyphData() {}
+  NodeGlyphData() = default;
 
   NodeGlyphData(Glyph *glyph, node n, float lod, const Coord &nodePos, const Size &nodeSize,
                 float nodeRot, bool selected)
@@ -51,7 +51,7 @@ struct TLP_GL_SCOPE NodeGlyphData {
 
 struct TLP_GL_SCOPE EdgeExtremityGlyphData {
 
-  EdgeExtremityGlyphData() {}
+  EdgeExtremityGlyphData() = default;
 
   EdgeExtremityGlyphData(EdgeExtremityGlyph *glyph, edge e, node source, Color glyphColor,
                          Color glyphBorderColor, float lod, Coord beginAnchor, Coord srcAnchor,

@@ -82,7 +82,7 @@ struct StableIterator : public Iterator<T> {
     copyIterator = sequenceCopy.begin();
   }
   //=============================
-  ~StableIterator() {}
+  ~StableIterator() = default;
   //=============================
   T next() {
     T tmp(*copyIterator);

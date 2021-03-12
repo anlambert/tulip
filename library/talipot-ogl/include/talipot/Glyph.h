@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -37,7 +37,7 @@ public:
   GlyphContext(Graph ** = nullptr, GlGraphInputData *glGraphInputData = nullptr, int = 5, int = 5)
       : glGraphInputData(glGraphInputData) {}
   ///
-  ~GlyphContext() override {}
+  ~GlyphContext() override = default;
 };
 //==========================================================
 class TLP_GL_SCOPE Glyph : public tlp::Plugin {

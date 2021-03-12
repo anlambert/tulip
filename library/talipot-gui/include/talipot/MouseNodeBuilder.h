@@ -26,7 +26,7 @@ class TLP_QT_SCOPE MouseNodeBuilder : public InteractorComponent {
 public:
   MouseNodeBuilder(QEvent::Type eventType = QEvent::MouseButtonPress)
       : _eventType(eventType), glWidget(nullptr) {}
-  ~MouseNodeBuilder() override {}
+  ~MouseNodeBuilder() override = default;
   bool eventFilter(QObject *, QEvent *) override;
   void clear() override;
 

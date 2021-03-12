@@ -100,7 +100,7 @@ struct TLPGraphBuilder : public TLPTrue {
     version = 0.0;
   }
 
-  ~TLPGraphBuilder() override {}
+  ~TLPGraphBuilder() override = default;
 
   Graph *getSubGraph(int id) {
     if (const auto it = clusterIndex.find(id); it != clusterIndex.end()) {
@@ -652,7 +652,7 @@ struct TLPAttributesBuilder : public TLPFalse {
   TLPGraphBuilder *graphBuilder;
 
   TLPAttributesBuilder(TLPGraphBuilder *graphBuilder) : graphBuilder(graphBuilder) {}
-  ~TLPAttributesBuilder() override {}
+  ~TLPAttributesBuilder() override = default;
   bool close() override {
     return true;
   }
@@ -704,7 +704,7 @@ struct TLPDataSetBuilder : public TLPFalse {
   }
   TLPDataSetBuilder(TLPGraphBuilder *graphBuilder, DataSet *currentDataSet)
       : graphBuilder(graphBuilder), currentDataSet(currentDataSet), dataSetName(nullptr) {}
-  ~TLPDataSetBuilder() override {}
+  ~TLPDataSetBuilder() override = default;
   bool close() override {
     return true;
   }
@@ -722,7 +722,7 @@ struct TLPFileInfoBuilder : public TLPFalse {
 
   TLPFileInfoBuilder(TLPGraphBuilder *graphBuilder, const std::string &infoName)
       : graphBuilder(graphBuilder), name(infoName) {}
-  ~TLPFileInfoBuilder() override {}
+  ~TLPFileInfoBuilder() override = default;
 
   bool addString(const std::string &str) override {
     std::string theStr(str);
@@ -744,7 +744,7 @@ struct TLPSceneBuilder : public TLPFalse {
   TLPGraphBuilder *graphBuilder;
 
   TLPSceneBuilder(TLPGraphBuilder *graphBuilder) : graphBuilder(graphBuilder) {}
-  ~TLPSceneBuilder() override {}
+  ~TLPSceneBuilder() override = default;
 
   bool addString(const std::string &str) override {
     graphBuilder->dataSet->set(SCENE, str);
@@ -778,7 +778,7 @@ struct TLPPropertyBuilder : public TLPFalse {
   bool isGraphProperty;
   bool isPathViewProperty;
 
-  ~TLPPropertyBuilder() override {}
+  ~TLPPropertyBuilder() override = default;
   TLPPropertyBuilder(TLPGraphBuilder *graphBuilder)
       : graphBuilder(graphBuilder), clusterId(INT_MAX), propertyType(std::string()),
         propertyName(std::string()), property(nullptr), isGraphProperty(false),
@@ -864,7 +864,7 @@ struct TLPEdgePropertyBuilder : public TLPFalse {
   std::string nodeValue;
   TLPEdgePropertyBuilder(TLPPropertyBuilder *propertyBuilder)
       : propertyBuilder(propertyBuilder), edgeId(INT_MAX) {}
-  ~TLPEdgePropertyBuilder() override {}
+  ~TLPEdgePropertyBuilder() override = default;
   bool addInt(const int id) override {
     edgeId = id;
     return true;
@@ -883,7 +883,7 @@ struct TLPDefaultPropertyBuilder : public TLPFalse {
   int i;
   TLPDefaultPropertyBuilder(TLPPropertyBuilder *propertyBuilder)
       : propertyBuilder(propertyBuilder), edgeId(INT_MAX), i(0) {}
-  ~TLPDefaultPropertyBuilder() override {}
+  ~TLPDefaultPropertyBuilder() override = default;
   bool addString(const std::string &val) override {
     if (i == 0) {
       i++;
@@ -980,7 +980,7 @@ public:
   TLPImport(tlp::PluginContext *context) : ImportModule(context) {
     addInParameter<std::string>("file::filename", "The pathname of the TLP file to import.", "");
   }
-  ~TLPImport() override {}
+  ~TLPImport() override = default;
 
   std::string icon() const override {
     return ":/talipot/gui/icons/tlp32x32.png";

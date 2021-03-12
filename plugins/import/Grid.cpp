@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -57,7 +57,7 @@ public:
     addInParameter<bool>("oppositeNodesConnected", paramHelp[3], "false");
     addInParameter<double>("spacing", paramHelp[4], "1.0");
   }
-  ~Grid() override {}
+  ~Grid() override = default;
 
   void buildRow(const vector<node> &nodes, vector<pair<node, node>> &ends, unsigned int iRow,
                 unsigned width, int conn, bool isTore, double spacing) {

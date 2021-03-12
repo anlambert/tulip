@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -79,7 +79,7 @@ GlRect::GlRect(const Coord &center, const Size &size, const Color &fillColor, co
 //=====================================================
 GlRect::GlRect(bool filled, bool outlined) : GlPolygon(4u, 4u, 4u, filled, outlined) {}
 //=====================================================
-GlRect::~GlRect() {}
+GlRect::~GlRect() = default;
 //=====================================================
 Coord GlRect::getCenter() {
   return (point(0) + point(2)) / 2.f;

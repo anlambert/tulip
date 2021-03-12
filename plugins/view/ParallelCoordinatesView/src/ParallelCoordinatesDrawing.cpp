@@ -66,7 +66,7 @@ ParallelCoordinatesDrawing::ParallelCoordinatesDrawing(ParallelCoordinatesGraphP
   addGlEntity(axisPlotComposite, "axis plot composite");
 }
 
-ParallelCoordinatesDrawing::~ParallelCoordinatesDrawing() {}
+ParallelCoordinatesDrawing::~ParallelCoordinatesDrawing() = default;
 
 void ParallelCoordinatesDrawing::createAxis(GlWidget *glWidget, GlProgressBar *progressBar) {
 

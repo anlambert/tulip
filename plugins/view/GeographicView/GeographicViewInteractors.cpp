@@ -98,7 +98,7 @@ PLUGIN(GeographicViewInteractorSelectionEditor)
 
 GeographicViewNavigator::GeographicViewNavigator() : x(0), y(0), inRotation(false) {}
 
-GeographicViewNavigator::~GeographicViewNavigator() {}
+GeographicViewNavigator::~GeographicViewNavigator() = default;
 
 void GeographicViewNavigator::viewChanged(View *) {}
 

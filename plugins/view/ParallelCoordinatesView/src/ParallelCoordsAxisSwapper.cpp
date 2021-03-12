@@ -39,7 +39,7 @@ ParallelCoordsAxisSwapper::ParallelCoordsAxisSwapper()
       initialSelectedAxisRotAngle(0), dragStarted(false), x(0), y(0), mouseMove(false),
       axisSwapStarted(false) {}
 
-ParallelCoordsAxisSwapper::~ParallelCoordsAxisSwapper() {}
+ParallelCoordsAxisSwapper::~ParallelCoordsAxisSwapper() = default;
 
 void ParallelCoordsAxisSwapper::viewChanged(View *view) {
   parallelView = static_cast<ParallelCoordinatesView *>(view);

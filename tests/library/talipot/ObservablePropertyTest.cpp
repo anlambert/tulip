@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -37,7 +37,7 @@ class ObserverPTest : public Observable {
 public:
   std::set<Observable *> observables;
 
-  ObserverPTest() {}
+  ObserverPTest() = default;
 
   void reset() {
     observables.clear();
@@ -74,7 +74,7 @@ public:
   node lastNode;
   edge lastEdge;
 
-  PropertyObserverTest() {}
+  PropertyObserverTest() = default;
 
   void reset() {
     properties.clear();

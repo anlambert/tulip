@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -31,7 +31,7 @@ class VectorGraphValues {
 protected:
   virtual void addElement(const unsigned int id) = 0;
   virtual void reserve(const size_t size) = 0;
-  virtual ~VectorGraphValues() {}
+  virtual ~VectorGraphValues() = default;
 };
 
 /**
@@ -58,7 +58,7 @@ protected:
       std::vector<TYPE>::reserve(capacity);
       std::vector<TYPE>::resize(size);
     }
-    ~ValuesImpl() override {}
+    ~ValuesImpl() override = default;
     void addElement(const unsigned int id) override {
       if (id >= std::vector<TYPE>::size()) {
         std::vector<TYPE>::resize(id + 1);
@@ -70,7 +70,7 @@ protected:
   };
 
 public:
-  virtual ~VectorGraphProperty() {}
+  virtual ~VectorGraphProperty() = default;
   /**
    * @brief read/write accessor
    *

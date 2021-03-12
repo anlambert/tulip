@@ -101,15 +101,9 @@ void Font::removeFont(const string &fontFile) {
 Font::Font(const string &fontFamily, const string &fontStyle, const string &fontFile)
     : _fontFamily(fontFamily), _fontStyle(fontStyle), _fontFile(fontFile) {}
 
-Font::Font(const Font &f)
-    : _fontFamily(f._fontFamily), _fontStyle(f._fontStyle), _fontFile(f._fontFile) {}
+Font::Font(const Font &f) = default;
 
-Font &Font::operator=(const Font &other) {
-  _fontFamily = other._fontFamily;
-  _fontStyle = other._fontStyle;
-  _fontFile = other._fontFile;
-  return *this;
-}
+Font &Font::operator=(const Font &other) = default;
 
 string Font::fontFamily() const {
   return _fontFamily;

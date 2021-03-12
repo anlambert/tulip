@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -90,7 +90,7 @@ public:
   PropertyNameValidator(const std::vector<PropertyConfigurationWidget *> &widgets,
                         QObject *parent = nullptr)
       : QValidator(parent), widgets(widgets) {}
-  ~PropertyNameValidator() override {}
+  ~PropertyNameValidator() override = default;
 
   /**
    * Validate the new property name. Check if any property does not have the same name

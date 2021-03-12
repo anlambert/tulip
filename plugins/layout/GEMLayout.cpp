@@ -87,7 +87,7 @@ GEMLayout::GEMLayout(const tlp::PluginContext *context)
   addDependency("Connected Component Packing", "1.0");
 }
 //=========================================================
-GEMLayout::~GEMLayout() {}
+GEMLayout::~GEMLayout() = default;
 //=========================================================
 unsigned int GEMLayout::select() {
   return randomInteger(graph->numberOfNodes() - 1);

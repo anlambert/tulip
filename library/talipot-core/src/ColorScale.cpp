@@ -40,7 +40,7 @@ ColorScale &ColorScale::operator=(const ColorScale &scale) {
   return *this;
 }
 
-ColorScale::~ColorScale() {}
+ColorScale::~ColorScale() = default;
 
 void ColorScale::setColorScale(const std::vector<Color> &colors, const bool gradientV) {
   gradient = gradientV;

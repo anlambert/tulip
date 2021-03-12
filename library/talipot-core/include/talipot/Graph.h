@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -261,7 +261,7 @@ class TLP_SCOPE Graph : public Observable {
 
 public:
   Graph() : id(0) {}
-  ~Graph() override {}
+  ~Graph() override = default;
 
   /**
    * @brief Applies an algorithm plugin, identified by its name.

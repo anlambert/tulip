@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -42,7 +42,7 @@ public:
   PlanarGraph(tlp::PluginContext *context) : ImportModule(context) {
     addInParameter<unsigned int>("nodes", paramHelp[0], "30");
   }
-  ~PlanarGraph() override {}
+  ~PlanarGraph() override = default;
 
   bool importGraph() override {
     unsigned int nbNodes = 30;

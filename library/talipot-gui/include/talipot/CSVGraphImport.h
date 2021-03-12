@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -175,7 +175,7 @@ private:
  **/
 class TLP_QT_SCOPE CSVToGraphDataMapping {
 public:
-  virtual ~CSVToGraphDataMapping() {}
+  virtual ~CSVToGraphDataMapping() = default;
   virtual std::pair<tlp::ElementType, std::vector<unsigned int>>
   getElementsForRow(const std::vector<std::vector<std::string>> &tokens) = 0;
   virtual void init(unsigned int rowNumber) = 0;
@@ -193,7 +193,7 @@ public:
   AbstractCSVToGraphDataMapping(tlp::Graph *graph, tlp::ElementType type,
                                 const std::vector<unsigned int> &columnIds,
                                 const std::vector<std::string> &propertyNames);
-  ~AbstractCSVToGraphDataMapping() override {}
+  ~AbstractCSVToGraphDataMapping() override = default;
 
   void init(unsigned int rowNumber) override;
   std::pair<tlp::ElementType, std::vector<unsigned int>>
@@ -325,7 +325,7 @@ private:
  **/
 class TLP_QT_SCOPE CSVImportColumnToGraphPropertyMapping {
 public:
-  virtual ~CSVImportColumnToGraphPropertyMapping() {}
+  virtual ~CSVImportColumnToGraphPropertyMapping() = default;
   /**
    * @brief Return the property corresponding to the column index.
    * @param column The index of the column.
@@ -350,7 +350,7 @@ public:
   CSVImportColumnToGraphPropertyMappingProxy(tlp::Graph *graph,
                                              const CSVImportParameters &importParameters,
                                              QWidget *parent = nullptr);
-  ~CSVImportColumnToGraphPropertyMappingProxy() override {}
+  ~CSVImportColumnToGraphPropertyMappingProxy() override = default;
   tlp::PropertyInterface *getPropertyInterface(unsigned int column,
                                                const std::string &token) override;
 

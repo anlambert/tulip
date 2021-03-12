@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -109,7 +109,7 @@ class ScatterPlot2DMouseShowElementInfo : public MouseShowElementInfo {
 
 public:
   ScatterPlot2DMouseShowElementInfo() : MouseShowElementInfo(), scp2DView(nullptr) {}
-  ~ScatterPlot2DMouseShowElementInfo() override {}
+  ~ScatterPlot2DMouseShowElementInfo() override = default;
 
   void viewChanged(View *v) override {
     scp2DView = static_cast<ScatterPlot2DView *>(v);

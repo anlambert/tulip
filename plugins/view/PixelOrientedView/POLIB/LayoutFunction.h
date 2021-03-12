@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -18,7 +18,7 @@
 
 class LayoutFunction {
 public:
-  virtual ~LayoutFunction() {}
+  virtual ~LayoutFunction() = default;
   virtual tlp::Vec2i project(const unsigned int id) const = 0;
   virtual unsigned int unproject(const tlp::Vec2i &) const = 0;
 };

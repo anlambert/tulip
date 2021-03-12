@@ -56,7 +56,7 @@ void computeLinearRegressionFunction(Graph *graph, DoubleProperty *xk, DoublePro
 
 ScatterPlotTrendLine::ScatterPlotTrendLine() : scatterView(nullptr), a(0.0f), b(0.0f) {}
 
-ScatterPlotTrendLine::~ScatterPlotTrendLine() {}
+ScatterPlotTrendLine::~ScatterPlotTrendLine() = default;
 
 bool ScatterPlotTrendLine::eventFilter(QObject *, QEvent *e) {
   if (e->type() == QEvent::MouseMove) {

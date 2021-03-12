@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -33,7 +33,7 @@ class Camera;
 class TLP_GL_SCOPE AdditionalGlSceneAnimation {
 
 public:
-  virtual ~AdditionalGlSceneAnimation() {}
+  virtual ~AdditionalGlSceneAnimation() = default;
 
   /**
    * Method to set the total number of animation steps. No need to call it because the
@@ -71,7 +71,7 @@ protected:
 class TLP_GL_SCOPE GlSceneZoomAndPan {
 
 public:
-  virtual ~GlSceneZoomAndPan() {}
+  virtual ~GlSceneZoomAndPan() = default;
 
   /**
    * GlSceneZoomAndPan constructor

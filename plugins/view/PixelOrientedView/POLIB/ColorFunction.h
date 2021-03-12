@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -18,7 +18,7 @@
 
 class ColorFunction {
 public:
-  virtual ~ColorFunction() {}
+  virtual ~ColorFunction() = default;
   virtual tlp::Color getColor(double value, unsigned int itemId) const = 0;
 };
 

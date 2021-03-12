@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -27,7 +27,7 @@ public:
   ParallelCoordsGlEntitiesSelector(Qt::MouseButton button = Qt::LeftButton,
                                    Qt::KeyboardModifier modifier = Qt::NoModifier)
       : MouseSelector(button, modifier) {}
-  ~ParallelCoordsGlEntitiesSelector() override {}
+  ~ParallelCoordsGlEntitiesSelector() override = default;
   bool eventFilter(QObject *, QEvent *) override;
   virtual void unselectAllEntitiesHandler(ParallelCoordinatesView *parallelView) = 0;
   virtual void selectedEntitiesHandler(ParallelCoordinatesView *parallelView, int x, int y,

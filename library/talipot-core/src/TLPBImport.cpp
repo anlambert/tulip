@@ -41,7 +41,7 @@ struct RangeIterator : public Iterator<T> {
   RangeIterator(T begin, T end) : Iterator<T>(), first(begin), last(end), current(begin) {
     assert(begin.id <= last.id);
   }
-  ~RangeIterator() override {}
+  ~RangeIterator() override = default;
   T next() override {
     T tmp = current;
     ++(current.id);

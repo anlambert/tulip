@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -26,7 +26,7 @@ CSVImportParameters::CSVImportParameters(unsigned int fromLine, unsigned int toL
                                          const vector<CSVColumn *> &columns)
     : fromLine(fromLine), toLine(toLine), columns(columns) {}
 
-CSVImportParameters::~CSVImportParameters() {}
+CSVImportParameters::~CSVImportParameters() = default;
 
 unsigned int CSVImportParameters::columnNumber() const {
   return columns.size();
@@ -510,7 +510,7 @@ CSVGraphImport::CSVGraphImport(CSVToGraphDataMapping *mapping,
                                CSVImportColumnToGraphPropertyMapping *properties,
                                const CSVImportParameters &importParameters)
     : mapping(mapping), propertiesManager(properties), importParameters(importParameters) {}
-CSVGraphImport::~CSVGraphImport() {}
+CSVGraphImport::~CSVGraphImport() = default;
 bool CSVGraphImport::begin() {
   mapping->init(importParameters.getLastLineIndex() - importParameters.getFirstLineIndex() + 1);
   return true;

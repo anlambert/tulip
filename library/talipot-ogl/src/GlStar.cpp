@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -32,7 +32,7 @@ GlStar::GlStar(const Coord &position, const Size &size, unsigned int numberOfSta
   computeStar();
 }
 //=====================================================
-GlStar::~GlStar() {}
+GlStar::~GlStar() = default;
 //=====================================================
 unsigned int GlStar::getNumberOfStarPoints() {
   return numberOfStarPoints;

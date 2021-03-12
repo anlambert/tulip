@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -37,7 +37,7 @@ class TLP_GL_SCOPE Font {
   std::string _fontFile;
 
 public:
-  Font(){};
+  Font() = default;
   Font(const std::string &fontFamily, const std::string &fontStyle, const std::string &fontFile);
   Font(const Font &);
   Font &operator=(const Font &other);

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -53,7 +53,7 @@ EccentricityMetric::EccentricityMetric(const tlp::PluginContext *context)
   addOutParameter<double>("graph diameter", "The computed diameter (-1 if not computed)", "-1");
 }
 //====================================================================
-EccentricityMetric::~EccentricityMetric() {}
+EccentricityMetric::~EccentricityMetric() = default;
 //====================================================================
 double EccentricityMetric::compute(unsigned int nPos) {
 

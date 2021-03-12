@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -26,7 +26,7 @@ public:
     addDependency("Test", "1.0");
     addInParameter<int>("testParameter", "no help for you :)", "0", false);
   }
-  ~Test() override {}
+  ~Test() override = default;
   bool run() override {
     std::string name = "Test";
     std::string err = "Error";

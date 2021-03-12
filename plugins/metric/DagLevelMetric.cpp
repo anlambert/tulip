@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -20,7 +20,7 @@ using namespace tlp;
 
 DagLevelMetric::DagLevelMetric(const tlp::PluginContext *context) : DoubleAlgorithm(context) {}
 
-DagLevelMetric::~DagLevelMetric() {}
+DagLevelMetric::~DagLevelMetric() = default;
 //======================================================
 bool DagLevelMetric::run() {
   NodeStaticProperty<unsigned int> level(graph);

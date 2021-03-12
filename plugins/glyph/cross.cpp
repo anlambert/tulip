@@ -104,7 +104,7 @@ PLUGIN(Cross)
 Cross::Cross(const tlp::PluginContext *context) : Glyph(context) {
   initCross();
 }
-Cross::~Cross() {}
+Cross::~Cross() = default;
 void Cross::getIncludeBoundingBox(BoundingBox &boundingBox, node) {
   boundingBox[0] = Coord(-0.5, -0.5, 0);
   boundingBox[1] = Coord(0.5, 0.5, 0);

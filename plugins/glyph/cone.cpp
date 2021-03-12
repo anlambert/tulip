@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -133,7 +133,7 @@ public:
 PLUGIN(Cone)
 
 Cone::Cone(const tlp::PluginContext *context) : NoShaderGlyph(context) {}
-Cone::~Cone() {}
+Cone::~Cone() = default;
 void Cone::getIncludeBoundingBox(BoundingBox &boundingBox, node) {
   boundingBox[0] = Coord(-0.25, -0.25, 0);
   boundingBox[1] = Coord(0.25, 0.25, 0.5);
@@ -190,7 +190,7 @@ public:
                    "Textured cone for edge extremities", "1.0", EdgeExtremityShape::Cone)
 
   EECone(const tlp::PluginContext *context) : EdgeExtremityGlyph(context) {}
-  ~EECone() override {}
+  ~EECone() override = default;
 
   void draw(edge e, node /*n*/, const Color &glyphColor, const Color & /*borderColor*/,
             float /*lod*/) override {

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -66,7 +66,7 @@ PLUGIN(Sphere)
 //=========================================================================================
 Sphere::Sphere(const tlp::PluginContext *context) : NoShaderGlyph(context) {}
 
-Sphere::~Sphere() {}
+Sphere::~Sphere() = default;
 
 void Sphere::getIncludeBoundingBox(BoundingBox &boundingBox, node) {
   boundingBox[0] = Coord(-0.35f, -0.35f, -0.35f);
@@ -84,7 +84,7 @@ class EESphere : public EdgeExtremityGlyph {
                    "Textured sphere for edge extremities", "1.0", EdgeExtremityShape::Sphere)
 public:
   EESphere(const tlp::PluginContext *context) : EdgeExtremityGlyph(context) {}
-  ~EESphere() override {}
+  ~EESphere() override = default;
   void draw(edge e, node, const Color &glyphColor, const Color &, float) override {
     glEnable(GL_LIGHTING);
     drawGlyph(glyphColor, edgeExtGlGraphInputData->getElementTexture()->getEdgeValue(e),

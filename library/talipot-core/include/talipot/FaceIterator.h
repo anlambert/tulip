@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -30,7 +30,7 @@ class PlanarConMap;
 class TLP_SCOPE FaceIterator : public Iterator<Face> {
 public:
   FaceIterator(PlanarConMap *m);
-  ~FaceIterator() override {}
+  ~FaceIterator() override = default;
 
   Face next() override;
   bool hasNext() override;
@@ -45,7 +45,7 @@ private:
 class TLP_SCOPE FaceAdjIterator : public Iterator<Face> {
 public:
   FaceAdjIterator(PlanarConMap *m, const node n);
-  ~FaceAdjIterator() override {}
+  ~FaceAdjIterator() override = default;
 
   Face next() override;
   bool hasNext() override;
@@ -60,7 +60,7 @@ private:
 class TLP_SCOPE NodeFaceIterator : public Iterator<node> {
 public:
   NodeFaceIterator(PlanarConMap *m, const Face);
-  ~NodeFaceIterator() override {}
+  ~NodeFaceIterator() override = default;
 
   node next() override;
   bool hasNext() override;
@@ -76,7 +76,7 @@ private:
 class TLP_SCOPE EdgeFaceIterator : public Iterator<edge> {
 public:
   EdgeFaceIterator(PlanarConMap *m, const Face);
-  ~EdgeFaceIterator() override {}
+  ~EdgeFaceIterator() override = default;
 
   edge next() override;
   bool hasNext() override;

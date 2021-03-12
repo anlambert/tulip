@@ -129,7 +129,7 @@ private:
 
 namespace tlp {
 //===========================================
-VectorGraph::VectorGraph() {}
+VectorGraph::VectorGraph() = default;
 //=======================================================
 VectorGraph::~VectorGraph() {
   for (auto values : _nodeValues) {

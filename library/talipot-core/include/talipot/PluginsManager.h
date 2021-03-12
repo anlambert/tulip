@@ -207,7 +207,7 @@ public:
   void sendPluginRemovedEvent(const std::string &pluginName);
 
 private:
-  PluginsManager() {}
+  PluginsManager() = default;
 
   template <typename PluginType>
   bool pluginExistsImpl(const std::string &pluginName) {

@@ -404,7 +404,7 @@ AbstractGlCurve::AbstractGlCurve(const string &shaderProgramName,
   }
 }
 
-AbstractGlCurve::~AbstractGlCurve() {}
+AbstractGlCurve::~AbstractGlCurve() = default;
 
 void AbstractGlCurve::buildCurveVertexBuffers(const unsigned int nbCurvePoints, bool vboOk) {
   curveVertexBuffersObject[nbCurvePoints].resize(5);

@@ -46,7 +46,7 @@ GlArrow2DEdgeExtremity::GlArrow2DEdgeExtremity(tlp::PluginContext *gc) : EdgeExt
   }
 }
 
-GlArrow2DEdgeExtremity::~GlArrow2DEdgeExtremity() {}
+GlArrow2DEdgeExtremity::~GlArrow2DEdgeExtremity() = default;
 
 void GlArrow2DEdgeExtremity::draw(edge e, node, const Color &glyphColor, const Color &borderColor,
                                   float lod) {

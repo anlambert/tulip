@@ -86,7 +86,7 @@ MouseSelectionEditor::MouseSelectionEditor()
   }
 }
 //========================================================================================
-MouseSelectionEditor::~MouseSelectionEditor() {}
+MouseSelectionEditor::~MouseSelectionEditor() = default;
 //========================================================================================
 void MouseSelectionEditor::clear() {
   if (glWidget != nullptr) {

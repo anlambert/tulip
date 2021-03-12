@@ -41,7 +41,7 @@ class GlEditableCurve : public GlEntity {
 public:
   GlEditableCurve(const Coord &startPoint, const Coord &endPoint, const Color &curveColor);
   GlEditableCurve(const GlEditableCurve &curve);
-  ~GlEditableCurve() override {}
+  ~GlEditableCurve() override = default;
 
   void setXAxisScale(GlQuantitativeAxis *xAxis) {
     this->xAxis = xAxis;

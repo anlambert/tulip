@@ -31,7 +31,7 @@ class GlQuantitativeAxis;
 class KernelFunction {
 
 public:
-  virtual ~KernelFunction() {}
+  virtual ~KernelFunction() = default;
 
   virtual double operator()(double val) = 0;
 };

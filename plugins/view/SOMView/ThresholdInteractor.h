@@ -35,7 +35,7 @@ class GlLabel;
 
 class Slider {
 public:
-  virtual ~Slider() {}
+  virtual ~Slider() = default;
 
   virtual float getLeftBound() = 0;
   virtual float getRightBound() = 0;

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -58,7 +58,7 @@ SquarifiedTreeMap::SquarifiedTreeMap(const tlp::PluginContext *context) : Layout
 }
 
 //====================================================================
-SquarifiedTreeMap::~SquarifiedTreeMap() {}
+SquarifiedTreeMap::~SquarifiedTreeMap() = default;
 
 //====================================================================
 bool SquarifiedTreeMap::check(std::string &errorMsg) {

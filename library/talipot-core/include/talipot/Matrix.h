@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -41,7 +41,7 @@ namespace tlp {
 template <typename Obj, size_t SIZE>
 class Matrix : public Array<Vector<Obj, SIZE>, SIZE> {
 public:
-  Matrix() {}
+  Matrix() = default;
   Matrix(const Array<Vector<Obj, SIZE>, SIZE> &a) : Array<Vector<Obj, SIZE>, SIZE>(a) {}
 
   // Builds a correlation matrix from a covariance matrix !

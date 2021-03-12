@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -77,7 +77,7 @@ TLP_SCOPE std::string getMinor(const std::string &release);
  */
 class TLP_SCOPE Plugin : public tlp::WithParameter, public tlp::WithDependency {
 public:
-  virtual ~Plugin() {}
+  virtual ~Plugin() = default;
 
   /**
     @brief The icon (preferably a thumbnail) of the plugin

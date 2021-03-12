@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -217,7 +217,7 @@ public:
     addInParameter<string>("Default metric", paramHelp[1], "weight");
   }
 
-  ~ImportUCINET() override {}
+  ~ImportUCINET() override = default;
 
   std::string icon() const override {
     return ":/talipot/app/icons/32/import_ucinet.png";

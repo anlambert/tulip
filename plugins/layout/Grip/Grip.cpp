@@ -33,7 +33,7 @@ Grip::Grip(const tlp::PluginContext *context)
   addInParameter<bool>("3D layout", paramHelp[0], "false");
   addDependency("Connected Component Packing", "1.0");
 }
-Grip::~Grip() {}
+Grip::~Grip() = default;
 
 void Grip::computeCurrentGraphLayout() {
   if (currentGraph->numberOfNodes() <= 3) {

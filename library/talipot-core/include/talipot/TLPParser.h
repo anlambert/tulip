@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -305,7 +305,7 @@ struct TLPTokenParser {
 };
 //=====================================================================================
 struct TLPBuilder {
-  virtual ~TLPBuilder() {}
+  virtual ~TLPBuilder() = default;
   virtual bool addBool(const bool) = 0;
   virtual bool addInt(const int) = 0;
   virtual bool addRange(int, int) = 0;

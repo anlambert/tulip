@@ -61,7 +61,7 @@ MixedModel::MixedModel(const tlp::PluginContext *context) : LayoutAlgorithm(cont
   addDependency("Connected Component Packing", "1.0");
 }
 //====================================================
-MixedModel::~MixedModel() {}
+MixedModel::~MixedModel() = default;
 //====================================================
 bool MixedModel::run() {
   string orientation = "vertical";

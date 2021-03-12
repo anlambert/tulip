@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -20,7 +20,7 @@ using namespace tlp;
 
 StrengthMetric::StrengthMetric(const tlp::PluginContext *context) : DoubleAlgorithm(context) {}
 
-StrengthMetric::~StrengthMetric() {}
+StrengthMetric::~StrengthMetric() = default;
 //=============================================================
 double StrengthMetric::e(std::unordered_set<tlp::node> &U, std::unordered_set<tlp::node> &V) {
   double result = 0;

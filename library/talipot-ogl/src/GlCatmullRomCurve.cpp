@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -119,7 +119,7 @@ GlCatmullRomCurve::GlCatmullRomCurve(const vector<Coord> &controlPoints, const C
                       startColor, endColor, startSize, endSize, nbCurvePoints),
       closedCurve(closedCurve), paramType(paramType) {}
 
-GlCatmullRomCurve::~GlCatmullRomCurve() {}
+GlCatmullRomCurve::~GlCatmullRomCurve() = default;
 
 Coord GlCatmullRomCurve::computeCurvePointOnCPU(const std::vector<Coord> &controlPoints, float t) {
   return computeCatmullRomPoint(controlPoints, t, closedCurve, alpha);

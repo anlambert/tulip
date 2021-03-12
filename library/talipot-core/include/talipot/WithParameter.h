@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -69,7 +69,7 @@ private:
   ParameterDirection direction;
 
 public:
-  ParameterDescription() {}
+  ParameterDescription() = default;
   ParameterDescription(const std::string &name, const std::string &type, const std::string &help,
                        const std::string &defaultValue, bool mandatory,
                        ParameterDirection direction)
@@ -145,7 +145,7 @@ public:
  **/
 struct TLP_SCOPE ParameterDescriptionList {
 
-  ParameterDescriptionList() {}
+  ParameterDescriptionList() = default;
 
   /**
    * @brief Adds a new parameter of type T to the list.

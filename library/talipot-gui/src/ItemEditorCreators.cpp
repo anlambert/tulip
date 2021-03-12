@@ -76,7 +76,7 @@ public:
     // it may not be shown when using gnome
     setOptions(QColorDialog::ShowAlphaChannel | QColorDialog::DontUseNativeDialog);
   }
-  ~ColorDialog() override {}
+  ~ColorDialog() override = default;
   tlp::Color previousColor;
   int ok;
   void done(int res) override {
@@ -345,7 +345,7 @@ class FileDialog : public QFileDialog {
 
 public:
   FileDialog(QWidget *w) : QFileDialog(w), ok(QDialog::Rejected) {}
-  ~FileDialog() override {}
+  ~FileDialog() override = default;
   int ok;
   FileDescriptor previousFileDescriptor;
 

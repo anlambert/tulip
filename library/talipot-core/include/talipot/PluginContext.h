@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -37,7 +37,7 @@ class PluginProgress;
 class PluginContext {
 public:
   // Required for dynamic casting
-  virtual ~PluginContext() {}
+  virtual ~PluginContext() = default;
 };
 
 /**
@@ -71,7 +71,7 @@ public:
   AlgorithmContext(tlp::Graph *graph = nullptr, tlp::DataSet *dataSet = nullptr,
                    tlp::PluginProgress *progress = nullptr)
       : graph(graph), dataSet(dataSet), pluginProgress(progress) {}
-  ~AlgorithmContext() override {}
+  ~AlgorithmContext() override = default;
 };
 }
 #endif // TALIPOT_PLUGIN_CONTEXT_H

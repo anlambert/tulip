@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -37,7 +37,7 @@ public:
                    NodeShape::GlowSphere)
   GlowSphere(const tlp::PluginContext *context = nullptr)
       : AroundTexturedSphere(context, "radialGradientTexture.png", 128) {}
-  ~GlowSphere() override {}
+  ~GlowSphere() override = default;
 };
 
 PLUGIN(GlowSphere)
@@ -47,7 +47,7 @@ public:
   GLYPHINFORMATION("3D - Glow Sphere extremity", "Patrick Mary", "24/01/2012",
                    "Glow Sphere for edge extremities", "1.0", EdgeExtremityShape::GlowSphere)
   EEGlowSphere(const tlp::PluginContext *context = nullptr) : EdgeExtremityGlyph(context) {}
-  ~EEGlowSphere() override {}
+  ~EEGlowSphere() override = default;
   void draw(edge e, node n, const Color &glyphColor, const Color & /* borderColor */,
             float /* lod */) override {
     glDisable(GL_LIGHTING);

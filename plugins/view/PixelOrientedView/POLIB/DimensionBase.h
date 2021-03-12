@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -18,7 +18,7 @@
 #include <string>
 
 struct DimensionBase {
-  virtual ~DimensionBase() {}
+  virtual ~DimensionBase() = default;
   virtual unsigned int numberOfItems() const = 0;
   virtual unsigned int numberOfValues() const = 0;
   virtual std::string getItemLabelAtRank(const unsigned int rank) const = 0;

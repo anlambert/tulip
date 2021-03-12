@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -180,7 +180,7 @@ public:
 };
 PLUGIN(Ring)
 Ring::Ring(const tlp::PluginContext *context) : Glyph(context) {}
-Ring::~Ring() {}
+Ring::~Ring() = default;
 void Ring::getIncludeBoundingBox(BoundingBox &boundingBox, node) {
   boundingBox[0] = Coord(-0.35f, -0.35f, 0);
   boundingBox[1] = Coord(0.35f, 0.35f, 0);

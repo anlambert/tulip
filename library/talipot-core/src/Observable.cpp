@@ -160,7 +160,7 @@ Event::Event(const Observable &sender, EventType type) : _sender(sender._n), _ty
   }
 }
 //----------------------------------
-Event::~Event() {}
+Event::~Event() = default;
 //----------------------------------
 Observable *Event::sender() const {
   return Observable::getObject(_sender); /** only Observable can be use to create event */

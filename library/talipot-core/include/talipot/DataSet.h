@@ -29,17 +29,17 @@ class Graph;
 
 // basic interface to embed a data of any type
 struct TLP_SCOPE DataMem {
-  DataMem() {}
-  virtual ~DataMem() {}
+  DataMem() = default;
+  virtual ~DataMem() = default;
 };
 
 // basic template to embed a value of a known type
 template <typename TYPE>
 struct TypedValueContainer : public DataMem {
   TYPE value;
-  TypedValueContainer() {}
+  TypedValueContainer() = default;
   TypedValueContainer(const TYPE &val) : value(val) {}
-  ~TypedValueContainer() override {}
+  ~TypedValueContainer() override = default;
 };
 
 /**
@@ -47,7 +47,7 @@ struct TypedValueContainer : public DataMem {
  * @brief Describes a value of any type
  */
 struct TLP_SCOPE DataType : public DataMem {
-  DataType() {}
+  DataType() = default;
   DataType(void *value) : value(value) {}
 
   /**
@@ -106,7 +106,7 @@ struct DataTypeSerializer {
   // the readable type name the serializer is designed for
   std::string outputTypeName;
   DataTypeSerializer(const std::string &otn) : outputTypeName(otn) {}
-  virtual ~DataTypeSerializer() {}
+  virtual ~DataTypeSerializer() = default;
   // return a copy of this
   virtual DataTypeSerializer *clone() const = 0;
   // write the DataType embedded value into the output stream
@@ -187,7 +187,7 @@ class TLP_SCOPE DataSet {
   static void registerDataTypeSerializer(const std::string &typeName, DataTypeSerializer *dts);
 
 public:
-  DataSet() {}
+  DataSet() = default;
   DataSet(const DataSet &set);
   ~DataSet();
 

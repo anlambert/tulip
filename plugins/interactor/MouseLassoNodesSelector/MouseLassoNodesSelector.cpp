@@ -58,7 +58,7 @@ MouseLassoNodesSelectorInteractorComponent::MouseLassoNodesSelectorInteractorCom
     : drawInteractor(false), camera(nullptr), graph(nullptr), viewSelection(nullptr),
       dragStarted(false) {}
 
-MouseLassoNodesSelectorInteractorComponent::~MouseLassoNodesSelectorInteractorComponent() {}
+MouseLassoNodesSelectorInteractorComponent::~MouseLassoNodesSelectorInteractorComponent() = default;
 
 // found on http://local.wasp.uwa.edu.au/~pbourke/geometry/insidepoly/
 bool pointInsidePolygon(const vector<Coord> &polygon, const Coord &point) {

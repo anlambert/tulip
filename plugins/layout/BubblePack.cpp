@@ -265,7 +265,7 @@ BubblePack::BubblePack(const tlp::PluginContext *context) : LayoutAlgorithm(cont
   addDependency("Connected Component Packing", "1.0");
 }
 
-BubblePack::~BubblePack() {}
+BubblePack::~BubblePack() = default;
 
 bool BubblePack::run() {
   if (pluginProgress) {

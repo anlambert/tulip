@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -33,7 +33,7 @@ GlCurve::GlCurve(const vector<Coord> &points, const Color &beginFColor, const Co
 //=====================================================
 GlCurve::GlCurve(const unsigned int nbPoints) : _points(nbPoints), texture("") {}
 //=====================================================
-GlCurve::~GlCurve() {}
+GlCurve::~GlCurve() = default;
 //=====================================================
 void GlCurve::resizePoints(const unsigned int nbPoints) {
   assert(nbPoints >= 3);

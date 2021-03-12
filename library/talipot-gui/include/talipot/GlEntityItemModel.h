@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -25,7 +25,7 @@ class GlEntity;
 class TLP_QT_SCOPE GlEntityItemEditor {
 public:
   GlEntityItemEditor(GlEntity *ent) : entity(ent) {}
-  virtual ~GlEntityItemEditor() {}
+  virtual ~GlEntityItemEditor() = default;
 
   /**
    * @brief Return properties names for this entity

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -28,7 +28,7 @@ PixelOrientedMediator::PixelOrientedMediator(LayoutFunction *layout, ColorFuncti
   fishTranslation[1] = 0;
 }
 
-PixelOrientedMediator::~PixelOrientedMediator() {}
+PixelOrientedMediator::~PixelOrientedMediator() = default;
 
 Vec2f PixelOrientedMediator::screenToScene(const Vec2i &p) {
   Vec2f q;

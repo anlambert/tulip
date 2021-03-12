@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -102,7 +102,7 @@ Defines a graph with 3 nodes and 3 edges, the edge between A and C is named E an
   AdjacencyMatrixImport(tlp::PluginContext *context) : ImportModule(context) {
     addInParameter<string>("file::filename", paramHelp[0], "");
   }
-  ~AdjacencyMatrixImport() override {}
+  ~AdjacencyMatrixImport() override = default;
   vector<node> nodes;
 
   std::string icon() const override {

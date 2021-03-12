@@ -177,7 +177,7 @@ void MouseElementDeleter::clear() {
 class MouseRotXRotY : public InteractorComponent {
 public:
   MouseRotXRotY() : x(INT_MAX), y(INT_MAX) {}
-  ~MouseRotXRotY() override {}
+  ~MouseRotXRotY() override = default;
   int x, y;
   bool eventFilter(QObject *, QEvent *) override;
 };
@@ -223,7 +223,7 @@ bool MouseRotXRotY::eventFilter(QObject *widget, QEvent *e) {
 class MouseZoomRotZ : public InteractorComponent {
 public:
   MouseZoomRotZ() : x(INT_MAX), y(INT_MAX), inRotation(false), inZoom(false) {}
-  ~MouseZoomRotZ() override {}
+  ~MouseZoomRotZ() override = default;
   int x, y;
   bool inRotation, inZoom;
   bool eventFilter(QObject *, QEvent *) override;
@@ -286,7 +286,7 @@ class MouseMove : public InteractorComponent {
 public:
   int x, y;
   MouseMove() : x(INT_MAX), y(INT_MAX) {}
-  ~MouseMove() override {}
+  ~MouseMove() override = default;
   bool eventFilter(QObject *, QEvent *) override;
 };
 

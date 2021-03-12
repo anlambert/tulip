@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -31,7 +31,7 @@ typedef __int64 int64_t;
 
 class StackWalker {
 public:
-  virtual ~StackWalker() {}
+  virtual ~StackWalker() = default;
   virtual void printCallStack(std::ostream &os, unsigned int maxDepth = 50) = 0;
 
   void printCallStackToStdErr(unsigned int maxDepth = 50) {

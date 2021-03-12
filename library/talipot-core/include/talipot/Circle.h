@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -28,7 +28,7 @@ namespace tlp {
  */
 template <typename Obj, typename OTYPE>
 struct Circle : public Vector<Obj, 2, OTYPE> {
-  Circle() {}
+  Circle() = default;
   Circle(const Vector<Obj, 2, OTYPE> &pos, Obj radius)
       : Vector<Obj, 2, OTYPE>(pos), radius(radius) {}
   Circle(const Circle &c) : Vector<Obj, 2, OTYPE>(c), radius(c.radius) {}

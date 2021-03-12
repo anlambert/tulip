@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -63,7 +63,7 @@ public:
 
 #endif
   }
-  ~IdManagerIterator() override {}
+  ~IdManagerIterator() override = default;
 
   bool hasNext() override {
     return (current < last);
@@ -93,7 +93,7 @@ class TLP_SCOPE IdManager {
   IdManagerState state;
 
 public:
-  IdManager() {}
+  IdManager() = default;
   /**
    * Returns true if the id is not used else false.
    */

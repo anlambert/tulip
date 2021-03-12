@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -175,7 +175,7 @@ class HistogramMouseShowElementInfo : public MouseShowElementInfo {
 
 public:
   HistogramMouseShowElementInfo() : MouseShowElementInfo(), hView(nullptr) {}
-  ~HistogramMouseShowElementInfo() override {}
+  ~HistogramMouseShowElementInfo() override = default;
 
   void viewChanged(View *v) override {
     hView = static_cast<HistogramView *>(v);

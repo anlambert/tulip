@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -35,7 +35,7 @@ CSVSimpleParser::CSVSimpleParser(const string &fileName, const QString &separato
       _decimalMark(decimalMark), _fileEncoding(fileEncoding), _firstLine(firstLine),
       _lastLine(lastLine), _mergesep(mergesep) {}
 
-CSVSimpleParser::~CSVSimpleParser() {}
+CSVSimpleParser::~CSVSimpleParser() = default;
 
 string CSVSimpleParser::convertStringEncoding(const std::string &toConvert, QTextCodec *encoder) {
   return QStringToTlpString(encoder->toUnicode(toConvert.c_str()));

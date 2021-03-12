@@ -28,7 +28,7 @@ class GlAxisBoxPlot : public GlEntity {
 
 public:
   GlAxisBoxPlot(QuantitativeParallelAxis *axis, const Color &fillColor, const Color &outlineColor);
-  ~GlAxisBoxPlot() override {}
+  ~GlAxisBoxPlot() override = default;
 
   void draw(float lod, Camera *camera) override;
 

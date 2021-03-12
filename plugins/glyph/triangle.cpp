@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -44,7 +44,7 @@ PLUGIN(Triangle)
 //===================================================================================
 Triangle::Triangle(const tlp::PluginContext *context) : Glyph(context) {}
 //=====================================================
-Triangle::~Triangle() {}
+Triangle::~Triangle() = default;
 //=====================================================
 void Triangle::getIncludeBoundingBox(BoundingBox &boundingBox, node) {
   boundingBox[0] = Coord(-0.25, -0.5, 0);

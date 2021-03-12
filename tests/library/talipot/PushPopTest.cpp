@@ -1099,7 +1099,7 @@ class PropertyObserverForTest : public Observable {
 public:
   std::set<PropertyInterface *> properties;
 
-  PropertyObserverForTest() {}
+  PropertyObserverForTest() = default;
 
   void reset() {
     properties.clear();

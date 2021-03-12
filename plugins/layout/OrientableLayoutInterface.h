@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -24,7 +24,7 @@ public:
   typedef OrientableCoord PointType;
   typedef std::vector<OrientableCoord> LineType;
 
-  virtual ~OrientableLayoutInterface() {}
+  virtual ~OrientableLayoutInterface() = default;
 
   virtual OrientableCoord createCoord(const float x = 0, const float y = 0, const float z = 0) = 0;
   virtual OrientableCoord createCoord(const tlp::Coord &v) = 0;

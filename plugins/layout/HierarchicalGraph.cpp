@@ -44,7 +44,7 @@ HierarchicalGraph::HierarchicalGraph(const tlp::PluginContext *context) : Layout
   addDependency("Hierarchical Tree (R-T Extended)", "1.1");
 }
 //================================================================================
-HierarchicalGraph::~HierarchicalGraph() {}
+HierarchicalGraph::~HierarchicalGraph() = default;
 //================================================================================
 class LessThanEdge {
 public:

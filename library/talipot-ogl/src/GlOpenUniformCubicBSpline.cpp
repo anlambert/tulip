@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -87,7 +87,7 @@ GlOpenUniformCubicBSpline::GlOpenUniformCubicBSpline(const vector<Coord> &contro
     : AbstractGlCurve("open uniform cubic bspline vertex shader", bSplineSpecificShaderCode,
                       controlPoints, startColor, endColor, startSize, endSize, nbCurvePoints) {}
 
-GlOpenUniformCubicBSpline::~GlOpenUniformCubicBSpline() {}
+GlOpenUniformCubicBSpline::~GlOpenUniformCubicBSpline() = default;
 
 void GlOpenUniformCubicBSpline::setCurveVertexShaderRenderingSpecificParameters() {
   curveShaderProgram->setUniformFloat("stepKnots", stepKnots);

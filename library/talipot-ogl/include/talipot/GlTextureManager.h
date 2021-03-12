@@ -43,7 +43,7 @@ public:
    */
   virtual bool loadTexture(const std::string &filename, GlTexture &texture);
 
-  virtual ~GlTextureLoader() {}
+  virtual ~GlTextureLoader() = default;
 };
 
 /**

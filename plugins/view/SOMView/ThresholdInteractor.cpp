@@ -208,7 +208,7 @@ void ColorScaleSlider::treatEvents(const std::vector<Event> &) {
 SliderBar::SliderBar(ColorScaleSlider *left, ColorScaleSlider *right, const string &textureName)
     : GlEntity(), left(left), right(right), texture(textureName), isVisible(false) {}
 
-SliderBar::~SliderBar() {}
+SliderBar::~SliderBar() = default;
 
 float SliderBar::getLeftBound() {
   return left->getLeftBound();

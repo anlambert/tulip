@@ -28,7 +28,7 @@ namespace tlp {
 ScatterPlot2DViewNavigator::ScatterPlot2DViewNavigator()
     : scatterPlot2dView(nullptr), selectedScatterPlotOverview(nullptr), glWidget(nullptr) {}
 
-ScatterPlot2DViewNavigator::~ScatterPlot2DViewNavigator() {}
+ScatterPlot2DViewNavigator::~ScatterPlot2DViewNavigator() = default;
 
 void ScatterPlot2DViewNavigator::viewChanged(View *view) {
   scatterPlot2dView = static_cast<ScatterPlot2DView *>(view);

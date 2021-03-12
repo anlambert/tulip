@@ -207,7 +207,7 @@ ScatterPlotCorrelCoeffSelector::ScatterPlotCorrelCoeffSelector(
   basicCircle.setOutlineColor(Color(0, 0, 255, 255));
 }
 
-ScatterPlotCorrelCoeffSelector::~ScatterPlotCorrelCoeffSelector() {}
+ScatterPlotCorrelCoeffSelector::~ScatterPlotCorrelCoeffSelector() = default;
 
 bool ScatterPlotCorrelCoeffSelector::eventFilter(QObject *obj, QEvent *e) {
   GlWidget *glWidget = static_cast<GlWidget *>(obj);

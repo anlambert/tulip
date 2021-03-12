@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -29,7 +29,7 @@ Dendrogram::Dendrogram(const tlp::PluginContext *context) : LayoutAlgorithm(cont
 }
 
 //====================================================================
-Dendrogram::~Dendrogram() {}
+Dendrogram::~Dendrogram() = default;
 //====================================================================
 void Dendrogram::computeLevelHeights(tlp::Graph *tree, tlp::node n, unsigned int depth,
                                      OrientableSizeProxy *oriSize) {

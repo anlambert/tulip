@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -137,7 +137,7 @@ int file_exist(const std::string &filename) {
 #include <execinfo.h>
 #endif
 
-StackWalkerGCC::StackWalkerGCC() {}
+StackWalkerGCC::StackWalkerGCC() = default;
 
 StackWalkerGCC::~StackWalkerGCC() {
 #ifdef HAVE_BFD
