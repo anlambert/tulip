@@ -199,7 +199,7 @@ void QuickAccessBarImpl::addButtonsAtEnd(const QVector<QAbstractButton *> &butto
 }
 
 void QuickAccessBarImpl::addSeparator() {
-  QFrame *sep = new QFrame(this);
+  auto *sep = new QFrame(this);
   sep->setFrameShape(QFrame::VLine);
   sep->setFrameShadow(QFrame::Sunken);
   QLayoutItem *spacer = _ui->horizontalLayout->itemAt(_ui->horizontalLayout->count() - 1);

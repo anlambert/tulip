@@ -36,7 +36,7 @@ ExportWizard::ExportWizard(Graph *g, const QString &exportFile, QWidget *parent)
   _ui->browseButton->setIcon(FontIconManager::icon(MaterialDesignIcons::FolderOpen));
   button(QWizard::FinishButton)->setEnabled(false);
 
-  PluginModel<tlp::ExportModule> *model = new PluginModel<tlp::ExportModule>(_ui->exportModules);
+  auto *model = new PluginModel<tlp::ExportModule>(_ui->exportModules);
 
   _ui->exportModules->setModel(model);
   _ui->exportModules->setRootIndex(model->index(0, 0));
@@ -92,7 +92,7 @@ QString ExportWizard::algorithm() const {
 }
 
 tlp::DataSet ExportWizard::parameters() const {
-  ParameterListModel *model = dynamic_cast<ParameterListModel *>(_ui->parametersList->model());
+  auto *model = dynamic_cast<ParameterListModel *>(_ui->parametersList->model());
 
   if (model == nullptr) {
     return DataSet();
@@ -115,7 +115,7 @@ void ExportWizard::pathChanged(QString s) {
   button(QWizard::FinishButton)->setEnabled(!s.isEmpty());
 
   for (const auto &pluginName : PluginsManager::availablePlugins<ExportModule>()) {
-    const ExportModule &exportPlugin =
+    const auto &exportPlugin =
         static_cast<const ExportModule &>(PluginsManager::pluginInformation(pluginName));
 
     for (const auto &ext : exportPlugin.allFileExtensions()) {
@@ -135,8 +135,7 @@ void ExportWizard::pathChanged(QString s) {
     return;
   }
 
-  PluginModel<tlp::ExportModule> *model =
-      static_cast<PluginModel<tlp::ExportModule> *>(_ui->exportModules->model());
+  auto *model = static_cast<PluginModel<tlp::ExportModule> *>(_ui->exportModules->model());
   QModelIndexList results = model->match(_ui->exportModules->rootIndex(), Qt::DisplayRole,
                                          selectedExport, 1, Qt::MatchExactly | Qt::MatchRecursive);
 
@@ -152,7 +151,7 @@ void ExportWizard::browseButtonClicked() {
   QString all = "all supported formats (";
 
   for (const auto &pluginName : PluginsManager::availablePlugins<ExportModule>()) {
-    const ExportModule &exportPlugin =
+    const auto &exportPlugin =
         static_cast<const ExportModule &>(PluginsManager::pluginInformation(pluginName));
     filter += tlpStringToQString(exportPlugin.name()) + " (";
 
@@ -187,8 +186,7 @@ bool ExportWizard::validateCurrentPage() {
   QString exportFile = outputFile();
 
   // check correct extension
-  ExportModule *p =
-      PluginsManager::getPluginObject<ExportModule>(tlp::QStringToTlpString(algorithm()));
+  auto *p = PluginsManager::getPluginObject<ExportModule>(tlp::QStringToTlpString(algorithm()));
   std::list<std::string> extensions;
 
   if (p != nullptr) {

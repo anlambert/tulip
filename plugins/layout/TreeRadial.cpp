@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -361,7 +361,7 @@ public:
 
     getSpacingParameters(dataSet, nSpacing, lSpacing);
 
-    SizeProperty *circleSizes = new SizeProperty(graph);
+    auto *circleSizes = new SizeProperty(graph);
     for (auto n : tree->nodes()) {
       const Size &boundingBox = sizes->getNodeValue(n);
       double diam = 2. * sqrt(boundingBox.getW() * boundingBox.getW() / 4.0 +

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -131,7 +131,7 @@ void SOMMap::registerModification(const vector<string> &propertiesToListen) {
       std::cerr << __PRETTY_FUNCTION__ << ":" << __LINE__ << " "
                 << "Property doesn't exist creating new" << std::endl;
 #endif
-      DoubleProperty *property = new DoubleProperty(this);
+      auto *property = new DoubleProperty(this);
       addLocalProperty(strProp, property);
       properties.push_back(property);
     } else {

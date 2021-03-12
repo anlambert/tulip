@@ -80,8 +80,7 @@ void SceneConfigWidget::resetChanges() {
 
   // NODES
   delete _ui->labelsOrderingCombo->model();
-  GraphPropertiesModel<NumericProperty> *model =
-      new GraphPropertiesModel<NumericProperty>("Disable ordering", graph);
+  auto *model = new GraphPropertiesModel<NumericProperty>("Disable ordering", graph);
   _ui->labelsOrderingCombo->setModel(model);
 
   if (renderingParameters.getElementOrderingProperty() == nullptr) {
@@ -160,7 +159,7 @@ void SceneConfigWidget::applySettings() {
   if (_ui->labelsOrderingCombo->currentIndex() == 0) {
     renderingParameters.setElementOrderingProperty(nullptr);
   } else {
-    GraphPropertiesModel<NumericProperty> *model =
+    auto *model =
         static_cast<GraphPropertiesModel<NumericProperty> *>(_ui->labelsOrderingCombo->model());
     renderingParameters.setElementOrderingProperty(
         dynamic_cast<NumericProperty *>(model->index(_ui->labelsOrderingCombo->currentIndex(), 0)

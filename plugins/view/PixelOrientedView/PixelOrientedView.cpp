@@ -387,7 +387,7 @@ void PixelOrientedView::initPixelView() {
     oss << "pixel oriented overview for dimension " << selectedGraphProperties[i];
 
     if (overviewsMap.find(selectedGraphProperties[i]) == overviewsMap.end()) {
-      PixelOrientedOverview *pixelOrientedOverview = new PixelOrientedOverview(
+      auto *pixelOrientedOverview = new PixelOrientedOverview(
           dataMap[selectedGraphProperties[i]], pixelOrientedMediator, overviewBLCorner,
           selectedGraphProperties[i], backgroundColor, textColor);
       pixelOrientedOverview->computePixelView();
@@ -451,13 +451,13 @@ void PixelOrientedView::addEmptyViewLabel() {
 
   Color textColor = getTextColor();
 
-  GlLabel *noDimsLabel = new GlLabel(Coord(0.0f, 0.0f, 0.0f), Size(200.0f, 200.0f), textColor);
+  auto *noDimsLabel = new GlLabel(Coord(0.0f, 0.0f, 0.0f), Size(200.0f, 200.0f), textColor);
   noDimsLabel->setText(ViewName::PixelOrientedViewName);
   mainLayer->addGlEntity(noDimsLabel, "no dimensions label");
-  GlLabel *noDimsLabel1 = new GlLabel(Coord(0.0f, -50.0f, 0.0f), Size(400.0f, 200.0f), textColor);
+  auto *noDimsLabel1 = new GlLabel(Coord(0.0f, -50.0f, 0.0f), Size(400.0f, 200.0f), textColor);
   noDimsLabel1->setText("No graph properties selected.");
   mainLayer->addGlEntity(noDimsLabel1, "no dimensions label 1");
-  GlLabel *noDimsLabel2 = new GlLabel(Coord(0.0f, -100.0f, 0.0f), Size(700.0f, 200.0f), textColor);
+  auto *noDimsLabel2 = new GlLabel(Coord(0.0f, -100.0f, 0.0f), Size(700.0f, 200.0f), textColor);
   noDimsLabel2->setText("Go to the \"Properties\" tab in top right corner.");
   mainLayer->addGlEntity(noDimsLabel2, "no dimensions label 2");
 
@@ -626,7 +626,7 @@ void PixelOrientedView::updateOverviews(const bool updateAll) {
   Coord upBak = cam.getUp();
   float width = cam.getBoundingBox().width();
 
-  GlProgressBar *progressBar =
+  auto *progressBar =
       new GlProgressBar(centerBak + Coord(0, width / 70, 0), width - width / 10, width / 12,
                         // use same green color as the highlighting one
                         // in workspace panel

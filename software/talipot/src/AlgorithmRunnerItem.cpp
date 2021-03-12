@@ -107,7 +107,7 @@ void AlgorithmRunnerItem::setGraph(Graph *g) {
   _graph = g;
 
   if (_ui->parameters->model() != nullptr) {
-    ParameterListModel *model = static_cast<ParameterListModel *>(_ui->parameters->model());
+    auto *model = static_cast<ParameterListModel *>(_ui->parameters->model());
     DataSet dataSet = model->parametersValues();
     for (const std::pair<std::string, tlp::DataType *> &it : stableIterator(dataSet.getValues())) {
       if (it.second->isTalipotProperty()) {
@@ -126,7 +126,7 @@ void AlgorithmRunnerItem::setGraph(Graph *g) {
 
 void AlgorithmRunnerItem::setData(const DataSet &data) {
   initModel();
-  ParameterListModel *model = static_cast<ParameterListModel *>(_ui->parameters->model());
+  auto *model = static_cast<ParameterListModel *>(_ui->parameters->model());
   model->setParametersValues(data);
 }
 
@@ -462,7 +462,7 @@ void AlgorithmRunnerItem::run(Graph *g) {
       originalDataSet.setData(outNonPropertyParams[i], dataType);
     }
 
-    ParameterListModel *model = static_cast<ParameterListModel *>(_ui->parameters->model());
+    auto *model = static_cast<ParameterListModel *>(_ui->parameters->model());
     model->setParametersValues(originalDataSet);
   }
 
@@ -494,7 +494,7 @@ void AlgorithmRunnerItem::mouseMoveEvent(QMouseEvent *ev) {
     return;
   }
 
-  QDrag *drag = new QDrag(this);
+  auto *drag = new QDrag(this);
   const Plugin &p = PluginsManager::pluginInformation(QStringToTlpString(_pluginName).c_str());
   QPixmap icon;
   if (IconicFont::isIconSupported(p.icon())) {
@@ -523,7 +523,7 @@ void AlgorithmRunnerItem::mouseMoveEvent(QMouseEvent *ev) {
   drag->setPixmap(pix);
 
   initModel();
-  AlgorithmMimeType *mimeData = new AlgorithmMimeType(
+  auto *mimeData = new AlgorithmMimeType(
       name(), static_cast<ParameterListModel *>(_ui->parameters->model())->parametersValues());
   connect(mimeData, &AlgorithmMimeType::mimeRun, this, &AlgorithmRunnerItem::run);
   drag->setMimeData(mimeData);
@@ -633,7 +633,7 @@ void AlgorithmRunnerItem::initModel() {
     return;
   }
 
-  ParameterListModel *model =
+  auto *model =
       new ParameterListModel(PluginsManager::getPluginParameters(QStringToTlpString(_pluginName)),
                              _graph, _ui->parameters);
 

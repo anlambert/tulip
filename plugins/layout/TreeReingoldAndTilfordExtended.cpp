@@ -185,7 +185,7 @@ list<LR> *TreeReingoldAndTilfordExtended::mergeLRList(std::list<LR> *L, std::lis
 list<LR> *TreeReingoldAndTilfordExtended::TreePlace(tlp::node n,
                                                     std::unordered_map<tlp::node, double> *p) {
   if (tree->outdeg(n) == 0) {
-    list<LR> *result = new list<LR>();
+    auto *result = new list<LR>();
     LR tmpLR;
     tmpLR.L = -sizes->getNodeValue(n).getW() / 2.;
     tmpLR.R = +sizes->getNodeValue(n).getW() / 2.;
@@ -241,7 +241,7 @@ list<LR> *TreeReingoldAndTilfordExtended::TreePlace(tlp::node n,
         childPos.push_back(tmpL + decal);
         delete rightTree;
       } else {
-        list<double>::iterator itI = childPos.begin();
+        auto itI = childPos.begin();
 
         for (; itI != childPos.end(); ++itI) {
           (*itI) -= decal;
@@ -387,7 +387,7 @@ bool TreeReingoldAndTilfordExtended::run() {
 
   // use bounding circles if specified
   if (boundingCircles) {
-    SizeProperty *circleSizes = new SizeProperty(graph);
+    auto *circleSizes = new SizeProperty(graph);
     for (auto n : graph->nodes()) {
       const Size &boundCircle = sizes->getNodeValue(n);
       double diam = 2 * sqrt(boundCircle.getW() * boundCircle.getW() / 4.0 +

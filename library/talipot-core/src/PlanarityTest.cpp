@@ -33,7 +33,7 @@ public:
 };
 
 void PlanarityTestListener::treatEvent(const Event &evt) {
-  const GraphEvent *gEvt = dynamic_cast<const GraphEvent *>(&evt);
+  const auto *gEvt = dynamic_cast<const GraphEvent *>(&evt);
 
   if (gEvt) {
     Graph *graph = gEvt->getGraph();
@@ -69,7 +69,7 @@ void PlanarityTestListener::treatEvent(const Event &evt) {
     }
   } else {
 
-    Graph *graph = static_cast<Graph *>(evt.sender());
+    auto *graph = static_cast<Graph *>(evt.sender());
 
     if (evt.type() == Event::TLP_DELETE) {
       resultsBuffer.erase(graph);

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -63,10 +63,10 @@ void GlAxis::setAxisGraduations(const std::vector<std::string> &axisGradsLabels,
   unsigned int gradsCpt = 0;
 
   for (unsigned int i = 0; i < axisGradsLabels.size(); ++i) {
-    GlLine *axisGraduation = new GlLine();
+    auto *axisGraduation = new GlLine();
     axisGraduation->setStencil(1);
     axisGraduation->setLineWidth(2.0);
-    GlLabel *graduationLabel = new GlLabel();
+    auto *graduationLabel = new GlLabel();
     float labelWidth;
 
     graduationLabel->setText(axisGradsLabels[i]);
@@ -145,7 +145,7 @@ void GlAxis::setAxisGraduations(const std::vector<std::string> &axisGradsLabels,
 }
 
 void GlAxis::buildAxisLine() {
-  GlLine *axisLine = new GlLine();
+  auto *axisLine = new GlLine();
   axisLine->addPoint(axisBaseCoord, axisColor);
   const unsigned int nbLineSegments = 30;
   float step = axisLength / nbLineSegments;
@@ -248,7 +248,7 @@ void GlAxis::addAxisCaption(const Coord &captionLabelCenter, const bool frame) {
   if (frame) {
     captionLabel->setSize(Size(captionWidth, baseCaptionHeight));
     BoundingBox labelBB = captionLabel->getBoundingBox();
-    GlRect *captionLabelInnerFrame =
+    auto *captionLabelInnerFrame =
         new GlRect(Coord(labelBB[0][0] - 1, labelBB[0][1] + baseCaptionHeight + 1),
                    Coord(labelBB[0][0] + captionWidth + 1, labelBB[0][1] - 1), axisColor, axisColor,
                    false, true);
@@ -259,7 +259,7 @@ void GlAxis::addAxisCaption(const Coord &captionLabelCenter, const bool frame) {
 
     captionComposite->addGlEntity(captionLabelInnerFrame, "caption inner frame" + captionText);
 
-    GlRect *captionLabelOuterFrame =
+    auto *captionLabelOuterFrame =
         new GlRect(Coord(labelBB[0][0] - 2, labelBB[0][1] + baseCaptionHeight + 2),
                    Coord(labelBB[0][0] + captionWidth + 2, labelBB[0][1] - 2), axisColor, axisColor,
                    false, true);

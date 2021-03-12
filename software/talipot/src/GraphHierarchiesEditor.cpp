@@ -146,7 +146,7 @@ GraphHierarchiesEditor::GraphHierarchiesEditor(QWidget *parent)
   _ui->actionCollapse_hierarchy->setIcon(
       FontIconManager::icon(MaterialDesignIcons::ArrowCollapseUp));
 
-  QToolButton *linkButton = new QToolButton();
+  auto *linkButton = new QToolButton();
   linkButton->setObjectName("linkButton");
   linkButton->setIcon(
       FontIconManager::icon(MaterialDesignIcons::LinkVariant, QColor(Qt::white), 0.8));
@@ -175,7 +175,7 @@ bool GraphHierarchiesEditor::synchronized() const {
 
 void GraphHierarchiesEditor::setModel(tlp::GraphHierarchiesModel *model) {
   _model = model;
-  QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(_ui->hierarchiesTree);
+  auto *proxyModel = new QSortFilterProxyModel(_ui->hierarchiesTree);
   proxyModel->setSourceModel(model);
   proxyModel->setDynamicSortFilter(false);
   _ui->hierarchiesTree->setModel(proxyModel);

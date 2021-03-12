@@ -425,7 +425,7 @@ bool HistogramView::eventFilter(QObject *object, QEvent *event) {
   if (xAxisDetail != nullptr && event->type() == QEvent::ToolTip &&
       !detailedHistogram->uniformQuantificationHistogram()) {
     GlWidget *glw = getGlWidget();
-    QHelpEvent *he = static_cast<QHelpEvent *>(event);
+    auto *he = static_cast<QHelpEvent *>(event);
     float x = glw->width() - he->x();
     float y = he->y();
     Coord screenCoords = {x, y};
@@ -662,9 +662,9 @@ void HistogramView::buildHistograms() {
     oss << "histogram overview for property " << selectedProperties[i];
 
     if (histogramsMap.find(selectedProperties[i]) == histogramsMap.end()) {
-      Histogram *histoOverview = new Histogram(
-          _histoGraph, edgeAsNodeGraph, edgeToNode, selectedProperties[i], dataLocation,
-          overviewBLCorner, OVERVIEW_SIZE, backgroundColor, foregroundColor);
+      auto *histoOverview = new Histogram(_histoGraph, edgeAsNodeGraph, edgeToNode,
+                                          selectedProperties[i], dataLocation, overviewBLCorner,
+                                          OVERVIEW_SIZE, backgroundColor, foregroundColor);
       histogramsMap[selectedProperties[i]] = histoOverview;
     } else {
       histogramsMap[selectedProperties[i]]->setDataLocation(dataLocation);
@@ -675,7 +675,7 @@ void HistogramView::buildHistograms() {
 
     histogramsComposite->addGlEntity(histogramsMap[selectedProperties[i]], oss.str());
 
-    GlLabel *propertyLabel =
+    auto *propertyLabel =
         new GlLabel(Coord(overviewBLCorner.getX() + OVERVIEW_SIZE / 2,
                           overviewBLCorner.getY() - labelHeight / 2, 0),
                     Size((8.f / 10.f) * OVERVIEW_SIZE, labelHeight), foregroundColor);
@@ -953,7 +953,7 @@ void HistogramView::applySettings() {
 
 void HistogramView::treatEvent(const Event &message) {
   if (typeid(message) == typeid(GraphEvent)) {
-    const GraphEvent *graphEvent = dynamic_cast<const GraphEvent *>(&message);
+    const auto *graphEvent = dynamic_cast<const GraphEvent *>(&message);
 
     if (graphEvent) {
       if (graphEvent->getType() == GraphEvent::TLP_ADD_NODE) {
@@ -975,7 +975,7 @@ void HistogramView::treatEvent(const Event &message) {
   }
 
   if (typeid(message) == typeid(PropertyEvent)) {
-    const PropertyEvent *propertyEvent = dynamic_cast<const PropertyEvent *>(&message);
+    const auto *propertyEvent = dynamic_cast<const PropertyEvent *>(&message);
 
     if (propertyEvent) {
       if (propertyEvent->getType() == PropertyEvent::TLP_AFTER_SET_NODE_VALUE) {
@@ -999,7 +999,7 @@ void HistogramView::treatEvent(const Event &message) {
 
 void HistogramView::afterSetNodeValue(PropertyInterface *p, const node n) {
   if (p->getGraph() == edgeAsNodeGraph && p->getName() == "viewSelection") {
-    BooleanProperty *edgeAsNodeGraphSelection = static_cast<BooleanProperty *>(p);
+    auto *edgeAsNodeGraphSelection = static_cast<BooleanProperty *>(p);
     BooleanProperty *viewSelection = _histoGraph->getBooleanProperty("viewSelection");
     viewSelection->removeListener(this);
     viewSelection->setEdgeValue(nodeToEdge[n], edgeAsNodeGraphSelection->getNodeValue(n));
@@ -1018,17 +1018,17 @@ void HistogramView::afterSetEdgeValue(PropertyInterface *p, const edge e) {
 
   if (p->getName() == "viewColor") {
     ColorProperty *edgeAsNodeGraphColors = edgeAsNodeGraph->getColorProperty("viewColor");
-    ColorProperty *viewColor = static_cast<ColorProperty *>(p);
+    auto *viewColor = static_cast<ColorProperty *>(p);
     edgeAsNodeGraphColors->setNodeValue(edgeToNode[e], viewColor->getEdgeValue(e));
     setUpdateNeeded();
   } else if (p->getName() == "viewLabel") {
     StringProperty *edgeAsNodeGraphLabels = edgeAsNodeGraph->getStringProperty("viewLabel");
-    StringProperty *viewLabel = static_cast<StringProperty *>(p);
+    auto *viewLabel = static_cast<StringProperty *>(p);
     edgeAsNodeGraphLabels->setNodeValue(edgeToNode[e], viewLabel->getEdgeValue(e));
   } else if (p->getName() == "viewSelection") {
     BooleanProperty *edgeAsNodeGraphSelection =
         edgeAsNodeGraph->getBooleanProperty("viewSelection");
-    BooleanProperty *viewSelection = static_cast<BooleanProperty *>(p);
+    auto *viewSelection = static_cast<BooleanProperty *>(p);
     edgeAsNodeGraphSelection->removeListener(this);
 
     if (edgeAsNodeGraphSelection->getNodeValue(edgeToNode[e]) != viewSelection->getEdgeValue(e)) {
@@ -1047,7 +1047,7 @@ void HistogramView::afterSetAllNodeValue(PropertyInterface *p) {
     setSizesUpdateNeeded();
   } else if (p->getName() == "viewSelection") {
     if (p->getGraph() == edgeAsNodeGraph) {
-      BooleanProperty *edgeAsNodeGraphSelection = static_cast<BooleanProperty *>(p);
+      auto *edgeAsNodeGraphSelection = static_cast<BooleanProperty *>(p);
       BooleanProperty *viewSelection = _histoGraph->getBooleanProperty("viewSelection");
       viewSelection->setAllEdgeValue(
           edgeAsNodeGraphSelection->getNodeValue(edgeAsNodeGraph->getOneNode()));
@@ -1068,17 +1068,17 @@ void HistogramView::afterSetAllEdgeValue(PropertyInterface *p) {
 
   if (p->getName() == "viewColor") {
     ColorProperty *edgeAsNodeGraphColors = edgeAsNodeGraph->getColorProperty("viewColor");
-    ColorProperty *viewColor = static_cast<ColorProperty *>(p);
+    auto *viewColor = static_cast<ColorProperty *>(p);
     edgeAsNodeGraphColors->setAllNodeValue(viewColor->getEdgeDefaultValue());
     setUpdateNeeded();
   } else if (p->getName() == "viewLabel") {
     StringProperty *edgeAsNodeGraphLabels = edgeAsNodeGraph->getStringProperty("viewLabel");
-    StringProperty *viewLabel = static_cast<StringProperty *>(p);
+    auto *viewLabel = static_cast<StringProperty *>(p);
     edgeAsNodeGraphLabels->setAllNodeValue(viewLabel->getEdgeDefaultValue());
   } else if (p->getName() == "viewSelection") {
     BooleanProperty *edgeAsNodeGraphSelection =
         edgeAsNodeGraph->getBooleanProperty("viewSelection");
-    BooleanProperty *viewSelection = static_cast<BooleanProperty *>(p);
+    auto *viewSelection = static_cast<BooleanProperty *>(p);
     for (auto e : _histoGraph->edges()) {
       if (edgeAsNodeGraphSelection->getNodeValue(edgeToNode[e]) != viewSelection->getEdgeValue(e)) {
         edgeAsNodeGraphSelection->setNodeValue(edgeToNode[e], viewSelection->getEdgeValue(e));

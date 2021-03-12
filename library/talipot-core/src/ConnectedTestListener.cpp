@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -20,7 +20,7 @@ using namespace std;
 using namespace tlp;
 
 void ConnectedTestListener::treatEvent(const Event &evt) {
-  const GraphEvent *gEvt = dynamic_cast<const GraphEvent *>(&evt);
+  const auto *gEvt = dynamic_cast<const GraphEvent *>(&evt);
 
   if (gEvt) {
     Graph *graph = gEvt->getGraph();
@@ -61,7 +61,7 @@ void ConnectedTestListener::treatEvent(const Event &evt) {
     }
   } else {
 
-    Graph *graph = static_cast<Graph *>(evt.sender());
+    auto *graph = static_cast<Graph *>(evt.sender());
 
     if (evt.type() == Event::TLP_DELETE) {
       resultsBuffer.erase(graph);

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -317,7 +317,7 @@ void ColorScaleConfigDialog::nbColorsValueChanged(int value) {
 
   if (lastCount < value) {
     for (int j = 0; j < value - lastCount; ++j) {
-      QTableWidgetItem *item = new QTableWidgetItem();
+      auto *item = new QTableWidgetItem();
       QColor color(255, 255, 255, 255);
 
       if (_ui->globalAlphaCB->isChecked()) {
@@ -446,7 +446,7 @@ void ColorScaleConfigDialog::reeditSaveColorScale(QListWidgetItem *savedColorSca
     Settings::instance().endGroup();
 
     for (int i = 0; i < colorsListv.size(); ++i) {
-      QColor color = colorsListv.at(i).value<QColor>();
+      auto color = colorsListv.at(i).value<QColor>();
       colorsList.push_back(Color(color.red(), color.green(), color.blue(), color.alpha()));
     }
 
@@ -493,7 +493,7 @@ void ColorScaleConfigDialog::setColorScale(const ColorScale &colorScale) {
     }
 
     for (auto it = colorMap.begin(); it != colorMap.end();) {
-      QTableWidgetItem *item = new QTableWidgetItem();
+      auto *item = new QTableWidgetItem();
       item->setFlags(Qt::ItemIsEnabled);
       item->setBackground(QBrush(
           QColor(it->second.getR(), it->second.getG(), it->second.getB(), it->second.getA())));

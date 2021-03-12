@@ -65,9 +65,13 @@ public:
   void getIncludeBoundingBox(BoundingBox &boundingBox, node) override;
   void draw(node n, float lod) override;
 };
+
 PLUGIN(Circle)
+
 Circle::Circle(const tlp::PluginContext *context) : Glyph(context) {}
+
 Circle::~Circle() = default;
+
 void Circle::getIncludeBoundingBox(BoundingBox &boundingBox, node) {
   boundingBox[0] = Coord(-0.35f, -0.35f, 0);
   boundingBox[1] = Coord(0.35f, 0.35f, 0);
@@ -105,4 +109,4 @@ public:
 
 PLUGIN(EECircle)
 
-} // end of namespace tlp
+}

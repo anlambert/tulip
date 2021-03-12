@@ -116,7 +116,7 @@ void GlGraph::getXML(string &outString) {
 void GlGraph::setWithXML(const string &, unsigned int &) {}
 
 void GlGraph::treatEvent(const Event &evt) {
-  const GraphEvent *graphEvent = dynamic_cast<const GraphEvent *>(&evt);
+  const auto *graphEvent = dynamic_cast<const GraphEvent *>(&evt);
 
   if (graphEvent) {
     switch (graphEvent->getType()) {
@@ -136,13 +136,13 @@ void GlGraph::treatEvent(const Event &evt) {
       break;
     }
   } else if (evt.type() == Event::TLP_DELETE) {
-    Graph *g = dynamic_cast<Graph *>(evt.sender());
+    auto *g = dynamic_cast<Graph *>(evt.sender());
 
     if (g && inputData.getGraph() == g) {
       inputData.graph = nullptr;
     }
   } else {
-    const PropertyEvent *propertyEvent = dynamic_cast<const PropertyEvent *>(&evt);
+    const auto *propertyEvent = dynamic_cast<const PropertyEvent *>(&evt);
 
     if (propertyEvent && propertyEvent->getType() == PropertyEvent::TLP_AFTER_SET_NODE_VALUE) {
       nodesModified = true;

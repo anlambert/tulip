@@ -163,8 +163,8 @@ void MouseSelectionEditor::getOperation(GlEntity *select) {
 }
 //========================================================================================
 bool MouseSelectionEditor::eventFilter(QObject *widget, QEvent *e) {
-  QMouseEvent *qMouseEv = static_cast<QMouseEvent *>(e);
-  GlWidget *glWidget = static_cast<GlWidget *>(widget);
+  auto *qMouseEv = static_cast<QMouseEvent *>(e);
+  auto *glWidget = static_cast<GlWidget *>(widget);
 
   if (e->type() == QEvent::MouseButtonPress) {
 

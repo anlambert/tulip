@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -198,14 +198,14 @@ void PropertyValuesDispatcher::addLocalProperty(tlp::Graph *g, const std::string
 
 void PropertyValuesDispatcher::treatEvent(const tlp::Event &evt) {
   if (typeid(evt) == typeid(GraphEvent)) {
-    const GraphEvent *gEvt = dynamic_cast<const GraphEvent *>(&evt);
+    const auto *gEvt = dynamic_cast<const GraphEvent *>(&evt);
     Graph *graph = gEvt->getGraph();
 
     if (gEvt->getType() == GraphEvent::TLP_ADD_LOCAL_PROPERTY) {
       addLocalProperty(graph, gEvt->getPropertyName());
     }
   } else {
-    const PropertyEvent *propEvt = dynamic_cast<const PropertyEvent *>(&evt);
+    const auto *propEvt = dynamic_cast<const PropertyEvent *>(&evt);
 
     if (propEvt) {
       PropertyInterface *prop = propEvt->getProperty();

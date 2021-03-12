@@ -24,7 +24,7 @@ ExpandableGroupBox::ExpandableGroupBox(QWidget *parent, const QString &title)
   setExpanded(_expanded);
   connect(this, &QGroupBox::toggled, this, &ExpandableGroupBox::setExpanded);
 
-  QVBoxLayout *lyt = new QVBoxLayout;
+  auto *lyt = new QVBoxLayout;
   lyt->setContentsMargins(0, 0, 0, 0);
   lyt->setMargin(0);
   lyt->setSpacing(0);

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -49,8 +49,8 @@ public slots:
       return;
     }
 
-    QTextBrowser *textBrowser = dynamic_cast<QTextBrowser *>(consoleWidget);
-    QPlainTextEdit *textEdit = dynamic_cast<QPlainTextEdit *>(consoleWidget);
+    auto *textBrowser = dynamic_cast<QTextBrowser *>(consoleWidget);
+    auto *textEdit = dynamic_cast<QPlainTextEdit *>(consoleWidget);
 
     QBrush brush(Qt::SolidPattern);
 
@@ -165,8 +165,8 @@ public:
     }
 
     _lineRead = false;
-    QTextBrowser *textBrowser = dynamic_cast<QTextBrowser *>(_consoleWidget);
-    QPlainTextEdit *textEdit = dynamic_cast<QPlainTextEdit *>(_consoleWidget);
+    auto *textBrowser = dynamic_cast<QTextBrowser *>(_consoleWidget);
+    auto *textEdit = dynamic_cast<QPlainTextEdit *>(_consoleWidget);
     QColor lineColor = QColor(Qt::green).lighter(160);
 
     if (textBrowser) {
@@ -196,8 +196,8 @@ public:
   }
 
   bool eventFilter(QObject *, QEvent *event) override {
-    QTextBrowser *textBrowser = dynamic_cast<QTextBrowser *>(_consoleWidget);
-    QPlainTextEdit *textEdit = dynamic_cast<QPlainTextEdit *>(_consoleWidget);
+    auto *textBrowser = dynamic_cast<QTextBrowser *>(_consoleWidget);
+    auto *textEdit = dynamic_cast<QPlainTextEdit *>(_consoleWidget);
     QTextCursor curCursor;
 
     if (textBrowser) {
@@ -207,7 +207,7 @@ public:
     }
 
     if (event->type() == QEvent::KeyPress) {
-      QKeyEvent *kev = static_cast<QKeyEvent *>(event);
+      auto *kev = static_cast<QKeyEvent *>(event);
       int key = kev->key();
 
       if ((key == Qt::Key_Enter || key == Qt::Key_Return) && kev->modifiers() == Qt::NoModifier) {

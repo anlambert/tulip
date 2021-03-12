@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -39,7 +39,7 @@ Project::~Project() {
 }
 
 Project *Project::newProject() {
-  QTemporaryDir *tempdir = new QTemporaryDir();
+  auto *tempdir = new QTemporaryDir();
   bool dirOk = tempdir->isValid() && QDir(tempdir->path()).mkdir(DATA_DIR_NAME);
 
   if (!dirOk) {
@@ -210,7 +210,7 @@ bool Project::copy(const QString &source, const QString &destination) {
 
 std::fstream *Project::stdFileStream(const QString &path, std::ios_base::openmode mode) {
   QString filePath(toAbsolutePath(path));
-  std::fstream *result = new std::fstream();
+  auto *result = new std::fstream();
   result->open(QStringToTlpString(filePath).c_str(), mode);
 
   if (!result->is_open()) {
@@ -222,7 +222,7 @@ std::fstream *Project::stdFileStream(const QString &path, std::ios_base::openmod
 }
 
 QIODevice *Project::fileStream(const QString &path, QIODevice::OpenMode mode) {
-  QFile *result = new QFile(toAbsolutePath(path));
+  auto *result = new QFile(toAbsolutePath(path));
   result->open(mode);
   return result;
 }

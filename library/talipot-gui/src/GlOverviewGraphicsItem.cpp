@@ -213,7 +213,7 @@ void GlOverviewGraphicsItem::draw(bool generatePixmap) {
                                                     height - 2 * _frameWidth);
     GlOffscreenRenderer::instance().renderExternalScene(&baseScene, true);
 
-    vector<bool>::iterator itTmp = layersVisibility.begin();
+    auto itTmp = layersVisibility.begin();
 
     for (const auto &it : layersList) {
       if ((*itTmp) == true) {

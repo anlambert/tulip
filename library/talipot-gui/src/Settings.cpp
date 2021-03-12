@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -388,7 +388,7 @@ void Settings::setGuiTheme(const QString &guiTheme) {
 }
 
 void Settings::treatEvent(const Event &message) {
-  const ViewSettingsEvent *sev = dynamic_cast<const ViewSettingsEvent *>(&message);
+  const auto *sev = dynamic_cast<const ViewSettingsEvent *>(&message);
 
   if (sev && sev->getType() == ViewSettingsEvent::TLP_DEFAULT_COLOR_MODIFIED) {
     setDefaultColor(sev->getElementType(), sev->getColor());

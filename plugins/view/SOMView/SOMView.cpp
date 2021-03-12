@@ -144,7 +144,7 @@ void SOMView::initGlViews() {
   }
 
   // No graph to print
-  GlGraph *glGraph = new GlGraph(tlp::newGraph());
+  auto *glGraph = new GlGraph(tlp::newGraph());
   mainLayer->addGlEntity(glGraph, "graph");
   // activate hover
 
@@ -250,9 +250,9 @@ void SOMView::changeMapViewGraph(tlp::Graph *graph) {
 
   GlScene *scene = mapWidget->getScene();
   scene->clearLayersList();
-  GlLayer *mainLayer = new GlLayer("Main");
+  auto *mainLayer = new GlLayer("Main");
   scene->addExistingLayer(mainLayer);
-  GlGraph *glGraph = new GlGraph(graph);
+  auto *glGraph = new GlGraph(graph);
   mainLayer->addGlEntity(glGraph, "graph");
   GlGraphRenderingParameters &p = mapWidget->getGlGraphRenderingParameters();
   p.setDisplayEdges(false);
@@ -366,9 +366,9 @@ void SOMView::drawPreviews() {
     double maximumDisplayed = inputSample.isUsingNormalizedValues()
                                   ? inputSample.unnormalize(maxValue, propertyIndex)
                                   : maxValue;
-    SOMPreviewComposite *SOMPrevComp = new SOMPreviewComposite(
-        previewCoord, previewSize, p, colorProperty, som,
-        this->properties->getPropertyColorScale(p), minimumDisplayed, maximumDisplayed);
+    auto *SOMPrevComp = new SOMPreviewComposite(previewCoord, previewSize, p, colorProperty, som,
+                                                this->properties->getPropertyColorScale(p),
+                                                minimumDisplayed, maximumDisplayed);
 
     propertyToPreviews[p] = SOMPrevComp;
 
@@ -471,7 +471,7 @@ ColorProperty *SOMView::computePropertyColor(const string &propertyName, double 
   assert(propColor);
 
   // Original value
-  NumericProperty *property = dynamic_cast<NumericProperty *>(som->getProperty(propertyName));
+  auto *property = dynamic_cast<NumericProperty *>(som->getProperty(propertyName));
   assert(property);
 
   minValue = property->getNodeDoubleMin(som);
@@ -822,7 +822,7 @@ bool SOMView::eventFilter(QObject *obj, QEvent *event) {
 
   if (obj == previewWidget) {
     if (event->type() == QMouseEvent::MouseButtonDblClick) {
-      QMouseEvent *me = static_cast<QMouseEvent *>(event);
+      auto *me = static_cast<QMouseEvent *>(event);
 
       if (me->button() == Qt::LeftButton) {
         vector<SOMPreviewComposite *> properties;
@@ -839,7 +839,7 @@ bool SOMView::eventFilter(QObject *obj, QEvent *event) {
     }
 
     if (event->type() == QMouseEvent::ToolTip) {
-      QHelpEvent *he = static_cast<QHelpEvent *>(event);
+      auto *he = static_cast<QHelpEvent *>(event);
       vector<SOMPreviewComposite *> properties;
       Coord screenCoords = Coord(he->x(), he->y(), 0.0f);
       Coord viewportCoords = getGlWidget()->screenToViewport(screenCoords);
@@ -1163,11 +1163,11 @@ void SOMView::dimensionUpdated() {
 
 void SOMView::addEmptyViewLabel() {
   GlLayer *mainLayer = previewWidget->getScene()->getLayer("Main");
-  GlLabel *noDimsLabel = new GlLabel(Coord(0, 0, 0), Size(200, 100), Color(0, 0, 0));
+  auto *noDimsLabel = new GlLabel(Coord(0, 0, 0), Size(200, 100), Color(0, 0, 0));
   noDimsLabel->setText(ViewName::SOMViewName);
-  GlLabel *noDimsLabel1 = new GlLabel(Coord(0, -50, 0), Size(400, 100), Color(0, 0, 0));
+  auto *noDimsLabel1 = new GlLabel(Coord(0, -50, 0), Size(400, 100), Color(0, 0, 0));
   noDimsLabel1->setText("No dimension selected.");
-  GlLabel *noDimsLabel2 = new GlLabel(Coord(0, -100, 0), Size(700, 200), Color(0, 0, 0));
+  auto *noDimsLabel2 = new GlLabel(Coord(0, -100, 0), Size(700, 200), Color(0, 0, 0));
   noDimsLabel2->setText("Go to the \"Dimensions\" tab in top right corner.");
   mainLayer->addGlEntity(noDimsLabel, "no dimensions label");
   mainLayer->addGlEntity(noDimsLabel1, "no dimensions label 1");

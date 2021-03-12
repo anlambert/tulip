@@ -70,7 +70,7 @@ inline double square(double x) {
 static void drawComposite(tlp::GlComposite *composite, float lod, tlp::Camera *camera) {
   for (const auto &it : composite->getGlEntities()) {
     tlp::GlEntity *entity = it.second;
-    tlp::GlComposite *compositeEntity = dynamic_cast<tlp::GlComposite *>(entity);
+    auto *compositeEntity = dynamic_cast<tlp::GlComposite *>(entity);
 
     if (compositeEntity != nullptr) {
       drawComposite(compositeEntity, lod, camera);
@@ -444,10 +444,10 @@ void HistogramStatistics::computeInteractor() {
       viewSelection->setAllEdgeValue(false);
       double lowerBound = histoStatsConfigWidget->getSelectionLowerBound();
       double upperBound = histoStatsConfigWidget->getSelectionUpperBound();
-      map<unsigned int, double>::iterator pos = find_if(
-          graphPropertyValueSet.begin(), graphPropertyValueSet.end(),
-          compose_fn(logical_and<bool>(), map_value_greater_equal<unsigned int, double>(lowerBound),
-                     map_value_less_equal<unsigned int, double>(upperBound)));
+      auto pos = find_if(graphPropertyValueSet.begin(), graphPropertyValueSet.end(),
+                         compose_fn(logical_and<bool>(),
+                                    map_value_greater_equal<unsigned int, double>(lowerBound),
+                                    map_value_less_equal<unsigned int, double>(upperBound)));
 
       while (pos != graphPropertyValueSet.end()) {
         if (histoView->getDataLocation() == EDGE) {

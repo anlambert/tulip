@@ -275,7 +275,7 @@ GlPolygon *RoundedBox::createRoundedRect(const Size &size) {
   fillColors.push_back(Color(255, 255, 255));
   outlineColors.push_back(Color(0, 0, 0));
 
-  GlPolygon *ret = new GlPolygon(boxPoints, fillColors, outlineColors, true, true);
+  auto *ret = new GlPolygon(boxPoints, fillColors, outlineColors, true, true);
   ret->setInvertYTexture(false);
 
   return ret;
@@ -413,4 +413,4 @@ Coord RoundedBox::getAnchor(const Coord &v) const {
 
 PLUGIN(RoundedBox)
 
-} // end of namespace tlp
+}

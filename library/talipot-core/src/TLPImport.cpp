@@ -313,7 +313,7 @@ struct TLPGraphBuilder : public TLPTrue {
 
     } else {
       if (isGraphProperty) {
-        GraphProperty *gProp = static_cast<GraphProperty *>(prop);
+        auto *gProp = static_cast<GraphProperty *>(prop);
         char *endPtr = nullptr;
         const char *startPtr = value.c_str();
         int result = strtol(startPtr, &endPtr, 10);
@@ -361,7 +361,7 @@ struct TLPGraphBuilder : public TLPTrue {
       return prop->setEdgeStringValue(e, convertOldEdgeExtremitiesValueToNew(value));
     } else {
       if (isGraphProperty) {
-        GraphProperty *gProp = static_cast<GraphProperty *>(prop);
+        auto *gProp = static_cast<GraphProperty *>(prop);
         std::set<edge> v;
         bool result = EdgeSetType::fromString(v, value);
 
@@ -420,7 +420,7 @@ struct TLPGraphBuilder : public TLPTrue {
   bool setAllNodeValue(PropertyInterface *prop, std::string &value, bool isGraphProperty,
                        bool isPathViewProperty) {
     if (isGraphProperty) {
-      GraphProperty *gProp = static_cast<GraphProperty *>(prop);
+      auto *gProp = static_cast<GraphProperty *>(prop);
       char *endPtr = nullptr;
       const char *startPtr = value.c_str();
       int result = strtol(startPtr, &endPtr, 10);
@@ -460,7 +460,7 @@ struct TLPGraphBuilder : public TLPTrue {
     const std::string &propertyName = prop->getName();
 
     if (isGraphProperty) {
-      GraphProperty *gProp = dynamic_cast<GraphProperty *>(prop);
+      auto *gProp = dynamic_cast<GraphProperty *>(prop);
       std::set<edge> v;
       bool result = EdgeSetType::fromString(v, value);
 

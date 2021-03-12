@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -167,7 +167,7 @@ public:
   }
 
   void beforeCall() override {
-    ogdf::SugiyamaLayout *sugiyama = static_cast<ogdf::SugiyamaLayout *>(ogdfLayoutAlgo);
+    auto *sugiyama = static_cast<ogdf::SugiyamaLayout *>(ogdfLayoutAlgo);
 
     if (dataSet != nullptr) {
       int ival = 0;
@@ -246,18 +246,18 @@ public:
         dataSet->get("fixed layer distance", fixedLayerDistance);
 
         if (sc.getCurrent() == ELT_FASTHIERARCHY) {
-          ogdf::FastHierarchyLayout *fhl = new ogdf::FastHierarchyLayout();
+          auto *fhl = new ogdf::FastHierarchyLayout();
           fhl->nodeDistance(nodeDistance);
           fhl->layerDistance(layerDistance);
           fhl->fixedLayerDistance(fixedLayerDistance);
           sugiyama->setLayout(fhl);
         } else if (sc.getCurrent() == ELT_FASTSIMPLEHIERARCHY) {
-          ogdf::FastSimpleHierarchyLayout *fshl = new ogdf::FastSimpleHierarchyLayout();
+          auto *fshl = new ogdf::FastSimpleHierarchyLayout();
           fshl->nodeDistance(nodeDistance);
           fshl->layerDistance(layerDistance);
           sugiyama->setLayout(fshl);
         } else {
-          ogdf::OptimalHierarchyLayout *ohl = new ogdf::OptimalHierarchyLayout();
+          auto *ohl = new ogdf::OptimalHierarchyLayout();
           ohl->nodeDistance(nodeDistance);
           ohl->layerDistance(layerDistance);
           sugiyama->setLayout(ohl);
@@ -267,7 +267,7 @@ public:
   }
 
   void callOGDFLayoutAlgorithm(ogdf::GraphAttributes &gAttributes) override {
-    ogdf::SugiyamaLayout *sugiyama = static_cast<ogdf::SugiyamaLayout *>(ogdfLayoutAlgo);
+    auto *sugiyama = static_cast<ogdf::SugiyamaLayout *>(ogdfLayoutAlgo);
 
     if (sugiyama->alignBaseClasses() || sugiyama->alignSiblings()) {
       sugiyama->callUML(gAttributes);

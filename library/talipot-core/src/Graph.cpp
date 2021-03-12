@@ -219,7 +219,7 @@ Graph *tlp::loadGraph(const std::string &filename, PluginProgress *progress, Gra
   std::string importPluginName = "TLP Import";
 
   for (const string &pluginName : PluginsManager::availablePlugins<ImportModule>()) {
-    const ImportModule &importPlugin =
+    const auto &importPlugin =
         static_cast<const ImportModule &>(PluginsManager::pluginInformation(pluginName));
 
     for (const string &ext : importPlugin.allFileExtensions()) {
@@ -245,7 +245,7 @@ bool tlp::saveGraph(Graph *graph, const std::string &filename, PluginProgress *p
   string exportPluginName;
 
   for (const string &pluginName : PluginsManager::availablePlugins<ExportModule>()) {
-    const ExportModule &exportPlugin =
+    const auto &exportPlugin =
         static_cast<const ExportModule &>(PluginsManager::pluginInformation(pluginName));
     string ext = exportPlugin.fileExtension();
 
@@ -335,8 +335,8 @@ Graph *tlp::importGraph(const std::string &format, DataSet &parameters, PluginPr
     tmpProgress = progress;
   }
 
-  AlgorithmContext *tmp = new AlgorithmContext(graph, &parameters, tmpProgress);
-  ImportModule *newImportModule = PluginsManager::getPluginObject<ImportModule>(format, tmp);
+  auto *tmp = new AlgorithmContext(graph, &parameters, tmpProgress);
+  auto *newImportModule = PluginsManager::getPluginObject<ImportModule>(format, tmp);
   assert(newImportModule != nullptr);
 
   // ensure that the parsing of float or double does not depend on locale
@@ -389,8 +389,8 @@ bool tlp::exportGraph(Graph *graph, std::ostream &outputStream, const std::strin
     tmpProgress = progress;
   }
 
-  AlgorithmContext *context = new AlgorithmContext(graph, &parameters, tmpProgress);
-  ExportModule *newExportModule = PluginsManager::getPluginObject<ExportModule>(format, context);
+  auto *context = new AlgorithmContext(graph, &parameters, tmpProgress);
+  auto *newExportModule = PluginsManager::getPluginObject<ExportModule>(format, context);
   assert(newExportModule != nullptr);
   std::string filename;
 
@@ -636,8 +636,8 @@ bool Graph::applyAlgorithm(const std::string &algorithm, std::string &errorMessa
     tmpProgress = progress;
   }
 
-  AlgorithmContext *context = new AlgorithmContext(this, parameters, tmpProgress);
-  Algorithm *newAlgo = PluginsManager::getPluginObject<Algorithm>(algorithm, context);
+  auto *context = new AlgorithmContext(this, parameters, tmpProgress);
+  auto *newAlgo = PluginsManager::getPluginObject<Algorithm>(algorithm, context);
 
   if ((result = newAlgo->check(errorMessage))) {
     result = newAlgo->run();
@@ -1940,7 +1940,7 @@ const std::vector<node> &GraphEvent::getNodes() const {
 
   if (vectInfos.addedNodes == nullptr) {
     unsigned int nbElts = info.nbElts;
-    std::vector<node> *addedNodes = new std::vector<node>();
+    auto *addedNodes = new std::vector<node>();
     addedNodes->reserve(nbElts);
     const std::vector<node> &nodes = getGraph()->nodes();
     // copy new graph nodes in addedNodes reserved memory
@@ -1958,7 +1958,7 @@ const std::vector<edge> &GraphEvent::getEdges() const {
 
   if (vectInfos.addedEdges == nullptr) {
     unsigned int nbElts = info.nbElts;
-    std::vector<edge> *addedEdges = new std::vector<edge>();
+    auto *addedEdges = new std::vector<edge>();
     addedEdges->reserve(nbElts);
     const std::vector<edge> &edges = getGraph()->edges();
     // copy new graph edges in addedEdges reserved memory

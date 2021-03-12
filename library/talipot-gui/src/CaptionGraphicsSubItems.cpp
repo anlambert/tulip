@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -360,7 +360,7 @@ SelectionArrowItem::SelectionArrowItem(float initRangePos, const QPoint &initPos
 
 bool SelectionArrowItem::sceneEvent(QEvent *event) {
   if (event->type() == QEvent::GraphicsSceneMouseMove) {
-    QGraphicsSceneMouseEvent *e = static_cast<QGraphicsSceneMouseEvent *>(event);
+    auto *e = static_cast<QGraphicsSceneMouseEvent *>(event);
     qreal diffPosY = e->pos().y() - e->lastPos().y();
 
     if (pos().y() + diffPosY > initPos.y() + 130) {
@@ -390,7 +390,7 @@ MovableRectItem::MovableRectItem(const QRectF &rect, const QRectF &size,
 
 bool MovableRectItem::sceneEvent(QEvent *event) {
   if (event->type() == QEvent::GraphicsSceneMouseMove) {
-    QGraphicsSceneMouseEvent *e = static_cast<QGraphicsSceneMouseEvent *>(event);
+    auto *e = static_cast<QGraphicsSceneMouseEvent *>(event);
     qreal diffPosY = e->pos().y() - e->lastPos().y();
 
     if (_currentRect.bottom() * 160 + diffPosY > 160) {
@@ -545,7 +545,7 @@ void MovablePathItem::updatePath() {
 
 bool MovablePathItem::sceneEvent(QEvent *event) {
   if (event->type() == QEvent::GraphicsSceneMouseMove) {
-    QGraphicsSceneMouseEvent *e = static_cast<QGraphicsSceneMouseEvent *>(event);
+    auto *e = static_cast<QGraphicsSceneMouseEvent *>(event);
     qreal diffPosY = e->pos().y() - e->lastPos().y();
 
     if (_currentRect.bottom() * 160 + diffPosY > 160) {

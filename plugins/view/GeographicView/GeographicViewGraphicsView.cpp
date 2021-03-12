@@ -48,7 +48,7 @@ namespace tlp {
 const string planisphereTextureId = ":/talipot/view/geographic/planisphere.jpg";
 
 GlComposite *readPolyFile(QString fileName) {
-  GlComposite *composite = new GlComposite;
+  auto *composite = new GlComposite;
 
   QFile file(fileName);
 
@@ -159,7 +159,7 @@ GlComposite *readPolyFile(QString fileName) {
 
 GlComposite *readCsvFile(QString fileName) {
 
-  GlComposite *composite = new GlComposite;
+  auto *composite = new GlComposite;
 
   QFile file(fileName);
 
@@ -367,13 +367,13 @@ GeographicViewGraphicsView::GeographicViewGraphicsView(GeographicView *geoView,
   buttonProxy->setParentItem(_placeholderItem);
   buttonProxy->setPos(20, 76);
 
-  QMessageBox *msgBox = new QMessageBox(QMessageBox::Warning, "Geolocated layout not initialized",
-                                        "Warning : the geolocated layout\n"
-                                        "has not been initialized yet.\n"
-                                        "The graph will not be displayed until\n"
-                                        "that operation has been performed.\n\n"
-                                        "Open the Geolocation configuration tab\n"
-                                        "to proceed.");
+  auto *msgBox = new QMessageBox(QMessageBox::Warning, "Geolocated layout not initialized",
+                                 "Warning : the geolocated layout\n"
+                                 "has not been initialized yet.\n"
+                                 "The graph will not be displayed until\n"
+                                 "that operation has been performed.\n\n"
+                                 "Open the Geolocation configuration tab\n"
+                                 "to proceed.");
   msgBox->setModal(false);
   noLayoutMsgBox = scene()->addWidget(msgBox);
   noLayoutMsgBox->setParentItem(_placeholderItem);
@@ -456,7 +456,7 @@ void GeographicViewGraphicsView::setGraph(Graph *graph) {
     this->graph = graph;
 
     GlScene *scene = glWidget->getScene();
-    GlGraph *glGraph = new GlGraph(graph);
+    auto *glGraph = new GlGraph(graph);
     glGraph->setVisible(false);
     glGraph->setRenderingParameters(rp);
     GlLayer *layer = scene->createLayer("Main");
@@ -465,7 +465,7 @@ void GeographicViewGraphicsView::setGraph(Graph *graph) {
 
     backgroundLayer = new GlLayer("Background");
     backgroundLayer->set2DMode();
-    Gl2DRect *backgroundRect = new Gl2DRect(0, 1, 0, 1, mapTextureId, true);
+    auto *backgroundRect = new Gl2DRect(0, 1, 0, 1, mapTextureId, true);
     backgroundLayer->addGlEntity(backgroundRect, "geoview_background");
     scene->addExistingLayerBefore(backgroundLayer, "Main");
 
@@ -569,7 +569,7 @@ void GeographicViewGraphicsView::mapToPolygon() {
 
     for (const auto &entity : entities) {
       if (entity.second->getBoundingBox().contains(nodePos)) {
-        GlComplexPolygon *polygon = static_cast<GlComplexPolygon *>(entity.second);
+        auto *polygon = static_cast<GlComplexPolygon *>(entity.second);
 
         const auto &polygonSides = polygon->getPolygonSides();
 
@@ -899,7 +899,7 @@ void GeographicViewGraphicsView::setGeoShape(IntegerProperty *property) {
 }
 
 void GeographicViewGraphicsView::treatEvent(const Event &ev) {
-  const PropertyEvent *propEvt = dynamic_cast<const PropertyEvent *>(&ev);
+  const auto *propEvt = dynamic_cast<const PropertyEvent *>(&ev);
 
   if (propEvt && propEvt->getType() == PropertyEvent::TLP_AFTER_SET_NODE_VALUE &&
       propEvt->getProperty() == geoLayout) {

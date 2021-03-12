@@ -538,7 +538,7 @@ static void bfs(const Graph *graph, node root, std::vector<tlp::node> &nodes,
   }
 
   visited.set(root, true);
-  visitedElt *first = new visitedElt(root);
+  auto *first = new visitedElt(root);
   visitedElt *current, *last;
   last = current = first;
   unsigned nbNodes = 1;

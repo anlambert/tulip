@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -93,7 +93,7 @@ void SOMMapElement::buildMainComposite(tlp::Coord basePos, tlp::Size gridSize, S
 
         n = map->getNodeAt(j, i);
         Color c = Color(255, 255, 255, 0);
-        tlp::GlCircle *hex = new tlp::GlCircle(center, r, c, c, true, false, float(M_PI / 2), 6);
+        auto *hex = new tlp::GlCircle(center, r, c, c, true, false, float(M_PI / 2), 6);
         oss.str("");
         oss << j << "," << i;
         addGlEntity(hex, oss.str());
@@ -129,10 +129,10 @@ void SOMMapElement::updateColors(ColorProperty *newColor) {
   SOMMap::SOMMapConnectivity connect = som->getConnectivity();
   for (auto n : som->nodes()) {
     if (connect == SOMMap::six) {
-      GlCircle *hex = static_cast<GlCircle *>(nodesMap[n]);
+      auto *hex = static_cast<GlCircle *>(nodesMap[n]);
       hex->setFillColor(newColor->getNodeValue(n));
     } else {
-      GlRect *rect = static_cast<GlRect *>(nodesMap[n]);
+      auto *rect = static_cast<GlRect *>(nodesMap[n]);
       rect->setBottomRightColor(newColor->getNodeValue(n));
       rect->setTopLeftColor(newColor->getNodeValue(n));
     }

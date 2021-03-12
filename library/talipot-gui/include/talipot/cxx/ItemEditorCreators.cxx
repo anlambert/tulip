@@ -134,7 +134,7 @@ QWidget *MultiLinesEditEditorCreator<T>::createWidget(QWidget *parent) const {
 template <typename T>
 void MultiLinesEditEditorCreator<T>::setEditorData(QWidget *editor, const QVariant &data, bool,
                                                    tlp::Graph *) {
-  typename T::RealType val = data.value<typename T::RealType>();
+  auto val = data.value<typename T::RealType>();
   static_cast<QTextEdit *>(editor)->setPlainText(tlpStringToQString(T::toString(val)));
   static_cast<QTextEdit *>(editor)->selectAll();
 }
@@ -156,7 +156,7 @@ template <typename T>
 QSize MultiLinesEditEditorCreator<T>::sizeHint(const QStyleOptionViewItem &option,
                                                const QModelIndex &index) const {
   QVariant data = index.model()->data(index);
-  typename T::RealType val = data.value<typename T::RealType>();
+  auto val = data.value<typename T::RealType>();
   QString valS = tlpStringToQString(T::toString(val));
   QStringList lines = valS.split(QLatin1Char('\n'));
   QFontMetrics fontMetrics(option.font);
@@ -180,7 +180,7 @@ bool MultiLinesEditEditorCreator<T>::paint(QPainter *painter, const QStyleOption
                                            const QVariant &data, const QModelIndex &index) const {
   ItemEditorCreator::paint(painter, option, data, index);
   QRect rect = option.rect;
-  typename T::RealType val = data.value<typename T::RealType>();
+  auto val = data.value<typename T::RealType>();
   QString valS = tlpStringToQString(T::toString(val));
   QStringList lines = valS.split(QLatin1Char('\n'));
 
@@ -213,8 +213,8 @@ void PropertyEditorCreator<PROPTYPE>::setEditorData(QWidget *w, const QVariant &
     return;
   }
 
-  PROPTYPE *prop = val.value<PROPTYPE *>();
-  QComboBox *combo = static_cast<QComboBox *>(w);
+  auto *prop = val.value<PROPTYPE *>();
+  auto *combo = static_cast<QComboBox *>(w);
   GraphPropertiesModel<PROPTYPE> *model = nullptr;
 
   if (isMandatory) {
@@ -233,18 +233,17 @@ QVariant PropertyEditorCreator<PROPTYPE>::editorData(QWidget *w, tlp::Graph *g) 
     return QVariant();
   }
 
-  QComboBox *combo = static_cast<QComboBox *>(w);
-  GraphPropertiesModel<PROPTYPE> *model =
-      static_cast<GraphPropertiesModel<PROPTYPE> *>(combo->model());
+  auto *combo = static_cast<QComboBox *>(w);
+  auto *model = static_cast<GraphPropertiesModel<PROPTYPE> *>(combo->model());
   QVariant var = model->data(model->index(combo->currentIndex(), 0), Model::PropertyRole);
-  tlp::PropertyInterface *pi = var.value<tlp::PropertyInterface *>();
-  PROPTYPE *prop = static_cast<PROPTYPE *>(pi);
+  auto *pi = var.value<tlp::PropertyInterface *>();
+  auto *prop = static_cast<PROPTYPE *>(pi);
   return QVariant::fromValue<PROPTYPE *>(prop);
 }
 
 template <typename PROPTYPE>
 QString PropertyEditorCreator<PROPTYPE>::displayText(const QVariant &v) const {
-  PROPTYPE *prop = v.value<PROPTYPE *>();
+  auto *prop = v.value<PROPTYPE *>();
 
   if (prop == nullptr) {
     return QObject::tr("Select a property");
@@ -255,7 +254,7 @@ QString PropertyEditorCreator<PROPTYPE>::displayText(const QVariant &v) const {
 
 template <typename ElementType>
 QWidget *VectorEditorCreator<ElementType>::createWidget(QWidget *) const {
-  VectorEditor *w = new VectorEditor(nullptr);
+  auto *w = new VectorEditor(nullptr);
   w->setWindowFlags(Qt::Dialog);
   w->setWindowModality(Qt::ApplicationModal);
   return w;
@@ -265,7 +264,7 @@ template <typename ElementType>
 void VectorEditorCreator<ElementType>::setEditorData(QWidget *editor, const QVariant &v, bool,
                                                      tlp::Graph *) {
   QVector<QVariant> editorData;
-  std::vector<ElementType> vect = v.value<std::vector<ElementType>>();
+  auto vect = v.value<std::vector<ElementType>>();
 
   for (size_t i = 0; i < vect.size(); ++i) {
     editorData.push_back(QVariant::fromValue<ElementType>(vect[i]));
@@ -304,7 +303,7 @@ struct DisplayVectorDataType : public DataType {
 
 template <typename ElementType>
 QString VectorEditorCreator<ElementType>::displayText(const QVariant &data) const {
-  std::vector<ElementType> v = data.value<std::vector<ElementType>>();
+  auto v = data.value<std::vector<ElementType>>();
 
   if (v.empty()) {
     return QString();

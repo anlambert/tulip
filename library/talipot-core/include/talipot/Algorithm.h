@@ -50,7 +50,7 @@ public:
   Algorithm(const PluginContext *context)
       : graph(nullptr), pluginProgress(nullptr), dataSet(nullptr) {
     if (context != nullptr) {
-      const AlgorithmContext *algorithmContext = static_cast<const AlgorithmContext *>(context);
+      const auto *algorithmContext = static_cast<const AlgorithmContext *>(context);
       graph = algorithmContext->graph;
       pluginProgress = algorithmContext->pluginProgress;
       dataSet = algorithmContext->dataSet;

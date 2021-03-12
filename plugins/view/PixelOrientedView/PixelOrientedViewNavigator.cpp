@@ -40,7 +40,7 @@ bool PixelOrientedViewNavigator::eventFilter(QObject *widget, QEvent *e) {
     return false;
   }
 
-  GlWidget *glWidget = static_cast<GlWidget *>(widget);
+  auto *glWidget = static_cast<GlWidget *>(widget);
 
   if (!glWidget->hasMouseTracking()) {
     glWidget->setMouseTracking(true);
@@ -55,7 +55,7 @@ bool PixelOrientedViewNavigator::eventFilter(QObject *widget, QEvent *e) {
   }
 
   if (e->type() == QEvent::MouseMove && pixelView->smallMultiplesViewSet()) {
-    QMouseEvent *me = static_cast<QMouseEvent *>(e);
+    auto *me = static_cast<QMouseEvent *>(e);
     float x = glWidget->width() - me->x();
     float y = me->y();
     Coord screenCoords = {x, y};

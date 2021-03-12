@@ -225,7 +225,7 @@ void GraphView::addNodesInternal(unsigned int nbAdded, const std::vector<node> *
     it = nodes->begin() + nodes->size() - nbAdded;
   }
 
-  std::vector<node>::const_iterator ite = nodes->end();
+  auto ite = nodes->end();
 
   for (; it != ite; ++it) {
     node n(*it);
@@ -305,7 +305,7 @@ void GraphView::addEdgesInternal(unsigned int nbAdded, const std::vector<edge> *
     it = ee->begin() + ee->size() - nbAdded;
   }
 
-  std::vector<edge>::const_iterator ite = ee->end();
+  auto ite = ee->end();
 
   for (; it != ite; ++it, ++i) {
     edge e = *it;

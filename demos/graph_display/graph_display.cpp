@@ -133,7 +133,7 @@ int main(int argc, char **argv) {
   }
 
   // Creates the main widget that will display our graph
-  GlWidget *mainWidget = new GlWidget(nullptr);
+  auto *mainWidget = new GlWidget(nullptr);
 
   // Adds a layer to the scene
   GlLayer *mainLayer = mainWidget->getScene()->createLayer("Main");

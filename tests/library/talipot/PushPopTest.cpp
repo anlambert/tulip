@@ -1118,7 +1118,7 @@ public:
   }
 
   void treatEvent(const Event &evt) override {
-    PropertyInterface *prop = dynamic_cast<PropertyInterface *>(evt.sender());
+    auto *prop = dynamic_cast<PropertyInterface *>(evt.sender());
 
     if (prop && evt.type() == Event::TLP_DELETE) {
       destroy(prop);
@@ -1288,11 +1288,11 @@ public:
 
   void treatEvent(const Event &e) override {
     if (e.type() == Event::TLP_DELETE) {
-      Graph *graph = dynamic_cast<Graph *>(e.sender());
+      auto *graph = dynamic_cast<Graph *>(e.sender());
       if (graph) {
         deletedGraphs.push_back(graph);
       }
-      PropertyInterface *prop = dynamic_cast<PropertyInterface *>(e.sender());
+      auto *prop = dynamic_cast<PropertyInterface *>(e.sender());
       if (prop) {
         deletedProperties.push_back(prop);
       }

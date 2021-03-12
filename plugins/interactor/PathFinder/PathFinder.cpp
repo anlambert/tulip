@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -69,7 +69,7 @@ void PathFinder::construct() {
   }
 
   push_back(new MousePanNZoomNavigator);
-  PathFinderComponent *component = new PathFinderComponent(this);
+  auto *component = new PathFinderComponent(this);
   // installing path highlighters on the component
   component->addHighlighter(new EnclosingCircleHighlighter);
   component->addHighlighter(new ZoomAndPanHighlighter);
@@ -124,7 +124,7 @@ void PathFinder::construct() {
 
   _configurationWidget->addbottomWidget(highlightersListWidget);
   configureHighlighterBtn = new QPushButton("Configure", _configurationWidget);
-  QHBoxLayout *hlLayout = highlightersListWidget->findChild<QHBoxLayout *>("horizontalLayout_2");
+  auto *hlLayout = highlightersListWidget->findChild<QHBoxLayout *>("horizontalLayout_2");
 
   if (hlLayout) {
     hlLayout->addWidget(configureHighlighterBtn);
@@ -243,15 +243,15 @@ void PathFinder::configureHighlighterButtonPressed() {
   }
 
   if (hler->isConfigurable()) {
-    QDialog *dialog = new QDialog;
-    QVBoxLayout *verticalLayout = new QVBoxLayout(dialog);
+    auto *dialog = new QDialog;
+    auto *verticalLayout = new QVBoxLayout(dialog);
     verticalLayout->setObjectName("verticalLayout");
-    QVBoxLayout *mainLayout = new QVBoxLayout();
+    auto *mainLayout = new QVBoxLayout();
     mainLayout->setObjectName("mainLayout");
 
     verticalLayout->addLayout(mainLayout);
 
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(dialog);
+    auto *buttonBox = new QDialogButtonBox(dialog);
     buttonBox->setObjectName("buttonBox");
     buttonBox->setOrientation(Qt::Horizontal);
     buttonBox->setStandardButtons(QDialogButtonBox::Ok);
@@ -275,7 +275,7 @@ PathFinderComponent *PathFinder::getPathFinderComponent() {
   // Look upon all the installed components and stop as soon as we get a PathFinderComponent *
   // object.
   for (auto ic : *this) {
-    PathFinderComponent *pfc = dynamic_cast<PathFinderComponent *>(ic);
+    auto *pfc = dynamic_cast<PathFinderComponent *>(ic);
 
     if (pfc) {
       return pfc;

@@ -39,7 +39,7 @@ public:
   }
 
   void beforeCall() override {
-    ogdf::DominanceLayout *dominance = static_cast<ogdf::DominanceLayout *>(ogdfLayoutAlgo);
+    auto *dominance = static_cast<ogdf::DominanceLayout *>(ogdfLayoutAlgo);
 
     if (dataSet != nullptr) {
       int ival = 0;

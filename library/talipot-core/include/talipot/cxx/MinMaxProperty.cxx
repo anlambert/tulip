@@ -298,7 +298,7 @@ void tlp::MinMaxProperty<nodeType, edgeType, propType>::updateAllEdgesValues(
 
 template <typename nodeType, typename edgeType, typename propType>
 void tlp::MinMaxProperty<nodeType, edgeType, propType>::treatEvent(const tlp::Event &ev) {
-  const GraphEvent *graphEvent = dynamic_cast<const tlp::GraphEvent *>(&ev);
+  const auto *graphEvent = dynamic_cast<const tlp::GraphEvent *>(&ev);
 
   if (graphEvent) {
     tlp::Graph *graph = graphEvent->getGraph();

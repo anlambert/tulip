@@ -748,7 +748,7 @@ static int matchLeftParenthesis(const QTextBlock &block, const std::pair<char, c
     return -1;
   }
 
-  ParenInfoTextBlockData *data = static_cast<ParenInfoTextBlockData *>(block.userData());
+  auto *data = static_cast<ParenInfoTextBlockData *>(block.userData());
   QVector<ParenInfo> info = data->parens();
 
   for (int i = dataStartIndex; i < info.size(); ++i) {
@@ -772,7 +772,7 @@ static int matchRightParenthesis(const QTextBlock &block, const std::pair<char, 
     return -1;
   }
 
-  ParenInfoTextBlockData *data = static_cast<ParenInfoTextBlockData *>(block.userData());
+  auto *data = static_cast<ParenInfoTextBlockData *>(block.userData());
   QVector<ParenInfo> info = data->parens();
 
   int startIdx = (dataStartIndex == -1) ? info.size() - 1 : dataStartIndex;
@@ -918,7 +918,7 @@ void PythonCodeEditor::highlightSelection() {
 
     while (!cursor.isNull()) {
       QTextEdit::ExtraSelection selection;
-      QColor lineColor = QColor(Qt::yellow);
+      auto lineColor = QColor(Qt::yellow);
       selection.format = cursor.block().charFormat();
       selection.format.setBackground(lineColor);
       selection.cursor = cursor;

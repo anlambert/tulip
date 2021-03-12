@@ -826,7 +826,7 @@ void GlVertexArrayManager::activateQuadEdgeDisplay(GlEdge *glEdge, bool selected
     renderingIndicesArray.push_back(i + 3);
   }
 
-  float borderWidth = float(inputData->getElementBorderWidth()->getEdgeValue(e));
+  auto borderWidth = float(inputData->getElementBorderWidth()->getEdgeValue(e));
 
   if (borderWidth > 0) {
     auto &outlineRenderingIndicesArray =
@@ -1043,7 +1043,7 @@ void GlVertexArrayManager::clearObservers(PropertyInterface *deletedProperty) {
 }
 
 void GlVertexArrayManager::treatEvent(const Event &evt) {
-  const GraphEvent *graphEvent = dynamic_cast<const GraphEvent *>(&evt);
+  const auto *graphEvent = dynamic_cast<const GraphEvent *>(&evt);
 
   if (graphEvent) {
 
@@ -1106,7 +1106,7 @@ void GlVertexArrayManager::treatEvent(const Event &evt) {
     }
   } else if (evt.type() == Event::TLP_DELETE) {
     PropertyInterface *property = nullptr;
-    const PropertyEvent *propertyEvent = dynamic_cast<const PropertyEvent *>(&evt);
+    const auto *propertyEvent = dynamic_cast<const PropertyEvent *>(&evt);
 
     if (propertyEvent) {
       property = propertyEvent->getProperty();
@@ -1115,7 +1115,7 @@ void GlVertexArrayManager::treatEvent(const Event &evt) {
     clearData();
     clearObservers(property);
   } else {
-    const PropertyEvent *propertyEvent = dynamic_cast<const PropertyEvent *>(&evt);
+    const auto *propertyEvent = dynamic_cast<const PropertyEvent *>(&evt);
     PropertyInterface *property = propertyEvent->getProperty();
 
     switch (propertyEvent->getType()) {

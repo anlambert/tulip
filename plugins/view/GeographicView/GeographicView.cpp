@@ -435,7 +435,7 @@ QPixmap GeographicView::snapshot(const QSize &size) const {
   QList<QGraphicsItem *> sceneItems = geoViewGraphicsView->scene()->items();
 
   for (int i = 0; i < sceneItems.size(); ++i) {
-    QGraphicsProxyWidget *gWidget = dynamic_cast<QGraphicsProxyWidget *>(sceneItems.at(i));
+    auto *gWidget = dynamic_cast<QGraphicsProxyWidget *>(sceneItems.at(i));
 
     if (gWidget && gWidget->isVisible()) {
       gWidget->hide();

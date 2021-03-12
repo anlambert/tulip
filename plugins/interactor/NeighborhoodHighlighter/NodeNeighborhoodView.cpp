@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -81,7 +81,7 @@ void NodeNeighborhoodView::getNeighbors(node n, unsigned int dist, bool noRecurs
       }
 
       // removing the edges that are connected to filtered nodes
-      for (vector<edge>::iterator it = graphViewEdges.begin(); it != graphViewEdges.end();) {
+      for (auto it = graphViewEdges.begin(); it != graphViewEdges.end();) {
         const std::pair<node, node> &eEnds = graph_component->ends(*it);
 
         if (find(graphViewNodes.begin(), graphViewNodes.end(), eEnds.first) ==

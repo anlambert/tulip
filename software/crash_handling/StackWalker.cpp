@@ -254,8 +254,8 @@ void StackWalkerGCC::printCallStack(std::ostream &os, unsigned int maxDepth) {
       char *real_name = abi::__cxa_demangle(mangled_name, nullptr, nullptr, &status);
 
       char *end;
-      int64_t runtimeAddr = static_cast<int64_t>(strtoll(runtime_addr, &end, 16));
-      int64_t runtimeOffset = static_cast<int64_t>(strtoll(runtime_offset, &end, 0));
+      auto runtimeAddr = static_cast<int64_t>(strtoll(runtime_addr, &end, 16));
+      auto runtimeOffset = static_cast<int64_t>(strtoll(runtime_offset, &end, 0));
 
       if (runtimeAddr == 1 && i == (size - 1)) {
         break;

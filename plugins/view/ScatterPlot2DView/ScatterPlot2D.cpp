@@ -178,7 +178,7 @@ void ScatterPlot2D::generateOverview(GlWidget *glWidget, LayoutProperty *reverse
 
   if (mapBackgroundColorToCoeff) {
     GlLayer *backgroundLayer = scene->getLayer("Background");
-    Gl2DRect *background = new Gl2DRect(1.0f, 0.0f, 0.0f, 1.0f, backgroundTextureId, true);
+    auto *background = new Gl2DRect(1.0f, 0.0f, 0.0f, 1.0f, backgroundTextureId, true);
     backgroundLayer->addGlEntity(background, "background");
   }
 
@@ -198,8 +198,8 @@ void ScatterPlot2D::generateOverview(GlWidget *glWidget, LayoutProperty *reverse
 
   deleteGlEntity(glProgressBar);
   delete glProgressBar;
-  Gl2DRect *rectTextured = new Gl2DRect(blCorner.getY() + size, blCorner.getY(), blCorner.getX(),
-                                        blCorner.getX() + size, textureName);
+  auto *rectTextured = new Gl2DRect(blCorner.getY() + size, blCorner.getY(), blCorner.getX(),
+                                    blCorner.getX() + size, textureName);
   addGlEntity(rectTextured, textureName + " overview");
   computeBoundingBox();
   overviewGen = true;
@@ -216,8 +216,8 @@ void ScatterPlot2D::clean() {
 void ScatterPlot2D::createAxis() {
   assert(dynamic_cast<NumericProperty *>(graph->getProperty(xDim)));
   assert(dynamic_cast<NumericProperty *>(graph->getProperty(yDim)));
-  NumericProperty *xProp = static_cast<NumericProperty *>(graph->getProperty(xDim));
-  NumericProperty *yProp = static_cast<NumericProperty *>(graph->getProperty(yDim));
+  auto *xProp = static_cast<NumericProperty *>(graph->getProperty(xDim));
+  auto *yProp = static_cast<NumericProperty *>(graph->getProperty(yDim));
   xType = graph->getProperty(xDim)->getTypename();
   yType = graph->getProperty(yDim)->getTypename();
 
@@ -278,7 +278,7 @@ void ScatterPlot2D::createAxis() {
   if (xType == "double") {
     xAxis->setAxisParameters(xMin, xMax, DEFAULT_NB_GRADS, GlAxis::LEFT_OR_BELOW, true);
   } else {
-    unsigned int step = uint((xMax - xMin) / 20);
+    auto step = uint((xMax - xMin) / 20);
     xAxis->setAxisParameters(int(xMin), int(xMax), step ? step : 1, GlAxis::LEFT_OR_BELOW, true);
   }
 
@@ -292,7 +292,7 @@ void ScatterPlot2D::createAxis() {
   if (yType == "double") {
     yAxis->setAxisParameters(yMin, yMax, DEFAULT_NB_GRADS, GlAxis::LEFT_OR_BELOW, true);
   } else {
-    unsigned int step = uint((yMax - yMin) / 20);
+    auto step = uint((yMax - yMin) / 20);
     yAxis->setAxisParameters(int(yMin), int(yMax), step ? step : 1, GlAxis::LEFT_OR_BELOW, true);
   }
 
@@ -321,8 +321,8 @@ void ScatterPlot2D::computeScatterPlotLayout(GlWidget *glWidget, LayoutProperty 
 
   assert(dynamic_cast<NumericProperty *>(graph->getProperty(xDim)));
   assert(dynamic_cast<NumericProperty *>(graph->getProperty(yDim)));
-  NumericProperty *xProp = static_cast<NumericProperty *>(graph->getProperty(xDim));
-  NumericProperty *yProp = static_cast<NumericProperty *>(graph->getProperty(yDim));
+  auto *xProp = static_cast<NumericProperty *>(graph->getProperty(xDim));
+  auto *yProp = static_cast<NumericProperty *>(graph->getProperty(yDim));
 
   for (auto n : _graph->nodes()) {
     Coord nodeCoord;

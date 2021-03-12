@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -224,8 +224,6 @@ public:
   void callOGDFLayoutAlgorithm(ogdf::GraphAttributes &gAttributes) override;
 };
 
-/*Nom de la classe, Nom du plugins, nom de l'auteur,date de
- creation,information, release, groupe*/
 PLUGIN(OGDFFm3)
 
 OGDFFm3::OGDFFm3(const tlp::PluginContext *context)
@@ -273,7 +271,7 @@ OGDFFm3::OGDFFm3(const tlp::PluginContext *context)
 }
 
 void OGDFFm3::beforeCall() {
-  ogdf::FMMMLayout *fmmm = static_cast<ogdf::FMMMLayout *>(ogdfLayoutAlgo);
+  auto *fmmm = static_cast<ogdf::FMMMLayout *>(ogdfLayoutAlgo);
 
   if (dataSet != nullptr) {
     fmmm->useHighLevelOptions(true);
@@ -446,7 +444,7 @@ void OGDFFm3::beforeCall() {
 
 void OGDFFm3::callOGDFLayoutAlgorithm(ogdf::GraphAttributes &gAttributes) {
 
-  ogdf::FMMMLayout *fmmm = static_cast<ogdf::FMMMLayout *>(ogdfLayoutAlgo);
+  auto *fmmm = static_cast<ogdf::FMMMLayout *>(ogdfLayoutAlgo);
 
   tlp::NumericProperty *length = nullptr;
 

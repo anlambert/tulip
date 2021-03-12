@@ -234,7 +234,7 @@ private:
   std::list<std::string> availablePluginsImpl() {
     std::list<std::string> keys;
     for (const auto &[pluginName, pluginDescription] : _plugins) {
-      PluginType *plugin = dynamic_cast<PluginType *>(pluginDescription.info);
+      auto *plugin = dynamic_cast<PluginType *>(pluginDescription.info);
 
       if (plugin != nullptr &&
           // deprecated names are not listed

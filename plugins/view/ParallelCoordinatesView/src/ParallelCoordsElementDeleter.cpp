@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -24,10 +24,10 @@ namespace tlp {
 bool ParallelCoordsElementDeleter::eventFilter(QObject *, QEvent *e) {
 
   if (e->type() == QEvent::MouseButtonPress) {
-    QMouseEvent *me = static_cast<QMouseEvent *>(e);
+    auto *me = static_cast<QMouseEvent *>(e);
 
     if (me->buttons() == Qt::LeftButton) {
-      ParallelCoordinatesView *parallelView = static_cast<ParallelCoordinatesView *>(view());
+      auto *parallelView = static_cast<ParallelCoordinatesView *>(view());
       Observable::holdObservers();
       parallelView->deleteDataUnderPointer(me->x(), me->y());
       Observable::unholdObservers();

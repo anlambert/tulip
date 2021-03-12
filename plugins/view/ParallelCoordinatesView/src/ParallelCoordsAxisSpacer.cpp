@@ -32,8 +32,8 @@ ParallelCoordsAxisSpacer::ParallelCoordsAxisSpacer()
 
 bool ParallelCoordsAxisSpacer::eventFilter(QObject *widget, QEvent *e) {
 
-  GlWidget *glWidget = static_cast<GlWidget *>(widget);
-  QMouseEvent *me = static_cast<QMouseEvent *>(e);
+  auto *glWidget = static_cast<GlWidget *>(widget);
+  auto *me = static_cast<QMouseEvent *>(e);
 
   if (e->type() == QEvent::MouseMove) {
 

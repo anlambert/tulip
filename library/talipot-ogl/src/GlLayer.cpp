@@ -107,7 +107,7 @@ void GlLayer::addGlEntity(GlEntity *entity, const std::string &name) {
 }
 
 void GlLayer::addGraph(tlp::Graph *graph, const string &name) {
-  GlGraph *glGraph = new GlGraph(graph, scene);
+  auto *glGraph = new GlGraph(graph, scene);
   addGlEntity(glGraph, name);
 }
 

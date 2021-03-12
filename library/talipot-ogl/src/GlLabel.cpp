@@ -51,7 +51,7 @@ static FTPolygonFont *getPolygonFont(const std::string &name) {
   auto itf = polygonFonts.find(name);
 
   if (itf == polygonFonts.end()) {
-    FTPolygonFont *font = new FTPolygonFont(name.c_str());
+    auto *font = new FTPolygonFont(name.c_str());
     polygonFonts[name].reset(font);
     return font;
   }
@@ -63,7 +63,7 @@ static FTGLOutlineFont *getOutlineFont(const std::string &name) {
   auto itf = outlineFonts.find(name);
 
   if (itf == outlineFonts.end()) {
-    FTGLOutlineFont *font = new FTGLOutlineFont(name.c_str());
+    auto *font = new FTGLOutlineFont(name.c_str());
     outlineFonts[name].reset(font);
     return font;
   }

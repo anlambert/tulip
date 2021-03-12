@@ -146,7 +146,7 @@ bool MixedModel::run() {
         if (e.isValid()) {
           vector<Coord> bends(2);
           bends.clear();
-          unsigned int max = uint(c[1] > c2[1] ? c[1] / 2 : c2[1] / 2);
+          auto max = uint(c[1] > c2[1] ? c[1] / 2 : c2[1] / 2);
           max += uint(edgeNodeSpacing);
 
           if (graph->source(e) == n) {
@@ -206,7 +206,7 @@ bool MixedModel::run() {
         G->addEdge(e);
         resultatAlgoSelection.setEdgeValue(e, true);
         edge_planar.push_back(e);
-        vector<edge>::iterator ite = find(unplanar_edges.begin(), unplanar_edges.end(), e);
+        auto ite = find(unplanar_edges.begin(), unplanar_edges.end(), e);
         unplanar_edges.erase(ite);
       }
 
@@ -593,7 +593,7 @@ void MixedModel::assignInOutPoints() { // on considère qu'il n'y a pas d'arc do
       if (k != 0) {
         if (i == 0) {
           edge e = existEdge(nl, v);
-          vector<edge>::iterator eil = find(listOfEdgesIN.begin(), listOfEdgesIN.end(), e);
+          auto eil = find(listOfEdgesIN.begin(), listOfEdgesIN.end(), e);
           assert(eil != listOfEdgesIN.end());
 
           if (!((*listOfEdgesIN.begin()) == e)) {
@@ -604,7 +604,7 @@ void MixedModel::assignInOutPoints() { // on considère qu'il n'y a pas d'arc do
           }
         } else if (i == p - 1) {
           edge e = existEdge(nr, v);
-          vector<edge>::iterator eir = find(listOfEdgesIN.begin(), listOfEdgesIN.end(), e);
+          auto eir = find(listOfEdgesIN.begin(), listOfEdgesIN.end(), e);
           assert(eir != listOfEdgesIN.end());
 
           if (!((*listOfEdgesIN.rbegin()) == e)) {
@@ -619,7 +619,7 @@ void MixedModel::assignInOutPoints() { // on considère qu'il n'y a pas d'arc do
           if (e.isValid()) {
             if (!((*listOfEdgesIN.begin()) == e)) {
               vector<edge> tmp;
-              vector<edge>::iterator ei = find(listOfEdgesIN.begin(), listOfEdgesIN.end(), e);
+              auto ei = find(listOfEdgesIN.begin(), listOfEdgesIN.end(), e);
               tmp.insert(tmp.begin(), ei, listOfEdgesIN.end());
               tmp.insert(tmp.end(), listOfEdgesIN.begin(), ei);
               listOfEdgesIN.swap(tmp);
@@ -630,7 +630,7 @@ void MixedModel::assignInOutPoints() { // on considère qu'il n'y a pas d'arc do
 
             if (!((*listOfEdgesIN.rbegin()) == e)) {
               vector<edge> tmp;
-              vector<edge>::iterator ei = find(listOfEdgesIN.begin(), listOfEdgesIN.end(), e);
+              auto ei = find(listOfEdgesIN.begin(), listOfEdgesIN.end(), e);
               tmp.insert(tmp.begin(), ei + 1, listOfEdgesIN.end());
               tmp.insert(tmp.end(), listOfEdgesIN.begin(), ei + 1);
               listOfEdgesIN.swap(tmp);
@@ -900,15 +900,15 @@ void MixedModel::computeCoords() {
     node cl = leftV(k),
          cr = rightV(k); // recherche du left et right de Vk, qui est cherché à l'aide de EdgesIN
 
-    vector<node>::iterator il = find(C.begin(), C.end(), cl);
+    auto il = find(C.begin(), C.end(), cl);
     assert(il != C.end());
-    vector<node>::iterator ir = find(il, C.end(), cr); // par définition, il<ir
+    auto ir = find(il, C.end(), cr); // par définition, il<ir
     assert(ir != C.end());
     Coord co = nodeSize.get((*il).id);
     float max_y = NodeCoords[(*il)].getY() + co.getY() / 2.f;
     float somme = 0; // relative to cl
 
-    for (vector<node>::iterator i = il + 1; i != ir + 1; ++i) {
+    for (auto i = il + 1; i != ir + 1; ++i) {
       Coord co2 = nodeSize.get((*i).id);
       float y = NodeCoords[(*i)].getY() + co2.getY() / 2.f; // recherche max des y(ci) dans
                                                             // [cl...cr]
@@ -949,7 +949,7 @@ void MixedModel::computeCoords() {
       assert(p == 1);
 
       int in_l = inl[Z0];
-      vector<node>::iterator it = il;
+      auto it = il;
       int t = 1;
 
       for (; t < in_l + 2 && it != ir; ++t) {
@@ -979,7 +979,7 @@ void MixedModel::computeCoords() {
       float delta = NodeCoords[Z0].getX() - (dxt + NodeCoords[(*it)].getX());
 
       if (delta > 0) {
-        for (vector<node>::iterator i = it; i != ir + 1; ++i) {
+        for (auto i = it; i != ir + 1; ++i) {
           NodeCoords[(*i)].setX(NodeCoords[(*i)].getX() + delta);
         }
       } else {
@@ -999,7 +999,7 @@ void MixedModel::computeCoords() {
 
       float xZ0 = NodeCoords[Z0].getX();
 
-      for (vector<node>::iterator i = il + 1; i != ir; ++i) { // it; i++){
+      for (auto i = il + 1; i != ir; ++i) { // it; i++){
         NodeCoords[(*i)].setX(NodeCoords[(*i)].getX() - xZ0);
         father[(*i)] = Z0;
       }
@@ -1043,7 +1043,7 @@ void MixedModel::computeCoords() {
 
       float xZ0 = NodeCoords[Z0].getX();
 
-      for (vector<node>::iterator i = il + 1; i != ir; ++i) {
+      for (auto i = il + 1; i != ir; ++i) {
         NodeCoords[(*i)].setX(NodeCoords[(*i)].getX() - xZ0);
         father[(*i)] = Z0;
       }

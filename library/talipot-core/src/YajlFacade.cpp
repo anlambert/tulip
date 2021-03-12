@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -29,25 +29,25 @@ YajlParseFacade::YajlParseFacade(tlp::PluginProgress *progress)
     : _progress(progress), _parsingSucceeded(true) {}
 
 static int parse_null(void *ctx) {
-  YajlParseFacade *facade = static_cast<YajlParseFacade *>(ctx);
+  auto *facade = static_cast<YajlParseFacade *>(ctx);
   facade->parseNull();
   return 1;
 }
 
 static int parse_boolean(void *ctx, int boolVal) {
-  YajlParseFacade *facade = static_cast<YajlParseFacade *>(ctx);
+  auto *facade = static_cast<YajlParseFacade *>(ctx);
   facade->parseBoolean(boolVal);
   return 1;
 }
 
 static int parse_integer(void *ctx, long long integerVal) {
-  YajlParseFacade *facade = static_cast<YajlParseFacade *>(ctx);
+  auto *facade = static_cast<YajlParseFacade *>(ctx);
   facade->parseInteger(integerVal);
   return 1;
 }
 
 static int parse_double(void *ctx, double doubleVal) {
-  YajlParseFacade *facade = static_cast<YajlParseFacade *>(ctx);
+  auto *facade = static_cast<YajlParseFacade *>(ctx);
   facade->parseDouble(doubleVal);
   return 1;
 }
@@ -60,39 +60,39 @@ static int parse_double(void *ctx, double doubleVal) {
 // }
 
 static int parse_string(void *ctx, const unsigned char *stringVal, size_t stringLen) {
-  YajlParseFacade *facade = static_cast<YajlParseFacade *>(ctx);
+  auto *facade = static_cast<YajlParseFacade *>(ctx);
   std::string key(reinterpret_cast<const char *>(stringVal), stringLen);
   facade->parseString(key);
   return 1;
 }
 
 static int parse_map_key(void *ctx, const unsigned char *stringVal, size_t stringLen) {
-  YajlParseFacade *facade = static_cast<YajlParseFacade *>(ctx);
+  auto *facade = static_cast<YajlParseFacade *>(ctx);
   std::string key(reinterpret_cast<const char *>(stringVal), stringLen);
   facade->parseMapKey(key);
   return 1;
 }
 
 static int parse_start_map(void *ctx) {
-  YajlParseFacade *facade = static_cast<YajlParseFacade *>(ctx);
+  auto *facade = static_cast<YajlParseFacade *>(ctx);
   facade->parseStartMap();
   return 1;
 }
 
 static int parse_end_map(void *ctx) {
-  YajlParseFacade *facade = static_cast<YajlParseFacade *>(ctx);
+  auto *facade = static_cast<YajlParseFacade *>(ctx);
   facade->parseEndMap();
   return 1;
 }
 
 static int parse_start_array(void *ctx) {
-  YajlParseFacade *facade = static_cast<YajlParseFacade *>(ctx);
+  auto *facade = static_cast<YajlParseFacade *>(ctx);
   facade->parseStartArray();
   return 1;
 }
 
 static int parse_end_array(void *ctx) {
-  YajlParseFacade *facade = static_cast<YajlParseFacade *>(ctx);
+  auto *facade = static_cast<YajlParseFacade *>(ctx);
   facade->parseEndArray();
   return 1;
 }

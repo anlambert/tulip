@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -27,7 +27,7 @@ void drawComposite(GlComposite *composite, float lod, Camera *camera) {
 
   for (const auto &it : glEntities) {
     GlEntity *entity = it.second;
-    GlComposite *compositeEntity = dynamic_cast<GlComposite *>(entity);
+    auto *compositeEntity = dynamic_cast<GlComposite *>(entity);
 
     if (compositeEntity != nullptr) {
       drawComposite(compositeEntity, lod, camera);

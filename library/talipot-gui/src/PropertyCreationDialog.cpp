@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -120,7 +120,7 @@ void PropertyCreationDialog::accept() {
 
 PropertyInterface *PropertyCreationDialog::createNewProperty(tlp::Graph *graph, QWidget *parent,
                                                              const std::string &selectedType) {
-  PropertyCreationDialog *dialog = new PropertyCreationDialog(graph, parent, selectedType);
+  auto *dialog = new PropertyCreationDialog(graph, parent, selectedType);
   PropertyInterface *result = nullptr;
 
   if (dialog->exec() == QDialog::Accepted) {

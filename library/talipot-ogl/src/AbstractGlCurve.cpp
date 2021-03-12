@@ -506,7 +506,7 @@ void AbstractGlCurve::initShader(const std::string &shaderProgramName,
 
     if (canUseGeometryShader &&
         curvesGeometryShadersMap.find(shaderProgramName) == curvesGeometryShadersMap.end()) {
-      GlShaderProgram *polygonShader = new GlShaderProgram(shaderProgramName);
+      auto *polygonShader = new GlShaderProgram(shaderProgramName);
       polygonShader->addShaderFromSourceCode(Vertex,
                                              commonUniformVariables + curveSpecificShaderCode);
       polygonShader->addShader(curveVertexGeometryShaderNormalMain.get());
@@ -522,7 +522,7 @@ void AbstractGlCurve::initShader(const std::string &shaderProgramName,
         polygonShader = nullptr;
       }
 
-      GlShaderProgram *lineShader = new GlShaderProgram(shaderProgramName);
+      auto *lineShader = new GlShaderProgram(shaderProgramName);
       lineShader->addShaderFromSourceCode(Vertex, commonUniformVariables + curveSpecificShaderCode);
       lineShader->addShader(curveVertexGeometryShaderNormalMain.get());
       lineShader->addGeometryShaderFromSourceCode(curveExtrusionGeometryShaderSrc,
@@ -554,7 +554,7 @@ void AbstractGlCurve::initShader(const std::string &shaderProgramName,
 
     if (canUseGeometryShader && curvesBillboardGeometryShadersMap.find(shaderProgramName) ==
                                     curvesBillboardGeometryShadersMap.end()) {
-      GlShaderProgram *polygonShader = new GlShaderProgram(shaderProgramName);
+      auto *polygonShader = new GlShaderProgram(shaderProgramName);
       polygonShader->addShaderFromSourceCode(Vertex,
                                              commonUniformVariables + curveSpecificShaderCode);
       polygonShader->addShader(curveVertexGeometryShaderNormalMain.get());
@@ -570,7 +570,7 @@ void AbstractGlCurve::initShader(const std::string &shaderProgramName,
         polygonShader = nullptr;
       }
 
-      GlShaderProgram *lineShader = new GlShaderProgram(shaderProgramName);
+      auto *lineShader = new GlShaderProgram(shaderProgramName);
       lineShader->addShaderFromSourceCode(Vertex, commonUniformVariables + curveSpecificShaderCode);
       lineShader->addShader(curveVertexGeometryShaderNormalMain.get());
       lineShader->addGeometryShaderFromSourceCode(curveExtrusionBillboardGeometryShaderSrc,

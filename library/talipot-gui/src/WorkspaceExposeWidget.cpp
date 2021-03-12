@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -160,7 +160,7 @@ void WorkspaceExposeWidget::setData(const QVector<WorkspacePanel *> &panels,
     QPixmap pixmap = p->view()
                          ->snapshot(previewSize() * 3)
                          .scaled(previewSize(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    PreviewItem *item = new PreviewItem(pixmap, p);
+    auto *item = new PreviewItem(pixmap, p);
     scene()->addItem(item);
     _items << item;
     item->installEventFilter(this);
@@ -186,12 +186,12 @@ void WorkspaceExposeWidget::updatePositions(bool resetScenePos) {
   const int referenceDuration = 120;
   qreal referenceDistance = distance(QPointF(0, 0), QPointF(previewSize().width() + MARGIN, 0));
 
-  QParallelAnimationGroup *group = new QParallelAnimationGroup(this);
+  auto *group = new QParallelAnimationGroup(this);
   int x = MARGIN, y = MARGIN;
 
   for (auto i : _items) {
     if (i != _selectedItem) {
-      QPropertyAnimation *moveAnim = new QPropertyAnimation(i, "pos", group);
+      auto *moveAnim = new QPropertyAnimation(i, "pos", group);
       QPointF startPoint = i->pos();
       QPointF endPoint = QPointF(x, y);
       qreal d = distance(startPoint, endPoint);
@@ -243,7 +243,7 @@ void WorkspaceExposeWidget::resetSceneRect() {
 }
 
 bool WorkspaceExposeWidget::eventFilter(QObject *obj, QEvent *ev) {
-  PreviewItem *item = static_cast<PreviewItem *>(obj);
+  auto *item = static_cast<PreviewItem *>(obj);
 
   if (ev->type() == QEvent::GraphicsSceneMousePress) {
     if (item->shouldClose(static_cast<QGraphicsSceneMouseEvent *>(ev)->pos())) {
@@ -266,7 +266,7 @@ bool WorkspaceExposeWidget::eventFilter(QObject *obj, QEvent *ev) {
 
   else if (item == _selectedItem) {
     if (ev->type() == QEvent::GraphicsSceneMouseMove) {
-      QGraphicsSceneMouseEvent *mouseEv = static_cast<QGraphicsSceneMouseEvent *>(ev);
+      auto *mouseEv = static_cast<QGraphicsSceneMouseEvent *>(ev);
       QPointF itemPos = mouseEv->scenePos();
       int itemPerLine = floor(width() / (previewSize().width() + MARGIN));
       int nbLines = _items.size() / itemPerLine;
@@ -311,7 +311,7 @@ bool WorkspaceExposeWidget::event(QEvent *event) {
 }
 
 void WorkspaceExposeWidget::itemOpened() {
-  PreviewItem *item = static_cast<PreviewItem *>(sender());
+  auto *item = static_cast<PreviewItem *>(sender());
   _currentPanelIndex = _items.indexOf(item);
   _switchToSingleMode = true;
   finish();

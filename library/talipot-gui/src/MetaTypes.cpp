@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -84,7 +84,7 @@ tlp::DataType *MetaTypes::qVariantToDataType(const QVariant &v) {
 
   // CHECK_QVARIANT(tlp::BooleanVectorType::RealType);
   if (v.userType() == qMetaTypeId<QVector<bool>>()) {
-    QVector<bool> vb = v.value<QVector<bool>>();
+    auto vb = v.value<QVector<bool>>();
     return new TypedData<tlp::BooleanVectorType::RealType>(
         new tlp::BooleanVectorType::RealType(std::vector<bool>(vb.begin(), vb.end())));
   }
@@ -126,7 +126,7 @@ tlp::DataType *MetaTypes::qVariantToDataType(const QVariant &v) {
   CHECK_QVARIANT(QStringListType::RealType);
 
   if (v.userType() == qMetaTypeId<FileDescriptor>()) {
-    FileDescriptor desc = v.value<FileDescriptor>();
+    auto desc = v.value<FileDescriptor>();
     return new TypedData<std::string>(new std::string(QStringToTlpString(desc.absolutePath)));
   }
 

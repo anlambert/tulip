@@ -211,7 +211,7 @@ void GlGraphLowDetailsRenderer::updateObservers() {
 
 void GlGraphLowDetailsRenderer::treatEvent(const Event &ev) {
   if (typeid(ev) == typeid(GraphEvent)) {
-    const GraphEvent *graphEvent = dynamic_cast<const GraphEvent *>(&ev);
+    const auto *graphEvent = dynamic_cast<const GraphEvent *>(&ev);
 
     switch (graphEvent->getType()) {
     case GraphEvent::TLP_ADD_NODE:
@@ -239,7 +239,7 @@ void GlGraphLowDetailsRenderer::treatEvent(const Event &ev) {
       break;
     }
   } else if (typeid(ev) == typeid(PropertyEvent)) {
-    const PropertyEvent *propertyEvent = dynamic_cast<const PropertyEvent *>(&ev);
+    const auto *propertyEvent = dynamic_cast<const PropertyEvent *>(&ev);
 
     switch (propertyEvent->getType()) {
     case PropertyEvent::TLP_BEFORE_SET_ALL_NODE_VALUE:

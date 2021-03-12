@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -72,8 +72,7 @@ void EdgeExtremityGlyphManager::initGlyphList(Graph **graph, GlGraphInputData *g
   glyphs.setAll(nullptr);
 
   for (const auto &glyphName : plugins) {
-    EdgeExtremityGlyph *newGlyph =
-        PluginsManager::getPluginObject<EdgeExtremityGlyph>(glyphName, &gc);
+    auto *newGlyph = PluginsManager::getPluginObject<EdgeExtremityGlyph>(glyphName, &gc);
     glyphs.set(PluginsManager::pluginInformation(glyphName).id(), newGlyph);
   }
 }

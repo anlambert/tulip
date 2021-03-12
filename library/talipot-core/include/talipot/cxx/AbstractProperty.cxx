@@ -607,8 +607,7 @@ bool tlp::AbstractProperty<NodeType, EdgeType, PropType>::copy(const tlp::node d
     return false;
   }
 
-  tlp::AbstractProperty<NodeType, EdgeType, PropType> *tp =
-      dynamic_cast<tlp::AbstractProperty<NodeType, EdgeType, PropType> *>(property);
+  auto *tp = dynamic_cast<tlp::AbstractProperty<NodeType, EdgeType, PropType> *>(property);
   assert(tp);
   bool notDefault;
   typename tlp::StoredType<typename NodeType::RealType>::ReturnedValue value =
@@ -631,8 +630,7 @@ bool tlp::AbstractProperty<NodeType, EdgeType, PropType>::copy(const tlp::edge d
     return false;
   }
 
-  tlp::AbstractProperty<NodeType, EdgeType, PropType> *tp =
-      dynamic_cast<tlp::AbstractProperty<NodeType, EdgeType, PropType> *>(property);
+  auto *tp = dynamic_cast<tlp::AbstractProperty<NodeType, EdgeType, PropType> *>(property);
   assert(tp);
   bool notDefault;
   typename tlp::StoredType<typename EdgeType::RealType>::ReturnedValue value =
@@ -648,7 +646,7 @@ bool tlp::AbstractProperty<NodeType, EdgeType, PropType>::copy(const tlp::edge d
 //============================================================
 template <typename NodeType, typename EdgeType, typename PropType>
 void tlp::AbstractProperty<NodeType, EdgeType, PropType>::copy(tlp::PropertyInterface *property) {
-  tlp::AbstractProperty<NodeType, EdgeType, PropType> *prop =
+  auto *prop =
       dynamic_cast<typename tlp::AbstractProperty<NodeType, EdgeType, PropType> *>(property);
   assert(prop != nullptr);
   *this = *prop;

@@ -46,9 +46,13 @@ public:
 
 protected:
 };
+
 PLUGIN(Cube)
+
 Cube::Cube(const tlp::PluginContext *context) : NoShaderGlyph(context) {}
+
 Cube::~Cube() = default;
+
 void Cube::draw(node n, float lod) {
   string textureName = glGraphInputData->getElementTexture()->getNodeValue(n);
   if (!textureName.empty()) {
@@ -86,4 +90,4 @@ public:
 
 PLUGIN(EECube)
 
-} // end of namespace tlp
+}

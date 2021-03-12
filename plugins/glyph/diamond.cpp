@@ -65,13 +65,18 @@ public:
   void draw(node n, float lod) override;
   Coord getAnchor(const Coord &vector) const override;
 };
+
 PLUGIN(Diamond)
+
 Diamond::Diamond(const tlp::PluginContext *context) : Glyph(context) {}
+
 Diamond::~Diamond() = default;
+
 void Diamond::getIncludeBoundingBox(BoundingBox &boundingBox, node) {
   boundingBox[0] = Coord(-0.35f, -0.35f, 0);
   boundingBox[1] = Coord(0.35f, 0.35f, 0);
 }
+
 void Diamond::draw(node n, float lod) {
   string textureName = glGraphInputData->getElementTexture()->getNodeValue(n);
 
@@ -134,4 +139,4 @@ public:
 
 PLUGIN(EEDiamond)
 
-} // end of namespace tlp
+}

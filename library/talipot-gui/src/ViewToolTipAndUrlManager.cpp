@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -110,7 +110,7 @@ void ViewToolTipAndUrlManager::fillContextMenu(QMenu *menu) {
   urlPropMenu->setToolTip(
       "Choose the property giving the web page associated with a graph element");
 
-  QActionGroup *urlPropGroup = new QActionGroup(urlPropMenu);
+  auto *urlPropGroup = new QActionGroup(urlPropMenu);
   urlPropGroup->setExclusive(true);
   connect(urlPropMenu, &QMenu::triggered, this, &ViewToolTipAndUrlManager::setUrlProp);
   action = urlPropMenu->addAction(" None ");
@@ -123,7 +123,7 @@ void ViewToolTipAndUrlManager::fillContextMenu(QMenu *menu) {
   // get all existing StringProperty
   std::set<std::string> props;
   for (auto inheritedProp : graph->getInheritedObjectProperties()) {
-    StringProperty *prop = dynamic_cast<StringProperty *>(inheritedProp);
+    auto *prop = dynamic_cast<StringProperty *>(inheritedProp);
 
     if (prop != nullptr) {
       props.insert(prop->getName());
@@ -131,7 +131,7 @@ void ViewToolTipAndUrlManager::fillContextMenu(QMenu *menu) {
   }
 
   for (auto localProp : graph->getLocalObjectProperties()) {
-    StringProperty *prop = dynamic_cast<StringProperty *>(localProp);
+    auto *prop = dynamic_cast<StringProperty *>(localProp);
     if (prop != nullptr) {
       props.insert(prop->getName());
     }
@@ -187,7 +187,7 @@ bool ViewToolTipAndUrlManager::eventFilter(QObject *, QEvent *event) {
                                 : dynamic_cast<StringProperty *>(graph->getProperty(_urlPropName));
 
   if (event->type() == QEvent::ToolTip && (_tooltips == true || urlProp != nullptr)) {
-    QHelpEvent *he = static_cast<QHelpEvent *>(event);
+    auto *he = static_cast<QHelpEvent *>(event);
 
     node tmpNode;
     edge tmpEdge;

@@ -132,8 +132,8 @@ double StrengthMetric::getEdgeValue(const tlp::edge ee) {
   }
 
   // compute strength metric
-  double gamma3 = double(Wuv.size());
-  double norm3 = double((Wuv.size() + Mv.size() + Mu.size()));
+  auto gamma3 = double(Wuv.size());
+  auto norm3 = double((Wuv.size() + Mv.size() + Mu.size()));
 
   double gamma4 = (e(Mu, Wuv) + e(Mv, Wuv) + e(Mu, Mv) + e(Wuv));
   double norm4 = (double(Mu.size() * Wuv.size() + Mv.size() * Wuv.size() + Mu.size() * Mv.size()) +

@@ -79,7 +79,7 @@ bool MouseMagnifyingGlassInteractorComponent::eventFilter(QObject *, QEvent *e) 
   Coord screenCoords;
 
   if (e->type() == QEvent::MouseMove) {
-    QMouseEvent *me = static_cast<QMouseEvent *>(e);
+    auto *me = static_cast<QMouseEvent *>(e);
     float x = glWidget->width() - me->x();
     float y = me->y();
     screenCoords = Coord(x, y, 0);
@@ -87,7 +87,7 @@ bool MouseMagnifyingGlassInteractorComponent::eventFilter(QObject *, QEvent *e) 
 
     updateMagnifyingGlass = true;
   } else if (e->type() == QEvent::Wheel) {
-    QWheelEvent *wheelEvent = static_cast<QWheelEvent *>(e);
+    auto *wheelEvent = static_cast<QWheelEvent *>(e);
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
     float x = glWidget->width() - wheelEvent->position().x();
     float y = wheelEvent->position().y();
@@ -282,7 +282,7 @@ void MouseMagnifyingGlassInteractorComponent::viewChanged(View *view) {
     return;
   }
 
-  GlView *glView = dynamic_cast<GlView *>(view);
+  auto *glView = dynamic_cast<GlView *>(view);
   glWidget = glView->getGlWidget();
   radius = glWidget->screenToViewport(glWidget->width()) / 4;
   camera = &glWidget->getScene()->getLayer("Main")->getCamera();

@@ -20,7 +20,7 @@ using namespace tlp;
 EdgeExtremityGlyph::EdgeExtremityGlyph(const PluginContext *context)
     : edgeExtGlGraphInputData(nullptr) {
   if (context != nullptr) {
-    const GlyphContext *glyphContext = static_cast<const GlyphContext *>(context);
+    const auto *glyphContext = static_cast<const GlyphContext *>(context);
     edgeExtGlGraphInputData = glyphContext->glGraphInputData;
   }
 }

@@ -214,8 +214,7 @@ void GlWidget::computeInteractors() {
     return;
   }
 
-  GLInteractorComposite *interactor =
-      dynamic_cast<GLInteractorComposite *>(view->currentInteractor());
+  auto *interactor = dynamic_cast<GLInteractorComposite *>(view->currentInteractor());
 
   if (interactor == nullptr) {
     return;
@@ -229,8 +228,7 @@ void GlWidget::drawInteractors() {
     return;
   }
 
-  GLInteractorComposite *interactor =
-      dynamic_cast<GLInteractorComposite *>(view->currentInteractor());
+  auto *interactor = dynamic_cast<GLInteractorComposite *>(view->currentInteractor());
 
   if (!interactor) {
     return;
@@ -399,8 +397,8 @@ QImage GlWidget::createPicture(int width, int height, bool center, QImage::Forma
   QOpenGLFramebufferObjectFormat fboFormat;
   fboFormat.setAttachment(QOpenGLFramebufferObject::CombinedDepthStencil);
   fboFormat.setSamples(OpenGlConfigManager::maxNumberOfSamples());
-  QOpenGLFramebufferObject *frameBuf = new QOpenGLFramebufferObject(width, height, fboFormat);
-  QOpenGLFramebufferObject *frameBuf2 = new QOpenGLFramebufferObject(width, height);
+  auto *frameBuf = new QOpenGLFramebufferObject(width, height, fboFormat);
+  auto *frameBuf2 = new QOpenGLFramebufferObject(width, height);
 
   if (frameBuf->isValid() && frameBuf2->isValid()) {
     frameBuf->bind();

@@ -417,14 +417,14 @@ void ParallelCoordinatesView::addEmptyViewLabel() {
     foregroundColor = Color(0, 0, 0);
   }
 
-  GlLabel *noDimsLabel = new GlLabel(Coord(0, 0, 0), Size(200, 200), foregroundColor);
+  auto *noDimsLabel = new GlLabel(Coord(0, 0, 0), Size(200, 200), foregroundColor);
   noDimsLabel->setText(ViewName::ParallelCoordinatesViewName);
   mainLayer->addGlEntity(noDimsLabel, "no dimensions label");
-  GlLabel *noDimsLabel1 =
+  auto *noDimsLabel1 =
       new GlLabel(Coord(0.0f, -50.0f, 0.0f), Size(400.0f, 200.0f), foregroundColor);
   noDimsLabel1->setText("No graph properties selected.");
   mainLayer->addGlEntity(noDimsLabel1, "no dimensions label 1");
-  GlLabel *noDimsLabel2 =
+  auto *noDimsLabel2 =
       new GlLabel(Coord(0.0f, -100.0f, 0.0f), Size(700.0f, 200.0f), foregroundColor);
   noDimsLabel2->setText("Go to the \"Properties\" tab in top right corner.");
   mainLayer->addGlEntity(noDimsLabel2, "no dimensions label 2");
@@ -512,7 +512,7 @@ void ParallelCoordinatesView::init() {
 
 bool ParallelCoordinatesView::eventFilter(QObject *obj, QEvent *event) {
   if (event->type() == QEvent::KeyPress) {
-    QKeyEvent *keyEvent = dynamic_cast<QKeyEvent *>(event);
+    auto *keyEvent = dynamic_cast<QKeyEvent *>(event);
 
     if ((keyEvent->key() == Qt::Key_R) && (keyEvent->modifiers() & Qt::ControlModifier) != 0 &&
         (keyEvent->modifiers() & Qt::ShiftModifier) != 0) {
@@ -553,7 +553,7 @@ void ParallelCoordinatesView::buildContextMenu() {
 
   viewSetupMenu = new QMenu("View setup");
   viewSetupMenu->addAction("Layout type")->setEnabled(false);
-  QActionGroup *layoutActionGroup = new QActionGroup(this);
+  auto *layoutActionGroup = new QActionGroup(this);
   classicLayout = viewSetupMenu->addAction("Classic layout", this,
                                            &ParallelCoordinatesView::centerSetupAndDrawView);
   classicLayout->setToolTip("Use parallel axis layout");
@@ -569,7 +569,7 @@ void ParallelCoordinatesView::buildContextMenu() {
   viewSetupMenu->addSeparator();
 
   viewSetupMenu->addAction("Lines type")->setEnabled(false);
-  QActionGroup *lineTypeActionGroup = new QActionGroup(this);
+  auto *lineTypeActionGroup = new QActionGroup(this);
   straightLinesType =
       viewSetupMenu->addAction("Polyline", this, &ParallelCoordinatesView::setupAndDrawView);
   straightLinesType->setToolTip(
@@ -593,7 +593,7 @@ void ParallelCoordinatesView::buildContextMenu() {
   viewSetupMenu->addSeparator();
 
   viewSetupMenu->addAction("Lines thickness")->setEnabled(false);
-  QActionGroup *lineActionGroup = new QActionGroup(this);
+  auto *lineActionGroup = new QActionGroup(this);
   thickLines =
       viewSetupMenu->addAction("Map to viewSize", this, &ParallelCoordinatesView::setupAndDrawView);
   thickLines->setToolTip("The lines thickness is computed according the viewSize property values");

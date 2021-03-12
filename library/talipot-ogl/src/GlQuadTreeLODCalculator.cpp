@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -540,12 +540,12 @@ void GlQuadTreeLODCalculator::update(PropertyInterface *property) {
 }
 
 void GlQuadTreeLODCalculator::treatEvent(const Event &ev) {
-  const GlSceneEvent *sceneEv = dynamic_cast<const GlSceneEvent *>(&ev);
+  const auto *sceneEv = dynamic_cast<const GlSceneEvent *>(&ev);
 
   if (sceneEv) {
     setHaveToCompute();
   } else if (typeid(ev) == typeid(GraphEvent)) {
-    const GraphEvent *graphEvent = static_cast<const GraphEvent *>(&ev);
+    const auto *graphEvent = static_cast<const GraphEvent *>(&ev);
 
     switch (graphEvent->getType()) {
     case GraphEvent::TLP_ADD_NODE:
@@ -573,7 +573,7 @@ void GlQuadTreeLODCalculator::treatEvent(const Event &ev) {
       break;
     }
   } else if (typeid(ev) == typeid(PropertyEvent)) {
-    const PropertyEvent *propertyEvent = static_cast<const PropertyEvent *>(&ev);
+    const auto *propertyEvent = static_cast<const PropertyEvent *>(&ev);
     PropertyInterface *property = propertyEvent->getProperty();
 
     switch (propertyEvent->getType()) {
@@ -588,7 +588,7 @@ void GlQuadTreeLODCalculator::treatEvent(const Event &ev) {
       break;
     }
   } else if (ev.type() == Event::TLP_DELETE) {
-    Camera *camera = dynamic_cast<Camera *>(ev.sender());
+    auto *camera = dynamic_cast<Camera *>(ev.sender());
     if (camera) {
       auto it = find(cameras.begin(), cameras.end(), camera);
       if (it != cameras.end()) {
@@ -644,7 +644,7 @@ void GlQuadTreeLODCalculator::setHaveToCompute() {
     return;
   }
 
-  GlQuadTreeLODCalculator *attachedQuadTreeLODCalculator =
+  auto *attachedQuadTreeLODCalculator =
       dynamic_cast<GlQuadTreeLODCalculator *>(attachedLODCalculator);
 
   if (attachedQuadTreeLODCalculator) {

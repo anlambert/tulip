@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -41,7 +41,7 @@ DoubleStringsListRelationDialog::DoubleStringsListRelationDialog(
   }
 
   for (const auto &c : secondValues) {
-    QListWidgetItem *item = new QListWidgetItem;
+    auto *item = new QListWidgetItem;
     item->setBackground(QColor(c[0], c[1], c[2], c[3]));
     _ui->secondListWidget->addItem(item);
   }
@@ -141,7 +141,7 @@ void DoubleStringsListRelationDialog::interpolateCheckBoxChange(int state) {
     // vector lastNonInterpolateValues
     _ui->secondListWidget->clear();
     for (const auto &c : lastNonInterpolateValues) {
-      QListWidgetItem *item = new QListWidgetItem;
+      auto *item = new QListWidgetItem;
       item->setBackground(QColor(c[0], c[1], c[2], c[3]));
       _ui->secondListWidget->addItem(item);
     }
@@ -155,10 +155,10 @@ void DoubleStringsListRelationDialog::interpolateCheckBoxChange(int state) {
     }
     // replace the color columns with interpolated values
     ColorScale tempCS = ColorScale(lastNonInterpolateValues);
-    float nbOfValues = static_cast<float>(_ui->firstListWidget->count());
+    auto nbOfValues = static_cast<float>(_ui->firstListWidget->count());
     _ui->secondListWidget->clear();
     for (float i = 0.; i < nbOfValues; ++i) {
-      QListWidgetItem *item = new QListWidgetItem;
+      auto *item = new QListWidgetItem;
       Color ic = tempCS.getColorAtPos(i / (nbOfValues - 1.));
       item->setBackground(QColor(ic[0], ic[1], ic[2], ic[3]));
       _ui->secondListWidget->addItem(item);

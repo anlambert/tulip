@@ -63,7 +63,7 @@ void MouseEdgeBendEditor::stopEdition() {
 //========================================================================================
 bool MouseEdgeBendEditor::eventFilter(QObject *widget, QEvent *e) {
 
-  QMouseEvent *qMouseEv = dynamic_cast<QMouseEvent *>(e);
+  auto *qMouseEv = dynamic_cast<QMouseEvent *>(e);
 
   if (qMouseEv == nullptr) {
     return false;
@@ -141,7 +141,7 @@ bool MouseEdgeBendEditor::eventFilter(QObject *widget, QEvent *e) {
 
   if (e->type() == QEvent::MouseButtonRelease && qMouseEv->button() == Qt::LeftButton &&
       _operation != NONE_OP) {
-    GlWidget *glWidget = static_cast<GlWidget *>(widget);
+    auto *glWidget = static_cast<GlWidget *>(widget);
 
     Camera &camera = glWidget->getScene()->getLayer("Main")->getCamera();
 
@@ -216,7 +216,7 @@ bool MouseEdgeBendEditor::eventFilter(QObject *widget, QEvent *e) {
 
   if (e->type() == QEvent::MouseMove) {
     if (qMouseEv->buttons() == Qt::LeftButton && _operation != NONE_OP) {
-      GlWidget *glWidget = static_cast<GlWidget *>(widget);
+      auto *glWidget = static_cast<GlWidget *>(widget);
 
       switch (_operation) {
       case TRANSLATE_OP:
@@ -228,7 +228,7 @@ bool MouseEdgeBendEditor::eventFilter(QObject *widget, QEvent *e) {
       }
     } else if (qMouseEv->buttons() == Qt::NoButton) {
       SelectedEntity selectedEntity;
-      GlWidget *g = static_cast<GlWidget *>(widget);
+      auto *g = static_cast<GlWidget *>(widget);
 
       if (g->pickNodesEdges(qMouseEv->x(), qMouseEv->y(), selectedEntity) &&
           selectedEntity.getEntityType() == SelectedEntity::NODE_SELECTED) {
@@ -362,8 +362,8 @@ void MouseEdgeBendEditor::mMouseDelete() {
   if (selectedEntity != "targetTriangle" && selectedEntity != "sourceCircle") {
     int i;
     IntegerType::fromString(i, selectedEntity);
-    vector<Coord>::iterator CoordIt = coordinates.begin();
-    vector<tlp::GlCircle>::iterator circleIt = circles.begin();
+    auto CoordIt = coordinates.begin();
+    auto circleIt = circles.begin();
     int tmp = 0;
 
     while (tmp != i) {
@@ -422,7 +422,7 @@ void MouseEdgeBendEditor::mMouseCreate(int x, int y, GlWidget *glWidget) {
     }
 
     if (!firstSeg && !lastSeg && !firstLastSeg) {
-      vector<Coord>::iterator CoordIt = coordinates.begin();
+      auto CoordIt = coordinates.begin();
       last = Coord(CoordIt->getX(), CoordIt->getY(), CoordIt->getZ());
       ++CoordIt;
 
@@ -560,7 +560,7 @@ bool MouseEdgeBendEditor::computeBendsCircles(GlWidget *glWidget) {
     circleString->addGlEntity(&sourceCircle, "sourceCircle");
 
     // Bends circles
-    vector<Coord>::iterator CoordIt = coordinates.begin();
+    auto CoordIt = coordinates.begin();
 
     while (CoordIt != coordinates.end()) {
       tmp = Coord(CoordIt->getX(), CoordIt->getY(), CoordIt->getZ());
@@ -618,7 +618,7 @@ bool MouseEdgeBendEditor::computeBendsCircles(GlWidget *glWidget) {
           coordinates.push_back(_layout->getNodeValue(mNode) + tmp);
         }
 
-        vector<Coord>::iterator coordIt = coordinatesWithRotation.begin();
+        auto coordIt = coordinatesWithRotation.begin();
 
         while (coordIt != coordinatesWithRotation.end()) {
           Coord tmp =

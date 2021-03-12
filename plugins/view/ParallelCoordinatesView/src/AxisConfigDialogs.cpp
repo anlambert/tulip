@@ -40,12 +40,12 @@ QuantitativeAxisConfigDialog::QuantitativeAxisConfigDialog(QuantitativeParallelA
     : QDialog(), axis(axis) {
   setWindowTitle("Quantitative Axis Configuration");
 
-  QVBoxLayout *dialogLayout = new QVBoxLayout();
-  QHBoxLayout *nbGradsLayout = new QHBoxLayout();
-  QHBoxLayout *axisMinLayout = new QHBoxLayout();
-  QHBoxLayout *axisMaxLayout = new QHBoxLayout();
-  QHBoxLayout *axisOrderLayout = new QHBoxLayout();
-  QHBoxLayout *okButtonLayout = new QHBoxLayout();
+  auto *dialogLayout = new QVBoxLayout();
+  auto *nbGradsLayout = new QHBoxLayout();
+  auto *axisMinLayout = new QHBoxLayout();
+  auto *axisMaxLayout = new QHBoxLayout();
+  auto *axisOrderLayout = new QHBoxLayout();
+  auto *okButtonLayout = new QHBoxLayout();
 
   nbGrads = new QSpinBox();
   okButton = new QPushButton("OK");
@@ -137,18 +137,17 @@ NominalAxisConfigDialog::NominalAxisConfigDialog(NominalParallelAxis *axis)
 
   setWindowTitle("Nominal Axis Configuration");
 
-  QVBoxLayout *dialogLayout = new QVBoxLayout();
-  QVBoxLayout *buttonsUpDownLayout = new QVBoxLayout();
-  QHBoxLayout *labelsOrderLayout = new QHBoxLayout();
-  QHBoxLayout *okButtonLayout = new QHBoxLayout();
+  auto *dialogLayout = new QVBoxLayout();
+  auto *buttonsUpDownLayout = new QVBoxLayout();
+  auto *labelsOrderLayout = new QHBoxLayout();
+  auto *okButtonLayout = new QHBoxLayout();
 
   okButton = new QPushButton("OK");
   axisLabelsOrder = new ItemsListWidget(this);
-  QPushButton *up = new QPushButton(FontIconManager::icon(MaterialDesignIcons::ArrowUpBold), "");
-  QPushButton *lexOrder = new QPushButton(QString("Lexicographic") + QChar(QChar::LineSeparator) +
-                                          QString("     order"));
-  QPushButton *down =
-      new QPushButton(FontIconManager::icon(MaterialDesignIcons::ArrowDownBold), "");
+  auto *up = new QPushButton(FontIconManager::icon(MaterialDesignIcons::ArrowUpBold), "");
+  auto *lexOrder = new QPushButton(QString("Lexicographic") + QChar(QChar::LineSeparator) +
+                                   QString("     order"));
+  auto *down = new QPushButton(FontIconManager::icon(MaterialDesignIcons::ArrowDownBold), "");
 
   buttonsUpDownLayout->addWidget(up);
   buttonsUpDownLayout->addWidget(lexOrder);

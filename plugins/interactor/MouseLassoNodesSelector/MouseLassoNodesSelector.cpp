@@ -203,13 +203,13 @@ void MouseLassoNodesSelectorInteractorComponent::selectGraphElementsUnderPolygon
 }
 
 bool MouseLassoNodesSelectorInteractorComponent::eventFilter(QObject *obj, QEvent *e) {
-  GlWidget *glWidget = static_cast<GlWidget *>(obj);
+  auto *glWidget = static_cast<GlWidget *>(obj);
 
   if (!glWidget->hasMouseTracking()) {
     glWidget->setMouseTracking(true);
   }
 
-  QMouseEvent *me = dynamic_cast<QMouseEvent *>(e);
+  auto *me = dynamic_cast<QMouseEvent *>(e);
 
   if (!me) {
     return false;

@@ -433,7 +433,7 @@ void GraphImpl::push(bool unpopAllowed, std::vector<PropertyInterface *> *propsT
   const GraphStorageIdsMemento *prevIdsMemento =
       hasRecorders ? recorders.front()->newIdsState : nullptr;
 
-  GraphUpdatesRecorder *recorder = new GraphUpdatesRecorder(unpopAllowed, prevIdsMemento);
+  auto *recorder = new GraphUpdatesRecorder(unpopAllowed, prevIdsMemento);
   recorder->startRecording(this);
   recorders.push_front(recorder);
 
@@ -444,7 +444,7 @@ void GraphImpl::push(bool unpopAllowed, std::vector<PropertyInterface *> *propsT
     unsigned int nb = recorders.size();
 
     if (nb > NB_MAX_RECORDERS) {
-      std::list<GraphUpdatesRecorder *>::reverse_iterator it = recorders.rbegin();
+      auto it = recorders.rbegin();
 
       while (nb > NB_MAX_RECORDERS) {
         delete (*it);

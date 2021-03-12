@@ -43,9 +43,9 @@ GlOffscreenRenderer::GlOffscreenRenderer()
     : glContext(nullptr), offscreenSurface(nullptr), vPWidth(512), vPHeight(512),
       glFrameBuf(nullptr), glFrameBuf2(nullptr), mainLayer(new GlLayer("Main")), entitiesCpt(0),
       zoomFactor(DBL_MAX), cameraCenter(FLT_MAX, FLT_MAX, FLT_MAX) {
-  GlLayer *backgroundLayer = new GlLayer("Background");
+  auto *backgroundLayer = new GlLayer("Background");
   backgroundLayer->setVisible(true);
-  GlLayer *foregroundLayer = new GlLayer("Foreground");
+  auto *foregroundLayer = new GlLayer("Foreground");
   foregroundLayer->setVisible(true);
   backgroundLayer->set2DMode();
   foregroundLayer->set2DMode();

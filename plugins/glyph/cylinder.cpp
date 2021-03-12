@@ -171,14 +171,18 @@ public:
   void draw(node n, float lod) override;
   Coord getAnchor(const Coord &vector) const override;
 };
+
 PLUGIN(Cylinder)
 
 Cylinder::Cylinder(const tlp::PluginContext *context) : NoShaderGlyph(context) {}
+
 Cylinder::~Cylinder() = default;
+
 void Cylinder::getIncludeBoundingBox(BoundingBox &boundingBox, node) {
   boundingBox[0] = Coord(-0.35f, -0.35f, 0);
   boundingBox[1] = Coord(0.35f, 0.35f, 1);
 }
+
 void Cylinder::draw(node n, float) {
 
   setMaterial(glGraphInputData->getElementColor()->getNodeValue(n));
@@ -304,4 +308,4 @@ public:
 
 PLUGIN(EECylinder)
 
-} // end of namespace tlp
+}

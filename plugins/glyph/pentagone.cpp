@@ -64,9 +64,13 @@ public:
   void getIncludeBoundingBox(BoundingBox &boundingBox, node) override;
   void draw(node n, float lod) override;
 };
+
 PLUGIN(Pentagon)
+
 Pentagon::Pentagon(const tlp::PluginContext *context) : Glyph(context) {}
+
 Pentagon::~Pentagon() = default;
+
 void Pentagon::getIncludeBoundingBox(BoundingBox &boundingBox, node) {
   boundingBox[0] = Coord(-0.3f, -0.35f, 0);
   boundingBox[1] = Coord(0.3f, 0.35f, 0);
@@ -102,6 +106,7 @@ public:
                  lod, false);
   }
 };
+
 PLUGIN(EEPentagon)
 
-} // end of namespace tlp
+}

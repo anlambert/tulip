@@ -140,7 +140,7 @@ void GlMetaNodeRenderer::render(node n, float, Camera *camera) {
                     scene->getGraphLayer()->getCamera().getCenter())
                        .norm();
   Camera newCamera = scene->getGraphLayer()->getCamera();
-  Camera *oldCamera = new Camera(scene, true);
+  auto *oldCamera = new Camera(scene, true);
   newCamera.setScene(scene);
   *oldCamera = newCamera;
   newCamera.setUp(camera->getUp());
@@ -168,10 +168,10 @@ void GlMetaNodeRenderer::render(node n, float, Camera *camera) {
 }
 
 GlScene *GlMetaNodeRenderer::createScene(Graph *metaGraph) const {
-  GlScene *scene = new GlScene(new GlCPULODCalculator());
-  GlLayer *layer = new GlLayer("Main");
+  auto *scene = new GlScene(new GlCPULODCalculator());
+  auto *layer = new GlLayer("Main");
   scene->addExistingLayer(layer);
-  GlGraph *glGraph = new GlGraph(metaGraph, scene);
+  auto *glGraph = new GlGraph(metaGraph, scene);
   layer->addGlEntity(glGraph, "graph");
   return scene;
 }

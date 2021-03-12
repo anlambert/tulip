@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -106,7 +106,7 @@ void dumpStack(int sig, siginfo_t *, void *ucontext) {
 
 #ifndef __APPLE__
 
-  sig_ucontext_t *uc = reinterpret_cast<sig_ucontext_t *>(ucontext);
+  auto *uc = reinterpret_cast<sig_ucontext_t *>(ucontext);
 #if defined(__i386__)
 #ifdef __FreeBSD__
   void *callerAddress = reinterpret_cast<void *>(uc->uc_mcontext.mc_eip); // x86 specific;

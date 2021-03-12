@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -104,7 +104,7 @@ QVector<PropertyInterface *> GraphElementModel::getGraphProperties() const {
 
 bool GraphNodeElementModel::setData(const QModelIndex &index, const QVariant &value, int role) {
   if (role == Qt::EditRole) {
-    PropertyInterface *prop = static_cast<PropertyInterface *>(index.internalPointer());
+    auto *prop = static_cast<PropertyInterface *>(index.internalPointer());
     _graph->push();
     bool result = GraphModel::setNodeValue(_id, prop, value);
     _graph->popIfNoUpdates();
@@ -116,7 +116,7 @@ bool GraphNodeElementModel::setData(const QModelIndex &index, const QVariant &va
 
 bool GraphEdgeElementModel::setData(const QModelIndex &index, const QVariant &value, int role) {
   if (role == Qt::EditRole) {
-    PropertyInterface *prop = static_cast<PropertyInterface *>(index.internalPointer());
+    auto *prop = static_cast<PropertyInterface *>(index.internalPointer());
     _graph->push();
     bool result = GraphModel::setEdgeValue(_id, prop, value);
     _graph->popIfNoUpdates();

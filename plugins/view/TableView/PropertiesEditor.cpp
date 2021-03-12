@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -61,7 +61,7 @@ void PropertiesEditor::setCaseSensitive(Qt::CaseSensitivity cs) {
 
 void PropertiesEditor::setGraph(tlp::Graph *g) {
   _graph = g;
-  QSortFilterProxyModel *model = new QSortFilterProxyModel(_ui->tableView);
+  auto *model = new QSortFilterProxyModel(_ui->tableView);
   delete _sourceModel;
   _sourceModel = new GraphPropertiesModel<PropertyInterface>(g, true);
   model->setSourceModel(_sourceModel);
@@ -364,12 +364,11 @@ void PropertiesEditor::showVisualProperties(bool f) {
 // properties inserted when filtering
 // are visible according to their CheckState
 void PropertiesEditor::displayedPropertiesInserted(const QModelIndex &parent, int start, int end) {
-  QSortFilterProxyModel *model = static_cast<QSortFilterProxyModel *>(sender());
+  auto *model = static_cast<QSortFilterProxyModel *>(sender());
 
   for (; start <= end; ++start) {
     QModelIndex sIndex = model->mapToSource(model->index(start, 0, parent));
-    PropertyInterface *pi =
-        _sourceModel->data(sIndex, Model::PropertyRole).value<PropertyInterface *>();
+    auto *pi = _sourceModel->data(sIndex, Model::PropertyRole).value<PropertyInterface *>();
 
     if (filteringProperties == false) {
       _sourceModel->setData(sIndex, Qt::Checked, Qt::CheckStateRole);
@@ -383,10 +382,10 @@ void PropertiesEditor::displayedPropertiesInserted(const QModelIndex &parent, in
 // properties removed when filtering
 // are no longer visible
 void PropertiesEditor::displayedPropertiesRemoved(const QModelIndex &parent, int start, int end) {
-  QSortFilterProxyModel *model = static_cast<QSortFilterProxyModel *>(sender());
+  auto *model = static_cast<QSortFilterProxyModel *>(sender());
 
   for (; start <= end; ++start) {
-    PropertyInterface *pi =
+    auto *pi =
         _sourceModel->data(model->mapToSource(model->index(start, 0, parent)), Model::PropertyRole)
             .value<PropertyInterface *>();
     emit propertyVisibilityChanged(pi, false);
@@ -536,8 +535,7 @@ void PropertiesEditor::toLabels(PropertyInterface *prop, bool nodes, bool edges,
 }
 
 void PropertiesEditor::checkStateChanged(QModelIndex index, Qt::CheckState state) {
-  PropertyInterface *pi =
-      _sourceModel->data(index, Model::PropertyRole).value<PropertyInterface *>();
+  auto *pi = _sourceModel->data(index, Model::PropertyRole).value<PropertyInterface *>();
   emit propertyVisibilityChanged(pi, state == Qt::Checked);
 }
 

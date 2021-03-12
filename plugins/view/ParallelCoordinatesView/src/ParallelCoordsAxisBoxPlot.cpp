@@ -352,8 +352,7 @@ void ParallelCoordsAxisBoxPlot::initOrUpdateBoxPlots() {
 void ParallelCoordsAxisBoxPlot::buildGlAxisPlot(vector<ParallelAxis *> currentAxis) {
   for (unsigned int i = 0; i < currentAxis.size(); ++i) {
     if (dynamic_cast<QuantitativeParallelAxis *>(currentAxis[i])) {
-      QuantitativeParallelAxis *quantitativeAxis =
-          static_cast<QuantitativeParallelAxis *>(currentAxis[i]);
+      auto *quantitativeAxis = static_cast<QuantitativeParallelAxis *>(currentAxis[i]);
 
       if (quantitativeAxis->getMedianStringValue() != "KO") {
         axisBoxPlotMap[quantitativeAxis] = new GlAxisBoxPlot(quantitativeAxis, lightBlue, darkBlue);
@@ -371,7 +370,7 @@ void ParallelCoordsAxisBoxPlot::deleteGlAxisPlot() {
 
 bool ParallelCoordsAxisBoxPlot::eventFilter(QObject *widget, QEvent *e) {
 
-  GlWidget *glWidget = static_cast<GlWidget *>(widget);
+  auto *glWidget = static_cast<GlWidget *>(widget);
 
   if (!glWidget) {
     return false;
@@ -380,7 +379,7 @@ bool ParallelCoordsAxisBoxPlot::eventFilter(QObject *widget, QEvent *e) {
   initOrUpdateBoxPlots();
 
   if (e->type() == QEvent::MouseMove) {
-    QMouseEvent *me = static_cast<QMouseEvent *>(e);
+    auto *me = static_cast<QMouseEvent *>(e);
     float x = glWidget->width() - me->x();
     float y = me->y();
     Coord screenCoords = {x, y};
@@ -389,7 +388,7 @@ bool ParallelCoordsAxisBoxPlot::eventFilter(QObject *widget, QEvent *e) {
     selectedAxis = parallelView->getAxisUnderPointer(me->x(), me->y());
 
     if (selectedAxis != nullptr) {
-      QuantitativeParallelAxis *qaxis = dynamic_cast<QuantitativeParallelAxis *>(selectedAxis);
+      auto *qaxis = dynamic_cast<QuantitativeParallelAxis *>(selectedAxis);
       if (qaxis && axisBoxPlotMap.find(qaxis) != axisBoxPlotMap.end()) {
         if (parallelView->getLayoutType() == ParallelCoordinatesDrawing::CIRCULAR) {
           rotateVector(sceneCoords, -(selectedAxis->getRotationAngle()), Z_ROT);

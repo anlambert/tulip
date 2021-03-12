@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -82,7 +82,7 @@ struct GuillaumeLatapyModel : public ImportModule {
     vector<BottomNode> vec_bottom_nodes(nbNodes);
     vector<TopNode> vec_top_nodes(nbNodes);
 
-    unsigned int nbNodesSmallWorld = uint(ceil(0.8 * nbNodes));
+    auto nbNodesSmallWorld = uint(ceil(0.8 * nbNodes));
     unsigned int nbNodesScaleFree = nbNodes - nbNodesSmallWorld;
     unsigned int maxDegreeSmallWorldNodes = 2;
     unsigned int numberOfEdges = 0;

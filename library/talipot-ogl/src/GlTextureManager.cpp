@@ -81,8 +81,8 @@ static bool generateTexture(const TextureInfo &texti, GlTexture &glTexture) {
 }
 //====================================================================
 static unsigned char *invertImage(int pitch, int height, unsigned char *imagePixels) {
-  unsigned char *tempRow = new unsigned char[pitch];
-  unsigned int heightDiv2 = static_cast<unsigned int>(height * .5);
+  auto *tempRow = new unsigned char[pitch];
+  auto heightDiv2 = static_cast<unsigned int>(height * .5);
   for (unsigned int index = 0; index < heightDiv2; ++index) {
     memcpy(tempRow, imagePixels + pitch * index, pitch);
     memcpy(imagePixels + pitch * index, imagePixels + pitch * (height - index - 1), pitch);
@@ -111,7 +111,7 @@ bool GlTextureLoader::loadTexture(const string &filename, GlTexture &texture) {
     int nearestpotW = nearestPOT(w);
     int nearestpotH = nearestPOT(h);
     if (nearestpotW != w || nearestpotH != h) {
-      unsigned char *newPixels = new unsigned char[nearestpotW * nearestpotH * nbBytesPerPixel];
+      auto *newPixels = new unsigned char[nearestpotW * nearestpotH * nbBytesPerPixel];
       stbir_resize_uint8(pixels, w, h, 0, newPixels, nearestpotW, nearestpotH, 0, nbBytesPerPixel);
       delete[] pixels;
       pixels = newPixels;
@@ -175,7 +175,7 @@ static void deleteGlTexture(GlTexture &texture) {
 }
 
 void GlTextureManager::deleteTexture(const string &name) {
-  TextureMap::iterator it = texturesMap.find(name);
+  auto it = texturesMap.find(name);
   if (it != texturesMap.end()) {
     deleteGlTexture(it->second);
     texturesMap.erase(it);

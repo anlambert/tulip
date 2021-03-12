@@ -106,7 +106,7 @@ struct CurvePoints {
     memcpy(data, cp.data, sizeof(GLfloat) * size * 6);
   }
   void addPoint() {
-    GLfloat *newData = new GLfloat[2 * (size + 1) * 3];
+    auto *newData = new GLfloat[2 * (size + 1) * 3];
     memcpy(newData, data, sizeof(GLfloat) * size * 3);
     memcpy(newData + ((size + 1) * 3), data + (size * 3), sizeof(GLfloat) * size * 3);
     delete[] data;
@@ -160,7 +160,7 @@ GLfloat *buildCurvePoints(const vector<Coord> &vertices, const vector<float> &si
     float newSize = sizes[i];
     Coord u = vertices[i - 1] - vertices[i];
     Coord v = vertices[i + 1] - vertices[i];
-    float angle =
+    auto angle =
         float(M_PI - acos((u[0] * v[0] + u[1] * v[1] + u[2] * v[2]) / (u.norm() * v.norm())));
 
     if (isnan(angle)) {
@@ -604,7 +604,7 @@ void simpleQuad(const vector<Coord> &vertices, const Color &c1, const Color &c2,
     float newSize = sizes[i];
     Coord u = -v;
     v = vertices[i + 1] - vertices[i];
-    float angle =
+    auto angle =
         float(M_PI - acos((u[0] * v[0] + u[1] * v[1] + u[2] * v[2]) / (u.norm() * v.norm())));
 
     if (isnan(angle)) {

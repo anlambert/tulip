@@ -27,7 +27,7 @@ using namespace tlp;
 using namespace std;
 
 bool MouseNodeBuilder::eventFilter(QObject *widget, QEvent *e) {
-  QMouseEvent *qMouseEv = dynamic_cast<QMouseEvent *>(e);
+  auto *qMouseEv = dynamic_cast<QMouseEvent *>(e);
 
   if (qMouseEv != nullptr) {
     SelectedEntity selectedEntity;

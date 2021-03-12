@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -424,7 +424,7 @@ void GlLines::glEnableLineStipple(unsigned int stippleType) {
 //=============================================================
 GLfloat *GlLines::buildCurvePoints(const Coord &startPoint, const vector<Coord> &bends,
                                    const Coord &endPoint) {
-  GLfloat *bendsCoordinates = new GLfloat[(bends.size() + 2) * 3];
+  auto *bendsCoordinates = new GLfloat[(bends.size() + 2) * 3];
   bendsCoordinates[0] = startPoint[0];
   bendsCoordinates[1] = startPoint[1];
   bendsCoordinates[2] = startPoint[2];
@@ -446,7 +446,7 @@ GLfloat *GlLines::buildCurvePoints(const Coord &startPoint, const vector<Coord> 
 //=============================================================
 GLfloat *GlLines::buildCurvePoints(const Coord &p0, const Coord &p1, const Coord &p2,
                                    const Coord &p3) {
-  GLfloat *bendsCoordinates = new GLfloat[4 * 3];
+  auto *bendsCoordinates = new GLfloat[4 * 3];
 
   for (unsigned int i = 0; i < 3; ++i) {
     bendsCoordinates[i] = p0[i];

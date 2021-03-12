@@ -286,7 +286,7 @@ void Observable::unholdObservers() {
 
       for (const auto &[src, tgt] : backupEvents) {
         if (_oAlive[src]) {
-          Observable *sender = static_cast<Observable *>(_oPointer[src]);
+          auto *sender = static_cast<Observable *>(_oPointer[src]);
           sender->queuedEvent = false;
           if (_oAlive[tgt]) {
             _oEventsToTreat[tgt] += 1;
@@ -302,7 +302,7 @@ void Observable::unholdObservers() {
           _oEventsToTreat[n] -= events.size();
 
           if (_oAlive[n]) {
-            Observable *obs = static_cast<Observable *>(_oPointer[n]);
+            auto *obs = static_cast<Observable *>(_oPointer[n]);
             ++(obs->received);
             obs->treatEvents(events);
           }

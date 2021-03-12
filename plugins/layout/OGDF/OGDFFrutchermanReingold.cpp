@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -65,8 +65,6 @@ public:
   void beforeCall() override;
 };
 
-/*Nom de la classe, Nom du plugins, nom de l'auteur,date de
- creation,information, realease, groupe*/
 PLUGIN(OGDFFrutchermanReingold)
 
 OGDFFrutchermanReingold::OGDFFrutchermanReingold(const tlp::PluginContext *context)
@@ -86,7 +84,7 @@ OGDFFrutchermanReingold::OGDFFrutchermanReingold(const tlp::PluginContext *conte
 }
 
 void OGDFFrutchermanReingold::beforeCall() {
-  ogdf::SpringEmbedderFRExact *sefr = static_cast<ogdf::SpringEmbedderFRExact *>(ogdfLayoutAlgo);
+  auto *sefr = static_cast<ogdf::SpringEmbedderFRExact *>(ogdfLayoutAlgo);
 
   if (dataSet != nullptr) {
     int ival = 0;

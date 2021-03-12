@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -41,13 +41,13 @@ class LinkWidget : public QWidget {
 public:
   LinkWidget() : QWidget(), linked(true), alwaysLinked(false) {
     installEventFilter(this);
-    QLabel *topLabel = new QLabel();
+    auto *topLabel = new QLabel();
     QPixmap topPixmap =
         FontIconManager::icon(MaterialDesignIcons::AlphaL, 1.0, 0.0, QPointF(-1, -6))
             .pixmap(20, 20)
             .transformed(QTransform().scale(-1, -1));
     topLabel->setPixmap(topPixmap);
-    QLabel *bottomLabel = new QLabel();
+    auto *bottomLabel = new QLabel();
     QPixmap bottomPixmap =
         FontIconManager::icon(MaterialDesignIcons::AlphaL, 1.0, 0.0, QPointF(-1, -6))
             .pixmap(20, 20)
@@ -61,7 +61,7 @@ public:
                        .pixmap(20, 20)
                        .transformed(QTransform().rotate(90));
     linkLabel->setPixmap(linkPixmap);
-    QVBoxLayout *layout = new QVBoxLayout();
+    auto *layout = new QVBoxLayout();
     layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(topLabel);
     layout->addWidget(linkLabel);

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -112,7 +112,7 @@ QWidget *ItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem 
     return QStyledItemDelegate::createEditor(parent, option, index);
   }
 
-  PropertyInterface *pi = index.data(Model::PropertyRole).value<PropertyInterface *>();
+  auto *pi = index.data(Model::PropertyRole).value<PropertyInterface *>();
   if (pi) {
     c->setPropertyToEdit(pi);
   }
@@ -160,7 +160,7 @@ void ItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
   if (bgColor.isValid() && bgColor.type() == QVariant::Color) {
     painter->setBrush(bgColor.value<QColor>());
   } else {
-    QTableView *tv = static_cast<QTableView *>(parent());
+    auto *tv = static_cast<QTableView *>(parent());
     painter->setBrush((tv && tv->alternatingRowColors() && (index.row() % 2))
                           ? option.palette.alternateBase()
                           : option.palette.base());
@@ -199,7 +199,7 @@ void ItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
 
 void ItemDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const {
   QVariant data = index.data();
-  tlp::Graph *g = index.data(Model::GraphRole).value<tlp::Graph *>();
+  auto *g = index.data(Model::GraphRole).value<tlp::Graph *>();
   bool isMandatory = true;
   QVariant mandatoryVar = index.data(Model::MandatoryRole);
 
@@ -219,7 +219,7 @@ void ItemDelegate::setEditorData(QWidget *editor, const QModelIndex &index) cons
 void ItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
                                 const QModelIndex &index) const {
   QVariant data = index.data();
-  tlp::Graph *g = index.data(Model::GraphRole).value<tlp::Graph *>();
+  auto *g = index.data(Model::GraphRole).value<tlp::Graph *>();
   ItemEditorCreator *c = creator(data.userType());
 
   if (!c) {
@@ -233,7 +233,7 @@ bool ItemDelegate::eventFilter(QObject *object, QEvent *event) {
   if (event->type() == QEvent::FocusOut && dynamic_cast<QComboBox *>(object) != nullptr) {
     return true;
   } else if (event->type() == QEvent::ChildAdded) {
-    QChildEvent *childEv = static_cast<QChildEvent *>(event);
+    auto *childEv = static_cast<QChildEvent *>(event);
 
     if (dynamic_cast<QComboBox *>(object) != nullptr) {
       _currentMonitoredChild = childEv->child();
@@ -291,7 +291,7 @@ QVariant ItemDelegate::showEditorDialog(tlp::ElementType elType, tlp::PropertyIn
   QWidget *w = creator->createWidget(dialogParent);
   creator->setEditorData(w, value, g);
 
-  QDialog *dlg = dynamic_cast<QDialog *>(w);
+  auto *dlg = dynamic_cast<QDialog *>(w);
 
   if (dlg == nullptr) {
     QString title(
@@ -305,14 +305,14 @@ QVariant ItemDelegate::showEditorDialog(tlp::ElementType elType, tlp::PropertyIn
     // create a dialog on the fly
     dlg = new QDialog(dialogParent);
     dlg->setWindowTitle(title);
-    QVBoxLayout *layout = new QVBoxLayout;
+    auto *layout = new QVBoxLayout;
     dlg->setLayout(layout);
     dlg->setMinimumWidth(250);
     if (displayPropertyName) {
       layout->addWidget(new QLabel(pi->getName().c_str()));
     }
     layout->addWidget(w);
-    QDialogButtonBox *buttonBox =
+    auto *buttonBox =
         new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok, Qt::Horizontal);
     layout->addWidget(buttonBox);
     QWidget::setTabOrder(w, buttonBox);

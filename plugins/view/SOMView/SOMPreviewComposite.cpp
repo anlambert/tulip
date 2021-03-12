@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -119,7 +119,7 @@ bool SOMPreviewComposite::isElement(GlEntity *entity) {
       }
 
       // If the element is a composite add it to the list of composite to explore.
-      GlComposite *composite = dynamic_cast<GlComposite *>(itElements.second);
+      auto *composite = dynamic_cast<GlComposite *>(itElements.second);
 
       if (composite) {
         compositeToExplore.push_back(composite);

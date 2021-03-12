@@ -367,8 +367,7 @@ void ParallelCoordinatesDrawing::plotData(const unsigned int dataId, const Color
     }
 
     if (linesThickness == THICK) {
-      GlPolyQuad *polyquad =
-          new GlPolyQuad(polylineCoords, color, lineTextureFilename, true, 1, color);
+      auto *polyquad = new GlPolyQuad(polylineCoords, color, lineTextureFilename, true, 1, color);
       polyquad->setOutlined(false);
       line = polyquad;
     } else {
@@ -385,9 +384,8 @@ void ParallelCoordinatesDrawing::plotData(const unsigned int dataId, const Color
       textureName = lineTextureFilename;
     }
 
-    GlCatmullRomCurve *catmull =
-        new GlCatmullRomCurve(splineCurvePassPoints, color, color, size, size, closeSpline,
-                              20 * splineCurvePassPoints.size() - 1);
+    auto *catmull = new GlCatmullRomCurve(splineCurvePassPoints, color, color, size, size,
+                                          closeSpline, 20 * splineCurvePassPoints.size() - 1);
 
     if (textureName == DEFAULT_TEXTURE_FILE) {
       catmull->setOutlined(true);
@@ -409,7 +407,7 @@ void ParallelCoordinatesDrawing::plotData(const unsigned int dataId, const Color
       splineCurvePassPoints.push_back(splineCurvePassPoints[0]);
     }
 
-    GlCubicBSplineInterpolation *cubicInterpolation = new GlCubicBSplineInterpolation(
+    auto *cubicInterpolation = new GlCubicBSplineInterpolation(
         splineCurvePassPoints, color, color, size, size, 20 * splineCurvePassPoints.size() - 1);
 
     if (textureName == DEFAULT_TEXTURE_FILE) {
@@ -630,7 +628,7 @@ void ParallelCoordinatesDrawing::updateWithAxisSlidersRange(
                             ? eltsInSlidersRange.size()
                             : currentHighlightedElts.size();
     vector<unsigned int> intersection(size);
-    vector<unsigned int>::iterator intersectionEnd = std::set_intersection(
+    auto intersectionEnd = std::set_intersection(
         eltsInSlidersRange.begin(), eltsInSlidersRange.end(), currentHighlightedElts.begin(),
         currentHighlightedElts.end(), intersection.begin());
     dataSubset = set<unsigned int>(intersection.begin(), intersectionEnd);
@@ -639,9 +637,9 @@ void ParallelCoordinatesDrawing::updateWithAxisSlidersRange(
     const set<unsigned int> &currentHighlightedElts(graphProxy->getHighlightedElts());
 
     vector<unsigned int> unionSet(eltsInSlidersRange.size() + currentHighlightedElts.size());
-    vector<unsigned int>::iterator unionEnd = std::set_union(
-        eltsInSlidersRange.begin(), eltsInSlidersRange.end(), currentHighlightedElts.begin(),
-        currentHighlightedElts.end(), unionSet.begin());
+    auto unionEnd = std::set_union(eltsInSlidersRange.begin(), eltsInSlidersRange.end(),
+                                   currentHighlightedElts.begin(), currentHighlightedElts.end(),
+                                   unionSet.begin());
     dataSubset = set<unsigned int>(unionSet.begin(), unionEnd);
   } else {
     dataSubset = axis->getDataInSlidersRange();
@@ -685,7 +683,7 @@ void ParallelCoordinatesDrawing::delEdge(Graph *, const edge e) {
 }
 
 void ParallelCoordinatesDrawing::treatEvent(const tlp::Event &evt) {
-  const GraphEvent *gEvt = dynamic_cast<const GraphEvent *>(&evt);
+  const auto *gEvt = dynamic_cast<const GraphEvent *>(&evt);
 
   if (gEvt) {
     Graph *graph = gEvt->getGraph();

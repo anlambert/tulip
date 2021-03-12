@@ -325,7 +325,7 @@ CSVToGraphEdgeSrcTgtMapping::getElementsForRow(const vector<vector<string>> &tok
         key.append(keyTokens[i][j]);
       }
 
-      std::unordered_map<string, unsigned int>::iterator it = srcValueToId.find(key);
+      auto it = srcValueToId.find(key);
 
       // token exists in the map
       if (it != srcValueToId.end()) {
@@ -390,7 +390,7 @@ CSVToGraphEdgeSrcTgtMapping::getElementsForRow(const vector<vector<string>> &tok
         key.append(keyTokens[i][j]);
       }
 
-      std::unordered_map<string, unsigned int>::iterator it = valueToId.find(key);
+      auto it = valueToId.find(key);
 
       // token exists in the map
       if (it != valueToId.end()) {
@@ -445,8 +445,7 @@ CSVImportColumnToGraphPropertyMappingProxy::generateApproximateProperty(const st
 PropertyInterface *
 CSVImportColumnToGraphPropertyMappingProxy::getPropertyInterface(unsigned int column,
                                                                  const string &) {
-  std::unordered_map<unsigned int, PropertyInterface *>::iterator it =
-      propertiesBuffer.find(column);
+  auto it = propertiesBuffer.find(column);
 
   // No properties
   if (it == propertiesBuffer.end()) {

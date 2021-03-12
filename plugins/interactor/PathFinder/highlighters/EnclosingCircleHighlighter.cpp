@@ -113,8 +113,8 @@ void EnclosingCircleHighlighter::highlight(const PathFinder *, GlWidget *glWidge
 
   inside.setA(alpha);
 
-  GlCircle *glCircle = new GlCircle(Coord(enclosing[0], enclosing[1], minDepth), enclosing.radius,
-                                    outline, inside, true, true, 0, 256);
+  auto *glCircle = new GlCircle(Coord(enclosing[0], enclosing[1], minDepth), enclosing.radius,
+                                outline, inside, true, true, 0, 256);
   addGlEntity(scene, glCircle, true, "PathFinderCircle");
 }
 

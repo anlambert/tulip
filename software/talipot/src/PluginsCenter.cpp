@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -124,11 +124,11 @@ void PluginsCenter::refreshFilter() {
     _categoryFilters.push_back("");
   }
 
-  QVBoxLayout *lyt = new QVBoxLayout();
+  auto *lyt = new QVBoxLayout();
 
   for (const QString &cf : _categoryFilters) {
     for (const Plugin &plugin : listPlugins(_nameFilter, cf)) {
-      PluginInformationListItem *item = new PluginInformationListItem(plugin);
+      auto *item = new PluginInformationListItem(plugin);
       connect(item, &PluginInformationListItem::focused, this, &PluginsCenter::itemFocused);
       lyt->addWidget(item);
     }

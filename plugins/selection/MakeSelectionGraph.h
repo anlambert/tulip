@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -40,14 +40,14 @@ public:
   bool run() override;
 };
 
-class isGraphTest : public tlp::GraphTest {
+class IsGraphTest : public tlp::GraphTest {
   PLUGININFORMATION("Graph", "Bruno Pinaud", "29/11/2016",
                     "Tests whether the set of the selected "
                     "elements of the current graph is a "
                     "graph or not (no dangling edges).",
                     "1.0", "Topological Test")
 public:
-  isGraphTest(const tlp::PluginContext *context);
+  IsGraphTest(const tlp::PluginContext *context);
   bool test() override;
 };
 

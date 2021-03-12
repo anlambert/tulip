@@ -775,7 +775,7 @@ void HistogramMetricMapping::initInteractor() {
 
 bool HistogramMetricMapping::eventFilter(QObject *widget, QEvent *e) {
 
-  QMouseEvent *me = dynamic_cast<QMouseEvent *>(e);
+  auto *me = dynamic_cast<QMouseEvent *>(e);
 
   if (!me && e->type() != QEvent::ContextMenu) {
     return false;
@@ -783,7 +783,7 @@ bool HistogramMetricMapping::eventFilter(QObject *widget, QEvent *e) {
 
   bool ret = false;
 
-  GlWidget *glWidget = static_cast<GlWidget *>(widget);
+  auto *glWidget = static_cast<GlWidget *>(widget);
 
   if (!glWidget->hasMouseTracking()) {
     glWidget->setMouseTracking(true);
@@ -892,7 +892,7 @@ bool HistogramMetricMapping::eventFilter(QObject *widget, QEvent *e) {
     histoView->refresh();
     ret = true;
   } else if (e->type() == QEvent::ContextMenu) {
-    QContextMenuEvent *cme = static_cast<QContextMenuEvent *>(e);
+    auto *cme = static_cast<QContextMenuEvent *>(e);
     float x = glWidget->width() - cme->x();
     float y = cme->y();
     Coord screenCoords = {x, y};

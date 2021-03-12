@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -131,7 +131,7 @@ void FontIconEngine::paint(QPainter *painter, const QRect &rect, QIcon::Mode mod
                            QIcon::State state) {
   painter->save();
 
-  QColor color = optionValueForModeAndState("color", mode, state, _options).value<QColor>();
+  auto color = optionValueForModeAndState("color", mode, state, _options).value<QColor>();
   if (!color.isValid()) {
     color = textColor();
   }

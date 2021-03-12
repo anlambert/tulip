@@ -22,7 +22,7 @@ using namespace std;
 
 Glyph::Glyph(const tlp::PluginContext *context) : glGraphInputData(nullptr) {
   if (context != nullptr) {
-    const GlyphContext *glyphContext = static_cast<const GlyphContext *>(context);
+    const auto *glyphContext = static_cast<const GlyphContext *>(context);
     glGraphInputData = glyphContext->glGraphInputData;
   }
 }

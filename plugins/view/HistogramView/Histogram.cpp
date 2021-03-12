@@ -203,7 +203,7 @@ void Histogram::computeHistogram() {
     if (dataLocation == NODE) {
 
       for (auto n : graph->nodes()) {
-        unsigned int binId = uint(propertyCopy.getNodeValue(n));
+        auto binId = uint(propertyCopy.getNodeValue(n));
         histogramBins[binId].push_back(n.id);
 
         if (histogramBins[binId].size() > maxBinSize) {
@@ -230,7 +230,7 @@ void Histogram::computeHistogram() {
     } else {
 
       for (auto e : graph->edges()) {
-        unsigned int binId = uint(propertyCopy.getEdgeValue(e));
+        auto binId = uint(propertyCopy.getEdgeValue(e));
         histogramBins[binId].push_back(e.id);
 
         if (histogramBins[binId].size() > maxBinSize) {
@@ -319,7 +319,7 @@ void Histogram::computeHistogram() {
         }
 
         if (value != max) {
-          unsigned int nodeHistoBin = uint(floor((value - min) / binWidth));
+          auto nodeHistoBin = uint(floor((value - min) / binWidth));
           histogramBins[nodeHistoBin].push_back(e.id);
 
           if (histogramBins[nodeHistoBin].size() > maxBinSize) {
@@ -421,13 +421,13 @@ void Histogram::createAxis() {
     xAxis->setAxisGraduations(uniformQuantificationAxisLabels, GlAxis::LEFT_OR_BELOW);
   } else {
     if (integerScale) {
-      long long axisMin = static_cast<long long>(min);
-      long long axisMax = static_cast<long long>(max);
+      auto axisMin = static_cast<long long>(min);
+      auto axisMax = static_cast<long long>(max);
 
       // check the [min, max] double values range
       // fit in a long long range
       if (axisMax != LLONG_MIN) {
-        long long incrementStep = static_cast<long long>((max - min) / nbXGraduations);
+        auto incrementStep = static_cast<long long>((max - min) / nbXGraduations);
 
         if (incrementStep < 1) {
           incrementStep = 1;
@@ -605,7 +605,7 @@ void Histogram::update() {
 
   unsigned int cumulativeSize = 0;
   unsigned int rectCpt = 0;
-  GlPolyQuad *cumulativeHistogram = new GlPolyQuad();
+  auto *cumulativeHistogram = new GlPolyQuad();
 
   for (unsigned int i = 0; i < nbHistogramBins; ++i) {
     Vec4i quadColorCumul;
@@ -661,7 +661,7 @@ void Histogram::update() {
         quadColor = Color(255, 0, 0);
       }
 
-      GlPolyQuad *binRect =
+      auto *binRect =
           new GlPolyQuad(polyQuadCoords, quadColor, BIN_RECT_TEXTURE, true, 1, quadColor);
       binRect->setStencil(1);
       oss.str("");
@@ -706,8 +706,8 @@ void Histogram::update() {
   GlTextureManager::registerExternalTexture(textureName, textureId);
   glOffscreenRenderer.clearScene();
 
-  Gl2DRect *rectTextured = new Gl2DRect(blCorner.getY() + size, blCorner.getY(), blCorner.getX(),
-                                        blCorner.getX() + size, textureName);
+  auto *rectTextured = new Gl2DRect(blCorner.getY() + size, blCorner.getY(), blCorner.getX(),
+                                    blCorner.getX() + size, textureName);
   rectTextured->setFillColor(Color(255, 255, 255));
   addGlEntity(rectTextured, textureName + " overview");
   computeBoundingBox();

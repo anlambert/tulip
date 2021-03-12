@@ -159,7 +159,7 @@ void CaptionGraphicsItem::selectPropertyButtonClicked() {
   // to popup the menu
   QWidget *pViewport = QApplication::widgetAt(QCursor::pos());
   QWidget *pView = pViewport->parentWidget();
-  QGraphicsView *pGraphicsView = qobject_cast<QGraphicsView *>(pView);
+  auto *pGraphicsView = qobject_cast<QGraphicsView *>(pView);
   QPoint popupPos =
       pGraphicsView->mapToGlobal(pGraphicsView->mapFromScene(_confPropertySelectionItem->mapToScene(
           _confPropertySelectionItem->subWidgetRect(_confPropertySelectionWidget).bottomLeft())));
@@ -168,7 +168,7 @@ void CaptionGraphicsItem::selectPropertyButtonClicked() {
 }
 
 void CaptionGraphicsItem::propertySelectedSlot() {
-  QAction *action = static_cast<QAction *>(sender());
+  auto *action = static_cast<QAction *>(sender());
   _confPropertySelectionWidget->setText(wrappedPropName(action->text()));
   _confPropertySelectionWidget->setToolTip(action->text());
   emit selectedPropertyChanged(QStringToTlpString(action->text()));

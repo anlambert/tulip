@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -74,7 +74,7 @@ void GlyphManager::initGlyphList(Graph **graph, GlGraphInputData *glGraphInputDa
   glyphs.setAll(PluginsManager::getPluginObject<Glyph>("3D - Cube OutLined", &gc));
 
   for (const std::string &glyphName : glyphList) {
-    Glyph *newGlyph = PluginsManager::getPluginObject<Glyph>(glyphName, &gc);
+    auto *newGlyph = PluginsManager::getPluginObject<Glyph>(glyphName, &gc);
     glyphs.set(PluginsManager::pluginInformation(glyphName).id(), newGlyph);
   }
 }

@@ -137,10 +137,10 @@ bool GeographicViewShowElementInfo::eventFilter(QObject *widget, QEvent *e) {
     return false;
   }
 
-  QMouseEvent *qMouseEv = dynamic_cast<QMouseEvent *>(e);
+  auto *qMouseEv = dynamic_cast<QMouseEvent *>(e);
 
   if (qMouseEv != nullptr) {
-    GeographicView *geoView = static_cast<GeographicView *>(view());
+    auto *geoView = static_cast<GeographicView *>(view());
     SelectedEntity selectedEntity;
 
     if (e->type() == QEvent::MouseMove) {
@@ -165,7 +165,7 @@ bool GeographicViewShowElementInfo::eventFilter(QObject *widget, QEvent *e) {
               selectedEntity.getEntityType() == SelectedEntity::EDGE_SELECTED) {
             _informationWidgetItem->setVisible(true);
 
-            QLabel *title = _informationWidget->findChild<QLabel *>();
+            auto *title = _informationWidget->findChild<QLabel *>();
 
             if (selectedEntity.getEntityType() == SelectedEntity::NODE_SELECTED) {
               title->setText("Node");
@@ -195,8 +195,7 @@ bool GeographicViewShowElementInfo::eventFilter(QObject *widget, QEvent *e) {
             }
 
             _informationWidgetItem->setPos(position);
-            QPropertyAnimation *animation =
-                new QPropertyAnimation(_informationWidgetItem, "opacity");
+            auto *animation = new QPropertyAnimation(_informationWidgetItem, "opacity");
             animation->setDuration(100);
             animation->setStartValue(0.);
             animation->setEndValue(1.);
@@ -205,15 +204,14 @@ bool GeographicViewShowElementInfo::eventFilter(QObject *widget, QEvent *e) {
             return true;
           } else if (selectedEntity.getEntityType() == SelectedEntity::SIMPLE_ENTITY_SELECTED) {
 
-            GlComplexPolygon *polygon =
-                dynamic_cast<GlComplexPolygon *>(selectedEntity.getEntity());
+            auto *polygon = dynamic_cast<GlComplexPolygon *>(selectedEntity.getEntity());
 
             if (!polygon) {
               return false;
             }
 
             _informationWidgetItem->setVisible(true);
-            QLabel *title = _informationWidget->findChild<QLabel *>();
+            auto *title = _informationWidget->findChild<QLabel *>();
             title->setText(selectedEntity.getEntity()
                                ->getParent()
                                ->findKey(selectedEntity.getEntity())
@@ -241,8 +239,7 @@ bool GeographicViewShowElementInfo::eventFilter(QObject *widget, QEvent *e) {
             }
 
             _informationWidgetItem->setPos(position);
-            QPropertyAnimation *animation =
-                new QPropertyAnimation(_informationWidgetItem, "opacity");
+            auto *animation = new QPropertyAnimation(_informationWidgetItem, "opacity");
             animation->setDuration(100);
             animation->setStartValue(0.);
             animation->setEndValue(1.);
@@ -259,7 +256,7 @@ bool GeographicViewShowElementInfo::eventFilter(QObject *widget, QEvent *e) {
 }
 
 bool GeographicViewShowElementInfo::pick(int x, int y, SelectedEntity &selectedEntity) {
-  GeographicView *geoView = static_cast<GeographicView *>(view());
+  auto *geoView = static_cast<GeographicView *>(view());
 
   if (geoView->getGeographicViewGraphicsView()->getGlWidget()->pickNodesEdges(x, y,
                                                                               selectedEntity)) {
@@ -283,7 +280,7 @@ void GeographicViewShowElementInfo::viewChanged(View *view) {
     return;
   }
 
-  GeographicView *geoView = static_cast<GeographicView *>(view);
+  auto *geoView = static_cast<GeographicView *>(view);
   _view = geoView;
   connect(_view, &View::graphSet, _informationWidgetItem, &QGraphicsWidget::close);
   _view->getGeographicViewGraphicsView()->scene()->addItem(_informationWidgetItem);

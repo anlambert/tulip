@@ -51,7 +51,7 @@ public:
   virtual bool compare(tlp::edge e) = 0;
 
   tlp::BooleanProperty *run(tlp::Graph *g, bool onNodes, bool onEdges) {
-    tlp::BooleanProperty *prop = new BooleanProperty(g);
+    auto *prop = new BooleanProperty(g);
 
     if (onNodes) {
       for (auto n : g->nodes())
@@ -198,8 +198,7 @@ void SearchWidget::setModel(tlp::GraphHierarchiesModel *model) {
 }
 
 void SearchWidget::currentGraphChanged(tlp::Graph *g) {
-  GraphHierarchiesModel *graphsModel =
-      static_cast<GraphHierarchiesModel *>(_ui->graphCombo->model());
+  auto *graphsModel = static_cast<GraphHierarchiesModel *>(_ui->graphCombo->model());
   QModelIndex idx = graphsModel->indexOf(g);
   _ui->graphCombo->setRootModelIndex(idx.parent());
   _ui->graphCombo->setCurrentIndex(idx.row());
@@ -296,12 +295,12 @@ void SearchWidget::search() {
     deleteTermB = true;
 
     if (isNumericComparison()) {
-      DoubleProperty *doubleProp = new DoubleProperty(_graph);
+      auto *doubleProp = new DoubleProperty(_graph);
       doubleProp->setAllNodeValue(_ui->tableWidget->item(0, 0)->data(Qt::DisplayRole).toDouble());
       doubleProp->setAllEdgeValue(_ui->tableWidget->item(0, 0)->data(Qt::DisplayRole).toDouble());
       b = doubleProp;
     } else {
-      StringProperty *stringProp = new StringProperty(_graph);
+      auto *stringProp = new StringProperty(_graph);
       DataType *talipotData =
           MetaTypes::qVariantToDataType(_ui->tableWidget->item(0, 0)->data(Qt::DisplayRole));
 
@@ -349,12 +348,12 @@ void SearchWidget::search() {
   bool onEdges = scopeIndex == 0 || scopeIndex == 2;
   BooleanProperty *result = op->run(_graph, onNodes, onEdges);
 
-  PropertyInterface *outputInterface = _ui->resultsStorageCombo->model()
-                                           ->data(_ui->resultsStorageCombo->model()->index(
-                                                      _ui->resultsStorageCombo->currentIndex(), 0),
-                                                  Model::PropertyRole)
-                                           .value<PropertyInterface *>();
-  BooleanProperty *output = static_cast<BooleanProperty *>(outputInterface);
+  auto *outputInterface = _ui->resultsStorageCombo->model()
+                              ->data(_ui->resultsStorageCombo->model()->index(
+                                         _ui->resultsStorageCombo->currentIndex(), 0),
+                                     Model::PropertyRole)
+                              .value<PropertyInterface *>();
+  auto *output = static_cast<BooleanProperty *>(outputInterface);
 
   node n;
   edge e;
@@ -433,9 +432,9 @@ void SearchWidget::search() {
 }
 
 void SearchWidget::graphIndexChanged() {
-  tlp::Graph *g = _ui->graphCombo->model()
-                      ->data(_ui->graphCombo->selectedIndex(), Model::GraphRole)
-                      .value<tlp::Graph *>();
+  auto *g = _ui->graphCombo->model()
+                ->data(_ui->graphCombo->selectedIndex(), Model::GraphRole)
+                .value<tlp::Graph *>();
   setGraph(g);
 }
 
@@ -515,7 +514,7 @@ void SearchWidget::updateEditorWidget() {
 }
 
 void SearchWidget::dragEnterEvent(QDragEnterEvent *dragEv) {
-  const GraphMimeType *mimeType = dynamic_cast<const GraphMimeType *>(dragEv->mimeData());
+  const auto *mimeType = dynamic_cast<const GraphMimeType *>(dragEv->mimeData());
 
   if (mimeType != nullptr) {
     dragEv->accept();
@@ -523,7 +522,7 @@ void SearchWidget::dragEnterEvent(QDragEnterEvent *dragEv) {
 }
 
 void SearchWidget::dropEvent(QDropEvent *dropEv) {
-  const GraphMimeType *mimeType = dynamic_cast<const GraphMimeType *>(dropEv->mimeData());
+  const auto *mimeType = dynamic_cast<const GraphMimeType *>(dropEv->mimeData());
 
   if (mimeType != nullptr) {
     currentGraphChanged(mimeType->graph());
@@ -532,8 +531,7 @@ void SearchWidget::dropEvent(QDropEvent *dropEv) {
 }
 
 PropertyInterface *SearchWidget::term(QComboBox *combo) {
-  GraphPropertiesModel<PropertyInterface> *model =
-      static_cast<GraphPropertiesModel<PropertyInterface> *>(combo->model());
+  auto *model = static_cast<GraphPropertiesModel<PropertyInterface> *>(combo->model());
   return model->data(model->index(combo->currentIndex(), 0), Model::PropertyRole)
       .value<PropertyInterface *>();
 }

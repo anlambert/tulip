@@ -111,7 +111,7 @@ bool MouseShowElementInfo::eventFilter(QObject *widget, QEvent *e) {
     }
   }
 
-  QMouseEvent *qMouseEv = dynamic_cast<QMouseEvent *>(e);
+  auto *qMouseEv = dynamic_cast<QMouseEvent *>(e);
 
   if (qMouseEv != nullptr) {
     if (glWidget == nullptr) {
@@ -143,7 +143,7 @@ bool MouseShowElementInfo::eventFilter(QObject *widget, QEvent *e) {
           if (selectedEntity.getEntityType() == SelectedEntity::NODE_SELECTED ||
               selectedEntity.getEntityType() == SelectedEntity::EDGE_SELECTED) {
 
-            QLabel *title = _informationWidget->findChild<QLabel *>();
+            auto *title = _informationWidget->findChild<QLabel *>();
 
             ElementType eltType =
                 selectedEntity.getEntityType() == SelectedEntity::NODE_SELECTED ? NODE : EDGE;
@@ -174,8 +174,7 @@ bool MouseShowElementInfo::eventFilter(QObject *widget, QEvent *e) {
 
             _informationWidgetItem->setPos(position);
             _informationWidgetItem->setVisible(true);
-            QPropertyAnimation *animation =
-                new QPropertyAnimation(_informationWidgetItem, "opacity");
+            auto *animation = new QPropertyAnimation(_informationWidgetItem, "opacity");
             connect(animation, &QAbstractAnimation::finished, animation, &QObject::deleteLater);
             animation->setDuration(100);
             animation->setStartValue(0.);
@@ -205,7 +204,7 @@ void MouseShowElementInfo::viewChanged(View *view) {
     return;
   }
 
-  ViewWidget *viewWidget = dynamic_cast<ViewWidget *>(view);
+  auto *viewWidget = dynamic_cast<ViewWidget *>(view);
   assert(viewWidget);
   _view = viewWidget;
   connect(_view, &View::graphSet, _informationWidgetItem, &QGraphicsWidget::close);

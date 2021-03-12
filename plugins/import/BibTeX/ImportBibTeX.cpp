@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -1491,8 +1491,7 @@ public:
 
       // extract entries from BibTeX file
       bibFile.readFromFile(filename, xdkbib::File::StrictQuote);
-      std::vector<xdkbib::FileEntry> &entries =
-          const_cast<std::vector<xdkbib::FileEntry> &>(bibFile.entries());
+      auto &entries = const_cast<std::vector<xdkbib::FileEntry> &>(bibFile.entries());
 
       // first add nodes for publication
       vector<node> publis;

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -34,7 +34,7 @@ void tlp::GraphPropertiesModel<PROPTYPE>::rebuildCache() {
     }
 
 #endif
-    PROPTYPE *prop = dynamic_cast<PROPTYPE *>(inheritedProp);
+    auto *prop = dynamic_cast<PROPTYPE *>(inheritedProp);
 
     if (prop != nullptr) {
       _properties += prop;
@@ -48,7 +48,7 @@ void tlp::GraphPropertiesModel<PROPTYPE>::rebuildCache() {
     }
 
 #endif
-    PROPTYPE *prop = dynamic_cast<PROPTYPE *>(localProp);
+    auto *prop = dynamic_cast<PROPTYPE *>(localProp);
 
     if (prop != nullptr) {
       _properties += prop;
@@ -129,7 +129,7 @@ QVariant GraphPropertiesModel<PROPTYPE>::data(const QModelIndex &index, int role
     return QVariant();
   }
 
-  PropertyInterface *pi = static_cast<PropertyInterface *>(index.internalPointer());
+  auto *pi = static_cast<PropertyInterface *>(index.internalPointer());
 
   if (role == Qt::DisplayRole || role == Qt::ToolTipRole) {
     if (!_placeholder.isEmpty() && index.row() == 0) {

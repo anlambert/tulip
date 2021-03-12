@@ -40,7 +40,7 @@ bool MouseEdgeBuilder::eventFilter(QObject *widget, QEvent *e) {
   assert(glWidget);
 
   if (e->type() == QEvent::MouseButtonPress) {
-    QMouseEvent *qMouseEv = static_cast<QMouseEvent *>(e);
+    auto *qMouseEv = static_cast<QMouseEvent *>(e);
 
     SelectedEntity selectedEntity;
     GlGraphInputData *inputData = glWidget->getGlGraphInputData();
@@ -97,7 +97,7 @@ bool MouseEdgeBuilder::eventFilter(QObject *widget, QEvent *e) {
   }
 
   if (e->type() == QEvent::MouseMove) {
-    QMouseEvent *qMouseEv = static_cast<QMouseEvent *>(e);
+    auto *qMouseEv = static_cast<QMouseEvent *>(e);
 
     if (!_started) {
       SelectedEntity selectedEntity;
@@ -175,7 +175,7 @@ void MouseEdgeBuilder::clearObserver() {
 
 void MouseEdgeBuilder::treatEvent(const Event &evt) {
   if (typeid(evt) == typeid(GraphEvent)) {
-    const GraphEvent *graphEvent = dynamic_cast<const GraphEvent *>(&evt);
+    const auto *graphEvent = dynamic_cast<const GraphEvent *>(&evt);
 
     if (graphEvent && graphEvent->getType() == GraphEvent::TLP_DEL_NODE &&
         graphEvent->getNode() == _source) {
@@ -184,7 +184,7 @@ void MouseEdgeBuilder::treatEvent(const Event &evt) {
       clearObserver();
     }
   } else {
-    const PropertyEvent *propertyEvent = dynamic_cast<const PropertyEvent *>(&evt);
+    const auto *propertyEvent = dynamic_cast<const PropertyEvent *>(&evt);
 
     if (propertyEvent && propertyEvent->getType() == PropertyEvent::TLP_AFTER_SET_NODE_VALUE &&
         propertyEvent->getNode() == _source && propertyEvent->getProperty() == _layoutProperty) {

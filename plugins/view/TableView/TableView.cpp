@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -49,17 +49,16 @@ TableView::~TableView() {
 #define EDGES_DISPLAYED (_ui->eltTypeCombo->currentIndex() == 1)
 
 tlp::BooleanProperty *TableView::getFilteringProperty() const {
-  GraphPropertiesModel<BooleanProperty> *model =
+  auto *model =
       static_cast<GraphPropertiesModel<BooleanProperty> *>(_ui->filteringPropertyCombo->model());
-  PropertyInterface *pi =
+  auto *pi =
       model->data(model->index(_ui->filteringPropertyCombo->currentIndex(), 0), Model::PropertyRole)
           .value<PropertyInterface *>();
   return pi ? static_cast<BooleanProperty *>(pi) : nullptr;
 }
 
 bool TableView::hasEffectiveFiltering() {
-  GraphSortFilterProxyModel *sortModel =
-      static_cast<GraphSortFilterProxyModel *>(_ui->table->model());
+  auto *sortModel = static_cast<GraphSortFilterProxyModel *>(_ui->table->model());
 
   return sortModel->rowCount() != sortModel->sourceModel()->rowCount();
 }
@@ -89,7 +88,7 @@ void TableView::setState(const tlp::DataSet &data) {
     data.get<std::string>("filtering_property", filterPropertyName);
   }
 
-  GraphPropertiesModel<BooleanProperty> *model =
+  auto *model =
       static_cast<GraphPropertiesModel<BooleanProperty> *>(_ui->filteringPropertyCombo->model());
   int r = 0;
 
@@ -107,7 +106,7 @@ void TableView::setState(const tlp::DataSet &data) {
 bool TableView::eventFilter(QObject *obj, QEvent *event) {
   if (event->type() == QEvent::Resize) {
     // ensure automatic resize of the viewport
-    QResizeEvent *resizeEvent = static_cast<QResizeEvent *>(event);
+    auto *resizeEvent = static_cast<QResizeEvent *>(event);
     graphicsView()->viewport()->setFixedSize(resizeEvent->size());
     // same for PropertiesEditor
     QSize pSize = propertiesEditor->parentWidget()->parentWidget()->size();
@@ -136,7 +135,7 @@ void TableView::setupWidget() {
   // install this as event filter
   // for automatic resizing of the viewport
   graphicsView()->viewport()->parentWidget()->installEventFilter(this);
-  QWidget *centralWidget = new QWidget();
+  auto *centralWidget = new QWidget();
   _ui->setupUi(centralWidget);
   activateTooltipAndUrlManager(_ui->table->viewport());
   // no need to display standard View context menu
@@ -194,8 +193,8 @@ void TableView::graphChanged(tlp::Graph *g) {
     }
   }
 
-  GraphPropertiesModel<BooleanProperty> *model = new GraphPropertiesModel<BooleanProperty>(
-      "no selection", g, false, _ui->filteringPropertyCombo);
+  auto *model = new GraphPropertiesModel<BooleanProperty>("no selection", g, false,
+                                                          _ui->filteringPropertyCombo);
   _ui->filteringPropertyCombo->setModel(model);
   _ui->filteringPropertyCombo->setCurrentIndex(0);
 
@@ -258,7 +257,7 @@ void TableView::readSettings() {
       _model = new EdgesGraphModel(_ui->table);
 
     _model->setGraph(graph());
-    GraphSortFilterProxyModel *sortModel = new GraphSortFilterProxyModel(_ui->table);
+    auto *sortModel = new GraphSortFilterProxyModel(_ui->table);
     sortModel->setSourceModel(_model);
     _ui->table->setModel(sortModel);
     connect(_model, &QAbstractItemModel::columnsInserted, this, &TableView::columnsInserted);
@@ -266,16 +265,15 @@ void TableView::readSettings() {
     filterChanged();
   }
 
-  GraphSortFilterProxyModel *sortModel =
-      static_cast<GraphSortFilterProxyModel *>(_ui->table->model());
+  auto *sortModel = static_cast<GraphSortFilterProxyModel *>(_ui->table->model());
 
   sortModel->setFilterProperty(getFilteringProperty());
 
   QSet<tlp::PropertyInterface *> visibleProperties = propertiesEditor->visibleProperties();
 
   for (int i = 0; i < _model->columnCount(); ++i) {
-    PropertyInterface *pi = _model->headerData(i, Qt::Horizontal, Model::PropertyRole)
-                                .value<tlp::PropertyInterface *>();
+    auto *pi = _model->headerData(i, Qt::Horizontal, Model::PropertyRole)
+                   .value<tlp::PropertyInterface *>();
 
     if (!visibleProperties.contains(pi))
       _ui->table->setColumnHidden(i, true);
@@ -286,11 +284,11 @@ void TableView::readSettings() {
 }
 
 void TableView::dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight) {
-  QAbstractItemModel *model = static_cast<QAbstractItemModel *>(sender());
+  auto *model = static_cast<QAbstractItemModel *>(sender());
 
   for (int i = topLeft.row(); i <= bottomRight.row(); ++i) {
-    PropertyInterface *pi = model->headerData(topLeft.column(), Qt::Horizontal, Model::PropertyRole)
-                                .value<PropertyInterface *>();
+    auto *pi = model->headerData(topLeft.column(), Qt::Horizontal, Model::PropertyRole)
+                   .value<PropertyInterface *>();
 
     if (pi->getTypename() == "string" && pi->getName() != "viewTexture" &&
         pi->getName() != "viewFont")
@@ -299,10 +297,10 @@ void TableView::dataChanged(const QModelIndex &topLeft, const QModelIndex &botto
 }
 
 void TableView::columnsInserted(const QModelIndex &, int start, int end) {
-  QAbstractItemModel *model = static_cast<QAbstractItemModel *>(sender());
+  auto *model = static_cast<QAbstractItemModel *>(sender());
 
   for (int c = start; c <= end; c++) {
-    PropertyInterface *pi =
+    auto *pi =
         model->headerData(c, Qt::Horizontal, Model::PropertyRole).value<PropertyInterface *>();
     setPropertyVisible(pi, false);
   }
@@ -380,8 +378,7 @@ void TableView::setPropertiesFilter(const QString &text) {
 
 void TableView::filterChanged() {
   QString filter = _ui->filterEdit->text();
-  GraphSortFilterProxyModel *sortModel =
-      static_cast<GraphSortFilterProxyModel *>(_ui->table->model());
+  auto *sortModel = static_cast<GraphSortFilterProxyModel *>(_ui->table->model());
   QVector<PropertyInterface *> props;
 
   Graph *g = graph();
@@ -443,8 +440,7 @@ void TableView::toggleHighlightedRows() {
   BooleanProperty *selection = g->getBooleanProperty("viewSelection");
   QModelIndexList rows = _ui->table->selectionModel()->selectedRows();
 
-  GraphSortFilterProxyModel *sortModel =
-      static_cast<GraphSortFilterProxyModel *>(_ui->table->model());
+  auto *sortModel = static_cast<GraphSortFilterProxyModel *>(_ui->table->model());
 
   if (sortModel->filterProperty() == selection) {
     selection->removeListener(sortModel);
@@ -470,8 +466,7 @@ void TableView::selectHighlightedRows() {
   BooleanProperty *selection = g->getBooleanProperty("viewSelection");
   QModelIndexList rows = _ui->table->selectionModel()->selectedRows();
 
-  GraphSortFilterProxyModel *sortModel =
-      static_cast<GraphSortFilterProxyModel *>(_ui->table->model());
+  auto *sortModel = static_cast<GraphSortFilterProxyModel *>(_ui->table->model());
 
   if (sortModel->filterProperty() == selection) {
     selection->removeListener(sortModel);
@@ -924,8 +919,7 @@ void TableView::showHorizontalHeaderCustomContextMenu(const QPoint &pos) {
   if (action == sortById) {
     if (_ui->table->horizontalHeader()->sortIndicatorSection() != -1) {
       _ui->table->horizontalHeader()->setSortIndicator(-1, Qt::AscendingOrder);
-      GraphSortFilterProxyModel *sortModel =
-          static_cast<GraphSortFilterProxyModel *>(_ui->table->model());
+      auto *sortModel = static_cast<GraphSortFilterProxyModel *>(_ui->table->model());
       QAbstractItemModel *model = sortModel->sourceModel();
       sortModel->setSourceModel(nullptr);
       sortModel->setSourceModel(model);
@@ -934,8 +928,8 @@ void TableView::showHorizontalHeaderCustomContextMenu(const QPoint &pos) {
       QSet<tlp::PropertyInterface *> visibleProperties = propertiesEditor->visibleProperties();
 
       for (int i = 0; i < model->columnCount(); ++i) {
-        PropertyInterface *pi = _model->headerData(i, Qt::Horizontal, Model::PropertyRole)
-                                    .value<tlp::PropertyInterface *>();
+        auto *pi = _model->headerData(i, Qt::Horizontal, Model::PropertyRole)
+                       .value<tlp::PropertyInterface *>();
 
         if (!visibleProperties.contains(pi))
           _ui->table->setColumnHidden(i, true);

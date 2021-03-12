@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -153,7 +153,7 @@ const set<edge> &GraphProperty::getReferencedEdges(const edge e) const {
 void GraphProperty::treatEvent(const Event &evt) {
   if (evt.type() == Event::TLP_DELETE) {
 
-    Graph *sg = static_cast<Graph *>(evt.sender());
+    auto *sg = static_cast<Graph *>(evt.sender());
 
 #ifndef NDEBUG
     tlp::warning() << "Talipot Warning : A graph pointed by metanode(s) has been deleted, the "

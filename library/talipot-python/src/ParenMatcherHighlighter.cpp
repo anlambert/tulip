@@ -40,7 +40,7 @@ ParenMatcherHighlighter::ParenMatcherHighlighter(QTextDocument *parent)
 }
 
 void ParenMatcherHighlighter::highlightBlock(const QString &text) {
-  ParenInfoTextBlockData *data = new ParenInfoTextBlockData;
+  auto *data = new ParenInfoTextBlockData;
 
   QString modifiedText = text;
   QRegExp dblQuotesRegexp("\"[^\"]*\"");

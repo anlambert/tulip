@@ -32,8 +32,8 @@ MouseSelector::MouseSelector(Qt::MouseButton button, Qt::KeyboardModifier modifi
       _mode(mode) {}
 //==================================================================
 bool MouseSelector::eventFilter(QObject *widget, QEvent *e) {
-  QMouseEvent *qMouseEv = static_cast<QMouseEvent *>(e);
-  GlWidget *glWidget = static_cast<GlWidget *>(widget);
+  auto *qMouseEv = static_cast<QMouseEvent *>(e);
+  auto *glWidget = static_cast<GlWidget *>(widget);
   Graph *g = glWidget->getGlGraphInputData()->getGraph();
 
   if (e->type() == QEvent::MouseButtonPress) {

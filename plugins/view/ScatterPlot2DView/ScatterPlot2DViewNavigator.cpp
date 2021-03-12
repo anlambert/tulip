@@ -50,7 +50,7 @@ bool ScatterPlot2DViewNavigator::eventFilter(QObject *widget, QEvent *e) {
     }
 
     if (e->type() == QEvent::MouseMove && scatterPlot2dView->matrixViewSet()) {
-      QMouseEvent *me = static_cast<QMouseEvent *>(e);
+      auto *me = static_cast<QMouseEvent *>(e);
       float x = glWidget->width() - me->x();
       float y = me->y();
       Coord screenCoords = {x, y};

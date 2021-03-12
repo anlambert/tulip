@@ -414,7 +414,7 @@ void MatrixView::addEdge(tlp::Graph *g, const tlp::edge e) {
 }
 
 void MatrixView::treatEvent(const Event &message) {
-  const GraphEvent *graphEvent = dynamic_cast<const GraphEvent *>(&message);
+  const auto *graphEvent = dynamic_cast<const GraphEvent *>(&message);
 
   if (graphEvent) {
     if (graphEvent->getType() == GraphEvent::TLP_ADD_EDGE) {

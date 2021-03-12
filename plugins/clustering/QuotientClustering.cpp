@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -195,9 +195,9 @@ public:
 
     // set specific meta value calculators
     // for most properties
-    DoubleProperty::PredefinedMetaValueCalculator nodeFn =
+    auto nodeFn =
         static_cast<DoubleProperty::PredefinedMetaValueCalculator>(nodeFunctions.getCurrent());
-    DoubleProperty::PredefinedMetaValueCalculator edgeFn =
+    auto edgeFn =
         static_cast<DoubleProperty::PredefinedMetaValueCalculator>(edgeFunctions.getCurrent());
     QuotientLabelCalculator viewLabelCalc(metaLabel, useSubGraphName);
     std::unordered_map<PropertyInterface *, PropertyInterface::MetaValueCalculator *> prevCalcs;
@@ -232,8 +232,7 @@ public:
     }
 
     // restore previous calculators
-    std::unordered_map<PropertyInterface *, PropertyInterface::MetaValueCalculator *>::iterator
-        itC = prevCalcs.begin();
+    auto itC = prevCalcs.begin();
 
     while (itC != prevCalcs.end()) {
       if (dynamic_cast<DoubleProperty *>((*itC).first)) {
@@ -387,7 +386,7 @@ public:
       dSet.set("meta-node label", metaLabel);
       dSet.set("use name of subgraph", useSubGraphName);
       dSet.set("layout quotient graph(s)", quotientLayout);
-      vector<node>::iterator itn = mNodes.begin();
+      auto itn = mNodes.begin();
 
       while (itn != mNodes.end()) {
         node mn = *itn;

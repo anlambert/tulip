@@ -241,7 +241,7 @@ GlLayer *GlScene::createLayer(const std::string &name) {
     removeLayer(oldLayer);
   }
 
-  GlLayer *newLayer = new GlLayer(name);
+  auto *newLayer = new GlLayer(name);
   layersList.push_back(std::pair<std::string, GlLayer *>(name, newLayer));
   newLayer->setScene(this);
 
@@ -782,7 +782,7 @@ bool GlScene::selectEntities(RenderingEntitiesFlag type, int x, int y, int w, in
     glPushClientAttrib(GL_CLIENT_ALL_ATTRIB_BITS); // save previous attributes
 
     // Allocate memory to store the result of the selection
-    GLuint(*selectBuf)[4] = new GLuint[size][4];
+    auto *selectBuf = new GLuint[size][4];
     glSelectBuffer(size * 4, reinterpret_cast<GLuint *>(selectBuf));
     // Activate Open Gl Selection mode
     glRenderMode(GL_SELECT);
@@ -833,7 +833,7 @@ bool GlScene::selectEntities(RenderingEntitiesFlag type, int x, int y, int w, in
           continue;
         }
 
-        GlGraph *composite = dynamic_cast<GlGraph *>(it.entity);
+        auto *composite = dynamic_cast<GlGraph *>(it.entity);
 
         if (composite) {
           compositesToRender.push_back(composite);
@@ -875,7 +875,7 @@ bool GlScene::selectEntities(RenderingEntitiesFlag type, int x, int y, int w, in
 }
 //====================================================
 unsigned char *GlScene::getImage() {
-  unsigned char *image =
+  auto *image =
       static_cast<unsigned char *>(malloc(viewport[2] * viewport[3] * 3 * sizeof(unsigned char)));
   draw();
   glFlush();

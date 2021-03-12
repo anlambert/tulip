@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -146,7 +146,7 @@ Coord computeBezierPoint(const vector<Coord> &controlPoints, const float t) {
   Vec3d bezierPoint;
   bezierPoint[0] = bezierPoint[1] = bezierPoint[2] = 0;
   double curCoeff = 1.0;
-  double r = double(nbControlPoints);
+  auto r = double(nbControlPoints);
 
   for (size_t i = 0; i < controlPoints.size(); ++i) {
     Vec3d controlPoint;
@@ -155,7 +155,7 @@ Coord computeBezierPoint(const vector<Coord> &controlPoints, const float t) {
     controlPoint[2] = controlPoints[i][2];
     bezierPoint += controlPoint * curCoeff * tCoeffs[double(t)][i] *
                    sCoeffs[double(t)][nbControlPoints - 1 - i];
-    double c = double(i + 1);
+    auto c = double(i + 1);
     curCoeff *= (r - c) / c;
   }
 
@@ -354,7 +354,7 @@ Coord computeOpenUniformBsplinePoint(const vector<Coord> &controlPoints, const f
   } else if (t >= 1.0) {
     return controlPoints[controlPoints.size() - 1];
   } else {
-    float *coeffs = new float[curveDegree + 1];
+    auto *coeffs = new float[curveDegree + 1];
     memset(coeffs, 0, (curveDegree + 1) * sizeof(float));
     int k = curveDegree;
     int cpt = 0;

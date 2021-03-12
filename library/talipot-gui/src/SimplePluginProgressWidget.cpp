@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -144,7 +144,7 @@ SimplePluginProgressDialog::SimplePluginProgressDialog(QWidget *parent)
     : QDialog(parent, Qt::WindowTitleHint | Qt::CustomizeWindowHint), _painted(false),
       _progress(new SimplePluginProgressWidget(this)) {
   setModal(true);
-  QVBoxLayout *mainLayout = new QVBoxLayout(this);
+  auto *mainLayout = new QVBoxLayout(this);
   mainLayout->setContentsMargins(0, 0, 0, 0);
   mainLayout->addWidget(_progress);
   setWindowIcon(QIcon(":/talipot/gui/icons/talipot.ico"));

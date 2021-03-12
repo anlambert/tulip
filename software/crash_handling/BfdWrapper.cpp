@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -249,7 +249,7 @@ pair<const char *, unsigned int> BfdWrapper::getFileAndLineForAddress(const char
     return ret;
   }
 
-  bfd_byte *from = reinterpret_cast<bfd_byte *>(symbolTable);
+  auto *from = reinterpret_cast<bfd_byte *>(symbolTable);
   bfd_byte *fromend = from + nSymbols * symbolSize;
   int index = 0;
 

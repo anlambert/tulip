@@ -116,7 +116,7 @@ public:
     properties.insert(prop);
   }
   void treatEvent(const Event &evt) override {
-    const PropertyEvent *propEvt = dynamic_cast<const PropertyEvent *>(&evt);
+    const auto *propEvt = dynamic_cast<const PropertyEvent *>(&evt);
 
     if (propEvt) {
       PropertyInterface *prop = propEvt->getProperty();
@@ -141,7 +141,7 @@ public:
         return;
       }
     } else {
-      PropertyInterface *prop = dynamic_cast<PropertyInterface *>(evt.sender());
+      auto *prop = dynamic_cast<PropertyInterface *>(evt.sender());
 
       if (prop && evt.type() == Event::TLP_DELETE) {
         destroy(prop);
@@ -459,7 +459,7 @@ void ObservablePropertyTest::testRemoveObserver() {
 void ObservablePropertyTest::testObserverWhenRemoveObservable() {
   CPPUNIT_ASSERT(props[0]->countListeners() == 1);
   CPPUNIT_ASSERT(props[0]->countObservers() == 1);
-  PropertyObserverTest *pObserverTmp = new PropertyObserverTest();
+  auto *pObserverTmp = new PropertyObserverTest();
   props[0]->addListener(pObserverTmp);
   CPPUNIT_ASSERT(props[0]->countListeners() == 2);
   CPPUNIT_ASSERT(props[0]->countObservers() == 1);
@@ -494,7 +494,7 @@ void ObservablePropertyTest::testNoPropertiesEventsAfterGraphClear() {
 
 //==========================================================
 CppUnit::Test *ObservablePropertyTest::suite() {
-  CppUnit::TestSuite *suiteOfTests = new CppUnit::TestSuite("Talipot lib : Graph");
+  auto *suiteOfTests = new CppUnit::TestSuite("Talipot lib : Graph");
   suiteOfTests->addTest(new CppUnit::TestCaller<ObservablePropertyTest>(
       "Add an observer", &ObservablePropertyTest::testAddObserver));
   suiteOfTests->addTest(new CppUnit::TestCaller<ObservablePropertyTest>(

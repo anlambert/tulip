@@ -88,7 +88,7 @@ static bool talipotCanOpenFile(const QString &path) {
   }
 
   for (auto &pluginName : PluginsManager::availablePlugins<ImportModule>()) {
-    const ImportModule &importPlugin =
+    const auto &importPlugin =
         static_cast<const ImportModule &>(PluginsManager::pluginInformation(pluginName));
     for (auto &ext : importPlugin.allFileExtensions()) {
       if (path.endsWith(tlpStringToQString(ext))) {
@@ -606,7 +606,7 @@ void TalipotMainWindow::findPlugins() {
 
 bool TalipotMainWindow::eventFilter(QObject *obj, QEvent *ev) {
   if (ev->type() == QEvent::DragEnter) {
-    QDragEnterEvent *dragEvent = static_cast<QDragEnterEvent *>(ev);
+    auto *dragEvent = static_cast<QDragEnterEvent *>(ev);
 
     if (dragEvent->mimeData()->hasUrls()) {
       dragEvent->accept();
@@ -614,7 +614,7 @@ bool TalipotMainWindow::eventFilter(QObject *obj, QEvent *ev) {
   }
 
   if (ev->type() == QEvent::Drop) {
-    QDropEvent *dropEvent = static_cast<QDropEvent *>(ev);
+    auto *dropEvent = static_cast<QDropEvent *>(ev);
 
     for (const QUrl &url : dropEvent->mimeData()->urls()) {
       open(url.toLocalFile());
@@ -933,7 +933,7 @@ void TalipotMainWindow::open(QString fileName) {
   std::string filterAny("Any supported format (");
 
   for (auto &pluginName : PluginsManager::availablePlugins<ImportModule>()) {
-    const ImportModule &importPlugin =
+    const auto &importPlugin =
         static_cast<const ImportModule &>(PluginsManager::pluginInformation(pluginName));
     std::string currentFilter;
 
@@ -1519,7 +1519,7 @@ bool TalipotMainWindow::setGlViewPropertiesForGraph(
   bool result = false;
 
   for (auto v : _ui->workspace->panels()) {
-    GlView *glView = dynamic_cast<tlp::GlView *>(v);
+    auto *glView = dynamic_cast<tlp::GlView *>(v);
 
     if (v->graph() == g && glView != nullptr) {
       if (glView->getGlWidget()->getGlGraphInputData()->installProperties(propsMap))
@@ -1559,7 +1559,7 @@ void TalipotMainWindow::newProject() {
 }
 
 void TalipotMainWindow::openRecentFile() {
-  QAction *action = static_cast<QAction *>(sender());
+  auto *action = static_cast<QAction *>(sender());
   open(action->data().toString());
 }
 
@@ -1624,10 +1624,10 @@ void TalipotMainWindow::displayColorScalesDialog() {
 }
 
 void TalipotMainWindow::showAboutPage() {
-  tlp::AboutPage *aboutPage = new tlp::AboutPage;
+  auto *aboutPage = new tlp::AboutPage;
   QDialog aboutDialog(this, Qt::Window);
   aboutDialog.setWindowTitle("About Talipot");
-  QVBoxLayout *layout = new QVBoxLayout;
+  auto *layout = new QVBoxLayout;
   layout->addWidget(aboutPage);
   layout->setContentsMargins(0, 0, 0, 0);
   aboutDialog.setLayout(layout);
@@ -1680,7 +1680,7 @@ void TalipotMainWindow::resetLoggerDialogPosition() {
 }
 
 PluginProgress *TalipotMainWindow::progress(ProgressOptions options) {
-  SimplePluginProgressDialog *dlg = new SimplePluginProgressDialog(this);
+  auto *dlg = new SimplePluginProgressDialog(this);
   dlg->setWindowIcon(windowIcon());
   dlg->showPreview(options.testFlag(IsPreviewable));
   dlg->setCancelButtonVisible(options.testFlag(IsCancellable));

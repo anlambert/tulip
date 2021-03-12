@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -512,7 +512,7 @@ void SuperGraphTest::testSubgraph() {
   dg.insert(g3);
   dg.insert(g4);
   for (Graph *g : graph->getDescendantGraphs()) {
-    set<Graph *>::iterator itdg = dg.find(g);
+    auto itdg = dg.find(g);
     CPPUNIT_ASSERT(itdg != dg.end());
     dg.erase(itdg);
   }

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -100,7 +100,7 @@ public:
 
   void treatEvent(const Event &evt) override {
 
-    const GraphEvent *gEvt = dynamic_cast<const GraphEvent *>(&evt);
+    const auto *gEvt = dynamic_cast<const GraphEvent *>(&evt);
 
     if (gEvt) {
       Graph *graph = gEvt->getGraph();
@@ -256,7 +256,7 @@ public:
     sGraphs.push_back(g), spName = name;
   }
   void treatEvent(const Event &evt) override {
-    const GraphEvent *gEvt = dynamic_cast<const GraphEvent *>(&evt);
+    const auto *gEvt = dynamic_cast<const GraphEvent *>(&evt);
 
     if (gEvt) {
       Graph *graph = gEvt->getGraph();
@@ -365,7 +365,7 @@ public:
         break;
       }
     } else {
-      Graph *graph = static_cast<Graph *>(evt.sender());
+      auto *graph = static_cast<Graph *>(evt.sender());
 
       if (graph && evt.type() == Event::TLP_DELETE) {
         if (deleteBug747) {
@@ -405,7 +405,7 @@ public:
     }
   }
   void treatEvent(const Event &evt) override {
-    const GraphEvent *gEvt = dynamic_cast<const GraphEvent *>(&evt);
+    const auto *gEvt = dynamic_cast<const GraphEvent *>(&evt);
 
     if (gEvt) {
       Graph *graph = gEvt->getGraph();
@@ -890,7 +890,7 @@ void ObservableGraphTest::testAddDelProperties() {
 //==========================================================
 void ObservableGraphTest::testObserverWhenRemoveObservable() {
   unsigned int listeners = graph->countListeners();
-  GraphObserverTest *graphObserverTmp = new GraphObserverTest();
+  auto *graphObserverTmp = new GraphObserverTest();
   graph->addListener(graphObserverTmp);
   CPPUNIT_ASSERT_EQUAL(listeners + 1, graph->countListeners());
   delete graphObserverTmp;
@@ -899,7 +899,7 @@ void ObservableGraphTest::testObserverWhenRemoveObservable() {
 
 void ObservableGraphTest::testDelInheritedPropertyExistWhenDelInheritedPropertyIsSend() {
   Graph *g1 = graph->addSubGraph();
-  DelInheritedPropertyObserverTest *observer = new DelInheritedPropertyObserverTest();
+  auto *observer = new DelInheritedPropertyObserverTest();
   g1->addListener(observer);
   graph->getLocalBooleanProperty("test");
   graph->delLocalProperty("test");

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -56,7 +56,7 @@ class PluginModel : public tlp::Model {
       qDeleteAll(children);
     }
     TreeItem *addChild(QString name, QString info = "") {
-      TreeItem *result = new TreeItem(name, info, this);
+      auto *result = new TreeItem(name, info, this);
       children.push_back(result);
       return result;
     }
@@ -151,7 +151,7 @@ public:
       return QModelIndex();
     }
 
-    TreeItem *childItem = static_cast<TreeItem *>(child.internalPointer());
+    auto *childItem = static_cast<TreeItem *>(child.internalPointer());
 
     if (childItem->parent == _root) {
       return QModelIndex();
@@ -177,7 +177,7 @@ public:
   }
 
   QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override {
-    TreeItem *item = static_cast<TreeItem *>(index.internalPointer());
+    auto *item = static_cast<TreeItem *>(index.internalPointer());
 
     if (role == Qt::DisplayRole) {
       return item->name;
@@ -211,7 +211,7 @@ public:
     Qt::ItemFlags result(QAbstractItemModel::flags(index));
 
     if (index.isValid()) {
-      TreeItem *item = static_cast<TreeItem *>(index.internalPointer());
+      auto *item = static_cast<TreeItem *>(index.internalPointer());
 
       if (!PluginsManager::pluginExists<PLUGIN>(tlp::QStringToTlpString(item->name))) {
         result = Qt::ItemIsEnabled;

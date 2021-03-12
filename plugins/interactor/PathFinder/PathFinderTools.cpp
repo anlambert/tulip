@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -36,7 +36,7 @@ Circlef getEnclosingCircle(GlGraphInputData *inputData, BooleanProperty *selecti
 }
 
 bool getNodeEnclosingCircle(Circlef &circle, GlGraphInputData *inputData, node n) {
-  BooleanProperty *selection = new BooleanProperty(inputData->getGraph());
+  auto *selection = new BooleanProperty(inputData->getGraph());
   selection->setAllNodeValue(false);
   selection->setNodeValue(n, true);
   circle = getEnclosingCircle(inputData, selection);
@@ -44,7 +44,7 @@ bool getNodeEnclosingCircle(Circlef &circle, GlGraphInputData *inputData, node n
 }
 
 bool getEdgeEnclosingCircle(Circlef &circle, GlGraphInputData *inputData, edge e) {
-  BooleanProperty *selection = new BooleanProperty(inputData->getGraph());
+  auto *selection = new BooleanProperty(inputData->getGraph());
   selection->setAllEdgeValue(false);
   selection->setEdgeValue(e, true);
 

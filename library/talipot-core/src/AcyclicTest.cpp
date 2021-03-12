@@ -32,7 +32,7 @@ public:
 };
 
 void TestAcyclicListener::treatEvent(const Event &evt) {
-  const GraphEvent *graphEvent = dynamic_cast<const GraphEvent *>(&evt);
+  const auto *graphEvent = dynamic_cast<const GraphEvent *>(&evt);
 
   if (graphEvent) {
     Graph *graph = graphEvent->getGraph();
@@ -65,7 +65,7 @@ void TestAcyclicListener::treatEvent(const Event &evt) {
     }
   } else {
 
-    Graph *graph = static_cast<Graph *>(evt.sender());
+    auto *graph = static_cast<Graph *>(evt.sender());
 
     if (evt.type() == Event::TLP_DELETE) {
       resultsBuffer.erase(graph);

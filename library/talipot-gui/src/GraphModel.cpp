@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -192,7 +192,7 @@ bool GraphModel::setData(const QModelIndex &index, const QVariant &value, int ro
 }
 
 void GraphModel::treatEvent(const Event &ev) {
-  const GraphEvent *graphEv = dynamic_cast<const GraphEvent *>(&ev);
+  const auto *graphEv = dynamic_cast<const GraphEvent *>(&ev);
   if (graphEv != nullptr) {
 
     if (graphEv->getType() == GraphEvent::TLP_ADD_INHERITED_PROPERTY ||
@@ -423,7 +423,7 @@ bool GraphModel::setAllNodeValue(PropertyInterface *prop, QVariant v, const Grap
                                                            graph);
     }
   } else if (dynamic_cast<BooleanVectorProperty *>(prop) != nullptr) {
-    QVector<bool> vb = v.value<QVector<bool>>();
+    auto vb = v.value<QVector<bool>>();
     static_cast<BooleanVectorProperty *>(prop)->setAllNodeValue(
         std::vector<bool>(vb.begin(), vb.end()), graph);
   }
@@ -462,7 +462,7 @@ bool GraphModel::setNodeValue(unsigned int id, PropertyInterface *prop, QVariant
       static_cast<StringProperty *>(prop)->setNodeValue(n, QStringToTlpString(v.value<QString>()));
     }
   } else if (dynamic_cast<BooleanVectorProperty *>(prop) != nullptr) {
-    QVector<bool> vb = v.value<QVector<bool>>();
+    auto vb = v.value<QVector<bool>>();
     static_cast<BooleanVectorProperty *>(prop)->setNodeValue(
         n, std::vector<bool>(vb.begin(), vb.end()));
   }
@@ -501,7 +501,7 @@ bool GraphModel::setNodeDefaultValue(PropertyInterface *prop, QVariant v) {
           QStringToTlpString(v.value<QString>()));
     }
   } else if (dynamic_cast<BooleanVectorProperty *>(prop) != nullptr) {
-    QVector<bool> vb = v.value<QVector<bool>>();
+    auto vb = v.value<QVector<bool>>();
     static_cast<BooleanVectorProperty *>(prop)->setNodeDefaultValue(
         std::vector<bool>(vb.begin(), vb.end()));
   }
@@ -672,7 +672,7 @@ bool GraphModel::setEdgeValue(unsigned int id, PropertyInterface *prop, QVariant
       static_cast<StringProperty *>(prop)->setEdgeValue(e, QStringToTlpString(v.value<QString>()));
     }
   } else if (dynamic_cast<BooleanVectorProperty *>(prop) != nullptr) {
-    QVector<bool> vb = v.value<QVector<bool>>();
+    auto vb = v.value<QVector<bool>>();
     static_cast<BooleanVectorProperty *>(prop)->setEdgeValue(
         e, std::vector<bool>(vb.begin(), vb.end()));
   }
@@ -721,7 +721,7 @@ bool GraphModel::setEdgeDefaultValue(PropertyInterface *prop, QVariant v) {
           QStringToTlpString(v.value<QString>()));
     }
   } else if (dynamic_cast<BooleanVectorProperty *>(prop) != nullptr) {
-    QVector<bool> vb = v.value<QVector<bool>>();
+    auto vb = v.value<QVector<bool>>();
     static_cast<BooleanVectorProperty *>(prop)->setEdgeDefaultValue(
         std::vector<bool>(vb.begin(), vb.end()));
   }
@@ -769,7 +769,7 @@ bool GraphModel::setAllEdgeValue(PropertyInterface *prop, QVariant v, const Grap
                                                            graph);
     }
   } else if (dynamic_cast<BooleanVectorProperty *>(prop) != nullptr) {
-    QVector<bool> vb = v.value<QVector<bool>>();
+    auto vb = v.value<QVector<bool>>();
     static_cast<BooleanVectorProperty *>(prop)->setAllEdgeValue(
         std::vector<bool>(vb.begin(), vb.end()), graph);
   }
@@ -873,7 +873,7 @@ GraphSortFilterProxyModel::GraphSortFilterProxyModel(QObject *parent)
       _filterProperty(nullptr) {}
 
 bool GraphSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const {
-  GraphModel *graphModel = static_cast<GraphModel *>(sourceModel());
+  auto *graphModel = static_cast<GraphModel *>(sourceModel());
   return graphModel->lessThan(graphModel->elementAt(left.row()), graphModel->elementAt(right.row()),
                               static_cast<PropertyInterface *>(left.internalPointer()));
 }
@@ -882,7 +882,7 @@ void GraphSortFilterProxyModel::setProperties(QVector<PropertyInterface *> prope
 }
 
 bool GraphSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &) const {
-  GraphModel *graphModel = static_cast<GraphModel *>(sourceModel());
+  auto *graphModel = static_cast<GraphModel *>(sourceModel());
 
   if (graphModel->graph() == nullptr) {
     return true;
@@ -1058,8 +1058,8 @@ void GraphModel::treatEvents(const std::vector<tlp::Event> &) {
 void NodesGraphModel::treatEvent(const Event &ev) {
   GraphModel::treatEvent(ev);
 
-  const GraphEvent *graphEv = dynamic_cast<const GraphEvent *>(&ev);
-  const PropertyEvent *propEv = dynamic_cast<const PropertyEvent *>(&ev);
+  const auto *graphEv = dynamic_cast<const GraphEvent *>(&ev);
+  const auto *propEv = dynamic_cast<const PropertyEvent *>(&ev);
 
   if (graphEv) {
 
@@ -1146,8 +1146,8 @@ QString NodesGraphModel::getNodeTooltip(Graph *graph, node n) {
 void EdgesGraphModel::treatEvent(const Event &ev) {
   GraphModel::treatEvent(ev);
 
-  const GraphEvent *graphEv = dynamic_cast<const GraphEvent *>(&ev);
-  const PropertyEvent *propEv = dynamic_cast<const PropertyEvent *>(&ev);
+  const auto *graphEv = dynamic_cast<const GraphEvent *>(&ev);
+  const auto *propEv = dynamic_cast<const PropertyEvent *>(&ev);
 
   if (dynamic_cast<const GraphEvent *>(&ev) != nullptr) {
 

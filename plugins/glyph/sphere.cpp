@@ -91,6 +91,7 @@ public:
               edgeExtGlGraphInputData->parameters->getTexturePath());
   }
 };
+
 PLUGIN(EESphere)
 
-} // end of namespace tlp
+}

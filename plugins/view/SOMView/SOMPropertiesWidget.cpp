@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -39,7 +39,7 @@ SOMPropertiesWidget::SOMPropertiesWidget(SOMView *view, QWidget *parent)
 
   defaultScale->addObserver(this);
 
-  QVBoxLayout *sizeMappingLayout = new QVBoxLayout(_ui->nodeSizeMappingGroupBox);
+  auto *sizeMappingLayout = new QVBoxLayout(_ui->nodeSizeMappingGroupBox);
   sizeMappingLayout->setMargin(0);
   sizeMappingLayout->setSpacing(0);
   sizeMappingLayout->setContentsMargins(0, 5, 0, 0);

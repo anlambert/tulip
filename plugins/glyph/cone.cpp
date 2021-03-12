@@ -211,4 +211,4 @@ public:
 
 PLUGIN(EECone)
 
-} // end of namespace tlp
+}

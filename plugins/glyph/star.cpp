@@ -63,13 +63,18 @@ public:
   void getIncludeBoundingBox(BoundingBox &boundingBox, node) override;
   void draw(node n, float lod) override;
 };
+
 PLUGIN(Star)
+
 Star::Star(const tlp::PluginContext *context) : Glyph(context) {}
+
 Star::~Star() = default;
+
 void Star::getIncludeBoundingBox(BoundingBox &boundingBox, node) {
   boundingBox[0] = Coord(-0.3f, -0.35f, 0);
   boundingBox[1] = Coord(0.3f, 0.35f, 0);
 }
+
 void Star::draw(node n, float lod) {
   string textureName = glGraphInputData->getElementTexture()->getNodeValue(n);
 
@@ -100,6 +105,7 @@ public:
              edgeExtGlGraphInputData->getElementBorderWidth()->getEdgeValue(e), textureName, lod);
   }
 };
+
 PLUGIN(EEStar)
 
-} // end of namespace tlp
+}

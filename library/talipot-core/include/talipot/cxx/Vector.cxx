@@ -369,7 +369,7 @@ TYPE VECTORTLP::norm() const {
     return tlpsqrt<TYPE, OTYPE>(tlpsqr<TYPE, OTYPE>((*this)[0]) + tlpsqr<TYPE, OTYPE>((*this)[1]) +
                                 tlpsqr<TYPE, OTYPE>((*this)[2]));
   } else {
-    OTYPE tmp = tlpsqr<TYPE, OTYPE>((*this)[0]);
+    auto tmp = tlpsqr<TYPE, OTYPE>((*this)[0]);
     for (size_t i = 1; i < SIZE; ++i) {
       tmp += tlpsqr<TYPE, OTYPE>((*this)[i]);
     }
@@ -391,7 +391,7 @@ DTYPE VECTORTLP::dist(const VECTOR &c) const {
                                  tlpsqr<DTYPE, OTYPE>((*this)[2] - c[2]));
 
   } else {
-    OTYPE tmp = tlpsqr<DTYPE, OTYPE>((*this)[0] - c[0]);
+    auto tmp = tlpsqr<DTYPE, OTYPE>((*this)[0] - c[0]);
     for (size_t i = 1; i < SIZE; ++i) {
       tmp += tlpsqr<DTYPE, OTYPE>((*this)[i] - c[i]);
     }

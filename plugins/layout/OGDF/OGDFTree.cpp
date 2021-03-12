@@ -86,7 +86,7 @@ public:
   }
 
   void beforeCall() override {
-    ogdf::TreeLayout *tree = static_cast<ogdf::TreeLayout *>(ogdfLayoutAlgo);
+    auto *tree = static_cast<ogdf::TreeLayout *>(ogdfLayoutAlgo);
 
     if (dataSet != nullptr) {
       double dval = 0;

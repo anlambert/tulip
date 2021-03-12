@@ -42,6 +42,7 @@ public:
   void draw(node n, float lod) override;
   Coord getAnchor(const Coord &vector) const override;
 };
+
 PLUGIN(CubeOutLinedTransparent)
 
 CubeOutLinedTransparent::CubeOutLinedTransparent(const tlp::PluginContext *context)
@@ -80,6 +81,7 @@ public:
     glDisable(GL_LIGHTING);
   }
 };
+
 PLUGIN(EECubeOutlinedTransparent)
 
-} // end of namespace tlp
+}

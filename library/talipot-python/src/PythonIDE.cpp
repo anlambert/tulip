@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -1799,7 +1799,7 @@ void PythonIDE::setGraphsModel(tlp::GraphHierarchiesModel *model) {
 }
 
 void PythonIDE::dragEnterEvent(QDragEnterEvent *dragEv) {
-  const tlp::GraphMimeType *mimeType = dynamic_cast<const tlp::GraphMimeType *>(dragEv->mimeData());
+  const auto *mimeType = dynamic_cast<const tlp::GraphMimeType *>(dragEv->mimeData());
 
   if (mimeType != nullptr) {
     dragEv->accept();
@@ -1807,11 +1807,10 @@ void PythonIDE::dragEnterEvent(QDragEnterEvent *dragEv) {
 }
 
 void PythonIDE::dropEvent(QDropEvent *dropEv) {
-  const tlp::GraphMimeType *mimeType = dynamic_cast<const tlp::GraphMimeType *>(dropEv->mimeData());
+  const auto *mimeType = dynamic_cast<const tlp::GraphMimeType *>(dropEv->mimeData());
 
   if (mimeType != nullptr) {
-    tlp::GraphHierarchiesModel *model =
-        static_cast<tlp::GraphHierarchiesModel *>(_ui->graphComboBox->model());
+    auto *model = static_cast<tlp::GraphHierarchiesModel *>(_ui->graphComboBox->model());
     QModelIndex graphIndex = model->indexOf(mimeType->graph());
 
     if (graphIndex == _ui->graphComboBox->selectedIndex()) {
@@ -2032,7 +2031,7 @@ bool PythonIDE::eventFilter(QObject *obj, QEvent *event) {
 #endif
 
   if (event->type() == QEvent::KeyPress) {
-    QKeyEvent *keyEvt = static_cast<QKeyEvent *>(event);
+    auto *keyEvt = static_cast<QKeyEvent *>(event);
 
     if (obj == getCurrentMainScriptEditor() && keyEvt->modifiers() == modifier &&
         keyEvt->key() == Qt::Key_Return) {

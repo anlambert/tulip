@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -47,15 +47,15 @@ void PythonREPLWidget::setModel(tlp::GraphHierarchiesModel *model) {
 }
 
 void PythonREPLWidget::graphComboIndexChanged() {
-  tlp::Graph *g = _ui->graphCombo->model()
-                      ->data(_ui->graphCombo->selectedIndex(), tlp::Model::GraphRole)
-                      .value<tlp::Graph *>();
+  auto *g = _ui->graphCombo->model()
+                ->data(_ui->graphCombo->selectedIndex(), tlp::Model::GraphRole)
+                .value<tlp::Graph *>();
   tlp::PythonInterpreter::instance().runGraphScript("__main__", "setCurrentGraph", g);
   _ui->pythonShellWidget->getAutoCompletionDb()->setGraph(g);
 }
 
 void PythonREPLWidget::dragEnterEvent(QDragEnterEvent *dragEv) {
-  const tlp::GraphMimeType *mimeType = dynamic_cast<const tlp::GraphMimeType *>(dragEv->mimeData());
+  const auto *mimeType = dynamic_cast<const tlp::GraphMimeType *>(dragEv->mimeData());
 
   if (mimeType != nullptr) {
     dragEv->accept();
@@ -63,11 +63,10 @@ void PythonREPLWidget::dragEnterEvent(QDragEnterEvent *dragEv) {
 }
 
 void PythonREPLWidget::dropEvent(QDropEvent *dropEv) {
-  const tlp::GraphMimeType *mimeType = dynamic_cast<const tlp::GraphMimeType *>(dropEv->mimeData());
+  const auto *mimeType = dynamic_cast<const tlp::GraphMimeType *>(dropEv->mimeData());
 
   if (mimeType != nullptr) {
-    tlp::GraphHierarchiesModel *model =
-        static_cast<tlp::GraphHierarchiesModel *>(_ui->graphCombo->model());
+    auto *model = static_cast<tlp::GraphHierarchiesModel *>(_ui->graphCombo->model());
     QModelIndex graphIndex = model->indexOf(mimeType->graph());
 
     if (graphIndex == _ui->graphCombo->selectedIndex()) {
@@ -80,9 +79,9 @@ void PythonREPLWidget::dropEvent(QDropEvent *dropEv) {
 }
 
 void PythonREPLWidget::beginCurrentLinesExecution() {
-  tlp::Graph *g = _ui->graphCombo->model()
-                      ->data(_ui->graphCombo->selectedIndex(), tlp::Model::GraphRole)
-                      .value<tlp::Graph *>();
+  auto *g = _ui->graphCombo->model()
+                ->data(_ui->graphCombo->selectedIndex(), tlp::Model::GraphRole)
+                .value<tlp::Graph *>();
 
   // undo/redo management
   if (g) {
@@ -91,9 +90,9 @@ void PythonREPLWidget::beginCurrentLinesExecution() {
 }
 
 void PythonREPLWidget::endCurrentLinesExecution() {
-  tlp::Graph *g = _ui->graphCombo->model()
-                      ->data(_ui->graphCombo->selectedIndex(), tlp::Model::GraphRole)
-                      .value<tlp::Graph *>();
+  auto *g = _ui->graphCombo->model()
+                ->data(_ui->graphCombo->selectedIndex(), tlp::Model::GraphRole)
+                .value<tlp::Graph *>();
   // undo/redo management
   g->popIfNoUpdates();
 }

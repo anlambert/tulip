@@ -23,12 +23,12 @@ namespace tlp {
 
 bool ParallelCoordsGlEntitiesSelector::eventFilter(QObject *widget, QEvent *e) {
 
-  ParallelCoordinatesView *parallelView = static_cast<ParallelCoordinatesView *>(view());
-  GlWidget *glWidget = static_cast<GlWidget *>(widget);
+  auto *parallelView = static_cast<ParallelCoordinatesView *>(view());
+  auto *glWidget = static_cast<GlWidget *>(widget);
 
   if (e->type() == QEvent::MouseButtonPress) {
 
-    QMouseEvent *qMouseEv = static_cast<QMouseEvent *>(e);
+    auto *qMouseEv = static_cast<QMouseEvent *>(e);
 
     if (qMouseEv->buttons() == Qt::LeftButton) {
 
@@ -47,7 +47,7 @@ bool ParallelCoordsGlEntitiesSelector::eventFilter(QObject *widget, QEvent *e) {
 
   if (e->type() == QEvent::MouseMove) {
 
-    QMouseEvent *qMouseEv = static_cast<QMouseEvent *>(e);
+    auto *qMouseEv = static_cast<QMouseEvent *>(e);
 
     if (qMouseEv->buttons() & Qt::LeftButton && started) {
       if ((qMouseEv->x() > 0) && (qMouseEv->x() < glWidget->width())) {
@@ -65,7 +65,7 @@ bool ParallelCoordsGlEntitiesSelector::eventFilter(QObject *widget, QEvent *e) {
 
   if (e->type() == QEvent::MouseButtonRelease) {
 
-    QMouseEvent *qMouseEv = static_cast<QMouseEvent *>(e);
+    auto *qMouseEv = static_cast<QMouseEvent *>(e);
 
     if (started) {
       Observable::holdObservers();

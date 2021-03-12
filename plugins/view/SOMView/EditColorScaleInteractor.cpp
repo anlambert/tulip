@@ -42,10 +42,10 @@ EditColorScaleInteractor::~EditColorScaleInteractor() {
 }
 
 bool EditColorScaleInteractor::eventFilter(QObject *obj, QEvent *event) {
-  tlp::GlWidget *glWidget = static_cast<tlp::GlWidget *>(obj);
+  auto *glWidget = static_cast<tlp::GlWidget *>(obj);
 
   if (event->type() == QEvent::MouseButtonDblClick) {
-    QMouseEvent *me = static_cast<QMouseEvent *>(event);
+    auto *me = static_cast<QMouseEvent *>(event);
 
     glWidget->getScene()->getGraphCamera().initGl();
     selectionLayer->set2DMode();
@@ -65,7 +65,7 @@ bool EditColorScaleInteractor::eventFilter(QObject *obj, QEvent *event) {
           foundGlColorScale = true;
 
           if (dialog.exec()) {
-            SOMView *somView = static_cast<SOMView *>(view());
+            auto *somView = static_cast<SOMView *>(view());
             // update shared color scale
             somView->getColorScale()->setColorMap(dialog.getColorScale().getColorMap());
             somView->updateDefaultColorProperty();
@@ -84,7 +84,7 @@ bool EditColorScaleInteractor::eventFilter(QObject *obj, QEvent *event) {
   return false;
 }
 void EditColorScaleInteractor::viewChanged(View *view) {
-  SOMView *somView = static_cast<SOMView *>(view);
+  auto *somView = static_cast<SOMView *>(view);
 
   if (somView != nullptr) {
     assert(colorScale == nullptr);
@@ -100,7 +100,7 @@ void EditColorScaleInteractor::viewChanged(View *view) {
 }
 
 bool EditColorScaleInteractor::compute(GlWidget *) {
-  SOMView *somView = static_cast<SOMView *>(view());
+  auto *somView = static_cast<SOMView *>(view());
   assert(somView != nullptr);
 
   screenSizeChanged(somView);
@@ -108,7 +108,7 @@ bool EditColorScaleInteractor::compute(GlWidget *) {
 }
 
 bool EditColorScaleInteractor::draw(GlWidget *glWidget) {
-  SOMView *somView = static_cast<SOMView *>(view());
+  auto *somView = static_cast<SOMView *>(view());
   assert(somView != nullptr);
 
   if (colorScale) {

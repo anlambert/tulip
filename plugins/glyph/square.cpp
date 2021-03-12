@@ -63,9 +63,13 @@ public:
   void draw(node n, float lod) override;
   Coord getAnchor(const Coord &vector) const override;
 };
+
 PLUGIN(Square)
+
 Square::Square(const tlp::PluginContext *context) : Glyph(context) {}
+
 Square::~Square() = default;
+
 void Square::draw(node n, float lod) {
   drawGlyph(glGraphInputData->getElementColor()->getNodeValue(n),
             glGraphInputData->getElementTexture()->getNodeValue(n),
@@ -73,6 +77,7 @@ void Square::draw(node n, float lod) {
             glGraphInputData->getElementBorderWidth()->getNodeValue(n),
             glGraphInputData->getElementBorderColor()->getNodeValue(n), lod);
 }
+
 Coord Square::getAnchor(const Coord &v) const {
   float fmax = std::max(fabsf(v.x()), fabsf(v.y()));
   if (fmax > 0.0f) {
@@ -95,6 +100,7 @@ public:
               edgeExtGlGraphInputData->getElementBorderWidth()->getEdgeValue(e), borderColor, lod);
   }
 };
+
 PLUGIN(EESquare)
 
-} // end of namespace tlp
+}

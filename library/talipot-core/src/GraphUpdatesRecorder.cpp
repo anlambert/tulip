@@ -47,7 +47,7 @@ GraphUpdatesRecorder::~GraphUpdatesRecorder() {
 
 void GraphUpdatesRecorder::treatEvent(const Event &ev) {
   if (typeid(ev) == typeid(GraphEvent)) {
-    const GraphEvent *gEvt = static_cast<const GraphEvent *>(&ev);
+    const auto *gEvt = static_cast<const GraphEvent *>(&ev);
     Graph *graph = gEvt->getGraph();
 
     switch (gEvt->getType()) {
@@ -124,7 +124,7 @@ void GraphUpdatesRecorder::treatEvent(const Event &ev) {
       break;
     }
   } else {
-    const PropertyEvent *propEvt = dynamic_cast<const PropertyEvent *>(&ev);
+    const auto *propEvt = dynamic_cast<const PropertyEvent *>(&ev);
 
     if (propEvt) {
       PropertyInterface *prop = propEvt->getProperty();
@@ -260,7 +260,7 @@ void GraphUpdatesRecorder::recordNewValues(GraphImpl *g) {
     newValuesRecorded = true;
 
     // get ids memento
-    GraphImpl *root = static_cast<GraphImpl *>(g);
+    auto *root = static_cast<GraphImpl *>(g);
     assert(newIdsState == nullptr);
 
     // record ids memento only if needed
@@ -403,7 +403,7 @@ void GraphUpdatesRecorder::recordNewNodeValues(PropertyInterface *p) {
   assert(itnv == newValues.end() || (itnv->second.recordedNodes == nullptr));
 
   PropertyInterface *nv;
-  MutableContainer<bool> *rn = new MutableContainer<bool>();
+  auto *rn = new MutableContainer<bool>();
 
   if (itnv == newValues.end()) {
     nv = p->clonePrototype(p->getGraph(), "");
@@ -456,7 +456,7 @@ void GraphUpdatesRecorder::recordNewEdgeValues(PropertyInterface *p) {
   assert(itnv == newValues.end() || (itnv->second.recordedEdges == nullptr));
 
   PropertyInterface *nv;
-  MutableContainer<bool> *re = new MutableContainer<bool>();
+  auto *re = new MutableContainer<bool>();
 
   const auto itnv = newValues.find(p);
 
@@ -1349,7 +1349,7 @@ void GraphUpdatesRecorder::beforeSetNodeValue(PropertyInterface *p, node n) {
   } else {
     if (const auto it = oldValues.find(p); it == oldValues.end()) {
       PropertyInterface *pv = p->clonePrototype(p->getGraph(), "");
-      MutableContainer<bool> *rn = new MutableContainer<bool>();
+      auto *rn = new MutableContainer<bool>();
 
       pv->copy(n, n, p);
       rn->set(n, true);
@@ -1405,7 +1405,7 @@ void GraphUpdatesRecorder::beforeSetEdgeValue(PropertyInterface *p, edge e) {
   } else {
     if (const auto it = oldValues.find(p); it == oldValues.end()) {
       PropertyInterface *pv = p->clonePrototype(p->getGraph(), "");
-      MutableContainer<bool> *re = new MutableContainer<bool>();
+      auto *re = new MutableContainer<bool>();
 
       pv->copy(e, e, p);
       re->set(e, true);

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -90,7 +90,7 @@ struct PageRank : public DoubleAlgorithm {
     pr.setAll(oon);
 
     const double one_minus_d = (1 - d) / nbNodes;
-    const unsigned int kMax = uint(15 * log(nbNodes));
+    const auto kMax = uint(15 * log(nbNodes));
 
     NodeStaticProperty<double> deg(graph);
     tlp::degree(graph, deg, directed ? DIRECTED : UNDIRECTED, weight, false);

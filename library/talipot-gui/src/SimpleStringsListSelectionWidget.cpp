@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -70,7 +70,7 @@ void SimpleStringsListSelectionWidget::setUnselectedStringsList(
       items[0]->setFlags(items[0]->flags() | Qt::ItemIsUserCheckable);
       items[0]->setCheckState(Qt::Unchecked);
     } else {
-      QListWidgetItem *item = new QListWidgetItem(tlpStringToQString(unselectedStringsList[i]));
+      auto *item = new QListWidgetItem(tlpStringToQString(unselectedStringsList[i]));
       item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
       item->setCheckState(Qt::Unchecked);
       _ui->listWidget->addItem(item);
@@ -93,7 +93,7 @@ void SimpleStringsListSelectionWidget::setSelectedStringsList(
       items[0]->setFlags(items[0]->flags() | Qt::ItemIsUserCheckable);
       items[0]->setCheckState(Qt::Checked);
     } else {
-      QListWidgetItem *item = new QListWidgetItem(tlpStringToQString(selectedStringsList[i]));
+      auto *item = new QListWidgetItem(tlpStringToQString(selectedStringsList[i]));
       item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
       item->setCheckState(Qt::Checked);
       _ui->listWidget->addItem(item);
@@ -191,8 +191,8 @@ void SimpleStringsListSelectionWidget::pressButtonUp() {
     int row = _ui->listWidget->currentRow();
 
     if (row > 0) {
-      QListWidgetItem *item1 = new QListWidgetItem(*(_ui->listWidget->currentItem()));
-      QListWidgetItem *item2 = new QListWidgetItem(*(_ui->listWidget->item(row - 1)));
+      auto *item1 = new QListWidgetItem(*(_ui->listWidget->currentItem()));
+      auto *item2 = new QListWidgetItem(*(_ui->listWidget->item(row - 1)));
       delete _ui->listWidget->item(row - 1);
       delete _ui->listWidget->item(row - 1);
       _ui->listWidget->insertItem(row - 1, item2);
@@ -207,8 +207,8 @@ void SimpleStringsListSelectionWidget::pressButtonDown() {
     int row = _ui->listWidget->currentRow();
 
     if (row != -1 && row < (_ui->listWidget->count() - 1)) {
-      QListWidgetItem *item1 = new QListWidgetItem(*(_ui->listWidget->currentItem()));
-      QListWidgetItem *item2 = new QListWidgetItem(*(_ui->listWidget->item(row + 1)));
+      auto *item1 = new QListWidgetItem(*(_ui->listWidget->currentItem()));
+      auto *item2 = new QListWidgetItem(*(_ui->listWidget->item(row + 1)));
       delete _ui->listWidget->item(row);
       delete _ui->listWidget->item(row);
       _ui->listWidget->insertItem(row, item1);

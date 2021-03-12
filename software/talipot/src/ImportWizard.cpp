@@ -31,7 +31,7 @@ ImportWizard::ImportWizard(QWidget *parent) : QWizard(parent), _ui(new Ui::Impor
   _ui->setupUi(this);
   setWizardStyle(QWizard::ClassicStyle);
 
-  PluginModel<tlp::ImportModule> *model = new PluginModel<tlp::ImportModule>(_ui->importModules);
+  auto *model = new PluginModel<tlp::ImportModule>(_ui->importModules);
 
   _ui->importModules->setModel(model);
   _ui->importModules->setRootIndex(model->index(0, 0));
@@ -111,7 +111,7 @@ QString ImportWizard::algorithm() const {
 }
 
 tlp::DataSet ImportWizard::parameters() const {
-  ParameterListModel *model = dynamic_cast<ParameterListModel *>(_ui->parametersList->model());
+  auto *model = dynamic_cast<ParameterListModel *>(_ui->parametersList->model());
 
   if (model == nullptr) {
     return DataSet();

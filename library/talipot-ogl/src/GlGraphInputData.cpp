@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -71,7 +71,7 @@ public:
     graph->addListener(this);
   }
   void treatEvent(const Event &evt) override {
-    Graph *g = static_cast<Graph *>(evt.sender());
+    auto *g = static_cast<Graph *>(evt.sender());
 
     if (graph == g && evt.type() == Event::TLP_DELETE) {
       delete this;
@@ -190,7 +190,7 @@ bool GlGraphInputData::installProperties(
 
 void GlGraphInputData::treatEvent(const Event &ev) {
   if (dynamic_cast<const GraphEvent *>(&ev) != nullptr) {
-    const GraphEvent *graphEv = static_cast<const GraphEvent *>(&ev);
+    const auto *graphEv = static_cast<const GraphEvent *>(&ev);
 
     if (graphEv->getType() == GraphEvent::TLP_ADD_LOCAL_PROPERTY ||
         graphEv->getType() == GraphEvent::TLP_AFTER_DEL_LOCAL_PROPERTY ||

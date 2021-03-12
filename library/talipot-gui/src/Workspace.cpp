@@ -194,7 +194,7 @@ QString Workspace::panelTitle(tlp::WorkspacePanel *panel) const {
 }
 
 int Workspace::addPanel(tlp::View *view) {
-  WorkspacePanel *panel = new WorkspacePanel(view);
+  auto *panel = new WorkspacePanel(view);
 
   if (_model != nullptr) {
     panel->setGraphsModel(_model);
@@ -239,7 +239,7 @@ void Workspace::delView(tlp::View *view) {
 }
 
 void Workspace::panelDestroyed(QObject *obj) {
-  WorkspacePanel *panel = static_cast<WorkspacePanel *>(obj);
+  auto *panel = static_cast<WorkspacePanel *>(obj);
 
   if (panel == _focusedPanel) {
     _focusedPanel = nullptr;
@@ -271,7 +271,7 @@ void Workspace::panelDestroyed(QObject *obj) {
 }
 
 void Workspace::viewNeedsDraw() {
-  WorkspacePanel *panel = static_cast<WorkspacePanel *>(sender());
+  auto *panel = static_cast<WorkspacePanel *>(sender());
 
   if (_autoCenterViews) {
     // we assume graph has changed
@@ -513,14 +513,14 @@ bool Workspace::eventFilter(QObject *obj, QEvent *ev) {
   if (ev->type() == QEvent::ChildRemoved) {
     QObject *childObj = static_cast<QChildEvent *>(ev)->child();
     childObj->removeEventFilter(this);
-    QGraphicsView *graphicsView = dynamic_cast<QGraphicsView *>(childObj);
+    auto *graphicsView = dynamic_cast<QGraphicsView *>(childObj);
 
     if (graphicsView != nullptr && graphicsView->scene()) {
       graphicsView->scene()->removeEventFilter(this);
     }
   } else if (ev->type() == QEvent::FocusIn) {
     if (dynamic_cast<QGraphicsView *>(obj) != nullptr) {
-      tlp::WorkspacePanel *panel = static_cast<tlp::WorkspacePanel *>(obj->parent());
+      auto *panel = static_cast<tlp::WorkspacePanel *>(obj->parent());
       setFocusedPanel(panel);
     }
   }
@@ -546,7 +546,7 @@ bool Workspace::handleDragEnterEvent(QEvent *e, const QMimeData *mimedata) {
 }
 
 bool Workspace::handleDropEvent(const QMimeData *mimedata) {
-  const GraphMimeType *graphMime = dynamic_cast<const GraphMimeType *>(mimedata);
+  const auto *graphMime = dynamic_cast<const GraphMimeType *>(mimedata);
 
   if (graphMime == nullptr) {
     return false;
@@ -820,7 +820,7 @@ void Workspace::setAutoCenterPanelsOnDraw(bool f) {
 }
 
 void Workspace::swapPanelsRequested(WorkspacePanel *panel) {
-  WorkspacePanel *sourcePanel = static_cast<WorkspacePanel *>(sender());
+  auto *sourcePanel = static_cast<WorkspacePanel *>(sender());
 
   if (sourcePanel) {
     auto pb = _panels.begin();

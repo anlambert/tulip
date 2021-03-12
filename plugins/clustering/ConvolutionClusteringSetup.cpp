@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -118,7 +118,7 @@ ConvolutionClusteringSetup::ConvolutionClusteringSetup(ConvolutionClustering *co
       useLogarithmicScale(false) {
   _ui->setupUi(this);
   histogramWidget = new HistogramWidget(this, _ui->Frame3);
-  QGridLayout *flayout = new QGridLayout(_ui->Frame3);
+  auto *flayout = new QGridLayout(_ui->Frame3);
   flayout->setMargin(1);
   flayout->addWidget(histogramWidget, 0, 0);
 

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -24,7 +24,7 @@ PythonEditorsTabWidget::PythonEditorsTabWidget(QWidget *parent)
 }
 
 int PythonEditorsTabWidget::addEditor(const QString &fileName) {
-  PythonCodeEditor *codeEditor = new PythonCodeEditor();
+  auto *codeEditor = new PythonCodeEditor();
 
   QFileInfo fileInfo(fileName);
 
@@ -118,7 +118,7 @@ bool PythonEditorsTabWidget::eventFilter(QObject *obj, QEvent *event) {
 #endif
 
   if (event->type() == QEvent::KeyPress) {
-    QKeyEvent *keyEvt = static_cast<QKeyEvent *>(event);
+    auto *keyEvt = static_cast<QKeyEvent *>(event);
 
     if (keyEvt->modifiers() == modifier && keyEvt->key() == Qt::Key_S) {
       if (obj == getCurrentEditor()) {

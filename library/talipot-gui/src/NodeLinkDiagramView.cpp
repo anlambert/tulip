@@ -125,7 +125,7 @@ void NodeLinkDiagramView::setState(const tlp::DataSet &data) {
   gridParameters.add<bool>("X grid", "", "true", false);
   gridParameters.add<bool>("Y grid", "", "true", false);
   gridParameters.add<bool>("Z grid", "", "true", false);
-  ParameterListModel *model = new ParameterListModel(gridParameters, nullptr, this);
+  auto *model = new ParameterListModel(gridParameters, nullptr, this);
 
   grid_ui = new Ui::GridOptionsWidget;
   _gridOptions = new QDialog(graphicsView());
@@ -199,10 +199,10 @@ void NodeLinkDiagramView::createScene(Graph *graph, DataSet dataSet) {
 
   if (sceneInput.empty()) {
     // Default scene
-    GlLayer *layer = new GlLayer("Main");
-    GlLayer *backgroundLayer = new GlLayer("Background");
+    auto *layer = new GlLayer("Main");
+    auto *backgroundLayer = new GlLayer("Background");
     backgroundLayer->setVisible(false);
-    GlLayer *foregroundLayer = new GlLayer("Foreground");
+    auto *foregroundLayer = new GlLayer("Foreground");
     foregroundLayer->setVisible(true);
 
     backgroundLayer->set2DMode();
@@ -211,7 +211,7 @@ void NodeLinkDiagramView::createScene(Graph *graph, DataSet dataSet) {
     scene->addExistingLayer(backgroundLayer);
     scene->addExistingLayer(layer);
     scene->addExistingLayer(foregroundLayer);
-    GlGraph *glGraph = new GlGraph(graph, scene);
+    auto *glGraph = new GlGraph(graph, scene);
     scene->getLayer("Main")->addGlEntity(glGraph, "graph");
     initRenderingParameters(glGraph->getRenderingParameters());
     scene->centerScene();
@@ -303,7 +303,7 @@ void NodeLinkDiagramView::loadGraphOnScene(Graph *graph) {
   GlMetaNodeRenderer *metaNodeRenderer = oldGlGraph->getInputData()->getMetaNodeRenderer();
   // prevent deletion of MetaNodeRenderer when deleting oldGlGraph
   oldGlGraph->getInputData()->setMetaNodeRenderer(nullptr, false);
-  GlGraph *glGraph = new GlGraph(graph);
+  auto *glGraph = new GlGraph(graph);
   glGraph->setRenderingParameters(oldGlGraph->getRenderingParameters());
 
   metaNodeRenderer->setInputData(glGraph->getInputData());

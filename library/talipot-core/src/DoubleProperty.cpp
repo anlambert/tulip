@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -284,7 +284,7 @@ void DoubleProperty::edgesUniformQuantification(unsigned int k) {
 //====================================================================
 void DoubleProperty::clone_handler(
     AbstractProperty<DoubleType, DoubleType, tlp::NumericProperty> &proxyC) {
-  DoubleProperty *proxy = static_cast<DoubleProperty *>(&proxyC);
+  auto *proxy = static_cast<DoubleProperty *>(&proxyC);
   minMaxNode = proxy->minMaxNode;
   minMaxEdge = proxy->minMaxEdge;
 }

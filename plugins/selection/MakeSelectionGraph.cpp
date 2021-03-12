@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -44,11 +44,11 @@ bool MakeSelectionGraph::run() {
   return true;
 }
 
-isGraphTest::isGraphTest(const tlp::PluginContext *context) : tlp::GraphTest(context) {
+IsGraphTest::IsGraphTest(const tlp::PluginContext *context) : tlp::GraphTest(context) {
   addInParameter<BooleanProperty>("selection", paramHelp[0], "viewSelection");
 }
 
-bool isGraphTest::test() {
+bool IsGraphTest::test() {
   BooleanProperty *sel = graph->getBooleanProperty("viewSelection");
 
   if (dataSet != nullptr) {
@@ -61,4 +61,4 @@ bool isGraphTest::test() {
 }
 
 PLUGIN(MakeSelectionGraph)
-PLUGIN(isGraphTest)
+PLUGIN(IsGraphTest)

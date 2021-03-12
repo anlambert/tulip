@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -68,8 +68,8 @@ void Camera::rotate(float angle, float x, float y, float z) {
   Coord vEyes = eyes - center;
 
   // Calculate the sine and cosine of the angle once
-  float cosTheta = float(cos(angle));
-  float sinTheta = float(sin(angle));
+  auto cosTheta = float(cos(angle));
+  auto sinTheta = float(sin(angle));
 
   // Find the new x position for the new rotated point
   vNewEyes[0] = (cosTheta + (1 - cosTheta) * x * x) * vEyes[0];

@@ -227,7 +227,7 @@ void WorkspacePanel::showEvent(QShowEvent *event) {
 
     // get old scene pointer for further deletion
     QGraphicsScene *oldScene = _view->graphicsView()->scene();
-    QGraphicsScene *newScene = new QGraphicsScene();
+    auto *newScene = new QGraphicsScene();
     newScene->setSceneRect(oldScene->sceneRect());
     // create a new QGraphicsScene and set it in the QGraphicsView
     _view->graphicsView()->setScene(newScene);
@@ -320,8 +320,8 @@ void WorkspacePanel::setCurrentInteractorConfigurationVisible(bool) {
 }
 
 void WorkspacePanel::interactorActionTriggered() {
-  QAction *action = static_cast<QAction *>(sender());
-  Interactor *interactor = static_cast<Interactor *>(action->parent());
+  auto *action = static_cast<QAction *>(sender());
+  auto *interactor = static_cast<Interactor *>(action->parent());
 
   if (interactor == view()->currentInteractor()) {
     return;
@@ -349,12 +349,12 @@ void WorkspacePanel::refreshInteractorsToolbar() {
   _ui->sep2->setVisible(interactorsUiShown);
 
   if (interactorsUiShown) {
-    QHBoxLayout *interactorsLayout = new QHBoxLayout;
+    auto *interactorsLayout = new QHBoxLayout;
     interactorsLayout->setContentsMargins(0, 0, 0, 0);
     interactorsLayout->setSpacing(4);
 
     for (auto i : compatibleInteractors) {
-      QPushButton *button = new QPushButton();
+      auto *button = new QPushButton();
       button->setMinimumSize(22, 22);
       button->setFlat(true);
       button->setMaximumSize(22, 22);
@@ -374,7 +374,7 @@ void WorkspacePanel::refreshInteractorsToolbar() {
 }
 
 void WorkspacePanel::actionChanged() {
-  QAction *action = static_cast<QAction *>(sender());
+  auto *action = static_cast<QAction *>(sender());
 
   if (!_actionTriggers.contains(action)) {
     return;
@@ -431,8 +431,7 @@ void WorkspacePanel::viewGraphSet(tlp::Graph *g) {
 
 #endif // NDEBUG
 
-  tlp::GraphHierarchiesModel *model =
-      static_cast<tlp::GraphHierarchiesModel *>(_ui->graphCombo->model());
+  auto *model = static_cast<tlp::GraphHierarchiesModel *>(_ui->graphCombo->model());
   QModelIndex graphIndex = model->indexOf(g);
 
   if (graphIndex == _ui->graphCombo->selectedIndex()) {
@@ -443,9 +442,9 @@ void WorkspacePanel::viewGraphSet(tlp::Graph *g) {
 }
 
 void WorkspacePanel::graphComboIndexChanged() {
-  tlp::Graph *g = _ui->graphCombo->model()
-                      ->data(_ui->graphCombo->selectedIndex(), Model::GraphRole)
-                      .value<tlp::Graph *>();
+  auto *g = _ui->graphCombo->model()
+                ->data(_ui->graphCombo->selectedIndex(), Model::GraphRole)
+                .value<tlp::Graph *>();
 #ifndef NDEBUG
 
   if (g != nullptr) {
@@ -485,8 +484,8 @@ void WorkspacePanel::setConfigurationTabExpanded(bool expanded, bool animate) {
   }
 
   if (animate) {
-    QPropertyAnimation *anim = new QPropertyAnimation(_viewConfigurationTabWidgetProxy, "pos",
-                                                      _viewConfigurationTabWidgetProxy);
+    auto *anim = new QPropertyAnimation(_viewConfigurationTabWidgetProxy, "pos",
+                                        _viewConfigurationTabWidgetProxy);
     anim->setDuration(250);
     anim->setStartValue(_viewConfigurationTabWidgetProxy->pos());
     anim->setEndValue(newPos);
@@ -509,7 +508,7 @@ QPointF WorkspacePanel::configurationTabPosition(bool expanded) const {
   if (expanded) {
     return QPointF(width() - _viewConfigurationTabWidgetProxy->size().width(), 10);
   } else {
-    QTabWidget *tabWidget = static_cast<QTabWidget *>(_viewConfigurationTabWidgetProxy->widget());
+    auto *tabWidget = static_cast<QTabWidget *>(_viewConfigurationTabWidgetProxy->widget());
     int tabWidth =
         (tabWidget != nullptr)
             ? (_viewConfigurationTabWidgetProxy->size().width() - tabWidget->widget(0)->width())
@@ -565,9 +564,9 @@ bool WorkspacePanel::handleDragEnterEvent(QEvent *e, const QMimeData *mimedata) 
 }
 
 bool WorkspacePanel::handleDropEvent(const QMimeData *mimedata) {
-  const GraphMimeType *graphMime = dynamic_cast<const GraphMimeType *>(mimedata);
-  const PanelMimeType *panelMime = dynamic_cast<const PanelMimeType *>(mimedata);
-  const AlgorithmMimeType *algorithmMime = dynamic_cast<const AlgorithmMimeType *>(mimedata);
+  const auto *graphMime = dynamic_cast<const GraphMimeType *>(mimedata);
+  const auto *panelMime = dynamic_cast<const PanelMimeType *>(mimedata);
+  const auto *algorithmMime = dynamic_cast<const AlgorithmMimeType *>(mimedata);
 
   if (graphMime != nullptr && graphMime->graph()) {
     viewGraphSet(graphMime->graph());

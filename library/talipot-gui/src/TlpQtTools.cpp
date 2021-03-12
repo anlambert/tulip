@@ -490,7 +490,7 @@ void enableQtUserInput() {
 
 QMainWindow *getMainWindow() {
   for (QWidget *widget : qApp->topLevelWidgets()) {
-    if (QMainWindow *mainWindow = qobject_cast<QMainWindow *>(widget)) {
+    if (auto *mainWindow = qobject_cast<QMainWindow *>(widget)) {
       return mainWindow;
     }
   }

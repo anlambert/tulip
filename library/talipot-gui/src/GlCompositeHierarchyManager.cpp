@@ -68,14 +68,14 @@ void GlCompositeHierarchyManager::buildComposite(Graph *current, GlComposite *co
 
   stringstream naming;
   naming << current->getName() << " [#" << current->getId() << ']';
-  GlConvexGraphHull *hull = new GlConvexGraphHull(composite, naming.str(), getColor(), current,
-                                                  _layout, _size, _rotation);
+  auto *hull = new GlConvexGraphHull(composite, naming.str(), getColor(), current, _layout, _size,
+                                     _rotation);
 
   _graphsComposites.insert(std::pair<Graph *, std::pair<GlComposite *, GlConvexGraphHull *>>(
       current, std::pair<GlComposite *, GlConvexGraphHull *>(composite, hull)));
 
   if (!current->subGraphs().empty()) {
-    GlComposite *newComposite = new GlComposite();
+    auto *newComposite = new GlComposite();
     naming << " - " << _subCompositesSuffix;
     composite->addGlEntity(newComposite, naming.str());
 
@@ -86,7 +86,7 @@ void GlCompositeHierarchyManager::buildComposite(Graph *current, GlComposite *co
 }
 
 void GlCompositeHierarchyManager::treatEvent(const Event &evt) {
-  const GraphEvent *gEvt = dynamic_cast<const GraphEvent *>(&evt);
+  const auto *gEvt = dynamic_cast<const GraphEvent *>(&evt);
 
   if (gEvt) {
     Graph *graph = gEvt->getGraph();
@@ -195,7 +195,7 @@ void GlCompositeHierarchyManager::treatEvent(const Event &evt) {
     }
   }
 
-  Graph *graph = dynamic_cast<Graph *>(evt.sender());
+  auto *graph = dynamic_cast<Graph *>(evt.sender());
   if (graph && evt.type() == Event::TLP_DELETE) {
     if (graph == _graph) {
       _graph = nullptr;

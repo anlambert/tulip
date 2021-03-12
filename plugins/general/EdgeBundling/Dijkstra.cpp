@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -58,7 +58,7 @@ void Dijkstra::initDijkstra(const tlp::Graph *const forbidden, tlp::node srcTlp,
 
   for (auto n : graph.nodes()) {
     if (n != src) { // init all nodes to +inf
-      DijkstraElement *tmp = new DijkstraElement(DBL_MAX / 2. + 10., node(), n);
+      auto *tmp = new DijkstraElement(DBL_MAX / 2. + 10., node(), n);
       dijkstraTable.insert(tmp);
 
       if (focus[n]) {
@@ -67,7 +67,7 @@ void Dijkstra::initDijkstra(const tlp::Graph *const forbidden, tlp::node srcTlp,
 
       mapDik[n] = tmp;
     } else { // init starting node to 0
-      DijkstraElement *tmp = new DijkstraElement(0, n, n);
+      auto *tmp = new DijkstraElement(0, n, n);
       dijkstraTable.insert(tmp);
       mapDik[n] = tmp;
     }
@@ -78,12 +78,12 @@ void Dijkstra::initDijkstra(const tlp::Graph *const forbidden, tlp::node srcTlp,
 
   while (!dijkstraTable.empty()) {
     // select the first element in the list the one with min value
-    set<DijkstraElement *, LessDijkstraElement>::iterator it = dijkstraTable.begin();
+    auto it = dijkstraTable.begin();
     DijkstraElement &u = *(*it);
     dijkstraTable.erase(it);
 
     if (!focusTable.empty()) {
-      set<DijkstraElement *, LessDijkstraElement>::reverse_iterator it = focusTable.rbegin();
+      auto it = focusTable.rbegin();
       double maxDist = (*it)->dist;
 
       if (u.dist > maxDist) {

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -29,7 +29,7 @@ IntegerProperty::IntegerProperty(Graph *g, const std::string &n)
 void IntegerProperty::clone_handler(
     AbstractProperty<tlp::IntegerType, tlp::IntegerType, tlp::NumericProperty> &proxyC) {
   if (typeid(this) == typeid(&proxyC)) {
-    IntegerProperty *proxy = static_cast<IntegerProperty *>(&proxyC);
+    auto *proxy = static_cast<IntegerProperty *>(&proxyC);
     minMaxNode = proxy->minMaxNode;
     minMaxEdge = proxy->minMaxEdge;
   }

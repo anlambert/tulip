@@ -291,7 +291,7 @@ bool HierarchicalGraph::run() {
   //=========================================================
   // use a temporary rotated size if necessary
   if (orientation == "horizontal") {
-    SizeProperty *tmpSize = new SizeProperty(graph);
+    auto *tmpSize = new SizeProperty(graph);
 
     tmpSize->copy(nodeSize);
     for (auto n : graph->nodes()) {

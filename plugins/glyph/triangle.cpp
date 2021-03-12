@@ -79,4 +79,4 @@ void Triangle::draw(node n, float lod) {
 }
 //=====================================================
 
-} // end of namespace tlp
+}

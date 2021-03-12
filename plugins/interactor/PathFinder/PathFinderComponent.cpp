@@ -35,8 +35,8 @@ PathFinderComponent::~PathFinderComponent() {
 }
 
 bool PathFinderComponent::eventFilter(QObject *obj, QEvent *event) {
-  QMouseEvent *qMouseEv = static_cast<QMouseEvent *>(event);
-  GlWidget *glw = dynamic_cast<GlWidget *>(obj);
+  auto *qMouseEv = static_cast<QMouseEvent *>(event);
+  auto *glw = dynamic_cast<GlWidget *>(obj);
 
   if (glw == nullptr) {
     return false;
@@ -211,6 +211,6 @@ QSet<PathHighlighter *> PathFinderComponent::getHighlighters() {
 }
 
 void PathFinderComponent::clear() {
-  GlView *glView = static_cast<GlView *>(view());
+  auto *glView = static_cast<GlView *>(view());
   glView->getGlWidget()->setCursor(QCursor());
 }

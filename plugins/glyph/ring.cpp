@@ -207,6 +207,7 @@ public:
               edgeExtGlGraphInputData->getElementBorderWidth()->getEdgeValue(e), borderColor, lod);
   }
 };
+
 PLUGIN(EERing)
 
-} // end of namespace tlp
+}

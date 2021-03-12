@@ -56,7 +56,7 @@ QModelIndex SceneLayersModel::index(int row, int column, const QModelIndex &pare
   GlComposite *composite = nullptr;
 
   if (!parent.parent().isValid()) { // 1st sublevel, parent is a layer
-    GlLayer *layer = static_cast<GlLayer *>(parent.internalPointer());
+    auto *layer = static_cast<GlLayer *>(parent.internalPointer());
     composite = layer->getComposite();
   } else { // Deeper sublevel, the parent is a composite
     composite = static_cast<GlComposite *>(parent.internalPointer());
@@ -115,7 +115,7 @@ QModelIndex SceneLayersModel::parent(const QModelIndex &child) const {
     }
   }
 
-  GlEntity *entity = static_cast<GlEntity *>(child.internalPointer());
+  auto *entity = static_cast<GlEntity *>(child.internalPointer());
   GlComposite *parent = entity->getParent();
 
   if (parent == nullptr) {
@@ -156,7 +156,7 @@ int SceneLayersModel::rowCount(const QModelIndex &parent) const {
   }
 
   if (!parent.parent().isValid()) { // First sublevel: parent is a GlLayer
-    GlLayer *layer = static_cast<GlLayer *>(parent.internalPointer());
+    auto *layer = static_cast<GlLayer *>(parent.internalPointer());
     return layer->getComposite()->getGlEntities().size();
   }
 
@@ -164,7 +164,7 @@ int SceneLayersModel::rowCount(const QModelIndex &parent) const {
     return 0;
   }
 
-  GlEntity *entity = static_cast<GlEntity *>(parent.internalPointer());
+  auto *entity = static_cast<GlEntity *>(parent.internalPointer());
 
   if (_scene->getGlGraph() == entity) {
     return GRAPH_COMPOSITE_IDS.size();
@@ -404,7 +404,7 @@ Qt::ItemFlags SceneLayersModel::flags(const QModelIndex &index) const {
 
 void SceneLayersModel::treatEvent(const Event &e) {
   if (e.type() == Event::TLP_MODIFICATION) {
-    const GlSceneEvent *glse = dynamic_cast<const GlSceneEvent *>(&e);
+    const auto *glse = dynamic_cast<const GlSceneEvent *>(&e);
 
     if (glse) {
       emit layoutAboutToBeChanged();

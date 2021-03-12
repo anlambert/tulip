@@ -46,10 +46,10 @@ protected:
 using namespace tlp;
 
 static ExpandableGroupBox *createGroupBox(QString name, bool root = false) {
-  ExpandableGroupBox *groupBox = new ExpandableGroupBox(nullptr, name);
+  auto *groupBox = new ExpandableGroupBox(nullptr, name);
   groupBox->setObjectName(name);
   groupBox->setProperty("root", root);
-  QWidget *groupWidget = new QWidget();
+  auto *groupWidget = new QWidget();
   groupWidget->setLayout(new QVBoxLayout);
   groupWidget->layout()->setContentsMargins(0, 15, 0, 6);
   groupWidget->layout()->setSpacing(0);
@@ -68,7 +68,7 @@ void AlgorithmRunner::buildTreeUi(QWidget *w, PluginModel<tlp::Algorithm> *model
       w->layout()->addWidget(groupBox);
       buildTreeUi(groupBox->widget(), model, index);
     } else {
-      AlgorithmRunnerItem *item = new AlgorithmRunnerItem(name);
+      auto *item = new AlgorithmRunnerItem(name);
       QObject::connect(this, QOverload<bool>::of(&AlgorithmRunner::setStoreResultAsLocal), item,
                        &AlgorithmRunnerItem::setStoreResultAsLocal);
       w->layout()->addWidget(item);
@@ -106,12 +106,11 @@ void AlgorithmRunner::insertItem(QWidget *w, const QString &name) {
 
   if (!group.isEmpty() && groupBox == nullptr) {
     groupBox = createGroupBox(group);
-    QVBoxLayout *categoryLayout = static_cast<QVBoxLayout *>(categoryBox->widget()->layout());
+    auto *categoryLayout = static_cast<QVBoxLayout *>(categoryBox->widget()->layout());
     int index = 0;
 
     while (index < categoryLayout->count()) {
-      ExpandableGroupBox *gb =
-          dynamic_cast<ExpandableGroupBox *>(categoryLayout->itemAt(index)->widget());
+      auto *gb = dynamic_cast<ExpandableGroupBox *>(categoryLayout->itemAt(index)->widget());
 
       if (gb && group < gb->title()) {
         break;
@@ -125,16 +124,15 @@ void AlgorithmRunner::insertItem(QWidget *w, const QString &name) {
     groupBox = categoryBox;
   }
 
-  AlgorithmRunnerItem *item = new AlgorithmRunnerItem(name);
+  auto *item = new AlgorithmRunnerItem(name);
   QObject::connect(this, QOverload<bool>::of(&AlgorithmRunner::setStoreResultAsLocal), item,
                    &AlgorithmRunnerItem::setStoreResultAsLocal);
   QObject::connect(item, &AlgorithmRunnerItem::favorized, this, &AlgorithmRunner::favorized);
-  QVBoxLayout *groupLayout = static_cast<QVBoxLayout *>(groupBox->widget()->layout());
+  auto *groupLayout = static_cast<QVBoxLayout *>(groupBox->widget()->layout());
   int index = 0;
 
   while (index < groupLayout->count()) {
-    AlgorithmRunnerItem *i =
-        dynamic_cast<AlgorithmRunnerItem *>(groupLayout->itemAt(index)->widget());
+    auto *i = dynamic_cast<AlgorithmRunnerItem *>(groupLayout->itemAt(index)->widget());
 
     if (i && name < i->name()) {
       break;
@@ -198,7 +196,7 @@ AlgorithmRunner::AlgorithmRunner(QWidget *parent)
       "property (created on the fly if needed),\nor\n- in a property already existing in "
       "the ascendant hierarchy (inherited or local).");
   _ui->header->layout()->addWidget(_storeResultAsLocalButton);
-  QMenu *resultMenu = new QMenu(this);
+  auto *resultMenu = new QMenu(this);
   _resultAsLocalPropAction =
       resultMenu->addAction("Always store result in a local property of the graph");
   _resultAsLocalPropAction->setIconVisibleInMenu(true);
@@ -207,7 +205,7 @@ AlgorithmRunner::AlgorithmRunner(QWidget *parent)
       resultMenu->addAction("Store result in an existing property of the graphs hierarchy");
   resultAsPredefinedPropAction->setIconVisibleInMenu(true);
   resultAsPredefinedPropAction->setCheckable(true);
-  QActionGroup *resultGroup = new QActionGroup(resultMenu);
+  auto *resultGroup = new QActionGroup(resultMenu);
   resultGroup->addAction(_resultAsLocalPropAction);
   resultGroup->addAction(resultAsPredefinedPropAction);
   _resultAsLocalPropAction->setChecked(true);
@@ -265,7 +263,7 @@ void AlgorithmRunner::refreshPluginsList() {
 }
 
 void AlgorithmRunner::favorized(bool f) {
-  AlgorithmRunnerItem *item = static_cast<AlgorithmRunnerItem *>(sender());
+  auto *item = static_cast<AlgorithmRunnerItem *>(sender());
 
   if (f) {
     addFavorite(item->name(), item->data());
@@ -348,7 +346,7 @@ bool AlgorithmRunner::eventFilter(QObject *obj, QEvent *ev) {
     }
   } else if ((ev->type() == QEvent::DragEnter || ev->type() == QEvent::DragMove) &&
              draggableObject) {
-    QDropEvent *dropEv = static_cast<QDropEvent *>(ev);
+    auto *dropEv = static_cast<QDropEvent *>(ev);
 
     if (dynamic_cast<const AlgorithmMimeType *>(dropEv->mimeData()) != nullptr) {
       _ui->favoritesBox->_droppingFavorite = true;
@@ -361,8 +359,8 @@ bool AlgorithmRunner::eventFilter(QObject *obj, QEvent *ev) {
     _ui->favoritesBox->_droppingFavorite = false;
     _ui->favoritesBox->repaint();
   } else if (ev->type() == QEvent::Drop && draggableObject) {
-    QDropEvent *dropEv = static_cast<QDropEvent *>(ev);
-    const AlgorithmMimeType *mime = dynamic_cast<const AlgorithmMimeType *>(dropEv->mimeData());
+    auto *dropEv = static_cast<QDropEvent *>(ev);
+    const auto *mime = dynamic_cast<const AlgorithmMimeType *>(dropEv->mimeData());
 
     if (mime != nullptr) {
       addFavorite(mime->algorithm(), mime->params());
@@ -410,7 +408,7 @@ void AlgorithmRunner::addFavorite(const QString &algName, const DataSet &data) {
   }
 
   _ui->favoritesBox->widget()->setMinimumHeight(0);
-  AlgorithmRunnerItem *item = new AlgorithmRunnerItem(algName);
+  auto *item = new AlgorithmRunnerItem(algName);
   item->setGraph(_graph);
 
   if (!data.empty()) {

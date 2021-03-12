@@ -65,13 +65,18 @@ public:
   void getIncludeBoundingBox(BoundingBox &boundingBox, node) override;
   void draw(node n, float lod) override;
 };
+
 PLUGIN(Hexagon)
+
 Hexagon::Hexagon(const tlp::PluginContext *context) : Glyph(context) {}
+
 Hexagon::~Hexagon() = default;
+
 void Hexagon::getIncludeBoundingBox(BoundingBox &boundingBox, node) {
   boundingBox[0] = Coord(-0.35f, -0.35f, 0);
   boundingBox[1] = Coord(0.35f, 0.35f, 0);
 }
+
 void Hexagon::draw(node n, float lod) {
   string textureName = glGraphInputData->getElementTexture()->getNodeValue(n);
 
@@ -103,6 +108,7 @@ public:
                 false);
   }
 };
+
 PLUGIN(EEHexagon)
 
 } // end of namespace tlp

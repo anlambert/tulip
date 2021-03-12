@@ -60,4 +60,4 @@ public:
 
 PLUGIN(EEGlowSphere)
 
-} // end of namespace tlp
+}

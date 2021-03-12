@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -35,7 +35,7 @@ GlyphScaleConfigDialog::GlyphScaleConfigDialog(QWidget *parent)
   }
 
   for (int i = 0; i < 5; ++i) {
-    QComboBox *glyphNameComboBox = new QComboBox(this);
+    auto *glyphNameComboBox = new QComboBox(this);
     glyphNameComboBox->addItems(glyphsNameList);
     glyphNameComboBox->setCurrentIndex(i);
     _ui->tableWidget->setCellWidget(i, 0, glyphNameComboBox);
@@ -71,7 +71,7 @@ void GlyphScaleConfigDialog::nbGlyphsSpinBoxValueChanged(int value) {
   _ui->tableWidget->setRowCount(value);
 
   if (lastCount < value) {
-    QComboBox *glyphNameComboBox = new QComboBox(this);
+    auto *glyphNameComboBox = new QComboBox(this);
     glyphNameComboBox->addItems(glyphsNameList);
     _ui->tableWidget->setCellWidget(value - 1, 0, glyphNameComboBox);
   }

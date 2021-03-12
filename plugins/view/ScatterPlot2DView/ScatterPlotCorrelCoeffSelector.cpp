@@ -210,7 +210,7 @@ ScatterPlotCorrelCoeffSelector::ScatterPlotCorrelCoeffSelector(
 ScatterPlotCorrelCoeffSelector::~ScatterPlotCorrelCoeffSelector() = default;
 
 bool ScatterPlotCorrelCoeffSelector::eventFilter(QObject *obj, QEvent *e) {
-  GlWidget *glWidget = static_cast<GlWidget *>(obj);
+  auto *glWidget = static_cast<GlWidget *>(obj);
 
   Camera &camera = glWidget->getScene()->getLayer("Main")->getCamera();
   Graph *graph = glWidget->getGlGraphInputData()->getGraph();
@@ -221,7 +221,7 @@ bool ScatterPlotCorrelCoeffSelector::eventFilter(QObject *obj, QEvent *e) {
   }
 
   if (e->type() == QEvent::MouseMove) {
-    QMouseEvent *me = static_cast<QMouseEvent *>(e);
+    auto *me = static_cast<QMouseEvent *>(e);
     x = glWidget->screenToViewport(glWidget->width() - me->x());
     y = glWidget->screenToViewport(me->y());
     Coord newPointerSceneCoords = camera.viewportTo3DWorld(Coord(x, y, 0));
@@ -274,7 +274,7 @@ bool ScatterPlotCorrelCoeffSelector::eventFilter(QObject *obj, QEvent *e) {
     glWidget->redraw();
     return true;
   } else if (e->type() == QEvent::MouseButtonPress) {
-    QMouseEvent *me = static_cast<QMouseEvent *>(e);
+    auto *me = static_cast<QMouseEvent *>(e);
     x = glWidget->screenToViewport(glWidget->width() - me->x());
     y = glWidget->screenToViewport(me->y());
     currentPointerSceneCoords = camera.viewportTo3DWorld(Coord(x, y, 0));
@@ -318,7 +318,7 @@ bool ScatterPlotCorrelCoeffSelector::eventFilter(QObject *obj, QEvent *e) {
 
     return true;
   } else if (e->type() == QEvent::MouseButtonDblClick) {
-    QMouseEvent *me = static_cast<QMouseEvent *>(e);
+    auto *me = static_cast<QMouseEvent *>(e);
     x = glWidget->screenToViewport(glWidget->width() - me->x());
     y = glWidget->screenToViewport(me->y());
     currentPointerSceneCoords = camera.viewportTo3DWorld(Coord(x, y, 0.0f));
@@ -341,7 +341,7 @@ bool ScatterPlotCorrelCoeffSelector::eventFilter(QObject *obj, QEvent *e) {
 
     glWidget->redraw();
   } else if (e->type() == QEvent::ContextMenu) {
-    QContextMenuEvent *cme = static_cast<QContextMenuEvent *>(e);
+    auto *cme = static_cast<QContextMenuEvent *>(e);
     if (!polygonEdit.empty()) {
       polygonEdit.clear();
       glWidget->redraw();

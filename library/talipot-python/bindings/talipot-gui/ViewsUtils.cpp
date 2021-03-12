@@ -76,7 +76,7 @@ std::vector<tlp::View *> ViewsManager::getOpenedViewsWithName(const std::string 
 tlp::View *ViewsManager::addView(const std::string &viewName, tlp::Graph *graph,
                                  const DataSet &dataSet, bool show) {
   tlp::Workspace *workspace = tlpWorkspace();
-  tlp::View *view = PluginsManager::getPluginObject<View>(viewName);
+  auto *view = PluginsManager::getPluginObject<View>(viewName);
   view->setupUi();
   view->setGraph(graph);
   view->setState(dataSet);
@@ -90,7 +90,7 @@ tlp::View *ViewsManager::addView(const std::string &viewName, tlp::Graph *graph,
 
     model->addGraph(graph);
 
-    WorkspacePanel *panel = new WorkspacePanel(view);
+    auto *panel = new WorkspacePanel(view);
     panel->setGraphsModel(model);
     panel->viewGraphSet(graph);
 
@@ -193,7 +193,7 @@ void ViewsManager::closeViewsRelatedToGraph(tlp::Graph *graph) {
 
 void ViewsManager::viewDestroyed(QObject *obj) {
   tlp::Workspace *workspace = tlpWorkspace();
-  tlp::View *view = static_cast<tlp::View *>(obj);
+  auto *view = static_cast<tlp::View *>(obj);
   releaseSIPWrapper(view, sipFindType("tlp::View"));
 
   if (!workspace) {
@@ -250,7 +250,7 @@ void ViewsManager::resizeView(tlp::View *view, int width, int height) {
 
   if (!workspace) {
     viewToWindow[view]->resize(width, height);
-    tlp::GlView *glView = dynamic_cast<tlp::GlView *>(view);
+    auto *glView = dynamic_cast<tlp::GlView *>(view);
     if (glView) {
       glView->getGlWidget()->resize(width, height);
       glView->getGlWidget()->resizeGL(width, height);
@@ -270,7 +270,7 @@ void ViewsManager::setViewPos(tlp::View *view, int x, int y) {
 
 void ViewsManager::treatEvent(const tlp::Event &ev) {
   if (ev.type() == Event::TLP_DELETE) {
-    Graph *g = static_cast<Graph *>(ev.sender());
+    auto *g = static_cast<Graph *>(ev.sender());
     closeViewsRelatedToGraph(g);
   }
 }

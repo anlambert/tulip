@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -43,7 +43,7 @@ void StringsListSelectionWidget::setListType(const ListType listType) {
   delete currentLayout;
 
   if (stringsListSelectionWidget != nullptr) {
-    QWidget *widget = dynamic_cast<QWidget *>(stringsListSelectionWidget);
+    auto *widget = dynamic_cast<QWidget *>(stringsListSelectionWidget);
     delete widget;
   }
 
@@ -53,7 +53,7 @@ void StringsListSelectionWidget::setListType(const ListType listType) {
     stringsListSelectionWidget = new SimpleStringsListSelectionWidget();
   }
 
-  QVBoxLayout *newLayout = new QVBoxLayout;
+  auto *newLayout = new QVBoxLayout;
   newLayout->addWidget(dynamic_cast<QWidget *>(stringsListSelectionWidget));
   setLayout(newLayout);
 }

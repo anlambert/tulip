@@ -138,7 +138,7 @@ void NeighborhoodHighlighterInteractor::construct() {
   configWidget = new NeighborhoodHighlighterConfigWidget();
 
   push_back(new MousePanNZoomNavigator());
-  NeighborhoodHighlighter *neighborhoodHighlighter = new NeighborhoodHighlighter();
+  auto *neighborhoodHighlighter = new NeighborhoodHighlighter();
   neighborhoodHighlighter->setConfigWidget(configWidget);
   push_back(neighborhoodHighlighter);
 }
@@ -176,7 +176,7 @@ void NeighborhoodHighlighter::viewChanged(View *view) {
     return;
   }
 
-  GlView *glView = static_cast<GlView *>(view);
+  auto *glView = static_cast<GlView *>(view);
   glWidget = glView->getGlWidget();
 }
 
@@ -202,7 +202,7 @@ bool NeighborhoodHighlighter::eventFilter(QObject *, QEvent *e) {
   SelectedEntity selectedEntity;
 
   if (e->type() == QEvent::Wheel && centralNodeLocked && !circleLayoutSet) {
-    QWheelEvent *we = static_cast<QWheelEvent *>(e);
+    auto *we = static_cast<QWheelEvent *>(e);
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
     auto pos = we->position();
 #else
@@ -229,7 +229,7 @@ bool NeighborhoodHighlighter::eventFilter(QObject *, QEvent *e) {
     }
 
   } else if (e->type() == QEvent::MouseMove) {
-    QMouseEvent *qMouseEv = static_cast<QMouseEvent *>(e);
+    auto *qMouseEv = static_cast<QMouseEvent *>(e);
 
     if (!centralNodeLocked) {
       node tmpNode = selectNodeInOriginalGraph(glWidget, qMouseEv->x(), qMouseEv->y());
@@ -277,7 +277,7 @@ bool NeighborhoodHighlighter::eventFilter(QObject *, QEvent *e) {
                selectedNeighborNode == neighborhoodGraphCentralNode && neighborhoodDist == 1) {
       computeNeighborhoodGraphCircleLayout();
       computeNeighborhoodGraphBoundingBoxes();
-      GraphLayoutMorphing *layoutMorphing =
+      auto *layoutMorphing =
           new GraphLayoutMorphing(neighborhoodGraph, neighborhoodGraphOriginalLayout,
                                   neighborhoodGraphCircleLayout, neighborhoodGraphLayout);
       performZoomAndPan(neighborhoodGraphCircleLayoutBB, layoutMorphing);
@@ -294,7 +294,7 @@ bool NeighborhoodHighlighter::eventFilter(QObject *, QEvent *e) {
     } else if (selectedNeighborNode.isValid()) {
       if (circleLayoutSet) {
         if (selectedNeighborNode == neighborhoodGraphCentralNode) {
-          GraphLayoutMorphing *layoutMorphing =
+          auto *layoutMorphing =
               new GraphLayoutMorphing(neighborhoodGraph, neighborhoodGraphCircleLayout,
                                       neighborhoodGraphOriginalLayout, neighborhoodGraphLayout);
           performZoomAndPan(neighborhoodGraphOriginalLayoutBB, layoutMorphing);
@@ -317,7 +317,7 @@ bool NeighborhoodHighlighter::eventFilter(QObject *, QEvent *e) {
           computeNeighborhoodGraphCircleLayout();
           computeNeighborhoodGraphBoundingBoxes();
           *neighborhoodGraphLayout = *neighborhoodGraphCircleLayout;
-          GraphLayoutMorphing *layoutMorphing =
+          auto *layoutMorphing =
               new GraphLayoutMorphing(neighborhoodGraph, neighborhoodGraphCircleLayout,
                                       neighborhoodGraphOriginalLayout, neighborhoodGraphLayout);
           performZoomAndPan(destBB, layoutMorphing);

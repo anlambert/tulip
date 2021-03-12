@@ -80,7 +80,7 @@ void GraphStorage::restoreAdj(const node n, const std::vector<edge> &edges) {
  * must be deleted by the caller
  */
 const GraphStorageIdsMemento *GraphStorage::getIdsMemento() const {
-  GraphStorageIdsMemento *memento = new GraphStorageIdsMemento();
+  auto *memento = new GraphStorageIdsMemento();
   memento->nodeIds = nodeIds;
   memento->edgeIds = edgeIds;
   return memento;

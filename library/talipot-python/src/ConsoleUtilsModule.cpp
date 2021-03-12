@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -334,10 +334,10 @@ PyMODINIT_FUNC initconsoleutils(void) {
 
   m = PyModule_Create(&consoleutilsModuleDef);
 
-  PyObject *cot = reinterpret_cast<PyObject *>(&consoleutils_ConsoleOutputType);
+  auto *cot = reinterpret_cast<PyObject *>(&consoleutils_ConsoleOutputType);
   Py_INCREF(cot);
   PyModule_AddObject(m, "ConsoleOutput", cot);
-  PyObject *cit = reinterpret_cast<PyObject *>(&consoleutils_ConsoleInputType);
+  auto *cit = reinterpret_cast<PyObject *>(&consoleutils_ConsoleInputType);
   Py_INCREF(cit);
   PyModule_AddObject(m, "ConsoleInput", cit);
 

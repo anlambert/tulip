@@ -135,7 +135,7 @@ void GlView::assignNewGlWidget(GlWidget *glWidget, bool deleteOldGlWidget) {
           &View::drawNeeded);
 
   setCentralWidget(_glWidget, deleteOldGlWidget);
-  GlWidgetGraphicsItem *glWidgetGraphicsItem = static_cast<GlWidgetGraphicsItem *>(centralItem());
+  auto *glWidgetGraphicsItem = static_cast<GlWidgetGraphicsItem *>(centralItem());
   delete _sceneConfigurationWidget;
   _sceneConfigurationWidget = new SceneConfigWidget();
   _sceneConfigurationWidget->setGlWidget(_glWidget);
@@ -185,7 +185,7 @@ QList<QWidget *> GlView::configurationWidgets() const {
 
 void GlView::updateShowOverviewButton() {
   if (_showOvButton == nullptr) {
-    QGraphicsProxyWidget *proxy = new QGraphicsProxyWidget();
+    auto *proxy = new QGraphicsProxyWidget();
     _showOvButton = new QPushButton();
     _showOvButton->setMinimumSize(10, 10);
     _showOvButton->setMaximumSize(10, 10);
@@ -244,7 +244,7 @@ void GlView::setViewOrtho(bool viewOrtho) {
 void GlView::updateShowQuickAccessBarButton() {
   if (needQuickAccessBar) {
     if (_showQabButton == nullptr) {
-      QGraphicsProxyWidget *proxy = new QGraphicsProxyWidget();
+      auto *proxy = new QGraphicsProxyWidget();
       _showQabButton = new QPushButton();
       _showQabButton->setStyleSheet("border: none;");
       _showQabButton->setMinimumSize(10, 10);
@@ -402,7 +402,7 @@ void GlView::applySettings() {
 bool GlView::eventFilter(QObject *obj, QEvent *event) {
   if (event->type() == QEvent::Resize) {
     // ensure automatic resize of the viewport
-    QResizeEvent *resizeEvent = static_cast<QResizeEvent *>(event);
+    auto *resizeEvent = static_cast<QResizeEvent *>(event);
     graphicsView()->viewport()->setFixedSize(resizeEvent->size());
     // same for the configuration widgets
     QList<QWidget *> list = configurationWidgets();

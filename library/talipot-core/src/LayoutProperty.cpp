@@ -97,8 +97,8 @@ Coord LayoutProperty::getMin(const Graph *sg) {
 static void rotateVector(Coord &vec, double alpha, int rot) {
   Coord backupVec = vec;
   double aRot = 2.0 * M_PI * alpha / 360.0;
-  float cosA = float(cos(aRot));
-  float sinA = float(sin(aRot));
+  auto cosA = float(cos(aRot));
+  auto sinA = float(sin(aRot));
 
   switch (rot) {
   case Z_ROT:
@@ -394,7 +394,7 @@ void LayoutProperty::perfectAspectRatio(const Graph *subgraph) {
 //=================================================================================
 void LayoutProperty::clone_handler(AbstractProperty<tlp::PointType, tlp::LineType> &proxyC) {
   if (typeid(this) == typeid(&proxyC)) {
-    LayoutProperty *proxy = static_cast<LayoutProperty *>(&proxyC);
+    auto *proxy = static_cast<LayoutProperty *>(&proxyC);
     minMaxNode = proxy->minMaxNode;
   }
 }
@@ -692,7 +692,7 @@ PropertyInterface *LayoutProperty::clonePrototype(Graph *g, const std::string &n
 //=============================================================
 //=============================================================
 void LayoutProperty::treatEvent(const Event &evt) {
-  const GraphEvent *graphEvent = dynamic_cast<const tlp::GraphEvent *>(&evt);
+  const auto *graphEvent = dynamic_cast<const tlp::GraphEvent *>(&evt);
 
   if (graphEvent) {
     switch (graphEvent->getType()) {

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -190,7 +190,7 @@ void TalipotLogger::showContextMenu(const QPoint &pos) {
 // its behaviour in order to be able to copy the text of all the selected rows
 // (only the text of the current item is copied otherwise)
 bool TalipotLogger::eventFilter(QObject *, QEvent *event) {
-  QKeyEvent *ke = dynamic_cast<QKeyEvent *>(event);
+  auto *ke = dynamic_cast<QKeyEvent *>(event);
 
   if (ke && ke->matches(QKeySequence::Copy)) {
     copy();

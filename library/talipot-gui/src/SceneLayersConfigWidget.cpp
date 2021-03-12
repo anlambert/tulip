@@ -31,7 +31,7 @@ SceneLayersConfigWidget::~SceneLayersConfigWidget() {
 
 void SceneLayersConfigWidget::setGlWidget(GlWidget *glWidget) {
   _glWidget = glWidget;
-  SceneLayersModel *model = new SceneLayersModel(_glWidget->getScene(), _ui->treeView);
+  auto *model = new SceneLayersModel(_glWidget->getScene(), _ui->treeView);
   _ui->treeView->setModel(model);
   connect(model, &SceneLayersModel::drawNeeded, this, &SceneLayersConfigWidget::drawNeeded);
   connect(_ui->treeView, &QTreeView::collapsed, this, &SceneLayersConfigWidget::resizeFirstColumn);

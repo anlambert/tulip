@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -62,7 +62,7 @@ unsigned int GraphDimension::numberOfValues() const {
 
 template <typename PROPERTY>
 double GraphDimension::getNodeValue(const node n) const {
-  PROPERTY *dimValues = graph->getProperty<PROPERTY>(dimName);
+  auto *dimValues = graph->getProperty<PROPERTY>(dimName);
   double d = dimValues->getNodeValue(n);
   double delta = maxValue() - minValue();
   return (d - minValue()) / delta;

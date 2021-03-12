@@ -152,10 +152,10 @@ void trans(Coord &c1, Coord &c2, float angle1, float angle2) {
 }
 
 bool GeographicViewNavigator::eventFilter(QObject *widget, QEvent *e) {
-  GeographicView *geoView = static_cast<GeographicView *>(view());
-  GlWidget *g = static_cast<GlWidget *>(widget);
-  QMouseEvent *qMouseEv = dynamic_cast<QMouseEvent *>(e);
-  QWheelEvent *qWheelEv = dynamic_cast<QWheelEvent *>(e);
+  auto *geoView = static_cast<GeographicView *>(view());
+  auto *g = static_cast<GlWidget *>(widget);
+  auto *qMouseEv = dynamic_cast<QMouseEvent *>(e);
+  auto *qWheelEv = dynamic_cast<QWheelEvent *>(e);
 
   if (geoView->viewType() <= GeographicView::LeafletCustomTileLayer) {
     return false;

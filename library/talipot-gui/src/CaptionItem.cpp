@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -412,8 +412,8 @@ void CaptionItem::treatEvents(const vector<Event> &ev) {
 
   for (const auto &e : ev) {
 
-    PropertyInterface *prop = dynamic_cast<PropertyInterface *>(e.sender());
-    Graph *graph = dynamic_cast<Graph *>(e.sender());
+    auto *prop = dynamic_cast<PropertyInterface *>(e.sender());
+    auto *graph = dynamic_cast<Graph *>(e.sender());
 
     if (e.type() == Event::TLP_DELETE) {
       deleteEvent = true;

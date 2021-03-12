@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -29,7 +29,7 @@ SplashScreen::SplashScreen(bool debugOutput)
   setPixmap(QPixmap(QDir(QApplication::applicationDirPath())
                         .absoluteFilePath("../share/talipot/bitmaps/logo.png")));
   setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
-  QPropertyAnimation *fadeInAnimation = new QPropertyAnimation(this, "windowOpacity");
+  auto *fadeInAnimation = new QPropertyAnimation(this, "windowOpacity");
   fadeInAnimation->setStartValue(0);
   fadeInAnimation->setEndValue(1);
   fadeInAnimation->setDuration(200);

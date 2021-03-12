@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -97,7 +97,7 @@ public:
   void edgesUniformQuantification(unsigned int) override;
 
   NumericProperty *copyProperty(Graph *g) override {
-    DoubleProperty *newProp = new DoubleProperty(g);
+    auto *newProp = new DoubleProperty(g);
     newProp->copy(this);
 
     return newProp;

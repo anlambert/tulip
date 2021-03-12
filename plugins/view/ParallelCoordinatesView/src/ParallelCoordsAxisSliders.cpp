@@ -245,7 +245,7 @@ void ParallelCoordsAxisSliders::initOrUpdateSliders() {
 
 bool ParallelCoordsAxisSliders::eventFilter(QObject *widget, QEvent *e) {
 
-  GlWidget *glWidget = static_cast<GlWidget *>(widget);
+  auto *glWidget = static_cast<GlWidget *>(widget);
 
   if (glWidget == nullptr) {
     return false;
@@ -260,7 +260,7 @@ bool ParallelCoordsAxisSliders::eventFilter(QObject *widget, QEvent *e) {
   }
 
   if (e->type() == QEvent::MouseMove) {
-    QMouseEvent *me = static_cast<QMouseEvent *>(e);
+    auto *me = static_cast<QMouseEvent *>(e);
     float x = glWidget->width() - me->x();
     float y = me->y();
     Coord screenCoords = {x, y};
@@ -362,7 +362,7 @@ bool ParallelCoordsAxisSliders::eventFilter(QObject *widget, QEvent *e) {
     parallelView->refresh();
     return true;
   } else if (e->type() == QEvent::MouseButtonPress) {
-    QMouseEvent *me = static_cast<QMouseEvent *>(e);
+    auto *me = static_cast<QMouseEvent *>(e);
 
     if (me->button() == Qt::LeftButton && selectedSlider != nullptr && !axisSliderDragStarted) {
       axisSliderDragStarted = true;
@@ -371,7 +371,7 @@ bool ParallelCoordsAxisSliders::eventFilter(QObject *widget, QEvent *e) {
     } else if (selectedAxis != nullptr && pointerBetweenSliders &&
                highlightedEltsSetOperation != ParallelCoordinatesDrawing::INTERSECTION &&
                !slidersRangeDragStarted) {
-      QMouseEvent *me = static_cast<QMouseEvent *>(e);
+      auto *me = static_cast<QMouseEvent *>(e);
       slidersRangeDragStarted = true;
       slidersRangeLength = axisSlidersMap[selectedAxis][TOP_SLIDER]->getSliderCoord().getY() -
                            axisSlidersMap[selectedAxis][BOTTOM_SLIDER]->getSliderCoord().getY();
@@ -380,7 +380,7 @@ bool ParallelCoordsAxisSliders::eventFilter(QObject *widget, QEvent *e) {
       return true;
     }
   } else if (e->type() == QEvent::MouseButtonRelease) {
-    QMouseEvent *me = static_cast<QMouseEvent *>(e);
+    auto *me = static_cast<QMouseEvent *>(e);
 
     if (me->button() == Qt::LeftButton && selectedAxis != nullptr &&
         (axisSliderDragStarted || slidersRangeDragStarted)) {
@@ -403,7 +403,7 @@ bool ParallelCoordsAxisSliders::eventFilter(QObject *widget, QEvent *e) {
       return true;
     }
   } else if (e->type() == QEvent::KeyPress) {
-    QKeyEvent *ke = static_cast<QKeyEvent *>(e);
+    auto *ke = static_cast<QKeyEvent *>(e);
 
     if (ke->key() == Qt::Key_Control) {
       highlightedEltsSetOperation = ParallelCoordinatesDrawing::INTERSECTION;
@@ -415,7 +415,7 @@ bool ParallelCoordsAxisSliders::eventFilter(QObject *widget, QEvent *e) {
     parallelView->refresh();
     return true;
   } else if (e->type() == QEvent::KeyRelease) {
-    QKeyEvent *ke = static_cast<QKeyEvent *>(e);
+    auto *ke = static_cast<QKeyEvent *>(e);
 
     if (ke->key() == Qt::Key_Control || ke->key() == Qt::Key_Shift) {
       highlightedEltsSetOperation = ParallelCoordinatesDrawing::NONE;
@@ -432,12 +432,12 @@ void ParallelCoordsAxisSliders::buildGlSliders(vector<ParallelAxis *> axis) {
   for (auto ax : axis) {
     lastAxisHeight = ax->getAxisHeight();
     float sliderMetricRef = ax->getAxisHeight() / 60.0f;
-    AxisSlider *axisTopSlider = new AxisSlider(
-        TOP_SLIDER, ax->getTopSliderCoord(), 2.5f * sliderMetricRef, 2.0f * sliderMetricRef,
-        redColor, ax->getAxisColor(), ax->getRotationAngle());
-    AxisSlider *axisBottomSlider = new AxisSlider(
-        BOTTOM_SLIDER, ax->getBottomSliderCoord(), 2.5f * sliderMetricRef, 2.0f * sliderMetricRef,
-        redColor, ax->getAxisColor(), ax->getRotationAngle());
+    auto *axisTopSlider = new AxisSlider(TOP_SLIDER, ax->getTopSliderCoord(),
+                                         2.5f * sliderMetricRef, 2.0f * sliderMetricRef, redColor,
+                                         ax->getAxisColor(), ax->getRotationAngle());
+    auto *axisBottomSlider = new AxisSlider(BOTTOM_SLIDER, ax->getBottomSliderCoord(),
+                                            2.5f * sliderMetricRef, 2.0f * sliderMetricRef,
+                                            redColor, ax->getAxisColor(), ax->getRotationAngle());
     axisSlidersMap[ax].push_back(axisTopSlider);
     axisSlidersMap[ax].push_back(axisBottomSlider);
     selectionLayer->addGlEntity(axisTopSlider, getStringFromNumber(axisTopSlider));

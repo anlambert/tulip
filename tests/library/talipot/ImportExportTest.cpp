@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -436,7 +436,7 @@ void ImportExportTest::testMetaGraphImportExport() {
 
 void ImportExportTest::exportImportGraph(tlp::Graph *original, const string &exportBaseFilename) {
 
-  const ExportModule &exportPlugin =
+  const auto &exportPlugin =
       static_cast<const ExportModule &>(PluginsManager::pluginInformation(exportAlgorithm));
 
   vector<string> exts = {exportPlugin.fileExtension(), exportPlugin.gzipFileExtensions().front(),

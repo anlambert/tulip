@@ -132,7 +132,7 @@ GlShaderProgram::~GlShaderProgram() {
 }
 
 void GlShaderProgram::addShaderFromSourceCode(const ShaderType shaderType, const char *shaderSrc) {
-  GlShader *shader = new GlShader(shaderType);
+  auto *shader = new GlShader(shaderType);
   shader->setAnonymousCreation(true);
   shader->compileFromSourceCode(shaderSrc);
   addShader(shader);
@@ -140,7 +140,7 @@ void GlShaderProgram::addShaderFromSourceCode(const ShaderType shaderType, const
 
 void GlShaderProgram::addShaderFromSourceCode(const ShaderType shaderType,
                                               const std::string &shaderSrc) {
-  GlShader *shader = new GlShader(shaderType);
+  auto *shader = new GlShader(shaderType);
   shader->setAnonymousCreation(true);
   shader->compileFromSourceCode(shaderSrc);
   addShader(shader);
@@ -148,7 +148,7 @@ void GlShaderProgram::addShaderFromSourceCode(const ShaderType shaderType,
 
 void GlShaderProgram::addShaderFromSourceFile(const ShaderType shaderType,
                                               const std::string &shaderSrcFilename) {
-  GlShader *shader = new GlShader(shaderType);
+  auto *shader = new GlShader(shaderType);
   shader->setAnonymousCreation(true);
   shader->compileFromSourceFile(shaderSrcFilename);
   addShader(shader);
@@ -157,7 +157,7 @@ void GlShaderProgram::addShaderFromSourceFile(const ShaderType shaderType,
 void GlShaderProgram::addGeometryShaderFromSourceCode(const char *geometryShaderSrc,
                                                       GLenum inputPrimitiveType,
                                                       GLenum outputPrimitiveType) {
-  GlShader *shader = new GlShader(inputPrimitiveType, outputPrimitiveType);
+  auto *shader = new GlShader(inputPrimitiveType, outputPrimitiveType);
   shader->setAnonymousCreation(true);
   shader->compileFromSourceCode(geometryShaderSrc);
   addShader(shader);
@@ -166,7 +166,7 @@ void GlShaderProgram::addGeometryShaderFromSourceCode(const char *geometryShader
 void GlShaderProgram::addGeometryShaderFromSourceCode(const std::string &geometryShaderSrc,
                                                       GLenum inputPrimitiveType,
                                                       GLenum outputPrimitiveType) {
-  GlShader *shader = new GlShader(inputPrimitiveType, outputPrimitiveType);
+  auto *shader = new GlShader(inputPrimitiveType, outputPrimitiveType);
   shader->setAnonymousCreation(true);
   shader->compileFromSourceCode(geometryShaderSrc);
   addShader(shader);
@@ -175,7 +175,7 @@ void GlShaderProgram::addGeometryShaderFromSourceCode(const std::string &geometr
 void GlShaderProgram::addGeometryShaderFromSourceFile(const std::string &geometryShaderSrcFilename,
                                                       GLenum inputPrimitiveType,
                                                       GLenum outputPrimitiveType) {
-  GlShader *shader = new GlShader(inputPrimitiveType, outputPrimitiveType);
+  auto *shader = new GlShader(inputPrimitiveType, outputPrimitiveType);
   shader->setAnonymousCreation(true);
   shader->compileFromSourceFile(geometryShaderSrcFilename);
   addShader(shader);
@@ -337,7 +337,7 @@ void GlShaderProgram::setUniformVec4Float(const std::string &variableName, const
 
 template <size_t SIZE>
 float *getMatrixData(const Matrix<float, SIZE> &matrix) {
-  float *matrixData = new float[SIZE * SIZE];
+  auto *matrixData = new float[SIZE * SIZE];
 
   for (size_t i = 0; i < SIZE; ++i) {
     for (size_t j = 0; j < SIZE; ++j) {
@@ -654,7 +654,7 @@ void GlShaderProgram::setUniformVec4FloatArray(const std::string &variableName,
 
 template <unsigned int SIZE, unsigned int SIZE2>
 float *getVectorOfMatrixData(const Vector<Matrix<float, SIZE>, SIZE2> &vm) {
-  float *vmData = new float[SIZE * SIZE * SIZE2];
+  auto *vmData = new float[SIZE * SIZE * SIZE2];
 
   for (unsigned int i = 0; i < SIZE2; ++i) {
     for (unsigned int j = 0; j < SIZE; ++j) {

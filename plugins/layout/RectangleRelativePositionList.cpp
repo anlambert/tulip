@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -43,7 +43,7 @@ void RectangleRelativePositionList::allocateCoordinates() {
 
 void RectangleRelativePositionList::stockOfTemporaryBestCoordinates(int bestPlaceInFirstSequence) {
 
-  list<RectangleRelativePosition>::reverse_iterator itRectToReposition = this->rbegin();
+  auto itRectToReposition = this->rbegin();
   int positionRectToReposition;
 
   for (positionRectToReposition = this->size();

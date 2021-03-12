@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -103,7 +103,7 @@ bool EqualValueClustering::computeClusters(NumericProperty *prop, bool onNodes, 
           sstr << curValue;
 
           if (connected) {
-            std::unordered_map<std::string, unsigned int>::iterator itv = valuesCount.find(strVal);
+            auto itv = valuesCount.find(strVal);
 
             if (itv != valuesCount.end()) {
               itv->second += 1;
@@ -204,7 +204,7 @@ bool EqualValueClustering::computeClusters(NumericProperty *prop, bool onNodes, 
           sstr << curValue;
 
           if (connected) {
-            std::unordered_map<std::string, unsigned int>::iterator itv = valuesCount.find(strVal);
+            auto itv = valuesCount.find(strVal);
 
             if (itv != valuesCount.end()) {
               itv->second += 1;
@@ -311,8 +311,7 @@ bool EqualValueClustering::computeClusters(PropertyInterface *prop, bool onNodes
           sstr << prop->getName().c_str() << ": " << curValue.c_str();
 
           if (connected) {
-            std::unordered_map<std::string, unsigned int>::iterator itv =
-                valuesCount.find(curValue);
+            auto itv = valuesCount.find(curValue);
 
             if (itv != valuesCount.end()) {
               itv->second += 1;
@@ -411,8 +410,7 @@ bool EqualValueClustering::computeClusters(PropertyInterface *prop, bool onNodes
           sstr << prop->getName().c_str() << ": " << curValue.c_str();
 
           if (connected) {
-            std::unordered_map<std::string, unsigned int>::iterator itv =
-                valuesCount.find(curValue);
+            auto itv = valuesCount.find(curValue);
 
             if (itv != valuesCount.end()) {
               itv->second += 1;

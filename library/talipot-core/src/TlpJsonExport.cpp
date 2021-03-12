@@ -335,13 +335,13 @@ public:
         edge *e = static_cast<edge *>(value->value);
         e->id = g->edgePos(*e);
       } else if (value->getTypeName() == string(typeid(vector<node>).name())) {
-        vector<node> *vn = static_cast<vector<node> *>(value->value);
+        auto *vn = static_cast<vector<node> *>(value->value);
 
         for (size_t i = 0; i < vn->size(); ++i) {
           (*vn)[i].id = graph->nodePos((*vn)[i]);
         }
       } else if (value->getTypeName() == string(typeid(vector<edge>).name())) {
-        vector<edge> *ve = static_cast<vector<edge> *>(value->value);
+        auto *ve = static_cast<vector<edge> *>(value->value);
 
         for (size_t i = 0; i < ve->size(); ++i) {
           (*ve)[i].id = graph->edgePos((*ve)[i]);

@@ -30,7 +30,7 @@ using namespace tlp;
 CSVParsingConfigurationQWizardPage::CSVParsingConfigurationQWizardPage(QWidget *parent)
     : QWizardPage(parent), parserConfigurationWidget(new CSVParserConfigurationWidget(this)),
       previewTableWidget(new CSVTableWidget(this)), previewLineNumber(6) {
-  QVBoxLayout *vbLayout = new QVBoxLayout();
+  auto *vbLayout = new QVBoxLayout();
   vbLayout->setContentsMargins(0, 0, 0, 0);
   vbLayout->setSpacing(0);
   setLayout(vbLayout);
@@ -42,7 +42,7 @@ CSVParsingConfigurationQWizardPage::CSVParsingConfigurationQWizardPage(QWidget *
   previewTableWidget->verticalHeader()->setVisible(false);
   connect(parserConfigurationWidget, &CSVParserConfigurationWidget::parserChanged, this,
           &CSVParsingConfigurationQWizardPage::parserChanged);
-  QLabel *noteWidget = new QLabel(this);
+  auto *noteWidget = new QLabel(this);
   noteWidget->setWordWrap(true);
   noteWidget->setText(" <em>Note: several (node and/or edge) import operations using the same "
                       "source file may be required to get all data to be imported and inserted "
@@ -112,7 +112,7 @@ CSVImportConfigurationQWizardPage::CSVImportConfigurationQWizardPage(QWidget *pa
 }
 
 void CSVImportConfigurationQWizardPage::initializePage() {
-  CSVImportWizard *csvWizard = qobject_cast<CSVImportWizard *>(wizard());
+  auto *csvWizard = qobject_cast<CSVImportWizard *>(wizard());
   assert(csvWizard != nullptr);
   int firstLine = csvWizard->getParsingConfigurationPage()->getFirstLineIndex();
   importConfigurationWidget->setFirstLineIndex(firstLine);
@@ -138,7 +138,7 @@ CSVImportParameters CSVImportConfigurationQWizardPage::getImportParameters() con
 }
 
 void CSVGraphMappingConfigurationQWizardPage::initializePage() {
-  CSVImportWizard *csvWizard = qobject_cast<CSVImportWizard *>(wizard());
+  auto *csvWizard = qobject_cast<CSVImportWizard *>(wizard());
   assert(csvWizard != nullptr);
   graphMappingConfigurationWidget->updateWidget(
       csvWizard->getGraph(), csvWizard->getImportConfigurationPage()->getImportParameters());

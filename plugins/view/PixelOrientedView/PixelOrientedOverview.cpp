@@ -184,7 +184,7 @@ void PixelOrientedOverview::computePixelView(GlWidget *glWidget) {
     return;
   }
 
-  set<int>::iterator it = xCoordSet.begin();
+  auto it = xCoordSet.begin();
   int x1 = *(it++);
   int x2 = *it;
   int size = x2 - x1;

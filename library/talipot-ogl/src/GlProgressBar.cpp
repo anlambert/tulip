@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -125,16 +125,15 @@ void GlProgressBar::progress_handler(int step, int max_step) {
   progressBarCoords[1] = progressBarCoords[0] + Coord(progressBarWidth, 0, 0);
   progressBarCoords[2] = progressBarCoords[1] + Coord(0, -progressBarHeight, 0);
   progressBarCoords[3] = progressBarCoords[2] + Coord(-progressBarWidth, 0, 0);
-  GlQuad *progressBarQuad =
-      new GlQuad(progressBarCoords[0], progressBarCoords[1], progressBarCoords[2],
-                 progressBarCoords[3], progressBarColor);
+  auto *progressBarQuad = new GlQuad(progressBarCoords[0], progressBarCoords[1],
+                                     progressBarCoords[2], progressBarCoords[3], progressBarColor);
   progressBarQuad->setTextureName(TalipotBitmapDir + SLIDER_TEXTURE_NAME);
 
-  GlLabel *commentLabel =
+  auto *commentLabel =
       new GlLabel(commentLabelCenter, Size(commentWidth, commentHeight, 0), commentColor);
   commentLabel->setText(comment);
 
-  GlLabel *percentLabel = new GlLabel(
+  auto *percentLabel = new GlLabel(
       Coord(progressBarTLCorner.getX() + (progressBarMaxWidth / 2.),
             progressBarTLCorner.getY() - (progressBarHeight / 2.), 0),
       Size(((1. / 10.) * progressBarMaxWidth), ((8. / 10.) * progressBarHeight), 0), commentColor);

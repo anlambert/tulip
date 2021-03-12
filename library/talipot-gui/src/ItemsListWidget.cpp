@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -48,9 +48,9 @@ void ItemsListWidget::mouseMoveEvent(QMouseEvent *event) {
 
 void ItemsListWidget::beginDrag(QListWidgetItem *item) {
   if (item) {
-    QMimeData *mimeData = new QMimeData;
+    auto *mimeData = new QMimeData;
     mimeData->setText(item->text());
-    QDrag *drag = new QDrag(this);
+    auto *drag = new QDrag(this);
     drag->setMimeData(mimeData);
 
     if (drag->exec(Qt::MoveAction) == Qt::MoveAction) {
@@ -69,7 +69,7 @@ void ItemsListWidget::dragMoveEvent(QDragMoveEvent *event) {
 }
 
 void ItemsListWidget::dragMoveOrEnterEvent(QDragMoveEvent *event) {
-  ItemsListWidget *source = qobject_cast<ItemsListWidget *>(event->source());
+  auto *source = qobject_cast<ItemsListWidget *>(event->source());
 
   if (source && source != this) {
     event->setDropAction(Qt::MoveAction);
@@ -78,7 +78,7 @@ void ItemsListWidget::dragMoveOrEnterEvent(QDragMoveEvent *event) {
 }
 
 void ItemsListWidget::dropEvent(QDropEvent *event) {
-  ItemsListWidget *source = qobject_cast<ItemsListWidget *>(event->source());
+  auto *source = qobject_cast<ItemsListWidget *>(event->source());
 
   if (source && source != this) {
     if (addItemList(event->mimeData()->text())) {

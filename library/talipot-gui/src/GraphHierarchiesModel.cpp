@@ -529,7 +529,7 @@ QModelIndex GraphHierarchiesModel::parent(const QModelIndex &child) const {
     return QModelIndex();
   }
 
-  Graph *childGraph = static_cast<Graph *>(child.internalPointer());
+  auto *childGraph = static_cast<Graph *>(child.internalPointer());
 
   if (childGraph == nullptr || _graphs.contains(childGraph) ||
       childGraph->getSuperGraph() == childGraph) {
@@ -565,7 +565,7 @@ int GraphHierarchiesModel::rowCount(const QModelIndex &parent) const {
     return 0;
   }
 
-  Graph *parentGraph = static_cast<Graph *>(parent.internalPointer());
+  auto *parentGraph = static_cast<Graph *>(parent.internalPointer());
 
   return parentGraph->numberOfSubGraphs();
 }
@@ -576,7 +576,7 @@ int GraphHierarchiesModel::columnCount(const QModelIndex &) const {
 
 bool GraphHierarchiesModel::setData(const QModelIndex &index, const QVariant &value, int role) {
   if (index.column() == NAME_SECTION) {
-    Graph *graph = static_cast<Graph *>(index.internalPointer());
+    auto *graph = static_cast<Graph *>(index.internalPointer());
     graph->setName(QStringToTlpString(value.toString()));
     return true;
   }
@@ -590,7 +590,7 @@ QVariant GraphHierarchiesModel::data(const QModelIndex &index, int role) const {
     return QVariant();
   }
 
-  Graph *graph = static_cast<Graph *>(index.internalPointer());
+  auto *graph = static_cast<Graph *>(index.internalPointer());
 
   if (role == Qt::DisplayRole || role == Qt::EditRole) {
     if (index.column() == NAME_SECTION) {
@@ -670,14 +670,14 @@ QMimeData *GraphHierarchiesModel::mimeData(const QModelIndexList &indexes) const
   QSet<Graph *> graphs;
 
   for (const QModelIndex &index : indexes) {
-    Graph *g = data(index, GraphRole).value<Graph *>();
+    auto *g = data(index, GraphRole).value<Graph *>();
 
     if (g != nullptr) {
       graphs.insert(g);
     }
   }
 
-  GraphMimeType *result = new GraphMimeType();
+  auto *result = new GraphMimeType();
 
   // every current implementation uses a single graph, so we do not have a graphmim with multiple
   // graphs.
@@ -808,7 +808,7 @@ void GraphHierarchiesModel::removeGraph(tlp::Graph *g) {
 
 // Observation
 void GraphHierarchiesModel::treatEvent(const Event &e) {
-  Graph *g = static_cast<tlp::Graph *>(e.sender());
+  auto *g = static_cast<tlp::Graph *>(e.sender());
 
   if (e.type() == Event::TLP_DELETE && _graphs.contains(g)) { // A root graph has been deleted
     int pos = _graphs.indexOf(g);
@@ -830,7 +830,7 @@ void GraphHierarchiesModel::treatEvent(const Event &e) {
 
     endRemoveRows();
   } else if (e.type() == Event::TLP_MODIFICATION) {
-    const GraphEvent *ge = dynamic_cast<const tlp::GraphEvent *>(&e);
+    const auto *ge = dynamic_cast<const tlp::GraphEvent *>(&e);
 
     if (!ge) {
       return;

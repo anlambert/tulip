@@ -98,7 +98,7 @@ void MCLClustering::power(node n) {
           if (ne.isValid()) {
             outW[ne] += v2;
           } else {
-            std::unordered_map<node, double>::iterator it = newTargets.find(tgt);
+            auto it = newTargets.find(tgt);
 
             if (it != newTargets.end()) {
               // newTargets[tgt] += v2;

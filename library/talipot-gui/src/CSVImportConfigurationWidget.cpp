@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -112,7 +112,7 @@ void PropertyConfigurationWidget::addException() {
   auto row = w->rowCount();
   w->insertRow(row);
   w->setItem(row, 0, new QTableWidgetItem(QString("edit the value")));
-  QComboBox *actionCB = new QComboBox(w);
+  auto *actionCB = new QComboBox(w);
   actionCB->addItem(QString("Assign no value"));
   actionCB->addItem(QString("Ignore the row"));
   w->setCellWidget(row, 1, actionCB);
@@ -623,7 +623,7 @@ void CSVImportConfigurationWidget::addPropertyToPropertyList(const string &prope
 PropertyConfigurationWidget *CSVImportConfigurationWidget::createPropertyConfigurationWidget(
     unsigned int propertyNumber, const QString &propertyName, bool isEditable,
     const string &propertyType, QWidget *parent) {
-  PropertyConfigurationWidget *propertyConfigurationWidget = new PropertyConfigurationWidget(
+  auto *propertyConfigurationWidget = new PropertyConfigurationWidget(
       propertyNumber, propertyName, isEditable, propertyType, validator, parent);
   propertyConfigurationWidget->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
   connect(propertyConfigurationWidget, &PropertyConfigurationWidget::stateChange, this,
@@ -645,7 +645,7 @@ PropertyConfigurationWidget *CSVImportConfigurationWidget::createPropertyConfigu
 }
 
 void CSVImportConfigurationWidget::propertyStateChanged(bool state) {
-  PropertyConfigurationWidget *widget = qobject_cast<PropertyConfigurationWidget *>(sender());
+  auto *widget = qobject_cast<PropertyConfigurationWidget *>(sender());
   assert(widget != nullptr);
 
   for (int i = 0; i < ui->previewTableWidget->rowCount(); ++i) {

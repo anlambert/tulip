@@ -141,7 +141,7 @@ void MISFiltering::updateVectors() {
   unsigned int curPos = 0;
 
   while (level + 1) {
-    std::unordered_set<node>::iterator it = levelToNodes[level].begin();
+    auto it = levelToNodes[level].begin();
 
     while (it != levelToNodes[level].end()) {
       node n = *it;

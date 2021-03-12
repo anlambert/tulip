@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -26,11 +26,11 @@ GraphTableItemDelegate::GraphTableItemDelegate(QObject *parent) : ItemDelegate(p
 
 void GraphTableItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
                                    const QModelIndex &index) const {
-  PropertyInterface *pi = index.data(Model::PropertyRole).value<PropertyInterface *>();
+  auto *pi = index.data(Model::PropertyRole).value<PropertyInterface *>();
 
   if (index.data().type() == QVariant::Double && dynamic_cast<DoubleProperty *>(pi) != nullptr) {
-    DoubleProperty *prop = static_cast<DoubleProperty *>(pi);
-    double value = index.data().value<double>();
+    auto *prop = static_cast<DoubleProperty *>(pi);
+    auto value = index.data().value<double>();
     double min = 0, max = 0;
 
     if (index.data(Model::IsNodeRole).value<bool>()) {

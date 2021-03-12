@@ -34,11 +34,11 @@ MouseBoxZoomer::MouseBoxZoomer(Qt::MouseButton button, Qt::KeyboardModifier modi
 MouseBoxZoomer::~MouseBoxZoomer() = default;
 //=====================================================================
 bool MouseBoxZoomer::eventFilter(QObject *widget, QEvent *e) {
-  GlWidget *glw = static_cast<GlWidget *>(widget);
+  auto *glw = static_cast<GlWidget *>(widget);
   GlGraphInputData *inputData = glw->getGlGraphInputData();
 
   if (e->type() == QEvent::MouseButtonPress) {
-    QMouseEvent *qMouseEv = static_cast<QMouseEvent *>(e);
+    auto *qMouseEv = static_cast<QMouseEvent *>(e);
 
     if (qMouseEv->buttons() == mButton &&
         (kModifier == Qt::NoModifier || qMouseEv->modifiers() & kModifier)) {
@@ -69,7 +69,7 @@ bool MouseBoxZoomer::eventFilter(QObject *widget, QEvent *e) {
   }
 
   if (e->type() == QEvent::MouseMove) {
-    QMouseEvent *qMouseEv = static_cast<QMouseEvent *>(e);
+    auto *qMouseEv = static_cast<QMouseEvent *>(e);
 
     if ((qMouseEv->buttons() & mButton) &&
         (kModifier == Qt::NoModifier || qMouseEv->modifiers() & kModifier)) {
@@ -103,7 +103,7 @@ bool MouseBoxZoomer::eventFilter(QObject *widget, QEvent *e) {
 
   if (e->type() == QEvent::MouseButtonRelease) {
 
-    QMouseEvent *qMouseEv = static_cast<QMouseEvent *>(e);
+    auto *qMouseEv = static_cast<QMouseEvent *>(e);
 
     if ((qMouseEv->button() == mButton &&
          (kModifier == Qt::NoModifier || qMouseEv->modifiers() & kModifier))) {

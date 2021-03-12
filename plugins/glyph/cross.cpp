@@ -170,4 +170,4 @@ public:
 };
 PLUGIN(EECross)
 
-} // end of namespace tlp
+}

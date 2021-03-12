@@ -43,7 +43,7 @@ void GlStar::computeStar() {
 
   BoundingBox box;
   vector<Coord> points;
-  float delta = float(2.0 * M_PI / numberOfStarPoints);
+  auto delta = float(2.0 * M_PI / numberOfStarPoints);
 
   for (unsigned int i = 0; i < numberOfStarPoints; ++i) {
     float deltaX = cos(i * delta + startAngle);

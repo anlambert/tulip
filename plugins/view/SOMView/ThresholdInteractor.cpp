@@ -314,10 +314,10 @@ bool ThresholdInteractor::draw(GlWidget *glWidget) {
 
 bool ThresholdInteractor::eventFilter(QObject *widget, QEvent *event) {
 
-  GlWidget *glWidget = static_cast<GlWidget *>(widget);
-  SOMView *somView = static_cast<SOMView *>(view());
+  auto *glWidget = static_cast<GlWidget *>(widget);
+  auto *somView = static_cast<SOMView *>(view());
 
-  QMouseEvent *me = static_cast<QMouseEvent *>(event);
+  auto *me = static_cast<QMouseEvent *>(event);
 
   if (event->type() == QEvent::MouseButtonPress && me->button() == Qt::LeftButton) {
 
@@ -335,11 +335,11 @@ bool ThresholdInteractor::eventFilter(QObject *widget, QEvent *event) {
 
       for (const auto &itPE : selectedEntities) {
         for (const auto &itDisplay : layer->getGlEntities()) {
-          GlComposite *composite = dynamic_cast<GlComposite *>(itDisplay.second);
+          auto *composite = dynamic_cast<GlComposite *>(itDisplay.second);
 
           if (composite && !composite->findKey(itPE.getEntity()).empty()) {
 
-            Slider *slider = dynamic_cast<Slider *>(composite);
+            auto *slider = dynamic_cast<Slider *>(composite);
 
             if (slider) {
               // finalSelectedEntities.insert(slider);
@@ -349,7 +349,7 @@ bool ThresholdInteractor::eventFilter(QObject *widget, QEvent *event) {
             break;
           } else {
             if (itDisplay.second == (itPE.getEntity())) {
-              Slider *slider = dynamic_cast<Slider *>(itDisplay.second);
+              auto *slider = dynamic_cast<Slider *>(itDisplay.second);
 
               if (slider) {
                 // finalSelectedEntities.insert(slider);

@@ -45,8 +45,8 @@ struct TalipotGraphicsView : public QGraphicsView {
       scene()->setSceneRect(QRect(QPoint(0, 0), size()));
     }
 
-    GlWidgetGraphicsItem *glWidgetItem = dynamic_cast<GlWidgetGraphicsItem *>(_centralItem);
-    QGraphicsProxyWidget *proxyWidget = dynamic_cast<QGraphicsProxyWidget *>(_centralItem);
+    auto *glWidgetItem = dynamic_cast<GlWidgetGraphicsItem *>(_centralItem);
+    auto *proxyWidget = dynamic_cast<QGraphicsProxyWidget *>(_centralItem);
 
     if (glWidgetItem) {
       glWidgetItem->resize(width(), height());
@@ -118,14 +118,14 @@ void ViewWidget::setCentralWidget(QWidget *w, bool deleteOldCentralWidget) {
     currentInteractor()->install(w);
   }
 
-  GlWidget *glWidget = dynamic_cast<GlWidget *>(w);
+  auto *glWidget = dynamic_cast<GlWidget *>(w);
 
   if (glWidget) {
     _graphicsView->setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing |
                                   QPainter::TextAntialiasing);
     _graphicsView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 
-    GlWidgetGraphicsItem *glWidgetItem = dynamic_cast<GlWidgetGraphicsItem *>(_centralWidgetItem);
+    auto *glWidgetItem = dynamic_cast<GlWidgetGraphicsItem *>(_centralWidgetItem);
 
     if (glWidgetItem) {
       deleteOldCentralWidget = false;

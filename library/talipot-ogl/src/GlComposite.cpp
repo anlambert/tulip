@@ -35,7 +35,7 @@ void GlComposite::addLayerParent(GlLayer *layer) {
   layerParents.push_back(layer);
 
   for (auto entity : _sortedElements) {
-    GlComposite *composite = dynamic_cast<GlComposite *>(entity);
+    auto *composite = dynamic_cast<GlComposite *>(entity);
 
     if (composite) {
       composite->addLayerParent(layer);
@@ -50,7 +50,7 @@ void GlComposite::removeLayerParent(GlLayer *layer) {
   }
 
   for (auto entity : _sortedElements) {
-    GlComposite *composite = dynamic_cast<GlComposite *>(entity);
+    auto *composite = dynamic_cast<GlComposite *>(entity);
 
     if (composite) {
       composite->removeLayerParent(layer);
@@ -77,7 +77,7 @@ void GlComposite::reset(bool deleteElems) {
     entity->removeParent(this);
 
     for (auto l : layerParents) {
-      GlComposite *composite = dynamic_cast<GlComposite *>(entity);
+      auto *composite = dynamic_cast<GlComposite *>(entity);
 
       if (composite) {
         composite->removeLayerParent(l);
@@ -134,7 +134,7 @@ void GlComposite::addGlEntity(GlEntity *entity, const string &key) {
     }
   }
 
-  GlGraph *glGraph = dynamic_cast<GlGraph *>(entity);
+  auto *glGraph = dynamic_cast<GlGraph *>(entity);
 
   if (glGraph) {
     for (auto l : layerParents) {
@@ -155,7 +155,7 @@ void GlComposite::deleteGlEntity(const string &key, bool informTheEntity) {
   }
 
   if (informTheEntity) {
-    GlComposite *composite = dynamic_cast<GlComposite *>(entity);
+    auto *composite = dynamic_cast<GlComposite *>(entity);
 
     if (composite) {
       for (auto l : layerParents) {
@@ -164,7 +164,7 @@ void GlComposite::deleteGlEntity(const string &key, bool informTheEntity) {
     }
   }
 
-  GlGraph *glGraph = dynamic_cast<GlGraph *>(entity);
+  auto *glGraph = dynamic_cast<GlGraph *>(entity);
 
   if (glGraph) {
     for (auto l : layerParents) {
@@ -190,7 +190,7 @@ void GlComposite::deleteGlEntity(GlEntity *entity, bool informTheEntity) {
       if (informTheEntity) {
         entity->removeParent(this);
 
-        GlComposite *composite = dynamic_cast<GlComposite *>(entity);
+        auto *composite = dynamic_cast<GlComposite *>(entity);
 
         if (composite) {
           for (auto l : layerParents) {

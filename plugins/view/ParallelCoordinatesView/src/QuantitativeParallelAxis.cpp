@@ -71,8 +71,8 @@ void QuantitativeParallelAxis::setAxisLabels() {
                                           GlAxis::RIGHT_OR_ABOVE, true);
     integerScale = false;
   } else {
-    long long min = static_cast<long long>(axisMinValue);
-    long long max = static_cast<long long>(axisMaxValue);
+    auto min = static_cast<long long>(axisMinValue);
+    auto max = static_cast<long long>(axisMaxValue);
     unsigned long long incrementStep = (max - min) / DEFAULT_NB_AXIS_GRAD;
 
     if (incrementStep < 1) {
