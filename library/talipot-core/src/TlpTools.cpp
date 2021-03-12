@@ -74,21 +74,32 @@ const char tlp::PATH_DELIMITER = ':';
 #endif
 
 #ifndef __EMSCRIPTEN__
+inline std::string getTalipotLibName() {
+#ifdef _WIN32
+#ifdef __MINGW32__
+  return "libtalipot-core-" + getMajor(TALIPOT_VERSION) + "." + getMinor(TALIPOT_VERSION) + ".dll";
+#else
+  return "talipot-core-" + getMajor(TALIPOT_VERSION) + "_" + getMinor(TALIPOT_VERSION) + ".dll";
+#endif
+#else
+  std::string talipotLibName =
+      "libtalipot-core-" + getMajor(TALIPOT_VERSION) + "." + getMinor(TALIPOT_VERSION);
+#ifdef __APPLE__
+  return talipotLibName + ".dylib";
+#else
+  return talipotLibName + ".so";
+#endif
+#endif
+}
 // A function that retrieves the Talipot libraries directory based on
 // the path of the loaded shared library libtalipot-core-X.Y.[dll, so, dylib]
 extern "C" {
 const char *getTalipotLibDir() {
-  static std::string talipotLibDir;
-  std::string libTalipotName;
+  std::string libTalipotName = getTalipotLibName();
+  std::string libTalipotPath;
 
 #ifdef _WIN32
-#ifdef __MINGW32__
-  libTalipotName =
-      "libtalipot-core-" + getMajor(TALIPOT_VERSION) + "." + getMinor(TALIPOT_VERSION) + ".dll";
-#else
-  libTalipotName =
-      "talipot-core-" + getMajor(TALIPOT_VERSION) + "_" + getMinor(TALIPOT_VERSION) + ".dll";
-#endif
+
   HMODULE hmod = GetModuleHandle(libTalipotName.c_str());
 
   if (hmod != nullptr) {
@@ -96,20 +107,13 @@ const char *getTalipotLibDir() {
     DWORD dwLen = GetModuleFileName(hmod, szPath, 512);
 
     if (dwLen > 0) {
-      std::string tmp = szPath;
-      std::replace(tmp.begin(), tmp.end(), '\\', '/');
-      talipotLibDir = tmp.substr(0, tmp.rfind('/') + 1) + "../" + TALIPOT_INSTALL_LIBDIR_STR;
+      libTalipotPath = szPath;
+      std::replace(libTalipotPath.begin(), libTalipotPath.end(), '\\', '/');
     }
   }
 
 #else
-#ifdef __APPLE__
-  libTalipotName =
-      "libtalipot-core-" + getMajor(TALIPOT_VERSION) + "." + getMinor(TALIPOT_VERSION) + ".dylib";
-#else
-  libTalipotName =
-      "libtalipot-core-" + getMajor(TALIPOT_VERSION) + "." + getMinor(TALIPOT_VERSION) + ".so";
-#endif
+
   void *ptr = dlopen(libTalipotName.c_str(), RTLD_LAZY);
 
   if (ptr != nullptr) {
@@ -118,15 +122,17 @@ const char *getTalipotLibDir() {
     if (symbol != nullptr) {
       Dl_info info;
       if (dladdr(symbol, &info)) {
-        std::string tmp = info.dli_fname;
-        talipotLibDir = tmp.substr(0, tmp.rfind('/') + 1);
-        talipotLibDir.append("../").append(TALIPOT_INSTALL_LIBDIR_STR);
+        libTalipotPath = info.dli_fname;
       }
     }
     dlclose(ptr);
   }
 
 #endif
+
+  static std::string talipotLibDir;
+  talipotLibDir =
+      libTalipotPath.substr(0, libTalipotPath.rfind('/') + 1) + "../" + TALIPOT_INSTALL_LIBDIR_STR;
   return talipotLibDir.c_str();
 }
 }
