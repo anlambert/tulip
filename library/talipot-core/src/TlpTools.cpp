@@ -77,8 +77,8 @@ const char tlp::PATH_DELIMITER = ':';
 // A function that retrieves the Talipot libraries directory based on
 // the path of the loaded shared library libtalipot-core-X.Y.[dll, so, dylib]
 extern "C" {
-string getTalipotLibDir() {
-  std::string talipotLibDir;
+const char *getTalipotLibDir() {
+  static std::string talipotLibDir;
   std::string libTalipotName;
 
 #ifdef _WIN32
@@ -127,7 +127,7 @@ string getTalipotLibDir() {
   }
 
 #endif
-  return talipotLibDir;
+  return talipotLibDir.c_str();
 }
 }
 
