@@ -71,7 +71,7 @@ void PathHighlighter::addGlEntity(GlScene *scene, GlEntity *entity, bool deleteO
                                   const string &name) {
   string realName = name;
 
-  if (realName.compare("") == 0) {
+  if (realName == "") {
     stringstream ss;
     ss << getName() << entityId++;
     realName = ss.str();

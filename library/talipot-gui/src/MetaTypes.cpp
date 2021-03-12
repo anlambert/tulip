@@ -138,8 +138,8 @@ tlp::DataType *MetaTypes::qVariantToDataType(const QVariant &v) {
   return nullptr;
 }
 
-#define CHECK_DATATYPE(TYPE)                  \
-  if (type.compare(typeid(TYPE).name()) == 0) \
+#define CHECK_DATATYPE(TYPE)       \
+  if (type == typeid(TYPE).name()) \
     return typedVariant<TYPE>(dm);
 
 #include <QDebug>
@@ -151,7 +151,7 @@ QVariant MetaTypes::dataTypeToQvariant(tlp::DataType *dm, const std::string &par
   // file:: or dir::
   QString name(paramName.c_str());
 
-  if (type.compare(typeid(std::string).name()) == 0 &&
+  if (type == typeid(std::string).name() &&
       (name.startsWith("file::") || name.startsWith("anyfile::") || name.startsWith("dir::"))) {
     FileDescriptor desc;
     desc.absolutePath = tlpStringToQString(*static_cast<std::string *>(dm->value));
@@ -172,7 +172,7 @@ QVariant MetaTypes::dataTypeToQvariant(tlp::DataType *dm, const std::string &par
   CHECK_DATATYPE(tlp::BooleanType::RealType);
 
   // CHECK_DATATYPE(tlp::BooleanVectorType::RealType);
-  if (type.compare(typeid(tlp::BooleanVectorType::RealType).name()) == 0) {
+  if (type == typeid(tlp::BooleanVectorType::RealType).name()) {
     tlp::BooleanVectorType::RealType result;
 
     if (dm) {

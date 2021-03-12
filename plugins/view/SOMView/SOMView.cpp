@@ -638,7 +638,7 @@ void SOMView::computeSOMMap() {
   drawPreviews();
 
   for (const auto &p : propertiesSelected) {
-    if (oldSelection.compare(p) == 0) {
+    if (oldSelection == p) {
       selection = oldSelection;
     }
   }
@@ -731,7 +731,7 @@ void SOMView::computeMapping() {
 }
 
 void SOMView::addPropertyToSelection(const string &propertyName) {
-  if (selection.compare(propertyName) != 0) {
+  if (selection != propertyName) {
     selection = propertyName;
     // mainWidget->currentPropertyNameLabel->setText(QString::fromStdString(propertyName));
     refreshSOMMap();
@@ -746,7 +746,7 @@ void SOMView::addPropertyToSelection(const string &propertyName) {
 
 void SOMView::removePropertyFromSelection(const string &propertyName) {
 
-  if (selection.compare(propertyName) == 0) {
+  if (selection == propertyName) {
     selection = "";
     refreshSOMMap();
     assert(propertyToPreviews.find(propertyName) != propertyToPreviews.end());

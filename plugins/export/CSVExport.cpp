@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -196,7 +196,7 @@ bool CsvExport::exportGraph(std::ostream &os) {
   for (PropertyInterface *prop : graph->getObjectProperties()) {
     const string &propName = prop->getName();
 
-    if (propName.compare(0, 4, "view") != 0 || exportVisualProperties) {
+    if (propName.substr(0, 4) != "view" || exportVisualProperties) {
       ++nbProps;
       props.push_back(prop);
       propIsString.push_back(dynamic_cast<tlp::StringProperty *>(prop));

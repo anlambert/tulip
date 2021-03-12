@@ -276,7 +276,7 @@ public:
 
               if (dynamic_cast<DoubleProperty *>(property) &&
                   // try to avoid view... properties
-                  (pName.compare(0, 4, "view") != 0 || pName == "viewMetric")) {
+                  (pName.substr(0, 4) != "view" || pName == "viewMetric")) {
                 DoubleProperty *metric = graph->getDoubleProperty(pName);
                 double value = metric->getEdgeValue(mE);
 

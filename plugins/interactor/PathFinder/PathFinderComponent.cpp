@@ -131,10 +131,10 @@ void PathFinderComponent::selectPath(GlWidget *glWidget, Graph *graph) {
     DoubleProperty *weights = nullptr;
     string weightsMetricName = parent->getWeightMetricName();
 
-    if (weightsMetricName.compare(NO_METRIC) != 0 && graph->existProperty(weightsMetricName)) {
+    if (weightsMetricName != NO_METRIC && graph->existProperty(weightsMetricName)) {
       PropertyInterface *prop = graph->getProperty(weightsMetricName);
 
-      if (prop && prop->getTypename().compare("double") == 0) {
+      if (prop && prop->getTypename() == "double") {
         weights = graph->getDoubleProperty(weightsMetricName);
       }
     }

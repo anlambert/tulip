@@ -79,7 +79,7 @@ void InputSample::buildPropertyVector(const std::vector<std::string> &properties
       property = rootGraph->getProperty(strProp);
       string type = property->getTypename();
 
-      if (type.compare("double") == 0 || type.compare("int") == 0) {
+      if (type == "double" || type == "int") {
         propertiesNameList.push_back(strProp);
         propertiesList.push_back(static_cast<NumericProperty *>(property));
       } else {
@@ -277,7 +277,7 @@ void InputSample::delLocalProperty(Graph *, const std::string &propName) {
   unsigned int i = 0;
 
   for (; i < propertiesNameList.size(); ++i) {
-    if (propertiesNameList[i].compare(propName) == 0) {
+    if (propertiesNameList[i] == propName) {
       propertiesNameList.erase(propertiesNameList.begin() + i);
       propertiesList.erase(propertiesList.begin() + i);
       meanProperties.erase(meanProperties.begin() + i);
@@ -401,7 +401,7 @@ void InputSample::setUsingNormalizedValues(bool norm) {
 
 unsigned InputSample::findIndexForProperty(const std::string &propertyName) const {
   for (unsigned int i = 0; i < propertiesNameList.size(); ++i) {
-    if (propertiesNameList[i].compare(propertyName) == 0) {
+    if (propertiesNameList[i] == propertyName) {
       return i;
     }
   }

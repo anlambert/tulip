@@ -295,7 +295,7 @@ bool PluginLibraryLoader::initPluginDir(PluginLoader *loader, bool recursive,
 
       // don't print error messages when trying to load Talipot Python
       // binary modules
-      if (lib.compare(0, 1, "_") == 0 || lib.find("sip") != std::string::npos) {
+      if (lib[0] == '_' || lib.find("sip") != std::string::npos) {
         success = FindNextFile(hFind, &findData);
         continue;
       }
@@ -394,7 +394,7 @@ bool PluginLibraryLoader::initPluginDir(PluginLoader *loader, bool recursive,
 
     // don't print error messages when trying to load Talipot Python
     // binary modules
-    if (lib.compare(0, 1, "_") == 0 || lib.find("sip") != std::string::npos) {
+    if (lib[0] == '_' || lib.find("sip") != std::string::npos) {
       continue;
     }
 

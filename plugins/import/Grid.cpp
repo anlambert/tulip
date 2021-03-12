@@ -183,9 +183,9 @@ public:
       return false;
     }
 
-    if (connectivity.getCurrentString().compare("4") == 0) {
+    if (connectivity.getCurrentString() == "4") {
       conn = 4;
-    } else if (connectivity.getCurrentString().compare("6") == 0) {
+    } else if (connectivity.getCurrentString() == "6") {
       conn = 6;
 
       if (isTore && height % 2 == 1) {

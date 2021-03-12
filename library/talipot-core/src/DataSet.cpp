@@ -32,7 +32,7 @@ using namespace std;
 using namespace tlp;
 
 bool DataType::isTalipotProperty(const std::string &typeName) {
-#define ISPROP(T) typeName.compare(typeid(T).name()) == 0
+#define ISPROP(T) typeName == typeid(T).name()
   return (ISPROP(tlp::BooleanProperty *) || ISPROP(tlp::BooleanVectorProperty *) ||
           ISPROP(tlp::DoubleProperty *) || ISPROP(tlp::DoubleVectorProperty *) ||
           ISPROP(tlp::LayoutProperty *) || ISPROP(tlp::CoordVectorProperty *) ||

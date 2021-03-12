@@ -555,7 +555,7 @@ void AlgorithmRunnerItem::afterRun(Graph *g, const tlp::DataSet &dataSet) {
     DoubleProperty *prop = nullptr;
     dataSet.get<DoubleProperty *>("result", prop);
 
-    if ((prop != nullptr) && (prop->getName().compare("viewMetric") == 0)) {
+    if ((prop != nullptr) && (prop->getName() == "viewMetric")) {
       bool applyMapping = prop->numberOfNonDefaultValuatedNodes() != 0;
 
       std::string errMsg;

@@ -42,7 +42,7 @@ string EdgeExtremityGlyphManager::glyphName(int id) {
 }
 //====================================================
 int EdgeExtremityGlyphManager::glyphId(const string &name) {
-  if (name.compare("NONE") == 0) {
+  if (name == "NONE") {
     return EdgeExtremityShape::None;
   }
 

@@ -163,7 +163,7 @@ bool ParameterDescriptionList::isMandatory(const string &name) const {
 }
 
 #define CHECK_PROPERTY(T)                                                   \
-  if (type.compare(typeid(T).name()) == 0) {                                \
+  if (type == typeid(T).name()) {                                           \
     if (!g || defaultValue.empty() || !g->existProperty(defaultValue))      \
       dataSet.set(name, static_cast<T *>(nullptr));                         \
     else                                                                    \
@@ -190,7 +190,7 @@ void ParameterDescriptionList::buildDefaultDataSet(DataSet &dataSet, Graph *g) c
       assert(result);
       continue;
     } else {
-      if (type.compare(typeid(tlp::ColorScale).name()) == 0) {
+      if (type == typeid(tlp::ColorScale).name()) {
         vector<Color> colors;
         ColorVectorType::fromString(colors, defaultValue);
         dataSet.set(name, ColorScale(colors));
@@ -213,7 +213,7 @@ void ParameterDescriptionList::buildDefaultDataSet(DataSet &dataSet, Graph *g) c
     CHECK_PROPERTY(tlp::SizeVectorProperty);
     CHECK_PROPERTY(tlp::ColorVectorProperty);
 
-    if (type.compare(typeid(NumericProperty *).name()) == 0) {
+    if (type == typeid(NumericProperty *).name()) {
       if (!g || defaultValue.empty()) {
         dataSet.set(name, static_cast<NumericProperty *>(nullptr));
       } else {
@@ -231,7 +231,7 @@ void ParameterDescriptionList::buildDefaultDataSet(DataSet &dataSet, Graph *g) c
       continue;
     }
 
-    if (type.compare(typeid(PropertyInterface *).name()) == 0) {
+    if (type == typeid(PropertyInterface *).name()) {
       if (!g || defaultValue.empty()) {
         dataSet.set(name, static_cast<PropertyInterface *>(nullptr));
       } else {
@@ -255,63 +255,63 @@ bool WithParameter::inputRequired() const {
 
     const string &type = param.getTypeName();
 
-    if (type.compare(typeid(tlp::BooleanProperty).name()) == 0) {
+    if (type == typeid(tlp::BooleanProperty).name()) {
       return true;
     }
 
-    if (type.compare(typeid(tlp::ColorProperty).name()) == 0) {
+    if (type == typeid(tlp::ColorProperty).name()) {
       return true;
     }
 
-    if (type.compare(typeid(tlp::DoubleProperty).name()) == 0) {
+    if (type == typeid(tlp::DoubleProperty).name()) {
       return true;
     }
 
-    if (type.compare(typeid(tlp::IntegerProperty).name()) == 0) {
+    if (type == typeid(tlp::IntegerProperty).name()) {
       return true;
     }
 
-    if (type.compare(typeid(tlp::LayoutProperty).name()) == 0) {
+    if (type == typeid(tlp::LayoutProperty).name()) {
       return true;
     }
 
-    if (type.compare(typeid(tlp::SizeProperty).name()) == 0) {
+    if (type == typeid(tlp::SizeProperty).name()) {
       return true;
     }
 
-    if (type.compare(typeid(tlp::StringProperty).name()) == 0) {
+    if (type == typeid(tlp::StringProperty).name()) {
       return true;
     }
 
-    if (type.compare(typeid(tlp::BooleanVectorProperty).name()) == 0) {
+    if (type == typeid(tlp::BooleanVectorProperty).name()) {
       return true;
     }
 
-    if (type.compare(typeid(tlp::ColorVectorProperty).name()) == 0) {
+    if (type == typeid(tlp::ColorVectorProperty).name()) {
       return true;
     }
 
-    if (type.compare(typeid(tlp::DoubleVectorProperty).name()) == 0) {
+    if (type == typeid(tlp::DoubleVectorProperty).name()) {
       return true;
     }
 
-    if (type.compare(typeid(tlp::IntegerVectorProperty).name()) == 0) {
+    if (type == typeid(tlp::IntegerVectorProperty).name()) {
       return true;
     }
 
-    if (type.compare(typeid(tlp::CoordVectorProperty).name()) == 0) {
+    if (type == typeid(tlp::CoordVectorProperty).name()) {
       return true;
     }
 
-    if (type.compare(typeid(tlp::SizeProperty).name()) == 0) {
+    if (type == typeid(tlp::SizeProperty).name()) {
       return true;
     }
 
-    if (type.compare(typeid(tlp::StringProperty).name()) == 0) {
+    if (type == typeid(tlp::StringProperty).name()) {
       return true;
     }
 
-    if (type.compare(typeid(tlp::PropertyInterface *).name()) == 0) {
+    if (type == typeid(tlp::PropertyInterface *).name()) {
       return true;
     }
   }

@@ -146,7 +146,7 @@ void SOMMap::registerModification(const vector<string> &propertiesToListen) {
     for (unsigned int propertyNumber = 0; propertyNumber < properties.size(); ++propertyNumber) {
 
       // If the property is double no need to convert
-      if (properties[propertyNumber]->getTypename().compare("double") == 0) {
+      if (properties[propertyNumber]->getTypename() == "double") {
         static_cast<DoubleProperty *>(properties[propertyNumber])
             ->setNodeValue(n, nodeToNodeVec[n][propertyNumber]);
       } else {

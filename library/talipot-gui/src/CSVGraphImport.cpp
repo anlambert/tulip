@@ -467,7 +467,7 @@ CSVImportColumnToGraphPropertyMappingProxy::getPropertyInterface(unsigned int co
       PropertyInterface *existingProperty = graph->getProperty(propertyName);
 
       // If the properties are compatible query if we had to use existing.
-      if (existingProperty->getTypename().compare(propertyType) == 0) {
+      if (existingProperty->getTypename() == propertyType) {
         if (overwritePropertiesButton != QMessageBox::YesToAll &&
             overwritePropertiesButton != QMessageBox::NoToAll) {
           overwritePropertiesButton = QMessageBox::question(

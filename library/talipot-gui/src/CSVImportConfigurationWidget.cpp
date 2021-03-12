@@ -699,8 +699,7 @@ QValidator::State PropertyNameValidator::validate(QString &input, int &) const {
 
   // Only the property at the current index can have this name
   for (auto widget : widgets) {
-    if ((widget->getPropertyName().compare(input) == 0) &&
-        (currentIndex != widget->getPropertyNumber())) {
+    if ((widget->getPropertyName() == input) && (currentIndex != widget->getPropertyNumber())) {
       return QValidator::Invalid;
     }
   }

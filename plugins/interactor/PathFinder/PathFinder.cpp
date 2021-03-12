@@ -81,7 +81,7 @@ void PathFinder::construct() {
 
   _configurationWidget->addweightComboItem(NO_METRIC);
   for (const string &s : g->getProperties()) {
-    if (g->getProperty(s)->getTypename().compare("double") == 0) {
+    if (g->getProperty(s)->getTypename() == "double") {
       _configurationWidget->addweightComboItem(s.c_str());
     }
   }
@@ -156,7 +156,7 @@ void PathFinder::setEdgeOrientation(const QString &metric) {
   string cmp(QStringToTlpString(metric));
 
   for (const auto &it : edgeOrientationLabels) {
-    if (it.second.compare(cmp) == 0) {
+    if (it.second == cmp) {
       edgeOrientation = it.first;
     }
   }
@@ -170,7 +170,7 @@ void PathFinder::setPathsType(const QString &pathType) {
   string cmp = QStringToTlpString(pathType);
 
   for (const auto &it : pathsTypesLabels) {
-    if (it.second.compare(cmp) == 0) {
+    if (it.second == cmp) {
       pathsTypes = it.first;
     }
   }

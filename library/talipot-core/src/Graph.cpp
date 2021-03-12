@@ -969,35 +969,35 @@ void Graph::notifyDestroy() {
 
 PropertyInterface *Graph::getLocalProperty(const std::string &propertyName,
                                            const std::string &propertyType) {
-  if (propertyType.compare(DoubleProperty::propertyTypename) == 0) {
+  if (propertyType == DoubleProperty::propertyTypename) {
     return getLocalDoubleProperty(propertyName);
-  } else if (propertyType.compare(LayoutProperty::propertyTypename) == 0) {
+  } else if (propertyType == LayoutProperty::propertyTypename) {
     return getLocalLayoutProperty(propertyName);
-  } else if (propertyType.compare(StringProperty::propertyTypename) == 0) {
+  } else if (propertyType == StringProperty::propertyTypename) {
     return getLocalStringProperty(propertyName);
-  } else if (propertyType.compare(IntegerProperty::propertyTypename) == 0) {
+  } else if (propertyType == IntegerProperty::propertyTypename) {
     return getLocalIntegerProperty(propertyName);
-  } else if (propertyType.compare(ColorProperty::propertyTypename) == 0) {
+  } else if (propertyType == ColorProperty::propertyTypename) {
     return getLocalColorProperty(propertyName);
-  } else if (propertyType.compare(SizeProperty::propertyTypename) == 0) {
+  } else if (propertyType == SizeProperty::propertyTypename) {
     return getLocalSizeProperty(propertyName);
-  } else if (propertyType.compare(BooleanProperty::propertyTypename) == 0) {
+  } else if (propertyType == BooleanProperty::propertyTypename) {
     return getLocalBooleanProperty(propertyName);
-  } else if (propertyType.compare(DoubleVectorProperty::propertyTypename) == 0) {
+  } else if (propertyType == DoubleVectorProperty::propertyTypename) {
     return getLocalDoubleVectorProperty(propertyName);
-  } else if (propertyType.compare(StringVectorProperty::propertyTypename) == 0) {
+  } else if (propertyType == StringVectorProperty::propertyTypename) {
     return getLocalStringVectorProperty(propertyName);
-  } else if (propertyType.compare(IntegerVectorProperty::propertyTypename) == 0) {
+  } else if (propertyType == IntegerVectorProperty::propertyTypename) {
     return getLocalIntegerVectorProperty(propertyName);
-  } else if (propertyType.compare(CoordVectorProperty::propertyTypename) == 0) {
+  } else if (propertyType == CoordVectorProperty::propertyTypename) {
     return getLocalCoordVectorProperty(propertyName);
-  } else if (propertyType.compare(ColorVectorProperty::propertyTypename) == 0) {
+  } else if (propertyType == ColorVectorProperty::propertyTypename) {
     return getLocalColorVectorProperty(propertyName);
-  } else if (propertyType.compare(BooleanVectorProperty::propertyTypename) == 0) {
+  } else if (propertyType == BooleanVectorProperty::propertyTypename) {
     return getLocalBooleanVectorProperty(propertyName);
-  } else if (propertyType.compare(SizeVectorProperty::propertyTypename) == 0) {
+  } else if (propertyType == SizeVectorProperty::propertyTypename) {
     return getLocalSizeVectorProperty(propertyName);
-  } else if (propertyType.compare(GraphProperty::propertyTypename) == 0) {
+  } else if (propertyType == GraphProperty::propertyTypename) {
     return getLocalGraphProperty(propertyName);
   } else {
     return nullptr;
@@ -1006,35 +1006,35 @@ PropertyInterface *Graph::getLocalProperty(const std::string &propertyName,
 
 PropertyInterface *Graph::getProperty(const std::string &propertyName,
                                       const std::string &propertyType) {
-  if (propertyType.compare(DoubleProperty::propertyTypename) == 0) {
+  if (propertyType == DoubleProperty::propertyTypename) {
     return getDoubleProperty(propertyName);
-  } else if (propertyType.compare(LayoutProperty::propertyTypename) == 0) {
+  } else if (propertyType == LayoutProperty::propertyTypename) {
     return getLayoutProperty(propertyName);
-  } else if (propertyType.compare(StringProperty::propertyTypename) == 0) {
+  } else if (propertyType == StringProperty::propertyTypename) {
     return getStringProperty(propertyName);
-  } else if (propertyType.compare(IntegerProperty::propertyTypename) == 0) {
+  } else if (propertyType == IntegerProperty::propertyTypename) {
     return getIntegerProperty(propertyName);
-  } else if (propertyType.compare(ColorProperty::propertyTypename) == 0) {
+  } else if (propertyType == ColorProperty::propertyTypename) {
     return getColorProperty(propertyName);
-  } else if (propertyType.compare(SizeProperty::propertyTypename) == 0) {
+  } else if (propertyType == SizeProperty::propertyTypename) {
     return getSizeProperty(propertyName);
-  } else if (propertyType.compare(BooleanProperty::propertyTypename) == 0) {
+  } else if (propertyType == BooleanProperty::propertyTypename) {
     return getBooleanProperty(propertyName);
-  } else if (propertyType.compare(DoubleVectorProperty::propertyTypename) == 0) {
+  } else if (propertyType == DoubleVectorProperty::propertyTypename) {
     return getDoubleVectorProperty(propertyName);
-  } else if (propertyType.compare(StringVectorProperty::propertyTypename) == 0) {
+  } else if (propertyType == StringVectorProperty::propertyTypename) {
     return getStringVectorProperty(propertyName);
-  } else if (propertyType.compare(IntegerVectorProperty::propertyTypename) == 0) {
+  } else if (propertyType == IntegerVectorProperty::propertyTypename) {
     return getIntegerVectorProperty(propertyName);
-  } else if (propertyType.compare(CoordVectorProperty::propertyTypename) == 0) {
+  } else if (propertyType == CoordVectorProperty::propertyTypename) {
     return getCoordVectorProperty(propertyName);
-  } else if (propertyType.compare(ColorVectorProperty::propertyTypename) == 0) {
+  } else if (propertyType == ColorVectorProperty::propertyTypename) {
     return getColorVectorProperty(propertyName);
-  } else if (propertyType.compare(BooleanVectorProperty::propertyTypename) == 0) {
+  } else if (propertyType == BooleanVectorProperty::propertyTypename) {
     return getBooleanVectorProperty(propertyName);
-  } else if (propertyType.compare(SizeVectorProperty::propertyTypename) == 0) {
+  } else if (propertyType == SizeVectorProperty::propertyTypename) {
     return getSizeVectorProperty(propertyName);
-  } else if (propertyType.compare(GraphProperty::propertyTypename) == 0) {
+  } else if (propertyType == GraphProperty::propertyTypename) {
     return getGraphProperty(propertyName);
   } else {
     return nullptr;

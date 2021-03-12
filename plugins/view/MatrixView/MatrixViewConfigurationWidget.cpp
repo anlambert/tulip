@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -105,7 +105,7 @@ void MatrixViewConfigurationWidget::setGraph(tlp::Graph *g) {
 
     _ui->orderingMetricCombo->addItem(tlpStringToQString(s));
 
-    if (QStringToTlpString(currentString).compare(s) == 0) {
+    if (QStringToTlpString(currentString) == s) {
       currentIndex = i;
     }
 
