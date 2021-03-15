@@ -380,7 +380,7 @@ bool PluginLibraryLoader::initPluginDir(PluginLoader *loader, bool recursive,
   }
 
   if (loader != nullptr) {
-    loader->start(_pluginPath.c_str());
+    loader->start(_pluginPath);
   }
 
   while (n > 0) {

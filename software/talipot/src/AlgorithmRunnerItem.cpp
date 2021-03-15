@@ -494,7 +494,7 @@ void AlgorithmRunnerItem::mouseMoveEvent(QMouseEvent *ev) {
   }
 
   auto *drag = new QDrag(this);
-  const Plugin &p = PluginsManager::pluginInformation(QStringToTlpString(_pluginName).c_str());
+  const Plugin &p = PluginsManager::pluginInformation(QStringToTlpString(_pluginName));
   QPixmap icon;
   if (IconicFont::isIconSupported(p.icon())) {
     icon = FontIconManager::icon(tlp::tlpStringToQString(p.icon())).pixmap(QSize(64, 64));

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -148,7 +148,7 @@ QVariant ParameterListModel::headerData(int section, Qt::Orientation orientation
         return tlp::tlpStringToQString(info.getName().c_str() + pos + 2);
       }
 
-      return tlp::tlpStringToQString(info.getName().c_str());
+      return tlp::tlpStringToQString(info.getName());
     } else if (role == Qt::BackgroundRole) {
       if (info.isMandatory()) {
         return QColor(255, 255, 222);

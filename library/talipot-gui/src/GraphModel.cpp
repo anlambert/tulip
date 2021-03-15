@@ -606,7 +606,7 @@ QVariant GraphModel::edgeDefaultValue(PropertyInterface *prop) {
   } else if (dynamic_cast<StringProperty *>(prop) != nullptr) {
     if (prop->getName() == "viewFont") {
       return QVariant::fromValue<Font>(
-          Font::fromName(static_cast<StringProperty *>(prop)->getEdgeDefaultValue().c_str()));
+          Font::fromName(static_cast<StringProperty *>(prop)->getEdgeDefaultValue()));
     }
 
     if (prop->getName() == "viewIcon") {
