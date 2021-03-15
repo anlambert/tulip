@@ -191,7 +191,7 @@ void NodeLinkDiagramView::createScene(Graph *graph, DataSet dataSet) {
   GlScene *scene = getGlWidget()->getScene();
   scene->clearLayersList();
 
-  std::string sceneInput = "";
+  std::string sceneInput;
 
   if (dataSet.exists("scene")) {
     dataSet.get("scene", sceneInput);

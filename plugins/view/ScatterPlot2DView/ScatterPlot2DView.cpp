@@ -301,8 +301,8 @@ void ScatterPlot2DView::setState(const DataSet &dataSet) {
     drawOverview(true);
   }
 
-  string detailScatterPlotX = "";
-  string detailScatterPlotY = "";
+  string detailScatterPlotX;
+  string detailScatterPlotY;
   dataSet.get("detailed scatterplot x dim", detailScatterPlotX);
   dataSet.get("detailed scatterplot y dim", detailScatterPlotY);
 

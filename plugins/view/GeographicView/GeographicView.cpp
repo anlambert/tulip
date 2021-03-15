@@ -268,7 +268,7 @@ void GeographicView::computeGeoLayout() {
   } else {
     string latProp = geolocationConfigWidget->getLatitudeGraphPropertyName();
     string lngProp = geolocationConfigWidget->getLongitudeGraphPropertyName();
-    string edgesPathsProp = "";
+    string edgesPathsProp;
 
     if (geolocationConfigWidget->useEdgesPaths()) {
       edgesPathsProp = geolocationConfigWidget->getEdgesPathsPropertyName();

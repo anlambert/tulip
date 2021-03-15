@@ -377,7 +377,7 @@ void ParallelCoordinatesDrawing::plotData(const unsigned int dataId, const Color
     }
   } else if (linesType == CATMULL_ROM_SPLINE) {
     float size = 1;
-    string textureName = "";
+    string textureName;
 
     if (linesThickness == THICK) {
       size = pointRadius;
@@ -396,7 +396,7 @@ void ParallelCoordinatesDrawing::plotData(const unsigned int dataId, const Color
     line = catmull;
   } else {
     float size = 1;
-    string textureName = "";
+    string textureName;
 
     if (linesThickness == THICK) {
       size = pointRadius;

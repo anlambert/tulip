@@ -221,7 +221,7 @@ void PathFinder::configureHighlighterButtonPressed() {
       static_cast<QListWidget *>(highlightersListWidget->findChild<QListWidget *>("listWidget"));
 
   QList<QListWidgetItem *> lst = listWidget->selectedItems();
-  string text("");
+  string text;
 
   for (auto item : lst) {
     text = QStringToTlpString(item->text());

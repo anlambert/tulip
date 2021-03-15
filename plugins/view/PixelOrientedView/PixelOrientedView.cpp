@@ -243,7 +243,7 @@ void PixelOrientedView::setState(const DataSet &dataSet) {
       overviewGenMap[selectedGraphProperties[i]] = overviewGenerated;
     }
 
-    string layoutName("");
+    string layoutName;
     dataSet.get("layout", layoutName);
 
     if (!layoutName.empty()) {

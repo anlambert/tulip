@@ -26,8 +26,7 @@ using namespace std;
 using namespace tlp;
 
 GeographicViewConfigWidget::GeographicViewConfigWidget(QWidget *parent)
-    : QWidget(parent), _ui(new Ui::GeographicViewConfigWidget), _oldPolyFileType(None),
-      _oldFileLoaded("") {
+    : QWidget(parent), _ui(new Ui::GeographicViewConfigWidget), _oldPolyFileType(None) {
   _ui->setupUi(this);
   _ui->csvFilePushButton->setIcon(FontIconManager::icon(MaterialDesignIcons::FolderOpen));
   _ui->polyFilePushButton->setIcon(FontIconManager::icon(MaterialDesignIcons::FolderOpen));

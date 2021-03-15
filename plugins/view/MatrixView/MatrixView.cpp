@@ -39,7 +39,7 @@ MatrixView::MatrixView(const PluginContext *)
       _graphEntitiesToDisplayedNodes(nullptr), _displayedNodesToGraphEntities(nullptr),
       _displayedEdgesToGraphEdges(nullptr), _displayedNodesAreNodes(nullptr), _dispatcher(nullptr),
       _configurationWidget(nullptr), _mustUpdateSizes(false), _mustUpdateLayout(false),
-      _isOriented(false), _orderingMetricName("") {}
+      _isOriented(false) {}
 
 MatrixView::~MatrixView() {
   deleteDisplayedGraph();

@@ -79,7 +79,7 @@ tlp::DataSet TableView::state() const {
 
 void TableView::setState(const tlp::DataSet &data) {
   bool showNodes = true;
-  std::string filterPropertyName = "";
+  std::string filterPropertyName;
   data.get<bool>("show_nodes", showNodes);
 
   _ui->eltTypeCombo->setCurrentIndex(showNodes ? 0 : 1);

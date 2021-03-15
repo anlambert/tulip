@@ -406,7 +406,7 @@ DataSet HistogramView::state() const {
   }
 
   dataSet.set("backgroundColor", getGlWidget()->getScene()->getBackgroundColor());
-  string histoDetailedNamed = "";
+  string histoDetailedNamed;
 
   if (detailedHistogram != nullptr) {
     histoDetailedNamed = detailedHistogram->getPropertyName();

@@ -25,8 +25,8 @@ namespace tlp {
 
 GlAbstractPolygon::GlAbstractPolygon()
     : polygonMode(POLYGON), filled(true), outlined(true), lighting(true), invertYTexture(true),
-      textureName(""), outlineSize(1.), hideOutlineLod(0.), indices(nullptr), auxIndices(nullptr),
-      texArray(nullptr), generated(false) {}
+      outlineSize(1.), hideOutlineLod(0.), indices(nullptr), auxIndices(nullptr), texArray(nullptr),
+      generated(false) {}
 //=====================================================
 GlAbstractPolygon::~GlAbstractPolygon() {
   clearGenerated();

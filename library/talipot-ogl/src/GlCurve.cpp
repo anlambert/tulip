@@ -22,7 +22,7 @@ namespace tlp {
 GlCurve::GlCurve(const vector<Coord> &points, const Color &beginFColor, const Color &endFColor,
                  const float &beginSize, const float &endSize)
     : _points(points), _beginFillColor(beginFColor), _endFillColor(endFColor),
-      _beginSize(beginSize), _endSize(endSize), texture("") {
+      _beginSize(beginSize), _endSize(endSize) {
 
   assert(points.size() >= 3);
 
@@ -31,7 +31,7 @@ GlCurve::GlCurve(const vector<Coord> &points, const Color &beginFColor, const Co
   }
 }
 //=====================================================
-GlCurve::GlCurve(const unsigned int nbPoints) : _points(nbPoints), texture("") {}
+GlCurve::GlCurve(const unsigned int nbPoints) : _points(nbPoints) {}
 //=====================================================
 GlCurve::~GlCurve() = default;
 //=====================================================

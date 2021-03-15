@@ -285,7 +285,7 @@ bool MixedModel::run() {
   }
 
   if (components.size() > 1) {
-    string err = "";
+    string err;
     DataSet tmp;
     tmp.set("coordinates", result);
     graph->applyPropertyAlgorithm("Connected Component Packing", result, err, &tmp, pluginProgress);

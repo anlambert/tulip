@@ -28,7 +28,7 @@
 
 using namespace std;
 
-static std::string TALIPOT_DUMP_FILE = "";
+static std::string TALIPOT_DUMP_FILE;
 
 void CrashHandling::setDumpPath(string s) {
   TALIPOT_DUMP_FILE = s;

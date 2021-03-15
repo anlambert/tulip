@@ -376,9 +376,9 @@ std::unordered_map<std::string, std::pair<unique_ptr<GlShaderProgram>, unique_pt
 AbstractGlCurve::AbstractGlCurve(const string &shaderProgramName,
                                  const string &curveSpecificShaderCode)
     : curveShaderProgramNormal(nullptr), curveShaderProgramBillboard(nullptr),
-      curveShaderProgram(nullptr), outlined(false), outlineColor(Color(0, 0, 0)), texture(""),
-      texCoordFactor(1), billboardCurve(false), lookDir(Coord(0, 0, 1)), lineCurve(false),
-      curveLineWidth(1.0f), curveQuadBordersWidth(1.0f), outlineColorInterpolation(false) {
+      curveShaderProgram(nullptr), outlined(false), outlineColor(Color(0, 0, 0)), texCoordFactor(1),
+      billboardCurve(false), lookDir(Coord(0, 0, 1)), lineCurve(false), curveLineWidth(1.0f),
+      curveQuadBordersWidth(1.0f), outlineColorInterpolation(false) {
   canUseGeometryShader = GlShaderProgram::geometryShaderSupported();
   initShader(shaderProgramName, curveSpecificShaderCode);
 }
@@ -392,7 +392,7 @@ AbstractGlCurve::AbstractGlCurve(const string &shaderProgramName,
       curveShaderProgramBillboard(nullptr), curveShaderProgram(nullptr),
       controlPoints(controlPoints), startColor(startColor), endColor(endColor),
       startSize(startSize), endSize(endSize), nbCurvePoints(nbCurvePoints), outlined(false),
-      outlineColor(Color(0, 0, 0)), texture(""), texCoordFactor(1), billboardCurve(false),
+      outlineColor(Color(0, 0, 0)), texCoordFactor(1), billboardCurve(false),
       lookDir(Coord(0, 0, 1)), lineCurve(false), curveLineWidth(1.0f), curveQuadBordersWidth(1.0f),
       outlineColorInterpolation(false) {
 

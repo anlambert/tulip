@@ -56,7 +56,7 @@ GlComposite *readPolyFile(QString fileName) {
     return nullptr;
   }
 
-  string polygonName = "";
+  string polygonName;
   vector<vector<Coord>> datas;
   vector<Coord> currentVector;
   bool ok;

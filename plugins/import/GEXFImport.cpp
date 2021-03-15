@@ -322,7 +322,7 @@ public:
       }
       // parse node attributes
       else if (xmlReader.isStartElement() && xmlReader.qualifiedName() == "attvalue") {
-        string attributeId = "";
+        string attributeId;
 
         if (xmlReader.attributes().hasAttribute("id")) {
           attributeId = QStringToTlpString(xmlReader.attributes().value("id").toString());
@@ -398,7 +398,7 @@ public:
       while (!(xmlReader.isEndElement() && xmlReader.name() == "edge")) {
         // parse edge attribute
         if (xmlReader.isStartElement() && xmlReader.qualifiedName() == "attvalue") {
-          string attributeId = "";
+          string attributeId;
 
           if (xmlReader.attributes().hasAttribute("id")) {
             attributeId = QStringToTlpString(xmlReader.attributes().value("id").toString());
