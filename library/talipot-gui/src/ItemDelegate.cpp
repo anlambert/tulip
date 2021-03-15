@@ -86,7 +86,7 @@ ItemDelegate::ItemDelegate(QObject *parent)
 }
 
 ItemDelegate::~ItemDelegate() {
-  for (auto v : _creators.values()) {
+  for (auto *v : _creators.values()) {
     delete v;
   }
 }

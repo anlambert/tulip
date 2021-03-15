@@ -123,7 +123,7 @@ void PanelSelectionWizard::pageChanged(int id) {
     createView();
     bool inPlaceHolder = true;
 
-    for (auto w : _view->configurationWidgets()) {
+    for (auto *w : _view->configurationWidgets()) {
       QWizardPage *p;
 
       if (inPlaceHolder) {

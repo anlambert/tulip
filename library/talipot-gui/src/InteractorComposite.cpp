@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -72,7 +72,7 @@ void InteractorComposite::setView(tlp::View *view) {
     construct();
   }
 
-  for (auto i : _components) {
+  for (auto *i : _components) {
     i->setView(view);
   }
 }
@@ -99,7 +99,7 @@ void InteractorComposite::install(QObject *target) {
   setLastTarget(target);
 
   if (target != nullptr) {
-    for (auto i : _components) {
+    for (auto *i : _components) {
       target->installEventFilter(i);
       i->init();
     }
@@ -107,7 +107,7 @@ void InteractorComposite::install(QObject *target) {
 }
 void InteractorComposite::uninstall() {
   if (lastTarget() != nullptr) {
-    for (auto i : _components) {
+    for (auto *i : _components) {
       lastTarget()->removeEventFilter(i);
       i->clear();
     }

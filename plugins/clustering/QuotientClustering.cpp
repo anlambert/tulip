@@ -149,7 +149,7 @@ public:
     DataSet layoutParams;
 
     if (clustersLayout) {
-      for (auto cluster : graph->subGraphs()) {
+      for (auto *cluster : graph->subGraphs()) {
         SizeProperty *viewSize = cluster->getSizeProperty("viewSize");
         Size minSize = viewSize->getMin(cluster);
         Size maxSize = viewSize->getMax(cluster);

@@ -219,7 +219,7 @@ void ParallelCoordsAxisSliders::initOrUpdateSliders() {
     deleteGlSliders();
 
     if (currentGraph != nullptr && currentGraph != parallelView->getGraphProxy()->getGraph()) {
-      for (auto axis : allAxis) {
+      for (auto *axis : allAxis) {
         axis->resetSlidersPosition();
       }
     }
@@ -429,7 +429,7 @@ bool ParallelCoordsAxisSliders::eventFilter(QObject *widget, QEvent *e) {
 }
 
 void ParallelCoordsAxisSliders::buildGlSliders(vector<ParallelAxis *> axis) {
-  for (auto ax : axis) {
+  for (auto *ax : axis) {
     lastAxisHeight = ax->getAxisHeight();
     float sliderMetricRef = ax->getAxisHeight() / 60.0f;
     auto *axisTopSlider = new AxisSlider(TOP_SLIDER, ax->getTopSliderCoord(),
@@ -463,7 +463,7 @@ AxisSlider *ParallelCoordsAxisSliders::getSliderUnderPointer(GlWidget *glWidget,
 
   if (glWidget->pickGlEntities(x, y, pickedEntities, selectionLayer)) {
     for (size_t i = 0; i < pickedEntities.size(); ++i) {
-      for (auto as : axisSlidersMap[axis]) {
+      for (auto *as : axisSlidersMap[axis]) {
         if (as == pickedEntities[i].getEntity()) {
           return as;
         }
@@ -495,7 +495,7 @@ bool ParallelCoordsAxisSliders::draw(GlWidget *glWidget) {
   for (const auto &it : axisSlidersMap) {
     ParallelAxis *axis = it.first;
 
-    for (auto slider : it.second) {
+    for (auto *slider : it.second) {
       if (slider->getSliderType() == TOP_SLIDER) {
         slider->moveToCoord(axis->getTopSliderCoord());
         slider->setSliderLabel(axis->getTopSliderTextValue());

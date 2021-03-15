@@ -1537,7 +1537,7 @@ public:
         }
 
         // loop of entry fields
-        for (auto &fit : fe.fields()) {
+        for (const auto &fit : fe.fields()) {
           string pName = fit.first;
 
           // year is already set

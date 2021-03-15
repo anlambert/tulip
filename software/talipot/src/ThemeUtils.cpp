@@ -263,7 +263,7 @@ void setApplicationGuiTheme(const QString &guiTheme, bool updateGui) {
     // extra polish operations for special widgets
     getMainWindow()->findChild<AlgorithmRunner *>()->buildPluginsList();
     for (QWidget *topLevelWidget : qApp->topLevelWidgets()) {
-      auto logger = getMainWindow()->findChild<TalipotLogger *>();
+      auto *logger = getMainWindow()->findChild<TalipotLogger *>();
       if (logger) {
         logger->updateLogItemsBackgroundColor();
       }

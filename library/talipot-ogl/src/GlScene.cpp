@@ -847,7 +847,7 @@ bool GlScene::selectEntities(RenderingEntitiesFlag type, int x, int y, int w, in
 
     delete[] selectBuf;
 
-    for (auto glGraph : compositesToRender) {
+    for (auto *glGraph : compositesToRender) {
       glGraph->selectEntities(camera, type, x, y, w, h, selectedEntities);
     }
 

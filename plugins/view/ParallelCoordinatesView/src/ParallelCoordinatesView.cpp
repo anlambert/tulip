@@ -75,7 +75,7 @@ ParallelCoordinatesView::ParallelCoordinatesView(const PluginContext *)
       dontCenterViewAfterConfLoaded(false), needDraw(false) {}
 
 ParallelCoordinatesView::~ParallelCoordinatesView() {
-  for (auto obs : triggers()) {
+  for (auto *obs : triggers()) {
     removeRedrawTrigger(obs);
   }
 
@@ -97,7 +97,7 @@ ParallelCoordinatesView::~ParallelCoordinatesView() {
 }
 
 QuickAccessBar *ParallelCoordinatesView::getQuickAccessBarImpl() {
-  auto _bar = new ParallelCoordinatesViewQuickAccessBar(drawConfigWidget);
+  auto *_bar = new ParallelCoordinatesViewQuickAccessBar(drawConfigWidget);
   connect(_bar, &ParallelCoordinatesViewQuickAccessBar::settingsChanged, this,
           &ParallelCoordinatesView::applySettings);
   return _bar;
@@ -962,7 +962,7 @@ void ParallelCoordinatesView::updateAxisSlidersPosition() {
     const set<unsigned int> &highlightedElts(graphProxy->getHighlightedElts());
     vector<ParallelAxis *> axis(getAllAxis());
 
-    for (auto ax : axis) {
+    for (auto *ax : axis) {
       ax->updateSlidersWithDataSubset(highlightedElts);
     }
   }
@@ -989,20 +989,20 @@ void ParallelCoordinatesView::highlightDataInAxisBoxPlotRange(QuantitativeParall
 }
 
 void ParallelCoordinatesView::removeTriggers() {
-  for (auto obs : triggers()) {
+  for (auto *obs : triggers()) {
     removeRedrawTrigger(obs);
   }
 }
 
 void ParallelCoordinatesView::registerTriggers() {
-  for (auto obs : triggers()) {
+  for (auto *obs : triggers()) {
     removeRedrawTrigger(obs);
   }
 
   if (graph()) {
     addRedrawTrigger(graph());
 
-    for (auto prop : graph()->getObjectProperties()) {
+    for (auto *prop : graph()->getObjectProperties()) {
       addRedrawTrigger(prop);
     }
   }

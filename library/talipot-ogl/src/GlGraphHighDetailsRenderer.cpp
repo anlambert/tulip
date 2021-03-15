@@ -221,7 +221,7 @@ void GlGraphHighDetailsRenderer::draw(float, Camera *camera) {
 
   LayersLODVector &layersLODVector = lodCalculator->getResult();
 
-  auto vertexArrayManager = inputData->getGlVertexArrayManager();
+  auto *vertexArrayManager = inputData->getGlVertexArrayManager();
   bool vertexArrayManagerActivated = vertexArrayManager->isActivated();
 
   if (vertexArrayManagerActivated) {

@@ -193,7 +193,7 @@ void PathFinderComponent::clearHighlighters(GlWidget *glWidget) {
 }
 
 PathHighlighter *PathFinderComponent::findHighlighter(const string &name) {
-  for (auto p : highlighters) {
+  for (auto *p : highlighters) {
     if (p->getName() == name) {
       return p;
     }

@@ -112,7 +112,7 @@ Workspace::Workspace(QWidget *parent)
 }
 
 Workspace::~Workspace() {
-  for (auto p : _panels) {
+  for (auto *p : _panels) {
     disconnect(p, &QObject::destroyed, this, &Workspace::panelDestroyed);
     delete p;
   }
@@ -129,7 +129,7 @@ void Workspace::setModel(tlp::GraphHierarchiesModel *model) {
   _model = model;
 
   if (_model != nullptr) {
-    for (auto panel : _panels) {
+    for (auto *panel : _panels) {
       panel->setGraphsModel(_model);
     }
 
@@ -151,7 +151,7 @@ void Workspace::closeAll() {
   // which modifies the _panels vector
   auto panels = _panels;
 
-  for (auto p : panels) {
+  for (auto *p : panels) {
     delete p;
   }
   _panels.clear();
@@ -160,7 +160,7 @@ void Workspace::closeAll() {
 QList<tlp::View *> Workspace::panels() const {
   QList<tlp::View *> result;
 
-  for (auto panel : _panels) {
+  for (auto *panel : _panels) {
     result.push_back(panel->view());
   }
 
@@ -172,7 +172,7 @@ QString Workspace::panelTitle(tlp::WorkspacePanel *panel) const {
 
   QRegExp regExp("^.*(?:<([^>])*>){1}$");
 
-  for (auto other : _panels) {
+  for (auto *other : _panels) {
     if (other == panel) {
       continue;
     }
@@ -229,7 +229,7 @@ int Workspace::addPanel(tlp::View *view) {
 }
 
 void Workspace::delView(tlp::View *view) {
-  for (auto it : _panels) {
+  for (auto *it : _panels) {
     if (it->view() == view) {
       delete it;
       _panels.removeOne(it);
@@ -253,8 +253,8 @@ void Workspace::panelDestroyed(QObject *obj) {
 
   // To prevent segfaults due to Qt's event queue handling when deleting views, we reset the
   // placeholder widget that contained this panel
-  for (auto mode : _modeToSlots.keys()) {
-    for (auto p : _modeToSlots[mode]) {
+  for (auto *mode : _modeToSlots.keys()) {
+    for (auto *p : _modeToSlots[mode]) {
       if (p->widget() == panel) {
         p->resetWidget();
       }
@@ -378,7 +378,7 @@ unsigned int Workspace::currentSlotsCount() const {
 }
 
 void Workspace::updateAvailableModes() {
-  for (auto page : _modeSwitches.keys()) {
+  for (auto *page : _modeSwitches.keys()) {
     _modeSwitches[page]->setVisible(_panels.size() >= _modeToSlots[page].size());
     _modeSwitches[page]->setEnabled(_panels.size() >= _modeToSlots[page].size());
   }
@@ -395,14 +395,14 @@ void Workspace::updateAvailableModes() {
 }
 
 void Workspace::updatePanels() {
-  for (auto mode : _modeToSlots.keys()) {
+  for (auto *mode : _modeToSlots.keys()) {
     if (mode == currentModeWidget()) {
       continue;
     }
 
     QVector<PlaceHolderWidget *> panelSlots = _modeToSlots[mode];
 
-    for (auto panel : panelSlots) {
+    for (auto *panel : panelSlots) {
       panel->setWidget(nullptr);
     }
   }
@@ -418,7 +418,7 @@ void Workspace::updatePanels() {
   // Fill up slots according to the current index until there is no panel to show
   int i = _currentPanelIndex;
 
-  for (auto slt : currentModeSlots()) {
+  for (auto *slt : currentModeSlots()) {
     if (i >= _panels.size()) {
       slt->setWidget(nullptr);
     } else if (slt->widget() != _panels[i]) {
@@ -430,7 +430,7 @@ void Workspace::updatePanels() {
 
   i = _currentPanelIndex;
 
-  for (auto slt : currentModeSlots()) {
+  for (auto *slt : currentModeSlots()) {
     if (i >= _panels.size()) {
       break;
     } else if (slt->widget() != _panels[i]) {
@@ -452,7 +452,7 @@ void Workspace::updatePanels() {
     QWidget *fallbackMode = _ui->startupPage;
 
     // Current mode is not available, fallback to the largest available mode
-    for (auto it : _modeToSlots.keys()) {
+    for (auto *it : _modeToSlots.keys()) {
       if (_panels.size() >= _modeToSlots[it].size() && _modeToSlots[it].size() > maxSize) {
         maxSize = _modeToSlots[it].size();
         fallbackMode = it;
@@ -499,7 +499,7 @@ void Workspace::setGraphForFocusedPanel(tlp::Graph *g) {
 WorkspacePanel *Workspace::panelForScene(QObject *obj) {
   WorkspacePanel *p = nullptr;
 
-  for (auto panel : _panels) {
+  for (auto *panel : _panels) {
     if (panel->view()->graphicsView()->scene() == obj) {
       p = panel;
       break;
@@ -575,7 +575,7 @@ void Workspace::showExposeMode() {
 
   _oldWorkspaceMode = currentModeWidget();
 
-  for (auto s : _modeSwitches.values()) {
+  for (auto *s : _modeSwitches.values()) {
     s->hide();
   }
 
@@ -584,7 +584,7 @@ void Workspace::showExposeMode() {
 
   QVector<WorkspacePanel *> panels;
 
-  for (auto p : _panels) {
+  for (auto *p : _panels) {
     panels << p;
   }
 
@@ -605,7 +605,7 @@ void Workspace::hideExposeMode() {
   QVector<WorkspacePanel *> newPanels = _ui->exposeMode->panels();
   _panels.clear();
 
-  for (auto p : newPanels) {
+  for (auto *p : newPanels) {
     _panels.push_back(p);
   }
 
@@ -631,7 +631,7 @@ QWidget *Workspace::suitableMode(QWidget *oldMode) {
   int maxSlots = 0;
   QWidget *result = _ui->startupPage;
 
-  for (auto mode : _modeToSlots.keys()) {
+  for (auto *mode : _modeToSlots.keys()) {
     int slotCount = _modeToSlots[mode].size();
 
     if (slotCount <= _panels.size() && slotCount > maxSlots) {
@@ -651,7 +651,7 @@ void Workspace::writeProject(Project *project, QMap<Graph *, QString> rootIds,
   project->removeAllDir("views");
   int i = 0;
 
-  for (auto v : panels()) {
+  for (auto *v : panels()) {
     progress->progress(i, panels().size());
     QString path = "views/" + QString::number(i);
     project->mkpath(path);
@@ -765,7 +765,7 @@ void Workspace::readProject(Project *project, QMap<QString, Graph *> rootIds,
       int current = doc.attributes().value("current").toString().toInt();
       int mode = doc.attributes().value("mode").toString().toInt();
 
-      for (auto modeWidget : _modeToSlots.keys()) {
+      for (auto *modeWidget : _modeToSlots.keys()) {
         if (_modeToSlots[modeWidget].size() == mode) {
           if (current > 0 && current < _panels.size()) {
             setActivePanel(_panels[current]->view());
@@ -806,7 +806,7 @@ void Workspace::setPageCountLabel(QLabel *l) {
 }
 
 void Workspace::redrawPanels(bool center) {
-  for (auto panel : _panels) {
+  for (auto *panel : _panels) {
     if (center) {
       panel->view()->centerView();
     } else {

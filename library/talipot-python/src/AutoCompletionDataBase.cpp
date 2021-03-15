@@ -873,7 +873,7 @@ static QSet<QString> getGraphPropertiesList(Graph *graph, const QString &prefix,
   QSet<QString> ret;
   QVector<PropertyInterface *> properties = getAllGraphPropertiesFromRoot(graph);
 
-  for (auto prop : properties) {
+  for (auto *prop : properties) {
     if (type.isEmpty() || prop->getTypename() == QStringToTlpString(type)) {
       QString qProp = "\"" + tlpStringToQString(prop->getName()) + "\"";
 

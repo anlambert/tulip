@@ -87,7 +87,7 @@ ScatterPlot2D *ScatterPlot2DViewNavigator::getOverviewUnderPointer(const Coord &
   ScatterPlot2D *ret = nullptr;
   vector<ScatterPlot2D *> overviews = scatterPlot2dView->getSelectedScatterPlots();
 
-  for (auto overview : overviews) {
+  for (auto *overview : overviews) {
     if (!overview) {
       continue;
     }

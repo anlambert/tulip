@@ -122,7 +122,7 @@ void ViewToolTipAndUrlManager::fillContextMenu(QMenu *menu) {
   action->setToolTip("The graph elements have no associated web page");
   // get all existing StringProperty
   std::set<std::string> props;
-  for (auto inheritedProp : graph->getInheritedObjectProperties()) {
+  for (auto *inheritedProp : graph->getInheritedObjectProperties()) {
     auto *prop = dynamic_cast<StringProperty *>(inheritedProp);
 
     if (prop != nullptr) {
@@ -130,7 +130,7 @@ void ViewToolTipAndUrlManager::fillContextMenu(QMenu *menu) {
     }
   }
 
-  for (auto localProp : graph->getLocalObjectProperties()) {
+  for (auto *localProp : graph->getLocalObjectProperties()) {
     auto *prop = dynamic_cast<StringProperty *>(localProp);
     if (prop != nullptr) {
       props.insert(prop->getName());

@@ -188,7 +188,7 @@ void TableView::graphChanged(tlp::Graph *g) {
 
   if (g && propertiesEditor->getGraph() &&
       (g->getRoot() == propertiesEditor->getGraph()->getRoot())) {
-    for (auto pi : propertiesEditor->visibleProperties()) {
+    for (auto *pi : propertiesEditor->visibleProperties()) {
       visibleProperties.insert(tlpStringToQString(pi->getName()));
     }
   }

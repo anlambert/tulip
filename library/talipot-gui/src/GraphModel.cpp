@@ -908,7 +908,7 @@ bool GraphSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelInde
     return true;
   }
 
-  for (auto pi : _properties) {
+  for (auto *pi : _properties) {
     if (graphModel->stringValue(id, pi).contains(filterRegExp())) {
       return true;
     }

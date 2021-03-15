@@ -328,7 +328,7 @@ void GlAxis::setGradsLabelsHeight(float height) {
 
   unsigned int i = 0;
 
-  for (auto l : gradsLabelsVector) {
+  for (auto *l : gradsLabelsVector) {
     BoundingBox textBoundingBox = l->getTextBoundingBox();
     float labelWidth = (labelHeight / (textBoundingBox[1][1] - textBoundingBox[0][1])) *
                        (textBoundingBox[1][0] - textBoundingBox[0][0]);

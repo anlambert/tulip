@@ -74,7 +74,7 @@ void VectorEditor::add() {
 }
 
 void VectorEditor::remove() {
-  for (auto i : _ui->list->selectedItems()) {
+  for (auto *i : _ui->list->selectedItems()) {
     delete i;
   }
 

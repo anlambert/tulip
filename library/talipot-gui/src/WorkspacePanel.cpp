@@ -176,7 +176,7 @@ void WorkspacePanel::setView(tlp::View *view) {
 
   _viewConfigurationTabWidget->clear();
   if (!_view->configurationWidgets().empty()) {
-    for (auto w : _view->configurationWidgets()) {
+    for (auto *w : _view->configurationWidgets()) {
       w->installEventFilter(this);
       w->resize(w->width(), w->sizeHint().height());
       _viewConfigurationTabWidget->addTab(w, w->windowTitle());
@@ -353,7 +353,7 @@ void WorkspacePanel::refreshInteractorsToolbar() {
     interactorsLayout->setContentsMargins(0, 0, 0, 0);
     interactorsLayout->setSpacing(4);
 
-    for (auto i : compatibleInteractors) {
+    for (auto *i : compatibleInteractors) {
       auto *button = new QPushButton();
       button->setMinimumSize(22, 22);
       button->setFlat(true);
@@ -610,7 +610,7 @@ void WorkspacePanel::updateCurrentInteractorButtonText() {
     return;
   }
   auto fm = fontMetrics();
-  auto interactor = _view->currentInteractor();
+  auto *interactor = _view->currentInteractor();
   auto text = interactor->action()->text();
   int width = _ui->sep4->pos().x() - 20;
 // QToolButton text is automatically elided by the middle on windows

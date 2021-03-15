@@ -19,7 +19,7 @@ GLInteractorComposite::GLInteractorComposite(const QIcon &icon, const QString &t
     : InteractorComposite(icon, text) {}
 
 void GLInteractorComposite::draw(tlp::GlWidget *w) {
-  for (auto i : _components) {
+  for (auto *i : _components) {
     auto *cmp = dynamic_cast<GLInteractorComponent *>(i);
 
     if (cmp != nullptr) {
@@ -29,7 +29,7 @@ void GLInteractorComposite::draw(tlp::GlWidget *w) {
 }
 
 void GLInteractorComposite::compute(tlp::GlWidget *w) {
-  for (auto i : _components) {
+  for (auto *i : _components) {
     auto *cmp = dynamic_cast<GLInteractorComponent *>(i);
 
     if (cmp != nullptr) {

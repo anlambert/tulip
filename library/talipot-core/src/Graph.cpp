@@ -412,7 +412,7 @@ bool tlp::exportGraph(Graph *graph, std::ostream &outputStream, const std::strin
 static void removeFromGraph(Graph *g, const vector<node> &nodes, const std::vector<edge> &edges) {
 
   // Clean properties
-  for (auto p : g->getObjectProperties()) {
+  for (auto *p : g->getObjectProperties()) {
     for (auto n : nodes) {
       p->erase(n);
     }
@@ -1681,7 +1681,7 @@ void Graph::createMetaNodes(Iterator<Graph *> *itS, Graph *quotientGraph, vector
   for (const auto &[mE, edges] : eMapping) {
     metaInfo->setEdgeValue(mE, edges);
     // compute meta edge values
-    for (auto prop : quotientGraph->getObjectProperties()) {
+    for (auto *prop : quotientGraph->getObjectProperties()) {
       prop->computeMetaValue(mE, getRoot()->getEdgeMetaInfo(mE), quotientGraph);
     }
   }

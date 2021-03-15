@@ -129,12 +129,12 @@ void InputSample::buildNodeVector(node n) {
   unsigned int propNum = 0;
 
   if (usingNormalizedValues) {
-    for (auto prop : propertiesList) {
+    for (auto *prop : propertiesList) {
       nodeVec[propNum] = normalize(prop->getNodeDoubleValue(n), propNum);
       ++propNum;
     }
   } else {
-    for (auto prop : propertiesList) {
+    for (auto *prop : propertiesList) {
       nodeVec[propNum] = prop->getNodeDoubleValue(n);
       ++propNum;
     }
@@ -191,12 +191,12 @@ void InputSample::clearGraphObs() {
 }
 
 void InputSample::initPropertiesObs() {
-  for (auto prop : propertiesList) {
+  for (auto *prop : propertiesList) {
     prop->addObserver(this);
   }
 }
 void InputSample::clearPropertiesObs() {
-  for (auto prop : propertiesList) {
+  for (auto *prop : propertiesList) {
     prop->removeObserver(this);
   }
 }
@@ -210,7 +210,7 @@ void InputSample::treatEvents(const std::vector<Event> &events) {
 
     unsigned int propNum = 0;
 
-    for (auto prop : propertiesList) {
+    for (auto *prop : propertiesList) {
       if (event.type() == Event::TLP_MODIFICATION && event.sender() == prop) {
         // mWeightTab.setAll(DynamicVector<double> ());
         mWeightTab.clear();

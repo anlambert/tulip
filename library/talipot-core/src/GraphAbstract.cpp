@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -112,7 +112,7 @@ Graph *GraphAbstract::getNthSubGraph(unsigned int n) const {
 unsigned int GraphAbstract::numberOfDescendantGraphs() const {
   unsigned int result = numberOfSubGraphs();
 
-  for (auto sg : subgraphs) {
+  for (auto *sg : subgraphs) {
     result += sg->numberOfDescendantGraphs();
   }
 
@@ -176,7 +176,7 @@ void GraphAbstract::removeSubGraph(Graph *toRemove) {
 //=========================================================================
 void GraphAbstract::delAllSubGraphs() {
   while (subgraphs.size()) {
-    auto sg = subgraphs[0];
+    auto *sg = subgraphs[0];
     static_cast<GraphAbstract *>(sg)->delAllSubGraphs();
     delSubGraph(sg);
   }
@@ -214,7 +214,7 @@ bool GraphAbstract::isDescendantGraph(const Graph *g) const {
     return true;
   }
 
-  for (auto sg : subgraphs) {
+  for (auto *sg : subgraphs) {
     if (sg->isDescendantGraph(g)) {
       return true;
     }
@@ -224,7 +224,7 @@ bool GraphAbstract::isDescendantGraph(const Graph *g) const {
 }
 //=========================================================================
 Graph *GraphAbstract::getSubGraph(unsigned int sgId) const {
-  for (auto sg : subgraphs) {
+  for (auto *sg : subgraphs) {
     if (sg->getId() == sgId) {
       return sg;
     }
@@ -234,7 +234,7 @@ Graph *GraphAbstract::getSubGraph(unsigned int sgId) const {
 }
 //=========================================================================
 Graph *GraphAbstract::getSubGraph(const std::string &name) const {
-  for (auto sg : subgraphs) {
+  for (auto *sg : subgraphs) {
     if (sg->getName() == name) {
       return sg;
     }
@@ -250,7 +250,7 @@ Graph *GraphAbstract::getDescendantGraph(unsigned int sgId) const {
     return sg;
   }
 
-  for (auto sg : subgraphs) {
+  for (auto *sg : subgraphs) {
     if ((sg = sg->getDescendantGraph(sgId))) {
       return sg;
     }
@@ -266,7 +266,7 @@ Graph *GraphAbstract::getDescendantGraph(const string &name) const {
     return sg;
   }
 
-  for (auto sg : subgraphs) {
+  for (auto *sg : subgraphs) {
     if ((sg = sg->getDescendantGraph(name))) {
       return sg;
     }

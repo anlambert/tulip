@@ -162,7 +162,7 @@ void GraphUpdatesRecorder::deleteDeletedObjects() {
 
   // loop on properties
   for (auto &[graph, properties] : propertiesToDelete) {
-    for (auto property : properties) {
+    for (auto *property : properties) {
       delete property;
     }
   }
@@ -602,7 +602,7 @@ void GraphUpdatesRecorder::doUpdates(GraphImpl *g, bool undo) {
   auto &propsToDel = undo ? addedProperties : deletedProperties;
 
   for (const auto &[graph, properties] : propsToDel) {
-    for (auto property : properties) {
+    for (auto *property : properties) {
       graph->delLocalProperty(property->getName());
     }
   }
@@ -740,7 +740,7 @@ void GraphUpdatesRecorder::doUpdates(GraphImpl *g, bool undo) {
   auto &propsToAdd = undo ? deletedProperties : addedProperties;
 
   for (const auto &[g, properties] : propsToAdd) {
-    for (auto property : properties) {
+    for (auto *property : properties) {
       g->addLocalProperty(property->getName(), property);
     }
   }

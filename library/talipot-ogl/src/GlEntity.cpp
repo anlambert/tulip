@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -22,7 +22,7 @@ using namespace std;
 
 namespace tlp {
 GlEntity::~GlEntity() {
-  for (auto parent : parents) {
+  for (auto *parent : parents) {
     parent->deleteGlEntity(this, false);
   }
 }
@@ -38,7 +38,7 @@ void GlEntity::setVisible(bool visible) {
 
   this->visible = visible;
 
-  for (auto parent : parents) {
+  for (auto *parent : parents) {
     parent->notifyModified(this);
   }
 }

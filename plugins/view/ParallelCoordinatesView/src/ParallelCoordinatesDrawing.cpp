@@ -665,7 +665,7 @@ void ParallelCoordinatesDrawing::updateWithAxisSlidersRange(
 void ParallelCoordinatesDrawing::resetAxisSlidersPosition() {
   vector<ParallelAxis *> axis = getAllAxis();
 
-  for (auto ax : axis) {
+  for (auto *ax : axis) {
     ax->resetSlidersPosition();
   }
 }

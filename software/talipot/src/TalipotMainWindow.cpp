@@ -558,7 +558,7 @@ TalipotMainWindow::~TalipotMainWindow() {
   qInstallMessageHandler(nullptr);
 
   // ensure all loaded graphs are deleted
-  for (auto graph : _graphs->graphs()) {
+  for (auto *graph : _graphs->graphs()) {
     delete graph;
   }
 
@@ -1141,7 +1141,7 @@ void TalipotMainWindow::undo() {
 
   Observable::unholdObservers();
 
-  for (auto v : _ui->workspace->panels()) {
+  for (auto *v : _ui->workspace->panels()) {
     if (v->graph() == graph)
       v->undoCallback();
   }
@@ -1157,7 +1157,7 @@ void TalipotMainWindow::redo() {
 
   Observable::unholdObservers();
 
-  for (auto v : _ui->workspace->panels()) {
+  for (auto *v : _ui->workspace->panels()) {
     if (v->graph() == graph)
       v->undoCallback();
   }
@@ -1258,7 +1258,7 @@ void TalipotMainWindow::group() {
     return;
   }
 
-  for (auto v : _ui->workspace->panels()) {
+  for (auto *v : _ui->workspace->panels()) {
     if (v->graph() == graph->getRoot())
       v->setGraph(graph);
   }
@@ -1412,7 +1412,7 @@ void TalipotMainWindow::CSVImport() {
     applyDefaultLayout(g);
     bool openPanels = true;
 
-    for (auto v : _ui->workspace->panels()) {
+    for (auto *v : _ui->workspace->panels()) {
       if (v->graph() == g) {
         openPanels = false;
         break;
@@ -1456,7 +1456,7 @@ void TalipotMainWindow::showStartPanels(Graph *g) {
   _ui->workspace->hideExposeMode();
   View *firstPanel = nullptr;
 
-  for (auto panelName : {"Node Link Diagram", "Spreadsheet"}) {
+  for (const auto *panelName : {"Node Link Diagram", "Spreadsheet"}) {
     View *view = PluginsManager::getPluginObject<View>(panelName);
 
     if (firstPanel == nullptr) {
@@ -1490,7 +1490,7 @@ void TalipotMainWindow::applyDefaultLayout(Graph *g) {
 }
 
 void TalipotMainWindow::centerPanelsForGraph(tlp::Graph *g, bool graphChanged, bool onlyGlView) {
-  for (auto v : _ui->workspace->panels()) {
+  for (auto *v : _ui->workspace->panels()) {
     if ((v->graph() == g) && (!onlyGlView || dynamic_cast<tlp::GlView *>(v)))
       v->centerView(graphChanged);
   }
@@ -1499,7 +1499,7 @@ void TalipotMainWindow::centerPanelsForGraph(tlp::Graph *g, bool graphChanged, b
 void TalipotMainWindow::closePanelsForGraph(tlp::Graph *g) {
   list<View *> viewsToDelete;
 
-  for (auto v : _ui->workspace->panels()) {
+  for (auto *v : _ui->workspace->panels()) {
     if (v->graph() == g || g->isDescendantGraph(v->graph()))
       viewsToDelete.push_back(v);
   }
@@ -1508,7 +1508,7 @@ void TalipotMainWindow::closePanelsForGraph(tlp::Graph *g) {
     // expose mode is not safe when deleting a panel
     // so hide it first
     _ui->workspace->hideExposeMode();
-    for (auto v : viewsToDelete) {
+    for (auto *v : viewsToDelete) {
       _ui->workspace->delView(v);
     }
   }
@@ -1518,7 +1518,7 @@ bool TalipotMainWindow::setGlViewPropertiesForGraph(
     tlp::Graph *g, const std::map<std::string, tlp::PropertyInterface *> &propsMap) {
   bool result = false;
 
-  for (auto v : _ui->workspace->panels()) {
+  for (auto *v : _ui->workspace->panels()) {
     auto *glView = dynamic_cast<tlp::GlView *>(v);
 
     if (v->graph() == g && glView != nullptr) {
@@ -1643,7 +1643,7 @@ void TalipotMainWindow::showHideDockWidget(QToolButton *button, bool forceShow) 
   static const QVector<QToolButton *> dockButtons = {_ui->graphsButton, _ui->algorithmsButton,
                                                      _ui->searchButton, _ui->pythonButton};
   bool newState = forceShow || button->isChecked();
-  for (auto dockButton : dockButtons) {
+  for (auto *dockButton : dockButtons) {
     if (dockButton != button) {
       if (dockButton == _ui->pythonButton && _pythonIDE->isAnchored()) {
         dockButton->setChecked(false);

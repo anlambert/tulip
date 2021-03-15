@@ -336,7 +336,7 @@ void NodeLinkDiagramView::registerTriggers() {
   std::set<tlp::PropertyInterface *> properties =
       getGlWidget()->getGlGraphInputData()->properties();
 
-  for (auto p : properties) {
+  for (auto *p : properties) {
     addRedrawTrigger(p);
   }
 }

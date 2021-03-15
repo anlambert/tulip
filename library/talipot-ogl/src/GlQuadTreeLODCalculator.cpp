@@ -62,15 +62,15 @@ GlQuadTreeLODCalculator::~GlQuadTreeLODCalculator() {
   setHaveToCompute();
   clearCamerasObservers();
 
-  for (auto node : nodesQuadTree) {
+  for (auto *node : nodesQuadTree) {
     delete node;
   }
 
-  for (auto node : edgesQuadTree) {
+  for (auto *node : edgesQuadTree) {
     delete node;
   }
 
-  for (auto node : entitiesQuadTree) {
+  for (auto *node : entitiesQuadTree) {
     delete node;
   }
 }
@@ -197,19 +197,19 @@ void GlQuadTreeLODCalculator::compute(const Vec4i &globalViewport, const Vec4i &
     layerToCamera.clear();
     entities.clear();
 
-    for (auto node : nodesQuadTree) {
+    for (auto *node : nodesQuadTree) {
       delete node;
     }
 
     nodesQuadTree.clear();
 
-    for (auto node : edgesQuadTree) {
+    for (auto *node : edgesQuadTree) {
       delete node;
     }
 
     edgesQuadTree.clear();
 
-    for (auto node : entitiesQuadTree) {
+    for (auto *node : entitiesQuadTree) {
       delete node;
     }
 
@@ -266,7 +266,7 @@ void GlQuadTreeLODCalculator::compute(const Vec4i &globalViewport, const Vec4i &
     quadTreesVectorPosition = 0;
     entitiesVectorPosition = 0;
 
-    for (auto camera : cameras) {
+    for (auto *camera : cameras) {
       layersLODVector.push_back(LayerLODUnit());
       LayerLODUnit *layerLODUnit = &(layersLODVector.back());
       layerLODUnit->camera = camera;
@@ -620,7 +620,7 @@ void GlQuadTreeLODCalculator::treatEvent(const Event &ev) {
 void GlQuadTreeLODCalculator::initCamerasObservers() {
   set<Camera *> treatedCameras;
 
-  for (auto camera : cameras) {
+  for (auto *camera : cameras) {
     if (treatedCameras.find(camera) == treatedCameras.end()) {
       treatedCameras.insert(camera);
       camera->addListener(this);
@@ -631,7 +631,7 @@ void GlQuadTreeLODCalculator::initCamerasObservers() {
 void GlQuadTreeLODCalculator::clearCamerasObservers() {
   set<Camera *> treatedCameras;
 
-  for (auto camera : cameras) {
+  for (auto *camera : cameras) {
     if (treatedCameras.find(camera) == treatedCameras.end()) {
       treatedCameras.insert(camera);
       camera->removeListener(this);

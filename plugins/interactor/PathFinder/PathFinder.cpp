@@ -110,7 +110,7 @@ void PathFinder::construct() {
   vector<string> activeList, inactiveList;
   QSet<PathHighlighter *> highlighters(getPathFinderComponent()->getHighlighters());
 
-  for (auto h : highlighters) {
+  for (auto *h : highlighters) {
     inactiveList.push_back(h->getName());
   }
 
@@ -223,14 +223,14 @@ void PathFinder::configureHighlighterButtonPressed() {
   QList<QListWidgetItem *> lst = listWidget->selectedItems();
   string text;
 
-  for (auto item : lst) {
+  for (auto *item : lst) {
     text = QStringToTlpString(item->text());
   }
 
   QSet<PathHighlighter *> highlighters(getPathFinderComponent()->getHighlighters());
   PathHighlighter *hler = nullptr;
 
-  for (auto h : highlighters) {
+  for (auto *h : highlighters) {
     if (h->getName() == text) {
       hler = h;
       break;
@@ -274,7 +274,7 @@ void PathFinder::configureHighlighterButtonPressed() {
 PathFinderComponent *PathFinder::getPathFinderComponent() {
   // Look upon all the installed components and stop as soon as we get a PathFinderComponent *
   // object.
-  for (auto ic : *this) {
+  for (auto *ic : *this) {
     auto *pfc = dynamic_cast<PathFinderComponent *>(ic);
 
     if (pfc) {

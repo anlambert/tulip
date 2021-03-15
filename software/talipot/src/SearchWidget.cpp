@@ -179,15 +179,15 @@ SearchWidget::SearchWidget(QWidget *parent)
 SearchWidget::~SearchWidget() {
   delete _ui;
 
-  for (auto op : NUMERIC_OPERATORS) {
+  for (auto *op : NUMERIC_OPERATORS) {
     delete op;
   }
 
-  for (auto op : STRING_OPERATORS) {
+  for (auto *op : STRING_OPERATORS) {
     delete op;
   }
 
-  for (auto op : NOCASE_STRING_OPERATORS) {
+  for (auto *op : NOCASE_STRING_OPERATORS) {
     delete op;
   }
 }

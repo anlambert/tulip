@@ -117,15 +117,15 @@ public:
     graph->setName(agnameof(g));
 
     // Get talipot view properties
-    auto viewLabel = graph->getStringProperty("viewLabel");
-    auto viewFontSize = graph->getIntegerProperty("viewFontSize");
-    auto viewColor = graph->getColorProperty("viewColor");
-    auto viewBorderColor = graph->getColorProperty("viewBorderColor");
-    auto viewBorderWidth = graph->getDoubleProperty("viewBorderWidth");
-    auto viewLabelColor = graph->getColorProperty("viewLabelColor");
-    auto viewLayout = graph->getLayoutProperty("viewLayout");
-    auto viewSize = graph->getSizeProperty("viewSize");
-    auto viewShape = graph->getIntegerProperty("viewShape");
+    auto *viewLabel = graph->getStringProperty("viewLabel");
+    auto *viewFontSize = graph->getIntegerProperty("viewFontSize");
+    auto *viewColor = graph->getColorProperty("viewColor");
+    auto *viewBorderColor = graph->getColorProperty("viewBorderColor");
+    auto *viewBorderWidth = graph->getDoubleProperty("viewBorderWidth");
+    auto *viewLabelColor = graph->getColorProperty("viewLabelColor");
+    auto *viewLayout = graph->getLayoutProperty("viewLayout");
+    auto *viewSize = graph->getSizeProperty("viewSize");
+    auto *viewShape = graph->getIntegerProperty("viewShape");
 
     // Set some visual defaults
     Color defaultNodeColor;
@@ -243,7 +243,7 @@ public:
           string attrDefaultValue = sym->defval;
           string attrValue = agxget(n, sym);
 
-          auto prop = graph->getStringProperty(attrName);
+          auto *prop = graph->getStringProperty(attrName);
           prop->setNodeDefaultValue(attrDefaultValue);
           prop->setNodeValue(nTlp, attrValue);
 
@@ -268,7 +268,7 @@ public:
           string attrDefaultValue = sym->defval;
           string attrValue = agxget(e, sym);
 
-          auto prop = graph->getStringProperty(attrName);
+          auto *prop = graph->getStringProperty(attrName);
           prop->setEdgeDefaultValue(attrDefaultValue);
           prop->setEdgeValue(eTlp, attrValue);
 

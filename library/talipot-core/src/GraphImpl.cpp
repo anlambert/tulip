@@ -49,7 +49,7 @@ GraphImpl::~GraphImpl() {
   if (!recorders.empty()) {
     recorders.front()->stopRecording(this);
 
-    for (auto r : recorders) {
+    for (auto *r : recorders) {
       delete r;
     }
 
@@ -362,7 +362,7 @@ void GraphImpl::delPreviousRecorders() {
   // because they are pushed in front of previousRecorders
   // when they are popped from recorders,
   // so the lasts created are back in previousRecorders
-  for (auto pr : reversed(previousRecorders)) {
+  for (auto *pr : reversed(previousRecorders)) {
     delete pr;
   }
 

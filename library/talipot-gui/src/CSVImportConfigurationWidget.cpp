@@ -634,9 +634,9 @@ PropertyConfigurationWidget *CSVImportConfigurationWidget::createPropertyConfigu
   if (propertyNumber == 0) {
     typenameToProps.clear();
 
-    auto itp = CSVImportWizard::getGraph()->getObjectProperties();
+    auto *itp = CSVImportWizard::getGraph()->getObjectProperties();
     while (itp->hasNext()) {
-      auto prop = itp->next();
+      auto *prop = itp->next();
       typenameToProps[prop->getTypename()].insert(prop->getName());
     }
   }
@@ -698,7 +698,7 @@ QValidator::State PropertyNameValidator::validate(QString &input, int &) const {
   }
 
   // Only the property at the current index can have this name
-  for (auto widget : widgets) {
+  for (auto *widget : widgets) {
     if ((widget->getPropertyName() == input) && (currentIndex != widget->getPropertyNumber())) {
       return QValidator::Invalid;
     }

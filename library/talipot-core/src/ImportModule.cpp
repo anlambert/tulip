@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2020  The Talipot developers
+ * Copyright (C) 2020-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -81,7 +81,7 @@ ImportModule::InputData ImportModule::getInputData() const {
     string data;
     dataSet->get("file::data", data);
     size = data.size();
-    auto tmpss = new stringstream;
+    auto *tmpss = new stringstream;
     *tmpss << data;
     input = tmpss;
   } else {

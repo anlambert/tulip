@@ -434,7 +434,7 @@ void ScatterPlot2DView::computeNodeSizes() {
 }
 
 QuickAccessBar *ScatterPlot2DView::getQuickAccessBarImpl() {
-  auto _bar = new ScatterPlotQuickAccessBar(optionsWidget);
+  auto *_bar = new ScatterPlotQuickAccessBar(optionsWidget);
   connect(_bar, &ScatterPlotQuickAccessBar::settingsChanged, this,
           &ScatterPlot2DView::applySettings);
   return _bar;
@@ -1023,13 +1023,13 @@ void ScatterPlot2DView::interactorsInstalled(const QList<tlp::Interactor *> &) {
 }
 
 void ScatterPlot2DView::registerTriggers() {
-  for (auto obs : triggers()) {
+  for (auto *obs : triggers()) {
     removeRedrawTrigger(obs);
   }
 
   if (graph()) {
     addRedrawTrigger(graph());
-    for (auto prop : getScatterPlotGraph()->getObjectProperties()) {
+    for (auto *prop : getScatterPlotGraph()->getObjectProperties()) {
       addRedrawTrigger(prop);
     }
   }

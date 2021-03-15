@@ -191,7 +191,7 @@ void QuickAccessBarImpl::addButtonsAtEnd(const QVector<QAbstractButton *> &butto
   QLayoutItem *spacer = _ui->horizontalLayout->itemAt(_ui->horizontalLayout->count() - 1);
   _ui->horizontalLayout->removeItem(spacer);
 
-  for (auto b : buttonvect) {
+  for (auto *b : buttonvect) {
     _ui->horizontalLayout->addWidget(b);
   }
 

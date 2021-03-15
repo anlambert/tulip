@@ -45,7 +45,7 @@ bool MaterialDesignIcons::isIconSupported(const string &iconName) {
 const vector<string> &MaterialDesignIcons::getSupportedIcons() {
   if (iconsNames.empty()) {
     iconsNames.reserve(iconCodePoint.size());
-    for (auto &[iconName, codePoint] : iconCodePoint) {
+    for (const auto &[iconName, codePoint] : iconCodePoint) {
       iconsNames.push_back(iconName);
     }
   }

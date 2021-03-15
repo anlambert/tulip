@@ -26,7 +26,7 @@ void tlp::GraphPropertiesModel<PROPTYPE>::rebuildCache() {
     return;
   }
 
-  for (auto inheritedProp : _graph->getInheritedObjectProperties()) {
+  for (auto *inheritedProp : _graph->getInheritedObjectProperties()) {
 #ifdef NDEBUG
 
     if (inheritedProp->getName() == "viewMetaGraph") {
@@ -40,7 +40,7 @@ void tlp::GraphPropertiesModel<PROPTYPE>::rebuildCache() {
       _properties += prop;
     }
   }
-  for (auto localProp : _graph->getLocalObjectProperties()) {
+  for (auto *localProp : _graph->getLocalObjectProperties()) {
 #ifdef NDEBUG
 
     if (localProp->getName() == "viewMetaGraph") {

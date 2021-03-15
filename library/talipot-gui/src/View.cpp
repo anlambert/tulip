@@ -33,7 +33,7 @@ View::View()
       interactorsActivated(false), _displayContextMenu(true) {}
 
 View::~View() {
-  for (auto i : _interactors) {
+  for (auto *i : _interactors) {
     // as the current view is being deleted
     // we must detach it from the interactors before
     // deleting them
@@ -45,7 +45,7 @@ View::~View() {
 
 void View::toggleInteractors(const bool activate,
                              const std::unordered_set<const char *> &exceptions) {
-  for (auto it : _interactors) {
+  for (auto *it : _interactors) {
     if (exceptions.find(it->name().c_str()) == exceptions.end()) {
       it->action()->setEnabled(activate);
       if (!activate) {
@@ -61,7 +61,7 @@ void View::toggleInteractors(const bool activate,
 void View::setInteractors(const QList<tlp::Interactor *> &inters) {
   _interactors = inters;
 
-  for (auto i : inters) {
+  for (auto *i : inters) {
     i->setView(this);
   }
 
@@ -270,7 +270,7 @@ QGraphicsItem *View::centralItem() const {
 }
 
 void View::clearRedrawTriggers() {
-  for (auto t : triggers()) {
+  for (auto *t : triggers()) {
     removeRedrawTrigger(t);
   }
 }

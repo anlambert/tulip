@@ -1192,14 +1192,14 @@ void SOMView::removeEmptyViewLabel() {
 }
 
 void SOMView::registerTriggers() {
-  for (auto obs : triggers()) {
+  for (auto *obs : triggers()) {
     removeRedrawTrigger(obs);
   }
 
   if (graph()) {
     addRedrawTrigger(graph());
 
-    for (auto prop : graph()->getObjectProperties()) {
+    for (auto *prop : graph()->getObjectProperties()) {
       addRedrawTrigger(prop);
     }
   }

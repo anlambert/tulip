@@ -141,7 +141,7 @@ void PropertiesEditor::showCustomContextMenu(const QPoint &p) {
   if (_contextPropertyList.size() > 1) {
     bool enabled = true;
 
-    for (auto pi : _contextPropertyList) {
+    for (auto *pi : _contextPropertyList) {
       if (isReservedPropertyName(pi->getName().c_str()) &&
           (_graph == _graph->getRoot() || !_graph->existLocalProperty(pi->getName()))) {
         enabled = false;
@@ -334,7 +334,7 @@ void PropertiesEditor::setPropsVisibility(int state) {
 void PropertiesEditor::setPropsNotVisibleExcept() {
   std::set<std::string> ctxPropNames;
 
-  for (auto pi : _contextPropertyList) {
+  for (auto *pi : _contextPropertyList) {
     ctxPropNames.insert(pi->getName());
   }
 
@@ -474,7 +474,7 @@ void PropertiesEditor::delProperty() {
 void PropertiesEditor::delProperties() {
   _graph->push();
 
-  for (auto pi : _contextPropertyList) {
+  for (auto *pi : _contextPropertyList) {
     pi->getGraph()->delLocalProperty(pi->getName());
   }
 }

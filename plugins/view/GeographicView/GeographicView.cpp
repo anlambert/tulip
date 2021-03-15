@@ -422,7 +422,7 @@ void GeographicView::registerTriggers() {
   addRedrawTrigger(geoViewGraphicsView->getGlWidget()->getScene()->getGlGraph()->getGraph());
   auto properties = geoViewGraphicsView->getGlWidget()->getGlGraphInputData()->properties();
 
-  for (auto p : properties) {
+  for (auto *p : properties) {
     addRedrawTrigger(p);
   }
 }

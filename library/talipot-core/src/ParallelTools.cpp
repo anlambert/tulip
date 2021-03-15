@@ -63,7 +63,7 @@ void tlp::OpenMPLock::registerExitHandler() {
 struct OpenMPDefaultOptions {
   OpenMPDefaultOptions() {
     int num_threads = omp_get_num_procs();
-    auto num_threads_ptr = getenv("OMP_NUM_THREADS");
+    auto *num_threads_ptr = getenv("OMP_NUM_THREADS");
     if (num_threads_ptr) {
       num_threads = atoi(num_threads_ptr);
     }

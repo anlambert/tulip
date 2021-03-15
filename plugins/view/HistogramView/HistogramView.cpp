@@ -136,7 +136,7 @@ void HistogramView::cleanupGlScene() {
 }
 
 QuickAccessBar *HistogramView::getQuickAccessBarImpl() {
-  auto _bar = new QuickAccessBarImpl(
+  auto *_bar = new QuickAccessBarImpl(
       nullptr, QuickAccessBarImpl::QuickAccessButtons(
                    QuickAccessBarImpl::SCREENSHOT | QuickAccessBarImpl::BACKGROUNDCOLOR |
                    QuickAccessBarImpl::SHOWLABELS | QuickAccessBarImpl::LABELSSCALED |
@@ -706,7 +706,7 @@ void HistogramView::buildHistograms() {
   // re-enable user input
   tlp::enableQtUserInput();
 
-  for (auto label : propertiesLabels) {
+  for (auto *label : propertiesLabels) {
     label->setSize(Size(label->getSize()[0], minSize));
   }
 }
@@ -716,7 +716,7 @@ void HistogramView::updateHistograms(Histogram *detailOverview) {
   getGlWidget()->makeCurrent();
 
   for (auto &prop : selectedProperties) {
-    auto histo = histogramsMap[prop];
+    auto *histo = histogramsMap[prop];
     if (histo != detailOverview) {
       histo->setUpdateNeeded();
       histo->update();
@@ -727,7 +727,7 @@ void HistogramView::updateHistograms(Histogram *detailOverview) {
 vector<Histogram *> HistogramView::getHistograms() const {
   vector<Histogram *> ret;
 
-  for (auto &prop : selectedProperties) {
+  for (const auto &prop : selectedProperties) {
     ret.push_back(histogramsMap.find(prop)->second);
   }
 
@@ -928,13 +928,13 @@ BoundingBox HistogramView::getSmallMultiplesBoundingBox() const {
 }
 
 void HistogramView::registerTriggers() {
-  for (auto obs : triggers()) {
+  for (auto *obs : triggers()) {
     removeRedrawTrigger(obs);
   }
 
   if (graph()) {
     addRedrawTrigger(graph());
-    for (auto prop : graph()->getObjectProperties()) {
+    for (auto *prop : graph()->getObjectProperties()) {
       addRedrawTrigger(prop);
     }
   }

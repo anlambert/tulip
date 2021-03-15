@@ -34,7 +34,7 @@ QPixmap GlyphRenderer::render(int glyphId, const QColor &backgroundColor) {
   if (!previews.contains(glyphKey)) {
     // Init graph parameters.
     GlGraphRenderingParameters parameters;
-    auto graph = newGraph();
+    auto *graph = newGraph();
     auto node = graph->addNode();
     {
       // need a block to ensure inputData
@@ -76,7 +76,7 @@ QPixmap EdgeExtremityGlyphRenderer::render(int glyphId, const QColor &background
     previews[QString::number(EdgeExtremityShape::None) + backgroundColor.name()] = QPixmap();
     // Init graph parameters.
     GlGraphRenderingParameters parameters;
-    auto graph = newGraph();
+    auto *graph = newGraph();
     node n1 = graph->addNode();
     node n2 = graph->addNode();
     edge e = graph->addEdge(n1, n2);

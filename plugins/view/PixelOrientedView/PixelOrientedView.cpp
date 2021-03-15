@@ -165,7 +165,7 @@ void PixelOrientedView::setState(const DataSet &dataSet) {
       newGraphSet = true;
     }
 
-    for (auto obs : triggers()) {
+    for (auto *obs : triggers()) {
       removeRedrawTrigger(obs);
     }
 
@@ -692,7 +692,7 @@ vector<PixelOrientedOverview *> PixelOrientedView::getOverviews() {
 }
 
 QuickAccessBar *PixelOrientedView::getQuickAccessBarImpl() {
-  auto _bar = new PixelOrientedViewQuickAccessBar(optionsWidget);
+  auto *_bar = new PixelOrientedViewQuickAccessBar(optionsWidget);
 
   connect(_bar, &PixelOrientedViewQuickAccessBar::settingsChanged, this,
           &PixelOrientedView::applySettings);
@@ -778,13 +778,13 @@ void PixelOrientedView::toggleInteractors(const bool activate) {
 }
 
 void PixelOrientedView::registerTriggers() {
-  for (auto obs : triggers()) {
+  for (auto *obs : triggers()) {
     removeRedrawTrigger(obs);
   }
 
   addRedrawTrigger(graph());
 
-  for (auto prop : graph()->getObjectProperties()) {
+  for (auto *prop : graph()->getObjectProperties()) {
     addRedrawTrigger(prop);
   }
 }

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -96,7 +96,7 @@ public:
   void setStencil(int stencil) override {
     this->stencil = stencil;
 
-    for (auto entity : _sortedElements) {
+    for (auto *entity : _sortedElements) {
       entity->setStencil(stencil);
     }
   }
@@ -128,7 +128,7 @@ public:
    */
   void acceptVisitor(GlSceneVisitor *visitor) override {
     // visitor->visit(this);
-    for (auto entity : _sortedElements) {
+    for (auto *entity : _sortedElements) {
       if (entity->isVisible()) {
 
 #ifndef NDEBUG

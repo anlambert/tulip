@@ -95,7 +95,7 @@ PixelOrientedOverview *PixelOrientedViewNavigator::getOverviewUnderPointer(Coord
   PixelOrientedOverview *ret = nullptr;
   vector<PixelOrientedOverview *> overviews = pixelView->getOverviews();
 
-  for (auto poo : overviews) {
+  for (auto *poo : overviews) {
     BoundingBox overviewBB = poo->getBoundingBox();
 
     if (sceneCoords.getX() >= overviewBB[0][0] && sceneCoords.getX() <= overviewBB[1][0] &&

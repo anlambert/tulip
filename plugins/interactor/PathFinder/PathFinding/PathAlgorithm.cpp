@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -30,7 +30,7 @@ using namespace std;
 double computePathLength(BooleanProperty *result, EdgeStaticProperty<double> &weights) {
   double retVal(0);
   Graph *graph(result->getGraph());
-  auto ite = result->getNonDefaultValuatedEdges(graph);
+  auto *ite = result->getNonDefaultValuatedEdges(graph);
   while (ite->hasNext()) {
     retVal += weights.getEdgeValue(ite->next());
   }

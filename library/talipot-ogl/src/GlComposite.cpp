@@ -34,7 +34,7 @@ GlComposite::~GlComposite() {
 void GlComposite::addLayerParent(GlLayer *layer) {
   layerParents.push_back(layer);
 
-  for (auto entity : _sortedElements) {
+  for (auto *entity : _sortedElements) {
     auto *composite = dynamic_cast<GlComposite *>(entity);
 
     if (composite) {
@@ -49,7 +49,7 @@ void GlComposite::removeLayerParent(GlLayer *layer) {
     layerParents.erase(it);
   }
 
-  for (auto entity : _sortedElements) {
+  for (auto *entity : _sortedElements) {
     auto *composite = dynamic_cast<GlComposite *>(entity);
 
     if (composite) {
@@ -67,8 +67,8 @@ void GlComposite::reset(bool deleteElems) {
     toTreat.push_back(it.second);
   }
 
-  for (auto entity : toTreat) {
-    for (auto l : layerParents) {
+  for (auto *entity : toTreat) {
+    for (auto *l : layerParents) {
       if (l->getScene()) {
         l->getScene()->notifyDeletedEntity(entity);
       }
@@ -76,7 +76,7 @@ void GlComposite::reset(bool deleteElems) {
 
     entity->removeParent(this);
 
-    for (auto l : layerParents) {
+    for (auto *l : layerParents) {
       auto *composite = dynamic_cast<GlComposite *>(entity);
 
       if (composite) {
@@ -92,7 +92,7 @@ void GlComposite::reset(bool deleteElems) {
   elements.clear();
   _sortedElements.clear();
 
-  for (auto l : layerParents) {
+  for (auto *l : layerParents) {
     if (l->getScene()) {
       l->getScene()->notifyModifyLayer(l->getName(), l);
     }
@@ -123,7 +123,7 @@ void GlComposite::addGlEntity(GlEntity *entity, const string &key) {
     GlComposite *composite;
     composite = dynamic_cast<GlComposite *>(entity);
 
-    for (auto l : layerParents) {
+    for (auto *l : layerParents) {
       if (composite) {
         composite->addLayerParent(l);
       }
@@ -137,7 +137,7 @@ void GlComposite::addGlEntity(GlEntity *entity, const string &key) {
   auto *glGraph = dynamic_cast<GlGraph *>(entity);
 
   if (glGraph) {
-    for (auto l : layerParents) {
+    for (auto *l : layerParents) {
       l->glGraphAdded(glGraph);
     }
   }
@@ -158,7 +158,7 @@ void GlComposite::deleteGlEntity(const string &key, bool informTheEntity) {
     auto *composite = dynamic_cast<GlComposite *>(entity);
 
     if (composite) {
-      for (auto l : layerParents) {
+      for (auto *l : layerParents) {
         composite->removeLayerParent(l);
       }
     }
@@ -167,7 +167,7 @@ void GlComposite::deleteGlEntity(const string &key, bool informTheEntity) {
   auto *glGraph = dynamic_cast<GlGraph *>(entity);
 
   if (glGraph) {
-    for (auto l : layerParents) {
+    for (auto *l : layerParents) {
       l->glGraphRemoved(glGraph);
     }
   }
@@ -175,7 +175,7 @@ void GlComposite::deleteGlEntity(const string &key, bool informTheEntity) {
   _sortedElements.remove(elements[key]);
   elements.erase(key);
 
-  for (auto l : layerParents) {
+  for (auto *l : layerParents) {
     if (l->getScene()) {
       l->getScene()->notifyModifyLayer(l->getName(), l);
       l->getScene()->notifyDeletedEntity(entity);
@@ -193,7 +193,7 @@ void GlComposite::deleteGlEntity(GlEntity *entity, bool informTheEntity) {
         auto *composite = dynamic_cast<GlComposite *>(entity);
 
         if (composite) {
-          for (auto l : layerParents) {
+          for (auto *l : layerParents) {
             composite->removeLayerParent(l);
           }
         }
@@ -202,7 +202,7 @@ void GlComposite::deleteGlEntity(GlEntity *entity, bool informTheEntity) {
       _sortedElements.remove(it.second);
       elements.erase(it.first);
 
-      for (auto l : layerParents) {
+      for (auto *l : layerParents) {
         if (l->getScene()) {
           l->getScene()->notifyModifyLayer(l->getName(), l);
           l->getScene()->notifyDeletedEntity(entity);
@@ -253,7 +253,7 @@ void GlComposite::getXML(string &outString) {
 
   GlXMLTools::beginChildNode(outString);
 
-  for (auto entity : _sortedElements) {
+  for (auto *entity : _sortedElements) {
     name = findKey(entity);
     GlXMLTools::beginChildNode(outString, "GlEntity");
     GlXMLTools::createProperty(outString, "name", name);

@@ -97,7 +97,7 @@ void HeaderFrame::setExpanded(bool e) {
     return;
   }
 
-  for (auto obj : pw->children()) {
+  for (auto *obj : pw->children()) {
     auto *w = dynamic_cast<QWidget *>(obj);
 
     if (w && w != this) {

@@ -132,22 +132,22 @@ namespace tlp {
 VectorGraph::VectorGraph() = default;
 //=======================================================
 VectorGraph::~VectorGraph() {
-  for (auto values : _nodeValues) {
+  for (auto *values : _nodeValues) {
     delete values;
   }
 
-  for (auto values : _edgeValues) {
+  for (auto *values : _edgeValues) {
     delete values;
   }
 }
 //=======================================================
 void VectorGraph::clear() {
   delAllNodes();
-  for (auto values : _nodeValues) {
+  for (auto *values : _nodeValues) {
     delete values;
   }
 
-  for (auto values : _edgeValues) {
+  for (auto *values : _edgeValues) {
     delete values;
   }
 
@@ -249,7 +249,7 @@ void VectorGraph::swapEdgeOrder(const node n, const edge e1, const edge e2) {
 void VectorGraph::reserveNodes(const size_t nbNodes) {
   _nodes.reserve(nbNodes);
   _nData.reserve(nbNodes);
-  for (auto values : _nodeValues) {
+  for (auto *values : _nodeValues) {
     values->reserve(nbNodes);
   }
 }
@@ -257,7 +257,7 @@ void VectorGraph::reserveNodes(const size_t nbNodes) {
 void VectorGraph::reserveEdges(const size_t nbEdges) {
   _edges.reserve(nbEdges);
   _eData.reserve(nbEdges);
-  for (auto values : _edgeValues) {
+  for (auto *values : _edgeValues) {
     values->reserve(nbEdges);
   }
 }
@@ -655,13 +655,13 @@ void VectorGraph::testCond(string str, bool b) {
 }
 //=======================================================
 void VectorGraph::addNodeToValues(node n) {
-  for (auto values : _nodeValues) {
+  for (auto *values : _nodeValues) {
     values->addElement(n.id);
   }
 }
 //=======================================================
 void VectorGraph::addEdgeToValues(edge e) {
-  for (auto values : _edgeValues) {
+  for (auto *values : _edgeValues) {
     values->addElement(e.id);
   }
 }

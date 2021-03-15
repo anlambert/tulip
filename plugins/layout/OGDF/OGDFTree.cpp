@@ -143,7 +143,7 @@ public:
   bool check(std::string &errorMsg) {
     auto connectedComponents = tlp::ConnectedTest::computeConnectedComponents(graph);
     for (const auto &connectedComponent : connectedComponents) {
-      auto sg = graph->inducedSubGraph(connectedComponent);
+      auto *sg = graph->inducedSubGraph(connectedComponent);
       if (!tlp::TreeTest::isTree(sg)) {
         graph->delSubGraph(sg);
         errorMsg = "Each connected component must be a tree.";

@@ -140,7 +140,7 @@ int WorkspaceExposeWidget::currentPanelIndex() const {
 QVector<WorkspacePanel *> WorkspaceExposeWidget::panels() const {
   QVector<WorkspacePanel *> result;
 
-  for (auto item : _items) {
+  for (auto *item : _items) {
     result << item->panel();
   }
 
@@ -156,7 +156,7 @@ void WorkspaceExposeWidget::setData(const QVector<WorkspacePanel *> &panels,
   scene()->clear();
   _items.clear();
 
-  for (auto p : panels) {
+  for (auto *p : panels) {
     QPixmap pixmap = p->view()
                          ->snapshot(previewSize() * 3)
                          .scaled(previewSize(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
@@ -189,7 +189,7 @@ void WorkspaceExposeWidget::updatePositions(bool resetScenePos) {
   auto *group = new QParallelAnimationGroup(this);
   int x = MARGIN, y = MARGIN;
 
-  for (auto i : _items) {
+  for (auto *i : _items) {
     if (i != _selectedItem) {
       auto *moveAnim = new QPropertyAnimation(i, "pos", group);
       QPointF startPoint = i->pos();

@@ -167,7 +167,7 @@ void TalipotLogger::clear() {
 void TalipotLogger::copy() {
   QStringList strings;
 
-  for (auto item : _ui->listWidget->selectedItems()) {
+  for (auto *item : _ui->listWidget->selectedItems()) {
     strings << item->text();
   }
 

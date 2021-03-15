@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -43,7 +43,7 @@ void InteractorLister::initInteractorsDependencies() {
   for (const std::string &viewName : views) {
     QList<Interactor *> compatibleInteractors;
 
-    for (auto i : interactorToName.keys()) {
+    for (auto *i : interactorToName.keys()) {
       if (i->isCompatible(viewName)) {
         compatibleInteractors << i;
       }
@@ -53,14 +53,14 @@ void InteractorLister::initInteractorsDependencies() {
 
     QList<string> compatibleNames;
 
-    for (auto i : compatibleInteractors) {
+    for (auto *i : compatibleInteractors) {
       compatibleNames << interactorToName[i];
     }
 
     _compatibilityMap[viewName] = compatibleNames;
   }
 
-  for (auto i : interactorToName.keys()) {
+  for (auto *i : interactorToName.keys()) {
     delete i;
   }
 }
