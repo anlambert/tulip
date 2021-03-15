@@ -82,8 +82,8 @@ vector<Font> Font::addFontsFromDir(const std::string &fontsDir) {
 
 void Font::removeFont(const string &fontFile) {
   Font f;
-  for (auto itFamily : _fonts) {
-    for (auto itStyle : itFamily.second) {
+  for (const auto &itFamily : _fonts) {
+    for (const auto &itStyle : itFamily.second) {
       if (itStyle.second.fontFile() == fontFile) {
         f = itStyle.second;
         break;

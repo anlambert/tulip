@@ -206,7 +206,7 @@ void InputSample::treatEvents(const std::vector<Event> &events) {
   bool updated = false;
 
   // A property has been updated clear the cache
-  for (auto event : events) {
+  for (const auto &event : events) {
 
     unsigned int propNum = 0;
 

@@ -53,7 +53,7 @@ int GlyphManager::glyphId(const string &name, bool warnIfNotFound) {
 void GlyphManager::loadGlyphPlugins() {
   glyphList = PluginsManager::availablePlugins<Glyph>();
 
-  for (std::string pluginName : glyphList) {
+  for (const std::string &pluginName : glyphList) {
     int pluginId = PluginsManager::pluginInformation(pluginName).id();
     glyphIdToName[pluginId] = pluginName;
     nameToGlyphId[pluginName] = pluginId;

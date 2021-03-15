@@ -165,7 +165,7 @@ NominalAxisConfigDialog::NominalAxisConfigDialog(NominalParallelAxis *axis)
 
   vector<string> labelsOrder = axis->getLabelsOrder();
 
-  for (auto l : reversed(labelsOrder)) {
+  for (const auto &l : reversed(labelsOrder)) {
     axisLabelsOrder->addItem(tlpStringToQString(l));
   }
 
@@ -232,7 +232,7 @@ void NominalAxisConfigDialog::pressButtonLexOrder() {
       axisLabelsOrder->addItem(tlpStringToQString(l));
     }
   } else {
-    for (auto l : reversed(labelsOrder)) {
+    for (const auto &l : reversed(labelsOrder)) {
       axisLabelsOrder->addItem(tlpStringToQString(l));
     }
   }

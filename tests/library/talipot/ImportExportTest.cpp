@@ -442,7 +442,7 @@ void ImportExportTest::exportImportGraph(tlp::Graph *original, const string &exp
   vector<string> exts = {exportPlugin.fileExtension(), exportPlugin.gzipFileExtensions().front(),
                          exportPlugin.zstdFileExtensions().front()};
 
-  for (auto ext : exts) {
+  for (const auto &ext : exts) {
 
     string exportFilename = exportBaseFilename + "." + ext;
 

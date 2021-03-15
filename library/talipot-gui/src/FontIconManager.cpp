@@ -119,7 +119,7 @@ static QStringList optionKeysForModeAndState(const QString &key, QIcon::Mode mod
 
 static QVariant optionValueForModeAndState(const QString &baseKey, QIcon::Mode mode,
                                            QIcon::State state, const QVariantMap &options) {
-  for (auto key : optionKeysForModeAndState(baseKey, mode, state)) {
+  for (const auto &key : optionKeysForModeAndState(baseKey, mode, state)) {
     if (options.contains(key) && !(options.value(key).toString().isEmpty())) {
       return options.value(key);
     }

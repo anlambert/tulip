@@ -138,7 +138,7 @@ void ViewToolTipAndUrlManager::fillContextMenu(QMenu *menu) {
   }
 
   // insert the StringProperty found
-  for (auto propName : props) {
+  for (const auto &propName : props) {
     // among the view... properties only viewLabel is allowed
     if (propName.find("view") != 0 || propName == "viewLabel") {
       action = urlPropMenu->addAction(tlpStringToQString(propName));

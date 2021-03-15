@@ -111,7 +111,7 @@ QPixmap EdgeExtremityGlyphRenderer::render(int glyphId, const QColor &background
       renderingParamerters.setViewArrow(true);
 
       // init previews
-      for (string glyphName : PluginsManager::availablePlugins<EdgeExtremityGlyph>()) {
+      for (const string &glyphName : PluginsManager::availablePlugins<EdgeExtremityGlyph>()) {
         const Plugin &info = PluginsManager::pluginInformation(glyphName);
         int glId = info.id();
         // Create the glyph preview
