@@ -37,7 +37,7 @@ public:
     observables.clear();
   }
 
-  unsigned int nbObservables() {
+  unsigned int nbObservables() const {
     return observables.size();
   }
 

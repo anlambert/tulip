@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -56,7 +56,7 @@ public:
   /**
    * Get if the polygon is filled or not
    */
-  bool getFillMode();
+  bool getFillMode() const;
 
   /**
    * Set if the polygon is filled or not
@@ -66,7 +66,7 @@ public:
   /**
    * Get if the polygon is outlined or not
    */
-  bool getOutlineMode();
+  bool getOutlineMode() const;
 
   /**
    * Set if the polygon is outlined or not
@@ -76,7 +76,7 @@ public:
   /**
    * Get if the polygon use light or not
    */
-  bool getLightingMode();
+  bool getLightingMode() const;
 
   /**
    * Set if the polygon use light or not
@@ -126,7 +126,7 @@ public:
   /**
    * @brief Get the outline size
    */
-  float getOutlineSize();
+  float getOutlineSize() const;
 
   /**
    * @brief Set the outline size
@@ -136,7 +136,7 @@ public:
   /**
    * Get the lod outline value, below this lod value outline will not be displayed
    */
-  float getHideOutlineLod();
+  float getHideOutlineLod() const;
 
   /**
    * Set the lod outline value, below this lod value outline will not be displayed

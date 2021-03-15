@@ -36,7 +36,7 @@ public:
   virtual void endOfVisit() {}
   virtual void reserveMemoryForGraphElts(unsigned int /*nbNodes*/, unsigned int /*nbEdges*/) {}
 
-  bool isThreadSafe() {
+  bool isThreadSafe() const {
     return threadSafe;
   }
 

@@ -43,7 +43,7 @@ public:
     observables.clear();
   }
 
-  unsigned int nbObservables() {
+  unsigned int nbObservables() const {
     return observables.size();
   }
 
@@ -80,7 +80,7 @@ public:
     properties.clear();
   }
 
-  unsigned int nbProperties() {
+  unsigned int nbProperties() const {
     return properties.size();
   }
 
@@ -88,11 +88,11 @@ public:
     return properties.find(prop) != properties.end();
   }
 
-  node getNode() {
+  node getNode() const {
     return lastNode;
   }
 
-  edge getEdge() {
+  edge getEdge() const {
     return lastEdge;
   }
 

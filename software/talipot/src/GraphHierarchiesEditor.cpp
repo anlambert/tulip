@@ -107,7 +107,7 @@ void CustomTreeView::setAllHierarchyVisible(const QModelIndex &index, bool visib
   }
 }
 
-void CustomTreeView::resizeFirstColumnToContent() {
+void CustomTreeView::resizeFirstColumnToContent() const {
   QTimer::singleShot(100, this, &CustomTreeView::resizeFirstColumnToContentImpl);
 }
 

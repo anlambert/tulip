@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -92,7 +92,7 @@ public:
   /**
    * @return The length tolerance factor when the user doesn't want only the shortest path.
    */
-  double getTolerance();
+  double getTolerance() const;
 
   /**
    * @return The active path highlighters

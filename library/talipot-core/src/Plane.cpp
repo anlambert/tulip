@@ -36,7 +36,7 @@ float Plane::planeValue(float a, float b, float c, float d, float x, float y) {
   return -(a * x + b * y + c) / d;
 }
 
-bool Plane::computePlane(Coord &p1, Coord &p2, Coord &p3, Coord &p4) {
+bool Plane::computePlane(Coord &p1, Coord &p2, Coord &p3, Coord &p4) const {
   // This is not a plane !
   if (a == 0 && b == 0 && c == 0) {
     return false;
@@ -82,6 +82,6 @@ bool Plane::computePlane(Coord &p1, Coord &p2, Coord &p3, Coord &p4) {
   return true;
 }
 
-float Plane::planePointValue(const Coord &pos) {
+float Plane::planePointValue(const Coord &pos) const {
   return (a * pos[0] + b * pos[1] + c * pos[2] + d);
 }

@@ -177,7 +177,7 @@ public:
    * @brief Return if this layer is a working layer
    * A working layer is not displayed on overview
    */
-  bool isAWorkingLayer() {
+  bool isAWorkingLayer() const {
     return workingLayer;
   }
 
@@ -186,7 +186,7 @@ public:
    * A shared camera is a camera used by more than one Layer, so if this layer use a shared camera
    * we don't have to delete it when the layer is destroyed
    */
-  bool useSharedCamera() {
+  bool useSharedCamera() const {
     return sharedCamera;
   }
 

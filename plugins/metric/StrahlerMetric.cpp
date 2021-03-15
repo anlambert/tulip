@@ -24,7 +24,7 @@ using namespace tlp;
 namespace std {
 struct couple {
   int p, r;
-  bool operator==(const couple d) {
+  bool operator==(const couple d) const {
     return (p == d.p) && (r == d.r);
   }
 };

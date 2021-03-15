@@ -702,7 +702,7 @@ private:
    * integrity test.
    * @TODO hide that function in the .cpp file
    */
-  void testCond(std::string str, bool b);
+  void testCond(std::string str, bool b) const;
   //=======================================================
   /**
    * internal function to adjust size of node properties when graph is modified

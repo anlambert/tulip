@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -216,7 +216,7 @@ static bool treatEdges(Graph *graph, tlp::PluginProgress *pp, ExportInterface &e
 struct sortNodes {
   LayoutProperty *layout;
   sortNodes(LayoutProperty *ly) : layout(ly) {}
-  bool operator()(const node i, const node j) {
+  bool operator()(const node i, const node j) const {
     return layout->getNodeValue(i)[2] < layout->getNodeValue(j)[2];
   }
 };

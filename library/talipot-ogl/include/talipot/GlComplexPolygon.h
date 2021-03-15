@@ -156,7 +156,7 @@ public:
   /**
    * @brief Get the texture zoom factor
    */
-  float getTextureZoom() {
+  float getTextureZoom() const {
     return textureZoom;
   }
 

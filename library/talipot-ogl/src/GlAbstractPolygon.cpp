@@ -40,7 +40,7 @@ void GlAbstractPolygon::setPolygonMode(PolygonMode mode) {
   polygonMode = mode;
 }
 //=====================================================
-bool GlAbstractPolygon::getFillMode() {
+bool GlAbstractPolygon::getFillMode() const {
   return filled;
 }
 //=====================================================
@@ -48,7 +48,7 @@ void GlAbstractPolygon::setFillMode(const bool filled) {
   this->filled = filled;
 }
 //=====================================================
-bool GlAbstractPolygon::getOutlineMode() {
+bool GlAbstractPolygon::getOutlineMode() const {
   return outlined;
 }
 //=====================================================
@@ -56,7 +56,7 @@ void GlAbstractPolygon::setOutlineMode(const bool outlined) {
   this->outlined = outlined;
 }
 //=====================================================
-bool GlAbstractPolygon::getLightingMode() {
+bool GlAbstractPolygon::getLightingMode() const {
   return lighting;
 }
 //=====================================================
@@ -72,7 +72,7 @@ void GlAbstractPolygon::setTextureName(const string &name) {
   textureName = name;
 }
 //=====================================================
-float GlAbstractPolygon::getOutlineSize() {
+float GlAbstractPolygon::getOutlineSize() const {
   return outlineSize;
 }
 //=====================================================
@@ -124,7 +124,7 @@ void GlAbstractPolygon::setOutlineColor(const Color &color) {
   outlineColors.push_back(color);
 }
 //=====================================================
-float GlAbstractPolygon::getHideOutlineLod() {
+float GlAbstractPolygon::getHideOutlineLod() const {
   return hideOutlineLod;
 }
 //=====================================================

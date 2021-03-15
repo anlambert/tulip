@@ -183,7 +183,7 @@ void RectanglePacking::modificationOfSequencePair(
   }
 }
 
-float RectanglePacking::calculateRatio() {
+float RectanglePacking::calculateRatio() const {
 
   if (maxHeightOfBoundingBox > maxWidthOfBoundingBox) {
     return (maxHeightOfBoundingBox / maxWidthOfBoundingBox);
@@ -249,7 +249,7 @@ void RectanglePacking::dimensionsBoundingBoxOfNewRectangleAndRectanglesLeftOrBel
 void RectanglePacking::
     modificationCoordinatesRectanglesRightOrAboveNewRectangleInFonctionNewRectangle(
         list<RectangleRelativePosition>::iterator itRectOfSequenceToReposition,
-        int positionInSecondSequence) {
+        int positionInSecondSequence) const {
   if (placesOfRectanglesInSecondSequence[itRectOfSequenceToReposition->rectangleNumber - 1] <
       positionInSecondSequence) {
     float highOrdinate;
@@ -271,7 +271,7 @@ void RectanglePacking::
 void RectanglePacking::
     modificationCoordinatesRectanglesRightOrAboveNewRectangleInFonctionAlreadyRepositionnedRectangles(
         list<RectangleRelativePosition>::iterator itFirstRectangleRightOrAboveOfNewRectangle,
-        list<RectangleRelativePosition>::iterator itRectOfSequenceToReposition) {
+        list<RectangleRelativePosition>::iterator itRectOfSequenceToReposition) const {
 
   list<RectangleRelativePosition>::iterator itRectOfSequenceAlreadyRepositionned;
   float rightAbscissa;
@@ -315,7 +315,7 @@ void RectanglePacking::dimensionsBoundingBoxOfAllOptimalPositionnedRectangles(
   }
 }
 
-int RectanglePacking::calculOfNumberOptimalRepositionnedRectangles(const char *quality) {
+int RectanglePacking::calculOfNumberOptimalRepositionnedRectangles(const char *quality) const {
 
   double numberOfRectanglesDouble = numberOfRectangles;
 
@@ -398,7 +398,7 @@ void RectanglePacking::defaultPositionRestOfRectangles(vector<Rectangle<float>>:
   */
 }
 
-void RectanglePacking::lineOrColumnToStart(bool &boolWidth, bool &boolHeight) {
+void RectanglePacking::lineOrColumnToStart(bool &boolWidth, bool &boolHeight) const {
   if (bestHeightOfBoundingBox < bestWidthOfBoundingBox) {
     boolWidth = 1;
     boolHeight = 0;
@@ -610,7 +610,7 @@ void RectanglePacking::optimalPositionOfNewRectangleLimPos(
   modificationOfSequencePair(itNewRect, itBestPositionInFirstSequence);
 }
 
-int RectanglePacking::calculNumberOfTestedPositions(const char *quality) {
+int RectanglePacking::calculNumberOfTestedPositions(const char *quality) const {
 
   double numberOfRectanglesDouble = numberOfRectangles;
 

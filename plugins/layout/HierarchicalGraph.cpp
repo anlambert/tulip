@@ -50,7 +50,7 @@ class LessThanEdge {
 public:
   DoubleProperty *metric;
   Graph *sg;
-  bool operator()(edge e1, edge e2) {
+  bool operator()(edge e1, edge e2) const {
     return (metric->getNodeValue(sg->source(e1)) < metric->getNodeValue(sg->source(e2)));
   }
 };

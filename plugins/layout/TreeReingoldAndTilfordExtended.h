@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -59,7 +59,7 @@ public:
 private:
   void calcLayout(tlp::node, std::unordered_map<tlp::node, double> *, double, double, int,
                   std::unordered_map<int, double> &);
-  double calcDecal(const std::list<LR> &, const std::list<LR> &);
+  double calcDecal(const std::list<LR> &, const std::list<LR> &) const;
   std::list<LR> *mergeLRList(std::list<LR> *, std::list<LR> *, double decal);
   std::list<LR> *TreePlace(tlp::node, std::unordered_map<tlp::node, double> *);
   void TreeLevelSizing(tlp::node, std::unordered_map<int, double> &, int,

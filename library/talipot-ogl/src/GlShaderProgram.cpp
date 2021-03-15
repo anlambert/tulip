@@ -295,7 +295,7 @@ GlShaderProgram *GlShaderProgram::getCurrentActiveShader() {
   return currentActiveShaderProgram;
 }
 
-GLint GlShaderProgram::getUniformVariableLocation(const std::string &variableName) {
+GLint GlShaderProgram::getUniformVariableLocation(const std::string &variableName) const {
   return glGetUniformLocation(programObjectId, variableName.c_str());
 }
 
@@ -458,7 +458,7 @@ void GlShaderProgram::setUniformVec4Bool(const std::string &variableName, const 
   glUniform4i(loc, b1, b2, b3, b4);
 }
 
-GLint GlShaderProgram::getAttributeVariableLocation(const std::string &variableName) {
+GLint GlShaderProgram::getAttributeVariableLocation(const std::string &variableName) const {
   return glGetAttribLocation(programObjectId, variableName.c_str());
 }
 

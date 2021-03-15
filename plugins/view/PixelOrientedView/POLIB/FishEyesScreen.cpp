@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -63,7 +63,7 @@ void FishEyesScreen::setRadius(double r) {
   R = r * r / 2.0;
 }
 //==============================================================
-double FishEyesScreen::getRadius() {
+double FishEyesScreen::getRadius() const {
   return sqrt(2.0 * R);
 }
 //==============================================================

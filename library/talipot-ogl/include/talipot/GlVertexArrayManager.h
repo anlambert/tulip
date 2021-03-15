@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -79,7 +79,7 @@ public:
   /**
    * Return if this GlVertexArrayManager is used to render entities of the scene
    */
-  bool renderingIsBegin() {
+  bool renderingIsBegin() const {
     return isBegin;
   }
 
@@ -123,7 +123,7 @@ public:
    */
   void activate(bool act);
 
-  bool isActivated() {
+  bool isActivated() const {
     return activated;
   }
 

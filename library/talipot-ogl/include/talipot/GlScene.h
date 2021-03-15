@@ -318,7 +318,7 @@ public:
   /**
    * @brief Scene is render in orthogonal mode ?
    */
-  bool isViewOrtho() {
+  bool isViewOrtho() const {
     return viewOrtho;
   }
 

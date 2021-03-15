@@ -34,7 +34,7 @@ GlStar::GlStar(const Coord &position, const Size &size, unsigned int numberOfSta
 //=====================================================
 GlStar::~GlStar() = default;
 //=====================================================
-unsigned int GlStar::getNumberOfStarPoints() {
+unsigned int GlStar::getNumberOfStarPoints() const {
   return numberOfStarPoints;
 }
 //=====================================================

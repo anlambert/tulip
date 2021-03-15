@@ -281,7 +281,7 @@ MCLClustering::~MCLClustering() = default;
 //================================================================================
 struct DegreeSort {
   DegreeSort(VectorGraph &g) : g(g) {}
-  bool operator()(node a, node b) {
+  bool operator()(node a, node b) const {
     unsigned int da = g.deg(a), db = g.deg(b);
 
     if (da == db) {

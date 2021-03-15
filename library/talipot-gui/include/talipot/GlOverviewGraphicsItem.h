@@ -37,10 +37,10 @@ public:
   ~GlOverviewGraphicsItem() override;
 
   void setSize(unsigned int width, unsigned int height);
-  unsigned int getWidth() {
+  unsigned int getWidth() const {
     return width;
   }
-  unsigned int getHeight() {
+  unsigned int getHeight() const {
     return height;
   }
 

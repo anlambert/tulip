@@ -238,7 +238,7 @@ double LinLogLayout::getGravitationEnergy(node u) {
  * Returns the Euclidean distance between the positions pos1 and pos2.
  * @return Euclidean distance between the positions pos1 and pos2
  */
-double LinLogLayout::getDist(const Coord &pos1, const Coord &pos2) {
+double LinLogLayout::getDist(const Coord &pos1, const Coord &pos2) const {
   double dist = 0.0;
 
   for (unsigned int d = 0; d < _dim; ++d) {
@@ -249,7 +249,7 @@ double LinLogLayout::getDist(const Coord &pos1, const Coord &pos2) {
   return sqrt(dist);
 }
 
-double LinLogLayout::getDistForComparison(const Coord &pos1, const Coord &pos2) {
+double LinLogLayout::getDistForComparison(const Coord &pos1, const Coord &pos2) const {
   double dist = 0.0;
 
   for (unsigned int d = 0; d < _dim; ++d) {

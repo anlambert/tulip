@@ -226,7 +226,7 @@ void SimpleStringsListSelectionWidget::pressButtonUnselectAll() {
   unselectAllStrings();
 }
 
-void SimpleStringsListSelectionWidget::listItemClicked(QListWidgetItem *item) {
+void SimpleStringsListSelectionWidget::listItemClicked(QListWidgetItem *item) const {
   if (maxSelectedStringsListSize != 0 &&
       getSelectedStringsList().size() > maxSelectedStringsListSize) {
     if (item->checkState() == Qt::Checked) {

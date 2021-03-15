@@ -128,7 +128,7 @@ const GlGraphInputData *entityWithDistanceCompare::inputData = nullptr;
 class GreatThanNode {
 public:
   NumericProperty *metric;
-  bool operator()(pair<node, float> n1, pair<node, float> n2) {
+  bool operator()(pair<node, float> n1, pair<node, float> n2) const {
     return (metric->getNodeDoubleValue(n1.first) > metric->getNodeDoubleValue(n2.first));
   }
 };
@@ -138,7 +138,7 @@ public:
 class GreatThanEdge {
 public:
   NumericProperty *metric;
-  bool operator()(pair<edge, float> e1, pair<edge, float> e2) {
+  bool operator()(pair<edge, float> e1, pair<edge, float> e2) const {
     return (metric->getEdgeDoubleValue(e1.first) > metric->getEdgeDoubleValue(e2.first));
   }
 };

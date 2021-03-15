@@ -400,7 +400,7 @@ struct TLPParser {
     }
   }
 
-  bool formatError(const std::string &value) {
+  bool formatError(const std::string &value) const {
     std::stringstream ess;
     ess << "Error when parsing '" << value.c_str() << "' at line " << tokenParser->curLine + 1;
 

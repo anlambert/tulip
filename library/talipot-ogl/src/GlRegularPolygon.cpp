@@ -42,7 +42,7 @@ void GlRegularPolygon::setStartAngle(float angle) {
   computePolygon();
 }
 //=====================================================
-unsigned int GlRegularPolygon::getNumberOfSides() {
+unsigned int GlRegularPolygon::getNumberOfSides() const {
   return numberOfSides;
 }
 //=====================================================

@@ -58,7 +58,7 @@ void ConvolutionClustering::setParameters(int histosize, int threshold, int widt
   this->width = width;
 }
 //================================================================================
-void ConvolutionClustering::getParameters(int &histosize, int &threshold, int &width) {
+void ConvolutionClustering::getParameters(int &histosize, int &threshold, int &width) const {
   histosize = this->histosize;
   threshold = this->threshold;
   width = this->width;

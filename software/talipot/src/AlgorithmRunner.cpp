@@ -76,7 +76,7 @@ void AlgorithmRunner::buildTreeUi(QWidget *w, PluginModel<tlp::Algorithm> *model
   }
 }
 
-void AlgorithmRunner::insertItem(QWidget *w, const QString &name) {
+void AlgorithmRunner::insertItem(QWidget *w, const QString &name) const {
 
   const Plugin &plugin = PluginsManager::pluginInformation(QStringToTlpString(name));
   QString category = plugin.category().c_str();

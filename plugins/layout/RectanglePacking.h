@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -157,7 +157,7 @@ public:
    */
   void modificationCoordinatesRectanglesRightOrAboveNewRectangleInFonctionNewRectangle(
       std::list<RectangleRelativePosition>::iterator itRectOfSequenceToReposition,
-      int positionInSecondSequence);
+      int positionInSecondSequence) const;
 
   /**
    *Compare the left abscissa and the low ordonate of the rectangle pointed by
@@ -173,7 +173,7 @@ public:
   void
   modificationCoordinatesRectanglesRightOrAboveNewRectangleInFonctionAlreadyRepositionnedRectangles(
       std::list<RectangleRelativePosition>::iterator itFirstRectangleRightOrAboveOfNewRectangle,
-      std::list<RectangleRelativePosition>::iterator itRectOfSequenceToReposition);
+      std::list<RectangleRelativePosition>::iterator itRectOfSequenceToReposition) const;
 
   /**
    *Search the dimensions of the rectangle including the rectangles on the
@@ -197,17 +197,17 @@ public:
    *@return an integer equal to the number of rectangles we want to pack
    * in an optimal way.
    */
-  int calculOfNumberOptimalRepositionnedRectangles(const char *quality);
+  int calculOfNumberOptimalRepositionnedRectangles(const char *quality) const;
 
   /**
    *Calculate the ratio width/height or height/width so that the return >=1.
    */
-  float calculateRatio();
+  float calculateRatio() const;
 
   /**
    *decide if a new rectangle is going to be placed in line or in column.
    */
-  void lineOrColumnToStart(bool &boolWidth, bool &boolHeight);
+  void lineOrColumnToStart(bool &boolWidth, bool &boolHeight) const;
 
   /**
    *End a line and decide if the rectangle pointed is going to start a line
@@ -244,7 +244,7 @@ public:
    *Calculate the number of rectangles we can pack without go beyond the
    *complexity desired.
    */
-  int calculNumberOfTestedPositions(const char *quality);
+  int calculNumberOfTestedPositions(const char *quality) const;
 };
 
 #endif // RECTANGLE_PACKING_H

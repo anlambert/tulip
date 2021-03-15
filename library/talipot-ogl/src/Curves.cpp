@@ -113,7 +113,7 @@ struct CurvePoints {
     data = newData;
     ++size;
   }
-  Coord &operator()(unsigned int i, unsigned int j) {
+  Coord &operator()(unsigned int i, unsigned int j) const {
     return reinterpret_cast<Coord &>(data[j * size * 3 + i * 3]);
   }
 };

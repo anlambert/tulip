@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -52,13 +52,13 @@ public:
   /**
    * Computes a quad from the plane
    */
-  bool computePlane(Coord &p1, Coord &p2, Coord &p3, Coord &p4);
+  bool computePlane(Coord &p1, Coord &p2, Coord &p3, Coord &p4) const;
 
   /**
    * Given a point, this function returns aX + bY + cZ + d.
    * This is mainly used to determine if a point is above or under the plane.
    */
-  float planePointValue(const Coord &pos);
+  float planePointValue(const Coord &pos) const;
 };
 }
 #endif // TALIPOT_PLANE_H

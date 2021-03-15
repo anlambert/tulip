@@ -27,7 +27,7 @@ HierarchicalClustering::~HierarchicalClustering() = default;
 class LessThan {
 public:
   DoubleProperty *metric;
-  bool operator()(node n1, node n2) {
+  bool operator()(node n1, node n2) const {
     return (metric->getNodeValue(n1) < metric->getNodeValue(n2));
   }
 };

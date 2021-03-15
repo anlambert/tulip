@@ -154,7 +154,7 @@ bool CSVSimpleParser::parse(CSVContentHandler *handler, PluginProgress *progress
   }
 }
 
-bool CSVSimpleParser::multiplatformgetline(istream &is, string &str) {
+bool CSVSimpleParser::multiplatformgetline(istream &is, string &str) const {
   // nothing new to read.
   if (is.eof()) {
     return false;
@@ -300,7 +300,7 @@ string CSVSimpleParser::treatToken(const string &token, int, int) {
   return removeQuotesIfAny(currentToken);
 }
 
-string CSVSimpleParser::removeQuotesIfAny(string &s) {
+string CSVSimpleParser::removeQuotesIfAny(string &s) const {
   // remove special chars at the beginning and end
   string::size_type pos = s.find_first_not_of(defaultRejectedChars);
   if (pos && pos != string::npos) {

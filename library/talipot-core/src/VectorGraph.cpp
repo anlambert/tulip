@@ -646,7 +646,7 @@ void VectorGraph::integrityTest() {
 }
 
 //=======================================================
-void VectorGraph::testCond(string str, bool b) {
+void VectorGraph::testCond(string str, bool b) const {
   if (!b) {
     tlp::debug() << str << flush << endl;
     dump();

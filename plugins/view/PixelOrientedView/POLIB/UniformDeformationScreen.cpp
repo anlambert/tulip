@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -47,7 +47,7 @@ void UniformDeformationScreen::setTranslation(double x, double y) {
   updateMatrix();
 }
 //=======================================================
-void UniformDeformationScreen::getTranslation(double &x, double &y) {
+void UniformDeformationScreen::getTranslation(double &x, double &y) const {
   x = _tx;
   y = _ty;
 }
@@ -57,7 +57,7 @@ void UniformDeformationScreen::setZoom(double zoom) {
   updateMatrix();
 }
 //=======================================================
-double UniformDeformationScreen::getZoom() {
+double UniformDeformationScreen::getZoom() const {
   return _zoom;
 }
 //=======================================================

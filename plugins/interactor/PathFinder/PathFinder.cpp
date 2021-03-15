@@ -179,7 +179,7 @@ void PathFinder::setPathsType(const QString &pathType) {
   _configurationWidget->toleranceDisabled(disabled);
 }
 
-double PathFinder::getTolerance() {
+double PathFinder::getTolerance() const {
   if (!toleranceActivated) {
     return DBL_MAX;
   }

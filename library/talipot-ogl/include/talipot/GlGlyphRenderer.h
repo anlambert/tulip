@@ -79,7 +79,7 @@ public:
 
   void startRendering();
 
-  bool renderingHasStarted();
+  bool renderingHasStarted() const;
 
   void addNodeGlyphRendering(Glyph *glyph, node n, float lod, const Coord &nodePos,
                              const Size &nodeSize, float nodeRot, bool selected);

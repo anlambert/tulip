@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -22,9 +22,9 @@ public:
   tlp::Vec2f project(const tlp::Vec2f &) const override;
   tlp::Vec2f unproject(const tlp::Vec2f &) const override;
   void setTranslation(double x, double y);
-  void getTranslation(double &x, double &y);
+  void getTranslation(double &x, double &y) const;
   void setZoom(double zoom);
-  double getZoom();
+  double getZoom() const;
   UniformDeformationScreen();
 
 private:

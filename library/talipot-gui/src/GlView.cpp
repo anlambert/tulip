@@ -450,7 +450,7 @@ bool GlView::getNodeOrEdgeAtViewportPos(GlWidget *glw, int x, int y, node &n, ed
 }
 
 bool GlView::pickNodeEdge(const int x, const int y, node &n, edge &e, bool pickNode,
-                          bool pickEdge) {
+                          bool pickEdge) const {
   SelectedEntity selectedEntity;
   bool foundEntity =
       getGlWidget()->pickNodesEdges(x, y, selectedEntity, nullptr, pickNode, pickEdge);
@@ -469,7 +469,7 @@ bool GlView::pickNodeEdge(const int x, const int y, node &n, edge &e, bool pickN
   return false;
 }
 
-void GlView::zoomAndPanAnimation(const tlp::BoundingBox &boundingBox, const double duration) {
+void GlView::zoomAndPanAnimation(const tlp::BoundingBox &boundingBox, const double duration) const {
   BoundingBox bb;
   if (bb.isValid()) {
     bb = boundingBox;

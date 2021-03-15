@@ -48,7 +48,7 @@ public:
   virtual QWidget *getConfigurationWidget() = 0;
 
 protected:
-  tlp::GlLayer *getWorkingLayer(tlp::GlScene *scene);
+  tlp::GlLayer *getWorkingLayer(tlp::GlScene *scene) const;
   tlp::GlGraphInputData *getInputData(tlp::GlWidget *glWidget);
   void addGlEntity(tlp::GlScene *scene, tlp::GlEntity *entity, bool deleteOnExit = true,
                    const std::string &name = "");

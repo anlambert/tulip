@@ -114,7 +114,7 @@ public:
    *  @return true if something has been found, false otherwise
    */
   bool pickNodeEdge(const int x, const int y, tlp::node &n, tlp::edge &e, bool pickNode = true,
-                    bool pickEdge = true);
+                    bool pickEdge = true) const;
 
   /**
    * @brief Rotate the view camera by (x,y,z)
@@ -122,7 +122,7 @@ public:
    * @param y rotation around the Y axis in degree
    * @param z rotation around Z axis in degree
    */
-  void rotateCamera(int x, int y, int z) {
+  void rotateCamera(int x, int y, int z) const {
     getGlWidget()->getScene()->rotateCamera(x, y, z);
   }
 
@@ -132,7 +132,7 @@ public:
    * @param y offset along the Y axis
    * @param z offset along the Z axis
    */
-  void translateCamera(int x, int y, int z) {
+  void translateCamera(int x, int y, int z) const {
     getGlWidget()->getScene()->translateCamera(x, y, z);
   }
 
@@ -154,7 +154,7 @@ public:
    * @brief Zoom by step to the given (x,y) view position
    * @param step of zoom
    */
-  void zoomXY(int step, const int x, const int y) {
+  void zoomXY(int step, const int x, const int y) const {
     getGlWidget()->getScene()->zoomXY(step, x, y);
   }
 
@@ -162,7 +162,7 @@ public:
    * @brief Zoom by step
    * @param step of zoom
    */
-  void zoom(int step) {
+  void zoom(int step) const {
     getGlWidget()->getScene()->zoom(step);
   }
 
@@ -170,7 +170,7 @@ public:
    * @brief Zoom by factor
    * @param factor of zoom
    */
-  void zoomFactor(float factor) {
+  void zoomFactor(float factor) const {
     getGlWidget()->getScene()->zoomFactor(factor);
   }
 
@@ -182,7 +182,8 @@ public:
    * bounding box.
    * @param duration the animation duration in msecs
    */
-  void zoomAndPanAnimation(const tlp::BoundingBox &boundingBox, const double duration = 1000.);
+  void zoomAndPanAnimation(const tlp::BoundingBox &boundingBox,
+                           const double duration = 1000.) const;
 
 public slots:
   /**

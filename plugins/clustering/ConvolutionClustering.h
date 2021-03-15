@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -43,7 +43,7 @@ public:
   bool check(std::string &) override;
   std::vector<double> *getHistogram();
   void setParameters(int histosize, int threshold, int width);
-  void getParameters(int &histosize, int &threshold, int &width);
+  void getParameters(int &histosize, int &threshold, int &width) const;
   void autoSetParameter();
   std::list<int> getLocalMinimum();
 

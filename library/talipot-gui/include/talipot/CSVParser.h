@@ -122,9 +122,9 @@ private:
    * @brief Function to extract a line from a istream. Can handle Linux,Mac and Windows end of line
    *pattern.
    **/
-  bool multiplatformgetline(std::istream &is, std::string &str);
+  bool multiplatformgetline(std::istream &is, std::string &str) const;
 
-  std::string removeQuotesIfAny(std::string &s);
+  std::string removeQuotesIfAny(std::string &s) const;
   std::string _fileName;
   QString _separator;
   char _textDelimiter;

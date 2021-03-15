@@ -92,7 +92,7 @@ void GlGlyphRenderer::startRendering() {
   }
 }
 
-bool GlGlyphRenderer::renderingHasStarted() {
+bool GlGlyphRenderer::renderingHasStarted() const {
   return _renderingStarted;
 }
 

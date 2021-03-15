@@ -141,7 +141,7 @@ public:
     maxLineNumber = lineNumber + 1;
   }
 
-  unsigned int getFirstLineIndex() {
+  unsigned int getFirstLineIndex() const {
     return firstLineIndex;
   }
 
@@ -149,7 +149,7 @@ public:
     firstLineIndex = index;
   }
 
-  int getNbCommentsLines() {
+  int getNbCommentsLines() const {
     return nbCommentsLines;
   }
 

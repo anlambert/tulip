@@ -45,7 +45,7 @@ class AlgorithmRunner : public QWidget {
   void refreshTreeUi(QWidget *w);
   void buildTreeUi(QWidget *w, tlp::PluginModel<tlp::Algorithm> *model, const QModelIndex &parent,
                    bool root = false);
-  void insertItem(QWidget *w, const QString &name);
+  void insertItem(QWidget *w, const QString &name) const;
 
 public:
   explicit AlgorithmRunner(QWidget *parent = nullptr);

@@ -22,7 +22,7 @@
 class LessThanNode2 {
 public:
   tlp::DoubleProperty *metric;
-  bool operator()(tlp::node n1, tlp::node n2) {
+  bool operator()(tlp::node n1, tlp::node n2) const {
     return (metric->getNodeValue(n1) < metric->getNodeValue(n2));
   }
 };

@@ -887,13 +887,13 @@ QVector<QString> PythonInterpreter::getBaseTypesForType(const QString &typeName)
   return ret;
 }
 
-void PythonInterpreter::holdGIL() {
+void PythonInterpreter::holdGIL() const {
   if (!_wasInit) {
     gilState = PyGILState_Ensure();
   }
 }
 
-void PythonInterpreter::releaseGIL() {
+void PythonInterpreter::releaseGIL() const {
   if (!_wasInit) {
     PyGILState_Release(gilState);
   }
@@ -949,7 +949,7 @@ double PythonInterpreter::getPythonVersion() const {
   return atof(QStringToTlpString(_pythonVersion).c_str());
 }
 
-void PythonInterpreter::sendOutputToConsole(const QString &output, bool stdErr) {
+void PythonInterpreter::sendOutputToConsole(const QString &output, bool stdErr) const {
   bool textOutput = false;
 
   if (consoleOuputEmitter) {

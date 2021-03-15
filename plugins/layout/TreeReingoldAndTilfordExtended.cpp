@@ -55,7 +55,7 @@ TreeReingoldAndTilfordExtended::TreeReingoldAndTilfordExtended(const tlp::Plugin
 TreeReingoldAndTilfordExtended::~TreeReingoldAndTilfordExtended() = default;
 //=============================================================================
 double TreeReingoldAndTilfordExtended::calcDecal(const std::list<LR> &arbreG,
-                                                 const std::list<LR> &arbreD) {
+                                                 const std::list<LR> &arbreD) const {
   double decal = 0;
   int iG = 0, iD = 0;
   auto itG = arbreG.begin();

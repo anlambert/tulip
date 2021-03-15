@@ -143,7 +143,7 @@ SOMPropertiesWidget::~SOMPropertiesWidget() {
 
 void SOMPropertiesWidget::diffusionMethodChange() {}
 
-void SOMPropertiesWidget::scalingMethodChange(QAbstractButton *button) {
+void SOMPropertiesWidget::scalingMethodChange(QAbstractButton *button) const {
   if (button == singleColorScale) {
     editGradients->setEnabled(false);
   } else {

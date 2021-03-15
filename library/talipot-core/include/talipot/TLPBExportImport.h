@@ -145,7 +145,7 @@ struct TLPBHeader {
       : magicNumber(TLPB_MAGIC_NUMBER), major(TLPB_MAJOR), minor(TLPB_MINOR), numNodes(nbN),
         numEdges(nbE) {}
 
-  bool checkCompatibility() {
+  bool checkCompatibility() const {
     return ((magicNumber == TLPB_MAGIC_NUMBER) && (major == TLPB_MAJOR) && (minor <= TLPB_MINOR));
   }
 };

@@ -149,7 +149,7 @@ struct GMLGraphBuilder : public GMLTrue {
   bool setEdgeValue(edge, const string &, double) {
     return true;
   }
-  void setEdgeValue(edge e, const LineType::RealType &lCoord) {
+  void setEdgeValue(edge e, const LineType::RealType &lCoord) const {
     _graph->getLocalLayoutProperty("viewLayout")->setEdgeValue(e, lCoord);
   }
   bool setAllNodeValue(const string, const string, string) {
@@ -220,13 +220,13 @@ struct GMLNodeBuilder : public GMLBuilder {
 
     return true;
   }
-  void setColor(const Color &color) {
+  void setColor(const Color &color) const {
     graphBuilder->setNodeValue(idSet, "viewColor", color);
   }
-  void setSize(const Size &size) {
+  void setSize(const Size &size) const {
     graphBuilder->setNodeSizeValue(idSet, "viewSize", size);
   }
-  void setCoord(const Coord &coord) {
+  void setCoord(const Coord &coord) const {
     graphBuilder->setNodeCoordValue(idSet, "viewLayout", coord);
   }
   bool addStruct(const string &structName, GMLBuilder *&newBuilder) override;
@@ -426,7 +426,7 @@ struct GMLEdgeBuilder : public GMLTrue {
 
     return true;
   }
-  void setEdgeValue(const LineType::RealType &lCoord) {
+  void setEdgeValue(const LineType::RealType &lCoord) const {
     graphBuilder->setEdgeValue(curEdge, lCoord);
   }
   bool addStruct(const string &structName, GMLBuilder *&newBuilder) override;
@@ -445,7 +445,7 @@ struct GMLEdgeGraphicsBuilder : public GMLTrue {
   bool addString(const string &, const string &) override {
     return true;
   }
-  void setLine(const LineType::RealType &lCoord) {
+  void setLine(const LineType::RealType &lCoord) const {
     edgeBuilder->setEdgeValue(lCoord);
   }
   bool addStruct(const string &structName, GMLBuilder *&newBuilder) override;

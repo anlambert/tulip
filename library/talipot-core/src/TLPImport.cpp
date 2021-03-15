@@ -155,11 +155,11 @@ struct TLPGraphBuilder : public TLPTrue {
 
     return true;
   }
-  bool reserveNodes(int nbNodes) {
+  bool reserveNodes(int nbNodes) const {
     _graph->reserveNodes(nbNodes);
     return true;
   }
-  bool reserveEdges(int nbEdges) {
+  bool reserveEdges(int nbEdges) const {
     _graph->reserveEdges(nbEdges);
     return true;
   }
@@ -599,10 +599,10 @@ struct TLPClusterBuilder : public TLPFalse {
     return true;
   }
   bool addStruct(const std::string &structName, TLPBuilder *&newBuilder) override;
-  bool addNode(int nodeId) {
+  bool addNode(int nodeId) const {
     return graphBuilder->addClusterNode(nodeId);
   }
-  bool addEdge(int edgeId) {
+  bool addEdge(int edgeId) const {
     return graphBuilder->addClusterEdge(edgeId);
   }
   bool close() override {

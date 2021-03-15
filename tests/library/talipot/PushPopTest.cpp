@@ -1105,7 +1105,7 @@ public:
     properties.clear();
   }
 
-  unsigned int nbProperties() {
+  unsigned int nbProperties() const {
     return properties.size();
   }
 

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -59,8 +59,8 @@ private:
   double getAttractionEnergy(node u);
   double getRepulsionEnergy(node u);
   double getEnergy(node u);
-  double getDist(const Coord &pos1, const Coord &pos2);
-  double getDistForComparison(const Coord &pos1, const Coord &pos2);
+  double getDist(const Coord &pos1, const Coord &pos2) const;
+  double getDistForComparison(const Coord &pos1, const Coord &pos2) const;
 
   double addRepulsionDir(node u, double *dir);
   double addAttractionDir(node u, double *dir);

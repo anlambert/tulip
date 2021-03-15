@@ -577,8 +577,8 @@ public:
   void disableAttributesArrays();
 
 private:
-  GLint getUniformVariableLocation(const std::string &variableName);
-  GLint getAttributeVariableLocation(const std::string &variableName);
+  GLint getUniformVariableLocation(const std::string &variableName) const;
+  GLint getAttributeVariableLocation(const std::string &variableName) const;
 
   std::string programName;
   GLuint programObjectId;
