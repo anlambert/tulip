@@ -788,7 +788,7 @@ bool getCoordFromGraphvizPos(Coord &outCoord, const string &inValue) {
 
 bool getCoordsFromGraphvizPos(vector<Coord> &outCoords, const string &inValue) {
   vector<string> points = tokenize(inValue);
-  for (auto point : points) {
+  for (const auto &point : points) {
     // skip anchor points
     if (point[0] == 'e' || point[1] == 's') {
       continue;

@@ -13,6 +13,8 @@
 
 #include <GL/glew.h>
 
+#include <algorithm>
+
 #include <talipot/GlAbstractPolygon.h>
 #include <talipot/GlTools.h>
 #include <talipot/OpenGlConfigManager.h>
@@ -161,14 +163,8 @@ void GlAbstractPolygon::draw(float lod, Camera *) {
       normalPoints.push_back(points[0]);
 
       for (size_t i = 1; i < points.size() && normalPoints.size() < 3; ++i) {
-        bool find = false;
-
-        for (size_t j = 0; j < normalPoints.size(); ++j) {
-          if (normalPoints[j] == points[i]) {
-            find = true;
-            break;
-          }
-        }
+        bool find =
+            std::find(normalPoints.begin(), normalPoints.end(), points[i]) != normalPoints.end();
 
         if (!find) {
           normalPoints.push_back(points[i]);

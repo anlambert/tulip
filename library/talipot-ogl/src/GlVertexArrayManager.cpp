@@ -763,9 +763,9 @@ void GlVertexArrayManager::endOfVisit() {
 
       auto &qcolors = eInfos.quadColors;
       if (colorInterpolate) {
-        for (size_t i = 0; i < qcolors.size(); ++i) {
-          quadsColorsArray.push_back(qcolors[i]);
-          quadsColorsArray.push_back(qcolors[i]);
+        for (const auto &qcolor : qcolors) {
+          quadsColorsArray.push_back(qcolor);
+          quadsColorsArray.push_back(qcolor);
         }
       } else {
         quadsColorsArray.insert(quadsColorsArray.end(), 2 * qcolors.size(), eInfos.edgeColor);

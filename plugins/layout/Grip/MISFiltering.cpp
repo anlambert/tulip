@@ -56,9 +56,7 @@ void MISFiltering::computeFiltering() {
 
     unsigned int depth = 2u << (level - 1u);
 
-    for (unsigned int i = 0; i < toVisit.size(); ++i) {
-      node current = toVisit[i];
-
+    for (auto current : toVisit) {
       if (removedVisit.get(current.id)) {
         continue;
       }

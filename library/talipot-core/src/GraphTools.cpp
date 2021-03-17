@@ -468,8 +468,8 @@ void selectMinimumSpanningTree(Graph *graph, BooleanProperty *selection,
 
   const vector<node> &nodes = graph->nodes();
 
-  for (unsigned int i = 0; i < nodes.size(); ++i) {
-    selection->setNodeValue(nodes[i], true);
+  for (auto node : nodes) {
+    selection->setNodeValue(node, true);
   }
 
   selection->setAllEdgeValue(false);

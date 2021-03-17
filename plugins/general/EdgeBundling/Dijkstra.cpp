@@ -129,8 +129,8 @@ void Dijkstra::initDijkstra(const tlp::Graph *const forbidden, tlp::node srcTlp,
     DijkstraElement *dEle = mapDik[n];
     nodeDistance[n] = dEle->dist;
 
-    for (size_t i = 0; i < dEle->usedEdge.size(); ++i) {
-      usedEdges[dEle->usedEdge[i]] = true;
+    for (auto e : dEle->usedEdge) {
+      usedEdges[e] = true;
     }
 
     delete dEle;

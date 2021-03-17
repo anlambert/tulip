@@ -161,14 +161,14 @@ void GraphUpdatesRecorder::deleteDeletedObjects() {
   auto &subGraphsToDelete = updatesReverted ? addedSubGraphs : deletedSubGraphs;
 
   // loop on properties
-  for (auto &[graph, properties] : propertiesToDelete) {
+  for (const auto &[graph, properties] : propertiesToDelete) {
     for (auto *property : properties) {
       delete property;
     }
   }
 
   // loop on sub graphs
-  for (auto &[g, sg] : subGraphsToDelete) {
+  for (const auto &[g, sg] : subGraphsToDelete) {
     sg->clearSubGraphs();
     delete sg;
   }
@@ -177,7 +177,7 @@ void GraphUpdatesRecorder::deleteDeletedObjects() {
 // clean up all the MutableContainers
 void GraphUpdatesRecorder::deleteValues(
     std::unordered_map<PropertyInterface *, RecordedValues> &values) {
-  for (auto &[property, rvalues] : values) {
+  for (const auto &[property, rvalues] : values) {
     delete rvalues.values;
     delete rvalues.recordedNodes;
     delete rvalues.recordedEdges;
@@ -189,7 +189,7 @@ void GraphUpdatesRecorder::deleteValues(
 // delete all the DataMem referenced by a std::unordered_map
 void GraphUpdatesRecorder::deleteDefaultValues(
     std::unordered_map<PropertyInterface *, DataMem *> &values) {
-  for (auto &[property, value] : values) {
+  for (const auto &[property, value] : values) {
     delete value;
   }
 

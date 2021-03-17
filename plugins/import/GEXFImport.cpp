@@ -150,8 +150,8 @@ public:
 
     // Special case : some GEXF files declare edges before nodes
     // so we have to add edges once nodes have been parsed
-    for (size_t i = 0; i < edgesTmp.size(); ++i) {
-      graph->addEdge(nodesMap[edgesTmp[i].first], nodesMap[edgesTmp[i].second]);
+    for (const auto &[srcId, tgtId] : edgesTmp) {
+      graph->addEdge(nodesMap[srcId], nodesMap[tgtId]);
     }
 
     // nodes shape will be circle

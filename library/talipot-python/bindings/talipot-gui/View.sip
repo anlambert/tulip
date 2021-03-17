@@ -263,7 +263,7 @@ Installs a new set of interactors on the view.
 
 %MethodCode
     QList<tlp::Interactor*> param;
-    for (auto i : *a0) {
+    for (auto *i : *a0) {
         param.append(i);
     }
     sipCpp->setInteractors(param);

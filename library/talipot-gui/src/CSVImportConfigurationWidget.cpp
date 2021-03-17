@@ -367,10 +367,10 @@ void CSVImportConfigurationWidget::updateWidget(const std::string &title) {
       // parse the first line only
       parser->parse(this, &progress, true);
 
-      for (unsigned int i = 0; i < columnHeaderType.size(); ++i) {
+      for (const auto &type : columnHeaderType) {
         // If there is at least one column with a header type different
         // from StringProperty, then the first line is not the header
-        if (columnHeaderType[i] != StringProperty::propertyTypename) {
+        if (type != StringProperty::propertyTypename) {
           setUseFirstLineAsPropertyName(false);
           break;
         }

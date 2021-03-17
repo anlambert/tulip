@@ -328,10 +328,10 @@ void GraphStorage::setEdgeOrder(const node n, const std::vector<edge> &v) {
   auto it2 = v.begin();
   std::vector<edge> &currentOrder = nodeData[n.id].edges;
 
-  for (unsigned int i = 0; i < currentOrder.size(); ++i) {
-    if (isEle.get(currentOrder[i].id) > 0) {
-      isEle.add(currentOrder[i].id, -1);
-      currentOrder[i] = *it2;
+  for (auto &e : currentOrder) {
+    if (isEle.get(e.id) > 0) {
+      isEle.add(e.id, -1);
+      e = *it2;
       ++it2;
     }
   }

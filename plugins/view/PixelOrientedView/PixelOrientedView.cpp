@@ -237,10 +237,10 @@ void PixelOrientedView::setState(const DataSet &dataSet) {
 
     propertiesSelectionWidget->setSelectedProperties(selectedGraphProperties);
 
-    for (size_t i = 0; i < selectedGraphProperties.size(); ++i) {
+    for (const auto &selectedGraphProperty : selectedGraphProperties) {
       bool overviewGenerated = false;
-      dataSet.get(selectedGraphProperties[i], overviewGenerated);
-      overviewGenMap[selectedGraphProperties[i]] = overviewGenerated;
+      dataSet.get(selectedGraphProperty, overviewGenerated);
+      overviewGenMap[selectedGraphProperty] = overviewGenerated;
     }
 
     string layoutName;
@@ -296,8 +296,8 @@ DataSet PixelOrientedView::state() const {
 
   map<string, bool> tmpOverviewGenMap = overviewGenMap;
 
-  for (size_t i = 0; i < selectedGraphProperties.size(); ++i) {
-    dataSet.set(selectedGraphProperties[i], tmpOverviewGenMap[selectedGraphProperties[i]]);
+  for (const auto &selectedGraphProperty : selectedGraphProperties) {
+    dataSet.set(selectedGraphProperty, tmpOverviewGenMap[selectedGraphProperty]);
   }
 
   dataSet.set("lastViewWindowWidth", getGlWidget()->width());
@@ -415,25 +415,25 @@ void PixelOrientedView::initPixelView() {
 void PixelOrientedView::destroyOverviewsIfNeeded() {
   vector<string> propertiesToRemove;
 
-  for (size_t i = 0; i < selectedGraphProperties.size(); ++i) {
-    if (!pixelOrientedGraph->existProperty(selectedGraphProperties[i])) {
-      if (overviewsMap[selectedGraphProperties[i]] == detailOverview) {
+  for (const auto &selectedGraphProperty : selectedGraphProperties) {
+    if (!pixelOrientedGraph->existProperty(selectedGraphProperty)) {
+      if (overviewsMap[selectedGraphProperty] == detailOverview) {
         detailOverview = nullptr;
         detailOverviewPropertyName = "";
       }
 
-      delete overviewsMap[selectedGraphProperties[i]];
-      overviewsMap.erase(selectedGraphProperties[i]);
-      delete dataMap[selectedGraphProperties[i]];
-      dataMap.erase(selectedGraphProperties[i]);
-      propertiesToRemove.push_back(selectedGraphProperties[i]);
+      delete overviewsMap[selectedGraphProperty];
+      overviewsMap.erase(selectedGraphProperty);
+      delete dataMap[selectedGraphProperty];
+      dataMap.erase(selectedGraphProperty);
+      propertiesToRemove.push_back(selectedGraphProperty);
     }
   }
 
-  for (size_t i = 0; i < propertiesToRemove.size(); ++i) {
-    selectedGraphProperties.erase(remove(selectedGraphProperties.begin(),
-                                         selectedGraphProperties.end(), propertiesToRemove[i]),
-                                  selectedGraphProperties.end());
+  for (const auto &prop : propertiesToRemove) {
+    selectedGraphProperties.erase(
+        remove(selectedGraphProperties.begin(), selectedGraphProperties.end(), prop),
+        selectedGraphProperties.end());
   }
 }
 

@@ -110,8 +110,8 @@ BoundingBox GlEdge::getBoundingBox(const GlGraphInputData *data, const edge e, c
     vector<Coord> quadVertices;
     buildCurvePoints(tmp, edgeSizes, srcCoord, tgtCoord, quadVertices);
 
-    for (size_t i = 0; i < quadVertices.size(); ++i) {
-      bb.expand(quadVertices[i]);
+    for (const auto &quadVertex : quadVertices) {
+      bb.expand(quadVertex);
     }
   }
 

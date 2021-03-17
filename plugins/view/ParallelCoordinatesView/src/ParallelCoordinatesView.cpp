@@ -920,12 +920,12 @@ void ParallelCoordinatesView::resetHighlightedElements() {
 }
 
 ParallelAxis *ParallelCoordinatesView::getAxisUnderPointer(const int x, const int y) const {
-  vector<ParallelAxis *> allAxis(parallelCoordsDrawing->getAllAxis());
+  vector<ParallelAxis *> allAxis = parallelCoordsDrawing->getAllAxis();
   axisSelectionLayer->setSharedCamera(&getGlWidget()->getScene()->getLayer("Main")->getCamera());
   axisSelectionLayer->getComposite()->reset(false);
 
-  for (size_t i = 0; i < allAxis.size(); ++i) {
-    axisSelectionLayer->addGlEntity(allAxis[i], getStringFromNumber(allAxis[i]));
+  for (auto *axis : allAxis) {
+    axisSelectionLayer->addGlEntity(axis, getStringFromNumber(axis));
   }
 
   vector<SelectedEntity> pickedEntities;

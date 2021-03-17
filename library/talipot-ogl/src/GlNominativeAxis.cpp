@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -68,8 +68,8 @@ string GlNominativeAxis::getValueAtAxisPoint(const Coord &axisPointCoord) {
 
 void GlNominativeAxis::translate(const Coord &c) {
   GlAxis::translate(c);
-  for (auto &it : labelsCoord) {
-    it.second += c;
+  for (auto &[label, coord] : labelsCoord) {
+    coord += c;
   }
 }
 

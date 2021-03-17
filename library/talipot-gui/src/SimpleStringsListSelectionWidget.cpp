@@ -62,15 +62,15 @@ void SimpleStringsListSelectionWidget::qtWidgetsConnection() {
 
 void SimpleStringsListSelectionWidget::setUnselectedStringsList(
     const std::vector<std::string> &unselectedStringsList) {
-  for (unsigned int i = 0; i < unselectedStringsList.size(); ++i) {
+  for (const auto &s : unselectedStringsList) {
     QList<QListWidgetItem *> items =
-        _ui->listWidget->findItems(tlpStringToQString(unselectedStringsList[i]), Qt::MatchExactly);
+        _ui->listWidget->findItems(tlpStringToQString(s), Qt::MatchExactly);
 
     if (items.size() > 0) {
       items[0]->setFlags(items[0]->flags() | Qt::ItemIsUserCheckable);
       items[0]->setCheckState(Qt::Unchecked);
     } else {
-      auto *item = new QListWidgetItem(tlpStringToQString(unselectedStringsList[i]));
+      auto *item = new QListWidgetItem(tlpStringToQString(s));
       item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
       item->setCheckState(Qt::Unchecked);
       _ui->listWidget->addItem(item);
@@ -80,20 +80,20 @@ void SimpleStringsListSelectionWidget::setUnselectedStringsList(
 
 void SimpleStringsListSelectionWidget::setSelectedStringsList(
     const std::vector<std::string> &selectedStringsList) {
-  for (unsigned int i = 0; i < selectedStringsList.size(); ++i) {
+  for (const auto &s : selectedStringsList) {
     if (maxSelectedStringsListSize != 0 &&
         getSelectedStringsList().size() == maxSelectedStringsListSize) {
       break;
     }
 
     QList<QListWidgetItem *> items =
-        _ui->listWidget->findItems(tlpStringToQString(selectedStringsList[i]), Qt::MatchExactly);
+        _ui->listWidget->findItems(tlpStringToQString(s), Qt::MatchExactly);
 
     if (items.size() > 0) {
       items[0]->setFlags(items[0]->flags() | Qt::ItemIsUserCheckable);
       items[0]->setCheckState(Qt::Checked);
     } else {
-      auto *item = new QListWidgetItem(tlpStringToQString(selectedStringsList[i]));
+      auto *item = new QListWidgetItem(tlpStringToQString(s));
       item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
       item->setCheckState(Qt::Checked);
       _ui->listWidget->addItem(item);
@@ -112,8 +112,8 @@ void SimpleStringsListSelectionWidget::clearUnselectedStringsList() {
     }
   }
 
-  for (unsigned int i = 0; i < itemsToDelete.size(); ++i) {
-    delete itemsToDelete[i];
+  for (auto *item : itemsToDelete) {
+    delete item;
   }
 }
 
@@ -128,8 +128,8 @@ void SimpleStringsListSelectionWidget::clearSelectedStringsList() {
     }
   }
 
-  for (unsigned int i = 0; i < itemsToDelete.size(); ++i) {
-    delete itemsToDelete[i];
+  for (auto *i : itemsToDelete) {
+    delete i;
   }
 }
 

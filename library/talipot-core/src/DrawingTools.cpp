@@ -215,8 +215,8 @@ Coord tlp::computePolygonCentroid(const vector<Coord> &points) {
   vector<Vec3d> pointsCp;
   pointsCp.reserve(points.size() + 1);
 
-  for (size_t i = 0; i < points.size(); ++i) {
-    pointsCp.push_back(Vec3d(points[i][0], points[i][1], 0.0));
+  for (const auto &point : points) {
+    pointsCp.push_back(Vec3d(point[0], point[1], 0.0));
   }
 
   pointsCp.push_back(Vec3d(points[0][0], points[0][1], 0.0));

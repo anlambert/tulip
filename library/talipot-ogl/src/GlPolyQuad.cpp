@@ -215,14 +215,14 @@ void GlPolyQuad::draw(float, Camera *) {
 void GlPolyQuad::translate(const Coord &move) {
   boundingBox.translate(move);
 
-  for (unsigned int i = 0; i < polyQuadEdges.size(); ++i) {
-    polyQuadEdges[i] += move;
+  for (auto &polyQuadEdge : polyQuadEdges) {
+    polyQuadEdge += move;
   }
 }
 
 void GlPolyQuad::setColor(const Color &color) {
-  for (unsigned int i = 0; i < polyQuadEdgesColors.size(); ++i) {
-    polyQuadEdgesColors[i] = color;
+  for (auto &polyQuadEdgesColor : polyQuadEdgesColors) {
+    polyQuadEdgesColor = color;
   }
 }
 

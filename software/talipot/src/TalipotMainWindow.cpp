@@ -87,10 +87,10 @@ static bool talipotCanOpenFile(const QString &path) {
     return true;
   }
 
-  for (auto &pluginName : PluginsManager::availablePlugins<ImportModule>()) {
+  for (const auto &pluginName : PluginsManager::availablePlugins<ImportModule>()) {
     const auto &importPlugin =
         static_cast<const ImportModule &>(PluginsManager::pluginInformation(pluginName));
-    for (auto &ext : importPlugin.allFileExtensions()) {
+    for (const auto &ext : importPlugin.allFileExtensions()) {
       if (path.endsWith(tlpStringToQString(ext))) {
         return true;
       }
@@ -932,12 +932,12 @@ void TalipotMainWindow::open(QString fileName) {
   std::string filters("Talipot project (*.tlpx);;");
   std::string filterAny("Any supported format (");
 
-  for (auto &pluginName : PluginsManager::availablePlugins<ImportModule>()) {
+  for (const auto &pluginName : PluginsManager::availablePlugins<ImportModule>()) {
     const auto &importPlugin =
         static_cast<const ImportModule &>(PluginsManager::pluginInformation(pluginName));
     std::string currentFilter;
 
-    for (auto &ext : importPlugin.allFileExtensions()) {
+    for (const auto &ext : importPlugin.allFileExtensions()) {
 
       if (ext.empty())
         continue;

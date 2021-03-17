@@ -82,8 +82,8 @@ bool pointInsidePolygon(const vector<Coord> &polygon, const Coord &point) {
 bool isPolygonAincludesInB(const vector<Coord> &A, const vector<Coord> &B) {
   bool ret = true;
 
-  for (unsigned int i = 0; i < A.size(); ++i) {
-    ret = ret && pointInsidePolygon(B, A[i]);
+  for (const auto &p : A) {
+    ret = ret && pointInsidePolygon(B, p);
 
     if (!ret) {
       break;
@@ -123,8 +123,8 @@ void MouseLassoNodesSelectorInteractorComponent::selectGraphElementsUnderPolygon
 
     bool needPush = true;
 
-    for (unsigned int i = 0; i < tmpNodes.size(); ++i) {
-      glNode.n = node(tmpNodes[i].getComplexEntityId());
+    for (const auto &tmpNode : tmpNodes) {
+      glNode.n = node(tmpNode.getComplexEntityId());
       BoundingBox nodeBB(glNode.getBoundingBox(glWidget->getGlGraphInputData()));
       float dx = nodeBB[1][0] - nodeBB[0][0];
       float dy = nodeBB[1][1] - nodeBB[0][1];
@@ -185,8 +185,8 @@ void MouseLassoNodesSelectorInteractorComponent::selectGraphElementsUnderPolygon
           needPush = false;
         }
 
-        viewSelection->setNodeValue(node(tmpNodes[i].getComplexEntityId()), true);
-        selectedNodes.push_back(node(tmpNodes[i].getComplexEntityId()));
+        viewSelection->setNodeValue(node(tmpNode.getComplexEntityId()), true);
+        selectedNodes.push_back(node(tmpNode.getComplexEntityId()));
       }
     }
 
@@ -194,8 +194,8 @@ void MouseLassoNodesSelectorInteractorComponent::selectGraphElementsUnderPolygon
       for (unsigned int j = i + 1; j < selectedNodes.size(); ++j) {
         vector<edge> edges = graph->getEdges(selectedNodes[i], selectedNodes[j], false);
 
-        for (size_t i = 0; i < edges.size(); ++i) {
-          viewSelection->setEdgeValue(edges[i], true);
+        for (auto edge : edges) {
+          viewSelection->setEdgeValue(edge, true);
         }
       }
     }

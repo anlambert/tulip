@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -42,15 +42,15 @@ DoubleStringsListSelectionWidget::~DoubleStringsListSelectionWidget() {
 
 void DoubleStringsListSelectionWidget::setUnselectedStringsList(
     const std::vector<std::string> &unselectedStringsList) {
-  for (unsigned int i = 0; i < unselectedStringsList.size(); ++i) {
-    _ui->inputList->addItemList(tlpStringToQString(unselectedStringsList[i]));
+  for (const auto &s : unselectedStringsList) {
+    _ui->inputList->addItemList(tlpStringToQString(s));
   }
 }
 
 void DoubleStringsListSelectionWidget::setSelectedStringsList(
     const std::vector<std::string> &selectedStringsList) {
-  for (unsigned int i = 0; i < selectedStringsList.size(); ++i) {
-    _ui->outputList->addItemList(tlpStringToQString(selectedStringsList[i]));
+  for (const auto &s : selectedStringsList) {
+    _ui->outputList->addItemList(tlpStringToQString(s));
   }
 }
 

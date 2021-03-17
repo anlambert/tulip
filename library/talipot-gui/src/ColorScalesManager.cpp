@@ -35,9 +35,7 @@ void ColorScalesManager::getColorScalesFromDir(const string &colorScalesDir,
     dir.setFilter(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
     QFileInfoList list = dir.entryInfoList();
 
-    for (int i = 0; i < list.size(); ++i) {
-      QFileInfo fileInfo = list.at(i);
-
+    for (const auto &fileInfo : list) {
       if (fileInfo.isDir()) {
         getColorScalesFromDir(QStringToTlpString(fileInfo.absoluteFilePath()), colorScalesList);
       } else if (fileInfo.suffix() == "png") {
@@ -117,9 +115,7 @@ string ColorScalesManager::findColorScaleFile(const string &rootDir, const strin
     dir.setFilter(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
     QFileInfoList list = dir.entryInfoList();
 
-    for (int i = 0; i < list.size(); ++i) {
-      QFileInfo fileInfo = list.at(i);
-
+    for (const auto &fileInfo : list) {
       if (fileInfo.isDir()) {
         ret = findColorScaleFile(QStringToTlpString(fileInfo.absoluteFilePath()), colorScaleName);
 

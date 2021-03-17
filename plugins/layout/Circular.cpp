@@ -87,8 +87,8 @@ static vector<node> findMaxCycle(Graph *graph, PluginProgress *pluginProgress) {
 
   vector<node> max;
   unsigned int nbCalls = 0;
-  for (unsigned int i = 0; i < components.size(); ++i) {
-    Graph *sg = graph->inducedSubGraph(components[i]);
+  for (const auto &component : components) {
+    Graph *sg = graph->inducedSubGraph(component);
     MutableContainer<bool> flag;
     flag.setAll(false);
     deque<node> st;
@@ -174,13 +174,13 @@ bool Circular::run() {
     MutableContainer<bool> inCir;
     inCir.setAll(false);
 
-    for (unsigned int i = 0; i < cycleOrdering.size(); ++i) {
-      inCir.set(cycleOrdering[i].id, true);
+    for (auto n : cycleOrdering) {
+      inCir.set(n.id, true);
     }
 
-    for (unsigned int i = 0; i < dfsOrdering.size(); ++i) {
-      if (!inCir.get(dfsOrdering[i].id)) {
-        cycleOrdering.push_back(dfsOrdering[i]);
+    for (auto n : dfsOrdering) {
+      if (!inCir.get(n.id)) {
+        cycleOrdering.push_back(n);
       }
     }
 

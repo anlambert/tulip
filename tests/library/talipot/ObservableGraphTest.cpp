@@ -50,8 +50,8 @@ public:
     if (events[0].type() == Event::TLP_DELETE) {
       observables.insert(events[0].sender());
     } else {
-      for (unsigned int i = 0; i < events.size(); ++i) {
-        observables.insert(events[i].sender());
+      for (const auto &event : events) {
+        observables.insert(event.sender());
       }
     }
   }
@@ -221,8 +221,8 @@ public:
   }
   void addEdges(Graph *g, const vector<edge> &ve) {
     graphs.push_back(g);
-    for (size_t i = 0; i < ve.size(); ++i) {
-      edges.push_back(ve[i]);
+    for (auto e : ve) {
+      edges.push_back(e);
     }
   }
   void delNode(Graph *g, const node n) {

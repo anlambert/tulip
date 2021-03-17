@@ -32,18 +32,18 @@
 using namespace std;
 using namespace tlp;
 
-static string convert(const string &tmp) {
+static string convert(const string &s) {
   string newStr;
 
-  for (unsigned int i = 0; i < tmp.length(); ++i) {
-    if (tmp[i] == '\"') {
+  for (char c : s) {
+    if (c == '\"') {
       newStr += "\\\"";
-    } else if (tmp[i] == '\n') {
+    } else if (c == '\n') {
       newStr += "\\n";
-    } else if (tmp[i] == '\\') {
+    } else if (c == '\\') {
       newStr += "\\\\";
     } else {
-      newStr += tmp[i];
+      newStr += c;
     }
   }
 
@@ -403,14 +403,14 @@ public:
         } else if (value->getTypeName() == string(typeid(vector<node>).name())) {
           auto *vn = static_cast<vector<node> *>(value->value);
 
-          for (size_t i = 0; i < vn->size(); ++i) {
-            (*vn)[i].id = getNode((*vn)[i]).id;
+          for (auto n : *vn) {
+            n.id = getNode(n).id;
           }
         } else if (value->getTypeName() == string(typeid(vector<edge>).name())) {
           auto *ve = static_cast<vector<edge> *>(value->value);
 
-          for (size_t i = 0; i < ve->size(); ++i) {
-            (*ve)[i].id = getEdge((*ve)[i]).id;
+          for (auto e : *ve) {
+            e.id = getEdge(e).id;
           }
         }
       }

@@ -175,8 +175,8 @@ void ColorScale::setColorMap(const map<float, Color> &newColorMap) {
 
 void ColorScale::setColorMapTransparency(unsigned char alpha) {
   // force the alpha value of all mapped colors
-  for (auto &it : colorMap) {
-    it.second.setA(alpha);
+  for (auto &[t, color] : colorMap) {
+    color.setA(alpha);
   }
 }
 

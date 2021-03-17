@@ -106,11 +106,8 @@ void ColorScaleConfigDialog::accept() {
         gradient = Settings::instance().value(gradientScaleId).toBool();
         Settings::instance().endGroup();
 
-        for (int i = 0; i < colorsVector.size(); ++i) {
-          colors.push_back(Color(colorsVector.at(i).value<QColor>().red(),
-                                 colorsVector.at(i).value<QColor>().green(),
-                                 colorsVector.at(i).value<QColor>().blue(),
-                                 colorsVector.at(i).value<QColor>().alpha()));
+        for (const auto &colorv : colorsVector) {
+          colors.push_back(QColorToColor(colorv.value<QColor>()));
         }
 
         std::reverse(colors.begin(), colors.end());
@@ -119,8 +116,7 @@ void ColorScaleConfigDialog::accept() {
   } else {
     for (int i = 0; i < _ui->colorsTable->rowCount(); ++i) {
       QColor itemColor = _ui->colorsTable->item(i, 0)->background().color();
-      colors.push_back(
-          Color(itemColor.red(), itemColor.green(), itemColor.blue(), itemColor.alpha()));
+      colors.push_back(QColorToColor(itemColor));
     }
 
     std::reverse(colors.begin(), colors.end());
@@ -149,15 +145,13 @@ vector<Color> ColorScaleConfigDialog::getColorScaleFromImageFile(const QString &
   vector<Color> colors;
 
   for (unsigned int i = 0; i < imageHeight; i += step) {
-    QRgb pixelValue = gradientImage.pixel(0, i);
-    colors.push_back(
-        Color(qRed(pixelValue), qGreen(pixelValue), qBlue(pixelValue), qAlpha(pixelValue)));
+    QColor pixelColor = gradientImage.pixelColor(0, i);
+    colors.push_back(QColorToColor(pixelColor));
   }
 
   if (imageHeight % step != 0) {
-    QRgb pixelValue = gradientImage.pixel(0, imageHeight - 1);
-    colors.push_back(
-        Color(qRed(pixelValue), qGreen(pixelValue), qBlue(pixelValue), qAlpha(pixelValue)));
+    QColor pixelColor = gradientImage.pixelColor(0, imageHeight - 1);
+    colors.push_back(QColorToColor(pixelColor));
   }
 
   std::reverse(colors.begin(), colors.end());
@@ -177,9 +171,7 @@ void ColorScaleConfigDialog::loadImageColorScalesFromDir(const QString &colorSca
     dir.setFilter(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
     QFileInfoList list = dir.entryInfoList();
 
-    for (int i = 0; i < list.size(); ++i) {
-      QFileInfo fileInfo = list.at(i);
-
+    for (const auto &fileInfo : list) {
       if (fileInfo.isDir()) {
         loadImageColorScalesFromDir(fileInfo.absoluteFilePath());
       } else if (fileInfo.suffix() == "png") {
@@ -230,8 +222,8 @@ void ColorScaleConfigDialog::displaySavedGradientPreview() {
       vector<Color> colors = talipotImageColorScales[savedColorScaleId];
       std::reverse(colors.begin(), colors.end());
 
-      for (size_t i = 0; i < colors.size(); ++i) {
-        colorsList.push_back(QColor(colors[i][0], colors[i][1], colors[i][2], colors[i][3]));
+      for (const auto &color : colors) {
+        colorsList.push_back(QColor(color[0], color[1], color[2], color[3]));
       }
     } else {
       Settings::instance().beginGroup("ColorScales");
@@ -240,8 +232,8 @@ void ColorScaleConfigDialog::displaySavedGradientPreview() {
       gradient = Settings::instance().value(gradientScaleId).toBool();
       Settings::instance().endGroup();
 
-      for (int i = 0; i < colorsListv.size(); ++i) {
-        colorsList.push_back(colorsListv.at(i).value<QColor>());
+      for (const auto &c : colorsListv) {
+        colorsList.push_back(c.value<QColor>());
       }
     }
 
@@ -292,8 +284,8 @@ void ColorScaleConfigDialog::displayGradientPreview(const QList<QColor> &colorsV
     qreal increment = 1.0 / (colorsVector.size() - 1);
     qreal relPos = 0;
 
-    for (int i = 0; i < colorsVector.size(); ++i) {
-      qLinearGradient.setColorAt(clamp(relPos, 0.0, 1.0), colorsVector.at(i));
+    for (const auto &c : colorsVector) {
+      qLinearGradient.setColorAt(clamp(relPos, 0.0, 1.0), c);
       relPos += increment;
     }
 
@@ -445,9 +437,8 @@ void ColorScaleConfigDialog::reeditSaveColorScale(QListWidgetItem *savedColorSca
     gradient = Settings::instance().value(gradientScaleId).toBool();
     Settings::instance().endGroup();
 
-    for (int i = 0; i < colorsListv.size(); ++i) {
-      auto color = colorsListv.at(i).value<QColor>();
-      colorsList.push_back(Color(color.red(), color.green(), color.blue(), color.alpha()));
+    for (const auto &colorv : colorsListv) {
+      colorsList.push_back(QColorToColor(colorv.value<QColor>()));
     }
 
     reverse(colorsList.begin(), colorsList.end());

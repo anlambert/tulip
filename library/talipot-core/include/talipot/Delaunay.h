@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -101,8 +101,8 @@ public:
   std::vector<Edge> voronoiEdgesForSite(const unsigned int siteIdx) {
     std::vector<Edge> ret;
 
-    for (size_t i = 0; i < siteToCellEdges[siteIdx].size(); ++i) {
-      ret.push_back(edges[siteToCellEdges[siteIdx][i]]);
+    for (unsigned int i : siteToCellEdges[siteIdx]) {
+      ret.push_back(edges[i]);
     }
 
     return ret;

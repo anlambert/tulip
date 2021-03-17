@@ -258,8 +258,8 @@ static Graph *computeTreeInternal(Graph *graph, Graph *rGraph, bool isConnected,
   // compute the connected components's subgraphs
   auto components = ConnectedTest::computeConnectedComponents(rGraph);
 
-  for (unsigned int i = 0; i < components.size(); ++i) {
-    rGraph->inducedSubGraph(components[i]);
+  for (const auto &component : components) {
+    rGraph->inducedSubGraph(component);
   }
 
   // create a new subgraph for the tree

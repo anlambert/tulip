@@ -227,8 +227,8 @@ public:
 
     IntegerProperty *viewShape = graph->getIntegerProperty("viewShape");
 
-    for (size_t i = 0; i < mNodes.size(); ++i) {
-      viewShape->setNodeValue(mNodes[i], NodeShape::Square);
+    for (auto mNode : mNodes) {
+      viewShape->setNodeValue(mNode, NodeShape::Square);
     }
 
     // restore previous calculators

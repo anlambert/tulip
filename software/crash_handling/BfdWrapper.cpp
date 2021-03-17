@@ -150,9 +150,9 @@ BfdWrapper::BfdWrapper(const char *dsoName)
 
       bool absolutePathFound = false;
 
-      for (size_t i = 0; i < paths.size(); ++i) {
-        if (file_exist((paths[i] + "/" + filePath))) {
-          filePath = paths[i] + "/" + filePath;
+      for (const auto &path : paths) {
+        if (file_exist((path + "/" + filePath))) {
+          filePath = path + "/" + filePath;
           absolutePathFound = true;
           break;
         }

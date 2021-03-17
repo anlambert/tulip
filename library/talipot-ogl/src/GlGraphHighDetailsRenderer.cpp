@@ -300,20 +300,20 @@ void GlGraphHighDetailsRenderer::draw(float, Camera *camera) {
         std::reverse(nodesMetricOrdered.begin(), nodesMetricOrdered.end());
       }
 
-      for (auto &it : nodesMetricOrdered) {
+      for (const auto &[n, lod] : nodesMetricOrdered) {
         if (selectionDrawActivate) {
           if ((selectionType & RenderingNodes) == 0) {
             continue;
           }
 
           (*selectionIdMap)[*selectionCurrentId] =
-              SelectedEntity(graph, it.first.id, SelectedEntity::NODE_SELECTED);
+              SelectedEntity(graph, n.id, SelectedEntity::NODE_SELECTED);
           glLoadName(*selectionCurrentId);
           (*selectionCurrentId)++;
         }
 
-        GlNode glNode(node(it.first.id), graph);
-        glNode.draw(it.second, inputData, camera);
+        GlNode glNode(n, graph);
+        glNode.draw(lod, inputData, camera);
       }
     }
 
@@ -356,20 +356,20 @@ void GlGraphHighDetailsRenderer::draw(float, Camera *camera) {
           reverse(edgesMetricOrdered.begin(), edgesMetricOrdered.end());
         }
 
-        for (auto &it : edgesMetricOrdered) {
+        for (const auto &[e, lod] : edgesMetricOrdered) {
           if (selectionDrawActivate) {
             if ((selectionType & RenderingEdges) == 0) {
               continue;
             }
 
             (*selectionIdMap)[*selectionCurrentId] =
-                SelectedEntity(graph, it.first.id, SelectedEntity::EDGE_SELECTED);
+                SelectedEntity(graph, e.id, SelectedEntity::EDGE_SELECTED);
             glLoadName(*selectionCurrentId);
             (*selectionCurrentId)++;
           }
 
-          GlEdge glEdge(edge(it.first.id), graph, selectionDrawActivate);
-          glEdge.draw(it.second, inputData, camera);
+          GlEdge glEdge(e, graph, selectionDrawActivate);
+          glEdge.draw(lod, inputData, camera);
         }
       }
     }

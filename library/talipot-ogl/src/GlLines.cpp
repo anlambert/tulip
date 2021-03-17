@@ -63,9 +63,9 @@ void GlLines::glDrawCurve(const Coord &startPoint, const vector<Coord> &bends,
     colorStart[i] += colorDelta[i];
   }
 
-  for (unsigned int i = 0; i < bends.size(); i++) {
+  for (const auto &bend : bends) {
     setColor(colorStart);
-    glVertex3f(bends[i][0], bends[i][1], bends[i][2]);
+    glVertex3f(bend[0], bend[1], bend[2]);
 
     for (int i = 0; i < 4; i++) {
       colorStart[i] += colorDelta[i];

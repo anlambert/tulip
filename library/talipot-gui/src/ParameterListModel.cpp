@@ -58,7 +58,7 @@ ParameterListModel::ParameterListModel(const tlp::ParameterDescriptionList &para
     : Model(parent), _graph(graph) {
   std::vector<ParameterDescription> outParams;
   // first add in parameters
-  for (const ParameterDescription &param : params.getParameters()) {
+  for (const auto &param : params.getParameters()) {
     if (param.getDirection() != OUT_PARAM) {
       _params.push_back(param);
     } else {
@@ -67,8 +67,8 @@ ParameterListModel::ParameterListModel(const tlp::ParameterDescriptionList &para
   }
 
   // then add out parameters
-  for (unsigned int i = 0; i < outParams.size(); ++i) {
-    _params.push_back(outParams[i]);
+  for (const auto &outParam : outParams) {
+    _params.push_back(outParam);
   }
 
   // no sort, keep the predefined ordering

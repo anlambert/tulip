@@ -88,9 +88,9 @@ AbstractCSVToGraphDataMapping::AbstractCSVToGraphDataMapping(Graph *graph, Eleme
     : graph(graph), type(type), columnIds(colIds) {
   assert(graph != nullptr);
 
-  for (unsigned int i = 0; i < propertyNames.size(); ++i) {
+  for (const auto &propertyName : propertyNames) {
     assert(graph->existProperty(propertyNames[i]));
-    keyProperties.push_back(graph->getProperty(propertyNames[i]));
+    keyProperties.push_back(graph->getProperty(propertyName));
   }
 }
 
@@ -103,8 +103,8 @@ void AbstractCSVToGraphDataMapping::init(unsigned int) {
     for (auto n : graph->nodes()) {
       string key;
 
-      for (unsigned int i = 0; i < keyProperties.size(); ++i) {
-        key.append(keyProperties[i]->getNodeStringValue(n));
+      for (const auto &keyProperty : keyProperties) {
+        key.append(keyProperty->getNodeStringValue(n));
       }
 
       valueToId[key] = n.id;
@@ -113,8 +113,8 @@ void AbstractCSVToGraphDataMapping::init(unsigned int) {
     for (auto e : graph->edges()) {
       string key;
 
-      for (unsigned int i = 0; i < keyProperties.size(); ++i) {
-        key.append(keyProperties[i]->getEdgeStringValue(e));
+      for (const auto &keyProperty : keyProperties) {
+        key.append(keyProperty->getEdgeStringValue(e));
       }
 
       valueToId[key] = e.id;
@@ -129,8 +129,8 @@ AbstractCSVToGraphDataMapping::getElementsForRow(const vector<vector<string>> &t
   bool idsOK = true;
 
   // Check if the ids are available for this line
-  for (unsigned int i = 0; i < columnIds.size(); ++i) {
-    if (columnIds[i] >= tokens.size()) {
+  for (unsigned int columnId : columnIds) {
+    if (columnId >= tokens.size()) {
       idsOK = false;
       break;
     }
@@ -140,8 +140,8 @@ AbstractCSVToGraphDataMapping::getElementsForRow(const vector<vector<string>> &t
     string key;
     vector<string> keys;
 
-    for (unsigned int i = 0; i < columnIds.size(); ++i) {
-      for (const string &token : tokens[columnIds[i]]) {
+    for (unsigned int columnId : columnIds) {
+      for (const string &token : tokens[columnId]) {
         key.append(token);
         keys.push_back(token);
       }
@@ -227,9 +227,9 @@ CSVToGraphEdgeSrcTgtMapping::CSVToGraphEdgeSrcTgtMapping(
       buildMissingElements(createMissinNodes) {
   assert(graph != nullptr);
 
-  for (unsigned int i = 0; i < srcPropNames.size(); ++i) {
+  for (const auto &srcPropName : srcPropNames) {
     assert(graph->existProperty(srcPropNames[i]));
-    srcProperties.push_back(graph->getProperty(srcPropNames[i]));
+    srcProperties.push_back(graph->getProperty(srcPropName));
   }
 
   for (unsigned int i = 0; i < tgtPropNames.size(); ++i) {
@@ -244,8 +244,8 @@ void CSVToGraphEdgeSrcTgtMapping::init(unsigned int rowNumber) {
   for (auto n : graph->nodes()) {
     string key;
 
-    for (unsigned int i = 0; i < srcProperties.size(); ++i) {
-      key.append(srcProperties[i]->getNodeStringValue(n));
+    for (const auto &srcProperty : srcProperties) {
+      key.append(srcProperty->getNodeStringValue(n));
     }
 
     srcValueToId[key] = n.id;
@@ -253,8 +253,8 @@ void CSVToGraphEdgeSrcTgtMapping::init(unsigned int rowNumber) {
     if (!sameSrcTgtProperties) {
       key.clear();
 
-      for (unsigned int i = 0; i < tgtProperties.size(); ++i) {
-        key.append(tgtProperties[i]->getNodeStringValue(n));
+      for (const auto &tgtProperty : tgtProperties) {
+        key.append(tgtProperty->getNodeStringValue(n));
       }
 
       tgtValueToId[key] = n.id;
@@ -282,8 +282,8 @@ CSVToGraphEdgeSrcTgtMapping::getElementsForRow(const vector<vector<string>> &tok
   bool idsOK = true;
 
   // Check if the src ids are available for this line
-  for (unsigned int i = 0; i < srcColumnIds.size(); ++i) {
-    if (srcColumnIds[i] >= tokens.size()) {
+  for (unsigned int srcColumnId : srcColumnIds) {
+    if (srcColumnId >= tokens.size()) {
       idsOK = false;
       break;
     }
@@ -292,8 +292,8 @@ CSVToGraphEdgeSrcTgtMapping::getElementsForRow(const vector<vector<string>> &tok
   if (idsOK) {
     vector<vector<string>> keyTokens;
 
-    for (unsigned int i = 0; i < srcColumnIds.size(); ++i) {
-      const vector<string> &currentTokens = tokens[srcColumnIds[i]];
+    for (unsigned int srcColumnId : srcColumnIds) {
+      const vector<string> &currentTokens = tokens[srcColumnId];
 
       // merge current tokens with previous ones
       if (keyTokens.empty()) {
@@ -316,13 +316,13 @@ CSVToGraphEdgeSrcTgtMapping::getElementsForRow(const vector<vector<string>> &tok
       }
     }
 
-    for (unsigned int i = 0; i < keyTokens.size(); ++i) {
+    for (const auto &keyToken : keyTokens) {
       // because column values may be of type vector
       // we can have several source entities
       string key;
 
-      for (unsigned int j = 0; j < keyTokens[i].size(); ++j) {
-        key.append(keyTokens[i][j]);
+      for (const auto &s : keyToken) {
+        key.append(s);
       }
 
       auto it = srcValueToId.find(key);
@@ -330,12 +330,12 @@ CSVToGraphEdgeSrcTgtMapping::getElementsForRow(const vector<vector<string>> &tok
       // token exists in the map
       if (it != srcValueToId.end()) {
         srcs.push_back(node(it->second));
-      } else if (buildMissingElements && srcProperties.size() == keyTokens[i].size()) {
+      } else if (buildMissingElements && srcProperties.size() == keyToken.size()) {
         node src = graph->addNode();
         srcs.push_back(src);
 
-        for (unsigned int j = 0; j < keyTokens[i].size(); ++j) {
-          srcProperties[j]->setNodeStringValue(src, keyTokens[i][j]);
+        for (unsigned int j = 0; j < keyToken.size(); ++j) {
+          srcProperties[j]->setNodeStringValue(src, keyToken[j]);
         }
 
         srcValueToId[key] = src.id;
@@ -344,8 +344,8 @@ CSVToGraphEdgeSrcTgtMapping::getElementsForRow(const vector<vector<string>> &tok
   }
 
   // Check if the target ids are available for this line
-  for (unsigned int i = 0; i < tgtColumnIds.size(); ++i) {
-    if (tgtColumnIds[i] >= tokens.size()) {
+  for (unsigned int tgtColumnId : tgtColumnIds) {
+    if (tgtColumnId >= tokens.size()) {
       idsOK = false;
       break;
     }
@@ -354,8 +354,8 @@ CSVToGraphEdgeSrcTgtMapping::getElementsForRow(const vector<vector<string>> &tok
   if (idsOK) {
     vector<vector<string>> keyTokens;
 
-    for (unsigned int i = 0; i < tgtColumnIds.size(); ++i) {
-      const vector<string> &currentTokens = tokens[tgtColumnIds[i]];
+    for (unsigned int tgtColumnId : tgtColumnIds) {
+      const vector<string> &currentTokens = tokens[tgtColumnId];
 
       // merge current tokens with previous ones
       if (keyTokens.empty()) {
@@ -381,13 +381,13 @@ CSVToGraphEdgeSrcTgtMapping::getElementsForRow(const vector<vector<string>> &tok
     std::unordered_map<string, unsigned int> &valueToId =
         sameSrcTgtProperties ? srcValueToId : tgtValueToId;
 
-    for (unsigned int i = 0; i < keyTokens.size(); ++i) {
+    for (const auto &keyToken : keyTokens) {
       // because column values may be of type vector
       // we can have several target entities
       string key;
 
-      for (unsigned int j = 0; j < keyTokens[i].size(); ++j) {
-        key.append(keyTokens[i][j]);
+      for (const auto &s : keyToken) {
+        key.append(s);
       }
 
       auto it = valueToId.find(key);
@@ -395,12 +395,12 @@ CSVToGraphEdgeSrcTgtMapping::getElementsForRow(const vector<vector<string>> &tok
       // token exists in the map
       if (it != valueToId.end()) {
         tgts.push_back(node(it->second));
-      } else if (buildMissingElements && tgtProperties.size() == keyTokens[i].size()) {
+      } else if (buildMissingElements && tgtProperties.size() == keyToken.size()) {
         node tgt = graph->addNode();
         tgts.push_back(tgt);
 
-        for (unsigned int j = 0; j < keyTokens[i].size(); ++j) {
-          tgtProperties[j]->setNodeStringValue(tgt, keyTokens[i][j]);
+        for (unsigned int j = 0; j < keyToken.size(); ++j) {
+          tgtProperties[j]->setNodeStringValue(tgt, keyToken[j]);
         }
 
         valueToId[key] = tgt.id;
@@ -410,10 +410,10 @@ CSVToGraphEdgeSrcTgtMapping::getElementsForRow(const vector<vector<string>> &tok
 
   // we create as much edges as we can build
   // of valid source-target entities couple
-  for (unsigned int i = 0; i < srcs.size(); ++i) {
-    for (unsigned int j = 0; j < tgts.size(); ++j) {
-      if (srcs[i].isValid() && tgts[j].isValid()) {
-        results.push_back(graph->addEdge(srcs[i], tgts[j]).id);
+  for (auto src : srcs) {
+    for (auto tgt : tgts) {
+      if (src.isValid() && tgt.isValid()) {
+        results.push_back(graph->addEdge(src, tgt).id);
       }
     }
   }
@@ -618,15 +618,15 @@ bool CSVGraphImport::line(unsigned int row, const vector<string> &lineTokens) {
     if (property != nullptr && !tokens[column].empty()) {
       bool isVectorProperty = (property->getTypename().find("vector") == 0);
       if (elements.first == NODE) {
-        for (size_t i = 0; i < elements.second.size(); ++i) {
-          if (elements.second[i] == UINT_MAX) {
+        for (unsigned int i : elements.second) {
+          if (i == UINT_MAX) {
             continue;
           }
 
           if (!(isVectorProperty
                     ? static_cast<VectorPropertyInterface *>(property)->setNodeStringValueAsVector(
-                          node(elements.second[i]), tokens[column])
-                    : property->setNodeStringValue(node(elements.second[i]), tokens[column][0]))) {
+                          node(i), tokens[column])
+                    : property->setNodeStringValue(node(i), tokens[column][0]))) {
             // We add one to the row number as in the configuration widget we start from row 1 not
             // row 0
             qWarning() << __PRETTY_FUNCTION__ << ":" << __LINE__ << " error when importing token \""
@@ -635,11 +635,11 @@ bool CSVGraphImport::line(unsigned int row, const vector<string> &lineTokens) {
           }
         }
       } else {
-        for (size_t i = 0; i < elements.second.size(); ++i) {
+        for (unsigned int i : elements.second) {
           if (!(isVectorProperty
                     ? static_cast<VectorPropertyInterface *>(property)->setEdgeStringValueAsVector(
-                          edge(elements.second[i]), tokens[column])
-                    : property->setEdgeStringValue(edge(elements.second[i]), tokens[column][0]))) {
+                          edge(i), tokens[column])
+                    : property->setEdgeStringValue(edge(i), tokens[column][0]))) {
             // We add one to the row number as in the configuration widget we start from row 1 not
             // row 0
             qWarning() << __PRETTY_FUNCTION__ << ":" << __LINE__ << " error when importing token \""

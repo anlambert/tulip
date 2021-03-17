@@ -113,22 +113,21 @@ bool MixedModel::run() {
   // compute the connected components's subgraphs
   auto components = ConnectedTest::computeConnectedComponents(graph);
 
-  for (unsigned int i = 0; i < components.size(); ++i) {
+  for (auto &component : components) {
     if (pluginProgress->progress(2, 1000) != TLP_CONTINUE) {
       return pluginProgress->state() != TLP_CANCEL;
     }
-    std::vector<node> &nodes = components[i];
 
     //====================================================
     // don't compute the canonical ordering if the number of nodes is less than 3
-    if (nodes.size() == 1) {
-      result->setNodeValue(nodes[0], Coord(0, 0, 0));
+    if (component.size() == 1) {
+      result->setNodeValue(component[0], Coord(0, 0, 0));
       continue;
-    } else if (nodes.size() < 4) {
-      node n = nodes[0];
+    } else if (component.size() < 4) {
+      node n = component[0];
       const Coord &c = sizeResult->getNodeValue(n);
       result->setNodeValue(n, Coord(0, 0, 0));
-      node n2 = nodes[1];
+      node n2 = component[1];
       const Coord &c2 = sizeResult->getNodeValue(n2);
       result->setNodeValue(n2, Coord(spacing + c.getX() / 2 + c2.getX() / 2, 0, 0));
 
@@ -136,8 +135,8 @@ bool MixedModel::run() {
         edge_planar.push_back(e);
       }
 
-      if (nodes.size() == 3) {
-        node n3 = nodes[2];
+      if (component.size() == 3) {
+        node n3 = component[2];
         const Coord &c3 = sizeResult->getNodeValue(n2);
         result->setNodeValue(
             n3, Coord(2.f * spacing + c.getX() / 2.f + c2.getX() + c3.getX() / 2.f, 0, 0));
@@ -174,7 +173,7 @@ bool MixedModel::run() {
     }
 
     //====================================================
-    Graph *currentGraph = graph->inducedSubGraph(components[i]);
+    Graph *currentGraph = graph->inducedSubGraph(component);
 
     planar = PlanarityTest::isPlanar(currentGraph);
     Graph *G;
@@ -753,8 +752,7 @@ void MixedModel::assignInOutPoints() { // on considère qu'il n'y a pas d'arc do
       }
 
       if (k != 0) {
-        for (unsigned int ui = 0; ui < listOfEdgesIN.size(); ++ui) {
-          edge e_tmp = listOfEdgesIN[ui];
+        for (auto e_tmp : listOfEdgesIN) {
           const pair<node, node> &eEnds = carte->ends(e_tmp);
           node n_tmp = (eEnds.first == v) ? eEnds.second : eEnds.first;
 
@@ -1056,9 +1054,9 @@ void MixedModel::computeCoords() {
 
   float somme = 0;
 
-  for (unsigned int i = 0; i < C.size(); ++i) {
-    somme += NodeCoords[C[i]].getX();
-    NodeCoords[C[i]].setX(somme);
+  for (auto n : C) {
+    somme += NodeCoords[n].getX();
+    NodeCoords[n].setX(somme);
   }
 
   for (int k = size_V - 1; k >= 0; k--) {

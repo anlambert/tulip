@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -38,8 +38,8 @@ static bool delaunayTriangulation(tlp::Graph *graph, bool simplicesSubGraphs, bo
     const std::vector<tlp::node> &nodes = graph->nodes();
     delaunaySg->addNodes(nodes);
 
-    for (size_t i = 0; i < edges.size(); ++i) {
-      delaunaySg->addEdge(nodes[edges[i].first], nodes[edges[i].second]);
+    for (const auto &[src, tgt] : edges) {
+      delaunaySg->addEdge(nodes[src], nodes[tgt]);
     }
 
     if (simplicesSubGraphs) {

@@ -97,8 +97,8 @@ void PythonEditorsTabWidget::indicateErrors(const QMap<QString, QVector<int>> &e
       const QVector<int> &linesErrorNumbers = errorLines[moduleFile];
       PythonCodeEditor *codeEditor = getEditor(i);
 
-      for (int i = 0; i < linesErrorNumbers.size(); ++i) {
-        codeEditor->indicateScriptCurrentError(linesErrorNumbers[i] - 1);
+      for (int linesErrorNumber : linesErrorNumbers) {
+        codeEditor->indicateScriptCurrentError(linesErrorNumber - 1);
       }
     }
   }

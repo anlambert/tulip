@@ -534,8 +534,8 @@ void MatrixView::updateLayout() {
   Coord horiz = {1, 0, 0}, vert = {0, -1, 0};
   IntegerProperty *position = getGlWidget()->getGlGraphInputData()->getElementLabelPosition();
 
-  for (auto _on : _orderedNodes) {
-    const vector<int> &dispNodes = _graphEntitiesToDisplayedNodes->getNodeValue(node(_on));
+  for (auto on : _orderedNodes) {
+    const vector<int> &dispNodes = _graphEntitiesToDisplayedNodes->getNodeValue(node(on));
     layout->setNodeValue(node(dispNodes[0]), horiz);
     position->setNodeValue(node(dispNodes[0]), LabelPosition::Top);
     layout->setNodeValue(node(dispNodes[1]), vert);

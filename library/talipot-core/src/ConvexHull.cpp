@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -83,9 +83,9 @@ static bool runQHull(int dim, vector<double> &points, vector<vector<unsigned int
       neighbors.push_back(neighborsV);
     }
 
-    for (size_t i = 0; i < neighbors.size(); ++i) {
-      for (size_t j = 0; j < neighbors[i].size(); ++j) {
-        neighbors[i][j] = faceIds[neighbors[i][j]];
+    for (auto &neighbor : neighbors) {
+      for (unsigned int &i : neighbor) {
+        i = faceIds[i];
       }
     }
   }
@@ -111,9 +111,9 @@ void tlp::convexHull(const std::vector<Coord> &points, std::vector<unsigned int>
   vector<vector<unsigned int>> facets;
   vector<vector<unsigned int>> neighbors;
 
-  for (size_t i = 0; i < points.size(); ++i) {
-    pointsQHull.push_back(points[i][0]);
-    pointsQHull.push_back(points[i][1]);
+  for (const auto &point : points) {
+    pointsQHull.push_back(point[0]);
+    pointsQHull.push_back(point[1]);
   }
 
   // compute the convex hull
@@ -186,16 +186,16 @@ void tlp::convexHull(const std::vector<Coord> &points,
   int dim = 3;
 
   if (!coPlanarLayout) {
-    for (size_t i = 0; i < points.size(); ++i) {
-      pointsQHull.push_back(points[i][0]);
-      pointsQHull.push_back(points[i][1]);
-      pointsQHull.push_back(points[i][2]);
+    for (const auto &point : points) {
+      pointsQHull.push_back(point[0]);
+      pointsQHull.push_back(point[1]);
+      pointsQHull.push_back(point[2]);
     }
   } else {
     dim = 2;
 
-    for (size_t i = 0; i < points.size(); ++i) {
-      Coord p = Coord(invTransformMatrix * points[i]);
+    for (const auto &point : points) {
+      Coord p = Coord(invTransformMatrix * point);
       pointsQHull.push_back(p[0]);
       pointsQHull.push_back(p[1]);
     }

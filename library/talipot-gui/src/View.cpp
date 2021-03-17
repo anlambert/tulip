@@ -250,9 +250,7 @@ void View::addRedrawTrigger(tlp::Observable *obs) {
 }
 
 void View::treatEvents(const std::vector<Event> &events) {
-  for (unsigned int i = 0; i < events.size(); ++i) {
-    Event e = events[i];
-
+  for (auto e : events) {
     // ensure redraw trigger is removed from the triggers set when it is deleted
     if (e.type() == Event::TLP_DELETE && _triggers.contains(e.sender())) {
       removeRedrawTrigger(e.sender());

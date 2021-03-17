@@ -355,9 +355,9 @@ void GlEditableCurve::updateSize(const Coord &newMinPoint, const Coord &newMaxPo
   float oldLength = maxPoint.getX() - minPoint.getX();
   float newLength = newMaxPoint.getX() - newMinPoint.getX();
 
-  for (size_t i = 0; i < curvePoints.size(); ++i) {
-    curvePoints[i].setX(newMinPoint.getX() +
-                        ((curvePoints[i].getX() - minPoint.getX()) * newLength) / oldLength);
+  for (auto &curvePoint : curvePoints) {
+    curvePoint.setX(newMinPoint.getX() +
+                    ((curvePoint.getX() - minPoint.getX()) * newLength) / oldLength);
   }
 
   minPoint = newMinPoint;
@@ -1015,13 +1015,11 @@ bool HistogramMetricMapping::draw(GlWidget *glWidget) {
 
     glDisable(GL_LIGHTING);
 
-    for (size_t i = 0; i < curvePointsCp.size(); ++i) {
-      Coord startLine = {xStart, curvePointsCp[i].getY()};
-      GlLines::glDrawLine(startLine, curvePointsCp[i], 0.5, GlLines::TLP_DASHED, lineColor,
-                          lineColor);
-      Coord endLine = {curvePointsCp[i].getX(), yEnd};
-      GlLines::glDrawLine(curvePointsCp[i], endLine, 0.5, GlLines::TLP_DASHED, lineColor,
-                          lineColor);
+    for (const auto &p : curvePointsCp) {
+      Coord startLine = {xStart, p.getY()};
+      GlLines::glDrawLine(startLine, p, 0.5, GlLines::TLP_DASHED, lineColor, lineColor);
+      Coord endLine = {p.getX(), yEnd};
+      GlLines::glDrawLine(p, endLine, 0.5, GlLines::TLP_DASHED, lineColor, lineColor);
     }
 
     glEnable(GL_LIGHTING);

@@ -170,7 +170,7 @@ void GlTextureManager::registerExternalTexture(const std::string &textureName,
 }
 
 //====================================================================
-static void deleteGlTexture(GlTexture &texture) {
+static void deleteGlTexture(const GlTexture &texture) {
   glDeleteTextures(1, &texture.id);
 }
 
@@ -224,8 +224,8 @@ void GlTextureManager::deactivateTexture(int textureUnit) {
 }
 //====================================================================
 void GlTextureManager::deleteAllTextures() {
-  for (auto &it : texturesMap) {
-    deleteGlTexture(it.second);
+  for (const auto &[name, texture] : texturesMap) {
+    deleteGlTexture(texture);
   }
 }
 

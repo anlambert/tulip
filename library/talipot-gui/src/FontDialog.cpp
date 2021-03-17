@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -56,7 +56,7 @@ void FontDialog::fontChanged() {
   if (sender() == _ui->nameList && _ui->nameList->currentItem() != nullptr) {
     _styleUpdate = true;
     _ui->styleList->clear();
-    for (auto &f : _fonts[_ui->nameList->currentItem()->text()]) {
+    for (const auto &f : _fonts[_ui->nameList->currentItem()->text()]) {
       _ui->styleList->addItem(tlpStringToQString(f.fontStyle()));
     }
     _styleUpdate = false;

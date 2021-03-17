@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -40,18 +40,14 @@ public:
    */
   QuadTreeNode(const tlp::Rectangle<float> &box) : _box(box) {
     assert(_box.isValid());
-
-    for (int i = 0; i < 4; ++i) {
-      children[i] = nullptr;
-    }
   }
   /**
    * Basic destructor
    */
   ~QuadTreeNode() {
-    for (int i = 0; i < 4; ++i) {
-      if (children[i] != nullptr) {
-        delete children[i];
+    for (auto *child : children) {
+      if (child != nullptr) {
+        delete child;
       }
     }
   }
@@ -102,9 +98,9 @@ public:
         result.push_back(entities[i]);
       }
 
-      for (unsigned int i = 0; i < 4; ++i) {
-        if (children[i] != nullptr) {
-          children[i]->getElements(box, result);
+      for (auto *child : children) {
+        if (child != nullptr) {
+          child->getElements(box, result);
         }
       }
     }
@@ -118,9 +114,9 @@ public:
       result.push_back(entities[i]);
     }
 
-    for (unsigned int i = 0; i < 4; ++i) {
-      if (children[i] != nullptr) {
-        children[i]->getElements(result);
+    for (auto *child : children) {
+      if (child != nullptr) {
+        child->getElements(result);
       }
     }
   }
@@ -145,13 +141,13 @@ public:
 
       // elements are big enough and all of them must be displayed
       if (xRatio < ratio || yRatio < ratio) {
-        for (size_t i = 0; i < entities.size(); ++i) {
-          result.push_back(entities[i]);
+        for (const auto &entity : entities) {
+          result.push_back(entity);
         }
 
-        for (unsigned int i = 0; i < 4; ++i) {
-          if (children[i] != nullptr) {
-            children[i]->getElementsWithRatio(box, result, ratio);
+        for (auto *child : children) {
+          if (child != nullptr) {
+            child->getElementsWithRatio(box, result, ratio);
           }
         }
       }
@@ -165,11 +161,11 @@ public:
         }
 
         if (!find) {
-          for (unsigned int i = 0; i < 4; ++i) {
-            if (children[i] != nullptr && children[i]->_box.intersect(box)) {
+          for (auto *child : children) {
+            if (child != nullptr && child->_box.intersect(box)) {
               // if children[i]!=nullptr we are sure to find an elements in that branch of the
               // tree thus we do not have to explore the other branches.
-              children[i]->getElementsWithRatio(box, result, ratio);
+              child->getElementsWithRatio(box, result, ratio);
               break;
             }
           }
@@ -244,7 +240,7 @@ private:
     }
   }
   //======================================
-  QuadTreeNode *children[4];
+  QuadTreeNode *children[4] = {nullptr, nullptr, nullptr, nullptr};
   std::vector<TYPE> entities;
   tlp::Rectangle<float> _box;
 };

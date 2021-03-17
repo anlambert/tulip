@@ -221,8 +221,8 @@ void WorkspacePanel::showEvent(QShowEvent *event) {
     // and remove it from the scene
     QList<QGraphicsItem *> items = _view->graphicsView()->scene()->items();
 
-    for (int i = 0; i < items.size(); ++i) {
-      _view->graphicsView()->scene()->removeItem(items.at(i));
+    for (auto *item : items) {
+      _view->graphicsView()->scene()->removeItem(item);
     }
 
     // get old scene pointer for further deletion
@@ -235,8 +235,8 @@ void WorkspacePanel::showEvent(QShowEvent *event) {
     _view->graphicsView()->scene()->addItem(_view->centralItem());
 
     // restore remaining items in the new scene
-    for (int i = 0; i < items.size(); ++i) {
-      _view->graphicsView()->scene()->addItem(items.at(i));
+    for (auto *item : items) {
+      _view->graphicsView()->scene()->addItem(item);
     }
 
     // set event filter for the new scene

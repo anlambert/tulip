@@ -67,11 +67,11 @@ public:
   string convert(const string &tmp) {
     string newStr;
 
-    for (unsigned int i = 0; i < tmp.length(); i++) {
-      if (tmp[i] == '\"') {
+    for (char c : tmp) {
+      if (c == '\"') {
         newStr += "\\\"";
       } else {
-        newStr += tmp[i];
+        newStr += c;
       }
     }
 

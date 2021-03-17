@@ -364,11 +364,11 @@ bool GEMLayout::run() {
     string err;
     auto components = ConnectedTest::computeConnectedComponents(graph);
 
-    for (size_t i = 0; i < components.size(); ++i) {
+    for (const auto &component : components) {
       Graph *tmp = graph;
       // apply "GEM (Frick)" on the subgraph induced
       // by the current connected component
-      graph = graph->inducedSubGraph(components[i]);
+      graph = graph->inducedSubGraph(component);
       auto result = run();
       tmp->delSubGraph(graph);
       // restore current graph

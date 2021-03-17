@@ -122,8 +122,8 @@ double BubblePack::computeRelativePosition(tlp::node n,
         Circled tmp(crad * cos(calpha), crad * sin(calpha), radius);
         bool reject = false;
 
-        for (unsigned int k = 0; k < placed.size(); ++k) {
-          if (placed[k].dist(tmp) < placed[k].radius + tmp.radius) {
+        for (const auto &circle : placed) {
+          if (circle.dist(tmp) < circle.radius + circle.radius) {
             reject = true;
             break;
           }
@@ -162,8 +162,8 @@ double BubblePack::computeRelativePosition(tlp::node n,
         placed.push_back(circles[index[i]]);
       }
     } else { //        if (false) //polyo packing
-      for (unsigned int i = 0; i < index.size(); ++i) {
-        double radius = realCircleRadius[index[i]];
+      for (unsigned int i : index) {
+        double radius = realCircleRadius[i];
         double bestRadius = FLT_MAX;
         int discret = ceil(2. * (sizeFather + radius) * M_PI) + 3;
         angle += M_PI / 3.;
@@ -179,10 +179,10 @@ double BubblePack::computeRelativePosition(tlp::node n,
             // restcnt += 1;
             restart = false;
 
-            for (unsigned int k = 0; k < placed.size(); ++k) {
-              if (placed[k].dist(tmp) < placed[k].radius + tmp.radius) {
-                spiralRadius = std::max(spiralRadius, double(placed[k].norm()) + placed[k].radius +
-                                                          radius + 1E-3);
+            for (const auto &circle : placed) {
+              if (circle.dist(tmp) < circle.radius + tmp.radius) {
+                spiralRadius =
+                    std::max(spiralRadius, double(circle.norm()) + circle.radius + radius + 1E-3);
                 // spiralRadius += 0.01;
                 tmp = Circled(spiralRadius * cos(_angle), spiralRadius * sin(_angle), radius);
                 // restart = true;
@@ -199,10 +199,10 @@ double BubblePack::computeRelativePosition(tlp::node n,
           TLP_UNLOCK_SECTION(GOODCIRCLE);
         });
 
-        circles[index[i]][0] = bestRadius * cos(bestAngle);
-        circles[index[i]][1] = bestRadius * sin(bestAngle);
-        circles[index[i]].radius = radius;
-        placed.push_back(circles[index[i]]);
+        circles[i][0] = bestRadius * cos(bestAngle);
+        circles[i][1] = bestRadius * sin(bestAngle);
+        circles[i].radius = radius;
+        placed.push_back(circles[i]);
       }
     }
   }
@@ -277,11 +277,11 @@ bool BubblePack::run() {
     string err;
     auto components = ConnectedTest::computeConnectedComponents(graph);
 
-    for (unsigned int i = 0; i < components.size(); ++i) {
+    for (const auto &component : components) {
       Graph *tmp = graph;
       // apply "Bubble Pack" on the subgraph induced
       // by the current connected component
-      graph = graph->inducedSubGraph(components[i]);
+      graph = graph->inducedSubGraph(component);
       run();
       tmp->delSubGraph(graph);
       // restore current graph

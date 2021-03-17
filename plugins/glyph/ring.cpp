@@ -79,8 +79,8 @@ static void drawRing() {
     ringOutlineIndices.push_back(numberOfSides + numberOfSides - 1);
     ringOutlineIndices.push_back(numberOfSides);
 
-    for (size_t i = 0; i < ringVertices.size(); ++i) {
-      ringTexCoords.push_back(Vec2f(ringVertices[i][0] + 0.5, ringVertices[i][1] + 0.5));
+    for (const auto &ringVertice : ringVertices) {
+      ringTexCoords.push_back(Vec2f(ringVertice[0] + 0.5, ringVertice[1] + 0.5));
     }
 
     buffers.resize(4);

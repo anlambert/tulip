@@ -57,8 +57,8 @@ public:
     } else {
       reset();
 
-      for (unsigned int i = 0; i < events.size(); ++i) {
-        observables.insert(events[i].sender());
+      for (const auto &event : events) {
+        observables.insert(event.sender());
       }
     }
   }
@@ -253,10 +253,10 @@ void ObservablePropertyTest::addObservers() {
   CPPUNIT_ASSERT(observer->nbObservables() == 0);
   CPPUNIT_ASSERT(pObserver->nbProperties() == 0);
 
-  for (unsigned int i = 0; i < 7; ++i) {
-    props[i]->addObserver(observer);
+  for (auto *prop : props) {
+    prop->addObserver(observer);
     CPPUNIT_ASSERT(observer->nbObservables() == 0);
-    props[i]->addListener(pObserver);
+    prop->addListener(pObserver);
     CPPUNIT_ASSERT(pObserver->nbProperties() == 0);
   }
 }
@@ -265,8 +265,8 @@ void ObservablePropertyTest::testAddObserver() {
   CPPUNIT_ASSERT(observer->nbObservables() == 0);
   CPPUNIT_ASSERT(pObserver->nbProperties() == 0);
 
-  for (unsigned int i = 0; i < 7; ++i) {
-    CPPUNIT_ASSERT(props[i]->countObservers() == 1);
+  for (auto *prop : props) {
+    CPPUNIT_ASSERT(prop->countObservers() == 1);
     // CPPUNIT_ASSERT(props[i]->countPropertyObservers() == 1); //same as above
   }
 }
@@ -305,8 +305,8 @@ void ObservablePropertyTest::testAsynchronousSetNodeValue() {
   Observable::unholdObservers();
   CPPUNIT_ASSERT(observer->nbObservables() == 7);
 
-  for (unsigned int i = 0; i < 7; ++i) {
-    CPPUNIT_ASSERT(observer->found(props[i]));
+  for (auto *prop : props) {
+    CPPUNIT_ASSERT(observer->found(prop));
   }
 }
 
@@ -323,8 +323,8 @@ void ObservablePropertyTest::testAsynchronousSetEdgeValue() {
   Observable::unholdObservers();
   CPPUNIT_ASSERT(observer->nbObservables() == 7);
 
-  for (unsigned int i = 0; i < 7; ++i) {
-    CPPUNIT_ASSERT(observer->found(props[i]));
+  for (auto *prop : props) {
+    CPPUNIT_ASSERT(observer->found(prop));
   }
 }
 
@@ -363,8 +363,8 @@ void ObservablePropertyTest::testAsynchronousSetAllNodeValue() {
   Observable::unholdObservers();
   CPPUNIT_ASSERT(observer->nbObservables() == 7);
 
-  for (unsigned int i = 0; i < 7; ++i) {
-    CPPUNIT_ASSERT(observer->found(props[i]));
+  for (auto *prop : props) {
+    CPPUNIT_ASSERT(observer->found(prop));
   }
 }
 
@@ -381,8 +381,8 @@ void ObservablePropertyTest::testAsynchronousSetAllEdgeValue() {
   Observable::unholdObservers();
   CPPUNIT_ASSERT(observer->nbObservables() == 7);
 
-  for (unsigned int i = 0; i < 7; ++i) {
-    CPPUNIT_ASSERT(observer->found(props[i]));
+  for (auto *prop : props) {
+    CPPUNIT_ASSERT(observer->found(prop));
   }
 }
 
@@ -425,10 +425,10 @@ void ObservablePropertyTest::testRemoveObserver() {
   CPPUNIT_ASSERT(observer->nbObservables() == 0);
   CPPUNIT_ASSERT(pObserver->nbProperties() == 0);
 
-  for (unsigned int i = 0; i < 7; ++i) {
-    props[i]->removeObserver(observer);
-    props[i]->removeListener(pObserver);
-    CPPUNIT_ASSERT(props[i]->countObservers() == 0);
+  for (auto *prop : props) {
+    prop->removeObserver(observer);
+    prop->removeListener(pObserver);
+    CPPUNIT_ASSERT(prop->countObservers() == 0);
     // CPPUNIT_ASSERT(props[i]->countPropertyObservers() == 0); same as above
   }
 
@@ -448,8 +448,8 @@ void ObservablePropertyTest::testRemoveObserver() {
   setEdgeValue(props[5], "(0.0, 0.0, 0.0)", true, false, false);
   setEdgeValue(props[6], "talipot", true, false, false);
 
-  for (unsigned int i = 0; i < 7; ++i) {
-    graph->delLocalProperty(props[i]->getName());
+  for (auto *prop : props) {
+    graph->delLocalProperty(prop->getName());
     CPPUNIT_ASSERT(observer->nbObservables() == 0);
     CPPUNIT_ASSERT(pObserver->nbProperties() == 0);
   }

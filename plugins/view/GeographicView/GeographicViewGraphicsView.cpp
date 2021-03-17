@@ -707,9 +707,9 @@ void GeographicViewGraphicsView::createLayoutWithAddresses(const string &address
               addressSelectionDialog->clearList();
               addressSelectionDialog->setBaseAddress(tlpStringToQString(addr));
 
-              for (unsigned int i = 0; i < geocodingResults.size(); ++i) {
+              for (auto &geocodingResult : geocodingResults) {
                 addressSelectionDialog->addResultToList(
-                    tlpStringToQString(geocodingResults[i].address));
+                    tlpStringToQString(geocodingResult.address));
               }
 
               addressSelectionProxy->setPos(
@@ -990,8 +990,8 @@ void GeographicViewGraphicsView::switchViewType() {
       }
 
       if (nodeLatLng.find(n) != nodeLatLng.end()) {
-        geoLayout->setNodeValue(
-            n, Coord(nodeLatLng[n].second * 2., latitudeToMercator(nodeLatLng[n].first), 0));
+        const auto &[lat, lng] = nodeLatLng[n];
+        geoLayout->setNodeValue(n, Coord(lng * 2., latitudeToMercator(lat), 0));
       }
     }
 
@@ -999,9 +999,8 @@ void GeographicViewGraphicsView::switchViewType() {
       for (auto e : graph->edges()) {
         vector<Coord> edgeBendsCoords;
 
-        for (unsigned int i = 0; i < edgeBendsLatLng[e].size(); ++i) {
-          edgeBendsCoords.push_back(Coord(edgeBendsLatLng[e][i].second * 2.,
-                                          latitudeToMercator(edgeBendsLatLng[e][i].first), 0));
+        for (const auto &[lat, lng] : edgeBendsLatLng[e]) {
+          edgeBendsCoords.push_back(Coord(lng * 2., latitudeToMercator(lat), 0));
         }
 
         geoLayout->setEdgeValue(e, edgeBendsCoords);

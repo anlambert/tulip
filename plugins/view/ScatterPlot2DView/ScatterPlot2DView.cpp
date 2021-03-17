@@ -734,19 +734,19 @@ void ScatterPlot2DView::destroyOverviewsIfNeeded() {
 
   vector<string> propertiesToRemove;
 
-  for (size_t i = 0; i < selectedGraphProperties.size(); ++i) {
+  for (const auto &selectedGraphProperty : selectedGraphProperties) {
 
-    if (!scatterPlotGraph || !scatterPlotGraph->existProperty(selectedGraphProperties[i])) {
-      propertiesToRemove.push_back(selectedGraphProperties[i]);
+    if (!scatterPlotGraph || !scatterPlotGraph->existProperty(selectedGraphProperty)) {
+      propertiesToRemove.push_back(selectedGraphProperty);
 
-      if (detailedScatterPlotPropertyName.first == selectedGraphProperties[i] ||
-          detailedScatterPlotPropertyName.second == selectedGraphProperties[i]) {
+      if (detailedScatterPlotPropertyName.first == selectedGraphProperty ||
+          detailedScatterPlotPropertyName.second == selectedGraphProperty) {
         detailedScatterPlotPropertyName = make_pair("", "");
       }
 
       map<pair<string, string>, ScatterPlot2D *>::iterator overviewToDestroyIt;
       overviewToDestroyIt = find_if(scatterPlotsMap.begin(), scatterPlotsMap.end(),
-                                    map_pair_string_key_contains(selectedGraphProperties[i]));
+                                    map_pair_string_key_contains(selectedGraphProperty));
 
       while (overviewToDestroyIt != scatterPlotsMap.end()) {
         if (overviewToDestroyIt->second == detailedScatterPlot) {
@@ -762,15 +762,15 @@ void ScatterPlot2DView::destroyOverviewsIfNeeded() {
         scatterPlotsGenMap.erase(overviewToDestroyIt->first);
         scatterPlotsMap.erase(overviewToDestroyIt);
         overviewToDestroyIt = find_if(scatterPlotsMap.begin(), scatterPlotsMap.end(),
-                                      map_pair_string_key_contains(selectedGraphProperties[i]));
+                                      map_pair_string_key_contains(selectedGraphProperty));
       }
     }
   }
 
-  for (size_t i = 0; i < propertiesToRemove.size(); ++i) {
-    selectedGraphProperties.erase(remove(selectedGraphProperties.begin(),
-                                         selectedGraphProperties.end(), propertiesToRemove[i]),
-                                  selectedGraphProperties.end());
+  for (const auto &prop : propertiesToRemove) {
+    selectedGraphProperties.erase(
+        remove(selectedGraphProperties.begin(), selectedGraphProperties.end(), prop),
+        selectedGraphProperties.end());
   }
 
   if (!propertiesToRemove.empty()) {

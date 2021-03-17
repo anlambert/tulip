@@ -350,9 +350,9 @@ void ParallelCoordsAxisBoxPlot::initOrUpdateBoxPlots() {
 }
 
 void ParallelCoordsAxisBoxPlot::buildGlAxisPlot(vector<ParallelAxis *> currentAxis) {
-  for (unsigned int i = 0; i < currentAxis.size(); ++i) {
-    if (dynamic_cast<QuantitativeParallelAxis *>(currentAxis[i])) {
-      auto *quantitativeAxis = static_cast<QuantitativeParallelAxis *>(currentAxis[i]);
+  for (auto *axis : currentAxis) {
+    if (dynamic_cast<QuantitativeParallelAxis *>(axis)) {
+      auto *quantitativeAxis = static_cast<QuantitativeParallelAxis *>(axis);
 
       if (quantitativeAxis->getMedianStringValue() != "KO") {
         axisBoxPlotMap[quantitativeAxis] = new GlAxisBoxPlot(quantitativeAxis, lightBlue, darkBlue);

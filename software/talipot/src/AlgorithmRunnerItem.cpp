@@ -456,9 +456,9 @@ void AlgorithmRunnerItem::run(Graph *g) {
     // because they may have been created on the fly
     // (local properties see copyToLocal function above)
     // and thus they may be deleted further in case of undo
-    for (unsigned int i = 0; i < outNonPropertyParams.size(); ++i) {
-      tlp::DataType *dataType = dataSet.getData(outNonPropertyParams[i]);
-      originalDataSet.setData(outNonPropertyParams[i], dataType);
+    for (const auto &outNonPropertyParam : outNonPropertyParams) {
+      tlp::DataType *dataType = dataSet.getData(outNonPropertyParam);
+      originalDataSet.setData(outNonPropertyParam, dataType);
     }
 
     auto *model = static_cast<ParameterListModel *>(_ui->parameters->model());

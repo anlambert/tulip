@@ -106,8 +106,8 @@ void ViewGraphPropertiesSelectionWidget::setSelectedProperties(vector<string> se
 
   vector<string> selectedPropertiesCopy(selectedProperties);
 
-  for (unsigned int i = 0; i < stringList.size(); ++i) {
-    if (std::find(selectedProperties.begin(), selectedProperties.end(), stringList[i]) !=
+  for (const auto &s : stringList) {
+    if (std::find(selectedProperties.begin(), selectedProperties.end(), s) !=
         selectedProperties.end()) {
       finalStringList.push_back(selectedPropertiesCopy.front());
       selectedPropertiesCopy.erase(remove(selectedPropertiesCopy.begin(),
@@ -115,7 +115,7 @@ void ViewGraphPropertiesSelectionWidget::setSelectedProperties(vector<string> se
                                           selectedPropertiesCopy.front()),
                                    selectedPropertiesCopy.end());
     } else {
-      finalStringList.push_back(stringList[i]);
+      finalStringList.push_back(s);
     }
   }
 

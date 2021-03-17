@@ -268,8 +268,7 @@ void AutoCompletionDataBase::analyseCurrentScriptCode(const QString &code, const
 
   QVector<QString> importedModules = PythonInterpreter::instance().getImportedModulesList();
 
-  for (int i = 0; i < importedModules.size(); ++i) {
-    QString moduleName = importedModules[i];
+  for (const auto &moduleName : importedModules) {
     _globalAutoCompletionList.insert(moduleName);
 
     if (moduleName.indexOf(".") != -1) {
@@ -287,8 +286,8 @@ void AutoCompletionDataBase::analyseCurrentScriptCode(const QString &code, const
     QVector<QString> builtinDictContent =
         PythonInterpreter::instance().getObjectDictEntries(builtinModName);
 
-    for (int i = 0; i < builtinDictContent.size(); ++i) {
-      _globalAutoCompletionList.insert(builtinDictContent[i]);
+    for (const auto &builtin : builtinDictContent) {
+      _globalAutoCompletionList.insert(builtin);
     }
   }
 
@@ -750,14 +749,14 @@ QString AutoCompletionDataBase::findTypeForExpr(const QString &expr,
   QString cleanExpr = expr;
   int parenLevel = 0;
 
-  for (int i = 0; i < cleanExpr.length(); ++i) {
-    if (cleanExpr[i] == '(') {
+  for (auto &c : cleanExpr) {
+    if (c == '(') {
       parenLevel += 1;
-    } else if (cleanExpr[i] == ')') {
+    } else if (c == ')') {
       parenLevel -= 1;
-    } else if (cleanExpr[i] == '.') {
+    } else if (c == '.') {
       if (parenLevel > 0) {
-        cleanExpr[i] = '_';
+        c = '_';
       }
     }
   }
@@ -1316,8 +1315,7 @@ QSet<QString> AutoCompletionDataBase::getAllDictForType(const QString &type, con
 
   QVector<QString> baseTypes = PythonInterpreter::instance().getBaseTypesForType(type);
 
-  for (int i = 0; i < baseTypes.size(); ++i) {
-    QString baseType = baseTypes[i];
+  for (auto baseType : baseTypes) {
     baseType.replace("_talipotgui", "tlpgui");
     baseType.replace("_talipot", "tlp");
 
@@ -1487,8 +1485,7 @@ AutoCompletionDataBase::getParamTypesForMethodOrFunction(const QString &type,
   QVector<QVector<QString>> ret = _apiDb->getParamTypesForMethodOrFunction(fullName);
   QVector<QString> baseTypes = PythonInterpreter::instance().getBaseTypesForType(type);
 
-  for (int i = 0; i < baseTypes.size(); ++i) {
-    QString baseType = baseTypes[i];
+  for (auto baseType : baseTypes) {
     baseType.replace("_talipotgui", "tlpgui");
     baseType.replace("_talipot", "tlp");
 
@@ -1516,8 +1513,7 @@ QString AutoCompletionDataBase::getReturnTypeForMethodOrFunction(const QString &
   if (ret.isEmpty()) {
     QVector<QString> baseTypes = PythonInterpreter::instance().getBaseTypesForType(type);
 
-    for (int i = 0; i < baseTypes.size(); ++i) {
-      QString baseType = baseTypes[i];
+    for (auto baseType : baseTypes) {
       baseType.replace("_talipot", "tlpgui");
       baseType.replace("_talipot", "tlp");
 

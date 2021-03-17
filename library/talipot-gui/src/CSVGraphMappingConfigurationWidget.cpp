@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -158,9 +158,9 @@ CSVToGraphDataMapping *CSVGraphMappingConfigurationWidget::buildMappingObject() 
   } else if (ui->mappingConfigurationStackedWidget->currentWidget() ==
              ui->importEdgesFromNodesPage) {
     // src and tgt columns must be different
-    for (unsigned int i = 0; i < srcColumnIds.size(); ++i) {
-      for (unsigned int j = 0; j < tgtColumnIds.size(); ++j) {
-        if (srcColumnIds[i] == tgtColumnIds[j]) {
+    for (unsigned int srcColumnId : srcColumnIds) {
+      for (unsigned int tgtColumnId : tgtColumnIds) {
+        if (srcColumnId == tgtColumnId) {
           QMessageBox::critical(parentWidget(), "Import of new relations failed",
                                 "Source columns and destination columns are not different.");
           return nullptr;
@@ -186,9 +186,9 @@ bool CSVGraphMappingConfigurationWidget::isValid() const {
   } else if (ui->mappingConfigurationStackedWidget->currentWidget() ==
              ui->importEdgesFromNodesPage) {
     // src and tgt columns must be different
-    for (unsigned int i = 0; i < srcColumnIds.size(); ++i) {
-      for (unsigned int j = 0; j < tgtColumnIds.size(); ++j) {
-        if (srcColumnIds[i] == tgtColumnIds[j]) {
+    for (unsigned int srcColumnId : srcColumnIds) {
+      for (unsigned int tgtColumnId : tgtColumnIds) {
+        if (srcColumnId == tgtColumnId) {
           return false;
         }
       }
@@ -256,14 +256,14 @@ void CSVGraphMappingConfigurationWidget::selectColumns(const QString &title,
   vector<string> tmpColumns;
   vector<string> selColumns;
 
-  for (unsigned int i = 0; i < columns.size(); ++i) {
-    if (!columns[i].empty()) {
-      tmpColumns.push_back(columns[i]);
+  for (const auto &column : columns) {
+    if (!column.empty()) {
+      tmpColumns.push_back(column);
     }
   }
 
-  for (unsigned int i = 0; i < columnIds.size(); ++i) {
-    selColumns.push_back(columns[columnIds[i]]);
+  for (unsigned int columnId : columnIds) {
+    selColumns.push_back(columns[columnId]);
   }
 
   if (StringsListSelectionDialog::choose(title, tmpColumns, selColumns, this)) {

@@ -333,11 +333,11 @@ bool BubbleTree::run() {
     string err;
     auto components = ConnectedTest::computeConnectedComponents(graph);
 
-    for (unsigned int i = 0; i < components.size(); ++i) {
+    for (const auto &component : components) {
       Graph *tmp = graph;
       // apply "Bubble Tree" on the subgraph induced
       // by the current connected component
-      graph = graph->inducedSubGraph(components[i]);
+      graph = graph->inducedSubGraph(component);
       run();
       tmp->delSubGraph(graph);
       // restore current graph

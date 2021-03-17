@@ -38,8 +38,8 @@ void ConeTreeExtended::computeLayerSize(tlp::node n, unsigned int level) {
   }
 
   levelSize[level] = std::max(levelSize[level], nodeSize->getNodeValue(n)[1]);
-  for (auto i : tree->getOutNodes(n)) {
-    computeLayerSize(i, level + 1);
+  for (auto on : tree->getOutNodes(n)) {
+    computeLayerSize(on, level + 1);
   }
 }
 //===============================================================

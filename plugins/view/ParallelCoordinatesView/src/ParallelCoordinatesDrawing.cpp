@@ -99,8 +99,8 @@ void ParallelCoordinatesDrawing::createAxis(GlWidget *glWidget, GlProgressBar *p
     lastAxisCoord.clear();
     vector<ParallelAxis *> lastAxisOrder(getAllAxis());
 
-    for (size_t i = 0; i < lastAxisOrder.size(); ++i) {
-      lastAxisCoord.push_back(lastAxisOrder[i]->getBaseCoord());
+    for (auto *axis : lastAxisOrder) {
+      lastAxisCoord.push_back(axis->getBaseCoord());
     }
   }
 
@@ -110,8 +110,8 @@ void ParallelCoordinatesDrawing::createAxis(GlWidget *glWidget, GlProgressBar *p
     lastAxisRotAngle.clear();
     vector<ParallelAxis *> lastAxisOrder(getAllAxis());
 
-    for (size_t i = 0; i < lastAxisOrder.size(); ++i) {
-      lastAxisRotAngle.push_back(lastAxisOrder[i]->getRotationAngle());
+    for (auto *axis : lastAxisOrder) {
+      lastAxisRotAngle.push_back(axis->getRotationAngle());
     }
   }
 
@@ -295,12 +295,12 @@ void ParallelCoordinatesDrawing::plotData(const unsigned int dataId, const Color
   vector<Coord> polylineCoords;
   vector<Coord> splineCurvePassPoints;
 
-  for (size_t j = 0; j < axisOrder.size(); j++) {
+  for (const auto &axis : axisOrder) {
 
-    Coord pointCoord = parallelAxis[axisOrder[j]]->getPointCoordOnAxisForData(dataId);
-    float axisRotAngle = parallelAxis[axisOrder[j]]->getRotationAngle();
+    Coord pointCoord = parallelAxis[axis]->getPointCoordOnAxisForData(dataId);
+    float axisRotAngle = parallelAxis[axis]->getRotationAngle();
     ostringstream oss;
-    oss << "data " << dataId << " var " << axisOrder[j];
+    oss << "data " << dataId << " var " << axis;
 
     if (drawPointsOnAxis) {
 
@@ -600,12 +600,12 @@ void ParallelCoordinatesDrawing::computeResizeFactor() {
 vector<ParallelAxis *> ParallelCoordinatesDrawing::getAllAxis() {
   vector<ParallelAxis *> axis;
 
-  for (size_t i = 0; i < axisOrder.size(); ++i) {
-    ParallelAxis *pa = parallelAxis[axisOrder[i]];
+  for (const auto &ax : axisOrder) {
+    ParallelAxis *pa = parallelAxis[ax];
 
     if (pa == nullptr) {
       // on the fly clean up for deleted properties
-      parallelAxis.erase(axisOrder[i]);
+      parallelAxis.erase(ax);
       continue;
     }
 

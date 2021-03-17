@@ -377,9 +377,9 @@ bool MouseNKeysNavigator::eventFilter(QObject *widget, QEvent *e) {
       node metaNode;
       bool find = false;
 
-      for (unsigned int i = 0; i < tmpNodes.size(); ++i) {
-        if (graph->isMetaNode(node(tmpNodes[i].getComplexEntityId()))) {
-          metaNode = node(tmpNodes[i].getComplexEntityId());
+      for (auto tmpNode : tmpNodes) {
+        if (graph->isMetaNode(node(tmpNode.getComplexEntityId()))) {
+          metaNode = node(tmpNode.getComplexEntityId());
           find = true;
           break;
         }

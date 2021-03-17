@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -102,8 +102,8 @@ void PythonCodeHighlighter::buildHighlightingRules() {
         PythonInterpreter::instance().getObjectDictEntries(builtinModName);
     QStringList builtinPatterns;
 
-    for (int i = 0; i < builtinDictContent.size(); ++i) {
-      builtinPatterns << "\\b" + builtinDictContent[i] + "\\b";
+    for (const auto &builtin : builtinDictContent) {
+      builtinPatterns << "\\b" + builtin + "\\b";
     }
 
     builtinPatterns << "\\bself\\b";

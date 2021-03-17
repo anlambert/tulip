@@ -44,8 +44,8 @@ static void drawCone() {
     coneVertices.push_back(Coord(0, 0, -0.5));
     coneVertices.push_back(Coord(0, 0, 0.5));
 
-    for (size_t i = 0; i < coneVertices.size(); ++i) {
-      coneTexCoords.push_back(Vec2f(coneVertices[i][0] + 0.5, coneVertices[i][1] + 0.5));
+    for (const auto &coneVertice : coneVertices) {
+      coneTexCoords.push_back(Vec2f(coneVertice[0] + 0.5, coneVertice[1] + 0.5));
     }
 
     for (unsigned int i = 0; i < numberOfSides - 1; ++i) {

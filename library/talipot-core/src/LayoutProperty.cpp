@@ -646,11 +646,11 @@ double LayoutProperty::edgeLength(const edge e) const {
   Coord start = getNodeValue(src);
   const Coord &end = getNodeValue(tgt);
   double result = 0;
-  const vector<Coord> &tmp = getEdgeValue(e);
+  const vector<Coord> &bends = getEdgeValue(e);
 
-  for (unsigned int i = 0; i < tmp.size(); ++i) {
-    result += (tmp[i] - start).norm();
-    start = tmp[i];
+  for (const auto &p : bends) {
+    result += (p - start).norm();
+    start = p;
   }
 
   result += (end - start).norm();
@@ -810,8 +810,8 @@ void LayoutProperty::updateEdgeValue(tlp::edge e, tlp::LineType::RealType newVal
       bool reset = false;
 
       // check if min has to be updated
-      for (unsigned i = 0; i < newValue.size(); ++i) {
-        if (minV > newValue[i]) {
+      for (const auto &v : newValue) {
+        if (minV > v) {
           reset = true;
           break;
         }
@@ -819,8 +819,8 @@ void LayoutProperty::updateEdgeValue(tlp::edge e, tlp::LineType::RealType newVal
 
       if (!reset) {
         // check if max has to be updated
-        for (unsigned i = 0; i < newValue.size(); ++i) {
-          if (maxV < newValue[i]) {
+        for (const auto &v : newValue) {
+          if (maxV < v) {
             reset = true;
             break;
           }
@@ -829,8 +829,8 @@ void LayoutProperty::updateEdgeValue(tlp::edge e, tlp::LineType::RealType newVal
 
       if (!reset) {
         // check if minV belongs to oldV
-        for (unsigned i = 0; i < oldV.size(); ++i) {
-          if (minV == oldV[i]) {
+        for (const auto &v : oldV) {
+          if (minV == v) {
             reset = false;
             break;
           }
@@ -839,8 +839,8 @@ void LayoutProperty::updateEdgeValue(tlp::edge e, tlp::LineType::RealType newVal
 
       if (!reset) {
         // check if maxV belongs to oldV
-        for (unsigned i = 0; i < oldV.size(); ++i) {
-          if (maxV == oldV[i]) {
+        for (const auto &v : oldV) {
+          if (maxV == v) {
             reset = false;
             break;
           }

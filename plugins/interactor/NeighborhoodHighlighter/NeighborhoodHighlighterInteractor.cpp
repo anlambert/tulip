@@ -593,8 +593,8 @@ void NeighborhoodHighlighter::computeNeighborhoodGraphCircleLayout() {
 
     vector<Coord> edgesBends = neighborhoodGraphLayout->getEdgeValue(e);
 
-    for (size_t i = 0; i < edgesBends.size(); ++i) {
-      edgesBends[i] = finalBendsCoord;
+    for (auto &edgesBend : edgesBends) {
+      edgesBend = finalBendsCoord;
     }
 
     neighborhoodGraphCircleLayout->setEdgeValue(e, edgesBends);

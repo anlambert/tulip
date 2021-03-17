@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -320,9 +320,7 @@ void OctreeBundle::createOctree(Graph *graph, tlp::LayoutProperty *lay, tlp::Siz
 
   recQuad(fr, ba, graph->nodes());
 
-  for (size_t i = 0; i < unvalidEdges.size(); ++i) {
-    node src = unvalidEdges[i].first;
-    node tgt = unvalidEdges[i].second;
+  for (const auto &[src, tgt] : unvalidEdges) {
     edge e;
 
     if ((e = graph->existEdge(src, tgt)).isValid()) {

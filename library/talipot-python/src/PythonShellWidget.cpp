@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -270,9 +270,7 @@ void PythonShellWidget::updateAutoCompletionList(bool) {
       QVector<QString> dynamicAutoCompletionList =
           PythonInterpreter::instance().getObjectDictEntries(context[0], context[1]);
 
-      for (int i = 0; i < dynamicAutoCompletionList.size(); ++i) {
-        QString entry = dynamicAutoCompletionList[i];
-
+      for (const auto &entry : dynamicAutoCompletionList) {
         if (_autoCompletionList->findItems(entry, Qt::MatchExactly).empty()) {
           _autoCompletionList->addItem(entry);
         }
@@ -284,9 +282,7 @@ void PythonShellWidget::updateAutoCompletionList(bool) {
         QVector<QString> dynamicAutoCompletionList =
             PythonInterpreter::instance().getGlobalDictEntries(context[0]);
 
-        for (int i = 0; i < dynamicAutoCompletionList.size(); ++i) {
-          QString entry = dynamicAutoCompletionList[i];
-
+        for (const auto &entry : dynamicAutoCompletionList) {
           if (_autoCompletionList->findItems(entry, Qt::MatchExactly).empty()) {
             _autoCompletionList->addItem(entry);
           }

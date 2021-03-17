@@ -162,8 +162,8 @@ struct TLP_SCOPE ParameterDescriptionList {
            const std::string &defaultValue, bool isMandatory = true,
            ParameterDirection direction = IN_PARAM,
            const std::string &valuesDescription = std::string()) {
-    for (unsigned int i = 0; i < parameters.size(); ++i) {
-      if (parameters[i].getName() == parameterName) {
+    for (const auto &parameter : parameters) {
+      if (parameter.getName() == parameterName) {
 #ifndef NDEBUG
         tlp::warning() << "ParameterDescriptionList::add " << parameterName << " already exists"
                        << std::endl;

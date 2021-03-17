@@ -145,14 +145,14 @@ void tlp::AbstractProperty<NodeType, EdgeType, PropType>::setNodeDefaultValue(
 
   // reset the backup nodes to the old default value as there is a new one in the
   // underlying MutableContainer
-  for (size_t i = 0; i < nodesOldDefaultToUpdate.size(); ++i) {
-    nodeProperties.set(nodesOldDefaultToUpdate[i].id, oldDefaultValue);
+  for (auto n : nodesOldDefaultToUpdate) {
+    nodeProperties.set(n.id, oldDefaultValue);
   }
 
   // reset the backup nodes to their current value in order
   // to synchronize the underlying MutableContainer state
-  for (size_t i = 0; i < nodesDefaultToUpdate.size(); ++i) {
-    nodeProperties.set(nodesDefaultToUpdate[i].id, v, true);
+  for (auto n : nodesDefaultToUpdate) {
+    nodeProperties.set(n.id, v, true);
   }
 }
 //=============================================================
@@ -202,14 +202,14 @@ void tlp::AbstractProperty<NodeType, EdgeType, PropType>::setEdgeDefaultValue(
 
   // reset the backup edges to the old default value as there is a new one in the
   // underlying MutableContainer
-  for (size_t i = 0; i < edgesOldDefaultToUpdate.size(); ++i) {
-    edgeProperties.set(edgesOldDefaultToUpdate[i].id, oldDefaultValue);
+  for (auto e : edgesOldDefaultToUpdate) {
+    edgeProperties.set(e.id, oldDefaultValue);
   }
 
   // reset the backup edges to their current value in order
   // to synchronize the underlying MutableContainer state
-  for (size_t i = 0; i < edgesDefaultToUpdate.size(); ++i) {
-    edgeProperties.set(edgesDefaultToUpdate[i].id, v, true);
+  for (auto e : edgesDefaultToUpdate) {
+    edgeProperties.set(e.id, v, true);
   }
 }
 //============================================================

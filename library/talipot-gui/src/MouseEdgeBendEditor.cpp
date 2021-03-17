@@ -588,7 +588,7 @@ bool MouseEdgeBendEditor::computeBendsCircles(GlWidget *glWidget) {
         min = baseCoordinates[0];
         max = baseCoordinates[0];
 
-        for (auto coord : baseCoordinates) {
+        for (const auto &coord : baseCoordinates) {
           if (coord[0] < min[0]) {
             min[0] = coord[0];
           }
@@ -609,7 +609,7 @@ bool MouseEdgeBendEditor::computeBendsCircles(GlWidget *glWidget) {
         Size nodeSize = _sizes->getNodeValue(mNode);
         double rotation = _rotation->getNodeValue(mNode) * M_PI / 180;
 
-        for (auto coord : baseCoordinates) {
+        for (const auto &coord : baseCoordinates) {
           Coord tmp = {((coord[0] - min[0]) / (max[0] - min[0])) * nodeSize[0] - nodeSize[0] / 2.f,
                        ((coord[1] - min[1]) / (max[1] - min[1])) * nodeSize[1] - nodeSize[1] / 2.f};
           coordinatesWithRotation.push_back(_layout->getNodeValue(mNode) +

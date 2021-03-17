@@ -863,9 +863,9 @@ bool FontEditorCreator::paint(QPainter *painter, const QStyleOptionViewItem &opt
 QWidget *LabelPositionEditorCreator::createWidget(QWidget *parent) const {
   auto *result = new QComboBox(parent);
 
-  for (const auto &i : ViewSettings::POSITION_LABEL_MAP) {
-    result->addItem(tlp::tlpStringToQString(i.second),
-                    QVariant::fromValue<LabelPosition::LabelPositions>(i.first));
+  for (const auto &[labelPosition, labelPositionName] : ViewSettings::POSITION_LABEL_MAP) {
+    result->addItem(tlp::tlpStringToQString(labelPositionName),
+                    QVariant::fromValue<LabelPosition::LabelPositions>(labelPosition));
   }
 
   return result;
@@ -954,8 +954,8 @@ void QVectorBoolEditorCreator::setEditorData(QWidget *editor, const QVariant &v,
   QVector<QVariant> editorData;
   auto vect = v.value<QVector<bool>>();
 
-  for (int i = 0; i < vect.size(); ++i) {
-    editorData.push_back(QVariant::fromValue<bool>(vect[i]));
+  for (bool b : vect) {
+    editorData.push_back(QVariant::fromValue<bool>(b));
   }
 
   static_cast<VectorEditor *>(editor)->setVector(editorData, qMetaTypeId<bool>());

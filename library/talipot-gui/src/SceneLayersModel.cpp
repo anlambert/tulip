@@ -413,9 +413,9 @@ void SceneLayersModel::treatEvent(const Event &e) {
       if (glse->getSceneEventType() == GlSceneEvent::TLP_DELENTITY) {
         QModelIndexList persistentIndexes = persistentIndexList();
 
-        for (int i = 0; i < persistentIndexes.size(); ++i) {
-          if (persistentIndexes.at(i).internalPointer() == glse->getGlEntity()) {
-            changePersistentIndex(persistentIndexes.at(i), QModelIndex());
+        for (const auto &persistentIndexe : persistentIndexes) {
+          if (persistentIndexe.internalPointer() == glse->getGlEntity()) {
+            changePersistentIndex(persistentIndexe, QModelIndex());
             break;
           }
         }

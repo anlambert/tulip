@@ -126,13 +126,13 @@ void updateLayout(node src, edge e, Graph *graph, LayoutProperty *layout,
     sens = false;
   }
 
-  for (unsigned int j = 0; j < bends.size(); ++j) {
+  for (auto &bend : bends) {
     const Coord &coord = layout->getNodeValue(nBends[i]);
 
     if (!layout3D) {
-      (bends[j] = coord)[2] = 0;
+      (bend = coord)[2] = 0;
     } else {
-      bends[j] = coord;
+      bend = coord;
     }
 
     if (sens) {
@@ -406,13 +406,13 @@ bool EdgeBundling::run() {
   // their enclosing cell vertices.
   // So connect the other ones to the enclosing cell vertices too
   // in order for the shortest path computation to work
-  for (size_t i = 0; i < samePositionNodes.size(); ++i) {
+  for (const auto &samePositionNode : samePositionNodes) {
     tlp::node rep;
 
     // get the nodes that has been connected to the voronoi cell vertices
-    for (size_t j = 0; j < samePositionNodes[i].size(); ++j) {
-      if (gridGraph->deg(samePositionNodes[i][j]) > 0) {
-        rep = samePositionNodes[i][j];
+    for (auto n : samePositionNode) {
+      if (gridGraph->deg(n) > 0) {
+        rep = n;
         break;
       }
     }
@@ -421,12 +421,12 @@ bool EdgeBundling::run() {
     // Warning: because no edge is added to the current node
     // we can use a basic iteration instead of a stable one
     for (auto n : gridGraph->getOutNodes(rep)) {
-      for (size_t j = 0; j < samePositionNodes[i].size(); ++j) {
-        if (samePositionNodes[i][j] == rep) {
+      for (auto n2 : samePositionNode) {
+        if (n2 == rep) {
           continue;
         }
 
-        tlp::edge e = gridGraph->addEdge(samePositionNodes[i][j], n);
+        tlp::edge e = gridGraph->addEdge(n2, n);
         ntype.addEdgeValue(e, 2);
       }
     }
@@ -536,9 +536,9 @@ bool EdgeBundling::run() {
       }
 
       if (optimizationLevel > 1) {
-        for (unsigned int i = 0; i < toDelete.size(); i++) {
-          orderedNodes.erase(toDelete[i]);
-          vertexCoverGraph->delNode(toDelete[i]);
+        for (auto n : toDelete) {
+          orderedNodes.erase(n);
+          vertexCoverGraph->delNode(n);
         }
       }
 
@@ -626,8 +626,7 @@ bool EdgeBundling::run() {
         });
       }
 
-      for (size_t j = 0; j < toTreatByThreads.size(); ++j) {
-        node n = toTreatByThreads[j];
+      for (auto n : toTreatByThreads) {
         vector<node> neigbors;
         for (auto n2 : vertexCoverGraph->getInOutNodes(n)) {
           neigbors.push_back(n2);
@@ -636,9 +635,9 @@ bool EdgeBundling::run() {
         orderedNodes.erase(n);
         vertexCoverGraph->delNode(n);
 
-        for (unsigned int i = 0; i < neigbors.size(); ++i) {
-          computeDistance(neigbors[i]);
-          orderedNodes.insert(neigbors[i]);
+        for (auto neigbor : neigbors) {
+          computeDistance(neigbor);
+          orderedNodes.insert(neigbor);
         }
       }
     }
@@ -667,24 +666,24 @@ bool EdgeBundling::run() {
   }
 
   // Reinsert multiple edges if any and update their layout
-  for (size_t i = 0; i < removedEdges.size(); ++i) {
-    auto eEnds = graph->ends(removedEdges[i]);
+  for (auto removedEdge : removedEdges) {
+    auto eEnds = graph->ends(removedEdge);
 
     if (eEnds.first == eEnds.second) {
-      oriGraph->addEdge(removedEdges[i]);
+      oriGraph->addEdge(removedEdge);
     } else {
       tlp::edge origEdge = oriGraph->existEdge(eEnds.first, eEnds.second);
 
       if (origEdge.isValid()) {
-        oriGraph->addEdge(removedEdges[i]);
-        layout->setEdgeValue(removedEdges[i], layout->getEdgeValue(origEdge));
+        oriGraph->addEdge(removedEdge);
+        layout->setEdgeValue(removedEdge, layout->getEdgeValue(origEdge));
       } else {
         origEdge = oriGraph->existEdge(eEnds.second, eEnds.first);
         assert(origEdge.isValid());
-        oriGraph->addEdge(removedEdges[i]);
+        oriGraph->addEdge(removedEdge);
         std::vector<tlp::Coord> bends = layout->getEdgeValue(origEdge);
         std::reverse(bends.begin(), bends.end());
-        layout->setEdgeValue(removedEdges[i], bends);
+        layout->setEdgeValue(removedEdge, bends);
       }
     }
   }

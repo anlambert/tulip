@@ -133,9 +133,9 @@ Iterator<ParameterDescription> *ParameterDescriptionList::getParameters() const 
 }
 
 ParameterDescription *ParameterDescriptionList::getParameter(const string &name) {
-  for (unsigned int i = 0; i < parameters.size(); ++i) {
-    if (name == parameters[i].getName()) {
-      return &parameters[i];
+  for (auto &parameter : parameters) {
+    if (name == parameter.getName()) {
+      return &parameter;
     }
   }
 

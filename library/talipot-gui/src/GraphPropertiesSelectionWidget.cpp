@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -87,9 +87,9 @@ bool GraphPropertiesSelectionWidget::propertySelectable(const std::string &prope
 void GraphPropertiesSelectionWidget::setInputPropertiesList(vector<string> &inputPropertiesList) {
   vector<string> inputPropertiesListFiltered;
 
-  for (unsigned int i = 0; i < inputPropertiesList.size(); ++i) {
-    if (propertySelectable(inputPropertiesList[i])) {
-      inputPropertiesListFiltered.push_back(inputPropertiesList[i]);
+  for (const auto &prop : inputPropertiesList) {
+    if (propertySelectable(prop)) {
+      inputPropertiesListFiltered.push_back(prop);
     }
   }
 
@@ -99,9 +99,9 @@ void GraphPropertiesSelectionWidget::setInputPropertiesList(vector<string> &inpu
 void GraphPropertiesSelectionWidget::setOutputPropertiesList(vector<string> &outputPropertiesList) {
   vector<string> outputPropertiesListFiltered;
 
-  for (unsigned int i = 0; i < outputPropertiesList.size(); ++i) {
-    if (propertySelectable(outputPropertiesList[i])) {
-      outputPropertiesListFiltered.push_back(outputPropertiesList[i]);
+  for (const auto &prop : outputPropertiesList) {
+    if (propertySelectable(prop)) {
+      outputPropertiesListFiltered.push_back(prop);
     }
   }
 

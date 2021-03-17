@@ -222,8 +222,7 @@ bool PolyominoPacking::run() {
     }
   }
 
-  for (size_t i = 0; i < polyominos.size(); ++i) {
-    Polyomino &poly = polyominos[i];
+  for (const auto &poly : polyominos) {
     Coord move = Coord(poly.newPlace[0], poly.newPlace[1]);
     const std::vector<node> &ccNodes = *poly.ccNodes;
     unsigned int nbNodes = ccNodes.size();
@@ -254,8 +253,8 @@ int PolyominoPacking::computeGridStep() {
   double b = 0.0;
   double c = 0.0;
 
-  for (size_t i = 0; i < polyominos.size(); ++i) {
-    const BoundingBox &ccBB = polyominos[i].ccBB;
+  for (const auto &polyomino : polyominos) {
+    const BoundingBox &ccBB = polyomino.ccBB;
     double W = ccBB[1][0] - ccBB[0][0] + 2 * margin;
     double H = ccBB[1][1] - ccBB[0][1] + 2 * margin;
     b -= (W + H);
@@ -465,8 +464,7 @@ bool PolyominoPacking::polyominoFits(Polyomino &poly, int x, int y) {
   std::vector<Vec2i> &cells = poly.cells;
   const BoundingBox &ccBB = poly.ccBB;
 
-  for (size_t i = 0; i < cells.size(); ++i) {
-    Vec2i cell = cells[i];
+  for (auto cell : cells) {
     cell[0] += x;
     cell[1] += y;
 
@@ -479,8 +477,7 @@ bool PolyominoPacking::polyominoFits(Polyomino &poly, int x, int y) {
   poly.newPlace[0] = gridStepSize * x - LL[0];
   poly.newPlace[1] = gridStepSize * y - LL[1];
 
-  for (size_t i = 0; i < cells.size(); ++i) {
-    Vec2i cell = cells[i];
+  for (auto cell : cells) {
     cell[0] += x;
     cell[1] += y;
     pointsSet[cell] = true;

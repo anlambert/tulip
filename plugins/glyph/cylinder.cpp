@@ -45,9 +45,8 @@ public:
       cylinderVertices.insert(cylinderVertices.end(), tmp.begin(), tmp.end());
       cylinderVertices.push_back(Coord(0, 0, cylinderHeight / 2 + dz));
 
-      for (size_t i = 0; i < cylinderVertices.size(); ++i) {
-        cylinderTexCoords.push_back(
-            Vec2f(cylinderVertices[i][0] + 0.5, cylinderVertices[i][1] + 0.5));
+      for (const auto &cylinderVertice : cylinderVertices) {
+        cylinderTexCoords.push_back(Vec2f(cylinderVertice[0] + 0.5, cylinderVertice[1] + 0.5));
       }
 
       size_t startIdx = cylinderVertices.size();

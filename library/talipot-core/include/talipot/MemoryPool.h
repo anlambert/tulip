@@ -78,9 +78,9 @@ private:
   class MemoryChunkManager {
   public:
     ~MemoryChunkManager() {
-      for (unsigned int i = 0; i < TLP_MAX_NB_THREADS; ++i) {
-        for (size_t j = 0; j < _allocatedChunks[i].size(); ++j) {
-          free(_allocatedChunks[i][j]);
+      for (const auto &chunks : _allocatedChunks) {
+        for (auto *chunk : chunks) {
+          free(chunk);
         }
       }
     }

@@ -363,8 +363,8 @@ GraphHierarchiesModel::GraphHierarchiesModel(QObject *parent)
 
 GraphHierarchiesModel::GraphHierarchiesModel(const GraphHierarchiesModel &copy)
     : Model(copy.QObject::parent()), tlp::Observable() {
-  for (int i = 0; i < copy.size(); ++i) {
-    addGraph(copy[i]);
+  for (auto *g : copy) {
+    addGraph(g);
   }
 
   _currentGraph = nullptr;
@@ -702,12 +702,12 @@ QString GraphHierarchiesModel::generateName(tlp::Graph *graph) const {
   return tlp::tlpStringToQString(name);
 }
 
-void GraphHierarchiesModel::setCurrentGraph(tlp::Graph *g) {
+void GraphHierarchiesModel::setCurrentGraph(tlp::Graph *graph) {
 
   bool inHierarchy = false;
 
-  for (auto *_g : _graphs) {
-    if (_g->isDescendantGraph(g) || g == _g) {
+  for (auto *g : _graphs) {
+    if (g->isDescendantGraph(graph) || graph == g) {
       inHierarchy = true;
       break;
     }
@@ -718,7 +718,7 @@ void GraphHierarchiesModel::setCurrentGraph(tlp::Graph *g) {
   }
 
   Graph *oldGraph = _currentGraph;
-  _currentGraph = g;
+  _currentGraph = graph;
 
   if (oldGraph != nullptr && oldGraph != _currentGraph) {
     QModelIndex oldRow1 = indexOf(oldGraph);
@@ -732,7 +732,7 @@ void GraphHierarchiesModel::setCurrentGraph(tlp::Graph *g) {
     emit dataChanged(newRow1, newRow2);
   }
 
-  emit currentGraphChanged(g);
+  emit currentGraphChanged(graph);
 }
 
 Graph *GraphHierarchiesModel::currentGraph() const {
@@ -755,35 +755,35 @@ static void addListenerToWholeGraphHierarchy(Graph *root, Observable *listener) 
   root->addObserver(listener);
 }
 
-void GraphHierarchiesModel::addGraph(tlp::Graph *g) {
-  if (_graphs.contains(g) || g == nullptr) {
+void GraphHierarchiesModel::addGraph(tlp::Graph *graph) {
+  if (_graphs.contains(graph) || graph == nullptr) {
     return;
   }
 
-  for (auto *_g : _graphs) {
-    if (_g->isDescendantGraph(g)) {
+  for (auto *g : _graphs) {
+    if (g->isDescendantGraph(graph)) {
       return;
     }
   }
 
   beginInsertRows(QModelIndex(), rowCount(), rowCount());
 
-  _saveNeeded[g] = new GraphNeedsSavingObserver(g, getMainWindow());
+  _saveNeeded[graph] = new GraphNeedsSavingObserver(graph, getMainWindow());
 
-  _graphs.push_back(g);
+  _graphs.push_back(graph);
 
   if (_graphs.size() == 1) {
-    setCurrentGraph(g);
+    setCurrentGraph(graph);
   }
 
   endInsertRows();
-  initIndexCache(g);
+  initIndexCache(graph);
 
   // listen events on the whole hierarchy
   // in order to keep track of subgraphs names, number of nodes and edges
   // must be done after the row is inserted
   // to prevent the use of invalid QModelIndex
-  addListenerToWholeGraphHierarchy(g, this);
+  addListenerToWholeGraphHierarchy(graph, this);
 }
 
 void GraphHierarchiesModel::removeGraph(tlp::Graph *g) {

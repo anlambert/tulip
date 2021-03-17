@@ -205,11 +205,11 @@ void GlShaderProgram::removeShader(GlShader *shader) {
 }
 
 void GlShaderProgram::removeAllShaders() {
-  for (size_t i = 0; i < attachedShaders.size(); ++i) {
-    removeShader(attachedShaders[i]);
+  for (auto *attachedShader : attachedShaders) {
+    removeShader(attachedShader);
 
-    if (attachedShaders[i]->anonymouslyCreated()) {
-      delete attachedShaders[i];
+    if (attachedShader->anonymouslyCreated()) {
+      delete attachedShader;
     }
   }
 }
@@ -217,16 +217,16 @@ void GlShaderProgram::removeAllShaders() {
 void GlShaderProgram::link() {
   bool allShaderCompiled = true;
 
-  for (size_t i = 0; i < attachedShaders.size(); ++i) {
-    if (!attachedShaders[i]->isCompiled()) {
+  for (auto *attachedShader : attachedShaders) {
+    if (!attachedShader->isCompiled()) {
       allShaderCompiled = false;
     }
 
-    if (attachedShaders[i]->getShaderType() == Geometry) {
+    if (attachedShader->getShaderType() == Geometry) {
       glProgramParameteriEXT(programObjectId, GL_GEOMETRY_INPUT_TYPE_EXT,
-                             attachedShaders[i]->getInputPrimitiveType());
+                             attachedShader->getInputPrimitiveType());
       glProgramParameteriEXT(programObjectId, GL_GEOMETRY_OUTPUT_TYPE_EXT,
-                             attachedShaders[i]->getOutputPrimitiveType());
+                             attachedShader->getOutputPrimitiveType());
 
       GLint maxOutputVertices = maxGeometryShaderOutputVertices;
 
@@ -248,8 +248,8 @@ void GlShaderProgram::link() {
 }
 
 void GlShaderProgram::printInfoLog() {
-  for (size_t i = 0; i < attachedShaders.size(); ++i) {
-    string shaderCompilationlog = attachedShaders[i]->getCompilationLog();
+  for (auto *attachedShader : attachedShaders) {
+    string shaderCompilationlog = attachedShader->getCompilationLog();
 
     if (!shaderCompilationlog.empty()) {
       tlp::debug() << shaderCompilationlog << endl;
@@ -884,8 +884,8 @@ void GlShaderProgram::setVertexAttribPointer(const std::string &variableName, GL
 }
 
 void GlShaderProgram::disableAttributesArrays() {
-  for (size_t i = 0; i < activeAttributesArrays.size(); ++i) {
-    glDisableVertexAttribArray(activeAttributesArrays[i]);
+  for (int activeAttributesArray : activeAttributesArrays) {
+    glDisableVertexAttribArray(activeAttributesArray);
   }
   activeAttributesArrays.clear();
 }

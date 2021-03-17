@@ -147,12 +147,12 @@ void AlgorithmRunner::insertItem(QWidget *w, const QString &name) const {
 void AlgorithmRunner::refreshTreeUi(QWidget *w) {
   QStringList visibleItems;
 
-  for (auto *i : w->findChildren<AlgorithmRunnerItem *>()) {
-    if (PluginsManager::pluginExists(QStringToTlpString(i->name())))
-      visibleItems.push_back(i->name());
-    else {
-      _favorites.removeAll(i);
-      delete i;
+  for (auto *ari : w->findChildren<AlgorithmRunnerItem *>()) {
+    if (PluginsManager::pluginExists(QStringToTlpString(ari->name()))) {
+      visibleItems.push_back(ari->name());
+    } else {
+      _favorites.removeAll(ari);
+      delete ari;
     }
   }
 
@@ -228,8 +228,8 @@ void AlgorithmRunner::buildPluginsList() {
   _ui->contents->layout()->addItem(
       new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
 
-  for (auto *i : findChildren<AlgorithmRunnerItem *>()) {
-    connect(i, &AlgorithmRunnerItem::favorized, this, &AlgorithmRunner::favorized);
+  for (auto *ari : findChildren<AlgorithmRunnerItem *>()) {
+    connect(ari, &AlgorithmRunnerItem::favorized, this, &AlgorithmRunner::favorized);
   }
 
   for (const QString &a : Settings::favoriteAlgorithms()) {
@@ -298,8 +298,9 @@ bool filterGroup(ExpandableGroupBox *group, QString filter) {
       subItems += childrenObj<AlgorithmRunnerItem *>(g->widget());
     }
 
-    for (auto *i : subItems)
-      i->show();
+    for (auto *ari : subItems) {
+      ari->show();
+    }
 
     return true;
   }
@@ -310,9 +311,9 @@ bool filterGroup(ExpandableGroupBox *group, QString filter) {
     groupVisible |= filterGroup(g, filter);
   }
 
-  for (auto *i : subItems) {
-    bool itemVisible = i->name().contains(filter, Qt::CaseInsensitive);
-    i->setVisible(itemVisible);
+  for (auto *ari : subItems) {
+    bool itemVisible = ari->name().contains(filter, Qt::CaseInsensitive);
+    ari->setVisible(itemVisible);
     groupVisible |= itemVisible;
   }
 
@@ -374,15 +375,17 @@ bool AlgorithmRunner::eventFilter(QObject *obj, QEvent *ev) {
 }
 
 void AlgorithmRunner::removeFavorite(const QString &algName) {
-  for (auto *i : _favorites) {
-    if (i->name() == algName) {
-      _favorites.removeAll(i);
-      i->deleteLater();
+  for (auto *ari : _favorites) {
+    if (ari->name() == algName) {
+      _favorites.removeAll(ari);
+      ari->deleteLater();
 
-      for (auto *item : findChildren<AlgorithmRunnerItem *>())
+      for (auto *item : findChildren<AlgorithmRunnerItem *>()) {
 
-        if (item != i && item->name() == algName)
+        if (item != ari && item->name() == algName) {
           item->setFavorite(false);
+        }
+      }
 
       break;
     }
@@ -402,9 +405,10 @@ void AlgorithmRunner::addFavorite(const QString &algName, const DataSet &data) {
 
   Settings::addFavoriteAlgorithm(algName);
 
-  for (auto *i : _favorites) {
-    if (i->name() == algName)
+  for (auto ar : _favorites) {
+    if (ar->name() == algName) {
       return;
+    }
   }
 
   _ui->favoritesBox->widget()->setMinimumHeight(0);
@@ -418,8 +422,8 @@ void AlgorithmRunner::addFavorite(const QString &algName, const DataSet &data) {
   item->setFavorite(true);
   int itemPos = 0;
 
-  for (auto *i : _ui->favoritesBox->widget()->findChildren<AlgorithmRunnerItem *>()) {
-    if (i->name() > item->name()) {
+  for (auto *ari : _ui->favoritesBox->widget()->findChildren<AlgorithmRunnerItem *>()) {
+    if (ari->name() > item->name()) {
       break;
     }
 
@@ -436,9 +440,10 @@ void AlgorithmRunner::addFavorite(const QString &algName, const DataSet &data) {
 
   connect(item, &AlgorithmRunnerItem::favorized, this, &AlgorithmRunner::favorized);
 
-  for (auto *i : findChildren<AlgorithmRunnerItem *>()) {
-    if (i != item && i->name() == algName)
-      i->setFavorite(true);
+  for (auto *ari : findChildren<AlgorithmRunnerItem *>()) {
+    if (ari != item && ari->name() == algName) {
+      ari->setFavorite(true);
+    }
   }
 }
 

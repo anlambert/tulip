@@ -37,8 +37,8 @@ bool QStringListType::read(std::istream &iss, RealType &t) {
     return false;
   }
 
-  for (unsigned int i = 0; i < stdVect.size(); ++i) {
-    t.push_back(tlp::tlpStringToQString(stdVect[i]));
+  for (const auto &s : stdVect) {
+    t.push_back(tlp::tlpStringToQString(s));
   }
 
   return true;

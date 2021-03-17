@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -39,12 +39,12 @@ void moveBendsToSphere(Graph *graph, float ray, LayoutProperty *layout) {
     vector<Coord> bends;
     bends = layout->getEdgeValue(e);
 
-    for (size_t i = 0; i < bends.size(); ++i) {
-      Coord c = bends[i];
+    for (auto &bend : bends) {
+      Coord c = bend;
       double dist = c.norm();
       c /= dist;
       c *= ray;
-      bends[i] = c;
+      bend = c;
     }
 
     layout->setEdgeValue(e, bends);
