@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -290,7 +290,8 @@ public:
   void setAllEdgeValue(StoredType<std::vector<Coord>>::ReturnedConstValue v,
                        const Graph *graph = nullptr) override;
 
-  void updateEdgeValue(edge e, LineType::RealType newValue) override;
+  void updateEdgeValue(edge e,
+                       StoredType<LineType::RealType>::ReturnedConstValue newValue) override;
 
 protected:
   void clone_handler(AbstractProperty<PointType, LineType> &) override;

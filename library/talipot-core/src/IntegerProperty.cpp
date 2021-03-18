@@ -30,8 +30,8 @@ void IntegerProperty::clone_handler(
     AbstractProperty<tlp::IntegerType, tlp::IntegerType, tlp::NumericProperty> &proxyC) {
   if (typeid(this) == typeid(&proxyC)) {
     auto *proxy = static_cast<IntegerProperty *>(&proxyC);
-    minMaxNode = proxy->minMaxNode;
-    minMaxEdge = proxy->minMaxEdge;
+    _minMaxNode = proxy->_minMaxNode;
+    _minMaxEdge = proxy->_minMaxEdge;
   }
 }
 //=================================================================================

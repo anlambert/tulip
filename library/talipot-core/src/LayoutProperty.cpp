@@ -395,13 +395,13 @@ void LayoutProperty::perfectAspectRatio(const Graph *subgraph) {
 void LayoutProperty::clone_handler(AbstractProperty<tlp::PointType, tlp::LineType> &proxyC) {
   if (typeid(this) == typeid(&proxyC)) {
     auto *proxy = static_cast<LayoutProperty *>(&proxyC);
-    minMaxNode = proxy->minMaxNode;
+    _minMaxNode = proxy->_minMaxNode;
   }
 }
 //=================================================================================
 void LayoutProperty::resetBoundingBox() {
-  minMaxNode.clear();
-  minMaxEdge.clear();
+  _minMaxNode.clear();
+  _minMaxEdge.clear();
 }
 //================================================================================
 void LayoutProperty::setNodeValue(const node n, tlp::StoredType<Coord>::ReturnedConstValue v) {
@@ -779,19 +779,20 @@ std::pair<tlp::Coord, tlp::Coord> LayoutProperty::computeMinMaxNode(const Graph 
 
   // graph observation is now delayed
   // until we need to do some minmax computation
-  if (minMaxNode.find(sgi) == minMaxNode.end()) {
+  if (_minMaxNode.find(sgi) == _minMaxNode.end()) {
     // launch graph hierarchy observation
     graph->addListener(this);
   }
 
-  return minMaxNode[sgi] = {minT, maxT};
+  return _minMaxNode[sgi] = {minT, maxT};
 }
 
 /**
  * @brief Provides specific computation for min and max values of
  *Layout properties (they are specific in that they use the control points of the edges)
  **/
-void LayoutProperty::updateEdgeValue(tlp::edge e, tlp::LineType::RealType newValue) {
+void LayoutProperty::updateEdgeValue(tlp::edge e,
+                                     StoredType<LineType::RealType>::ReturnedConstValue newValue) {
 
   const std::vector<Coord> &oldV = this->getEdgeValue(e);
 
@@ -802,9 +803,9 @@ void LayoutProperty::updateEdgeValue(tlp::edge e, tlp::LineType::RealType newVal
   static_cast<LayoutProperty *>(this)->nbBendedEdges +=
       (newValue.empty() ? 0 : 1) - (oldV.empty() ? 0 : 1);
 
-  if (!minMaxNode.empty()) {
+  if (!_minMaxNode.empty()) {
     // loop on subgraph min/max
-    for (const auto &[graphId, minMax] : minMaxNode) {
+    for (const auto &[graphId, minMax] : _minMaxNode) {
       const auto &[minV, maxV] = minMax;
 
       bool reset = false;
@@ -849,7 +850,7 @@ void LayoutProperty::updateEdgeValue(tlp::edge e, tlp::LineType::RealType newVal
 
       // reset bounding box if needed
       if (reset) {
-        needGraphListener = static_cast<LayoutProperty *>(this)->nbBendedEdges > 0;
+        _needGraphListener = static_cast<LayoutProperty *>(this)->nbBendedEdges > 0;
         removeListenersAndClearNodeMap();
         return;
       }
@@ -858,9 +859,9 @@ void LayoutProperty::updateEdgeValue(tlp::edge e, tlp::LineType::RealType newVal
 
   // we need to observe the graph as soon as there is an edge
   // with bends
-  if (!needGraphListener &&
-      (needGraphListener = (static_cast<LayoutProperty *>(this)->nbBendedEdges > 0)) &&
-      (minMaxNode.find(graph->getId()) == minMaxNode.end())) {
+  if (!_needGraphListener &&
+      (_needGraphListener = (static_cast<LayoutProperty *>(this)->nbBendedEdges > 0)) &&
+      (_minMaxNode.find(graph->getId()) == _minMaxNode.end())) {
     graph->addListener(this);
   }
 }

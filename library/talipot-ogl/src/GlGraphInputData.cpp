@@ -67,7 +67,7 @@ GlGraphInputData::~GlGraphInputData() {
 class GlViewAnimationFrameProperty : public IntegerProperty {
 public:
   GlViewAnimationFrameProperty(Graph *g) : IntegerProperty(g, "viewAnimationFrame") {
-    needGraphListener = true;
+    _needGraphListener = true;
     graph->addListener(this);
   }
   void treatEvent(const Event &evt) override {
@@ -76,7 +76,7 @@ public:
     if (graph == g && evt.type() == Event::TLP_DELETE) {
       delete this;
     } else {
-      needGraphListener = true;
+      _needGraphListener = true;
       IntegerMinMaxProperty::treatEvent(evt);
     }
   }
