@@ -45,7 +45,8 @@ then
     mingw-w64-$MSYS2_ARCH-qt5 \
     mingw-w64-$MSYS2_ARCH-quazip \
     mingw-w64-$MSYS2_ARCH-qtwebkit \
-    mingw-w64-$MSYS2_ARCH-python-sphinx
+    mingw-w64-$MSYS2_ARCH-python-sphinx \
+    mingw-w64-$MSYS2_ARCH-python-packaging
   export TALIPOT_BUILD_DOC=ON
 fi
 
