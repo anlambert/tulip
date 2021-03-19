@@ -337,13 +337,13 @@ public:
       } else if (value->getTypeName() == string(typeid(vector<node>).name())) {
         auto *vn = static_cast<vector<node> *>(value->value);
 
-        for (auto n : *vn) {
+        for (auto &n : *vn) {
           n.id = graph->nodePos(n);
         }
       } else if (value->getTypeName() == string(typeid(vector<edge>).name())) {
         auto *ve = static_cast<vector<edge> *>(value->value);
 
-        for (auto e : *ve) {
+        for (auto &e : *ve) {
           e.id = graph->edgePos(e);
         }
       }
