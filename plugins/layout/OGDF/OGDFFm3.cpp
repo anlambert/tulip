@@ -167,58 +167,58 @@ static const char *paramHelp[] = {
     // MaxIntPosExponent
     "Defines the exponent used if allowedPositions == Exponent (clamped to [31, 51])"};
 
-static const char *pageFormatValuesDescription = "Portrait <i>(A4 portrait page)</i><br>"
-                                                 "Landscape <i>(A4 landscape page)</i><br>"
-                                                 "Square <i>(Square format)</i>";
+static const char *pageFormatValuesDescription = "<b>Portrait</b> <i>(A4 portrait page)</i><br>"
+                                                 "<b>Landscape</b> <i>(A4 landscape page)</i><br>"
+                                                 "<b>Square</b> <i>(Square format)</i>";
 
 static const char *qualityVsSpeedValuesDescription =
-    "GorgeousAndEfficient <i>(Best quality)</i><br>"
-    "BeautifulAndFast <i>(Medium quality and speed)</i><br>"
-    "NiceAndIncredibleSpeed <i>(Best speed</i>";
+    "<b>GorgeousAndEfficient</b> <i>(Best quality)</i><br>"
+    "<b>BeautifulAndFast</b> <i>(Medium quality and speed)</i><br>"
+    "<b>NiceAndIncredibleSpeed</b> <i>(Best speed</i>";
 
 static const char *edgeLengthMeasurementValuesDescription =
-    "Midpoint <i>(Measure from center point of edge end points)</i><br>"
-    "BoundingCircle <i>(Measure from border of circle surrounding edge end points)</i>";
+    "<b>Midpoint</b> <i>(Measure from center point of edge end points)</i><br>"
+    "<b>BoundingCircle</b> <i>(Measure from border of circle surrounding edge end points)</i>";
 
 static const char *presortValuesDescription =
-    "None <i>(Do not presort)</i><br>"
-    "DecreasingHeight <i>(Presort by decreasing height of components)</i><br>"
-    "DecreasingWidth <i>(Presort by decreasing width of components)</i>";
+    "<b>None</b> <i>(Do not presort)</i><br>"
+    "<b>DecreasingHeight</b> <i>(Presort by decreasing height of components)</i><br>"
+    "<b>DecreasingWidth</b> <i>(Presort by decreasing width of components)</i>";
 
-static const char *galaxyChoiceValuesDescription = "UniformProb<br>"
-                                                   "NonUniformProbLowerMass<br>"
-                                                   "NonUniformProbHigherMass";
+static const char *galaxyChoiceValuesDescription = "<b>UniformProb</b><br>"
+                                                   "<b>NonUniformProbLowerMass</b><br>"
+                                                   "<b>NonUniformProbHigherMass</b>";
 
-static const char *maxIterChangeValuesDescription = "Constant <br>"
-                                                    "LinearlyDecreasing <br>"
-                                                    "RapidlyDecreasing";
+static const char *maxIterChangeValuesDescription = "<b>Constant</b> <br>"
+                                                    "<b>LinearlyDecreasing</b> <br>"
+                                                    "<b>RapidlyDecreasing</b>";
 
 static const char *forceModelValuesDescription =
-    "FruchtermanReingold <i>(The force-model by Fruchterman, Reingold)</i><br>"
-    "Eades <i>(The force-model by Eades)</i><br>"
-    "New <i>(The new force-model)</i>";
+    "<b>FruchtermanReingold</b> <i>(The force-model by Fruchterman, Reingold)</i><br>"
+    "<b>Eades</b> <i>(The force-model by Eades)</i><br>"
+    "<b>New</b> <i>(The new force-model)</i>";
 
 static const char *repulsiveForceValuesDescription =
-    "Exact <i>(Exact calculation)</i><br>"
-    "GridApproximation <i>(Grid approximation)</i><br>"
-    "NMM <i>(Calculation as for new multipole method)</i>";
+    "<b>Exact</b> <i>(Exact calculation)</i><br>"
+    "<b>GridApproximation</b> <i>(Grid approximation)</i><br>"
+    "<b>NMM</b> <i>(Calculation as for new multipole method)</i>";
 
 static const char *initialPlacementValuesDescription =
-    "UniformGrid <i>(Uniform placement on a grid)</i><br>"
-    "RandomTime <i>(Random placement, based on current time)</i><br>"
-    "RandomRandIterNr <i>(Random placement, based on randIterNr())</i><br>"
-    "KeepPositions <i>(No change in placement)</i>";
+    "<b>UniformGrid</b> <i>(Uniform placement on a grid)</i><br>"
+    "<b>RandomTime</b> <i>(Random placement, based on current time)</i><br>"
+    "<b>RandomRandIterNr</b> <i>(Random placement, based on randIterNr())</i><br>"
+    "<b>KeepPositions</b> <i>(No change in placement)</i>";
 
 static const char *smallestCellFindingValuesDescription =
-    "Iteratively <i>(Iteratively, in constant time)</i><br>"
-    "Aluru <i>(According to formula by Aluru et al., in constant time)</i>";
+    "<b>Iteratively</b> <i>(Iteratively, in constant time)</i><br>"
+    "<b>Aluru</b> <i>(According to formula by Aluru et al., in constant time)</i>";
 
 static const char *allowedPositionsValuesDescription =
-    "All <i>(Every position is allowed)</i><br>"
-    "Integer <i>(Only integer positions are allowed that are in<br>"
+    "<b>All</b> <i>(Every position is allowed)</i><br>"
+    "<b>Integer</b> <i>(Only integer positions are allowed that are in<br>"
     "a range depending on the number of nodes and<br>"
     "the average ideal edge length)</i><br>"
-    "Exponent <i>(Only integer positions in a range of<br>"
+    "<b>Exponent</b> <i>(Only integer positions in a range of<br>"
     "[-2^MaxIntPosExponent, 2^MaxIntPosExponent] are alllowed)</i>";
 
 class OGDFFm3 : public tlp::OGDFLayoutPluginBase {
