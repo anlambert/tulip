@@ -162,7 +162,10 @@ static const char *paramHelp[] = {
 
     // Smallest Cell Finding
     "Specifies how to calculate the smallest quadratic cell surrounding particles of a node in the "
-    "reduced bucket quadtree."};
+    "reduced bucket quadtree.",
+
+    // MaxIntPosExponent
+    "Defines the exponent used if allowedPositions == Exponent (clamped to [31, 51])"};
 
 static const char *pageFormatValuesDescription = "Portrait <i>(A4 portrait page)</i><br>"
                                                  "Landscape <i>(A4 landscape page)</i><br>"
@@ -210,6 +213,14 @@ static const char *smallestCellFindingValuesDescription =
     "Iteratively <i>(Iteratively, in constant time)</i><br>"
     "Aluru <i>(According to formula by Aluru et al., in constant time)</i>";
 
+static const char *allowedPositionsValuesDescription =
+    "All <i>(Every position is allowed)</i><br>"
+    "Integer <i>(Only integer positions are allowed that are in<br>"
+    "a range depending on the number of nodes and<br>"
+    "the average ideal edge length)</i><br>"
+    "Exponent <i>(Only integer positions in a range of<br>"
+    "[-2^MaxIntPosExponent, 2^MaxIntPosExponent] are alllowed)</i>";
+
 class OGDFFm3 : public tlp::OGDFLayoutPluginBase {
 
   tlp::StringCollection stringCollection;
@@ -218,7 +229,7 @@ public:
   PLUGININFORMATION("FM^3 (OGDF)", "Stephan Hachul", "09/11/2007",
                     "Implements the FM³ layout algorithm by Hachul and Jünger. It is a multilevel, "
                     "force-directed layout algorithm that can be applied to very large graphs.",
-                    "1.2", "Force Directed")
+                    "1.3", "Force Directed")
   OGDFFm3(const tlp::PluginContext *context);
   void beforeCall() override;
   void callOGDFLayoutAlgorithm(ogdf::GraphAttributes &gAttributes) override;
@@ -243,7 +254,8 @@ OGDFFm3::OGDFFm3(const tlp::PluginContext *context)
                                         edgeLengthMeasurementValuesDescription);
   addInParameter<tlp::StringCollection>(ELT_ALLOWEDPOSITIONS, paramHelp[9],
                                         ELT_ALLOWEDPOSITIONSLIST, true,
-                                        "All<br> Integer <br> Exponent");
+                                        allowedPositionsValuesDescription);
+  addInParameter<int>("MaxIntPosExponent", paramHelp[20], "40");
   addInParameter<tlp::StringCollection>(ELT_TIPOVER, paramHelp[10], ELT_TIPOVERLIST, true,
                                         "None<br> NoGrowingRow<br> Always");
   addInParameter<tlp::StringCollection>(ELT_PRESORT, paramHelp[11], ELT_PRESORTLIST, true,
@@ -341,6 +353,10 @@ void OGDFFm3::beforeCall() {
       } else {
         fmmm->allowedPositions(ogdf::FMMMOptions::AllowedPositions::All);
       }
+    }
+
+    if (dataSet->get("MaxIntPosExponent", ival)) {
+      fmmm->maxIntPosExponent(ival);
     }
 
     if (dataSet->get(ELT_TIPOVER, stringCollection)) {
