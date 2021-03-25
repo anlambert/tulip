@@ -283,13 +283,13 @@ If not, a new random seed will be set to initialize each new random sequence.&lt
             <enum>QFrame::NoFrame</enum>
            </property>
            <property name="editTriggers">
-            <set>QAbstractItemView::AllEditTriggers</set>
+            <set>QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed</set>
            </property>
            <property name="showGrid">
             <bool>true</bool>
            </property>
            <property name="cornerButtonEnabled">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <attribute name="horizontalHeaderDefaultSectionSize">
             <number>200</number>
@@ -299,34 +299,29 @@ If not, a new random seed will be set to initialize each new random sequence.&lt
            </attribute>
            <row>
             <property name="text">
-             <string/>
+             <string>Color</string>
             </property>
            </row>
            <row>
             <property name="text">
-             <string/>
+             <string>Size</string>
             </property>
            </row>
            <row>
             <property name="text">
-             <string/>
+             <string>Shape</string>
             </property>
            </row>
            <row>
             <property name="text">
-             <string/>
+             <string>Selection color</string>
             </property>
            </row>
            <row>
             <property name="text">
-             <string/>
+             <string>Label color</string>
             </property>
            </row>
-           <column>
-            <property name="text">
-             <string/>
-            </property>
-           </column>
            <column>
             <property name="text">
              <string>Nodes</string>
@@ -337,66 +332,6 @@ If not, a new random seed will be set to initialize each new random sequence.&lt
              <string>Edges</string>
             </property>
            </column>
-           <item row="0" column="0">
-            <property name="text">
-             <string>Color</string>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>8</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-           </item>
-           <item row="1" column="0">
-            <property name="text">
-             <string>Size</string>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>8</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-           </item>
-           <item row="2" column="0">
-            <property name="text">
-             <string>Shape</string>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>8</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-           </item>
-           <item row="3" column="0">
-            <property name="text">
-             <string>Selection color</string>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>8</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-           </item>
-           <item row="4" column="0">
-            <property name="text">
-             <string>Label color</string>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>8</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-           </item>
           </widget>
          </item>
         </layout>

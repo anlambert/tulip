@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -32,10 +32,23 @@ PreferencesDialog::PreferencesDialog(QWidget *parent)
     : QDialog(parent), _ui(new Ui::PreferencesDialog) {
   _ui->setupUi(this);
   _ui->graphDefaultsTable->setItemDelegate(new tlp::ItemDelegate(_ui->graphDefaultsTable));
+  // disable edition for title items (in column 0)
+  for (int i = 0; i < _ui->graphDefaultsTable->rowCount(); ++i) {
+    QString sectionText =
+        _ui->graphDefaultsTable->model()->headerData(i, Qt::Vertical, Qt::DisplayRole).toString();
+    QString tooltip = "Click mouse right button to display a contextual menu allowing to "
+                      "reset the default values of <b>" +
+                      sectionText + "</b>.";
+    _ui->graphDefaultsTable->model()->setHeaderData(i, Qt::Vertical, tooltip, Qt::ToolTipRole);
+  }
+
+  _ui->graphDefaultsTable->setContextMenuPolicy(Qt::CustomContextMenu);
+  _ui->graphDefaultsTable->verticalHeader()->setContextMenuPolicy(Qt::CustomContextMenu);
+
   connect(_ui->graphDefaultsTable, &QTableWidget::cellChanged, this,
           &PreferencesDialog::cellChanged);
-  _ui->graphDefaultsTable->setContextMenuPolicy(Qt::CustomContextMenu);
-  connect(_ui->graphDefaultsTable, &QWidget::customContextMenuRequested, this,
+  connect(_ui->graphDefaultsTable, &QWidget::customContextMenuRequested, []() {});
+  connect(_ui->graphDefaultsTable->verticalHeader(), &QWidget::customContextMenuRequested, this,
           &PreferencesDialog::showGraphDefaultsContextMenu);
   connect(_ui->randomSeedCheck, &QCheckBox::stateChanged, this,
           &PreferencesDialog::randomSeedCheckChanged);
@@ -43,15 +56,6 @@ PreferencesDialog::PreferencesDialog(QWidget *parent)
           [this] { resetToTalipotDefaults(); });
   connect(_ui->guiThemeCB, &QComboBox::currentTextChanged, this,
           &PreferencesDialog::guiThemeChanged);
-
-  // disable edition for title items (in column 0)
-  for (int i = 0; i < _ui->graphDefaultsTable->rowCount(); ++i) {
-    _ui->graphDefaultsTable->item(i, 0)->setFlags(Qt::ItemIsEnabled);
-    QTableWidgetItem *item = _ui->graphDefaultsTable->item(i, 0);
-    item->setToolTip("Click mouse right button to display a contextual menu allowing to "
-                     "reset the default values of <b>" +
-                     item->text() + "</b>.");
-  }
 
   _ui->graphDefaultsTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
 }
@@ -152,8 +156,8 @@ void PreferencesDialog::writeSettings() {
   bool applyDrawingDefaults = _ui->applyDrawingDefaultsCheck->isChecked();
   bool graphPush = true;
 
-  if (Settings::defaultColor(tlp::NODE) != model->data(model->index(0, 1)).value<tlp::Color>()) {
-    Settings::setDefaultColor(tlp::NODE, model->data(model->index(0, 1)).value<tlp::Color>());
+  if (Settings::defaultColor(tlp::NODE) != model->data(model->index(0, 0)).value<tlp::Color>()) {
+    Settings::setDefaultColor(tlp::NODE, model->data(model->index(0, 0)).value<tlp::Color>());
 
     if (applyDrawingDefaults) {
       setDefaultNodeValueInProperty<ColorProperty>("viewColor", Settings::defaultColor(tlp::NODE),
@@ -161,8 +165,8 @@ void PreferencesDialog::writeSettings() {
     }
   }
 
-  if (Settings::defaultColor(tlp::EDGE) != model->data(model->index(0, 2)).value<tlp::Color>()) {
-    Settings::setDefaultColor(tlp::EDGE, model->data(model->index(0, 2)).value<tlp::Color>());
+  if (Settings::defaultColor(tlp::EDGE) != model->data(model->index(0, 1)).value<tlp::Color>()) {
+    Settings::setDefaultColor(tlp::EDGE, model->data(model->index(0, 1)).value<tlp::Color>());
 
     if (applyDrawingDefaults) {
       setDefaultEdgeValueInProperty<ColorProperty>("viewColor", Settings::defaultColor(tlp::EDGE),
@@ -170,14 +174,14 @@ void PreferencesDialog::writeSettings() {
     }
   }
 
-  if (Settings::defaultSize(tlp::NODE) != model->data(model->index(1, 1)).value<tlp::Size>()) {
-    Settings::setDefaultSize(tlp::NODE, model->data(model->index(1, 1)).value<tlp::Size>());
+  if (Settings::defaultSize(tlp::NODE) != model->data(model->index(1, 0)).value<tlp::Size>()) {
+    Settings::setDefaultSize(tlp::NODE, model->data(model->index(1, 0)).value<tlp::Size>());
     setDefaultNodeValueInProperty<SizeProperty>("viewSize", Settings::defaultSize(tlp::NODE),
                                                 graphPush);
   }
 
-  if (Settings::defaultSize(tlp::EDGE) != model->data(model->index(1, 2)).value<tlp::Size>()) {
-    Settings::setDefaultSize(tlp::EDGE, model->data(model->index(1, 2)).value<tlp::Size>());
+  if (Settings::defaultSize(tlp::EDGE) != model->data(model->index(1, 1)).value<tlp::Size>()) {
+    Settings::setDefaultSize(tlp::EDGE, model->data(model->index(1, 1)).value<tlp::Size>());
 
     if (applyDrawingDefaults) {
       setDefaultEdgeValueInProperty<SizeProperty>("viewSize", Settings::defaultSize(tlp::EDGE),
@@ -186,9 +190,9 @@ void PreferencesDialog::writeSettings() {
   }
 
   if (Settings::defaultShape(tlp::NODE) !=
-      model->data(model->index(2, 1)).value<NodeShape::NodeShapes>()) {
+      model->data(model->index(2, 0)).value<NodeShape::NodeShapes>()) {
     Settings::setDefaultShape(tlp::NODE,
-                              model->data(model->index(2, 1)).value<NodeShape::NodeShapes>());
+                              model->data(model->index(2, 0)).value<NodeShape::NodeShapes>());
 
     if (applyDrawingDefaults) {
       setDefaultNodeValueInProperty<IntegerProperty>("viewShape", Settings::defaultShape(tlp::NODE),
@@ -197,15 +201,15 @@ void PreferencesDialog::writeSettings() {
   }
 
   if (Settings::defaultShape(tlp::EDGE) !=
-      int(model->data(model->index(2, 2)).value<EdgeShape::EdgeShapes>())) {
+      int(model->data(model->index(2, 1)).value<EdgeShape::EdgeShapes>())) {
     Settings::setDefaultShape(tlp::EDGE,
-                              int(model->data(model->index(2, 2)).value<EdgeShape::EdgeShapes>()));
+                              int(model->data(model->index(2, 1)).value<EdgeShape::EdgeShapes>()));
     setDefaultEdgeValueInProperty<IntegerProperty>("viewShape", Settings::defaultShape(tlp::EDGE),
                                                    graphPush);
   }
 
-  if (Settings::defaultLabelColor() != model->data(model->index(4, 1)).value<tlp::Color>()) {
-    Settings::setDefaultLabelColor(model->data(model->index(4, 1)).value<tlp::Color>());
+  if (Settings::defaultLabelColor() != model->data(model->index(4, 0)).value<tlp::Color>()) {
+    Settings::setDefaultLabelColor(model->data(model->index(4, 0)).value<tlp::Color>());
 
     if (applyDrawingDefaults) {
       setDefaultNodeValueInProperty<ColorProperty>("viewLabelColor", Settings::defaultLabelColor(),
@@ -215,7 +219,7 @@ void PreferencesDialog::writeSettings() {
     }
   }
 
-  Settings::setDefaultSelectionColor(model->data(model->index(3, 1)).value<tlp::Color>());
+  Settings::setDefaultSelectionColor(model->data(model->index(3, 0)).value<tlp::Color>());
 
   Settings::applyProxySettings();
 
@@ -283,27 +287,27 @@ void PreferencesDialog::readSettings() {
   _ui->proxyPassword->setText(Settings::proxyPassword());
 
   QAbstractItemModel *model = _ui->graphDefaultsTable->model();
-  model->setData(model->index(0, 1),
+  model->setData(model->index(0, 0),
                  QVariant::fromValue<tlp::Color>(Settings::defaultColor(tlp::NODE)));
-  model->setData(model->index(0, 2),
+  model->setData(model->index(0, 1),
                  QVariant::fromValue<tlp::Color>(Settings::defaultColor(tlp::EDGE)));
-  model->setData(model->index(1, 1),
+  model->setData(model->index(1, 0),
                  QVariant::fromValue<tlp::Size>(Settings::defaultSize(tlp::NODE)));
-  model->setData(model->index(1, 2),
+  model->setData(model->index(1, 1),
                  QVariant::fromValue<tlp::Size>(Settings::defaultSize(tlp::EDGE)));
-  model->setData(model->index(2, 1),
+  model->setData(model->index(2, 0),
                  QVariant::fromValue<NodeShape::NodeShapes>(
                      static_cast<NodeShape::NodeShapes>(Settings::defaultShape(tlp::NODE))));
-  model->setData(model->index(2, 2),
+  model->setData(model->index(2, 1),
                  QVariant::fromValue<EdgeShape::EdgeShapes>(
                      static_cast<EdgeShape::EdgeShapes>(Settings::defaultShape(tlp::EDGE))));
+  model->setData(model->index(3, 0),
+                 QVariant::fromValue<tlp::Color>(Settings::defaultSelectionColor()));
   model->setData(model->index(3, 1),
                  QVariant::fromValue<tlp::Color>(Settings::defaultSelectionColor()));
-  model->setData(model->index(3, 2),
-                 QVariant::fromValue<tlp::Color>(Settings::defaultSelectionColor()));
-  model->setData(model->index(4, 1),
+  model->setData(model->index(4, 0),
                  QVariant::fromValue<tlp::Color>(Settings::defaultLabelColor()));
-  model->setData(model->index(4, 2),
+  model->setData(model->index(4, 1),
                  QVariant::fromValue<tlp::Color>(Settings::defaultLabelColor()));
   // edges selection color is not editable
   //_ui->graphDefaultsTable->item(3,2)->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
@@ -338,7 +342,7 @@ void PreferencesDialog::cellChanged(int row, int column) {
   if (row >= 3) {
     // force selection color to be the same for nodes & edges
     QAbstractItemModel *model = _ui->graphDefaultsTable->model();
-    model->setData(model->index(row, column == 1 ? 2 : 1), model->data(model->index(row, column)));
+    model->setData(model->index(row, column == 0 ? 1 : 0), model->data(model->index(row, column)));
   }
 }
 
@@ -371,10 +375,10 @@ void PreferencesDialog::resetToTalipotDefaults(int row, int updateMode) {
   switch (row) {
   case 0: // default color
     if (updateMode == RESET_NODE) {
-      model->setData(model->index(0, 1),
+      model->setData(model->index(0, 0),
                      QVariant::fromValue<tlp::Color>(ViewSettings::ApplicationDefault::NodeColor));
     } else {
-      model->setData(model->index(0, 2),
+      model->setData(model->index(0, 1),
                      QVariant::fromValue<tlp::Color>(ViewSettings::ApplicationDefault::EdgeColor));
     }
 
@@ -382,10 +386,10 @@ void PreferencesDialog::resetToTalipotDefaults(int row, int updateMode) {
 
   case 1: // default size
     if (updateMode == RESET_NODE) {
-      model->setData(model->index(1, 1),
+      model->setData(model->index(1, 0),
                      QVariant::fromValue<tlp::Size>(ViewSettings::ApplicationDefault::NodeSize));
     } else {
-      model->setData(model->index(1, 2),
+      model->setData(model->index(1, 1),
                      QVariant::fromValue<tlp::Size>(ViewSettings::ApplicationDefault::EdgeSize));
     }
 
@@ -393,11 +397,11 @@ void PreferencesDialog::resetToTalipotDefaults(int row, int updateMode) {
 
   case 2: // default shape
     if (updateMode == RESET_NODE) {
-      model->setData(model->index(2, 1),
+      model->setData(model->index(2, 0),
                      QVariant::fromValue<NodeShape::NodeShapes>(static_cast<NodeShape::NodeShapes>(
                          ViewSettings::ApplicationDefault::NodeShape)));
     } else {
-      model->setData(model->index(2, 2),
+      model->setData(model->index(2, 1),
                      QVariant::fromValue<EdgeShape::EdgeShapes>(static_cast<EdgeShape::EdgeShapes>(
                          ViewSettings::ApplicationDefault::EdgeShape)));
     }
@@ -406,10 +410,10 @@ void PreferencesDialog::resetToTalipotDefaults(int row, int updateMode) {
 
   case 3: // default selection color
     if (updateMode == RESET_NODE) {
-      model->setData(model->index(3, 1), QVariant::fromValue<tlp::Color>(
+      model->setData(model->index(3, 0), QVariant::fromValue<tlp::Color>(
                                              ViewSettings::ApplicationDefault::SelectionColor));
     } else {
-      model->setData(model->index(3, 2), QVariant::fromValue<tlp::Color>(
+      model->setData(model->index(3, 1), QVariant::fromValue<tlp::Color>(
                                              ViewSettings::ApplicationDefault::SelectionColor));
     }
 
@@ -417,10 +421,10 @@ void PreferencesDialog::resetToTalipotDefaults(int row, int updateMode) {
 
   case 4: // default label color
     if (updateMode == RESET_NODE) {
-      model->setData(model->index(4, 1),
+      model->setData(model->index(4, 0),
                      QVariant::fromValue<tlp::Color>(ViewSettings::ApplicationDefault::LabelColor));
     } else {
-      model->setData(model->index(4, 2),
+      model->setData(model->index(4, 1),
                      QVariant::fromValue<tlp::Color>(ViewSettings::ApplicationDefault::LabelColor));
     }
 
@@ -430,48 +434,46 @@ void PreferencesDialog::resetToTalipotDefaults(int row, int updateMode) {
 }
 
 void PreferencesDialog::showGraphDefaultsContextMenu(const QPoint &p) {
-  QModelIndex idx = _ui->graphDefaultsTable->indexAt(p);
+  int row = _ui->graphDefaultsTable->verticalHeader()->logicalIndexAt(p);
 
-  if (idx.column() == 0) {
-    QMenu contextMenu;
-    // the style sheet below allows to display disabled items
-    // as "title" items in the "mainMenu"
-    contextMenu.setStyleSheet("QMenu[mainMenu = \"true\"]::item:disabled {color: white; "
-                              "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:, "
-                              "y2:1, stop:0 rgb(75,75,75), stop:1 rgb(60, 60, 60))}");
-    // so it is the "mainMenu"
-    contextMenu.setProperty("mainMenu", true);
-    contextMenu.setToolTipsVisible(true);
+  QMenu contextMenu;
+  // the style sheet below allows to display disabled items
+  // as "title" items in the "mainMenu"
+  contextMenu.setStyleSheet("QMenu[mainMenu = \"true\"]::item:disabled {color: white; "
+                            "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:, "
+                            "y2:1, stop:0 rgb(75,75,75), stop:1 rgb(60, 60, 60))}");
+  // so it is the "mainMenu"
+  contextMenu.setProperty("mainMenu", true);
+  contextMenu.setToolTipsVisible(true);
 
-    int row = idx.row();
-    QString defaultProp = _ui->graphDefaultsTable->item(row, idx.column())->text();
-    QAction *action = contextMenu.addAction(defaultProp);
-    action->setEnabled(false);
-    contextMenu.addSeparator();
+  QString defaultProp =
+      _ui->graphDefaultsTable->model()->headerData(row, Qt::Vertical, Qt::DisplayRole).toString();
+  QAction *action = contextMenu.addAction(defaultProp);
+  action->setEnabled(false);
+  contextMenu.addSeparator();
 
-    if (row < 3) {
-      QMenu *subMenu = contextMenu.addMenu(QString("Reset to Talipot predefined"));
-      subMenu->setToolTip("Choose the type of elements for which the default value will be reset");
-      action = subMenu->addAction("Node default value");
-      action->setToolTip("Reset the node " + defaultProp + " to the Talipot predefined value");
-      action->setData(QVariant(int(RESET_NODE)));
-      action = subMenu->addAction("Edge default value");
-      action->setToolTip("Reset the edge " + defaultProp + " to the Talipot predefined value");
-      action->setData(QVariant(int(RESET_EDGE)));
-      action = subMenu->addAction("Node/Edge default values");
-      action->setToolTip("Reset the node/edge " + defaultProp + " to the Talipot predefined value");
-      action->setData(QVariant(int(RESET_BOTH)));
-    } else {
-      action = contextMenu.addAction("Reset to Talipot predefined value");
-      action->setData(QVariant(int(RESET_BOTH)));
-      action->setToolTip("Reset " + defaultProp + " to the Talipot predefined value");
-    }
+  if (row < 3) {
+    QMenu *subMenu = contextMenu.addMenu(QString("Reset to Talipot predefined"));
+    subMenu->setToolTip("Choose the type of elements for which the default value will be reset");
+    action = subMenu->addAction("Node default value");
+    action->setToolTip("Reset the node " + defaultProp + " to the Talipot predefined value");
+    action->setData(QVariant(int(RESET_NODE)));
+    action = subMenu->addAction("Edge default value");
+    action->setToolTip("Reset the edge " + defaultProp + " to the Talipot predefined value");
+    action->setData(QVariant(int(RESET_EDGE)));
+    action = subMenu->addAction("Node/Edge default values");
+    action->setToolTip("Reset the node/edge " + defaultProp + " to the Talipot predefined value");
+    action->setData(QVariant(int(RESET_BOTH)));
+  } else {
+    action = contextMenu.addAction("Reset to Talipot predefined value");
+    action->setData(QVariant(int(RESET_BOTH)));
+    action->setToolTip("Reset " + defaultProp + " to the Talipot predefined value");
+  }
 
-    action = contextMenu.exec(QCursor::pos() - QPoint(5, 5));
+  action = contextMenu.exec(QCursor::pos() - QPoint(5, 5));
 
-    if (action) {
-      resetToTalipotDefaults(row, action->data().toInt());
-    }
+  if (action) {
+    resetToTalipotDefaults(row, action->data().toInt());
   }
 }
 

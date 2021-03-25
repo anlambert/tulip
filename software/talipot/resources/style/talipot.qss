@@ -14,8 +14,7 @@
 AlgorithmRunner #contents,
 QDialog,
 QGroupBox,
-QFrame,
-QWizard QHeaderView::section {
+QFrame {
   background: %1;
 }
 
@@ -26,9 +25,26 @@ QMenuBar {
 
 QWizard QHeaderView,
 AlgorithmRunner QHeaderView,
-AlgorithmRunner QHeaderView::section,
-#PreferencesDialog QHeaderView::section {
+#PreferencesDialog QHeaderView {
   background: %1;
+}
+
+QWizard QHeaderView::section,
+AlgorithmRunner QHeaderView::section,
+#PreferencesDialog QHeaderView::section:horizontal,
+#PreferencesDialog QHeaderView::section:vertical,
+#PreferencesDialog QTableWidget QTableCornerButton::section {
+  background: %1;
+  border: none;
+  border-bottom: 1px solid #c4c9cd;
+  border-right: 1px solid #c4c9cd;
+}
+
+QWizard QHeaderView::section:first,
+AlgorithmRunner QHeaderView::section:first,
+QWizard QHeaderView::section:only-one,
+AlgorithmRunner QHeaderView::section:only-one {
+  border-top: 1px solid #c4c9cd;
 }
 
 QLabel {
@@ -244,16 +260,21 @@ QFrame[header="true"] QComboBox QAbstractItemView {
   padding-top: 5px;
 }
 
-#PreferencesDialog #graphDefaultsTable QAbstractItemView {
+#PreferencesDialog #graphDefaultsTable {
   border: none;
+  gridline-color: #c4c9cd;
 }
 
-#PreferencesDialog #graphDefaultsTable QHeaderView::section {
+#PreferencesDialog #graphDefaultsTable QHeaderView::section:horizontal {
   height: 30px;
   font: bold 12px;
 }
 
-#PreferencesDialog #graphDefaultsTable QTableView {
+#PreferencesDialog #graphDefaultsTable QHeaderView::section:vertical {
+  font: bold 12px;
+}
+
+#PreferencesDialog #graphDefaultsTable {
   font: 12px;
 }
 
