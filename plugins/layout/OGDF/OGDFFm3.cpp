@@ -106,7 +106,8 @@ static const char *paramHelp[] = {
     "The unit edge length.",
 
     // New initial placement
-    "Indicates the initial placement before running algorithm.",
+    "Defines if the initial placement of the nodes at the coarsest multilevel vary for each "
+    "distinct call of the layout or keeps always the same.",
 
     // Threshold
     "The threshold for the stop criterion.",
@@ -237,7 +238,7 @@ OGDFFm3::OGDFFm3(const tlp::PluginContext *context)
                                         allowedPositionsValuesDescription);
   addInParameter<int>("MaxIntPosExponent", paramHelp[18], "40");
   addInParameter<tlp::StringCollection>(ELT_TIPOVER, paramHelp[9], ELT_TIPOVERLIST, true,
-                                        "None<br> NoGrowingRow<br> Always");
+                                        "<b>None</b><br> <b>NoGrowingRow</b><br> <b>Always</b>");
   addInParameter<tlp::StringCollection>(ELT_PRESORT, paramHelp[10], ELT_PRESORTLIST, true,
                                         presortValuesDescription);
   addInParameter<tlp::StringCollection>(ELT_GALAXYCHOICE, paramHelp[11], ELT_GALAXYCHOICELIST, true,
@@ -245,7 +246,8 @@ OGDFFm3::OGDFFm3(const tlp::PluginContext *context)
   addInParameter<tlp::StringCollection>(ELT_MAXITERCHANGE, paramHelp[12], ELT_MAXITERCHANGELIST,
                                         true, maxIterChangeValuesDescription);
   addInParameter<tlp::StringCollection>(ELT_INITIALPLACEMENTMULT, paramHelp[13],
-                                        ELT_INITIALPLACEMENTMULTLIST, true, "Simple <br> Advanced");
+                                        ELT_INITIALPLACEMENTMULTLIST, true,
+                                        "<b>Simple</b> <br> <b>Advanced</b>");
   addInParameter<tlp::StringCollection>(ELT_FORCEMODEL, paramHelp[14], ELT_FORCEMODELLIST, true,
                                         forceModelValuesDescription);
   addInParameter<tlp::StringCollection>(ELT_REPULSIVEFORCEMETHOD, paramHelp[15],
@@ -253,7 +255,7 @@ OGDFFm3::OGDFFm3(const tlp::PluginContext *context)
                                         repulsiveForceValuesDescription);
   addInParameter<tlp::StringCollection>(ELT_REDUCEDTREECONSTRCUCTION, paramHelp[16],
                                         ELT_REDUCEDTREECONSTRCUCTIONLIST, true,
-                                        "PathByPath <br> SubtreeBySubtree");
+                                        "<b>PathByPath</b> <br> <b>SubtreeBySubtree</b>");
   addInParameter<tlp::StringCollection>(ELT_SMALLESTCELLFINDING, paramHelp[17],
                                         ELT_SMALLESTCELLFINDINGLIST, true,
                                         smallestCellFindingValuesDescription);
