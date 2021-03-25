@@ -84,13 +84,6 @@ using namespace std;
 #define ELT_EXACT 1
 #define ELT_GRIDAPPROXIMATION 2
 
-#define ELT_INITIALPLACEMENTFORCES "Initial Placement Forces"
-#define ELT_INITIALPLACEMENTFORCESLIST "RandomRandIterNr;RandomTime;UniformGrid;KeepPositions"
-#define ELT_RANDOMRANDITERNR 0
-#define ELT_RANDOMTIME 1
-#define ELT_UNIFORMGRID 2
-#define ELT_KEEPPOSITIONS 3
-
 #define ELT_REDUCEDTREECONSTRCUCTION "Reduced Tree Construction"
 #define ELT_REDUCEDTREECONSTRCUCTIONLIST "SubtreeBySubtree;PathByPath"
 #define ELT_SUBTREEBYSUBTREE 0
@@ -114,9 +107,6 @@ static const char *paramHelp[] = {
 
     // New initial placement
     "Indicates the initial placement before running algorithm.",
-
-    // Fixed iterations
-    "The fixed number of iterations for the stop criterion.",
 
     // Threshold
     "The threshold for the stop criterion.",
@@ -153,9 +143,6 @@ static const char *paramHelp[] = {
 
     // Repulsive Force Model
     "Specifies how to calculate repulsive forces.",
-
-    // Initial Placement Forces
-    "Specifies how the initial placement is done.",
 
     // Reduced Tree Construction
     "Specifies how the reduced bucket quadtree is constructed.",
@@ -203,12 +190,6 @@ static const char *repulsiveForceValuesDescription =
     "<b>GridApproximation</b> <i>(Grid approximation)</i><br>"
     "<b>NMM</b> <i>(Calculation as for new multipole method)</i>";
 
-static const char *initialPlacementValuesDescription =
-    "<b>UniformGrid</b> <i>(Uniform placement on a grid)</i><br>"
-    "<b>RandomTime</b> <i>(Random placement, based on current time)</i><br>"
-    "<b>RandomRandIterNr</b> <i>(Random placement, based on randIterNr())</i><br>"
-    "<b>KeepPositions</b> <i>(No change in placement)</i>";
-
 static const char *smallestCellFindingValuesDescription =
     "<b>Iteratively</b> <i>(Iteratively, in constant time)</i><br>"
     "<b>Aluru</b> <i>(According to formula by Aluru et al., in constant time)</i>";
@@ -229,7 +210,7 @@ public:
   PLUGININFORMATION("FM^3 (OGDF)", "Stephan Hachul", "09/11/2007",
                     "Implements the FM³ layout algorithm by Hachul and Jünger. It is a multilevel, "
                     "force-directed layout algorithm that can be applied to very large graphs.",
-                    "1.3", "Force Directed")
+                    "1.4", "Force Directed")
   OGDFFm3(const tlp::PluginContext *context);
   void beforeCall() override;
   void callOGDFLayoutAlgorithm(ogdf::GraphAttributes &gAttributes) override;
@@ -243,41 +224,37 @@ OGDFFm3::OGDFFm3(const tlp::PluginContext *context)
   addInParameter<tlp::SizeProperty>("Node Size", paramHelp[1], "viewSize", false);
   addInParameter<double>("Unit edge length", paramHelp[2], "10.0", false);
   addInParameter<bool>("New initial placement", paramHelp[3], "true");
-  addInParameter<int>("Fixed iterations", paramHelp[4], "30");
-  addInParameter<double>("Threshold", paramHelp[5], "0.01");
-  addInParameter<tlp::StringCollection>(ELT_PAGEFORMAT, paramHelp[6], ELT_PAGEFORMATLIST, true,
+  addInParameter<double>("Threshold", paramHelp[4], "0.01");
+  addInParameter<tlp::StringCollection>(ELT_PAGEFORMAT, paramHelp[5], ELT_PAGEFORMATLIST, true,
                                         pageFormatValuesDescription);
-  addInParameter<tlp::StringCollection>(ELT_QUALITYVSSPEED, paramHelp[7], ELT_QUALITYVSSPEEDLIST,
+  addInParameter<tlp::StringCollection>(ELT_QUALITYVSSPEED, paramHelp[6], ELT_QUALITYVSSPEEDLIST,
                                         true, qualityVsSpeedValuesDescription);
-  addInParameter<tlp::StringCollection>(ELT_EDGELENGTHMEASUREMENT, paramHelp[8],
+  addInParameter<tlp::StringCollection>(ELT_EDGELENGTHMEASUREMENT, paramHelp[7],
                                         ELT_EDGELENGTHMEASUREMENTLIST, true,
                                         edgeLengthMeasurementValuesDescription);
-  addInParameter<tlp::StringCollection>(ELT_ALLOWEDPOSITIONS, paramHelp[9],
+  addInParameter<tlp::StringCollection>(ELT_ALLOWEDPOSITIONS, paramHelp[8],
                                         ELT_ALLOWEDPOSITIONSLIST, true,
                                         allowedPositionsValuesDescription);
-  addInParameter<int>("MaxIntPosExponent", paramHelp[20], "40");
-  addInParameter<tlp::StringCollection>(ELT_TIPOVER, paramHelp[10], ELT_TIPOVERLIST, true,
+  addInParameter<int>("MaxIntPosExponent", paramHelp[18], "40");
+  addInParameter<tlp::StringCollection>(ELT_TIPOVER, paramHelp[9], ELT_TIPOVERLIST, true,
                                         "None<br> NoGrowingRow<br> Always");
-  addInParameter<tlp::StringCollection>(ELT_PRESORT, paramHelp[11], ELT_PRESORTLIST, true,
+  addInParameter<tlp::StringCollection>(ELT_PRESORT, paramHelp[10], ELT_PRESORTLIST, true,
                                         presortValuesDescription);
-  addInParameter<tlp::StringCollection>(ELT_GALAXYCHOICE, paramHelp[12], ELT_GALAXYCHOICELIST, true,
+  addInParameter<tlp::StringCollection>(ELT_GALAXYCHOICE, paramHelp[11], ELT_GALAXYCHOICELIST, true,
                                         galaxyChoiceValuesDescription);
-  addInParameter<tlp::StringCollection>(ELT_MAXITERCHANGE, paramHelp[13], ELT_MAXITERCHANGELIST,
+  addInParameter<tlp::StringCollection>(ELT_MAXITERCHANGE, paramHelp[12], ELT_MAXITERCHANGELIST,
                                         true, maxIterChangeValuesDescription);
-  addInParameter<tlp::StringCollection>(ELT_INITIALPLACEMENTMULT, paramHelp[14],
+  addInParameter<tlp::StringCollection>(ELT_INITIALPLACEMENTMULT, paramHelp[13],
                                         ELT_INITIALPLACEMENTMULTLIST, true, "Simple <br> Advanced");
-  addInParameter<tlp::StringCollection>(ELT_FORCEMODEL, paramHelp[15], ELT_FORCEMODELLIST, true,
+  addInParameter<tlp::StringCollection>(ELT_FORCEMODEL, paramHelp[14], ELT_FORCEMODELLIST, true,
                                         forceModelValuesDescription);
-  addInParameter<tlp::StringCollection>(ELT_REPULSIVEFORCEMETHOD, paramHelp[16],
+  addInParameter<tlp::StringCollection>(ELT_REPULSIVEFORCEMETHOD, paramHelp[15],
                                         ELT_REPULSIVEFORCEMETHODLIST, true,
                                         repulsiveForceValuesDescription);
-  addInParameter<tlp::StringCollection>(ELT_INITIALPLACEMENTFORCES, paramHelp[17],
-                                        ELT_INITIALPLACEMENTFORCESLIST, true,
-                                        initialPlacementValuesDescription);
-  addInParameter<tlp::StringCollection>(ELT_REDUCEDTREECONSTRCUCTION, paramHelp[18],
+  addInParameter<tlp::StringCollection>(ELT_REDUCEDTREECONSTRCUCTION, paramHelp[16],
                                         ELT_REDUCEDTREECONSTRCUCTIONLIST, true,
                                         "PathByPath <br> SubtreeBySubtree");
-  addInParameter<tlp::StringCollection>(ELT_SMALLESTCELLFINDING, paramHelp[19],
+  addInParameter<tlp::StringCollection>(ELT_SMALLESTCELLFINDING, paramHelp[17],
                                         ELT_SMALLESTCELLFINDINGLIST, true,
                                         smallestCellFindingValuesDescription);
 }
@@ -303,12 +280,6 @@ void OGDFFm3::beforeCall() {
 
     if (dataSet->get("New initial placement", bval)) {
       fmmm->newInitialPlacement(bval);
-    }
-
-    int ival = 0;
-
-    if (dataSet->get("Fixed iterations", ival)) {
-      fmmm->fixedIterations(ival);
     }
 
     double dval = 0;
@@ -354,6 +325,8 @@ void OGDFFm3::beforeCall() {
         fmmm->allowedPositions(ogdf::FMMMOptions::AllowedPositions::All);
       }
     }
+
+    int ival = 0;
 
     if (dataSet->get("MaxIntPosExponent", ival)) {
       fmmm->maxIntPosExponent(ival);
@@ -425,18 +398,6 @@ void OGDFFm3::beforeCall() {
             ogdf::FMMMOptions::RepulsiveForcesMethod::GridApproximation);
       } else {
         fmmm->repulsiveForcesCalculation(ogdf::FMMMOptions::RepulsiveForcesMethod::NMM);
-      }
-    }
-
-    if (dataSet->get(ELT_INITIALPLACEMENTFORCES, stringCollection)) {
-      if (stringCollection.getCurrent() == ELT_UNIFORMGRID) {
-        fmmm->initialPlacementForces(ogdf::FMMMOptions::InitialPlacementForces::UniformGrid);
-      } else if (stringCollection.getCurrent() == ELT_RANDOMTIME) {
-        fmmm->initialPlacementForces(ogdf::FMMMOptions::InitialPlacementForces::RandomTime);
-      } else if (stringCollection.getCurrent() == ELT_RANDOMRANDITERNR) {
-        fmmm->initialPlacementForces(ogdf::FMMMOptions::InitialPlacementForces::RandomRandIterNr);
-      } else {
-        fmmm->initialPlacementForces(ogdf::FMMMOptions::InitialPlacementForces::KeepPositions);
       }
     }
 
