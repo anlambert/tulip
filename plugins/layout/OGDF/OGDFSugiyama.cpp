@@ -29,32 +29,53 @@
 
 #include <talipot/StringCollection.h>
 #include <talipot/OGDFLayoutPluginBase.h>
+#include <talipot/TlpTools.h>
+
+#include <vector>
+
+using namespace std;
 
 #define ELT_RANKING "Ranking"
 #define ELT_RANKINGLIST "LongestPathRanking;OptimalRanking;CoffmanGrahamRanking"
-#define ELT_LONGESTPATHRANKING 0
-#define ELT_OPTIMALRANKING 1
-#define ELT_COFFMANGRAHAMRANKING 2
+static const vector<function<ogdf::RankingModule *()>> ranking = {
+    []() { return new ogdf::LongestPathRanking; },
+    []() { return new ogdf::OptimalRanking; },
+    []() { return new ogdf::CoffmanGrahamRanking; },
+};
 
 #define ELT_TWOLAYERCROSS "Two-layer crossing minimization"
-#define ELT_TWOLAYERCROSSLIST                                                                  \
-  "BarycenterHeuristic;MedianHeuristic;SplitHeuristic;SiftingHeuristic;GreedyInsertHeuristic;" \
-  "GreedySwitchHeuristic;GlobalSiftingHeuristic;GridSiftingHeuristic"
-#define ELT_BARYCENTER 0
-#define ELT_MEDIAN 1
-#define ELT_SPLIT 2
-#define ELT_SIFTING 3
-#define ELT_GREEDYINSERT 4
-#define ELT_GREEDYSWITCH 5
-#define ELT_GLOBALSIFTING 6
-#define ELT_GRIDSIFTING 7
+#define ELT_TWOLAYERCROSSLIST                                            \
+  "BarycenterHeuristic;MedianHeuristic;SplitHeuristic;SiftingHeuristic;" \
+  "GreedyInsertHeuristic;GreedySwitchHeuristic;GlobalSiftingHeuristic;"  \
+  "GridSiftingHeuristic"
+static const vector<function<ogdf::LayeredCrossMinModule *()>> crossingMinimization = {
+    []() { return new ogdf::BarycenterHeuristic; },   []() { return new ogdf::MedianHeuristic; },
+    []() { return new ogdf::SplitHeuristic; },        []() { return new ogdf::SiftingHeuristic; },
+    []() { return new ogdf::GreedySwitchHeuristic; }, []() { return new ogdf::GlobalSifting; },
+    []() { return new ogdf::GridSifting; },
+};
+
+template <class T>
+function<ogdf::HierarchyLayoutModule *(double, double, bool)> hierarchyLayoutFunc() {
+  return [](double nodeDistance, double layerDistance, bool fixedLayerDistance) {
+    T *layout = new T;
+    layout->nodeDistance(nodeDistance);
+    layout->layerDistance(layerDistance);
+    if constexpr (tlp::type_name<T>() != tlp::type_name<ogdf::FastSimpleHierarchyLayout>()) {
+      layout->fixedLayerDistance(nodeDistance);
+    }
+    return layout;
+  };
+};
 
 #define ELT_HIERARCHYLAYOUT "Layout"
 #define ELT_HIERARCHYLAYOUTLIST \
   "FastHierarchyLayout;FastSimpleHierarchyLayout;OptimalHierarchyLayout"
-#define ELT_FASTHIERARCHY 0
-#define ELT_FASTSIMPLEHIERARCHY 1
-#define ELT_OPTIMALHIERARCHY 2
+static const vector<function<ogdf::HierarchyLayoutModule *(double, double, bool)>> hLayout = {
+    hierarchyLayoutFunc<ogdf::FastHierarchyLayout>(),
+    hierarchyLayoutFunc<ogdf::FastSimpleHierarchyLayout>(),
+    hierarchyLayoutFunc<ogdf::OptimalHierarchyLayout>(),
+};
 
 static const char *paramHelp[] = {
     // fails
@@ -73,8 +94,8 @@ static const char *paramHelp[] = {
     "The minimal vertical distance between two nodes on neighboring layers.",
 
     // fixed layer distance
-    "If true, the distance between neighboring layers is fixed, otherwise variable (only for "
-    "FastHierarchyLayout).",
+    "If true, the distance between neighboring layers is fixed, otherwise variable (not "
+    "available for FastSimpleHierarchyLayout).",
 
     // transpose
     "If this option is set to true an additional fine tuning step is performed after each "
@@ -169,6 +190,7 @@ public:
   }
 
   void beforeCall() override {
+
     auto *sugiyama = static_cast<ogdf::SugiyamaLayout *>(ogdfLayoutAlgo);
 
     if (dataSet != nullptr) {
@@ -210,33 +232,11 @@ public:
       }
 
       if (dataSet->get(ELT_RANKING, sc)) {
-        if (sc.getCurrent() == ELT_LONGESTPATHRANKING) {
-          sugiyama->setRanking(new ogdf::LongestPathRanking());
-        } else if (sc.getCurrent() == ELT_OPTIMALRANKING) {
-          sugiyama->setRanking(new ogdf::OptimalRanking());
-        } else {
-          sugiyama->setRanking(new ogdf::CoffmanGrahamRanking());
-        }
+        sugiyama->setRanking(ranking[sc.getCurrent()]());
       }
 
       if (dataSet->get(ELT_TWOLAYERCROSS, sc)) {
-        if (sc.getCurrent() == ELT_BARYCENTER) {
-          sugiyama->setCrossMin(new ogdf::BarycenterHeuristic());
-        } else if (sc.getCurrent() == ELT_MEDIAN) {
-          sugiyama->setCrossMin(new ogdf::MedianHeuristic());
-        } else if (sc.getCurrent() == ELT_SPLIT) {
-          sugiyama->setCrossMin(new ogdf::SplitHeuristic());
-        } else if (sc.getCurrent() == ELT_SIFTING) {
-          sugiyama->setCrossMin(new ogdf::SiftingHeuristic());
-        } else if (sc.getCurrent() == ELT_GREEDYINSERT) {
-          sugiyama->setCrossMin(new ogdf::GreedyInsertHeuristic());
-        } else if (sc.getCurrent() == ELT_GREEDYSWITCH) {
-          sugiyama->setCrossMin(new ogdf::GreedySwitchHeuristic());
-        } else if (sc.getCurrent() == ELT_GLOBALSIFTING) {
-          sugiyama->setCrossMin(new ogdf::GlobalSifting());
-        } else {
-          sugiyama->setCrossMin(new ogdf::GridSifting());
-        }
+        sugiyama->setCrossMin(crossingMinimization[sc.getCurrent()]());
       }
 
       if (dataSet->get(ELT_HIERARCHYLAYOUT, sc)) {
@@ -247,23 +247,8 @@ public:
         dataSet->get("layer distance", layerDistance);
         dataSet->get("fixed layer distance", fixedLayerDistance);
 
-        if (sc.getCurrent() == ELT_FASTHIERARCHY) {
-          auto *fhl = new ogdf::FastHierarchyLayout();
-          fhl->nodeDistance(nodeDistance);
-          fhl->layerDistance(layerDistance);
-          fhl->fixedLayerDistance(fixedLayerDistance);
-          sugiyama->setLayout(fhl);
-        } else if (sc.getCurrent() == ELT_FASTSIMPLEHIERARCHY) {
-          auto *fshl = new ogdf::FastSimpleHierarchyLayout();
-          fshl->nodeDistance(nodeDistance);
-          fshl->layerDistance(layerDistance);
-          sugiyama->setLayout(fshl);
-        } else {
-          auto *ohl = new ogdf::OptimalHierarchyLayout();
-          ohl->nodeDistance(nodeDistance);
-          ohl->layerDistance(layerDistance);
-          sugiyama->setLayout(ohl);
-        }
+        sugiyama->setLayout(
+            hLayout[sc.getCurrent()](nodeDistance, layerDistance, fixedLayerDistance));
       }
     }
   }

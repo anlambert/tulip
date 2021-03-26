@@ -16,10 +16,16 @@
 #include <talipot/OGDFLayoutPluginBase.h>
 #include <talipot/StringCollection.h>
 
+#include <vector>
+
+using namespace std;
+
 #define ELT_COOLING "Cooling function"
 #define ELT_COOLINGLIST "Factor;Logarithmic"
-#define ELT_FACTOR 0
-#define ELT_LOGARITHMIC 1
+static const vector<ogdf::SpringEmbedderFRExact::CoolingFunction> coolingFunction = {
+    ogdf::SpringEmbedderFRExact::CoolingFunction::Factor,
+    ogdf::SpringEmbedderFRExact::CoolingFunction::Logarithmic,
+};
 
 static const char *paramHelp[] = {
     // iterations
@@ -109,11 +115,7 @@ void OGDFFrutchermanReingold::beforeCall() {
     }
 
     if (dataSet->get(ELT_COOLING, sc)) {
-      if (sc.getCurrent() == ELT_FACTOR) {
-        sefr->coolingFunction(ogdf::SpringEmbedderFRExact::CoolingFunction::Factor);
-      } else {
-        sefr->coolingFunction(ogdf::SpringEmbedderFRExact::CoolingFunction::Logarithmic);
-      }
+      sefr->coolingFunction(coolingFunction[sc.getCurrent()]);
     }
 
     if (dataSet->get("use node weights", bval)) {

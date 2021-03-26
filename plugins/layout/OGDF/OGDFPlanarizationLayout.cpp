@@ -24,18 +24,23 @@
 #include <talipot/OGDFLayoutPluginBase.h>
 #include <talipot/StringCollection.h>
 
+#include <vector>
+
+using namespace std;
+
 #define ELT_EMBEDDER "Embedder"
-#define ELT_EMBEDDER_LIST                                                                          \
-  "SimpleEmbedder;EmbedderMaxFace;EmbedderMaxFaceLayers;EmbedderMinDepth;EmbedderMinDepthMaxFace;" \
-  "EmbedderMinDepthMaxFaceLayers;EmbedderMinDepthPiTa" //;EmbedderOptimalFlexDraw"
-#define ELT_EMBEDDER_SIMPLE 0
-#define ELT_EMBEDDER_MAXFACE 1
-#define ELT_EMBEDDER_MAXFACELAYERS 2
-#define ELT_EMBEDDER_MINDEPTH 3
-#define ELT_EMBEDDER_MINDEPTHMAXFACE 4
-#define ELT_EMBEDDER_MINDEPTHMAXFACELAYERS 5
-#define ELT_EMBEDDER_MINDEPTHPITA 6
-#define ELT_EMBEDDER_OPTIMALFLEXDRAW 7
+#define ELT_EMBEDDER_LIST                                                  \
+  "SimpleEmbedder;EmbedderMaxFace;EmbedderMaxFaceLayers;EmbedderMinDepth;" \
+  "EmbedderMinDepthMaxFace;EmbedderMinDepthMaxFaceLayers;EmbedderMinDepthPiTa"
+static const vector<function<ogdf::EmbedderModule *()>> embedder = {
+    []() { return new ogdf::SimpleEmbedder; },
+    []() { return new ogdf::EmbedderMaxFace; },
+    []() { return new ogdf::EmbedderMaxFaceLayers; },
+    []() { return new ogdf::EmbedderMinDepth; },
+    []() { return new ogdf::EmbedderMinDepthMaxFace; },
+    []() { return new ogdf::EmbedderMinDepthMaxFaceLayers; },
+    []() { return new ogdf::EmbedderMinDepthPiTa; },
+};
 
 static const char *embedderValuesDescription =
     "<b>SimpleEmbedder</b> <i>(Planar graph embedding from the algorithm of Boyer and "
@@ -84,25 +89,7 @@ public:
       }
 
       if (dataSet->get(ELT_EMBEDDER, sc)) {
-        if (sc.getCurrent() == ELT_EMBEDDER_MAXFACE) {
-          pl->setEmbedder(new ogdf::EmbedderMaxFace());
-        } else if (sc.getCurrent() == ELT_EMBEDDER_MAXFACELAYERS) {
-          pl->setEmbedder(new ogdf::EmbedderMaxFaceLayers());
-        } else if (sc.getCurrent() == ELT_EMBEDDER_MINDEPTH) {
-          pl->setEmbedder(new ogdf::EmbedderMinDepth());
-        } else if (sc.getCurrent() == ELT_EMBEDDER_MINDEPTHMAXFACE) {
-          pl->setEmbedder(new ogdf::EmbedderMinDepthMaxFace());
-        } else if (sc.getCurrent() == ELT_EMBEDDER_MINDEPTHMAXFACELAYERS) {
-          pl->setEmbedder(new ogdf::EmbedderMinDepthMaxFaceLayers());
-        } else if (sc.getCurrent() == ELT_EMBEDDER_MINDEPTHPITA) {
-          pl->setEmbedder(new ogdf::EmbedderMinDepthPiTa());
-          // EmbedderOptimalFlexDraw embedder segfaults every time, so disable it for the moment
-          //        } else if (sc.getCurrent() == ELT_EMBEDDER_OPTIMALFLEXDRAW) {
-          //          pl->setEmbedder(new ogdf::EmbedderOptimalFlexDraw());
-
-        } else {
-          pl->setEmbedder(new ogdf::SimpleEmbedder());
-        }
+        pl->setEmbedder(embedder[sc.getCurrent()]());
       }
     }
   }

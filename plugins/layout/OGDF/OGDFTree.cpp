@@ -18,18 +18,26 @@
 #include <talipot/TreeTest.h>
 #include <talipot/ConnectedTest.h>
 
+#include <vector>
+
+using namespace std;
+
 #define ELT_ORIENTATION "Orientation"
 #define ELT_ORIENTATIONLIST "topToBottom;bottomToTop;leftToRight;rightToLeft"
-#define ELT_TOPTOBOTTOM 0
-#define ELT_BOTTOMTOTOP 1
-#define ELT_LEFTTORIGHT 2
-#define ELT_RIGHTTOLEFT 3
+static const vector<ogdf::Orientation> orientation = {
+    ogdf::Orientation::topToBottom,
+    ogdf::Orientation::bottomToTop,
+    ogdf::Orientation::leftToRight,
+    ogdf::Orientation::rightToLeft,
+};
 
 #define ELT_ROOTSELECTION "Root selection"
 #define ELT_ROOTSELECTIONLIST "rootIsSource;rootIsSink;rootByCoord"
-#define ELT_ROOTSOURCE 0
-#define ELT_ROOTSINK 1
-#define ELT_ROOTCOORD 2
+static const vector<ogdf::TreeLayout::RootSelectionType> rootSelection = {
+    ogdf::TreeLayout::RootSelectionType::Source,
+    ogdf::TreeLayout::RootSelectionType::Sink,
+    ogdf::TreeLayout::RootSelectionType::ByCoord,
+};
 
 static const char *paramHelp[] = {
     // siblings distance
@@ -114,33 +122,16 @@ public:
       }
 
       if (dataSet->get(ELT_ORIENTATION, sc)) {
-        if (sc.getCurrent() == ELT_TOPTOBOTTOM) {
-          // because of an ununderstanding fix
-          // in thirdparty/OGDF/src/ogdf/tree/TreeLayout.cpp
-          tree->orientation(ogdf::Orientation::bottomToTop);
-        } else if (sc.getCurrent() == ELT_BOTTOMTOTOP) {
-          // same as above
-          tree->orientation(ogdf::Orientation::topToBottom);
-        } else if (sc.getCurrent() == ELT_LEFTTORIGHT) {
-          tree->orientation(ogdf::Orientation::leftToRight);
-        } else {
-          tree->orientation(ogdf::Orientation::rightToLeft);
-        }
+        tree->orientation(orientation[sc.getCurrent()]);
       }
 
       if (dataSet->get(ELT_ROOTSELECTION, sc)) {
-        if (sc.getCurrent() == ELT_ROOTSOURCE) {
-          tree->rootSelection(ogdf::TreeLayout::RootSelectionType::Source);
-        } else if (sc.getCurrent() == ELT_ROOTSINK) {
-          tree->rootSelection(ogdf::TreeLayout::RootSelectionType::Sink);
-        } else {
-          tree->rootSelection(ogdf::TreeLayout::RootSelectionType::ByCoord);
-        }
+        tree->rootSelection(rootSelection[sc.getCurrent()]);
       }
     }
   }
 
-  bool check(std::string &errorMsg) {
+  bool check(string &errorMsg) {
     auto connectedComponents = tlp::ConnectedTest::computeConnectedComponents(graph);
     for (const auto &connectedComponent : connectedComponents) {
       auto *sg = graph->inducedSubGraph(connectedComponent);

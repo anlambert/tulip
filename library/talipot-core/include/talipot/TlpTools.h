@@ -17,6 +17,7 @@
 #include <iostream>
 #include <climits>
 #include <random>
+#include <string_view>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -244,6 +245,49 @@ TLP_SCOPE std::wstring utf8to16(const std::string &s);
 
 TLP_SCOPE std::vector<std::string> tokenize(const std::string &str,
                                             const std::string &delimiter = " ");
+
+// Utility constexpr template function to get a typename at compile time.
+// This is useful to discard execution branches for specific types in template implementation.
+// https://stackoverflow.com/questions/35941045/can-i-obtain-c-type-names-in-a-constexpr-way
+
+template <typename T>
+constexpr std::string_view type_name();
+
+template <>
+constexpr std::string_view type_name<void>() {
+  return "void";
+}
+
+using type_name_prober = void;
+
+template <typename T>
+constexpr std::string_view wrapped_type_name() {
+#if defined(__clang__) || defined(__GNUC__)
+  return __PRETTY_FUNCTION__;
+#elif defined(_MSC_VER)
+  return __FUNCSIG__;
+#else
+#error "wrapped_type_name: Unsupported compiler"
+#endif
+}
+
+constexpr std::size_t wrapped_type_name_prefix_length() {
+  return wrapped_type_name<type_name_prober>().find(type_name<type_name_prober>());
+}
+
+constexpr std::size_t wrapped_type_name_suffix_length() {
+  return wrapped_type_name<type_name_prober>().length() - wrapped_type_name_prefix_length() -
+         type_name<type_name_prober>().length();
+}
+
+template <typename T>
+constexpr std::string_view type_name() {
+  constexpr auto wrapped_name = wrapped_type_name<T>();
+  constexpr auto prefix_length = wrapped_type_name_prefix_length();
+  constexpr auto suffix_length = wrapped_type_name_suffix_length();
+  constexpr auto type_name_length = wrapped_name.length() - prefix_length - suffix_length;
+  return wrapped_name.substr(prefix_length, type_name_length);
+}
 
 }
 #endif // TALIPOT_TLP_TOOLS_H

@@ -23,76 +23,102 @@ using namespace std;
 
 #define ELT_PAGEFORMAT "Page Format"
 #define ELT_PAGEFORMATLIST "Square;Portrait;Landscape"
-#define ELT_SQUARE 0
-#define ELT_PORTRAIT 1
-#define ELT_LANDSCAPE 2
+static const vector<ogdf::FMMMOptions::PageFormatType> pageFormatType = {
+    ogdf::FMMMOptions::PageFormatType::Square,
+    ogdf::FMMMOptions::PageFormatType::Portrait,
+    ogdf::FMMMOptions::PageFormatType::Landscape,
+};
 
 #define ELT_QUALITYVSSPEED "Quality vs Speed"
 #define ELT_QUALITYVSSPEEDLIST "BeautifulAndFast;NiceAndIncredibleSpeed;GorgeousAndEfficient"
-#define ELT_BEAUTIFULANDFAST 0
-#define ELT_NICEANDINCREDIBLESPEED 1
-#define ELT_GORGEOUSANDEFFICIENT 2
+static const vector<ogdf::FMMMOptions::QualityVsSpeed> qualityVsSpeed = {
+    ogdf::FMMMOptions::QualityVsSpeed::BeautifulAndFast,
+    ogdf::FMMMOptions::QualityVsSpeed::NiceAndIncredibleSpeed,
+    ogdf::FMMMOptions::QualityVsSpeed::GorgeousAndEfficient,
+};
 
 #define ELT_EDGELENGTHMEASUREMENT "Edge Length Measurement"
 #define ELT_EDGELENGTHMEASUREMENTLIST "BoundingCircle;Midpoint"
-#define ELT_BOUNDINGCIRCLE 0
-#define ELT_MIDPOINT 1
+static const vector<ogdf::FMMMOptions::EdgeLengthMeasurement> edgeLengthMeasurement = {
+    ogdf::FMMMOptions::EdgeLengthMeasurement::BoundingCircle,
+    ogdf::FMMMOptions::EdgeLengthMeasurement::Midpoint,
+};
 
 #define ELT_ALLOWEDPOSITIONS "Allowed Positions"
 #define ELT_ALLOWEDPOSITIONSLIST "Integer;Exponent;All"
-#define ELT_INTEGER 0
-#define ELT_EXPONENT 1
-#define ELT_ALL 2
+static const vector<ogdf::FMMMOptions::AllowedPositions> allowedPositions = {
+    ogdf::FMMMOptions::AllowedPositions::Integer,
+    ogdf::FMMMOptions::AllowedPositions::Exponent,
+    ogdf::FMMMOptions::AllowedPositions::All,
+};
 
 #define ELT_TIPOVER "Tip Over"
 #define ELT_TIPOVERLIST "NoGrowingRow;Always;None"
-#define ELT_NOGROWINGROW 0
-#define ELT_ALWAYS 1
-#define ELT_NONE 2
+static const vector<ogdf::FMMMOptions::TipOver> tipOver = {
+    ogdf::FMMMOptions::TipOver::NoGrowingRow,
+    ogdf::FMMMOptions::TipOver::Always,
+    ogdf::FMMMOptions::TipOver::None,
+};
 
 #define ELT_PRESORT "Pre Sort"
 #define ELT_PRESORTLIST "DecreasingHeight;DecreasingWidth;None;"
-#define ELT_DECREASINGHEIGHT 0
-#define ELT_DECREASINGWDTH 1
+static const vector<ogdf::FMMMOptions::PreSort> preSort = {
+    ogdf::FMMMOptions::PreSort::DecreasingHeight,
+    ogdf::FMMMOptions::PreSort::DecreasingWidth,
+};
 
 #define ELT_GALAXYCHOICE "Galaxy Choice"
 #define ELT_GALAXYCHOICELIST "NonUniformProbLowerMass;NonUniformProbHigherMass;UniformProb"
-#define ELT_NONUNIFORMPROBLOWERMASS 0
-#define ELT_NONUNIFORMPROBHIGHERMASS 1
-#define ELT_UNIFORMPROB 2
+static const vector<ogdf::FMMMOptions::GalaxyChoice> galaxyChoice = {
+    ogdf::FMMMOptions::GalaxyChoice::NonUniformProbLowerMass,
+    ogdf::FMMMOptions::GalaxyChoice::NonUniformProbHigherMass,
+    ogdf::FMMMOptions::GalaxyChoice::UniformProb,
+};
 
 #define ELT_MAXITERCHANGE "Max Iter Change"
 #define ELT_MAXITERCHANGELIST "LinearlyDecreasing;RapidlyDecreasing;Constant"
-#define ELT_LINEARLYDECREASING 0
-#define ELT_RAPIDLYDECREASING 1
-#define ELT_CONSTANT 2
+static const vector<ogdf::FMMMOptions::MaxIterChange> maxIterChange = {
+    ogdf::FMMMOptions::MaxIterChange::LinearlyDecreasing,
+    ogdf::FMMMOptions::MaxIterChange::RapidlyDecreasing,
+    ogdf::FMMMOptions::MaxIterChange::Constant,
+};
 
 #define ELT_INITIALPLACEMENTMULT "Initial Placement Mult"
 #define ELT_INITIALPLACEMENTMULTLIST "Advanced;Simple"
-#define ELT_ADVANCED 0
-#define ELT_SIMPLE 1
+static const vector<ogdf::FMMMOptions::InitialPlacementMult> initialPlacementMult = {
+    ogdf::FMMMOptions::InitialPlacementMult::Advanced,
+    ogdf::FMMMOptions::InitialPlacementMult::Simple,
+};
 
 #define ELT_FORCEMODEL "Force Model"
 #define ELT_FORCEMODELLIST "New;FruchtermanReingold;Eades"
-#define ELT_NEW 0
-#define ELT_FRUCHTERMANNREINGOLD 1
-#define ELT_EADES 2
+static const vector<ogdf::FMMMOptions::ForceModel> forceModel = {
+    ogdf::FMMMOptions::ForceModel::New,
+    ogdf::FMMMOptions::ForceModel::FruchtermanReingold,
+    ogdf::FMMMOptions::ForceModel::Eades,
+};
 
-#define ELT_REPULSIVEFORCEMETHOD "Repulsive Force Method"
+#define ELT_REPULSIVEFORCEMETHOD "Repulsive Forces Method"
 #define ELT_REPULSIVEFORCEMETHODLIST "NMM;Exact;GridApproximation"
-#define ELT_NMM 0
-#define ELT_EXACT 1
-#define ELT_GRIDAPPROXIMATION 2
+static const vector<ogdf::FMMMOptions::RepulsiveForcesMethod> repulsiveForcesMethod = {
+    ogdf::FMMMOptions::RepulsiveForcesMethod::NMM,
+    ogdf::FMMMOptions::RepulsiveForcesMethod::Exact,
+    ogdf::FMMMOptions::RepulsiveForcesMethod::GridApproximation,
+};
 
 #define ELT_REDUCEDTREECONSTRCUCTION "Reduced Tree Construction"
 #define ELT_REDUCEDTREECONSTRCUCTIONLIST "SubtreeBySubtree;PathByPath"
-#define ELT_SUBTREEBYSUBTREE 0
-#define ELT_PATHBYPATH 1
+static const vector<ogdf::FMMMOptions::ReducedTreeConstruction> reducedTreeConstruction = {
+    ogdf::FMMMOptions::ReducedTreeConstruction::SubtreeBySubtree,
+    ogdf::FMMMOptions::ReducedTreeConstruction::PathByPath,
+};
 
 #define ELT_SMALLESTCELLFINDING "Smallest Cell Finding"
 #define ELT_SMALLESTCELLFINDINGLIST "Iteratively;Aluru"
-#define ELT_ITERATIVELY 0
-#define ELT_ALURU 1
+static const vector<ogdf::FMMMOptions::SmallestCellFinding> smallestCellFinding = {
+    ogdf::FMMMOptions::SmallestCellFinding::Iteratively,
+    ogdf::FMMMOptions::SmallestCellFinding::Aluru,
+};
 
 static const char *paramHelp[] = {
 
@@ -142,15 +168,15 @@ static const char *paramHelp[] = {
     // Force Model
     "Specifies the force-model.",
 
-    // Repulsive Force Model
+    // Repulsive Forces Model
     "Specifies how to calculate repulsive forces.",
 
     // Reduced Tree Construction
     "Specifies how the reduced bucket quadtree is constructed.",
 
     // Smallest Cell Finding
-    "Specifies how to calculate the smallest quadratic cell surrounding particles of a node in the "
-    "reduced bucket quadtree.",
+    "Specifies how to calculate the smallest quadratic cell surrounding particles of a node in "
+    "the reduced bucket quadtree.",
 
     // MaxIntPosExponent
     "Defines the exponent used if allowedPositions == Exponent (clamped to [31, 51])"};
@@ -291,41 +317,19 @@ void OGDFFm3::beforeCall() {
     }
 
     if (dataSet->get(ELT_PAGEFORMAT, stringCollection)) {
-      if (stringCollection.getCurrent() == ELT_PORTRAIT) {
-        fmmm->pageFormat(ogdf::FMMMOptions::PageFormatType::Portrait);
-      } else if (stringCollection.getCurrent() == ELT_LANDSCAPE) {
-        fmmm->pageFormat(ogdf::FMMMOptions::PageFormatType::Landscape);
-      } else {
-        fmmm->pageFormat(ogdf::FMMMOptions::PageFormatType::Square);
-      }
+      fmmm->pageFormat(pageFormatType[stringCollection.getCurrent()]);
     }
 
     if (dataSet->get(ELT_QUALITYVSSPEED, stringCollection)) {
-      if (stringCollection.getCurrent() == ELT_NICEANDINCREDIBLESPEED) {
-        fmmm->qualityVersusSpeed(ogdf::FMMMOptions::QualityVsSpeed::NiceAndIncredibleSpeed);
-      } else if (stringCollection.getCurrent() == ELT_GORGEOUSANDEFFICIENT) {
-        fmmm->qualityVersusSpeed(ogdf::FMMMOptions::QualityVsSpeed::GorgeousAndEfficient);
-      } else {
-        fmmm->qualityVersusSpeed(ogdf::FMMMOptions::QualityVsSpeed::BeautifulAndFast);
-      }
+      fmmm->qualityVersusSpeed(qualityVsSpeed[stringCollection.getCurrent()]);
     }
 
     if (dataSet->get(ELT_EDGELENGTHMEASUREMENT, stringCollection)) {
-      if (stringCollection.getCurrent() == ELT_BOUNDINGCIRCLE) {
-        fmmm->edgeLengthMeasurement(ogdf::FMMMOptions::EdgeLengthMeasurement::BoundingCircle);
-      } else {
-        fmmm->edgeLengthMeasurement(ogdf::FMMMOptions::EdgeLengthMeasurement::Midpoint);
-      }
+      fmmm->edgeLengthMeasurement(edgeLengthMeasurement[stringCollection.getCurrent()]);
     }
 
     if (dataSet->get(ELT_ALLOWEDPOSITIONS, stringCollection)) {
-      if (stringCollection.getCurrent() == ELT_INTEGER) {
-        fmmm->allowedPositions(ogdf::FMMMOptions::AllowedPositions::Integer);
-      } else if (stringCollection.getCurrent() == ELT_EXPONENT) {
-        fmmm->allowedPositions(ogdf::FMMMOptions::AllowedPositions::Exponent);
-      } else {
-        fmmm->allowedPositions(ogdf::FMMMOptions::AllowedPositions::All);
-      }
+      fmmm->allowedPositions(allowedPositions[stringCollection.getCurrent()]);
     }
 
     int ival = 0;
@@ -335,88 +339,39 @@ void OGDFFm3::beforeCall() {
     }
 
     if (dataSet->get(ELT_TIPOVER, stringCollection)) {
-      if (stringCollection.getCurrent() == ELT_NONE) {
-        fmmm->tipOverCCs(ogdf::FMMMOptions::TipOver::None);
-      } else if (stringCollection.getCurrent() == ELT_NOGROWINGROW) {
-        fmmm->tipOverCCs(ogdf::FMMMOptions::TipOver::NoGrowingRow);
-      } else {
-        fmmm->tipOverCCs(ogdf::FMMMOptions::TipOver::Always);
-      }
+      fmmm->tipOverCCs(tipOver[stringCollection.getCurrent()]);
     }
 
     if (dataSet->get(ELT_PRESORT, stringCollection)) {
-      if (stringCollection.getCurrent() == ELT_NONE) {
-        fmmm->presortCCs(ogdf::FMMMOptions::PreSort::None);
-      } else if (stringCollection.getCurrent() == ELT_DECREASINGHEIGHT) {
-        fmmm->presortCCs(ogdf::FMMMOptions::PreSort::DecreasingHeight);
-      } else {
-        fmmm->presortCCs(ogdf::FMMMOptions::PreSort::DecreasingWidth);
-      }
+      fmmm->presortCCs(preSort[stringCollection.getCurrent()]);
     }
 
     if (dataSet->get(ELT_GALAXYCHOICE, stringCollection)) {
-      if (stringCollection.getCurrent() == ELT_UNIFORMPROB) {
-        fmmm->galaxyChoice(ogdf::FMMMOptions::GalaxyChoice::UniformProb);
-      } else if (stringCollection.getCurrent() == ELT_NONUNIFORMPROBLOWERMASS) {
-        fmmm->galaxyChoice(ogdf::FMMMOptions::GalaxyChoice::NonUniformProbLowerMass);
-      } else {
-        fmmm->galaxyChoice(ogdf::FMMMOptions::GalaxyChoice::NonUniformProbHigherMass);
-      }
+      fmmm->galaxyChoice(galaxyChoice[stringCollection.getCurrent()]);
     }
 
     if (dataSet->get(ELT_MAXITERCHANGE, stringCollection)) {
-      if (stringCollection.getCurrent() == ELT_CONSTANT) {
-        fmmm->maxIterChange(ogdf::FMMMOptions::MaxIterChange::Constant);
-      } else if (stringCollection.getCurrent() == ELT_LINEARLYDECREASING) {
-        fmmm->maxIterChange(ogdf::FMMMOptions::MaxIterChange::LinearlyDecreasing);
-      } else {
-        fmmm->maxIterChange(ogdf::FMMMOptions::MaxIterChange::RapidlyDecreasing);
-      }
+      fmmm->maxIterChange(maxIterChange[stringCollection.getCurrent()]);
     }
 
     if (dataSet->get(ELT_INITIALPLACEMENTMULT, stringCollection)) {
-      if (stringCollection.getCurrent() == ELT_ADVANCED) {
-        fmmm->initialPlacementMult(ogdf::FMMMOptions::InitialPlacementMult::Advanced);
-      } else {
-        fmmm->initialPlacementMult(ogdf::FMMMOptions::InitialPlacementMult::Simple);
-      }
+      fmmm->initialPlacementMult(initialPlacementMult[stringCollection.getCurrent()]);
     }
 
     if (dataSet->get(ELT_FORCEMODEL, stringCollection)) {
-      if (stringCollection.getCurrent() == ELT_FRUCHTERMANNREINGOLD) {
-        fmmm->forceModel(ogdf::FMMMOptions::ForceModel::FruchtermanReingold);
-      } else if (stringCollection.getCurrent() == ELT_EADES) {
-        fmmm->forceModel(ogdf::FMMMOptions::ForceModel::Eades);
-      } else {
-        fmmm->forceModel(ogdf::FMMMOptions::ForceModel::New);
-      }
+      fmmm->forceModel(forceModel[stringCollection.getCurrent()]);
     }
 
     if (dataSet->get(ELT_REPULSIVEFORCEMETHOD, stringCollection)) {
-      if (stringCollection.getCurrent() == ELT_EXACT) {
-        fmmm->repulsiveForcesCalculation(ogdf::FMMMOptions::RepulsiveForcesMethod::Exact);
-      } else if (stringCollection.getCurrent() == ELT_GRIDAPPROXIMATION) {
-        fmmm->repulsiveForcesCalculation(
-            ogdf::FMMMOptions::RepulsiveForcesMethod::GridApproximation);
-      } else {
-        fmmm->repulsiveForcesCalculation(ogdf::FMMMOptions::RepulsiveForcesMethod::NMM);
-      }
+      fmmm->repulsiveForcesCalculation(repulsiveForcesMethod[stringCollection.getCurrent()]);
     }
 
     if (dataSet->get(ELT_REDUCEDTREECONSTRCUCTION, stringCollection)) {
-      if (stringCollection.getCurrent() == ELT_SUBTREEBYSUBTREE) {
-        fmmm->nmTreeConstruction(ogdf::FMMMOptions::ReducedTreeConstruction::SubtreeBySubtree);
-      } else {
-        fmmm->nmTreeConstruction(ogdf::FMMMOptions::ReducedTreeConstruction::PathByPath);
-      }
+      fmmm->nmTreeConstruction(reducedTreeConstruction[stringCollection.getCurrent()]);
     }
 
     if (dataSet->get(ELT_SMALLESTCELLFINDING, stringCollection)) {
-      if (stringCollection.getCurrent() == ELT_ITERATIVELY) {
-        fmmm->nmSmallCell(ogdf::FMMMOptions::SmallestCellFinding::Iteratively);
-      } else {
-        fmmm->nmSmallCell(ogdf::FMMMOptions::SmallestCellFinding::Aluru);
-      }
+      fmmm->nmSmallCell(smallestCellFinding[stringCollection.getCurrent()]);
     }
   }
 }
