@@ -105,6 +105,7 @@ for:
 
     cache:
       - /Users/appveyor/Library/Caches/ccache
+      - /Users/appveyor/.macports-ci-ccache
 
     init:
       - export APPVEYOR_SAVE_CACHE_ON_ERROR="true"

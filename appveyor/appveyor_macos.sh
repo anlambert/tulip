@@ -8,6 +8,7 @@ set -e
 # install MacPorts
 curl -LO https://raw.githubusercontent.com/GiovanniBussi/macports-ci/master/macports-ci
 source ./macports-ci install
+source ./macports-ci ccache
 
 CLANG_VERSION=11
 PYTHON_VERSION=3.9
@@ -44,6 +45,8 @@ then
   pip-${PYTHON_VERSION} install sphinx
   export TALIPOT_BUILD_DOC=ON
 fi
+
+source ./macports-ci ccache --save
 
 cd $APPVEYOR_BUILD_FOLDER
 
