@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -69,18 +69,18 @@ static const char *paramHelp[] = {
     // bezier edges
     "If activated, set all edge shapes to Bezier curves."};
 
-static const char *curveTypeValues = "QuadraticContinuous <br>"
-                                     "QuadraticDiscrete <br>"
-                                     "QuadraticDiagonalCross <br>"
-                                     "QuadraticStraightCross <br>"
-                                     "QuadraticHorizontal <br>"
-                                     "QuadraticVertical <br>"
-                                     "CubicContinuous <br>"
-                                     "CubicVertical <br>"
-                                     "CubicDiagonalCross <br>"
-                                     "CubicVerticalDiagonalCross <br>"
-                                     "CubicStraightCrossSource <br>"
-                                     "CubicStraightCrossTarget";
+static const char *curveTypeValues = "<b>QuadraticContinuous</b> <br>"
+                                     "<b>QuadraticDiscrete</b> <br>"
+                                     "<b>QuadraticDiagonalCross</b> <br>"
+                                     "<b>QuadraticStraightCross</b> <br>"
+                                     "<b>QuadraticHorizontal</b> <br>"
+                                     "<b>QuadraticVertical</b> <br>"
+                                     "<b>CubicContinuous</b> <br>"
+                                     "<b>CubicVertical</b> <br>"
+                                     "<b>CubicDiagonalCross</b> <br>"
+                                     "<b>CubicVerticalDiagonalCross</b> <br>"
+                                     "<b>CubicStraightCrossSource</b> <br>"
+                                     "<b>CubicStraightCrossTarget</b>";
 
 class CurveEdges : public tlp::Algorithm {
 

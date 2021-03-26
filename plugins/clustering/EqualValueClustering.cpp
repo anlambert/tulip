@@ -38,7 +38,8 @@ static const char *paramHelp[] = {
 //================================================================================
 EqualValueClustering::EqualValueClustering(tlp::PluginContext *context) : Algorithm(context) {
   addInParameter<PropertyInterface *>("Property", paramHelp[0], "viewMetric");
-  addInParameter<StringCollection>(ELT_TYPE, paramHelp[1], ELT_TYPES, true, "nodes <br> edges");
+  addInParameter<StringCollection>(ELT_TYPE, paramHelp[1], ELT_TYPES, true,
+                                   "<b>nodes</b> <br> <b>edges</b>");
   addInParameter<bool>("Connected", paramHelp[2], "false");
 }
 //===============================================================================

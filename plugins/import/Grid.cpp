@@ -53,7 +53,7 @@ public:
     addInParameter<unsigned int>("width", paramHelp[0], "10");
     addInParameter<unsigned int>("height", paramHelp[1], "10");
     addInParameter<StringCollection>("connectivity", paramHelp[2], "4;6;8", true,
-                                     "4 <br> 6 <br> 8");
+                                     "<b>4</b> <br> <b>6</b> <br> <b>8</b>");
     addInParameter<bool>("oppositeNodesConnected", paramHelp[3], "false");
     addInParameter<double>("spacing", paramHelp[4], "1.0");
   }

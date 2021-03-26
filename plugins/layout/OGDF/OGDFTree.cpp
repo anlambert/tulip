@@ -54,16 +54,16 @@ static const char *paramHelp[] = {
     "This parameter indicates how the root is selected."};
 
 static const char *orientationValuesDescription =
-    "topToBottom <i>(Edges are oriented from top to bottom)</i><br>"
-    "bottomToTop <i>(Edges are oriented from bottom to top)</i><br>"
-    "leftToRight <i>(Edges are oriented from left to right)</i><br>"
-    "rightToLeft <i>(Edges are oriented from right to left)</i>";
+    "<b>topToBottom</b> <i>(Edges are oriented from top to bottom)</i><br>"
+    "<b>bottomToTop</b> <i>(Edges are oriented from bottom to top)</i><br>"
+    "<b>leftToRight</b> <i>(Edges are oriented from left to right)</i><br>"
+    "<b>rightToLeft</b> <i>(Edges are oriented from right to left)</i>";
 
 static const char *rootSelectionValuesDescription =
-    "rootIsSource <i>(Select a source in the graph)</i><br>"
-    "rootIsSink <i>(Select a sink in the graph)</i><br>"
-    "rootByCoord <i>(Use the coordinates, e.g., select the topmost node if orientation is "
-    "topToBottom)</i>";
+    "<b>rootIsSource</b> <i>(Select a source in the graph)</i><br>"
+    "<b>rootIsSink</b> <i>(Select a sink in the graph)</i><br>"
+    "<b>rootByCoord</b> <i>(Use the coordinates, e.g., select the topmost node if orientation is "
+    "<b>topToBottom</b>)</i>";
 
 class OGDFTree : public tlp::OGDFLayoutPluginBase {
 

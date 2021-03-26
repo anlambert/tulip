@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -32,9 +32,9 @@ static const char *paramHelp[] = {
     "This parameter defines the maximal distance of reachable nodes."};
 
 static const char *directionValuesDescription =
-    "output edges : <i>follow output edges (directed)</i><br>"
-    "input edges : <i>follow input edges (reverse-directed)</i><br>"
-    "all edges : <i>all edges (undirected)</i>";
+    "<b>output edges</b> : <i>follow output edges (directed)</i><br>"
+    "<b>input edges</b> : <i>follow input edges (reverse-directed)</i><br>"
+    "<b>all edges</b> : <i>all edges (undirected)</i>";
 
 static const char *edgesDirectionLabels[] = {"output edges", "input edges", "all edges"};
 

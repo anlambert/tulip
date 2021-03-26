@@ -44,7 +44,8 @@ ConnectedComponentPacking::ConnectedComponentPacking(const tlp::PluginContext *c
   addInParameter<DoubleProperty>("rotation", paramHelp[1], "viewRotation");
   addInParameter<StringCollection>(
       "complexity", paramHelp[2], COMPLEXITY, true,
-      "auto <br> n5 <br> n4logn <br> n4 <br> n3logn <br> n3 <br> n2logn <br> n2 <br> nlogn <br> n");
+      "<b>auto</b> <br> <b>n5</b> <br> <b>n4logn</b> <br> <b>n4</b> <br> <b>n3logn</b> <br> "
+      "<b>n3</b> <br> <b>n2logn</b> <br> <b>n2</b> <br> <b>nlogn</b> <br> <b>n</b>");
 }
 //====================================================================
 bool ConnectedComponentPacking::run() {

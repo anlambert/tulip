@@ -103,11 +103,12 @@ public:
         maxInput(std::numeric_limits<double>::quiet_NaN()),
         minInput(std::numeric_limits<double>::quiet_NaN()), overrideMaxInput(false),
         overrideMinInput(false) {
-    addInParameter<StringCollection>(ELT_TYPE, paramHelp[0], ELT_TYPES, true,
-                                     "linear <br> uniform <br> enumerated <br> logarithmic");
+    addInParameter<StringCollection>(
+        ELT_TYPE, paramHelp[0], ELT_TYPES, true,
+        "<b>linear<b/> <br> <b>uniform</b> <br> <b>enumerated</b> <br> <b>logarithmic</b>");
     addInParameter<PropertyInterface *>("input property", paramHelp[1], "viewMetric");
     addInParameter<StringCollection>(TARGET_TYPE, paramHelp[2], TARGET_TYPES, true,
-                                     "nodes <br> edges");
+                                     "<b>nodes</b> <br> <b>edges</b>");
     addInParameter<ColorScale>("color scale", paramHelp[3], "");
     addInParameter<bool>("override minimum value", paramHelp[4], "false", false);
     addInParameter<double>("minimum value", paramHelp[5], "", false);

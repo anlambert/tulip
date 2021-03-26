@@ -75,7 +75,7 @@ OGDFFrutchermanReingold::OGDFFrutchermanReingold(const tlp::PluginContext *conte
   addInParameter<bool>("use node weights", paramHelp[2], "false");
   addInParameter<tlp::NumericProperty *>("node weights", paramHelp[3], "viewMetric");
   addInParameter<tlp::StringCollection>(ELT_COOLING, paramHelp[4], ELT_COOLINGLIST, true,
-                                        "Factor<br> Logarithmic");
+                                        "<b>Factor</b> <br> <b>Logarithmic</b>");
   addInParameter<double>("ideal edge length", paramHelp[5], "10.0");
   addInParameter<double>("minDistCC", paramHelp[6], "20.0");
   addInParameter<double>("pageRatio", paramHelp[7], "1.0");

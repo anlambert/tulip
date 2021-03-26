@@ -177,7 +177,7 @@ StrahlerMetric::StrahlerMetric(const tlp::PluginContext *context)
     : DoubleAlgorithm(context), allNodes(false) {
   addInParameter<bool>("All nodes", paramHelp[0], "false");
   addInParameter<StringCollection>(COMPUTATION_TYPE, paramHelp[1], COMPUTATION_TYPES, true,
-                                   "all <br> ramification <br> nested cycles");
+                                   "<b>all</b> <br> <b>ramification</b> <br> <b>nested cycles</b>");
 }
 //==============================================================================
 bool StrahlerMetric::run() {

@@ -45,7 +45,7 @@ TreeReingoldAndTilfordExtended::TreeReingoldAndTilfordExtended(const tlp::Plugin
   addNodeSizePropertyParameter(this);
   addInParameter<IntegerProperty>("edge length", paramHelp[0], "", false);
   addInParameter<StringCollection>("orientation", paramHelp[1], ORIENTATION, true,
-                                   "vertical <br> horizontal");
+                                   "<b>vertical</b> <br> <b>horizontal</b>");
   addInParameter<bool>("orthogonal", paramHelp[2], "true");
   addSpacingParameters(this);
   addInParameter<bool>("bounding circles", paramHelp[3], "false");

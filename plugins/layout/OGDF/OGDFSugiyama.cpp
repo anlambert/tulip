@@ -110,30 +110,32 @@ static const char *paramHelp[] = {
     "Transpose the layout vertically from top to bottom."};
 
 static const char *eltRankingValuesDescription =
-    "CoffmanGrahamRanking <i>(The coffman graham ranking algorithm)</i><br>"
-    "LongestPathRanking <i>(the well-known longest-path ranking algorithm)</i><br>"
-    "OptimalRanking <i>(the LP-based algorithm for computing a node ranking with minimal edge "
-    "lengths)</i>";
+    "<b>CoffmanGrahamRanking</b> <i>(The coffman graham ranking algorithm)</i><br>"
+    "<b>LongestPathRanking</b> <i>(the well-known longest-path ranking algorithm)</i><br>"
+    "<b>OptimalRanking</b> <i>(the LP-based algorithm for computing a node ranking with minimal "
+    "edge lengths)</i>";
 
 static const char *twoLayerCrossValuesDescription =
-    "BarycenterHeuristic <i>(the barycenter heuristic for 2-layer crossing minimization)</i><br>"
-    "GreedyInsertHeuristic <i>(The greedy-insert heuristic for 2-layer crossing "
+    "<b>BarycenterHeuristic</b> <i>(the barycenter heuristic for 2-layer crossing "
     "minimization)</i><br>"
-    "GreedySwitchHeuristic <i>(The greedy-switch heuristic for 2-layer crossing "
+    "<b>GreedyInsertHeuristic</b> <i>(The greedy-insert heuristic for 2-layer crossing "
     "minimization)</i><br>"
-    "MedianHeuristic <i>(the median heuristic for 2-layer crossing minimization)</i><br>"
-    "SiftingHeuristic <i>(The sifting heuristic for 2-layer crossing minimization)</i><br>"
-    "SplitHeuristic <i>(the split heuristic for 2-layer crossing minimization)</i><br>"
-    "GridSiftingHeuristic <i>(the grid sifting heuristic for 2-layer crossing minimization)</i><br>"
-    "GlobalSiftingHeuristic <i>(the global sifting heuristic for 2-layer crossing "
+    "<b>GreedySwitchHeuristic</b> <i>(The greedy-switch heuristic for 2-layer crossing "
+    "minimization)</i><br>"
+    "<b>MedianHeuristic</b> <i>(the median heuristic for 2-layer crossing minimization)</i><br>"
+    "<b>SiftingHeuristic</b> <i>(The sifting heuristic for 2-layer crossing minimization)</i><br>"
+    "<b>SplitHeuristic</b> <i>(the split heuristic for 2-layer crossing minimization)</i><br>"
+    "<b>GridSiftingHeuristic</b> <i>(the grid sifting heuristic for 2-layer crossing "
+    "minimization)</i><br>"
+    "<b>GlobalSiftingHeuristic</b> <i>(the global sifting heuristic for 2-layer crossing "
     "minimization)</i>";
 
 static const char *hierarchyLayoutValuesDescription =
-    "FastHierarchyLayout <i>(Coordinate assignment phase for the Sugiyama algorithm by Buchheim et "
-    "al.)</i><br>"
-    "FastSimpleHierarchyLayout <i>(Coordinate assignment phase for the Sugiyama algorithm by Ulrik "
-    "Brandes and Boris Koepf)</i><br>"
-    "OptimalHierarchyLayout <i>(The LP-based hierarchy layout algorithm)</i>";
+    "<b>FastHierarchyLayout</b> <i>(Coordinate assignment phase for the Sugiyama algorithm by "
+    "Buchheim et al.)</i><br>"
+    "<b>FastSimpleHierarchyLayout</b> <i>(Coordinate assignment phase for the Sugiyama algorithm "
+    "by Ulrik Brandes and Boris Koepf)</i><br>"
+    "<b>OptimalHierarchyLayout</b> <i>(The LP-based hierarchy layout algorithm)</i>";
 
 class OGDFSugiyama : public tlp::OGDFLayoutPluginBase {
 

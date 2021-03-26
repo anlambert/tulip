@@ -60,9 +60,9 @@ public:
                     "2.0", "Force Directed")
   OGDFStressMinimization(const tlp::PluginContext *context)
       : OGDFLayoutPluginBase(context, tlp::getOGDFLayoutModule<ogdf::StressMinimization>(context)) {
-    addInParameter<tlp::StringCollection>("terminationCriterion", paramHelp[0],
-                                          "None;PositionDifference;Stress", true,
-                                          "None <br> PositionDifference <br> Stress");
+    addInParameter<tlp::StringCollection>(
+        "terminationCriterion", paramHelp[0], "None;PositionDifference;Stress", true,
+        "<b>None</b> <br> <b>PositionDifference</b> <br> <b>Stress</b>");
     addInParameter<bool>("fixXCoordinates", paramHelp[1], "false");
     addInParameter<bool>("fixYCoordinates", paramHelp[2], "false");
     addInParameter<bool>("hasInitialLayout", paramHelp[3], "false");

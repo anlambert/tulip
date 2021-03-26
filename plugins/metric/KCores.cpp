@@ -89,7 +89,7 @@ static const char *paramHelp[] = {
 //========================================================================================
 KCores::KCores(const PluginContext *context) : DoubleAlgorithm(context) {
   addInParameter<StringCollection>(DEGREE_TYPE, paramHelp[0], DEGREE_TYPES, true,
-                                   "InOut <br> In <br> Out");
+                                   "<b>InOut</b> <br> <b>In</b> <br> <b>Out</b>");
   addInParameter<NumericProperty *>("metric", paramHelp[1], "", false);
 }
 //========================================================================================

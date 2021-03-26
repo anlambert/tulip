@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -53,9 +53,9 @@ static const char *paramHelp[] = {
 #define OVERLAP_TYPE "X-Y;X;Y"
 
 static const char *overlapRemovalTypeValuesDescription =
-    "X-Y <i>(Remove overlaps in both X and Y directions)</i><br>"
-    "X <i>(Remove overlaps only in X direction)</i><br>"
-    "Y <i>(Remove overlaps only in Y direction)</i>";
+    "<b>X-Y</b> <i>(Remove overlaps in both X and Y directions)</i><br>"
+    "<b>X</b> <i>(Remove overlaps only in X direction)</i><br>"
+    "<b>Y</b> <i>(Remove overlaps only in Y direction)</i>";
 
 FastOverlapRemoval::FastOverlapRemoval(const tlp::PluginContext *context)
     : tlp::LayoutAlgorithm(context) {

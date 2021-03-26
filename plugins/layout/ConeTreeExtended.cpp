@@ -162,7 +162,7 @@ ConeTreeExtended::ConeTreeExtended(const tlp::PluginContext *context)
     : LayoutAlgorithm(context), spaceBetweenLevels(10) {
   addNodeSizePropertyParameter(this);
   addInParameter<StringCollection>("orientation", paramHelp[0], ORIENTATION, true,
-                                   "vertical <br> horizontal");
+                                   "<b>vertical</b> <br> <b>horizontal</b>");
   addInParameter<float>("space between levels", paramHelp[1], "1.0");
 }
 //===============================================================

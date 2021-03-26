@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -32,7 +32,7 @@ static const char *paramHelp[] = {
 //==================================================================
 IdMetric::IdMetric(const tlp::PluginContext *context) : DoubleAlgorithm(context) {
   addInParameter<StringCollection>(TARGET_TYPE, paramHelp[0], TARGET_TYPES, true,
-                                   "both <br> nodes <br> edges");
+                                   "<b>both</b> <br> </b>node</b>s <br> <b>edges</b>");
 
   // result needs to be an inout parameter
   // in order to preserve the original values of non targeted elements

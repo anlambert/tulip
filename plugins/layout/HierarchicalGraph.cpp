@@ -39,7 +39,7 @@ static const char *paramHelp[] = {
 HierarchicalGraph::HierarchicalGraph(const tlp::PluginContext *context) : LayoutAlgorithm(context) {
   addNodeSizePropertyParameter(this);
   addInParameter<StringCollection>("orientation", paramHelp[0], ORIENTATION, true,
-                                   "horizontal <br> vertical");
+                                   "<b>horizontal</b> <br> <b>vertical</b>");
   addSpacingParameters(this);
   addDependency("Hierarchical Tree (R-T Extended)", "1.1");
 }

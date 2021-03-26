@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -43,7 +43,7 @@ static const char *paramHelp[] = {
 //==============================================================================
 DegreeMetric::DegreeMetric(const tlp::PluginContext *context) : DoubleAlgorithm(context) {
   addInParameter<StringCollection>(DEGREE_TYPE, paramHelp[0], DEGREE_TYPES, true,
-                                   "InOut <br> In <br> Out");
+                                   "<b>InOut</b> <br> <b>In</b> <br> <b>Out</b>");
   addInParameter<NumericProperty *>("metric", paramHelp[1], "", false);
   addInParameter<bool>("norm", paramHelp[2], "false", false);
 }

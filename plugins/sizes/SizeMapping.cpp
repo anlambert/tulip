@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -104,12 +104,12 @@ public:
     addInParameter<double>("min size", paramHelp[5], "1");
     addInParameter<double>("max size", paramHelp[6], "10");
     addInParameter<StringCollection>(MAPPING_TYPE, paramHelp[7], MAPPING_TYPES, true,
-                                     "linear <br/> uniform");
+                                     "<b>linear</b> <br/> <b>uniform</b>");
     addInParameter<StringCollection>(TARGET_TYPE, paramHelp[8], TARGET_TYPES, true,
-                                     "nodes <br/> edges");
+                                     "<b>nodes</b> <br/> <b>edges</b>");
     addInParameter<StringCollection>("area proportional", paramHelp[7],
                                      "Area Proportional;Quadratic/Cubic", true,
-                                     "Area Proportional <br/> Quadratic/Cubic");
+                                     "<b>Area Proportional</b> <br/> <b>Quadratic/Cubic</b>");
 
     // result needs to be an inout parameter
     // in order to preserve the original values of non targeted elements

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -38,9 +38,9 @@ static const char *paramHelp[] = {
 
 //====================================================================
 void addOrientationParameters(LayoutAlgorithm *pLayout) {
-  pLayout->addInParameter<StringCollection>(
-      ORIENTATION_ID, paramHelp[0], ORIENTATION, true,
-      "up to down <br> down to up <br> right to left <br> left to right");
+  pLayout->addInParameter<StringCollection>(ORIENTATION_ID, paramHelp[0], ORIENTATION, true,
+                                            "<b>up to down</b> <br> <b>down to up</b> <br> "
+                                            "<b>right to left</b> <br> <b>left to right</b>");
 }
 
 //====================================================================

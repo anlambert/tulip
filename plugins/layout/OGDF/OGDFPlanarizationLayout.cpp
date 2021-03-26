@@ -38,19 +38,18 @@
 #define ELT_EMBEDDER_OPTIMALFLEXDRAW 7
 
 static const char *embedderValuesDescription =
-    "SimpleEmbedder <i>(Planar graph embedding from the algorithm of Boyer and Myrvold)</i><br>"
-    "EmbedderMaxFace <i>(Planar graph embedding with maximum external face)</i><br>"
-    "EmbedderMaxFaceLayers <i>(Planar graph embedding with maximum external face, plus layers "
-    "approach)</i><br>"
-    "EmbedderMinDepth <i>(Planar graph embedding with minimum block-nesting depth)</i><br>"
-    "EmbedderMinDepthMaxFace <i>(Planar graph embedding with minimum block-nesting depth and "
-    "maximum external face)</i><br>"
-    "EmbedderMinDepthMaxFaceLayers <i>(Planar graph embedding with minimum block-nesting depth and "
-    "maximum external face, plus layers approach)</i><br>"
-    "EmbedderMinDepthPiTa <i>(Planar graph embedding with minimum block-nesting depth for given "
-    "embedded blocks)</i>"
-    //"EmbedderOptimalFlexDraw <i>(Planar graph embedding with minimum cost)</i>"
-    ;
+    "<b>SimpleEmbedder</b> <i>(Planar graph embedding from the algorithm of Boyer and "
+    "Myrvold)</i><br>"
+    "<b>EmbedderMaxFace</b> <i>(Planar graph embedding with maximum external face)</i><br>"
+    "<b>EmbedderMaxFaceLayers</b> <i>(Planar graph embedding with maximum external face, plus "
+    "layers approach)</i><br>"
+    "<b>EmbedderMinDepth</b> <i>(Planar graph embedding with minimum block-nesting depth)</i><br>"
+    "<b>EmbedderMinDepthMaxFace</b> <i>(Planar graph embedding with minimum block-nesting depth "
+    "and maximum external face)</i><br>"
+    "<b>EmbedderMinDepthMaxFaceLayers</b> <i>(Planar graph embedding with minimum block-nesting "
+    "depth and maximum external face, plus layers approach)</i><br>"
+    "<b>EmbedderMinDepthPiTa</b> <i>(Planar graph embedding with minimum block-nesting depth for "
+    "given embedded blocks)</i>";
 
 static const char *paramHelp[] = {
     // page ratio

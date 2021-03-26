@@ -100,10 +100,12 @@ public:
     addDependency("FM^3 (OGDF)", "1.2");
     addDependency("Fast Overlap Removal", "1.3");
     addInParameter<bool>("oriented", paramHelp[0], "true");
-    addInParameter<StringCollection>("node function", paramHelp[2], AGGREGATION_FUNCTIONS, true,
-                                     "none <br> average <br> sum <br> max <br> min");
-    addInParameter<StringCollection>("edge function", paramHelp[3], AGGREGATION_FUNCTIONS, true,
-                                     "none <br> average <br> sum <br> max <br> min");
+    addInParameter<StringCollection>(
+        "node function", paramHelp[2], AGGREGATION_FUNCTIONS, true,
+        "<b>none</b> <br> <b>average</b> <br> <b>sum</b> <br> <b>max</b> <br> <b>min</b>");
+    addInParameter<StringCollection>(
+        "edge function", paramHelp[3], AGGREGATION_FUNCTIONS, true,
+        "<b>none</b> <br> <b>average</b> <br> <b>sum</b> <br> <b>max</b> <br> <b>min</b>");
     addInParameter<StringProperty>("meta-node label", paramHelp[4], "", false);
     addInParameter<bool>("use name of subgraph", paramHelp[5], "false");
     addInParameter<bool>("recursive", paramHelp[1], "false");
