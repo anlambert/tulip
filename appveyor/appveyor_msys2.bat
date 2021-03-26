@@ -7,6 +7,9 @@ rem    MSYSTEM:  MINGW64 or MINGW32
 rem Update PATH for MSYS2 binaries
 PATH C:\msys64\%MSYSTEM%\bin;C:\msys64\usr\bin;%PATH%
 
+rem Add missing ucrt64 database
+bash -l "%APPVEYOR_BUILD_FOLDER%/appveyor/appveyor_msys2_add_ucrt64.sh"
+
 rem Upgrade MSYS2 platform
 bash -lc "pacman --noconfirm -Syu"
 
