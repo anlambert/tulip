@@ -16,5 +16,5 @@ rem Execute build script
 if "%BUILD_WHEELS%" == "true" (
   bash -l "%APPVEYOR_BUILD_FOLDER%/bundlers/win/talipot_python_wheels_win_amd64.sh"
 ) else (
-  bash -l "%APPVEYOR_BUILD_FOLDER%/appveyor_msys2.sh"
+  bash -l "%APPVEYOR_BUILD_FOLDER%/appveyor/appveyor_msys2.sh"
 )
