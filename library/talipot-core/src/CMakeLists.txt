@@ -139,8 +139,7 @@ SET_SOURCE_FILES_PROPERTIES(
     "${CMAKE_CURRENT_SOURCE_DIR}/FontAwesomeData.cpp;${CMAKE_CURRENT_SOURCE_DIR}/MaterialDesignIconsData.cpp"
 )
 
-ADD_LIBRARY(${LibTalipotCoreName} SHARED ${talipot_LIB_SRCS}
-                                         ../include/talipot/Release.h)
+ADD_LIBRARY(${LibTalipotCoreName} SHARED ${talipot_LIB_SRCS})
 
 TARGET_LINK_LIBRARIES(
   ${LibTalipotCoreName} ${GZStreamLibrary} ${YAJL_LIBRARIES} ${QHULL_LIBRARIES}
