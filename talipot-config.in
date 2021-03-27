@@ -1,5 +1,5 @@
 #!/bin/bash
-#This file is auto-generated when compiling Talipot.
+
 thisdir=$(dirname "$0")
 if test "$thisdir" = "." ; then
   thisdir=$PWD
@@ -12,7 +12,7 @@ libdir=@libdir@
 sharedir=${prefix}/share
 libversion=@libversion@
 libextension=$(echo @CMAKE_SHARED_LIBRARY_SUFFIX@ | cut -d'.' -f 2)
-plugincxxflags="-fPIC -DPIC"
+plugincxxflags="-std=c++17 -fPIC -DPIC"
 pluginldflags=-shared
 pluginpath=@libdir@/talipot
 if [ "@CMAKE_DEBUG_MODE@" = "FALSE" ]; then
@@ -27,7 +27,7 @@ LINUX=$(test ${libextension} = so; echo $?)
 if [ $MACOSX -eq 0 ] ; then
   pluginldflags="-bundle -Wl,-bind_at_load -flat_namespace"
   if [ -e ${upthisdir}/Frameworks/QtCore ] ; then
-# MacOS bundle
+    # MacOS bundle
     includedir=${upthisdir}/include
     libdir=${upthisdir}/Frameworks
     pluginpath=${upthisdir}/lib/talipot
@@ -35,9 +35,9 @@ if [ $MACOSX -eq 0 ] ; then
 fi
 if [ $WINDOWS -eq 0 ] ; then
   libversion=@WIN_VERSION@
-  plugincxxflags=-DPIC
+  plugincxxflags="-std=c++17 -DPIC"
   if [ -f "${upthisdir}/Uninstall.exe" ] ; then
-# Windows installation
+    # Windows installation
     drive=`echo ${thisdir} | awk -F / '{print $2}'`
     ndir=${thisdir/\/$drive\//$drive:/}
     if [ -d ${ndir} ]; then
