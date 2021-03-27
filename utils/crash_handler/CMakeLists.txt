@@ -59,7 +59,7 @@ IF(BFD_FOUND)
   # some build environments requires the need to link against the intl library
   IF(INTL_LIBRARY)
 
-    TARGET_LINK_LIBRARIES(crash_handler ${INTL_LIBRARY})
+    TARGET_LINK_LIBRARIES(crash_handler ${INTL_LIBRARY} ${ZLIB_LIBRARY})
 
   ENDIF(INTL_LIBRARY)
 

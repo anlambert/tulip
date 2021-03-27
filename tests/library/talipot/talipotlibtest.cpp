@@ -23,10 +23,15 @@
 
 #include <talipot/TlpTools.h>
 
+#include <CrashHandler.h>
+
 using namespace std;
 using namespace tlp;
 
 int main() {
+
+  CrashHandler::install();
+
   initTalipotLib();
 
   CPPUNIT_NS::TestResult controller;

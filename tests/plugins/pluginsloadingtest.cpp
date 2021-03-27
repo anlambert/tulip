@@ -23,6 +23,8 @@
 #include <talipot/PluginLibraryLoader.h>
 #include <talipot/PluginsManager.h>
 
+#include <CrashHandler.h>
+
 using namespace std;
 using namespace tlp;
 
@@ -52,6 +54,8 @@ public:
 // The test will then try to create and destroy an instance of each plugin.
 // This can be helpful to catch possible segfaults or memory leaks.
 int main(int argc, char **argv) {
+
+  CrashHandler::install();
 
 #ifndef TALIPOT_BUILD_CORE_ONLY
   // we need to create a QApplication as some plugins (view, interactor)

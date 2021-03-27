@@ -25,10 +25,14 @@
 #endif
 #include <talipot/PluginLibraryLoader.h>
 
+#include <CrashHandler.h>
+
 using namespace std;
 using namespace tlp;
 
 int main() {
+
+  CrashHandler::install();
 
   string talipotBuildDir = TALIPOT_BUILD_DIR;
 

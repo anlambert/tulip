@@ -1,9 +1,11 @@
-INCLUDE_DIRECTORIES(${TalipotCoreInclude} ${TalipotCoreBuildInclude})
+INCLUDE_DIRECTORIES(${TalipotCoreInclude} ${TalipotCoreBuildInclude}
+                    ${CMAKE_SOURCE_DIR}/utils/crash_handler)
 
 SET(TEST_EXTERNAL_PLUGINS_LOAD test_external_plugins_load)
 
 ADD_EXECUTABLE(${TEST_EXTERNAL_PLUGINS_LOAD} ../plugins/pluginsloadingtest.cpp)
-TARGET_LINK_LIBRARIES(${TEST_EXTERNAL_PLUGINS_LOAD} ${LibTalipotCoreName})
+TARGET_LINK_LIBRARIES(${TEST_EXTERNAL_PLUGINS_LOAD} ${LibTalipotCoreName}
+                      crash_handler)
 
 SET_SOURCE_FILES_PROPERTIES(
   ../plugins/pluginsloadingtest.cpp
