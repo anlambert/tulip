@@ -24,12 +24,12 @@
 #define TLP_STACK_BEGIN_HEADER "TLP_STACK_BEGIN"
 #define TLP_STACK_END_HEADER "TLP_STACK_END"
 
-class CrashHandling {
+class CrashHandler {
 
 public:
   static void setDumpPath(std::string);
 
-  static void installCrashHandler();
+  static void install();
 
 #ifdef _MSC_VER
   // function to add extra search paths for locating program databases (*.pdb files)

@@ -23,14 +23,14 @@
 #include <fstream>
 #include <cstring>
 
-#include "CrashHandling.h"
+#include "CrashHandler.h"
 #include "StackWalker.h"
 
 using namespace std;
 
 static std::string TALIPOT_DUMP_FILE;
 
-void CrashHandling::setDumpPath(string s) {
+void CrashHandler::setDumpPath(string s) {
   TALIPOT_DUMP_FILE = s;
 }
 
@@ -38,7 +38,7 @@ void CrashHandling::setDumpPath(string s) {
 
 static std::string SYMBOLS_SEARCH_PATHS = "";
 
-void CrashHandling::setExtraSymbolsSearchPaths(const std::string &searchPaths) {
+void CrashHandler::setExtraSymbolsSearchPaths(const std::string &searchPaths) {
   SYMBOLS_SEARCH_PATHS = searchPaths;
 }
 
@@ -142,7 +142,7 @@ void dumpStack(int sig, siginfo_t *, void *ucontext) {
 
 extern void installSignalHandlers(void);
 
-void CrashHandling::installCrashHandler() {
+void CrashHandler::install() {
   installSignalHandler(SIGSEGV, &dumpStack);
   installSignalHandler(SIGABRT, &dumpStack);
   installSignalHandler(SIGFPE, &dumpStack);
@@ -152,7 +152,7 @@ void CrashHandling::installCrashHandler() {
 
 #else
 // architecture not supported
-void CrashHandling::installCrashHandler() {}
+void CrashHandler::install() {}
 #endif
 
 /*
@@ -169,7 +169,7 @@ static LONG WINAPI exception_filter(LPEXCEPTION_POINTERS info) {
   return 1;
 }
 
-void CrashHandling::installCrashHandler() {
+void CrashHandler::install() {
   SetUnhandledExceptionFilter(exception_filter);
 }
 
@@ -185,7 +185,7 @@ static LONG WINAPI exception_filter(LPEXCEPTION_POINTERS info) {
   return 1;
 }
 
-void CrashHandling::installCrashHandler() {
+void CrashHandler::install() {
   SetUnhandledExceptionFilter(exception_filter);
 }
 #endif

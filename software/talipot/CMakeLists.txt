@@ -53,7 +53,8 @@ QTX_WRAP_UI(
   designer/TalipotLogger.ui
   designer/TalipotMainWindow.ui)
 
-INCLUDE_DIRECTORIES(../crash_handling include/ ${CMAKE_CURRENT_BINARY_DIR})
+INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/utils/crash_handler include/
+                    ${CMAKE_CURRENT_BINARY_DIR})
 
 INCLUDE_DIRECTORIES(
   ${TalipotCoreBuildInclude} ${TalipotCoreInclude} ${TalipotOGLInclude}
@@ -93,7 +94,7 @@ ADD_EXECUTABLE(talipot ${SRCS} ${RCC_SRCS} ${MOC_SRCS} ${UI_SRCS})
 
 TARGET_LINK_LIBRARIES(
   talipot
-  crash_handling
+  crash_handler
   ${LibTalipotCoreName}
   ${LibTalipotOGLName}
   ${LibTalipotGUIName}

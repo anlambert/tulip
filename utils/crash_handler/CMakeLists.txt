@@ -1,4 +1,4 @@
-SET(LIB_SRCS CrashHandling.cpp StackWalker.cpp)
+SET(LIB_SRCS CrashHandler.cpp StackWalker.cpp)
 
 IF(NOT MSVC AND NOT BSD)
 
@@ -48,18 +48,18 @@ IF(UNIX)
 
 ENDIF(UNIX)
 
-ADD_LIBRARY(crash_handling STATIC ${LIB_SRCS})
+ADD_LIBRARY(crash_handler STATIC ${LIB_SRCS})
 
-TARGET_LINK_LIBRARIES(crash_handling ${CMAKE_DL_LIBS})
+TARGET_LINK_LIBRARIES(crash_handler ${CMAKE_DL_LIBS})
 
 IF(BFD_FOUND)
 
-  TARGET_LINK_LIBRARIES(crash_handling ${BFD_LIBRARY})
+  TARGET_LINK_LIBRARIES(crash_handler ${BFD_LIBRARY})
 
   # some build environments requires the need to link against the intl library
   IF(INTL_LIBRARY)
 
-    TARGET_LINK_LIBRARIES(crash_handling ${INTL_LIBRARY})
+    TARGET_LINK_LIBRARIES(crash_handler ${INTL_LIBRARY})
 
   ENDIF(INTL_LIBRARY)
 
@@ -67,16 +67,16 @@ ENDIF(BFD_FOUND)
 
 IF(IBERTY_LIBRARY)
 
-  TARGET_LINK_LIBRARIES(crash_handling ${IBERTY_LIBRARY})
+  TARGET_LINK_LIBRARIES(crash_handler ${IBERTY_LIBRARY})
 
 ENDIF(IBERTY_LIBRARY)
 
 IF(MINGW)
 
-  TARGET_LINK_LIBRARIES(crash_handling imagehlp)
+  TARGET_LINK_LIBRARIES(crash_handler imagehlp)
 
 ELSEIF(MSVC)
 
-  TARGET_LINK_LIBRARIES(crash_handling dbghelp)
+  TARGET_LINK_LIBRARIES(crash_handler dbghelp)
 
 ENDIF(MINGW)
