@@ -36,11 +36,10 @@
 using namespace tlp;
 using namespace std;
 
-const unsigned int arrowWithLineSize = 8;
 const vector<Coord> arrowWithLine = {Coord(0, 3, 0),  Coord(-5, -5, 0), Coord(5, -5, 0),
                                      Coord(0, 3, 0),  Coord(5, 3, 0),   Coord(5, 5, 0),
                                      Coord(-5, 5, 0), Coord(-5, 3, 0)};
-const unsigned int twoArrowWithLineSize = 10;
+
 const vector<Coord> twoArrowWithLine = {
     Coord(0, 0, 0), Coord(5, -5, 0), Coord(-5, -5, 0), Coord(0, 0, 0),  Coord(-5, 0, 0),
     Coord(5, 0, 0), Coord(0, 0, 0),  Coord(5, 5, 0),   Coord(-5, 5, 0), Coord(0, 0, 0)};
