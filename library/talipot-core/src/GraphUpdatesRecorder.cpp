@@ -453,12 +453,12 @@ void GraphUpdatesRecorder::recordNewNodeValues(PropertyInterface *p) {
 
 void GraphUpdatesRecorder::recordNewEdgeValues(PropertyInterface *p) {
 
-  assert(itnv == newValues.end() || (itnv->second.recordedEdges == nullptr));
-
   PropertyInterface *nv;
   auto *re = new MutableContainer<bool>();
 
   const auto itnv = newValues.find(p);
+
+  assert(itnv == newValues.end() || (itnv->second.recordedEdges == nullptr));
 
   if (itnv == newValues.end()) {
     nv = p->clonePrototype(p->getGraph(), "");

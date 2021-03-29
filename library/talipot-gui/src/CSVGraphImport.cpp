@@ -89,7 +89,7 @@ AbstractCSVToGraphDataMapping::AbstractCSVToGraphDataMapping(Graph *graph, Eleme
   assert(graph != nullptr);
 
   for (const auto &propertyName : propertyNames) {
-    assert(graph->existProperty(propertyNames[i]));
+    assert(graph->existProperty(propertyName));
     keyProperties.push_back(graph->getProperty(propertyName));
   }
 }
@@ -228,7 +228,7 @@ CSVToGraphEdgeSrcTgtMapping::CSVToGraphEdgeSrcTgtMapping(
   assert(graph != nullptr);
 
   for (const auto &srcPropName : srcPropNames) {
-    assert(graph->existProperty(srcPropNames[i]));
+    assert(graph->existProperty(srcPropName));
     srcProperties.push_back(graph->getProperty(srcPropName));
   }
 
