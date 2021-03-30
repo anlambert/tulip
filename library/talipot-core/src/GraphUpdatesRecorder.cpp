@@ -228,8 +228,7 @@ void GraphUpdatesRecorder::recordEdgeContainer(
     // for the elts of adj that are in the last edges added and remove them
     unsigned int adjAdded = 0;
     for (auto e : reversed(adj)) {
-      if (std::find(gEdges.begin() + (gEdges.size() - nbAdded - 1), gEdges.end(), e) !=
-          gEdges.end()) {
+      if (std::find(gEdges.end() - nbAdded, gEdges.end(), e) != gEdges.end()) {
         ++adjAdded;
       } else {
         break;
