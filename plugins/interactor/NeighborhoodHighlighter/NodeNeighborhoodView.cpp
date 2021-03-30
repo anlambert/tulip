@@ -82,12 +82,10 @@ void NodeNeighborhoodView::getNeighbors(node n, unsigned int dist, bool noRecurs
 
       // removing the edges that are connected to filtered nodes
       for (auto it = graphViewEdges.begin(); it != graphViewEdges.end();) {
-        const std::pair<node, node> &eEnds = graph_component->ends(*it);
+        const auto &[src, tgt] = graph_component->ends(*it);
 
-        if (find(graphViewNodes.begin(), graphViewNodes.end(), eEnds.first) ==
-                graphViewNodes.end() ||
-            find(graphViewNodes.begin(), graphViewNodes.end(), eEnds.second) ==
-                graphViewNodes.end()) {
+        if (find(graphViewNodes.begin(), graphViewNodes.end(), src) == graphViewNodes.end() ||
+            find(graphViewNodes.begin(), graphViewNodes.end(), tgt) == graphViewNodes.end()) {
           it = graphViewEdges.erase(it);
         } else {
           ++it;

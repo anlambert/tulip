@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -59,28 +59,28 @@ public:
     TLP_GLOBALLY_UNLOCK_SECTION(DijkstraProps);
   }
 
-  static void loadGraph(const tlp::Graph *src) {
+  static void loadGraph(const tlp::Graph *srcGraph) {
 
     graph.delAllNodes();
 
-    graph.reserveNodes(src->numberOfNodes());
-    graph.reserveEdges(src->numberOfEdges());
+    graph.reserveNodes(srcGraph->numberOfNodes());
+    graph.reserveEdges(srcGraph->numberOfEdges());
 
     ndik2tlp.setAll(tlp::node());
     edik2tlp.setAll(tlp::edge());
     ntlp2dik.setAll(tlp::node());
     etlp2dik.setAll(tlp::edge());
 
-    for (auto n : src->nodes()) {
+    for (auto n : srcGraph->nodes()) {
       tlp::node newNode = graph.addNode();
       ntlp2dik.set(n, newNode);
       ndik2tlp[newNode] = n;
-      graph.reserveAdj(newNode, src->deg(n));
+      graph.reserveAdj(newNode, srcGraph->deg(n));
     }
 
-    for (auto e : src->edges()) {
-      auto eEnds = src->ends(e);
-      tlp::edge tmp = graph.addEdge(ntlp2dik.get(eEnds.first), ntlp2dik.get(eEnds.second));
+    for (auto e : srcGraph->edges()) {
+      const auto &[src, tgt] = srcGraph->ends(e);
+      tlp::edge tmp = graph.addEdge(ntlp2dik.get(src), ntlp2dik.get(tgt));
       etlp2dik.set(e, tmp);
       edik2tlp[tmp] = e;
     }

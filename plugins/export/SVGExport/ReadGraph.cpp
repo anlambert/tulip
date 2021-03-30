@@ -59,7 +59,7 @@ static bool treatEdges(Graph *graph, tlp::PluginProgress *pp, ExportInterface &e
       pp->progress(i, nb_elements);
     }
 
-    auto ends = graph->ends(e);
+    const auto &[src, tgt] = graph->ends(e);
     ret = exportint.startEdge(e.id);
 
     if (!ret) {
@@ -76,8 +76,8 @@ static bool treatEdges(Graph *graph, tlp::PluginProgress *pp, ExportInterface &e
     Coord srcCoord, tgtCoord;
     Size srcSize, tgtSize;
     vector<Coord> edgeVertices;
-    auto nbVertices = glEdge.getVertices(&inputData, e, ends.first, ends.second, srcCoord, tgtCoord,
-                                         srcSize, tgtSize, edgeVertices);
+    auto nbVertices = glEdge.getVertices(&inputData, e, src, tgt, srcCoord, tgtCoord, srcSize,
+                                         tgtSize, edgeVertices);
 
     // nothing to do if current edge is a loop with no bends
     if (!nbVertices) {
@@ -117,8 +117,7 @@ static bool treatEdges(Graph *graph, tlp::PluginProgress *pp, ExportInterface &e
 
     if (edge_size_interpolation) {
       // svg only handles a width for each edge
-      width =
-          std::min(sizes->getNodeValue(ends.first)[0] / 8, sizes->getNodeValue(ends.second)[0] / 8);
+      width = std::min(sizes->getNodeValue(src)[0] / 8, sizes->getNodeValue(tgt)[0] / 8);
     } else {
       width = std::min(sizes->getEdgeValue(e)[0], sizes->getEdgeValue(e)[1]) + 1;
     }
@@ -131,8 +130,8 @@ static bool treatEdges(Graph *graph, tlp::PluginProgress *pp, ExportInterface &e
                                  id_tgt_shape, edgeVertices);
     } else {
       ret = exportint.exportEdge(e.id, static_cast<EdgeShape::EdgeShapes>(shape->getEdgeValue(e)),
-                                 layout->getEdgeValue(e), colors->getNodeValue(ends.first),
-                                 colors->getNodeValue(ends.second), width, src_anchor_shape_type,
+                                 layout->getEdgeValue(e), colors->getNodeValue(src),
+                                 colors->getNodeValue(tgt), width, src_anchor_shape_type,
                                  id_src_shape, tgt_anchor_shape_type, id_tgt_shape, edgeVertices);
     }
 

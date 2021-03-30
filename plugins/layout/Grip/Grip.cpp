@@ -63,27 +63,26 @@ void Grip::computeCurrentGraphLayout() {
         edge e1 = edges[0];
         edge e2 = edges[1];
 
-        const std::pair<node, node> ends1 = currentGraph->ends(e1);
-        const std::pair<node, node> ends2 = currentGraph->ends(e2);
-        node n1 = ends1.first;
-        node n2 = ends1.second;
-        node n3;
+        auto [src1, tgt1] = currentGraph->ends(e1);
+        const auto &[src2, tgt2] = currentGraph->ends(e2);
 
-        if (ends2.second == n1) {
-          n1 = ends2.first;
-          n3 = n2;
-          n2 = ends2.second;
-        } else if (ends2.first == n1) {
-          n1 = ends2.second;
-          n3 = n2;
-          n2 = ends2.first;
+        node n;
+
+        if (tgt2 == src1) {
+          src1 = src2;
+          n = tgt1;
+          tgt1 = tgt2;
+        } else if (src2 == src1) {
+          src1 = tgt2;
+          n = tgt1;
+          tgt1 = src2;
         } else {
-          n3 = (ends2.first == n2) ? ends2.second : ends2.first;
+          n = (src2 == tgt1) ? tgt2 : src2;
         }
 
-        result->setNodeValue(n1, Coord(0, 0, 0));
-        result->setNodeValue(n2, Coord(1, 0, 0));
-        result->setNodeValue(n3, Coord(2, 0, 0));
+        result->setNodeValue(src1, Coord(0, 0, 0));
+        result->setNodeValue(tgt1, Coord(1, 0, 0));
+        result->setNodeValue(n, Coord(2, 0, 0));
       }
     }
   } else {

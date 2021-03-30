@@ -578,16 +578,14 @@ void NeighborhoodHighlighter::computeNeighborhoodGraphCircleLayout() {
   }
 
   for (auto e : neighborhoodGraph->edges()) {
-    const std::pair<node, node> &eEnds = neighborhoodGraph->ends(e);
-    node srcNode = eEnds.first;
-    node tgtNode = eEnds.second;
-    Coord finalBendsCoord;
+    const auto &[src, tgt] = neighborhoodGraph->ends(e);
 
-    if (srcNode != neighborhoodGraphCentralNode) {
-      Coord srcNodeCoord = neighborhoodGraphCircleLayout->getNodeValue(srcNode);
+    Coord finalBendsCoord;
+    if (src != neighborhoodGraphCentralNode) {
+      Coord srcNodeCoord = neighborhoodGraphCircleLayout->getNodeValue(src);
       finalBendsCoord = circleCenter + (srcNodeCoord - circleCenter) / 2.f;
     } else {
-      Coord tgtNodeCoord = neighborhoodGraphCircleLayout->getNodeValue(tgtNode);
+      Coord tgtNodeCoord = neighborhoodGraphCircleLayout->getNodeValue(tgt);
       finalBendsCoord = circleCenter + (tgtNodeCoord - circleCenter) / 2.f;
     }
 

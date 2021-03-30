@@ -409,9 +409,7 @@ bool HierarchicalGraph::run() {
 
   float spacing_4 = spacing / 4.f;
   for (auto e : graph->edges()) {
-    std::pair<node, node> eEnds(graph->ends(e));
-    node src = eEnds.first;
-    node tgt = eEnds.second;
+    const auto &[src, tgt] = graph->ends(e);
 
     if (src == tgt) {
       continue;

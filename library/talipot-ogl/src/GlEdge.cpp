@@ -50,9 +50,7 @@ namespace tlp {
 Singleton<GlLabel> GlEdge::label;
 
 BoundingBox GlEdge::getBoundingBox(const GlGraphInputData *data) {
-  auto ends = data->graph->ends(e);
-  const node src = ends.first;
-  const node tgt = ends.second;
+  const auto &[src, tgt] = data->graph->ends(e);
   const Coord &srcCoord = data->getElementLayout()->getNodeValue(src);
   const Coord &tgtCoord = data->getElementLayout()->getNodeValue(tgt);
 
@@ -119,9 +117,7 @@ BoundingBox GlEdge::getBoundingBox(const GlGraphInputData *data, const edge e, c
 }
 
 void GlEdge::draw(float lod, const GlGraphInputData *data, Camera *camera) {
-  auto ends = data->graph->ends(e);
-  const node src = ends.first;
-  const node tgt = ends.second;
+  const auto &[src, tgt] = data->graph->ends(e);
 
   bool selected = data->getElementSelected()->getEdgeValue(e);
 
@@ -441,9 +437,7 @@ void GlEdge::drawLabel(OcclusionTest *test, const GlGraphInputData *data, float 
   label.instance().setOutlineColor(outlineColor);
   label.instance().setOutlineSize(outlineWidth);
 
-  auto ends = data->graph->ends(e);
-  const node src = ends.first;
-  const node tgt = ends.second;
+  const auto &[src, tgt] = data->graph->ends(e);
 
   const Size &srcSize = data->getElementSize()->getNodeValue(src);
   const Size &tgtSize = data->getElementSize()->getNodeValue(tgt);

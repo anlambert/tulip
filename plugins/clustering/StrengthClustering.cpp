@@ -40,22 +40,19 @@ double StrengthClustering::computeMQValue(const vector<unordered_set<node>> &par
   }
 
   for (auto e : sg->edges()) {
-    auto eEnds = sg->ends(e);
-    node n1 = eEnds.first;
-    node n2 = eEnds.second;
+    auto [src, tgt] = sg->ends(e);
 
-    if (n1.id >= n2.id) {
-      n1 = n2;
-      n2 = eEnds.first;
+    if (src.id >= tgt.id) {
+      std::swap(src, tgt);
     }
 
-    unsigned int n1ClustId = clusterId.get(n1.id);
-    unsigned int n2ClustId = clusterId.get(n2.id);
+    unsigned int srcClustId = clusterId.get(src.id);
+    unsigned int tgtClustId = clusterId.get(tgt.id);
 
-    if (n1ClustId == n2ClustId) {
-      nbIntraEdges[n1ClustId] += 1;
+    if (srcClustId == tgtClustId) {
+      nbIntraEdges[srcClustId] += 1;
     } else {
-      pair<unsigned int, unsigned int> pp(n1ClustId, n2ClustId);
+      pair pp = {srcClustId, tgtClustId};
 
       if (nbExtraEdges.find(pp) != nbExtraEdges.end()) {
         nbExtraEdges[pp] += 1;
@@ -78,10 +75,7 @@ double StrengthClustering::computeMQValue(const vector<unordered_set<node>> &par
 
   double negative = 0;
 
-  for (const auto &itMap : nbExtraEdges) {
-    const auto &pp = itMap.first;
-    unsigned int val = itMap.second;
-
+  for (const auto &[pp, val] : nbExtraEdges) {
     if (!partition[pp.first].empty() && !partition[pp.second].empty()) {
       negative += double(val) / double(partition[pp.first].size() * partition[pp.second].size());
     }
@@ -102,9 +96,9 @@ void StrengthClustering::computeNodePartition(double threshold,
 
   for (auto e : graph->edges()) {
     if (values->getEdgeValue(e) < threshold) {
-      auto eEnds = graph->ends(e);
+      const auto &[src, tgt] = graph->ends(e);
 
-      if (graph->deg(eEnds.first) > 1 && graph->deg(eEnds.second) > 1) {
+      if (graph->deg(src) > 1 && graph->deg(tgt) > 1) {
         tmpGraph->delEdge(e);
       }
     }
@@ -121,10 +115,9 @@ void StrengthClustering::computeNodePartition(double threshold,
 
   // restore edges to reconnect singleton by computing induced subgraph
   for (auto e : graph->edges()) {
-    auto eEnds = graph->ends(e);
+    const auto &[src, tgt] = graph->ends(e);
 
-    if (singleton.find(eEnds.first) != singleton.end() &&
-        singleton.find(eEnds.second) != singleton.end()) {
+    if (singleton.find(src) != singleton.end() && singleton.find(tgt) != singleton.end()) {
       tmpGraph->addEdge(e);
     }
   }

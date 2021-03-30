@@ -1,4 +1,4 @@
-# Copyright (C) 2019  The Talipot developers
+# Copyright (C) 2019-2021  The Talipot developers
 #
 # Talipot is a fork of Tulip, created by David Auber
 # and the Tulip development Team from LaBRI, University of Bordeaux
@@ -68,9 +68,9 @@ class TestGraphStructure(unittest.TestCase):
             self.assertIn(e, self.edges)
             self.assertIn(self.graph.source(e), self.nodes)
             self.assertIn(self.graph.target(e), self.nodes)
-            ends = self.graph.ends(e)
-            self.assertIn(ends[0], self.nodes)
-            self.assertIn(ends[1], self.nodes)
+            src, tgt = self.graph.ends(e)
+            self.assertIn(src, self.nodes)
+            self.assertIn(tgt, self.nodes)
 
         for e in self.graph.edges():
             self.assertIn(e, self.edges)
@@ -325,10 +325,10 @@ class TestGraphStructure(unittest.TestCase):
                 (NB_NODES, self.graph.getName(), self.graph.getId()))
 
         for e in self.graph.edges():
-            ends = self.graph.ends(e)
+            src, tgt = self.graph.ends(e)
             self.graph.reverse(e)
-            self.assertEqual(self.graph.source(e), ends[1])
-            self.assertEqual(self.graph.target(e), ends[0])
+            self.assertEqual(self.graph.source(e), tgt)
+            self.assertEqual(self.graph.target(e), src)
 
             new_src = self.graph.getRandomNode()
             new_tgt = self.graph.getRandomNode()

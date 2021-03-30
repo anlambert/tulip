@@ -348,9 +348,9 @@ void PolyominoPacking::fillEdge(edge e, const Vec2i &p, std::vector<Vec2i> &cell
                                 LayoutProperty *layout) {
 
   Coord pf = Coord(p[0], p[1]);
-  auto ends = graph->ends(e);
-  const Coord &srcCoord = layout->getNodeValue(ends.first);
-  Coord tgtCoord = layout->getNodeValue(ends.second);
+  const auto &[src, tgt] = graph->ends(e);
+  const Coord &srcCoord = layout->getNodeValue(src);
+  Coord tgtCoord = layout->getNodeValue(tgt);
   const std::vector<Coord> &bends = layout->getEdgeValue(e);
 
   if (bends.empty()) {

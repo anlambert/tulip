@@ -395,11 +395,11 @@ void MatrixView::addEdge(tlp::Graph *g, const tlp::edge e) {
 
   _graphEntitiesToDisplayedNodes->setEdgeValue(e, edgeToDisplayedNodes);
 
-  const std::pair<node, node> &eEnds = g->ends(e);
+  const auto &[src, tgt] = g->ends(e);
 
-  node dispSrc = node(_graphEntitiesToDisplayedNodes->getNodeValue(eEnds.first)[0]);
+  node dispSrc = node(_graphEntitiesToDisplayedNodes->getNodeValue(src)[0]);
 
-  node dispTgt = node(_graphEntitiesToDisplayedNodes->getNodeValue(eEnds.second)[0]);
+  node dispTgt = node(_graphEntitiesToDisplayedNodes->getNodeValue(tgt)[0]);
 
   edge dispEdge = _matrixGraph->addEdge(dispSrc, dispTgt);
 
@@ -547,9 +547,9 @@ void MatrixView::updateLayout() {
   IntegerProperty *shapes = getGlWidget()->getGlGraphInputData()->getElementShape();
   int shape = GlyphManager::glyphId("2D - Square");
   for (auto e : graph()->edges()) {
-    auto eEnds = graph()->ends(e);
-    const vector<int> &srcNodes = _graphEntitiesToDisplayedNodes->getNodeValue(eEnds.first),
-                      &tgtNodes = _graphEntitiesToDisplayedNodes->getNodeValue(eEnds.second),
+    const auto &[src, tgt] = graph()->ends(e);
+    const vector<int> &srcNodes = _graphEntitiesToDisplayedNodes->getNodeValue(src),
+                      &tgtNodes = _graphEntitiesToDisplayedNodes->getNodeValue(tgt),
                       &edgeNodes = _graphEntitiesToDisplayedNodes->getEdgeValue(e);
 
     // 0 => horizontal line, 1 => vertical line
@@ -568,10 +568,10 @@ void MatrixView::updateLayout() {
   }
 
   for (auto e : _matrixGraph->edges()) {
-    auto eEnds = _matrixGraph->ends(e);
+    const auto &[src, tgt] = _matrixGraph->ends(e);
 
-    auto srcPos = layout->getNodeValue(eEnds.first);
-    auto tgtPos = layout->getNodeValue(eEnds.second);
+    auto srcPos = layout->getNodeValue(src);
+    auto tgtPos = layout->getNodeValue(tgt);
     float xMax = max(srcPos[0], tgtPos[0]);
     float xMin = min(srcPos[0], tgtPos[0]);
     float dist = (xMax - xMin);

@@ -116,10 +116,10 @@ public:
 
     // Save edges
     for (auto e : graph->edges()) {
-      auto ends = graph->ends(e);
+      const auto &[src, tgt] = graph->ends(e);
       os << "edge [" << endl;
-      os << "source " << ends.first.id << endl;
-      os << "target " << ends.second.id << endl;
+      os << "source " << src.id << endl;
+      os << "target " << tgt.id << endl;
       os << "id " << e.id << endl;
       os << "label \"" << label->getEdgeValue(e) << "\"" << endl;
       os << "graphics [" << endl;
@@ -131,7 +131,7 @@ public:
       vector<Coord> lcoord = layout->getEdgeValue(e);
 
       if (!lcoord.empty()) {
-        printPoint(os, layout->getNodeValue(ends.first));
+        printPoint(os, layout->getNodeValue(src));
       }
 
       for (const auto &c : lcoord) {
@@ -139,7 +139,7 @@ public:
       }
 
       if (!lcoord.empty()) {
-        printPoint(os, layout->getNodeValue(ends.second));
+        printPoint(os, layout->getNodeValue(tgt));
       }
 
       os << "]" << endl;

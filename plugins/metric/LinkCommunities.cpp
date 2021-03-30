@@ -169,9 +169,8 @@ void LinkCommunities::createDualGraph(const std::vector<edge> &edges) {
 
   for (unsigned int i = 0; i < nbEdges; ++i) {
     node dn = dual.addNode();
-    auto eEnds = graph->ends(edges[i]);
-    node src = eEnds.first;
-    node tgt = eEnds.second;
+    const auto &[src, tgt] = graph->ends(edges[i]);
+
     for (auto ee : graph->getInOutEdges(src)) {
       unsigned int eePos = graph->edgePos(ee);
 
@@ -211,13 +210,13 @@ void LinkCommunities::computeSimilarities(const std::vector<edge> &edges) {
 //==============================================================================================================
 double LinkCommunities::getSimilarity(edge ee, const std::vector<edge> &edges) {
   node key = mapKeystone.get(ee.id);
-  auto eeEnds = dual.ends(ee);
-  edge e1 = edges[eeEnds.first.id];
-  edge e2 = edges[eeEnds.second.id];
-  auto e1Ends = graph->ends(e1);
-  node n1 = (e1Ends.first != key) ? e1Ends.first : e1Ends.second;
-  auto e2Ends = graph->ends(e2);
-  node n2 = (e2Ends.first != key) ? e2Ends.first : e2Ends.second;
+  auto [eeSrc, eeTgt] = dual.ends(ee);
+  edge e1 = edges[eeSrc.id];
+  edge e2 = edges[eeTgt.id];
+  const auto &[e1Src, e1Tgt] = graph->ends(e1);
+  node n1 = (e1Src != key) ? e1Src : e1Tgt;
+  const auto &[e2Src, e2Tgt] = graph->ends(e2);
+  node n2 = (e2Src != key) ? e2Src : e2Tgt;
   unsigned int wuv = 0, m = 0;
   for (auto n : graph->getInOutNodes(n1)) {
     if (graph->existEdge(n2, n, true).isValid()) {
@@ -250,13 +249,13 @@ double LinkCommunities::getSimilarity(edge ee, const std::vector<edge> &edges) {
 //==============================================================================================================
 double LinkCommunities::getWeightedSimilarity(tlp::edge ee, const std::vector<edge> &edges) {
   node key = mapKeystone.get(ee.id);
-  auto eeEnds = dual.ends(ee);
-  edge e1 = edges[eeEnds.first.id];
-  edge e2 = edges[eeEnds.second.id];
-  auto e1Ends = graph->ends(e1);
-  node n1 = (e1Ends.first != key) ? e1Ends.first : e1Ends.second;
-  auto e2Ends = graph->ends(e2);
-  node n2 = (e2Ends.first != key) ? e2Ends.first : e2Ends.second;
+  auto [eeSrc, eeTgt] = dual.ends(ee);
+  edge e1 = edges[eeSrc.id];
+  edge e2 = edges[eeTgt.id];
+  const auto &[e1Src, e1Tgt] = graph->ends(e1);
+  node n1 = (e1Src != key) ? e1Src : e1Tgt;
+  const auto &[e2Src, e2Tgt] = graph->ends(e2);
+  node n2 = (e2Src != key) ? e2Src : e2Tgt;
 
   if (graph->deg(n1) > graph->deg(n2)) {
     node tmp = n1;
@@ -353,11 +352,11 @@ double LinkCommunities::computeAverageDensity(double threshold, const std::vecto
       edge re = edges[dn.id];
       MutableContainer<bool> visited;
       unsigned int nbNodes = 1;
-      auto reEnds = graph->ends(re);
-      visited.set(reEnds.first.id, true);
+      const auto &[reSrc, reTgt] = graph->ends(re);
+      visited.set(reSrc.id, true);
 
-      if (reEnds.first != reEnds.second) {
-        visited.set(reEnds.second.id, true);
+      if (reSrc != reTgt) {
+        visited.set(reTgt.id, true);
         nbNodes = 2;
       }
 
@@ -381,15 +380,15 @@ double LinkCommunities::computeAverageDensity(double threshold, const std::vecto
               dnToVisit.push_back(neighbour);
               ++nbDNodes;
               edge re = edges[neighbour.id];
-              auto reEnds = graph->ends(re);
+              const auto &[reSrc, reTgt] = graph->ends(re);
 
-              if (!visited.get(reEnds.first.id)) {
-                visited.set(reEnds.first.id, true);
+              if (!visited.get(reSrc.id)) {
+                visited.set(reSrc.id, true);
                 ++nbNodes;
               }
 
-              if (!visited.get(reEnds.second.id)) {
-                visited.set(reEnds.second.id, true);
+              if (!visited.get(reTgt.id)) {
+                visited.set(reTgt.id, true);
                 ++nbNodes;
               }
             }

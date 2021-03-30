@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -74,9 +74,9 @@ private:
   }
 
   Size getEdgeValue(const edge e) {
-    auto eEnds = graph->ends(e);
-    const Size &s = result->getNodeValue(eEnds.first);
-    const Size &t = result->getNodeValue(eEnds.second);
+    const auto &[src, tgt] = graph->ends(e);
+    const Size &s = result->getNodeValue(src);
+    const Size &t = result->getNodeValue(tgt);
     Coord tmp = {s.getW(), s.getH(), s.getD()};
     Coord tmp2 = {t.getW(), t.getH(), t.getD()};
     float sizes = tmp.norm();

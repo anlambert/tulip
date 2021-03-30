@@ -223,9 +223,9 @@ bool EqualValueClustering::computeClusters(NumericProperty *prop, bool onNodes, 
         }
 
         // add curEdge in cluster
-        const std::pair<node, node> &ends = graph->ends(curEdge);
-        sg->addNode(ends.first);
-        sg->addNode(ends.second);
+        const auto &[src, tgt] = graph->ends(curEdge);
+        sg->addNode(src);
+        sg->addNode(tgt);
         sg->addEdge(curEdge);
 
         if (pluginProgress && (++step % 50 == 1)) {
@@ -238,8 +238,8 @@ bool EqualValueClustering::computeClusters(NumericProperty *prop, bool onNodes, 
 
         // do a bfs traversal for this edge
         list<node> nodesToVisit;
-        nodesToVisit.push_front(ends.first);
-        nodesToVisit.push_front(ends.second);
+        nodesToVisit.push_front(src);
+        nodesToVisit.push_front(tgt);
         visited.set(curEdge.id, true);
 
         while (!nodesToVisit.empty()) {
@@ -429,9 +429,9 @@ bool EqualValueClustering::computeClusters(PropertyInterface *prop, bool onNodes
         }
 
         // add curEdge in cluster
-        const std::pair<node, node> &ends = graph->ends(curEdge);
-        sg->addNode(ends.first);
-        sg->addNode(ends.second);
+        const auto &[src, tgt] = graph->ends(curEdge);
+        sg->addNode(src);
+        sg->addNode(tgt);
         sg->addEdge(curEdge);
 
         if (pluginProgress && (++step % 50 == 1)) {
@@ -444,8 +444,8 @@ bool EqualValueClustering::computeClusters(PropertyInterface *prop, bool onNodes
 
         // do a bfs traversal for this edge
         list<node> nodesToVisit;
-        nodesToVisit.push_front(ends.first);
-        nodesToVisit.push_front(ends.second);
+        nodesToVisit.push_front(src);
+        nodesToVisit.push_front(tgt);
         visited.set(curEdge.id, true);
 
         while (!nodesToVisit.empty()) {

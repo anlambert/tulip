@@ -132,11 +132,10 @@ bool ReachableSubGraphSelection::run() {
       ++num_nodes;
     }
 
-    auto ite = reachables.end();
     // select corresponding edges
     for (auto e : graph->edges()) {
-      const auto &ends = graph->ends(e);
-      if ((reachables.find(ends.first) != ite) && (reachables.find(ends.second) != ite)) {
+      const auto &[src, tgt] = graph->ends(e);
+      if (reachables.find(src) != reachables.end() && reachables.find(tgt) != reachables.end()) {
         result->setEdgeValue(e, true);
         ++num_edges;
       }

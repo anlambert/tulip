@@ -319,9 +319,7 @@ bool MCLClustering::run() {
   });
 
   for (auto e : graph->edges()) {
-    auto eEnds = graph->ends(e);
-    node src = nodeMapping[eEnds.first];
-    node tgt = nodeMapping[eEnds.second];
+    const auto &[src, tgt] = graph->ends(e);
     edge tmp = g.addEdge(src, tgt);
 
     double weight = (weights != nullptr) ? weights->getEdgeDoubleValue(e) : 1.0;

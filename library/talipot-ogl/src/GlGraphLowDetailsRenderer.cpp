@@ -54,7 +54,7 @@ void GlGraphLowDetailsRenderer::initEdgesArray() {
   size_t i_indices = 0;
   size_t i_col = 0;
   for (auto e : graph->edges()) {
-    auto ends = graph->ends(e);
+    const auto &[src, tgt] = graph->ends(e);
     Color a = color->getEdgeValue(e);
     Color b = color->getEdgeValue(e);
     Vec4f ca, cb;
@@ -66,7 +66,7 @@ void GlGraphLowDetailsRenderer::initEdgesArray() {
 
     indices[i_indices++] = i_point;
     colors[i_col++] = a;
-    const auto &srcCoord = layout->getNodeValue(ends.first);
+    const auto &srcCoord = layout->getNodeValue(src);
     points[i_point][0] = srcCoord[0];
     points[i_point++][1] = srcCoord[1];
 
@@ -86,7 +86,7 @@ void GlGraphLowDetailsRenderer::initEdgesArray() {
 
     indices[i_indices++] = i_point;
     colors[i_col++] = b;
-    const auto &tgtCoord = layout->getNodeValue(ends.second);
+    const auto &tgtCoord = layout->getNodeValue(tgt);
     points[i_point][0] = tgtCoord[0];
     points[i_point++][1] = tgtCoord[1];
   }

@@ -2039,7 +2039,7 @@ Returns a tuple containing the two end nodes of an edge
 
 %MethodCode
   if (sipCpp->isElement(*a0)) {
-    sipRes = new std::pair<tlp::node, tlp::node>(sipCpp->ends(*a0));
+    sipRes = new std::pair(sipCpp->ends(*a0));
   } else {
     sipIsErr = throwInvalidEdgeException(sipCpp, *a0);
   }

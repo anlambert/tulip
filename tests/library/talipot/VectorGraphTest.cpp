@@ -107,14 +107,14 @@ static void checkCreatedGraph(bool nodesOnly = false) {
     CPPUNIT_ASSERT(gEdges[i] == edges[i]);
 
     // check ends
-    std::pair<node, node> ends = graph.ends(edges[i]);
-    CPPUNIT_ASSERT(ends.first == nodes[i]);
+    const auto [src, tgt] = graph.ends(edges[i]);
+    CPPUNIT_ASSERT(src == nodes[i]);
     if (i < NB_NODES - 1) {
-      CPPUNIT_ASSERT(ends.second == nodes[i + 1]);
+      CPPUNIT_ASSERT(tgt == nodes[i + 1]);
       CPPUNIT_ASSERT(graph.existEdge(nodes[i], nodes[i + 1], true) == edges[i]);
       CPPUNIT_ASSERT(graph.existEdge(nodes[i + 1], nodes[i], false) == edges[i]);
     } else {
-      CPPUNIT_ASSERT(ends.second == nodes[0]);
+      CPPUNIT_ASSERT(tgt == nodes[0]);
       CPPUNIT_ASSERT(graph.existEdge(nodes[i], nodes[0], true) == edges[i]);
       CPPUNIT_ASSERT(graph.existEdge(nodes[0], nodes[i], false) == edges[i]);
     }
@@ -455,9 +455,9 @@ void VectorGraphTest::testAddDelEdges() {
     edge e = nEdges[i];
     CPPUNIT_ASSERT(e == edges[i]);
     // check ends
-    std::pair<node, node> ends = graph.ends(e);
-    CPPUNIT_ASSERT(ends.first == nodes[0]);
-    CPPUNIT_ASSERT(ends.second == nodes[i + 1]);
+    const auto [src, tgt] = graph.ends(e);
+    CPPUNIT_ASSERT(src == nodes[0]);
+    CPPUNIT_ASSERT(tgt == nodes[i + 1]);
     CPPUNIT_ASSERT(graph.existEdge(nodes[0], nodes[i + 1], true) == e);
     CPPUNIT_ASSERT(graph.existEdge(nodes[i + 1], nodes[0], false) == e);
     // check edge source
@@ -518,9 +518,9 @@ void VectorGraphTest::testAddDelEdges() {
     edge e = n0Edges[i];
     CPPUNIT_ASSERT(e == edges[i]);
     // check ends
-    std::pair<node, node> ends = graph.ends(e);
-    CPPUNIT_ASSERT(ends.first == nodes[0]);
-    CPPUNIT_ASSERT(ends.second == nodes[NB_NODES - i - 1]);
+    const auto [src, tgt] = graph.ends(e);
+    CPPUNIT_ASSERT(src == nodes[0]);
+    CPPUNIT_ASSERT(tgt == nodes[NB_NODES - i - 1]);
     CPPUNIT_ASSERT(graph.existEdge(nodes[0], nodes[NB_NODES - i - 1], true) == e);
     CPPUNIT_ASSERT(graph.existEdge(nodes[NB_NODES - i - 1], nodes[0], false) == e);
     // check edge source
@@ -619,14 +619,14 @@ void checkGraphAfterReverseEdges() {
     CPPUNIT_ASSERT(e == edges[i]);
 
     // check ends
-    std::pair<node, node> ends = graph.ends(e);
-    CPPUNIT_ASSERT(ends.second == nodes[i]);
+    const auto [src, tgt] = graph.ends(e);
+    CPPUNIT_ASSERT(tgt == nodes[i]);
     if (i < NB_NODES - 1) {
-      CPPUNIT_ASSERT(ends.first == nodes[i + 1]);
+      CPPUNIT_ASSERT(src == nodes[i + 1]);
       CPPUNIT_ASSERT(graph.existEdge(nodes[i + 1], nodes[i], true) == e);
       CPPUNIT_ASSERT(graph.existEdge(nodes[i], nodes[i + 1], false) == e);
     } else {
-      CPPUNIT_ASSERT(ends.first == nodes[0]);
+      CPPUNIT_ASSERT(src == nodes[0]);
       CPPUNIT_ASSERT(graph.existEdge(nodes[0], nodes[i], true) == e);
       CPPUNIT_ASSERT(graph.existEdge(nodes[i], nodes[0], false) == e);
     }
@@ -662,13 +662,13 @@ void VectorGraphTest::testReverseEdges() {
 
   // reverse all edges
   for (auto e : graph.edges()) {
-    std::pair<node, node> ends = graph.ends(e);
-    unsigned int src_outdeg = graph.outdeg(ends.first);
-    unsigned int tgt_outdeg = graph.outdeg(ends.second);
+    const auto [src, tgt] = graph.ends(e);
+    unsigned int src_outdeg = graph.outdeg(src);
+    unsigned int tgt_outdeg = graph.outdeg(tgt);
     graph.reverse(e);
     // check out degrees
-    CPPUNIT_ASSERT(graph.outdeg(ends.second) - tgt_outdeg == 1);
-    CPPUNIT_ASSERT(src_outdeg - graph.outdeg(ends.first) == 1);
+    CPPUNIT_ASSERT(graph.outdeg(tgt) - tgt_outdeg == 1);
+    CPPUNIT_ASSERT(src_outdeg - graph.outdeg(src) == 1);
   }
   // check graph
   checkGraphAfterReverseEdges();
@@ -681,15 +681,15 @@ void VectorGraphTest::testSetSourcesAndTargets() {
 
   // reverse each edge using setSource and setTarget
   for (auto e : graph.edges()) {
-    std::pair<node, node> ends = graph.ends(e);
-    unsigned int src_outdeg = graph.outdeg(ends.first);
-    unsigned int tgt_outdeg = graph.outdeg(ends.second);
-    graph.setSource(e, ends.second);
-    CPPUNIT_ASSERT(graph.outdeg(ends.first) == src_outdeg - 1);
-    CPPUNIT_ASSERT(graph.outdeg(ends.second) == tgt_outdeg + 1);
-    graph.setTarget(e, ends.first);
-    CPPUNIT_ASSERT(graph.outdeg(ends.first) == src_outdeg - 1);
-    CPPUNIT_ASSERT(graph.outdeg(ends.second) == tgt_outdeg + 1);
+    const auto [src, tgt] = graph.ends(e);
+    unsigned int src_outdeg = graph.outdeg(src);
+    unsigned int tgt_outdeg = graph.outdeg(tgt);
+    graph.setSource(e, tgt);
+    CPPUNIT_ASSERT(graph.outdeg(src) == src_outdeg - 1);
+    CPPUNIT_ASSERT(graph.outdeg(tgt) == tgt_outdeg + 1);
+    graph.setTarget(e, src);
+    CPPUNIT_ASSERT(graph.outdeg(src) == src_outdeg - 1);
+    CPPUNIT_ASSERT(graph.outdeg(tgt) == tgt_outdeg + 1);
   }
 
   // check nodes and edges
@@ -703,8 +703,8 @@ void VectorGraphTest::testSetEnds() {
 
   // reverse each edge using setEnds
   for (auto e : graph.edges()) {
-    std::pair<node, node> ends = graph.ends(e);
-    graph.setEnds(e, ends.second, ends.first);
+    const auto [src, tgt] = graph.ends(e);
+    graph.setEnds(e, tgt, src);
   }
 
   // check graph is in afterReverseEdges state
@@ -734,16 +734,16 @@ void VectorGraphTest::testMoreSetEnds() {
     CPPUNIT_ASSERT(e == edges[i]);
 
     // check ends
-    std::pair<node, node> ends = graph.ends(edges[i]);
-    CPPUNIT_ASSERT(ends.second == nodes[NB_NODES - i - 1]);
+    const auto [src, tgt] = graph.ends(edges[i]);
+    CPPUNIT_ASSERT(tgt == nodes[NB_NODES - i - 1]);
     if (i < NB_NODES - 1) {
-      CPPUNIT_ASSERT(ends.first == nodes[NB_NODES - i - 2]);
+      CPPUNIT_ASSERT(src == nodes[NB_NODES - i - 2]);
       CPPUNIT_ASSERT(graph.existEdge(nodes[NB_NODES - i - 2], nodes[NB_NODES - i - 1], true) ==
                      edges[i]);
       CPPUNIT_ASSERT(graph.existEdge(nodes[NB_NODES - i - 1], nodes[NB_NODES - i - 2], false) ==
                      edges[i]);
     } else {
-      CPPUNIT_ASSERT(ends.first == nodes[NB_NODES - 1]);
+      CPPUNIT_ASSERT(src == nodes[NB_NODES - 1]);
       CPPUNIT_ASSERT(graph.existEdge(nodes[NB_NODES - 1], nodes[0], true) == edges[i]);
       CPPUNIT_ASSERT(graph.existEdge(nodes[0], nodes[NB_NODES - 1], false) == edges[i]);
     }

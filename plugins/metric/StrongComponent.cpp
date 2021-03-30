@@ -77,19 +77,19 @@ bool StrongComponent::run() {
   int id = 1;
   int curComponent = 0;
 
-  for (auto itn : graph->nodes()) {
-    if (!visited[itn]) {
-      attachNumerotation(itn, visited, finished, cachedValues, id, renum, curComponent);
+  for (auto n : graph->nodes()) {
+    if (!visited[n]) {
+      attachNumerotation(n, visited, finished, cachedValues, id, renum, curComponent);
     }
   }
 
-  for (auto ite : graph->edges()) {
-    auto eEnds = graph->ends(ite);
+  for (auto e : graph->edges()) {
+    const auto &[src, tgt] = graph->ends(e);
 
-    if (result->getNodeValue(eEnds.first) == result->getNodeValue(eEnds.second)) {
-      result->setEdgeValue(ite, result->getNodeValue(eEnds.first));
+    if (result->getNodeValue(src) == result->getNodeValue(tgt)) {
+      result->setEdgeValue(e, result->getNodeValue(src));
     } else {
-      result->setEdgeValue(ite, curComponent);
+      result->setEdgeValue(e, curComponent);
     }
   }
 

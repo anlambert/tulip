@@ -1051,9 +1051,7 @@ void GeographicViewGraphicsView::switchViewType() {
       }
 
       for (auto e : graph->edges()) {
-        const std::pair<node, node> &eEnds = graph->ends(e);
-        node src = eEnds.first;
-        node tgt = eEnds.second;
+        const auto &[src, tgt] = graph->ends(e);
         unsigned int bendsNumber = 2;
         vector<Coord> bends;
 

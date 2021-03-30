@@ -252,8 +252,8 @@ public:
       // for each edge
       // store opposite edge in opProp
       for (auto mE : quotientGraph->edges()) {
-        const std::pair<node, node> &eEnds = quotientGraph->ends(mE);
-        edge op = quotientGraph->existEdge(eEnds.second, eEnds.first);
+        const auto &[src, tgt] = quotientGraph->ends(mE);
+        edge op = quotientGraph->existEdge(tgt, src);
 
         if (op.isValid()) {
           opProp->setEdgeValue(op, mE.id);

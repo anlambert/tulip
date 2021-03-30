@@ -186,9 +186,9 @@ bool MixedModel::run() {
 
       for (auto e : graph->edges()) {
         if (resultatAlgoSelection.getEdgeValue(e)) {
-          auto eEnds = currentGraph->ends(e);
-          G->addNode(eEnds.first);
-          G->addNode(eEnds.second);
+          const auto &[src, tgt] = currentGraph->ends(e);
+          G->addNode(src);
+          G->addNode(tgt);
           G->addEdge(e);
           edge_planar.push_back(e);
         } else {
@@ -333,8 +333,8 @@ vector<edge> MixedModel::getPlanarSubGraph(tlp::PlanarConMap *sg,
   vector<edge> res;
 
   for (auto e : unplanar_edges) {
-    auto eEnds = sg->ends(e);
-    Face f = sg->sameFace(eEnds.first, eEnds.second);
+    const auto &[src, tgt] = sg->ends(e);
+    Face f = sg->sameFace(src, tgt);
 
     if (f != Face()) {
       sg->splitFace(f, e);
@@ -357,11 +357,8 @@ void MixedModel::placeNodesEdges() {
   }
 
   for (auto e : carte->edges()) {
-    auto eEnds = carte->ends(e);
-    node src = eEnds.first;
-    node tgt = eEnds.second;
+    const auto &[src, tgt] = carte->ends(e);
     Coord cs, ct, c;
-
     unsigned int rs = rank[src], rt = rank[tgt];
 
     if (rs != rt) {
@@ -420,9 +417,7 @@ void MixedModel::placeNodesEdges() {
     maxY /= 8;
 
     for (auto e : unplanar_edges) {
-      auto eEnds = carte->ends(e);
-      node n = eEnds.first;
-      node v = eEnds.second;
+      const auto &[n, v] = carte->ends(e);
       auto c_n = NodeCoords[n];
       auto c_v = NodeCoords[v];
       vector<Coord> bends;
@@ -512,9 +507,9 @@ void MixedModel::assignInOutPoints() { // on considère qu'il n'y a pas d'arc do
       tmp.clear();
 
       for (auto e : carte->getInOutEdges(v)) {
-        auto eEnds = carte->ends(e);
+        const auto &[src, tgt] = carte->ends(e);
 
-        node n = (eEnds.first == v) ? eEnds.second : eEnds.first;
+        node n = (src == v) ? tgt : src;
 
         bool trouve = false;
         unsigned int r = rank[n];
@@ -753,8 +748,8 @@ void MixedModel::assignInOutPoints() { // on considère qu'il n'y a pas d'arc do
 
       if (k != 0) {
         for (auto e_tmp : listOfEdgesIN) {
-          const pair<node, node> &eEnds = carte->ends(e_tmp);
-          node n_tmp = (eEnds.first == v) ? eEnds.second : eEnds.first;
+          const auto &[src, tgt] = carte->ends(e_tmp);
+          node n_tmp = (src == v) ? tgt : src;
 
           if (rank[n_tmp] < k) {
             if (i == 0) {
@@ -1078,8 +1073,8 @@ void MixedModel::computeCoords() {
 node MixedModel::leftV(unsigned int k) {
   assert((0 < k) && (k < V.size()));
   edge el = EdgesIN[V[k][0]][0];
-  auto eEnds = carte->ends(el);
-  return (eEnds.first == V[k][0]) ? eEnds.second : eEnds.first;
+  const auto &[src, tgt] = carte->ends(el);
+  return (src == V[k][0]) ? tgt : src;
 }
 
 //====================================================
@@ -1088,7 +1083,7 @@ node MixedModel::rightV(unsigned int k) {
   unsigned int p = V[k].size();
   unsigned int n = EdgesIN[V[k][p - 1]].size();
   edge er = EdgesIN[V[k][p - 1]][n - 1];
-  auto eEnds = carte->ends(er);
-  return (eEnds.first == V[k][p - 1]) ? eEnds.second : eEnds.first;
+  const auto &[src, tgt] = carte->ends(er);
+  return (src == V[k][p - 1]) ? tgt : src;
 }
 //====================================================

@@ -659,9 +659,8 @@ void GlVertexArrayManager::activate(bool act) {
 
 void GlVertexArrayManager::visit(GlEdge *glEdge) {
   edge e = glEdge->e;
-  auto ends = graph->ends(e);
-  node src = ends.first;
-  node tgt = ends.second;
+  const auto &[src, tgt] = graph->ends(e);
+
   auto edgePos = graph->edgePos(e);
   auto nbNodes = graph->numberOfNodes();
   auto &eInfos = edgeInfosVector[edgePos];

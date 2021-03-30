@@ -155,26 +155,26 @@ bool KCores::run() {
             edge ee = edges[j];
 
             if (noEdgeCheck || graph->isElement(ee)) {
-              auto ends = graph->ends(ee);
+              const auto &[src, tgt] = graph->ends(ee);
               node m;
 
               switch (degree_type) {
               case IN_EDGE:
-                if ((m = ends.second) == n) {
+                if ((m = tgt) == n) {
                   continue;
                 }
 
                 break;
 
               case OUT_EDGE:
-                if ((m = ends.first) == n) {
+                if ((m = src) == n) {
                   continue;
                 }
 
                 break;
 
               default:
-                m = (ends.first == n) ? ends.second : ends.first;
+                m = (src == n) ? tgt : src;
               }
 
               unsigned int mPos = graph->nodePos(m);

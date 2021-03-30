@@ -154,9 +154,9 @@ void EdgeBundling::fixEdgeType(EdgeStaticProperty<unsigned int> &ntype) {
     if (oriGraph->isElement(e)) {
       ntype[i] = 1;
     } else {
-      auto ends = graph->ends(e);
+      const auto &[src, tgt] = graph->ends(e);
 
-      if (oriGraph->isElement(ends.first) || oriGraph->isElement(ends.second)) {
+      if (oriGraph->isElement(src) || oriGraph->isElement(tgt)) {
         ntype[i] = 2;
       } else {
         ntype[i] = 0;
@@ -437,9 +437,9 @@ bool EdgeBundling::run() {
   EdgeStaticProperty<double> mWeights(graph);
   EdgeStaticProperty<double> mWeightsInit(graph);
   TLP_PARALLEL_MAP_EDGES_AND_INDICES(graph, [&](edge e, unsigned int i) {
-    auto ends = graph->ends(e);
-    const Coord &a = layout->getNodeValue(ends.first);
-    const Coord &b = layout->getNodeValue(ends.second);
+    const auto &[src, tgt] = graph->ends(e);
+    const Coord &a = layout->getNodeValue(src);
+    const Coord &b = layout->getNodeValue(tgt);
     double abNorm = (a - b).norm();
     double initialWeight = pow(abNorm, longEdges);
 
@@ -667,18 +667,18 @@ bool EdgeBundling::run() {
 
   // Reinsert multiple edges if any and update their layout
   for (auto removedEdge : removedEdges) {
-    auto eEnds = graph->ends(removedEdge);
+    const auto &[src, tgt] = graph->ends(removedEdge);
 
-    if (eEnds.first == eEnds.second) {
+    if (src == tgt) {
       oriGraph->addEdge(removedEdge);
     } else {
-      tlp::edge origEdge = oriGraph->existEdge(eEnds.first, eEnds.second);
+      tlp::edge origEdge = oriGraph->existEdge(src, tgt);
 
       if (origEdge.isValid()) {
         oriGraph->addEdge(removedEdge);
         layout->setEdgeValue(removedEdge, layout->getEdgeValue(origEdge));
       } else {
-        origEdge = oriGraph->existEdge(eEnds.second, eEnds.first);
+        origEdge = oriGraph->existEdge(tgt, src);
         assert(origEdge.isValid());
         oriGraph->addEdge(removedEdge);
         std::vector<tlp::Coord> bends = layout->getEdgeValue(origEdge);

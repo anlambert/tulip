@@ -277,8 +277,8 @@ bool CsvExport::exportGraph(std::ostream &os) {
           os << fieldSeparator;
         }
 
-        auto ends = graph->ends(e);
-        os << ends.first << fieldSeparator << ends.second.id;
+        const auto &[src, tgt] = graph->ends(e);
+        os << src.id << fieldSeparator << tgt.id;
 
         if (nbProps > 0) {
           os << fieldSeparator;

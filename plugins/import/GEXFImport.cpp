@@ -506,18 +506,18 @@ public:
 
           // replace n by mn
           for (auto e : graph->getInOutEdges(n)) {
-            const pair<node, node> &eEnds = graph->ends(e);
+            const auto &[src, tgt] = graph->ends(e);
 
-            if (eEnds.first == n) {
-              graph->setEnds(e, mn, eEnds.second);
+            if (src == n) {
+              graph->setEnds(e, mn, tgt);
 
-              if ((sg != quotientGraph) && quotientGraph->isElement(eEnds.second)) {
+              if ((sg != quotientGraph) && quotientGraph->isElement(tgt)) {
                 quotientGraph->addEdge(e);
               }
             } else {
-              graph->setEnds(e, eEnds.first, mn);
+              graph->setEnds(e, src, mn);
 
-              if ((sg != quotientGraph) && quotientGraph->isElement(eEnds.first)) {
+              if ((sg != quotientGraph) && quotientGraph->isElement(src)) {
                 quotientGraph->addEdge(e);
               }
             }
@@ -534,9 +534,9 @@ public:
   // Methods which compute Cubic Bézier control points for each edge
   void curveGraphEdges() {
     for (auto e : graph->edges()) {
-      auto eEnds = graph->ends(e);
-      const Coord &srcCoord = viewLayout->getNodeValue(eEnds.first);
-      const Coord &tgtCoord = viewLayout->getNodeValue(eEnds.second);
+      const auto &[src, tgt] = graph->ends(e);
+      const Coord &srcCoord = viewLayout->getNodeValue(src);
+      const Coord &tgtCoord = viewLayout->getNodeValue(tgt);
       Coord dir = tgtCoord - srcCoord;
       dir /= dir.norm();
       float length = srcCoord.dist(tgtCoord);

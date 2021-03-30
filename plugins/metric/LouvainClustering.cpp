@@ -109,9 +109,9 @@ private:
       double weight = (*weights)[e];
       wdg += weight;
       // self loop must be counted only once
-      auto ends = quotient->ends(e);
+      const auto &[src, tgt] = quotient->ends(e);
 
-      if (ends.first == ends.second) {
+      if (src == tgt) {
         nsl = weight;
         ++i;
       }
@@ -159,8 +159,8 @@ private:
     neigh_last = 1;
 
     for (auto e : quotient->star(node(n))) {
-      auto ends = quotient->ends(e);
-      unsigned int neigh = (ends.first == node(n)) ? ends.second : ends.first;
+      const auto &[src, tgt] = quotient->ends(e);
+      unsigned int neigh = (src == node(n)) ? tgt : src;
       unsigned int neigh_comm = n2c[neigh];
       double neigh_w = (*weights)[e];
 
@@ -201,9 +201,9 @@ private:
 
     total_weight = 0;
     for (auto e : quotient->edges()) {
-      std::pair<node, node> ends = quotient->ends(e);
-      node src = ends.first;
-      node tgt = ends.second;
+      auto [src, tgt] = quotient->ends(e);
+      auto ends = quotient->ends(e);
+
       unsigned int src_comm = renumber[n2c[src]];
       unsigned int tgt_comm = renumber[n2c[tgt]];
       double weight = (*weights)[e];
@@ -212,8 +212,8 @@ private:
       double *weight_comm = nullptr;
 
       if (!e_comm.isValid()) {
-        ends = make_pair(node(src_comm), node(tgt_comm));
-        e_comm = new_quotient->addEdge(node(src_comm), node(tgt_comm));
+        ends = pair(node(src_comm), node(tgt_comm));
+        e_comm = new_quotient->addEdge(ends.first, ends.second);
         weight_comm = &((*new_weights)[e_comm]);
         *weight_comm = weight;
       } else {
@@ -377,9 +377,9 @@ bool LouvainClustering::run() {
   // init total_weight, weights and quotient edges
   for (auto e : graph->edges()) {
     double weight = metric ? metric->getEdgeDoubleValue(e) : 1;
-    const std::pair<node, node> &ends = graph->ends(e);
-    node q_src(clusters->getNodeValue(ends.first));
-    node q_tgt(clusters->getNodeValue(ends.second));
+    const auto &[src, tgt] = graph->ends(e);
+    node q_src(clusters->getNodeValue(src));
+    node q_tgt(clusters->getNodeValue(tgt));
     // self loops are counted only once
     total_weight += q_src != q_tgt ? 2 * weight : weight;
     // create corresponding edge if needed
