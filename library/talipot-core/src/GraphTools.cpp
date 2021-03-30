@@ -106,7 +106,7 @@ void makeProperDag(Graph *graph, list<node> &addedNodes,
   unsigned int nbEdges = edges.size();
   for (unsigned int i = 0; i < nbEdges; ++i) {
     edge e = edges[i];
-    const auto &[src, tgt] = graph->ends(e);
+    auto [src, tgt] = graph->ends(e);
     unsigned int fLevel = dLevel.getNodeValue(src);
     unsigned int sLevel = dLevel.getNodeValue(tgt);
     int delta = sLevel - fLevel;
