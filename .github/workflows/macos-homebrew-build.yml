@@ -29,6 +29,7 @@ jobs:
           pkg-config
           glew
           freetype
+          fribidi
           fontconfig
           qt5
           quazip

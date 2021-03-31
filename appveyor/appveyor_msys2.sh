@@ -41,6 +41,7 @@ then
   pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-fontconfig \
     mingw-w64-$MSYS2_ARCH-freetype \
+    mingw-w64-$MSYS2_ARCH-fribidi \
     mingw-w64-$MSYS2_ARCH-glew \
     mingw-w64-$MSYS2_ARCH-qt5 \
     mingw-w64-$MSYS2_ARCH-quazip \

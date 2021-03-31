@@ -36,6 +36,7 @@ then
   sudo port -N install \
     freetype \
     fontconfig \
+    fribidi \
     glew \
     qt5-qtbase \
     qt5-qttools \

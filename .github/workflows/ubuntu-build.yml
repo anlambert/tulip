@@ -39,6 +39,7 @@ jobs:
           libquazip5-dev
           libglew-dev
           libfreetype6-dev
+          libfribidi-dev
           libfontconfig-dev
           python3
           python3-pip

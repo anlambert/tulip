@@ -283,6 +283,9 @@ IF(NOT TALIPOT_BUILD_CORE_ONLY)
   # FontConfig
   FIND_PACKAGE(FontConfig REQUIRED)
 
+  # FriBidi
+  FIND_PACKAGE(FriBidi REQUIRED)
+
   # Qt
   FIND_PACKAGE(QtX)
 

@@ -39,6 +39,8 @@
 #include <talipot/ViewSettings.h>
 #include <talipot/ParallelTools.h>
 
+#include <fribidi/fribidi.h>
+
 using namespace std;
 
 namespace tlp {
@@ -68,6 +70,38 @@ static FTGLOutlineFont *getOutlineFont(const std::string &name) {
     return font;
   }
   return itf->second.get();
+}
+
+// Utility function to reshape text for visual display using the
+// Unicode Bidirectional Algorithm implemented by FriBidi library.
+// It enables to improve the rendering of Complex text layout
+// (arabic scripts for instance).
+static std::string getVisualText(const std::string &text) {
+  std::string visualText;
+  const FriBidiCharSet enc = FRIBIDI_CHAR_SET_UTF8;
+  FriBidiParType direction = FRIBIDI_PAR_ON;
+  size_t len = text.size() * 2;
+
+  auto *str_in = new FriBidiChar[len];
+  auto *str_out = new FriBidiChar[len];
+
+  // convert UTF8 to UTF32
+  FriBidiStrIndex ulen = fribidi_charset_to_unicode(enc, text.c_str(), text.size(), str_in);
+  // reshape the UTF32 string
+  FriBidiLevel lvl = fribidi_log2vis(str_in, ulen, &direction, str_out, 0, 0, 0);
+  if (lvl) {
+    // convert shaped text back to UTF8
+    char *output = new char[len];
+    fribidi_unicode_to_charset(enc, str_out, ulen, output);
+    visualText = output;
+    delete[] output;
+  } else {
+    visualText = text;
+  }
+
+  delete[] str_in;
+  delete[] str_out;
+  return visualText;
 }
 
 static const int SpaceBetweenLine = 5;
@@ -687,6 +721,7 @@ void GlLabel::draw(float, Camera *camera) {
     auto itW = textWidthVector.begin();
 
     for (const auto &text : textVector) {
+      auto visualText = getVisualText(text);
       ftglPolygonFont->BBox(text.c_str(), x1, y1, z1, x2, y2, z2);
 
       FTPoint shift(-(textBoundingBox[1][0] - textBoundingBox[0][0]) / 2. - x1 +
@@ -701,7 +736,7 @@ void GlLabel::draw(float, Camera *camera) {
 
       setMaterial(color);
 
-      ftglPolygonFont->Render(text.c_str(), -1, shift);
+      ftglPolygonFont->Render(visualText.c_str(), -1, shift);
 
       if (!textureName.empty()) {
         GlTextureManager::deactivateTexture();
@@ -716,7 +751,7 @@ void GlLabel::draw(float, Camera *camera) {
 
         setMaterial(outlineColor);
 
-        ftglOutlineFont->Render(text.c_str(), -1, shift);
+        ftglOutlineFont->Render(visualText.c_str(), -1, shift);
       }
 
       yShift -= fontSize + 5;

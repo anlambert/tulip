@@ -19,7 +19,7 @@ yum -y install devtoolset-8-gcc devtoolset-8-gcc-c++
 
 # install talipot deps
 yum -y install zlib-devel libzstd-devel qhull-devel yajl-devel graphviz-devel binutils-devel
-yum -y install freetype-devel fontconfig-devel glew-devel
+yum -y install freetype-devel fontconfig-devel glew-devel fribidi-devel
 yum -y install python36-devel python36-pip
 yum -y install qt5-qtbase-devel qt5-qtimageformats qt5-qtsvg quazip-qt5-devel qt5-qtwebkit-devel
 
