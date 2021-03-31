@@ -16,7 +16,26 @@
 
 #ifdef __MINGW32__
 #include <windows.h>
-#include <stdint.h>
+#include <cstdint>
+
+extern "C" {
+void *dlopen(const char *file, int) {
+  return LoadLibrary(file);
+}
+
+void *dlsym(void *handle, const char *name) {
+  return reinterpret_cast<void *>(GetProcAddress(reinterpret_cast<HMODULE>(handle), name));
+}
+
+int dlclose(void *handle) {
+  FreeLibrary(reinterpret_cast<HMODULE>(handle));
+  return 0;
+}
+
+const char *dlerror(void) {
+  return "Unable to load DLL.";
+}
+}
 #endif
 
 #include <cstdlib>
