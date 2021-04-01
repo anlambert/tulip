@@ -514,13 +514,14 @@ static string &forceUtf8String(string &str) {
       default:
         break;
       }
-
+      [[fallthrough]];
     case ' ':
       if (charComposing) {
         str.replace(i, 1, 0, ' ');
         --i;
         continue;
       }
+      [[fallthrough]];
 
     default:
       if (charComposing) {
@@ -1686,6 +1687,7 @@ public:
                   case '\204': // Ä
                   case '\205': // Å
                     aKey.replace(k, 2, "A");
+                    [[fallthrough]];
 
                   case '\210': // È
                   case '\211': // É

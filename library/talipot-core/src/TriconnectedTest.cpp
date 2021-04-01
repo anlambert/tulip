@@ -44,6 +44,7 @@ void TriconnectedTestListener::treatEvent(const Event &evt) {
           return;
         }
       }
+      [[fallthrough]];
 
     case GraphEvent::TLP_DEL_EDGE:
     case GraphEvent::TLP_DEL_NODE:

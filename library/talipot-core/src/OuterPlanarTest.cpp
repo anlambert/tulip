@@ -55,6 +55,7 @@ void OuterPlanarTestListener::treatEvent(const Event &evt) {
           return;
         }
       }
+      [[fallthrough]];
 
     case GraphEvent::TLP_REVERSE_EDGE:
       graph->removeListener(this);

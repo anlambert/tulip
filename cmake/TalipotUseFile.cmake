@@ -132,14 +132,6 @@ MACRO(TALIPOT_SET_COMPILER_OPTIONS_AND_DEFINITIONS)
       "-Wall -Wextra -Wunused -Wno-long-long -Wold-style-cast")
     IF(NOT APPLE)
       TALIPOT_SET_CXX_FLAGS("-pedantic")
-      # disable annoying GCC 7.x compilation warnings
-      IF(NOT CLANG)
-        IF(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 7.0.0
-           OR CMAKE_CXX_COMPILER_VERSION VERSION_EQUAL 7.0.0)
-          TALIPOT_SET_CXX_FLAGS("-Wimplicit-fallthrough=0")
-        ENDIF(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 7.0.0
-              OR CMAKE_CXX_COMPILER_VERSION VERSION_EQUAL 7.0.0)
-      ENDIF(NOT CLANG)
     ENDIF(NOT APPLE)
 
     IF(BSD)
