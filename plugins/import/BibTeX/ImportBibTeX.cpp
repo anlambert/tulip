@@ -20,8 +20,6 @@
 #include <xdkbibtex/formatter.h>
 #include <xdkbibtex/author.h>
 
-#include <cstring>
-
 using namespace std;
 using namespace tlp;
 
@@ -30,52 +28,6 @@ using namespace tlp;
 #define IMPORT_PUBLICATIONS 2
 
 #define NODES_TO_IMPORT "Authors;Authors & Publications;Publications"
-
-#if defined(_MSC_VER) && !defined(strtok_r)
-#define strtok_r strtok_s
-#endif
-#if defined(strtok_r) && defined(_WIN32) && defined(__GNUC__) && \
-    ((__GNUC__ * 100 + __GNUC__MINOR) < 409)
-// in MINGW environment
-// strtok_r is declared in pthread.h instead of string.h
-// and is a not reentrant macro so use a public domain version
-#undef strtok_r
-/*
- * public domain strtok_r() by Charlie Gordon
- *
- *   from comp.lang.c  9/14/2007
- *
- *      http://groups.google.com/group/comp.lang.c/msg/2ab1ecbb86646684
- *
- *     (Declaration that it's public domain):
- *      http://groups.google.com/group/comp.lang.c/msg/7c7b39328fefab9c
- */
-static char *strtok_r(char *str, const char *delim, char **nextp) {
-  char *ret;
-
-  if (str == nullptr) {
-    str = *nextp;
-  }
-
-  str += strspn(str, delim);
-
-  if (*str == '\0') {
-    return nullptr;
-  }
-
-  ret = str;
-
-  str += strcspn(str, delim);
-
-  if (*str) {
-    *str++ = '\0';
-  }
-
-  *nextp = str;
-
-  return ret;
-}
-#endif
 
 extern string &forceUtf8String(string &);
 extern string &normalizeString(string &);
@@ -145,17 +97,9 @@ public:
     StringProperty *keyProp = oneEdgePerPubli ? graph->getStringProperty("key") : nullptr;
     StringProperty *typeProp = oneEdgePerPubli ? graph->getStringProperty("type") : nullptr;
     IntegerProperty *yearProp = oneEdgePerPubli ? graph->getIntegerProperty("year") : nullptr;
-    BooleanProperty *fromLabriProp =
-        createAuthNodes ? graph->getBooleanProperty("from LaBRI") : nullptr;
-    IntegerVectorProperty *labriAuthorsProp =
-        createPubliNodes ? graph->getIntegerVectorProperty("LaBRI authors") : nullptr;
-    StringVectorProperty *labriTeamsProp =
-        createPubliNodes ? graph->getStringVectorProperty("LaBRI teams") : nullptr;
     StringVectorProperty *authProp =
         createPubliNodes ? graph->getStringVectorProperty("authors") : nullptr;
     StringProperty *authNameProp = createAuthNodes ? graph->getStringProperty("name") : nullptr;
-    StringProperty *labriTeamProp =
-        createAuthNodes ? graph->getStringProperty("LaBRI team") : nullptr;
     IntegerProperty *countProp =
         createAuthNodes ? graph->getIntegerProperty("# publications") : nullptr;
 
@@ -262,47 +206,6 @@ public:
           }
 
           if (isAuthor) {
-            // author
-            char *labriAuthors = nullptr;
-            char *labriTeams = nullptr;
-            string authorsComments;
-            string teamsComments;
-            vector<int> indices;
-            // look for laBRI specific attributes in comments
-            size_t pos = fe.comment().find("LaBRI: ");
-
-            if (pos != string::npos) {
-              authorsComments = fe.comment().substr(pos + 7);
-              labriAuthors = const_cast<char *>(authorsComments.c_str());
-              pos = fe.comment().find("LaBRI: ", pos + 7);
-
-              if (pos != string::npos) {
-                teamsComments = fe.comment().substr(pos + 7);
-                labriTeams = const_cast<char *>(teamsComments.c_str());
-              }
-            }
-
-            // get teams
-            vector<string> teams;
-
-            if (labriTeams) {
-              char *teamsPtr;
-              char *token = strtok_r(labriTeams, " \n", &teamsPtr);
-
-              while (token) {
-                teams.push_back(string(token));
-                token = strtok_r(nullptr, " \n", &teamsPtr);
-              }
-
-              if (createPubliNodes) {
-                labriTeamsProp->setNodeValue(publi, teams);
-              }
-            }
-
-            char *authorsPtr;
-            unsigned int labriIndex =
-                labriAuthors ? (atoi(strtok_r(labriAuthors, " \n", &authorsPtr)) - 1) : 0;
-            unsigned int teamIndex = 0;
             // add authors
             xdkbib::AuthorList authors;
             authors.readFrom(fe.field("author").value().c_str());
@@ -310,13 +213,6 @@ public:
             vector<node> authorNodes;
 
             for (unsigned int j = 0; j < authors.size(); ++j) {
-              bool labriAuthor = labriAuthors && j == labriIndex;
-
-              if (labriAuthor) {
-                indices.push_back(int(labriIndex));
-                char *token = strtok_r(nullptr, " \n", &authorsPtr);
-                labriIndex = token ? (atoi(token) - 1) : 0;
-              }
 
               xdkbib::Author &auth = authors[j];
               vector<string> firstNames = auth.first();
@@ -328,15 +224,12 @@ public:
 
                 if (k) {
                   aName += " ";
-
-                  if (!labriAuthor) {
-                    aKey += " ";
-                  }
+                  aKey += " ";
                 }
 
                 aName += firstName;
 
-                if (k == 0 || !labriAuthor) {
+                if (k == 0) {
                   // keep only the first letter and a dot for the key
                   firstName.resize(2);
                   firstName.replace(1, 1, ".");
@@ -370,23 +263,9 @@ public:
                 authorNodes.push_back(author = graph->addNode());
                 authorsMap[aKey] = author;
                 authNameProp->setNodeValue(author, aName);
-
-                if (labriAuthor && labriTeams) {
-                  labriTeamProp->setNodeValue(author, teams[teamIndex]);
-                }
-
                 label->setNodeValue(author, aName);
                 icon->setNodeValue(author, FontAwesome::Solid::User);
                 countProp->setNodeValue(author, 1);
-              }
-
-              if (labriAuthor) {
-                fromLabriProp->setNodeValue(author, true);
-                color->setNodeValue(author, Color::Aquamarine);
-
-                if (labriTeams) {
-                  ++teamIndex;
-                }
               }
 
               if (createPubliNodes) {
@@ -400,8 +279,6 @@ public:
             if (createPubliNodes) {
               // store authors
               authProp->setNodeValue(publi, authPropValue);
-              // store Labri authors
-              labriAuthorsProp->setNodeValue(publi, indices);
             } else {
               // display a warning for publication without author
               if (authorNodes.empty()) {
@@ -472,28 +349,8 @@ public:
       pluginProgress->setError(sstr.str());
     }
 
-    // remove unused properties
-    if (createPubliNodes) {
-      if (!labriTeamsProp->hasNonDefaultValuatedNodes()) {
-        graph->delLocalProperty(labriTeamsProp->getName());
-      }
-
-      if (!labriAuthorsProp->hasNonDefaultValuatedNodes()) {
-        graph->delLocalProperty(labriAuthorsProp->getName());
-      }
-    }
-
-    // layout graph with a bubble tree
+    // layout graph with FM^3
     if (createAuthNodes) {
-      // delete labri specific properties if not used
-      if (!labriTeamProp->hasNonDefaultValuatedNodes()) {
-        graph->delLocalProperty(labriTeamProp->getName());
-      }
-
-      if (!fromLabriProp->hasNonDefaultValuatedNodes()) {
-        graph->delLocalProperty(fromLabriProp->getName());
-      }
-
       string err;
       return graph->applyPropertyAlgorithm("FM^3 (OGDF)", graph->getLayoutProperty("viewLayout"),
                                            err, nullptr, pluginProgress);
