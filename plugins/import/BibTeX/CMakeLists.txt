@@ -6,6 +6,8 @@ TALIPOT_ADD_PLUGIN(
   BibTeXImport
   SRCS
   ImportBibTeX.cpp
+  ForceUtf8String.cpp
+  NormalizeString.cpp
   LINKS
   ${LibTalipotCoreName}
   xdkbibtex
