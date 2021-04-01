@@ -12,10 +12,10 @@ echo TALIPOT_BUILD_CORE_ONLY=%TALIPOT_BUILD_CORE_ONLY%
 
 rem let's compile clcache in order to speedup incremental builds
 cd C:/
-set PATH=C:/Python35-x64;C:/Python35-x64/Scripts;%PATH%
+set PATH=C:/Python39-x64;C:/Python39-x64/Scripts;%PATH%
 pip install clcache
 set CLCACHE_MSBUILD_CONF=/p:TrackFileAccess=false /p:CLToolExe=clcache.exe^
-  /p:CLToolPath=C:\Python35-x64\Scripts
+  /p:CLToolPath=C:\Python39-x64\Scripts
 
 rem create a directory to store some Talipot dependencies
 cd C:/ && md talipot_dependencies
