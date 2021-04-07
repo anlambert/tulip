@@ -64,6 +64,7 @@ The following dependencies are required to build Talipot:
   [Clang](https://clang.llvm.org) >= 5 or
   [Microsoft Visual Studio](https://www.visualstudio.com) >= 2017
   * [FreeType](https://www.freetype.org)
+  * [FriBidi](https://github.com/fribidi/fribidi)
   * [Fontconfig](https://www.freedesktop.org/wiki/Software/fontconfig/)
   * [zlib](https://zlib.net)
   * [zstd](https://github.com/facebook/zstd)
