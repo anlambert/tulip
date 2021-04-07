@@ -838,6 +838,11 @@ AlgorithmRunner #searchBox {
   gridline-color: #c4c9cd;
 }
 
+#TableView QTableView::item {
+  border: 0px;
+  padding-left: 2px;
+}
+
 #TableView #frame_3 {
   padding-top: 5px;
 }

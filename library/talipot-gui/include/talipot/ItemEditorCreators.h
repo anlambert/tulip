@@ -29,6 +29,8 @@ class QModelIndex;
 
 namespace tlp {
 
+static const int cellPadding = 2;
+
 class PropertyInterface;
 
 class TLP_QT_SCOPE ItemEditorCreator {

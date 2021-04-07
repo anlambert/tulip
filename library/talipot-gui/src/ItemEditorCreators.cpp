@@ -643,6 +643,8 @@ bool FontIconCreator::paint(QPainter *painter, const QStyleOptionViewItem &optio
   opt.icon = FontIconManager::icon(iconName);
   opt.decorationSize = opt.icon.actualSize(QSize(16, 16));
   opt.text = displayText(v);
+  opt.rect = {opt.rect.x() + cellPadding, opt.rect.y(), opt.rect.width() - cellPadding,
+              opt.rect.height()};
 
   QStyle *style = QApplication::style();
   style->drawControl(QStyle::CE_ItemViewItem, &opt, painter, nullptr);
@@ -717,6 +719,8 @@ bool NodeShapeEditorCreator::paint(QPainter *painter, const QStyleOptionViewItem
   opt.icon = QIcon(pixmap);
   opt.decorationSize = pixmap.size();
   opt.text = displayText(data);
+  opt.rect = {opt.rect.x() + cellPadding, opt.rect.y(), opt.rect.width() - cellPadding,
+              opt.rect.height()};
 
   QStyle *style = QApplication::style();
   style->drawControl(QStyle::CE_ItemViewItem, &opt, painter, nullptr);
@@ -780,6 +784,8 @@ bool EdgeExtremityShapeEditorCreator::paint(QPainter *painter, const QStyleOptio
   opt.icon = QIcon(pixmap);
   opt.decorationSize = pixmap.size();
   opt.text = displayText(data);
+  opt.rect = {opt.rect.x() + cellPadding, opt.rect.y(), opt.rect.width() - cellPadding,
+              opt.rect.height()};
 
   QStyle *style = QApplication::style();
   style->drawControl(QStyle::CE_ItemViewItem, &opt, painter, nullptr);
@@ -852,11 +858,14 @@ bool FontEditorCreator::paint(QPainter *painter, const QStyleOptionViewItem &opt
   QFont qFont = option.font;
   qFont.setFamily(tlpStringToQString(font.fontFamily()));
   qFont.setStyleName(tlpStringToQString(font.fontStyle()));
+  qFont.setPointSize(9);
   painter->setFont(qFont);
   if (option.state.testFlag(QStyle::State_Selected) && option.showDecorationSelected) {
     painter->setPen(option.palette.highlightedText().color());
   }
-  painter->drawText(option.rect, displayText(v), QTextOption(Qt::AlignCenter));
+  QRect rect = {option.rect.x() + cellPadding, option.rect.y(), option.rect.width() - cellPadding,
+                option.rect.height()};
+  painter->drawText(rect, displayText(v), QTextOption(Qt::AlignCenter));
   return true;
 }
 
