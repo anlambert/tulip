@@ -833,8 +833,9 @@ AlgorithmRunner #searchBox {
   background: rgb(160, 160, 160);
 }
 
-#TableView QAbstractItemView {
+#TableView QTableView {
   border: none;
+  gridline-color: #c4c9cd;
 }
 
 #TableView #frame_3 {
