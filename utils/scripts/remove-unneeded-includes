@@ -1,0 +1,116 @@
+#!/usr/bin/env python
+
+# Copyright (C) 2021  The Talipot developers
+#
+# Talipot is a fork of Tulip, created by David Auber
+# and the Tulip development Team from LaBRI, University of Bordeaux
+#
+# See the AUTHORS file at the top-level directory of this distribution
+# License: GNU General Public License version 3, or any later version
+# See top-level LICENSE file for more information
+
+import errno
+import json
+import os
+import pty
+from subprocess import Popen
+import sys
+
+# Script to remove unneeded includes in C++ source files by using
+# the deheader tool (http://catb.org/~esr/deheader/).
+# It uses a brute force strategy by removing includes one by one
+# in source files and checking if compilation is still successful.
+
+# Usage: $ ./remove-unneeded-includes <compile_commands_file>
+#
+# A compile commands file can be generated with cmake the following way:
+# $ cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .
+#
+# Only tested on linux so far.
+
+
+class OutputStream:
+    """Helper class to read lines from a program output while
+    it is running
+
+    Args:
+        fileno (int): File descriptor of a program output stream
+            opened in text mode
+    """
+
+    def __init__(self, fileno):
+        self._fileno = fileno
+        self._buffer = ""
+
+    def read_lines(self):
+        """
+        Read available lines from the output stream and return them.
+
+        Returns:
+            Tuple[List[str], bool]: A tuple whose first member is the read
+                lines and second member a boolean indicating if there are
+                still some other lines available to read.
+        """
+        try:
+            output = os.read(self._fileno, 1000).decode()
+        except OSError as e:
+            if e.errno != errno.EIO:
+                raise
+            output = ""
+        output = output.replace("\r\n", "\n")
+        lines = output.split("\n")
+        lines[0] = self._buffer + lines[0]
+
+        if output:
+            self._buffer = lines[-1]
+            return (lines[:-1], True)
+        else:
+            self._buffer = ""
+            if len(lines) == 1 and not lines[0]:
+                lines = []
+            return (lines, False)
+
+
+if len(sys.argv) != 2:
+    print("Usage: %s <compile_commands_file>" % sys.argv[0])
+    exit(0)
+
+with open(sys.argv[1]) as cc_file:
+    compile_commands = json.load(cc_file)
+
+for compile_command in compile_commands:
+    if any(
+        [
+            pattern in compile_command["file"]
+            for pattern in ("/thirdparty/", "/moc_", "/qrc_", "/sip_")
+        ]
+    ):
+        continue
+
+    cxxflags = compile_command["command"].replace("/usr/bin/c++  ", "")
+    cxxflags = cxxflags[: cxxflags.find("-o ")]
+
+    deheader_cmd = [
+        "deheader",
+        "-r",
+        "-v",
+        compile_command["file"],
+    ]
+    deheader_path = os.path.join(os.path.dirname(__file__), "deheader")
+
+    stdout_r, stdout_w = pty.openpty()
+    deheader = Popen(
+        deheader_cmd,
+        stdout=stdout_w,
+        env={"CXX": "/usr/bin/c++", "CXXFLAGS": cxxflags},
+        cwd=deheader_path,
+    )
+    os.close(stdout_w)
+    stdout_stream = OutputStream(stdout_r)
+    readable = True
+    while readable:
+        lines, readable = stdout_stream.read_lines()
+        for line in lines:
+            print(line)
+    deheader.wait()
+    os.close(stdout_r)

@@ -1,0 +1,56 @@
+			deheader project news
+
+1.7: 2020-08-12
+    Use moern GCC error format for failure messages.
+    Fix filename of header for (f)statvfs.
+
+1.6: 2016-09-30
+    Fix bug that prevented the -b option from being interpreted.
+    Acknowledge Debian bug #839179: keywords in comments not ignored.
+
+1.5: 2016-09-27
+    exit(1) if unneeded includes are detected (useful in Makefiles).
+
+1.4: 2016-09-01
+    Now runs polyglot under either Python 2 or Python 3
+    Added assert() to requirements.
+
+1.3 @ 2016-01-12
+    When compilation fails, also try it directly inside subdirectories.
+
+1.2 @ 2015-07-18
+    Notice preprocessor directives with whitespace after the hash-mark
+    
+1.1 @ 2015-01-26
+    Allow --version on the command line. Fix up the regression tests.  
+
+1.0 @ 2014-06-03
+    Added --quiet option.
+
+0.8 @ 2013-09-14
+    Minor documentation fixes.
+
+0.7 @ 2013-01-22
+    Accept .cc as an extension as well as .cpp.
+
+0.6 @ 2011-02-10
+    Add the return-status macros from sys/wait.h to the portability list.
+
+0.5 @ 2010-12-22
+    Source is now checked against all SuS portability requirements.
+    There is an option to exclude files by pattern.
+
+0.4 @ 2010-12-20
+    Script now removes generated objects.
+    Duplicate inclusions are now detected.
+    Absence of some headers required for portability is now detected.
+
+0.3 @ 2010-12-09
+    Add a dependencies table to head off common cross-platform problems.
+
+0.2 @ 2010-12-02
+    Make the last line of output a statistical summary.
+    Document some limitations.
+
+0.1 @ 2010-12-01
+    Initial release.
