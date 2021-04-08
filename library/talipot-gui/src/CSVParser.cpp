@@ -14,13 +14,8 @@
 #include <QTextCodec>
 
 #include <talipot/CSVParser.h>
-#include <talipot/TlpTools.h>
 #include <talipot/TlpQtTools.h>
 #include <talipot/PluginProgress.h>
-
-#include <fstream>
-#include <cassert>
-#include <locale>
 
 using namespace std;
 using namespace tlp;

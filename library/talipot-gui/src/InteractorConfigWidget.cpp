@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -14,11 +14,8 @@
 #include <talipot/InteractorConfigWidget.h>
 #include "ui_InteractorConfigWidget.h"
 
-#include <QScrollArea>
 #include <QLabel>
-#include <QShowEvent>
 
-#include <talipot/TlpQtTools.h>
 #include <talipot/Interactor.h>
 
 using namespace tlp;

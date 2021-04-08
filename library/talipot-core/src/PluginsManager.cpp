@@ -11,9 +11,7 @@
  *
  */
 
-#include <cstdlib>
 #include <talipot/PluginsManager.h>
-#include <talipot/PluginLoader.h>
 #include <talipot/PluginLibraryLoader.h>
 
 using namespace tlp;

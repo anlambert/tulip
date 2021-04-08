@@ -12,7 +12,6 @@
  */
 
 #include <talipot/Plugin.h>
-#include <talipot/TlpTools.h>
 
 using namespace tlp;
 using namespace std;

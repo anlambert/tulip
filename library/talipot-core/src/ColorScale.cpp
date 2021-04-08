@@ -11,7 +11,6 @@
  *
  */
 
-#include <algorithm>
 #include <talipot/ColorScale.h>
 
 using namespace std;

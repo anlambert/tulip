@@ -13,45 +13,22 @@
 
 #include <talipot/PythonInterpreter.h>
 
-#include <QFile>
-#include <QTextStream>
 #include <QMessageBox>
 #include <QFileDialog>
-#include <QTextBlock>
 #include <QInputDialog>
-#include <QLineEdit>
 #include <QXmlStreamReader>
 #include <QMainWindow>
 #include <QCryptographicHash>
-#include <QByteArray>
-#include <QRegExp>
 
-#include <talipot/Graph.h>
-#include <talipot/DoubleProperty.h>
-#include <talipot/LayoutProperty.h>
-#include <talipot/ColorProperty.h>
-#include <talipot/StringProperty.h>
-#include <talipot/SizeProperty.h>
-#include <talipot/BooleanProperty.h>
-#include <talipot/IntegerProperty.h>
-#include <talipot/GraphProperty.h>
 #include <talipot/Algorithm.h>
-#include <talipot/ImportModule.h>
-#include <talipot/ExportModule.h>
-#include <talipot/PluginsManager.h>
-#include <talipot/PythonCodeEditor.h>
-#include <talipot/PluginsManager.h>
 #include <talipot/Project.h>
-#include <talipot/TlpQtTools.h>
 #include <talipot/GraphHierarchiesModel.h>
 #include <talipot/Mimes.h>
 #include <talipot/MetaTypes.h>
 #include <talipot/FontIconManager.h>
-#include <talipot/MaterialDesignIcons.h>
 
 #include <talipot/PythonIDE.h>
 #include <talipot/PythonPluginCreationDialog.h>
-#include <talipot/PythonEditorsTabWidget.h>
 #include <talipot/PythonShellWidget.h>
 
 #include "ui_PythonIDE.h"

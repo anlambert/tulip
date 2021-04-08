@@ -11,27 +11,20 @@
  *
  */
 
-#include <GL/glew.h>
-
 #include "talipot/SnapshotDialog.h"
 #include "ui_SnapshotDialog.h"
 
-#include <QLabel>
-#include <QEvent>
 #include <QMessageBox>
 #include <QImageWriter>
 #include <QFileDialog>
 #include <QGraphicsItem>
 #include <QClipboard>
 #include <QGraphicsScene>
-#include <QPixmap>
 #include <QPushButton>
-#include <QVBoxLayout>
 
 #include <talipot/View.h>
 #include <talipot/GlOffscreenRenderer.h>
 #include <talipot/FontIconManager.h>
-#include <talipot/MaterialDesignIcons.h>
 
 using namespace std;
 

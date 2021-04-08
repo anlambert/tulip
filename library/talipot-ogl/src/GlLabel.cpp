@@ -21,23 +21,11 @@
 #endif
 
 #include <talipot/GlLabel.h>
-#include <talipot/Coord.h>
-#include <talipot/LayoutProperty.h>
-#include <talipot/DoubleProperty.h>
-#include <talipot/StringProperty.h>
-#include <talipot/BooleanProperty.h>
-#include <talipot/SizeProperty.h>
-#include <talipot/IntegerProperty.h>
-#include <talipot/ColorProperty.h>
-#include <talipot/GlTools.h>
-#include <talipot/GlyphManager.h>
 #include <talipot/OcclusionTest.h>
 #include <talipot/OcclusionTest.h>
 #include <talipot/GlTextureManager.h>
 #include <talipot/GlXMLTools.h>
-#include <talipot/TlpTools.h>
 #include <talipot/ViewSettings.h>
-#include <talipot/ParallelTools.h>
 
 #include <fribidi/fribidi.h>
 

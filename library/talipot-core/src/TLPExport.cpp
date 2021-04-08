@@ -11,21 +11,8 @@
  *
  */
 
-#include <iostream>
-#include <set>
-#include <sstream>
-#include <string>
-#include <ctime>
-
 #include <talipot/ExportModule.h>
-#include <talipot/Graph.h>
 #include <talipot/GraphProperty.h>
-#include <talipot/TlpTools.h>
-#include <talipot/MutableContainer.h>
-#include <talipot/StringCollection.h>
-#include <talipot/Release.h>
-#include <talipot/PropertyTypes.h>
-#include <talipot/StableIterator.h>
 
 #define TLP_FILE_VERSION "2.3"
 

@@ -19,7 +19,6 @@
 #include "talipot/PythonIncludes.h"
 #include "talipot/PythonInterpreter.h"
 
-#include <talipot/PluginsManager.h>
 #include <talipot/TlpQtTools.h>
 #include <talipot/Workspace.h>
 

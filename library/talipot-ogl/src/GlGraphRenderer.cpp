@@ -12,14 +12,6 @@
  */
 
 #include <talipot/GlGraphRenderer.h>
-#include <talipot/GraphProperty.h>
-#include <talipot/GlTools.h>
-#include <talipot/GlScene.h>
-#include <talipot/GlVertexArrayManager.h>
-#include <talipot/GlSceneVisitor.h>
-#include <talipot/GlNode.h>
-#include <talipot/GlEdge.h>
-#include <talipot/GlGraphInputData.h>
 #include <talipot/GlGraphRenderingParameters.h>
 #include <talipot/GraphParallelTools.h>
 

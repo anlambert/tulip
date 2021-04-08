@@ -13,13 +13,10 @@
 
 #include "talipot/GlOverviewGraphicsItem.h"
 
-#include <QMenu>
-#include <QMessageBox>
 #include <QGraphicsSceneMouseEvent>
 #include <QPen>
 
 #include <talipot/GlOffscreenRenderer.h>
-#include <talipot/GlWidget.h>
 #include <talipot/GlView.h>
 #include <talipot/GlGraph.h>
 #include <talipot/GlOffscreenRenderer.h>

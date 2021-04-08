@@ -12,15 +12,9 @@
  */
 
 #include <talipot/GlMetaNodeRenderer.h>
-#include <talipot/GlGraphInputData.h>
-#include <talipot/GlScene.h>
 #include <talipot/GlCPULODCalculator.h>
-#include <talipot/GlNode.h>
 #include <talipot/GlGraph.h>
 #include <talipot/Glyph.h>
-#include <talipot/Camera.h>
-
-#include <talipot/OpenGlIncludes.h>
 
 using namespace std;
 

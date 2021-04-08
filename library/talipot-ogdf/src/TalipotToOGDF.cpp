@@ -12,13 +12,10 @@
  */
 
 #include <talipot/TalipotToOGDF.h>
-#include <talipot/PropertyTypes.h>
 #include <talipot/LayoutProperty.h>
 #include <talipot/SizeProperty.h>
 #include <talipot/NumericProperty.h>
 #include <talipot/SimpleTest.h>
-
-#include <ogdf/basic/geometry.h>
 
 using namespace std;
 using namespace tlp;

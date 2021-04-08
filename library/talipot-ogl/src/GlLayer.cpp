@@ -11,11 +11,7 @@
  *
  */
 
-#include <talipot/GlLayer.h>
 #include <talipot/GlXMLTools.h>
-#include <talipot/Camera.h>
-#include <talipot/GlSceneVisitor.h>
-#include <talipot/GlScene.h>
 #include <talipot/GlGraph.h>
 
 using namespace std;

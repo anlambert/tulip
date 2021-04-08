@@ -12,19 +12,14 @@
  */
 
 #include "talipot/CSVImportWizard.h"
-#include "talipot/CSVImportConfigurationWidget.h"
 #include "ui_CSVImportConfigurationWidget.h"
 #include "ui_CSVPropertyDialog.h"
 
-#include <QLabel>
 #include <QPainter>
 #include <QPushButton>
-#include <QStyleOptionButton>
 #include <QStylePainter>
 
 #include <talipot/CSVParser.h>
-#include <talipot/CSVGraphImport.h>
-#include <talipot/TlpQtTools.h>
 #include <talipot/SimplePluginProgressWidget.h>
 #include <talipot/ColorProperty.h>
 #include <talipot/IntegerProperty.h>

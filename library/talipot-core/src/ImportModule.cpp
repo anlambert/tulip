@@ -12,10 +12,8 @@
  */
 
 #include <talipot/ImportModule.h>
-#include <talipot/TlpTools.h>
 #include <talipot/PluginProgress.h>
 
-#include <cerrno>
 #include <cstring>
 
 using namespace std;

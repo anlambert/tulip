@@ -16,13 +16,8 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QApplication>
 #include <QGraphicsProxyWidget>
-#include <QContextMenuEvent>
-#include <QGraphicsScene>
 #include <QPainter>
 
-#include <talipot/GlTextureManager.h>
-#include <talipot/GlQuad.h>
-#include <talipot/GlTools.h>
 #include <talipot/GlWidget.h>
 #include <talipot/GlOffscreenRenderer.h>
 

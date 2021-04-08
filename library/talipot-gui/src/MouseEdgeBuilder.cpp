@@ -13,16 +13,9 @@
 
 #include <QMouseEvent>
 
-#include <talipot/Graph.h>
-#include <talipot/LayoutProperty.h>
-#include <talipot/ColorProperty.h>
 #include <talipot/GlWidget.h>
-#include <talipot/GlView.h>
-#include <talipot/GlTools.h>
 #include <talipot/GlLine.h>
-#include <talipot/GlGraph.h>
 #include <talipot/MouseEdgeBuilder.h>
-#include <talipot/Camera.h>
 
 using namespace std;
 using namespace tlp;

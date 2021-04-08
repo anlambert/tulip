@@ -13,54 +13,27 @@
 
 #include <GL/glew.h>
 
-#include <talipot/TlpQtTools.h>
-
-#include <ostream>
-#include <ios>
-#include <unordered_map>
-#include <memory>
-
-#include <QDebug>
 #include <QColorDialog>
-#include <QAbstractButton>
-#include <QMessageBox>
-#include <QImage>
-#include <QEvent>
 #include <QMetaEnum>
 #include <QApplication>
 #include <QDir>
 #include <QApplication>
 #include <QStandardPaths>
 #include <QMainWindow>
-#include <QPalette>
 #include <QFontDatabase>
 #include <QLayout>
 
-#include <talipot/DataSet.h>
 #include <talipot/Settings.h>
 #include <talipot/Interactor.h>
-#include <talipot/View.h>
-#include <talipot/BooleanProperty.h>
-#include <talipot/ColorProperty.h>
-#include <talipot/DoubleProperty.h>
-#include <talipot/GraphProperty.h>
-#include <talipot/IntegerProperty.h>
-#include <talipot/LayoutProperty.h>
-#include <talipot/SizeProperty.h>
-#include <talipot/StringProperty.h>
 #include <talipot/SystemDefinition.h>
-#include <talipot/TlpTools.h>
 #include <talipot/PluginLibraryLoader.h>
 #include <talipot/GlyphManager.h>
 #include <talipot/EdgeExtremityGlyphManager.h>
 #include <talipot/OpenGlConfigManager.h>
 #include <talipot/GlTextureManager.h>
-#include <talipot/MetaTypes.h>
-#include <talipot/PythonVersionChecker.h>
 #include <talipot/FileDownloader.h>
 #include <talipot/ItemEditorCreators.h>
 #include <talipot/GlOffscreenRenderer.h>
-#include <talipot/Font.h>
 
 /**
  * For openDataSetDialog function : see OpenDataSet.cpp

@@ -13,13 +13,9 @@
 
 #include <talipot/ParameterListModel.h>
 #include <talipot/MetaTypes.h>
-#include <talipot/TlpQtTools.h>
 #include <talipot/FontIconManager.h>
 #include <talipot/MaterialDesignIcons.h>
 
-#include <QColor>
-#include <QModelIndex>
-#include <QIcon>
 #include <QPainter>
 
 namespace tlp {

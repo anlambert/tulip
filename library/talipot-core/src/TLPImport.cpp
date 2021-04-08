@@ -11,11 +11,6 @@
  *
  */
 
-#include <fstream>
-#include <string>
-#include <vector>
-#include <cerrno>
-
 #include <talipot/GraphImpl.h>
 #include <talipot/BooleanProperty.h>
 #include <talipot/ColorProperty.h>
@@ -24,11 +19,8 @@
 #include <talipot/ImportModule.h>
 #include <talipot/IntegerProperty.h>
 #include <talipot/LayoutProperty.h>
-#include <talipot/Release.h>
-#include <talipot/PropertyTypes.h>
 #include <talipot/SizeProperty.h>
 #include <talipot/StringProperty.h>
-#include <talipot/TlpTools.h>
 #include <talipot/TLPParser.h>
 
 #define TLP "tlp"

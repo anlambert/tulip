@@ -11,7 +11,6 @@
  *
  */
 
-#include <talipot/PropertyTypes.h>
 #include "talipot/MetaTypes.h"
 #include "talipot/TlpQtTools.h"
 
@@ -141,8 +140,6 @@ tlp::DataType *MetaTypes::qVariantToDataType(const QVariant &v) {
 #define CHECK_DATATYPE(TYPE)       \
   if (type == typeid(TYPE).name()) \
     return typedVariant<TYPE>(dm);
-
-#include <QDebug>
 
 QVariant MetaTypes::dataTypeToQvariant(tlp::DataType *dm, const std::string &paramName) {
   std::string type = dm->getTypeName();

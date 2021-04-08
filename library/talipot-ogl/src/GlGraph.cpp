@@ -14,11 +14,7 @@
 #include <talipot/GlGraph.h>
 #include <talipot/GraphProperty.h>
 #include <talipot/GlXMLTools.h>
-#include <talipot/GlTools.h>
-#include <talipot/GlScene.h>
-#include <talipot/GlVertexArrayManager.h>
 #include <talipot/GlBoundingBoxSceneVisitor.h>
-#include <talipot/OcclusionTest.h>
 #include <talipot/GlGraphHighDetailsRenderer.h>
 
 using namespace std;

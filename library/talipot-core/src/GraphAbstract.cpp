@@ -14,13 +14,10 @@
 #include <talipot/GraphAbstract.h>
 #include <talipot/PropertyManager.h>
 #include <talipot/GraphProperty.h>
-#include <talipot/StlIterator.h>
 #include <talipot/StableIterator.h>
 #include <talipot/GraphView.h>
-#include <talipot/GraphImpl.h>
 #include <talipot/ConcatIterator.h>
 #include <talipot/GraphTools.h>
-#include <talipot/TlpTools.h>
 
 using namespace std;
 using namespace tlp;

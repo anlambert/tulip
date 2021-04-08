@@ -12,14 +12,9 @@
  */
 
 #include <iomanip>
-#include <fstream>
 #include <stack>
-#include <unordered_map>
 #include <unordered_set>
 
-#include <talipot/StlIterator.h>
-#include <talipot/TlpTools.h>
-#include <talipot/Graph.h>
 #include <talipot/GraphImpl.h>
 #include <talipot/BooleanProperty.h>
 #include <talipot/ColorProperty.h>
@@ -29,12 +24,9 @@
 #include <talipot/LayoutProperty.h>
 #include <talipot/SizeProperty.h>
 #include <talipot/StringProperty.h>
-#include <talipot/DataSet.h>
 #include <talipot/ExportModule.h>
-#include <talipot/Algorithm.h>
 #include <talipot/ImportModule.h>
 #include <talipot/SimplePluginProgress.h>
-#include <talipot/BoundingBox.h>
 #include <talipot/DrawingTools.h>
 #include <talipot/ViewSettings.h>
 #include <talipot/VectorGraph.h>

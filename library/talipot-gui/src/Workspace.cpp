@@ -13,14 +13,10 @@
 
 #include "talipot/Workspace.h"
 
-#include <QPainter>
-#include <QPaintEvent>
-#include <QGraphicsView>
-#include <QGraphicsEffect>
-#include <QGraphicsSceneDragDropEvent>
+#include <QDragEnterEvent>
+#include <QDropEvent>
 #include <QTimer>
 #include <QXmlStreamWriter>
-#include <QXmlStreamReader>
 
 #include <talipot/MetaTypes.h>
 #include <talipot/View.h>
@@ -28,9 +24,7 @@
 #include <talipot/Project.h>
 #include <talipot/Mimes.h>
 #include <talipot/GraphHierarchiesModel.h>
-#include <talipot/TlpQtTools.h>
 #include <talipot/FontIconManager.h>
-#include <talipot/MaterialDesignIcons.h>
 
 #include "ui_Workspace.h"
 

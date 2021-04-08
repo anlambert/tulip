@@ -14,29 +14,15 @@
 #include "talipot/QuickAccessBar.h"
 
 #include <QFontDatabase>
-#include <QComboBox>
-#include <QDebug>
-#include <QListView>
-#include <QMainWindow>
-#include <QMouseEvent>
-#include <QApplication>
 #include <QGraphicsView>
 
-#include <talipot/GraphPropertiesModel.h>
 #include <talipot/GraphModel.h>
 #include <talipot/FontDialog.h>
-#include <talipot/ColorProperty.h>
 #include <talipot/GlGraph.h>
-#include <talipot/GlGraphRenderingParameters.h>
-#include <talipot/TlpQtTools.h>
-#include <talipot/GlWidget.h>
 #include <talipot/GlView.h>
-#include <talipot/GlGraphInputData.h>
 #include <talipot/SnapshotDialog.h>
 #include <talipot/ItemDelegate.h>
 #include <talipot/CaptionGraphicsSubItems.h>
-#include <talipot/FontIconManager.h>
-#include <talipot/MaterialDesignIcons.h>
 
 using namespace tlp;
 

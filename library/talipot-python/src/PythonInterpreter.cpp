@@ -20,14 +20,7 @@
 #include "talipot/PythonInterpreter.h"
 #include "ConsoleHandlers.h"
 
-#include <sstream>
-#include <string>
-
 #include <QMessageBox>
-#include <QApplication>
-#include <QLibrary>
-#include <QElapsedTimer>
-#include <QTextStream>
 #include <QMutex>
 #include <QWaitCondition>
 #include <QDir>
@@ -36,11 +29,8 @@
 #endif
 
 #include <talipot/Release.h>
-#include <talipot/TlpTools.h>
 #include <talipot/PythonVersionChecker.h>
-#include <talipot/TlpQtTools.h>
 
-#include <cstdio>
 #ifndef WIN32
 #include <dlfcn.h>
 #else

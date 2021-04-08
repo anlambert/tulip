@@ -13,16 +13,10 @@
 
 #include "talipot/IconicFont.h"
 #include "talipot/FontIconManager.h"
-#include "talipot/TlpQtTools.h"
 
-#include <QFile>
 #include <QFontDatabase>
 #include <QPainter>
 #include <QIconEngine>
-#include <QPixmap>
-#include <QFont>
-#include <QVariantMap>
-#include <QMap>
 #include <QScreen>
 #include <QGuiApplication>
 

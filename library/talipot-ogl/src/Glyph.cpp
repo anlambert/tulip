@@ -11,9 +11,6 @@
  *
  */
 
-#include <talipot/BoundingBox.h>
-#include <talipot/Size.h>
-#include <talipot/Coord.h>
 #include <talipot/Glyph.h>
 #include <talipot/GlRect.h>
 

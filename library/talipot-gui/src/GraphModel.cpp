@@ -11,16 +11,9 @@
  *
  */
 
-#include <algorithm>
-
 #include "talipot/GraphModel.h"
 
-#include <QIcon>
-
-#include <talipot/BooleanProperty.h>
-#include <talipot/Graph.h>
 #include <talipot/MetaTypes.h>
-#include <talipot/TlpQtTools.h>
 #include <talipot/FontIconManager.h>
 #include <talipot/MaterialDesignIcons.h>
 

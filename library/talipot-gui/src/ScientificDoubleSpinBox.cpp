@@ -2,13 +2,10 @@
 // https://jdreaver.com/posts/2014-07-28-scientific-notation-spin-box-pyside.html
 // see also https://gist.github.com/jdreaver/0be2e44981159d0854f5
 
-#include <cfloat>
-
 #include <talipot/ScientificDoubleSpinBox.h>
 #include <talipot/PropertyTypes.h>
 #include <talipot/TlpQtTools.h>
 
-#include <QRegExp>
 #include <QLineEdit>
 
 using namespace tlp;

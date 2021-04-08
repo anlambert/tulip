@@ -14,8 +14,6 @@
 #include <talipot/RangeSlider.h>
 
 #include <QKeyEvent>
-#include <QMouseEvent>
-#include <QApplication>
 #include <QStyleOptionSlider>
 
 namespace tlp {

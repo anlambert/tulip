@@ -12,7 +12,6 @@
  */
 
 #include <talipot/StringEditor.h>
-#include <talipot/TlpQtTools.h>
 #include <QVBoxLayout>
 #include <QDialogButtonBox>
 

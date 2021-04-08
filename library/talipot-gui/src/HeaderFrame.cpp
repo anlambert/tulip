@@ -13,8 +13,6 @@
 
 #include <talipot/HeaderFrame.h>
 
-#include <QSplitter>
-
 #include "ui_HeaderFrame.h"
 
 using namespace tlp;

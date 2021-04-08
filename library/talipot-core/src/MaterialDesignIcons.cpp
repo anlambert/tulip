@@ -11,7 +11,6 @@
  *
  */
 
-#include <cstring>
 #include <talipot/MaterialDesignIcons.h>
 #include <talipot/TlpTools.h>
 

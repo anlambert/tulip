@@ -11,11 +11,7 @@
  *
  */
 
-#include <algorithm>
-
 #include <talipot/TLPBExportImport.h>
-#include <talipot/TlpTools.h>
-#include <talipot/PropertyTypes.h>
 #include <talipot/GraphProperty.h>
 
 PLUGIN(TLPBExport)

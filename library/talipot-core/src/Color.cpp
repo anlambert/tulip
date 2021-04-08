@@ -11,7 +11,6 @@
  *
  */
 
-#include <cmath>
 #include <talipot/Color.h>
 
 static void RGBtoHSV(unsigned char r, unsigned char g, unsigned char b, int &h, int &s, int &v);

@@ -12,18 +12,11 @@
  */
 
 #include <talipot/YajlFacade.h>
-#include <talipot/TlpTools.h>
 
 extern "C" {
 #include <yajl/yajl_parse.h>
 #include <yajl/yajl_gen.h>
 }
-#include <cerrno>
-#include <cstdlib>
-#include <cstring>
-#include <iostream>
-#include <fstream>
-#include <sstream>
 
 YajlParseFacade::YajlParseFacade(tlp::PluginProgress *progress)
     : _progress(progress), _parsingSucceeded(true) {}

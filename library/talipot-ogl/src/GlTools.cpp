@@ -24,13 +24,6 @@
 
 #include <talipot/Rectangle.h>
 #include <talipot/GlTools.h>
-#include <talipot/Matrix.h>
-#include <talipot/BoundingBox.h>
-#include <talipot/Exception.h>
-#include <iostream>
-#include <string>
-#include <sstream>
-#include <climits>
 
 using namespace std;
 namespace tlp {

@@ -12,7 +12,6 @@
  */
 
 #include <talipot/GlLine.h>
-#include <talipot/GlPolygon.h>
 #include <talipot/GlTriangle.h>
 
 #include <sstream>

@@ -11,14 +11,7 @@
  *
  */
 
-#include <deque>
-#include <stack>
-#include <climits>
-
-#include <unordered_map>
 #include <talipot/GraphMeasure.h>
-#include <talipot/Graph.h>
-#include <talipot/GraphParallelTools.h>
 #include <talipot/Dijkstra.h>
 
 using namespace std;

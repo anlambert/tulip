@@ -13,14 +13,8 @@
 
 #include <QMouseEvent>
 
-#include <talipot/Graph.h>
-#include <talipot/BooleanProperty.h>
 #include <talipot/GlWidget.h>
-#include <talipot/GlTools.h>
 #include <talipot/MouseSelector.h>
-#include <talipot/GlGraph.h>
-
-#include <talipot/OpenGlIncludes.h>
 
 using namespace std;
 using namespace tlp;

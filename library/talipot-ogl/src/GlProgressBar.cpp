@@ -12,12 +12,9 @@
  */
 
 #include <talipot/GlProgressBar.h>
-#include <talipot/GlPolygon.h>
 #include <talipot/GlLabel.h>
 #include <talipot/GlQuad.h>
-#include <talipot/TlpTools.h>
 
-#include <vector>
 #include <sstream>
 
 using namespace std;

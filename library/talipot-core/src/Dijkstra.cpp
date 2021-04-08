@@ -11,8 +11,6 @@
  *
  */
 
-#include <set>
-
 #include <talipot/Dijkstra.h>
 
 using namespace tlp;

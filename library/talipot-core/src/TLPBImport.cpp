@@ -11,10 +11,7 @@
  *
  */
 
-#include <fstream>
-#include <cerrno>
 #include <talipot/TLPBExportImport.h>
-#include <talipot/TlpTools.h>
 #include <talipot/GraphAbstract.h>
 #include <talipot/BooleanProperty.h>
 #include <talipot/ColorProperty.h>

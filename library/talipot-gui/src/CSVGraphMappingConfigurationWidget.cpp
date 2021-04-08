@@ -14,15 +14,8 @@
 #include "talipot/CSVGraphMappingConfigurationWidget.h"
 #include "ui_CSVGraphMappingConfigurationWidget.h"
 
-#include <QComboBox>
-#include <QFormLayout>
-#include <QLabel>
-#include <QPushButton>
-#include <QLineEdit>
-
 #include <talipot/CSVGraphImport.h>
 #include <talipot/PropertyCreationDialog.h>
-#include <talipot/Graph.h>
 #include <talipot/TlpQtTools.h>
 #include <talipot/StringsListSelectionDialog.h>
 

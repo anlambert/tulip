@@ -12,7 +12,6 @@
  */
 
 #include <talipot/GlGraphInputData.h>
-#include <talipot/Graph.h>
 #include <talipot/GlyphManager.h>
 #include <talipot/EdgeExtremityGlyphManager.h>
 #include <talipot/GlVertexArrayManager.h>

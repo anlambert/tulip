@@ -13,14 +13,11 @@
 
 #include "talipot/GlCompositeHierarchyManager.h"
 
-#include <talipot/Graph.h>
 #include <talipot/GlLayer.h>
 #include <talipot/GlConvexGraphHull.h>
 #include <talipot/DoubleProperty.h>
 #include <talipot/LayoutProperty.h>
 #include <talipot/SizeProperty.h>
-
-#include <sstream>
 
 using namespace std;
 

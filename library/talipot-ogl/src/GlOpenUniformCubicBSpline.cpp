@@ -11,14 +11,7 @@
  *
  */
 
-#include <GL/glew.h>
-
-#include <sstream>
-
-#include <talipot/GlTextureManager.h>
 #include <talipot/GlOpenUniformCubicBSpline.h>
-#include <talipot/GlTools.h>
-#include <talipot/Curves.h>
 #include <talipot/GlBezierCurve.h>
 #include <talipot/ParametricCurves.h>
 #include <talipot/GlShaderProgram.h>

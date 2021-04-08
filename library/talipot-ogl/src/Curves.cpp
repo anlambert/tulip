@@ -11,14 +11,10 @@
  *
  */
 
-#include <vector>
-#include <cstring>
 #include <GL/glew.h>
-#include <talipot/Vector.h>
-#include <talipot/TlpTools.h>
+
 #include <talipot/Curves.h>
 #include <talipot/GlTextureManager.h>
-#include <talipot/GlShaderProgram.h>
 #include <talipot/GlTools.h>
 
 using namespace std;

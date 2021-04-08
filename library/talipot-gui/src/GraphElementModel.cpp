@@ -13,10 +13,6 @@
 
 #include <talipot/GraphElementModel.h>
 #include <talipot/MetaTypes.h>
-#include <QFont>
-
-#include <talipot/Graph.h>
-#include <talipot/FilterIterator.h>
 
 using namespace tlp;
 using namespace std;

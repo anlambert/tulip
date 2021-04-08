@@ -11,12 +11,7 @@
  *
  */
 
-#include <cmath>
-#include <cfloat>
-#include <unordered_map>
-
 #include <talipot/LayoutProperty.h>
-#include <talipot/Coord.h>
 
 using namespace std;
 using namespace tlp;

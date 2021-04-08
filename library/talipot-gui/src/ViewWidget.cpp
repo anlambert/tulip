@@ -16,12 +16,10 @@
 #include <QApplication>
 #include <QGraphicsView>
 #include <QGraphicsProxyWidget>
-#include <QMainWindow>
 
 #include <talipot/GlWidget.h>
 #include <talipot/GlWidgetGraphicsItem.h>
 #include <talipot/Interactor.h>
-#include <talipot/TlpQtTools.h>
 
 using namespace tlp;
 

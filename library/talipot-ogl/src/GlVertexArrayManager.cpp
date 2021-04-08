@@ -17,10 +17,7 @@
 #include <talipot/GlVertexArrayManager.h>
 #include <talipot/GlEdge.h>
 #include <talipot/GlNode.h>
-#include <talipot/GlGraphInputData.h>
-#include <talipot/Graph.h>
 #include <talipot/Curves.h>
-#include <talipot/GlShaderProgram.h>
 #include <talipot/GlGraphRenderingParameters.h>
 
 using namespace std;

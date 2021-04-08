@@ -11,21 +11,9 @@
  *
  */
 
-#include <algorithm>
-#include <array>
-
 #include <talipot/GlGraphHighDetailsRenderer.h>
-#include <talipot/GraphProperty.h>
-#include <talipot/NumericProperty.h>
-#include <talipot/GlTools.h>
-#include <talipot/GlScene.h>
 #include <talipot/GlVertexArrayManager.h>
-#include <talipot/GlBoundingBoxSceneVisitor.h>
 #include <talipot/OcclusionTest.h>
-#include <talipot/GlEdge.h>
-#include <talipot/GlNode.h>
-#include <talipot/Camera.h>
-#include <talipot/GlGraphInputData.h>
 #include <talipot/GlGraphRenderingParameters.h>
 #include <talipot/GlGlyphRenderer.h>
 #include <talipot/OpenGlConfigManager.h>

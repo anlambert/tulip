@@ -11,26 +11,13 @@
  *
  */
 
-#include <QEvent>
-#include <QWheelEvent>
 #include <QPinchGesture>
-#include <QPanGesture>
 
-#include <talipot/GlNode.h>
-#include <talipot/GlWidget.h>
-#include <talipot/View.h>
-#include <talipot/Observable.h>
-#include <talipot/GlGraph.h>
-#include <talipot/GlView.h>
 #include <talipot/GlBoundingBoxSceneVisitor.h>
-#include <talipot/DrawingTools.h>
 #include <talipot/QtGlSceneZoomAndPanAnimator.h>
 #include <talipot/NodeLinkDiagramView.h>
 #include <talipot/MouseInteractors.h>
-#include <talipot/MaterialDesignIcons.h>
 #include <talipot/FontIconManager.h>
-
-#include <iostream>
 
 using namespace tlp;
 using namespace std;

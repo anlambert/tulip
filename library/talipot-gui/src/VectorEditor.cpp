@@ -11,12 +11,7 @@
  *
  */
 
-#include <talipot/VectorEditor.h>
 #include <talipot/ItemDelegate.h>
-#include <talipot/MetaTypes.h>
-#include <talipot/TlpQtTools.h>
-#include <talipot/FontIconManager.h>
-#include <talipot/MaterialDesignIcons.h>
 
 #include "ui_VectorEditor.h"
 

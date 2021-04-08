@@ -11,10 +11,7 @@
  *
  */
 
-#include <unordered_map>
-
 #include <talipot/ConnectedTestListener.h>
-#include <talipot/Graph.h>
 
 using namespace std;
 using namespace tlp;

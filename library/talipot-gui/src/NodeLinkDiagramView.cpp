@@ -14,31 +14,20 @@
 #include "ui_GridOptionsWidget.h"
 
 #include <QGraphicsView>
-#include <QActionGroup>
-#include <QDialog>
 #include <QMenu>
-#include <QString>
 
 #include <talipot/GlMetaNodeRenderer.h>
 #include <talipot/GlGrid.h>
 #include <talipot/DrawingTools.h>
 #include <talipot/ItemDelegate.h>
 #include <talipot/ParameterListModel.h>
-#include <talipot/GlWidget.h>
 #include <talipot/GlGraph.h>
-#include <talipot/GlGraphInputData.h>
-#include <talipot/Gl2DRect.h>
 #include <talipot/GlVertexArrayManager.h>
 #include <talipot/GlOverviewGraphicsItem.h>
-#include <talipot/Interactor.h>
-#include <talipot/MetaTypes.h>
 #include <talipot/QtGlSceneZoomAndPanAnimator.h>
 #include <talipot/GlCompositeHierarchyManager.h>
-#include <talipot/TlpTools.h>
-#include <talipot/TlpQtTools.h>
 #include <talipot/NodeLinkDiagramView.h>
 #include <talipot/GraphModel.h>
-#include <talipot/NumericProperty.h>
 
 using namespace tlp;
 using namespace std;

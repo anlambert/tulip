@@ -11,8 +11,6 @@
  *
  */
 
-#include <stack>
-#include <talipot/Graph.h>
 #include <talipot/ConnectedTest.h>
 #include <talipot/TreeTest.h>
 #include <talipot/AcyclicTest.h>

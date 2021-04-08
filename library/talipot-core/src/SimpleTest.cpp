@@ -11,11 +11,8 @@
  *
  */
 
-#include <vector>
-#include <talipot/Graph.h>
 #include <talipot/GraphTools.h>
 #include <talipot/SimpleTest.h>
-#include <talipot/MutableContainer.h>
 
 using namespace std;
 using namespace tlp;

@@ -11,18 +11,12 @@
  *
  */
 
-#include <QMap>
-
-#include <talipot/Node.h>
-#include <talipot/Edge.h>
 #include <talipot/GlyphRenderer.h>
 #include <talipot/GlyphManager.h>
-#include <talipot/Graph.h>
 #include <talipot/GlOffscreenRenderer.h>
 #include <talipot/GlGraph.h>
 #include <talipot/ViewSettings.h>
 #include <talipot/EdgeExtremityGlyph.h>
-#include <talipot/Camera.h>
 #include <talipot/TlpQtTools.h>
 
 using namespace tlp;

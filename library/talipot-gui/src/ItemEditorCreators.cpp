@@ -11,21 +11,11 @@
  *
  */
 
-#include <QCheckBox>
-#include <QLabel>
-#include <QStylePainter>
-#include <QApplication>
-#include <QLinearGradient>
-#include <QPaintEvent>
 #include <QColorDialog>
 #include <QMainWindow>
 #include <QFileDialog>
-#include <QHBoxLayout>
-#include <QFontDatabase>
 
-#include <talipot/TlpTools.h>
 #include <talipot/ColorScaleButton.h>
-#include <talipot/MetaTypes.h>
 #include <talipot/Vec3fEditor.h>
 #include <talipot/StringEditor.h>
 #include <talipot/GlyphRenderer.h>
@@ -33,14 +23,10 @@
 #include <talipot/EdgeExtremityGlyph.h>
 #include <talipot/FontDialog.h>
 #include <talipot/GlyphManager.h>
-#include <talipot/GraphPropertiesModel.h>
 #include <talipot/ItemEditorCreators.h>
-#include <talipot/FontAwesome.h>
 #include <talipot/TextureFileDialog.h>
 #include <talipot/FontIconDialog.h>
-#include <talipot/FontIconManager.h>
 #include <talipot/ShapeDialog.h>
-#include <talipot/MaterialDesignIcons.h>
 
 using namespace tlp;
 

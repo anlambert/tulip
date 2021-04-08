@@ -13,18 +13,12 @@
 
 #include "talipot/ItemDelegate.h"
 
-#include <QDebug>
-#include <QEvent>
-#include <QDialog>
 #include <QVBoxLayout>
 #include <QDialogButtonBox>
 #include <QMainWindow>
 #include <QLabel>
 #include <QTableView>
 
-#include <talipot/Model.h>
-#include <talipot/MetaTypes.h>
-#include <talipot/ItemEditorCreators.h>
 #include <talipot/GraphModel.h>
 
 using namespace tlp;

@@ -14,15 +14,8 @@
 #include "talipot/Settings.h"
 
 #include <talipot/MetaTypes.h>
-#include <talipot/PropertyTypes.h>
-#include <talipot/GlGraphStaticData.h>
 #include <talipot/GlyphManager.h>
-#include <talipot/Release.h>
-#include <talipot/ViewSettings.h>
-#include <talipot/TlpTools.h>
 #include <talipot/TlpQtTools.h>
-
-#include <QStringList>
 
 using namespace tlp;
 using namespace std;

@@ -11,11 +11,7 @@
  *
  */
 
-#include <list>
-#include <unordered_map>
-
 #include <talipot/GlyphManager.h>
-#include <talipot/Glyph.h>
 
 //====================================================
 using namespace std;

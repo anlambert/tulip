@@ -11,9 +11,6 @@
  *
  */
 
-#include <utility>
-#include <limits>
-
 #include <talipot/BoundingBox.h>
 
 static bool getIntersection(float fDst1, float fDst2, const tlp::Coord &p1, const tlp::Coord &p2,

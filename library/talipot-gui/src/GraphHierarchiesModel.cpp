@@ -14,30 +14,15 @@
 #include "talipot/GraphHierarchiesModel.h"
 
 #include <QFont>
-#include <QSize>
-#include <QDebug>
-#include <QMimeData>
-#include <QSet>
 #include <QCryptographicHash>
 
-#include <talipot/TlpTools.h>
 #include <talipot/MetaTypes.h>
-#include <talipot/Graph.h>
 #include <talipot/Project.h>
-#include <talipot/IntegerProperty.h>
-#include <talipot/ColorProperty.h>
-#include <talipot/SizeProperty.h>
-#include <talipot/DoubleProperty.h>
 #include <talipot/Settings.h>
 #include <talipot/Mimes.h>
-#include <talipot/DrawingTools.h>
-#include <talipot/EdgeExtremityGlyphManager.h>
 #include <talipot/GraphNeedsSavingObserver.h>
 #include <talipot/TlpQtTools.h>
 #include <talipot/StableIterator.h>
-#include <talipot/Font.h>
-
-#include <fstream>
 
 using namespace std;
 using namespace tlp;

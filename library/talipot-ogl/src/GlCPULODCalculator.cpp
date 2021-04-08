@@ -12,12 +12,6 @@
  */
 
 #include <talipot/GlCPULODCalculator.h>
-#include <talipot/GlGraphInputData.h>
-
-#include <talipot/Matrix.h>
-#include <talipot/Camera.h>
-#include <talipot/GlTools.h>
-#include <talipot/ParallelTools.h>
 
 using namespace std;
 

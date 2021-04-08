@@ -13,16 +13,10 @@
 
 #include "talipot/PythonInterpreter.h"
 
-#include <QRegExp>
-#include <QKeyEvent>
-
-#include <talipot/TlpTools.h>
 #include <talipot/TlpQtTools.h>
-#include <talipot/Observable.h>
 
 #include "talipot/PythonShellWidget.h"
 #include "talipot/PythonCodeHighlighter.h"
-#include "talipot/ParenMatcherHighlighter.h"
 
 using namespace tlp;
 

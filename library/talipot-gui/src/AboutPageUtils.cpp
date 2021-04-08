@@ -11,11 +11,8 @@
  *
  */
 
-#include <QString>
 #include <QFile>
-#include <QTextStream>
 
-#include <talipot/TlpTools.h>
 #include <talipot/TlpQtTools.h>
 
 namespace tlp {

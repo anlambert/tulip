@@ -11,27 +11,16 @@
  *
  */
 
-#include <algorithm>
-#include <queue>
-#include <stack>
-#include <cmath>
-
-#include <unordered_map>
-#include <talipot/GraphTools.h>
 #include <talipot/GraphMeasure.h>
-#include <talipot/AcyclicTest.h>
 #include <talipot/TreeTest.h>
-#include <talipot/Graph.h>
-#include <talipot/BooleanProperty.h>
 #include <talipot/DoubleProperty.h>
 #include <talipot/IntegerProperty.h>
-#include <talipot/NumericProperty.h>
-#include <talipot/ConnectedTest.h>
-#include <talipot/MutableContainer.h>
 #include <talipot/Ordering.h>
-#include <talipot/PlanarConMap.h>
-#include <talipot/GraphParallelTools.h>
 #include <talipot/Dijkstra.h>
+#ifndef NDEBUG
+#include <talipot/AcyclicTest.h>
+#include <talipot/ConnectedTest.h>
+#endif
 
 using namespace std;
 

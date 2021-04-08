@@ -14,9 +14,6 @@
 #include <iomanip>
 
 #include "talipot/CSVGraphImport.h"
-#include <talipot/Graph.h>
-#include <talipot/PropertyInterface.h>
-#include <talipot/PropertyTypes.h>
 #include <talipot/TlpQtTools.h>
 
 using namespace tlp;

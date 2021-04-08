@@ -11,22 +11,14 @@
  *
  */
 
-#include <string>
-#include <talipot/PropertyTypes.h>
-#include <talipot/Graph.h>
 #include <talipot/BooleanProperty.h>
 #include <talipot/DoubleProperty.h>
 #include <talipot/GraphProperty.h>
 #include <talipot/IntegerProperty.h>
 #include <talipot/LayoutProperty.h>
-#include <talipot/Color.h>
 #include <talipot/ColorProperty.h>
-#include <talipot/Size.h>
 #include <talipot/SizeProperty.h>
 #include <talipot/StringProperty.h>
-#include <talipot/TlpTools.h>
-
-#include <talipot/DataSet.h>
 
 using namespace std;
 using namespace tlp;

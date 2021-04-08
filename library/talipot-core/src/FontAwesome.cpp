@@ -11,9 +11,6 @@
  *
  */
 
-#include <cassert>
-#include <cstring>
-
 #include <talipot/FontAwesome.h>
 #include <talipot/TlpTools.h>
 

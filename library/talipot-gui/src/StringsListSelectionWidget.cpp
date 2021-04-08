@@ -16,7 +16,6 @@
 #include <talipot/StringsListSelectionWidget.h>
 
 #include <QLayout>
-#include <QVBoxLayout>
 
 using namespace std;
 

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -15,10 +15,6 @@
 
 #include <QHeaderView>
 #include <QStyledItemDelegate>
-#include <QPainter>
-#include <QStyleOptionViewItem>
-#include <QMouseEvent>
-#include <QTreeView>
 
 class TreeViewDelegate : public QStyledItemDelegate {
 public:

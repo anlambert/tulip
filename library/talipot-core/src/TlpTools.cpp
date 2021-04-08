@@ -11,13 +11,6 @@
  *
  */
 
-#include <algorithm>
-#include <cstring>
-#include <ctime>
-#include <string>
-#include <sstream>
-#include <clocale>
-#include <cerrno>
 #include <locale>
 #include <codecvt>
 
@@ -43,11 +36,8 @@
 #include <zststream.h>
 
 #include <talipot/Exception.h>
-#include <talipot/TlpTools.h>
 #include <talipot/Plugin.h>
-#include <talipot/PluginLoader.h>
 #include <talipot/PropertyTypes.h>
-#include <talipot/Release.h>
 #if defined(_OPENMP) && defined(__APPLE__)
 #include <talipot/ParallelTools.h>
 #endif

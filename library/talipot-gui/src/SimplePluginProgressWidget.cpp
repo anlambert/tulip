@@ -18,12 +18,6 @@
 #include "ui_SimplePluginProgressWidget.h"
 
 #include <QCloseEvent>
-#include <QStyle>
-#include <QVBoxLayout>
-
-#include <iostream>
-
-#include <talipot/TlpQtTools.h>
 
 using namespace tlp;
 

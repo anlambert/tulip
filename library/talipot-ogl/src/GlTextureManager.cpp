@@ -11,9 +11,6 @@
  *
  */
 
-#include <cstdio>
-#include <cstring>
-
 #include <GL/glew.h>
 
 #ifdef __GNUC__

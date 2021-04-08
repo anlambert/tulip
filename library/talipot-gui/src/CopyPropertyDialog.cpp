@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -11,20 +11,13 @@
  *
  */
 
-#include <QString>
-#include <QStringList>
-#include <QListView>
 #include <QPushButton>
 #include <QMessageBox>
-#include <QInputDialog>
-#include <QLabel>
-#include <QTabWidget>
 
 #include "ui_CopyPropertyDialog.h"
 
 #include <talipot/CopyPropertyDialog.h>
 #include <talipot/TlpQtTools.h>
-#include <talipot/Graph.h>
 #include <talipot/BooleanProperty.h>
 #include <talipot/ColorProperty.h>
 #include <talipot/DoubleProperty.h>

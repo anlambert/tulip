@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -11,15 +11,8 @@
  *
  */
 
-#include <cassert>
-#include <iostream>
-
-#include <talipot/Graph.h>
-#include <talipot/GraphImpl.h>
 #include <talipot/GraphView.h>
 #include <talipot/GraphIterators.h>
-#include <talipot/Observable.h>
-#include <talipot/StoredType.h>
 
 namespace tlp {
 

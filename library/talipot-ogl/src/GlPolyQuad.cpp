@@ -15,8 +15,6 @@
 #include <talipot/GlTools.h>
 #include <talipot/GlXMLTools.h>
 #include <talipot/GlPolyQuad.h>
-#include <talipot/Vector.h>
-#include <talipot/GlShaderProgram.h>
 
 using namespace std;
 

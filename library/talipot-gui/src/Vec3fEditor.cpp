@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -16,8 +16,6 @@
 #include "ui_Vec3fEditor.h"
 
 #include <cfloat>
-
-#include <QDoubleValidator>
 
 using namespace tlp;
 

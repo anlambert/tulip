@@ -12,9 +12,7 @@
  */
 
 #include <talipot/AboutPage.h>
-#include <talipot/TlpTools.h>
 #include <talipot/TlpQtTools.h>
-#include <talipot/GlWidget.h>
 #include <talipot/Release.h>
 #include <talipot/OpenGlConfigManager.h>
 #include <talipot/PythonVersionChecker.h>
@@ -23,10 +21,7 @@
 #include "ui_AboutPage.h"
 
 #include <QFile>
-#include <QDir>
-#include <QTextStream>
 #include <QDesktopServices>
-#include <QUrl>
 #include <QOpenGLContext>
 
 namespace tlp {

@@ -11,8 +11,6 @@
  *
  */
 
-#include <algorithm>
-
 #include "talipot/ParenMatcherHighlighter.h"
 
 ParenInfoTextBlockData::ParenInfoTextBlockData() = default;

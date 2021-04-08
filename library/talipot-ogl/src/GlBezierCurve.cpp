@@ -11,10 +11,6 @@
  *
  */
 
-#include <GL/glew.h>
-
-#include <cstring>
-
 #include <talipot/GlBezierCurve.h>
 #include <talipot/GlCatmullRomCurve.h>
 #include <talipot/ParametricCurves.h>

@@ -19,8 +19,6 @@
 #include "talipot/PythonIncludes.h"
 #include "talipot/PythonInterpreter.h"
 
-#include <QStringList>
-
 using namespace tlp;
 
 QString consoleOuputString = "";

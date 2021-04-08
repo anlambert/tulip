@@ -11,16 +11,7 @@
  *
  */
 
-#include <vector>
-#include <set>
-#include <cassert>
-#include <iostream>
-#include <string>
-
 #include <talipot/VectorGraph.h>
-#include <talipot/Node.h>
-#include <talipot/Edge.h>
-#include <talipot/StlIterator.h>
 #include <talipot/TlpTools.h>
 
 using namespace std;

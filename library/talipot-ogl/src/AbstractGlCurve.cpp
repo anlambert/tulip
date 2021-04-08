@@ -15,11 +15,8 @@
 #include <talipot/AbstractGlCurve.h>
 #include <talipot/GlTextureManager.h>
 #include <talipot/Curves.h>
-#include <talipot/TlpTools.h>
 #include <talipot/GlShaderProgram.h>
 #include <talipot/OpenGlConfigManager.h>
-
-#include <sstream>
 
 using namespace std;
 

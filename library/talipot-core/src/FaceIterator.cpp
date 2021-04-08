@@ -14,8 +14,6 @@
 #include <talipot/FaceIterator.h>
 #include <talipot/PlanarConMap.h>
 
-#include <cassert>
-
 using namespace std;
 using namespace tlp;
 

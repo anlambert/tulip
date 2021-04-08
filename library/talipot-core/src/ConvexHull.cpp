@@ -14,9 +14,7 @@
 #include <talipot/ConvexHull.h>
 #include <talipot/DrawingTools.h>
 
-#include <list>
 #include <map>
-#include <algorithm>
 
 #ifdef __GNUC__
 #pragma GCC diagnostic push

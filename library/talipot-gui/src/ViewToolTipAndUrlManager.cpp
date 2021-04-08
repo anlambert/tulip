@@ -11,21 +11,16 @@
  *
  */
 
-#include <talipot/ViewToolTipAndUrlManager.h>
-#include <QActionGroup>
 #include <QGraphicsView>
-#include <QHelpEvent>
-#include <QToolTip>
-#include <QString>
 #include <QKeyEvent>
-#include <QUrl>
+#include <QToolTip>
 #include <QDesktopServices>
+#include <QUrl>
 
-#include <talipot/TlpTools.h>
 #include <talipot/TlpQtTools.h>
-#include <talipot/Graph.h>
 #include <talipot/GraphModel.h>
 #include <talipot/StringProperty.h>
+#include <talipot/ViewToolTipAndUrlManager.h>
 
 using namespace tlp;
 using namespace std;

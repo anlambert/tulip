@@ -13,22 +13,15 @@
 
 #include "talipot/WorkspaceExposeWidget.h"
 
-#include <QEvent>
-#include <QDebug>
 #include <QPropertyAnimation>
 #include <QParallelAnimationGroup>
 #include <QGraphicsSceneMouseEvent>
 #include <QKeyEvent>
-#include <QGraphicsTextItem>
 
 #include <talipot/View.h>
 #include <talipot/WorkspacePanel.h>
 #include <talipot/Graph.h>
-#include <talipot/TlpQtTools.h>
 #include <talipot/FontIconManager.h>
-#include <talipot/MaterialDesignIcons.h>
-
-#include <cmath>
 
 using namespace tlp;
 

@@ -14,10 +14,8 @@
 #include <stack>
 
 #include <talipot/Graph.h>
-#include <talipot/GraphImpl.h>
 #include <talipot/PropertyManager.h>
 #include <talipot/GraphView.h>
-#include <talipot/GraphIterators.h>
 #include <talipot/GraphUpdatesRecorder.h>
 
 using namespace std;

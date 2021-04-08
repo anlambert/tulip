@@ -12,13 +12,7 @@
  */
 
 #include <talipot/GlGraphLowDetailsRenderer.h>
-#include <talipot/GraphProperty.h>
-#include <talipot/GlGraphInputData.h>
 #include <talipot/GlGraphRenderingParameters.h>
-#include <talipot/GlTools.h>
-#include <talipot/GlScene.h>
-#include <talipot/GlVertexArrayManager.h>
-#include <talipot/OcclusionTest.h>
 #include <talipot/OpenGlConfigManager.h>
 
 using namespace std;

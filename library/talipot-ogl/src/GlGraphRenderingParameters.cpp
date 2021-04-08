@@ -11,10 +11,7 @@
  *
  */
 
-#include <talipot/LayoutProperty.h>
-#include <talipot/Vector.h>
 #include <talipot/GlGraphRenderingParameters.h>
-#include <talipot/TlpTools.h>
 #include <talipot/NumericProperty.h>
 #include <talipot/ViewSettings.h>
 

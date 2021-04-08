@@ -11,35 +11,17 @@
  *
  */
 
-#include <set>
-
 #include <talipot/GlEdge.h>
 #include <talipot/EdgeExtremityGlyph.h>
-#include <talipot/Coord.h>
-#include <talipot/LayoutProperty.h>
-#include <talipot/DoubleProperty.h>
-#include <talipot/StringProperty.h>
-#include <talipot/BooleanProperty.h>
-#include <talipot/SizeProperty.h>
-#include <talipot/IntegerProperty.h>
-#include <talipot/ColorProperty.h>
-#include <talipot/GlShaderProgram.h>
-#include <talipot/GlTools.h>
 #include <talipot/GlyphManager.h>
 #include <talipot/Curves.h>
-#include <talipot/GlGraphStaticData.h>
-#include <talipot/GlLines.h>
-#include <talipot/OcclusionTest.h>
 #include <talipot/GlGraphRenderingParameters.h>
-#include <talipot/Camera.h>
 #include <talipot/GlBezierCurve.h>
 #include <talipot/GlCatmullRomCurve.h>
 #include <talipot/GlOpenUniformCubicBSpline.h>
-#include <talipot/GlTextureManager.h>
 #include <talipot/GlVertexArrayManager.h>
 #include <talipot/ParametricCurves.h>
 #include <talipot/GlGraphInputData.h>
-#include <talipot/GlScene.h>
 #include <talipot/GlGlyphRenderer.h>
 #include <talipot/ViewSettings.h>
 

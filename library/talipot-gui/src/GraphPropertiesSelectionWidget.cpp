@@ -14,8 +14,6 @@
 #include "talipot/GraphPropertiesSelectionWidget.h"
 #include "talipot/Graph.h"
 
-#include <algorithm>
-
 using namespace std;
 
 namespace tlp {

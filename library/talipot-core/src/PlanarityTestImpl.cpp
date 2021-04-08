@@ -18,7 +18,6 @@
 
 #include <talipot/Graph.h>
 #include <talipot/PlanarityTestImpl.h>
-#include <talipot/MutableContainer.h>
 #include <talipot/StableIterator.h>
 
 using namespace std;

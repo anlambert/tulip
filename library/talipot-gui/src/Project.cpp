@@ -14,17 +14,11 @@
 #include "talipot/Project.h"
 
 #include <QMetaProperty>
-#include <QDir>
-#include <QCoreApplication>
-#include <QTextStream>
 #include <QXmlStreamWriter>
-#include <QXmlStreamReader>
 
 #include <talipot/SimplePluginProgress.h>
 #include <talipot/QuaZIPFacade.h>
 #include <talipot/TlpQtTools.h>
-
-#include <cstdlib>
 
 #define DATA_DIR_NAME "data"
 #define INFO_FILE_NAME "project.xml"

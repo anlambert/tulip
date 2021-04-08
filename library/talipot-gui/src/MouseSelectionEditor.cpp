@@ -14,19 +14,9 @@
 #include <QMouseEvent>
 
 #include <talipot/MouseSelectionEditor.h>
-#include <talipot/Camera.h>
-#include <talipot/Graph.h>
-#include <talipot/LayoutProperty.h>
-#include <talipot/BooleanProperty.h>
-#include <talipot/DoubleProperty.h>
-#include <talipot/SizeProperty.h>
 #include <talipot/GlWidget.h>
 #include <talipot/DrawingTools.h>
-#include <talipot/GlGraph.h>
 #include <talipot/TlpQtTools.h>
-
-#include <cmath>
-#include <climits>
 
 #define EPSILON 1.0
 #define EPSILON_SCREEN 50

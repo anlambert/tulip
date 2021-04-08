@@ -11,8 +11,6 @@
  *
  */
 
-#include <algorithm>
-
 #include <talipot/Interactor.h>
 #include <talipot/View.h>
 

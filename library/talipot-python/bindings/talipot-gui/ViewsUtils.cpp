@@ -13,15 +13,6 @@
 
 #include <sipAPI_talipotgui.h>
 
-#include <QApplication>
-
-#include <talipot/PluginsManager.h>
-#include <talipot/WorkspacePanel.h>
-#include <talipot/GlView.h>
-#include <talipot/GlWidget.h>
-
-#include "ViewsUtils.h"
-
 using namespace std;
 using namespace tlp;
 

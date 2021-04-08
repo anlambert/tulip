@@ -17,8 +17,6 @@
 #include <talipot/Glyph.h>
 #include <talipot/ViewSettings.h>
 
-#include <memory>
-
 using namespace tlp;
 using namespace std;
 

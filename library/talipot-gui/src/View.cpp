@@ -11,15 +11,7 @@
  *
  */
 
-#include <talipot/View.h>
-
-#include <QDebug>
-#include <QFile>
 #include <QGraphicsView>
-#include <QGraphicsItem>
-#include <QMenu>
-#include <QMainWindow>
-#include <QStatusBar>
 
 #include <talipot/Interactor.h>
 #include <talipot/Graph.h>

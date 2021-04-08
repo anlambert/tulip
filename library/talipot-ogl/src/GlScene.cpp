@@ -11,21 +11,10 @@
  *
  */
 
-#include <GL/glew.h>
-
-#include <algorithm>
-#include <cstdlib>
-#include <climits>
-#include <cstdio>
-
 #include <talipot/OpenGlConfigManager.h>
-#include <talipot/GlScene.h>
-#include <talipot/GlTools.h>
 #include <talipot/GlXMLTools.h>
 #include <talipot/GlCPULODCalculator.h>
 #include <talipot/GlBoundingBoxSceneVisitor.h>
-#include <talipot/Camera.h>
-#include <talipot/GlEntity.h>
 #include <talipot/GlGraph.h>
 #include <talipot/GlSceneObserver.h>
 

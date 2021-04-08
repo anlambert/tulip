@@ -13,14 +13,7 @@
 
 #include "talipot/PythonInterpreter.h"
 #include "talipot/AutoCompletionDataBase.h"
-#include "talipot/APIDataBase.h"
 
-#include <QTextStream>
-#include <QRegExp>
-#include <QStringList>
-
-#include <talipot/StringCollection.h>
-#include <talipot/PluginsManager.h>
 #include <talipot/PropertyAlgorithm.h>
 #include <talipot/ImportModule.h>
 #include <talipot/ExportModule.h>

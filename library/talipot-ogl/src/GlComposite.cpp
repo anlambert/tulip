@@ -11,14 +11,8 @@
  *
  */
 
-#include <talipot/GlComposite.h>
-
-#include <talipot/GlLayer.h>
-#include <talipot/GlScene.h>
 #include <talipot/GlGraph.h>
 #include <talipot/GlXMLTools.h>
-
-#include <algorithm>
 
 using namespace std;
 

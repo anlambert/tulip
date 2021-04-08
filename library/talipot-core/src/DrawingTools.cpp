@@ -12,14 +12,11 @@
  */
 
 #include <talipot/DrawingTools.h>
-#include <talipot/Graph.h>
 #include <talipot/LayoutProperty.h>
 #include <talipot/SizeProperty.h>
 #include <talipot/DoubleProperty.h>
 #include <talipot/BooleanProperty.h>
 #include <talipot/ConvexHull.h>
-
-#include <climits>
 
 using namespace std;
 using namespace tlp;

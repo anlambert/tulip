@@ -11,17 +11,16 @@
  *
  */
 
-#include <algorithm>
-
 #include <talipot/ConnectedTest.h>
 #include <talipot/PlanarityTest.h>
-#include <talipot/SimpleTest.h>
 #include <talipot/MutableContainer.h>
 #include <talipot/MapIterator.h>
 #include <talipot/FaceIterator.h>
-#include <talipot/Face.h>
 #include <talipot/PlanarConMap.h>
 #include <talipot/TreeTest.h>
+#ifndef NDEBUG
+#include <talipot/SimpleTest.h>
+#endif
 
 using namespace std;
 using namespace tlp;

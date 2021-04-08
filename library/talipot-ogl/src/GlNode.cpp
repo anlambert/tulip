@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -11,28 +11,13 @@
  *
  */
 
-#include <set>
-
 #include <talipot/GlNode.h>
 
-#include <talipot/Coord.h>
-#include <talipot/LayoutProperty.h>
-#include <talipot/DoubleProperty.h>
-#include <talipot/StringProperty.h>
-#include <talipot/BooleanProperty.h>
-#include <talipot/SizeProperty.h>
-#include <talipot/IntegerProperty.h>
-#include <talipot/ColorProperty.h>
 #include <talipot/GlMetaNodeRenderer.h>
-#include <talipot/GlGraphInputData.h>
 #include <talipot/Glyph.h>
-#include <talipot/GlTools.h>
-#include <talipot/GlSceneVisitor.h>
 #include <talipot/GlGraphRenderingParameters.h>
-#include <talipot/GlTextureManager.h>
 #include <talipot/GlVertexArrayManager.h>
 #include <talipot/GlGlyphRenderer.h>
-#include <talipot/ViewSettings.h>
 
 //====================================================
 

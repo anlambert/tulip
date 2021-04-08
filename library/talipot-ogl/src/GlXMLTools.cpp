@@ -13,8 +13,6 @@
 
 #include <talipot/GlXMLTools.h>
 
-#include <string>
-
 #include <talipot/Gl2DRect.h>
 #include <talipot/GlComposite.h>
 #include <talipot/GlBox.h>
@@ -22,8 +20,6 @@
 #include <talipot/GlGrid.h>
 #include <talipot/GlLabel.h>
 #include <talipot/GlLine.h>
-#include <talipot/GlPolygon.h>
-#include <talipot/GlRect.h>
 #include <talipot/GlSphere.h>
 #include <talipot/GlCurve.h>
 #include <talipot/GlComplexPolygon.h>

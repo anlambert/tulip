@@ -13,14 +13,11 @@
 
 #include <GL/glew.h>
 
-#include <iostream>
-#include <fstream>
 #include <algorithm>
 #include <memory>
 
 #include <talipot/GlShaderProgram.h>
 #include <talipot/OpenGlConfigManager.h>
-#include <talipot/TlpTools.h>
 
 using namespace std;
 

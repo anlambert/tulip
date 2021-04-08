@@ -11,13 +11,8 @@
  *
  */
 
-#include <cfloat>
 #include <talipot/SizeProperty.h>
-#include <talipot/Observable.h>
-#include <talipot/BoundingBox.h>
 #include <talipot/DrawingTools.h>
-#include <talipot/LayoutProperty.h>
-#include <talipot/DoubleProperty.h>
 
 using namespace std;
 using namespace tlp;

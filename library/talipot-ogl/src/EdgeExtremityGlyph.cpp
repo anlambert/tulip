@@ -13,7 +13,6 @@
 
 #include <talipot/EdgeExtremityGlyph.h>
 #include <talipot/Glyph.h>
-#include <talipot/Vector.h>
 
 using namespace tlp;
 

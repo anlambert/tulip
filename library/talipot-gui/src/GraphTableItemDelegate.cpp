@@ -13,12 +13,6 @@
 
 #include <talipot/GraphTableItemDelegate.h>
 
-#include <QDebug>
-
-#include <talipot/GraphModel.h>
-#include <talipot/DoubleProperty.h>
-#include <talipot/MetaTypes.h>
-
 using namespace tlp;
 using namespace std;
 

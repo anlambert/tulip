@@ -15,14 +15,7 @@
 #include <time.h>
 #endif
 
-#include <algorithm>
-#include <sstream>
-
 #include <talipot/ExportModule.h>
-#include <talipot/Graph.h>
-#include <talipot/DataSet.h>
-#include <talipot/MutableContainer.h>
-#include <talipot/TlpTools.h>
 #include <talipot/YajlFacade.h>
 #include <talipot/JsonTokens.h>
 #include <talipot/GraphProperty.h>

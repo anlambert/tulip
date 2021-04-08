@@ -16,9 +16,6 @@
 #include <QGraphicsProxyWidget>
 #include <QGraphicsSceneMouseEvent>
 
-#include <talipot/DoubleProperty.h>
-#include <talipot/ColorProperty.h>
-
 using namespace std;
 
 namespace tlp {

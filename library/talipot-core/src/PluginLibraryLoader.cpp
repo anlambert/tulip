@@ -12,15 +12,8 @@
  */
 
 #include <talipot/PluginLibraryLoader.h>
-#include <talipot/Release.h>
-#include <talipot/config.h>
 #include <talipot/PluginsManager.h>
-#include <talipot/TlpTools.h>
 
-#include <cstring>
-#include <sstream>
-#include <set>
-#include <vector>
 #include <regex>
 
 #ifdef _WIN32

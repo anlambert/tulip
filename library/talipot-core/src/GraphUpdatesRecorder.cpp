@@ -12,7 +12,6 @@
  */
 
 #include <talipot/GraphUpdatesRecorder.h>
-#include <talipot/Graph.h>
 #include <talipot/GraphImpl.h>
 
 using namespace std;

@@ -11,22 +11,11 @@
  *
  */
 
-#include <set>
-#include <algorithm>
-
 #include <talipot/GlQuadTreeLODCalculator.h>
 
-#include <talipot/Matrix.h>
 #include <talipot/QuadTree.h>
-#include <talipot/GlGraphInputData.h>
-#include <talipot/Camera.h>
-#include <talipot/GlEntity.h>
-#include <talipot/GlTools.h>
 #include <talipot/GlScene.h>
-#include <talipot/GlNode.h>
-#include <talipot/GlEdge.h>
 #include <talipot/GlSceneObserver.h>
-#include <talipot/ParallelTools.h>
 
 using namespace std;
 

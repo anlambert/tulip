@@ -12,8 +12,6 @@
  */
 
 #include <talipot/WithParameter.h>
-#include <talipot/DataSet.h>
-#include <talipot/PropertyTypes.h>
 #include <talipot/BooleanProperty.h>
 #include <talipot/DoubleProperty.h>
 #include <talipot/IntegerProperty.h>
@@ -21,10 +19,8 @@
 #include <talipot/ColorProperty.h>
 #include <talipot/SizeProperty.h>
 #include <talipot/StringProperty.h>
-#include <talipot/StlIterator.h>
 #include <talipot/ColorScale.h>
 #include <talipot/StringCollection.h>
-#include <talipot/TlpTools.h>
 
 using namespace tlp;
 using namespace std;

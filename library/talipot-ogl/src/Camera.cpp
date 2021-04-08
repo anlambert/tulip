@@ -11,14 +11,8 @@
  *
  */
 
-#include <talipot/Camera.h>
-
-#include <cmath>
-
 #include <talipot/GlScene.h>
 #include <talipot/GlXMLTools.h>
-
-#include <talipot/OpenGlIncludes.h>
 
 using namespace std;
 

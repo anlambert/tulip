@@ -11,7 +11,6 @@
  *
  */
 
-#include <talipot/GlEntity.h>
 #include <talipot/GlSceneVisitor.h>
 
 #include <talipot/GlComposite.h>

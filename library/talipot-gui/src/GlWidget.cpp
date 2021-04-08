@@ -18,32 +18,20 @@
 // remove warnings about qt5/glew incompatibility
 // as we do not rely on QOpenGLFunctions for rendering
 #undef __GLEW_H__
-#include <QOpenGLContext>
 #include <QOpenGLFramebufferObject>
 #define __GLEW_H__
 
-#include <QSurfaceFormat>
-#include <QOffscreenSurface>
-
 #include <talipot/TlpQtTools.h>
 #include <talipot/Settings.h>
-#include <talipot/Graph.h>
-#include <talipot/GlTools.h>
 #include <talipot/GlTextureManager.h>
 #include <talipot/Gl2DRect.h>
 #include <talipot/GlQuadTreeLODCalculator.h>
 #include <talipot/GLInteractor.h>
 #include <talipot/GlGraph.h>
-#include <talipot/Interactor.h>
-#include <talipot/GlCompositeHierarchyManager.h>
-#include <talipot/GlVertexArrayManager.h>
 #include <talipot/View.h>
-#include <talipot/Camera.h>
 #include <talipot/OpenGlConfigManager.h>
 #include <talipot/GlOffscreenRenderer.h>
 #include <talipot/GlTextureManager.h>
-
-#include <cstdint>
 
 using namespace std;
 

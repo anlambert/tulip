@@ -14,8 +14,6 @@
 #include <talipot/DoubleProperty.h>
 #include <talipot/GraphTools.h>
 
-#include <climits>
-
 using namespace std;
 using namespace tlp;
 

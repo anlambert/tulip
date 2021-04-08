@@ -13,15 +13,9 @@
 
 #include <talipot/OGDFLayoutPluginBase.h>
 #include <talipot/LayoutProperty.h>
-#include <talipot/SizeProperty.h>
 
-#include <ogdf/basic/basic.h>
-#include <ogdf/basic/Graph_d.h>
-#include <ogdf/basic/GraphAttributes.h>
-#include <ogdf/basic/LayoutModule.h>
 #include <ogdf/packing/ComponentSplitterLayout.h>
 
-#include <vector>
 #include <talipot/DrawingTools.h>
 
 using namespace std;

@@ -26,15 +26,11 @@
 
 #include <QOffscreenSurface>
 
-#include <talipot/Camera.h>
 #include <talipot/GlOffscreenRenderer.h>
 #include <talipot/GlWidget.h>
 #include <talipot/GlVertexArrayManager.h>
 #include <talipot/GlGraph.h>
 #include <talipot/OpenGlConfigManager.h>
-#include <talipot/GlTools.h>
-
-#include <sstream>
 
 using namespace std;
 using namespace tlp;

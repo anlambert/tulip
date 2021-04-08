@@ -11,14 +11,12 @@
  *
  */
 
-#include <talipot/TlpTools.h>
 #include <talipot/TlpQtTools.h>
 #include <talipot/FontDialog.h>
 #include "ui_FontDialog.h"
 
 #include <QFontDatabase>
 #include <QPushButton>
-#include <QDebug>
 
 using namespace tlp;
 

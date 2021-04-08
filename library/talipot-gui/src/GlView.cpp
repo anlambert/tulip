@@ -13,16 +13,11 @@
 
 #include <talipot/GlView.h>
 
-#include <QApplication>
 #include <QGraphicsProxyWidget>
 #include <QGraphicsView>
-#include <QAction>
-#include <QMenu>
 #include <QPushButton>
-#include <QTimer>
 
 #include <talipot/GlWidgetGraphicsItem.h>
-#include <talipot/GlWidget.h>
 #include <talipot/SceneConfigWidget.h>
 #include <talipot/SceneLayersConfigWidget.h>
 #include <talipot/GlBoundingBoxSceneVisitor.h>
@@ -30,10 +25,8 @@
 #include <talipot/QuickAccessBar.h>
 #include <talipot/QtGlSceneZoomAndPanAnimator.h>
 #include <talipot/GlGraph.h>
-#include <talipot/Gl2DRect.h>
 #include <talipot/ViewActionsManager.h>
 #include <talipot/FontIconManager.h>
-#include <talipot/MaterialDesignIcons.h>
 
 using namespace tlp;
 

@@ -11,7 +11,6 @@
  *
  */
 
-#include <climits>
 #include <talipot/IntegerProperty.h>
 #include <talipot/GraphTools.h>
 

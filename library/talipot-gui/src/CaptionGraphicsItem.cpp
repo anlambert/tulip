@@ -19,8 +19,6 @@
 #include <QPushButton>
 
 #include <talipot/DoubleProperty.h>
-#include <talipot/ColorProperty.h>
-#include <talipot/CaptionItem.h>
 #include <talipot/CaptionGraphicsItem.h>
 #include <talipot/CaptionGraphicsSubItems.h>
 #include <talipot/View.h>

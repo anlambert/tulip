@@ -13,17 +13,10 @@
 
 #include <QMouseEvent>
 
-#include <talipot/Graph.h>
 #include <talipot/GlWidget.h>
-#include <talipot/GlTools.h>
-#include <talipot/DrawingTools.h>
 #include <talipot/QtGlSceneZoomAndPanAnimator.h>
 #include <talipot/GlBoundingBoxSceneVisitor.h>
-#include <talipot/GlGraph.h>
-#include <talipot/Camera.h>
 #include <talipot/MouseBoxZoomer.h>
-
-#include <talipot/OpenGlIncludes.h>
 
 using namespace std;
 using namespace tlp;

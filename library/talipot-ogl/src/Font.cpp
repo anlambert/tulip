@@ -15,8 +15,6 @@
 
 #include <fontconfig/fontconfig.h>
 
-#include <algorithm>
-
 #include <talipot/TlpTools.h>
 
 using namespace std;

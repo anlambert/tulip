@@ -14,9 +14,7 @@
 #include <talipot/SceneLayersModel.h>
 
 #include <QFont>
-#include <QVector>
 
-#include <talipot/GlScene.h>
 #include <talipot/GlGraph.h>
 #include <talipot/GlSceneObserver.h>
 

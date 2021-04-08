@@ -15,9 +15,6 @@
 #include <talipot/Graph.h>
 #include <talipot/StringCollection.h>
 
-#include <cstdint>
-#include <limits>
-
 using namespace std;
 using namespace tlp;
 

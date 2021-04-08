@@ -11,18 +11,14 @@
  *
  */
 
-#include <QMimeData>
 #include <QDrag>
-#include <QMouseEvent>
 #include <QApplication>
+#include <QMouseEvent>
 
-#include <talipot/Edge.h>
 #include <talipot/DragHandle.h>
 #include <talipot/Mimes.h>
 #include <talipot/WorkspacePanel.h>
 #include <talipot/View.h>
-
-#include <cassert>
 
 using namespace tlp;
 

@@ -11,8 +11,6 @@
  *
  */
 
-#include <set>
-
 #include <talipot/Graph.h>
 #include <talipot/PlanarityTest.h>
 #include <talipot/PlanarityTestImpl.h>

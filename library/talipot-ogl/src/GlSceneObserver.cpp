@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -11,10 +11,8 @@
  *
  */
 
-#include <cassert>
 #include <talipot/GlSceneObserver.h>
 #include <talipot/GlScene.h>
-#include <talipot/GlEntity.h>
 
 using namespace std;
 

@@ -12,19 +12,12 @@
  */
 
 #include <QFileDialog>
-#include <QHeaderView>
-#include <QLinearGradient>
 #include <QPainter>
 #include <QMessageBox>
 #include <QInputDialog>
 
-#include <algorithm>
-#include <vector>
-
-#include <talipot/TlpQtTools.h>
 #include <talipot/ColorScaleConfigDialog.h>
 #include <talipot/ColorScalesManager.h>
-#include <talipot/TlpTools.h>
 #include <talipot/Settings.h>
 #include <talipot/FontIconManager.h>
 #include <talipot/MaterialDesignIcons.h>

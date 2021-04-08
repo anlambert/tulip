@@ -17,7 +17,6 @@
 #include <talipot/MouseEdgeBendEditor.h>
 #include <talipot/GlGraph.h>
 #include <talipot/GlyphManager.h>
-#include <talipot/Camera.h>
 
 using namespace tlp;
 using namespace std;

@@ -14,11 +14,6 @@
 #include <talipot/PythonVersionChecker.h>
 
 #include <QProcess>
-#include <QSettings>
-
-#include <cstdlib>
-#include <iostream>
-#include <tuple>
 
 // Current Python versions
 static const char *pythonVersion[] = {"3.9", "3.8", "3.7", "3.6", "3.5",  "3.4",
@@ -28,6 +23,7 @@ static const char *pythonVersion[] = {"3.9", "3.8", "3.7", "3.6", "3.5",  "3.4",
 #ifdef WIN32
 
 #include <QFileInfo>
+#include <QSettings>
 
 #include <windows.h>
 

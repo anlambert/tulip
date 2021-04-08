@@ -15,9 +15,6 @@
 
 #include "talipot/PythonInterpreter.h"
 #include "talipot/PythonCodeHighlighter.h"
-#include "talipot/APIDataBase.h"
-
-#include <QTextDocument>
 
 using namespace tlp;
 

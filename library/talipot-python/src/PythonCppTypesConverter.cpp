@@ -16,7 +16,6 @@
 #pragma GCC diagnostic ignored "-Wold-style-cast"
 #endif
 
-#include <unordered_map>
 #include "talipot/PythonIncludes.h"
 #include "talipot/PythonCppTypesConverter.h"
 

@@ -12,12 +12,10 @@
  */
 
 #include <stack>
-#include <unordered_map>
 
 #include <talipot/BiconnectedTest.h>
 #include <talipot/ConnectedTest.h>
 #include <talipot/ConnectedTestListener.h>
-#include <talipot/Graph.h>
 #include <talipot/MutableContainer.h>
 #include <talipot/StableIterator.h>
 

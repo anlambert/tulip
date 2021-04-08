@@ -13,9 +13,6 @@
 
 #include <talipot/GlSceneZoomAndPan.h>
 #include <talipot/GlScene.h>
-#include <talipot/Camera.h>
-
-#include <algorithm>
 
 using namespace std;
 

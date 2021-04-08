@@ -11,15 +11,10 @@
  *
  */
 
-#include <cerrno>
-#include <sstream>
 #include <stack>
 
-#include <talipot/Graph.h>
 #include <talipot/GraphAbstract.h>
 #include <talipot/ImportModule.h>
-#include <talipot/PropertyInterface.h>
-#include <talipot/TlpTools.h>
 #include <talipot/JsonTokens.h>
 #include <talipot/YajlFacade.h>
 #include <talipot/GraphProperty.h>

@@ -16,28 +16,16 @@
 #include "ui_WorkspacePanel.h"
 
 #include <QGraphicsView>
-#include <QCloseEvent>
-#include <QPushButton>
-#include <QApplication>
 #include <QGraphicsProxyWidget>
-#include <QGraphicsRectItem>
-#include <QGraphicsSceneMouseEvent>
-#include <QTabWidget>
-#include <QGraphicsSceneContextMenuEvent>
-#include <QVBoxLayout>
 #include <QScrollBar>
 #include <QPropertyAnimation>
-#include <QLayout>
 
 #include <talipot/MetaTypes.h>
 #include <talipot/Interactor.h>
 #include <talipot/View.h>
-#include <talipot/Graph.h>
 #include <talipot/GraphHierarchiesModel.h>
 #include <talipot/Mimes.h>
-#include <talipot/TlpQtTools.h>
 #include <talipot/FontIconManager.h>
-#include <talipot/MaterialDesignIcons.h>
 
 using namespace tlp;
 

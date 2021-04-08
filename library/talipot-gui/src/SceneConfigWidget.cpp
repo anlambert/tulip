@@ -13,13 +13,8 @@
 
 #include "talipot/SceneConfigWidget.h"
 
-#include <QDebug>
-#include <QMainWindow>
-#include <QApplication>
-
 #include <talipot/GlGraph.h>
 #include <talipot/GlWidget.h>
-#include <talipot/Settings.h>
 #include <talipot/GraphPropertiesModel.h>
 
 #include "ui_SceneConfigWidget.h"

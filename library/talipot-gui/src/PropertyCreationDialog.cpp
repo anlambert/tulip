@@ -18,7 +18,6 @@
 #include <QPushButton>
 
 #include <talipot/Graph.h>
-#include <talipot/TlpQtTools.h>
 #include <talipot/FontIconManager.h>
 #include <talipot/MaterialDesignIcons.h>
 

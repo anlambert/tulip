@@ -18,16 +18,11 @@
 #include "talipot/PythonCodeHighlighter.h"
 #include "talipot/ParenMatcherHighlighter.h"
 
-#include <QTextStream>
 #include <QPainter>
-#include <QTextBlock>
-#include <QApplication>
 #include <QMainWindow>
-#include <QToolTip>
 #include <QScrollBar>
 #include <QMessageBox>
 #include <QMimeData>
-#include <QDesktopWidget>
 #include <QFileInfo>
 #include <QScreen>
 

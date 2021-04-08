@@ -13,7 +13,6 @@
 
 #include <talipot/GraphAbstract.h>
 #include <talipot/PropertyManager.h>
-#include <talipot/PropertyInterface.h>
 #include <talipot/GraphProperty.h>
 
 namespace tlp {

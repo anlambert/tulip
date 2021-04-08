@@ -15,11 +15,8 @@
 
 #include <QVBoxLayout>
 #include <QLabel>
-#include <QHeaderView>
 
-#include <talipot/CSVGraphImport.h>
 #include <talipot/CSVParserConfigurationWidget.h>
-#include <talipot/CSVImportWizard.h>
 #include <talipot/CSVImportConfigurationWidget.h>
 #include <talipot/CSVGraphMappingConfigurationWidget.h>
 #include <talipot/SimplePluginProgressWidget.h>

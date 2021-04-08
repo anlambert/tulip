@@ -11,14 +11,8 @@
  *
  */
 
-#include <iostream>
-#include <algorithm>
-
 #include <talipot/Delaunay.h>
-#include <talipot/Matrix.h>
 #include <talipot/Graph.h>
-#include <talipot/LayoutProperty.h>
-#include <talipot/BoundingBox.h>
 #include <talipot/DrawingTools.h>
 
 #ifdef __GNUC__

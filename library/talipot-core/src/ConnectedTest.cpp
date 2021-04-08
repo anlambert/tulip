@@ -11,11 +11,8 @@
  *
  */
 
-#include <list>
 #include <talipot/ConnectedTest.h>
 #include <talipot/ConnectedTestListener.h>
-#include <talipot/Graph.h>
-#include <talipot/MutableContainer.h>
 #include <talipot/StaticProperty.h>
 
 using namespace std;

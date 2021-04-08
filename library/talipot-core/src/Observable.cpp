@@ -17,15 +17,9 @@
 #pragma warning(disable : 4355)
 #endif
 
-#include <iostream>
-#include <sstream>
-#include <map>
-#include <set>
-
 #include <talipot/Observable.h>
 #include <talipot/ConversionIterator.h>
 #include <talipot/FilterIterator.h>
-#include <talipot/ParallelTools.h>
 #include <talipot/Exception.h>
 #include <talipot/VectorGraph.h>
 

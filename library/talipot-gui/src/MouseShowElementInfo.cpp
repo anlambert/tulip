@@ -15,18 +15,12 @@
 
 #include <QPropertyAnimation>
 #include <QGraphicsView>
-#include <QHeaderView>
-#include <QMouseEvent>
 #include <QGraphicsProxyWidget>
-#include <QSortFilterProxyModel>
 
 #include <talipot/GraphElementModel.h>
 #include <talipot/ItemDelegate.h>
 #include <talipot/GlView.h>
-#include <talipot/GlWidget.h>
-#include <talipot/GlScene.h>
 #include <talipot/MouseShowElementInfo.h>
-#include <talipot/MetaTypes.h>
 
 using namespace std;
 using namespace tlp;

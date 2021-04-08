@@ -12,11 +12,10 @@
  */
 
 #include <talipot/Ordering.h>
-#include <talipot/BiconnectedTest.h>
 #include <talipot/PlanarConMap.h>
-
-#include <cassert>
-#include <cstdlib>
+#ifndef NDEBUG
+#include <talipot/BiconnectedTest.h>
+#endif
 
 using namespace std;
 using namespace tlp;

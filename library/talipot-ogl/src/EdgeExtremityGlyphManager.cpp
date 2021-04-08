@@ -11,8 +11,6 @@
  *
  */
 
-#include <list>
-#include <unordered_map>
 #include <talipot/EdgeExtremityGlyph.h>
 #include <talipot/EdgeExtremityGlyphManager.h>
 #include <talipot/Glyph.h>

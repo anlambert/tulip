@@ -12,9 +12,7 @@
  */
 
 #include <talipot/GlEntityItemModel.h>
-#include <talipot/GlEntity.h>
 
-#include <QStringList>
 #include <QFont>
 
 namespace tlp {

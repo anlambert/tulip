@@ -15,7 +15,6 @@
 #include "ui_SceneLayersConfigWidget.h"
 
 #include <talipot/GlView.h>
-#include <talipot/GlWidget.h>
 #include <talipot/SceneLayersModel.h>
 
 using namespace tlp;

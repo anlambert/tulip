@@ -12,7 +12,6 @@
  */
 
 #include <talipot/DoubleStringsListSelectionWidget.h>
-#include <talipot/TlpQtTools.h>
 #include <talipot/FontIconManager.h>
 #include <talipot/MaterialDesignIcons.h>
 

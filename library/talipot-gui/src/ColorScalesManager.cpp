@@ -13,14 +13,10 @@
 
 #include <talipot/ColorScalesManager.h>
 #include <talipot/TlpQtTools.h>
-#include <talipot/TlpTools.h>
 #include <talipot/Settings.h>
 
-#include <QFileInfo>
 #include <QDir>
 #include <QImage>
-#include <QVariantMap>
-#include <QColor>
 
 using namespace std;
 using namespace tlp;
