@@ -32,6 +32,8 @@ yum -y install fuse fuse-libs file
 # needed for generating the doc
 yum -y install doxygen graphviz
 pip3.6 install sphinx
+# https://github.com/sphinx-doc/sphinx/issues/9063
+pip3.6 install 'docutils==0.16'
 
 # needed to build and run tests
 yum -y install cppunit-devel xorg-x11-server-Xvfb
