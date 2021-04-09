@@ -13,7 +13,6 @@
 
 #include "AlgorithmRunner.h"
 
-#include "AlgorithmRunnerItem.h"
 #include "ExpandableGroupBox.h"
 
 #include <QDropEvent>
@@ -23,7 +22,6 @@
 
 #include <talipot/Mimes.h>
 #include <talipot/Settings.h>
-#include <talipot/TlpQtTools.h>
 
 struct FavoriteBox : public ExpandableGroupBox {
   bool _droppingFavorite;

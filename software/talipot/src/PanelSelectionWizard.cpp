@@ -15,7 +15,6 @@
 #include "ui_PanelSelectionWizard.h"
 
 #include <QAbstractButton>
-#include <QMouseEvent>
 
 #include <talipot/View.h>
 #include <talipot/MetaTypes.h>

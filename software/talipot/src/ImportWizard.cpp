@@ -14,13 +14,10 @@
 #include "ImportWizard.h"
 #include "ui_ImportWizard.h"
 
-#include <QAbstractButton>
-
 #include <talipot/ItemDelegate.h>
 #include <talipot/ParameterListModel.h>
 #include <talipot/ImportModule.h>
 
-#include <talipot/GraphHierarchiesModel.h>
 #include <talipot/PluginModel.h>
 #include <talipot/Settings.h>
 

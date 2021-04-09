@@ -14,17 +14,13 @@
 #include "ExportWizard.h"
 #include "ui_ExportWizard.h"
 
-#include <QAbstractButton>
 #include <QFileDialog>
 #include <QMessageBox>
 
 #include <talipot/ItemDelegate.h>
 #include <talipot/ParameterListModel.h>
 #include <talipot/ExportModule.h>
-#include <talipot/GraphHierarchiesModel.h>
 #include <talipot/PluginModel.h>
-#include <talipot/FontIconManager.h>
-#include <talipot/MaterialDesignIcons.h>
 
 using namespace tlp;
 using namespace std;

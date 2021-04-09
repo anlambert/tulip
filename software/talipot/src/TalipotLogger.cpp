@@ -14,17 +14,11 @@
 #include "TalipotLogger.h"
 
 #include "ui_TalipotLogger.h"
-#include <iostream>
 
 #include <QKeyEvent>
 #include <QClipboard>
 #include <QMenu>
-#include <QPushButton>
-#include <QShowEvent>
-#include <QHideEvent>
-#include <QList>
 
-#include <talipot/TlpQtTools.h>
 #include <talipot/Settings.h>
 #include <talipot/FontIconManager.h>
 #include <talipot/MaterialDesignIcons.h>

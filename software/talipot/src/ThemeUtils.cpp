@@ -11,21 +11,14 @@
  *
  */
 
-#include <talipot/TlpQtTools.h>
 #include <talipot/PythonCodeEditor.h>
 
 #include "AlgorithmRunner.h"
-#include "ThemeUtils.h"
 #include "TalipotLogger.h"
 
 #include <QApplication>
-#include <QFile>
-#include <QPalette>
-#include <QStyle>
 #include <QMainWindow>
-#include <QMap>
 #include <QGraphicsView>
-#include <QGraphicsScene>
 #include <QGraphicsProxyWidget>
 
 using namespace tlp;

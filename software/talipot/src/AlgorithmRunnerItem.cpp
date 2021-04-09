@@ -11,7 +11,6 @@
  *
  */
 
-#include <QMouseEvent>
 #include <QMessageBox>
 #include <QDrag>
 #include <QtCore/QTime>
@@ -25,21 +24,10 @@
 #include <talipot/ItemDelegate.h>
 #include <talipot/ParameterListModel.h>
 #include <talipot/Settings.h>
-#include <talipot/TlpQtTools.h>
-#include <talipot/BooleanProperty.h>
-#include <talipot/StringProperty.h>
-#include <talipot/LayoutProperty.h>
-#include <talipot/GraphProperty.h>
-#include <talipot/SizeProperty.h>
-#include <talipot/IntegerProperty.h>
-#include <talipot/ColorProperty.h>
-#include <talipot/MetaTypes.h>
 #include <talipot/ColorScalesManager.h>
 #include <talipot/StableIterator.h>
 #include <talipot/PropertyAlgorithm.h>
-#include <talipot/FontIconManager.h>
 #include <talipot/IconicFont.h>
-#include <talipot/MaterialDesignIcons.h>
 
 using namespace tlp;
 

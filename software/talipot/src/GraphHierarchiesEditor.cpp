@@ -11,22 +11,12 @@
  *
  */
 
-#include <vector>
-#include "GraphHierarchiesEditor.h"
-
-#include <QDebug>
-#include <QContextMenuEvent>
 #include <QMenu>
-#include <QGraphicsEffect>
-#include <QPainter>
-#include <QTextDocument>
 #include <QToolButton>
 #include <QSortFilterProxyModel>
 #include <QMessageBox>
-#include <QMainWindow>
 #include <QTimer>
 
-#include <talipot/BooleanProperty.h>
 #include <talipot/MetaTypes.h>
 #include <talipot/GraphHierarchiesModel.h>
 #include <talipot/FontIconManager.h>

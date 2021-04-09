@@ -17,14 +17,8 @@
 
 #include "ui_PreferencesDialog.h"
 
-#include <talipot/TlpTools.h>
-#include <talipot/TlpQtTools.h>
 #include <talipot/Settings.h>
 #include <talipot/ItemDelegate.h>
-#include <talipot/MetaTypes.h>
-#include <talipot/ViewSettings.h>
-
-#include <QMessageBox>
 
 using namespace tlp;
 

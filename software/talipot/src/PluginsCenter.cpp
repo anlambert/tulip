@@ -16,8 +16,6 @@
 #include "PluginErrorReport.h"
 #include "PluginInformationListItem.h"
 
-#include <talipot/Algorithm.h>
-#include <talipot/TemplateAlgorithm.h>
 #include <talipot/PropertyAlgorithm.h>
 #include <talipot/View.h>
 #include <talipot/Interactor.h>
@@ -25,8 +23,6 @@
 #include <talipot/EdgeExtremityGlyph.h>
 #include <talipot/ImportModule.h>
 #include <talipot/ExportModule.h>
-#include <talipot/Settings.h>
-#include <talipot/PluginsManager.h>
 
 #include "ui_PluginsCenter.h"
 

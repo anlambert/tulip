@@ -18,7 +18,6 @@
 #include <QPropertyAnimation>
 #include <QDir>
 
-#include <talipot/TlpTools.h>
 #include <talipot/Plugin.h>
 #include <talipot/TlpQtTools.h>
 

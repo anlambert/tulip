@@ -11,49 +11,25 @@
  *
  */
 
-#include <QString>
 #include <QDir>
 #include <QApplication>
-#include <QMainWindow>
 #include <QMessageBox>
-#include <QDesktopWidget>
-#include <QStandardPaths>
-#include <QFile>
-#include <QStyle>
 #include <QProxyStyle>
 
 #include <CrashHandler.h>
 
 #include <talipot/Exception.h>
-#include <talipot/Release.h>
-#include <talipot/PluginLibraryLoader.h>
-#include <talipot/PluginsManager.h>
-#include <talipot/TlpTools.h>
-#include <talipot/TlpQtTools.h>
-#include <talipot/Project.h>
-#include <talipot/SimplePluginProgressWidget.h>
-#include <talipot/PluginsManager.h>
 #include <talipot/Interactor.h>
-#include <talipot/GlyphManager.h>
-#include <talipot/EdgeExtremityGlyphManager.h>
-#include <talipot/TlpQtTools.h>
 #include <talipot/Settings.h>
-#include <talipot/WorkspacePanel.h>
-#include <talipot/View.h>
-#include <talipot/GlView.h>
-#include <talipot/GlWidget.h>
 #include <talipot/PythonInterpreter.h>
 #include <talipot/GlOffscreenRenderer.h>
 #include <talipot/GlTextureManager.h>
 #include <talipot/FontIconManager.h>
-#include <talipot/MaterialDesignIcons.h>
 
 #include "TalipotMainWindow.h"
 #include "SplashScreen.h"
 #include "PluginsCenter.h"
 #include "ThemeUtils.h"
-
-#include <iostream>
 
 #ifdef WIN32
 #include <windows.h>

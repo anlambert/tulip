@@ -15,22 +15,11 @@
 #include "ui_SearchWidget.h"
 
 #include <talipot/GraphHierarchiesModel.h>
-#include <talipot/GraphPropertiesModel.h>
-#include <talipot/BooleanProperty.h>
 #include <talipot/GraphTableItemDelegate.h>
 #include <talipot/GraphModel.h>
-#include <talipot/DoubleProperty.h>
 #include <talipot/Mimes.h>
-#include <talipot/StringProperty.h>
-#include <talipot/MetaTypes.h>
-#include <talipot/TlpQtTools.h>
-#include <talipot/FontIconManager.h>
-#include <talipot/MaterialDesignIcons.h>
 
-#include <QDebug>
 #include <QStandardItemModel>
-#include <QDragEnterEvent>
-#include <QRegExp>
 
 using namespace tlp;
 using namespace std;

@@ -11,70 +11,42 @@
  *
  */
 
-#include <talipot/PythonInterpreter.h>
-#include <talipot/APIDataBase.h>
-#include <talipot/PythonIDE.h>
-#include <talipot/PythonCodeEditor.h>
-#include <talipot/SimplePluginProgressWidget.h>
-
 #include "TalipotMainWindow.h"
-#include "ThemeUtils.h"
-
-#include <QMessageBox>
-#include <QDesktopServices>
-#include <QFileDialog>
-#include <QCloseEvent>
-#include <QClipboard>
-#include <QDropEvent>
-#include <QUrl>
-#include <QMimeData>
-#include <QTimer>
-#include <QVBoxLayout>
-#include <QDialog>
-#include <QByteArray>
-#include <QStatusBar>
-#include <QMainWindow>
-#include <QApplication>
-#include <QDesktopWidget>
-
-#include <talipot/TlpTools.h>
-#include <talipot/ImportModule.h>
-#include <talipot/Graph.h>
-#include <talipot/ExportModule.h>
-#include <talipot/View.h>
-#include <talipot/SimplePluginProgressWidget.h>
-#include <talipot/GraphHierarchiesModel.h>
-#include <talipot/CSVImportWizard.h>
-#include <talipot/GraphModel.h>
-#include <talipot/GraphTableItemDelegate.h>
-#include <talipot/GraphPropertiesModel.h>
-#include <talipot/GlView.h>
-#include <talipot/GlWidget.h>
-#include <talipot/GlGraph.h>
-#include <talipot/Settings.h>
-#include <talipot/PluginsManager.h>
-#include <talipot/TlpQtTools.h>
-#include <talipot/Project.h>
-#include <talipot/GraphTools.h>
-#include <talipot/ColorScaleConfigDialog.h>
-#include <talipot/AboutPage.h>
-#include <talipot/ColorScalesManager.h>
-#include <talipot/StableIterator.h>
-#include <talipot/FontIconManager.h>
-#include <talipot/MaterialDesignIcons.h>
-#include <talipot/TreeTest.h>
-
 #include "ui_TalipotMainWindow.h"
 
 #include "TalipotLogger.h"
 #include "ImportWizard.h"
 #include "ExportWizard.h"
 #include "PanelSelectionWizard.h"
-#include "GraphHierarchiesEditor.h"
 #include "PreferencesDialog.h"
 #include "PluginsCenter.h"
 
-#include <QDebug>
+#include <talipot/PythonIDE.h>
+#include <talipot/SimplePluginProgressWidget.h>
+#include <talipot/ImportModule.h>
+#include <talipot/SimplePluginProgressWidget.h>
+#include <talipot/GraphHierarchiesModel.h>
+#include <talipot/CSVImportWizard.h>
+#include <talipot/GlView.h>
+#include <talipot/Settings.h>
+#include <talipot/Project.h>
+#include <talipot/GraphTools.h>
+#include <talipot/ColorScaleConfigDialog.h>
+#include <talipot/AboutPage.h>
+#include <talipot/ColorScalesManager.h>
+#include <talipot/StableIterator.h>
+#include <talipot/TreeTest.h>
+
+#include <QMessageBox>
+#include <QDesktopServices>
+#include <QFileDialog>
+#include <QClipboard>
+#include <QMimeData>
+#include <QTimer>
+#include <QDesktopWidget>
+#include <QDragEnterEvent>
+#include <QDropEvent>
+#include <QCloseEvent>
 
 using namespace tlp;
 using namespace std;
