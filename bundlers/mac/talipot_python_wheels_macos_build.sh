@@ -28,8 +28,9 @@ echo current wheel dev version = $DEV_VERSION
 # install MacPorts
 curl -LO https://raw.githubusercontent.com/GiovanniBussi/macports-ci/master/macports-ci
 source ./macports-ci install
+source ./macports-ci ccache
 
-CLANG_VERSION=10
+CLANG_VERSION=11
 
 # install build tools and dependencies
 sudo port -N install \
@@ -41,6 +42,8 @@ sudo port -N install \
   zlib \
   zstd \
   graphviz
+
+  source ./macports-ci ccache --save
 
 # install Python versions from which to build wheels against
 curl -LO https://www.python.org/ftp/python/3.7.6/python-3.7.6-macosx10.9.pkg
