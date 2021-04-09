@@ -14,8 +14,6 @@
 #include "SOMPreviewComposite.h"
 
 #include <talipot/ColorProperty.h>
-#include <talipot/GlTextureManager.h>
-#include <talipot/GlBoundingBoxSceneVisitor.h>
 
 using namespace tlp;
 using namespace std;

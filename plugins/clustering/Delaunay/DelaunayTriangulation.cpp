@@ -11,12 +11,8 @@
  *
  */
 
-#include <talipot/Algorithm.h>
 #include <talipot/PluginHeaders.h>
 #include <talipot/Delaunay.h>
-#include <talipot/LayoutProperty.h>
-#include <talipot/StaticProperty.h>
-#include <talipot/ParallelTools.h>
 
 using namespace std;
 

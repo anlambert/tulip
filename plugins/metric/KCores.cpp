@@ -16,8 +16,6 @@
 #include <talipot/GraphMeasure.h>
 #include <talipot/PropertyAlgorithm.h>
 
-#include <climits>
-
 using namespace std;
 using namespace tlp;
 

@@ -11,10 +11,6 @@
  *
  */
 
-#include <algorithm>
-
-#include <talipot/Iterator.h>
-#include <talipot/StlIterator.h>
 #include <talipot/TlpTools.h>
 
 #include "InputSample.h"

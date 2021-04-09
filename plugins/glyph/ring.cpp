@@ -13,19 +13,10 @@
 
 #include <GL/glew.h>
 
-#include <string>
-
-#include <talipot/StringProperty.h>
-#include <talipot/ColorProperty.h>
-#include <talipot/DoubleProperty.h>
-#include <talipot/Size.h>
-#include <talipot/Coord.h>
 #include <talipot/Glyph.h>
 #include <talipot/EdgeExtremityGlyph.h>
 #include <talipot/GlTextureManager.h>
 #include <talipot/GlGraphRenderingParameters.h>
-#include <talipot/Graph.h>
-#include <talipot/GlTools.h>
 #include <talipot/GlGraphInputData.h>
 #include <talipot/ViewSettings.h>
 #include <talipot/DrawingTools.h>

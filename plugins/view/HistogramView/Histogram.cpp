@@ -11,14 +11,10 @@
  *
  */
 
-#include <talipot/DoubleProperty.h>
-#include <talipot/IntegerProperty.h>
 #include <talipot/GlPolyQuad.h>
 #include <talipot/Gl2DRect.h>
 #include <talipot/GlOffscreenRenderer.h>
 #include <talipot/GlTextureManager.h>
-#include <talipot/TlpTools.h>
-#include <talipot/ViewSettings.h>
 
 #include "Histogram.h"
 

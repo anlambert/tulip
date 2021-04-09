@@ -12,8 +12,6 @@
  */
 
 #include "Dijkstra.h"
-#include <talipot/LayoutProperty.h>
-#include <talipot/ParallelTools.h>
 
 using namespace tlp;
 using namespace std;

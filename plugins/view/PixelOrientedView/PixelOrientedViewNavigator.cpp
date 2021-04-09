@@ -11,14 +11,10 @@
  *
  */
 
-#include <talipot/GlRect.h>
-#include <talipot/BoundingBox.h>
-#include <talipot/PluginHeaders.h>
 #include <talipot/QtGlSceneZoomAndPanAnimator.h>
 
 #include "PixelOrientedViewNavigator.h"
 
-#include <QEvent>
 #include <QMouseEvent>
 
 using namespace std;

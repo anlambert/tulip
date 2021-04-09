@@ -11,11 +11,7 @@
  *
  */
 
-#include <cassert>
-#include <stack>
-
 #include <talipot/SortIterator.h>
-#include <talipot/StringCollection.h>
 
 #include "HierarchicalGraph.h"
 #include "DatasetTools.h"

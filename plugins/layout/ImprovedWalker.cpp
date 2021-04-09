@@ -11,9 +11,7 @@
  *
  */
 
-#include <talipot/GraphTools.h>
 #include "DatasetTools.h"
-#include "Orientation.h"
 #include "ImprovedWalker.h"
 
 using namespace std;

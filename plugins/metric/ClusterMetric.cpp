@@ -13,7 +13,6 @@
 
 #include "ClusterMetric.h"
 
-#include <talipot/StaticProperty.h>
 #include <talipot/GraphMeasure.h>
 
 PLUGIN(ClusterMetric)

@@ -13,11 +13,8 @@
 
 #include "PropertyValuesDispatcher.h"
 
-#include <talipot/Graph.h>
 #include <talipot/IntegerProperty.h>
 #include <talipot/BooleanProperty.h>
-
-#include <typeinfo>
 
 using namespace std;
 

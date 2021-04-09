@@ -16,11 +16,6 @@
 #include <talipot/SimpleTest.h>
 #include <talipot/Graph.h>
 
-#include <sstream>
-#include <algorithm>
-#include <iterator>
-#include <unordered_map>
-
 PLUGIN(CliqueEnumeration)
 
 using namespace tlp;

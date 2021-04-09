@@ -16,21 +16,13 @@
 #include "GlLabelledColorScale.h"
 #include <SOMMap.h>
 
-#include <talipot/GlLabel.h>
 #include <talipot/GlBoundingBoxSceneVisitor.h>
 #include <talipot/GlTextureManager.h>
 #include <talipot/ColorScale.h>
 #include <talipot/GlQuad.h>
 #include <talipot/GlRect.h>
-#include <talipot/GlLayer.h>
-#include <talipot/GlWidget.h>
-#include <talipot/BooleanProperty.h>
 
-#include <QToolTip>
 #include <QMouseEvent>
-#include <QPicture>
-
-#include <cstdint>
 
 using namespace tlp;
 using namespace std;

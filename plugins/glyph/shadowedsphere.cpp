@@ -12,7 +12,6 @@
  */
 
 #include <talipot/ViewSettings.h>
-#include <talipot/Glyph.h>
 #include <talipot/AroundTexturedSphere.h>
 
 using namespace std;

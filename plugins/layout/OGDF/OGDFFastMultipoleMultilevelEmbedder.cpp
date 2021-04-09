@@ -12,9 +12,7 @@
  */
 
 #include <ogdf/energybased/FastMultipoleEmbedder.h>
-#include <ogdf/basic/simple_graph_alg.h>
 
-#include <talipot/SimpleTest.h>
 #include <talipot/OGDFLayoutPluginBase.h>
 
 static const char *paramHelp[] = {

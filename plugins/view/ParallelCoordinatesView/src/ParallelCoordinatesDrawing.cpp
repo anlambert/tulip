@@ -13,23 +13,12 @@
 
 #include <QApplication>
 
-#include <talipot/BooleanProperty.h>
-#include <talipot/IntegerProperty.h>
-#include <talipot/DoubleProperty.h>
-#include <talipot/LayoutProperty.h>
-#include <talipot/SizeProperty.h>
-#include <talipot/StringProperty.h>
-#include <talipot/Iterator.h>
-#include <talipot/BoundingBox.h>
-#include <talipot/GlBoundingBoxSceneVisitor.h>
 #include <talipot/GlPolyQuad.h>
 #include <talipot/GlCatmullRomCurve.h>
 #include <talipot/GlCubicBSplineInterpolation.h>
 #include <talipot/GlLine.h>
 #include <talipot/GlProgressBar.h>
-#include <talipot/GlScene.h>
 #include <talipot/GlGraphRenderingParameters.h>
-#include <talipot/GlGraph.h>
 #include <talipot/GlWidget.h>
 #include <talipot/ViewSettings.h>
 #include <talipot/TlpQtTools.h>
@@ -39,8 +28,6 @@
 #include "QuantitativeParallelAxis.h"
 #include "ParallelTools.h"
 #include "ParallelCoordinatesGraphProxy.h"
-
-#include <sstream>
 
 using namespace std;
 

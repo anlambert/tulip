@@ -14,7 +14,6 @@
 #include "DoubleStringsListRelationDialog.h"
 #include "ui_DoubleStringsListRelationDialog.h"
 
-#include <talipot/TlpQtTools.h>
 #include <talipot/ColorScale.h>
 #include <talipot/FontIconManager.h>
 #include <talipot/MaterialDesignIcons.h>

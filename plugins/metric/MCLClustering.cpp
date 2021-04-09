@@ -11,18 +11,8 @@
  *
  */
 
-#include <algorithm>
-#include <sstream>
-#include <string>
 #include <queue>
-#include <talipot/MutableContainer.h>
-#include <talipot/Graph.h>
-#include <talipot/TlpTools.h>
-#include <talipot/GraphMeasure.h>
-#include <talipot/StableIterator.h>
-#include <talipot/SimpleTest.h>
 #include <talipot/PluginHeaders.h>
-#include <talipot/StableIterator.h>
 #include <talipot/VectorGraph.h>
 
 using namespace tlp;

@@ -11,10 +11,6 @@
  *
  */
 
-#include <talipot/SizeProperty.h>
-#include <talipot/StringCollection.h>
-#include <talipot/GraphParallelTools.h>
-
 #include <libvpsc/generate-constraints.h>
 #include <libvpsc/remove_rectangle_overlap.h>
 

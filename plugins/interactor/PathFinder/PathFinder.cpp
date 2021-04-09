@@ -14,11 +14,8 @@
 #include "PathFinder.h"
 
 #include <talipot/MouseInteractors.h>
-#include <talipot/View.h>
 #include <talipot/StringsListSelectionWidget.h>
 #include <talipot/NodeLinkDiagramView.h>
-#include <talipot/Graph.h>
-#include <talipot/TlpQtTools.h>
 
 #include "PathFinderComponent.h"
 #include "PathFinderConfigurationWidget.h"
@@ -28,7 +25,6 @@
 #include "../../utils/InteractorIcons.h"
 
 #include <QListWidget>
-#include <QDialog>
 #include <QDialogButtonBox>
 #include <QMessageBox>
 #include <QPushButton>

@@ -11,35 +11,18 @@
  *
  */
 
-#include <QCursor>
-#include <QEvent>
-#include <QThread>
 #include <QApplication>
 #include <QTimeLine>
-#include <QMouseEvent>
+#include <QWheelEvent>
 
-#include <talipot/PluginHeaders.h>
 #include <talipot/MouseInteractors.h>
-#include <talipot/GlWidget.h>
-#include <talipot/GlView.h>
 #include <talipot/GlCircle.h>
-#include <talipot/OcclusionTest.h>
-#include <talipot/GlBoundingBoxSceneVisitor.h>
-#include <talipot/GlRect.h>
-#include <talipot/GlTextureManager.h>
-#include <talipot/GlGraphStaticData.h>
-#include <talipot/Rectangle.h>
 #include <talipot/QtGlSceneZoomAndPanAnimator.h>
-#include <talipot/GlNode.h>
-#include <talipot/GlEdge.h>
 #include <talipot/NodeLinkDiagramView.h>
-#include <talipot/GlLayer.h>
 
 #include "NeighborhoodHighlighterInteractor.h"
 #include "../../utils/PluginNames.h"
 #include "../../utils/InteractorIcons.h"
-
-#include <algorithm>
 
 using namespace std;
 

@@ -14,7 +14,6 @@
 #include <ogdf/planarity/PlanarizationGridLayout.h>
 
 #include <talipot/OGDFLayoutPluginBase.h>
-#include <talipot/StringCollection.h>
 
 static const char *paramHelp[] = {
     // page ratio

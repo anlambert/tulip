@@ -12,7 +12,6 @@
  */
 
 #include "StrongComponent.h"
-#include <talipot/DoubleProperty.h>
 
 PLUGIN(StrongComponent)
 

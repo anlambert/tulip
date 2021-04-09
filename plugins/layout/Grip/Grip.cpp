@@ -12,12 +12,7 @@
  */
 
 #include "Grip.h"
-#include "MISFiltering.h"
 #include "Distances.h"
-
-#include <talipot/PluginHeaders.h>
-#include <talipot/TreeTest.h>
-#include <talipot/Graph.h>
 
 using namespace std;
 using namespace tlp;

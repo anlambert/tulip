@@ -11,9 +11,6 @@
  *
  */
 
-#include <talipot/StringProperty.h>
-#include <talipot/StringCollection.h>
-
 #include "StrahlerMetric.h"
 
 PLUGIN(StrahlerMetric)

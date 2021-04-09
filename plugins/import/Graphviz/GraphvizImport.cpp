@@ -11,19 +11,16 @@
  *
  */
 
-#include <cstring>
-#include <cerrno>
-#include <unordered_map>
-
 #ifdef __GNUC__
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wold-style-cast"
 #endif
 
+#include <cstring>
+
 #include <cgraph.h>
 
 #include <talipot/PluginHeaders.h>
-#include <talipot/TlpTools.h>
 #include <talipot/ViewSettings.h>
 
 using namespace std;

@@ -11,13 +11,7 @@
  *
  */
 
-#include <cerrno>
-#include <fstream>
-#include <sstream>
-#include <vector>
-
 #include <talipot/PluginHeaders.h>
-#include <talipot/TlpTools.h>
 
 using namespace std;
 using namespace tlp;

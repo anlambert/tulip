@@ -11,14 +11,8 @@
  *
  */
 
-#include <cmath>
-#include <limits>
-
 #include <talipot/PluginHeaders.h>
-#include <talipot/Color.h>
-#include <talipot/Vector.h>
 #include <talipot/ColorScale.h>
-#include <talipot/StringCollection.h>
 
 #ifndef TALIPOT_BUILD_CORE_ONLY
 #include "DoubleStringsListRelationDialog.h"

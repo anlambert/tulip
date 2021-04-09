@@ -12,19 +12,14 @@
  */
 
 #include <ogdf/planarity/PlanarizationLayout.h>
-#include <ogdf/planarity/EmbedderMaxFace.h>
 #include <ogdf/planarity/EmbedderMaxFaceLayers.h>
 #include <ogdf/planarity/EmbedderMinDepth.h>
-#include <ogdf/planarity/EmbedderMinDepthMaxFace.h>
 #include <ogdf/planarity/EmbedderMinDepthMaxFaceLayers.h>
 #include <ogdf/planarity/EmbedderMinDepthPiTa.h>
-#include <ogdf/planarity/EmbedderOptimalFlexDraw.h>
 #include <ogdf/planarity/SimpleEmbedder.h>
 
 #include <talipot/OGDFLayoutPluginBase.h>
 #include <talipot/StringCollection.h>
-
-#include <vector>
 
 using namespace std;
 

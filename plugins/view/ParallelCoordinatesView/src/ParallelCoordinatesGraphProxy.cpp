@@ -15,12 +15,9 @@
 #include <talipot/BooleanProperty.h>
 #include <talipot/SizeProperty.h>
 #include <talipot/StringProperty.h>
-#include <talipot/IntegerProperty.h>
-#include <talipot/DoubleProperty.h>
 #include <talipot/ConversionIterator.h>
 
 #include "ParallelCoordinatesGraphProxy.h"
-#include "ParallelTools.h"
 
 using namespace std;
 

@@ -11,8 +11,6 @@
  *
  */
 
-#include <memory>
-
 #include <GL/glew.h>
 
 #include <talipot/Glyph.h>
@@ -22,7 +20,6 @@
 #include <talipot/GlGraphInputData.h>
 #include <talipot/GlTools.h>
 #include <talipot/ViewSettings.h>
-#include <talipot/ParallelTools.h>
 
 using namespace tlp;
 using namespace std;

@@ -12,24 +12,19 @@
  */
 
 #include "GeographicViewShowElementInfo.h"
+#include "GeographicViewGraphicsView.h"
 
 #include "ui_ElementInformationWidget.h"
 #include "GeographicViewInteractors.h"
 #include "../../utils/StandardInteractorPriority.h"
-#include "../../utils/PluginNames.h"
 #include "../../utils/InteractorIcons.h"
 
-#include <talipot/MouseInteractors.h>
-#include <talipot/NodeLinkDiagramViewInteractor.h>
 #include <talipot/ItemDelegate.h>
 #include <talipot/GraphElementModel.h>
 #include <talipot/GlEntityItemModel.h>
 #include <talipot/GlComplexPolygon.h>
 
 #include <QPropertyAnimation>
-#include <QLayout>
-#include <QStringList>
-#include <QVariantList>
 
 using namespace std;
 using namespace tlp;

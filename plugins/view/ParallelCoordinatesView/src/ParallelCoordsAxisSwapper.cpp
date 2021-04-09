@@ -11,13 +11,7 @@
  *
  */
 
-#include <talipot/GlLayer.h>
-#include <talipot/GlBoundingBoxSceneVisitor.h>
-#include <talipot/GlRect.h>
-#include <talipot/GlCircle.h>
 #include <talipot/GlQuad.h>
-#include <talipot/GlWidget.h>
-#include <talipot/Camera.h>
 
 #include "ParallelTools.h"
 #include "ParallelCoordinatesView.h"

@@ -13,8 +13,6 @@
 
 #include "EqualValueClustering.h"
 
-#include <talipot/StringCollection.h>
-
 //================================================================================
 using namespace std;
 using namespace tlp;

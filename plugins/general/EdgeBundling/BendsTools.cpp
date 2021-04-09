@@ -12,7 +12,6 @@
  */
 
 #include "BendsTools.h"
-#include <talipot/Vector.h>
 
 using namespace tlp;
 using namespace std;

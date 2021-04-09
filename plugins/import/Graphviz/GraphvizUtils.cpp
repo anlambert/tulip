@@ -11,12 +11,10 @@
  *
  */
 
-#include <cstdio>
 #include <unordered_map>
 
 #include <talipot/Color.h>
 #include <talipot/Coord.h>
-#include <talipot/TlpTools.h>
 
 using namespace std;
 using namespace tlp;

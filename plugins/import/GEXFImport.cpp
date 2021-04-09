@@ -11,12 +11,6 @@
  *
  */
 
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <cctype>
-#include <unordered_map>
-
 #include <talipot/ImportModule.h>
 #include <talipot/ViewSettings.h>
 #include <talipot/TlpQtTools.h>

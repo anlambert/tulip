@@ -11,18 +11,15 @@
  *
  */
 
-#include <talipot/TlpTools.h>
-#include <talipot/GlPolygon.h>
-#include <talipot/GlLabel.h>
 #include <talipot/GlQuad.h>
 #include <talipot/GlBoundingBoxSceneVisitor.h>
-#include <talipot/GlWidget.h>
 
 #include "ParallelCoordinatesView.h"
 #include "ParallelTools.h"
 #include "ParallelCoordsAxisSliders.h"
 #include "ParallelAxis.h"
 
+#include <QKeyEvent>
 #include <QMouseEvent>
 
 using namespace std;

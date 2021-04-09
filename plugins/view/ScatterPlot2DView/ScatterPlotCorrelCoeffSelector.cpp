@@ -11,24 +11,18 @@
  *
  */
 
-#include <talipot/GlLines.h>
-#include <talipot/GlNode.h>
-#include <talipot/GlEdge.h>
-#include <talipot/GlComplexPolygon.h>
-#include <talipot/GlWidget.h>
-#include <talipot/GlGraph.h>
-#include <talipot/GlQuantitativeAxis.h>
-#include <talipot/GlLabel.h>
-
-#include <QMenu>
-#include <QEvent>
-#include <QMouseEvent>
-#include <QContextMenuEvent>
-
 #include "ScatterPlotCorrelCoeffSelector.h"
 #include "ScatterPlotCorrelCoeffSelectorOptionsWidget.h"
 #include "ScatterPlot2DView.h"
 #include "ScatterPlot2D.h"
+
+#include <talipot/GlLines.h>
+#include <talipot/GlComplexPolygon.h>
+#include <talipot/GlQuantitativeAxis.h>
+
+#include <QContextMenuEvent>
+#include <QMenu>
+#include <QMouseEvent>
 
 using namespace std;
 

@@ -11,30 +11,17 @@
  *
  */
 
-#include <talipot/GlTextureManager.h>
-#include <talipot/GlWidget.h>
-#include <talipot/Camera.h>
-#include <talipot/GlTools.h>
-#include <talipot/Interactor.h>
-#include <talipot/DataSet.h>
 #include <talipot/GlVertexArrayManager.h>
 #include <talipot/GlComplexPolygon.h>
 #include <talipot/TlpQtTools.h>
-#include <talipot/OpenGlConfigManager.h>
 #include <talipot/NodeLinkDiagramView.h>
-#include <talipot/GlOffscreenRenderer.h>
 
-#include <QMenu>
-#include <QThread>
-#include <QComboBox>
-#include <QTimeLine>
-#include <QApplication>
-#include <QMessageBox>
 #include <QTimer>
 
-#include <iostream>
-
 #include "GeographicView.h"
+#include "GeographicViewGraphicsView.h"
+#include "GeographicViewConfigWidget.h"
+#include "GeolocationConfigWidget.h"
 
 using namespace std;
 using namespace tlp;
@@ -485,6 +472,26 @@ void GeographicView::graphChanged(Graph *graph) {
   if (graph->isEmpty()) {
     computeGeoLayout();
   }
+}
+
+LeafletMaps *GeographicView::getLeafletMap() {
+  return geoViewGraphicsView->getLeafletMapsPage();
+}
+
+bool GeographicView::getNodeOrEdgeAtViewportPos(int x, int y, node &n, edge &e) const {
+  return GlView::getNodeOrEdgeAtViewportPos(geoViewGraphicsView->getGlWidget(), x, y, n, e);
+}
+
+void GeographicView::currentInteractorChanged(tlp::Interactor *i) {
+  i->install(geoViewGraphicsView->getGlWidget());
+}
+
+void GeographicView::mapToPolygon() {
+  geoViewGraphicsView->mapToPolygon();
+}
+
+QGraphicsView *GeographicView::graphicsView() const {
+  return geoViewGraphicsView;
 }
 
 PLUGIN(GeographicView)

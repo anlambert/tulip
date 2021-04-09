@@ -13,11 +13,9 @@
 
 #include <talipot/PropertyAlgorithm.h>
 #include <talipot/StringCollection.h>
-#include <talipot/NumericProperty.h>
 #include <talipot/DoubleProperty.h>
 #include <talipot/SizeProperty.h>
 #include <talipot/StaticProperty.h>
-#include <talipot/ParallelTools.h>
 
 using namespace std;
 using namespace tlp;

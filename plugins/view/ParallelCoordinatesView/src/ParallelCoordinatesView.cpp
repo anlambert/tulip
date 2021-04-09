@@ -12,31 +12,17 @@
  */
 
 #include "ParallelCoordinatesView.h"
-#include "AxisConfigDialogs.h"
-#include "NominalParallelAxis.h"
 #include "ParallelCoordinatesViewQuickAccessbar.h"
 #include "ParallelTools.h"
-#include "ParallelCoordinatesDrawing.h"
 #include "ParallelCoordsDrawConfigWidget.h"
 #include "QuantitativeParallelAxis.h"
+#include "../utils/ViewGraphPropertiesSelectionWidget.h"
 
-#include <QMenu>
-#include <QImageWriter>
-#include <QDir>
-#include <QGraphicsView>
-#include <QKeyEvent>
-
-#include <talipot/GlTools.h>
-#include <talipot/GlLabel.h>
-#include <talipot/GlProgressBar.h>
-#include <talipot/GlWidget.h>
-#include <talipot/Interactor.h>
-#include <talipot/GlTextureManager.h>
 #include <talipot/GlGraph.h>
-#include <talipot/PropertyInterface.h>
 #include <talipot/TlpQtTools.h>
 
-#include "../utils/ViewGraphPropertiesSelectionWidget.h"
+#include <QKeyEvent>
+#include <QMenu>
 
 using namespace std;
 

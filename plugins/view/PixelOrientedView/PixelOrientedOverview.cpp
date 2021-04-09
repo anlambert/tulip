@@ -13,9 +13,7 @@
 
 #include <talipot/GlTextureManager.h>
 #include <talipot/Gl2DRect.h>
-#include <talipot/GlLabel.h>
 #include <talipot/GlProgressBar.h>
-#include <talipot/GlWidget.h>
 #include <talipot/GlOffscreenRenderer.h>
 #include <talipot/GlGraph.h>
 

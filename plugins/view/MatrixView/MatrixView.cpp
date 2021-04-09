@@ -11,8 +11,6 @@
  *
  */
 
-#include <QGraphicsView>
-#include <QAction>
 #include <QMenu>
 
 #include "MatrixView.h"
@@ -20,11 +18,7 @@
 #include "GlMatrixBackgroundGrid.h"
 #include "MatrixViewQuickAccessBar.h"
 
-#include <talipot/Graph.h>
-#include <talipot/IntegerProperty.h>
-#include <talipot/GlWidget.h>
 #include <talipot/TlpQtTools.h>
-#include <talipot/GlLabel.h>
 #include <talipot/GlGraph.h>
 #include <talipot/GlyphManager.h>
 #include <talipot/ParametricCurves.h>

@@ -11,7 +11,6 @@
  *
  */
 
-#include <algorithm>
 #include <talipot/Circle.h>
 #include "BubbleTree.h"
 #include "DatasetTools.h"

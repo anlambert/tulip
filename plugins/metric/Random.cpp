@@ -14,7 +14,6 @@
 #include "Random.h"
 
 #include <talipot/StringCollection.h>
-#include <talipot/TlpTools.h>
 
 PLUGIN(RandomMetric)
 

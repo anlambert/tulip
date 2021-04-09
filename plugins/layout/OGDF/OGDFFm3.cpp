@@ -17,7 +17,6 @@
 #include <talipot/SizeProperty.h>
 
 #include <ogdf/energybased/FMMMLayout.h>
-#include <ogdf/energybased/fmmm/FMMMOptions.h>
 
 using namespace std;
 

@@ -15,7 +15,6 @@
 
 #include <talipot/DrawingTools.h>
 #include <talipot/SizeProperty.h>
-#include <talipot/DoubleProperty.h>
 
 using namespace tlp;
 using namespace std;

@@ -16,16 +16,10 @@
 #include "NominalParallelAxis.h"
 
 #include <talipot/IntegerProperty.h>
-#include <talipot/DoubleProperty.h>
-#include <talipot/TlpQtTools.h>
 #include <talipot/FontIconManager.h>
 #include <talipot/MaterialDesignIcons.h>
 
 #include <QGridLayout>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QGroupBox>
-#include <QString>
 #include <QSpinBox>
 #include <QComboBox>
 #include <QPushButton>

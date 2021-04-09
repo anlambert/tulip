@@ -14,17 +14,13 @@
 #include "SOMPropertiesWidget.h"
 #include "SOMView.h"
 #include "ui_SOMPropertiesWidget.h"
-#include "ColorScalePreview.h"
 
-#include <QIntValidator>
-#include <QDoubleValidator>
 #include <QRadioButton>
 #include <QPushButton>
 #include <QButtonGroup>
 
 #include <talipot/GraphPropertiesSelectionWidget.h>
 #include <talipot/ColorScalesManager.h>
-#include <talipot/PropertyTypes.h>
 #include <talipot/TlpQtTools.h>
 
 using namespace std;

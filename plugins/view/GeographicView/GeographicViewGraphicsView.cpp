@@ -12,15 +12,14 @@
  */
 
 #include "GeographicViewGraphicsView.h"
+#include "GeographicViewConfigWidget.h"
 #include "GeographicView.h"
 #include "NominatimGeocoder.h"
 
 #include <talipot/GlCPULODCalculator.h>
 #include <talipot/GlComplexPolygon.h>
 #include <talipot/GlSphere.h>
-#include <talipot/GlLine.h>
 #include <talipot/GlSceneZoomAndPan.h>
-#include <talipot/GlyphManager.h>
 #include <talipot/GlTextureManager.h>
 #include <talipot/ViewSettings.h>
 #include <talipot/TlpQtTools.h>
@@ -28,18 +27,10 @@
 #include <talipot/Gl2DRect.h>
 
 #include <QPushButton>
-#include <QTextStream>
-#include <QTimeLine>
-#include <QFile>
 #include <QApplication>
-#include <QImage>
-#include <QPainter>
-#include <QTimer>
 #include <QMessageBox>
 #include <QOpenGLFramebufferObject>
 #include <QOpenGLPaintDevice>
-
-#include <cstdint>
 
 using namespace std;
 

@@ -11,7 +11,6 @@
  *
  */
 
-#include <algorithm>
 #include <talipot/Circle.h>
 #include <talipot/PluginHeaders.h>
 

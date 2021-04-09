@@ -11,12 +11,9 @@
  *
  */
 
-#include <algorithm>
-#include <talipot/TreeTest.h>
 #include <talipot/ViewSettings.h>
 
 #include "SquarifiedTreeMap.h"
-#include "TreeTools.h"
 
 using namespace std;
 using namespace tlp;

@@ -13,11 +13,9 @@
 
 #include <talipot/PluginHeaders.h>
 #include <talipot/ViewSettings.h>
-#include <talipot/StringCollection.h>
 #include <talipot/FontAwesome.h>
 
 #include <xdkbibtex/file.h>
-#include <xdkbibtex/formatter.h>
 #include <xdkbibtex/author.h>
 
 using namespace std;

@@ -11,17 +11,10 @@
  *
  */
 
-#include <talipot/OpenGlConfigManager.h>
 #include <talipot/GlLines.h>
-#include <talipot/GlWidget.h>
-#include <talipot/Camera.h>
-
-#include <QEvent>
 
 #include "HistoStatsConfigWidget.h"
 #include "HistogramView.h"
-
-#include <functional>
 
 #include "HistogramStatistics.h"
 

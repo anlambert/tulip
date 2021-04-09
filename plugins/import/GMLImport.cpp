@@ -11,13 +11,7 @@
  *
  */
 
-#include <cerrno>
-#include <fstream>
-#include <unordered_map>
-
 #include <talipot/PluginHeaders.h>
-#include <talipot/AbstractProperty.h>
-#include <talipot/TlpTools.h>
 
 #include "GMLParser.h"
 

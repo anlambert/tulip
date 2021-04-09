@@ -11,11 +11,8 @@
  *
  */
 
-#include <set>
 #include <talipot/DoubleProperty.h>
 #include <talipot/VectorGraph.h>
-#include <talipot/VectorGraphProperty.h>
-#include <talipot/ParallelTools.h>
 #include <talipot/PropertyAlgorithm.h>
 
 using namespace std;

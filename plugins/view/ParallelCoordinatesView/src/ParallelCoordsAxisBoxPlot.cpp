@@ -11,13 +11,8 @@
  *
  */
 
-#include <talipot/TlpTools.h>
-#include <talipot/GlPolygon.h>
-#include <talipot/GlLabel.h>
 #include <talipot/GlQuad.h>
 #include <talipot/GlLines.h>
-#include <talipot/GlEntity.h>
-#include <talipot/GlWidget.h>
 
 #include "ParallelCoordinatesView.h"
 #include "ParallelTools.h"

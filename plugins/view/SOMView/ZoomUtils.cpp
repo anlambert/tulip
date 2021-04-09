@@ -11,11 +11,8 @@
  *
  */
 
-#include "ZoomUtils.h"
-
 #include <talipot/QtGlSceneZoomAndPanAnimator.h>
 #include <talipot/GlWidget.h>
-#include <talipot/Camera.h>
 
 using namespace std;
 

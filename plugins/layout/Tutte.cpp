@@ -11,8 +11,6 @@
  *
  */
 
-#include <set>
-#include <unordered_map>
 #include <talipot/TriconnectedTest.h>
 #include "Tutte.h"
 

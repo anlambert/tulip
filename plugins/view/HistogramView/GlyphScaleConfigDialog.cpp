@@ -12,11 +12,9 @@
  */
 
 #include <talipot/Glyph.h>
-#include <talipot/Iterator.h>
 #include <talipot/TlpQtTools.h>
 
 #include <QComboBox>
-#include <QPushButton>
 
 #include "GlyphScaleConfigDialog.h"
 #include "ui_GlyphScaleConfigDialog.h"

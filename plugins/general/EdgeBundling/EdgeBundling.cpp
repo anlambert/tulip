@@ -12,16 +12,6 @@
  */
 
 #include <talipot/Exception.h>
-#include <talipot/GraphTools.h>
-#include <talipot/DrawingTools.h>
-#include <talipot/StableIterator.h>
-#include <talipot/MutableContainer.h>
-#include <talipot/LayoutProperty.h>
-#include <talipot/BooleanProperty.h>
-#include <talipot/DrawingTools.h>
-#include <talipot/Rectangle.h>
-#include <talipot/SimpleTest.h>
-#include <talipot/ParallelTools.h>
 
 #include "EdgeBundling.h"
 #include "QuadTree.h"
@@ -29,8 +19,6 @@
 #include "Dijkstra.h"
 #include "BendsTools.h"
 #include "SphereUtils.h"
-
-#include <sstream>
 
 using namespace std;
 using namespace tlp;

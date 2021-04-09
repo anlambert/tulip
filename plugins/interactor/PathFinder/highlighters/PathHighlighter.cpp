@@ -14,8 +14,6 @@
 #include "PathHighlighter.h"
 
 #include <talipot/GlWidget.h>
-#include <talipot/GlView.h>
-#include <talipot/GlGraph.h>
 
 using namespace tlp;
 using namespace std;

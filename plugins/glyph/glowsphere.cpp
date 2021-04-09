@@ -12,11 +12,9 @@
  */
 
 #include <talipot/ViewSettings.h>
-#include <talipot/Glyph.h>
 #include <talipot/EdgeExtremityGlyph.h>
 #include <talipot/GlGraphRenderingParameters.h>
 #include <talipot/GlGraphInputData.h>
-#include <talipot/OpenGlIncludes.h>
 #include <talipot/AroundTexturedSphere.h>
 
 using namespace std;

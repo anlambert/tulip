@@ -11,12 +11,6 @@
  *
  */
 
-#include <algorithm>
-#include <iostream>
-#include <fstream>
-#include <cctype>
-#include <cstdlib>
-#include <cstring>
 #include <talipot/PluginHeaders.h>
 
 /** \file

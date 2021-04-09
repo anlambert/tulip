@@ -11,15 +11,9 @@
  *
  */
 
-#include <algorithm>
 #include <talipot/PluginHeaders.h>
-#include <talipot/MapIterator.h>
 #include <talipot/PlanarConMap.h>
-#include <talipot/Ordering.h>
-#include <talipot/MutableContainer.h>
 #include <talipot/Bfs.h>
-#include <talipot/GraphTools.h>
-#include <talipot/StringCollection.h>
 #include <talipot/ViewSettings.h>
 
 #include "MixedModel.h"

@@ -11,9 +11,6 @@
  *
  */
 
-#include <talipot/GlWidget.h>
-#include <talipot/GlGraph.h>
-
 #include "ParallelCoordsGlEntitiesSelector.h"
 #include "ParallelCoordinatesView.h"
 

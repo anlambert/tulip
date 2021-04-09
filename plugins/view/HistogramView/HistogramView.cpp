@@ -11,23 +11,17 @@
  *
  */
 
-#include <talipot/GlQuantitativeAxis.h>
-#include <talipot/TlpTools.h>
 #include <talipot/Interactor.h>
-#include <talipot/GlWidget.h>
-#include <talipot/GlLabel.h>
 #include <talipot/GlRect.h>
-#include <talipot/GlTextureManager.h>
 #include <talipot/TlpQtTools.h>
 #include <talipot/QuickAccessBar.h>
 #include <talipot/ViewSettings.h>
 
-#include <QHelpEvent>
 #include <QApplication>
+#include <QHelpEvent>
 #include <QToolTip>
 
 #include "HistogramView.h"
-#include "HistogramInteractors.h"
 #include "../utils/ViewGraphPropertiesSelectionWidget.h"
 #include "HistoOptionsWidget.h"
 

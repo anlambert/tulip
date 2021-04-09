@@ -11,7 +11,6 @@
  *
  */
 
-#include <talipot/GlTools.h>
 #include <talipot/GlLabel.h>
 #include <talipot/GlRect.h>
 

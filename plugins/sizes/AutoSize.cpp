@@ -12,7 +12,6 @@
  */
 
 #include <talipot/PluginHeaders.h>
-#include <cmath>
 
 using namespace tlp;
 

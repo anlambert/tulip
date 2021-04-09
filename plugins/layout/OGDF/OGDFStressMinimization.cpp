@@ -15,7 +15,6 @@
 
 #include <talipot/OGDFLayoutPluginBase.h>
 #include <talipot/StringCollection.h>
-#include <talipot/NumericProperty.h>
 #include <talipot/DoubleProperty.h>
 
 static const char *paramHelp[] = {

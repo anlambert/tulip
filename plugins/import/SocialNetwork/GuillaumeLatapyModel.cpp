@@ -11,11 +11,7 @@
  *
  */
 
-#include <algorithm>
-#include <cmath>
 #include <talipot/ImportModule.h>
-#include <talipot/TlpTools.h>
-#include <talipot/PluginProgress.h>
 #include <talipot/Graph.h>
 
 using namespace std;

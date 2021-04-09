@@ -14,7 +14,6 @@
 #include "CSVExport.h"
 
 #include <talipot/StringCollection.h>
-#include <talipot/Graph.h>
 #include <talipot/StringProperty.h>
 #include <talipot/BooleanProperty.h>
 

@@ -12,8 +12,6 @@
  */
 
 #include <talipot/QtGlSceneZoomAndPanAnimator.h>
-#include <talipot/GlWidget.h>
-#include <talipot/Camera.h>
 
 #include "HistogramViewNavigator.h"
 #include "HistogramView.h"

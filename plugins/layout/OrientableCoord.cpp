@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -12,7 +12,6 @@
  */
 
 #include "OrientableLayout.h"
-#include "OrientableCoord.h"
 
 //====================================================================
 OrientableCoord::OrientableCoord(OrientableLayout *fatherParam, const float x, const float y,

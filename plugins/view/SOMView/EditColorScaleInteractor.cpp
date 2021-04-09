@@ -14,18 +14,12 @@
 #include "EditColorScaleInteractor.h"
 #include "GlLabelledColorScale.h"
 
-#include <QMouseEvent>
-
-#include <talipot/GlWidget.h>
-#include <talipot/GlEntity.h>
-#include <talipot/GlColorScale.h>
 #include <talipot/ColorScaleConfigDialog.h>
-#include <talipot/Camera.h>
-#include <talipot/GlLayer.h>
-#include <talipot/DoubleProperty.h>
 
 #include "SOMView.h"
 #include <SOMMap.h>
+
+#include <QMouseEvent>
 
 using namespace tlp;
 using namespace std;

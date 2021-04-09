@@ -11,25 +11,19 @@
  *
  */
 
-#include <talipot/GlTextureManager.h>
-#include <talipot/GlWidget.h>
 #include <talipot/GlGraph.h>
 #include <talipot/GlQuantitativeAxis.h>
-#include <talipot/GlLabel.h>
 #include <talipot/GlLine.h>
 #include <talipot/GlProgressBar.h>
 #include <talipot/TlpQtTools.h>
-#include <talipot/GraphProperty.h>
 #include <talipot/ViewSettings.h>
 
-#include <QTime>
 #include <QGraphicsView>
 #include <QApplication>
 
 #include "ScatterPlot2DView.h"
 #include "ScatterPlot2DOptionsWidget.h"
 #include "ScatterPlot2D.h"
-#include "ScatterPlot2DInteractors.h"
 #include "ScatterPlotQuickAccessBar.h"
 
 #include "../utils/ViewGraphPropertiesSelectionWidget.h"

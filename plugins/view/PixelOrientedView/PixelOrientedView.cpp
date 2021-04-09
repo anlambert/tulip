@@ -11,28 +11,10 @@
  *
  */
 
-#include <iostream>
-#include <fstream>
-#include <cmath>
-
-#include <talipot/TlpTools.h>
-#include <talipot/Graph.h>
-#include <talipot/GlWidget.h>
-#include <talipot/GlRect.h>
 #include <talipot/GlGraph.h>
-#include <talipot/GlLayer.h>
 #include <talipot/GlProgressBar.h>
-#include <talipot/GlLabel.h>
-#include <talipot/LayoutProperty.h>
-#include <talipot/StringProperty.h>
-#include <talipot/DoubleProperty.h>
-#include <talipot/IntegerProperty.h>
-#include <talipot/ColorProperty.h>
-#include <talipot/SizeProperty.h>
-#include <talipot/config.h>
 #include <talipot/TlpQtTools.h>
 
-#include "PixelOrientedInteractors.h"
 #include "PixelOrientedView.h"
 #include "PixelOrientedViewQuickAccessBar.h"
 

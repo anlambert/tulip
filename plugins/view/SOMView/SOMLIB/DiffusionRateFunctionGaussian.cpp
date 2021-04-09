@@ -13,7 +13,6 @@
 
 #include "DiffusionRateFunctionGaussian.h"
 #include <cmath>
-#include <talipot/config.h>
 
 DifusionRateFunctionGaussian::DifusionRateFunctionGaussian(
     TimeDecreasingFunction *decreasingFunction)

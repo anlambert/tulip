@@ -29,14 +29,14 @@
 #include <QThread>
 #include <QMap>
 
-#include "GeographicViewConfigWidget.h"
-#include "GeolocationConfigWidget.h"
-#include "LeafletMaps.h"
-#include "GeographicViewGraphicsView.h"
-
 #include "../../utils/PluginNames.h"
 
 namespace tlp {
+
+class GeographicViewGraphicsView;
+class GeographicViewConfigWidget;
+class GeolocationConfigWidget;
+class LeafletMaps;
 
 /*@{*/
 /** \file
@@ -91,17 +91,13 @@ public:
   void setState(const DataSet &dataSet) override;
   DataSet state() const override;
 
-  QGraphicsView *graphicsView() const override {
-    return geoViewGraphicsView;
-  }
+  QGraphicsView *graphicsView() const override;
 
   QList<QWidget *> configurationWidgets() const override;
 
   QGraphicsItem *centralItem() const override;
 
-  LeafletMaps *getLeafletMap() {
-    return geoViewGraphicsView->getLeafletMapsPage();
-  }
+  LeafletMaps *getLeafletMap();
 
   void registerTriggers();
 
@@ -119,9 +115,7 @@ public:
     return geoViewGraphicsView;
   }
 
-  bool getNodeOrEdgeAtViewportPos(int x, int y, node &n, edge &e) const override {
-    return GlView::getNodeOrEdgeAtViewportPos(geoViewGraphicsView->getGlWidget(), x, y, n, e);
-  }
+  bool getNodeOrEdgeAtViewportPos(int x, int y, node &n, edge &e) const override;
 
   GeographicViewConfigWidget *getConfigWidget() const {
     return geoViewConfigWidget;
@@ -149,13 +143,9 @@ public slots:
 
   void updateSharedProperties();
 
-  void currentInteractorChanged(tlp::Interactor *i) override {
-    i->install(geoViewGraphicsView->getGlWidget());
-  }
+  void currentInteractorChanged(tlp::Interactor *i) override;
 
-  void mapToPolygon() {
-    geoViewGraphicsView->mapToPolygon();
-  }
+  void mapToPolygon();
 
   void centerView();
 

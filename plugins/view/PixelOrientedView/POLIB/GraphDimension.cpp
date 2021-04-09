@@ -19,8 +19,6 @@
 #include <talipot/ConversionIterator.h>
 #include <talipot/ConcatIterator.h>
 
-#include <set>
-
 using namespace tlp;
 using namespace std;
 

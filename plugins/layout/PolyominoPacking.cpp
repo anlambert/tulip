@@ -24,14 +24,7 @@
 // Author: Antoine LAMBERT, University of Bordeaux 1, FR: Email: antoine.lambert@labri.fr
 // Version 1.0: May 2011
 
-#include <algorithm>
-#include <vector>
-#include <set>
-#include <talipot/PluginHeaders.h>
-#include <talipot/Vector.h>
-#include <talipot/BoundingBox.h>
 #include <talipot/DrawingTools.h>
-#include <talipot/ConnectedTest.h>
 #include <talipot/ParametricCurves.h>
 #include <talipot/ViewSettings.h>
 

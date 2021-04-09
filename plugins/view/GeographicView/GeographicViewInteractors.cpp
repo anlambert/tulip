@@ -11,7 +11,6 @@
  *
  */
 
-#include <QApplication>
 #include <talipot/MouseNodeBuilder.h>
 #include <talipot/MouseEdgeBuilder.h>
 #include <talipot/MouseSelector.h>
@@ -21,7 +20,6 @@
 #include "GeographicViewInteractors.h"
 
 #include "../../utils/StandardInteractorPriority.h"
-#include "../../utils/PluginNames.h"
 #include "../../utils/InteractorIcons.h"
 
 using namespace std;

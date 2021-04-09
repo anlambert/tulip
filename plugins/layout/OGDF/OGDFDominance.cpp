@@ -14,7 +14,6 @@
 #include <ogdf/upward/DominanceLayout.h>
 
 #include <talipot/OGDFLayoutPluginBase.h>
-#include <talipot/ConnectedTest.h>
 
 using namespace std;
 

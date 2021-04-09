@@ -12,7 +12,6 @@
  */
 
 #include <talipot/Circle.h>
-#include <talipot/StringCollection.h>
 
 #include "ConeTreeExtended.h"
 #include "DatasetTools.h"

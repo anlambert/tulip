@@ -11,14 +11,9 @@
  *
  */
 
-#include <talipot/StringProperty.h>
-#include <talipot/ColorProperty.h>
-#include <talipot/Size.h>
-#include <talipot/Coord.h>
 #include <talipot/Glyph.h>
 #include <talipot/EdgeExtremityGlyph.h>
 #include <talipot/GlGraphRenderingParameters.h>
-#include <talipot/Graph.h>
 #include <talipot/GlBox.h>
 #include <talipot/GlGraphInputData.h>
 #include <talipot/ViewSettings.h>

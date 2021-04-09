@@ -11,8 +11,6 @@
  *
  */
 
-#include <algorithm>
-
 #include "ViewGraphPropertiesSelectionWidget.h"
 #include "ui_ViewGraphPropertiesSelectionWidget.h"
 

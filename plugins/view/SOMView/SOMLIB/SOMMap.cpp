@@ -14,8 +14,6 @@
 #include "SOMMap.h"
 #include <talipot/DoubleProperty.h>
 #include <talipot/IntegerProperty.h>
-#include <talipot/GlyphManager.h>
-#include <talipot/config.h>
 #include <talipot/StringCollection.h>
 #include <talipot/ViewSettings.h>
 

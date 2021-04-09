@@ -11,11 +11,8 @@
  *
  */
 
-#include <algorithm>
-#include <climits>
 #include "NodeNeighborhoodView.h"
 
-#include <talipot/Iterator.h>
 #include <talipot/BooleanProperty.h>
 #include <talipot/DoubleProperty.h>
 

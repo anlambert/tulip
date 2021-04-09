@@ -15,23 +15,15 @@
 #include "ui_TableView.h"
 #include "PropertiesEditor.h"
 
-#include <talipot/Observable.h>
 #include <talipot/GraphModel.h>
 #include <talipot/GraphTableItemDelegate.h>
-#include <talipot/TlpQtTools.h>
-#include <talipot/StringProperty.h>
-#include <talipot/MetaTypes.h>
 #include <talipot/CopyPropertyDialog.h>
 #include <talipot/PropertyCreationDialog.h>
 
-#include <QResizeEvent>
 #include <QGraphicsView>
 #include <QMenu>
 #include <QMainWindow>
-#include <QGraphicsItem>
 #include <QGraphicsProxyWidget>
-
-#include <algorithm>
 
 using namespace tlp;
 

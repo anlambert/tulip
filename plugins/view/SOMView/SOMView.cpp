@@ -14,31 +14,17 @@
 #include "SOMView.h"
 
 #include "SOMPreviewComposite.h"
-#include "SOMMapElement.h"
-#include "ThresholdInteractor.h"
-#include "EditColorScaleInteractor.h"
-#include "SOMMap.h"
 #include "ZoomUtils.h"
-#include "SOMViewInteractor.h"
 #include "SOMPropertiesWidget.h"
 
-#include <talipot/GlGraphRenderingParameters.h>
-#include <talipot/NumericProperty.h>
-#include <talipot/ColorProperty.h>
-#include <talipot/BooleanProperty.h>
 #include <talipot/GlBoundingBoxSceneVisitor.h>
-#include <talipot/Interactor.h>
-#include <talipot/ImportModule.h>
-#include <talipot/GlLODCalculator.h>
-#include <talipot/GlLabel.h>
-#include <talipot/LayoutProperty.h>
-#include <talipot/GlWidget.h>
 #include <talipot/GlGraph.h>
 
+#include <QHelpEvent>
 #include <QMenu>
+#include <QMouseEvent>
 #include <QToolTip>
 #include <QMessageBox>
-#include <QMouseEvent>
 
 using namespace std;
 using namespace tlp;

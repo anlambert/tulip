@@ -14,7 +14,6 @@
 #include "DegreeMetric.h"
 
 #include <talipot/StringCollection.h>
-#include <talipot/StaticProperty.h>
 #include <talipot/GraphMeasure.h>
 
 PLUGIN(DegreeMetric)

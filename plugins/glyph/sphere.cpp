@@ -11,20 +11,9 @@
  *
  */
 
-#include <GL/glew.h>
-
-#include <talipot/OpenGlConfigManager.h>
-
-#include <iostream>
-
-#include <talipot/StringProperty.h>
-#include <talipot/ColorProperty.h>
-#include <talipot/GlTextureManager.h>
 #include <talipot/GlGraphRenderingParameters.h>
-#include <talipot/Graph.h>
 #include <talipot/Glyph.h>
 #include <talipot/EdgeExtremityGlyph.h>
-#include <talipot/GlTools.h>
 #include <talipot/GlGraphInputData.h>
 #include <talipot/ViewSettings.h>
 #include <talipot/GlSphere.h>

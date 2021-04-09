@@ -16,8 +16,6 @@
 #include <talipot/OGDFLayoutPluginBase.h>
 #include <talipot/StringCollection.h>
 
-#include <vector>
-
 using namespace std;
 
 #define ELT_COOLING "Cooling function"

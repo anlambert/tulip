@@ -11,10 +11,8 @@
  *
  */
 
-#include <talipot/GraphTools.h>
 #include "TreeLeaf.h"
 #include "DatasetTools.h"
-#include "Orientation.h"
 
 PLUGIN(TreeLeaf)
 

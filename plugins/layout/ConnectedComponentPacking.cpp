@@ -12,7 +12,6 @@
  */
 
 #include <talipot/DrawingTools.h>
-#include <talipot/StringCollection.h>
 
 #include "ConnectedComponentPacking.h"
 #include "rectanglePackingFonctions.h"

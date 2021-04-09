@@ -11,7 +11,6 @@
  *
  */
 
-#include <climits>
 #include <talipot/PluginHeaders.h>
 
 using namespace std;

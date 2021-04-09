@@ -16,11 +16,8 @@
 #include "GeographicView.h"
 
 #include <QFileDialog>
-#include <QMessageBox>
 
-#include <talipot/TlpQtTools.h>
 #include <talipot/FontIconManager.h>
-#include <talipot/MaterialDesignIcons.h>
 
 using namespace std;
 using namespace tlp;

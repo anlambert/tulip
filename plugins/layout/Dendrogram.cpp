@@ -11,9 +11,7 @@
  *
  */
 
-#include <talipot/GraphTools.h>
 #include "TreeTools.h"
-#include "Orientation.h"
 #include "DatasetTools.h"
 #include "Dendrogram.h"
 using namespace std;

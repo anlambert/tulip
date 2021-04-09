@@ -11,8 +11,6 @@
  *
  */
 
-#include <stack>
-#include <talipot/PluginHeaders.h>
 #include "DatasetTools.h"
 
 using namespace std;

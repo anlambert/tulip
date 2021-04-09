@@ -12,9 +12,6 @@
  */
 
 #include <talipot/PluginHeaders.h>
-#include <talipot/StringCollection.h>
-
-#include <cmath>
 
 using namespace std;
 using namespace tlp;

@@ -12,15 +12,12 @@
  */
 
 #include <talipot/GlLine.h>
-#include <talipot/Camera.h>
-#include <talipot/GlWidget.h>
 
 #include "ParallelCoordsAxisSpacer.h"
 #include "ParallelTools.h"
 #include "ParallelAxis.h"
 #include "ParallelCoordinatesView.h"
 
-#include <QCursor>
 #include <QMouseEvent>
 
 using namespace std;

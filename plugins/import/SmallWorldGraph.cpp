@@ -11,9 +11,6 @@
  *
  */
 
-#include <ctime>
-#include <cmath>
-#include <climits>
 #include <talipot/PluginHeaders.h>
 
 using namespace std;

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -15,12 +15,6 @@
 #include "ExportSvg.h"
 
 #include <talipot/ExportModule.h>
-#include <talipot/LayoutProperty.h>
-#include <talipot/ColorProperty.h>
-#include <talipot/IntegerProperty.h>
-#include <talipot/DoubleProperty.h>
-#include <talipot/SizeProperty.h>
-#include <talipot/StringProperty.h>
 
 using namespace std;
 using namespace tlp;

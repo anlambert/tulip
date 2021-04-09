@@ -11,28 +11,18 @@
  *
  */
 
-#include <GL/glew.h>
-
 #include "MouseMagnifyingGlass.h"
 #include "../../utils/PluginNames.h"
 #include "../../utils/InteractorIcons.h"
 
-#include <talipot/GlRect.h>
-#include <talipot/GlView.h>
 #include <talipot/GlTextureManager.h>
 #include <talipot/MouseInteractors.h>
-#include <talipot/GlTools.h>
 #include <talipot/NodeLinkDiagramView.h>
 #include <talipot/GlCircle.h>
 #include <talipot/OpenGlConfigManager.h>
 
 #include <QOpenGLFramebufferObject>
-#include <QEvent>
 #include <QMouseEvent>
-
-#include <sstream>
-
-#include <cstdint>
 
 using namespace std;
 using namespace tlp;

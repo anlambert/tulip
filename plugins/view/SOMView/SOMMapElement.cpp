@@ -17,7 +17,6 @@
 #include <talipot/GlRect.h>
 #include <talipot/GlCircle.h>
 #include <talipot/ColorProperty.h>
-#include <talipot/GlBoundingBoxSceneVisitor.h>
 
 #define DEGTORAD(x) (M_PI / 180.f) * x
 

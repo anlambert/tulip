@@ -12,14 +12,12 @@
  */
 
 #include <talipot/QtGlSceneZoomAndPanAnimator.h>
-#include <talipot/GlWidget.h>
-#include <talipot/Camera.h>
-
-#include <QMouseEvent>
 
 #include "ScatterPlot2DView.h"
 #include "ScatterPlot2DViewNavigator.h"
 #include "ScatterPlot2D.h"
+
+#include <QMouseEvent>
 
 using namespace std;
 

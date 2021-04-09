@@ -20,10 +20,8 @@
 #include "HistogramInteractors.h"
 #include "HistogramViewNavigator.h"
 #include "HistoStatsConfigWidget.h"
-#include "HistogramView.h"
 
 #include "../../utils/StandardInteractorPriority.h"
-#include "../../utils/PluginNames.h"
 #include "../../utils/InteractorIcons.h"
 
 namespace tlp {

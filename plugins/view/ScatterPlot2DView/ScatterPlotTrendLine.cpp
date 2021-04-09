@@ -11,14 +11,8 @@
  *
  */
 
-#include <talipot/IntegerProperty.h>
 #include <talipot/GlLine.h>
-#include <talipot/DoubleProperty.h>
 #include <talipot/GlQuantitativeAxis.h>
-#include <talipot/GlWidget.h>
-#include <talipot/GlLabel.h>
-
-#include <QEvent>
 
 #include "ScatterPlotTrendLine.h"
 #include "ScatterPlot2DView.h"

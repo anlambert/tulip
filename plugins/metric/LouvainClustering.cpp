@@ -13,8 +13,6 @@
 
 #include <talipot/DoubleProperty.h>
 #include <talipot/StaticProperty.h>
-#include <talipot/TlpTools.h>
-#include <talipot/ParallelTools.h>
 #include <talipot/VectorGraph.h>
 #include <talipot/PropertyAlgorithm.h>
 

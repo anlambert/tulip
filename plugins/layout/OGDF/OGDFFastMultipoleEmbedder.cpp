@@ -11,11 +11,9 @@
  *
  */
 
-#include <talipot/SimpleTest.h>
 #include <talipot/OGDFLayoutPluginBase.h>
 
 #include <ogdf/energybased/FastMultipoleEmbedder.h>
-#include <ogdf/basic/simple_graph_alg.h>
 
 static const char *paramHelp[] = {
     // number of iterations

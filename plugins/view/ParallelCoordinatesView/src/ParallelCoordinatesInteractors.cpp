@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -14,7 +14,6 @@
 #include "ParallelCoordinatesInteractors.h"
 
 #include <talipot/MouseInteractors.h>
-#include <talipot/Interactor.h>
 
 #include "ParallelCoordsElementHighlighter.h"
 #include "ParallelCoordsAxisSwapper.h"
@@ -26,10 +25,7 @@
 #include "ParallelCoordsAxisSpacer.h"
 
 #include "../../utils/StandardInteractorPriority.h"
-#include "../../utils/PluginNames.h"
 #include "../../utils/InteractorIcons.h"
-
-#include <talipot/View.h>
 
 #include "ui_AxisSlidersOptions.h"
 

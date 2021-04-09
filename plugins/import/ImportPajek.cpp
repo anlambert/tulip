@@ -11,13 +11,7 @@
  *
  */
 
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <cctype>
-#include <cstdlib>
 #include <talipot/PluginHeaders.h>
-#include <talipot/DoubleProperty.h>
 
 /** \file
  *  \brief - Import Pajek format graph file.

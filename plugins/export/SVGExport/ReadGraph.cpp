@@ -11,16 +11,10 @@
  *
  */
 
-#include <algorithm>
-
 #include "ReadGraph.h"
 #include "ExportInterface.h"
 
-#include <talipot/GlyphManager.h>
-#include <talipot/EdgeExtremityGlyphManager.h>
-#include <talipot/GlGraphStaticData.h>
 #include <talipot/DrawingTools.h>
-#include <talipot/StringProperty.h>
 #include <talipot/GlEdge.h>
 #include <talipot/GlGraphInputData.h>
 #include <talipot/GlGraphRenderingParameters.h>

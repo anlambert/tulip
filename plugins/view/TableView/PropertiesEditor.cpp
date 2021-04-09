@@ -14,26 +14,14 @@
 #include "PropertiesEditor.h"
 #include "ui_PropertiesEditor.h"
 
-#include <QSortFilterProxyModel>
 #include <QMenu>
-#include <QDialogButtonBox>
-#include <QDialog>
-#include <QCursor>
 #include <QMainWindow>
-#include <QMessageBox>
-#include <QTimer>
 
 #include <talipot/GraphModel.h>
-#include <talipot/ItemEditorCreators.h>
 #include <talipot/CopyPropertyDialog.h>
 #include <talipot/PropertyCreationDialog.h>
 #include <talipot/RenamePropertyDialog.h>
 #include <talipot/ItemDelegate.h>
-#include <talipot/StringProperty.h>
-#include <talipot/BooleanProperty.h>
-#include <talipot/MetaTypes.h>
-#include <talipot/FontIconManager.h>
-#include <talipot/MaterialDesignIcons.h>
 
 Q_DECLARE_METATYPE(Qt::CheckState)
 

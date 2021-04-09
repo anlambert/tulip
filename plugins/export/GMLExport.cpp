@@ -11,12 +11,9 @@
  *
  */
 
-#include <iostream>
 #include <iomanip>
 
-#include <talipot/ExportModule.h>
 #include <talipot/PluginHeaders.h>
-#include <talipot/AbstractProperty.h>
 
 using namespace std;
 using namespace tlp;

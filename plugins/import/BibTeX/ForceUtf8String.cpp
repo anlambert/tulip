@@ -13,8 +13,6 @@
 
 #include <talipot/config.h>
 
-#include <string>
-
 using namespace std;
 using namespace tlp;
 

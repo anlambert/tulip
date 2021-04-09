@@ -12,11 +12,6 @@
  */
 
 #include "MISFiltering.h"
-#include "Distances.h"
-#include <ctime>
-#include <cmath>
-#include <talipot/TlpTools.h>
-#include <talipot/StableIterator.h>
 
 using namespace tlp;
 using namespace std;

@@ -14,7 +14,6 @@
 #include "GeolocationConfigWidget.h"
 #include "ui_GeolocationConfigWidget.h"
 
-#include <talipot/ImportModule.h>
 #include <talipot/Graph.h>
 #include <talipot/TlpQtTools.h>
 

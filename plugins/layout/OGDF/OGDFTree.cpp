@@ -18,8 +18,6 @@
 #include <talipot/TreeTest.h>
 #include <talipot/ConnectedTest.h>
 
-#include <vector>
-
 using namespace std;
 
 #define ELT_ORIENTATION "Orientation"

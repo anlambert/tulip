@@ -14,11 +14,7 @@
 #include "MatrixViewConfigurationWidget.h"
 #include "ui_MatrixViewConfigurationWidget.h"
 
-#include <talipot/Graph.h>
-#include <talipot/ColorButton.h>
 #include <talipot/TlpQtTools.h>
-
-#include <QMainWindow>
 
 using namespace std;
 namespace tlp {

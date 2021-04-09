@@ -11,13 +11,10 @@
  *
  */
 
-#include <QThread>
 #include <talipot/GlOffscreenRenderer.h>
 #include <talipot/Gl2DRect.h>
 #include <talipot/GlOffscreenRenderer.h>
-#include <talipot/GlGraphRenderingParameters.h>
 #include <talipot/GlGraph.h>
-#include <talipot/GlLabel.h>
 #include <talipot/GlProgressBar.h>
 #include <talipot/GlQuantitativeAxis.h>
 #include <talipot/GlWidget.h>

@@ -14,19 +14,15 @@
 #include <talipot/MouseInteractors.h>
 #include <talipot/MouseShowElementInfo.h>
 #include <talipot/GraphElementModel.h>
-#include <talipot/MaterialDesignIcons.h>
-#include <talipot/FontIconManager.h>
 
 #include "ScatterPlot2DInteractors.h"
 #include "ScatterPlot2DViewNavigator.h"
 #include "ScatterPlotTrendLine.h"
 #include "ScatterPlotCorrelCoeffSelector.h"
 #include "ScatterPlot2DView.h"
-#include "ScatterPlot2D.h"
 #include "ScatterPlotCorrelCoeffSelectorOptionsWidget.h"
 
 #include "../../utils/StandardInteractorPriority.h"
-#include "../../utils/PluginNames.h"
 #include "../../utils/InteractorIcons.h"
 
 using namespace std;

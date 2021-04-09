@@ -11,15 +11,8 @@
  *
  */
 
-#include <talipot/GlScene.h>
-#include <talipot/Circle.h>
 #include <talipot/GlCircle.h>
 #include <talipot/GlView.h>
-#include <talipot/GlGraphInputData.h>
-#include <talipot/GlWidget.h>
-#include <talipot/ColorButton.h>
-
-#include <QWidget>
 
 #include "EnclosingCircleHighlighter.h"
 #include "../PathFinderTools.h"

@@ -11,8 +11,6 @@
  *
  */
 
-#include <GL/glew.h>
-
 #include "FisheyeInteractor.h"
 #include "FisheyeConfigWidget.h"
 #include "../../utils/PluginNames.h"
@@ -20,13 +18,10 @@
 
 #include <QOpenGLBuffer>
 #include <QOpenGLFramebufferObject>
-#include <QMouseEvent>
+#include <QWheelEvent>
 
-#include <talipot/PluginHeaders.h>
 #include <talipot/MouseInteractors.h>
-#include <talipot/GlView.h>
 #include <talipot/GlShaderProgram.h>
-#include <talipot/GlWidget.h>
 #include <talipot/NodeLinkDiagramView.h>
 #include <talipot/OpenGlConfigManager.h>
 #include <talipot/GlTextureManager.h>

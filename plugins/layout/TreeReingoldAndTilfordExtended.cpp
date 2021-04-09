@@ -11,9 +11,6 @@
  *
  */
 
-#include <talipot/GraphTools.h>
-#include <talipot/StringCollection.h>
-
 #include "TreeReingoldAndTilfordExtended.h"
 #include "DatasetTools.h"
 

@@ -14,9 +14,7 @@
 #include "PathFinderTools.h"
 
 #include <talipot/GlGraphInputData.h>
-#include <talipot/BoundingBox.h>
 #include <talipot/DrawingTools.h>
-#include <talipot/BooleanProperty.h>
 
 using namespace std;
 

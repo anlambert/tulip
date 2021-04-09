@@ -13,15 +13,9 @@
 
 #include "ZoomAndPanHighlighter.h"
 
-#include <talipot/Graph.h>
 #include <talipot/GlView.h>
-#include <talipot/GlGraphInputData.h>
-#include <talipot/LayoutProperty.h>
-#include <talipot/Coord.h>
-#include <talipot/BoundingBox.h>
 #include <talipot/DrawingTools.h>
 #include <talipot/GlGraph.h>
-#include <talipot/GlWidget.h>
 #include <talipot/QtGlSceneZoomAndPanAnimator.h>
 
 using namespace std;

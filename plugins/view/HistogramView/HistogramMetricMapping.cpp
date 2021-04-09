@@ -11,21 +11,10 @@
  *
  */
 
-#include <talipot/GlQuantitativeAxis.h>
 #include <talipot/GlLines.h>
-#include <talipot/GlLine.h>
-#include <talipot/PluginHeaders.h>
-#include <talipot/config.h>
-#include <talipot/GlLabel.h>
-#include <talipot/GlNode.h>
-#include <talipot/GlWidget.h>
 #include <talipot/ColorScalesManager.h>
 
-#include <QToolTip>
 #include <QMenu>
-#include <QContextMenuEvent>
-
-#include <algorithm>
 
 #include "HistogramMetricMapping.h"
 

@@ -13,10 +13,7 @@
 
 #include <atomic>
 
-#include <talipot/ConnectedTest.h>
-#include <talipot/StaticProperty.h>
 #include <talipot/GraphMeasure.h>
-#include <talipot/GraphParallelTools.h>
 #include <talipot/PropertyAlgorithm.h>
 
 #include "Eccentricity.h"

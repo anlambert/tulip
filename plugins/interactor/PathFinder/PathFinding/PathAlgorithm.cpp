@@ -11,13 +11,8 @@
  *
  */
 
-#include "PathAlgorithm.h"
-
 #include <talipot/BooleanProperty.h>
 #include <talipot/DoubleProperty.h>
-#include <talipot/MutableContainer.h>
-#include <talipot/Graph.h>
-#include <talipot/GraphParallelTools.h>
 #include <talipot/GraphTools.h>
 
 #include "DFS/DFS.h"

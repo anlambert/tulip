@@ -12,8 +12,7 @@
  */
 
 #include "RectanglePacking.h"
-#include <cfloat>  //FLT_MAX
-#include <climits> //INT_MAX
+#include <cfloat> //FLT_MAX
 
 using namespace std;
 using namespace tlp;

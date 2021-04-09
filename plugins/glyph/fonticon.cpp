@@ -11,7 +11,6 @@
  *
  */
 
-#include <unordered_map>
 #include <GL/glew.h>
 
 #ifdef __GNUC__
@@ -27,11 +26,9 @@
 #include <talipot/BoundingBox.h>
 #include <talipot/Glyph.h>
 #include <talipot/EdgeExtremityGlyph.h>
-#include <talipot/TlpTools.h>
 #include <talipot/GlGraphInputData.h>
 #include <talipot/IconicFont.h>
 #include <talipot/GlGraphRenderingParameters.h>
-#include <talipot/GlTools.h>
 #include <talipot/OpenGlConfigManager.h>
 #include <talipot/GlTextureManager.h>
 #include <talipot/ViewSettings.h>

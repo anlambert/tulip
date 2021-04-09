@@ -16,15 +16,11 @@
 #include "../../utils/PluginNames.h"
 #include "../../utils/InteractorIcons.h"
 
-#include <QMouseEvent>
-
 #include <talipot/MouseInteractors.h>
-#include <talipot/BooleanProperty.h>
 #include <talipot/GlComplexPolygon.h>
-#include <talipot/GlView.h>
-#include <talipot/GlGraph.h>
-#include <talipot/GlNode.h>
 #include <talipot/NodeLinkDiagramView.h>
+
+#include <QMouseEvent>
 
 using namespace std;
 using namespace tlp;

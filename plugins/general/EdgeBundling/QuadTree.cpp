@@ -11,10 +11,7 @@
  *
  */
 
-#include <talipot/MutableContainer.h>
 #include <talipot/LayoutProperty.h>
-#include <talipot/SizeProperty.h>
-#include <talipot/DoubleProperty.h>
 #include <talipot/Exception.h>
 
 #include "QuadTree.h"

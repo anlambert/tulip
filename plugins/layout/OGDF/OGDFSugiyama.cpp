@@ -11,7 +11,6 @@
  *
  */
 
-#include <ogdf/layered/SugiyamaLayout.h>
 #include <ogdf/layered/LongestPathRanking.h>
 #include <ogdf/layered/OptimalRanking.h>
 #include <ogdf/layered/BarycenterHeuristic.h>
@@ -20,7 +19,6 @@
 #include <ogdf/layered/FastHierarchyLayout.h>
 #include <ogdf/layered/CoffmanGrahamRanking.h>
 #include <ogdf/layered/SiftingHeuristic.h>
-#include <ogdf/layered/GreedyInsertHeuristic.h>
 #include <ogdf/layered/GreedySwitchHeuristic.h>
 #include <ogdf/layered/OptimalHierarchyLayout.h>
 #include <ogdf/layered/FastSimpleHierarchyLayout.h>
@@ -29,9 +27,6 @@
 
 #include <talipot/StringCollection.h>
 #include <talipot/OGDFLayoutPluginBase.h>
-#include <talipot/TlpTools.h>
-
-#include <vector>
 
 using namespace std;
 

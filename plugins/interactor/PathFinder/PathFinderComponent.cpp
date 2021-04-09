@@ -13,7 +13,6 @@
 
 #include "PathFinderComponent.h"
 
-#include <talipot/GlWidget.h>
 #include <talipot/GlGraph.h>
 #include <talipot/GlView.h>
 
@@ -21,8 +20,8 @@
 #include "PathFinder.h"
 
 #include <QApplication>
-#include <QMouseEvent>
 #include <QMessageBox>
+#include <QMouseEvent>
 
 using namespace std;
 using namespace tlp;
