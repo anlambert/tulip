@@ -58,7 +58,7 @@ QWizard QTreeView::branch:open:has-children:has-siblings  {
 
 AlgorithmRunner QPushButton:flat {
   border-image: none;
-  border: 1px solid black;
+  border: 1px solid #535252;
   outline: none;
 }
 
