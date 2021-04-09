@@ -1,4 +1,3 @@
-#include <string>
 #include <talipot/PluginHeaders.h>
 
 using namespace tlp;

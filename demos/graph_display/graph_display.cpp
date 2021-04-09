@@ -1,21 +1,11 @@
-#include <talipot/PluginLoaderTxt.h>
-#include <talipot/PluginLibraryLoader.h>
 #include <talipot/GlWidget.h>
 #include <talipot/MouseInteractors.h>
 #include <talipot/TlpQtTools.h>
-#include <talipot/LayoutProperty.h>
-#include <talipot/SizeProperty.h>
-#include <talipot/StringProperty.h>
-#include <talipot/DoubleProperty.h>
-#include <talipot/IntegerProperty.h>
 #include <talipot/ViewSettings.h>
 #include <talipot/GlGraph.h>
-#include <talipot/GlGraphRenderingParameters.h>
 
 #include <QApplication>
-#include <QString>
 
-#include <iostream>
 
 using namespace tlp;
 using namespace std;

@@ -1,5 +1,3 @@
-#include <talipot/Graph.h>
-#include <talipot/TlpTools.h>
 #include <talipot/PluginLoaderTxt.h>
 #include <talipot/PluginLibraryLoader.h>
 #include <talipot/ColorProperty.h>
