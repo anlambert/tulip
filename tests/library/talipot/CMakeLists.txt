@@ -36,8 +36,8 @@ UNIT_TEST(ObservableGraphTest ObservableGraphTest.cpp talipotlibtest.cpp)
 UNIT_TEST(PushPopTest PushPopTest.cpp talipotlibtest.cpp)
 UNIT_TEST(IntegerPropertyMinMaxSubgraphTest
           IntegerPropertyMinMaxSubgraphTest.cpp talipotlibtest.cpp)
-UNIT_TEST(IntegerPropertyMinMaxUptodateTest
-          IntegerPropertyMinMaxUptodateTest.cpp talipotlibtest.cpp)
+UNIT_TEST(IntegerPropertyMinMaxUpdateTest IntegerPropertyMinMaxUpdateTest.cpp
+          talipotlibtest.cpp)
 UNIT_TEST(PropertiesMinMaxAfterAddNodeTest PropertiesMinMaxAfterAddNodeTest.cpp
           talipotlibtest.cpp)
 UNIT_TEST(IsMetaEdgeTest IsMetaEdgeTest.cpp talipotlibtest.cpp)

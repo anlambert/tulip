@@ -11,7 +11,7 @@
  *
  */
 
-#include "IntegerPropertyMinMaxUptodateTest.h"
+#include "IntegerPropertyMinMaxUpdateTest.h"
 
 using namespace tlp;
 using namespace std;
