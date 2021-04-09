@@ -19,9 +19,7 @@
 #include "BfdWrapper.h"
 
 #include <iostream>
-#include <sstream>
 #include <vector>
-#include <cxxabi.h>
 #include <sys/stat.h>
 
 #define INRANGE(foo, bar, baz) (foo(bar)) && ((bar)baz)

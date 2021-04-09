@@ -19,9 +19,7 @@
 #include <talipot/SystemDefinition.h>
 #include <talipot/Release.h>
 
-#include <iostream>
 #include <fstream>
-#include <cstring>
 
 #include "CrashHandler.h"
 #include "StackWalker.h"

@@ -13,10 +13,7 @@
 
 #include "StackWalker.h"
 
-#include <talipot/config.h>
-
 #include <sstream>
-#include <cstring>
 
 #if defined(__unix__) || defined(__APPLE__)
 

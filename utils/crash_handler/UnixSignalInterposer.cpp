@@ -27,13 +27,8 @@
 #pragma GCC diagnostic ignored "-Wold-style-cast"
 #endif
 
-#include <cstdlib>
-#include <cstdio>
-#include <iostream>
-#include <algorithm>
 #include <set>
 
-#include <unistd.h>
 #include <dlfcn.h>
 
 #include "UnixSignalInterposer.h"
