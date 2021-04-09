@@ -1,6 +1,4 @@
-#include <tuple>
 
-#include <talipot/GraphParallelTools.h>
 #include <talipot/StaticProperty.h>
 
 #include "ParallelToolsTest.h"

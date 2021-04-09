@@ -11,16 +11,13 @@
  *
  */
 
-#include <string>
 #include <talipot/Graph.h>
-#include <talipot/TlpTools.h>
 
 #include <talipot/SimpleTest.h>
 #include <talipot/TreeTest.h>
 #include <talipot/AcyclicTest.h>
 #include <talipot/ConnectedTest.h>
 #include <talipot/BiconnectedTest.h>
-#include <talipot/TriconnectedTest.h>
 
 #include "TestAlgorithmTest.h"
 

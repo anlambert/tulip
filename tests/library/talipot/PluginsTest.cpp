@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -11,18 +11,9 @@
  *
  */
 
-#include <sstream>
-
 #include "PluginsTest.h"
 
-#include <talipot/Release.h>
-#include <talipot/config.h>
 #include <talipot/BooleanProperty.h>
-#include <talipot/ColorProperty.h>
-#include <talipot/DoubleProperty.h>
-#include <talipot/LayoutProperty.h>
-#include <talipot/SizeProperty.h>
-#include <talipot/StringProperty.h>
 #include <talipot/PluginLibraryLoader.h>
 #include <talipot/PluginLoaderTxt.h>
 #include <talipot/Plugin.h>

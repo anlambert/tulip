@@ -11,10 +11,6 @@
  *
  */
 
-#include <cstdio>
-#include <string>
-#include <iostream>
-
 #include <talipot/PluginHeaders.h>
 
 using namespace std;

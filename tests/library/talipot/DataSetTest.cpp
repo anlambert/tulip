@@ -11,14 +11,9 @@
  *
  */
 
-#include <cassert>
-#include <iomanip>
-
 #include "DataSetTest.h"
 
-#include <string>
 #include <talipot/Graph.h>
-#include <talipot/DataSet.h>
 #include <talipot/StringCollection.h>
 #include <talipot/Coord.h>
 #include <talipot/Size.h>

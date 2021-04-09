@@ -11,12 +11,8 @@
  *
  */
 
-#include <string>
-#include <iostream>
-
 #include "DoublePropertyTest.h"
 
-#include <talipot/TlpTools.h>
 #include <talipot/StaticProperty.h>
 
 using namespace tlp;

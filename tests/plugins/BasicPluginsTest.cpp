@@ -11,17 +11,11 @@
  *
  */
 
-#include <list>
-#include <sstream>
-
 #include "BasicPluginsTest.h"
-#include <talipot/TlpTools.h>
 #include <talipot/BooleanProperty.h>
 #include <talipot/ColorProperty.h>
 #include <talipot/DoubleProperty.h>
-#include <talipot/LayoutProperty.h>
 #include <talipot/SizeProperty.h>
-#include <talipot/StringProperty.h>
 #include <talipot/SimplePluginProgress.h>
 
 using namespace std;

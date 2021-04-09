@@ -27,7 +27,6 @@ const unsigned int NB_NODES = 4;
 const unsigned int EDGE_RATIO = 3;
 const unsigned int NB_EDGES = EDGE_RATIO * NB_NODES;
 
-#include <cppunit/extensions/HelperMacros.h>
 CPPUNIT_TEST_SUITE_REGISTRATION(ObservablePropertyTest);
 
 // these classes will capture

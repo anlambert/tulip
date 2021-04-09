@@ -13,7 +13,6 @@
 
 #include "ImportExportTest.h"
 
-#include <talipot/Graph.h>
 #include <talipot/BooleanProperty.h>
 #include <talipot/ColorProperty.h>
 #include <talipot/DoubleProperty.h>
@@ -23,13 +22,8 @@
 #include <talipot/StringProperty.h>
 #include <talipot/GraphProperty.h>
 
-#include <talipot/ImportModule.h>
 #include <talipot/ExportModule.h>
-#include <talipot/PluginLoaderTxt.h>
 #include <talipot/StringCollection.h>
-#include <talipot/TlpTools.h>
-
-#include <sstream>
 
 using namespace tlp;
 using namespace std;

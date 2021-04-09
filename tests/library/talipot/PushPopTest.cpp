@@ -15,13 +15,10 @@
 #include <talipot/BooleanProperty.h>
 #include <talipot/ColorProperty.h>
 #include <talipot/DoubleProperty.h>
-#include <talipot/IntegerProperty.h>
 #include <talipot/LayoutProperty.h>
 #include <talipot/ConnectedTest.h>
 
 #include <talipot/StringProperty.h>
-
-#include <talipot/GraphImpl.h>
 
 using namespace std;
 using namespace tlp;

@@ -1,9 +1,4 @@
-#include <cassert>
-#include <iomanip>
-#include <fstream>
 #include <talipot/VectorGraph.h>
-#include <talipot/Iterator.h>
-#include <talipot/ParallelTools.h>
 
 #include "CppUnitIncludes.h"
 

@@ -11,14 +11,10 @@
  *
  */
 
-#include <iostream>
-#include <cstdlib>
-
 #ifndef TALIPOT_BUILD_CORE_ONLY
 #include <QApplication>
 #endif
 
-#include <talipot/TlpTools.h>
 #include <talipot/PluginLoaderTxt.h>
 #include <talipot/PluginLibraryLoader.h>
 #include <talipot/PluginsManager.h>

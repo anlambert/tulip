@@ -12,9 +12,6 @@
  */
 
 #include "ObservableGraphTest.h"
-#include <talipot/BooleanProperty.h>
-#include <talipot/DoubleProperty.h>
-#include <talipot/IntegerProperty.h>
 
 using namespace std;
 using namespace tlp;
