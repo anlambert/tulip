@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -36,17 +36,13 @@
  * It also helps to uncover high level edge patterns to show how information flows between different
  * region of a graph.
  *
- * To apply this edge bundling technique, all nodes must have different positions.
- * If you encounter some crashes, try to apply the "Fast Overlap Removal" plugin before
- * executing this edge bundling plugin.
- *
  *  \author David Auber, Romain Bourqui, Antoine Lambert, LaBRI University Bordeaux I France:
  *   auber@labri.fr
  */
 class EdgeBundling : public tlp::Algorithm {
 public:
   EdgeBundling(const tlp::PluginContext *);
-  PLUGININFORMATION("Edge bundling", "David Auber/ Romain Bourqui / Antoine Lambert", "2010-...",
+  PLUGININFORMATION("Edge bundling", "David Auber/ Romain Bourqui / Antoine Lambert", "2010",
                     "Edges routing algorithm, implementing the intuitive Edge Bundling technique "
                     "published in :<br/>"
                     "<b>Winding Roads: Routing edges into bundles</b>, Antoine Lambert, Romain "
