@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -50,6 +50,5 @@ TLP_SCOPE void convexHull(const std::vector<Coord> &points,
                           std::vector<std::vector<unsigned int>> &convexHullFacets,
                           std::vector<std::vector<unsigned int>> &facetNeighbors);
 
-/*@}*/
 }
 #endif // TALIPOT_CONVEX_HULL_H

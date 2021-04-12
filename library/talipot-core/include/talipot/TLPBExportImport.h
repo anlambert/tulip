@@ -58,7 +58,6 @@
  * graph_attributes = (nb_subgraphs + 1) * <graph_id, graph_attributes_list>*
  */
 
-/*@{*/
 /// Export plugin for TLPB format
 /**
  *
@@ -125,8 +124,6 @@ public:
 
   bool importGraph() override;
 };
-
-/*@}*/
 
 // Don't ask why it is David favorite 9 digit number.
 #define TLPB_MAGIC_NUMBER 578374683
