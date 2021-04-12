@@ -29,7 +29,6 @@ namespace tlp {
 
 class AdditionalGlSceneAnimation;
 
-/*@{*/
 /** \file
  *  \brief Node Neighbourhood Highlighter
 

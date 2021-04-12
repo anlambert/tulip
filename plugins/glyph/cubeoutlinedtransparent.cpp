@@ -23,8 +23,6 @@ using namespace tlp;
 
 namespace tlp {
 
-/** \addtogroup glyph */
-
 /// A 3D glyph.
 /** This glyph draws a transparent cube using the "viewBorderColor" node
  * property value to draw its edges.

@@ -23,8 +23,6 @@ using namespace tlp;
 
 namespace tlp {
 
-/** \addtogroup glyph */
-
 /// A 3D glyph.
 /** This glyph draws a textured cube using the "viewTexture" node
  * property value. If this property has no value, the cube is then colored

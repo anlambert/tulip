@@ -59,7 +59,6 @@ private:
   inline static int _maxTextureSize = 0;
 };
 
-/*@{*/
 /** \file
  *  \brief Fisheye Interactor
 

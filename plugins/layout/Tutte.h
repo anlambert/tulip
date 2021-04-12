@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -15,8 +15,6 @@
 #define TUTTE_H
 
 #include <talipot/PluginHeaders.h>
-
-/** \addtogroup layout */
 
 /** This plugin is an implementation of the Tutte layout for 3-Connected graph
  *  algorithm first published as:

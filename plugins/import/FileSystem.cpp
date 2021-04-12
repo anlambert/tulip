@@ -98,8 +98,6 @@ static tlp::DataSet getDefaultAlgorithmParameters(const std::string &algoName, t
   return result;
 }
 
-/** \addtogroup import */
-
 /// Imports a tree representation of a file system directory.
 /** This plugin enables to capture in a tree the full hierarchy of
  *  of a given file system directory

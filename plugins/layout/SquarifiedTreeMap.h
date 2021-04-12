@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -24,7 +24,6 @@ typedef std::vector<tlp::node> VecNode;
 typedef std::unordered_map<tlp::node, double> MapNode;
 typedef std::pair<tlp::node, double> PairNodeF;
 typedef std::vector<PairNodeF> PairVector;
-/** \addtogroup layout */
 
 /// SquarifiedTreeMap.h - An implementation of a squarified treemap layout.
 /** This plugin is an implementation of TreeMap and Squarified treemap layout.

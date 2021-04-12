@@ -38,7 +38,6 @@ namespace tlp {
 class ViewGraphPropertiesSelectionWidget;
 class PixelOrientedViewQuickAccessBar;
 
-/*@{*/
 /** \file
  *  \brief Pixel Oriented View
 

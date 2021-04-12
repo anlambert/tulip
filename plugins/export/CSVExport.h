@@ -18,7 +18,6 @@
 
 #include <talipot/ExportModule.h>
 
-/*@{*/
 /// Export plugin for CSV format
 /**
  * \
@@ -82,5 +81,4 @@ public:
     os << stringDelimiter << s << stringDelimiter;
   }
 };
-/*@}*/
 #endif // CSV_EXPORT_H

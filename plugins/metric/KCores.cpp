@@ -19,8 +19,6 @@
 using namespace std;
 using namespace tlp;
 
-/** \addtogroup metric */
-/*@{*/
 /**
  * \file
  * \brief A metric based on the K-core decomposition of a graph.

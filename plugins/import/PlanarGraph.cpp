@@ -27,7 +27,6 @@ struct Triangle {
 };
 } // namespace
 //=============================================================
-/** \addtogroup import */
 
 /// Planar Graph - Import of a planar graph
 /** This plugin enables to create a planar graph

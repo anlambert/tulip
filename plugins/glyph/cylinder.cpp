@@ -149,7 +149,6 @@ private:
   vector<unsigned int> buffers;
 };
 
-/** \addtogroup glyph */
 /// A 3D glyph.
 /**
  * This glyph draws an textured cylinder using the "viewTexture" node
@@ -217,7 +216,6 @@ Coord Cylinder::getAnchor(const Coord &v) const {
   return {x, y, z};
 }
 
-/** \addtogroup glyph */
 /// A 3D glyph.
 /**
  * This glyph draws an textured a half cylinder - a cylinder whose height

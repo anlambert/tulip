@@ -18,8 +18,6 @@
 using namespace tlp;
 using namespace std;
 
-/** \addtogroup clustering */
-/*@{*/
 /** \file
  * \brief  An implementation of the MCL clustering algorithm
  *
@@ -66,7 +64,6 @@ public:
   double _r;
   unsigned int _k;
 };
-/*@}*/
 
 const double epsilon = 1E-9;
 

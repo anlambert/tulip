@@ -22,8 +22,6 @@ using namespace tlp;
 
 namespace tlp {
 
-/** \addtogroup glyph */
-
 /// A 2D glyph.
 /**
  * This glyph draws a textured square using the "viewTexture"

@@ -37,8 +37,6 @@ static const char *paramHelp[] = {
     // Average path length
     "The computed average path length (-1 if not computed)"};
 
-/** \addtogroup metric */
-
 /** This plugin is an implementation of betweenness centrality parameter.
  *  (see http://en.wikipedia.org/wiki/Centrality#Betweenness_centrality for more details)
  *

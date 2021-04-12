@@ -19,9 +19,6 @@
 #include <talipot/PluginHeaders.h>
 #include <talipot/LayoutProperty.h>
 
-/** \addtogroup selection */
-/*@{*/
-
 /**
  * This plugin is an implementation of the intuitive Edge Bundling technique published in :
  * "Winding Roads: Routing edges into bundles"
@@ -65,6 +62,5 @@ private:
   tlp::LayoutProperty *layout;
   tlp::Graph *vertexCoverGraph, *oriGraph, *gridGraph;
 };
-/*@}*/
 
 #endif // EDGE_BUNDLING_H

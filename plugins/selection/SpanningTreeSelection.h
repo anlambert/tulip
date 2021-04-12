@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -16,8 +16,6 @@
 
 #include <talipot/BooleanProperty.h>
 #include <talipot/PropertyAlgorithm.h>
-
-/** \addtogroup selection */
 
 /**
  * This selection plugins enables to find a subgraph of G that is a forest (a set of trees).

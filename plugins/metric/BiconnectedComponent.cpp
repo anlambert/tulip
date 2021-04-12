@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -174,8 +174,6 @@ int biconnectedComponents(const Graph &graph, MutableContainer<int> &compnum) {
   return (count2 + num_isolated);
 }
 //=============================================================================================
-
-/** \addtogroup metric */
 
 /** This plugin is an implementation of a biconnected component decomposition algorithm. It assigns
  *  the same value to all the edges in the same component.

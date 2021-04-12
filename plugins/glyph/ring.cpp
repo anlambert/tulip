@@ -148,8 +148,6 @@ static void drawGlyph(const Color &glyphColor, const string &texture, const stri
   }
 }
 
-/** \addtogroup glyph */
-
 /// A 2D glyph
 /**
  * This glyph draws a textured disc with a circular hole using the

@@ -41,8 +41,6 @@ static void drawPentagon(const Color &fillColor, const Color &borderColor, float
   pentagon.draw(lod, nullptr);
 }
 
-/** \addtogroup glyph */
-
 /// A 2D glyph
 /**
  * This glyph draws a textured pentagon using the "viewTexture"

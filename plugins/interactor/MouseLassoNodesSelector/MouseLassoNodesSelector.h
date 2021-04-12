@@ -21,7 +21,6 @@
 
 namespace tlp {
 
-/*@{*/
 /** \file
  *  \brief Lasso Selector Interactor
 

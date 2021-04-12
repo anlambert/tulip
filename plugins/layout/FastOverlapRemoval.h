@@ -3,8 +3,6 @@
 #ifndef FAST_OVERLAP_REMOVAL_H
 #define FAST_OVERLAP_REMOVAL_H
 
-/** \addtogroup layout */
-/*@{*/
 /** \file
  *  \brief A layout algorithm to resolve all node overlaps.
  *
@@ -53,5 +51,4 @@ public:
   ~FastOverlapRemoval() override = default;
   bool run() override;
 };
-/*@}*/
 #endif // FAST_OVERLAP_REMOVAL_H

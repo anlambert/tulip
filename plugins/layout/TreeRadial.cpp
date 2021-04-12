@@ -16,8 +16,6 @@
 using namespace std;
 using namespace tlp;
 
-/** \addtogroup layout */
-
 /// An implementation of a radial drawing of trees.
 /**
  * This algorithm is inspired from

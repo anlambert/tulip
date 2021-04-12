@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -16,7 +16,6 @@
 
 #include <unordered_map>
 #include <talipot/PluginHeaders.h>
-/** \addtogroup layout */
 
 /// ConeTreeExtended.h - An implementation of the cone tree layout.
 /** This plugin is an extension of the Cone tree layout

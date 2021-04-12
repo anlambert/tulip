@@ -33,7 +33,6 @@ public:
   }
 };
 
-/*@{*/
 /** \file
  *  \brief  An implementation of the Welsh and Powell algorithm
  *
@@ -154,5 +153,4 @@ public:
     return true;
   }
 };
-/*@}*/
 PLUGIN(WelshPowell)

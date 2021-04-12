@@ -55,7 +55,6 @@ private:
   float magnifyPower;
 };
 
-/*@{*/
 /** \file
  *  \brief Magnifying Glass Interactor
 

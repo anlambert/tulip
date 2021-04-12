@@ -42,8 +42,6 @@ static void drawHexagon(const Color &fillColor, const Color &borderColor, float 
   hexagon.draw(lod, nullptr);
 }
 
-/** \addtogroup glyph */
-
 /// A 2D glyph
 /**
  * This glyph draws a textured hexagon using the "viewTexture"

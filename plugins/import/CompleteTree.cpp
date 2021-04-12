@@ -26,8 +26,6 @@ static const char *paramHelp[] = {
     // tree layout
     "If true, the generated tree is drawn with the 'Tree Leaf' layout algorithm."};
 
-/** \addtogroup import */
-
 /// Complete Tree - Import of a complete tree
 /** This plugin enables to create a complete tree
  *

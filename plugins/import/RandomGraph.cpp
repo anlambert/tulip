@@ -65,8 +65,6 @@ static const char *paramHelp[] = {
     // directed
     "If True, the graph may contain edges a->b and b->a."};
 
-/** \addtogroup import */
-
 /// Random Graph - Import of a random graph
 /** This plugin enables to create a random graph
  *
@@ -192,8 +190,6 @@ public:
 };
 
 PLUGIN(RandomGraph)
-
-/** \addtogroup import */
 
 /// Random Simple Graph - Import of a random graph
 /** This plugin enables to create a random simple (undirected) graph

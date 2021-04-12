@@ -26,7 +26,6 @@ static const char *paramHelp[] = {
     // weight
     "An existing edge weight metric property."};
 
-/*@{*/
 /** \file
  *  \brief  An implementation of the PageRank metric
  *
@@ -49,7 +48,6 @@ static const char *paramHelp[] = {
  *
  *
  */
-/*@}*/
 struct PageRank : public DoubleAlgorithm {
 
   PLUGININFORMATION("Page Rank", "Mohamed Bouklit & David Auber", "16/12/10",

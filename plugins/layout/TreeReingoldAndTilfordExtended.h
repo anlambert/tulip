@@ -24,7 +24,6 @@ struct LR {
   double R;
   int size;
 };
-/** \addtogroup layout */
 
 /** This plugin is an implementation of the hierarchical tree layout
  *  algorithm first published as:

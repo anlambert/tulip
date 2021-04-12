@@ -18,8 +18,6 @@
 using namespace std;
 using namespace tlp;
 
-/** \addtogroup clustering */
-/*@{*/
 /** \file
  * @brief This plugin is an implementation of a fuzzy clustering procedure. First introduced in :
  *
@@ -97,7 +95,6 @@ private:
 
   tlp::NumericProperty *metric;
 };
-/*@}*/
 
 //==============================================================================================================
 static const char *paramHelp[] = {

@@ -19,8 +19,6 @@ using namespace tlp;
 
 namespace tlp {
 
-/** \addtogroup glyph */
-/*@{*/
 /// A 3D glyph.
 /**
  * This glyph draws a sphere with a bottom shadow
@@ -35,8 +33,6 @@ public:
 
 PLUGIN(BottomShadowSphere)
 
-/** \addtogroup glyph */
-/*@{*/
 /// A 3D glyph.
 /**
  * This glyph draws a sphere with a left bottom shadow
@@ -52,8 +48,6 @@ public:
 
 PLUGIN(LeftBottomShadowSphere)
 
-/** \addtogroup glyph */
-/*@{*/
 /// A 3D glyph.
 /**
  * This glyph draws a sphere with a right bottom shadow

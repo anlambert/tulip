@@ -35,7 +35,6 @@ class ViewGraphPropertiesSelectionWidget;
 class HistoOptionsWidget;
 class QuickAccessBarImpl;
 
-/*@{*/
 /** \file
  *  \brief Histogram view
 
@@ -148,25 +147,19 @@ private:
 
   void setLayoutUpdateNeeded() {
     if (detailedHistogram) {
-      {
-        detailedHistogram->setLayoutUpdateNeeded();
-      }
+      detailedHistogram->setLayoutUpdateNeeded();
     }
   }
 
   void setSizesUpdateNeeded() {
     if (detailedHistogram) {
-      {
-        detailedHistogram->setSizesUpdateNeeded();
-      }
+      detailedHistogram->setSizesUpdateNeeded();
     }
   }
 
   void setUpdateNeeded() {
     if (detailedHistogram) {
-      {
-        detailedHistogram->setUpdateNeeded();
-      }
+      detailedHistogram->setUpdateNeeded();
     }
   }
 

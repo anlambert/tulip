@@ -22,8 +22,6 @@ using namespace tlp;
 
 namespace tlp {
 
-/** \addtogroup glyph */
-/*@{*/
 /// A 3D glyph.
 /**
  * This glyph draws a sphere with a glow halo colored with the "viewColor"

@@ -27,8 +27,6 @@ public:
   }
 };
 
-/** \addtogroup layout */
-
 /**
  * \file
  * \brief An implementation of hierarchical graph drawing algorithm

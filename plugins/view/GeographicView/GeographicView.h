@@ -38,7 +38,6 @@ class GeographicViewConfigWidget;
 class GeolocationConfigWidget;
 class LeafletMaps;
 
-/*@{*/
 /** \file
  *  \brief Geographic View
 

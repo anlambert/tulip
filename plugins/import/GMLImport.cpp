@@ -560,8 +560,6 @@ static const char *paramHelp[] = {
     // filename
     "The pathname of the GML file to import."};
 
-/** \addtogroup import */
-
 /// Import plugin for GML format.
 /**
  * This plugin imports a graph structure recorded using the GML File format.

@@ -19,8 +19,6 @@
 using namespace std;
 using namespace tlp;
 
-/** \addtogroup clustering */
-/*@{*/
 /** \file
  * \brief  An implementation of the Louvain clustering algorithm
  *
@@ -326,7 +324,6 @@ private:
     });
   }
 };
-/*@}*/
 
 //========================================================================================
 static const char *paramHelp[] = { // metric

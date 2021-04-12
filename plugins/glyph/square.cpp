@@ -40,8 +40,6 @@ static void drawGlyph(const Color &glyphColor, const string &texture, const stri
   rect.draw(lod, nullptr);
 }
 
-/** \addtogroup glyph */
-
 /// A 2D glyph.
 /**
  * This glyph draws a textured square using the "viewTexture" node

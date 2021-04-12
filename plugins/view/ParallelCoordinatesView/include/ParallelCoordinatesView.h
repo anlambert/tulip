@@ -35,7 +35,6 @@ class ParallelCoordinatesViewQuickAccessBar;
 class ParallelCoordsDrawConfigWidget;
 class QuantitativeParallelAxis;
 
-/*@{*/
 /** \file
  *  \brief Parallel Coordinates view
 

@@ -108,8 +108,6 @@ static void drawCone() {
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-/** \addtogroup glyph */
-
 /// A 3D glyph.
 /**
  * This glyph draws a textured cone using the "viewTexture" node

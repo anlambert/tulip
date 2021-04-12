@@ -20,8 +20,6 @@
 
 #include "../utils/PluginNames.h"
 
-/** \addtogroup selection */
-
 /**
  * This selection plugin extends the current selection to a graph.
  * All selected edges will also have their extremities selected (no dangling edges).

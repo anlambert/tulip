@@ -60,8 +60,6 @@ void drawCross(const Color &fillColor, const Color &borderColor, float borderWid
   cross->draw(lod, nullptr);
 }
 
-/** \addtogroup glyph */
-
 /// A 2D glyph
 /**
  * This glyph draws a textured cross using the "viewTexture"

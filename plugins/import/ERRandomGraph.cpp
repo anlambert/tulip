@@ -33,8 +33,6 @@ const char *paramHelp[] = {
     "Generate a directed graph (arcs u->v and v->u have the same probability)"};
 }
 
-/** \addtogroup import */
-
 /** Random Graph - Import of a random graph based on the Erdős-Rényi Model
  *
  *  User can specify the number of nodes and the probability of having an edge between two nodes.

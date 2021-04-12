@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -15,8 +15,6 @@
 #define MIXED_MODEL_H
 
 #include <unordered_map>
-
-/** \addtogroup layout */
 
 /** This plugin is an implementation of the planar polyline graph
  *  drawing algorithm, the mixed model algorithm, first published as:

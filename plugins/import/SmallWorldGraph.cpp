@@ -33,8 +33,6 @@ static const char *paramHelp[] = {
  * Use a quadtree in order to change the complexity from n*n to n*log(n)
  */
 
-/** \addtogroup import */
-
 /// Grid Approximation - Import of a grid approximation
 /** This plugin enables to create a grid approximation
  *

@@ -32,8 +32,6 @@ static void drawGlyph(const Color &glyphColor, const string &texture, const stri
   sphere.draw(0, nullptr);
 }
 
-/** \addtogroup glyph */
-
 /// A 3D glyph.
 /**
  * This glyph draws a textured sphere using the "viewTexture" node

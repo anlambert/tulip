@@ -34,8 +34,6 @@ static const char *paramHelp[] = {
     // Line spacing
     "Spacing between nodes."};
 
-/** \addtogroup import */
-
 /// Grid - Import of a grid.
 /** This plugin enables to create a grid.
  *

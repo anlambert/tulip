@@ -35,7 +35,6 @@ class SizeProperty;
 class SOMMapElement;
 class SOMPropertiesWidget;
 
-/*@{*/
 /** \file
  *  \brief  Self organizing map view
 

@@ -41,8 +41,6 @@ static void drawDiamond(const Color &fillColor, const Color &borderColor, float 
   diamond.draw(lod, nullptr);
 }
 
-/** \addtogroup glyph */
-
 /// A 2D glyph
 /**
  * This glyph draws a textured diamond using the "viewTexture"

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -20,8 +20,6 @@
 
 #include <talipot/Algorithm.h>
 
-/** \addtogroup algorithm */
-/*@{*/
 /**
  * \file
  * \brief Compute all maximal cliques (or maximal cliques whose size is above a given threshold)
@@ -75,5 +73,4 @@ public:
   bool run() override;
   bool check(std::string &) override;
 };
-/*@}*/
 #endif // CLIQUE_ENUMERATION_H

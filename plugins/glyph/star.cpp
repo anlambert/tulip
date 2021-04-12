@@ -40,8 +40,6 @@ static void drawStar(const Color &fillColor, const Color &borderColor, float bor
   star.draw(lod, nullptr);
 }
 
-/** \addtogroup glyph */
-
 /// A 2D glyph
 /**
  * This glyph draws a textured star using the "viewTexture"

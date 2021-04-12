@@ -27,7 +27,6 @@
 
 namespace tlp {
 
-/*@{*/
 /** \file
  *  \brief  Scatter Plot view
 

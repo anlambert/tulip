@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -16,8 +16,6 @@
 
 #include <talipot/DoubleProperty.h>
 #include <talipot/PropertyAlgorithm.h>
-
-/** \addtogroup metric */
 
 /** This plugins compute for each node n, the maximum path-length between n and the other nodes.
  *  The graph must be acyclic.

@@ -35,7 +35,6 @@ class PathFinderConfigurationWidget;
 class StringsListSelectionWidget;
 class BooleanProperty;
 
-/*@{*/
 /** \file
  *  \brief PathFinder helps you finding paths between nodes in your graph.
  *
