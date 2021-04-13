@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -90,14 +90,11 @@ public:
   bool isElement(const edge e) const override;
   bool isMetaEdge(const edge e) const override;
   node addNode() override;
-  void addNodes(unsigned int nb) override;
-  void addNodes(unsigned int nb, std::vector<node> &addedNodes) override;
+  std::vector<node> addNodes(unsigned int nb) override;
   void addNode(const node) override;
   void addNodes(Iterator<node> *nodes) override;
   edge addEdge(const node n1, const node n2) override;
-  void addEdges(const std::vector<std::pair<node, node>> &edges) override;
-  void addEdges(const std::vector<std::pair<node, node>> &edges,
-                std::vector<edge> &addedEdges) override;
+  std::vector<edge> addEdges(const std::vector<std::pair<node, node>> &edges) override;
   void addEdge(const edge) override;
   void addEdges(Iterator<edge> *edges) override;
   void delNode(const tlp::node n, bool deleteInAllGraphs = false) override;

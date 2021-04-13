@@ -35,11 +35,11 @@ void SuperGraphTest::tearDown() {
 }
 //==========================================================
 void SuperGraphTest::build(unsigned int nbNodes, unsigned int edgeRatio) {
-  vector<node> nodes;
+
   unsigned int NB_ADD = nbNodes;
   unsigned int EDGE_RATIO = edgeRatio;
 
-  graph->addNodes(nbNodes, nodes);
+  vector<node> nodes = graph->addNodes(nbNodes);
 
   unsigned int NB_EDGES = EDGE_RATIO * NB_ADD;
 
@@ -278,7 +278,7 @@ void SuperGraphTest::testAddDel() {
 
   CPPUNIT_ASSERT_EQUAL(0u, graph->numberOfNodes());
 
-  graph->addNodes(NB_ADD, nodes);
+  nodes = graph->addNodes(NB_ADD);
 
   for (unsigned int i = 0; i < NB_ADD; ++i) {
     CPPUNIT_ASSERT(graph->isElement(nodes[i]));
@@ -308,7 +308,7 @@ void SuperGraphTest::testAddDel() {
                                     nodes[randomUnsignedInteger(NB_ADD - 1)]));
   }
 
-  graph->addEdges(ends, edges);
+  edges = graph->addEdges(ends);
   CPPUNIT_ASSERT_EQUAL(NB_EDGES, graph->numberOfEdges());
 
   for (unsigned int i = 0; i < NB_ADD; ++i) {

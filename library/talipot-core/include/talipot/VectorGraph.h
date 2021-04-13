@@ -284,13 +284,12 @@ public:
   //=======================================================
   /**
    * @brief Add nb new nodes in the structure and returns them
-   * in the addedNodes vector
+   * in a vector
    * @warning: That operation modify the array of nodes
-   * and thus devalidate all iterators on it. The addedNodes vector
-   * is cleared before adding nodes
+   * and thus devalidate all iterators on it.
    * @complexity: o(1)
    */
-  void addNodes(unsigned int nb, std::vector<node> *addedNodes = nullptr);
+  std::vector<node> addNodes(unsigned int nb);
   //=======================================================
   /**
    * @brief Delete a node and all its adjacent edges in the graph
@@ -315,13 +314,12 @@ public:
   //=======================================================
   /**
    * @brief Add edges in the structure and returns them
-   * in the addedEdges vector
+   * in a vector
    * @warning: That operation modify the array of edges and
    * the adjacency edges of its ends thus any iterators existing for
    * these structures will be devalidated.
    */
-  void addEdges(const std::vector<std::pair<node, node>> &edges,
-                std::vector<edge> *addedEdges = nullptr);
+  std::vector<edge> addEdges(const std::vector<std::pair<node, node>> &edges);
   //=======================================================
   /**
    * @brief Delete an edge in the graph

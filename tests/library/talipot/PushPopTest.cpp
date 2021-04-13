@@ -58,13 +58,13 @@ void PushPopTest::testAddDel() {
   vector<pair<node, node>> ends;
   vector<edge> edges;
 
-  graph->addNodes(3, nodes);
+  nodes = graph->addNodes(3);
 
   CPPUNIT_ASSERT_EQUAL(size_t(3), nodes.size());
   ends.push_back(pair<node, node>(nodes[0], nodes[1]));
   ends.push_back(pair<node, node>(nodes[0], nodes[2]));
   ends.push_back(pair<node, node>(nodes[1], nodes[2]));
-  graph->addEdges(ends, edges);
+  edges = graph->addEdges(ends);
   CPPUNIT_ASSERT_EQUAL(size_t(3), edges.size());
 
   graph->pop();

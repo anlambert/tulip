@@ -53,7 +53,7 @@ static void populateGraph(bool nodesOnly = false) {
   nodes.reserve(NB_NODES);
 
   // create nodes
-  graph.addNodes(NB_NODES, &nodes);
+  nodes = graph.addNodes(NB_NODES);
 
   if (nodesOnly) {
     return;
@@ -438,8 +438,7 @@ void VectorGraphTest::testAddDelEdges() {
     ends.push_back(std::make_pair(nodes[0], nodes[i]));
   }
 
-  edges.clear();
-  graph.addEdges(ends, &edges);
+  edges = graph.addEdges(ends);
 
   CPPUNIT_ASSERT(graph.numberOfEdges() == NB_NODES - 1);
 

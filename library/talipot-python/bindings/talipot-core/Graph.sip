@@ -725,7 +725,7 @@ through the use of a dictionary (see :meth:`tlp.Graph.setNodePropertiesValues` f
 
 //===========================================================================================
 
-  void addNodes(unsigned int nbNodes, std::vector<tlp::node>& addedNodes /Out/);
+  std::vector<tlp::node> addNodes(unsigned int nbNodes);
 %Docstring
 tlp.Graph.addNodes(nbNodes)
 
@@ -735,8 +735,6 @@ The new nodes are also added in all the graph ancestors to maintain the subgraph
 :param nbNodes: the number of nodes to add in the graph
 :type nbNodes: integer
 :rtype: list of :class:`tlp.node`
-
-.. warning:: the addedNodes vector is cleared before adding nodes.
 
 %End
 
@@ -957,7 +955,7 @@ through the use of a dictionary (see :meth:`tlp.Graph.setEdgePropertiesValues` f
 
 //===========================================================================================
 
-  void addEdges(const std::vector<pairNodeNode>& edges, std::vector<tlp::edge>& addedEdges /Out/);
+  std::vector<tlp::edge> addEdges(const std::vector<pairNodeNode>& edges);
 %Docstring
 tlp.Graph.addEdges(edges)
 
@@ -982,7 +980,7 @@ The new edges are also added in all the graph ancestors to maintain the subgraph
     }
   }
   if (sipIsErr == 0) {
-    sipCpp->addEdges(*a0, *a1);
+    sipRes = new std::vector<tlp::edge>(sipCpp->addEdges(*a0));
   }
 %End
 

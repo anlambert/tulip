@@ -395,18 +395,8 @@ node GraphStorage::addNode() {
  * @brief Add nb new nodes in the structure
  * and return them in addedNodes
  */
-void GraphStorage::addNodes(unsigned int nb, std::vector<node> *addedNodes) {
-  if (nb == 0) {
-    return;
-  }
-
-  if (addedNodes) {
-    addedNodes->clear();
-    addedNodes->reserve(nb);
-  }
-
-  unsigned int first = nodeIds.addNb(nb, addedNodes);
-
+std::vector<node> GraphStorage::addNodes(unsigned int nb) {
+  std::vector<node> addedNodes = nodeIds.addNb(nb);
   unsigned int sz = nodeData.size();
 
   if (sz < nodeIds.size()) {
@@ -416,9 +406,10 @@ void GraphStorage::addNodes(unsigned int nb, std::vector<node> *addedNodes) {
     nb -= nodeIds.size() - sz;
   }
 
-  for (unsigned int i = 0; i < nb; ++i) {
-    restoreNode(nodeIds[first + i]);
+  for (auto n : addedNodes) {
+    restoreNode(n);
   }
+  return addedNodes;
 }
 //=======================================================
 /**
@@ -504,21 +495,9 @@ edge GraphStorage::addEdge(const node src, const node tgt) {
  * @brief Add edges in the structure and returns them
  * in the addedEdges vector
  */
-void GraphStorage::addEdges(const std::vector<std::pair<node, node>> &ends,
-                            std::vector<edge> *addedEdges) {
+std::vector<edge> GraphStorage::addEdges(const std::vector<std::pair<node, node>> &ends) {
   unsigned int nb = ends.size();
-
-  if (nb == 0) {
-    return;
-  }
-
-  if (addedEdges) {
-    addedEdges->clear();
-    addedEdges->reserve(nb);
-  }
-
-  unsigned int first = edgeIds.addNb(nb, addedEdges);
-
+  std::vector<edge> addedEdges = edgeIds.addNb(nb);
   unsigned int sz = edgeEnds.size();
 
   if (sz < edgeIds.size()) {
@@ -527,13 +506,15 @@ void GraphStorage::addEdges(const std::vector<std::pair<node, node>> &ends,
 
   for (unsigned int i = 0; i < nb; ++i) {
     const auto &[src, tgt] = ends[i];
-    edge e = edgeIds[first + i];
+    edge e = addedEdges[i];
     edgeEnds[e.id] = {src, tgt};
     NodeData &srcData = nodeData[src.id];
     srcData.outDegree += 1;
     srcData.edges.push_back(e);
     nodeData[tgt.id].edges.push_back(e);
   }
+
+  return addedEdges;
 }
 //=======================================================
 /**

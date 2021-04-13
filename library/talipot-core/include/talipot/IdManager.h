@@ -223,11 +223,7 @@ public:
   }
 
   // add nb new elts
-  unsigned int addNb(unsigned int nb, std::vector<ID_TYPE> *elts = nullptr) {
-    if (elts) {
-      elts->clear();
-      elts->reserve(nb);
-    }
+  std::vector<ID_TYPE> addNb(unsigned int nb) {
     unsigned int lastPos = this->size();
     unsigned int i = 0;
     while (i++ < nb) {
@@ -246,12 +242,9 @@ public:
     for (i = 0; i < nb; ++i) {
       ID_TYPE elt = (*this)[lastPos + i];
       pos[elt] = lastPos + i;
-      if (elts) {
-        elts->push_back(elt);
-      }
     }
 
-    return lastPos;
+    return {this->begin() + lastPos, this->end()};
   }
 
   // push the elt in the free storage

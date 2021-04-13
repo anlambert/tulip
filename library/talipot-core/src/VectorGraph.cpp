@@ -310,13 +310,8 @@ node VectorGraph::addNode() {
   return newNode;
 }
 //=======================================================
-void VectorGraph::addNodes(unsigned int nb, std::vector<node> *addedNodes) {
-  if (addedNodes) {
-    addedNodes->clear();
-    addedNodes->reserve(nb);
-  }
-
-  unsigned int first = _nodes.addNb(nb, addedNodes);
+std::vector<node> VectorGraph::addNodes(unsigned int nb) {
+  std::vector<node> addedNodes = _nodes.addNb(nb);
 
   unsigned int sz = _nData.size();
 
@@ -328,9 +323,10 @@ void VectorGraph::addNodes(unsigned int nb, std::vector<node> *addedNodes) {
     nb -= _nodes.size() - sz;
   }
 
-  for (unsigned int i = 0; i < nb; ++i) {
-    _nData[_nodes[first + i]].clear();
+  for (auto n : addedNodes) {
+    _nData[n].clear();
   }
+  return addedNodes;
 }
 //=======================================================
 void VectorGraph::delNode(const node n) {
@@ -342,8 +338,6 @@ void VectorGraph::delNode(const node n) {
   if (_nodes.empty()) {
     _nData.resize(0);
   }
-
-  // integrityTest();
 }
 //=======================================================
 void VectorGraph::addEdgeInternal(const edge newEdge, const node src, const node tgt) {
@@ -383,20 +377,10 @@ edge VectorGraph::addEdge(const node src, const node tgt) {
   return newEdge;
 }
 //=======================================================
-void VectorGraph::addEdges(const std::vector<std::pair<node, node>> &ends,
-                           std::vector<edge> *addedEdges) {
+std::vector<edge> VectorGraph::addEdges(const std::vector<std::pair<node, node>> &ends) {
   unsigned int nb = ends.size();
 
-  if (nb == 0) {
-    return;
-  }
-
-  if (addedEdges) {
-    addedEdges->clear();
-    addedEdges->reserve(nb);
-  }
-
-  unsigned int first = _edges.addNb(nb, addedEdges);
+  std::vector<edge> addedEdges = _edges.addNb(nb);
 
   unsigned int sz = _eData.size();
 
@@ -407,8 +391,9 @@ void VectorGraph::addEdges(const std::vector<std::pair<node, node>> &ends,
 
   for (unsigned int i = 0; i < nb; ++i) {
     const auto &[src, tgt] = ends[i];
-    addEdgeInternal(_edges[first + i], src, tgt);
+    addEdgeInternal(addedEdges[i], src, tgt);
   }
+  return addedEdges;
 }
 
 //=======================================================

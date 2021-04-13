@@ -587,23 +587,14 @@ public:
   virtual node addNode() = 0;
 
   /**
-   * @brief Adds new nodes in the graph.
-   * The new nodes are also added in all the ancestor graphs.
-   *
-   * @param nbNodes The number of nodes to add.
-   * @see addNode() to add a single node.
-   */
-  virtual void addNodes(unsigned int nbNodes) = 0;
-
-  /**
    * @brief Adds new nodes in the graph and returns them in the addedNodes vector.
    * The new nodes are also added in all the ancestor graphs.
    *
    * @param nbNodes The number of nodes to add.
-   * @param addedNodes The newly added nodes. This vector is cleared before being filled.
+   * @return The newly added nodes in a vector.
    * @see addNode() to add a single node.
    */
-  virtual void addNodes(unsigned int nbNodes, std::vector<node> &addedNodes) = 0;
+  virtual std::vector<node> addNodes(unsigned int nbNodes) = 0;
 
   /**
    * @brief Adds an existing node in the graph. This node is also added in all the ancestor graphs.
@@ -686,18 +677,6 @@ public:
   virtual edge addEdge(const node source, const node target) = 0;
 
   /**
-   * @brief Adds new edges in the graph.
-   * The new edges are also added in all graph ancestors.
-   *
-   * @warning If the edges vector contains a node that does not belong to this graph,
-   * undefined behavior will ensue.
-   * @param edges A vector describing between which nodes to add edges.
-   * The first element of the pair is the source, the second is the destination.
-   *
-   */
-  virtual void addEdges(const std::vector<std::pair<node, node>> &edges) = 0;
-
-  /**
    * @brief Adds new edges in the graph and returns them in the addedEdges vector.
    * The new edges are also added in all graph ancestors.
    *
@@ -705,11 +684,10 @@ public:
    * undefined behavior will ensue.
    * @param edges A vector describing between which nodes to add edges.
    * The first element of the pair is the source, the second is the destination.
-   * @param addedEdges The newly added edges. This vector is cleared before being filled.
+   * @return The newly added edges in a vector.
    *
    */
-  virtual void addEdges(const std::vector<std::pair<node, node>> &edges,
-                        std::vector<edge> &addedEdges) = 0;
+  virtual std::vector<edge> addEdges(const std::vector<std::pair<node, node>> &edges) = 0;
 
   /**
    * @brief Adds an existing edge in the graph. This edge is also added in all

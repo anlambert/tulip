@@ -194,14 +194,12 @@ node GraphView::addNode() {
   return tmp;
 }
 //----------------------------------------------------------------
-void GraphView::addNodes(unsigned int nb) {
-  getSuperGraph()->addNodes(nb);
-  addNodesInternal(nb, nullptr);
-}
-//----------------------------------------------------------------
-void GraphView::addNodes(unsigned int nb, std::vector<node> &addedNodes) {
-  getSuperGraph()->addNodes(nb, addedNodes);
-  addNodesInternal(nb, &addedNodes);
+std::vector<node> GraphView::addNodes(unsigned int nb) {
+  std::vector<node> addedNodes = getSuperGraph()->addNodes(nb);
+  if (!addedNodes.empty()) {
+    addNodesInternal(nb, &addedNodes);
+  }
+  return addedNodes;
 }
 //----------------------------------------------------------------
 void GraphView::restoreNode(node n) {
@@ -338,15 +336,12 @@ void GraphView::addEdge(const edge e) {
   }
 }
 //----------------------------------------------------------------
-void GraphView::addEdges(const std::vector<std::pair<node, node>> &ends) {
-  getSuperGraph()->addEdges(ends);
-  addEdgesInternal(ends.size(), nullptr, ends);
-}
-//----------------------------------------------------------------
-void GraphView::addEdges(const std::vector<std::pair<node, node>> &ends,
-                         std::vector<edge> &addedEdges) {
-  getSuperGraph()->addEdges(ends, addedEdges);
-  addEdgesInternal(ends.size(), &addedEdges, ends);
+std::vector<edge> GraphView::addEdges(const std::vector<std::pair<node, node>> &ends) {
+  std::vector<edge> addedEdges = getSuperGraph()->addEdges(ends);
+  if (!addedEdges.empty()) {
+    addEdgesInternal(ends.size(), &addedEdges, ends);
+  }
+  return addedEdges;
 }
 //----------------------------------------------------------------
 void GraphView::addEdges(Iterator<edge> *addedEdges) {

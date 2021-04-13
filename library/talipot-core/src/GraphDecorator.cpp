@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -298,23 +298,13 @@ node GraphDecorator::addNode() {
   notifyAddNode(newNode);
   return newNode;
 }
-
 //============================================================
-void GraphDecorator::addNodes(unsigned int nb) {
-  graph_component->addNodes(nb);
-
+std::vector<node> GraphDecorator::addNodes(unsigned int nb) {
+  std::vector<node> addedNodes = graph_component->addNodes(nb);
   if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_ADD_NODES, nb));
   }
-}
-
-//============================================================
-void GraphDecorator::addNodes(unsigned int nb, std::vector<node> &addedNodes) {
-  graph_component->addNodes(nb, addedNodes);
-
-  if (hasOnlookers()) {
-    sendEvent(GraphEvent(*this, GraphEvent::TLP_ADD_NODES, nb));
-  }
+  return addedNodes;
 }
 
 //============================================================
@@ -345,22 +335,12 @@ edge GraphDecorator::addEdge(const node n, const node n2) {
 }
 
 //============================================================
-void GraphDecorator::addEdges(const std::vector<std::pair<node, node>> &edges) {
-  graph_component->addEdges(edges);
-
+std::vector<edge> GraphDecorator::addEdges(const std::vector<std::pair<node, node>> &edges) {
+  std::vector<edge> addedEdges = graph_component->addEdges(edges);
   if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_ADD_EDGES, edges.size()));
   }
-}
-
-//============================================================
-void GraphDecorator::addEdges(const std::vector<std::pair<node, node>> &edges,
-                              std::vector<edge> &addedEdges) {
-  graph_component->addEdges(edges, addedEdges);
-
-  if (hasOnlookers()) {
-    sendEvent(GraphEvent(*this, GraphEvent::TLP_ADD_EDGES, edges.size()));
-  }
+  return addedEdges;
 }
 
 //============================================================

@@ -123,7 +123,7 @@ public:
       vector<node> publis;
 
       if (createPubliNodes) {
-        graph->addNodes(entries.size(), publis);
+        publis = graph->addNodes(entries.size());
       }
 
       // loop on entries
