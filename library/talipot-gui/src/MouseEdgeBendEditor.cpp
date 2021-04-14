@@ -98,14 +98,20 @@ bool MouseEdgeBendEditor::eventFilter(QObject *widget, QEvent *e) {
         _operation = NONE_OP;
       } else {
 
+        std::vector<SelectedEntity> selectedEntities;
         bool entityIsSelected = glWidget->pickGlEntities(
-            int(editPosition[0]) - 3, int(editPosition[1]) - 3, 6, 6, select, layer);
+            int(editPosition[0]) - 3, int(editPosition[1]) - 3, 6, 6, selectedEntities, layer);
 
         if (!entityIsSelected) {
           // We have click outside an entity
           _operation = NONE_OP;
         } else {
-          selectedEntity = circleString->findKey(select[0].getEntity());
+          for (const auto &selection : selectedEntities) {
+            selectedEntity = circleString->findKey(selection.getEntity());
+            if (!selectedEntity.empty()) {
+              break;
+            }
+          }
 
           if (qMouseEv->modifiers() &
 #if defined(__APPLE__)
@@ -330,6 +336,7 @@ void MouseEdgeBendEditor::mMouseTranslate(int newX, int newY, GlWidget *glWidget
   v1 = camera.viewportTo3DWorld(glWidget->screenToViewport(v1));
   v1 -= v0;
 
+  int i;
   if (selectedEntity == "targetTriangle") {
     targetTriangle.translate(Coord(-glWidget->screenToViewport(editPosition[0] - newX),
                                    glWidget->screenToViewport(editPosition[1] - newY), 0));
@@ -338,9 +345,7 @@ void MouseEdgeBendEditor::mMouseTranslate(int newX, int newY, GlWidget *glWidget
     sourceCircle.translate(Coord(-glWidget->screenToViewport(editPosition[0] - newX),
                                  glWidget->screenToViewport(editPosition[1] - newY), 0));
     glWidget->draw(false);
-  } else {
-    int i;
-    IntegerType::fromString(i, selectedEntity);
+  } else if (IntegerType::fromString(i, selectedEntity)) {
     coordinates[i] += v1;
     Observable::holdObservers();
 
@@ -534,7 +539,6 @@ bool MouseEdgeBendEditor::computeBendsCircles(GlWidget *glWidget) {
   Coord tmp;
   coordinates.clear();
   circles.clear();
-  select.clear();
 
   if (circleString) {
     circleString->reset(false);
