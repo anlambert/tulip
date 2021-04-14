@@ -24,7 +24,7 @@ using namespace std;
 //========================================================================================
 MouseEdgeBendEditor::MouseEdgeBendEditor()
     : glWidget(nullptr), layer(nullptr), edgeEntity(nullptr),
-      targetTriangle(Coord(0, 0, 0), Size(1, 1, 1)), circleString(nullptr),
+      targetTriangle(Coord(0, 0, 0), Size(1, 1, 1)), circlesComposite(nullptr),
       mouseButtonPressOnEdge(false) {
   _operation = NONE_OP;
 
@@ -44,7 +44,7 @@ void MouseEdgeBendEditor::clear() {
 
     delete layer;
     layer = nullptr;
-    circleString = nullptr;
+    circlesComposite = nullptr;
 
     glWidget->getScene()->getGraphLayer()->deleteGlEntity("edgeEntity");
     delete edgeEntity;
@@ -107,7 +107,7 @@ bool MouseEdgeBendEditor::eventFilter(QObject *widget, QEvent *e) {
           _operation = NONE_OP;
         } else {
           for (const auto &selection : selectedEntities) {
-            selectedEntity = circleString->findKey(selection.getEntity());
+            selectedEntity = circlesComposite->findKey(selection.getEntity());
             if (!selectedEntity.empty()) {
               break;
             }
@@ -148,7 +148,7 @@ bool MouseEdgeBendEditor::eventFilter(QObject *widget, QEvent *e) {
       _operation != NONE_OP) {
     auto *glWidget = static_cast<GlWidget *>(widget);
 
-    Camera &camera = glWidget->getScene()->getLayer("Main")->getCamera();
+    Camera &camera = glWidget->getScene()->getGraphCamera();
 
     if (selectedEntity == "targetTriangle") {
       SelectedEntity selectedEntity;
@@ -259,11 +259,11 @@ bool MouseEdgeBendEditor::compute(GlWidget *glWidget) {
       layer = new GlLayer("edgeBendEditorLayer", true);
       layer->setCamera(new Camera(glWidget->getScene(), false));
 
-      if (!circleString) {
-        circleString = new GlComposite(false);
+      if (!circlesComposite) {
+        circlesComposite = new GlComposite(false);
       }
 
-      layer->addGlEntity(circleString, "selectionComposite");
+      layer->addGlEntity(circlesComposite, "selectionComposite");
     }
 
     bool layerInScene = false;
@@ -310,15 +310,13 @@ void MouseEdgeBendEditor::initProxies(GlWidget *glWidget) {
 }
 //========================================================================================
 // Does the point p belong to the segment [u,v]?
-bool MouseEdgeBendEditor::belong(Coord u, Coord v, Coord p, GlWidget *glWidget) {
-  int W = glWidget->screenToViewport(glWidget->width());
-  int H = glWidget->screenToViewport(glWidget->height());
-  Coord m = glWidget->getScene()->getLayer("Main")->getCamera().worldTo2DViewport(u);
-  m[0] = W - m[0];
-  m[1] = H - m[1];
-  Coord n = glWidget->getScene()->getLayer("Main")->getCamera().worldTo2DViewport(v);
-  n[0] = W - n[0];
-  n[1] = H - n[1];
+bool MouseEdgeBendEditor::belong(const Coord &u, const Coord &v, const Coord &p,
+                                 GlWidget *glWidget) {
+  float w = glWidget->screenToViewport(glWidget->width());
+  float h = glWidget->screenToViewport(glWidget->height());
+  Coord m = {w, h}, n = {w, h};
+  m -= glWidget->getScene()->getGraphCamera().worldTo2DViewport(u);
+  n -= glWidget->getScene()->getGraphCamera().worldTo2DViewport(v);
   double mnDist = m.dist(n);
   double mpDist = m.dist(p);
   double pnDist = p.dist(n);
@@ -328,13 +326,7 @@ bool MouseEdgeBendEditor::belong(Coord u, Coord v, Coord p, GlWidget *glWidget) 
 void MouseEdgeBendEditor::mMouseTranslate(int newX, int newY, GlWidget *glWidget) {
   initProxies(glWidget);
 
-  Camera &camera = glWidget->getScene()->getLayer("Main")->getCamera();
-
-  Coord v0;
-  Coord v1 = {editPosition[0] - newX, -(editPosition[1] - newY), 0};
-  v0 = camera.viewportTo3DWorld(glWidget->screenToViewport(v0));
-  v1 = camera.viewportTo3DWorld(glWidget->screenToViewport(v1));
-  v1 -= v0;
+  Camera &camera = glWidget->getScene()->getGraphCamera();
 
   int i;
   if (selectedEntity == "targetTriangle") {
@@ -346,15 +338,18 @@ void MouseEdgeBendEditor::mMouseTranslate(int newX, int newY, GlWidget *glWidget
                                  glWidget->screenToViewport(editPosition[1] - newY), 0));
     glWidget->draw(false);
   } else if (IntegerType::fromString(i, selectedEntity)) {
-    coordinates[i] += v1;
-    Observable::holdObservers();
+    Coord v0;
+    Coord v1 = {editPosition[0] - newX, -(editPosition[1] - newY), 0};
+    v0 = camera.viewportTo3DWorld(glWidget->screenToViewport(v0));
+    v1 = camera.viewportTo3DWorld(glWidget->screenToViewport(v1));
+    coordinates[i] += v1 - v0;
 
+    Observable::holdObservers();
     if (edgeSelected) {
       _layout->setEdgeValue(mEdge, coordinates);
     } else {
       _coordsVectorProperty->setNodeValue(mNode, coordinates);
     }
-
     Observable::unholdObservers();
   }
 
@@ -363,16 +358,17 @@ void MouseEdgeBendEditor::mMouseTranslate(int newX, int newY, GlWidget *glWidget
 }
 //========================================================================================
 void MouseEdgeBendEditor::mMouseDelete() {
-  if (selectedEntity != "targetTriangle" && selectedEntity != "sourceCircle") {
-    int i;
-    IntegerType::fromString(i, selectedEntity);
-    auto CoordIt = coordinates.begin();
+  int i;
+  if (selectedEntity != "targetTriangle" && selectedEntity != "sourceCircle" &&
+      IntegerType::fromString(i, selectedEntity)) {
+
+    auto coordIt = coordinates.begin();
     auto circleIt = circles.begin();
     int tmp = 0;
 
     while (tmp != i) {
       ++tmp;
-      ++CoordIt;
+      ++coordIt;
       ++circleIt;
     }
 
@@ -380,7 +376,7 @@ void MouseEdgeBendEditor::mMouseDelete() {
       return;
     }
 
-    coordinates.erase(CoordIt);
+    coordinates.erase(coordIt);
     circles.erase(circleIt);
     edgeEntity->setCoordinates(start, end, coordinates);
     Observable::holdObservers();
@@ -401,8 +397,7 @@ void MouseEdgeBendEditor::mMouseCreate(int x, int y, GlWidget *glWidget) {
   Coord viewportClick =
       Coord(glWidget->screenToViewport(glWidget->width() - x), glWidget->screenToViewport(y));
 
-  Coord worldLocation =
-      glWidget->getScene()->getLayer("Main")->getCamera().viewportTo3DWorld(viewportClick);
+  Coord worldLocation = glWidget->getScene()->getGraphCamera().viewportTo3DWorld(viewportClick);
 
   if (coordinates.empty()) {
     coordinates.push_back(worldLocation);
@@ -426,21 +421,21 @@ void MouseEdgeBendEditor::mMouseCreate(int x, int y, GlWidget *glWidget) {
     }
 
     if (!firstSeg && !lastSeg && !firstLastSeg) {
-      auto CoordIt = coordinates.begin();
-      last = Coord(CoordIt->getX(), CoordIt->getY(), CoordIt->getZ());
-      ++CoordIt;
+      auto coordIt = coordinates.begin();
+      last = *coordIt;
+      ++coordIt;
 
-      while (CoordIt != coordinates.end()) {
+      while (coordIt != coordinates.end()) {
         first = last;
-        last = Coord(CoordIt->getX(), CoordIt->getY(), CoordIt->getZ());
+        last = *coordIt;
         bool midSeg = belong(first, last, viewportClick, glWidget);
 
         if (midSeg) {
-          coordinates.insert(CoordIt, worldLocation);
+          coordinates.insert(coordIt, worldLocation);
           break;
         }
 
-        ++CoordIt;
+        ++coordIt;
       }
     }
   }
@@ -466,14 +461,14 @@ bool MouseEdgeBendEditor::haveSelection(GlWidget *glWidget) {
   bool hasSelection = false;
   bool multipleSelection = false;
 
-  for (auto ite : _graph->edges()) {
-    if (_selection->getEdgeValue(ite)) {
+  for (auto e : _graph->edges()) {
+    if (_selection->getEdgeValue(e)) {
       if (hasSelection) {
         hasSelection = false;
         multipleSelection = true;
         break;
       } else {
-        mEdge = ite;
+        mEdge = e;
         edgeSelected = true;
         hasSelection = true;
       }
@@ -481,13 +476,13 @@ bool MouseEdgeBendEditor::haveSelection(GlWidget *glWidget) {
   }
 
   if (!multipleSelection) {
-    for (auto itn : _graph->nodes()) {
-      if (_selection->getNodeValue(itn)) {
+    for (auto n : _graph->nodes()) {
+      if (_selection->getNodeValue(n)) {
         if (hasSelection) {
           hasSelection = false;
           break;
         } else {
-          mNode = itn;
+          mNode = n;
           edgeSelected = false;
           hasSelection = true;
         }
@@ -516,7 +511,7 @@ void MouseEdgeBendEditor::computeSrcTgtEntities(GlWidget *glWidget) {
     }
   }
 
-  Camera &camera = glWidget->getScene()->getLayer("Main")->getCamera();
+  Camera &camera = glWidget->getScene()->getGraphCamera();
 
   if (selectedEntity != "targetTriangle") {
     Coord tmp = camera.worldTo2DViewport(end);
@@ -540,10 +535,10 @@ bool MouseEdgeBendEditor::computeBendsCircles(GlWidget *glWidget) {
   coordinates.clear();
   circles.clear();
 
-  if (circleString) {
-    circleString->reset(false);
+  if (circlesComposite) {
+    circlesComposite->reset(false);
   } else {
-    circleString = new GlComposite(false);
+    circlesComposite = new GlComposite(false);
   }
 
   bool hasSelection = haveSelection(glWidget);
@@ -559,18 +554,13 @@ bool MouseEdgeBendEditor::computeBendsCircles(GlWidget *glWidget) {
     end = _layout->getNodeValue(_graph->target(mEdge));
 
     computeSrcTgtEntities(glWidget);
-    circleString->addGlEntity(&targetTriangle, "targetTriangle");
-    circleString->addGlEntity(&sourceCircle, "sourceCircle");
+    circlesComposite->addGlEntity(&targetTriangle, "targetTriangle");
+    circlesComposite->addGlEntity(&sourceCircle, "sourceCircle");
 
     // Bends circles
-    auto CoordIt = coordinates.begin();
-
-    while (CoordIt != coordinates.end()) {
-      tmp = Coord(CoordIt->getX(), CoordIt->getY(), CoordIt->getZ());
-      tmp = glWidget->getScene()->getLayer("Main")->getCamera().worldTo2DViewport(tmp);
-      basicCircle.set(tmp, 5, 0.);
+    for (const auto &coord : coordinates) {
+      basicCircle.set(glWidget->getScene()->getGraphCamera().worldTo2DViewport(coord), 5, 0.);
       circles.push_back(basicCircle);
-      ++CoordIt;
     }
 
     if (!edgeEntity) {
@@ -621,21 +611,16 @@ bool MouseEdgeBendEditor::computeBendsCircles(GlWidget *glWidget) {
           coordinates.push_back(_layout->getNodeValue(mNode) + tmp);
         }
 
-        auto coordIt = coordinatesWithRotation.begin();
-
-        while (coordIt != coordinatesWithRotation.end()) {
-          Coord tmp =
-              glWidget->getScene()->getLayer("Main")->getCamera().worldTo2DViewport(*coordIt);
-          basicCircle.set(tmp, 5, 0.);
+        for (const auto &coord : coordinatesWithRotation) {
+          basicCircle.set(glWidget->getScene()->getGraphCamera().worldTo2DViewport(coord), 5, 0.);
           circles.push_back(basicCircle);
-          ++coordIt;
         }
       }
     }
   }
 
   for (unsigned int i = 0; i < circles.size(); ++i) {
-    circleString->addGlEntity(&circles[i], IntegerType::toString(i));
+    circlesComposite->addGlEntity(&circles[i], IntegerType::toString(i));
   }
 
   return hasSelection;

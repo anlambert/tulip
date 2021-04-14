@@ -109,14 +109,14 @@ private:
   GlCircle basicCircle;
   GlTriangle targetTriangle;
   GlCircle sourceCircle;
-  GlComposite *circleString;
+  GlComposite *circlesComposite;
   bool edgeSelected;
   tlp::edge mEdge;
   node mNode;
   Coord start, end;
   std::string selectedEntity;
   bool mouseButtonPressOnEdge;
-  bool belong(Coord, Coord, Coord, GlWidget *);
+  bool belong(const Coord &, const Coord &, const Coord &, GlWidget *);
   bool haveSelection(GlWidget *);
   void computeSrcTgtEntities(GlWidget *);
   bool computeBendsCircles(GlWidget *);
