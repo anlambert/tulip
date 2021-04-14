@@ -168,8 +168,7 @@ bool Circular::run() {
       cycleOrdering = findMaxCycle(graph, pluginProgress);
     }
 
-    vector<node> dfsOrdering;
-    tlp::dfs(graph, dfsOrdering);
+    vector<node> dfsOrdering = tlp::dfs(graph);
 
     MutableContainer<bool> inCir;
     inCir.setAll(false);

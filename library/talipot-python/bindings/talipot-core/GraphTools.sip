@@ -17,7 +17,7 @@
 
 namespace tlp {
 
-void bfs(tlp::Graph *graph, std::vector<tlp::node> &nodes /Out/);
+std::vector<tlp::node> bfs(tlp::Graph *graph);
 %Docstring
 tlp.bfs(graph)
 
@@ -31,7 +31,7 @@ containing the nodes of the graph in the order they have been visited.
 
  //========================================================================================
 
-void bfs(tlp::Graph *graph, tlp::node root, std::vector<tlp::node> &nodes /Out/);
+std::vector<tlp::node> bfs(tlp::Graph *graph, tlp::node root);
 %Docstring
 tlp.bfs(graph, root)
 
@@ -48,7 +48,7 @@ containing the nodes of the graph in the order they have been visited.
 
 %MethodCode
   if (a0->isElement(*a1)) {
-    tlp::bfs(a0, *a1, *a2);
+    sipRes = new std::vector<tlp::node>(tlp::bfs(a0, *a1));
   } else {
     sipIsErr = throwInvalidNodeException(a0, *a1);
   }
@@ -56,7 +56,7 @@ containing the nodes of the graph in the order they have been visited.
 
 //========================================================================================
 
-  void dfs(tlp::Graph *graph, std::vector<tlp::node> &nodes /Out/);
+  std::vector<tlp::node> dfs(tlp::Graph *graph);
 %Docstring
 tlp.dfs(graph)
 
@@ -70,7 +70,7 @@ containing the nodes of the graph in the order they have been visited.
 
 //========================================================================================
 
-  void dfs(tlp::Graph *graph, tlp::node root, std::vector<tlp::node> &nodes /Out/);
+  std::vector<tlp::node> dfs(tlp::Graph *graph, tlp::node root);
 %Docstring
 tlp.dfs(graph, root)
 
@@ -87,7 +87,7 @@ containing the nodes of the graph in the order they have been visited.
 
 %MethodCode
   if (a0->isElement(*a1)) {
-    tlp::dfs(a0, *a1, *a2);
+    sipRes = new std::vector<tlp::node>(tlp::dfs(a0, *a1));
   } else {
     sipIsErr = throwInvalidNodeException(a0, *a1);
   }

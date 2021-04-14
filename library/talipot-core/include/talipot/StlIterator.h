@@ -145,7 +145,6 @@ inline StlMapValueIterator<Map> *stlMapValueIterator(const Map &map) {
 //=================================================
 template <typename Container>
 struct reverse_wrapper {
-
   Container &_c;
   reverse_wrapper(Container &c) : _c(c) {}
 
@@ -158,8 +157,26 @@ struct reverse_wrapper {
 };
 
 template <typename Container>
+struct const_reverse_wrapper {
+  const Container &_c;
+  const_reverse_wrapper(const Container &c) : _c(c) {}
+
+  typename Container::const_reverse_iterator begin() const {
+    return _c.rbegin();
+  }
+  typename Container::const_reverse_iterator end() const {
+    return _c.rend();
+  }
+};
+
+template <typename Container>
 inline reverse_wrapper<Container> reversed(Container &c) {
   return reverse_wrapper<Container>(c);
+}
+
+template <typename Container>
+inline const_reverse_wrapper<Container> reversed(const Container &c) {
+  return const_reverse_wrapper<Container>(c);
 }
 }
 

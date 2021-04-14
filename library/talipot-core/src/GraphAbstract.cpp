@@ -497,13 +497,9 @@ std::string GraphAbstract::getName() const {
 }
 
 Iterator<node> *GraphAbstract::bfs(const node root) const {
-  vector<node> bfsResult;
-  tlp::bfs(this, root, bfsResult);
-  return stableIterator(stlIterator(bfsResult));
+  return stableIterator(stlIterator(tlp::bfs(this, root)));
 }
 
 Iterator<node> *GraphAbstract::dfs(const node root) const {
-  vector<node> dfsResult;
-  tlp::dfs(this, root, dfsResult);
-  return stableIterator(stlIterator((dfsResult)));
+  return stableIterator(stlIterator(tlp::dfs(this, root)));
 }

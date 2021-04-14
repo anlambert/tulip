@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -119,21 +119,21 @@ TLP_SCOPE void selectMinimumSpanningTree(Graph *graph, BooleanProperty *selectio
 /**
  * @brief Performs a breadth-first search on a graph.
  * @param graph The graph to traverse with a BFS.
- * @param nodes a vector to fill with the nodes of the graph in the order they have been visited by
- * the BFS.
  * @param root The node from whom to start the BFS. If not provided, the root
  * node will be assigned to a source node in the graph (node with input degree equals to 0).
  * If there is no source node in the graph, a random node will be picked.
+ * @return a vector filled with the nodes of the graph in the order they have been visited by
+ * the BFS.
  */
-TLP_SCOPE void bfs(const Graph *graph, node root, std::vector<node> &nodes);
+TLP_SCOPE std::vector<node> bfs(const Graph *graph, node root);
 
 /**
  * @brief Performs a cumulative breadth-first search on every node of a graph.
  * @param graph The graph to traverse with a BFS.
- * @param nodes a vector to fill with the nodes of the graph in the order they have been visited by
+ * @return a vector filled with with the nodes of the graph in the order they have been visited by
  * the BFS.
  */
-TLP_SCOPE void bfs(const Graph *graph, std::vector<node> &nodes);
+TLP_SCOPE std::vector<node> bfs(const Graph *graph);
 
 /**
  * @brief Performs a depth-first search on a graph.
@@ -143,18 +143,18 @@ TLP_SCOPE void bfs(const Graph *graph, std::vector<node> &nodes);
  * @param root The node from whom to start the DFS. If not provided, the root
  * node will be assigned to a source node in the graph (node with input degree equals to 0).
  * If there is no source node in the graph, a random node will be picked.
- * @return A vector containing the nodes of the graph in the order they have been visited by the
+ * @return A vector filled with the nodes of the graph in the order they have been visited by the
  * DFS.
  */
-TLP_SCOPE void dfs(const Graph *graph, node root, std::vector<node> &nodes);
+TLP_SCOPE std::vector<node> dfs(const Graph *graph, node root);
 
 /**
  * @brief Performs a cumulative depth-first search on every node of a graph.
  * @param graph The graph to traverse with a DFS.
- * @param nodes a vector to fill with the nodes of the graph in the order they have been visited by
+ * @return a vector filled with the nodes of the graph in the order they have been visited by
  * the DFS.
  */
-TLP_SCOPE void dfs(const Graph *graph, std::vector<node> &nodes);
+TLP_SCOPE std::vector<node> dfs(const Graph *graph);
 
 /*
  * builds a uniform quantification with the NumericProperty associated values

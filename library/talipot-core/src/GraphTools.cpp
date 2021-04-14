@@ -513,109 +513,33 @@ void selectMinimumSpanningTree(Graph *graph, BooleanProperty *selection,
   }
 }
 //======================================================================
-struct visitedElt {
-  tlp::node n;
-  visitedElt *next;
 
-  visitedElt(tlp::node _n) : n(_n), next(nullptr) {}
-};
-
-static void bfs(const Graph *graph, node root, std::vector<tlp::node> &nodes,
-                MutableContainer<bool> &visited) {
-  if (visited.get(root.id)) {
+static void bfs(const Graph *graph, node root, NodeStaticProperty<bool> &visited,
+                vector<node> &nodes) {
+  if (visited[root]) {
     return;
   }
+  visited[root] = true;
+  list<node> queue;
+  queue.push_back(root);
 
-  visited.set(root, true);
-  auto *first = new visitedElt(root);
-  visitedElt *current, *last;
-  last = current = first;
-  unsigned nbNodes = 1;
+  while (!queue.empty()) {
+    node current = queue.front();
+    queue.pop_front();
+    nodes.push_back(current);
 
-  while (current) {
-    for (auto neigh : graph->getInOutNodes(current->n)) {
-      if (!visited.get(neigh)) {
-        visited.set(neigh, true);
-        last = last->next = new visitedElt(neigh);
-        ++nbNodes;
+    for (auto neigh : graph->getInOutNodes(current)) {
+      if (!visited[neigh]) {
+        visited[neigh] = true;
+        queue.push_back(neigh);
       }
     }
-    current = current->next;
-  }
-
-  // add nodes
-  nodes.reserve(nbNodes + nodes.size());
-
-  current = first;
-
-  while (current) {
-    nodes.push_back(current->n);
-    visitedElt *tmp = current->next;
-    delete current;
-    current = tmp;
   }
 }
 
 // bfs from a root node
-void bfs(const Graph *graph, node root, std::vector<tlp::node> &nodes) {
-  if (!graph->isEmpty()) {
-    if (!root.isValid()) {
-      root = graph->getSource();
-
-      if (!root.isValid()) {
-        root = graph->getOneNode();
-      }
-    }
-
-    MutableContainer<bool> visited;
-    visited.setAll(false);
-    bfs(graph, root, nodes, visited);
-  }
-}
-
-// cumulative bfs from every node of the graph
-void bfs(const Graph *graph, std::vector<tlp::node> &visitedNodes) {
-  MutableContainer<bool> visited;
-  visited.setAll(false);
-  for (auto n : graph->nodes()) {
-    bfs(graph, n, visitedNodes, visited);
-  }
-}
-//======================================================================
-static void dfs(const Graph *graph, node n, std::vector<node> &nodes,
-                MutableContainer<bool> &visited) {
-  if (!visited.get(n.id)) {
-    visited.set(n.id, true);
-    bool edgeOK = (graph == graph->getRoot());
-    std::stack<tlp::node> toVisit;
-    toVisit.push(n);
-
-    while (!toVisit.empty()) {
-      node current = toVisit.top();
-      toVisit.pop();
-      nodes.push_back(current);
-      const std::vector<edge> &edges = graph->allEdges(current);
-      unsigned int nbEdges = edges.size();
-      unsigned int i = nbEdges;
-
-      while (i) {
-        edge e = edges[--i];
-
-        if (edgeOK || graph->isElement(e)) {
-          node neigh = graph->opposite(e, current);
-
-          if (!visited.get(neigh.id)) {
-            visited.set(neigh.id, true);
-            toVisit.push(neigh);
-          }
-        }
-      }
-    }
-  }
-}
-
-// dfs from a root node
-void dfs(const Graph *graph, node root, std::vector<node> &visitedNodes) {
+std::vector<tlp::node> bfs(const Graph *graph, node root) {
+  vector<node> nodes;
   if (!graph->isEmpty()) {
     if (!root.isValid()) {
       root = graph->getSource();
@@ -626,24 +550,85 @@ void dfs(const Graph *graph, node root, std::vector<node> &visitedNodes) {
     }
 
     assert(graph->isElement(root));
-    MutableContainer<bool> visited;
+    NodeStaticProperty<bool> visited(graph);
     visited.setAll(false);
-
-    dfs(graph, root, visitedNodes, visited);
+    bfs(graph, root, visited, nodes);
   }
+  return nodes;
+}
+
+// cumulative bfs from every node of the graph
+std::vector<tlp::node> bfs(const Graph *graph) {
+  vector<node> nodes;
+  NodeStaticProperty<bool> visited(graph);
+  visited.setAll(false);
+  for (auto n : graph->nodes()) {
+    bfs(graph, n, visited, nodes);
+  }
+  return nodes;
+}
+
+//======================================================================
+
+static void dfs(const Graph *graph, node root, NodeStaticProperty<bool> &visited,
+                vector<node> &nodes) {
+  if (visited[root]) {
+    return;
+  }
+
+  std::stack<tlp::node> toVisit;
+  toVisit.push(root);
+  visited[root] = true;
+
+  while (!toVisit.empty()) {
+    node current = toVisit.top();
+    toVisit.pop();
+    nodes.push_back(current);
+
+    for (auto e : reversed(graph->allEdges(current))) {
+      if (graph != graph->getRoot() && !graph->isElement(e)) {
+        continue;
+      }
+      node neigh = graph->opposite(e, current);
+      if (!visited[neigh]) {
+        visited[neigh] = true;
+        toVisit.push(neigh);
+      }
+    }
+  }
+}
+
+// dfs from a root node
+std::vector<node> dfs(const Graph *graph, node root) {
+  vector<node> nodes;
+  if (!graph->isEmpty()) {
+    if (!root.isValid()) {
+      root = graph->getSource();
+
+      if (!root.isValid()) {
+        root = graph->getOneNode();
+      }
+    }
+
+    assert(graph->isElement(root));
+    NodeStaticProperty<bool> visited(graph);
+    visited.setAll(false);
+    dfs(graph, root, visited, nodes);
+  }
+  return nodes;
 }
 
 // cumulative dfs from every node of the graph
-void dfs(const Graph *graph, std::vector<node> &visitedNodes) {
-  MutableContainer<bool> visited;
+std::vector<tlp::node> dfs(const Graph *graph) {
+  vector<node> nodes;
+  NodeStaticProperty<bool> visited(graph);
   visited.setAll(false);
-  const std::vector<node> &nodes = graph->nodes();
-  unsigned int nbNodes = nodes.size();
-
-  for (unsigned int i = 0; i < nbNodes; ++i) {
-    dfs(graph, nodes[i], visitedNodes, visited);
+  for (auto n : graph->nodes()) {
+    dfs(graph, n, visited, nodes);
   }
+  return nodes;
 }
+
 //==================================================
 void buildNodesUniformQuantification(const Graph *graph, const NumericProperty *prop,
                                      unsigned int k, std::map<double, int> &nodeMapping) {
@@ -830,5 +815,4 @@ void computeDijkstra(const Graph *const graph, node src, const EdgeStaticPropert
   Dijkstra dijkstra(graph, src, weights, nodeDistance, direction, queueNodes, numberOfPaths);
   dijkstra.ancestors(ancestors);
 }
-
 }
