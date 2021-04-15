@@ -1028,12 +1028,10 @@ public:
 
   /**
    * @brief Gets all input/output edges of a node existing in the root graph
-   * @warning If the current graph is not the root, the existence of the edge
-   * can be tested with isElement(edge) function.
    * @param n The node to get the input/output edges from.
    * @return a const reference to the vector of all edges of a node
    */
-  virtual const std::vector<edge> &allEdges(const node n) const = 0;
+  virtual const std::vector<edge> &incidence(const node n) const = 0;
 
   /**
    * @brief Gets an iterator over the edges composing a meta edge.

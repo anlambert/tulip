@@ -21,7 +21,6 @@ SET(talipot_LIB_SRCS
     Graph.cpp
     GraphDecorator.cpp
     GraphImpl.cpp
-    GraphIterators.cpp
     GraphMeasure.cpp
     GraphProperty.cpp
     GraphStorage.cpp

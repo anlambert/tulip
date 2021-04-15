@@ -1457,10 +1457,8 @@ void Graph::openMetaNode(node metaNode, bool updateProperties) {
       }
     }
 
-    for (auto metaEdge : super->allEdges(metaNode)) {
-      if (!super->isElement(metaEdge)) {
-        continue;
-      }
+    for (auto metaEdge : super->incidence(metaNode)) {
+
       Color metaColor = graphColors->getEdgeValue(metaEdge);
       std::unordered_map<node, std::unordered_map<node, set<edge>>> newMetaEdges;
 

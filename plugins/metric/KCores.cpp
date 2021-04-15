@@ -119,8 +119,6 @@ bool KCores::run() {
     nodeDeleted[i] = false;
   }
 
-  bool noEdgeCheck = (graph == graph->getRoot());
-
   // loop on remaining nodes
   while (nbNodes) {
     bool modify = true;
@@ -144,43 +142,37 @@ bool KCores::run() {
         if (current_k <= k) {
           nK = k;
           // decrease neighbours weighted degree
-          const std::vector<edge> &edges = graph->allEdges(n);
-          unsigned int nbEdges = edges.size();
+          for (auto e : graph->incidence(n)) {
 
-          for (unsigned int j = 0; j < nbEdges; ++j) {
-            edge ee = edges[j];
+            const auto &[src, tgt] = graph->ends(e);
+            node m;
 
-            if (noEdgeCheck || graph->isElement(ee)) {
-              const auto &[src, tgt] = graph->ends(ee);
-              node m;
-
-              switch (degree_type) {
-              case IN_EDGE:
-                if ((m = tgt) == n) {
-                  continue;
-                }
-
-                break;
-
-              case OUT_EDGE:
-                if ((m = src) == n) {
-                  continue;
-                }
-
-                break;
-
-              default:
-                m = (src == n) ? tgt : src;
-              }
-
-              unsigned int mPos = graph->nodePos(m);
-
-              if (nodeDeleted[mPos]) {
+            switch (degree_type) {
+            case IN_EDGE:
+              if ((m = tgt) == n) {
                 continue;
               }
 
-              nodeK[mPos] -= metric ? metric->getEdgeDoubleValue(ee) : 1;
+              break;
+
+            case OUT_EDGE:
+              if ((m = src) == n) {
+                continue;
+              }
+
+              break;
+
+            default:
+              m = (src == n) ? tgt : src;
             }
+
+            unsigned int mPos = graph->nodePos(m);
+
+            if (nodeDeleted[mPos]) {
+              continue;
+            }
+
+            nodeK[mPos] -= metric ? metric->getEdgeDoubleValue(e) : 1;
           }
 
           // mark node as deleted

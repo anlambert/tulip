@@ -23,19 +23,34 @@
 namespace tlp {
 // used for node management
 struct SGraphNodeData {
-  unsigned int outDegree;
-  unsigned int inDegree;
-  SGraphNodeData() : outDegree(0), inDegree(0) {}
-  void outDegreeAdd(int i) {
-    outDegree += i;
+  unsigned int outDegree = 0;
+  std::vector<edge> incidence;
+
+  void inEdgeAdd(edge e) {
+    incidence.push_back(e);
   }
-  void inDegreeAdd(int i) {
-    inDegree += i;
+  void outEdgeAdd(edge e) {
+    incidence.push_back(e);
+    outDegree += 1;
+  }
+  void inEdgeRemove(edge e) {
+    removeEdge(e);
+  }
+  void outEdgeRemove(edge e) {
+    removeEdge(e);
+    outDegree -= 1;
+  }
+  void swapEdgeOrder(edge e1, edge e2) {
+    auto ite1 = std::find(incidence.begin(), incidence.end(), e1);
+    auto ite2 = std::find(incidence.begin(), incidence.end(), e2);
+    std::swap(*ite1, *ite2);
+  }
+
+private:
+  void removeEdge(edge e) {
+    incidence.erase(std::find(incidence.begin(), incidence.end(), e));
   }
 };
-
-typedef SGraphNodeData *SGraphNodeDataPtr;
-DECL_STORED_PTR(SGraphNodeDataPtr);
 
 /**
  * This class is one of the implementation of the Graph Interface
@@ -63,15 +78,25 @@ public:
   void addEdges(Iterator<edge> *edges) override;
   void delNode(const tlp::node n, bool deleteInAllGraphs = false) override;
   void delEdge(const tlp::edge e, bool deleteInAllGraphs = false) override;
-  void setEdgeOrder(const node n, const std::vector<edge> &v) override {
-    getRootImpl()->setEdgeOrder(n, v);
+  void setEdgeOrder(const node n, const std::vector<edge> &edges) override {
+    assert(isElement(n));
+    assert(edges.size() == deg(n));
+#ifndef NDEBUG
+    for (auto e : edges) {
+      assert(isElement(e));
+    }
+#endif
+    _nodeData[n].incidence = edges;
   }
   void swapEdgeOrder(const node n, const edge e1, const edge e2) override {
-    getRootImpl()->swapEdgeOrder(n, e1, e2);
+    assert(isElement(n));
+    assert(isElement(e1));
+    assert(isElement(e2));
+    _nodeData[n].swapEdgeOrder(e1, e2);
   }
   //=========================================================================
   bool isElement(const node n) const override {
-    return _nodeData.get(n.id) != nullptr;
+    return _nodeData.find(n) != _nodeData.end();
   }
   bool isElement(const edge e) const override {
     return _edges.isElement(e);
@@ -86,16 +111,16 @@ public:
   //=========================================================================
   unsigned int deg(const node n) const override {
     assert(isElement(n));
-    SGraphNodeData *nData = _nodeData.get(n.id);
-    return nData->inDegree + nData->outDegree;
+    return _nodeData.at(n).incidence.size();
   }
   unsigned int indeg(const node n) const override {
     assert(isElement(n));
-    return _nodeData.get(n.id)->inDegree;
+    const SGraphNodeData &nData = _nodeData.at(n);
+    return nData.incidence.size() - nData.outDegree;
   }
   unsigned int outdeg(const node n) const override {
     assert(isElement(n));
-    return _nodeData.get(n.id)->outDegree;
+    return _nodeData.at(n).outDegree;
   }
   //=========================================================================
   node source(const edge e) const override {
@@ -120,6 +145,8 @@ public:
     getRootImpl()->setEnds(e, newSrc, newTgt);
   }
   node opposite(const edge e, const node n) const override {
+    assert(isElement(e));
+    assert(isElement(n));
     return getRootImpl()->opposite(e, n);
   }
   void reverse(const edge e) override {
@@ -149,8 +176,8 @@ public:
   Iterator<edge> *getInOutEdges(const node) const override;
   std::vector<edge> getEdges(const node source, const node target,
                              bool directed = true) const override;
-  const std::vector<edge> &allEdges(const node n) const override {
-    return getRootImpl()->allEdges(n);
+  const std::vector<edge> &incidence(const node n) const override {
+    return _nodeData.at(n).incidence;
   }
   void sortElts() override {
     _nodes.sort();
@@ -188,15 +215,14 @@ protected:
   void removeEdges(const std::vector<edge> &edges);
 
 private:
-  MutableContainer<SGraphNodeDataPtr> _nodeData;
+  std::unordered_map<tlp::node, SGraphNodeData> _nodeData;
   SGraphIdContainer<node> _nodes;
   SGraphIdContainer<edge> _edges;
   edge addEdgeInternal(edge);
   void reverseInternal(const edge, const node src, const node tgt);
   void setEndsInternal(const edge, node src, node tgt, const node newSrc, const node newTgt);
-  void addNodesInternal(unsigned int nbAdded, const std::vector<node> *nodes);
-  void addEdgesInternal(unsigned int nbAdded, const std::vector<edge> *edges,
-                        const std::vector<std::pair<node, node>> &ends);
+  void addNodesInternal(const std::vector<node> &nodes);
+  void addEdgesInternal(const std::vector<edge> &edges);
 };
 }
 #endif // TALIPOT_GRAPH_VIEW_H

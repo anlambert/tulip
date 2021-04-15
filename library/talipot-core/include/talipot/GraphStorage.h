@@ -78,40 +78,21 @@ public:
   /**
    * @brief Enables to reserve memory for nbNodes
    * Reserving memory before to addNode enable to reduce the number of vector resizing and then
-   * to speed up significantly construction of graphs.
+   * to speed up construction of graphs.
    */
   void reserveNodes(const size_t nb);
   //=======================================================
   /**
    * @brief Enables to reserve memory for nbEdges
    * Reserving memory before to addEdge enable to reduce the number of vector resizing and then
-   * to speed up significantly construction of graphs.
+   * to speed up construction of graphs.
    */
   void reserveEdges(const size_t nb);
   //=======================================================
   /**
-   * @brief Enables to reserve memory for adjacency nodes
-   * Reserving memory before to addEdge enable to reduce the number of vector resizing and then
-   * to speed up significantly construction of graphs.
+   * @brief return the incident edges of a given node
    */
-  void reserveAdj(const node n, const size_t nb);
-  //=======================================================
-  /**
-   * @brief Enables to reserve memory for adjacency nodes
-   * Reserving memory before to addEdge enable to reduce the number of vector resizing and then
-   * to speed up significantly construction of graphs.
-   */
-  void reserveAdj(const size_t nb);
-  //=======================================================
-  /**
-   * @brief restore adjacency edges of a given node
-   */
-  void restoreAdj(const node n, const std::vector<edge> &edges);
-  //=======================================================
-  /**
-   * @brief return the adjacency edges of a given node
-   */
-  const std::vector<edge> &adj(const node n) const {
+  const std::vector<edge> &incidence(const node n) const {
     assert(isElement(n));
     return nodeData[n.id].edges;
   }
@@ -292,18 +273,12 @@ public:
 
   //=======================================================
   /**
-   * @brief Reconnect the edge e to have the new given ends
-   * @warning That operation modify the array of neighbours of extrmities of edges, thus
-   * it devalidates iterators on adjacency for the nodes at the extremities of the modified edges
-   * and nodes.
+   * @brief Reconnect an edge to new ends
    */
   void setEnds(const edge e, const node newSrc, const node newTgt);
   //=======================================================
   /**
    * @brief change the source of an edge
-   * @warning That operation modify the array of neighbours of extrmities of edges, thus
-   * it devalidates iterators on adjacency for the nodes at the extremities of the modified edges
-   * and nodes.
    * \see setEnds
    */
   void setSource(const edge e, const node n) {
@@ -312,9 +287,6 @@ public:
   //=======================================================
   /**
    * @brief change the target of an edge
-   * @warning That operation modify the array of neighbours of extrmities of edges, thus
-   * it devalidates iterators on adjacency for the nodes at the extremities of the modified edges
-   * and nodes.
    * \see setEnds
    */
   void setTarget(const edge e, const node n) {
@@ -332,8 +304,7 @@ public:
   void setEdgeOrder(const node n, const std::vector<edge> &v);
   //=======================================================
   /**
-   * \brief swap to edge in the ordered adjacency vector
-   * \warning the two edges must be element of star(v)
+   * \brief Swap to edges in the incidence list of a node
    */
   void swapEdgeOrder(const node n, const edge e1, const edge e2);
   //=======================================================
@@ -371,50 +342,28 @@ public:
   void removeFromNodes(const node n);
   //=======================================================
   /**
-   * @brief Delete a node and all its adjacent edges in the graph
-   * @warning That operation modify the array of nodes and the array of edges
-   * and thus devalidate all iterators on it.
-   * @warning That operation modify the array of neighbours of extrmities of edges, thus
-   * it devalidates iterators on adjacency for the nodes at the extremities od the deleted edges.
-   * @warning Orders of edges in the extremities of the deleted edges are affected
-   * @complexity: o(1)
+   * @brief Delete a node and all incident edges in the graph
    */
   void delNode(const node n);
   //=======================================================
   /**
    * @brief restore the given edge between src and tgt and return it
-   * the last argument indicates if the edge has to be added
-   * in the adjacency edges of its two ends
-   * @warning That operation modify the array of edges and
-   * the adjacency edges of its ends thus any iterators existing for
-   * these structures will be devalidated.
    */
   void restoreEdge(const node src, const node tgt, const edge e);
   //=======================================================
   /**
    * @brief Add a new edge between src and tgt and return it
-   * @warning That operation modify the array of edges and
-   * the adjacency edges of its ends thus any iterators existing for
-   * these structures will be devalidated.
    */
   edge addEdge(const node src, const node tgt);
   //=======================================================
   /**
-   * @brief Add edges in the structure and returns them
+   * @brief Add edges in the graph structure and returns them
    * in a vector
-   * @warning: That operation modify the array of edges and
-   * the adjacency edges of its ends thus any iterators existing for
-   * these structures will be devalidated.
    */
   std::vector<edge> addEdges(const std::vector<std::pair<node, node>> &edges);
   //=======================================================
   /**
    * @brief Delete an edge in the graph
-   * @warning: That operation modify the array of edges
-   * and thus devalidate all iterators on it.
-   * @warning That operation modify the array of neighbours of extremities of the edge e, thus
-   * it devalidates iterators on adjacency for the nodes at the extremities od the deleted edge.
-   * @warning Orders of edges in the extremities of the deleted edge are affected
    */
   void delEdge(const edge e);
   //=======================================================

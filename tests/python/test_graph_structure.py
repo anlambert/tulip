@@ -256,12 +256,12 @@ class TestGraphStructure(unittest.TestCase):
             edges = list(reversed(edges))
             self.graph.setEdgeOrder(n, edges)
             self.assertEqual(list(self.graph.getInOutEdges(n)), edges)
-            self.assertEqual(self.graph.allEdges(n), edges)
+            self.assertEqual(self.graph.incidence(n), edges)
 
             self.graph.swapEdgeOrder(n, edges[0], edges[-1])
             edges[0], edges[-1] = edges[-1], edges[0]
             self.assertEqual(list(self.graph.getInOutEdges(n)), edges)
-            self.assertEqual(self.graph.allEdges(n), edges)
+            self.assertEqual(self.graph.incidence(n), edges)
 
     def test_edge_extremities_modification(self):
 

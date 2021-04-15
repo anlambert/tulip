@@ -346,7 +346,7 @@ Information about the graph structure
 
 .. automethod:: talipot::tlp.Graph.edgePos
 
-.. automethod:: talipot::tlp.Graph.allEdges
+.. automethod:: talipot::tlp.Graph.incidence
 
 .. automethod:: talipot::tlp.Graph.subGraphs
 

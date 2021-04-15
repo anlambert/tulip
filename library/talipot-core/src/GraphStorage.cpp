@@ -45,33 +45,6 @@ void GraphStorage::reserveEdges(const size_t nb) {
 }
 //=======================================================
 /**
- * @brief Enables to reserve memory for adjacency nodes
- */
-void GraphStorage::reserveAdj(const node n, const size_t nb) {
-  std::vector<edge> &nEdges = nodeData[n.id].edges;
-
-  if (nEdges.size() < nb) {
-    nEdges.resize(nb);
-  }
-}
-//=======================================================
-/**
- * @brief Enables to reserve memory for adjacency nodes
- */
-void GraphStorage::reserveAdj(const size_t nb) {
-  for (unsigned int i = 0; i < nodeData.size(); ++i) {
-    reserveAdj(node(i), nb);
-  }
-}
-//=======================================================
-/**
- * @brief restore adjacency edges of a given node
- */
-void GraphStorage::restoreAdj(const node n, const std::vector<edge> &edges) {
-  nodeData[n.id].edges = edges;
-}
-//=======================================================
-/**
  * @brief Return the current state of the ids management
  * must be deleted by the caller
  */
@@ -309,28 +282,8 @@ void GraphStorage::reverse(const edge e) {
 /**
  *  \brief Set the ordering of edges around n according to their order in v.
  */
-void GraphStorage::setEdgeOrder(const node n, const std::vector<edge> &v) {
-  if (v.empty()) {
-    return;
-  }
-
-  MutableContainer<int> isEle;
-  isEle.setAll(0);
-
-  for (auto e : v) {
-    isEle.add(e.id, 1);
-  }
-
-  auto it2 = v.begin();
-  std::vector<edge> &currentOrder = nodeData[n.id].edges;
-
-  for (auto &e : currentOrder) {
-    if (isEle.get(e.id) > 0) {
-      isEle.add(e.id, -1);
-      e = *it2;
-      ++it2;
-    }
-  }
+void GraphStorage::setEdgeOrder(const node n, const std::vector<edge> &edges) {
+  nodeData[n.id].edges = edges;
 }
 //=======================================================
 /**

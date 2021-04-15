@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -70,10 +70,10 @@ class GraphUpdatesRecorder : public Observable {
   std::unordered_map<edge, std::pair<node, node>> oldEdgesEnds;
   // source + target per updated edge
   std::unordered_map<edge, std::pair<node, node>> newEdgesEnds;
-  // one 'set' for old edge containers
-  std::unordered_map<node, std::vector<edge>> oldContainers;
-  // one 'set' for new edge containers
-  std::unordered_map<node, std::vector<edge>> newContainers;
+  // one 'set' for old incidences
+  std::unordered_map<node, std::vector<edge>> oldIncidences;
+  // one 'set' for new incidences
+  std::unordered_map<node, std::vector<edge>> newIncidences;
 
   // copy of nodes/edges id manager state at start time
   const GraphStorageIdsMemento *oldIdsState;
@@ -135,13 +135,12 @@ class GraphUpdatesRecorder : public Observable {
   // deletion of DataMem default values
   void deleteDefaultValues(std::unordered_map<PropertyInterface *, DataMem *> &values);
   // record of a node's edges container before/after modification
-  void recordEdgeContainer(std::unordered_map<node, std::vector<edge>> &, GraphImpl *, node,
-                           edge e = edge());
-  void recordEdgeContainer(std::unordered_map<node, std::vector<edge>> &, GraphImpl *, node,
-                           const std::vector<edge> &, unsigned int);
+  void recordIncidence(std::unordered_map<node, std::vector<edge>> &, GraphImpl *, node,
+                       edge e = edge());
+  void recordIncidence(std::unordered_map<node, std::vector<edge>> &, GraphImpl *, node,
+                       const std::vector<edge> &, unsigned int);
   // remove an edge from a node's edges container
-  void removeFromEdgeContainer(std::unordered_map<node, std::vector<edge>> &containers, edge e,
-                               node n);
+  void removeFromIncidence(std::unordered_map<node, std::vector<edge>> &, edge, node);
 
   void removeGraphData(Graph *);
 

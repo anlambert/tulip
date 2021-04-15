@@ -118,7 +118,7 @@ public:
   Iterator<edge> *getOutEdges(const node n) const override;
   Iterator<edge> *getInOutEdges(const node n) const override;
   Iterator<edge> *getInEdges(const node n) const override;
-  const std::vector<edge> &allEdges(const node n) const override;
+  const std::vector<edge> &incidence(const node n) const override;
   Iterator<edge> *getEdgeMetaInfo(const edge) const override;
   void sortElts() override;
   //============================================================

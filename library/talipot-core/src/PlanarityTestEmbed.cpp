@@ -29,7 +29,6 @@ void sortEdges(Graph *graph, const vector<edge> &order, unordered_map<edge, edge
   }
 
   for (const auto &[n, edges] : graphMap) {
-    assert(graph->deg(n) == edges.size());
     graph->setEdgeOrder(n, edges);
   }
 }

@@ -168,7 +168,7 @@ void GraphImpl::removeNode(const node n) {
 //----------------------------------------------------------------
 void GraphImpl::delNode(const node n, bool) {
   assert(isElement(n));
-  std::vector<edge> edges(storage.adj(n));
+  std::vector<edge> edges = storage.incidence(n);
 
   // use a stack for a dfs subgraphs propagation
   std::stack<Graph *> sgq;

@@ -195,57 +195,56 @@ void GraphUpdatesRecorder::deleteDefaultValues(
   values.clear();
 }
 
-void GraphUpdatesRecorder::recordEdgeContainer(
-    std::unordered_map<node, std::vector<edge>> &containers, GraphImpl *g, node n, edge e) {
-  if (containers.find(n) == containers.end()) {
-    containers[n] = g->storage.adj(n);
+void GraphUpdatesRecorder::recordIncidence(std::unordered_map<node, std::vector<edge>> &incidences,
+                                           GraphImpl *g, node n, edge e) {
+  if (incidences.find(n) == incidences.end()) {
+    auto &incidence = incidences[n] = g->storage.incidence(n);
     // if we got a valid edge, this means that we must record
-    // the node adjacencies before that edge was added (see addEdge)
+    // the node incidence before that edge was added (see addEdge)
     if (e.isValid()) {
       // as the edge is the last added
-      // it must be at the last adj position
-      auto &adj = containers[n];
-      auto size = adj.size() - 1;
+      // it must be at the last incidence index
+      auto size = incidence.size() - 1;
       if (g->opposite(e, n) == n) {
         // handle loop special case
         size -= 1;
       }
-      assert(e == adj[size]);
-      adj.resize(size);
+      assert(e == incidence[size]);
+      incidence.resize(size);
     }
   }
 }
 
-void GraphUpdatesRecorder::recordEdgeContainer(
-    std::unordered_map<node, std::vector<edge>> &containers, GraphImpl *g, node n,
-    const vector<edge> &gEdges, unsigned int nbAdded) {
-  if (containers.find(n) == containers.end()) {
-    auto &adj = containers[n] = g->storage.adj(n);
+void GraphUpdatesRecorder::recordIncidence(std::unordered_map<node, std::vector<edge>> &incidences,
+                                           GraphImpl *g, node n, const vector<edge> &edges,
+                                           unsigned int nbAdded) {
+  if (incidences.find(n) == incidences.end()) {
+    auto &incidence = incidences[n] = g->storage.incidence(n);
     // we must ensure that the last edges added in gEdges
-    // are previously removed from the current node adjacencies,
+    // are previously removed from the current node incidence,
     // so we look (in reverse order because they must be at the end)
-    // for the elts of adj that are in the last edges added and remove them
-    unsigned int adjAdded = 0;
-    for (auto e : reversed(adj)) {
-      if (std::find(gEdges.end() - nbAdded, gEdges.end(), e) != gEdges.end()) {
-        ++adjAdded;
+    // for the elts of incidence that are in the last edges added and remove them
+    unsigned int edgeAdded = 0;
+    for (auto e : reversed(incidence)) {
+      if (std::find(edges.end() - nbAdded, edges.end(), e) != edges.end()) {
+        ++edgeAdded;
       } else {
         break;
       }
     }
-    assert(adjAdded);
-    adj.resize(adj.size() - adjAdded);
+    assert(edgeAdded);
+    incidence.resize(incidence.size() - edgeAdded);
   }
 }
 
-void GraphUpdatesRecorder::removeFromEdgeContainer(
-    std::unordered_map<node, std::vector<edge>> &containers, edge e, node n) {
+void GraphUpdatesRecorder::removeFromIncidence(
+    std::unordered_map<node, std::vector<edge>> &incidences, edge e, node n) {
 
-  if (const auto itAdj = containers.find(n); itAdj != containers.end()) {
-    auto &[n, adj] = *itAdj;
+  if (const auto itIncidence = incidences.find(n); itIncidence != incidences.end()) {
+    auto &[n, incidence] = *itIncidence;
 
-    if (const auto &it = std::find(adj.begin(), adj.end(), e); it != adj.end()) {
-      adj.erase(it);
+    if (const auto &it = std::find(incidence.begin(), incidence.end(), e); it != incidence.end()) {
+      incidence.erase(it);
     }
   }
 }
@@ -267,13 +266,13 @@ void GraphUpdatesRecorder::recordNewValues(GraphImpl *g) {
       newIdsState = root->storage.getIdsMemento();
     }
 
-    // record new edges containers
+    // record new incidences
     for (const auto &[e, ends] : addedEdgesEnds) {
       // e may have been deleted (see delEdge)
       if (root->isElement(e)) {
         auto [src, tgt] = ends;
-        recordEdgeContainer(newContainers, root, src);
-        recordEdgeContainer(newContainers, root, tgt);
+        recordIncidence(newIncidences, root, src);
+        recordIncidence(newIncidences, root, tgt);
       }
     }
 
@@ -707,12 +706,13 @@ void GraphUpdatesRecorder::doUpdates(GraphImpl *g, bool undo) {
     g->setEnds(e, src, tgt);
   }
 
-  // loop on containers
-  auto &containers = undo ? oldContainers : newContainers;
-  for (const auto &[n, edges] : containers) {
+  // loop on incidences
+  auto &incidences = undo ? oldIncidences : newIncidences;
+  for (const auto &[n, edges] : incidences) {
     // n may have been deleted as a previously added node
+    // restore its incidence
     if (g->isElement(n)) {
-      g->storage.restoreAdj(n, edges);
+      g->storage.setEdgeOrder(n, edges);
     }
   }
 
@@ -851,8 +851,8 @@ bool GraphUpdatesRecorder::hasUpdates() {
     return true;
   }
 
-  // check oldcontainers
-  if (!oldContainers.empty()) {
+  // check oldIncidences
+  if (!oldIncidences.empty()) {
     return true;
   }
 
@@ -966,9 +966,9 @@ void GraphUpdatesRecorder::addEdge(Graph *g, edge e) {
   if (g == g->getRoot()) {
     const auto &[src, tgt] = g->ends(e);
     addedEdgesEnds[e] = {src, tgt};
-    // record source & target old adjacencies
-    recordEdgeContainer(oldContainers, static_cast<GraphImpl *>(g), src, e);
-    recordEdgeContainer(oldContainers, static_cast<GraphImpl *>(g), tgt, e);
+    // record source and target incidences
+    recordIncidence(oldIncidences, static_cast<GraphImpl *>(g), src, e);
+    recordIncidence(oldIncidences, static_cast<GraphImpl *>(g), tgt, e);
   }
 
   // we need to backup properties values of the newly added edge
@@ -994,9 +994,9 @@ void GraphUpdatesRecorder::addEdges(Graph *g, unsigned int nbAdded) {
     if (g == g->getRoot()) {
       const auto &[src, tgt] = g->ends(e);
       addedEdgesEnds[e] = {src, tgt};
-      // record source & target old adjacencies
-      recordEdgeContainer(oldContainers, static_cast<GraphImpl *>(g), src, gEdges, nbAdded);
-      recordEdgeContainer(oldContainers, static_cast<GraphImpl *>(g), tgt, gEdges, nbAdded);
+      // record source and target old incidences
+      recordIncidence(oldIncidences, static_cast<GraphImpl *>(g), src, gEdges, nbAdded);
+      recordIncidence(oldIncidences, static_cast<GraphImpl *>(g), tgt, gEdges, nbAdded);
     }
 
     // we need to backup properties values of the newly added edge
@@ -1046,7 +1046,7 @@ void GraphUpdatesRecorder::delNode(Graph *g, node n) {
   }
 
   if (g == g->getSuperGraph()) {
-    recordEdgeContainer(oldContainers, static_cast<GraphImpl *>(g), n);
+    recordIncidence(oldIncidences, static_cast<GraphImpl *>(g), n);
   }
 }
 
@@ -1068,11 +1068,11 @@ void GraphUpdatesRecorder::delEdge(Graph *g, edge e) {
         revertedEdges.erase(itR);
       }
 
-      // remove edge from nodes newContainers if needed
+      // remove edge from nodes newIncidences if needed
       if (const auto itEnds = addedEdgesEnds.find(e); itEnds != addedEdgesEnds.end()) {
         const auto &[src, tgt] = itEnds->second;
-        removeFromEdgeContainer(newContainers, e, src);
-        removeFromEdgeContainer(newContainers, e, tgt);
+        removeFromIncidence(newIncidences, e, src);
+        removeFromIncidence(newIncidences, e, tgt);
       }
 
       return;
@@ -1128,9 +1128,9 @@ void GraphUpdatesRecorder::delEdge(Graph *g, edge e) {
   }
 
   if (g == g->getRoot()) {
-    // record source & target old containers
-    recordEdgeContainer(oldContainers, static_cast<GraphImpl *>(g), src);
-    recordEdgeContainer(oldContainers, static_cast<GraphImpl *>(g), tgt);
+    // record source and target old incidences
+    recordIncidence(oldIncidences, static_cast<GraphImpl *>(g), src);
+    recordIncidence(oldIncidences, static_cast<GraphImpl *>(g), tgt);
   }
 }
 
@@ -1154,10 +1154,10 @@ void GraphUpdatesRecorder::reverseEdge(Graph *g, edge e) {
         revertedEdges.erase(it);
       } else {
         revertedEdges.insert(e);
-        // record source & target old containers
+        // record source and target old incidences
         const auto &[src, tgt] = g->ends(e);
-        recordEdgeContainer(oldContainers, static_cast<GraphImpl *>(g), src);
-        recordEdgeContainer(oldContainers, static_cast<GraphImpl *>(g), tgt);
+        recordIncidence(oldIncidences, static_cast<GraphImpl *>(g), src);
+        recordIncidence(oldIncidences, static_cast<GraphImpl *>(g), tgt);
       }
     }
   }
@@ -1175,9 +1175,9 @@ void GraphUpdatesRecorder::beforeSetEnds(Graph *g, edge e) {
       // revert ends of it
       std::swap(src, tgt);
     } else {
-      // record source & target old containers
-      recordEdgeContainer(oldContainers, static_cast<GraphImpl *>(g), src);
-      recordEdgeContainer(oldContainers, static_cast<GraphImpl *>(g), tgt);
+      // record source & target old incidences
+      recordIncidence(oldIncidences, static_cast<GraphImpl *>(g), src);
+      recordIncidence(oldIncidences, static_cast<GraphImpl *>(g), tgt);
     }
 
     // add e old ends in oldEdgesEnds

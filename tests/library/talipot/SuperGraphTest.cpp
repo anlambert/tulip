@@ -44,49 +44,29 @@ void SuperGraphTest::build(unsigned int nbNodes, unsigned int edgeRatio) {
   unsigned int NB_EDGES = EDGE_RATIO * NB_ADD;
 
   for (unsigned int i = 0; i < NB_EDGES; ++i) {
-    graph->addEdge(nodes[randomUnsignedInteger(NB_ADD - 1)],
-                   nodes[randomUnsignedInteger(NB_ADD - 1)]);
+    graph->addEdge(graph->getRandomNode(), graph->getRandomNode());
   }
 }
 //==========================================================
 void SuperGraphTest::testIterators() {
   graph->clear();
-  vector<node> nodes;
-  vector<edge> edges;
-  unsigned int NB_NODES = 100;
+  size_t NB_NODES = 100;
   unsigned int EDGE_RATIO = 100;
+  size_t NB_EDGES = EDGE_RATIO * NB_NODES;
 
-  for (unsigned int i = 0; i < NB_NODES; ++i) {
-    nodes.push_back(graph->addNode());
-  }
-
-  unsigned int NB_EDGES = EDGE_RATIO * NB_NODES;
+  vector<node> nodes = graph->addNodes(NB_NODES);
+  vector<edge> edges;
 
   for (unsigned int i = 0; i < NB_EDGES; ++i) {
-    edges.push_back(graph->addEdge(nodes[randomUnsignedInteger(NB_NODES - 1)],
-                                   nodes[randomUnsignedInteger(NB_NODES - 1)]));
+    edges.push_back(graph->addEdge(graph->getRandomNode(), graph->getRandomNode()));
   }
 
-  {
-    unsigned int i = 0;
+  CPPUNIT_ASSERT_EQUAL(nodes, graph->nodes());
+  CPPUNIT_ASSERT_EQUAL(NB_NODES, graph->nodes().size());
 
-    for (auto n : graph->nodes()) {
-      CPPUNIT_ASSERT_EQUAL(nodes[i].id, n.id);
-      ++i;
-    }
+  CPPUNIT_ASSERT_EQUAL(edges, graph->edges());
+  CPPUNIT_ASSERT_EQUAL(NB_EDGES, graph->edges().size());
 
-    CPPUNIT_ASSERT_EQUAL(i, NB_NODES);
-  }
-  {
-    unsigned int i = 0;
-
-    for (auto e : graph->edges()) {
-      CPPUNIT_ASSERT_EQUAL(edges[i].id, e.id);
-      ++i;
-    }
-
-    CPPUNIT_ASSERT_EQUAL(i, NB_EDGES);
-  }
   graph->clear();
   node n1 = graph->addNode();
   node n2 = graph->addNode();
@@ -96,45 +76,19 @@ void SuperGraphTest::testIterators() {
   edge e3 = graph->addEdge(n2, n1); // parallel edge
   edge e4 = graph->addEdge(n1, n3);
 
-  Iterator<node> *it1 = graph->getOutNodes(n1);
-  CPPUNIT_ASSERT_EQUAL(n1.id, it1->next().id);
-  CPPUNIT_ASSERT_EQUAL(n2.id, it1->next().id);
-  CPPUNIT_ASSERT_EQUAL(n3.id, it1->next().id);
-  CPPUNIT_ASSERT(!it1->hasNext());
-  delete it1;
-  Iterator<node> *it2 = graph->getInNodes(n1);
-  CPPUNIT_ASSERT_EQUAL(n1.id, it2->next().id);
-  CPPUNIT_ASSERT_EQUAL(n2.id, it2->next().id);
-  CPPUNIT_ASSERT(!it2->hasNext());
-  delete it2;
-  Iterator<node> *it3 = graph->getInOutNodes(n1);
-  CPPUNIT_ASSERT_EQUAL(n1.id, it3->next().id);
-  CPPUNIT_ASSERT_EQUAL(n1.id, it3->next().id);
-  CPPUNIT_ASSERT_EQUAL(n2.id, it3->next().id);
-  CPPUNIT_ASSERT_EQUAL(n2.id, it3->next().id);
-  CPPUNIT_ASSERT_EQUAL(n3.id, it3->next().id);
-  CPPUNIT_ASSERT(!it3->hasNext());
-  delete it3;
+  CPPUNIT_ASSERT_EQUAL(vector({n1, n2, n3}), iteratorVector(graph->getOutNodes(n1)));
 
-  Iterator<edge> *it4 = graph->getOutEdges(n1);
-  CPPUNIT_ASSERT_EQUAL(e1.id, it4->next().id);
-  CPPUNIT_ASSERT_EQUAL(e2.id, it4->next().id);
-  CPPUNIT_ASSERT_EQUAL(e4.id, it4->next().id);
-  CPPUNIT_ASSERT(!it4->hasNext());
-  delete it4;
-  Iterator<edge> *it5 = graph->getInEdges(n1);
-  CPPUNIT_ASSERT_EQUAL(e1.id, it5->next().id);
-  CPPUNIT_ASSERT_EQUAL(e3.id, it5->next().id);
-  CPPUNIT_ASSERT(!it5->hasNext());
-  delete it5;
-  Iterator<edge> *it6 = graph->getInOutEdges(n1);
-  CPPUNIT_ASSERT_EQUAL(e1.id, it6->next().id);
-  CPPUNIT_ASSERT_EQUAL(e1.id, it6->next().id);
-  CPPUNIT_ASSERT_EQUAL(e2.id, it6->next().id);
-  CPPUNIT_ASSERT_EQUAL(e3.id, it6->next().id);
-  CPPUNIT_ASSERT_EQUAL(e4.id, it6->next().id);
-  CPPUNIT_ASSERT(!it6->hasNext());
-  delete it6;
+  CPPUNIT_ASSERT_EQUAL(vector({n1, n2}), iteratorVector(graph->getInNodes(n1)));
+
+  CPPUNIT_ASSERT_EQUAL(vector({n1, n1, n2, n2, n3}), iteratorVector(graph->getInOutNodes(n1)));
+
+  CPPUNIT_ASSERT_EQUAL(vector({e1, e2, e4}), iteratorVector(graph->getOutEdges(n1)));
+
+  CPPUNIT_ASSERT_EQUAL(vector({e1, e3}), iteratorVector(graph->getInEdges(n1)));
+
+  CPPUNIT_ASSERT_EQUAL(vector({e1, e1, e2, e3, e4}), iteratorVector(graph->getInOutEdges(n1)));
+
+  CPPUNIT_ASSERT_EQUAL(vector({e1, e1, e2, e3, e4}), graph->incidence(n1));
 }
 //==========================================================
 void degreeCheck(Graph *graph) {
@@ -144,10 +98,10 @@ void degreeCheck(Graph *graph) {
     unsigned int indeg = iteratorCount(graph->getInEdges(n));
     unsigned int deg = iteratorCount(graph->getInOutEdges(n));
 
-    CPPUNIT_ASSERT_EQUAL(graph->indeg(n), indeg);
-    CPPUNIT_ASSERT_EQUAL(graph->outdeg(n), outdeg);
-    CPPUNIT_ASSERT_EQUAL(graph->deg(n), deg);
-    CPPUNIT_ASSERT_EQUAL(indeg + outdeg, deg);
+    CPPUNIT_ASSERT_EQUAL(indeg, graph->indeg(n));
+    CPPUNIT_ASSERT_EQUAL(outdeg, graph->outdeg(n));
+    CPPUNIT_ASSERT_EQUAL(deg, graph->deg(n));
+    CPPUNIT_ASSERT_EQUAL(deg, indeg + outdeg);
   }
 }
 //==========================================================
@@ -259,13 +213,12 @@ void SuperGraphTest::testDegree() {
 }
 //==========================================================
 void SuperGraphTest::testAddDel() {
-  //  qWarning() << __PRETTY_FUNCTION__ << endl;
-  vector<node> nodes;
-  vector<edge> edges;
   unsigned int NB_ADD = 100;
   unsigned int EDGE_RATIO = 100;
-
   unsigned int NB_EDGES = EDGE_RATIO * NB_ADD;
+
+  vector<node> nodes;
+  vector<edge> edges;
 
   for (unsigned int i = 0; i < NB_ADD; ++i) {
     nodes.push_back(graph->addNode());
@@ -284,15 +237,14 @@ void SuperGraphTest::testAddDel() {
     CPPUNIT_ASSERT(graph->isElement(nodes[i]));
   }
 
-  CPPUNIT_ASSERT(graph->numberOfNodes() == NB_ADD);
+  CPPUNIT_ASSERT_EQUAL(NB_ADD, graph->numberOfNodes());
 
   for (unsigned int i = 0; i < NB_EDGES; ++i) {
-    edges.push_back(graph->addEdge(nodes[randomUnsignedInteger(NB_ADD - 1)],
-                                   nodes[randomUnsignedInteger(NB_ADD - 1)]));
+    edges.push_back(graph->addEdge(graph->getRandomNode(), graph->getRandomNode()));
     CPPUNIT_ASSERT(graph->isElement(edges[i]));
   }
 
-  CPPUNIT_ASSERT(graph->numberOfEdges() == NB_EDGES);
+  CPPUNIT_ASSERT_EQUAL(NB_EDGES, graph->numberOfEdges());
 
   for (unsigned int i = 0; i < NB_EDGES; ++i) {
     graph->delEdge(edges[i]);
@@ -304,8 +256,7 @@ void SuperGraphTest::testAddDel() {
   vector<pair<node, node>> ends;
 
   for (unsigned int i = 0; i < NB_EDGES; ++i) {
-    ends.push_back(pair<node, node>(nodes[randomUnsignedInteger(NB_ADD - 1)],
-                                    nodes[randomUnsignedInteger(NB_ADD - 1)]));
+    ends.push_back({graph->getRandomNode(), graph->getRandomNode()});
   }
 
   edges = graph->addEdges(ends);
@@ -321,8 +272,8 @@ void SuperGraphTest::testAddDel() {
     CPPUNIT_ASSERT(!graph->isElement(nodes[i]));
   }
 
-  CPPUNIT_ASSERT(graph->numberOfNodes() == 0);
-  CPPUNIT_ASSERT(graph->numberOfEdges() == 0);
+  CPPUNIT_ASSERT_EQUAL(0u, graph->numberOfNodes());
+  CPPUNIT_ASSERT_EQUAL(0u, graph->numberOfEdges());
 }
 //==========================================================
 void SuperGraphTest::testClear() {
@@ -334,66 +285,41 @@ void SuperGraphTest::testClear() {
 //==========================================================
 void SuperGraphTest::testOrderEdgeAndSwap() {
   graph->clear();
-  vector<node> nodes;
+  size_t NB_NODES = 100;
+  size_t NB_EDGES = NB_NODES - 1;
+
+  vector<node> nodes = graph->addNodes(NB_NODES);
   vector<edge> edges;
-  unsigned int NB_NODES = 1000;
-
-  for (unsigned int i = 0; i < NB_NODES; ++i) {
-    nodes.push_back(graph->addNode());
-  }
-
-  unsigned int NB_EDGES = NB_NODES - 1;
 
   for (unsigned int i = 0; i < NB_EDGES; ++i) {
     edges.push_back(graph->addEdge(nodes[0], nodes[i + 1]));
   }
 
-  {
-    unsigned int i = 0;
+  CPPUNIT_ASSERT_EQUAL(edges, iteratorVector(graph->getInOutEdges(nodes[0])));
+  CPPUNIT_ASSERT_EQUAL(edges, graph->incidence(nodes[0]));
 
-    for (auto e : graph->getInOutEdges(nodes[0])) {
-      CPPUNIT_ASSERT_EQUAL(edges[i], e);
-      ++i;
-    }
-  }
-
-  // change order
+  // change edges order
   for (unsigned int j = 0; j < NB_EDGES; ++j) {
     unsigned int u = randomUnsignedInteger(NB_EDGES - 1);
     unsigned int v = randomUnsignedInteger(NB_EDGES - 1);
-    edge tmp = edges[u];
-    edges[u] = edges[v];
-    edges[v] = tmp;
+    std::swap(edges[u], edges[v]);
   }
 
   graph->setEdgeOrder(nodes[0], edges);
-  {
-    unsigned int i = 0;
 
-    for (auto e : graph->getInOutEdges(nodes[0])) {
-      CPPUNIT_ASSERT_EQUAL(edges[i], e);
-      ++i;
-    }
-  }
+  CPPUNIT_ASSERT_EQUAL(edges, iteratorVector(graph->getInOutEdges(nodes[0])));
+  CPPUNIT_ASSERT_EQUAL(edges, graph->incidence(nodes[0]));
 
-  // Swap two edge
+  // swap two edges
   for (unsigned int j = 0; j < NB_EDGES; ++j) {
     unsigned int u = randomUnsignedInteger(NB_EDGES - 1);
     unsigned int v = randomUnsignedInteger(NB_EDGES - 1);
     graph->swapEdgeOrder(nodes[0], edges[u], edges[v]);
-    edge tmp = edges[u];
-    edges[u] = edges[v];
-    edges[v] = tmp;
+    std::swap(edges[u], edges[v]);
   }
 
-  {
-    unsigned int i = 0;
-
-    for (auto e : graph->getInOutEdges(nodes[0])) {
-      CPPUNIT_ASSERT_EQUAL(edges[i], e);
-      ++i;
-    }
-  }
+  CPPUNIT_ASSERT_EQUAL(edges, iteratorVector(graph->getInOutEdges(nodes[0])));
+  CPPUNIT_ASSERT_EQUAL(edges, graph->incidence(nodes[0]));
 
   graph->clear();
 }

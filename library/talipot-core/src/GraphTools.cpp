@@ -585,10 +585,7 @@ static void dfs(const Graph *graph, node root, NodeVectorProperty<bool> &visited
     toVisit.pop();
     nodes.push_back(current);
 
-    for (auto e : reversed(graph->allEdges(current))) {
-      if (graph != graph->getRoot() && !graph->isElement(e)) {
-        continue;
-      }
+    for (auto e : reversed(graph->incidence(current))) {
       node neigh = graph->opposite(e, current);
       if (!visited[neigh]) {
         visited[neigh] = true;

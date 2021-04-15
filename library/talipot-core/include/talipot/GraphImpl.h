@@ -56,10 +56,20 @@ public:
   void addEdges(Iterator<edge> *edges) override;
   void delNode(const tlp::node n, bool deleteInAllGraphs = false) override;
   void delEdge(const tlp::edge e, bool deleteInAllGraphs = false) override;
-  void setEdgeOrder(const node n, const std::vector<edge> &v) override {
-    storage.setEdgeOrder(n, v);
+  void setEdgeOrder(const node n, const std::vector<edge> &edges) override {
+    assert(isElement(n));
+    assert(edges.size() == deg(n));
+#ifndef NDEBUG
+    for (auto e : edges) {
+      assert(isElement(e));
+    }
+#endif
+    storage.setEdgeOrder(n, edges);
   }
   void swapEdgeOrder(const node n, const edge e1, const edge e2) override {
+    assert(isElement(n));
+    assert(isElement(e1));
+    assert(isElement(e2));
     storage.swapEdgeOrder(n, e1, e2);
   }
   //=========================================================================
@@ -89,8 +99,8 @@ public:
                              const Graph *sg = nullptr) const {
     return storage.getEdges(source, target, directed, sg);
   }
-  const std::vector<edge> &allEdges(const node n) const override {
-    return storage.adj(n);
+  const std::vector<edge> &incidence(const node n) const override {
+    return storage.incidence(n);
   }
   //========================================================================
   unsigned int deg(const node n) const override {
