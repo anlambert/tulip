@@ -28,7 +28,6 @@ using namespace tlp;
 using namespace std;
 
 void drawComposite(GlComposite *composite, float lod, Camera *camera) {
-
   for (const auto &entity : composite->getGlEntities()) {
     entity.second->draw(lod, camera);
   }
@@ -48,7 +47,6 @@ double ColorScaleSlider::getValue() {
 }
 
 ColorScaleSlider::~ColorScaleSlider() {
-  linkedScale->getGlColorScale()->getColorScale()->removeObserver(this);
   reset(true);
 }
 
@@ -272,7 +270,7 @@ void SliderBar::draw(float lod, tlp::Camera *camera) {
 }
 
 ThresholdInteractor::ThresholdInteractor()
-    : layer(new GlLayer("Threshold")), mouvingSlider(nullptr), rSlider(nullptr), lSlider(nullptr),
+    : layer(new GlLayer("Threshold")), movingSlider(nullptr), rSlider(nullptr), lSlider(nullptr),
       bar(nullptr), startDrag(false), XPosCursor(0), textureName(":/sliderTexture.png") {}
 
 ThresholdInteractor::~ThresholdInteractor() {
@@ -314,7 +312,6 @@ bool ThresholdInteractor::eventFilter(QObject *widget, QEvent *event) {
   if (event->type() == QEvent::MouseButtonPress && me->button() == Qt::LeftButton) {
 
     vector<SelectedEntity> selectedEntities;
-    // set<Slider*> finalSelectedEntities;
 
     // Update Camera for selection
     layer->set2DMode();
@@ -334,8 +331,7 @@ bool ThresholdInteractor::eventFilter(QObject *widget, QEvent *event) {
             auto *slider = dynamic_cast<Slider *>(composite);
 
             if (slider) {
-              // finalSelectedEntities.insert(slider);
-              mouvingSlider = slider;
+              movingSlider = slider;
             }
 
             break;
@@ -344,21 +340,17 @@ bool ThresholdInteractor::eventFilter(QObject *widget, QEvent *event) {
               auto *slider = dynamic_cast<Slider *>(itDisplay.second);
 
               if (slider) {
-                // finalSelectedEntities.insert(slider);
-                mouvingSlider = slider;
+                movingSlider = slider;
               }
             }
           }
         }
       }
 
-      // assert(!finalSelectedEntities.empty());
-
-      if (!startDrag && mouvingSlider) {
+      if (!startDrag && movingSlider) {
         glWidget->setMouseTracking(true);
         startDrag = true;
-        // mouvingSlider = *finalSelectedEntities.begin();
-        mouvingSlider->beginShift();
+        movingSlider->beginShift();
         XPosCursor = me->x();
         glWidget->getScene()->getGraphCamera().initGl();
 
@@ -383,20 +375,19 @@ bool ThresholdInteractor::eventFilter(QObject *widget, QEvent *event) {
         return true;
       }
 
-      mouvingSlider->shift(xShift / (colorScale->getGlColorScale()->getLength()));
+      movingSlider->shift(xShift / (colorScale->getGlColorScale()->getLength()));
       somView->refresh();
     }
 
     return true;
   }
 
-  if (event->type() == QEvent::MouseButtonRelease && startDrag) {
+  if (event->type() == QEvent::MouseButtonRelease && startDrag && movingSlider) {
     SOMMap *som = somView->getSOM();
-    assert(mouvingSlider != nullptr);
     glWidget->setMouseTracking(false);
     startDrag = false;
-    mouvingSlider->endShift();
-    mouvingSlider = nullptr;
+    movingSlider->endShift();
+    movingSlider = nullptr;
     Qt::KeyboardModifiers systMod;
 #if defined(__APPLE__)
     systMod = Qt::AltModifier;
@@ -486,7 +477,6 @@ void ThresholdInteractor::propertyChanged(SOMView *somView, const string &proper
 void ThresholdInteractor::buildSliders(SOMView *somView) {
   BooleanProperty *mask = somView->getMask();
   SOMMap *som = somView->getSOM();
-  assert(som);
   Size sliderSize = {colorScale->getSize().getH(), colorScale->getSize().getH()};
 
   double minValue, maxValue, intervalMinValue, intervalMaxValue;

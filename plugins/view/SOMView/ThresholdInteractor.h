@@ -134,7 +134,7 @@ protected:
 
   tlp::GlLayer *layer;
 
-  Slider *mouvingSlider;
+  Slider *movingSlider;
   ColorScaleSlider *rSlider;
   ColorScaleSlider *lSlider;
   SliderBar *bar;
