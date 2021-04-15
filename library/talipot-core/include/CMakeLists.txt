@@ -64,7 +64,7 @@ INSTALL(
         talipot/SizeProperty.h
         talipot/SortIterator.h
         talipot/StableIterator.h
-        talipot/StaticProperty.h
+        talipot/VectorProperty.h
         talipot/StlIterator.h
         talipot/StoredType.h
         talipot/StringCollection.h

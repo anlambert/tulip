@@ -28,7 +28,7 @@ TLP_DEFINE_GLOBAL_LOCK(DijkstraProps);
 
 //============================================================
 void Dijkstra::initDijkstra(const tlp::Graph *const forbidden, tlp::node srcTlp,
-                            const EdgeStaticProperty<double> &weights, const set<node> &fous) {
+                            const EdgeVectorProperty<double> &weights, const set<node> &fous) {
 
   assert(srcTlp.isValid());
   src = ntlp2dik.get(srcTlp);
@@ -138,7 +138,7 @@ void Dijkstra::initDijkstra(const tlp::Graph *const forbidden, tlp::node srcTlp,
   resultEdges.setAll(false);
 }
 //=======================================================================
-void Dijkstra::searchPaths(node ntlp, EdgeStaticProperty<unsigned int> &depth) {
+void Dijkstra::searchPaths(node ntlp, EdgeVectorProperty<unsigned int> &depth) {
 
   node n = ntlp2dik.get(ntlp);
 

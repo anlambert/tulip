@@ -59,7 +59,7 @@ bool DegreeMetric::run() {
     dataSet->get("norm", norm);
   }
 
-  NodeStaticProperty<double> deg(graph);
+  NodeVectorProperty<double> deg(graph);
   degree(graph, deg, static_cast<EDGE_TYPE>(degreeTypes.getCurrent()), weights, norm);
   deg.copyToProperty(result);
 

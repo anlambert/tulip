@@ -13,7 +13,7 @@
 
 %ModuleHeaderCode
 #include <talipot/GraphMeasure.h>
-#include <talipot/StaticProperty.h>
+#include <talipot/VectorProperty.h>
 %End
 
 namespace tlp {
@@ -71,7 +71,7 @@ This quantifies how close its neighbors are to being a clique.
 %End
 
 %MethodCode
-  tlp::NodeStaticProperty<double> result(a0);
+  tlp::NodeVectorProperty<double> result(a0);
   tlp::clusteringCoefficient(a0, result, a2);
   result.copyToProperty(a1);
 %End
@@ -96,7 +96,7 @@ The algorithm ensures that the number of level used is minimal.
 %End
 
 %MethodCode
-  tlp::NodeStaticProperty<unsigned int> result(a0);
+  tlp::NodeVectorProperty<unsigned int> result(a0);
   tlp::dagLevel(a0, result);
   result.copyToProperty(a1);
 %End
@@ -149,7 +149,7 @@ Computes the distances from a node to all the other nodes of a graph and return 
 
 %MethodCode
   if (a0->isElement(*a1)) {
-    tlp::NodeStaticProperty<unsigned int> result(a0);
+    tlp::NodeVectorProperty<unsigned int> result(a0);
     sipRes = tlp::maxDistance(a0, *a1, result, a3);
     result.copyToProperty(a2);
   } else {
@@ -181,7 +181,7 @@ Computes the distances from a node to all the other nodes of a weighted graph an
 
 %MethodCode
   if (a0->isElement(*a1)) {
-    tlp::NodeStaticProperty<double> result(a0);
+    tlp::NodeVectorProperty<double> result(a0);
     sipRes = tlp::maxDistance(a0, *a1, result, a3,a4);
     result.copyToProperty(a2);
   } else {

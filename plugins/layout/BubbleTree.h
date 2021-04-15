@@ -50,10 +50,10 @@ public:
 
 private:
   double computeRelativePosition(tlp::node n,
-                                 tlp::NodeStaticProperty<tlp::Vec5d> &relativePosition);
-  void calcLayout(tlp::node n, tlp::NodeStaticProperty<tlp::Vec5d> &relativePosition);
+                                 tlp::NodeVectorProperty<tlp::Vec5d> &relativePosition);
+  void calcLayout(tlp::node n, tlp::NodeVectorProperty<tlp::Vec5d> &relativePosition);
   void calcLayout2(tlp::node n, tlp::Vec5d &nrPos,
-                   tlp::NodeStaticProperty<tlp::Vec5d> &relativePosition, const tlp::Vec3d &,
+                   tlp::NodeVectorProperty<tlp::Vec5d> &relativePosition, const tlp::Vec3d &,
                    const tlp::Vec3d &);
   tlp::Graph *tree;
   tlp::SizeProperty *nodeSize;

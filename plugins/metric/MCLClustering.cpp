@@ -295,7 +295,7 @@ bool MCLClustering::run() {
     dataSet->get("pruning", _k);
   }
 
-  NodeStaticProperty<node> nodeMapping(graph);
+  NodeVectorProperty<node> nodeMapping(graph);
   const std::vector<node> &tlpNodes = graph->nodes();
   unsigned int nbNodes = tlpNodes.size();
   g.reserveNodes(nbNodes);

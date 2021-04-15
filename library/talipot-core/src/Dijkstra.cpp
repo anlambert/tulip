@@ -17,8 +17,8 @@ using namespace tlp;
 using namespace std;
 
 //============================================================
-Dijkstra::Dijkstra(const Graph *const graph, node src, const EdgeStaticProperty<double> &weights,
-                   NodeStaticProperty<double> &nd, EDGE_TYPE direction, std::stack<node> *qN,
+Dijkstra::Dijkstra(const Graph *const graph, node src, const EdgeVectorProperty<double> &weights,
+                   NodeVectorProperty<double> &nd, EDGE_TYPE direction, std::stack<node> *qN,
                    MutableContainer<int> *nP)
     : nodeDistance(nd), queueNodes(qN), numberOfPaths(nP) {
   assert(src.isValid());
@@ -26,7 +26,7 @@ Dijkstra::Dijkstra(const Graph *const graph, node src, const EdgeStaticProperty<
   usedEdges.setAll(false);
   this->src = src;
   set<DijkstraElement *, LessDijkstraElement> dijkstraTable;
-  NodeStaticProperty<DijkstraElement *> mapDik(graph);
+  NodeVectorProperty<DijkstraElement *> mapDik(graph);
   mapDik.setAll(nullptr);
   if (queueNodes) {
     while (!queueNodes->empty()) {

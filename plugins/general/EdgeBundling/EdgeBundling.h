@@ -49,7 +49,7 @@ public:
   bool run() override;
 
 private:
-  void fixEdgeType(tlp::EdgeStaticProperty<unsigned int> &);
+  void fixEdgeType(tlp::EdgeVectorProperty<unsigned int> &);
   void computeDistances();
   void computeDistance(tlp::node, unsigned int = UINT_MAX);
   double longEdges;

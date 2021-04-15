@@ -13,7 +13,7 @@
 
 #include <talipot/ConnectedTest.h>
 #include <talipot/ConnectedTestListener.h>
-#include <talipot/StaticProperty.h>
+#include <talipot/VectorProperty.h>
 
 using namespace std;
 using namespace tlp;
@@ -21,7 +21,7 @@ using namespace tlp;
 static ConnectedTestListener instance;
 //=================================================================
 static unsigned int connectedTest(const Graph *const graph, node n,
-                                  NodeStaticProperty<bool> &visited) {
+                                  NodeVectorProperty<bool> &visited) {
   list<node> nodesToVisit;
   visited[n] = true;
   nodesToVisit.push_front(n);
@@ -61,7 +61,7 @@ bool ConnectedTest::isConnected(const tlp::Graph *const graph) {
     return false;
   }
 
-  NodeStaticProperty<bool> visited(graph);
+  NodeVectorProperty<bool> visited(graph);
   visited.setAll(false);
   unsigned int count = connectedTest(graph, graph->getOneNode(), visited);
   bool result = (count == graph->numberOfNodes());
@@ -107,7 +107,7 @@ unsigned int ConnectedTest::numberOfConnectedComponents(const tlp::Graph *const 
 //======================================================================
 vector<vector<node>> ConnectedTest::computeConnectedComponents(const tlp::Graph *graph) {
   vector<vector<node>> components;
-  NodeStaticProperty<bool> visited(graph);
+  NodeVectorProperty<bool> visited(graph);
   visited.setAll(false);
   // do a bfs traversal for each node
   TLP_MAP_NODES_AND_INDICES(graph, [&](node n, unsigned int i) {
@@ -158,7 +158,7 @@ void ConnectedTest::connect(const tlp::Graph *const graph, vector<node> &toLink)
     return;
   }
 
-  NodeStaticProperty<bool> visited(graph);
+  NodeVectorProperty<bool> visited(graph);
   visited.setAll(false);
 
   TLP_MAP_NODES_AND_INDICES(graph, [&](node n, unsigned int i) {

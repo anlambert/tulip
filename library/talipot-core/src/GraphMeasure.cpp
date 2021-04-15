@@ -19,7 +19,7 @@ using namespace tlp;
 
 //================================================================
 unsigned int tlp::maxDistance(const Graph *graph, unsigned int nPos,
-                              tlp::NodeStaticProperty<unsigned int> &distance,
+                              tlp::NodeVectorProperty<unsigned int> &distance,
                               EDGE_TYPE direction) {
   deque<unsigned int> fifo;
   distance.setAll(UINT_MAX);
@@ -48,10 +48,10 @@ unsigned int tlp::maxDistance(const Graph *graph, unsigned int nPos,
 }
 //================================================================
 double tlp::maxDistance(const Graph *graph, const unsigned int nPos,
-                        tlp::NodeStaticProperty<double> &distance,
+                        tlp::NodeVectorProperty<double> &distance,
                         const NumericProperty *const weights, EDGE_TYPE direction) {
   if (!weights) {
-    NodeStaticProperty<unsigned int> dist_int(graph);
+    NodeVectorProperty<unsigned int> dist_int(graph);
     dist_int.setAll(0);
     unsigned int res = maxDistance(graph, nPos, dist_int, direction);
     for (auto n : graph->getNodes()) {
@@ -60,7 +60,7 @@ double tlp::maxDistance(const Graph *graph, const unsigned int nPos,
     return double(res);
   }
 
-  EdgeStaticProperty<double> eWeights(graph);
+  EdgeVectorProperty<double> eWeights(graph);
   eWeights.copyFromNumericProperty(weights);
 
   std::stack<node> queueNode;
@@ -90,7 +90,7 @@ double tlp::averagePathLength(const Graph *graph) {
   }
 
   TLP_PARALLEL_MAP_INDICES(nbNodes, [&](unsigned int i) {
-    tlp::NodeStaticProperty<unsigned int> distance(graph);
+    tlp::NodeVectorProperty<unsigned int> distance(graph);
     maxDistance(graph, i, distance, UNDIRECTED);
 
     double tmp_result = 0;
@@ -116,7 +116,7 @@ double tlp::averagePathLength(const Graph *graph) {
 }
 //================================================================
 double tlp::averageClusteringCoefficient(const Graph *graph) {
-  tlp::NodeStaticProperty<double> clusters(graph);
+  tlp::NodeVectorProperty<double> clusters(graph);
   tlp::clusteringCoefficient(graph, clusters, UINT_MAX);
   unsigned int nbNodes = graph->numberOfNodes();
   double sum = 0;
@@ -144,7 +144,7 @@ unsigned int tlp::minDegree(const Graph *graph) {
   return mindeg;
 }
 //=================================================
-void tlp::clusteringCoefficient(const Graph *graph, tlp::NodeStaticProperty<double> &clusters,
+void tlp::clusteringCoefficient(const Graph *graph, tlp::NodeVectorProperty<double> &clusters,
                                 unsigned int maxDepth) {
 
   TLP_MAP_NODES_AND_INDICES(graph, [&](node n, unsigned int i) {
@@ -174,8 +174,8 @@ void tlp::clusteringCoefficient(const Graph *graph, tlp::NodeStaticProperty<doub
   });
 }
 //==================================================
-void tlp::dagLevel(const Graph *graph, tlp::NodeStaticProperty<unsigned int> &level) {
-  tlp::NodeStaticProperty<unsigned int> totreat(graph);
+void tlp::dagLevel(const Graph *graph, tlp::NodeVectorProperty<unsigned int> &level) {
+  tlp::NodeVectorProperty<unsigned int> totreat(graph);
   deque<node> fifo;
   TLP_MAP_NODES_AND_INDICES(graph, [&](node n, unsigned int i) {
     unsigned int indegree = graph->indeg(n);
@@ -208,7 +208,7 @@ void tlp::dagLevel(const Graph *graph, tlp::NodeStaticProperty<unsigned int> &le
 }
 
 //==================================================
-void tlp::degree(const Graph *graph, tlp::NodeStaticProperty<double> &deg, EDGE_TYPE direction,
+void tlp::degree(const Graph *graph, tlp::NodeVectorProperty<double> &deg, EDGE_TYPE direction,
                  NumericProperty *weights, bool norm) {
   unsigned int nbNodes = graph->numberOfNodes();
 

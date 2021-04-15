@@ -29,7 +29,7 @@ struct greaterRadius {
 };
 
 double BubbleTree::computeRelativePosition(tlp::node n,
-                                           NodeStaticProperty<Vec5d> &relativePosition) {
+                                           NodeVectorProperty<Vec5d> &relativePosition) {
 
   Size tmpSizeFather = nodeSize->getNodeValue(n);
   tmpSizeFather[2] = 0.; // remove z-coordinates because the drawing is 2D
@@ -204,7 +204,7 @@ double BubbleTree::computeRelativePosition(tlp::node n,
 }
 
 void BubbleTree::calcLayout2(tlp::node n, tlp::Vec5d &nrPos,
-                             NodeStaticProperty<Vec5d> &relativePosition,
+                             NodeVectorProperty<Vec5d> &relativePosition,
                              const tlp::Vec3d &enclosingCircleCenter,
                              const tlp::Vec3d &originNodePosition) {
   /*
@@ -284,7 +284,7 @@ void BubbleTree::calcLayout2(tlp::node n, tlp::Vec5d &nrPos,
   delete it;
 }
 
-void BubbleTree::calcLayout(tlp::node n, NodeStaticProperty<Vec5d> &relativePosition) {
+void BubbleTree::calcLayout(tlp::node n, NodeVectorProperty<Vec5d> &relativePosition) {
   /*
    * Make the recursive call, to place the children of n.
    */
@@ -390,7 +390,7 @@ bool BubbleTree::run() {
 
   node startNode = tree->getSource();
   assert(startNode.isValid());
-  NodeStaticProperty<Vec5d> relativePosition(graph);
+  NodeVectorProperty<Vec5d> relativePosition(graph);
   computeRelativePosition(startNode, relativePosition);
   calcLayout(startNode, relativePosition);
 

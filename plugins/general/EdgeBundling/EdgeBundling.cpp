@@ -80,7 +80,7 @@ EdgeBundling::EdgeBundling(const PluginContext *context) : Algorithm(context) {
 //============================================
 class SortNodes {
 public:
-  static NodeStaticProperty<double> *dist;
+  static NodeVectorProperty<double> *dist;
   bool operator()(const node a, const node b) const { // sort in deceresing order;
     double da, db;
 
@@ -91,7 +91,7 @@ public:
     return da > db;
   }
 };
-NodeStaticProperty<double> *SortNodes::dist = nullptr;
+NodeVectorProperty<double> *SortNodes::dist = nullptr;
 //============================================
 void updateLayout(node src, edge e, Graph *graph, LayoutProperty *layout,
                   const vector<node> &nBends, bool layout3D) {
@@ -137,7 +137,7 @@ void updateLayout(node src, edge e, Graph *graph, LayoutProperty *layout,
 }
 //============================================
 // fix all graph edge to 1 and all grid edge to 0 graph-grid edge 2 edge on the contour of a node 3
-void EdgeBundling::fixEdgeType(EdgeStaticProperty<unsigned int> &ntype) {
+void EdgeBundling::fixEdgeType(EdgeVectorProperty<unsigned int> &ntype) {
   TLP_PARALLEL_MAP_EDGES_AND_INDICES(graph, [&](edge e, unsigned int i) {
     if (oriGraph->isElement(e)) {
       ntype[i] = 1;
@@ -155,7 +155,7 @@ void EdgeBundling::fixEdgeType(EdgeStaticProperty<unsigned int> &ntype) {
 //============================================
 static void computeDik(Dijkstra &dijkstra, const Graph *const vertexCoverGraph,
                        const Graph *const oriGraph, const node n,
-                       const EdgeStaticProperty<double> &mWeights, unsigned int optimizatioLevel) {
+                       const EdgeVectorProperty<double> &mWeights, unsigned int optimizatioLevel) {
   set<node> focus;
 
   if (optimizatioLevel > 0) {
@@ -366,7 +366,7 @@ bool EdgeBundling::run() {
     ThreadManager::setNumberOfThreads(maxThread);
   }
 
-  EdgeStaticProperty<unsigned int> ntype(graph);
+  EdgeVectorProperty<unsigned int> ntype(graph);
   fixEdgeType(ntype);
 
   //==========================================================
@@ -422,8 +422,8 @@ bool EdgeBundling::run() {
 
   // Initialization of grid edges weights
   //==========================================================
-  EdgeStaticProperty<double> mWeights(graph);
-  EdgeStaticProperty<double> mWeightsInit(graph);
+  EdgeVectorProperty<double> mWeights(graph);
+  EdgeVectorProperty<double> mWeightsInit(graph);
   TLP_PARALLEL_MAP_EDGES_AND_INDICES(graph, [&](edge e, unsigned int i) {
     const auto &[src, tgt] = graph->ends(e);
     const Coord &a = layout->getNodeValue(src);
@@ -440,7 +440,7 @@ bool EdgeBundling::run() {
 
   //==========================================================
 
-  EdgeStaticProperty<unsigned int> depth(graph);
+  EdgeVectorProperty<unsigned int> depth(graph);
 
   // Load the grid graph into an optimized structure for graph traversal
   Dijkstra::loadGraph(gridGraph);
@@ -457,7 +457,7 @@ bool EdgeBundling::run() {
 
     MutableContainer<bool> edgeTreated;
     edgeTreated.setAll(false);
-    NodeStaticProperty<double> distance(oriGraph);
+    NodeVectorProperty<double> distance(oriGraph);
     SortNodes::dist = &distance;
     computeDistances();
     set<node, SortNodes> orderedNodes;

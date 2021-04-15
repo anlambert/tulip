@@ -12,7 +12,7 @@
  */
 
 #include <talipot/DoubleProperty.h>
-#include <talipot/StaticProperty.h>
+#include <talipot/VectorProperty.h>
 #include <talipot/VectorGraph.h>
 #include <talipot/PropertyAlgorithm.h>
 
@@ -68,7 +68,7 @@ private:
 
   // the mapping between the nodes of the original graph
   // and the quotient nodes
-  NodeStaticProperty<int> *clusters;
+  NodeVectorProperty<int> *clusters;
 
   // quotient graph edge weights
   EdgeProperty<double> *weights;
@@ -363,7 +363,7 @@ bool LouvainClustering::run() {
   quotient = new VectorGraph();
   quotient->addNodes(nb_nodes);
 
-  clusters = new NodeStaticProperty<int>(graph);
+  clusters = new NodeVectorProperty<int>(graph);
 
   TLP_PARALLEL_MAP_INDICES(nb_nodes, [&](unsigned int i) { (*clusters)[i] = i; });
 

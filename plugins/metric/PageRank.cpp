@@ -78,8 +78,8 @@ struct PageRank : public DoubleAlgorithm {
     }
 
     // Initialize the PageRank
-    NodeStaticProperty<double> pr(graph);
-    NodeStaticProperty<double> next_pr(graph);
+    NodeVectorProperty<double> pr(graph);
+    NodeVectorProperty<double> next_pr(graph);
     unsigned int nbNodes = graph->numberOfNodes();
 
     double oon = 1. / nbNodes;
@@ -89,7 +89,7 @@ struct PageRank : public DoubleAlgorithm {
     const double one_minus_d = (1 - d) / nbNodes;
     const auto kMax = uint(15 * log(nbNodes));
 
-    NodeStaticProperty<double> deg(graph);
+    NodeVectorProperty<double> deg(graph);
     tlp::degree(graph, deg, directed ? DIRECTED : UNDIRECTED, weight, false);
 
     auto getNodes = getNodesIterator(directed ? INV_DIRECTED : UNDIRECTED);

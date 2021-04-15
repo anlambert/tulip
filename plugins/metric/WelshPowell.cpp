@@ -93,7 +93,7 @@ public:
     // sort the nodes in descending order of their degrees
     sort(nodesInfo.begin(), nodesInfo.end(), nodesInfoCmp());
     // build a map
-    NodeStaticProperty<unsigned int> toNodesInfo(graph);
+    NodeVectorProperty<unsigned int> toNodesInfo(graph);
 
     TLP_PARALLEL_MAP_INDICES(nbNodes, [&](unsigned int i) {
       nodeInfo &nInfo = nodesInfo[i];

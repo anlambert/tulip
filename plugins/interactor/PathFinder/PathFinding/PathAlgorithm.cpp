@@ -22,7 +22,7 @@
 using namespace tlp;
 using namespace std;
 
-double computePathLength(BooleanProperty *result, EdgeStaticProperty<double> &weights) {
+double computePathLength(BooleanProperty *result, EdgeVectorProperty<double> &weights) {
   double retVal(0);
   Graph *graph(result->getGraph());
   auto *ite = result->getNonDefaultValuatedEdges(graph);
@@ -79,7 +79,7 @@ bool PathAlgorithm::computePath(Graph *graph, PathType pathType, EdgeOrientation
   graph->push();
   retVal = selectShortestPaths(graph, src, tgt, spt, weights, result);
   if (pathType == AllPaths && retVal) {
-    EdgeStaticProperty<double> eWeights(graph);
+    EdgeVectorProperty<double> eWeights(graph);
 
     if (!weights) {
       eWeights.setAll(SMALLEST_WEIGHT);

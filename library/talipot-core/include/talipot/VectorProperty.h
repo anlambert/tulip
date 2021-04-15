@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -20,12 +20,12 @@
 
 namespace tlp {
 template <typename TYPE>
-class NodeStaticProperty : public std::vector<TYPE> {
+class NodeVectorProperty : public std::vector<TYPE> {
   const Graph *graph;
 
 public:
   // constructor
-  NodeStaticProperty(const Graph *g) : graph(g) {
+  NodeVectorProperty(const Graph *g) : graph(g) {
     assert(g);
     // set the vector size to the number of graph nodes
     this->resize(graph->numberOfNodes());
@@ -99,12 +99,12 @@ public:
 };
 
 template <>
-class NodeStaticProperty<bool> : public std::vector<unsigned char> {
+class NodeVectorProperty<bool> : public std::vector<unsigned char> {
   const Graph *graph;
 
 public:
   // constructor
-  NodeStaticProperty(const Graph *g) : graph(g) {
+  NodeVectorProperty(const Graph *g) : graph(g) {
     assert(g);
     // set the vector size to the number of graph nodes
     this->resize(graph->numberOfNodes());
@@ -176,12 +176,12 @@ public:
 };
 
 template <typename TYPE>
-class EdgeStaticProperty : public std::vector<TYPE> {
+class EdgeVectorProperty : public std::vector<TYPE> {
   const Graph *graph;
 
 public:
   // constructor
-  EdgeStaticProperty(const Graph *g) : graph(g) {
+  EdgeVectorProperty(const Graph *g) : graph(g) {
     assert(g);
     // set the vector size to the number of graph edges
     this->resize(graph->numberOfEdges());
@@ -258,12 +258,12 @@ public:
 };
 
 template <>
-class EdgeStaticProperty<bool> : public std::vector<unsigned char> {
+class EdgeVectorProperty<bool> : public std::vector<unsigned char> {
   const Graph *graph;
 
 public:
   // constructor
-  EdgeStaticProperty(const Graph *g) : graph(g) {
+  EdgeVectorProperty(const Graph *g) : graph(g) {
     assert(g);
     // set the vector size to the number of graph edges
     this->resize(graph->numberOfEdges());

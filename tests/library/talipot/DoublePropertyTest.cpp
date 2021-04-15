@@ -13,7 +13,7 @@
 
 #include "DoublePropertyTest.h"
 
-#include <talipot/StaticProperty.h>
+#include <talipot/VectorProperty.h>
 
 using namespace tlp;
 using namespace std;
@@ -341,35 +341,35 @@ void DoublePropertyTest::testDoublePropertySetDefaultValue() {
   CPPUNIT_ASSERT_DOUBLES_EQUAL(prop->getNodeValue(newNode), v2, 1e-6);
 }
 
-void DoublePropertyTest::testStaticDoublePropertyCopyFrom() {
+void DoublePropertyTest::testVectorDoublePropertyCopyFrom() {
   auto *prop = graph->getLocalDoubleProperty(doublePropertyName);
-  NodeStaticProperty<double> nStaticProp(graph);
-  nStaticProp.copyFromProperty(prop);
+  NodeVectorProperty<double> nVectorProp(graph);
+  nVectorProp.copyFromProperty(prop);
   for (auto n : graph->nodes()) {
-    CPPUNIT_ASSERT(nStaticProp[n] == prop->getNodeValue(n));
+    CPPUNIT_ASSERT(nVectorProp[n] == prop->getNodeValue(n));
   }
-  nStaticProp.setAll(1.1);
+  nVectorProp.setAll(1.1);
   for (auto n : graph->nodes()) {
-    CPPUNIT_ASSERT(nStaticProp[n] == 1.1);
+    CPPUNIT_ASSERT(nVectorProp[n] == 1.1);
   }
-  nStaticProp.copyFromNumericProperty(prop);
+  nVectorProp.copyFromNumericProperty(prop);
   for (auto n : graph->nodes()) {
-    CPPUNIT_ASSERT(nStaticProp[n] == prop->getNodeValue(n));
+    CPPUNIT_ASSERT(nVectorProp[n] == prop->getNodeValue(n));
   }
   for (auto e : graph->edges()) {
     prop->setEdgeValue(e, tlp::randomDouble());
   }
-  EdgeStaticProperty<double> eStaticProp(graph);
-  eStaticProp.copyFromProperty(prop);
+  EdgeVectorProperty<double> eVectorProp(graph);
+  eVectorProp.copyFromProperty(prop);
   for (auto e : graph->edges()) {
-    CPPUNIT_ASSERT(eStaticProp[e] == prop->getEdgeValue(e));
+    CPPUNIT_ASSERT(eVectorProp[e] == prop->getEdgeValue(e));
   }
-  eStaticProp.setAll(1.1);
+  eVectorProp.setAll(1.1);
   for (auto e : graph->edges()) {
-    CPPUNIT_ASSERT(eStaticProp[e] == 1.1);
+    CPPUNIT_ASSERT(eVectorProp[e] == 1.1);
   }
-  eStaticProp.copyFromNumericProperty(prop);
+  eVectorProp.copyFromNumericProperty(prop);
   for (auto e : graph->edges()) {
-    CPPUNIT_ASSERT(eStaticProp[e] == prop->getEdgeValue(e));
+    CPPUNIT_ASSERT(eVectorProp[e] == prop->getEdgeValue(e));
   }
 }

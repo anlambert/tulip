@@ -28,7 +28,7 @@ ClusterMetric::ClusterMetric(const tlp::PluginContext *context) : DoubleAlgorith
   addInParameter<unsigned int>("depth", paramHelp[0], "1");
 }
 //=================================================
-static double clusterGetEdgeValue(Graph *graph, tlp::NodeStaticProperty<double> &clusters,
+static double clusterGetEdgeValue(Graph *graph, tlp::NodeVectorProperty<double> &clusters,
                                   const edge e) {
   const auto &[src, tgt] = graph->ends(e);
   const double v1 = clusters.getNodeValue(src);
@@ -50,7 +50,7 @@ bool ClusterMetric::run() {
     dataSet->get("depth", maxDepth);
   }
 
-  tlp::NodeStaticProperty<double> clusters(graph);
+  tlp::NodeVectorProperty<double> clusters(graph);
   clusteringCoefficient(graph, clusters, maxDepth);
   clusters.copyToProperty(result);
 

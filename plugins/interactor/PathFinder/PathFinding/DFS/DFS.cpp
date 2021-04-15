@@ -20,7 +20,7 @@ using namespace tlp;
 using namespace std;
 
 DFS::DFS(Graph *graph, BooleanProperty *result, node tgt,
-         const EdgeStaticProperty<double> &eWeights, EdgeOrientation edgesOrientation,
+         const EdgeVectorProperty<double> &eWeights, EdgeOrientation edgesOrientation,
          double maxDist)
     : graph(graph), result(result), tgt(tgt), weights(eWeights), currentDist(0),
       edgesOrientation(edgesOrientation), maxDist(maxDist) {

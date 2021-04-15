@@ -23,9 +23,9 @@ public:
 
 private:
   double computeRelativePosition(tlp::node n,
-                                 tlp::NodeStaticProperty<tlp::Vec4f> &relativePosition);
+                                 tlp::NodeVectorProperty<tlp::Vec4f> &relativePosition);
   void calcLayout(tlp::node n, tlp::Vec2f pos,
-                  tlp::NodeStaticProperty<tlp::Vec4f> &relativePosition);
+                  tlp::NodeVectorProperty<tlp::Vec4f> &relativePosition);
 
   tlp::Graph *tree;
   tlp::SizeProperty *nodeSize;
@@ -54,7 +54,7 @@ struct lessRadius {
 };
 
 double BubblePack::computeRelativePosition(tlp::node n,
-                                           NodeStaticProperty<Vec4f> &relativePosition) {
+                                           NodeVectorProperty<Vec4f> &relativePosition) {
 
   Size centralNodeSize = nodeSize->getNodeValue(n);
   centralNodeSize[2] = 0.; // remove z-coordinates because the drawing is 2D
@@ -236,7 +236,7 @@ double BubblePack::computeRelativePosition(tlp::node n,
   return circleH.radius + 1.;
 }
 
-void BubblePack::calcLayout(tlp::node n, Vec2f pos, NodeStaticProperty<Vec4f> &relativePosition) {
+void BubblePack::calcLayout(tlp::node n, Vec2f pos, NodeVectorProperty<Vec4f> &relativePosition) {
   /*
    * Make the recursive call, to place the children of n.
    */
@@ -324,7 +324,7 @@ bool BubblePack::run() {
 
   node startNode = tree->getSource();
   assert(startNode.isValid());
-  NodeStaticProperty<Vec4f> relativePosition(graph);
+  NodeVectorProperty<Vec4f> relativePosition(graph);
   computeRelativePosition(startNode, relativePosition);
   calcLayout(startNode, Vec2f(0, 0), relativePosition);
 

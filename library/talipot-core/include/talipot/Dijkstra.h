@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -22,7 +22,7 @@
 #include <functional>
 #include <talipot/Graph.h>
 #include <talipot/BooleanProperty.h>
-#include <talipot/StaticProperty.h>
+#include <talipot/VectorProperty.h>
 #include <talipot/MutableContainer.h>
 #include <talipot/GraphTools.h>
 
@@ -31,8 +31,8 @@ namespace tlp {
 class Dijkstra {
 public:
   //============================================================
-  Dijkstra(const Graph *const graph, node src, const EdgeStaticProperty<double> &weights,
-           NodeStaticProperty<double> &nodeDistance, EDGE_TYPE direction,
+  Dijkstra(const Graph *const graph, node src, const EdgeVectorProperty<double> &weights,
+           NodeVectorProperty<double> &nodeDistance, EDGE_TYPE direction,
            std::stack<node> *qN = nullptr, MutableContainer<int> *nP = nullptr);
   //========================================================
   bool searchPaths(node n, BooleanProperty *result);
@@ -73,7 +73,7 @@ private:
   Graph const *graph;
   node src;
   MutableContainer<bool> usedEdges;
-  NodeStaticProperty<double> &nodeDistance;
+  NodeVectorProperty<double> &nodeDistance;
   std::stack<node> *queueNodes;
   MutableContainer<int> *numberOfPaths;
 };

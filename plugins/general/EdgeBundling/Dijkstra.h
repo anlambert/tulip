@@ -21,7 +21,7 @@
 #include <talipot/MutableContainer.h>
 #include <talipot/Vector.h>
 #include <talipot/LayoutProperty.h>
-#include <talipot/StaticProperty.h>
+#include <talipot/VectorProperty.h>
 #include <talipot/VectorGraph.h>
 #include <talipot/ParallelTools.h>
 
@@ -87,11 +87,11 @@ public:
   }
 
   void initDijkstra(const tlp::Graph *const forbiddenNodes, tlp::node src,
-                    const tlp::EdgeStaticProperty<double> &weights,
+                    const tlp::EdgeVectorProperty<double> &weights,
                     const std::set<tlp::node> &focus);
 
   //========================================================
-  void searchPaths(tlp::node n, tlp::EdgeStaticProperty<unsigned int> &depth);
+  void searchPaths(tlp::node n, tlp::EdgeVectorProperty<unsigned int> &depth);
   void searchPath(tlp::node n, std::vector<tlp::node> &vNodes);
   //=============================================================
 private:

@@ -179,18 +179,18 @@ PLUGIN(TestExportModulePlugin)
 // Check there is no symbol issue due to Talipot multithreading
 // implementation (either OpenMP or C++11 threads)
 // when using a static property in a plugin code
-class TestStaticPropertyPlugin : public tlp::Algorithm {
+class TestVectorPropertyPlugin : public tlp::Algorithm {
 
 public:
   PLUGININFORMATION("Test Static Property", "The Talipot developers", "2019", "", "1.0", "")
 
-  TestStaticPropertyPlugin(tlp::PluginContext *context) : tlp::Algorithm(context) {}
+  TestVectorPropertyPlugin(tlp::PluginContext *context) : tlp::Algorithm(context) {}
 
   bool run() override {
-    tlp::NodeStaticProperty<double *> test(graph);
+    tlp::NodeVectorProperty<double *> test(graph);
     test.setAll(nullptr);
     return true;
   }
 };
 
-PLUGIN(TestStaticPropertyPlugin)
+PLUGIN(TestVectorPropertyPlugin)

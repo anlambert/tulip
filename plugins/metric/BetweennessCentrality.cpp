@@ -231,9 +231,9 @@ private:
 
   void computeDijkstra(node s, bool directed, NumericProperty *weight, stack<node> &S,
                        unordered_map<node, list<node>> &P, MutableContainer<int> &sigma) {
-    EdgeStaticProperty<double> eWeights(graph);
+    EdgeVectorProperty<double> eWeights(graph);
     eWeights.copyFromNumericProperty(weight);
-    NodeStaticProperty<double> nodeDistance(graph);
+    NodeVectorProperty<double> nodeDistance(graph);
     tlp::computeDijkstra(graph, s, eWeights, nodeDistance, directed ? DIRECTED : UNDIRECTED, P, &S,
                          &sigma);
   }

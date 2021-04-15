@@ -24,7 +24,7 @@
 #include <talipot/Node.h>
 #include <talipot/Edge.h>
 #include <talipot/MutableContainer.h>
-#include <talipot/StaticProperty.h>
+#include <talipot/VectorProperty.h>
 #include <talipot/Iterator.h>
 
 namespace tlp {
@@ -224,8 +224,8 @@ TLP_SCOPE void markReachableNodes(const Graph *graph, const node startNode,
                                   unsigned int maxDistance, EDGE_TYPE direction = UNDIRECTED);
 
 TLP_SCOPE void computeDijkstra(const Graph *const graph, node src,
-                               const EdgeStaticProperty<double> &weights,
-                               NodeStaticProperty<double> &nodeDistance, EDGE_TYPE direction,
+                               const EdgeVectorProperty<double> &weights,
+                               NodeVectorProperty<double> &nodeDistance, EDGE_TYPE direction,
                                std::unordered_map<node, std::list<node>> &ancestors,
                                std::stack<node> *queueNodes = nullptr,
                                MutableContainer<int> *numberOfPaths = nullptr);

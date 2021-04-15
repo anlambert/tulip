@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -18,7 +18,7 @@
 
 #include <talipot/Node.h>
 #include <talipot/MutableContainer.h>
-#include <talipot/StaticProperty.h>
+#include <talipot/VectorProperty.h>
 #include <talipot/GraphTools.h>
 
 namespace tlp {
@@ -47,7 +47,7 @@ TLP_SCOPE double averageClusteringCoefficient(const Graph *);
  * This quantifies how close its neighbors are to being a clique.
  * see http://en.wikipedia.org/wiki/Clustering_coefficient for more details
  */
-TLP_SCOPE void clusteringCoefficient(const Graph *g, tlp::NodeStaticProperty<double> &result,
+TLP_SCOPE void clusteringCoefficient(const Graph *g, tlp::NodeVectorProperty<double> &result,
                                      unsigned int maxDepth = 1);
 /*
  * assign to each node of a graph its (in/ou/inout) degree.
@@ -59,7 +59,7 @@ TLP_SCOPE void clusteringCoefficient(const Graph *g, tlp::NodeStaticProperty<dou
  * unweighted case => m(n) = deg(n) / (#V - 1)
  * weighted case => m(n) = deg_w(n) / [(sum(e_w)/#E)(#V - 1)]
  */
-TLP_SCOPE void degree(const Graph *graph, tlp::NodeStaticProperty<double> &deg,
+TLP_SCOPE void degree(const Graph *graph, tlp::NodeVectorProperty<double> &deg,
                       EDGE_TYPE direction = UNDIRECTED, NumericProperty *weights = nullptr,
                       bool norm = false);
 /*
@@ -69,7 +69,7 @@ TLP_SCOPE void degree(const Graph *graph, tlp::NodeStaticProperty<double> &deg,
  *
  * Warning: the graph must be acyclic (no self loops).
  */
-TLP_SCOPE void dagLevel(const Graph *graph, tlp::NodeStaticProperty<unsigned int> &level);
+TLP_SCOPE void dagLevel(const Graph *graph, tlp::NodeVectorProperty<unsigned int> &level);
 // return the maximum value of the degree of the graph's nodes
 TLP_SCOPE unsigned int maxDegree(const Graph *);
 // return the minimum value of the degree of the graph's nodes
@@ -82,7 +82,7 @@ TLP_SCOPE unsigned int minDegree(const Graph *);
  * all the edge's weight is set to 1. (it uses a bfs thus the complexity is o(m), m = |E|).
  */
 TLP_SCOPE unsigned int maxDistance(const Graph *graph, const unsigned int nPos,
-                                   tlp::NodeStaticProperty<unsigned int> &distance,
+                                   tlp::NodeVectorProperty<unsigned int> &distance,
                                    EDGE_TYPE direction = UNDIRECTED);
 
 /*
@@ -95,7 +95,7 @@ TLP_SCOPE unsigned int maxDistance(const Graph *graph, const unsigned int nPos,
  * all the edge's weight is set to 1. (it uses a bfs thus the complexity is o(m), m = |E|).
  */
 TLP_SCOPE double maxDistance(const Graph *graph, const unsigned int nPos,
-                             tlp::NodeStaticProperty<double> &distance,
+                             tlp::NodeVectorProperty<double> &distance,
                              const NumericProperty *const weights,
                              EDGE_TYPE direction = UNDIRECTED);
 }

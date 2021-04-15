@@ -15,7 +15,7 @@
 #include <talipot/StringCollection.h>
 #include <talipot/DoubleProperty.h>
 #include <talipot/SizeProperty.h>
-#include <talipot/StaticProperty.h>
+#include <talipot/VectorProperty.h>
 
 using namespace std;
 using namespace tlp;
@@ -196,7 +196,7 @@ public:
       shift = entryMetric->getNodeDoubleMin(graph);
 
       // compute size of nodes
-      NodeStaticProperty<Size> nodeSize(graph);
+      NodeVectorProperty<Size> nodeSize(graph);
       nodeSize.copyFromProperty(entrySize);
 
       TLP_PARALLEL_MAP_NODES(graph, [&](const node &n) {
@@ -226,7 +226,7 @@ public:
     } else {
       shift = entryMetric->getEdgeDoubleMin(graph);
       // compute size of edges
-      EdgeStaticProperty<Size> edgeSize(graph);
+      EdgeVectorProperty<Size> edgeSize(graph);
 
       TLP_PARALLEL_MAP_EDGES(graph, [&](const edge &e) {
         double sizos = min + (entryMetric->getEdgeDoubleValue(e) - shift) * (max - min) / range;

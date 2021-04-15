@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -19,7 +19,7 @@
 
 #include <talipot/Node.h>
 #include <talipot/Edge.h>
-#include <talipot/StaticProperty.h>
+#include <talipot/VectorProperty.h>
 
 #include "../PathAlgorithm.h"
 
@@ -45,7 +45,7 @@ public:
    * the search (DBL_MAX by default)
    */
   DFS(tlp::Graph *graph, tlp::BooleanProperty *result, tlp::node tgt,
-      const tlp::EdgeStaticProperty<double> &weights, EdgeOrientation edgesOrientation,
+      const tlp::EdgeVectorProperty<double> &weights, EdgeOrientation edgesOrientation,
       double maxDist = DBL_MAX);
 
   /**
@@ -60,7 +60,7 @@ private:
   tlp::Graph *graph;
   tlp::BooleanProperty *result;
   tlp::node tgt;
-  const tlp::EdgeStaticProperty<double> &weights;
+  const tlp::EdgeVectorProperty<double> &weights;
   std::vector<tlp::edge> path;
   double currentDist;
   EdgeOrientation edgesOrientation;

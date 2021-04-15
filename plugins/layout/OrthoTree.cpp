@@ -13,7 +13,7 @@
 
 #include <talipot/SizeProperty.h>
 #include <talipot/LayoutProperty.h>
-#include <talipot/StaticProperty.h>
+#include <talipot/VectorProperty.h>
 #include <talipot/PropertyAlgorithm.h>
 
 using namespace std;
@@ -25,8 +25,8 @@ class OrthoTree : public tlp::LayoutAlgorithm {
   unsigned int layerSpacing;
   tlp::SizeProperty *size;
 
-  void computeVerticalSize(const tlp::node n, tlp::NodeStaticProperty<double> &verticalSize);
-  void computeLayout(const tlp::node n, tlp::NodeStaticProperty<double> &verticalSize);
+  void computeVerticalSize(const tlp::node n, tlp::NodeVectorProperty<double> &verticalSize);
+  void computeLayout(const tlp::node n, tlp::NodeVectorProperty<double> &verticalSize);
 
 public:
   PLUGININFORMATION("OrthoTree", "Romain Bourqui", "20/02/2012", "Orthogonal Tree", "1.0", "Tree")
@@ -51,7 +51,7 @@ OrthoTree::OrthoTree(const tlp::PluginContext *context)
   addInParameter<unsigned int>("Node spacing", paramHelp[1], "4", true);
 }
 
-void OrthoTree::computeVerticalSize(const node n, NodeStaticProperty<double> &verticalSize) {
+void OrthoTree::computeVerticalSize(const node n, NodeVectorProperty<double> &verticalSize) {
   if (graph->outdeg(n) == 0) {
     verticalSize[n] = size->getNodeValue(n)[1];
   } else {
@@ -69,7 +69,7 @@ void OrthoTree::computeVerticalSize(const node n, NodeStaticProperty<double> &ve
   }
 }
 
-void OrthoTree::computeLayout(const node n, NodeStaticProperty<double> &verticalSize) {
+void OrthoTree::computeLayout(const node n, NodeVectorProperty<double> &verticalSize) {
   Coord cn = result->getNodeValue(n);
   double prev = 0.;
   for (auto e : graph->getOutEdges(n)) {
@@ -98,7 +98,7 @@ bool OrthoTree::run() {
     dataSet->get("Node spacing", nodeSpacing);
   }
 
-  NodeStaticProperty<double> verticalSize(graph);
+  NodeVectorProperty<double> verticalSize(graph);
   size = graph->getSizeProperty("viewSize");
 
   verticalSize.setAll(0);

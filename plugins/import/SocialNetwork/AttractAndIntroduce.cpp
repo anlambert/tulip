@@ -12,7 +12,7 @@
  */
 
 #include <talipot/ImportModule.h>
-#include <talipot/StaticProperty.h>
+#include <talipot/VectorProperty.h>
 
 using namespace std;
 using namespace tlp;
@@ -91,8 +91,8 @@ public:
     graph->addNodes(nbNodes);
     graph->reserveEdges(nbEdges);
 
-    NodeStaticProperty<double> pAttractProperty(graph);
-    NodeStaticProperty<double> pIntroduceProperty(graph);
+    NodeVectorProperty<double> pAttractProperty(graph);
+    NodeVectorProperty<double> pIntroduceProperty(graph);
 
     for (unsigned int i = 0; i < nbNodes; ++i) {
       pAttractProperty[i] = ((1 - alpha) > randomDouble(1.0)) ? 0 : randomDouble(1.0);

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -54,7 +54,7 @@ void inline TLP_MAP_NODES_AND_INDICES(const tlp::Graph *graph,
  *   ...
  *  return result;
  * };
- * tlp::NodeStaticProperty<double> result(graph);
+ * tlp::NodeVectorProperty<double> result(graph);
  * TLP_PARALLEL_MAP_NODES(graph, [&](const tlp::node &n) {
  *   // run task in a thread
  *   result[n] = computationIntensiveTask(n);
@@ -84,7 +84,7 @@ void inline TLP_PARALLEL_MAP_NODES(const tlp::Graph *graph, const NodeFunction &
  *   ...
  *  return result;
  * };
- * tlp::NodeStaticProperty<double> result(graph);
+ * tlp::NodeVectorProperty<double> result(graph);
  * TLP_PARALLEL_MAP_EDGES(graph, [&](const tlp::node &n, unsigned int i) {
  *   // run task in a thread
  *   result[n] = computationIntensiveTask(n, i);
@@ -132,7 +132,7 @@ void inline TLP_MAP_EDGES_AND_INDICES(const tlp::Graph *graph,
  *   ...
  *  return result;
  * };
- * tlp::EdgeStaticProperty<double> result(graph);
+ * tlp::EdgeVectorProperty<double> result(graph);
  * TLP_PARALLEL_MAP_EDGES(graph, [&](const tlp::edge &e) {
  *   // run task in a thread
  *   result[e] = computationIntensiveTask(e);
@@ -162,7 +162,7 @@ void inline TLP_PARALLEL_MAP_EDGES(const tlp::Graph *graph, const EdgeFunction &
  *   ...
  *  return result;
  * };
- * tlp::EdgeStaticProperty<double> result(graph);
+ * tlp::EdgeVectorProperty<double> result(graph);
  * TLP_PARALLEL_MAP_EDGES(graph, [&](const tlp::edge &e, unsigned int i) {
  *   // run task in a thread
  *   result[e] = computationIntensiveTask(e, i);

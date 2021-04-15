@@ -105,10 +105,10 @@ bool KCores::run() {
 
   // the famous k
   double k = DBL_MAX;
-  // use two NodeStaticProperty to hold the nodes infos
+  // use two NodeVectorProperty to hold the nodes infos
   // because the more k increase the more nodes are "deleted"
-  NodeStaticProperty<bool> nodeDeleted(graph);
-  NodeStaticProperty<double> nodeK(graph);
+  NodeVectorProperty<bool> nodeDeleted(graph);
+  NodeVectorProperty<double> nodeK(graph);
   degree(graph, nodeK, degree_type, metric, false);
   const std::vector<node> &nodes = graph->nodes();
   // the number of non deleted nodes

@@ -1,5 +1,5 @@
 
-#include <talipot/StaticProperty.h>
+#include <talipot/VectorProperty.h>
 
 #include "ParallelToolsTest.h"
 
@@ -33,7 +33,7 @@ void ParallelToolsTest::testParallelMapIndices() {
 }
 
 void ParallelToolsTest::testParallelMapNodes() {
-  tlp::NodeStaticProperty<unsigned int> deg(_graph);
+  tlp::NodeVectorProperty<unsigned int> deg(_graph);
   TLP_PARALLEL_MAP_NODES(_graph, [&](const tlp::node &n) { deg[n] = _graph->deg(n); });
   for (auto n : _graph->nodes()) {
     CPPUNIT_ASSERT_EQUAL(deg[n], _graph->deg(n));
@@ -51,7 +51,7 @@ void ParallelToolsTest::testParallelMapNodesAndIndices() {
 }
 
 void ParallelToolsTest::testParallelMapEdges() {
-  tlp::EdgeStaticProperty<int> selfLoop(_graph);
+  tlp::EdgeVectorProperty<int> selfLoop(_graph);
   TLP_PARALLEL_MAP_EDGES(
       _graph, [&](const tlp::edge &e) { selfLoop[e] = _graph->source(e) == _graph->target(e); });
   for (auto e : _graph->edges()) {

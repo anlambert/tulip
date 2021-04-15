@@ -54,7 +54,7 @@ EccentricityMetric::~EccentricityMetric() = default;
 //====================================================================
 double EccentricityMetric::compute(unsigned int nPos) {
 
-  NodeStaticProperty<double> distance(graph);
+  NodeVectorProperty<double> distance(graph);
   distance.setAll(0);
   double val = tlp::maxDistance(graph, nPos, distance, weight, directed ? DIRECTED : UNDIRECTED);
 
@@ -114,7 +114,7 @@ bool EccentricityMetric::run() {
     return false;
   }
 
-  NodeStaticProperty<double> res(graph);
+  NodeVectorProperty<double> res(graph);
   unsigned int nbNodes = graph->numberOfNodes();
 
   double diameter = 1.0;

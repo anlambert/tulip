@@ -82,7 +82,7 @@ void makeProperDag(Graph *graph, list<node> &addedNodes,
 
   assert(AcyclicTest::isAcyclic(graph));
   // We compute the dag level metric on resulting sg.
-  NodeStaticProperty<unsigned int> dLevel(graph);
+  NodeVectorProperty<unsigned int> dLevel(graph);
   dagLevel(graph, dLevel);
 
   if (edgeLength) {
@@ -169,14 +169,14 @@ vector<vector<node>> computeCanonicalOrdering(PlanarConMap *carte, std::vector<e
 //======================================================================
 std::vector<node> computeGraphCenters(Graph *graph) {
   assert(ConnectedTest::isConnected(graph));
-  tlp::NodeStaticProperty<unsigned int> dist(graph);
+  tlp::NodeVectorProperty<unsigned int> dist(graph);
   const std::vector<node> &nodes = graph->nodes();
   unsigned int nbNodes = nodes.size();
   unsigned int minD = UINT_MAX;
   unsigned int minPos = 0;
 
   TLP_PARALLEL_MAP_INDICES(nbNodes, [&](unsigned int i) {
-    tlp::NodeStaticProperty<unsigned int> tmp(graph);
+    tlp::NodeVectorProperty<unsigned int> tmp(graph);
     unsigned int maxD = tlp::maxDistance(graph, i, tmp, UNDIRECTED);
     dist[i] = maxD;
     TLP_LOCK_SECTION(COMPUTE_MIN) {
@@ -209,9 +209,9 @@ node graphCenterHeuristic(Graph *graph, PluginProgress *pluginProgress) {
   }
 
   const vector<node> &nodes = graph->nodes();
-  tlp::NodeStaticProperty<bool> toTreat(graph);
+  tlp::NodeVectorProperty<bool> toTreat(graph);
   toTreat.setAll(true);
-  tlp::NodeStaticProperty<unsigned int> dist(graph);
+  tlp::NodeVectorProperty<unsigned int> dist(graph);
   unsigned int i = 0, n = 0, result = 0;
   unsigned int cDist = UINT_MAX - 2;
   unsigned int nbTry = 2 + sqrt(nbNodes);
@@ -280,7 +280,7 @@ void selectSpanningForest(Graph *graph, BooleanProperty *selectionProperty,
                           PluginProgress *pluginProgress) {
   list<node> fifo;
 
-  NodeStaticProperty<bool> nodeFlag(graph);
+  NodeVectorProperty<bool> nodeFlag(graph);
   const std::vector<node> &nodes = graph->nodes();
   unsigned int nbNodes = nodes.size();
 
@@ -303,7 +303,7 @@ void selectSpanningForest(Graph *graph, BooleanProperty *selectionProperty,
     nbSelectedNodes = 1;
   }
 
-  EdgeStaticProperty<bool> edgeSel(graph);
+  EdgeVectorProperty<bool> edgeSel(graph);
   edgeSel.setAll(true);
 
   // select all nodes
@@ -463,7 +463,7 @@ void selectMinimumSpanningTree(Graph *graph, BooleanProperty *selection,
 
   selection->setAllEdgeValue(false);
 
-  NodeStaticProperty<unsigned int> classes(graph);
+  NodeVectorProperty<unsigned int> classes(graph);
 
   unsigned int nbNodes = nodes.size();
   unsigned int numClasses = nbNodes;
@@ -514,7 +514,7 @@ void selectMinimumSpanningTree(Graph *graph, BooleanProperty *selection,
 }
 //======================================================================
 
-static void bfs(const Graph *graph, node root, NodeStaticProperty<bool> &visited,
+static void bfs(const Graph *graph, node root, NodeVectorProperty<bool> &visited,
                 vector<node> &nodes) {
   if (visited[root]) {
     return;
@@ -550,7 +550,7 @@ std::vector<tlp::node> bfs(const Graph *graph, node root) {
     }
 
     assert(graph->isElement(root));
-    NodeStaticProperty<bool> visited(graph);
+    NodeVectorProperty<bool> visited(graph);
     visited.setAll(false);
     bfs(graph, root, visited, nodes);
   }
@@ -560,7 +560,7 @@ std::vector<tlp::node> bfs(const Graph *graph, node root) {
 // cumulative bfs from every node of the graph
 std::vector<tlp::node> bfs(const Graph *graph) {
   vector<node> nodes;
-  NodeStaticProperty<bool> visited(graph);
+  NodeVectorProperty<bool> visited(graph);
   visited.setAll(false);
   for (auto n : graph->nodes()) {
     bfs(graph, n, visited, nodes);
@@ -570,7 +570,7 @@ std::vector<tlp::node> bfs(const Graph *graph) {
 
 //======================================================================
 
-static void dfs(const Graph *graph, node root, NodeStaticProperty<bool> &visited,
+static void dfs(const Graph *graph, node root, NodeVectorProperty<bool> &visited,
                 vector<node> &nodes) {
   if (visited[root]) {
     return;
@@ -611,7 +611,7 @@ std::vector<node> dfs(const Graph *graph, node root) {
     }
 
     assert(graph->isElement(root));
-    NodeStaticProperty<bool> visited(graph);
+    NodeVectorProperty<bool> visited(graph);
     visited.setAll(false);
     dfs(graph, root, visited, nodes);
   }
@@ -621,7 +621,7 @@ std::vector<node> dfs(const Graph *graph, node root) {
 // cumulative dfs from every node of the graph
 std::vector<tlp::node> dfs(const Graph *graph) {
   vector<node> nodes;
-  NodeStaticProperty<bool> visited(graph);
+  NodeVectorProperty<bool> visited(graph);
   visited.setAll(false);
   for (auto n : graph->nodes()) {
     dfs(graph, n, visited, nodes);
@@ -755,7 +755,7 @@ bool selectShortestPaths(const Graph *const graph, node src, node tgt, ShortestP
     direction = INV_DIRECTED;
   }
 
-  EdgeStaticProperty<double> eWeights(graph);
+  EdgeVectorProperty<double> eWeights(graph);
   if (!weights) {
     eWeights.setAll(SMALLEST_WEIGHT);
   } else {
@@ -767,7 +767,7 @@ bool selectShortestPaths(const Graph *const graph, node src, node tgt, ShortestP
     TLP_PARALLEL_MAP_EDGES_AND_INDICES(graph, fn);
   }
 
-  NodeStaticProperty<double> nodeDistance(graph);
+  NodeVectorProperty<double> nodeDistance(graph);
   Dijkstra dijkstra(graph, src, eWeights, nodeDistance, direction);
 
   if (uint(pathType) < ShortestPathType::AllPaths) {
@@ -808,8 +808,8 @@ void markReachableNodes(const Graph *graph, const node startNode,
   }
 }
 
-void computeDijkstra(const Graph *const graph, node src, const EdgeStaticProperty<double> &weights,
-                     NodeStaticProperty<double> &nodeDistance, EDGE_TYPE direction,
+void computeDijkstra(const Graph *const graph, node src, const EdgeVectorProperty<double> &weights,
+                     NodeVectorProperty<double> &nodeDistance, EDGE_TYPE direction,
                      unordered_map<node, std::list<node>> &ancestors, std::stack<node> *queueNodes,
                      MutableContainer<int> *numberOfPaths) {
   Dijkstra dijkstra(graph, src, weights, nodeDistance, direction, queueNodes, numberOfPaths);

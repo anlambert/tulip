@@ -52,7 +52,7 @@ public:
 };
 //================================================================================
 void HierarchicalGraph::buildGrid(tlp::Graph *sg) {
-  tlp::NodeStaticProperty<unsigned int> levels(sg);
+  tlp::NodeVectorProperty<unsigned int> levels(sg);
   dagLevel(graph, levels);
 
   TLP_MAP_NODES_AND_INDICES(graph, [&](const node n, unsigned int i) {

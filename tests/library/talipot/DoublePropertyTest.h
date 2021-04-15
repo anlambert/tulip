@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -30,7 +30,7 @@ class DoublePropertyTest : public CppUnit::TestFixture {
   CPPUNIT_TEST(testDoublePropertyInfValue);
   CPPUNIT_TEST(testDoublePropertySetAllValue);
   CPPUNIT_TEST(testDoublePropertySetDefaultValue);
-  CPPUNIT_TEST(testStaticDoublePropertyCopyFrom);
+  CPPUNIT_TEST(testVectorDoublePropertyCopyFrom);
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -46,7 +46,7 @@ public:
   void testDoublePropertyInfValue();
   void testDoublePropertySetAllValue();
   void testDoublePropertySetDefaultValue();
-  void testStaticDoublePropertyCopyFrom();
+  void testVectorDoublePropertyCopyFrom();
 
 private:
   tlp::Graph *graph;

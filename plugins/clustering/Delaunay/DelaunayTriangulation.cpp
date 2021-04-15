@@ -17,7 +17,7 @@
 using namespace std;
 
 static bool delaunayTriangulation(tlp::Graph *graph, bool simplicesSubGraphs, bool originalClone) {
-  tlp::NodeStaticProperty<tlp::Coord> points(graph);
+  tlp::NodeVectorProperty<tlp::Coord> points(graph);
   points.copyFromProperty(graph->getLayoutProperty("viewLayout"));
 
   vector<pair<unsigned int, unsigned int>> edges;
