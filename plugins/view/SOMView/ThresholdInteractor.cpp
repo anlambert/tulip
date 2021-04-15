@@ -354,11 +354,10 @@ bool ThresholdInteractor::eventFilter(QObject *widget, QEvent *event) {
 
       // assert(!finalSelectedEntities.empty());
 
-      if (!startDrag) {
+      if (!startDrag && mouvingSlider) {
         glWidget->setMouseTracking(true);
         startDrag = true;
         // mouvingSlider = *finalSelectedEntities.begin();
-        assert(mouvingSlider);
         mouvingSlider->beginShift();
         XPosCursor = me->x();
         glWidget->getScene()->getGraphCamera().initGl();
