@@ -20,9 +20,6 @@ using namespace tlp;
 PLUGIN(ImprovedWalker)
 
 //====================================================================
-const node ImprovedWalker::BADNODE;
-
-//====================================================================
 class ImprovedWalkerIterator : public Iterator<node> {
 private:
   Graph *graph;
@@ -136,7 +133,7 @@ int ImprovedWalker::initializeNode(tlp::node n, unsigned int depth) {
   shiftDelta[n] = 0;
 
   ancestor[n] = n;
-  thread[n] = BADNODE;
+  thread[n] = node();
 
   int maxDepth = 0;
   int count = 0;
@@ -176,7 +173,7 @@ void ImprovedWalker::firstWalk(tlp::node v) {
     prelimX[v] = 0;
     node vleftSibling = leftSibling(v);
 
-    if (vleftSibling != BADNODE) {
+    if (vleftSibling.isValid()) {
       prelimX[v] += prelimX[vleftSibling] + nodeSpacing + oriSize->getNodeValue(v).getW() / 2.f +
                     oriSize->getNodeValue(vleftSibling).getW() / 2.f;
     }
@@ -194,7 +191,7 @@ void ImprovedWalker::firstWalk(tlp::node v) {
 
     node leftBrother = leftSibling(v);
 
-    if (leftBrother != BADNODE) {
+    if (leftBrother.isValid()) {
       prelimX[v] = prelimX[leftBrother] + nodeSpacing + oriSize->getNodeValue(v).getW() / 2.f +
                    oriSize->getNodeValue(leftBrother).getW() / 2.f;
       modChildX[v] = prelimX[v] - midPoint;
@@ -216,7 +213,7 @@ void ImprovedWalker::secondWalk(tlp::node v, float modifierX, int depth) {
 void ImprovedWalker::combineSubtree(tlp::node v, tlp::node *defaultAncestor) {
   node leftBrother = leftSibling(v);
 
-  if (leftBrother != BADNODE) {
+  if (leftBrother.isValid()) {
     node nodeInsideRight;
     node nodeOutsideRight;
     node nodeInsideLeft;
@@ -237,8 +234,8 @@ void ImprovedWalker::combineSubtree(tlp::node v, tlp::node *defaultAncestor) {
     shiftInsideLeft = modChildX[nodeInsideLeft];
     shiftOutsideLeft = modChildX[nodeOutsideLeft];
 
-    while (nextRightContour(nodeInsideLeft) != BADNODE &&
-           nextLeftContour(nodeInsideRight) != BADNODE) {
+    while (nextRightContour(nodeInsideLeft).isValid() &&
+           nextLeftContour(nodeInsideRight).isValid()) {
 
       nodeInsideLeft = nextRightContour(nodeInsideLeft);
       nodeInsideRight = nextLeftContour(nodeInsideRight);
@@ -271,14 +268,13 @@ void ImprovedWalker::combineSubtree(tlp::node v, tlp::node *defaultAncestor) {
       shiftOutsideLeft += modChildX[nodeOutsideLeft];
     }
 
-    if (nextRightContour(nodeInsideLeft) != BADNODE &&
-        nextRightContour(nodeOutsideRight) == BADNODE) {
+    if (nextRightContour(nodeInsideLeft).isValid() &&
+        !nextRightContour(nodeOutsideRight).isValid()) {
       thread[nodeOutsideRight] = nextRightContour(nodeInsideLeft);
       modChildX[nodeOutsideRight] += shiftInsideLeft - shiftOutsideRight;
     }
 
-    if (nextLeftContour(nodeInsideRight) != BADNODE &&
-        nextLeftContour(nodeOutsideLeft) == BADNODE) {
+    if (nextLeftContour(nodeInsideRight).isValid() && !nextLeftContour(nodeOutsideLeft).isValid()) {
       thread[nodeOutsideLeft] = nextLeftContour(nodeInsideRight);
       modChildX[nodeOutsideLeft] += shiftInsideRight - shiftOutsideLeft;
 

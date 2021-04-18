@@ -67,7 +67,6 @@ private:
 
   float spacing;
   float nodeSpacing;
-  static const tlp::node BADNODE;
 
   OrientableLayout *oriLayout;
   OrientableSizeProxy *oriSize;
@@ -96,7 +95,7 @@ private:
   void moveSubtree(tlp::node fromNode, tlp::node toNode, float rightShift);
   void executeShifts(tlp::node v);
 
-  tlp::node getSuperGraph(tlp::node n);
+  tlp::node getFather(tlp::node n);
 
   tlp::node leftmostChild(tlp::node n);
   tlp::node rightmostChild(tlp::node n);
@@ -111,9 +110,9 @@ private:
 };
 
 //====================================================================
-tlp::node ImprovedWalker::getSuperGraph(tlp::node n) {
-  if (tree->indeg(n) < 1) {
-    return BADNODE;
+tlp::node ImprovedWalker::getFather(tlp::node n) {
+  if (!n.isValid() || tree->indeg(n) < 1) {
+    return tlp::node();
   }
 
   return tree->getInNode(n, 1);
@@ -121,8 +120,8 @@ tlp::node ImprovedWalker::getSuperGraph(tlp::node n) {
 
 //====================================================================
 tlp::node ImprovedWalker::leftmostChild(tlp::node n) {
-  if (tree->outdeg(n) < 1) {
-    return BADNODE;
+  if (!n.isValid() || tree->outdeg(n) < 1) {
+    return tlp::node();
   }
 
   return tree->getOutNode(n, 1);
@@ -132,8 +131,8 @@ tlp::node ImprovedWalker::leftmostChild(tlp::node n) {
 tlp::node ImprovedWalker::rightmostChild(tlp::node n) {
   int pos;
 
-  if ((pos = tree->outdeg(n)) < 1) {
-    return BADNODE;
+  if (!n.isValid() || (pos = tree->outdeg(n)) < 1) {
+    return tlp::node();
   }
 
   return tree->getOutNode(n, pos);
@@ -141,19 +140,20 @@ tlp::node ImprovedWalker::rightmostChild(tlp::node n) {
 
 //====================================================================
 tlp::node ImprovedWalker::leftSibling(tlp::node n) {
-  if (order[n] <= 1) {
-    return BADNODE;
+  tlp::node father = getFather(n);
+  if (!father.isValid() || order[n] <= 1) {
+    return tlp::node();
   } else {
-    return tree->getOutNode(getSuperGraph(n), order[n] - 1);
+    return tree->getOutNode(father, order[n] - 1);
   }
 }
 
 //====================================================================
 tlp::node ImprovedWalker::rightSibling(tlp::node n) {
-  tlp::node father = getSuperGraph(n);
+  tlp::node father = getFather(n);
 
-  if (order[n] >= int(tree->outdeg(father))) {
-    return BADNODE;
+  if (!father.isValid() || order[n] >= int(tree->outdeg(father))) {
+    return tlp::node();
   }
 
   return tree->getOutNode(father, order[n] + 1);
@@ -161,8 +161,7 @@ tlp::node ImprovedWalker::rightSibling(tlp::node n) {
 
 //====================================================================
 tlp::node ImprovedWalker::leftMostSibling(tlp::node n) {
-  tlp::node father = getSuperGraph(n);
-  return leftmostChild(father);
+  return leftmostChild(getFather(n));
 }
 
 //====================================================================
@@ -186,7 +185,7 @@ tlp::node ImprovedWalker::nextLeftContour(tlp::node n) {
 //====================================================================
 tlp::node ImprovedWalker::findCommonAncestor(tlp::node left, tlp::node right,
                                              tlp::node defaultAncestor) {
-  if (getSuperGraph(ancestor[left]) == getSuperGraph(right) /*&& left!=right*/) {
+  if (getFather(ancestor[left]) == getFather(right)) {
     return ancestor[left];
   } else {
     return defaultAncestor;
