@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -15,7 +15,9 @@
 #define TALIPOT_EDGE_H
 
 #include <climits>
+#include <iostream>
 #include <functional>
+#include <vector>
 
 namespace tlp {
 
@@ -88,6 +90,18 @@ struct edge {
     return id != UINT_MAX;
   }
 };
+
+inline std::ostream &operator<<(std::ostream &os, const std::vector<edge> &ve) {
+  os << "(";
+  for (unsigned int i = 0; i < ve.size(); ++i) {
+    os << "edge(" << ve[i].id << ")";
+    if (i != ve.size() - 1) {
+      os << ", ";
+    }
+  }
+  os << ")";
+  return os;
+}
 
 // utility lambda functions for type conversion
 static std::function<tlp::edge(unsigned int)> idToEdge = [](unsigned int id) {

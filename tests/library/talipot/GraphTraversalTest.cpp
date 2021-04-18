@@ -19,22 +19,6 @@
 
 using namespace std;
 
-namespace tlp {
-
-ostream &operator<<(ostream &os, const vector<node> &vn) {
-  os << "(";
-  for (unsigned int i = 0; i < vn.size(); ++i) {
-    os << "node(" << vn[i].id << ")";
-    if (i != vn.size() - 1) {
-      os << ", ";
-    }
-  }
-  os << ")";
-  return os;
-}
-
-}
-
 class GraphTraversalTest : public CppUnit::TestFixture {
   CPPUNIT_TEST_SUITE(GraphTraversalTest);
   CPPUNIT_TEST(testBFS);
