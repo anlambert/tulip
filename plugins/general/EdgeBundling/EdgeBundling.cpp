@@ -414,7 +414,7 @@ bool EdgeBundling::run() {
         }
 
         tlp::edge e = gridGraph->addEdge(n2, n);
-        ntype.addEdgeValue(e, 2);
+        ntype[e] = 2;
       }
     }
   }
@@ -440,9 +440,6 @@ bool EdgeBundling::run() {
   //==========================================================
 
   EdgeVectorProperty<unsigned int> depth(graph);
-
-  // Load the grid graph into an optimized structure for graph traversal
-  Dijkstra::loadGraph(gridGraph);
 
   // Routing edges into bundles
   for (unsigned int iteration = 0; iteration < MAX_ITER; iteration++) {
@@ -536,7 +533,7 @@ bool EdgeBundling::run() {
       if (iteration < MAX_ITER - 1) {
         TLP_PARALLEL_MAP_INDICES(nbThreads, [&](unsigned int j) {
           node n = toTreatByThreads[j];
-          Dijkstra dijkstra;
+          Dijkstra dijkstra(gridGraph);
 
           if (edgeNodeOverlap) {
             computeDik(dijkstra, vertexCoverGraph, nullptr, n, mWeights, optimizationLevel);
@@ -571,7 +568,7 @@ bool EdgeBundling::run() {
       } else {
         TLP_PARALLEL_MAP_INDICES(nbThreads, [&](unsigned int j) {
           node n = toTreatByThreads[j];
-          Dijkstra dijkstra;
+          Dijkstra dijkstra(gridGraph);
 
           if (edgeNodeOverlap) {
             computeDik(dijkstra, vertexCoverGraph, nullptr, n, mWeights, optimizationLevel);

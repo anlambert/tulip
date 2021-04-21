@@ -16,29 +16,18 @@
 using namespace tlp;
 using namespace std;
 
-NodeProperty<node> Dijkstra::ndik2tlp;
-EdgeProperty<edge> Dijkstra::edik2tlp;
-MutableContainer<node> Dijkstra::ntlp2dik;
-MutableContainer<edge> Dijkstra::etlp2dik;
-VectorGraph Dijkstra::graph;
-bool Dijkstra::_initB = Dijkstra::initG();
-
-// define the lock needed to protect Dijkstra()/~Dijkstra()
-TLP_DEFINE_GLOBAL_LOCK(DijkstraProps);
-
 //============================================================
-void Dijkstra::initDijkstra(const tlp::Graph *const forbidden, tlp::node srcTlp,
-                            const EdgeVectorProperty<double> &weights, const set<node> &fous) {
+void Dijkstra::initDijkstra(const tlp::Graph *const forbidden, tlp::node src,
+                            const EdgeVectorProperty<double> &weights, const set<node> &focus) {
 
-  assert(srcTlp.isValid());
-  src = ntlp2dik.get(srcTlp);
+  assert(src.isValid());
+  this->src = src;
 
   forbiddenNodes.setAll(false);
 
   if (forbidden) {
     for (auto n : forbidden->nodes()) {
-      node ndik = ntlp2dik.get(n);
-      forbiddenNodes[ndik] = true;
+      forbiddenNodes[n] = true;
     }
   }
 
@@ -47,19 +36,20 @@ void Dijkstra::initDijkstra(const tlp::Graph *const forbidden, tlp::node srcTlp,
   set<DijkstraElement *, LessDijkstraElement> dijkstraTable;
   set<DijkstraElement *, LessDijkstraElement> focusTable;
 
-  mapDik.setAll(0);
-  vector<bool> focus(graph.numberOfNodes(), false);
+  mapDik.setAll(nullptr);
+  NodeVectorProperty<bool> focusNode(graph);
+  focusNode.setAll(false);
 
-  for (auto n : fous) {
-    focus[ntlp2dik.get(n)] = true;
+  for (auto n : focus) {
+    focusNode[n] = true;
   }
 
-  for (auto n : graph.nodes()) {
+  for (auto n : graph->nodes()) {
     if (n != src) { // init all nodes to +inf
       auto *tmp = new DijkstraElement(DBL_MAX / 2. + 10., node(), n);
       dijkstraTable.insert(tmp);
 
-      if (focus[n]) {
+      if (focusNode[n]) {
         focusTable.insert(tmp);
       }
 
@@ -94,11 +84,11 @@ void Dijkstra::initDijkstra(const tlp::Graph *const forbidden, tlp::node srcTlp,
       continue;
     }
 
-    for (auto e : graph.star(n)) {
-      node v = graph.opposite(e, n);
+    for (auto e : graph->incidence(n)) {
+      node v = graph->opposite(e, n);
       DijkstraElement &dEle = *mapDik[v];
 
-      auto eWeight = weights.getEdgeValue(edik2tlp[e]);
+      auto eWeight = weights[e];
       if (fabs((u.dist + eWeight) - dEle.dist) < 1E-9) { // path of the same length
         dEle.usedEdge.push_back(e);
       } else if ((u.dist + eWeight) < dEle.dist) {
@@ -107,7 +97,7 @@ void Dijkstra::initDijkstra(const tlp::Graph *const forbidden, tlp::node srcTlp,
         //**********************************************
         dijkstraTable.erase(&dEle);
 
-        if (focus[dEle.n]) {
+        if (focusNode[dEle.n]) {
           focusTable.erase(&dEle);
         }
 
@@ -116,14 +106,14 @@ void Dijkstra::initDijkstra(const tlp::Graph *const forbidden, tlp::node srcTlp,
         dEle.usedEdge.push_back(e);
         dijkstraTable.insert(&dEle);
 
-        if (focus[dEle.n]) {
+        if (focusNode[dEle.n]) {
           focusTable.insert(&dEle);
         }
       }
     }
   }
 
-  for (auto n : graph.nodes()) {
+  for (auto n : graph->nodes()) {
     DijkstraElement *dEle = mapDik[n];
     nodeDistance[n] = dEle->dist;
 
@@ -138,9 +128,7 @@ void Dijkstra::initDijkstra(const tlp::Graph *const forbidden, tlp::node srcTlp,
   resultEdges.setAll(false);
 }
 //=======================================================================
-void Dijkstra::searchPaths(node ntlp, EdgeVectorProperty<unsigned int> &depth) {
-
-  node n = ntlp2dik.get(ntlp);
+void Dijkstra::searchPaths(node n, EdgeVectorProperty<unsigned int> &depth) {
 
   if (resultNodes[n]) {
     return;
@@ -148,47 +136,46 @@ void Dijkstra::searchPaths(node ntlp, EdgeVectorProperty<unsigned int> &depth) {
 
   resultNodes[n] = true;
 
-  for (auto e : graph.star(n)) {
+  for (auto e : graph->incidence(n)) {
 
     if (!usedEdges[e] || resultEdges[e]) {
       continue;
     }
 
-    node tgt = graph.opposite(e, n);
+    node tgt = graph->opposite(e, n);
 
     if (nodeDistance[tgt] >= nodeDistance[n]) {
       continue;
     }
 
     resultEdges[e] = true;
-    auto ePos = depth.getGraph()->edgePos(edik2tlp[e]);
+    auto ePos = depth.getGraph()->edgePos(e);
     depth[ePos] += 1;
 
     if (!resultNodes[tgt]) {
-      searchPaths(ndik2tlp[tgt], depth);
+      searchPaths(tgt, depth);
     }
   }
 }
 //=============================================================================
-void Dijkstra::searchPath(node ntlp, vector<node> &vNodes) {
+void Dijkstra::searchPath(node n, vector<node> &vNodes) {
 
-  node n = ntlp2dik.get(ntlp);
-  node tgte(ntlp);
+  node tgte(n);
   resultEdges.setAll(false);
   bool ok = true;
 
   while (ok) {
-    vNodes.push_back(ndik2tlp[n]);
+    vNodes.push_back(n);
     ok = false;
 
-    for (auto e : graph.star(n)) {
+    for (auto e : graph->incidence(n)) {
       // check if that edge does not belong to the shortest path edges
       // or if it has already been treated
       if (!usedEdges[e] || resultEdges[e]) {
         continue;
       }
 
-      node tgt = graph.opposite(e, n);
+      node tgt = graph->opposite(e, n);
 
       if (nodeDistance[tgt] >= nodeDistance[n]) {
         continue;

@@ -18,73 +18,25 @@
 #include <set>
 #include <climits>
 #include <talipot/Graph.h>
-#include <talipot/MutableContainer.h>
 #include <talipot/Vector.h>
 #include <talipot/LayoutProperty.h>
 #include <talipot/VectorProperty.h>
-#include <talipot/VectorGraph.h>
 #include <talipot/ParallelTools.h>
-
-using namespace std;
-
-// we need a lock to protect the allocation/free
-// of needed VectorGraph properties
-TLP_DECLARE_GLOBAL_LOCK(DijkstraProps);
 
 class Dijkstra {
 
 public:
   //============================================================
-  Dijkstra() {
-    TLP_GLOBALLY_LOCK_SECTION(DijkstraProps) {
-      graph.alloc(forbiddenNodes);
-      graph.alloc(usedEdges);
-      graph.alloc(nodeDistance);
-      graph.alloc(resultNodes);
-      graph.alloc(resultEdges);
-      graph.alloc(mapDik);
-    }
-    TLP_GLOBALLY_UNLOCK_SECTION(DijkstraProps);
+  Dijkstra(tlp::Graph *graph) : graph(graph) {
+    nodeDistance.alloc(graph);
+    forbiddenNodes.alloc(graph);
+    usedEdges.alloc(graph);
+    resultNodes.alloc(graph);
+    resultEdges.alloc(graph);
+    mapDik.alloc(graph);
   }
 
-  ~Dijkstra() {
-    TLP_GLOBALLY_LOCK_SECTION(DijkstraProps) {
-      graph.free(forbiddenNodes);
-      graph.free(usedEdges);
-      graph.free(nodeDistance);
-      graph.free(resultNodes);
-      graph.free(resultEdges);
-      graph.free(mapDik);
-    }
-    TLP_GLOBALLY_UNLOCK_SECTION(DijkstraProps);
-  }
-
-  static void loadGraph(const tlp::Graph *srcGraph) {
-
-    graph.delAllNodes();
-
-    graph.reserveNodes(srcGraph->numberOfNodes());
-    graph.reserveEdges(srcGraph->numberOfEdges());
-
-    ndik2tlp.setAll(tlp::node());
-    edik2tlp.setAll(tlp::edge());
-    ntlp2dik.setAll(tlp::node());
-    etlp2dik.setAll(tlp::edge());
-
-    for (auto n : srcGraph->nodes()) {
-      tlp::node newNode = graph.addNode();
-      ntlp2dik.set(n, newNode);
-      ndik2tlp[newNode] = n;
-      graph.reserveAdj(newNode, srcGraph->deg(n));
-    }
-
-    for (auto e : srcGraph->edges()) {
-      const auto &[src, tgt] = srcGraph->ends(e);
-      tlp::edge tmp = graph.addEdge(ntlp2dik.get(src), ntlp2dik.get(tgt));
-      etlp2dik.set(e, tmp);
-      edik2tlp[tmp] = e;
-    }
-  }
+  ~Dijkstra() = default;
 
   void initDijkstra(const tlp::Graph *const forbiddenNodes, tlp::node src,
                     const tlp::EdgeVectorProperty<double> &weights,
@@ -122,27 +74,16 @@ private:
     }
   };
 
+  tlp::Graph *graph;
+
   tlp::node src;
 
-  tlp::NodeProperty<double> nodeDistance;
-  tlp::NodeProperty<bool> forbiddenNodes;
-  tlp::EdgeProperty<bool> usedEdges;
-  tlp::NodeProperty<bool> resultNodes;
-  tlp::EdgeProperty<bool> resultEdges;
-  tlp::NodeProperty<DijkstraElement *> mapDik;
-
-  static tlp::VectorGraph graph;
-  static tlp::NodeProperty<tlp::node> ndik2tlp;
-  static tlp::EdgeProperty<tlp::edge> edik2tlp;
-  static tlp::MutableContainer<tlp::node> ntlp2dik;
-  static tlp::MutableContainer<tlp::edge> etlp2dik;
-  static bool _initB;
-
-  static bool initG() {
-    graph.alloc(ndik2tlp);
-    graph.alloc(edik2tlp);
-    return true;
-  }
+  tlp::NodeVectorProperty<double> nodeDistance;
+  tlp::NodeVectorProperty<bool> forbiddenNodes;
+  tlp::EdgeVectorProperty<bool> usedEdges;
+  tlp::NodeVectorProperty<bool> resultNodes;
+  tlp::EdgeVectorProperty<bool> resultEdges;
+  tlp::NodeVectorProperty<DijkstraElement *> mapDik;
 };
 
 #endif // DIJKSTRA_H
