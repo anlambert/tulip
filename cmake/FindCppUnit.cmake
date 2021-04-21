@@ -16,13 +16,7 @@ IF(WIN32) # Windows
       ${CppUnit_LIBRARY_SEARCH_DIRS} ${CMAKE_LIBRARY_PATH} /usr/lib
       /usr/local/lib /opt/lib)
   FIND_PATH(CppUnit_INCLUDE_DIRS cppunit/Test.h ${CppUnit_INCLUDE_SEARCH_DIRS})
-  IF(MSVC)
-    # prefer the cppunit dll with Visual Studio
-    FIND_LIBRARY(CppUnit_LIBRARIES cppunit_dll
-                 PATHS ${CppUnit_LIBRARY_SEARCH_DIRS})
-  ELSE(MSVC)
-    FIND_LIBRARY(CppUnit_LIBRARIES cppunit PATHS ${CppUnit_LIBRARY_SEARCH_DIRS})
-  ENDIF(MSVC)
+  FIND_LIBRARY(CppUnit_LIBRARIES cppunit PATHS ${CppUnit_LIBRARY_SEARCH_DIRS})
 ELSE(WIN32) # Unix
   FIND_PACKAGE(PkgConfig)
   PKG_SEARCH_MODULE(CppUnit cppunit)
