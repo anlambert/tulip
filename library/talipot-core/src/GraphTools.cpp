@@ -85,7 +85,7 @@ void makeProperDag(Graph *graph, list<node> &addedNodes,
       node n1 = graph->addNode();
       replacedEdges[e] = graph->addEdge(src, n1);
       addedNodes.push_back(n1);
-      dLevel.addNodeValue(n1, fLevel + 1);
+      dLevel[n1] = fLevel + 1;
 
       if (delta > 2) {
         node n2 = graph->addNode();
@@ -96,7 +96,7 @@ void makeProperDag(Graph *graph, list<node> &addedNodes,
           edgeLength->setEdgeValue(e, delta - 2);
         }
 
-        dLevel.addNodeValue(n2, sLevel - 1);
+        dLevel[n2] = sLevel - 1;
         n1 = n2;
       }
 
