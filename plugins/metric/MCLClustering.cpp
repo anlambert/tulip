@@ -13,7 +13,7 @@
 
 #include <queue>
 #include <talipot/PluginHeaders.h>
-#include <talipot/VectorGraph.h>
+#include <talipot/SortIterator.h>
 
 using namespace tlp;
 using namespace std;
@@ -58,8 +58,8 @@ public:
   void init();
   void power(node n);
 
-  VectorGraph g;
-  EdgeProperty<double> inW, outW;
+  unique_ptr<Graph> g;
+  EdgeVectorProperty<double> inW, outW;
   NumericProperty *weights;
   double _r;
   unsigned int _k;
@@ -71,16 +71,16 @@ const double epsilon = 1E-9;
 void MCLClustering::power(node n) {
   std::unordered_map<node, double> newTargets;
 
-  for (auto e1 : g.getOutEdges(n)) {
+  for (auto e1 : g->getOutEdges(n)) {
     double v1 = inW[e1];
 
     if (v1 > epsilon) {
-      for (auto e2 : g.getOutEdges(g.target(e1))) {
+      for (auto e2 : g->getOutEdges(g->target(e1))) {
         double v2 = inW[e2] * v1;
 
         if (v2 > epsilon) {
-          node tgt = g.target(e2);
-          edge ne = g.existEdge(n, tgt, true);
+          node tgt = g->target(e2);
+          edge ne = g->existEdge(n, tgt, true);
 
           if (ne.isValid()) {
             outW[ne] += v2;
@@ -101,7 +101,7 @@ void MCLClustering::power(node n) {
 
   for (const auto &it : newTargets) {
     edge ne;
-    ne = g.addEdge(n, it.first);
+    ne = g->addEdge(n, it.first);
     inW[ne] = 0.;
     outW[ne] = it.second;
   }
@@ -114,7 +114,7 @@ struct pvectCmp {
 };
 
 void MCLClustering::prune(node n) {
-  unsigned int outdeg = g.outdeg(n);
+  unsigned int outdeg = g->outdeg(n);
 
   if (outdeg == 0) {
     return;
@@ -127,7 +127,7 @@ void MCLClustering::prune(node n) {
   // - avoid a costly stable iteration when deleting edges
   std::vector<pair<double, edge>> pvect;
   pvect.reserve(outdeg);
-  for (auto e : g.getOutEdges(n)) {
+  for (auto e : g->getOutEdges(n)) {
     pvect.push_back(pair<double, edge>(outW[e], e));
   }
 
@@ -138,14 +138,14 @@ void MCLClustering::prune(node n) {
     pair<double, edge> p = pvect[i];
 
     if (p.first < t || inW[p.second] < epsilon) {
-      g.delEdge(p.second);
+      g->delEdge(p.second);
     }
   }
 }
 //=================================================
 bool MCLClustering::inflate(double r, unsigned int k, node n, bool equal
                             /*, bool noprune */) {
-  unsigned int sz = g.outdeg(n);
+  unsigned int sz = g->outdeg(n);
   // we use a specific vector to hold out edges needed info
   // in order to
   // - improve the locality of reference
@@ -155,7 +155,7 @@ bool MCLClustering::inflate(double r, unsigned int k, node n, bool equal
   pvect.reserve(sz);
 
   double sum = 0.;
-  for (auto e : g.getOutEdges(n)) {
+  for (auto e : g->getOutEdges(n)) {
     double outVal = outW[e];
     sum += pow(outVal, r);
     pvect.push_back(pair<double, edge>(outVal, e));
@@ -191,7 +191,7 @@ bool MCLClustering::inflate(double r, unsigned int k, node n, bool equal
       edge e = p.second;
       inW[e] = 0.;
       outW[e] = 0.;
-      g.delEdge(e);
+      g->delEdge(e);
       // put an invalid edge
       // to avoid any further computation
       // for this pvect elt
@@ -258,7 +258,7 @@ static constexpr std::string_view paramHelp[] = {
     "Determines, for each node, the number of strongest link kept at each iteration."};
 //=================================================
 MCLClustering::MCLClustering(const tlp::PluginContext *context)
-    : DoubleAlgorithm(context), weights(nullptr), _r(2.0), _k(5) {
+    : DoubleAlgorithm(context), g(tlp::newGraph()), weights(nullptr), _r(2.0), _k(5) {
   addInParameter<double>("inflate", paramHelp[0].data(), "2.", false);
   addInParameter<NumericProperty *>("weights", paramHelp[1].data(), "", false);
   addInParameter<unsigned int>("pruning", paramHelp[2].data(), "5", false);
@@ -267,9 +267,9 @@ MCLClustering::MCLClustering(const tlp::PluginContext *context)
 MCLClustering::~MCLClustering() = default;
 //================================================================================
 struct DegreeSort {
-  DegreeSort(VectorGraph &g) : g(g) {}
+  DegreeSort(Graph *g) : g(g) {}
   bool operator()(node a, node b) const {
-    unsigned int da = g.deg(a), db = g.deg(b);
+    unsigned int da = g->deg(a), db = g->deg(b);
 
     if (da == db) {
       return a.id > b.id;
@@ -277,13 +277,10 @@ struct DegreeSort {
 
     return da > db;
   }
-  VectorGraph &g;
+  Graph *g;
 };
 //==============================================================================
 bool MCLClustering::run() {
-
-  g.alloc(inW);
-  g.alloc(outW);
 
   weights = nullptr;
   _r = 2.;
@@ -296,38 +293,44 @@ bool MCLClustering::run() {
   }
 
   NodeVectorProperty<node> nodeMapping(graph);
-  const std::vector<node> &tlpNodes = graph->nodes();
-  unsigned int nbNodes = tlpNodes.size();
-  g.reserveNodes(nbNodes);
+  g->clear();
+  g->reserveNodes(graph->numberOfNodes());
 
   // add nodes to g
-  TLP_MAP_NODES_AND_INDICES(graph, [&](const node n, unsigned int i) {
-    g.reserveAdj(nodeMapping[i] = g.addNode(), 2 * graph->deg(n) + 1);
-  });
+  unsigned int nbEdges = 0;
+  for (auto n : graph->nodes()) {
+    nodeMapping[n] = g->addNode();
+    nbEdges += 2 * graph->deg(n) + 1;
+  }
+
+  NodeVectorProperty<node> inverseNodeMapping(g.get());
+  TLP_PARALLEL_MAP_NODES(graph, [&](const node n) { inverseNodeMapping[nodeMapping[n]] = n; });
+
+  inW.alloc(g.get(), nbEdges);
+  outW.alloc(g.get(), nbEdges);
 
   for (auto e : graph->edges()) {
     const auto &[src, tgt] = graph->ends(e);
-    edge tmp = g.addEdge(src, tgt);
+    edge tmp = g->addEdge(nodeMapping[src], nodeMapping[tgt]);
 
     double weight = (weights != nullptr) ? weights->getEdgeDoubleValue(e) : 1.0;
     inW[tmp] = weight;
     outW[tmp] = 0.;
     // add reverse edge
-    tmp = g.addEdge(tgt, src);
+    tmp = g->addEdge(nodeMapping[tgt], nodeMapping[src]);
     inW[tmp] = weight;
     outW[tmp] = 0.;
   }
 
   // add loops (Set the maximum of out-edges weights to self-loops weight)
-  for (unsigned int i = 0; i < nbNodes; ++i) {
-    node n = g[i];
-    edge tmp = g.addEdge(n, n);
+  for (auto n : g->nodes()) {
+    edge tmp = g->addEdge(n, n);
     double sum = 0.;
     outW[tmp] = 0.;
 
     if (weights != nullptr) {
       double tmpVal = inW[tmp] = 0.;
-      for (auto e : g.getOutEdges(n)) {
+      for (auto e : g->getOutEdges(n)) {
         double eVal = inW[e];
         sum += eVal;
 
@@ -338,29 +341,21 @@ bool MCLClustering::run() {
       sum += (inW[tmp] = tmpVal);
     } else {
       inW[tmp] = 1.;
-      sum = double(g.outdeg(n));
+      sum = double(g->outdeg(n));
     }
 
     double oos = 1. / sum;
-    for (auto e : g.getOutEdges(n)) {
+    for (auto e : g->getOutEdges(n)) {
       inW[e] *= oos;
     }
   }
 
-  // output for mcl
-  /*
-    for(const edge &e : graph->edges()) {
-    cout << graph->source(e).id << "\t" << graph->target(e).id << endl;
-    }
-  */
-
-  int iteration = 15. * log1p(g.numberOfNodes());
+  int iteration = 15. * log1p(g->numberOfNodes());
 
   while (iteration-- > 0) {
     bool equal = true;
 
-    for (unsigned int i = 0; i < nbNodes; ++i) {
-      node n = g[i];
+    for (auto n : g->nodes()) {
       power(n);
 
       // comment the next line to have exact MCL
@@ -376,7 +371,7 @@ bool MCLClustering::run() {
      */
     // uncomment that block to have correct MCL
 
-    //        for(const node &n : g.nodes()) {
+    //        for(const node &n : g->nodes()) {
     //            inflate(_r, _k,  n, false);
     //        }
 
@@ -389,30 +384,23 @@ bool MCLClustering::run() {
     outW.setAll(0.);
   }
 
-  // outW is no longer needed
-  g.free(outW);
-
   outW = inW;
 
-  for (auto n : g.nodes()) {
+  for (auto n : g->nodes()) {
     prune(n);
   }
 
-  // outW is no longer needed
-  g.free(outW);
+  // sort nodes in decreasing order of their degree
+  DegreeSort sortFunc(g.get());
 
-  DegreeSort sortFunc(g);
-  g.sortNodes(sortFunc); // sort nodes in decreasing order of their degree
-
-  NodeProperty<bool> visited;
-  g.alloc(visited);
+  NodeVectorProperty<bool> visited(g.get());
   visited.setAll(false);
 
   double curVal = 0.;
 
   // connected component loop
   // set the same value to all connected nodes
-  for (auto n : g.nodes()) {
+  for (auto n : sortIterator(g->nodes(), sortFunc)) {
     if (!visited[n]) {
       queue<node> fifo;
       fifo.push(n);
@@ -420,9 +408,9 @@ bool MCLClustering::run() {
 
       while (!fifo.empty()) {
         node nq = fifo.front();
-        result->setNodeValue(tlpNodes[nq.id], curVal);
+        result->setNodeValue(inverseNodeMapping[nq], curVal);
         fifo.pop();
-        for (auto ni : g.adj(nq)) {
+        for (auto ni : g->getInOutNodes(nq)) {
           if (!visited[ni]) {
             fifo.push(ni);
             visited[ni] = true;
