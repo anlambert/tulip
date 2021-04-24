@@ -64,7 +64,8 @@ jobs:
       - name: Install Talipot core build
         working-directory: ./build
         run: make -j4 install
-      - name: Run Talipot core build unit tests
+      - if: matrix.config.os == 'macos-10.15'
+        name: Run Talipot core build unit tests
         working-directory: ./build
         run: make tests
       - name: Configure Talipot complete build with CMake
@@ -78,7 +79,8 @@ jobs:
       - name: Install Talipot complete build
         working-directory: ./build
         run: make -j4 install
-      - name: Run Talipot complete build unit tests
+      - if: matrix.config.os == 'macos-10.15'
+        name: Run Talipot complete build unit tests
         working-directory: ./build
         run: make tests
       - name: Generate Talipot dmg bundle
