@@ -12,9 +12,7 @@
  */
 
 #include <cppunit/ui/text/TestRunner.h>
-#include <cppunit/TextOutputter.h>
 #include <cppunit/TestResultCollector.h>
-#include <cppunit/TestResult.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
 #include <talipot/TlpTools.h>
 #ifndef NDEBUG
@@ -24,6 +22,7 @@
 
 #include <CrashHandler.h>
 
+using namespace CppUnit;
 using namespace std;
 using namespace tlp;
 
@@ -52,16 +51,9 @@ int main() {
   PluginLibraryLoader::loadPluginsFromDir(talipotBuildDir + "/plugins/selection", pLoader);
   PluginLibraryLoader::loadPluginsFromDir(talipotBuildDir + "/plugins/sizes", pLoader);
 
-  CPPUNIT_NS::TestResult controller;
-  CPPUNIT_NS::TestResultCollector result;
-  controller.addListener(&result);
-
-  CPPUNIT_NS::TextUi::TestRunner runner;
+  TextUi::TestRunner runner;
   runner.addTest(CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest());
-  runner.run(controller);
+  runner.run();
 
-  CPPUNIT_NS::TextOutputter stdOut(&result, cout);
-  stdOut.write();
-
-  return result.wasSuccessful() ? EXIT_SUCCESS : EXIT_FAILURE;
+  return runner.result().wasSuccessful() ? EXIT_SUCCESS : EXIT_FAILURE;
 }

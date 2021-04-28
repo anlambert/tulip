@@ -12,15 +12,14 @@
  */
 
 #include <cppunit/ui/text/TestRunner.h>
-#include <cppunit/TextOutputter.h>
 #include <cppunit/TestResultCollector.h>
-#include <cppunit/TestResult.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
 
 #include <talipot/TlpTools.h>
 
 #include <CrashHandler.h>
 
+using namespace CppUnit;
 using namespace std;
 using namespace tlp;
 
@@ -30,16 +29,10 @@ int main() {
 
   initTalipotLib();
 
-  CPPUNIT_NS::TestResult controller;
-  CPPUNIT_NS::TestResultCollector result;
-  controller.addListener(&result);
+  TextUi::TestRunner runner;
 
-  CPPUNIT_NS::TextUi::TestRunner runner;
-  runner.addTest(CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest());
-  runner.run(controller);
+  runner.addTest(TestFactoryRegistry::getRegistry().makeTest());
+  runner.run();
 
-  CPPUNIT_NS::TextOutputter stdOut(&result, cout);
-  stdOut.write();
-
-  return result.wasSuccessful() ? EXIT_SUCCESS : EXIT_FAILURE;
+  return runner.result().wasSuccessful() ? EXIT_SUCCESS : EXIT_FAILURE;
 }
