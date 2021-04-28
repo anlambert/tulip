@@ -19,7 +19,7 @@
 
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // orientation
     "Choose a desired orientation.",
 
@@ -37,20 +37,20 @@ static const char *paramHelp[] = {
 
 //====================================================================
 void addOrientationParameters(LayoutAlgorithm *pLayout) {
-  pLayout->addInParameter<StringCollection>(ORIENTATION_ID, paramHelp[0], ORIENTATION, true,
+  pLayout->addInParameter<StringCollection>(ORIENTATION_ID, paramHelp[0].data(), ORIENTATION, true,
                                             "<b>up to down</b> <br> <b>down to up</b> <br> "
                                             "<b>right to left</b> <br> <b>left to right</b>");
 }
 
 //====================================================================
 void addOrthogonalParameters(LayoutAlgorithm *pLayout) {
-  pLayout->addInParameter<bool>(ORTHOGONAL, paramHelp[1], "false");
+  pLayout->addInParameter<bool>(ORTHOGONAL, paramHelp[1].data(), "false");
 }
 
 //====================================================================
 void addSpacingParameters(LayoutAlgorithm *pLayout) {
-  pLayout->addInParameter<float>("layer spacing", paramHelp[2], "64.");
-  pLayout->addInParameter<float>("node spacing", paramHelp[3], "18.");
+  pLayout->addInParameter<float>("layer spacing", paramHelp[2].data(), "64.");
+  pLayout->addInParameter<float>("node spacing", paramHelp[3].data(), "18.");
 }
 void getSpacingParameters(DataSet *dataSet, float &nodeSpacing, float &layerSpacing) {
   layerSpacing = 64.;
@@ -64,9 +64,9 @@ void getSpacingParameters(DataSet *dataSet, float &nodeSpacing, float &layerSpac
 //====================================================================
 void addNodeSizePropertyParameter(LayoutAlgorithm *pLayout, bool inout) {
   if (inout) {
-    pLayout->addInOutParameter<SizeProperty>("node size", paramHelp[4], "viewSize");
+    pLayout->addInOutParameter<SizeProperty>("node size", paramHelp[4].data(), "viewSize");
   } else {
-    pLayout->addInParameter<SizeProperty>("node size", paramHelp[4], "viewSize");
+    pLayout->addInParameter<SizeProperty>("node size", paramHelp[4].data(), "viewSize");
   }
 }
 

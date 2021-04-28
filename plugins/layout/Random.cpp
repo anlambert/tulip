@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -13,7 +13,7 @@
 
 #include "Random.h"
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // 3D layout
     "If true, the layout is computed in 3D, else it is computed in 2D."};
 
@@ -23,7 +23,7 @@ using namespace std;
 using namespace tlp;
 
 Random::Random(const tlp::PluginContext *context) : LayoutAlgorithm(context) {
-  addInParameter<bool>("3D layout", paramHelp[0], "false");
+  addInParameter<bool>("3D layout", paramHelp[0].data(), "false");
 }
 
 bool Random::run() {

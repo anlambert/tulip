@@ -185,7 +185,7 @@ bool tokenize(const string &str, vector<string> &tokens, const string &separator
 }
 } // namespace
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // filename
     "This parameter indicates the pathname of the file in UCINET DL format to import.",
 
@@ -207,8 +207,8 @@ public:
       : ImportModule(context), nbNodes(0), defaultMetric("weight"), n(0), nr(0), nc(0), nm(0),
         current(0), dl_found(false), diagonal(true), diagonal_found(false), labels_known(false),
         title_found(false), expectedLine(DL_HEADER), embedding(DL_NONE), dataFormat(DL_FM) {
-    addInParameter<string>("file::filename", paramHelp[0], "");
-    addInParameter<string>("Default metric", paramHelp[1], "weight");
+    addInParameter<string>("file::filename", paramHelp[0].data(), "");
+    addInParameter<string>("Default metric", paramHelp[1].data(), "weight");
   }
 
   ~ImportUCINET() override = default;

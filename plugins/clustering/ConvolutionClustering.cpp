@@ -16,7 +16,7 @@
 
 using namespace std;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // metric
     "An existing node metric property."};
 
@@ -24,7 +24,7 @@ namespace tlp {
 
 ConvolutionClustering::ConvolutionClustering(PluginContext *context)
     : DoubleAlgorithm(context), metric(nullptr) {
-  addInParameter<NumericProperty *>("metric", paramHelp[0], "viewMetric", false);
+  addInParameter<NumericProperty *>("metric", paramHelp[0].data(), "viewMetric", false);
 }
 
 // convolution function, build a triangular function center in 0 with a width width and a

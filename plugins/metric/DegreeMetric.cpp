@@ -20,7 +20,7 @@ PLUGIN(DegreeMetric)
 
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // type
     "Type of degree to compute (in/out/inout).",
 
@@ -41,10 +41,10 @@ static const char *paramHelp[] = {
 #define DEGREE_TYPES "InOut;In;Out;"
 //==============================================================================
 DegreeMetric::DegreeMetric(const tlp::PluginContext *context) : DoubleAlgorithm(context) {
-  addInParameter<StringCollection>(DEGREE_TYPE, paramHelp[0], DEGREE_TYPES, true,
+  addInParameter<StringCollection>(DEGREE_TYPE, paramHelp[0].data(), DEGREE_TYPES, true,
                                    "<b>InOut</b> <br> <b>In</b> <br> <b>Out</b>");
-  addInParameter<NumericProperty *>("metric", paramHelp[1], "", false);
-  addInParameter<bool>("norm", paramHelp[2], "false", false);
+  addInParameter<NumericProperty *>("metric", paramHelp[1].data(), "", false);
+  addInParameter<bool>("norm", paramHelp[2].data(), "false", false);
 }
 //==================================================================
 bool DegreeMetric::run() {

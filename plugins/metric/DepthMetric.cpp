@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -21,13 +21,13 @@ PLUGIN(DepthMetric)
 using namespace std;
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // edge weight
     "This parameter defines the metric used for edge weights."};
 
 DepthMetric::DepthMetric(const tlp::PluginContext *context)
     : DoubleAlgorithm(context), edgeWeight(nullptr) {
-  addInParameter<NumericProperty *>("edge weight", paramHelp[0], "", false);
+  addInParameter<NumericProperty *>("edge weight", paramHelp[0].data(), "", false);
 }
 
 // structure below is used to implement dfs loop

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -16,7 +16,7 @@
 using namespace std;
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // nodes
     "Number of nodes in the final graph.",
 
@@ -29,8 +29,8 @@ public:
   PLUGININFORMATION("Complete General Graph", "Auber", "16/12/2002",
                     "Imports a new complete graph.", "1.2", "Graph")
   CompleteGraph(tlp::PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0], "5");
-    addInParameter<bool>("directed", paramHelp[1], "false");
+    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "5");
+    addInParameter<bool>("directed", paramHelp[1].data(), "false");
   }
 
   bool importGraph() override {

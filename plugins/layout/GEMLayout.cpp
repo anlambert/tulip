@@ -18,7 +18,7 @@
 using namespace std;
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // 3D
     "If true, the layout is in 3D else it is computed in 2D.",
 
@@ -79,11 +79,11 @@ GEMLayout::GEMLayout(const tlp::PluginContext *context)
       a_gravity(AGRAVITYDEF), i_oscillation(IOSCILLATIONDEF), a_oscillation(AOSCILLATIONDEF),
       i_rotation(IROTATIONDEF), a_rotation(AROTATIONDEF), i_shake(ISHAKEDEF), a_shake(ASHAKEDEF),
       _dim(2), _nbNodes(0), _useLength(false), metric(nullptr), fixedNodes(nullptr), max_iter(0) {
-  addInParameter<bool>("3D layout", paramHelp[0], "false");
-  addInParameter<NumericProperty *>("edge length", paramHelp[1], "", false);
-  addInParameter<LayoutProperty>("initial layout", paramHelp[2], "", false);
-  addInParameter<BooleanProperty>("unmovable nodes", paramHelp[3], "", false);
-  addInParameter<unsigned int>("max iterations", paramHelp[4], "0");
+  addInParameter<bool>("3D layout", paramHelp[0].data(), "false");
+  addInParameter<NumericProperty *>("edge length", paramHelp[1].data(), "", false);
+  addInParameter<LayoutProperty>("initial layout", paramHelp[2].data(), "", false);
+  addInParameter<BooleanProperty>("unmovable nodes", paramHelp[3].data(), "", false);
+  addInParameter<unsigned int>("max iterations", paramHelp[4].data(), "0");
   addDependency("Connected Component Packing", "1.0");
 }
 //=========================================================

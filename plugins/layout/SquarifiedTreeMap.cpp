@@ -26,7 +26,7 @@ const double DEFAULT_RATIO = 1.4;
 const int DEFAULT_WIDTH = 1024;
 const int DEFAULT_HEIGHT = 1024;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // metric
     "This parameter defines the metric used to estimate the size allocated to each node.",
 
@@ -47,11 +47,11 @@ static const char *paramHelp[] = {
 //====================================================================
 SquarifiedTreeMap::SquarifiedTreeMap(const tlp::PluginContext *context) : LayoutAlgorithm(context) {
   aspectRatio = DEFAULT_RATIO;
-  addInParameter<NumericProperty *>("metric", paramHelp[0], "viewMetric", false);
-  addInParameter<double>("Aspect Ratio", paramHelp[1], "1.");
-  addInParameter<bool>("Treemap Type", paramHelp[2], "false");
-  addOutParameter<SizeProperty>("Node Size", paramHelp[3], "viewSize");
-  addOutParameter<IntegerProperty>("Node Shape", paramHelp[4], "viewShape");
+  addInParameter<NumericProperty *>("metric", paramHelp[0].data(), "viewMetric", false);
+  addInParameter<double>("Aspect Ratio", paramHelp[1].data(), "1.");
+  addInParameter<bool>("Treemap Type", paramHelp[2].data(), "false");
+  addOutParameter<SizeProperty>("Node Size", paramHelp[3].data(), "viewSize");
+  addOutParameter<IntegerProperty>("Node Shape", paramHelp[4].data(), "viewShape");
 }
 
 //====================================================================

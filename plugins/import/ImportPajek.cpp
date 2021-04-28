@@ -32,7 +32,7 @@
 using namespace std;
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // filename
     "This parameter indicates the pathname of the Pajek file (.net or .paj) to import.",
 };
@@ -118,7 +118,7 @@ public:
       : ImportModule(context), nbNodes(0), weights(nullptr), labels(nullptr), layout(nullptr),
         sizes(nullptr), expectedLine(NET_UNKNOWN), partition(nullptr), curNodeId(0),
         vectorProp(nullptr) {
-    addInParameter<string>("file::filename", paramHelp[0], "");
+    addInParameter<string>("file::filename", paramHelp[0].data(), "");
   }
 
   ~ImportPajek() override = default;

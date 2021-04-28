@@ -18,7 +18,7 @@ using namespace tlp;
 static const int WIDTH = 1024;
 static const int HEIGHT = 1024;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // nodes
     "Number of nodes in the final graph.",
 
@@ -43,9 +43,9 @@ public:
   PLUGININFORMATION("Grid Approximation", "Auber", "25/06/2002",
                     "Imports a new grid approximation graph.", "1.0", "Graph")
   SmallWorldGraph(tlp::PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0], "200");
-    addInParameter<unsigned int>("degree", paramHelp[1], "10");
-    addInParameter<bool>("long edge", paramHelp[2], "false");
+    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "200");
+    addInParameter<unsigned int>("degree", paramHelp[1].data(), "10");
+    addInParameter<bool>("long edge", paramHelp[2].data(), "false");
   }
   ~SmallWorldGraph() override = default;
 

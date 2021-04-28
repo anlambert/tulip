@@ -20,7 +20,7 @@
 using namespace std;
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // property
     "Input metric whose values will be mapped to sizes.",
 
@@ -93,18 +93,18 @@ public:
   MetricSizeMapping(const PluginContext *context)
       : SizeAlgorithm(context), entryMetric(nullptr), entrySize(nullptr), xaxis(true), yaxis(true),
         zaxis(true), linearType(true), min(1), max(10), range(0), shift(0) {
-    addInParameter<NumericProperty *>("property", paramHelp[0], "viewMetric");
-    addInParameter<SizeProperty>("input", paramHelp[1], "viewSize");
-    addInParameter<bool>("width", paramHelp[2], "true");
-    addInParameter<bool>("height", paramHelp[3], "true");
-    addInParameter<bool>("depth", paramHelp[4], "false");
-    addInParameter<double>("min size", paramHelp[5], "1");
-    addInParameter<double>("max size", paramHelp[6], "10");
-    addInParameter<StringCollection>(MAPPING_TYPE, paramHelp[7], MAPPING_TYPES, true,
+    addInParameter<NumericProperty *>("property", paramHelp[0].data(), "viewMetric");
+    addInParameter<SizeProperty>("input", paramHelp[1].data(), "viewSize");
+    addInParameter<bool>("width", paramHelp[2].data(), "true");
+    addInParameter<bool>("height", paramHelp[3].data(), "true");
+    addInParameter<bool>("depth", paramHelp[4].data(), "false");
+    addInParameter<double>("min size", paramHelp[5].data(), "1");
+    addInParameter<double>("max size", paramHelp[6].data(), "10");
+    addInParameter<StringCollection>(MAPPING_TYPE, paramHelp[7].data(), MAPPING_TYPES, true,
                                      "<b>linear</b> <br/> <b>uniform</b>");
-    addInParameter<StringCollection>(TARGET_TYPE, paramHelp[8], TARGET_TYPES, true,
+    addInParameter<StringCollection>(TARGET_TYPE, paramHelp[8].data(), TARGET_TYPES, true,
                                      "<b>nodes</b> <br/> <b>edges</b>");
-    addInParameter<StringCollection>("area proportional", paramHelp[7],
+    addInParameter<StringCollection>("area proportional", paramHelp[7].data(),
                                      "Area Proportional;Quadratic/Cubic", true,
                                      "<b>Area Proportional</b> <br/> <b>Quadratic/Cubic</b>");
 

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -17,13 +17,13 @@
 
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // selection
     "Only edges selected in this property (or all edges if no property is given) will be "
     "reversed."};
 
 ReverseEdges::ReverseEdges(tlp::PluginContext *context) : Algorithm(context) {
-  addInParameter<BooleanProperty>("selection", paramHelp[0], "viewSelection", false);
+  addInParameter<BooleanProperty>("selection", paramHelp[0].data(), "viewSelection", false);
 }
 
 bool ReverseEdges::run() {

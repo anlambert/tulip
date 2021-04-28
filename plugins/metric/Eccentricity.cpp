@@ -23,7 +23,7 @@ using namespace tlp;
 
 PLUGIN(EccentricityMetric)
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // closeness centrality
     "If true, the closeness centrality is computed (i.e. the average distance from a node to all "
     "others).",
@@ -43,10 +43,10 @@ static const char *paramHelp[] = {
 
 EccentricityMetric::EccentricityMetric(const tlp::PluginContext *context)
     : DoubleAlgorithm(context), allPaths(false), norm(true), directed(false) {
-  addInParameter<bool>("closeness centrality", paramHelp[0], "false");
-  addInParameter<bool>("norm", paramHelp[1], "true");
-  addInParameter<bool>("directed", paramHelp[2], "false");
-  addInParameter<NumericProperty *>("weight", paramHelp[3], "", false);
+  addInParameter<bool>("closeness centrality", paramHelp[0].data(), "false");
+  addInParameter<bool>("norm", paramHelp[1].data(), "true");
+  addInParameter<bool>("directed", paramHelp[2].data(), "false");
+  addInParameter<NumericProperty *>("weight", paramHelp[3].data(), "", false);
   addOutParameter<double>("graph diameter", "The computed diameter (-1 if not computed)", "-1");
 }
 //====================================================================

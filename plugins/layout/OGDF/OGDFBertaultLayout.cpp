@@ -15,7 +15,7 @@
 
 #include <talipot/OGDFLayoutPluginBase.h>
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // impred
     "Sets impred option.",
 
@@ -35,9 +35,9 @@ public:
                     "1.0", "Force Directed")
   OGDFBertaultLayout(const tlp::PluginContext *context)
       : OGDFLayoutPluginBase(context, tlp::getOGDFLayoutModule<ogdf::BertaultLayout>(context)) {
-    addInParameter<bool>("impred", paramHelp[0], "false", false);
-    addInParameter<int>("iterno", paramHelp[1], "20", false);
-    addInParameter<double>("reqlength", paramHelp[2], "0.0", false);
+    addInParameter<bool>("impred", paramHelp[0].data(), "false", false);
+    addInParameter<int>("iterno", paramHelp[1].data(), "20", false);
+    addInParameter<double>("reqlength", paramHelp[2].data(), "0.0", false);
   }
 
   void beforeCall() override {

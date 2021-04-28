@@ -119,7 +119,7 @@ static const vector<ogdf::FMMMOptions::SmallestCellFinding> smallestCellFinding 
     ogdf::FMMMOptions::SmallestCellFinding::Aluru,
 };
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
 
     // Edge Length Property
     "A numeric property containing unit edge length to use.",
@@ -246,42 +246,45 @@ PLUGIN(OGDFFm3)
 
 OGDFFm3::OGDFFm3(const tlp::PluginContext *context)
     : OGDFLayoutPluginBase(context, tlp::getOGDFLayoutModule<ogdf::FMMMLayout>(context)) {
-  addInParameter<tlp::NumericProperty *>("Edge Length Property", paramHelp[0], "viewMetric", false);
-  addInParameter<tlp::SizeProperty>("Node Size", paramHelp[1], "viewSize", false);
-  addInParameter<double>("Unit edge length", paramHelp[2], "10.0", false);
-  addInParameter<bool>("New initial placement", paramHelp[3], "true");
-  addInParameter<double>("Threshold", paramHelp[4], "0.01");
-  addInParameter<tlp::StringCollection>(ELT_PAGEFORMAT, paramHelp[5], ELT_PAGEFORMATLIST, true,
-                                        pageFormatValuesDescription);
-  addInParameter<tlp::StringCollection>(ELT_QUALITYVSSPEED, paramHelp[6], ELT_QUALITYVSSPEEDLIST,
-                                        true, qualityVsSpeedValuesDescription);
-  addInParameter<tlp::StringCollection>(ELT_EDGELENGTHMEASUREMENT, paramHelp[7],
+  addInParameter<tlp::NumericProperty *>("Edge Length Property", paramHelp[0].data(), "viewMetric",
+                                         false);
+  addInParameter<tlp::SizeProperty>("Node Size", paramHelp[1].data(), "viewSize", false);
+  addInParameter<double>("Unit edge length", paramHelp[2].data(), "10.0", false);
+  addInParameter<bool>("New initial placement", paramHelp[3].data(), "true");
+  addInParameter<double>("Threshold", paramHelp[4].data(), "0.01");
+  addInParameter<tlp::StringCollection>(ELT_PAGEFORMAT, paramHelp[5].data(), ELT_PAGEFORMATLIST,
+                                        true, pageFormatValuesDescription);
+  addInParameter<tlp::StringCollection>(ELT_QUALITYVSSPEED, paramHelp[6].data(),
+                                        ELT_QUALITYVSSPEEDLIST, true,
+                                        qualityVsSpeedValuesDescription);
+  addInParameter<tlp::StringCollection>(ELT_EDGELENGTHMEASUREMENT, paramHelp[7].data(),
                                         ELT_EDGELENGTHMEASUREMENTLIST, true,
                                         edgeLengthMeasurementValuesDescription);
-  addInParameter<tlp::StringCollection>(ELT_ALLOWEDPOSITIONS, paramHelp[8],
+  addInParameter<tlp::StringCollection>(ELT_ALLOWEDPOSITIONS, paramHelp[8].data(),
                                         ELT_ALLOWEDPOSITIONSLIST, true,
                                         allowedPositionsValuesDescription);
-  addInParameter<int>("MaxIntPosExponent", paramHelp[18], "40");
-  addInParameter<tlp::StringCollection>(ELT_TIPOVER, paramHelp[9], ELT_TIPOVERLIST, true,
+  addInParameter<int>("MaxIntPosExponent", paramHelp[18].data(), "40");
+  addInParameter<tlp::StringCollection>(ELT_TIPOVER, paramHelp[9].data(), ELT_TIPOVERLIST, true,
                                         "<b>None</b><br> <b>NoGrowingRow</b><br> <b>Always</b>");
-  addInParameter<tlp::StringCollection>(ELT_PRESORT, paramHelp[10], ELT_PRESORTLIST, true,
+  addInParameter<tlp::StringCollection>(ELT_PRESORT, paramHelp[10].data(), ELT_PRESORTLIST, true,
                                         presortValuesDescription);
-  addInParameter<tlp::StringCollection>(ELT_GALAXYCHOICE, paramHelp[11], ELT_GALAXYCHOICELIST, true,
-                                        galaxyChoiceValuesDescription);
-  addInParameter<tlp::StringCollection>(ELT_MAXITERCHANGE, paramHelp[12], ELT_MAXITERCHANGELIST,
-                                        true, maxIterChangeValuesDescription);
-  addInParameter<tlp::StringCollection>(ELT_INITIALPLACEMENTMULT, paramHelp[13],
+  addInParameter<tlp::StringCollection>(ELT_GALAXYCHOICE, paramHelp[11].data(),
+                                        ELT_GALAXYCHOICELIST, true, galaxyChoiceValuesDescription);
+  addInParameter<tlp::StringCollection>(ELT_MAXITERCHANGE, paramHelp[12].data(),
+                                        ELT_MAXITERCHANGELIST, true,
+                                        maxIterChangeValuesDescription);
+  addInParameter<tlp::StringCollection>(ELT_INITIALPLACEMENTMULT, paramHelp[13].data(),
                                         ELT_INITIALPLACEMENTMULTLIST, true,
                                         "<b>Simple</b> <br> <b>Advanced</b>");
-  addInParameter<tlp::StringCollection>(ELT_FORCEMODEL, paramHelp[14], ELT_FORCEMODELLIST, true,
-                                        forceModelValuesDescription);
-  addInParameter<tlp::StringCollection>(ELT_REPULSIVEFORCEMETHOD, paramHelp[15],
+  addInParameter<tlp::StringCollection>(ELT_FORCEMODEL, paramHelp[14].data(), ELT_FORCEMODELLIST,
+                                        true, forceModelValuesDescription);
+  addInParameter<tlp::StringCollection>(ELT_REPULSIVEFORCEMETHOD, paramHelp[15].data(),
                                         ELT_REPULSIVEFORCEMETHODLIST, true,
                                         repulsiveForceValuesDescription);
-  addInParameter<tlp::StringCollection>(ELT_REDUCEDTREECONSTRCUCTION, paramHelp[16],
+  addInParameter<tlp::StringCollection>(ELT_REDUCEDTREECONSTRCUCTION, paramHelp[16].data(),
                                         ELT_REDUCEDTREECONSTRCUCTIONLIST, true,
                                         "<b>PathByPath</b> <br> <b>SubtreeBySubtree</b>");
-  addInParameter<tlp::StringCollection>(ELT_SMALLESTCELLFINDING, paramHelp[17],
+  addInParameter<tlp::StringCollection>(ELT_SMALLESTCELLFINDING, paramHelp[17].data(),
                                         ELT_SMALLESTCELLFINDINGLIST, true,
                                         smallestCellFindingValuesDescription);
 }

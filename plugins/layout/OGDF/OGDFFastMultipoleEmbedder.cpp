@@ -15,7 +15,7 @@
 
 #include <ogdf/energybased/FastMultipoleEmbedder.h>
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // number of iterations
     "The maximum number of iterations.",
 
@@ -46,12 +46,12 @@ public:
       : OGDFLayoutPluginBase(context,
                              tlp::getOGDFLayoutModule<ogdf::FastMultipoleEmbedder>(context)),
         fme(static_cast<ogdf::FastMultipoleEmbedder *>(ogdfLayoutAlgo)) {
-    addInParameter<int>("number of iterations", paramHelp[0], "100");
-    addInParameter<int>("number of coefficients", paramHelp[1], "5");
-    addInParameter<bool>("randomize layout", paramHelp[2], "true");
-    addInParameter<double>("default node size", paramHelp[3], "20.0");
-    addInParameter<double>("default edge length", paramHelp[4], "1.0");
-    addInParameter<int>("number of threads", paramHelp[5], "3");
+    addInParameter<int>("number of iterations", paramHelp[0].data(), "100");
+    addInParameter<int>("number of coefficients", paramHelp[1].data(), "5");
+    addInParameter<bool>("randomize layout", paramHelp[2].data(), "true");
+    addInParameter<double>("default node size", paramHelp[3].data(), "20.0");
+    addInParameter<double>("default edge length", paramHelp[4].data(), "1.0");
+    addInParameter<int>("number of threads", paramHelp[5].data(), "3");
   }
 
   void beforeCall() override {

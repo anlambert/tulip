@@ -29,7 +29,7 @@ float edgeNodeSpacing = 2;
 
 //===============================================================
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // orientation
     "This parameter enables to choose the orientation of the drawing.",
 
@@ -47,11 +47,11 @@ static const char *paramHelp[] = {
 //====================================================
 MixedModel::MixedModel(const tlp::PluginContext *context) : LayoutAlgorithm(context) {
   addNodeSizePropertyParameter(this, true /* inout */);
-  addInParameter<StringCollection>("orientation", paramHelp[0], ORIENTATION, true,
+  addInParameter<StringCollection>("orientation", paramHelp[0].data(), ORIENTATION, true,
                                    "<b>vertical</b> <br> <b>horizontal</b>");
-  addInParameter<float>("y node-node spacing", paramHelp[1], "2");
-  addInParameter<float>("x node-node and edge-node spacing", paramHelp[2], "2");
-  addOutParameter<IntegerProperty>("shape property", paramHelp[3], "viewShape");
+  addInParameter<float>("y node-node spacing", paramHelp[1].data(), "2");
+  addInParameter<float>("x node-node and edge-node spacing", paramHelp[2].data(), "2");
+  addOutParameter<IntegerProperty>("shape property", paramHelp[3].data(), "viewShape");
   addDependency("Connected Component Packing", "1.0");
 }
 //====================================================

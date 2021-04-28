@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -15,7 +15,7 @@
 
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // input
     "Property to stringify values on labels.",
 
@@ -34,10 +34,10 @@ public:
                     "Maps the labels of the graph elements onto the values of a given property.",
                     "1.0", "")
   ToLabels(const tlp::PluginContext *context) : StringAlgorithm(context) {
-    addInParameter<PropertyInterface *>("input", paramHelp[0], "viewMetric", true);
-    addInParameter<BooleanProperty>("selection", paramHelp[1], "", false);
-    addInParameter<bool>("nodes", paramHelp[2], "true");
-    addInParameter<bool>("edges", paramHelp[3], "true");
+    addInParameter<PropertyInterface *>("input", paramHelp[0].data(), "viewMetric", true);
+    addInParameter<BooleanProperty>("selection", paramHelp[1].data(), "", false);
+    addInParameter<bool>("nodes", paramHelp[2].data(), "true");
+    addInParameter<bool>("edges", paramHelp[3].data(), "true");
   }
 
   bool run() override {

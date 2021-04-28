@@ -25,7 +25,7 @@ static const int NB_UPDOWN_SWEEP = 4;
 
 //================================================================================
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // orientation
     "This parameter enables to choose the orientation of the drawing."};
 
@@ -34,7 +34,7 @@ static const char *paramHelp[] = {
 //================================================================================
 HierarchicalGraph::HierarchicalGraph(const tlp::PluginContext *context) : LayoutAlgorithm(context) {
   addNodeSizePropertyParameter(this);
-  addInParameter<StringCollection>("orientation", paramHelp[0], ORIENTATION, true,
+  addInParameter<StringCollection>("orientation", paramHelp[0].data(), ORIENTATION, true,
                                    "<b>horizontal</b> <br> <b>vertical</b>");
   addSpacingParameters(this);
   addDependency("Hierarchical Tree (R-T Extended)", "1.1");

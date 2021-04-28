@@ -19,7 +19,7 @@
 #define ELT_ATTRACTIONFORMULA "Attraction formula"
 #define ELT_ATTRACTIONFORMULALIST "Fruchterman/Reingold;GEM"
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // number of rounds
     "The maximal number of rounds per node.",
 
@@ -74,21 +74,21 @@ public:
 
 OGDFGemFrick::OGDFGemFrick(const tlp::PluginContext *context)
     : OGDFLayoutPluginBase(context, tlp::getOGDFLayoutModule<ogdf::GEMLayout>(context)) {
-  addInParameter<int>("number of rounds", paramHelp[0], "30000");
-  addInParameter<double>("minimal temperature", paramHelp[1], "0.005");
-  addInParameter<double>("initial temperature", paramHelp[2], "12.0");
-  addInParameter<double>("gravitational constant", paramHelp[3], "0.0625");
-  addInParameter<double>("desired length", paramHelp[4], "5.0");
-  addInParameter<double>("maximal disturbance", paramHelp[5], "0.0");
-  addInParameter<double>("rotation angle", paramHelp[6], "1.04719755");
-  addInParameter<double>("oscillation angle", paramHelp[7], "1.57079633");
-  addInParameter<double>("rotation sensitivity", paramHelp[8], "0.01");
-  addInParameter<double>("oscillation sensitivity", paramHelp[9], "0.3");
-  addInParameter<tlp::StringCollection>(ELT_ATTRACTIONFORMULA, paramHelp[10],
+  addInParameter<int>("number of rounds", paramHelp[0].data(), "30000");
+  addInParameter<double>("minimal temperature", paramHelp[1].data(), "0.005");
+  addInParameter<double>("initial temperature", paramHelp[2].data(), "12.0");
+  addInParameter<double>("gravitational constant", paramHelp[3].data(), "0.0625");
+  addInParameter<double>("desired length", paramHelp[4].data(), "5.0");
+  addInParameter<double>("maximal disturbance", paramHelp[5].data(), "0.0");
+  addInParameter<double>("rotation angle", paramHelp[6].data(), "1.04719755");
+  addInParameter<double>("oscillation angle", paramHelp[7].data(), "1.57079633");
+  addInParameter<double>("rotation sensitivity", paramHelp[8].data(), "0.01");
+  addInParameter<double>("oscillation sensitivity", paramHelp[9].data(), "0.3");
+  addInParameter<tlp::StringCollection>(ELT_ATTRACTIONFORMULA, paramHelp[10].data(),
                                         ELT_ATTRACTIONFORMULALIST, true,
                                         "<b>Fruchterman/Reingold</b> <br> <b>GEM</b>");
-  addInParameter<double>("minDistCC", paramHelp[11], "20");
-  addInParameter<double>("pageRatio", paramHelp[12], "1.0");
+  addInParameter<double>("minDistCC", paramHelp[11].data(), "20");
+  addInParameter<double>("pageRatio", paramHelp[12].data(), "1.0");
 }
 
 void OGDFGemFrick::beforeCall() {

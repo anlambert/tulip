@@ -97,7 +97,7 @@ private:
 };
 
 //==============================================================================================================
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // metric
     "An existing edge metric property.",
 
@@ -109,9 +109,9 @@ static const char *paramHelp[] = {
 //==============================================================================================================
 LinkCommunities::LinkCommunities(const tlp::PluginContext *context)
     : DoubleAlgorithm(context), metric(nullptr) {
-  addInParameter<NumericProperty *>("metric", paramHelp[0], "", false);
-  addInParameter<bool>("Group isthmus", paramHelp[1], "true", true);
-  addInParameter<unsigned int>("Number of steps", paramHelp[2], "200", true);
+  addInParameter<NumericProperty *>("metric", paramHelp[0].data(), "", false);
+  addInParameter<bool>("Group isthmus", paramHelp[1].data(), "true", true);
+  addInParameter<unsigned int>("Number of steps", paramHelp[2].data(), "200", true);
 }
 //==============================================================================================================
 LinkCommunities::~LinkCommunities() = default;

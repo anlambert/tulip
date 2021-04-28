@@ -15,7 +15,7 @@
 
 #include <talipot/OGDFLayoutPluginBase.h>
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // transpose
     "If true, transpose the layout vertically."};
 
@@ -30,7 +30,7 @@ public:
   OGDFUpwardPlanarization(const tlp::PluginContext *context)
       : OGDFLayoutPluginBase(context,
                              tlp::getOGDFLayoutModule<ogdf::UpwardPlanarizationLayout>(context)) {
-    addInParameter<bool>("transpose", paramHelp[0], "false");
+    addInParameter<bool>("transpose", paramHelp[0].data(), "false");
   }
 
   void afterCall() override {

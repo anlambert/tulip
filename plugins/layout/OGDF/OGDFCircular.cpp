@@ -15,7 +15,7 @@
 
 #include <talipot/OGDFLayoutPluginBase.h>
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // minDistCircle
     "The minimal distance between nodes on a circle.",
 
@@ -38,11 +38,11 @@ public:
                     "Implements a circular layout.", "1.4", "Basic")
   OGDFCircular(const tlp::PluginContext *context)
       : OGDFLayoutPluginBase(context, tlp::getOGDFLayoutModule<ogdf::CircularLayout>(context)) {
-    addInParameter<double>("minDistCircle", paramHelp[0], "20.0", false);
-    addInParameter<double>("minDistLevel", paramHelp[1], "20.0", false);
-    addInParameter<double>("minDistSibling", paramHelp[2], "10.0", false);
-    addInParameter<double>("minDistCC", paramHelp[3], "20.0", false);
-    addInParameter<double>("pageRatio", paramHelp[4], "1.0", false);
+    addInParameter<double>("minDistCircle", paramHelp[0].data(), "20.0", false);
+    addInParameter<double>("minDistLevel", paramHelp[1].data(), "20.0", false);
+    addInParameter<double>("minDistSibling", paramHelp[2].data(), "10.0", false);
+    addInParameter<double>("minDistCC", paramHelp[3].data(), "20.0", false);
+    addInParameter<double>("pageRatio", paramHelp[4].data(), "1.0", false);
   }
 
   void beforeCall() override {

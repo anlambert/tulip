@@ -18,7 +18,7 @@ using namespace std;
 using namespace tlp;
 
 namespace {
-const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // nodes
     "Number of nodes in the final graph.",
 
@@ -46,10 +46,10 @@ public:
                     "For all pairs of vertices v,w there is an edge (v,w) with probability p.",
                     "1.1", "Graph")
   ERRandomGraph(tlp::PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0], "50");
-    addInParameter<double>("probability", paramHelp[1], "0.5");
-    addInParameter<bool>("self loop", paramHelp[2], "false");
-    addInParameter<bool>("directed", paramHelp[3], "false");
+    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "50");
+    addInParameter<double>("probability", paramHelp[1].data(), "0.5");
+    addInParameter<bool>("self loop", paramHelp[2].data(), "false");
+    addInParameter<bool>("directed", paramHelp[3].data(), "false");
   }
 
   bool importGraph() override {

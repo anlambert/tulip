@@ -15,7 +15,7 @@
 
 #include <talipot/OGDFLayoutPluginBase.h>
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // stop tolerance
     "The value for the stop tolerance, below which the system is regarded stable (balanced) and "
     "the optimization stopped.",
@@ -50,13 +50,13 @@ public:
                     "1.0", "Force Directed")
   OGDFKamadaKawai(const tlp::PluginContext *context)
       : OGDFLayoutPluginBase(context, tlp::getOGDFLayoutModule<ogdf::SpringEmbedderKK>(context)) {
-    addInParameter<double>("stop tolerance", paramHelp[0], "0.001");
-    addInParameter<bool>("used layout", paramHelp[1], "true");
-    addInParameter<double>("zero length", paramHelp[2], "0");
-    addInParameter<double>("edge length", paramHelp[3], "0");
-    addInParameter<bool>("compute max iterations", paramHelp[4], "true");
-    addInParameter<int>("global iterations", paramHelp[5], "50");
-    addInParameter<int>("local iterations", paramHelp[6], "50");
+    addInParameter<double>("stop tolerance", paramHelp[0].data(), "0.001");
+    addInParameter<bool>("used layout", paramHelp[1].data(), "true");
+    addInParameter<double>("zero length", paramHelp[2].data(), "0");
+    addInParameter<double>("edge length", paramHelp[3].data(), "0");
+    addInParameter<bool>("compute max iterations", paramHelp[4].data(), "true");
+    addInParameter<int>("global iterations", paramHelp[5].data(), "50");
+    addInParameter<int>("local iterations", paramHelp[6].data(), "50");
   }
 
   void beforeCall() override {

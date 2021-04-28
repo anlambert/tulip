@@ -19,7 +19,7 @@ PLUGIN(IdMetric)
 
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // target
     "Whether the id is copied only for nodes, only for edges, or for both."};
 
@@ -31,7 +31,7 @@ static const char *paramHelp[] = {
 
 //==================================================================
 IdMetric::IdMetric(const tlp::PluginContext *context) : DoubleAlgorithm(context) {
-  addInParameter<StringCollection>(TARGET_TYPE, paramHelp[0], TARGET_TYPES, true,
+  addInParameter<StringCollection>(TARGET_TYPE, paramHelp[0].data(), TARGET_TYPES, true,
                                    "<b>both</b> <br> </b>node</b>s <br> <b>edges</b>");
 
   // result needs to be an inout parameter

@@ -149,7 +149,7 @@ void ConeTreeExtended::calcLayout(tlp::node n, std::unordered_map<tlp::node, dou
   }
 }
 //===============================================================
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // orientation
     "This parameter enables to choose the orientation of the drawing.",
 
@@ -160,9 +160,9 @@ static const char *paramHelp[] = {
 ConeTreeExtended::ConeTreeExtended(const tlp::PluginContext *context)
     : LayoutAlgorithm(context), spaceBetweenLevels(10) {
   addNodeSizePropertyParameter(this);
-  addInParameter<StringCollection>("orientation", paramHelp[0], ORIENTATION, true,
+  addInParameter<StringCollection>("orientation", paramHelp[0].data(), ORIENTATION, true,
                                    "<b>vertical</b> <br> <b>horizontal</b>");
-  addInParameter<float>("space between levels", paramHelp[1], "1.0");
+  addInParameter<float>("space between levels", paramHelp[1].data(), "1.0");
 }
 //===============================================================
 ConeTreeExtended::~ConeTreeExtended() = default;

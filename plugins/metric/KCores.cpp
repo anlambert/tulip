@@ -71,7 +71,7 @@ public:
 };
 
 //========================================================================================
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // direction
     "This parameter indicates the direction used to compute K-Cores values.",
 
@@ -84,9 +84,9 @@ static const char *paramHelp[] = {
 #define OUT 2
 //========================================================================================
 KCores::KCores(const PluginContext *context) : DoubleAlgorithm(context) {
-  addInParameter<StringCollection>(DEGREE_TYPE, paramHelp[0], DEGREE_TYPES, true,
+  addInParameter<StringCollection>(DEGREE_TYPE, paramHelp[0].data(), DEGREE_TYPES, true,
                                    "<b>InOut</b> <br> <b>In</b> <br> <b>Out</b>");
-  addInParameter<NumericProperty *>("metric", paramHelp[1], "", false);
+  addInParameter<NumericProperty *>("metric", paramHelp[1].data(), "", false);
 }
 //========================================================================================
 KCores::~KCores() = default;

@@ -17,7 +17,7 @@
 using namespace std;
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // n
     "Number of nodes."};
 
@@ -39,7 +39,7 @@ struct LiuEtAl : public ImportModule {
                     "1.0", "Social network")
 
   LiuEtAl(PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0], "300");
+    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "300");
   }
 
   ~LiuEtAl() override = default;

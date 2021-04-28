@@ -19,7 +19,7 @@ PLUGIN(RandomMetric)
 
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // target
     "Whether metric is computed only for nodes, only for edges, or for both."};
 
@@ -30,7 +30,7 @@ static const char *paramHelp[] = {
 #define BOTH_TARGET 0
 
 RandomMetric::RandomMetric(const tlp::PluginContext *context) : DoubleAlgorithm(context) {
-  addInParameter<StringCollection>(TARGET_TYPE, paramHelp[0], TARGET_TYPES, true,
+  addInParameter<StringCollection>(TARGET_TYPE, paramHelp[0].data(), TARGET_TYPES, true,
                                    "<b>both</b> <br> <b>nodes</b> <br> <b>edges</b>");
 
   // result needs to be an inout parameter

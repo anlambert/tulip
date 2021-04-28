@@ -17,7 +17,7 @@
 #include <talipot/StringCollection.h>
 #include <talipot/DoubleProperty.h>
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // terminationCriterion
     "Tells which TERMINATION_CRITERIA should be used.",
 
@@ -60,16 +60,16 @@ public:
   OGDFStressMinimization(const tlp::PluginContext *context)
       : OGDFLayoutPluginBase(context, tlp::getOGDFLayoutModule<ogdf::StressMinimization>(context)) {
     addInParameter<tlp::StringCollection>(
-        "terminationCriterion", paramHelp[0], "None;PositionDifference;Stress", true,
+        "terminationCriterion", paramHelp[0].data(), "None;PositionDifference;Stress", true,
         "<b>None</b> <br> <b>PositionDifference</b> <br> <b>Stress</b>");
-    addInParameter<bool>("fixXCoordinates", paramHelp[1], "false");
-    addInParameter<bool>("fixYCoordinates", paramHelp[2], "false");
-    addInParameter<bool>("hasInitialLayout", paramHelp[3], "false");
-    addInParameter<bool>("layoutComponentsSeparately", paramHelp[4], "false");
-    addInParameter<int>("numberOfIterations", paramHelp[5], "200");
-    addInParameter<double>("edgeCosts", paramHelp[6], "100");
-    addInParameter<bool>("useEdgeCostsProperty", paramHelp[7], "false");
-    addInParameter<tlp::NumericProperty *>("edgeCostsProperty", paramHelp[8], "viewMetric");
+    addInParameter<bool>("fixXCoordinates", paramHelp[1].data(), "false");
+    addInParameter<bool>("fixYCoordinates", paramHelp[2].data(), "false");
+    addInParameter<bool>("hasInitialLayout", paramHelp[3].data(), "false");
+    addInParameter<bool>("layoutComponentsSeparately", paramHelp[4].data(), "false");
+    addInParameter<int>("numberOfIterations", paramHelp[5].data(), "200");
+    addInParameter<double>("edgeCosts", paramHelp[6].data(), "100");
+    addInParameter<bool>("useEdgeCostsProperty", paramHelp[7].data(), "false");
+    addInParameter<tlp::NumericProperty *>("edgeCostsProperty", paramHelp[8].data(), "viewMetric");
   }
 
   void beforeCall() override {

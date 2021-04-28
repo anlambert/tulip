@@ -19,7 +19,7 @@
 using namespace std;
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // directed
     "Indicates if the graph should be considered as directed or not.",
 
@@ -75,10 +75,10 @@ public:
   PLUGININFORMATION("Betweenness Centrality", "David Auber", "03/01/2005",
                     "Computes the betweenness centrality.", "1.3", "Graph")
   BetweennessCentrality(const PluginContext *context) : DoubleAlgorithm(context) {
-    addInParameter<bool>("directed", paramHelp[0], "false");
-    addInParameter<bool>("norm", paramHelp[1], "false", false);
-    addInParameter<NumericProperty *>("weight", paramHelp[2], "", false);
-    addOutParameter<double>("average path length", paramHelp[3], "-1");
+    addInParameter<bool>("directed", paramHelp[0].data(), "false");
+    addInParameter<bool>("norm", paramHelp[1].data(), "false", false);
+    addInParameter<NumericProperty *>("weight", paramHelp[2].data(), "", false);
+    addOutParameter<double>("average path length", paramHelp[3].data(), "-1");
   }
   bool run() override {
     result->setAllNodeValue(0.0);

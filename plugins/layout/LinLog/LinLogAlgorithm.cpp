@@ -17,7 +17,7 @@
 using namespace std;
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // 3D
     "If true the layout is in 3D else it is computed in 2D",
 
@@ -48,15 +48,15 @@ static const char *paramHelp[] = {
     "given the initial position will be computed by the algorithm."};
 
 LinLogAlgorithm::LinLogAlgorithm(const tlp::PluginContext *context) : LayoutAlgorithm(context) {
-  addInParameter<bool>("3D layout", paramHelp[0], "false");
-  addInParameter<bool>("octtree", paramHelp[1], "true");
-  addInParameter<NumericProperty *>("edge weight", paramHelp[2], "", false);
-  addInParameter<unsigned int>("max iterations", paramHelp[3], "100");
-  addInParameter<float>("repulsion exponent", paramHelp[4], "0.0");
-  addInParameter<float>("attraction exponent", paramHelp[5], "1.0");
-  addInParameter<float>("gravitation factor", paramHelp[6], "0.05");
-  addInParameter<BooleanProperty>("skip nodes", paramHelp[7], "", false);
-  addInParameter<LayoutProperty>("initial layout", paramHelp[8], "", false);
+  addInParameter<bool>("3D layout", paramHelp[0].data(), "false");
+  addInParameter<bool>("octtree", paramHelp[1].data(), "true");
+  addInParameter<NumericProperty *>("edge weight", paramHelp[2].data(), "", false);
+  addInParameter<unsigned int>("max iterations", paramHelp[3].data(), "100");
+  addInParameter<float>("repulsion exponent", paramHelp[4].data(), "0.0");
+  addInParameter<float>("attraction exponent", paramHelp[5].data(), "1.0");
+  addInParameter<float>("gravitation factor", paramHelp[6].data(), "0.05");
+  addInParameter<BooleanProperty>("skip nodes", paramHelp[7].data(), "", false);
+  addInParameter<LayoutProperty>("initial layout", paramHelp[8].data(), "", false);
 }
 
 LinLogAlgorithm::~LinLogAlgorithm() = default;

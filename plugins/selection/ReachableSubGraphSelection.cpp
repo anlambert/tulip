@@ -21,7 +21,7 @@ using namespace tlp;
 
 PLUGIN(ReachableSubGraphSelection)
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // edge direction
     "This parameter defines the navigation direction.",
 
@@ -40,11 +40,11 @@ static const char *edgesDirectionLabels[] = {"output edges", "input edges", "all
 
 ReachableSubGraphSelection::ReachableSubGraphSelection(const tlp::PluginContext *context)
     : BooleanAlgorithm(context) {
-  addInParameter<StringCollection>("edge direction", paramHelp[0],
+  addInParameter<StringCollection>("edge direction", paramHelp[0].data(),
                                    "output edges;input edges;all edges", true,
                                    directionValuesDescription);
-  addInParameter<BooleanProperty>("starting nodes", paramHelp[1], "viewSelection");
-  addInParameter<int>("distance", paramHelp[2], "5");
+  addInParameter<BooleanProperty>("starting nodes", paramHelp[1].data(), "viewSelection");
+  addInParameter<int>("distance", paramHelp[2].data(), "5");
   addOutParameter<unsigned int>("#edges selected", "The number of newly selected edges");
   addOutParameter<unsigned int>("#nodes selected", "The number of newly selected nodes");
   // old name

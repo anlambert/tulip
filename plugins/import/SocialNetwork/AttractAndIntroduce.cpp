@@ -17,7 +17,7 @@
 using namespace std;
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // nodes
     "This parameter defines the amount of nodes used to build the graph.",
 
@@ -54,10 +54,10 @@ public:
                     "1.0", "Social network")
 
   AttractAndIntroduce(tlp::PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0], "750");
-    addInParameter<unsigned int>("edges", paramHelp[1], "3150");
-    addInParameter<double>("alpha", paramHelp[2], "0.9");
-    addInParameter<double>("beta", paramHelp[3], "0.3");
+    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "750");
+    addInParameter<unsigned int>("edges", paramHelp[1].data(), "3150");
+    addInParameter<double>("alpha", paramHelp[2].data(), "0.9");
+    addInParameter<double>("beta", paramHelp[3].data(), "0.3");
   }
 
   bool importGraph() override {

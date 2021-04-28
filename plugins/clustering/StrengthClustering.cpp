@@ -176,7 +176,7 @@ double StrengthClustering::findBestThreshold(int numberOfSteps, bool &stopped) {
   return threshold;
 }
 //==============================================================================
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // metric
     "Metric used in order to multiply strength metric computed values."
     "If one is given, the complexity is O(n log(n)), O(n) neither."
@@ -185,7 +185,7 @@ static const char *paramHelp[] = {
 
 //================================================================================
 StrengthClustering::StrengthClustering(PluginContext *context) : DoubleAlgorithm(context) {
-  addInParameter<NumericProperty *>("metric", paramHelp[0], "", false);
+  addInParameter<NumericProperty *>("metric", paramHelp[0].data(), "", false);
   addDependency("Strength", "1.0");
 }
 

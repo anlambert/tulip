@@ -15,7 +15,7 @@
 
 #include <talipot/OGDFLayoutPluginBase.h>
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // Even angles
     "Subtrees may be assigned even angles or angles depending on their size."};
 
@@ -31,7 +31,7 @@ public:
   OGDFBalloon(const tlp::PluginContext *context)
       : OGDFLayoutPluginBase(context, tlp::getOGDFLayoutModule<ogdf::BalloonLayout>(context)),
         balloon(static_cast<ogdf::BalloonLayout *>(ogdfLayoutAlgo)) {
-    addInParameter<bool>("Even angles", paramHelp[0], "false", false);
+    addInParameter<bool>("Even angles", paramHelp[0].data(), "false", false);
   }
 
   void beforeCall() override {

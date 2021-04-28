@@ -326,7 +326,7 @@ private:
 };
 
 //========================================================================================
-static const char *paramHelp[] = { // metric
+static constexpr std::string_view paramHelp[] = { // metric
     "An existing edge weight metric property. If it is not defined "
     "all edges have a weight of 1.0.",
 
@@ -340,8 +340,8 @@ static const char *paramHelp[] = { // metric
 
 LouvainClustering::LouvainClustering(const tlp::PluginContext *context)
     : DoubleAlgorithm(context), new_mod(0.) {
-  addInParameter<NumericProperty *>("metric", paramHelp[0], "", false);
-  addInParameter<double>("precision", paramHelp[1], "0.000001", false);
+  addInParameter<NumericProperty *>("metric", paramHelp[0].data(), "", false);
+  addInParameter<double>("precision", paramHelp[1].data(), "0.000001", false);
   addOutParameter<double>("modularity", "The computed modularity");
   addOutParameter<unsigned int>("#communities", "The number of communities found");
 }

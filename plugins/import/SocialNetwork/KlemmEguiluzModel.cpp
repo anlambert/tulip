@@ -17,7 +17,7 @@
 using namespace std;
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // nodes
     "Number of nodes.",
 
@@ -45,9 +45,9 @@ struct KlemmEguiluzModel : public ImportModule {
                     "1.0", "Social network")
 
   KlemmEguiluzModel(PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0], "200");
-    addInParameter<unsigned int>("m", paramHelp[1], "10");
-    addInParameter<double>("mu", paramHelp[2], "0.5");
+    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "200");
+    addInParameter<unsigned int>("m", paramHelp[1].data(), "10");
+    addInParameter<double>("mu", paramHelp[2].data(), "0.5");
   }
 
   bool importGraph() override {

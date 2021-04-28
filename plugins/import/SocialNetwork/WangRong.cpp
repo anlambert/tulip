@@ -17,7 +17,7 @@
 using namespace std;
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // n
     "Number of nodes.",
 
@@ -46,9 +46,9 @@ struct WangRong : public ImportModule {
                     "1.0", "Social network")
 
   WangRong(PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0], "300");
-    addInParameter<unsigned int>("m0", paramHelp[1], "5");
-    addInParameter<unsigned int>("m", paramHelp[2], "5");
+    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "300");
+    addInParameter<unsigned int>("m0", paramHelp[1].data(), "5");
+    addInParameter<unsigned int>("m", paramHelp[2].data(), "5");
   }
 
   bool importGraph() override {

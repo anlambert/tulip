@@ -55,7 +55,7 @@ struct edgeS_comp {
 };
 } // namespace std
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // nodes
     "Number of nodes in the final graph.",
 
@@ -79,9 +79,9 @@ public:
   PLUGININFORMATION("Random General Graph", "Auber", "16/06/2002",
                     "Imports a new randomly generated graph.", "2.0", "Graph")
   RandomGraph(tlp::PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0], "500");
-    addInParameter<unsigned int>("edges", paramHelp[1], "1000");
-    addInParameter<bool>("directed", paramHelp[2], "False", false);
+    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "500");
+    addInParameter<unsigned int>("edges", paramHelp[1].data(), "1000");
+    addInParameter<bool>("directed", paramHelp[2].data(), "False", false);
   }
   ~RandomGraph() override = default;
 
@@ -205,8 +205,8 @@ public:
   PLUGININFORMATION("Random Simple Graph", "Auber", "16/06/2002",
                     "Imports a new randomly generated simple graph.", "1.0", "Graph")
   RandomSimpleGraph(tlp::PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0], "500");
-    addInParameter<unsigned int>("edges", paramHelp[1], "1000");
+    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "500");
+    addInParameter<unsigned int>("edges", paramHelp[1].data(), "1000");
   }
 
   bool importGraph() override {

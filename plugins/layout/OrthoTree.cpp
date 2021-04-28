@@ -39,7 +39,7 @@ public:
 PLUGIN(OrthoTree)
 
 //================================================================================
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // layer spacing
     "Define the spacing between two successive layers",
     // node spacing
@@ -47,8 +47,8 @@ static const char *paramHelp[] = {
 
 OrthoTree::OrthoTree(const tlp::PluginContext *context)
     : tlp::LayoutAlgorithm(context), nodeSpacing(4), layerSpacing(10), size(nullptr) {
-  addInParameter<unsigned int>("Layer spacing", paramHelp[0], "10", true);
-  addInParameter<unsigned int>("Node spacing", paramHelp[1], "4", true);
+  addInParameter<unsigned int>("Layer spacing", paramHelp[0].data(), "10", true);
+  addInParameter<unsigned int>("Node spacing", paramHelp[1].data(), "4", true);
 }
 
 void OrthoTree::computeVerticalSize(const node n, NodeVectorProperty<double> &verticalSize) {

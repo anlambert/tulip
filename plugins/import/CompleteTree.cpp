@@ -16,7 +16,7 @@
 using namespace std;
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // depth
     "Depth of the tree.",
 
@@ -36,9 +36,9 @@ public:
   PLUGININFORMATION("Complete Tree", "Auber", "08/09/2002", "Imports a new complete tree.", "1.1",
                     "Graph")
   CompleteTree(tlp::PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("depth", paramHelp[0], "5");
-    addInParameter<unsigned int>("degree", paramHelp[1], "2");
-    addInParameter<bool>("tree layout", paramHelp[2], "false");
+    addInParameter<unsigned int>("depth", paramHelp[0].data(), "5");
+    addInParameter<unsigned int>("degree", paramHelp[1].data(), "2");
+    addInParameter<bool>("tree layout", paramHelp[2].data(), "false");
     addDependency("Tree Leaf", "1.0");
   }
   ~CompleteTree() override = default;

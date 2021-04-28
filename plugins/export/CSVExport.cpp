@@ -22,7 +22,7 @@ PLUGIN(CsvExport)
 using namespace tlp;
 using namespace std;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // the type of element to export
     "This parameter enables to choose the type of graph elements to export",
     // export selection
@@ -78,15 +78,16 @@ static const char *paramHelp[] = {
 
 //================================================================================
 CsvExport::CsvExport(const PluginContext *context) : ExportModule(context) {
-  addInParameter<StringCollection>(ELT_TYPE, paramHelp[0], ELT_TYPES);
-  addInParameter<bool>(EXPORT_SELECTION, paramHelp[1], "false");
-  addInParameter<BooleanProperty>("Export selection property", paramHelp[2], "viewSelection");
-  addInParameter<bool>(EXPORT_ID, paramHelp[3], "false");
-  addInParameter<bool>(EXPORT_VISUAL_PROPERTIES, paramHelp[4], "false");
-  addInParameter<StringCollection>(FIELD_SEPARATOR, paramHelp[5], FIELD_SEPARATORS);
-  addInParameter<string>(FIELD_SEPARATOR_CUSTOM, paramHelp[6], CUSTOM_MARK);
-  addInParameter<StringCollection>(STRING_DELIMITER, paramHelp[7], STRING_DELIMITERS);
-  addInParameter<StringCollection>(DECIMAL_MARK, paramHelp[8], DECIMAL_MARKS);
+  addInParameter<StringCollection>(ELT_TYPE, paramHelp[0].data(), ELT_TYPES);
+  addInParameter<bool>(EXPORT_SELECTION, paramHelp[1].data(), "false");
+  addInParameter<BooleanProperty>("Export selection property", paramHelp[2].data(),
+                                  "viewSelection");
+  addInParameter<bool>(EXPORT_ID, paramHelp[3].data(), "false");
+  addInParameter<bool>(EXPORT_VISUAL_PROPERTIES, paramHelp[4].data(), "false");
+  addInParameter<StringCollection>(FIELD_SEPARATOR, paramHelp[5].data(), FIELD_SEPARATORS);
+  addInParameter<string>(FIELD_SEPARATOR_CUSTOM, paramHelp[6].data(), CUSTOM_MARK);
+  addInParameter<StringCollection>(STRING_DELIMITER, paramHelp[7].data(), STRING_DELIMITERS);
+  addInParameter<StringCollection>(DECIMAL_MARK, paramHelp[8].data(), DECIMAL_MARKS);
 }
 
 //================================================================================

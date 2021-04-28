@@ -20,7 +20,7 @@
 
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // type
     "If linear, logarithmic or uniform, the input property must be a <b>numeric</b> property."
     "<ul><li><b> linear</b>: the minimum value is mapped to one end of the color scale, "
@@ -98,16 +98,16 @@ public:
         minInput(std::numeric_limits<double>::quiet_NaN()), overrideMaxInput(false),
         overrideMinInput(false) {
     addInParameter<StringCollection>(
-        ELT_TYPE, paramHelp[0], ELT_TYPES, true,
+        ELT_TYPE, paramHelp[0].data(), ELT_TYPES, true,
         "<b>linear<b/> <br> <b>uniform</b> <br> <b>enumerated</b> <br> <b>logarithmic</b>");
-    addInParameter<PropertyInterface *>("input property", paramHelp[1], "viewMetric");
-    addInParameter<StringCollection>(TARGET_TYPE, paramHelp[2], TARGET_TYPES, true,
+    addInParameter<PropertyInterface *>("input property", paramHelp[1].data(), "viewMetric");
+    addInParameter<StringCollection>(TARGET_TYPE, paramHelp[2].data(), TARGET_TYPES, true,
                                      "<b>nodes</b> <br> <b>edges</b>");
-    addInParameter<ColorScale>("color scale", paramHelp[3], "");
-    addInParameter<bool>("override minimum value", paramHelp[4], "false", false);
-    addInParameter<double>("minimum value", paramHelp[5], "", false);
-    addInParameter<bool>("override maximum value", paramHelp[6], "false", false);
-    addInParameter<double>("maximum value", paramHelp[7], "", false);
+    addInParameter<ColorScale>("color scale", paramHelp[3].data(), "");
+    addInParameter<bool>("override minimum value", paramHelp[4].data(), "false", false);
+    addInParameter<double>("minimum value", paramHelp[5].data(), "", false);
+    addInParameter<bool>("override maximum value", paramHelp[6].data(), "false", false);
+    addInParameter<double>("maximum value", paramHelp[7].data(), "", false);
 
     // result needs to be an inout parameter
     // in order to preserve the original values of non targeted elements

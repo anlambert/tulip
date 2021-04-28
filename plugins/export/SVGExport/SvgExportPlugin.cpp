@@ -19,7 +19,7 @@
 using namespace std;
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // color interpolation
     "Indicates if edge color interpolation has to be used.",
 
@@ -71,16 +71,16 @@ public:
   }
 
   SvgExport(tlp::PluginContext *context) : tlp::ExportModule(context) {
-    addInParameter<bool>("Edge color interpolation", paramHelp[0], "false");
-    addInParameter<bool>("Edge size interpolation", paramHelp[1], "true");
-    addInParameter<bool>("Edge extremities", paramHelp[2], "false");
-    addInParameter<Color>("Background color", paramHelp[3], "(255,255,255,255)");
-    addInParameter<bool>("No background", paramHelp[4], "false");
-    addInParameter<bool>("Makes SVG output human readable", paramHelp[5], "true");
-    addInParameter<bool>("Export node labels", paramHelp[6], "true");
-    addInParameter<bool>("Export edge labels", paramHelp[7], "false");
-    addInParameter<bool>("Export metanode labels", paramHelp[8], "false");
-    addInParameter<bool>("Use Web Open Font Format v2", paramHelp[9], "false");
+    addInParameter<bool>("Edge color interpolation", paramHelp[0].data(), "false");
+    addInParameter<bool>("Edge size interpolation", paramHelp[1].data(), "true");
+    addInParameter<bool>("Edge extremities", paramHelp[2].data(), "false");
+    addInParameter<Color>("Background color", paramHelp[3].data(), "(255,255,255,255)");
+    addInParameter<bool>("No background", paramHelp[4].data(), "false");
+    addInParameter<bool>("Makes SVG output human readable", paramHelp[5].data(), "true");
+    addInParameter<bool>("Export node labels", paramHelp[6].data(), "true");
+    addInParameter<bool>("Export edge labels", paramHelp[7].data(), "false");
+    addInParameter<bool>("Export metanode labels", paramHelp[8].data(), "false");
+    addInParameter<bool>("Use Web Open Font Format v2", paramHelp[9].data(), "false");
   }
 
   bool exportGraph(ostream &os) override {

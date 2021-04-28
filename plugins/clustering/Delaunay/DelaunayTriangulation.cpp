@@ -55,7 +55,7 @@ static bool delaunayTriangulation(tlp::Graph *graph, bool simplicesSubGraphs, bo
   return ret;
 }
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // simplices
     "If true, a subgraph will be added for each computed simplex (a triangle in 2d, a tetrahedron "
     "in 3d).",
@@ -66,8 +66,8 @@ class DelaunayTriangulation : public tlp::Algorithm {
 
 public:
   DelaunayTriangulation(tlp::PluginContext *context) : Algorithm(context) {
-    addInParameter<bool>("simplices", paramHelp[0], "false");
-    addInParameter<bool>("original clone", paramHelp[1], "true");
+    addInParameter<bool>("simplices", paramHelp[0].data(), "false");
+    addInParameter<bool>("original clone", paramHelp[1].data(), "true");
   }
 
   PLUGININFORMATION("Delaunay triangulation", "Antoine Lambert", "",

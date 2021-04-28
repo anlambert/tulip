@@ -22,7 +22,7 @@
 
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // directory
     "The directory to scan recursively.",
 
@@ -113,13 +113,13 @@ public:
         _lastReadDates(nullptr), _owners(nullptr), _permissions(nullptr), _suffixes(nullptr),
         _sizes(nullptr), _fontIcon(nullptr), _useIcons(true), _treeLayout(true),
         dirColor(255, 255, 127, 128) {
-    addInParameter<std::string>("dir::directory", paramHelp[0], "");
-    addInParameter<bool>("include hidden files", paramHelp[5], "true");
-    addInParameter<bool>("follow symlinks", paramHelp[6], "true");
-    addInParameter<bool>("icons", paramHelp[1], "true");
-    addInParameter<bool>("tree layout", paramHelp[2], "true");
-    addInParameter<tlp::Color>("directory color", paramHelp[3], "(255, 255, 127, 255)");
-    addInParameter<tlp::Color>("other color", paramHelp[4], "(85, 170, 255, 255)");
+    addInParameter<std::string>("dir::directory", paramHelp[0].data(), "");
+    addInParameter<bool>("include hidden files", paramHelp[5].data(), "true");
+    addInParameter<bool>("follow symlinks", paramHelp[6].data(), "true");
+    addInParameter<bool>("icons", paramHelp[1].data(), "true");
+    addInParameter<bool>("tree layout", paramHelp[2].data(), "true");
+    addInParameter<tlp::Color>("directory color", paramHelp[3].data(), "(255, 255, 127, 255)");
+    addInParameter<tlp::Color>("other color", paramHelp[4].data(), "(85, 170, 255, 255)");
   }
 
   bool importGraph() override {

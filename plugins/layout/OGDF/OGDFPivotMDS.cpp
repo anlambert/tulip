@@ -15,7 +15,7 @@
 
 #include <talipot/OGDFLayoutPluginBase.h>
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // number of pivots
     "Sets the number of pivots. If the new value is smaller or equal 0 the default value (250) is "
     "used.",
@@ -38,9 +38,9 @@ public:
   OGDFPivotMDS(const tlp::PluginContext *context)
       : OGDFLayoutPluginBase(context, tlp::getOGDFLayoutModule<ogdf::PivotMDS>(context)),
         pivotMds(static_cast<ogdf::PivotMDS *>(ogdfLayoutAlgo)) {
-    addInParameter<int>("number of pivots", paramHelp[0], "250", false);
-    addInParameter<bool>("use edge costs", paramHelp[1], "false", false);
-    addInParameter<double>("edge costs", paramHelp[2], "100", false);
+    addInParameter<int>("number of pivots", paramHelp[0].data(), "250", false);
+    addInParameter<bool>("use edge costs", paramHelp[1].data(), "false", false);
+    addInParameter<double>("edge costs", paramHelp[2].data(), "100", false);
   }
 
   void beforeCall() override {

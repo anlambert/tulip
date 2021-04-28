@@ -556,7 +556,7 @@ bool GMLGraphBuilder::addStruct(const string &structName, GMLBuilder *&newBuilde
 }
 //=================================================================================
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // filename
     "The pathname of the GML file to import."};
 
@@ -577,7 +577,7 @@ public:
     return {"gml"};
   }
   GMLImport(PluginContext *context) : ImportModule(context) {
-    addInParameter<string>("file::filename", paramHelp[0], "");
+    addInParameter<string>("file::filename", paramHelp[0].data(), "");
   }
   ~GMLImport() override = default;
   bool importGraph() override {

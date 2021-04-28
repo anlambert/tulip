@@ -16,7 +16,7 @@
 using namespace std;
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // nodes
     "Number of nodes in the final graph."};
 
@@ -38,7 +38,7 @@ public:
   PLUGININFORMATION("Planar Graph", "Auber", "25/06/2005",
                     "Imports a new randomly generated planar graph.", "1.0", "Graph")
   PlanarGraph(tlp::PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0], "30");
+    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "30");
   }
   ~PlanarGraph() override = default;
 

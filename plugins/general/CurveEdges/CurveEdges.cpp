@@ -55,7 +55,7 @@ CubicDiagonalCross;CubicVerticalDiagonalCross;CubicStraightCrossSource;CubicStra
 #define CURVE_TYPE_CUBIC_STRAIGHTCROSS_SOURCE 10
 #define CURVE_TYPE_CUBIC_STRAIGHTCROSS_TARGET 11
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // layout
     "The input layout of the graph.",
 
@@ -91,11 +91,11 @@ public:
   CurveEdges(tlp::PluginContext *context)
       : tlp::Algorithm(context), curveType(0), curveRoundness(0.5), layout(nullptr),
         bezierEdges(true) {
-    addInParameter<tlp::LayoutProperty>("layout", paramHelp[0], "viewLayout");
-    addInParameter<float>("curve roundness", paramHelp[1], "0.5");
-    addInParameter<tlp::StringCollection>("curve type", paramHelp[2], CURVE_TYPE_LIST, true,
+    addInParameter<tlp::LayoutProperty>("layout", paramHelp[0].data(), "viewLayout");
+    addInParameter<float>("curve roundness", paramHelp[1].data(), "0.5");
+    addInParameter<tlp::StringCollection>("curve type", paramHelp[2].data(), CURVE_TYPE_LIST, true,
                                           curveTypeValues);
-    addInParameter<bool>("bezier edges", paramHelp[3], "true");
+    addInParameter<bool>("bezier edges", paramHelp[3].data(), "true");
   }
 
   std::vector<tlp::Coord> computeCubicBezierControlPoints(tlp::edge e) {

@@ -16,13 +16,13 @@
 #include <talipot/GraphTools.h>
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // selection
     "The property indicating the selected elements"};
 
 MakeSelectionGraph::MakeSelectionGraph(const tlp::PluginContext *context)
     : BooleanAlgorithm(context) {
-  addInParameter<BooleanProperty>("selection", paramHelp[0], "viewSelection");
+  addInParameter<BooleanProperty>("selection", paramHelp[0].data(), "viewSelection");
   addOutParameter<unsigned int>("#elements selected",
                                 "The number of graph elements (nodes + edges) selected");
 }
@@ -45,7 +45,7 @@ bool MakeSelectionGraph::run() {
 }
 
 IsGraphTest::IsGraphTest(const tlp::PluginContext *context) : tlp::GraphTest(context) {
-  addInParameter<BooleanProperty>("selection", paramHelp[0], "viewSelection");
+  addInParameter<BooleanProperty>("selection", paramHelp[0].data(), "viewSelection");
 }
 
 bool IsGraphTest::test() {

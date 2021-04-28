@@ -17,7 +17,7 @@
 using namespace std;
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // nodes
     "This parameter defines the amount of nodes used to build the scale-free graph.",
 
@@ -45,8 +45,8 @@ struct BollobasModel : public ImportModule {
                     "1.1", "Social network")
 
   BollobasModel(PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0], "2000");
-    addInParameter<unsigned int>("minimum degree", paramHelp[1], "4");
+    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "2000");
+    addInParameter<unsigned int>("minimum degree", paramHelp[1].data(), "4");
   }
 
   bool importGraph() override {

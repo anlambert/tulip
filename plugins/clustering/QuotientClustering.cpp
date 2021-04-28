@@ -25,7 +25,7 @@ using namespace std;
 using namespace tlp;
 
 //==============================================================================
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // oriented
     "If true, the graph is considered oriented.",
 
@@ -99,19 +99,19 @@ public:
   QuotientClustering(PluginContext *context) : Algorithm(context) {
     addDependency("FM^3 (OGDF)", "1.2");
     addDependency("Fast Overlap Removal", "1.3");
-    addInParameter<bool>("oriented", paramHelp[0], "true");
+    addInParameter<bool>("oriented", paramHelp[0].data(), "true");
     addInParameter<StringCollection>(
-        "node function", paramHelp[2], AGGREGATION_FUNCTIONS, true,
+        "node function", paramHelp[2].data(), AGGREGATION_FUNCTIONS, true,
         "<b>none</b> <br> <b>average</b> <br> <b>sum</b> <br> <b>max</b> <br> <b>min</b>");
     addInParameter<StringCollection>(
-        "edge function", paramHelp[3], AGGREGATION_FUNCTIONS, true,
+        "edge function", paramHelp[3].data(), AGGREGATION_FUNCTIONS, true,
         "<b>none</b> <br> <b>average</b> <br> <b>sum</b> <br> <b>max</b> <br> <b>min</b>");
-    addInParameter<StringProperty>("meta-node label", paramHelp[4], "", false);
-    addInParameter<bool>("use name of subgraph", paramHelp[5], "false");
-    addInParameter<bool>("recursive", paramHelp[1], "false");
-    addInParameter<bool>("layout quotient graph(s)", paramHelp[7], "false");
-    addInParameter<bool>("layout clusters", paramHelp[8], "false");
-    addInParameter<bool>("edge cardinality", paramHelp[6], "false");
+    addInParameter<StringProperty>("meta-node label", paramHelp[4].data(), "", false);
+    addInParameter<bool>("use name of subgraph", paramHelp[5].data(), "false");
+    addInParameter<bool>("recursive", paramHelp[1].data(), "false");
+    addInParameter<bool>("layout quotient graph(s)", paramHelp[7].data(), "false");
+    addInParameter<bool>("layout clusters", paramHelp[8].data(), "false");
+    addInParameter<bool>("edge cardinality", paramHelp[6].data(), "false");
   }
 
   bool check(string &errmsg) override {

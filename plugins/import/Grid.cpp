@@ -17,7 +17,7 @@ using namespace std;
 using namespace tlp;
 #define DEGTORAD(x) (M_PI / 180) * x
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // width
     "Grid node width.",
 
@@ -45,12 +45,12 @@ public:
   PLUGININFORMATION("Grid", "Jonathan Dubois", "02/12/2003", "Imports a new grid structured graph.",
                     "2.0", "Graph")
   Grid(tlp::PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("width", paramHelp[0], "10");
-    addInParameter<unsigned int>("height", paramHelp[1], "10");
-    addInParameter<StringCollection>("connectivity", paramHelp[2], "4;6;8", true,
+    addInParameter<unsigned int>("width", paramHelp[0].data(), "10");
+    addInParameter<unsigned int>("height", paramHelp[1].data(), "10");
+    addInParameter<StringCollection>("connectivity", paramHelp[2].data(), "4;6;8", true,
                                      "<b>4</b> <br> <b>6</b> <br> <b>8</b>");
-    addInParameter<bool>("oppositeNodesConnected", paramHelp[3], "false");
-    addInParameter<double>("spacing", paramHelp[4], "1.0");
+    addInParameter<bool>("oppositeNodesConnected", paramHelp[3].data(), "false");
+    addInParameter<double>("spacing", paramHelp[4].data(), "1.0");
   }
   ~Grid() override = default;
 

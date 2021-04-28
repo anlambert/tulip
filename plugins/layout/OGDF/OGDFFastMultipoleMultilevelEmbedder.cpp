@@ -15,7 +15,7 @@
 
 #include <talipot/OGDFLayoutPluginBase.h>
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // number of threads
     "The number of threads to use during the computation of the layout.",
 
@@ -33,8 +33,8 @@ public:
       : OGDFLayoutPluginBase(
             context, tlp::getOGDFLayoutModule<ogdf::FastMultipoleMultilevelEmbedder>(context)),
         fmme(static_cast<ogdf::FastMultipoleMultilevelEmbedder *>(ogdfLayoutAlgo)) {
-    addInParameter<int>("number of threads", paramHelp[0], "2");
-    addInParameter<int>("multilevel nodes bound", paramHelp[1], "10");
+    addInParameter<int>("number of threads", paramHelp[0].data(), "2");
+    addInParameter<int>("multilevel nodes bound", paramHelp[1].data(), "10");
   }
 
   void beforeCall() override {

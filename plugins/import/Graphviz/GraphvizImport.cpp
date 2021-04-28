@@ -30,7 +30,7 @@ extern bool decodeGraphvizColor(Color &outColor, const string &inValue);
 extern bool getCoordFromGraphvizPos(Coord &outCoord, const string &inValue);
 extern bool getCoordsFromGraphvizPos(vector<Coord> &outCoords, const string &inValue);
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // filename
     "Graphviz file to import written in DOT language."};
 
@@ -69,7 +69,7 @@ public:
   }
 
   GraphvizImport(PluginContext *context) : ImportModule(context) {
-    addInParameter<string>("file::filename", paramHelp[0], "");
+    addInParameter<string>("file::filename", paramHelp[0].data(), "");
   }
 
   ~GraphvizImport() override = default;

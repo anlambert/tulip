@@ -17,7 +17,7 @@
 using namespace std;
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // nodes
     "This parameter defines the amount of nodes used to build the small-world graph."};
 
@@ -60,7 +60,7 @@ struct GuillaumeLatapyModel : public ImportModule {
                     "1.0", "Social network")
 
   GuillaumeLatapyModel(PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0], "200");
+    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "200");
   }
 
   bool importGraph() override {

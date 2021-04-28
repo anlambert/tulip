@@ -16,7 +16,7 @@
 using namespace std;
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // minsize
     "Minimal number of nodes in the tree.",
 
@@ -61,9 +61,9 @@ public:
   PLUGININFORMATION("Uniform Random Binary Tree", "Auber", "16/02/2001",
                     "Imports a new randomly generated uniform binary tree.", "1.1", "Graph")
   RandomTree(tlp::PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("Minimum size", paramHelp[0], "50");
-    addInParameter<unsigned int>("Maximum size", paramHelp[1], "60");
-    addInParameter<bool>("tree layout", paramHelp[2], "false");
+    addInParameter<unsigned int>("Minimum size", paramHelp[0].data(), "50");
+    addInParameter<unsigned int>("Maximum size", paramHelp[1].data(), "60");
+    addInParameter<bool>("tree layout", paramHelp[2].data(), "false");
     addDependency("Tree Leaf", "1.0");
   }
 

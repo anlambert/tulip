@@ -311,14 +311,14 @@ void BubbleTree::calcLayout(tlp::node n, NodeVectorProperty<Vec5d> &relativePosi
   delete it;
 }
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // Complexity
     "This parameter enables to choose the complexity of the algorithm."
     "If true, the complexity is O(n.log(n)), if false it is O(n)."};
 
 BubbleTree::BubbleTree(const tlp::PluginContext *context) : LayoutAlgorithm(context) {
   addNodeSizePropertyParameter(this);
-  addInParameter<bool>("complexity", paramHelp[0], "true");
+  addInParameter<bool>("complexity", paramHelp[0].data(), "true");
   addDependency("Connected Component Packing", "1.0");
   addDependency("Circular", "1.1");
 }

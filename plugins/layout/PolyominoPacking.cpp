@@ -33,7 +33,7 @@
 using namespace std;
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // coordinates
     "Input layout of nodes and edges.",
 
@@ -111,11 +111,11 @@ public:
 PLUGIN(PolyominoPacking)
 
 PolyominoPacking::PolyominoPacking(const PluginContext *context) : LayoutAlgorithm(context) {
-  addInParameter<LayoutProperty>("coordinates", paramHelp[0], "viewLayout");
+  addInParameter<LayoutProperty>("coordinates", paramHelp[0].data(), "viewLayout");
   addNodeSizePropertyParameter(this);
-  addInParameter<DoubleProperty>("rotation", paramHelp[1], "viewRotation");
-  addInParameter<unsigned int>("margin", paramHelp[2], "1");
-  addInParameter<unsigned int>("increment", paramHelp[3], "1");
+  addInParameter<DoubleProperty>("rotation", paramHelp[1].data(), "viewRotation");
+  addInParameter<unsigned int>("margin", paramHelp[2].data(), "1");
+  addInParameter<unsigned int>("increment", paramHelp[3].data(), "1");
 }
 
 PolyominoPacking::~PolyominoPacking() = default;

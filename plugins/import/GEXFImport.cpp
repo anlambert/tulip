@@ -43,7 +43,7 @@ using namespace std;
  *
  */
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // filename
     "This parameter defines the pathname of the GEXF file to import.",
 
@@ -63,8 +63,8 @@ public:
       : ImportModule(context), viewLayout(nullptr), viewSize(nullptr), viewColor(nullptr),
         viewLabel(nullptr), viewShape(nullptr), nodesHaveCoordinates(false) {
     // add a file parameter for the plugin
-    addInParameter<string>("file::filename", paramHelp[0], "");
-    addInParameter<bool>("Curved edges", paramHelp[1], "false");
+    addInParameter<string>("file::filename", paramHelp[0].data(), "");
+    addInParameter<bool>("Curved edges", paramHelp[1].data(), "false");
   }
 
   ~GEXFImport() override = default;

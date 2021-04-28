@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -22,12 +22,12 @@ PLUGIN(Kruskal)
 using namespace std;
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // edge weight
     "Metric containing the edge weights."};
 //======================================================
 Kruskal::Kruskal(const tlp::PluginContext *context) : BooleanAlgorithm(context) {
-  addInParameter<NumericProperty *>("edge weight", paramHelp[0], "viewMetric");
+  addInParameter<NumericProperty *>("edge weight", paramHelp[0].data(), "viewMetric");
   addOutParameter<unsigned int>("#edges selected", "The number of newly selected edges");
 }
 

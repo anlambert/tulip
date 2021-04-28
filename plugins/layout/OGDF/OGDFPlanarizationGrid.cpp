@@ -15,7 +15,7 @@
 
 #include <talipot/OGDFLayoutPluginBase.h>
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // page ratio
     "Sets the option pageRatio."};
 
@@ -32,7 +32,7 @@ public:
   OGDFPlanarizationGrid(const tlp::PluginContext *context)
       : OGDFLayoutPluginBase(context,
                              tlp::getOGDFLayoutModule<ogdf::PlanarizationGridLayout>(context)) {
-    addInParameter<double>("page ratio", paramHelp[0], "1.1");
+    addInParameter<double>("page ratio", paramHelp[0].data(), "1.1");
   }
 
   void beforeCall() override {

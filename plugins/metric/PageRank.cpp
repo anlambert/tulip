@@ -16,7 +16,7 @@
 using namespace std;
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // d
     "Enables to choose a damping factor in ]0,1[.",
 
@@ -57,9 +57,9 @@ struct PageRank : public DoubleAlgorithm {
                     "2.1", "Graph")
 
   PageRank(const PluginContext *context) : DoubleAlgorithm(context) {
-    addInParameter<double>("d", paramHelp[0], "0.85");
-    addInParameter<bool>("directed", paramHelp[1], "true");
-    addInParameter<NumericProperty *>("weight", paramHelp[2], "", false);
+    addInParameter<double>("d", paramHelp[0].data(), "0.85");
+    addInParameter<bool>("directed", paramHelp[1].data(), "true");
+    addInParameter<NumericProperty *>("weight", paramHelp[2].data(), "", false);
   }
 
   bool run() override {

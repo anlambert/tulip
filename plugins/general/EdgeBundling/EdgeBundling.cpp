@@ -25,7 +25,7 @@ using namespace tlp;
 
 //============================================
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // layout
     "The input layout of the graph.",
 
@@ -65,16 +65,16 @@ static const char *paramHelp[] = {
 
 //============================================
 EdgeBundling::EdgeBundling(const PluginContext *context) : Algorithm(context) {
-  addInParameter<LayoutProperty>("layout", paramHelp[0], "viewLayout");
-  addInParameter<SizeProperty>("size", paramHelp[1], "viewSize");
-  addInParameter<bool>("grid_graph", paramHelp[2], "false");
-  addInParameter<bool>("3D_layout", paramHelp[3], "false");
-  addInParameter<bool>("sphere_layout", paramHelp[4], "false");
-  addInParameter<double>("long_edges", paramHelp[5], "0.9");
-  addInParameter<double>("split_ratio", paramHelp[6], "10");
-  addInParameter<unsigned int>("iterations", paramHelp[7], "2");
-  addInParameter<unsigned int>("max_thread", paramHelp[8], "0");
-  addInParameter<bool>("edge_node_overlap", paramHelp[9], "false");
+  addInParameter<LayoutProperty>("layout", paramHelp[0].data(), "viewLayout");
+  addInParameter<SizeProperty>("size", paramHelp[1].data(), "viewSize");
+  addInParameter<bool>("grid_graph", paramHelp[2].data(), "false");
+  addInParameter<bool>("3D_layout", paramHelp[3].data(), "false");
+  addInParameter<bool>("sphere_layout", paramHelp[4].data(), "false");
+  addInParameter<double>("long_edges", paramHelp[5].data(), "0.9");
+  addInParameter<double>("split_ratio", paramHelp[6].data(), "10");
+  addInParameter<unsigned int>("iterations", paramHelp[7].data(), "2");
+  addInParameter<unsigned int>("max_thread", paramHelp[8].data(), "0");
+  addInParameter<bool>("edge_node_overlap", paramHelp[9].data(), "false");
   addDependency("Voronoi diagram", "1.1");
 }
 //============================================

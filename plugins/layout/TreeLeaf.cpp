@@ -19,7 +19,7 @@ PLUGIN(TreeLeaf)
 using namespace std;
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // uniform layer spacing
     "If the layer spacing is uniform, the spacing between two consecutive layers will be the "
     "same."};
@@ -96,7 +96,7 @@ float TreeLeaf::dfsPlacement(tlp::Graph *tree, tlp::node n, float x, float y, un
 TreeLeaf::TreeLeaf(const tlp::PluginContext *context) : LayoutAlgorithm(context) {
   addNodeSizePropertyParameter(this);
   addOrientationParameters(this);
-  addInParameter<bool>("uniform layer spacing", paramHelp[0], "true");
+  addInParameter<bool>("uniform layer spacing", paramHelp[0].data(), "true");
   addSpacingParameters(this);
 }
 

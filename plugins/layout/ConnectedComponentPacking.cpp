@@ -25,7 +25,7 @@ PLUGIN(ConnectedComponentPacking)
 const float spacing = 8;
 #define COMPLEXITY "auto;n5;n4logn;n4;n3logn;n3;n2logn;n2;nlogn;n;"
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // coordinates
     "Input layout of nodes and edges.",
 
@@ -38,11 +38,11 @@ static const char *paramHelp[] = {
 //====================================================================
 ConnectedComponentPacking::ConnectedComponentPacking(const tlp::PluginContext *context)
     : LayoutAlgorithm(context) {
-  addInParameter<LayoutProperty>("coordinates", paramHelp[0], "viewLayout");
+  addInParameter<LayoutProperty>("coordinates", paramHelp[0].data(), "viewLayout");
   addNodeSizePropertyParameter(this);
-  addInParameter<DoubleProperty>("rotation", paramHelp[1], "viewRotation");
+  addInParameter<DoubleProperty>("rotation", paramHelp[1].data(), "viewRotation");
   addInParameter<StringCollection>(
-      "complexity", paramHelp[2], COMPLEXITY, true,
+      "complexity", paramHelp[2].data(), COMPLEXITY, true,
       "<b>auto</b> <br> <b>n5</b> <br> <b>n4logn</b> <br> <b>n4</b> <br> <b>n3logn</b> <br> "
       "<b>n3</b> <br> <b>n2logn</b> <br> <b>n2</b> <br> <b>nlogn</b> <br> <b>n</b>");
 }

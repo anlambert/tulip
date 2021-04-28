@@ -51,7 +51,7 @@ static const char *embedderValuesDescription =
     "<b>EmbedderMinDepthPiTa</b> <i>(Planar graph embedding with minimum block-nesting depth for "
     "given embedded blocks)</i>";
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // page ratio
     "Sets the option page ratio.",
 
@@ -67,9 +67,9 @@ public:
   OGDFPlanarizationLayout(const tlp::PluginContext *context)
       : OGDFLayoutPluginBase(context,
                              tlp::getOGDFLayoutModule<ogdf::PlanarizationLayout>(context)) {
-    addInParameter<double>("page ratio", paramHelp[0], "1.1");
-    addInParameter<tlp::StringCollection>(ELT_EMBEDDER, paramHelp[1], ELT_EMBEDDER_LIST, true,
-                                          embedderValuesDescription);
+    addInParameter<double>("page ratio", paramHelp[0].data(), "1.1");
+    addInParameter<tlp::StringCollection>(ELT_EMBEDDER, paramHelp[1].data(), ELT_EMBEDDER_LIST,
+                                          true, embedderValuesDescription);
   }
 
   void beforeCall() override {

@@ -250,7 +250,7 @@ void BubblePack::calcLayout(tlp::node n, Vec2f pos, NodeVectorProperty<Vec4f> &r
   }
 }
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // complexity
     "This parameter enables to choose the complexity of the algorithm, true = o(nlog(n)) / false = "
     "o(n)",
@@ -259,8 +259,8 @@ static const char *paramHelp[] = {
     "This parameter defines the property used for node's sizes."};
 
 BubblePack::BubblePack(const tlp::PluginContext *context) : LayoutAlgorithm(context) {
-  addInParameter<bool>("complexity", paramHelp[0], "true");
-  addInParameter<SizeProperty>("node size", paramHelp[1], "viewSize");
+  addInParameter<bool>("complexity", paramHelp[0].data(), "true");
+  addInParameter<SizeProperty>("node size", paramHelp[1].data(), "viewSize");
   addDependency("Connected Component Packing", "1.0");
 }
 

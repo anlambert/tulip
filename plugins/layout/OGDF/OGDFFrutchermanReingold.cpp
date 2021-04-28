@@ -25,7 +25,7 @@ static const vector<ogdf::SpringEmbedderFRExact::CoolingFunction> coolingFunctio
     ogdf::SpringEmbedderFRExact::CoolingFunction::Logarithmic,
 };
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // iterations
     "The number of iterations.",
 
@@ -74,17 +74,17 @@ PLUGIN(OGDFFrutchermanReingold)
 OGDFFrutchermanReingold::OGDFFrutchermanReingold(const tlp::PluginContext *context)
     : OGDFLayoutPluginBase(context,
                            tlp::getOGDFLayoutModule<ogdf::SpringEmbedderFRExact>(context)) {
-  addInParameter<int>("iterations", paramHelp[0], "1000");
-  addInParameter<bool>("noise", paramHelp[1], "true");
-  addInParameter<bool>("use node weights", paramHelp[2], "false");
-  addInParameter<tlp::NumericProperty *>("node weights", paramHelp[3], "viewMetric");
-  addInParameter<tlp::StringCollection>(ELT_COOLING, paramHelp[4], ELT_COOLINGLIST, true,
+  addInParameter<int>("iterations", paramHelp[0].data(), "1000");
+  addInParameter<bool>("noise", paramHelp[1].data(), "true");
+  addInParameter<bool>("use node weights", paramHelp[2].data(), "false");
+  addInParameter<tlp::NumericProperty *>("node weights", paramHelp[3].data(), "viewMetric");
+  addInParameter<tlp::StringCollection>(ELT_COOLING, paramHelp[4].data(), ELT_COOLINGLIST, true,
                                         "<b>Factor</b> <br> <b>Logarithmic</b>");
-  addInParameter<double>("ideal edge length", paramHelp[5], "10.0");
-  addInParameter<double>("minDistCC", paramHelp[6], "20.0");
-  addInParameter<double>("pageRatio", paramHelp[7], "1.0");
-  addInParameter<bool>("check convergence", paramHelp[8], "true");
-  addInParameter<double>("convergence tolerance", paramHelp[9], "0.01");
+  addInParameter<double>("ideal edge length", paramHelp[5].data(), "10.0");
+  addInParameter<double>("minDistCC", paramHelp[6].data(), "20.0");
+  addInParameter<double>("pageRatio", paramHelp[7].data(), "1.0");
+  addInParameter<bool>("check convergence", paramHelp[8].data(), "true");
+  addInParameter<double>("convergence tolerance", paramHelp[9].data(), "0.01");
 }
 
 void OGDFFrutchermanReingold::beforeCall() {

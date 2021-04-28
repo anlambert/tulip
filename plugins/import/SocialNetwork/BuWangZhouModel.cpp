@@ -17,7 +17,7 @@
 using namespace std;
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // nodes
     "Number of nodes.",
     // nodes
@@ -46,9 +46,9 @@ public:
                     "high clustering complex networks.</b><br/>Physica A, 374, 864--868, 2007.",
                     "1.0", "Social network")
   BuWangZhouModel(PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0], "200");
-    addInParameter<unsigned int>("types of nodes", paramHelp[1], "3");
-    addInParameter<unsigned int>("m", paramHelp[2], "2");
+    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "200");
+    addInParameter<unsigned int>("types of nodes", paramHelp[1].data(), "3");
+    addInParameter<unsigned int>("m", paramHelp[2].data(), "2");
   }
 
   bool importGraph() override {

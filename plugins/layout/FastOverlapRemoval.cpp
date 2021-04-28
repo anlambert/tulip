@@ -21,7 +21,7 @@ using namespace tlp;
 
 PLUGIN(FastOverlapRemoval)
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // overlap removal type
     "Overlap removal type.",
 
@@ -55,14 +55,14 @@ static const char *overlapRemovalTypeValuesDescription =
 
 FastOverlapRemoval::FastOverlapRemoval(const tlp::PluginContext *context)
     : tlp::LayoutAlgorithm(context) {
-  addInParameter<StringCollection>("overlap removal type", paramHelp[0], OVERLAP_TYPE, true,
+  addInParameter<StringCollection>("overlap removal type", paramHelp[0].data(), OVERLAP_TYPE, true,
                                    overlapRemovalTypeValuesDescription);
-  addInParameter<LayoutProperty>("layout", paramHelp[1], "viewLayout");
-  addInParameter<SizeProperty>("bounding box", paramHelp[2], "viewSize");
-  addInParameter<DoubleProperty>("rotation", paramHelp[3], "viewRotation");
-  addInParameter<int>("number of passes", paramHelp[4], "5");
-  addInParameter<double>("x border", paramHelp[5], "0.0");
-  addInParameter<double>("y border", paramHelp[6], "0.0");
+  addInParameter<LayoutProperty>("layout", paramHelp[1].data(), "viewLayout");
+  addInParameter<SizeProperty>("bounding box", paramHelp[2].data(), "viewSize");
+  addInParameter<DoubleProperty>("rotation", paramHelp[3].data(), "viewRotation");
+  addInParameter<int>("number of passes", paramHelp[4].data(), "5");
+  addInParameter<double>("x border", paramHelp[5].data(), "0.0");
+  addInParameter<double>("y border", paramHelp[6].data(), "0.0");
 }
 
 /**

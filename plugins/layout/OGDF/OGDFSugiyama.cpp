@@ -72,7 +72,7 @@ static const vector<function<ogdf::HierarchyLayoutModule *(double, double, bool)
     hierarchyLayoutFunc<ogdf::OptimalHierarchyLayout>(),
 };
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // fails
     "The number of times that the number of crossings may not decrease after a complete top-down "
     "bottom-up traversal, before a run is terminated.",
@@ -163,25 +163,26 @@ public:
 
   OGDFSugiyama(const tlp::PluginContext *context)
       : OGDFLayoutPluginBase(context, tlp::getOGDFLayoutModule<ogdf::SugiyamaLayout>(context)) {
-    addInParameter<int>("fails", paramHelp[0], "4");
-    addInParameter<int>("runs", paramHelp[1], "15");
-    addInParameter<double>("node distance", paramHelp[2], "3");
-    addInParameter<double>("layer distance", paramHelp[3], "3");
-    addInParameter<bool>("fixed layer distance", paramHelp[4], "false");
-    addInParameter<bool>("transpose", paramHelp[5], "true");
-    addInParameter<bool>("arrangeCCs", paramHelp[6], "true");
-    addInParameter<double>("minDistCC", paramHelp[7], "20");
-    addInParameter<double>("pageRatio", paramHelp[8], "1.0");
-    addInParameter<bool>("alignBaseClasses", paramHelp[9], "false");
-    addInParameter<bool>("alignSiblings", paramHelp[10], "false");
-    addInParameter<tlp::StringCollection>(ELT_RANKING, paramHelp[11], ELT_RANKINGLIST, true,
+    addInParameter<int>("fails", paramHelp[0].data(), "4");
+    addInParameter<int>("runs", paramHelp[1].data(), "15");
+    addInParameter<double>("node distance", paramHelp[2].data(), "3");
+    addInParameter<double>("layer distance", paramHelp[3].data(), "3");
+    addInParameter<bool>("fixed layer distance", paramHelp[4].data(), "false");
+    addInParameter<bool>("transpose", paramHelp[5].data(), "true");
+    addInParameter<bool>("arrangeCCs", paramHelp[6].data(), "true");
+    addInParameter<double>("minDistCC", paramHelp[7].data(), "20");
+    addInParameter<double>("pageRatio", paramHelp[8].data(), "1.0");
+    addInParameter<bool>("alignBaseClasses", paramHelp[9].data(), "false");
+    addInParameter<bool>("alignSiblings", paramHelp[10].data(), "false");
+    addInParameter<tlp::StringCollection>(ELT_RANKING, paramHelp[11].data(), ELT_RANKINGLIST, true,
                                           eltRankingValuesDescription);
-    addInParameter<tlp::StringCollection>(ELT_TWOLAYERCROSS, paramHelp[12], ELT_TWOLAYERCROSSLIST,
-                                          true, twoLayerCrossValuesDescription);
-    addInParameter<tlp::StringCollection>(ELT_HIERARCHYLAYOUT, paramHelp[13],
+    addInParameter<tlp::StringCollection>(ELT_TWOLAYERCROSS, paramHelp[12].data(),
+                                          ELT_TWOLAYERCROSSLIST, true,
+                                          twoLayerCrossValuesDescription);
+    addInParameter<tlp::StringCollection>(ELT_HIERARCHYLAYOUT, paramHelp[13].data(),
                                           ELT_HIERARCHYLAYOUTLIST, true,
                                           hierarchyLayoutValuesDescription);
-    addInParameter<bool>("transpose vertically", paramHelp[14], "true");
+    addInParameter<bool>("transpose vertically", paramHelp[14].data(), "true");
   }
 
   void beforeCall() override {

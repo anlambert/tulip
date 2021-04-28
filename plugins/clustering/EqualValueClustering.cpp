@@ -19,7 +19,7 @@ using namespace tlp;
 
 PLUGIN(EqualValueClustering)
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // Property
     "Property used to partition the graph.",
 
@@ -35,10 +35,10 @@ static const char *paramHelp[] = {
 #define EDGE_ELT 1
 //================================================================================
 EqualValueClustering::EqualValueClustering(tlp::PluginContext *context) : Algorithm(context) {
-  addInParameter<PropertyInterface *>("Property", paramHelp[0], "viewMetric");
-  addInParameter<StringCollection>(ELT_TYPE, paramHelp[1], ELT_TYPES, true,
+  addInParameter<PropertyInterface *>("Property", paramHelp[0].data(), "viewMetric");
+  addInParameter<StringCollection>(ELT_TYPE, paramHelp[1].data(), ELT_TYPES, true,
                                    "<b>nodes</b> <br> <b>edges</b>");
-  addInParameter<bool>("Connected", paramHelp[2], "false");
+  addInParameter<bool>("Connected", paramHelp[2].data(), "false");
 }
 //===============================================================================
 bool EqualValueClustering::run() {

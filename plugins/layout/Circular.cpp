@@ -19,14 +19,14 @@ PLUGIN(Circular)
 using namespace std;
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // search cycle
     "If true, search first for the maximum length cycle (be careful, this problem is NP-Complete). "
     "If false, nodes are ordered using a depth first search."};
 
 Circular::Circular(const tlp::PluginContext *context) : LayoutAlgorithm(context) {
   addNodeSizePropertyParameter(this);
-  addInParameter<bool>("search cycle", paramHelp[0], "false");
+  addInParameter<bool>("search cycle", paramHelp[0].data(), "false");
 }
 
 //===============================================================================

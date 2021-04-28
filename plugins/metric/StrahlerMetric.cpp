@@ -155,7 +155,7 @@ Strahler StrahlerMetric::topSortStrahler(tlp::node n, int &curPref,
   return result;
 }
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // All nodes
     "If true, for each node the Strahler number is computed from a spanning tree having that node "
     "as root: complexity o(n^2). If false the Strahler number is computed from a spanning tree "
@@ -172,8 +172,8 @@ static const char *paramHelp[] = {
 //==============================================================================
 StrahlerMetric::StrahlerMetric(const tlp::PluginContext *context)
     : DoubleAlgorithm(context), allNodes(false) {
-  addInParameter<bool>("All nodes", paramHelp[0], "false");
-  addInParameter<StringCollection>(COMPUTATION_TYPE, paramHelp[1], COMPUTATION_TYPES, true,
+  addInParameter<bool>("All nodes", paramHelp[0].data(), "false");
+  addInParameter<StringCollection>(COMPUTATION_TYPE, paramHelp[1].data(), COMPUTATION_TYPES, true,
                                    "<b>all</b> <br> <b>ramification</b> <br> <b>nested cycles</b>");
 }
 //==============================================================================

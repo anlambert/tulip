@@ -88,7 +88,7 @@ static bool voronoiDiagram(tlp::Graph *graph, bool voronoiCellsSubGraphs,
   return ret;
 }
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
 
     // voronoi cells
     "If true, a subgraph will be added for each computed voronoi cell.",
@@ -103,9 +103,9 @@ class VoronoiDiagram : public tlp::Algorithm {
 
 public:
   VoronoiDiagram(tlp::PluginContext *context) : tlp::Algorithm(context) {
-    addInParameter<bool>("voronoi cells", paramHelp[0], "false");
-    addInParameter<bool>("connect", paramHelp[1], "false");
-    addInParameter<bool>("original clone", paramHelp[2], "true");
+    addInParameter<bool>("voronoi cells", paramHelp[0].data(), "false");
+    addInParameter<bool>("connect", paramHelp[1].data(), "false");
+    addInParameter<bool>("original clone", paramHelp[2].data(), "true");
   }
 
   PLUGININFORMATION("Voronoi diagram", "Antoine Lambert", "",

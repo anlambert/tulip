@@ -17,7 +17,7 @@
 using namespace std;
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // 3D
     "If true the layout is in 3D else it is computed in 2D"};
 
@@ -25,7 +25,7 @@ static const char *paramHelp[] = {
 Grip::Grip(const tlp::PluginContext *context)
     : LayoutAlgorithm(context), misf(nullptr), edgeLength(0), level(0), currentGraph(nullptr),
       _dim(0) {
-  addInParameter<bool>("3D layout", paramHelp[0], "false");
+  addInParameter<bool>("3D layout", paramHelp[0].data(), "false");
   addDependency("Connected Component Packing", "1.0");
 }
 Grip::~Grip() = default;

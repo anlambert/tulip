@@ -18,7 +18,7 @@ using namespace tlp;
 
 enum ValType { TLP_DOUBLE = 0, TLP_STRING = 1, TLP_NOVAL = 2, TLP_NOTHING = 3, TLP_AND = 4 };
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // filename
     "This parameter defines the pathname of the file to import."};
 
@@ -92,7 +92,7 @@ A # E & 5<br/>\
 Defines a graph with 3 nodes and 3 edges, the edge between A and C is named E and has the value 5",
                     "1.2", "File")
   AdjacencyMatrixImport(tlp::PluginContext *context) : ImportModule(context) {
-    addInParameter<string>("file::filename", paramHelp[0], "");
+    addInParameter<string>("file::filename", paramHelp[0].data(), "");
   }
   ~AdjacencyMatrixImport() override = default;
   vector<node> nodes;

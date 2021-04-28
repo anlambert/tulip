@@ -247,7 +247,7 @@ bool MCLClustering::inflate(double r, unsigned int k, node n, bool equal
   return equal;
 }
 //=================================================
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // inflate
     "Determines the random walk length at each step.",
 
@@ -259,9 +259,9 @@ static const char *paramHelp[] = {
 //=================================================
 MCLClustering::MCLClustering(const tlp::PluginContext *context)
     : DoubleAlgorithm(context), weights(nullptr), _r(2.0), _k(5) {
-  addInParameter<double>("inflate", paramHelp[0], "2.", false);
-  addInParameter<NumericProperty *>("weights", paramHelp[1], "", false);
-  addInParameter<unsigned int>("pruning", paramHelp[2], "5", false);
+  addInParameter<double>("inflate", paramHelp[0].data(), "2.", false);
+  addInParameter<NumericProperty *>("weights", paramHelp[1].data(), "", false);
+  addInParameter<unsigned int>("pruning", paramHelp[2].data(), "5", false);
 }
 //===================================================================================
 MCLClustering::~MCLClustering() = default;

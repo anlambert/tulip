@@ -19,7 +19,7 @@ PLUGIN(TreeReingoldAndTilfordExtended)
 using namespace std;
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // edge length
     "This parameter indicates the property used to compute the length of edges.",
 
@@ -40,13 +40,13 @@ static const char *paramHelp[] = {
 TreeReingoldAndTilfordExtended::TreeReingoldAndTilfordExtended(const tlp::PluginContext *context)
     : LayoutAlgorithm(context), lengthMetric(nullptr) {
   addNodeSizePropertyParameter(this);
-  addInParameter<IntegerProperty>("edge length", paramHelp[0], "", false);
-  addInParameter<StringCollection>("orientation", paramHelp[1], ORIENTATION, true,
+  addInParameter<IntegerProperty>("edge length", paramHelp[0].data(), "", false);
+  addInParameter<StringCollection>("orientation", paramHelp[1].data(), ORIENTATION, true,
                                    "<b>vertical</b> <br> <b>horizontal</b>");
-  addInParameter<bool>("orthogonal", paramHelp[2], "true");
+  addInParameter<bool>("orthogonal", paramHelp[2].data(), "true");
   addSpacingParameters(this);
-  addInParameter<bool>("bounding circles", paramHelp[3], "false");
-  addInParameter<bool>("compact layout", paramHelp[4], "true");
+  addInParameter<bool>("bounding circles", paramHelp[3].data(), "false");
+  addInParameter<bool>("compact layout", paramHelp[4].data(), "true");
 }
 //=============================================================================
 TreeReingoldAndTilfordExtended::~TreeReingoldAndTilfordExtended() = default;

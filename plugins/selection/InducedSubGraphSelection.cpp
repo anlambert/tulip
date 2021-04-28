@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -20,7 +20,7 @@ using namespace tlp;
 PLUGIN(InducedSubGraphSelection)
 
 //=================================================================================
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // Nodes
     "Set of nodes from which the induced subgraph is computed.",
     // Use edges
@@ -29,8 +29,8 @@ static const char *paramHelp[] = {
 //=================================================================================
 InducedSubGraphSelection::InducedSubGraphSelection(const tlp::PluginContext *context)
     : BooleanAlgorithm(context) {
-  addInParameter<BooleanProperty>("Nodes", paramHelp[0], "viewSelection");
-  addInParameter<bool>("Use edges", paramHelp[1], "false");
+  addInParameter<BooleanProperty>("Nodes", paramHelp[0].data(), "viewSelection");
+  addInParameter<bool>("Use edges", paramHelp[1].data(), "false");
   addOutParameter<unsigned int>("#edges selected", "The number of newly selected edges");
   // old name
   declareDeprecatedName("Induced Sub-Graph");

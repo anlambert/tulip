@@ -20,12 +20,12 @@ PLUGIN(ClusterMetric)
 using namespace std;
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // depth
     "Maximal depth of a computed cluster."};
 //=================================================
 ClusterMetric::ClusterMetric(const tlp::PluginContext *context) : DoubleAlgorithm(context) {
-  addInParameter<unsigned int>("depth", paramHelp[0], "1");
+  addInParameter<unsigned int>("depth", paramHelp[0].data(), "1");
 }
 //=================================================
 static double clusterGetEdgeValue(Graph *graph, tlp::NodeVectorProperty<double> &clusters,

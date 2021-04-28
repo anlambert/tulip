@@ -15,7 +15,7 @@
 
 #include <talipot/OGDFLayoutPluginBase.h>
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // minimum grid distance
     "The minimum grid distance.",
 
@@ -32,8 +32,8 @@ public:
   OGDFVisibility(const tlp::PluginContext *context)
       : OGDFLayoutPluginBase(context, tlp::getOGDFLayoutModule<ogdf::VisibilityLayout>(context)),
         visibility(static_cast<ogdf::VisibilityLayout *>(ogdfLayoutAlgo)) {
-    addInParameter<int>("minimum grid distance", paramHelp[0], "1");
-    addInParameter<bool>("transpose", paramHelp[1], "false");
+    addInParameter<int>("minimum grid distance", paramHelp[0].data(), "1");
+    addInParameter<bool>("transpose", paramHelp[1].data(), "false");
   }
 
   void beforeCall() override {

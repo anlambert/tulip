@@ -17,7 +17,7 @@
 using namespace std;
 using namespace tlp;
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // nodes
     "This parameter defines the amount of nodes used to build the scale-free graph.",
 
@@ -49,10 +49,10 @@ struct WattsStrogatzModel : public ImportModule {
                     "1.0", "Social network")
 
   WattsStrogatzModel(PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0], "200");
-    addInParameter<unsigned int>("k", paramHelp[1], "3");
-    addInParameter<double>("p", paramHelp[2], "0.02");
-    addInParameter<bool>("original model", paramHelp[3], "false");
+    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "200");
+    addInParameter<unsigned int>("k", paramHelp[1].data(), "3");
+    addInParameter<double>("p", paramHelp[2].data(), "0.02");
+    addInParameter<bool>("original model", paramHelp[3].data(), "false");
   }
 
   bool importGraph() override {

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -14,7 +14,7 @@
 #include <talipot/PropertyAlgorithm.h>
 #include <talipot/LayoutProperty.h>
 
-static const char *paramHelp[] = {
+static constexpr std::string_view paramHelp[] = {
     // layout
     "The layout property from which a perfect aspect ratio has to be computed.",
 
@@ -27,8 +27,8 @@ public:
                     "Scales the graph layout to get an aspect ratio of 1.", "1.1", "")
 
   PerfectLayout(const tlp::PluginContext *context) : LayoutAlgorithm(context) {
-    addInParameter<tlp::LayoutProperty>("layout", paramHelp[0], "viewLayout", false);
-    addInParameter<bool>("Subgraph only", paramHelp[1], "false");
+    addInParameter<tlp::LayoutProperty>("layout", paramHelp[0].data(), "viewLayout", false);
+    addInParameter<bool>("Subgraph only", paramHelp[1].data(), "false");
   }
   bool run() override {
     tlp::LayoutProperty *layout = nullptr;
