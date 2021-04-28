@@ -262,20 +262,6 @@ private:
   std::vector<ParameterDescription> parameters;
 };
 
-#define HTML_HELP_OPEN() \
-  "<!DOCTYPE html><html><head>\
-<style type=\"text/css\">.body { font-family: \"Segoe UI\", Candara, \"Bitstream Vera Sans\", \"DejaVu Sans\", \"Bitstream Vera Sans\", \"Trebuchet MS\", Verdana, \"Verdana Ref\", sans-serif; }\
-    .paramtable { width: 100%; border: 0px; border-bottom: 1px solid #C9C9C9; padding: 5px; }\
-    .help { font-style: italic; font-size: 90%; }\
-    .b { padding-left: 5px; }</style>\
-</head><body><table border=\"0\" class=\"paramtable\">"
-
-#define HTML_HELP_DEF(A, B) "<tr><td><b>" A "</b><td class=\"b\">" B "</td></tr>"
-
-#define HTML_HELP_BODY() "</table><p class=\"help\">"
-
-#define HTML_HELP_CLOSE() "</p></body></html>"
-
 /**
  * @ingroup Plugins
  * @brief This class describes parameters on a plug-in.

@@ -80,14 +80,42 @@ string ParameterDescriptionList::generateParameterHTMLDocumentation(
     const string &name, const string &help, const string &type, const string &defaultValue,
     const string &valuesDescription, const ParameterDirection &direction) {
 
-  static string htmlDocheader = HTML_HELP_OPEN();
+  const string htmlHelpOpen = R"(
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+      .paramtable {
+        width: 100%;
+        border: 0px;
+        border-bottom: 1px solid #C9C9C9;
+        padding: 5px;
+      }
+      .help {
+        font-style: italic;
+        font-size: 90%;
+      }
+      .b {
+        padding-left: 5px;
+        }
+    </style>
+  </head>
+  <body>
+    <table border="0" class="paramtable">
+)";
 
-  // for backward compatibility for external plugins using the old plugin parameters doc system
-  if (help.substr(0, htmlDocheader.size()) == htmlDocheader) {
-    return help;
-  }
+  const string htmlHelpBody = R"(
+    </table>
+    <p class="help">
+)";
 
-  string doc = htmlDocheader;
+  const string htmlHelpClose = R"(
+    </p>
+  </body>
+</html>
+)";
+
+  string doc = htmlHelpOpen;
   doc += html_help_def(TYPE_SECTION, getParameterTypename(name, type));
 
   if (!valuesDescription.empty()) {
@@ -111,11 +139,11 @@ string ParameterDescriptionList::generateParameterHTMLDocumentation(
   }
 
   if (!help.empty()) {
-    doc += HTML_HELP_BODY();
+    doc += htmlHelpBody;
     doc += help;
   }
 
-  doc += HTML_HELP_CLOSE();
+  doc += htmlHelpClose;
 
   return doc;
 }
