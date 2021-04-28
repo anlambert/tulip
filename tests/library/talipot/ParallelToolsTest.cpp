@@ -87,7 +87,7 @@ void ParallelToolsTest::testCriticalSection() {
 
 void ParallelToolsTest::testNumberOfThreads() {
   const unsigned int vSize = 100;
-  const unsigned int nbThreads = 32;
+  const unsigned int nbThreads = 16;
   tlp::ThreadManager::setNumberOfThreads(nbThreads);
   std::vector<unsigned int> tids(vSize);
   tlp::TLP_PARALLEL_MAP_INDICES(
