@@ -129,18 +129,3 @@ for:
     artifacts:
       - path: build\*.dmg
         name: talipot_installers
-
-deploy:
-  - provider: BinTray
-    on:
-      branch: master
-    username: anlambert
-    api_key:
-      secure: uL6yGLvWIQkeqyYKFzshycul9WpaBj5P4SYUvtAnlcpxaDhL3Ek+sxm+XRYFfH7n
-    subject: anlambert
-    repo: talipot_binaries
-    package: Talipot
-    version: $(TALIPOT_VERSION)
-    publish: true
-    override: true
-    artifact: talipot_installers

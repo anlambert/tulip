@@ -40,15 +40,8 @@ jobs:
         run: |
           echo "::set-output name=version::$(bash build/talipot-config --version)"
         shell: bash
-      - if: github.ref == 'refs/heads/master'
-        name: Upload Taliot AppImage to Bintray
-        uses: masofcon/upload-to-bintray-github-action@master
+      - name: Upload Taliot AppImage to GitHub Actions artifacts
+        uses: actions/upload-artifact@v2
         with:
-          source_path: ./build/Talipot-${{ steps.get-talipot-version.outputs.version }}-x86_64.AppImage
-          api_user: anlambert
-          api_key: ${{ secrets.BINTRAY_API_KEY }}
-          repository: talipot_binaries
-          package: Talipot
-          version: ${{ steps.get-talipot-version.outputs.version }}
-          publish: true
-          override: 1
+          name: Talipot AppImage
+          path: ./build/Talipot*.AppImage
