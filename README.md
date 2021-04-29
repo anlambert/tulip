@@ -96,9 +96,9 @@ Hints on how to build Talipot for these three platforms can be found in the cont
 [AppVeyor](https://www.appveyor.com):
 
   * [ubuntu-build.yml](.github/workflows/ubuntu-build.yml)
-  * [appveyor_msys2.sh](appveyor_msys2.sh)
-  * [appveyor_macos.sh](appveyor_macos.sh)
-  * [appveyor_msvc.bat](appveyor_msvc.bat)
+  * [appveyor_msys2.sh](appveyor/appveyor_msys2.sh)
+  * [appveyor_macos.sh](appveyor/appveyor_macos.sh)
+  * [appveyor_msvc.bat](appveyor/appveyor_msvc.bat)
 
 
 ## License
