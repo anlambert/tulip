@@ -80,7 +80,7 @@ struct IOEdgeContainerIterator : public Iterator<edge>,
                                  public MemoryPool<IOEdgeContainerIterator<io_type>> {
   node n;
   edge curEdge;
-  MutableContainer<bool> loops;
+  std::set<edge> loops;
   const std::vector<std::pair<node, node>> &edges;
   std::vector<edge>::iterator it, itEnd;
 
@@ -90,17 +90,27 @@ struct IOEdgeContainerIterator : public Iterator<edge>,
       const auto &[curEdgeSrc, curEdgeTgt] = edges[curEdge.id];
       // note that io_type value may only be IO_IN which is null
       // or IO_OUT which is define to 1
-      node curNode = io_type != IO_IN ? curEdgeSrc : curEdgeTgt;
+      node curNode;
+
+      if constexpr (io_type != IO_IN) {
+        curNode = curEdgeSrc;
+      } else {
+        curNode = curEdgeTgt;
+      }
 
       if (curNode != n) {
         continue;
       }
 
-      curNode = io_type != IO_IN ? curEdgeTgt : curEdgeSrc;
+      if constexpr (io_type != IO_IN) {
+        curNode = curEdgeTgt;
+      } else {
+        curNode = curEdgeSrc;
+      }
 
       if (curNode == n) {
-        if (!loops.get(curEdge.id)) {
-          loops.set(curEdge.id, true);
+        if (loops.find(curEdge) == loops.end()) {
+          loops.insert(curEdge);
           ++it;
           return;
         }
@@ -117,7 +127,6 @@ struct IOEdgeContainerIterator : public Iterator<edge>,
   IOEdgeContainerIterator(node n, std::vector<edge> &v,
                           const std::vector<std::pair<node, node>> &edges)
       : n(n), edges(edges), it(v.begin()), itEnd(v.end()) {
-    loops.setAll(false);
     prepareNext();
   }
 
@@ -148,7 +157,7 @@ struct IONodesIterator : public Iterator<node>, public MemoryPool<IONodesIterato
   IONodesIterator(node n, std::vector<edge> &nEdges,
                   const std::vector<std::pair<node, node>> &edges)
       : n(n), edges(edges) {
-    if (io_type == IO_INOUT) {
+    if constexpr (io_type == IO_INOUT) {
       it = stlIterator(nEdges);
     } else {
       it = new IOEdgeContainerIterator<io_type>(n, nEdges, edges);
@@ -169,17 +178,17 @@ struct IONodesIterator : public Iterator<node>, public MemoryPool<IONodesIterato
     const auto &[src, tgt] = edges[it->next()];
 
     // out nodes
-    if (io_type == IO_OUT) {
+    if constexpr (io_type == IO_OUT) {
       return tgt;
     }
-
     // in nodes
-    if (io_type == IO_IN) {
+    else if constexpr (io_type == IO_IN) {
       return src;
     }
-
     // inout nodes
-    return (src == n) ? tgt : src;
+    else {
+      return (src == n) ? tgt : src;
+    }
   }
 };
 //=======================================================
