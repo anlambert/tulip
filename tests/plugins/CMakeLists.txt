@@ -12,8 +12,8 @@ SET_SOURCE_FILES_PROPERTIES(
              TALIPOT_PLUGINS_DIR="${CMAKE_BINARY_DIR}/plugins")
 
 SET_SOURCE_FILES_PROPERTIES(
-  pluginstest.cpp PROPERTIES COMPILE_DEFINITIONS
-                             TALIPOT_BUILD_DIR="${CMAKE_BINARY_DIR}")
+  pluginstest.cpp pluginsexecutiontest.cpp
+  PROPERTIES COMPILE_DEFINITIONS TALIPOT_BUILD_DIR="${CMAKE_BINARY_DIR}")
 
 ADD_CUSTOM_TARGET(
   copy_data ALL
@@ -27,3 +27,5 @@ SET_TESTS_PROPERTIES(TalipotPluginsTestSuite PROPERTIES DEPENDS copy_data)
 QTX_SET_INCLUDES_AND_DEFINITIONS()
 UNIT_PLUGINS_TEST(TalipotPluginsLoadingTest pluginsloadingtest.cpp)
 TARGET_LINK_LIBRARIES(TalipotPluginsLoadingTest ${QT_LIBRARIES})
+
+UNIT_PLUGINS_TEST(TalipotPluginsExecutionTest pluginsexecutiontest.cpp)
