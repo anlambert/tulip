@@ -198,16 +198,6 @@ void BasicPluginsTest::testExportImportJSON() {
   CPPUNIT_ASSERT(g == graph);
 }
 //==========================================================
-void BasicPluginsTest::testImportFileSystem() {
-  DataSet ds;
-  ds.set("dir::directory", string("toto"));
-  Graph *g = importGraph("File System Directory", ds, nullptr, graph);
-  CPPUNIT_ASSERT(g == nullptr);
-  ds.set("dir::directory", string(".."));
-  g = importGraph("File System Directory", ds, nullptr, graph);
-  CPPUNIT_ASSERT(g == graph);
-}
-//==========================================================
 void BasicPluginsTest::testImportAdjacencyMatrix() {
   DataSet ds;
   ds.set("file::name", string("data/toto.txt"));
@@ -265,32 +255,6 @@ void BasicPluginsTest::testImportUCINET() {
     ds.set("file::filename", string(files[0]));
     std::cout << "importing UCINET file: " << files[0] << "...";
     Graph *g = importGraph("UCINET", ds, nullptr, graph);
-    CPPUNIT_ASSERT(g == graph);
-    std::cout << " OK" << std::endl;
-    g->clear();
-    files += 1;
-  }
-}
-//==========================================================
-void BasicPluginsTest::testImportGEXF() {
-  // test all data/*.net files
-  const char *gexf_files[] = {"data/basic.gexf",
-                              "data/data.gexf",
-                              "data/hierarchy1.gexf",
-                              "data/hierarchy2.gexf",
-                              "data/hierarchy3.gexf",
-                              "data/hierarchy4.gexf",
-                              "data/phylogeny.gexf",
-                              "data/viz.gexf",
-                              "data/WebAtlas_EuroSiS.gexf",
-                              nullptr};
-  const char **files = &gexf_files[0];
-
-  while (files[0]) {
-    DataSet ds;
-    ds.set("file::filename", string(files[0]));
-    std::cout << "importing GEXF file: " << files[0] << "...";
-    Graph *g = importGraph("GEXF", ds, nullptr, graph);
     CPPUNIT_ASSERT(g == graph);
     std::cout << " OK" << std::endl;
     g->clear();
@@ -464,3 +428,41 @@ void BasicPluginsTest::testStrengthClustering() {
   result = graph->applyPropertyAlgorithm("Strength Clustering", &resultMetric, errorMsg);
   CPPUNIT_ASSERT(result);
 }
+//==========================================================
+#ifndef TALIPOT_BUILD_CORE_ONLY
+void BasicPluginsTest::testImportFileSystem() {
+  DataSet ds;
+  ds.set("dir::directory", string("toto"));
+  Graph *g = importGraph("File System Directory", ds, nullptr, graph);
+  CPPUNIT_ASSERT(g == nullptr);
+  ds.set("dir::directory", string(".."));
+  g = importGraph("File System Directory", ds, nullptr, graph);
+  CPPUNIT_ASSERT(g == graph);
+}
+//==========================================================
+void BasicPluginsTest::testImportGEXF() {
+  // test all data/*.net files
+  const char *gexf_files[] = {"data/basic.gexf",
+                              "data/data.gexf",
+                              "data/hierarchy1.gexf",
+                              "data/hierarchy2.gexf",
+                              "data/hierarchy3.gexf",
+                              "data/hierarchy4.gexf",
+                              "data/phylogeny.gexf",
+                              "data/viz.gexf",
+                              "data/WebAtlas_EuroSiS.gexf",
+                              nullptr};
+  const char **files = &gexf_files[0];
+
+  while (files[0]) {
+    DataSet ds;
+    ds.set("file::filename", string(files[0]));
+    std::cout << "importing GEXF file: " << files[0] << "...";
+    Graph *g = importGraph("GEXF", ds, nullptr, graph);
+    CPPUNIT_ASSERT(g == graph);
+    std::cout << " OK" << std::endl;
+    g->clear();
+    files += 1;
+  }
+}
+#endif

@@ -32,14 +32,12 @@ class BasicPluginsTest : public CppUnit::TestFixture {
   CPPUNIT_TEST(testImportGrid);
   CPPUNIT_TEST(testImportGridApproximation);
   CPPUNIT_TEST(testImportGraphviz);
-  CPPUNIT_TEST(testImportGEXF);
   CPPUNIT_TEST(testImportGml);
   CPPUNIT_TEST(testExportGml);
   CPPUNIT_TEST(testImportTLP);
   CPPUNIT_TEST(testExportTLP);
   CPPUNIT_TEST(testExportImportTLPB);
   CPPUNIT_TEST(testExportImportJSON);
-  CPPUNIT_TEST(testImportFileSystem);
   CPPUNIT_TEST(testImportAdjacencyMatrix);
   CPPUNIT_TEST(testImportPajek);
   CPPUNIT_TEST(testImportUCINET);
@@ -56,6 +54,10 @@ class BasicPluginsTest : public CppUnit::TestFixture {
   CPPUNIT_TEST(testHierarchicalClustering);
   CPPUNIT_TEST(testQuotientClustering);
   CPPUNIT_TEST(testStrengthClustering);
+#ifndef TALIPOT_BUILD_CORE_ONLY
+  CPPUNIT_TEST(testImportFileSystem);
+  CPPUNIT_TEST(testImportGEXF);
+#endif
   CPPUNIT_TEST_SUITE_END();
 
 private:
@@ -78,14 +80,12 @@ public:
   void testImportGrid();
   void testImportGridApproximation();
   void testImportGraphviz();
-  void testImportGEXF();
   void testImportGml();
   void testExportGml();
   void testImportTLP();
   void testExportTLP();
   void testExportImportTLPB();
   void testExportImportJSON();
-  void testImportFileSystem();
   void testImportAdjacencyMatrix();
   void testImportPajek();
   void testImportUCINET();
@@ -103,6 +103,11 @@ public:
   void testHierarchicalClustering();
   void testQuotientClustering();
   void testStrengthClustering();
+
+#ifndef TALIPOT_BUILD_CORE_ONLY
+  void testImportFileSystem();
+  void testImportGEXF();
+#endif
 };
 
 #endif // BASIC_PLUGINS_TEST_H
