@@ -15,6 +15,7 @@
 #include <talipot/LayoutProperty.h>
 #include <talipot/VectorProperty.h>
 #include <talipot/PropertyAlgorithm.h>
+#include <talipot/TreeTest.h>
 
 using namespace std;
 using namespace tlp;
@@ -24,6 +25,7 @@ class OrthoTree : public tlp::LayoutAlgorithm {
   unsigned int nodeSpacing;
   unsigned int layerSpacing;
   tlp::SizeProperty *size;
+  tlp::Graph *tree;
 
   void computeVerticalSize(const tlp::node n, tlp::NodeVectorProperty<double> &verticalSize);
   void computeLayout(const tlp::node n, tlp::NodeVectorProperty<double> &verticalSize);
@@ -47,21 +49,21 @@ static constexpr std::string_view paramHelp[] = {
 
 OrthoTree::OrthoTree(const tlp::PluginContext *context)
     : tlp::LayoutAlgorithm(context), nodeSpacing(4), layerSpacing(10), size(nullptr) {
-  addInParameter<unsigned int>("Layer spacing", paramHelp[0].data(), "10", true);
-  addInParameter<unsigned int>("Node spacing", paramHelp[1].data(), "4", true);
+  addInParameter<unsigned int>("layer spacing", paramHelp[0].data(), "10", true);
+  addInParameter<unsigned int>("node spacing", paramHelp[1].data(), "4", true);
 }
 
 void OrthoTree::computeVerticalSize(const node n, NodeVectorProperty<double> &verticalSize) {
-  if (graph->outdeg(n) == 0) {
+  if (tree->outdeg(n) == 0) {
     verticalSize[n] = size->getNodeValue(n)[1];
   } else {
     double s = 0.;
-    for (auto u : graph->getOutNodes(n)) {
+    for (auto u : tree->getOutNodes(n)) {
       computeVerticalSize(u, verticalSize);
       s += verticalSize[u];
     }
 
-    if (graph->outdeg(n) > 1) {
+    if (tree->outdeg(n) > 1) {
       s += nodeSpacing * (graph->outdeg(n) - 1);
     }
 
@@ -72,8 +74,8 @@ void OrthoTree::computeVerticalSize(const node n, NodeVectorProperty<double> &ve
 void OrthoTree::computeLayout(const node n, NodeVectorProperty<double> &verticalSize) {
   Coord cn = result->getNodeValue(n);
   double prev = 0.;
-  for (auto e : graph->getOutEdges(n)) {
-    node u = graph->opposite(e, n);
+  for (auto e : tree->getOutEdges(n)) {
+    node u = tree->opposite(e, n);
     Coord c = cn;
     c[0] += layerSpacing;
     c[1] -= prev;
@@ -94,16 +96,18 @@ bool OrthoTree::run() {
   nodeSpacing = 4;
 
   if (dataSet != nullptr) {
-    dataSet->get("Layer spacing", layerSpacing);
-    dataSet->get("Node spacing", nodeSpacing);
+    dataSet->get("layer spacing", layerSpacing);
+    dataSet->get("node spacing", nodeSpacing);
   }
 
-  NodeVectorProperty<double> verticalSize(graph);
+  tree = TreeTest::computeTree(graph, pluginProgress);
+
+  NodeVectorProperty<double> verticalSize(tree);
   size = graph->getSizeProperty("viewSize");
 
   verticalSize.setAll(0);
 
-  node root = graph->getSource();
+  node root = tree->getSource();
   assert(root.isValid());
 
   computeVerticalSize(root, verticalSize);
@@ -111,6 +115,8 @@ bool OrthoTree::run() {
   result->setAllNodeValue(Coord(0, 0, 0));
   result->setAllEdgeValue(vector<Coord>(0));
   computeLayout(root, verticalSize);
+
+  TreeTest::cleanComputedTree(graph, tree);
 
   return true;
 }
