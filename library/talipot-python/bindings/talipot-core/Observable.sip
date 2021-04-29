@@ -110,7 +110,7 @@ if the event was just sent or was delayed.
 The purpose of this twist is to allow algorithms that perform a high number of modifications (e.g. creating a grid to route edges,
 creating multiple subgraphs with metrics or layouts) to run smoothly without overcrowding the event queue.
 As events are sent for every graph modification  (e.g. adding a node, deleting a node, setting a value on a node), the
-sheer quantity of events sent by these algortithms would cause a big performance hit.
+sheer quantity of events sent by these algorithms would cause a big performance hit.
 
 This is avoided by using the static method :meth:`tlp.Observable.holdObservers`.
 This holds all events in a queue and only sends them when the static method :meth:`tlp.Observable.unholdObservers` is called.

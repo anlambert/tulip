@@ -170,7 +170,7 @@ public:
    */
   void setTextureZoom(float zoom) {
     textureZoom = zoom;
-    runTesselation();
+    runTessellation();
   }
 
   /**
@@ -240,7 +240,7 @@ protected:
    */
   virtual void beginNewHole();
 
-  void runTesselation();
+  void runTessellation();
   void createPolygon(const std::vector<Coord> &coords, int polygonEdgesType);
 
   std::vector<std::vector<Coord>> points;

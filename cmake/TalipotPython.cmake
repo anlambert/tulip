@@ -72,7 +72,7 @@ UNSET(PYTHON_INCLUDE_PATH CACHE)
 SET(Python_ADDITIONAL_VERSIONS ${PYTHON_VERSION}mu ${PYTHON_VERSION}m
                                ${PYTHON_VERSION})
 
-# Ensure the detection of Python library installed trough a bundle downloaded
+# Ensure the detection of Python library installed through a bundle downloaded
 # from Python.org
 IF(APPLE)
   IF(NOT "${PYTHON_EXECUTABLE}" MATCHES "^/usr/bin/python.*$"

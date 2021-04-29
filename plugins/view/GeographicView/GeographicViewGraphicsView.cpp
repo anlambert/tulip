@@ -48,7 +48,7 @@ GlComposite *readPolyFile(QString fileName) {
   }
 
   string polygonName;
-  vector<vector<Coord>> datas;
+  vector<vector<Coord>> data;
   vector<Coord> currentVector;
   bool ok;
   QString line;
@@ -64,7 +64,7 @@ GlComposite *readPolyFile(QString fileName) {
 
     if (ok) {
       if (!currentVector.empty()) {
-        datas.push_back(currentVector);
+        data.push_back(currentVector);
       }
 
       currentVector = vector<Coord>();
@@ -101,14 +101,14 @@ GlComposite *readPolyFile(QString fileName) {
       if (!polygonName.empty()) {
 
         if (!currentVector.empty()) {
-          datas.push_back(currentVector);
+          data.push_back(currentVector);
         }
 
-        if (!datas.empty()) {
+        if (!data.empty()) {
 
           composite->addGlEntity(
-              new GlComplexPolygon(datas, Color(0, 0, 0, 50), Color(0, 0, 0, 255)), polygonName);
-          datas.clear();
+              new GlComplexPolygon(data, Color(0, 0, 0, 50), Color(0, 0, 0, 255)), polygonName);
+          data.clear();
           currentVector.clear();
         }
       }
@@ -138,10 +138,10 @@ GlComposite *readPolyFile(QString fileName) {
 
   if (!polygonName.empty()) {
     if (!currentVector.empty()) {
-      datas.push_back(currentVector);
+      data.push_back(currentVector);
     }
 
-    composite->addGlEntity(new GlComplexPolygon(datas, Color(0, 0, 0, 50), Color(0, 0, 0, 255)),
+    composite->addGlEntity(new GlComplexPolygon(data, Color(0, 0, 0, 50), Color(0, 0, 0, 255)),
                            polygonName);
   }
 
@@ -158,7 +158,7 @@ GlComposite *readCsvFile(QString fileName) {
     return nullptr;
   }
 
-  vector<vector<Coord>> datas;
+  vector<vector<Coord>> data;
   vector<Coord> currentVector;
   int lastIndex = 0;
 
@@ -168,7 +168,7 @@ GlComposite *readCsvFile(QString fileName) {
 
     if (strList.size() != 3) {
       if (!currentVector.empty()) {
-        datas.push_back(currentVector);
+        data.push_back(currentVector);
       }
 
       currentVector.clear();
@@ -177,7 +177,7 @@ GlComposite *readCsvFile(QString fileName) {
 
     if (strList[0].toInt() != lastIndex) {
       if (!currentVector.empty()) {
-        datas.push_back(currentVector);
+        data.push_back(currentVector);
       }
 
       lastIndex = strList[0].toInt();
@@ -196,11 +196,11 @@ GlComposite *readCsvFile(QString fileName) {
         Coord((strList[2].toDouble()) * 360. / M_PI, mercatorLatitude * 360. / M_PI, 0));
   }
 
-  if (datas.empty()) {
+  if (data.empty()) {
     return nullptr;
   }
 
-  composite->addGlEntity(new GlComplexPolygon(datas, Color(0, 0, 0, 50), Color(0, 0, 0, 255)),
+  composite->addGlEntity(new GlComplexPolygon(data, Color(0, 0, 0, 50), Color(0, 0, 0, 255)),
                          "polygon");
 
   return composite;

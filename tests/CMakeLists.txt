@@ -44,7 +44,7 @@ runner = unittest.TextTestRunner()
 runner.run(tests)")
   ENDIF()
   # In order to run the tests on windows, we need to add the paths of the dll
-  # depencencies (cppunit, tulip, gzstream, yajl) in the PATH environment
+  # dependencies (cppunit, tulip, gzstream, yajl) in the PATH environment
   # variable
   IF(WIN32)
     IF(MINGW)

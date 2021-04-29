@@ -337,7 +337,7 @@ protected:
 
   /**
    * @brief Sends an event to all the Observers/Listeners.
-   * It is higly recommended to check if there are observers/listeners to send the event to before
+   * It is highly recommended to check if there are observers/listeners to send the event to before
    * actually sending it
    * to avoid the overhead of creating too many objects.
    *
@@ -459,7 +459,7 @@ private:
    * @brief addOnlooker Adds an Observer/Listener to this object.
    *
    * The added Onlookers will received the next Event sent by the Observable.
-   * In case of nested unholding (higly unlikely), calling that function inside hold/unhold block
+   * In case of nested unholding (highly unlikely), calling that function inside hold/unhold block
    * can make the Observer receive an event that has been sent before it was Observing the object.
    *
    * @param obs The Observer/Listener to add to this object.
@@ -470,7 +470,7 @@ private:
   /**
    * @brief removeOnlooker removes an Observer/Listener from this object.
    *
-   * In case of nested unholding (higly unlikely), calling that function inside a hold/unhold block
+   * In case of nested unholding (highly unlikely), calling that function inside a hold/unhold block
    * could
    * make the Observer not receive an event that was sent when it was connected.
    *

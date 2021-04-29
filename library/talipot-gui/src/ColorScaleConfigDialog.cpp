@@ -343,7 +343,7 @@ void ColorScaleConfigDialog::saveCurrentColorScale() {
   if (ok && !text.isEmpty()) {
     if (savedColorScalesList.contains(text)) {
       QString question = "There is already a color scale saved under the name " + text +
-                         ". Do you want to owerwrite it ?";
+                         ". Do you want to overwrite it ?";
 
       if (QMessageBox::question(this, "Color scale saving", question,
                                 QMessageBox::Yes | QMessageBox::No,

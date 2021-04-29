@@ -1,4 +1,4 @@
-# Copyright (C) 2019  The Talipot developers
+# Copyright (C) 2019-2021  The Talipot developers
 #
 # Talipot is a fork of Tulip, created by David Auber
 # and the Tulip development Team from LaBRI, University of Bordeaux
@@ -41,7 +41,7 @@ alpha of the graph element color.<br/>
 For the logarithmic case, input numeric properties values are first
 mapped in the [1, +inf[ range. Then the log of each mapped value is
 computed and used to compute the associated alpha value of the graph
-element color trough a linear interpolation between 0 and the log of
+element color through a linear interpolation between 0 and the log of
 the mapped maximum value of graph elements.<br/>
 If uniform, this is the same except for the interpolation: the values
 are sorted, numbered, and a linear interpolation is used on those numbers

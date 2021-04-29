@@ -37,7 +37,7 @@ IF(APPLE)
 ENDIF(APPLE)
 
 # ========================================================
-# Toolchains options and defintions
+# Toolchains options and definitions
 # ========================================================
 MACRO(TALIPOT_SET_CXX_FLAGS flag)
   STRING(FIND "${CMAKE_CXX_FLAGS}" "${flag}" FLAG_POS)

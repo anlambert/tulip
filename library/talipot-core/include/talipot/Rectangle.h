@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -124,7 +124,7 @@ struct Rectangle : public Array<Vector<Obj, 2, OTYPE>, 2> {
     return (*this)[0][0] <= (*this)[1][0] && (*this)[0][1] <= (*this)[1][1];
   }
   /**
-   * Return true if point is stricly inside the AARectangle
+   * Return true if point is strictly inside the AARectangle
    * \warning the rectangle must be valid (tested in debug mode)
    */
   bool isInside(const Vector<Obj, 2, OTYPE> &p) const {

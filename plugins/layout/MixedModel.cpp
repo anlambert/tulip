@@ -893,7 +893,7 @@ void MixedModel::computeCoords() {
     assert(ir != C.end());
     Coord co = nodeSize.get((*il).id);
     float max_y = NodeCoords[(*il)].getY() + co.getY() / 2.f;
-    float somme = 0; // relative to cl
+    float sum = 0; // relative to cl
 
     for (auto i = il + 1; i != ir + 1; ++i) {
       Coord co2 = nodeSize.get((*i).id);
@@ -905,8 +905,8 @@ void MixedModel::computeCoords() {
       }
 
       // compute x-coords [cl+1.. cr] temporarily
-      somme += NodeCoords[(*i)].getX();
-      NodeCoords[(*i)].setX(somme); // somme x(cj) dans [cl+1...ci]
+      sum += NodeCoords[(*i)].getX();
+      NodeCoords[(*i)].setX(sum); // somme x(cj) dans [cl+1...ci]
     }
 
     node Z0 = V[k][0];
@@ -992,7 +992,7 @@ void MixedModel::computeCoords() {
       }
     } else {
       int out_r = 0, out_r_moins1 = 0;
-      float somme = 0;
+      float sum = 0;
 
       // assign x(zi)
       for (unsigned int i = 0; i < p; ++i) {
@@ -1008,7 +1008,7 @@ void MixedModel::computeCoords() {
         }
 
         NodeCoords[V[k][i]].setX(float(x));
-        somme += float(x);
+        sum += float(x);
 
         out_r_moins1 = int((out_r < co2.getX() / 2.) ? co2.getX() / 2. : out_r);
       }
@@ -1020,10 +1020,10 @@ void MixedModel::computeCoords() {
       float xtmp = NodeCoords[cr].getX();
       double x;
 
-      if (tmp > xtmp - somme) {
+      if (tmp > xtmp - sum) {
         x = tmp;
       } else {
-        x = xtmp - somme;
+        x = xtmp - sum;
       }
 
       NodeCoords[cr].setX(float(x));
@@ -1041,11 +1041,11 @@ void MixedModel::computeCoords() {
     C.insert(ir, V[k].begin(), V[k].end());
   }
 
-  float somme = 0;
+  float sum = 0;
 
   for (auto n : C) {
-    somme += NodeCoords[n].getX();
-    NodeCoords[n].setX(somme);
+    sum += NodeCoords[n].getX();
+    NodeCoords[n].setX(sum);
   }
 
   for (int k = size_V - 1; k >= 0; k--) {

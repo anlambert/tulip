@@ -266,7 +266,7 @@ public:
   /**
    * @brief Applies an algorithm plugin, identified by its name.
    * Algorithm plugins are subclasses of the tlp::Algorithm interface.
-   * Parameters are transmitted to the algorithm trough the DataSet.
+   * Parameters are transmitted to the algorithm through the DataSet.
    * To determine a plugin's parameters, you can either:
    *
    * * refer to its documentation

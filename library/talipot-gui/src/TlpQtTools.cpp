@@ -270,7 +270,7 @@ void initTalipotSoftware(tlp::PluginLoader *loader) {
   tlp::GlyphManager::loadGlyphPlugins();
   tlp::EdgeExtremityGlyphManager::loadGlyphPlugins();
 
-  // Explicitely create a shared OpenGL context to
+  // Explicitly create a shared OpenGL context to
   // ensure it is initialized before using it
   GlOffscreenRenderer::instance().getOpenGLContext();
 

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -17,10 +17,10 @@
 #include <QLabel>
 
 /**
-  @brief This widget provides with maintenance actions related to a plugin load errror.
+  @brief This widget provides with maintenance actions related to a plugin load error.
   When a plugin crash at load time, the user shall have the following choices:
   @list
-  @li Uninstall the plugin (removes the file permanantly)
+  @li Uninstall the plugin (removes the file permanently)
   @li Reinstall it from a distant repository
   @list
   */

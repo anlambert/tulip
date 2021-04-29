@@ -82,7 +82,7 @@ then
   make test-wheel-upload
 fi
 
-# test uploaded wheels in clean environement
+# test uploaded wheels in clean environment
 sudo port -N -f uninstall \
   cmake \
   clang-${CLANG_VERSION} \

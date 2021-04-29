@@ -378,7 +378,7 @@ void NodeLinkDiagramView::fillContextMenu(QMenu *menu, const QPointF &point) {
       action = selectMenu->addAction("predecessor nodes", [this] { selectInNodes(); });
       action->setToolTip("Select the predecessors of node #" + sId);
       action = selectMenu->addAction("successor nodes", [this] { selectOutNodes(); });
-      action->setToolTip("Select the sucessors of node #" + sId);
+      action->setToolTip("Select the successors of node #" + sId);
       action = selectMenu->addAction("input edges", [this] { selectInEdges(); });
       action->setToolTip("Select the input edges of node #" + sId);
       action = selectMenu->addAction("output edges", [this] { selectOutEdges(); });
@@ -406,7 +406,7 @@ void NodeLinkDiagramView::fillContextMenu(QMenu *menu, const QPointF &point) {
       action->setToolTip("Add the predecessors of node #" + sId + " to the current selection");
       action =
           addToSelectionMenu->addAction("successor nodes", [this] { addOutNodesToSelection(); });
-      action->setToolTip("Add the sucessors of node #" + sId + " to the current selection");
+      action->setToolTip("Add the successors of node #" + sId + " to the current selection");
       action = addToSelectionMenu->addAction("input edges", [this] { addInEdgesToSelection(); });
       action->setToolTip("Add the input edges of node #" + sId + " to the current selection");
       action = addToSelectionMenu->addAction("output edges", [this] { addOutEdgesToSelection(); });
@@ -439,7 +439,7 @@ void NodeLinkDiagramView::fillContextMenu(QMenu *menu, const QPointF &point) {
       action->setToolTip("Remove the predecessors of node #" + sId + " from the current selection");
       action = removeFromSelectionMenu->addAction("successor nodes",
                                                   [this] { removeOutNodesFromSelection(); });
-      action->setToolTip("Remove the sucessors of node #" + sId + " from the current selection");
+      action->setToolTip("Remove the successors of node #" + sId + " from the current selection");
       action = removeFromSelectionMenu->addAction("input edges",
                                                   [this] { removeInEdgesFromSelection(); });
       action->setToolTip("Remove the input edges of node #" + sId + " from the current selection");

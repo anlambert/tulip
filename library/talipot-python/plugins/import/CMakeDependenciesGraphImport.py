@@ -37,7 +37,7 @@ def executeCommand(command, cwd, stderrfile, pluginProgress):
     with open(stderrfile, 'wb') as err:
         p = subprocess.Popen(command, cwd=cwd, shell=True,
                              stdout=subprocess.PIPE, stderr=err)
-        # add some execution feedback trough the plugin progress
+        # add some execution feedback through the plugin progress
         while True:
             line = p.stdout.readline().decode('utf-8')
             line = line.replace('\r\n', '').replace('\n', '')
@@ -131,7 +131,7 @@ class CMakeDependenciesGraphImport(tlp.ImportModule):
                 shutil.rmtree(tmpdir)
                 return False
 
-        # import the dot file in Talipot trough the graphviz import plugin
+        # import the dot file in Talipot through the graphviz import plugin
         dotImportParams = tlp.getDefaultPluginParameters('Graphviz',
                                                          self.graph)
         dotImportParams['filename'] = cmakeProjectDotFilePath

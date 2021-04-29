@@ -980,8 +980,7 @@ void GraphModel::treatEvents(const std::vector<tlp::Event> &) {
         rowsSequence.push_back(id);
       }
       // case where an element previously deleted, whose id is lower than the last one stored in the
-      // model,
-      // is readded in the graph
+      // model, is added again in the graph
       else {
 
         // if the current rows sequence is not empty, flush it to add the rows in the model
@@ -1012,8 +1011,7 @@ void GraphModel::treatEvents(const std::vector<tlp::Event> &) {
           std::lower_bound(_elements.begin(), _elements.end(), id) - _elements.begin();
 
       // if the index to remove is not contiguous with the last one stored in the current sequence
-      // of indices to remove,
-      // flush that sequence to remove the elements from the model
+      // of indices to remove, flush that sequence to remove the elements from the model
       if (!rowsSequence.isEmpty() && index != rowsSequence.back() + 1) {
         addRemoveRowsSequence(rowsSequence, add);
         rowsSequence.clear();
@@ -1058,10 +1056,9 @@ void NodesGraphModel::treatEvent(const Event &ev) {
 
     if (graphEv->getType() == GraphEvent::TLP_ADD_NODE) {
       _nodesAdded = true;
-      // if the node was removed then readded before the call to Observable::unholdObservers(),
-      // remove
-      // it from the elementsToModify list as no update has to be performed in the model for that
-      // element.
+      // if the node was removed then added again before the call to Observable::unholdObservers(),
+      // remove it from the elementsToModify list as no update has to be performed in the model for
+      // that element.
       int wasDeleted =
           _nodesRemoved ? _elementsToModify.indexOf(qMakePair(graphEv->getNode().id, false)) : -1;
 
@@ -1074,10 +1071,9 @@ void NodesGraphModel::treatEvent(const Event &ev) {
       _nodesAdded = true;
 
       for (auto n : graphEv->getNodes()) {
-        // if the node was removed then readded before the call to Observable::unholdObservers(),
-        // remove
-        // it from the elementsToModify list as no update has to be performed in the model for that
-        // element
+        // if the node was removed then added again before the call to
+        // Observable::unholdObservers(), remove it from the elementsToModify list as no update has
+        // to be performed in the model for that element
         int wasDeleted = _nodesRemoved ? _elementsToModify.indexOf(qMakePair(n.id, false)) : -1;
 
         if (wasDeleted == -1) {
@@ -1146,10 +1142,9 @@ void EdgesGraphModel::treatEvent(const Event &ev) {
 
     if (graphEv->getType() == GraphEvent::TLP_ADD_EDGE) {
       _edgesAdded = true;
-      // if the edge was removed then readded before the call to Observable::unholdObservers(),
-      // remove
-      // it from the elementsToModify list as no update has to be performed in the model for that
-      // element
+      // if the edge was removed then added again before the call to Observable::unholdObservers(),
+      // remove it from the elementsToModify list as no update has to be performed in the model for
+      // that element
       int wasDeleted =
           _edgesRemoved ? _elementsToModify.indexOf(qMakePair(graphEv->getEdge().id, false)) : -1;
 
@@ -1162,10 +1157,9 @@ void EdgesGraphModel::treatEvent(const Event &ev) {
       _edgesAdded = true;
 
       for (auto e : graphEv->getEdges()) {
-        // if the edge was removed then readded before the call to Observable::unholdObservers(),
-        // remove
-        // it from the elementsToModify list as no update has to be performed in the model for that
-        // element
+        // if the edge was removed then added again before the call to
+        // Observable::unholdObservers(), remove it from the elementsToModify list as no update has
+        // to be performed in the model for that element
         int wasDeleted = _edgesRemoved ? _elementsToModify.indexOf(qMakePair(e.id, false)) : -1;
 
         if (wasDeleted == -1) {

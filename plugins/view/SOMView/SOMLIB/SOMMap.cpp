@@ -164,15 +164,15 @@ tlp::node SOMMap::getNodeAt(unsigned int x, unsigned int y) {
     return node();
   }
 
-  unsigned int currenty = 0;
+  unsigned int currently = 0;
   unsigned int currentx = 0;
   // Get first node
   node n = graph_component->getOneNode();
 
   // Move on the line
-  while (currenty != y) {
+  while (currently != y) {
     n = graph_component->getOutNode(n, 2);
-    ++currenty;
+    ++currently;
   }
 
   while (currentx != x) {

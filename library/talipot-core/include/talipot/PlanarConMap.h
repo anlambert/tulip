@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -118,11 +118,11 @@ public:
   //================================================================================
   // Graph, nodes and edges information about the graph structure
   //================================================================================
-  /// Return the edge which is the succcessor of an edge in the cycle of a node.
+  /// Return the edge which is the successor of an edge in the cycle of a node.
   edge succCycleEdge(const edge, const node) const;
   /// Return the edge which is the predecessor of an edge in the cycle of a node.
   edge predCycleEdge(const edge, const node) const;
-  /// Return the node which is the succcessor of a node in the cycle of a node.
+  /// Return the node which is the successor of a node in the cycle of a node.
   node succCycleNode(const node, const node) const;
   /// Return the node which is the predecessor of a node in the cycle of a node.
   node predCycleNode(const node, const node) const;

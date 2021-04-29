@@ -454,7 +454,7 @@ public:
   /**
    * @brief Sort all edges according to comparison functor given in parameter
    * if stable is true a stable sort algorithm is applied
-   * Comparison should be an instance of a class wihch implements operator():
+   * Comparison should be an instance of a class which implements operator():
    * @remark dependent of stl::sort and stl::stable_sort algorithm (should be o(E log (E)))
    * @code
    *  class Compare {
@@ -479,7 +479,7 @@ public:
   /**
    * @brief Sort all nodes according to comparison functor given in parameter
    * if stable is true a stable sort algorithm is applied
-   * Comparison should be an instance of a class wihch implements operator():
+   * Comparison should be an instance of a class which implements operator():
    * @code
    *  class Compare {
    *  //return true if a < b

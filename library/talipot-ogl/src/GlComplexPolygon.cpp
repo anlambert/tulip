@@ -248,7 +248,7 @@ GlComplexPolygon::GlComplexPolygon(const vector<Coord> &coords, Color fcolor, in
     : currentVector(-1), outlined(false), fillColor(fcolor), outlineSize(1),
       textureName(textureName), textureZoom(1.) {
   createPolygon(coords, polygonEdgesType);
-  runTesselation();
+  runTessellation();
 }
 //=====================================================
 GlComplexPolygon::GlComplexPolygon(const vector<Coord> &coords, Color fcolor, Color ocolor,
@@ -257,7 +257,7 @@ GlComplexPolygon::GlComplexPolygon(const vector<Coord> &coords, Color fcolor, Co
       textureName(textureName), textureZoom(1.) {
   if (!coords.empty()) {
     createPolygon(coords, polygonEdgesType);
-    runTesselation();
+    runTessellation();
   }
 }
 //=====================================================
@@ -269,7 +269,7 @@ GlComplexPolygon::GlComplexPolygon(const vector<vector<Coord>> &coords, Color fc
     createPolygon(coord, polygonEdgesType);
   }
 
-  runTesselation();
+  runTessellation();
 }
 //=====================================================
 GlComplexPolygon::GlComplexPolygon(const vector<vector<Coord>> &coords, Color fcolor, Color ocolor,
@@ -280,7 +280,7 @@ GlComplexPolygon::GlComplexPolygon(const vector<vector<Coord>> &coords, Color fc
     createPolygon(coord, polygonEdgesType);
   }
 
-  runTesselation();
+  runTessellation();
 }
 //=====================================================
 void GlComplexPolygon::createPolygon(const vector<Coord> &coords, int polygonEdgesType) {
@@ -354,7 +354,7 @@ void GlComplexPolygon::beginNewHole() {
   quadBorderTexFactor.push_back(1.f);
 }
 //=====================================================
-void GlComplexPolygon::runTesselation() {
+void GlComplexPolygon::runTessellation() {
   verticesData.clear();
   verticesIndices.clear();
   // instantiate the tessellator from libtess2
@@ -365,17 +365,17 @@ void GlComplexPolygon::runTesselation() {
     tessAddContour(tess, 3, &point[0], sizeof(float) * 3, point.size());
   }
 
-  // the Tesselation will generate a set of polygons with maximum nvp vertices
+  // the Tessellation will generate a set of polygons with maximum nvp vertices
   const int nvp = 6;
 
-  // run Tesselation with the same default winding rule as in the GLU tessellator
+  // run Tessellation with the same default winding rule as in the GLU tessellator
   if (tessTesselate(tess, TESS_WINDING_ODD, TESS_POLYGONS, nvp, 3, nullptr)) {
     const float *verts = tessGetVertices(tess);
     const int *elems = tessGetElements(tess);
     const int nelems = tessGetElementCount(tess);
     std::unordered_map<Coord, unsigned int> vidx;
 
-    // iterate over polygons computed by Tesselation
+    // iterate over polygons computed by Tessellation
     for (int i = 0; i < nelems; ++i) {
       std::vector<tlp::Coord> verticesTmp;
       const int *p = &elems[i * nvp];
@@ -552,7 +552,7 @@ void GlComplexPolygon::translate(const Coord &vec) {
     }
   }
 
-  runTesselation();
+  runTessellation();
 }
 //===========================================================
 void GlComplexPolygon::getXML(string &outString) {

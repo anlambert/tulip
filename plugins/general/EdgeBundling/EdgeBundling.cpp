@@ -228,7 +228,7 @@ bool EdgeBundling::run() {
 
   if (!layout3D) {
     // forbid edge bundling execution if the input layout is in 3D
-    // and it has not been explicitely asked to use the 3D version
+    // and it has not been explicitly asked to use the 3D version
     // of the algorithm.
     auto lMin = layout->getMin(graph);
     auto lMax = layout->getMax(graph);
@@ -236,7 +236,7 @@ bool EdgeBundling::run() {
       pluginProgress->setError("Input layout is in 3D while the default behavior "
                                "of the algorithm is to consider the input layout in 2D. "
                                "You can set the \"3D_layout\" parameter of the algorithm to "
-                               "true to explicitely use 3D edge bundling.");
+                               "true to explicitly use 3D edge bundling.");
       return false;
     }
   }
@@ -615,17 +615,17 @@ bool EdgeBundling::run() {
       }
 
       for (auto n : toTreatByThreads) {
-        vector<node> neigbors;
+        vector<node> neighbors;
         for (auto n2 : vertexCoverGraph->getInOutNodes(n)) {
-          neigbors.push_back(n2);
+          neighbors.push_back(n2);
           orderedNodes.erase(n2);
         }
         orderedNodes.erase(n);
         vertexCoverGraph->delNode(n);
 
-        for (auto neigbor : neigbors) {
-          computeDistance(neigbor);
-          orderedNodes.insert(neigbor);
+        for (auto neighbor : neighbors) {
+          computeDistance(neighbor);
+          orderedNodes.insert(neighbor);
         }
       }
     }

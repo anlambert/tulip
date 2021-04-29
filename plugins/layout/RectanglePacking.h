@@ -81,14 +81,14 @@ public:
                                        std::vector<tlp::Rectangle<float>>::iterator itend);
 
   /**
-   *Search the best co-ordinates of a rectangle in order to pack it in the
+   *Search the best coordinates of a rectangle in order to pack it in the
    *best way. Test the results obtained with all the possible positions in
    * the even sequence.
    */
   void optimalPositionOfNewRectangle(std::vector<tlp::Rectangle<float>>::iterator itNewRect);
 
   /**
-   *Search the co-ordinates of a rectangle for the positions tested in the
+   *Search the coordinates of a rectangle for the positions tested in the
    *first and in the second sequence of the even sequence. Search the
    *dimensions of the rectangle including all the packed rectangles.
    *@param positionInFirstSequence position tested in the first sequence.
@@ -98,7 +98,7 @@ public:
   testOfPositionOfNewRectangle(int positionInFirstSequence, int positionInSecondSequence);
 
   /**
-   *Search the co-ordinates of a rectangle for the positions tested in the
+   *Search the coordinates of a rectangle for the positions tested in the
    *first and in the second sequence of the even sequence. Search the
    *dimensions of the rectangle including the rectangles placed on the left
    *and below the new rectangle.
@@ -137,7 +137,7 @@ public:
   void dimensionsBoundingBoxOfNewRectangleAndRectanglesLeftOrBelow();
 
   /**
-   *Calculate again the co-ordinates of the rectangles places on the right and
+   *Calculate again the coordinates of the rectangles places on the right and
    *above the new rectangle. Calculate the dimensions of the rectangle
    *including all the packed rectangles.
    *@param positionInFirstSequence position tested in the first sequence.

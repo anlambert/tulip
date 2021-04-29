@@ -33,7 +33,7 @@ ViewActionsManager::ViewActionsManager(View *view, GlWidget *widget, bool keepRa
 
   _centerViewAction = new QAction("Center view", widget);
   setToolTipWithCtrlShortcut(_centerViewAction,
-                             "Make the view to fully display and center its contents", "Shif+C");
+                             "Make the view to fully display and center its contents", "Shift+C");
   connect(_centerViewAction, &QAction::triggered, this, &ViewActionsManager::centerView);
   _centerViewAction->setShortcut(QKeySequence("Ctrl+Shift+C"));
   _centerViewAction->setShortcutContext(Qt::WidgetWithChildrenShortcut);

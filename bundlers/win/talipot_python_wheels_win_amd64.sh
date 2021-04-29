@@ -73,7 +73,7 @@ then
   make test-wheel-upload
 fi
 
-# Test uploaded wheels in clean environement
+# Test uploaded wheels in clean environment
 # Install build tools and dependencies
 pacman --noconfirm -Rc \
   mingw-w64-$MSYS2_ARCH-toolchain \

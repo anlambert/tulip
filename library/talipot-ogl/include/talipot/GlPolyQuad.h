@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -47,7 +47,7 @@ public:
              const int outlineWidth = 1, const Color &outlineColor = Color(0, 0, 0));
 
   /**
-   * Constructor for building a polyquad with spefific colors for each edges
+   * Constructor for building a polyquad with specific colors for each edges
    *
    * Pay attention to the order of the edges point in the polyQuadEdges vector. Indeed, to draw the
    * following polyquad

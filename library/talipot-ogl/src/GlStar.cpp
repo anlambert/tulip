@@ -67,6 +67,6 @@ void GlStar::computeStar() {
   boundingBox.expand(position - size / 2.f);
 
   createPolygon(points, 0);
-  runTesselation();
+  runTessellation();
 }
 }
