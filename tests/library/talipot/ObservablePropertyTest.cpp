@@ -173,15 +173,10 @@ void ObservablePropertyTest::setUp() {
   props[5] = graph->getSizeProperty("sizeProp");
   props[6] = graph->getStringProperty("stringProp");
 
-  vector<node> nodes;
-
-  for (unsigned int i = 0; i < NB_NODES; ++i) {
-    nodes.push_back(graph->addNode());
-  }
+  vector<node> nodes = graph->addNodes(NB_NODES);
 
   for (unsigned int i = 0; i < NB_EDGES; ++i) {
-    graph->addEdge(nodes[randomUnsignedInteger(NB_NODES - 1)],
-                   nodes[randomUnsignedInteger(NB_NODES - 1)]);
+    graph->addEdge(graph->getRandomNode(), graph->getRandomNode());
   }
 
   observer = new ObserverPTest();

@@ -95,53 +95,47 @@ void BooleanPropertyTest::testSetAll() {
 }
 //==========================================================
 void BooleanPropertyTest::testSetGet(bool value) {
-  const vector<node> &nodes = graph->nodes();
-  const vector<edge> &edges = graph->edges();
-
   selection->setAllNodeValue(value);
   selection->setAllEdgeValue(value);
 
   for (unsigned int i = 0; i < graph->numberOfNodes() * 10; ++i) {
-    unsigned int rando = randomUnsignedInteger(graph->numberOfNodes() - 1);
-    selection->setNodeValue(nodes[rando], !value);
-    CPPUNIT_ASSERT_EQUAL(!value, selection->getNodeValue(nodes[rando]));
+    node n = graph->getRandomNode();
+    selection->setNodeValue(n, !value);
+    CPPUNIT_ASSERT_EQUAL(!value, selection->getNodeValue(n));
   }
 
   for (unsigned int i = 0; i < graph->numberOfEdges() * 10; ++i) {
-    unsigned int rando = randomUnsignedInteger(graph->numberOfEdges() - 1);
-    selection->setEdgeValue(edges[rando], !value);
-    CPPUNIT_ASSERT_EQUAL(!value, selection->getEdgeValue(edges[rando]));
+    edge e = graph->getRandomEdge();
+    selection->setEdgeValue(e, !value);
+    CPPUNIT_ASSERT_EQUAL(!value, selection->getEdgeValue(e));
   }
 }
 //==========================================================
 void BooleanPropertyTest::testCopy() {
-  const vector<node> &nodes = graph->nodes();
-  const vector<edge> &edges = graph->edges();
-
   bool value = true;
   selection->setAllNodeValue(value);
   selection->setAllEdgeValue(value);
 
   for (unsigned int i = 0; i < graph->numberOfNodes() * 10; ++i) {
-    unsigned int rando = randomUnsignedInteger(graph->numberOfNodes() - 1);
-    selection->setNodeValue(nodes[rando], !value);
-    CPPUNIT_ASSERT_EQUAL(!value, selection->getNodeValue(nodes[rando]));
+    node n = graph->getRandomNode();
+    selection->setNodeValue(n, !value);
+    CPPUNIT_ASSERT_EQUAL(!value, selection->getNodeValue(n));
   }
 
   for (unsigned int i = 0; i < graph->numberOfEdges() * 10; ++i) {
-    unsigned int rando = randomUnsignedInteger(graph->numberOfEdges() - 1);
-    selection->setEdgeValue(edges[rando], !value);
-    CPPUNIT_ASSERT_EQUAL(!value, selection->getEdgeValue(edges[rando]));
+    edge e = graph->getRandomEdge();
+    selection->setEdgeValue(e, !value);
+    CPPUNIT_ASSERT_EQUAL(!value, selection->getEdgeValue(e));
   }
 
   BooleanProperty tmp(graph);
   tmp = *selection;
 
-  for (auto n : nodes) {
+  for (auto n : graph->nodes()) {
     CPPUNIT_ASSERT_EQUAL(selection->getNodeValue(n), tmp.getNodeValue(n));
   }
 
-  for (auto e : edges) {
+  for (auto e : graph->edges()) {
     CPPUNIT_ASSERT_EQUAL(selection->getEdgeValue(e), tmp.getEdgeValue(e));
   }
 }

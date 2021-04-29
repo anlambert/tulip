@@ -410,8 +410,7 @@ void BasicPluginsTest::testEqualValueClustering() {
   unsigned int NB_EDGES = EDGE_RATIO * NB_ADD;
 
   for (unsigned int i = 0; i < NB_EDGES; ++i) {
-    graph->addEdge(nodes[randomUnsignedInteger(NB_ADD - 1)],
-                   nodes[randomUnsignedInteger(NB_ADD - 1)]);
+    graph->addEdge(graph->getRandomNode(), graph->getRandomNode());
   }
 
   // check dcall to computeEqualValueClustering
