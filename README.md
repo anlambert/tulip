@@ -16,7 +16,7 @@ The Talipot framework offers numerous features, notably:
   graph hierarchies or cluster trees (nested subgraphs).
 
   * Several graph file formats for serializing such a model to disk, notably the
-  [TLP format](https://tulip.labri.fr/TulipDrupal/?q=tlp-file-format) based on a
+  [TLP format](https://tulip.labri.fr/site/?q=tlp-file-format) based on a
   Lisp syntax for easy parsing but also the TLP binary format for faster graph
   saving and loading.
 
