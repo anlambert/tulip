@@ -176,28 +176,6 @@
     "unicode": "f170",
     "voted": false
   },
-  "adobe": {
-    "changes": [
-      "5.6.0",
-      "5.8.0"
-    ],
-    "label": "Adobe",
-    "search": {
-      "terms": [
-        "acrobat",
-        "app",
-        "design",
-        "illustrator",
-        "indesign",
-        "photoshop"
-      ]
-    },
-    "styles": [
-      "brands"
-    ],
-    "unicode": "f778",
-    "voted": false
-  },
   "adversal": {
     "changes": [
       "5.0.0"
@@ -228,7 +206,8 @@
   },
   "air-freshener": {
     "changes": [
-      "5.2.0"
+      "5.2.0",
+      "5.15.3"
     ],
     "label": "Air Freshener",
     "search": {
@@ -429,6 +408,7 @@
     "label": "ambulance",
     "search": {
       "terms": [
+        "covid-19",
         "emergency",
         "emt",
         "er",
@@ -1585,6 +1565,52 @@
     "unicode": "f7e5",
     "voted": false
   },
+  "bacteria": {
+    "changes": [
+      "5.13.0",
+      "5.13.1",
+      "5.14.0"
+    ],
+    "label": "Bacteria",
+    "search": {
+      "terms": [
+        "antibiotic",
+        "antibody",
+        "covid-19",
+        "health",
+        "organism",
+        "sick"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e059",
+    "voted": false
+  },
+  "bacterium": {
+    "changes": [
+      "5.13.0",
+      "5.13.1",
+      "5.14.0"
+    ],
+    "label": "Bacterium",
+    "search": {
+      "terms": [
+        "antibiotic",
+        "antibody",
+        "covid-19",
+        "health",
+        "organism",
+        "sick"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e05a",
+    "voted": false
+  },
   "bahai": {
     "changes": [
       "5.3.0",
@@ -1719,7 +1745,8 @@
   "bandcamp": {
     "changes": [
       "4.7",
-      "5.0.0"
+      "5.0.0",
+      "5.13.1"
     ],
     "label": "Bandcamp",
     "search": {
@@ -2209,6 +2236,7 @@
     "label": "Biohazard",
     "search": {
       "terms": [
+        "covid-19",
         "danger",
         "dangerous",
         "hazmat",
@@ -2847,6 +2875,29 @@
       "solid"
     ],
     "unicode": "f49e",
+    "voted": false
+  },
+  "box-tissue": {
+    "changes": [
+      "5.13.0",
+      "5.14.0"
+    ],
+    "label": "Tissue Box",
+    "search": {
+      "terms": [
+        "cough",
+        "covid-19",
+        "kleenex",
+        "mucus",
+        "nose",
+        "sneeze",
+        "snot"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e05b",
     "voted": false
   },
   "boxes": {
@@ -5080,6 +5131,7 @@
     "label": "Medical Clinic",
     "search": {
       "terms": [
+        "covid-19",
         "doctor",
         "general practitioner",
         "hospital",
@@ -5168,7 +5220,8 @@
   "clock": {
     "changes": [
       "1",
-      "5.0.0"
+      "5.0.0",
+      "5.12.1"
     ],
     "label": "Clock",
     "search": {
@@ -5443,6 +5496,20 @@
       "solid"
     ],
     "unicode": "f382",
+    "voted": false
+  },
+  "cloudflare": {
+    "changes": [
+      "5.15.0"
+    ],
+    "label": "Cloudflare",
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "e07d",
     "voted": false
   },
   "cloudscale": {
@@ -6799,6 +6866,21 @@
     "unicode": "f6ca",
     "voted": false
   },
+  "dailymotion": {
+    "changes": [
+      "5.12.1",
+      "5.14.0"
+    ],
+    "label": "dailymotion",
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "e052",
+    "voted": true
+  },
   "dashcube": {
     "changes": [
       "4.3",
@@ -6854,6 +6936,21 @@
     ],
     "unicode": "f2a4",
     "voted": false
+  },
+  "deezer": {
+    "changes": [
+      "5.13.1",
+      "5.14.0"
+    ],
+    "label": "Deezer",
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "e077",
+    "voted": true
   },
   "delicious": {
     "changes": [
@@ -7326,6 +7423,28 @@
       "brands"
     ],
     "unicode": "f393",
+    "voted": false
+  },
+  "disease": {
+    "changes": [
+      "5.7.0"
+    ],
+    "label": "Disease",
+    "search": {
+      "terms": [
+        "bacteria",
+        "cancer",
+        "covid-19",
+        "illness",
+        "infection",
+        "sickness",
+        "virus"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f7fa",
     "voted": false
   },
   "divide": {
@@ -7959,7 +8078,8 @@
   "edge": {
     "changes": [
       "4.5",
-      "5.0.0"
+      "5.0.0",
+      "5.12.1"
     ],
     "label": "Edge Browser",
     "search": {
@@ -7972,6 +8092,21 @@
       "brands"
     ],
     "unicode": "f282",
+    "voted": false
+  },
+  "edge-legacy": {
+    "changes": [
+      "5.13.1",
+      "5.14.0"
+    ],
+    "label": "Edge Legacy Browser",
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "e078",
     "voted": false
   },
   "edit": {
@@ -8512,9 +8647,9 @@
     "label": "Expand",
     "search": {
       "terms": [
-        "arrow",
         "bigger",
         "enlarge",
+        "fullscreen",
         "resize"
       ]
     },
@@ -8533,9 +8668,10 @@
     "label": "Alternate Expand",
     "search": {
       "terms": [
-        "arrow",
+        "arrows",
         "bigger",
         "enlarge",
+        "fullscreen",
         "resize"
       ]
     },
@@ -8553,9 +8689,9 @@
     "label": "Alternate Expand Arrows",
     "search": {
       "terms": [
-        "arrows-alt",
         "bigger",
         "enlarge",
+        "fullscreen",
         "move",
         "resize"
       ]
@@ -8847,6 +8983,29 @@
       "solid"
     ],
     "unicode": "f050",
+    "voted": false
+  },
+  "faucet": {
+    "changes": [
+      "5.12.0",
+      "5.14.0"
+    ],
+    "label": "Faucet",
+    "search": {
+      "terms": [
+        "covid-19",
+        "drip",
+        "house",
+        "hygiene",
+        "kitchen",
+        "sink",
+        "water"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e005",
     "voted": false
   },
   "fax": {
@@ -9719,7 +9878,8 @@
   },
   "firefox-browser": {
     "changes": [
-      "5.12.0"
+      "5.12.0",
+      "5.14.0"
     ],
     "label": "Firefox Browser",
     "search": {
@@ -9730,7 +9890,7 @@
     "styles": [
       "brands"
     ],
-    "unicode": "f907",
+    "unicode": "e007",
     "voted": false
   },
   "first-aid": {
@@ -10067,7 +10227,8 @@
   "folder-plus": {
     "changes": [
       "5.3.0",
-      "5.11.0"
+      "5.11.0",
+      "5.12.1"
     ],
     "label": "Folder Plus",
     "search": {
@@ -11267,6 +11428,21 @@
     "unicode": "f3aa",
     "voted": false
   },
+  "google-pay": {
+    "changes": [
+      "5.13.1",
+      "5.14.0"
+    ],
+    "label": "Google Pay",
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "e079",
+    "voted": false
+  },
   "google-play": {
     "changes": [
       "5.0.0"
@@ -11284,7 +11460,8 @@
   "google-plus": {
     "changes": [
       "4.6",
-      "5.0.0"
+      "5.0.0",
+      "5.13.1"
     ],
     "label": "Google Plus",
     "search": {
@@ -11878,6 +12055,20 @@
     "unicode": "f3ad",
     "voted": false
   },
+  "guilded": {
+    "changes": [
+      "5.15.0"
+    ],
+    "label": "Guilded",
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "e07e",
+    "voted": false
+  },
   "guitar": {
     "changes": [
       "5.6.0",
@@ -12084,6 +12275,26 @@
     "unicode": "f4be",
     "voted": false
   },
+  "hand-holding-medical": {
+    "changes": [
+      "5.13.0",
+      "5.14.0"
+    ],
+    "label": "Hand Holding Medical Cross",
+    "search": {
+      "terms": [
+        "care",
+        "covid-19",
+        "donate",
+        "help"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e05c",
+    "voted": false
+  },
   "hand-holding-usd": {
     "changes": [
       "5.0.9",
@@ -12106,6 +12317,27 @@
       "solid"
     ],
     "unicode": "f4c0",
+    "voted": false
+  },
+  "hand-holding-water": {
+    "changes": [
+      "5.0.9",
+      "5.13.0"
+    ],
+    "label": "Hand Holding Water",
+    "search": {
+      "terms": [
+        "carry",
+        "covid-19",
+        "drought",
+        "grow",
+        "lift"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f4c1",
     "voted": false
   },
   "hand-lizard": {
@@ -12334,6 +12566,28 @@
     "unicode": "f257",
     "voted": false
   },
+  "hand-sparkles": {
+    "changes": [
+      "5.13.0",
+      "5.14.0"
+    ],
+    "label": "Hand Sparkles",
+    "search": {
+      "terms": [
+        "clean",
+        "covid-19",
+        "hygiene",
+        "magic",
+        "soap",
+        "wash"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e05d",
+    "voted": false
+  },
   "hand-spock": {
     "changes": [
       "4.4",
@@ -12395,6 +12649,26 @@
     "unicode": "f4c4",
     "voted": false
   },
+  "hands-wash": {
+    "changes": [
+      "5.13.0",
+      "5.14.0"
+    ],
+    "label": "Hands Wash",
+    "search": {
+      "terms": [
+        "covid-19",
+        "hygiene",
+        "soap",
+        "wash"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e05e",
+    "voted": false
+  },
   "handshake": {
     "changes": [
       "4.7",
@@ -12415,6 +12689,44 @@
       "regular"
     ],
     "unicode": "f2b5",
+    "voted": false
+  },
+  "handshake-alt-slash": {
+    "changes": [
+      "5.13.0",
+      "5.14.0"
+    ],
+    "label": "Handshake Alternate Slash",
+    "search": {
+      "terms": [
+        "broken",
+        "covid-19",
+        "social distance"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e05f",
+    "voted": false
+  },
+  "handshake-slash": {
+    "changes": [
+      "5.13.0",
+      "5.14.0"
+    ],
+    "label": "Handshake Slash",
+    "search": {
+      "terms": [
+        "broken",
+        "covid-19",
+        "social distance"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e060",
     "voted": false
   },
   "hanukiah": {
@@ -12581,6 +12893,91 @@
       "regular"
     ],
     "unicode": "f0a0",
+    "voted": false
+  },
+  "head-side-cough": {
+    "changes": [
+      "5.13.0",
+      "5.14.0"
+    ],
+    "label": "Head Side Cough",
+    "search": {
+      "terms": [
+        "cough",
+        "covid-19",
+        "germs",
+        "lungs",
+        "respiratory",
+        "sick"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e061",
+    "voted": false
+  },
+  "head-side-cough-slash": {
+    "changes": [
+      "5.13.0",
+      "5.14.0"
+    ],
+    "label": "Head Side-cough-slash",
+    "search": {
+      "terms": [
+        "cough",
+        "covid-19",
+        "germs",
+        "lungs",
+        "respiratory",
+        "sick"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e062",
+    "voted": false
+  },
+  "head-side-mask": {
+    "changes": [
+      "5.13.0",
+      "5.14.0"
+    ],
+    "label": "Head Side Mask",
+    "search": {
+      "terms": [
+        "breath",
+        "covid-19",
+        "filter",
+        "respirator",
+        "virus"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e063",
+    "voted": false
+  },
+  "head-side-virus": {
+    "changes": [
+      "5.13.0",
+      "5.14.0"
+    ],
+    "label": "Head Side Virus",
+    "search": {
+      "terms": [
+        "cold",
+        "covid-19",
+        "flu",
+        "sick"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e064",
     "voted": false
   },
   "heading": {
@@ -12879,6 +13276,20 @@
     "unicode": "f1da",
     "voted": false
   },
+  "hive": {
+    "changes": [
+      "5.15.0"
+    ],
+    "label": "Hive Blockchain Network",
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "e07f",
+    "voted": false
+  },
   "hockey-puck": {
     "changes": [
       "5.0.5"
@@ -13024,6 +13435,7 @@
     "search": {
       "terms": [
         "building",
+        "covid-19",
         "emergency room",
         "medical center"
       ]
@@ -13043,6 +13455,7 @@
     "search": {
       "terms": [
         "building",
+        "covid-19",
         "emergency room",
         "medical center"
       ]
@@ -13061,6 +13474,7 @@
     "search": {
       "terms": [
         "clinic",
+        "covid-19",
         "emergency",
         "map"
       ]
@@ -13069,6 +13483,26 @@
       "solid"
     ],
     "unicode": "f47e",
+    "voted": false
+  },
+  "hospital-user": {
+    "changes": [
+      "5.7.0"
+    ],
+    "label": "Hospital with User",
+    "search": {
+      "terms": [
+        "covid-19",
+        "doctor",
+        "network",
+        "patient",
+        "primary care"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f80d",
     "voted": false
   },
   "hot-tub": {
@@ -13258,6 +13692,26 @@
       "solid"
     ],
     "unicode": "f6f1",
+    "voted": false
+  },
+  "house-user": {
+    "changes": [
+      "5.13.0",
+      "5.14.0"
+    ],
+    "label": "House User",
+    "search": {
+      "terms": [
+        "covid-19",
+        "home",
+        "isolation",
+        "quarantine"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e065",
     "voted": false
   },
   "houzz": {
@@ -13485,7 +13939,8 @@
   },
   "ideal": {
     "changes": [
-      "5.12.0"
+      "5.12.0",
+      "5.14.0"
     ],
     "label": "iDeal",
     "search": {
@@ -13494,7 +13949,7 @@
     "styles": [
       "brands"
     ],
-    "unicode": "f913",
+    "unicode": "e013",
     "voted": true
   },
   "igloo": {
@@ -13648,7 +14103,7 @@
       "5.3.0",
       "5.10.1"
     ],
-    "label": null,
+    "label": "Infinity",
     "search": {
       "terms": [
         "eternity",
@@ -13706,6 +14161,20 @@
     "unicode": "f05a",
     "voted": false
   },
+  "innosoft": {
+    "changes": [
+      "5.15.0"
+    ],
+    "label": "Innosoft",
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "e080",
+    "voted": false
+  },
   "instagram": {
     "changes": [
       "4.6",
@@ -13719,6 +14188,35 @@
       "brands"
     ],
     "unicode": "f16d",
+    "voted": false
+  },
+  "instagram-square": {
+    "changes": [
+      "5.12.1",
+      "5.14.0"
+    ],
+    "label": "Instagram Square",
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "e055",
+    "voted": true
+  },
+  "instalod": {
+    "changes": [
+      "5.15.0"
+    ],
+    "label": "InstaLOD",
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "e081",
     "voted": false
   },
   "intercom": {
@@ -14410,6 +14908,28 @@
       "solid"
     ],
     "unicode": "f5fc",
+    "voted": false
+  },
+  "laptop-house": {
+    "changes": [
+      "5.13.0",
+      "5.14.0"
+    ],
+    "label": "Laptop House",
+    "search": {
+      "terms": [
+        "computer",
+        "covid-19",
+        "device",
+        "office",
+        "remote",
+        "work from home"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e066",
     "voted": false
   },
   "laptop-medical": {
@@ -15174,6 +15694,46 @@
       "solid"
     ],
     "unicode": "f59d",
+    "voted": false
+  },
+  "lungs": {
+    "changes": [
+      "5.2.0"
+    ],
+    "label": "Lungs",
+    "search": {
+      "terms": [
+        "air",
+        "breath",
+        "covid-19",
+        "organ",
+        "respiratory"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f604",
+    "voted": false
+  },
+  "lungs-virus": {
+    "changes": [
+      "5.13.0",
+      "5.14.0"
+    ],
+    "label": "Lungs Virus",
+    "search": {
+      "terms": [
+        "breath",
+        "covid-19",
+        "respiratory",
+        "sick"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e067",
     "voted": false
   },
   "lyft": {
@@ -16003,7 +16563,8 @@
   },
   "microblog": {
     "changes": [
-      "5.12.0"
+      "5.12.0",
+      "5.14.0"
     ],
     "label": "Micro.blog",
     "search": {
@@ -16012,7 +16573,7 @@
     "styles": [
       "brands"
     ],
-    "unicode": "f91a",
+    "unicode": "e01a",
     "voted": true
   },
   "microchip": {
@@ -16135,6 +16696,7 @@
     "label": "Microscope",
     "search": {
       "terms": [
+        "covid-19",
         "electron",
         "lens",
         "optics",
@@ -16283,6 +16845,21 @@
     ],
     "unicode": "f289",
     "voted": false
+  },
+  "mixer": {
+    "changes": [
+      "5.12.1",
+      "5.14.0"
+    ],
+    "label": "Mixer",
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "e056",
+    "voted": true
   },
   "mizuni": {
     "changes": [
@@ -16915,7 +17492,8 @@
   },
   "ns8": {
     "changes": [
-      "5.0.0"
+      "5.0.0",
+      "5.15.0"
     ],
     "label": "NS8",
     "search": {
@@ -16985,6 +17563,20 @@
       "regular"
     ],
     "unicode": "f248",
+    "voted": false
+  },
+  "octopus-deploy": {
+    "changes": [
+      "5.15.0"
+    ],
+    "label": "Octopus Deploy",
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "e082",
     "voted": false
   },
   "odnoklassniki": {
@@ -17800,6 +18392,28 @@
     "unicode": "f704",
     "voted": false
   },
+  "people-arrows": {
+    "changes": [
+      "5.13.0",
+      "5.14.0"
+    ],
+    "label": "People Arrows",
+    "search": {
+      "terms": [
+        "covid-19",
+        "personal space",
+        "social distance",
+        "space",
+        "spread",
+        "users"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e068",
+    "voted": false
+  },
   "people-carry": {
     "changes": [
       "5.0.9"
@@ -17845,6 +18459,20 @@
     ],
     "unicode": "f816",
     "voted": true
+  },
+  "perbyte": {
+    "changes": [
+      "5.15.0"
+    ],
+    "label": "PerByte",
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "e083",
+    "voted": false
   },
   "percent": {
     "changes": [
@@ -18208,7 +18836,8 @@
   },
   "pied-piper-square": {
     "changes": [
-      "5.12.0"
+      "5.12.0",
+      "5.14.0"
     ],
     "label": "Pied Piper Square Logo (Old)",
     "search": {
@@ -18217,7 +18846,7 @@
     "styles": [
       "brands"
     ],
-    "unicode": "f91e",
+    "unicode": "e01e",
     "voted": false
   },
   "piggy-bank": {
@@ -18421,6 +19050,28 @@
       "solid"
     ],
     "unicode": "f5b0",
+    "voted": false
+  },
+  "plane-slash": {
+    "changes": [
+      "5.13.0",
+      "5.14.0"
+    ],
+    "label": "Plane Slash",
+    "search": {
+      "terms": [
+        "airplane mode",
+        "canceled",
+        "covid-19",
+        "delayed",
+        "grounded",
+        "travel"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e069",
     "voted": false
   },
   "play": {
@@ -18938,6 +19589,53 @@
     "unicode": "f542",
     "voted": false
   },
+  "pump-medical": {
+    "changes": [
+      "5.13.0",
+      "5.14.0"
+    ],
+    "label": "Pump Medical",
+    "search": {
+      "terms": [
+        "anti-bacterial",
+        "clean",
+        "covid-19",
+        "disinfect",
+        "hygiene",
+        "medical grade",
+        "sanitizer",
+        "soap"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e06a",
+    "voted": false
+  },
+  "pump-soap": {
+    "changes": [
+      "5.13.0",
+      "5.14.0"
+    ],
+    "label": "Pump Soap",
+    "search": {
+      "terms": [
+        "anti-bacterial",
+        "clean",
+        "covid-19",
+        "disinfect",
+        "hygiene",
+        "sanitizer",
+        "soap"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e06b",
+    "voted": false
+  },
   "pushed": {
     "changes": [
       "5.0.0"
@@ -19306,7 +20004,8 @@
   "ravelry": {
     "changes": [
       "4.7",
-      "5.0.0"
+      "5.0.0",
+      "5.15.1"
     ],
     "label": "Ravelry",
     "search": {
@@ -19893,7 +20592,8 @@
     "changes": [
       "5.0.0",
       "5.4.2",
-      "5.8.0"
+      "5.8.0",
+      "5.15.0"
     ],
     "label": "Rocket.Chat",
     "search": {
@@ -20121,6 +20821,21 @@
     ],
     "unicode": "f156",
     "voted": false
+  },
+  "rust": {
+    "changes": [
+      "5.13.1",
+      "5.14.0"
+    ],
+    "label": "Rust",
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "e07a",
+    "voted": true
   },
   "sad-cry": {
     "changes": [
@@ -20740,6 +21455,27 @@
     "unicode": "f3ed",
     "voted": false
   },
+  "shield-virus": {
+    "changes": [
+      "5.13.0",
+      "5.14.0"
+    ],
+    "label": "Shield Virus",
+    "search": {
+      "terms": [
+        "antibodies",
+        "barrier",
+        "covid-19",
+        "health",
+        "protect"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e06c",
+    "voted": false
+  },
   "ship": {
     "changes": [
       "4.3",
@@ -20817,6 +21553,21 @@
     ],
     "unicode": "f54b",
     "voted": true
+  },
+  "shopify": {
+    "changes": [
+      "5.12.1",
+      "5.14.0"
+    ],
+    "label": "Shopify",
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "e057",
+    "voted": false
   },
   "shopping-bag": {
     "changes": [
@@ -21103,6 +21854,28 @@
       "brands"
     ],
     "unicode": "f215",
+    "voted": false
+  },
+  "sink": {
+    "changes": [
+      "5.13.0",
+      "5.13.1",
+      "5.14.0"
+    ],
+    "label": "Sink",
+    "search": {
+      "terms": [
+        "bathroom",
+        "covid-19",
+        "faucet",
+        "kitchen",
+        "wash"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e06d",
     "voted": false
   },
   "sistrix": {
@@ -21714,6 +22487,27 @@
       "solid"
     ],
     "unicode": "f7d2"
+  },
+  "soap": {
+    "changes": [
+      "5.13.0",
+      "5.14.0"
+    ],
+    "label": "Soap",
+    "search": {
+      "terms": [
+        "bubbles",
+        "clean",
+        "covid-19",
+        "hygiene",
+        "wash"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e06e",
+    "voted": false
   },
   "socks": {
     "changes": [
@@ -22670,6 +23464,7 @@
     "label": "Stethoscope",
     "search": {
       "terms": [
+        "covid-19",
         "diagnosis",
         "doctor",
         "general practitioner",
@@ -22784,6 +23579,31 @@
     "unicode": "f2f2",
     "voted": false
   },
+  "stopwatch-20": {
+    "changes": [
+      "5.13.0",
+      "5.14.0"
+    ],
+    "label": "Stopwatch 20",
+    "search": {
+      "terms": [
+        "ABCs",
+        "countdown",
+        "covid-19",
+        "happy birthday",
+        "i will survive",
+        "reminder",
+        "seconds",
+        "time",
+        "timer"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e06f",
+    "voted": false
+  },
   "store": {
     "changes": [
       "5.0.13",
@@ -22823,6 +23643,50 @@
     ],
     "unicode": "f54f",
     "voted": true
+  },
+  "store-alt-slash": {
+    "changes": [
+      "5.13.0",
+      "5.14.0"
+    ],
+    "label": "Alternate Store Slash",
+    "search": {
+      "terms": [
+        "building",
+        "buy",
+        "closed",
+        "covid-19",
+        "purchase",
+        "shopping"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e070",
+    "voted": false
+  },
+  "store-slash": {
+    "changes": [
+      "5.13.0",
+      "5.14.0"
+    ],
+    "label": "Store Slash",
+    "search": {
+      "terms": [
+        "building",
+        "buy",
+        "closed",
+        "covid-19",
+        "purchase",
+        "shopping"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e071",
+    "voted": false
   },
   "strava": {
     "changes": [
@@ -23364,6 +24228,7 @@
     "label": "Syringe",
     "search": {
       "terms": [
+        "covid-19",
         "doctor",
         "immunizations",
         "medical",
@@ -23701,6 +24566,7 @@
     "search": {
       "terms": [
         "cook",
+        "covid-19",
         "mercury",
         "summer",
         "thermometer",
@@ -23722,6 +24588,7 @@
       "terms": [
         "cold",
         "cool",
+        "covid-19",
         "mercury",
         "thermometer",
         "winter"
@@ -23971,6 +24838,7 @@
     "label": "Thermometer",
     "search": {
       "terms": [
+        "covid-19",
         "mercury",
         "status",
         "temperature"
@@ -24191,6 +25059,21 @@
     "unicode": "f3ff",
     "voted": false
   },
+  "tiktok": {
+    "changes": [
+      "5.13.1",
+      "5.14.0"
+    ],
+    "label": "TikTok",
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "e07b",
+    "voted": true
+  },
   "times": {
     "changes": [
       "1",
@@ -24385,6 +25268,7 @@
     "search": {
       "terms": [
         "bathroom",
+        "covid-19",
         "halloween",
         "holiday",
         "lavatory",
@@ -24397,6 +25281,33 @@
       "solid"
     ],
     "unicode": "f71e",
+    "voted": false
+  },
+  "toilet-paper-slash": {
+    "changes": [
+      "5.13.0",
+      "5.14.0"
+    ],
+    "label": "Toilet Paper Slash",
+    "search": {
+      "terms": [
+        "bathroom",
+        "covid-19",
+        "halloween",
+        "holiday",
+        "lavatory",
+        "leaves",
+        "prank",
+        "restroom",
+        "roll",
+        "trouble",
+        "ut oh"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e072",
     "voted": false
   },
   "toolbox": {
@@ -24576,7 +25487,8 @@
   },
   "trailer": {
     "changes": [
-      "5.12.0"
+      "5.12.0",
+      "5.14.0"
     ],
     "label": "Trailer",
     "search": {
@@ -24590,7 +25502,7 @@
     "styles": [
       "solid"
     ],
-    "unicode": "f941",
+    "unicode": "e041",
     "voted": true
   },
   "train": {
@@ -24797,7 +25709,9 @@
   "tripadvisor": {
     "changes": [
       "4.4",
-      "5.0.0"
+      "5.0.0",
+      "5.13.1",
+      "5.14.0"
     ],
     "label": "TripAdvisor",
     "search": {
@@ -25188,6 +26102,20 @@
     "unicode": "f5ca",
     "voted": false
   },
+  "uncharted": {
+    "changes": [
+      "5.15.0"
+    ],
+    "label": "Uncharted Software",
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "e084",
+    "voted": false
+  },
   "underline": {
     "changes": [
       "2",
@@ -25270,7 +26198,8 @@
   },
   "unity": {
     "changes": [
-      "5.12.0"
+      "5.12.0",
+      "5.14.0"
     ],
     "label": "Unity 3D",
     "search": {
@@ -25279,7 +26208,7 @@
     "styles": [
       "brands"
     ],
-    "unicode": "f949",
+    "unicode": "e049",
     "voted": true
   },
   "universal-access": {
@@ -25388,6 +26317,21 @@
       "solid"
     ],
     "unicode": "f13e",
+    "voted": false
+  },
+  "unsplash": {
+    "changes": [
+      "5.13.1",
+      "5.14.0"
+    ],
+    "label": "Unsplash",
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "e07c",
     "voted": false
   },
   "untappd": {
@@ -25750,6 +26694,7 @@
     "label": "Doctor",
     "search": {
       "terms": [
+        "covid-19",
         "job",
         "medical",
         "nurse",
@@ -25811,6 +26756,7 @@
     "label": "Nurse",
     "search": {
       "terms": [
+        "covid-19",
         "doctor",
         "midwife",
         "practitioner",
@@ -26020,6 +26966,31 @@
     "unicode": "f509",
     "voted": false
   },
+  "users-slash": {
+    "changes": [
+      "5.13.0",
+      "5.14.0"
+    ],
+    "label": "Users Slash",
+    "search": {
+      "terms": [
+        "disband",
+        "friends",
+        "group",
+        "people",
+        "persons",
+        "profiles",
+        "separate",
+        "team",
+        "ungroup"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e073",
+    "voted": false
+  },
   "usps": {
     "changes": [
       "5.6.0",
@@ -26184,6 +27155,44 @@
     "unicode": "f228",
     "voted": false
   },
+  "vest": {
+    "changes": [
+      "5.15.0",
+      "5.15.1"
+    ],
+    "label": "vest",
+    "search": {
+      "terms": [
+        "biker",
+        "fashion",
+        "style"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e085",
+    "voted": false
+  },
+  "vest-patches": {
+    "changes": [
+      "5.15.0",
+      "5.15.1"
+    ],
+    "label": "vest-patches",
+    "search": {
+      "terms": [
+        "biker",
+        "fashion",
+        "style"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e086",
+    "voted": false
+  },
   "viacoin": {
     "changes": [
       "4.3",
@@ -26204,7 +27213,7 @@
       "4.6",
       "5.0.0"
     ],
-    "label": "Video",
+    "label": "Viadeo",
     "search": {
       "terms": []
     },
@@ -26220,7 +27229,7 @@
       "5.0.0",
       "5.7.0"
     ],
-    "label": "Video Square",
+    "label": "Viadeo Square",
     "search": {
       "terms": []
     },
@@ -26409,6 +27418,76 @@
       "brands"
     ],
     "unicode": "f1ca",
+    "voted": false
+  },
+  "virus": {
+    "changes": [
+      "5.13.0",
+      "5.14.0"
+    ],
+    "label": "Virus",
+    "search": {
+      "terms": [
+        "bug",
+        "covid-19",
+        "flu",
+        "health",
+        "sick",
+        "viral"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e074",
+    "voted": false
+  },
+  "virus-slash": {
+    "changes": [
+      "5.13.0",
+      "5.14.0"
+    ],
+    "label": "Virus Slash",
+    "search": {
+      "terms": [
+        "bug",
+        "covid-19",
+        "cure",
+        "eliminate",
+        "flu",
+        "health",
+        "sick",
+        "viral"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e075",
+    "voted": false
+  },
+  "viruses": {
+    "changes": [
+      "5.13.0",
+      "5.14.0"
+    ],
+    "label": "Viruses",
+    "search": {
+      "terms": [
+        "bugs",
+        "covid-19",
+        "flu",
+        "health",
+        "multiply",
+        "sick",
+        "spread",
+        "viral"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "e076",
     "voted": false
   },
   "vk": {
@@ -26681,6 +27760,20 @@
       "solid"
     ],
     "unicode": "f494",
+    "voted": false
+  },
+  "watchman-monitoring": {
+    "changes": [
+      "5.15.0"
+    ],
+    "label": "Watchman Monitoring",
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "e087",
     "voted": false
   },
   "water": {
@@ -27154,6 +28247,20 @@
     "unicode": "f730",
     "voted": false
   },
+  "wodu": {
+    "changes": [
+      "5.15.0"
+    ],
+    "label": "Wodu",
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "e088",
+    "voted": false
+  },
   "wolf-pack-battalion": {
     "changes": [
       "5.0.12",
@@ -27387,7 +28494,8 @@
     "changes": [
       "4.1",
       "5.0.0",
-      "5.0.3"
+      "5.0.3",
+      "5.13.1"
     ],
     "label": "Yahoo Logo",
     "search": {
