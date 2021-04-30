@@ -27,6 +27,8 @@ public:
   SimpleTest(const tlp::PluginContext *context) : tlp::GraphTest(context) {
     addInParameter<bool>(
         "directed", "Indicates if the graph should be considered as directed or not.", "false");
+    addOutParameter<unsigned int>("loops count", "The number of found loops.");
+    addOutParameter<unsigned int>("parallel edges count", "The number of found parallel edges.");
   }
 
   bool test() override {
@@ -34,7 +36,12 @@ public:
     if (dataSet) {
       dataSet->get("directed", directed);
     }
-    return tlp::SimpleTest::isSimple(graph, directed);
+    auto [loops, parallelEdges] = tlp::SimpleTest::getLoopsAndParallelEdges(graph, directed);
+    if (dataSet) {
+      dataSet->set("loops count", uint(loops.size()));
+      dataSet->set("parallel edges count", uint(parallelEdges.size()));
+    }
+    return loops.empty() && parallelEdges.empty();
   }
 };
 PLUGIN(SimpleTest)
