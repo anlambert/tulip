@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -65,11 +65,6 @@ public:
    * Returns the location of the Material Design Icons .ttf file bundled with Talipot
    */
   static std::string getTTFLocation();
-
-  /**
-   * Returns the location of the Material Design Icons .woff file bundled with Talipot
-   */
-  static std::string getWOFFLocation();
 
   /**
    * Returns the location of the Material Design Icons .woff2 file bundled with Talipot

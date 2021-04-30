@@ -4,7 +4,7 @@
 
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -27,7 +27,6 @@ class ExportSvg : public ExportInterface {
   QXmlStreamWriter _res;
   QByteArray _out;
   std::set<std::string> _base64fontAdded;
-  bool _woff2;
   bool _gloweffectAdded;
   bool createEdge(const tlp::EdgeShape::EdgeShapes &type, const std::vector<tlp::Coord> &bends,
                   const QString &color, const QString &qcolorA, const double width,
@@ -39,7 +38,7 @@ class ExportSvg : public ExportInterface {
   void addGlowEffect();
 
 public:
-  ExportSvg(tlp::PluginProgress *pp, std::ostream &os, const bool autoformatting, const bool woff2);
+  ExportSvg(tlp::PluginProgress *pp, std::ostream &os, const bool autoformatting);
   bool writeHeader(const tlp::BoundingBox &bb) override;
   bool writeGraph(const tlp::BoundingBox &bb, const tlp::Color &background,
                   bool noBackground) override;

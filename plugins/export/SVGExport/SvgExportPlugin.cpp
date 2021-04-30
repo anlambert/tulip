@@ -50,9 +50,7 @@ static constexpr std::string_view paramHelp[] = {
     // metanode labels
     "Specifies if node and edge labels inside metanodes have to be exported.",
 
-    // woff2
-    "Uses Web Open Font Format version 2 (woff2) to reduce generated file length. This format is "
-    "supported in almost all recent Internet browsers."};
+};
 
 class SvgExport : public tlp::ExportModule {
 
@@ -80,19 +78,17 @@ public:
     addInParameter<bool>("Export node labels", paramHelp[6].data(), "true");
     addInParameter<bool>("Export edge labels", paramHelp[7].data(), "false");
     addInParameter<bool>("Export metanode labels", paramHelp[8].data(), "false");
-    addInParameter<bool>("Use Web Open Font Format v2", paramHelp[9].data(), "false");
   }
 
   bool exportGraph(ostream &os) override {
     pluginProgress->showPreview(false);
-    bool autoformatting(true), woff2(false);
+    bool autoformatting = true;
 
     if (dataSet != nullptr) {
       dataSet->get("Makes SVG output human readable", autoformatting);
-      dataSet->get("Use Web Open Font Format v2", woff2);
     }
 
-    ExportSvg svg(pluginProgress, os, autoformatting, woff2); // We call our first concrete builder
+    ExportSvg svg(pluginProgress, os, autoformatting);
     bool ret = ReadGraph::readGraph(graph, dataSet, pluginProgress, svg);
 
     if (!ret && autoformatting) {

@@ -29,10 +29,6 @@ string MaterialDesignIcons::getTTFLocation() {
   return TalipotShareDir + "fonts/MaterialDesignIcons/" + "materialdesignicons-webfont.ttf";
 }
 
-string MaterialDesignIcons::getWOFFLocation() {
-  return TalipotShareDir + "fonts/MaterialDesignIcons/" + "materialdesignicons-webfont.woff";
-}
-
 string MaterialDesignIcons::getWOFF2Location() {
   return TalipotShareDir + "fonts/MaterialDesignIcons/" + "materialdesignicons-webfont.woff2";
 }

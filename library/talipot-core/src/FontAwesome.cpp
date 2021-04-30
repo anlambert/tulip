@@ -30,10 +30,6 @@ string FontAwesome::getTTFLocation(const string &iconName) {
   return TalipotShareDir + "fonts/FontAwesome/" + getIconFamily(iconName) + ".ttf";
 }
 
-string FontAwesome::getWOFFLocation(const string &iconName) {
-  return TalipotShareDir + "fonts/FontAwesome/" + getIconFamily(iconName) + ".woff";
-}
-
 string FontAwesome::getWOFF2Location(const string &iconName) {
   return TalipotShareDir + "fonts/FontAwesome/" + getIconFamily(iconName) + ".woff2";
 }
