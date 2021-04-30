@@ -11,6 +11,12 @@
  *
  */
 
+%ModuleHeaderCode
+typedef std::vector<tlp::edge> VectorEdgeType;
+%End
+
+typedef std::vector<tlp::edge> VectorEdgeType;
+
 namespace tlp {
 
 class SimpleTest   {
@@ -24,7 +30,7 @@ public:
 %Docstring
 tlp.SimpleTest.isSimple(graph,directed = false)
 
-Returns :const:`True` if the graph is simple (i.e. it contains no self loops or parallel edges),
+Returns :const:`True` if the graph is simple (i.e. it contains no loops or parallel edges),
 :const:`False` otherwise.
 
 :param graph: the graph on which to perform the simple test
@@ -36,7 +42,7 @@ Returns :const:`True` if the graph is simple (i.e. it contains no self loops or 
 
 //===========================================================================================
 
-  static void makeSimple(tlp::Graph* graph, std::vector<tlp::edge> &removed /Out/, bool directed = false) ;
+  static std::vector<tlp::edge> makeSimple(tlp::Graph* graph, bool directed = false) ;
 %Docstring
 tlp.SimpleTest.makeSimple(graph,directed = false)
 
@@ -52,19 +58,18 @@ Returns a list of removed edges.
 
 //===========================================================================================
 
-  static bool simpleTest(tlp::Graph *graph, std::vector<tlp::edge> *multipleEdges /Out/, std::vector<tlp::edge> *loops /Out/, bool directed = false) /TypeHint="Tuple[bool, List[tlp.edge], List[tlp.edge]]"/;
+  static std::pair<VectorEdgeType, VectorEdgeType>
+  getLoopsAndParallelEdges(tlp::Graph *graph, bool directed = false) /TypeHint="Tuple[List[tlp.edge], List[tlp.edge]]"/;
 %Docstring
-tlp.SimpleTest.simpleTest(graph, bool directed = false)
+tlp.SimpleTest.getLoopsAndParallelEdges(graph, bool directed = false)
 
-Performs a simple test and returns a tuple with 3 elements. The first element is a boolean indicating the
-result of the test. The second element is a list of found parallel edges. The third element is a list of
-found self loops.
+Performs a simple test and returns found loops and parallel edges.
 
 :param graph: the graph on which to perform the simple test
 :type graph: :class:`tlp.Graph`
 :param directed: Indicates if the graph should be considered as directed or not
 :type directed: boolean
-:rtype: (boolean, list of :class:`tlp.edge`, list of :class:`tlp.edge`)
+:rtype: (list of :class:`tlp.edge`, list of :class:`tlp.edge`)
 %End
 
 private:

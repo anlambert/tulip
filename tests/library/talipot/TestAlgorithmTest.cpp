@@ -43,8 +43,7 @@ void TestAlgorithmTest::tearDown() {
 }
 //==========================================================
 void TestAlgorithmTest::testSimple() {
-  std::vector<edge> multi;
-  std::vector<edge> loops;
+
   // build a simple graph
   node n1, n2, n3, n4;
   edge e1, e2, e3;
@@ -66,16 +65,15 @@ void TestAlgorithmTest::testSimple() {
 
   // not directed tests
   CPPUNIT_ASSERT(!SimpleTest::isSimple(graph));
-  CPPUNIT_ASSERT(!SimpleTest::simpleTest(graph, &multi, &loops));
-  CPPUNIT_ASSERT(multi.size() == 1);
+  auto [loops, parallelEdges] = SimpleTest::getLoopsAndParallelEdges(graph);
+  CPPUNIT_ASSERT(parallelEdges.size() == 1);
   CPPUNIT_ASSERT(loops.size() == 0);
-  CPPUNIT_ASSERT(multi[0] == e || multi[0] == e3);
+  CPPUNIT_ASSERT(parallelEdges[0] == e || parallelEdges[0] == e3);
 
   // directed tests
   CPPUNIT_ASSERT(SimpleTest::isSimple(graph, true));
-  multi.clear();
-  CPPUNIT_ASSERT(SimpleTest::simpleTest(graph, &multi, &loops, true));
-  CPPUNIT_ASSERT(multi.empty());
+  std::tie(loops, parallelEdges) = SimpleTest::getLoopsAndParallelEdges(graph, true);
+  CPPUNIT_ASSERT(parallelEdges.empty());
   CPPUNIT_ASSERT(loops.empty());
 
   // add loop
@@ -83,18 +81,16 @@ void TestAlgorithmTest::testSimple() {
 
   // not directed tests
   CPPUNIT_ASSERT(!SimpleTest::isSimple(graph));
-  CPPUNIT_ASSERT(!SimpleTest::simpleTest(graph, &multi, &loops));
-  CPPUNIT_ASSERT(multi.size() == 1);
-  CPPUNIT_ASSERT(multi[0] == e || multi[0] == e3);
+  std::tie(loops, parallelEdges) = SimpleTest::getLoopsAndParallelEdges(graph);
+  CPPUNIT_ASSERT(parallelEdges.size() == 1);
+  CPPUNIT_ASSERT(parallelEdges[0] == e || parallelEdges[0] == e3);
   CPPUNIT_ASSERT(loops.size() == 1);
   CPPUNIT_ASSERT(loops[0] == loop1);
 
   // directed tests
   CPPUNIT_ASSERT(!SimpleTest::isSimple(graph, true));
-  multi.clear();
-  loops.clear();
-  CPPUNIT_ASSERT(!SimpleTest::simpleTest(graph, &multi, &loops, true));
-  CPPUNIT_ASSERT(multi.empty());
+  std::tie(loops, parallelEdges) = SimpleTest::getLoopsAndParallelEdges(graph, true);
+  CPPUNIT_ASSERT(parallelEdges.empty());
   CPPUNIT_ASSERT(loops.size() == 1);
   CPPUNIT_ASSERT(loops[0] == loop1);
 
@@ -103,34 +99,19 @@ void TestAlgorithmTest::testSimple() {
 
   // not directed tests
   CPPUNIT_ASSERT(!SimpleTest::isSimple(graph));
-  multi.clear();
-  loops.clear();
-  CPPUNIT_ASSERT(!SimpleTest::simpleTest(graph, &multi, &loops));
-  CPPUNIT_ASSERT(multi.size() == 2);
-  CPPUNIT_ASSERT(multi[0] == e || multi[0] == e3);
-  CPPUNIT_ASSERT(multi[1] == loop1 || multi[1] == loop2);
+  std::tie(loops, parallelEdges) = SimpleTest::getLoopsAndParallelEdges(graph);
+  CPPUNIT_ASSERT(parallelEdges.size() == 2);
+  CPPUNIT_ASSERT(parallelEdges[0] == e || parallelEdges[0] == e3);
+  CPPUNIT_ASSERT(parallelEdges[1] == loop1 || parallelEdges[1] == loop2);
   CPPUNIT_ASSERT(loops.size() == 2);
   CPPUNIT_ASSERT(loops[0] == loop1 && loops[1] == loop2);
-  multi.clear();
-  CPPUNIT_ASSERT(!SimpleTest::simpleTest(graph, &multi, &multi));
-  CPPUNIT_ASSERT(multi.size() == 3);
-  CPPUNIT_ASSERT(multi[0] == e || multi[0] == e3);
-  CPPUNIT_ASSERT(multi[1] == loop1 || multi[1] == loop2);
-  CPPUNIT_ASSERT(multi[2] == loop1 || multi[2] == loop2);
 
   // directed tests
   CPPUNIT_ASSERT(!SimpleTest::isSimple(graph, true));
-  multi.clear();
-  loops.clear();
-  CPPUNIT_ASSERT(!SimpleTest::simpleTest(graph, &multi, &loops, true));
-  CPPUNIT_ASSERT(multi.size() == 1);
-  CPPUNIT_ASSERT(multi[0] == loop1 || multi[0] == loop2);
+  std::tie(loops, parallelEdges) = SimpleTest::getLoopsAndParallelEdges(graph, true);
+  CPPUNIT_ASSERT(parallelEdges.size() == 1);
+  CPPUNIT_ASSERT(parallelEdges[0] == loop1 || parallelEdges[0] == loop2);
   CPPUNIT_ASSERT(loops.size() == 2);
-  CPPUNIT_ASSERT(loops[0] == loop1 && loops[1] == loop2);
-  multi.clear();
-  CPPUNIT_ASSERT(!SimpleTest::simpleTest(graph, &multi, &multi, true));
-  CPPUNIT_ASSERT(multi.size() == 2);
-  CPPUNIT_ASSERT(multi[0] == loop1 && multi[1] == loop2);
   CPPUNIT_ASSERT(loops[0] == loop1 && loops[1] == loop2);
 }
 //==========================================================

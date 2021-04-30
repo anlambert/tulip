@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -13,6 +13,7 @@
 
 #include "MultipleEdgeSelection.h"
 
+#include <talipot/ConcatIterator.h>
 #include <talipot/SimpleTest.h>
 
 PLUGIN(MultipleEdgeSelection)
@@ -33,18 +34,18 @@ bool MultipleEdgeSelection::run() {
     dataSet->get("directed", directed);
   }
 
-  vector<edge> multipleEdges;
-  SimpleTest::simpleTest(graph, &multipleEdges, nullptr, directed);
+  auto [loops, parallelEdges] = SimpleTest::getLoopsAndParallelEdges(graph, directed);
+
   result->setAllNodeValue(false);
   result->setAllEdgeValue(false);
 
-  for (auto e : multipleEdges) {
+  for (auto e : parallelEdges) {
     result->setEdgeValue(e, true);
   }
 
   // output some useful information
   if (dataSet != nullptr) {
-    dataSet->set("#edges selected", uint(multipleEdges.size()));
+    dataSet->set("#edges selected", uint(parallelEdges.size()));
   }
 
   return true;

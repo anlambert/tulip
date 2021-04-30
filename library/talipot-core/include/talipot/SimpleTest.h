@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -34,7 +34,7 @@ struct edge;
 class TLP_SCOPE SimpleTest {
 public:
   /**
-   * @brief Checks if the graph is simple (i.e. it contains no self loops or parallel edges).
+   * @brief Checks if the graph is simple (i.e. it contains no loops or parallel edges).
    *
    * @param graph The graph to check.
    * @param directed Whether the graph shall be considered directed or not.
@@ -43,37 +43,26 @@ public:
   static bool isSimple(const Graph *graph, const bool directed = false);
 
   /**
-   * Makes the graph  simple by removing self loops and parallel edges if any.
-   * The removed edges are stored in the removed vector.
+   * Makes the graph simple by removing loops and parallel edges if any.
    */
   /**
-   * @brief Makes the graph simple, by removing self loops and parallel edges if any.
+   * @brief Makes the graph simple, by removing loops and parallel edges if any.
    *
    * @param graph The graph to make simple.
-   * @param removed The edges that were removed to make the graph simple.
    * @param directed Whether the graph shall be considered directed or not.
-   * @return void
+   * @return The edges that were removed to make the graph simple.
    **/
-  static void makeSimple(Graph *graph, std::vector<edge> &removed, const bool directed = false);
+  static std::vector<edge> makeSimple(Graph *graph, const bool directed = false);
 
   /**
-   * Performs simple test and stores found parallel edges in the multipleEdges vector
-   * and found self loops in the loops vector.
-   * Returns true if the graph is simple, false otherwise.
-   */
-  /**
-   * @brief Checks if the graph is simple, and stores parallel edges and self loops in different
-   *vectors.
+   * @brief * Performs simple test and returns found loops and parallel edges.
    *
    * @param graph The graph to check for simplicity.
-   * @param multipleEdges The parallel edges that need to be removed to make the graph simple.
-   *Defaults to 0.
-   * @param loops The self loops that need to be removed to make the graph simple. Defaults to 0.
    * @param directed Whether the graph shall be considered directed or not.
-   * @return bool True if the graph is simple, false otherwise.
+   * @return A pair whose first member is the found loops and second one the found parallel edges.
    **/
-  static bool simpleTest(const Graph *graph, std::vector<edge> *multipleEdges = nullptr,
-                         std::vector<edge> *loops = nullptr, const bool directed = false);
+  static std::pair<std::vector<edge>, std::vector<edge>>
+  getLoopsAndParallelEdges(const Graph *graph, const bool directed = false);
 };
 }
 #endif // TALIPOT_SIMPLE_TEST_H

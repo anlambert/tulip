@@ -245,8 +245,7 @@ bool EdgeBundling::run() {
   oriGraph = graph->addCloneSubGraph("Original Graph");
 
   // Make the graph simple
-  std::vector<tlp::edge> removedEdges;
-  tlp::SimpleTest::makeSimple(oriGraph, removedEdges);
+  std::vector<tlp::edge> removedEdges = tlp::SimpleTest::makeSimple(oriGraph);
 
   // we need to registered the graph nodes having the same position
   // in the same vector

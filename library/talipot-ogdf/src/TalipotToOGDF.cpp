@@ -142,17 +142,17 @@ void TalipotToOGDF::copyTlpNumericPropertyToOGDFNodeWeight(NumericProperty *metr
 }
 
 void TalipotToOGDF::makeOGDFGraphSimple() {
-  vector<edge> loops, multiEdges;
-  SimpleTest::simpleTest(talipotGraph, &multiEdges, &loops);
+  auto [loops, parallelEdges] = SimpleTest::getLoopsAndParallelEdges(talipotGraph);
 
   for (auto e : loops) {
     ogdfGraph.delEdge(ogdfEdges[e]);
     ogdfEdges.erase(e);
   }
-  for (auto e : multiEdges) {
-    auto ends = talipotGraph->ends(e);
-    auto ee = talipotGraph->existEdge(ends.first, ends.second, false);
-    // an edge can be a loop and a multiple one
+
+  for (auto e : parallelEdges) {
+    auto [src, tgt] = talipotGraph->ends(e);
+    auto ee = talipotGraph->existEdge(src, tgt, false);
+    // an edge can be a loop and a paralell one
     if (ogdfEdges.find(e) != ogdfEdges.end()) {
       ogdfGraph.delEdge(ogdfEdges[e]);
       ogdfEdges[e] = ogdfEdges[ee];

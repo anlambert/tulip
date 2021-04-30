@@ -11,8 +11,11 @@
  *
  */
 
+#include <talipot/ConcatIterator.h>
 #include <talipot/GraphTools.h>
 #include <talipot/SimpleTest.h>
+#include <talipot/UniqueIterator.h>
+#include <talipot/VectorProperty.h>
 
 using namespace std;
 using namespace tlp;
@@ -76,102 +79,86 @@ void SimpleTestListener::treatEvent(const Event &evt) {
 //=================================================================
 static SimpleTestListener undirInstance;
 static SimpleTestListener dirInstance;
+static SimpleTestListener *getListener(bool directed) {
+  if (directed) {
+    return &dirInstance;
+  } else {
+    return &undirInstance;
+  }
+}
 //=================================================================
 bool SimpleTest::isSimple(const tlp::Graph *graph, const bool directed) {
-  SimpleTestListener *instance = nullptr;
-  if (directed) {
-    instance = &dirInstance;
-  } else {
-    instance = &undirInstance;
-  }
+  SimpleTestListener *listener = getListener(directed);
+  auto &resultsBuffer = listener->resultsBuffer;
 
-  if (const auto it = instance->resultsBuffer.find(graph); it != instance->resultsBuffer.end()) {
+  if (const auto it = resultsBuffer.find(graph); it != resultsBuffer.end()) {
     return it->second;
   }
 
-  graph->addListener(instance);
-  return instance->resultsBuffer[graph] = simpleTest(graph, nullptr, nullptr, directed);
+  graph->addListener(listener);
+  auto [loops, parallelEdges] = getLoopsAndParallelEdges(graph, directed);
+  return resultsBuffer[graph] = loops.empty() && parallelEdges.empty();
 }
 //**********************************************************************
-void SimpleTest::makeSimple(Graph *graph, vector<edge> &removed, const bool directed) {
-  if (SimpleTest::isSimple(graph, directed)) {
-    return;
-  }
+vector<edge> SimpleTest::makeSimple(Graph *graph, const bool directed) {
+  vector<edge> toRemove;
+  if (!SimpleTest::isSimple(graph, directed)) {
+    auto [loops, parallelEdges] = SimpleTest::getLoopsAndParallelEdges(graph, directed);
 
-  SimpleTest::simpleTest(graph, &removed, &removed, directed);
+    // an edge can be a loop and a parallel one at the same time,
+    // so ensure to deduplicate such edges before removing edges from graph
+    auto *itEdges = uniqueIterator(concatIterator(stlIterator(loops), stlIterator(parallelEdges)));
+    toRemove = iteratorVector(itEdges);
 
-  for (edge e : removed) {
-    graph->delEdge(e);
+    for (edge e : toRemove) {
+      graph->delEdge(e);
+    }
   }
 
   assert(SimpleTest::isSimple(graph, directed));
+
+  SimpleTestListener *listener = getListener(directed);
+  listener->resultsBuffer[graph] = true;
+
+  return toRemove;
 }
 //=================================================================
-bool SimpleTest::simpleTest(const tlp::Graph *graph, vector<edge> *multipleEdges,
-                            vector<edge> *loops, const bool directed) {
-  bool result = true;
-  const bool computeAll = (loops != nullptr) || (multipleEdges != nullptr);
-  const bool vDiff = loops != multipleEdges;
-  MutableContainer<bool> visited;
+pair<vector<edge>, vector<edge>> SimpleTest::getLoopsAndParallelEdges(const tlp::Graph *graph,
+                                                                      const bool directed) {
+
+  vector<edge> loops, parallelEdges;
+
+  EdgeVectorProperty<bool> visited(graph);
   visited.setAll(false);
 
   auto getEdges = getEdgesIterator(directed ? DIRECTED : UNDIRECTED);
 
-  for (auto current : graph->nodes()) {
-    // Search for multiple edges and loops
-    MutableContainer<bool> targeted;
-    targeted.setAll(false);
+  for (auto n : graph->nodes()) {
+    set<node> seenOpposites;
 
-    for (auto e : getEdges(graph, current)) {
+    // search for parallel edges and loops
+    for (auto e : getEdges(graph, n)) {
 
       // check if edge has already been visited
-      // Take care that in makeSimple (see above) we assume that edges
-      // are only processed once
-      if (visited.get(e.id)) {
+      if (visited[e]) {
         continue;
       }
 
       // mark edge as already visited
-      visited.set(e.id, true);
-      node target = graph->opposite(e, current);
-      bool loopFound = false;
+      visited[e] = true;
+      node opposite = graph->opposite(e, n);
 
-      if (target == current) { // loop
-        if (!computeAll) {
-          result = false;
-          break;
-        }
-
-        if (loops != nullptr) {
-          loopFound = true;
-          loops->push_back(e);
-          result = false;
-        }
+      if (opposite == n) { // loop
+        loops.push_back(e);
       }
 
-      if (targeted.get(target.id)) {
-        if (!computeAll) {
-          result = false;
-          break;
-        }
-
-        if (multipleEdges != nullptr) {
-          // e is not added in multipleEdges
-          // if it is already a loop and loops == multipleEdges
-          if (vDiff || !loopFound) {
-            multipleEdges->push_back(e);
-          }
-          result = false;
-        }
+      if (seenOpposites.find(opposite) != seenOpposites.end()) { // parallel edge
+        parallelEdges.push_back(e);
       } else {
-        targeted.set(target.id, true);
+        seenOpposites.insert(opposite);
       }
-    }
-
-    if (!computeAll && !result) {
-      break;
     }
   }
 
-  return result;
+  return {loops, parallelEdges};
 }

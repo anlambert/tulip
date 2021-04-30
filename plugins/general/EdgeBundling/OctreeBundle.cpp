@@ -329,6 +329,5 @@ void OctreeBundle::createOctree(Graph *graph, tlp::LayoutProperty *lay, tlp::Siz
     }
   }
 
-  vector<edge> tmpE;
-  SimpleTest::makeSimple(graph, tmpE);
+  SimpleTest::makeSimple(graph);
 }
