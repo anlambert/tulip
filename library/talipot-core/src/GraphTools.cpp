@@ -25,51 +25,32 @@
 using namespace std;
 
 namespace tlp {
-static Iterator<node> *getInNodes(const Graph *graph, const node n) {
-  return graph->getInNodes(n);
-}
-static Iterator<node> *getOutNodes(const Graph *graph, const node n) {
-  return graph->getOutNodes(n);
-}
-static Iterator<node> *getInOutNodes(const Graph *graph, const node n) {
-  return graph->getInOutNodes(n);
-}
 
-NodesIteratorFn getNodesIterator(EDGE_TYPE direction) {
+Iterator<node> *getAdjacentNodesIterator(const Graph *graph, node n, EDGE_TYPE direction) {
   switch (direction) {
   case DIRECTED:
-    return &getOutNodes;
+    return graph->getOutNodes(n);
 
   case INV_DIRECTED:
-    return &getInNodes;
+    return graph->getInNodes(n);
 
   case UNDIRECTED:
   default:
-    return &getInOutNodes;
+    return graph->getInOutNodes(n);
   }
 }
 
-static Iterator<edge> *getInEdges(const Graph *graph, const node n) {
-  return graph->getInEdges(n);
-}
-static Iterator<edge> *getOutEdges(const Graph *graph, const node n) {
-  return graph->getOutEdges(n);
-}
-static Iterator<edge> *getInOutEdges(const Graph *graph, const node n) {
-  return graph->getInOutEdges(n);
-}
-
-EdgesIteratorFn getEdgesIterator(EDGE_TYPE direction) {
+Iterator<edge> *getIncidentEdgesIterator(const Graph *graph, node n, EDGE_TYPE direction) {
   switch (direction) {
   case DIRECTED:
-    return &getOutEdges;
+    return graph->getOutEdges(n);
 
   case INV_DIRECTED:
-    return &getInEdges;
+    return graph->getInEdges(n);
 
   case UNDIRECTED:
   default:
-    return &getInOutEdges;
+    return graph->getInOutEdges(n);
   }
 }
 
@@ -785,15 +766,13 @@ void markReachableNodes(const Graph *graph, const node startNode,
   visited.set(startNode.id, true);
   distance.set(startNode.id, 0);
 
-  auto getNodes = getNodesIterator(direction);
-
   while (!fifo.empty()) {
     node current = fifo.front();
     unsigned int curDist = distance.get(current.id);
     fifo.pop_front();
 
     if (curDist < maxDistance) {
-      for (auto itn : getNodes(graph, current)) {
+      for (auto itn : getAdjacentNodesIterator(graph, current, direction)) {
         if (!visited.get(itn.id)) {
           fifo.push_back(itn);
           result[itn] = true;

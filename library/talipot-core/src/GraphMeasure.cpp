@@ -27,14 +27,13 @@ unsigned int tlp::maxDistance(const Graph *graph, unsigned int nPos,
   distance[nPos] = 0;
   const std::vector<node> &nodes = graph->nodes();
   unsigned int maxDist = 0;
-  auto getNodes = getNodesIterator(direction);
 
   while (!fifo.empty()) {
     unsigned int curPos = fifo.front();
     fifo.pop_front();
     unsigned int nDist = distance[curPos] + 1;
 
-    for (auto n : getNodes(graph, nodes[curPos])) {
+    for (auto n : getAdjacentNodesIterator(graph, nodes[curPos], direction)) {
       nPos = graph->nodePos(n);
       if (distance[nPos] == UINT_MAX) {
         fifo.push_back(nPos);

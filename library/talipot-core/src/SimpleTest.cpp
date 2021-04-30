@@ -131,13 +131,11 @@ pair<vector<edge>, vector<edge>> SimpleTest::getLoopsAndParallelEdges(const tlp:
   EdgeVectorProperty<bool> visited(graph);
   visited.setAll(false);
 
-  auto getEdges = getEdgesIterator(directed ? DIRECTED : UNDIRECTED);
-
   for (auto n : graph->nodes()) {
     set<node> seenOpposites;
 
     // search for parallel edges and loops
-    for (auto e : getEdges(graph, n)) {
+    for (auto e : getIncidentEdgesIterator(graph, n, directed ? DIRECTED : UNDIRECTED)) {
 
       // check if edge has already been visited
       if (visited[e]) {

@@ -41,20 +41,17 @@ enum EDGE_TYPE { UNDIRECTED = 0, INV_DIRECTED = 1, DIRECTED = 2 };
 #define OUT_EDGE DIRECTED
 #define INOUT_EDGE UNDIRECTED
 
-typedef Iterator<node> *(*NodesIteratorFn)(const tlp::Graph *, const tlp::node);
-typedef Iterator<edge> *(*EdgesIteratorFn)(const tlp::Graph *, const tlp::node);
+/**
+ * Return a function to get an Iterator on the adjacent nodes of a graph node
+ * according to the given direction
+ */
+TLP_SCOPE Iterator<node> *getAdjacentNodesIterator(const Graph *graph, node n, EDGE_TYPE direction);
 
 /**
- * return a function to get an Iterator on the adjacent nodes of a graph node
- * according the given direction
+ * Return a function to get an Iterator on the incident edges of a graph node
+ * according to the given direction
  */
-TLP_SCOPE NodesIteratorFn getNodesIterator(EDGE_TYPE direction);
-
-/**
- * return a function to get an Iterator on the adjacent edges of a graph node
- * according the given direction
- */
-TLP_SCOPE EdgesIteratorFn getEdgesIterator(EDGE_TYPE direction);
+TLP_SCOPE Iterator<edge> *getIncidentEdgesIterator(const Graph *graph, node n, EDGE_TYPE direction);
 
 /**
  *  This ordering was first introduced by C. Gutwenger and P. Mutzel in \n

@@ -54,8 +54,6 @@ Dijkstra::Dijkstra(const Graph *const graph, node src, const EdgeVectorProperty<
     mapDik[i++] = tmp;
   }
 
-  auto getEdges = getEdgesIterator(direction);
-
   while (!dijkstraTable.empty()) {
     // select the first element in the list the one with min value
     auto it = dijkstraTable.begin();
@@ -65,7 +63,7 @@ Dijkstra::Dijkstra(const Graph *const graph, node src, const EdgeVectorProperty<
       queueNodes->push(u.n);
     }
 
-    for (auto e : getEdges(graph, u.n)) {
+    for (auto e : getIncidentEdgesIterator(graph, u.n, direction)) {
       node v = graph->opposite(e, u.n);
       auto *dEle = mapDik[v];
       double eWeight = weights.getEdgeValue(e);

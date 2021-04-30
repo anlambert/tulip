@@ -92,14 +92,12 @@ struct PageRank : public DoubleAlgorithm {
     NodeVectorProperty<double> deg(graph);
     tlp::degree(graph, deg, directed ? DIRECTED : UNDIRECTED, weight, false);
 
-    auto getNodes = getNodesIterator(directed ? INV_DIRECTED : UNDIRECTED);
-    auto getEdges = getEdgesIterator(directed ? INV_DIRECTED : UNDIRECTED);
-
     for (unsigned int k = 0; k < kMax + 1; ++k) {
       if (!weight) {
         TLP_PARALLEL_MAP_NODES_AND_INDICES(graph, [&](const node n, unsigned int i) {
           double n_sum = 0;
-          for (auto nin : getNodes(graph, n)) {
+          for (auto nin :
+               getAdjacentNodesIterator(graph, n, directed ? INV_DIRECTED : UNDIRECTED)) {
             n_sum += pr.getNodeValue(nin) / deg.getNodeValue(nin);
           }
           next_pr[i] = one_minus_d + d * n_sum;
@@ -107,7 +105,7 @@ struct PageRank : public DoubleAlgorithm {
       } else {
         TLP_PARALLEL_MAP_NODES_AND_INDICES(graph, [&](const node n, unsigned int i) {
           double n_sum = 0;
-          for (auto e : getEdges(graph, n)) {
+          for (auto e : getIncidentEdgesIterator(graph, n, directed ? INV_DIRECTED : UNDIRECTED)) {
             node nin = graph->opposite(e, n);
             if (deg.getNodeValue(nin) > 0) {
               n_sum += weight->getEdgeDoubleValue(e) * pr.getNodeValue(nin) / deg.getNodeValue(nin);
