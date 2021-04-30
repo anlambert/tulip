@@ -11,8 +11,8 @@
  *
  */
 
-#ifndef MULTIPLE_EDGE_SELECTION_H
-#define MULTIPLE_EDGE_SELECTION_H
+#ifndef PARALLEL_EDGE_SELECTION_H
+#define PARALLEL_EDGE_SELECTION_H
 
 #include <talipot/BooleanProperty.h>
 #include <talipot/PropertyAlgorithm.h>
@@ -20,24 +20,24 @@
 #include "../utils/PluginNames.h"
 
 /**
- * This selection plugins enables to find the multiple-edges and parallel-edges in a graph.
- * Let e1, e2 two edges, e1 and e2 are parallel edges if source(e1)=source(e2) and
+ * This selection plugins enables to find the parallel edges in a graph.
+ * Let e1, e2 two edges, e1 and e2 are parallel edges if source(e1) = source(e2) and
  * target(e1) = target(e2).
  * If it exists n edges between two nodes, only n-1 edges will be selected.
  *
  *  \author David Auber, LaBRI University Bordeaux I France:
  *   auber@labri.fr
  */
-class MultipleEdgeSelection : public tlp::BooleanAlgorithm {
+class ParallelEdgesSelection : public tlp::BooleanAlgorithm {
 public:
-  PLUGININFORMATION(tlp::SelectionAlgorithm::MultipleEdgeSelection, "David Auber", "20/01/2003",
-                    "Selects the multiple or parallel edges of a graph.<br/>Two edges are "
+  PLUGININFORMATION(tlp::SelectionAlgorithm::ParallelEdgesSelection, "David Auber", "20/01/2003",
+                    "Selects the parallel edges of a graph.<br/>Two edges are "
                     "considered as parallel if they have the same source/origin and the same "
                     "target/destination."
                     "If it exists n edges between two nodes, only n-1 edges will be selected.",
                     "1.1", "Selection")
-  MultipleEdgeSelection(const tlp::PluginContext *context);
+  ParallelEdgesSelection(const tlp::PluginContext *context);
   bool run() override;
 };
 
-#endif // MULTIPLE_EDGE_SELECTION_H
+#endif // PARALLEL_EDGE_SELECTION_H

@@ -11,24 +11,24 @@
  *
  */
 
-#include "MultipleEdgeSelection.h"
+#include "ParallelEdgesSelection.h"
 
 #include <talipot/ConcatIterator.h>
 #include <talipot/SimpleTest.h>
 
-PLUGIN(MultipleEdgeSelection)
+PLUGIN(ParallelEdgesSelection)
 
 using namespace std;
 using namespace tlp;
 
-MultipleEdgeSelection::MultipleEdgeSelection(const tlp::PluginContext *context)
+ParallelEdgesSelection::ParallelEdgesSelection(const tlp::PluginContext *context)
     : BooleanAlgorithm(context) {
   addInParameter<bool>("directed",
                        "Indicates if the graph should be considered as directed or not.", "false");
-  addOutParameter<unsigned int>("#edges selected", "The number of multiple edges selected");
+  addOutParameter<unsigned int>("#edges selected", "The number of parallel edges selected");
 }
 
-bool MultipleEdgeSelection::run() {
+bool ParallelEdgesSelection::run() {
   bool directed = false;
   if (dataSet) {
     dataSet->get("directed", directed);

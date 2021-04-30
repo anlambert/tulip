@@ -53,9 +53,9 @@ TALIPOT_ADD_PLUGIN(
 # ------------------------------------------------------------------------------
 TALIPOT_ADD_PLUGIN(
   NAME
-  MultipleEdgeSelection
+  ParallelEdgesSelection
   SRCS
-  MultipleEdgeSelection.cpp
+  ParallelEdgesSelection.cpp
   LINKS
   ${LibTalipotCoreName}
   INSTALL_DIR

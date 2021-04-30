@@ -94,7 +94,7 @@ void TestAlgorithmTest::testSimple() {
   CPPUNIT_ASSERT(loops.size() == 1);
   CPPUNIT_ASSERT(loops[0] == loop1);
 
-  // add new loop and multiple edge
+  // add new loop and parallel edge
   auto loop2 = graph->addEdge(n1, n1);
 
   // not directed tests

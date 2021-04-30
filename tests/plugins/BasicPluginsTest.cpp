@@ -293,10 +293,10 @@ void BasicPluginsTest::testLoopSelection() {
   }
 }
 //==========================================================
-void BasicPluginsTest::testMultipleEdgeSelection() {
+void BasicPluginsTest::testParallelEdgesSelection() {
   BooleanProperty selection(graph);
   bool result =
-      computeProperty<BooleanProperty>("Multiple Edges Selection", "Planar Graph", &selection);
+      computeProperty<BooleanProperty>("Parallel Edges Selection", "Planar Graph", &selection);
   CPPUNIT_ASSERT(result);
   for (auto n : graph->nodes()) {
     CPPUNIT_ASSERT(selection.getNodeValue(n) == false);

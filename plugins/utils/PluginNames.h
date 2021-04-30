@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -29,7 +29,7 @@ const static char SOMViewName[] = "Self Organizing Map";
 namespace SelectionAlgorithm {
 
 const static char LoopSelection[] = "Loop Selection";
-const static char MultipleEdgeSelection[] = "Multiple Edges Selection";
+const static char ParallelEdgesSelection[] = "Parallel Edges Selection";
 const static char InducedSubGraphSelection[] = "Induced SubGraph";
 const static char ReachableSubGraphSelection[] = "Reachable SubGraph";
 const static char SpanningDagSelection[] = "Spanning Dag";

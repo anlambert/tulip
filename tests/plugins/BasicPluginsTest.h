@@ -44,7 +44,7 @@ class BasicPluginsTest : public CppUnit::TestFixture {
   CPPUNIT_TEST(testMetricColorMapping);
   CPPUNIT_TEST(testInducedSubGraphSelection);
   CPPUNIT_TEST(testLoopSelection);
-  CPPUNIT_TEST(testMultipleEdgeSelection);
+  CPPUNIT_TEST(testParallelEdgesSelection);
   CPPUNIT_TEST(testReachableSubGraphSelection);
   CPPUNIT_TEST(testSpanningDagSelection);
   CPPUNIT_TEST(testSpanningTreeSelection);
@@ -92,7 +92,7 @@ public:
   void testMetricColorMapping();
   void testInducedSubGraphSelection();
   void testLoopSelection();
-  void testMultipleEdgeSelection();
+  void testParallelEdgesSelection();
   void testReachableSubGraphSelection();
   void testSpanningDagSelection();
   void testSpanningTreeSelection();

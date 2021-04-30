@@ -652,7 +652,7 @@ bool EdgeBundling::run() {
     }
   }
 
-  // Reinsert multiple edges if any and update their layout
+  // Reinsert parallel edges if any and update their layout
   for (auto removedEdge : removedEdges) {
     const auto &[src, tgt] = graph->ends(removedEdge);
 
