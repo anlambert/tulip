@@ -574,10 +574,8 @@ class RootGraphsIterator : public tlp::Iterator<tlp::Graph *> {
 
 public:
   RootGraphsIterator() {
-    const VectorGraph &ovg = tlp::Observable::getObservableGraph();
-
     // we iterate the observable graph nodes
-    for (auto n : ovg.nodes()) {
+    for (auto n : tlp::Observable::nodes()) {
       Graph *g = nullptr;
 
       if (tlp::Observable::isAlive(n) &&

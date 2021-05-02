@@ -47,6 +47,9 @@ public:
   }
 
   typename std::vector<TYPE>::reference operator[](unsigned int i) {
+    if (i + 1 > this->size()) {
+      this->resize(i + 1);
+    }
     return std::vector<TYPE>::operator[](i);
   }
 
@@ -146,6 +149,9 @@ public:
   }
 
   std::vector<unsigned char>::reference operator[](unsigned int i) {
+    if (i + 1 > this->size()) {
+      this->resize(i + 1);
+    }
     return std::vector<unsigned char>::operator[](i);
   }
 
@@ -241,6 +247,9 @@ public:
   }
 
   typename std::vector<TYPE>::reference operator[](unsigned int i) {
+    if (i + 1 > this->size()) {
+      this->resize(i + 1);
+    }
     return std::vector<TYPE>::operator[](i);
   }
 
@@ -337,6 +346,9 @@ public:
   }
 
   std::vector<unsigned char>::reference operator[](unsigned int i) {
+    if (i + 1 > this->size()) {
+      this->resize(i + 1);
+    }
     return std::vector<unsigned char>::operator[](i);
   }
 

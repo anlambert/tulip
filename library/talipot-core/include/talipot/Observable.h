@@ -21,7 +21,6 @@
 #include <talipot/Node.h>
 
 namespace tlp {
-class VectorGraph;
 class Observable;
 //=======================================
 /**
@@ -267,13 +266,17 @@ public:
    * @brief gets the number of sent events.
    * @return the number of sent events
    */
-  unsigned int getSent() const;
+  unsigned int getSent() const {
+    return _sent;
+  }
 
   /**
    * @brief get the number of received events.
    * @return the number of received events
    */
-  unsigned int getReceived() const;
+  unsigned int getReceived() const {
+    return _received;
+  }
 
   /**
    * @brief gets the number of observers attached to this object.
@@ -322,12 +325,7 @@ public:
    */
   static tlp::node getNode(const tlp::Observable *obs);
 
-  /**
-   * @brief Gets the observation graph.
-   * @return The graph containing a node for each Observable/Observer/Listener, and an edge between
-   * connected objects.
-   */
-  static const tlp::VectorGraph &getObservableGraph();
+  static const std::vector<tlp::node> &nodes();
 
 protected:
   Observable();
@@ -409,29 +407,29 @@ private:
   enum OBSERVABLEEDGETYPE { OBSERVABLE = 0x01, OBSERVER = 0x02, LISTENER = 0x04 };
 
   /**
-   * @brief deleteMsgSent This allows for calling observableDeleted() multiple times safely.
+   * @brief This allows for calling observableDeleted() multiple times safely.
    */
-  bool deleteMsgSent;
+  bool _deleteMsgSent;
 
   /**
-   * @brief queuedEvent Used to prevent unnecessary elements insertion in the set of events.
+   * @brief Used to prevent unnecessary elements insertion in the set of events.
    */
-  mutable bool queuedEvent;
+  mutable bool _queuedEvent;
 
   /**
-   * @brief _n The node that represents this object in the ObservableGraph.
+   * @brief The node that represents this object in the ObservableGraph.
    */
   tlp::node _n;
 
   /**
-   * @brief sent The number of sent events
+   * @brief The number of sent events
    */
-  unsigned int sent;
+  unsigned int _sent;
 
   /**
    * @brief received The number of received events.
    */
-  unsigned int received;
+  unsigned int _received;
 
   /**
    * @brief return an Iterator on all Onlookers
@@ -512,6 +510,7 @@ private:
    * if _n is not valid it is then bound to a new added node
    */
   tlp::node getBoundNode();
+
   bool isBound() const {
     return _n.isValid();
   }
