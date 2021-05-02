@@ -12,8 +12,8 @@
  */
 
 #include <talipot/DoubleProperty.h>
-#include <talipot/VectorGraph.h>
 #include <talipot/PropertyAlgorithm.h>
+#include <talipot/VectorProperty.h>
 
 using namespace std;
 using namespace tlp;
@@ -53,7 +53,7 @@ public:
 
 private:
   /**
-   * @brief Create the dual (as VectorGraph) of the graph
+   * @brief Create the dual of the graph
    * in order to store Similarity value between two edges
    * Edges are represented by nodes linked according to edges' neighborhood.
    **/
@@ -88,10 +88,10 @@ private:
    **/
   void setEdgeValues(double, bool, const std::vector<edge> &edges);
 
-  tlp::VectorGraph dual; // Dual Node -> Graph Edges; Dual Edge -> indicates that the linked Graph
-                         // Edges have a same end.
-  tlp::MutableContainer<tlp::node> mapKeystone;
-  tlp::EdgeProperty<double> similarity;
+  std::unique_ptr<tlp::Graph> dual; // Dual Node -> Graph Edges; Dual Edge -> indicates that the
+                                    // linked Graph Edges have a same end.
+  tlp::EdgeVectorProperty<tlp::node> mapKeystone;
+  tlp::EdgeVectorProperty<double> similarity;
 
   tlp::NumericProperty *metric;
 };
@@ -108,7 +108,7 @@ static constexpr std::string_view paramHelp[] = {
     "This parameter indicates the number of thresholds to be compared."};
 //==============================================================================================================
 LinkCommunities::LinkCommunities(const tlp::PluginContext *context)
-    : DoubleAlgorithm(context), metric(nullptr) {
+    : DoubleAlgorithm(context), dual(tlp::newGraph()), metric(nullptr) {
   addInParameter<NumericProperty *>("metric", paramHelp[0].data(), "", false);
   addInParameter<bool>("Group isthmus", paramHelp[1].data(), "true", true);
   addInParameter<unsigned int>("Number of steps", paramHelp[2].data(), "200", true);
@@ -130,7 +130,6 @@ bool LinkCommunities::run() {
   const std::vector<edge> &edges = graph->edges();
   createDualGraph(edges);
 
-  dual.alloc(similarity);
   computeSimilarities(edges);
 
   result->setAllNodeValue(0);
@@ -139,8 +138,8 @@ bool LinkCommunities::run() {
 
   setEdgeValues(th, group_isthmus, edges);
 
-  dual.free(similarity);
-  dual.clear();
+  dual->clear();
+  similarity.clear();
 
   for (auto n : graph->nodes()) {
     std::set<double> around;
@@ -159,19 +158,21 @@ bool LinkCommunities::run() {
 //==============================================================================================================
 void LinkCommunities::createDualGraph(const std::vector<edge> &edges) {
   unsigned int nbEdges = edges.size();
-  dual.reserveNodes(nbEdges);
+  dual->reserveNodes(nbEdges);
+  similarity.alloc(dual.get(), nbEdges);
+  mapKeystone.alloc(dual.get(), nbEdges);
 
   for (unsigned int i = 0; i < nbEdges; ++i) {
-    node dn = dual.addNode();
+    node dn = dual->addNode();
     const auto &[src, tgt] = graph->ends(edges[i]);
 
     for (auto ee : graph->getInOutEdges(src)) {
       unsigned int eePos = graph->edgePos(ee);
 
       if (eePos < i) {
-        if (!dual.existEdge(dn, dual[eePos], false).isValid()) {
-          edge de = dual.addEdge(dn, dual[eePos]);
-          mapKeystone.set(de.id, src);
+        if (!dual->existEdge(dn, node(eePos), false).isValid()) {
+          edge de = dual->addEdge(dn, node(eePos));
+          mapKeystone[de] = src;
         }
       }
     }
@@ -179,9 +180,9 @@ void LinkCommunities::createDualGraph(const std::vector<edge> &edges) {
       unsigned int eePos = graph->edgePos(ee);
 
       if (eePos < i) {
-        if (!dual.existEdge(dn, dual[eePos], false).isValid()) {
-          edge de = dual.addEdge(dn, dual[eePos]);
-          mapKeystone.set(de.id, tgt);
+        if (!dual->existEdge(dn, node(eePos), false).isValid()) {
+          edge de = dual->addEdge(dn, node(eePos));
+          mapKeystone[de] = tgt;
         }
       }
     }
@@ -189,22 +190,23 @@ void LinkCommunities::createDualGraph(const std::vector<edge> &edges) {
 }
 //==============================================================================================================
 void LinkCommunities::computeSimilarities(const std::vector<edge> &edges) {
+  similarity.resize(dual->numberOfEdges());
   if (metric == nullptr) {
-    TLP_PARALLEL_MAP_INDICES(dual.numberOfEdges(), [&](unsigned int i) {
-      edge e = dual(i);
+    TLP_PARALLEL_MAP_INDICES(dual->numberOfEdges(), [&](unsigned int i) {
+      edge e = edge(i);
       similarity[e] = getSimilarity(e, edges);
     });
   } else {
-    TLP_PARALLEL_MAP_INDICES(dual.numberOfEdges(), [&](unsigned int i) {
-      edge e = dual(i);
+    TLP_PARALLEL_MAP_INDICES(dual->numberOfEdges(), [&](unsigned int i) {
+      edge e = edge(i);
       similarity[e] = getWeightedSimilarity(e, edges);
     });
   }
 }
 //==============================================================================================================
 double LinkCommunities::getSimilarity(edge ee, const std::vector<edge> &edges) {
-  node key = mapKeystone.get(ee.id);
-  auto [eeSrc, eeTgt] = dual.ends(ee);
+  node key = mapKeystone[ee];
+  auto [eeSrc, eeTgt] = dual->ends(ee);
   edge e1 = edges[eeSrc.id];
   edge e2 = edges[eeTgt.id];
   const auto &[e1Src, e1Tgt] = graph->ends(e1);
@@ -242,8 +244,8 @@ double LinkCommunities::getSimilarity(edge ee, const std::vector<edge> &edges) {
 }
 //==============================================================================================================
 double LinkCommunities::getWeightedSimilarity(tlp::edge ee, const std::vector<edge> &edges) {
-  node key = mapKeystone.get(ee.id);
-  auto [eeSrc, eeTgt] = dual.ends(ee);
+  node key = mapKeystone[ee];
+  auto [eeSrc, eeTgt] = dual->ends(ee);
   edge e1 = edges[eeSrc.id];
   edge e2 = edges[eeTgt.id];
   const auto &[e1Src, e1Tgt] = graph->ends(e1);
@@ -323,22 +325,16 @@ double LinkCommunities::getWeightedSimilarity(tlp::edge ee, const std::vector<ed
   }
 }
 //==============================================================================================================
-// define a lock to protect allocation/free of dn_visited
-TLP_DEFINE_GLOBAL_LOCK(DN_VISITED);
 
 double LinkCommunities::computeAverageDensity(double threshold, const std::vector<edge> &edges) {
   double d = 0.0;
-  NodeProperty<bool> dn_visited;
-  TLP_GLOBALLY_LOCK_SECTION(DN_VISITED) {
-    dual.alloc(dn_visited);
-  }
-  TLP_GLOBALLY_UNLOCK_SECTION(DN_VISITED);
+  NodeVectorProperty<bool> dn_visited(dual.get());
   dn_visited.setAll(false);
 
-  unsigned int sz = dual.numberOfNodes();
+  unsigned int sz = dual->numberOfNodes();
 
   for (unsigned int i = 0; i < sz; ++i) {
-    node dn = dual[i];
+    node dn = node(i);
 
     if (!dn_visited[dn]) {
       unsigned int nbDNodes = 1;
@@ -360,14 +356,10 @@ double LinkCommunities::computeAverageDensity(double threshold, const std::vecto
       while (!dnToVisit.empty()) {
         dn = dnToVisit.front();
         dnToVisit.pop_front();
-        const std::vector<edge> &curEdges = dual.star(dn);
-        unsigned int eSz = curEdges.size();
 
-        for (unsigned int j = 0; j < eSz; ++j) {
-          edge e = curEdges[j];
-
+        for (auto e : dual->incidence(dn)) {
           if (similarity[e] > threshold) {
-            node neighbour = dual.opposite(e, dn);
+            node neighbour = dual->opposite(e, dn);
 
             if (!dn_visited[neighbour]) {
               dn_visited[neighbour] = true;
@@ -399,25 +391,19 @@ double LinkCommunities::computeAverageDensity(double threshold, const std::vecto
     }
   }
 
-  TLP_GLOBALLY_LOCK_SECTION(DN_VISITED) {
-    dual.free(dn_visited);
-  }
-  TLP_GLOBALLY_UNLOCK_SECTION(DN_VISITED);
-
   return 2.0 * d / (graph->numberOfEdges());
 }
 //==============================================================================================================
 void LinkCommunities::setEdgeValues(double threshold, bool group_isthmus,
                                     const std::vector<edge> &edges) {
-  NodeProperty<bool> dn_visited;
-  dual.alloc(dn_visited);
+  NodeVectorProperty<bool> dn_visited(dual.get());
   dn_visited.setAll(false);
 
   double val = 1;
-  unsigned int sz = dual.numberOfNodes();
+  unsigned int sz = dual->numberOfNodes();
 
   for (unsigned int i = 0; i < sz; ++i) {
-    node dn = dual[i];
+    node dn = node(i);
 
     if (!dn_visited[dn]) {
       dn_visited[dn] = true;
@@ -430,14 +416,11 @@ void LinkCommunities::setEdgeValues(double threshold, bool group_isthmus,
       while (!dnToVisit.empty()) {
         dn = dnToVisit.front();
         dnToVisit.pop_front();
-        const std::vector<edge> &curEdges = dual.star(dn);
-        unsigned int eSz = curEdges.size();
 
-        for (unsigned int j = 0; j < eSz; ++j) {
-          edge e = curEdges[j];
+        for (auto e : dual->incidence(dn)) {
 
           if (similarity[e] > threshold) {
-            node neighbour = dual.opposite(e, dn);
+            node neighbour = dual->opposite(e, dn);
 
             if (!dn_visited[neighbour]) {
               dn_visited[neighbour] = true;
@@ -458,8 +441,6 @@ void LinkCommunities::setEdgeValues(double threshold, bool group_isthmus,
       val += 1;
     }
   }
-
-  dual.free(dn_visited);
 }
 //==============================================================================================================
 double LinkCommunities::findBestThreshold(unsigned int numberOfSteps,
@@ -470,10 +451,10 @@ double LinkCommunities::findBestThreshold(unsigned int numberOfSteps,
   double min = 1.1;
   double max = -1.0;
 
-  unsigned int sz = dual.numberOfEdges();
+  unsigned int sz = dual->numberOfEdges();
 
   for (unsigned int i = 0; i < sz; ++i) {
-    double value = similarity[dual(i)];
+    double value = similarity[edge(i)];
 
     if (value < min) {
       min = value;
