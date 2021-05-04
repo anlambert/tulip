@@ -29,7 +29,6 @@
 #include <talipot/SimplePluginProgress.h>
 #include <talipot/DrawingTools.h>
 #include <talipot/ViewSettings.h>
-#include <talipot/VectorGraph.h>
 #include <talipot/FontAwesome.h>
 #include <talipot/PropertyAlgorithm.h>
 

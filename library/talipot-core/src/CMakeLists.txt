@@ -65,7 +65,6 @@ SET(talipot_LIB_SRCS
     TlpTools.cpp
     TreeTest.cpp
     TriconnectedTest.cpp
-    VectorGraph.cpp
     WithParameter.cpp
     YajlFacade.cpp
     PluginsManager.cpp
