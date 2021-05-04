@@ -12,9 +12,8 @@
  */
 
 #include <talipot/DoubleProperty.h>
-#include <talipot/VectorProperty.h>
-#include <talipot/VectorGraph.h>
 #include <talipot/PropertyAlgorithm.h>
+#include <talipot/VectorProperty.h>
 
 using namespace std;
 using namespace tlp;
@@ -62,7 +61,7 @@ private:
   unsigned int nb_nodes;
 
   // a quotient graph of the original graph
-  VectorGraph *quotient;
+  Graph *quotient;
   // number of nodes in the quotient graph and size of all vectors
   unsigned int nb_qnodes;
 
@@ -71,7 +70,7 @@ private:
   NodeVectorProperty<int> *clusters;
 
   // quotient graph edge weights
-  EdgeProperty<double> *weights;
+  EdgeVectorProperty<double> *weights;
   // total weight (sum of edge weights for the quotient graph)
   double total_weight;
   // 1./total_weight
@@ -98,7 +97,7 @@ private:
   // of the current quotient graph
   void get_weighted_degree_and_selfloops(unsigned int n, double &wdg, double &nsl) {
     wdg = nsl = 0;
-    const std::vector<edge> &edges = quotient->star(node(n));
+    const std::vector<edge> &edges = quotient->incidence(node(n));
 
     for (unsigned int i = 0; i < edges.size(); ++i) {
       edge e = edges[i];
@@ -154,7 +153,7 @@ private:
     neigh_weight[neigh_pos[0]] = 0;
     neigh_last = 1;
 
-    for (auto e : quotient->star(node(n))) {
+    for (auto e : quotient->incidence(node(n))) {
       const auto &[src, tgt] = quotient->ends(e);
       unsigned int neigh = (src == node(n)) ? tgt : src;
       unsigned int neigh_comm = n2c[neigh];
@@ -172,7 +171,7 @@ private:
   }
 
   // generates the quotient graph of communities as computed by one_level
-  void partitionToQuotient(VectorGraph *new_quotient, EdgeProperty<double> *new_weights) {
+  void partitionToQuotient(Graph *new_quotient, EdgeVectorProperty<double> *new_weights) {
     // Renumber communities
     vector<int> renumber(nb_qnodes, -1);
 
@@ -241,7 +240,10 @@ private:
     new_mod = modularity();
     double cur_mod = new_mod;
 
-    quotient->shuffleNodes();
+    vector<unsigned int> random_order(nb_qnodes);
+    TLP_PARALLEL_MAP_INDICES(nb_qnodes, [&](unsigned int i) { random_order[i] = i; });
+
+    shuffle(random_order.begin(), random_order.end(), getRandomNumberGenerator());
 
     // repeat while
     // there is an improvement of modularity
@@ -253,7 +255,7 @@ private:
       // for each node:
       // remove the node from its community
       // and insert it in the best community
-      for (unsigned int n = 0; n < nb_qnodes; n++) {
+      for (auto n : random_order) {
         unsigned int n_comm = n2c[n];
         double n_wdg;
         double n_nsl;
@@ -360,21 +362,20 @@ bool LouvainClustering::run() {
 
   nb_nodes = graph->numberOfNodes();
 
-  quotient = new VectorGraph();
+  quotient = tlp::newGraph();
   quotient->addNodes(nb_nodes);
 
   clusters = new NodeVectorProperty<int>(graph);
 
   TLP_PARALLEL_MAP_INDICES(nb_nodes, [&](unsigned int i) { (*clusters)[i] = i; });
 
-  weights = new EdgeProperty<double>();
-  quotient->alloc(*weights);
+  weights = new EdgeVectorProperty<double>(quotient);
   // init total_weight, weights and quotient edges
   for (auto e : graph->edges()) {
     double weight = metric ? metric->getEdgeDoubleValue(e) : 1;
     const auto &[src, tgt] = graph->ends(e);
-    node q_src(clusters->getNodeValue(src));
-    node q_tgt(clusters->getNodeValue(tgt));
+    node q_src((*clusters)[src.id]);
+    node q_tgt((*clusters)[tgt.id]);
     // self loops are counted only once
     total_weight += q_src != q_tgt ? 2 * weight : weight;
     // create corresponding edge if needed
@@ -397,9 +398,8 @@ bool LouvainClustering::run() {
   while (one_level()) {
     ++level;
 
-    auto *new_quotient = new VectorGraph();
-    auto *new_weights = new EdgeProperty<double>();
-    new_quotient->alloc(*new_weights);
+    auto *new_quotient = tlp::newGraph();
+    auto *new_weights = new EdgeVectorProperty<double>(new_quotient);
 
     partitionToQuotient(new_quotient, new_weights);
     delete quotient;
