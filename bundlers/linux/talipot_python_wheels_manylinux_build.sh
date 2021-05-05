@@ -5,13 +5,13 @@
 
 TALIPOT_PYTHON_TEST_WHEEL_SUFFIX=$1
 
-yum -y install epel-release
+yum -y install epel-release ccache
 # compile and install cmake 3.19 to get C++17 support
 yum -y install wget openssl-devel
 wget https://github.com/Kitware/CMake/releases/download/v3.19.2/cmake-3.19.2.tar.gz
 tar -xvzf cmake-3.19.2.tar.gz > /dev/null
 cd cmake-3.19.2
-./bootstrap
+./bootstrap --enable-ccache
 make -j4
 make -j4 install
 cd ..
@@ -25,7 +25,10 @@ make -j4 install
 cd ..
 
 # install talipot-core wheel deps
-yum -y install zlib-devel libzstd-devel qhull-devel graphviz-devel ccache
+yum -y install zlib-devel libzstd-devel qhull-devel graphviz-devel
+
+# required to build upstream python cffi from pip
+yum -y install libffi-devel
 
 # ensure python library from based system is present, even if we do
 # not link to it, as cmake will fail to find PythonLibs otherwise
