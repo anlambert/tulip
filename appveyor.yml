@@ -15,13 +15,13 @@ environment:
       MSYSTEM: MINGW64
       BUILD_WHEELS: "false"
 
-    # MacOS core build
-    - APPVEYOR_BUILD_WORKER_IMAGE: macos-mojave
-      BUILD_WHEELS: "false"
+    # # MacOS core build
+    # - APPVEYOR_BUILD_WORKER_IMAGE: macos-mojave
+    #   BUILD_WHEELS: "false"
 
-    # MacOS complete build
-    - APPVEYOR_BUILD_WORKER_IMAGE: macos-mojave
-      BUILD_WHEELS: "false"
+    # # MacOS complete build
+    # - APPVEYOR_BUILD_WORKER_IMAGE: macos-mojave
+    #   BUILD_WHEELS: "false"
 
     # Windows MSYS2 GCC Python wheels build
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
