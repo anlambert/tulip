@@ -82,25 +82,8 @@ void GeographicView::viewTypeChanged(int idx) {
 }
 
 void GeographicView::viewTypeChanged(const QString &viewTypeName) {
-  QComboBox *comboBox = geoViewGraphicsView->getViewTypeComboBox();
-
-  if (comboBox == nullptr) {
-    return;
-  }
-
-  disconnect(comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this,
-             QOverload<int>::of(&GeographicView::viewTypeChanged));
-
   _viewType = getViewTypeFromName(viewTypeName);
-
   geoViewGraphicsView->switchViewType();
-
-  comboBox->removeItem(0);
-  comboBox->insertItem(0, viewTypeName);
-  comboBox->setCurrentIndex(0);
-
-  connect(comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this,
-          QOverload<int>::of(&GeographicView::viewTypeChanged));
 }
 
 void GeographicView::fillContextMenu(QMenu *menu, const QPointF &pf) {

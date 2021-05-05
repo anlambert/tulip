@@ -329,7 +329,6 @@ GeographicViewGraphicsView::GeographicViewGraphicsView(GeographicView *geoView,
     items.append(GeographicView::getViewNameFromType(viewType));
   }
   viewTypeComboBox->addItems(items);
-  viewTypeComboBox->insertSeparator(1);
 
   QGraphicsProxyWidget *comboBoxProxy = scene()->addWidget(viewTypeComboBox);
   comboBoxProxy->setParentItem(_placeholderItem);
