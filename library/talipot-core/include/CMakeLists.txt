@@ -4,7 +4,6 @@ INSTALL(
         talipot/Algorithm.h
         talipot/Array.h
         talipot/Bfs.h
-        talipot/BasicIterators.h
         talipot/BiconnectedTest.h
         talipot/BooleanProperty.h
         talipot/BoundingBox.h

@@ -13,8 +13,8 @@
 
 #include <cstdlib>
 
-#include <talipot/BasicIterators.h>
 #include <talipot/ConversionIterator.h>
+#include <talipot/FilterIterator.h>
 
 template <class NodeType, class EdgeType, class PropType>
 tlp::AbstractProperty<NodeType, EdgeType, PropType>::AbstractProperty(tlp::Graph *sg,
@@ -58,42 +58,42 @@ template <class NodeType, class EdgeType, class PropType>
 tlp::Iterator<tlp::node> *tlp::AbstractProperty<NodeType, EdgeType, PropType>::getNodesEqualTo(
     typename tlp::StoredType<typename NodeType::RealType>::ReturnedConstValue val,
     const Graph *sg) const {
-  if (sg == nullptr) {
-    sg = this->graph;
+  if (val == nodeDefaultValue) {
+    return filterIterator(sg == nullptr ? PropType::graph->nodes() : sg->nodes(),
+                          [&, val](node n) { return this->getNodeValue(n) == val; });
+  } else {
+    return filterIterator(
+        conversionIterator<node>(nodeProperties.findAll(val), idToNode), [&, sg](node n) {
+          if (PropType::name.empty()) {
+            // we always need to check that nodes belong to graph for non registered
+            // properties, because deleted nodes are not erased from them
+            return sg == nullptr ? PropType::graph->isElement(n) : sg->isElement(n);
+          } else {
+            return sg == nullptr || sg == PropType::graph || sg->isElement(n);
+          }
+        });
   }
-
-  tlp::Iterator<unsigned int> *it = nullptr;
-
-  if (sg == this->graph) {
-    it = nodeProperties.findAll(val);
-  }
-
-  if (it == nullptr) {
-    return new tlp::SGraphNodeIterator<typename NodeType::RealType>(sg, nodeProperties, val);
-  }
-
-  return tlp::conversionIterator<tlp::node>(it, idToNode);
 }
 //=================================================================================
 template <class NodeType, class EdgeType, class PropType>
 tlp::Iterator<tlp::edge> *tlp::AbstractProperty<NodeType, EdgeType, PropType>::getEdgesEqualTo(
     typename tlp::StoredType<typename EdgeType::RealType>::ReturnedConstValue val,
     const Graph *sg) const {
-  if (sg == nullptr) {
-    sg = this->graph;
+  if (val == edgeDefaultValue) {
+    return filterIterator(sg == nullptr ? PropType::graph->edges() : sg->edges(),
+                          [&, val](edge e) { return this->getEdgeValue(e) == val; });
+  } else {
+    return filterIterator(
+        conversionIterator<edge>(edgeProperties.findAll(val), idToEdge), [&, sg](edge e) {
+          if (PropType::name.empty()) {
+            // we always need to check that edges belong to graph for non registered
+            // properties, because deleted nodes are not erased from them
+            return sg == nullptr ? PropType::graph->isElement(e) : sg->isElement(e);
+          } else {
+            return sg == nullptr || sg == PropType::graph || sg->isElement(e);
+          }
+        });
   }
-
-  tlp::Iterator<unsigned int> *it = nullptr;
-
-  if (sg == this->graph) {
-    it = edgeProperties.findAll(val);
-  }
-
-  if (it == nullptr) {
-    return new tlp::SGraphEdgeIterator<typename EdgeType::RealType>(sg, edgeProperties, val);
-  }
-
-  return tlp::conversionIterator<tlp::edge>(it, idToEdge);
 }
 //=============================================================
 template <class NodeType, class EdgeType, class PropType>
@@ -245,64 +245,21 @@ int tlp::AbstractProperty<NodeType, EdgeType, PropType>::compare(const edge e1,
   return (e1Value < e2Value) ? -1 : ((e1Value == e2Value) ? 0 : 1);
 }
 //============================================================
-// define template iterator class to iterate over graph elts
-// belonging to a given graph instance
-// used by the two methods below
-template <typename ELT_TYPE>
-class GraphEltIterator : public tlp::Iterator<ELT_TYPE> {
-public:
-  ELT_TYPE next() {
-    ELT_TYPE tmp = curElt;
-
-    if ((_hasnext = it->hasNext())) {
-      curElt = it->next();
-
-      while (!(_hasnext = (!graph || graph->isElement(curElt)))) {
-        if (!it->hasNext()) {
-          break;
-        }
-
-        curElt = it->next();
-      }
-    }
-
-    return tmp;
-  }
-  GraphEltIterator(const tlp::Graph *g, tlp::Iterator<ELT_TYPE> *itN)
-      : it(itN), graph(g), curElt(ELT_TYPE()), _hasnext(false) {
-    next();
-  }
-
-  bool hasNext() {
-    return (_hasnext);
-  }
-  ~GraphEltIterator() {
-    delete it;
-  }
-
-private:
-  tlp::Iterator<ELT_TYPE> *it;
-  const tlp::Graph *graph;
-  ELT_TYPE curElt;
-  bool _hasnext;
-};
-
-//============================================================
 template <class NodeType, class EdgeType, class PropType>
 tlp::Iterator<tlp::node> *
 tlp::AbstractProperty<NodeType, EdgeType, PropType>::getNonDefaultValuatedNodes(
-    const Graph *g) const {
-  tlp::Iterator<tlp::node> *it =
-      conversionIterator<tlp::node>(nodeProperties.findAll(nodeDefaultValue, false), idToNode);
-
-  if (PropType::name.empty()) {
-    // we always need to check that nodes belong to graph
-    // for non registered properties, because deleted nodes are not erased
-    // from them
-    return new GraphEltIterator<tlp::node>(g != nullptr ? g : PropType::graph, it);
-  }
-
-  return ((g == nullptr) || (g == PropType::graph)) ? it : new GraphEltIterator<tlp::node>(g, it);
+    const Graph *sg) const {
+  return filterIterator(
+      conversionIterator<node>(nodeProperties.findAll(nodeDefaultValue, false), idToNode),
+      [&, sg](node n) {
+        if (PropType::name.empty()) {
+          // we always need to check that nodes belong to graph for non registered
+          // properties, because deleted nodes are not erased from them
+          return sg == nullptr ? PropType::graph->isElement(n) : sg->isElement(n);
+        } else {
+          return sg == nullptr || sg == PropType::graph || sg->isElement(n);
+        }
+      });
 }
 //============================================================
 template <class NodeType, class EdgeType, class PropType>
@@ -368,18 +325,18 @@ bool tlp::AbstractProperty<NodeType, EdgeType, PropType>::readNodeValue(std::ist
 template <class NodeType, class EdgeType, class PropType>
 tlp::Iterator<tlp::edge> *
 tlp::AbstractProperty<NodeType, EdgeType, PropType>::getNonDefaultValuatedEdges(
-    const Graph *g) const {
-  tlp::Iterator<tlp::edge> *it =
-      conversionIterator<tlp::edge>(edgeProperties.findAll(edgeDefaultValue, false), idToEdge);
-
-  if (PropType::name.empty()) {
-    // we always need to check that edges belong to graph
-    // for non registered properties, because deleted edges are not erased
-    // from them
-    return new GraphEltIterator<tlp::edge>(g != nullptr ? g : PropType::graph, it);
-  }
-
-  return ((g == nullptr) || (g == PropType::graph)) ? it : new GraphEltIterator<tlp::edge>(g, it);
+    const Graph *sg) const {
+  return filterIterator(
+      conversionIterator<edge>(edgeProperties.findAll(edgeDefaultValue, false), idToEdge),
+      [&, sg](edge e) {
+        if (PropType::name.empty()) {
+          // we always need to check that edges belong to graph for non registered
+          // properties, because deleted nodes are not erased from them
+          return sg == nullptr ? PropType::graph->isElement(e) : sg->isElement(e);
+        } else {
+          return sg == nullptr || sg == PropType::graph || sg->isElement(e);
+        }
+      });
 }
 //============================================================
 template <class NodeType, class EdgeType, class PropType>
