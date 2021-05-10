@@ -61,7 +61,7 @@ function init(lat, lng, zoom) {
     zoomControl: false
   });
   var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <ahref="https://www.openstreetmap.org/copyright">' +
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">' +
                  'OpenStreetMap</a> contributors'
   });
   addEventHandlersToLayer(osm);
