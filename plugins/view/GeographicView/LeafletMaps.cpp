@@ -11,6 +11,8 @@
  *
  */
 
+#include <talipot/TlpQtTools.h>
+
 #include "GeographicView.h"
 #include "LeafletMaps.h"
 
@@ -162,6 +164,11 @@ protected:
     }
     return QWebEnginePage::acceptNavigationRequest(url, type, isMainFrame);
   }
+
+  void javaScriptConsoleMessage(QWebEnginePage::JavaScriptConsoleMessageLevel,
+                                const QString &message, int, const QString &) override {
+    tlp::warning() << "[JavaScript output] " << QStringToTlpString(message) << std::endl;
+  }
 #else
     public QWebPage {
 protected:
@@ -172,6 +179,10 @@ protected:
       return false;
     }
     return QWebPage::acceptNavigationRequest(frame, request, type);
+  }
+
+  void javaScriptConsoleMessage(const QString &message, int, const QString &) override {
+    tlp::warning() << "[JavaScript output] " << QStringToTlpString(message) << std::endl;
   }
 #endif
 };
