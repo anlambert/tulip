@@ -21,6 +21,8 @@
 
 #ifdef QT_HAS_WEBENGINE
 #include <QWebChannel>
+#include <QWebEngineProfile>
+#include <QWebEngineUrlRequestInterceptor>
 #endif
 
 using namespace std;
@@ -152,6 +154,24 @@ document.addEventListener("DOMContentLoaded", function () {
 )";
 }
 
+#ifdef QT_HAS_WEBENGINE
+// https://stackoverflow.com/questions/66925445/qt-webengine-not-loading-openstreetmap-tiles
+class OpenStreetMapSetAcceptLanguageHeader : public QWebEngineUrlRequestInterceptor {
+public:
+  OpenStreetMapSetAcceptLanguageHeader(LeafletMaps *leafletMaps) : _leafletMaps(leafletMaps) {}
+
+  void interceptRequest(QWebEngineUrlRequestInfo &info) override {
+    if (_leafletMaps->getCurrentLayerName() ==
+        GeographicView::getViewNameFromType(GeographicView::OpenStreetMap)) {
+      info.setHttpHeader("Accept-Language", "en-US,en;q=0.9,fr;q=0.8,de;q=0.7");
+    }
+  }
+
+private:
+  LeafletMaps *_leafletMaps;
+};
+#endif
+
 class WebPage :
 #ifdef QT_HAS_WEBENGINE
     public QWebEnginePage {
@@ -207,6 +227,12 @@ LeafletMaps::LeafletMaps(QWidget *parent) : QWebEngineView(parent), init(false) 
   frame->setScrollBarPolicy(Qt::Horizontal, Qt::ScrollBarAlwaysOff);
 #else
   frame = page();
+  osmSetAccessLanguageHeader = new OpenStreetMapSetAcceptLanguageHeader(this);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
+  frame->profile()->setUrlRequestInterceptor(osmSetAccessLanguageHeader);
+#else
+  frame->profile()->setRequestInterceptor(osmSetAccessLanguageHeader);
+#endif
   mapRefresher = new MapRefresher;
   connect(mapRefresher, &MapRefresher::refreshMapSignal, this, &LeafletMaps::refreshMap);
   QWebChannel *channel = new QWebChannel(frame);
@@ -220,6 +246,7 @@ LeafletMaps::LeafletMaps(QWidget *parent) : QWebEngineView(parent), init(false) 
 LeafletMaps::~LeafletMaps() {
 #ifdef QT_HAS_WEBENGINE
   delete mapRefresher;
+  delete osmSetAccessLanguageHeader;
 #endif
 }
 
@@ -264,6 +291,7 @@ void LeafletMaps::triggerLoading() {
 
 void LeafletMaps::switchToTileLayer(const QString &layerName) {
   static const QString code = "switchToTileLayerName('%1')";
+  currentLayerName = layerName;
   executeJavascript(code.arg(layerName));
 }
 

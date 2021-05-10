@@ -44,6 +44,8 @@ signals:
   void refreshMapSignal();
 };
 
+class OpenStreetMapSetAcceptLanguageHeader;
+
 #endif
 
 #ifdef QT_HAS_WEBKIT
@@ -84,6 +86,10 @@ public:
 
   void switchToTileLayer(const QString &layerName);
 
+  const QString &getCurrentLayerName() {
+    return currentLayerName;
+  }
+
   void switchToCustomTileLayer(const QString &customTileLayerUrl);
 
   void setProgressWidget(ProgressWidgetGraphicsProxy *progressWidget) {
@@ -122,7 +128,10 @@ private:
 
 #ifdef QT_HAS_WEBENGINE
   MapRefresher *mapRefresher;
+  OpenStreetMapSetAcceptLanguageHeader *osmSetAccessLanguageHeader;
 #endif
+
+  QString currentLayerName;
 };
 
 #ifdef QT_HAS_WEBENGINE
