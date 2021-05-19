@@ -12,6 +12,7 @@
  */
 
 #include <iomanip>
+#include <queue>
 #include <stack>
 #include <unordered_set>
 
@@ -31,6 +32,7 @@
 #include <talipot/ViewSettings.h>
 #include <talipot/FontAwesome.h>
 #include <talipot/PropertyAlgorithm.h>
+#include <talipot/StableIterator.h>
 
 using namespace std;
 using namespace tlp;
@@ -1833,74 +1835,23 @@ StringVectorProperty *Graph::getStringVectorProperty(const string &propertyName)
   return getProperty<StringVectorProperty>(propertyName);
 }
 
-struct DescendantGraphsIterator : public Iterator<Graph *> {
-  // use a stack to store non empty iterators
-  stack<Iterator<Graph *> *> iterators;
-  // the current one
-  Iterator<Graph *> *current;
-
-  DescendantGraphsIterator(const Graph *g) {
-    current = g->getSubGraphs();
-
-    if (!current->hasNext()) {
-      delete current;
-      current = nullptr;
+static inline vector<Graph *> descendantGraphs(const Graph *graph) {
+  queue<const Graph *> graphs;
+  graphs.push(graph);
+  vector<Graph *> descendants;
+  while (!graphs.empty()) {
+    const Graph *g = graphs.front();
+    graphs.pop();
+    for (Graph *sg : g->getSubGraphs()) {
+      descendants.push_back(sg);
+      graphs.push(sg);
     }
   }
-
-  ~DescendantGraphsIterator() override {
-    if (current) {
-      delete current;
-    }
-
-    while (!iterators.empty()) {
-      delete iterators.top();
-      iterators.pop();
-    }
-  }
-
-  bool hasNext() override {
-    return current != nullptr;
-  }
-
-  Graph *next() override {
-    if (current) {
-      Graph *g = current->next();
-      Iterator<Graph *> *itg = g->getSubGraphs();
-
-      if (itg->hasNext()) {
-        if (current->hasNext()) {
-          // pushed iterators are always non empty
-          iterators.push(current);
-        } else {
-          delete current;
-        }
-
-        current = itg;
-      } else {
-        delete itg;
-
-        if (!current->hasNext()) {
-          delete current;
-
-          if (!iterators.empty()) {
-            current = iterators.top();
-            iterators.pop();
-          } else {
-            current = nullptr;
-          }
-        }
-      }
-
-      return g;
-    }
-
-    return nullptr;
-  }
-};
+  return descendants;
+}
 
 Iterator<Graph *> *Graph::getDescendantGraphs() const {
-  return new DescendantGraphsIterator(this);
+  return stableIterator(descendantGraphs(this));
 }
 
 // destructor
