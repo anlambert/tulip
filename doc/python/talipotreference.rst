@@ -57,9 +57,19 @@ Graph measures and functions
 .. autofunction:: talipot::tlp.bfs
   :noindex:
 
+.. autofunction:: talipot::tlp.bfsEdges
+
+.. autofunction:: talipot::tlp.bfsEdges
+  :noindex:
+
 .. autofunction:: talipot::tlp.dfs
 
 .. autofunction:: talipot::tlp.dfs
+  :noindex:
+
+.. autofunction:: talipot::tlp.dfsEdges
+
+.. autofunction:: talipot::tlp.dfsEdges
   :noindex:
 
 .. autofunction:: talipot::tlp.selectShortestPaths
@@ -315,7 +325,11 @@ from the graph while iterating on its nodes/edges/subgraphs.
 
 .. automethod:: talipot::tlp.Graph.bfs
 
+.. automethod:: talipot::tlp.Graph.bfsEdges
+
 .. automethod:: talipot::tlp.Graph.dfs
+
+.. automethod:: talipot::tlp.Graph.dfsEdges
 
 .. automethod:: talipot::tlp.Graph.getNodeMetaInfo
 

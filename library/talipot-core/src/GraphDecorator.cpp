@@ -439,6 +439,14 @@ Iterator<node> *GraphDecorator::dfs(const node root) const {
   return graph_component->dfs(root);
 }
 //============================================================
+Iterator<edge> *GraphDecorator::bfsEdges(const node root) const {
+  return graph_component->bfsEdges(root);
+}
+//============================================================
+Iterator<edge> *GraphDecorator::dfsEdges(const node root) const {
+  return graph_component->dfsEdges(root);
+}
+//============================================================
 const std::vector<edge> &GraphDecorator::edges() const {
   return graph_component->edges();
 }

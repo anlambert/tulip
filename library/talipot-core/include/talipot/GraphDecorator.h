@@ -112,6 +112,8 @@ public:
   Iterator<node> *getInOutNodes(const node n) const override;
   Iterator<node> *bfs(const node root = node()) const override;
   Iterator<node> *dfs(const node root = node()) const override;
+  Iterator<edge> *bfsEdges(const node root = node()) const override;
+  Iterator<edge> *dfsEdges(const node root = node()) const override;
   const std::vector<edge> &edges() const override;
   unsigned int edgePos(const edge) const override;
   Iterator<edge> *getEdges() const override;

@@ -496,10 +496,14 @@ void selectMinimumSpanningTree(Graph *graph, BooleanProperty *selection,
 //======================================================================
 
 static void bfs(const Graph *graph, node root, NodeVectorProperty<bool> &visited,
-                vector<node> &nodes) {
+                vector<node> &nodes, vector<edge> &edges) {
   if (visited[root]) {
     return;
   }
+
+  nodes.reserve(nodes.size() + graph->numberOfNodes());
+  edges.reserve(edges.size() + graph->numberOfEdges());
+
   visited[root] = true;
   list<node> queue;
   queue.push_back(root);
@@ -509,18 +513,20 @@ static void bfs(const Graph *graph, node root, NodeVectorProperty<bool> &visited
     queue.pop_front();
     nodes.push_back(current);
 
-    for (auto neigh : graph->getInOutNodes(current)) {
+    for (auto e : graph->incidence(current)) {
+      auto neigh = graph->opposite(e, current);
       if (!visited[neigh]) {
         visited[neigh] = true;
         queue.push_back(neigh);
+        edges.push_back(e);
       }
     }
   }
 }
 
-// bfs from a root node
-std::vector<tlp::node> bfs(const Graph *graph, node root) {
+static inline pair<vector<node>, vector<edge>> performBfs(const Graph *graph, node root) {
   vector<node> nodes;
+  vector<edge> edges;
   if (!graph->isEmpty()) {
     if (!root.isValid()) {
       root = graph->getSource();
@@ -533,52 +539,80 @@ std::vector<tlp::node> bfs(const Graph *graph, node root) {
     assert(graph->isElement(root));
     NodeVectorProperty<bool> visited(graph);
     visited.setAll(false);
-    bfs(graph, root, visited, nodes);
+    bfs(graph, root, visited, nodes, edges);
   }
+  return {nodes, edges};
+}
+
+// bfs from a root node
+vector<node> bfs(const Graph *graph, node root) {
+  auto [nodes, edges] = performBfs(graph, root);
   return nodes;
 }
 
-// cumulative bfs from every node of the graph
-std::vector<tlp::node> bfs(const Graph *graph) {
+vector<edge> bfsEdges(const Graph *graph, node root) {
+  auto [nodes, edges] = performBfs(graph, root);
+  return edges;
+}
+
+static inline pair<vector<node>, vector<edge>> performCumulativeBfs(const Graph *graph) {
   vector<node> nodes;
+  vector<edge> edges;
   NodeVectorProperty<bool> visited(graph);
   visited.setAll(false);
   for (auto n : graph->nodes()) {
-    bfs(graph, n, visited, nodes);
+    bfs(graph, n, visited, nodes, edges);
   }
+  return {nodes, edges};
+}
+
+// cumulative bfs from every node of the graph
+vector<node> bfs(const Graph *graph) {
+  auto [nodes, edges] = performCumulativeBfs(graph);
   return nodes;
+}
+
+vector<edge> bfsEdges(const Graph *graph) {
+  auto [nodes, edges] = performCumulativeBfs(graph);
+  return edges;
 }
 
 //======================================================================
 
 static void dfs(const Graph *graph, node root, NodeVectorProperty<bool> &visited,
-                vector<node> &nodes) {
+                vector<node> &nodes, vector<edge> &edges) {
   if (visited[root]) {
     return;
   }
 
-  std::stack<tlp::node> toVisit;
-  toVisit.push(root);
+  nodes.reserve(nodes.size() + graph->numberOfNodes());
+  edges.reserve(edges.size() + graph->numberOfEdges());
+
+  stack<pair<edge, node>> toVisit;
+  toVisit.push({edge(), root});
   visited[root] = true;
 
   while (!toVisit.empty()) {
-    node current = toVisit.top();
+    auto [edge, currentNode] = toVisit.top();
     toVisit.pop();
-    nodes.push_back(current);
+    nodes.push_back(currentNode);
+    if (edge.isValid()) {
+      edges.push_back(edge);
+    }
 
-    for (auto e : reversed(graph->incidence(current))) {
-      node neigh = graph->opposite(e, current);
+    for (auto e : reversed(graph->incidence(currentNode))) {
+      node neigh = graph->opposite(e, currentNode);
       if (!visited[neigh]) {
         visited[neigh] = true;
-        toVisit.push(neigh);
+        toVisit.push({e, neigh});
       }
     }
   }
 }
 
-// dfs from a root node
-std::vector<node> dfs(const Graph *graph, node root) {
+static inline pair<vector<node>, vector<edge>> performDfs(const Graph *graph, node root) {
   vector<node> nodes;
+  vector<edge> edges;
   if (!graph->isEmpty()) {
     if (!root.isValid()) {
       root = graph->getSource();
@@ -591,20 +625,42 @@ std::vector<node> dfs(const Graph *graph, node root) {
     assert(graph->isElement(root));
     NodeVectorProperty<bool> visited(graph);
     visited.setAll(false);
-    dfs(graph, root, visited, nodes);
+    dfs(graph, root, visited, nodes, edges);
   }
+  return {nodes, edges};
+}
+
+// dfs from a root node
+std::vector<node> dfs(const Graph *graph, node root) {
+  auto [nodes, edges] = performDfs(graph, root);
   return nodes;
+}
+
+std::vector<edge> dfsEdges(const Graph *graph, node root) {
+  auto [nodes, edges] = performDfs(graph, root);
+  return edges;
+}
+
+static inline pair<vector<node>, vector<edge>> performCumulativeDfs(const Graph *graph) {
+  vector<node> nodes;
+  vector<edge> edges;
+  NodeVectorProperty<bool> visited(graph);
+  visited.setAll(false);
+  for (auto n : graph->nodes()) {
+    dfs(graph, n, visited, nodes, edges);
+  }
+  return {nodes, edges};
 }
 
 // cumulative dfs from every node of the graph
 std::vector<tlp::node> dfs(const Graph *graph) {
-  vector<node> nodes;
-  NodeVectorProperty<bool> visited(graph);
-  visited.setAll(false);
-  for (auto n : graph->nodes()) {
-    dfs(graph, n, visited, nodes);
-  }
+  auto [nodes, edges] = performCumulativeDfs(graph);
   return nodes;
+}
+
+std::vector<tlp::edge> dfsEdges(const Graph *graph) {
+  auto [nodes, edges] = performCumulativeDfs(graph);
+  return edges;
 }
 
 //==================================================

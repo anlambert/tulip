@@ -22,7 +22,9 @@ using namespace std;
 class GraphTraversalTest : public CppUnit::TestFixture {
   CPPUNIT_TEST_SUITE(GraphTraversalTest);
   CPPUNIT_TEST(testBFS);
+  CPPUNIT_TEST(testBFSEdges);
   CPPUNIT_TEST(testDFS);
+  CPPUNIT_TEST(testDFSEdges);
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -63,6 +65,18 @@ public:
     CPPUNIT_ASSERT_EQUAL(dfs, iteratorVector(graph->dfs()));
   }
 
+  void testDFSEdges() {
+    vector<tlp::edge> dfsEdges = {
+        graph->existEdge(nodes[0], nodes[1]),   graph->existEdge(nodes[1], nodes[2]),
+        graph->existEdge(nodes[1], nodes[3]),   graph->existEdge(nodes[3], nodes[4]),
+        graph->existEdge(nodes[4], nodes[5]),   graph->existEdge(nodes[1], nodes[6]),
+        graph->existEdge(nodes[0], nodes[7]),   graph->existEdge(nodes[0], nodes[8]),
+        graph->existEdge(nodes[0], nodes[9]),   graph->existEdge(nodes[9], nodes[10]),
+        graph->existEdge(nodes[10], nodes[11]), graph->existEdge(nodes[9], nodes[12]),
+    };
+    CPPUNIT_ASSERT_EQUAL(dfsEdges, iteratorVector(graph->dfsEdges()));
+  }
+
   void testBFS() {
     /*      O________
      *     /   \  \  \
@@ -73,11 +87,37 @@ public:
      *     10      11
      *      |
      *     12
+     *
+     * 0 -> 0
+     * 1 -> 1
+     * 2 -> 7
+     * 3 -> 8
+     * 4 -> 9
+     * 5 -> 2
+     * 6 -> 3
+     * 7 -> 6
+     * 8 -> 10
+     * 9 -> 12
+     * 10 -> 4
+     * 11 -> 11
+     * 12 -> 5
      */
     vector<tlp::node> bfs = {nodes[0], nodes[1],  nodes[7], nodes[8],  nodes[9],
                              nodes[2], nodes[3],  nodes[6], nodes[10], nodes[12],
                              nodes[4], nodes[11], nodes[5]};
     CPPUNIT_ASSERT_EQUAL(bfs, iteratorVector(graph->bfs()));
+  }
+
+  void testBFSEdges() {
+    vector<tlp::edge> bfsEdges = {
+        graph->existEdge(nodes[0], nodes[1]),   graph->existEdge(nodes[0], nodes[7]),
+        graph->existEdge(nodes[0], nodes[8]),   graph->existEdge(nodes[0], nodes[9]),
+        graph->existEdge(nodes[1], nodes[2]),   graph->existEdge(nodes[1], nodes[3]),
+        graph->existEdge(nodes[1], nodes[6]),   graph->existEdge(nodes[9], nodes[10]),
+        graph->existEdge(nodes[9], nodes[12]),  graph->existEdge(nodes[3], nodes[4]),
+        graph->existEdge(nodes[10], nodes[11]), graph->existEdge(nodes[4], nodes[5]),
+    };
+    CPPUNIT_ASSERT_EQUAL(bfsEdges, iteratorVector(graph->bfsEdges()));
   }
 
 private:

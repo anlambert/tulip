@@ -125,6 +125,17 @@ TLP_SCOPE void selectMinimumSpanningTree(Graph *graph, BooleanProperty *selectio
 TLP_SCOPE std::vector<node> bfs(const Graph *graph, node root);
 
 /**
+ * @brief Performs a breadth-first search on a graph.
+ * @param graph The graph to traverse with a BFS.
+ * @param root The node from whom to start the BFS. If not provided, the root
+ * node will be assigned to a source node in the graph (node with input degree equals to 0).
+ * If there is no source node in the graph, a random node will be picked.
+ * @return a vector filled with the edges of the graph in the order they have been followed by
+ * the BFS.
+ */
+TLP_SCOPE std::vector<edge> bfsEdges(const Graph *graph, node root);
+
+/**
  * @brief Performs a cumulative breadth-first search on every node of a graph.
  * @param graph The graph to traverse with a BFS.
  * @return a vector filled with with the nodes of the graph in the order they have been visited by
@@ -133,10 +144,16 @@ TLP_SCOPE std::vector<node> bfs(const Graph *graph, node root);
 TLP_SCOPE std::vector<node> bfs(const Graph *graph);
 
 /**
+ * @brief Performs a cumulative breadth-first search on every node of a graph.
+ * @param graph The graph to traverse with a BFS.
+ * @return a vector filled with with the edges of the graph in the order they have been followed by
+ * the BFS.
+ */
+TLP_SCOPE std::vector<edge> bfsEdges(const Graph *graph);
+
+/**
  * @brief Performs a depth-first search on a graph.
  * @param graph The graph to traverse with a DFS.
- * @param nodes a vector to fill with the nodes of the graph in the order they have been visited by
- * the DFS.
  * @param root The node from whom to start the DFS. If not provided, the root
  * node will be assigned to a source node in the graph (node with input degree equals to 0).
  * If there is no source node in the graph, a random node will be picked.
@@ -146,12 +163,31 @@ TLP_SCOPE std::vector<node> bfs(const Graph *graph);
 TLP_SCOPE std::vector<node> dfs(const Graph *graph, node root);
 
 /**
+ * @brief Performs a depth-first search on a graph.
+ * @param graph The graph to traverse with a DFS.
+ * @param root The node from whom to start the DFS. If not provided, the root
+ * node will be assigned to a source node in the graph (node with input degree equals to 0).
+ * If there is no source node in the graph, a random node will be picked.
+ * @return A vector filled with the edges of the graph in the order they have been followed by the
+ * DFS.
+ */
+TLP_SCOPE std::vector<edge> dfsEdges(const Graph *graph, node root);
+
+/**
  * @brief Performs a cumulative depth-first search on every node of a graph.
  * @param graph The graph to traverse with a DFS.
  * @return a vector filled with the nodes of the graph in the order they have been visited by
  * the DFS.
  */
 TLP_SCOPE std::vector<node> dfs(const Graph *graph);
+
+/**
+ * @brief Performs a cumulative depth-first search on every node of a graph.
+ * @param graph The graph to traverse with a DFS.
+ * @return a vector filled with the edges of the graph in the order they have been followed by
+ * the DFS.
+ */
+TLP_SCOPE std::vector<edge> dfsEdges(const Graph *graph);
 
 /*
  * builds a uniform quantification with the NumericProperty associated values
