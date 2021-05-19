@@ -50,7 +50,7 @@ DataSet::DataSet(const DataSet &set) {
 
 DataSet &DataSet::operator=(const DataSet &set) {
   if (this != &set) {
-    data.clear();
+    clear();
     for (const auto &[key, value] : set.data) {
       data[key] = value->clone();
     }
@@ -59,9 +59,7 @@ DataSet &DataSet::operator=(const DataSet &set) {
 }
 
 DataSet::~DataSet() {
-  for (const auto &[key, value] : data) {
-    delete value;
-  }
+  clear();
 }
 
 bool DataSet::exists(const string &str) const {
@@ -328,4 +326,11 @@ string DataSet::toString() const {
     }
   }
   return ss.str();
+}
+
+void DataSet::clear() {
+  for (const auto &[key, value] : data) {
+    delete value;
+  }
+  data.clear();
 }

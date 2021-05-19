@@ -289,6 +289,11 @@ public:
   void remove(const std::string &str);
 
   /**
+   * @brief Removes and destroys all values stored in the dataset.
+   */
+  void clear();
+
+  /**
    * @param str The name of the element to retrieve
    * @return A untyped value for a given element name. nullptr if the element does not exist
    */
