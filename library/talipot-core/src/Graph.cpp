@@ -568,44 +568,9 @@ void tlp::copyToGraph(Graph *outG, const Graph *inG, BooleanProperty *inSel,
   }
 }
 
-// define a class of Iterator to iterate the root graphs
-class RootGraphsIterator : public tlp::Iterator<tlp::Graph *> {
-  std::vector<Graph *> roots;
-  Iterator<Graph *> *rootsIterator;
-
-public:
-  RootGraphsIterator() {
-    // we iterate the observable graph nodes
-    for (auto n : tlp::Observable::nodes()) {
-      Graph *g = nullptr;
-
-      if (tlp::Observable::isAlive(n) &&
-          (g = dynamic_cast<Graph *>(tlp::Observable::getObject(n)))) {
-        // check if g is a root graph
-        if (g->getRoot() == g) {
-          roots.push_back(g);
-        }
-      }
-    }
-
-    rootsIterator = stlIterator(roots);
-  }
-
-  ~RootGraphsIterator() override {
-    delete rootsIterator;
-  }
-
-  Graph *next() override {
-    return rootsIterator->next();
-  }
-
-  bool hasNext() override {
-    return rootsIterator->hasNext();
-  }
-};
-
 Iterator<Graph *> *tlp::getRootGraphs() {
-  return new RootGraphsIterator();
+  return filterIterator(Observable::observableObjects<Graph>(),
+                        [](Graph *g) { return g->getRoot() == g; });
 }
 
 bool Graph::applyAlgorithm(const std::string &algorithm, std::string &errorMessage,
