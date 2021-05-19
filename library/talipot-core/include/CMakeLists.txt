@@ -10,6 +10,7 @@ INSTALL(
         talipot/Color.h
         talipot/ColorProperty.h
         talipot/ColorScale.h
+        talipot/ConcatIterator.h
         talipot/ConnectedTest.h
         talipot/ConversionIterator.h
         talipot/Coord.h
@@ -18,6 +19,7 @@ INSTALL(
         talipot/DrawingTools.h
         talipot/Edge.h
         talipot/ExportModule.h
+        talipot/FilterIterator.h
         talipot/FontAwesome.h
         talipot/GraphAbstract.h
         talipot/GraphDecorator.h
