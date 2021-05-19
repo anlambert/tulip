@@ -13,7 +13,6 @@
 
 #include <talipot/PluginHeaders.h>
 #include <talipot/PlanarConMap.h>
-#include <talipot/Bfs.h>
 #include <talipot/ViewSettings.h>
 
 #include "MixedModel.h"
@@ -173,11 +172,13 @@ bool MixedModel::run() {
     Graph *G;
 
     if (!planar) {
-      BooleanProperty resultatAlgoSelection(currentGraph);
-      Bfs sp(currentGraph, &resultatAlgoSelection);
-      currentGraph->delSubGraph(sp.graph);
       G = currentGraph->addSubGraph();
 
+      BooleanProperty resultatAlgoSelection(currentGraph);
+      resultatAlgoSelection.setAllNodeValue(false);
+      for (auto e : graph->bfsEdges()) {
+        resultatAlgoSelection.setEdgeValue(e, true);
+      }
       for (auto e : graph->edges()) {
         if (resultatAlgoSelection.getEdgeValue(e)) {
           const auto &[src, tgt] = currentGraph->ends(e);

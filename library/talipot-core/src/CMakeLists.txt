@@ -1,6 +1,5 @@
 SET(talipot_LIB_SRCS
     AcyclicTest.cpp
-    Bfs.cpp
     BiconnectedTest.cpp
     BooleanProperty.cpp
     BoundingBox.cpp

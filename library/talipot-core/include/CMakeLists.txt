@@ -3,7 +3,6 @@ INSTALL(
         talipot/AcyclicTest.h
         talipot/Algorithm.h
         talipot/Array.h
-        talipot/Bfs.h
         talipot/BiconnectedTest.h
         talipot/BooleanProperty.h
         talipot/BoundingBox.h
