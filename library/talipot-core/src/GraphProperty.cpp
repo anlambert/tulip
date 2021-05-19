@@ -51,9 +51,6 @@ void GraphProperty::setAllNodeValue(tlp::StoredType<GraphType::RealType>::Return
     getNodeValue(n)->removeListener(this);
   }
 
-  set<node> emptySet;
-  referencedGraph.setAll(emptySet);
-
   if ((!graph || getGraph() == graph) && getNodeDefaultValue() != nullptr) {
     getNodeDefaultValue()->removeListener(this);
   }
@@ -67,26 +64,15 @@ void GraphProperty::setAllNodeValue(tlp::StoredType<GraphType::RealType>::Return
 //==============================
 void GraphProperty::setNodeValue(const node n,
                                  tlp::StoredType<GraphType::RealType>::ReturnedConstValue sg) {
-  // gestion désabonnement
   Graph *oldGraph = getNodeValue(n);
 
   if (oldGraph != nullptr && oldGraph != sg) {
-    // gestion du désabonnement
-    bool notDefault;
-    set<node> &refs = referencedGraph.get(oldGraph->getId(), notDefault);
-
-    if (notDefault) {
-      refs.erase(n);
-
-      if (refs.empty()) {
-        if (oldGraph != getNodeDefaultValue()) {
-          oldGraph->removeListener(this);
-        }
-
-        referencedGraph.set(oldGraph->getId(), set<node>());
+    set<node> &refs = referencedGraph[oldGraph];
+    refs.erase(n);
+    if (refs.empty()) {
+      if (oldGraph != getNodeDefaultValue()) {
+        oldGraph->removeListener(this);
       }
-    } else if (oldGraph != getNodeDefaultValue()) {
-      oldGraph->removeListener(this);
     }
   }
 
@@ -96,20 +82,10 @@ void GraphProperty::setNodeValue(const node n,
     return;
   }
 
-  // Gestion de l'abonnement
   sg->addListener(this);
 
   if (sg != getNodeDefaultValue()) {
-    bool notDefault;
-    set<node> &refs = referencedGraph.get(sg->getId(), notDefault);
-
-    if (notDefault) {
-      refs.insert(n);
-    } else {
-      set<node> newSet;
-      newSet.insert(n);
-      referencedGraph.set(sg->getId(), newSet);
-    }
+    referencedGraph[sg].insert(n);
   }
 }
 //============================================================
@@ -163,35 +139,25 @@ void GraphProperty::treatEvent(const Event &evt) {
 #endif
 
     if (getNodeDefaultValue() == sg) {
-      // we must backup old value
-      MutableContainer<Graph *> backup;
-      backup.setAll(nullptr);
-
+      setNodeDefaultValue(nullptr);
       for (auto n : graph->nodes()) {
-        if (getNodeValue(n) != sg) {
-          backup.set(n.id, getNodeValue(n));
+        if (getNodeValue(n) == sg) {
+          setNodeValue(n, nullptr);
         }
-      }
-
-      setAllNodeValue(nullptr);
-
-      // restore values
-      for (auto n : graph->nodes()) {
-        setNodeValue(n, backup.get(n.id));
       }
     }
 
-    const set<node> &refs = referencedGraph.get(sg->getId());
+    const set<node> &refs = referencedGraph.at(sg);
 
     if (!refs.empty()) {
-      // don't change values if this non longer exists (when undoing)
+      // don't change values if this no longer exists (when undoing)
       if (graph->existProperty(name)) {
         for (auto n : refs) {
           AbstractGraphProperty::setNodeValue(n, nullptr);
         }
       }
 
-      referencedGraph.set(sg->getId(), set<node>());
+      referencedGraph[sg] = set<node>();
     }
   }
 }
