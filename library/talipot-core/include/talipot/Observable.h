@@ -19,6 +19,8 @@
 #include <talipot/config.h>
 #include <talipot/Iterator.h>
 #include <talipot/Node.h>
+#include <talipot/ConversionIterator.h>
+#include <talipot/FilterIterator.h>
 
 namespace tlp {
 class Observable;
@@ -326,6 +328,14 @@ public:
   static tlp::node getNode(const tlp::Observable *obs);
 
   static const std::vector<tlp::node> &nodes();
+
+  template <typename T>
+  static tlp::Iterator<T *> *observableObjects() {
+    return conversionIterator<T *>(
+        filterIterator(nodes(),
+                       [](node n) { return isAlive(n) && dynamic_cast<T *>(getObject(n)); }),
+        [](node n) { return static_cast<T *>(getObject(n)); });
+  }
 
 protected:
   Observable();
