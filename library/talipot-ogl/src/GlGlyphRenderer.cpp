@@ -135,7 +135,7 @@ void GlGlyphRenderer::endRendering() {
     _glyphShader->setUniformVec3Float("pos", glyphData.nodePos);
     _glyphShader->setUniformVec3Float("size", glyphData.nodeSize);
     _glyphShader->setUniformVec3Float("rotVector", Coord(0, 0, 1));
-    _glyphShader->setUniformFloat("rotAngle", glyphData.nodeRot);
+    _glyphShader->setUniformFloat("rotAngle", glyphData.nodeRot * M_PI / 180);
 
     if (glyphData.selected) {
       _selectionBox->setStencil(_inputData->parameters->getSelectedNodesStencil() - 1);
