@@ -89,7 +89,8 @@ static void setViewPropertiesDefaults(Graph *g) {
                     labelBorderWidth = "viewLabelBorderWidth", labelPosition = "viewLabelPosition",
                     label = "viewLabel", layout = "viewLayout", rotation = "viewRotation",
                     srcAnchorSize = "viewSrcAnchorSize", selection = "viewSelection",
-                    texture = "viewTexture", tgtAnchorSize = "viewTgtAnchorSize";
+                    texture = "viewTexture", tgtAnchorSize = "viewTgtAnchorSize",
+                    labelRotation = "viewLabelRotation";
 
   if (!g->existProperty(shapes)) {
     g->getIntegerProperty(shapes)->setAllNodeValue(ViewSettings::defaultShape(NODE));
@@ -169,6 +170,11 @@ static void setViewPropertiesDefaults(Graph *g) {
   if (!g->existProperty(rotation)) {
     g->getDoubleProperty(rotation)->setAllNodeValue(0);
     g->getDoubleProperty(rotation)->setAllEdgeValue(0);
+  }
+
+  if (!g->existProperty(labelRotation)) {
+    g->getDoubleProperty(labelRotation)->setAllNodeValue(0);
+    g->getDoubleProperty(labelRotation)->setAllEdgeValue(0);
   }
 
   if (!g->existProperty(srcAnchorSize)) {

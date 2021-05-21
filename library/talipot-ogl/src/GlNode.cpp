@@ -35,6 +35,7 @@ void GlNode::init(const GlGraphInputData *data) {
   size = data->getElementSize()->getNodeValue(n);
   rot = data->getElementRotation()->getNodeValue(n);
   selected = data->getElementSelected()->getNodeValue(n);
+  labelRot = data->getElementLabelRotation()->getNodeValue(n);
 }
 
 BoundingBox GlNode::getBoundingBox(const GlGraphInputData *data) {
@@ -220,7 +221,7 @@ void GlNode::drawLabel(OcclusionTest *test, const GlGraphInputData *data, float 
   label.instance().setTranslationAfterRotation(centerBB * size);
   label.instance().setSize(Size(size[0] * sizeBB[0], size[1] * sizeBB[1], 0));
   label.instance().setSizeForOutAlign(Size(size[0], size[1], 0));
-  label.instance().rotate(0, 0, rot);
+  label.instance().rotate(0, 0, labelRot);
   label.instance().setAlignment(labelPos);
   label.instance().setScaleToSize(data->parameters->isLabelScaled());
   label.instance().setUseLODOptimisation(true, this->getBoundingBox(data));

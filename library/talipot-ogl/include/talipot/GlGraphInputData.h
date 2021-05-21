@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -67,6 +67,7 @@ public:
     VIEW_TGTANCHORSIZE,    /**< size of target arrow edge extremity */
     VIEW_ANIMATIONFRAME,   /**< animation frame */
     VIEW_ICON,             /**< icon name for the icon glyph*/
+    VIEW_LABELROTATION,    /**< rotation apply on nodes labels */
     NB_PROPS               /** must be the last, give the number of enum props */
   };
 
@@ -256,6 +257,18 @@ public:
    */
   void setElementRotation(DoubleProperty *property) {
     setProperty(VIEW_ROTATION, property);
+  }
+  /**
+   * Return a pointer on the property used to elementLabelRotation
+   */
+  DoubleProperty *getElementLabelRotation() const {
+    return getProperty<DoubleProperty>(VIEW_LABELROTATION);
+  }
+  /**
+   * Set the pointer on the property used to elementLabelRotation
+   */
+  void setElementLabelRotation(DoubleProperty *property) {
+    setProperty(VIEW_LABELROTATION, property);
   }
   /**
    * Return a pointer on the property used to elementSelected

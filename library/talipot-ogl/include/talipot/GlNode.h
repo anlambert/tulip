@@ -110,6 +110,7 @@ protected:
   tlp::Size size;
   float rot;
   bool selected;
+  float labelRot;
 };
 }
 
