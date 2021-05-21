@@ -73,6 +73,7 @@ void PropertiesEditor::setGraph(tlp::Graph *g) {
   registerReservedProperty("viewLabelBorderWidth");
   registerReservedProperty("viewSize");
   registerReservedProperty("viewLabel");
+  registerReservedProperty("viewLabelRotation");
   registerReservedProperty("viewLabelPosition");
   registerReservedProperty("viewShape");
   registerReservedProperty("viewRotation");
