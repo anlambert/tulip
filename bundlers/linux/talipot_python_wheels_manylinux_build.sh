@@ -1,39 +1,21 @@
 #!/bin/bash
 
-# This script is only intended to be run in a pypa/manylinux2010
-# docker image (based on CentOS 6.10)
+# This script is only intended to be run in a pypa/manylinux2014
+# docker image (based on CentOS 7)
 
 TALIPOT_PYTHON_TEST_WHEEL_SUFFIX=$1
 
 yum -y install epel-release ccache
-# compile and install cmake 3.19 to get C++17 support
-yum -y install wget openssl-devel
-wget https://github.com/Kitware/CMake/releases/download/v3.19.2/cmake-3.19.2.tar.gz
-tar -xvzf cmake-3.19.2.tar.gz > /dev/null
-cd cmake-3.19.2
-./bootstrap --enable-ccache
-make -j4
-make -j4 install
-cd ..
-
-# build upstream yajl as CentOS 6 package for it is way outdated
-git clone https://github.com/lloyd/yajl.git
-mkdir yajl_build
-cd yajl_build
-cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr ../yajl
-make -j4 install
-cd ..
 
 # install talipot-core wheel deps
-yum -y install zlib-devel libzstd-devel qhull-devel graphviz-devel
+yum -y install zlib-devel libzstd-devel yajl-devel qhull-devel graphviz-devel
 
 # required to build upstream python cffi from pip
 yum -y install libffi-devel
 
 # ensure python library from based system is present, even if we do
 # not link to it, as cmake will fail to find PythonLibs otherwise
-yum -y install rh-python36
-scl enable rh-python36 bash
+yum -y install python36-devel
 
 # get talipot source dir
 if [ -d /talipot ]
@@ -76,8 +58,6 @@ do
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX=/tmp/talipot_install \
         -DPYTHON_EXECUTABLE=${CPYBIN}/python \
-        -DCMAKE_INCLUDE_PATH=/opt/rh/rh-python36/root/usr/include/ \
-        -DCMAKE_LIBRARY_PATH=/opt/rh/rh-python36/root/usr/lib/ \
         -DTALIPOT_ACTIVATE_PYTHON_WHEEL_TARGET=ON \
         -DTALIPOT_PYTHON_TEST_WHEEL_SUFFIX=${TALIPOT_PYTHON_TEST_WHEEL_SUFFIX} \
         -DTALIPOT_BUILD_DOC=OFF \

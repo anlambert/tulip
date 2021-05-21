@@ -2,10 +2,10 @@ name: manylinux-wheel-build
 on: [push, pull_request]
 jobs:
   manylinux:
-    name: Talipot manylinux Python wheel build on CentOS 6.10
+    name: Talipot manylinux Python wheel build on CentOS 7.9
     runs-on: ubuntu-18.04
     env:
-      DOCKER_IMAGE: quay.io/pypa/manylinux2010_x86_64
+      DOCKER_IMAGE: quay.io/pypa/manylinux2014_x86_64
     steps:
       - name: Checkout Talipot code
         uses: actions/checkout@v2
@@ -18,9 +18,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/ccache
-          key: manylinux2010-ccache-${{ steps.get-current-date.outputs.date }}
+          key: manylinux2014-ccache-${{ steps.get-current-date.outputs.date }}
           restore-keys: |
-            manylinux2010-ccache-
+            manylinux2014-ccache-
       - name: Pull ${{ env.DOCKER_IMAGE }} docker image
         run: sudo docker pull ${DOCKER_IMAGE}
       - name: Create ccache docker volume

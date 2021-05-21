@@ -309,25 +309,9 @@ IF(TALIPOT_ACTIVATE_PYTHON_WHEEL_TARGET)
     ENDIF(NOT EXISTS ${PYTHON_HOME_PATH}/twine)
 
     # When building Python binary wheels on Linux, produced binaries have to be
-    # patched in order for the talipot modules to be successfully imported and
-    # loaded on every computer. The 'auditwheel' tool (see
-    # https://github.com/pypa/auditwheel) has been developed in order to ease
-    # that patching task.
-
-    # We use a patched version of the auditwheel tool as the upstream one does
-    # not repair Talipot-Python wheels correctly
-    EXECUTE_PROCESS(
-      COMMAND bash -c "echo $(dirname $(readlink /usr/local/bin/auditwheel))"
-      OUTPUT_VARIABLE PYBIN
-      OUTPUT_STRIP_TRAILING_WHITESPACE)
-
-    EXECUTE_PROCESS(
-      COMMAND
-        bash -c "${PYBIN}/pip uninstall -y auditwheel
-        cd /tmp
-        git clone -b wheel_abi_fixes https://github.com/anlambert/auditwheel.git
-        ${PYBIN}/pip install ./auditwheel
-        rm -rf ./auditwheel")
+    # patched in order for the talipot module to be successfully imported and
+    # loaded on every computer. The auditwheel tool has been developed in order
+    # to ease that patching task (see https://github.com/pypa/auditwheel).
 
     ADD_CUSTOM_COMMAND(
       TARGET wheel
