@@ -318,7 +318,7 @@ IF(TALIPOT_ACTIVATE_PYTHON_WHEEL_TARGET)
       POST_BUILD
       COMMAND
         bash -c
-        "auditwheel repair -L native -w ./dist ./dist/$(ls -t ./dist/ | head -1)"
+        "auditwheel repair -L /native -w ./dist ./dist/$(ls -t ./dist/ | head -1)"
       COMMAND bash -c "rm ./dist/$(ls -t ./dist/ | head -2 | tail -1)"
       WORKING_DIRECTORY ${TALIPOT_PYTHON_ROOT_FOLDER}
       COMMENT "Repairing linux talipot wheel"
@@ -330,7 +330,7 @@ IF(TALIPOT_ACTIVATE_PYTHON_WHEEL_TARGET)
         POST_BUILD
         COMMAND
           bash -c
-          "auditwheel repair -L native -w ./dist ./dist/$(ls -t ./dist/ | head -1)"
+          "auditwheel repair -L /native -w ./dist ./dist/$(ls -t ./dist/ | head -1)"
         COMMAND bash -c "rm ./dist/$(ls -t ./dist/ | head -2 | tail -1)"
         WORKING_DIRECTORY ${TALIPOT_PYTHON_ROOT_FOLDER}
         COMMENT "Repairing linux talipot test wheel"

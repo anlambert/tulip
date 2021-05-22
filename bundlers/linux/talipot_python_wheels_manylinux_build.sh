@@ -90,10 +90,12 @@ print('Talipot %s successfully imported in Python %s' %
   popd
 done
 
-if [ -n "$TALIPOT_PYTHON_TEST_WHEEL_SUFFIX" ]
-then
-  if [ "$3" == "refs/heads/master" ]
-  then
-    make test-wheel-upload
-  fi
-fi
+make test-wheel-upload
+
+# if [ -n "$TALIPOT_PYTHON_TEST_WHEEL_SUFFIX" ]
+# then
+#   if [ "$3" == "refs/heads/master" ]
+#   then
+#     make test-wheel-upload
+#   fi
+# fi
