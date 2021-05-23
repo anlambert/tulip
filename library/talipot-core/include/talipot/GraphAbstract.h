@@ -107,10 +107,10 @@ public:
   void setName(const std::string &name) override;
   std::string getName() const override;
 
-  Iterator<node> *bfs(const node root = node()) const override;
-  Iterator<node> *dfs(const node root = node()) const override;
-  Iterator<edge> *bfsEdges(const node root = node()) const override;
-  Iterator<edge> *dfsEdges(const node root = node()) const override;
+  Iterator<node> *bfs(const node root = node(), bool directed = false) const override;
+  Iterator<node> *dfs(const node root = node(), bool directed = false) const override;
+  Iterator<edge> *bfsEdges(const node root = node(), bool directed = false) const override;
+  Iterator<edge> *dfsEdges(const node root = node(), bool directed = false) const override;
 
 protected:
   DataSet &getNonConstAttributes() override {

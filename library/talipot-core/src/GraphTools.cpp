@@ -496,7 +496,7 @@ void selectMinimumSpanningTree(Graph *graph, BooleanProperty *selection,
 //======================================================================
 
 static void bfs(const Graph *graph, node root, NodeVectorProperty<bool> &visited,
-                vector<node> &nodes, vector<edge> &edges) {
+                vector<node> &nodes, vector<edge> &edges, bool directed = false) {
   if (visited[root]) {
     return;
   }
@@ -513,7 +513,7 @@ static void bfs(const Graph *graph, node root, NodeVectorProperty<bool> &visited
     queue.pop_front();
     nodes.push_back(current);
 
-    for (auto e : graph->incidence(current)) {
+    for (auto e : getIncidentEdgesIterator(graph, current, directed ? DIRECTED : UNDIRECTED)) {
       auto neigh = graph->opposite(e, current);
       if (!visited[neigh]) {
         visited[neigh] = true;
@@ -524,7 +524,8 @@ static void bfs(const Graph *graph, node root, NodeVectorProperty<bool> &visited
   }
 }
 
-static inline pair<vector<node>, vector<edge>> performBfs(const Graph *graph, node root) {
+static inline pair<vector<node>, vector<edge>> performBfs(const Graph *graph, node root,
+                                                          bool directed = false) {
   vector<node> nodes;
   vector<edge> edges;
   if (!graph->isEmpty()) {
@@ -539,19 +540,19 @@ static inline pair<vector<node>, vector<edge>> performBfs(const Graph *graph, no
     assert(graph->isElement(root));
     NodeVectorProperty<bool> visited(graph);
     visited.setAll(false);
-    bfs(graph, root, visited, nodes, edges);
+    bfs(graph, root, visited, nodes, edges, directed);
   }
   return {nodes, edges};
 }
 
 // bfs from a root node
-vector<node> bfs(const Graph *graph, node root) {
-  auto [nodes, edges] = performBfs(graph, root);
+vector<node> bfs(const Graph *graph, node root, bool directed) {
+  auto [nodes, edges] = performBfs(graph, root, directed);
   return nodes;
 }
 
-vector<edge> bfsEdges(const Graph *graph, node root) {
-  auto [nodes, edges] = performBfs(graph, root);
+vector<edge> bfsEdges(const Graph *graph, node root, bool directed) {
+  auto [nodes, edges] = performBfs(graph, root, directed);
   return edges;
 }
 
@@ -580,7 +581,7 @@ vector<edge> bfsEdges(const Graph *graph) {
 //======================================================================
 
 static void dfs(const Graph *graph, node root, NodeVectorProperty<bool> &visited,
-                vector<node> &nodes, vector<edge> &edges) {
+                vector<node> &nodes, vector<edge> &edges, bool directed = false) {
   if (visited[root]) {
     return;
   }
@@ -600,7 +601,9 @@ static void dfs(const Graph *graph, node root, NodeVectorProperty<bool> &visited
       edges.push_back(edge);
     }
 
-    for (auto e : reversed(graph->incidence(currentNode))) {
+    auto incidentEdges = iteratorVector(
+        getIncidentEdgesIterator(graph, currentNode, directed ? DIRECTED : UNDIRECTED));
+    for (auto e : reversed(incidentEdges)) {
       node neigh = graph->opposite(e, currentNode);
       if (!visited[neigh]) {
         visited[neigh] = true;
@@ -610,7 +613,8 @@ static void dfs(const Graph *graph, node root, NodeVectorProperty<bool> &visited
   }
 }
 
-static inline pair<vector<node>, vector<edge>> performDfs(const Graph *graph, node root) {
+static inline pair<vector<node>, vector<edge>> performDfs(const Graph *graph, node root,
+                                                          bool directed = false) {
   vector<node> nodes;
   vector<edge> edges;
   if (!graph->isEmpty()) {
@@ -625,19 +629,19 @@ static inline pair<vector<node>, vector<edge>> performDfs(const Graph *graph, no
     assert(graph->isElement(root));
     NodeVectorProperty<bool> visited(graph);
     visited.setAll(false);
-    dfs(graph, root, visited, nodes, edges);
+    dfs(graph, root, visited, nodes, edges, directed);
   }
   return {nodes, edges};
 }
 
 // dfs from a root node
-std::vector<node> dfs(const Graph *graph, node root) {
-  auto [nodes, edges] = performDfs(graph, root);
+std::vector<node> dfs(const Graph *graph, node root, bool directed) {
+  auto [nodes, edges] = performDfs(graph, root, directed);
   return nodes;
 }
 
-std::vector<edge> dfsEdges(const Graph *graph, node root) {
-  auto [nodes, edges] = performDfs(graph, root);
+std::vector<edge> dfsEdges(const Graph *graph, node root, bool directed) {
+  auto [nodes, edges] = performDfs(graph, root, directed);
   return edges;
 }
 

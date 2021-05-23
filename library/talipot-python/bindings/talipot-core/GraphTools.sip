@@ -45,9 +45,9 @@ containing the edges of the graph in the order they have been followed.
 
  //========================================================================================
 
-std::vector<tlp::node> bfs(tlp::Graph *graph, tlp::node root);
+std::vector<tlp::node> bfs(tlp::Graph *graph, tlp::node root, bool directed = false);
 %Docstring
-tlp.bfs(graph, root)
+tlp.bfs(graph, root[, directed])
 
 Performs a breadth-first search on a graph and returns a list
 containing the nodes of the graph in the order they have been visited.
@@ -56,13 +56,15 @@ containing the nodes of the graph in the order they have been visited.
 :type graph: :class:`tlp.Graph`
 :param root: The node from whom to start the BFS.
 :type root: :class:`tlp.node`
+:param directed: If :const:`True` only follow output edges, follow all edges otherwise
+:type directed: bool
 :rtype: list of :class:`tlp.node`
 :throws: an exception if the provided root node does not belong to the graph.
 %End
 
 %MethodCode
   if (a0->isElement(*a1)) {
-    sipRes = new std::vector<tlp::node>(tlp::bfs(a0, *a1));
+    sipRes = new std::vector<tlp::node>(tlp::bfs(a0, *a1, a2));
   } else {
     sipIsErr = throwInvalidNodeException(a0, *a1);
   }
@@ -70,9 +72,9 @@ containing the nodes of the graph in the order they have been visited.
 
 //========================================================================================
 
-std::vector<tlp::edge> bfsEdges(tlp::Graph *graph, tlp::node root);
+std::vector<tlp::edge> bfsEdges(tlp::Graph *graph, tlp::node root, bool directed = false);
 %Docstring
-tlp.bfsEdges(graph, root)
+tlp.bfsEdges(graph, root[, directed])
 
 Performs a breadth-first search on a graph and returns a list
 containing the edges of the graph in the order they have been followed.
@@ -81,13 +83,15 @@ containing the edges of the graph in the order they have been followed.
 :type graph: :class:`tlp.Graph`
 :param root: The node from whom to start the BFS.
 :type root: :class:`tlp.node`
+:param directed: If :const:`True` only follow output edges, follow all edges otherwise
+:type directed: bool
 :rtype: list of :class:`tlp.edge`
 :throws: an exception if the provided root node does not belong to the graph.
 %End
 
 %MethodCode
   if (a0->isElement(*a1)) {
-    sipRes = new std::vector<tlp::edge>(tlp::bfsEdges(a0, *a1));
+    sipRes = new std::vector<tlp::edge>(tlp::bfsEdges(a0, *a1, a2));
   } else {
     sipIsErr = throwInvalidNodeException(a0, *a1);
   }
@@ -123,9 +127,9 @@ containing the edges of the graph in the order they have been followed.
 
 //========================================================================================
 
-  std::vector<tlp::node> dfs(tlp::Graph *graph, tlp::node root);
+  std::vector<tlp::node> dfs(tlp::Graph *graph, tlp::node root, bool directed = false);
 %Docstring
-tlp.dfs(graph, root)
+tlp.dfs(graph, root[, directed])
 
 Performs a depth-first search on a graph and returns a list
 containing the nodes of the graph in the order they have been visited.
@@ -134,13 +138,15 @@ containing the nodes of the graph in the order they have been visited.
 :type graph: :class:`tlp.Graph`
 :param root: The node from whom to start the DFS.
 :type root: :class:`tlp.node`
+:param directed: If :const:`True` only follow output edges, follow all edges otherwise
+:type directed: bool
 :rtype: list of :class:`tlp.node`
 :throws: an exception if the provided root node does not belong to the graph.
 %End
 
 %MethodCode
   if (a0->isElement(*a1)) {
-    sipRes = new std::vector<tlp::node>(tlp::dfs(a0, *a1));
+    sipRes = new std::vector<tlp::node>(tlp::dfs(a0, *a1, a2));
   } else {
     sipIsErr = throwInvalidNodeException(a0, *a1);
   }
@@ -148,9 +154,9 @@ containing the nodes of the graph in the order they have been visited.
 
 //========================================================================================
 
-  std::vector<tlp::edge> dfsEdges(tlp::Graph *graph, tlp::node root);
+  std::vector<tlp::edge> dfsEdges(tlp::Graph *graph, tlp::node root, bool directed = false);
 %Docstring
-tlp.dfsEdges(graph, root)
+tlp.dfsEdges(graph, root[, directed])
 
 Performs a depth-first search on a graph and returns a list
 containing the edges of the graph in the order they have been followed.
@@ -159,13 +165,15 @@ containing the edges of the graph in the order they have been followed.
 :type graph: :class:`tlp.Graph`
 :param root: The node from whom to start the DFS.
 :type root: :class:`tlp.node`
+:param directed: If :const:`True` only follow output edges, follow all edges otherwise
+:type directed: bool
 :rtype: list of :class:`tlp.edge`
 :throws: an exception if the provided root node does not belong to the graph.
 %End
 
 %MethodCode
   if (a0->isElement(*a1)) {
-    sipRes = new std::vector<tlp::edge>(tlp::dfsEdges(a0, *a1));
+    sipRes = new std::vector<tlp::edge>(tlp::dfsEdges(a0, *a1, a2));
   } else {
     sipIsErr = throwInvalidNodeException(a0, *a1);
   }

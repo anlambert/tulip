@@ -431,20 +431,20 @@ Iterator<node> *GraphDecorator::getInOutNodes(const node n) const {
   return graph_component->getInOutNodes(n);
 }
 //============================================================
-Iterator<node> *GraphDecorator::bfs(const node root) const {
-  return graph_component->bfs(root);
+Iterator<node> *GraphDecorator::bfs(const node root, bool directed) const {
+  return graph_component->bfs(root, directed);
 }
 //============================================================
-Iterator<node> *GraphDecorator::dfs(const node root) const {
-  return graph_component->dfs(root);
+Iterator<node> *GraphDecorator::dfs(const node root, bool directed) const {
+  return graph_component->dfs(root, directed);
 }
 //============================================================
-Iterator<edge> *GraphDecorator::bfsEdges(const node root) const {
-  return graph_component->bfsEdges(root);
+Iterator<edge> *GraphDecorator::bfsEdges(const node root, bool directed) const {
+  return graph_component->bfsEdges(root, directed);
 }
 //============================================================
-Iterator<edge> *GraphDecorator::dfsEdges(const node root) const {
-  return graph_component->dfsEdges(root);
+Iterator<edge> *GraphDecorator::dfsEdges(const node root, bool directed) const {
+  return graph_component->dfsEdges(root, directed);
 }
 //============================================================
 const std::vector<edge> &GraphDecorator::edges() const {

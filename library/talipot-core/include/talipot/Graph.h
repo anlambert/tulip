@@ -941,36 +941,40 @@ public:
    * @param root The node from whom to start the BFS. If not provided, the root
    * node will be assigned to a source node in the graph (node with input degree equals to 0).
    * If there is no source node in the graph, a random node will be picked.
+   * @param directed if true only follow output edges, follow all edges otherwise
    * @return A stable iterator over the graph nodes in the BFS order.
    */
-  virtual Iterator<node> *bfs(const node root = node()) const = 0;
+  virtual Iterator<node> *bfs(const node root = node(), bool directed = false) const = 0;
 
   /**
    * @brief Gets an iterator performing a breadth-first search on the graph.
    * @param root The node from whom to start the BFS. If not provided, the root
    * node will be assigned to a source node in the graph (node with input degree equals to 0).
    * If there is no source node in the graph, a random node will be picked.
+   * @param directed if true only follow output edges, follow all edges otherwise
    * @return A stable iterator over the graph edges in the BFS order.
    */
-  virtual Iterator<edge> *bfsEdges(const node root = node()) const = 0;
+  virtual Iterator<edge> *bfsEdges(const node root = node(), bool directed = false) const = 0;
 
   /**
    * @brief Gets an iterator performing a depth-first search on the graph.
    * @param root The node from whom to start the DFS. If not provided, the root
    * node will be assigned to a source node in the graph (node with input degree equals to 0).
    * If there is no source node in the graph, a random node will be picked.
+   * @param directed if true only follow output edges, follow all edges otherwise
    * @return A stable iterator over the graph nodes in the DFS order.
    */
-  virtual Iterator<node> *dfs(const node root = node()) const = 0;
+  virtual Iterator<node> *dfs(const node root = node(), bool directed = false) const = 0;
 
   /**
    * @brief Gets an iterator performing a depth-first search on the graph.
    * @param root The node from whom to start the DFS. If not provided, the root
    * node will be assigned to a source node in the graph (node with input degree equals to 0).
    * If there is no source node in the graph, a random node will be picked.
+   * @param directed if true only follow output edges, follow all edges otherwise
    * @return A stable iterator over the graph edges in the DFS order.
    */
-  virtual Iterator<edge> *dfsEdges(const node root = node()) const = 0;
+  virtual Iterator<edge> *dfsEdges(const node root = node(), bool directed = false) const = 0;
 
   /**
    * @brief Gets the underlying graph of a meta node.

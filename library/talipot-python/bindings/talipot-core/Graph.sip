@@ -1614,15 +1614,17 @@ Returns an iterator on the neighbours of a node.
 
 //===========================================================================================
 
-  tlp::Iterator<tlp::node>* bfs(const tlp::node root = tlp::node()) const /TransferBack, TypeHint="Iterator[tlp.node]"/;
+  tlp::Iterator<tlp::node>* bfs(const tlp::node root = tlp::node(), bool directed = false) const /TransferBack, TypeHint="Iterator[tlp.node]"/;
 %Docstring
-tlp.Graph.bfs(root=tlp.node())
+tlp.Graph.bfs([root, directed])
 
 Returns an iterator performing a breadth-first search on the graph.
 
 :param root: The node from whom to start the BFS. If not provided, the root node
   will be assigned to a source node in the graph (node with input degree equals to 0).
   If there is no source node in the graph, a random node will be picked.
+:param directed: If :const:`True` only follow output edges, follow all edges otherwise
+:type directed: bool
 :type root: :class:`tlp.node`
 :rtype: a Talipot iterator on :class:`tlp.node` objects in the BFS order.
 :throws: an exception if the provided root node does not belong to the graph.
@@ -1631,7 +1633,7 @@ Returns an iterator performing a breadth-first search on the graph.
 %MethodCode
   if (!a0->isValid() || sipCpp->isElement(*a0)) {
     // tlp::Graph::bfs returns a StableIterator
-    sipRes = sipCpp->bfs(*a0);
+    sipRes = sipCpp->bfs(*a0, a1);
   } else {
     sipIsErr = throwInvalidNodeException(sipCpp, *a0);
   }
@@ -1639,15 +1641,17 @@ Returns an iterator performing a breadth-first search on the graph.
 
 //===========================================================================================
 
-  tlp::Iterator<tlp::edge>* bfsEdges(const tlp::node root = tlp::node()) const /TransferBack, TypeHint="Iterator[tlp.node]"/;
+  tlp::Iterator<tlp::edge>* bfsEdges(const tlp::node root = tlp::node(), bool directed = false) const /TransferBack, TypeHint="Iterator[tlp.node]"/;
 %Docstring
-tlp.Graph.bfsEdges(root=tlp.node())
+tlp.Graph.bfsEdges([root, directed])
 
 Returns an iterator performing a breadth-first search on the graph.
 
 :param root: The node from whom to start the BFS. If not provided, the root node
   will be assigned to a source node in the graph (node with input degree equals to 0).
   If there is no source node in the graph, a random node will be picked.
+:param directed: If :const:`True` only follow output edges, follow all edges otherwise
+:type directed: bool
 :type root: :class:`tlp.node`
 :rtype: a Talipot iterator on :class:`tlp.edge` objects in the BFS order.
 :throws: an exception if the provided root node does not belong to the graph.
@@ -1656,7 +1660,7 @@ Returns an iterator performing a breadth-first search on the graph.
 %MethodCode
   if (!a0->isValid() || sipCpp->isElement(*a0)) {
     // tlp::Graph::bfsEdges returns a StableIterator
-    sipRes = sipCpp->bfsEdges(*a0);
+    sipRes = sipCpp->bfsEdges(*a0, a1);
   } else {
     sipIsErr = throwInvalidNodeException(sipCpp, *a0);
   }
@@ -1664,15 +1668,17 @@ Returns an iterator performing a breadth-first search on the graph.
 
 //===========================================================================================
 
-  tlp::Iterator<tlp::node>* dfs(const tlp::node root = tlp::node()) const /TransferBack, TypeHint="Iterator[tlp.node]"/;
+  tlp::Iterator<tlp::node>* dfs(const tlp::node root = tlp::node(), bool directed = false) const /TransferBack, TypeHint="Iterator[tlp.node]"/;
 %Docstring
-tlp.Graph.dfs(root=tlp.node())
+tlp.Graph.dfs([root, directed])
 
 Returns an iterator performing a depth-first search on the graph.
 
 :param root: The node from whom to start the DFS. If not provided, the root node
   will be assigned to a source node in the graph (node with input degree equals to 0).
   If there is no source node in the graph, a random node will be picked.
+:param directed: If :const:`True` only follow output edges, follow all edges otherwise
+:type directed: bool
 :type root: :class:`tlp.node`
 :rtype: a Talipot iterator on :class:`tlp.node` objects in the DFS order.
 :throws: an exception if the provided root node does not belong to the graph.
@@ -1681,7 +1687,7 @@ Returns an iterator performing a depth-first search on the graph.
 %MethodCode
   if (!a0->isValid() || sipCpp->isElement(*a0)) {
     // tlp::Graph::dfs returns a StableIterator
-    sipRes = sipCpp->dfs(*a0);
+    sipRes = sipCpp->dfs(*a0, a1);
   } else {
     sipIsErr = throwInvalidNodeException(sipCpp, *a0);
   }
@@ -1689,15 +1695,17 @@ Returns an iterator performing a depth-first search on the graph.
 
 //===========================================================================================
 
-  tlp::Iterator<tlp::edge>* dfsEdges(const tlp::node root = tlp::node()) const /TransferBack, TypeHint="Iterator[tlp.node]"/;
+  tlp::Iterator<tlp::edge>* dfsEdges(const tlp::node root = tlp::node(), bool directed = false) const /TransferBack, TypeHint="Iterator[tlp.node]"/;
 %Docstring
-tlp.Graph.dfsEdges(root=tlp.node())
+tlp.Graph.dfsEdges([root, directed])
 
 Returns an iterator performing a depth-first search on the graph.
 
 :param root: The node from whom to start the DFS. If not provided, the root node
   will be assigned to a source node in the graph (node with input degree equals to 0).
   If there is no source node in the graph, a random node will be picked.
+:param directed: If :const:`True` only follow output edges, follow all edges otherwise
+:type directed: bool
 :type root: :class:`tlp.node`
 :rtype: a Talipot iterator on :class:`tlp.edge` objects in the DFS order.
 :throws: an exception if the provided root node does not belong to the graph.
@@ -1706,7 +1714,7 @@ Returns an iterator performing a depth-first search on the graph.
 %MethodCode
   if (!a0->isValid() || sipCpp->isElement(*a0)) {
     // tlp::Graph::dfsEdges returns a StableIterator
-    sipRes = sipCpp->dfsEdges(*a0);
+    sipRes = sipCpp->dfsEdges(*a0, a1);
   } else {
     sipIsErr = throwInvalidNodeException(sipCpp, *a0);
   }
