@@ -95,7 +95,7 @@ bool TLPBExport::exportGraph(std::ostream &os) {
                  MAX_EDGES_TO_WRITE * sizeof(vEdges[0]));
         nbWrittenEdges += edgesToWrite;
 
-        if (pluginProgress->progress(nbWrittenEdges, header.numNodes) != TLP_CONTINUE) {
+        if (pluginProgress->progress(nbWrittenEdges, header.numEdges) != TLP_CONTINUE) {
           return pluginProgress->state() != TLP_CANCEL;
         }
 
