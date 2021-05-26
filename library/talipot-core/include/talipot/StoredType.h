@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -24,9 +24,9 @@ struct StoredType {
   // the type of the stored value
   typedef TYPE Value;
   // the type of the returned value
-  typedef TYPE ReturnedValue;
+  typedef TYPE Reference;
   // the type of a returned const value
-  typedef TYPE ReturnedConstValue;
+  typedef TYPE ConstReference;
   // indicates if a pointer to the value is stored
   enum { isPointer = 0 };
   // simply get
@@ -49,47 +49,17 @@ struct StoredType {
   }
 };
 
-#define DECL_STORED_PTR(T)                          \
-  template <>                                       \
-  struct StoredType<T> {                            \
-    typedef T Value;                                \
-    typedef T ReturnedValue;                        \
-    typedef const T ReturnedConstValue;             \
-                                                    \
-    enum { isPointer = 1 };                         \
-                                                    \
-    static T get(T val) {                           \
-      return val;                                   \
-    }                                               \
-                                                    \
-    static bool equal(const T val1, const T val2) { \
-      return val2 == val1;                          \
-    }                                               \
-                                                    \
-    static T clone(T val) {                         \
-      return val;                                   \
-    }                                               \
-                                                    \
-    static void destroy(T val) {                    \
-      delete val;                                   \
-    }                                               \
-    static T defaultValue() {                       \
-      return nullptr;                               \
-    }                                               \
-  }
-
 // non basic types are returned by reference
 // and stored by pointer
 // This last point enables a better management of the default value
 // which can simply be flagged in storing a null pointer
 // the macro below must be used to enable thies type of management
-#ifdef TLP_NO_CONST_STORED_TYPE
 #define DECL_STORED_STRUCT(T)                      \
   template <>                                      \
   struct StoredType<T> {                           \
     typedef T *Value;                              \
-    typedef T &ReturnedValue;                      \
-    typedef T ReturnedConstValue;                  \
+    typedef T &Reference;                          \
+    typedef const T &ConstReference;               \
                                                    \
     enum { isPointer = 1 };                        \
                                                    \
@@ -116,39 +86,10 @@ struct StoredType {
       return new T();                              \
     }                                              \
   };
-#else
-#define DECL_STORED_STRUCT(T)                      \
-  template <>                                      \
-  struct StoredType<T> {                           \
-    typedef T *Value;                              \
-    typedef T &ReturnedValue;                      \
-    typedef const T &ReturnedConstValue;           \
-                                                   \
-    enum { isPointer = 1 };                        \
-                                                   \
-    static T &get(const Value &val) {              \
-      return *val;                                 \
-    }                                              \
-                                                   \
-    static bool equal(Value val1, const T &val2) { \
-      return val2 == *val1;                        \
-    }                                              \
-                                                   \
-    static bool equal(const T &val2, Value val1) { \
-      return val2 == *val1;                        \
-    }                                              \
-                                                   \
-    static Value clone(const T &val) {             \
-      return new T(val);                           \
-    }                                              \
-                                                   \
-    static void destroy(Value val) {               \
-      delete val;                                  \
-    }                                              \
-    static Value defaultValue() {                  \
-      return new T();                              \
-    }                                              \
-  };
-#endif
 }
+
+#define TYPE_REFERENCE(TYPE) typename tlp::StoredType<typename TYPE::RealType>::Reference
+
+#define TYPE_CONST_REFERENCE(TYPE) typename tlp::StoredType<typename TYPE::RealType>::ConstReference
+
 #endif // TALIPOT_STORED_TYPE_H

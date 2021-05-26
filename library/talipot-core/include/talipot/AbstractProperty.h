@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -70,10 +70,10 @@ public:
    * If there is no value, it returns the default node value.
    *
    * @param n The node for which we want to get the value of the property.
-   * @return :StoredType< NodeType::RealType >::ReturnedConstValue The value of the property for
+   * @return :StoredType< NodeType::RealType >::ConstReference The value of the property for
    *this node.
    **/
-  typename tlp::StoredType<typename NodeType::RealType>::ReturnedConstValue
+  TYPE_CONST_REFERENCE(NodeType)
   getNodeValue(const node n) const;
 
   /**
@@ -81,10 +81,10 @@ public:
    * If there is no value, it returns the default edge value.
    *
    * @param e The edge for which we want to get the value of the property.
-   * @return :StoredType< EdgeType::RealType >::ReturnedConstValue The value of the property for
+   * @return :StoredType< EdgeType::RealType >::ConstReference The value of the property for
    *this edge.
    **/
-  typename tlp::StoredType<typename EdgeType::RealType>::ReturnedConstValue
+  TYPE_CONST_REFERENCE(EdgeType)
   getEdgeValue(const edge e) const;
 
   /**
@@ -92,18 +92,16 @@ public:
    * whose associated value is equal to val.
    * If g is nullptr, the graph given when creating the property is considered.
    */
-  virtual tlp::Iterator<node> *
-  getNodesEqualTo(typename tlp::StoredType<typename NodeType::RealType>::ReturnedConstValue v,
-                  const Graph *g = nullptr) const;
+  virtual tlp::Iterator<node> *getNodesEqualTo(TYPE_CONST_REFERENCE(NodeType) v,
+                                               const Graph *g = nullptr) const;
 
   /**
    * Returns an iterator through all edges belonging to g
    * whose associated value is equal to val.
    * If g is nullptr, the graph given when creating the property is considered.
    */
-  virtual tlp::Iterator<edge> *
-  getEdgesEqualTo(typename tlp::StoredType<typename EdgeType::RealType>::ReturnedConstValue v,
-                  const Graph *g = nullptr) const;
+  virtual tlp::Iterator<edge> *getEdgesEqualTo(TYPE_CONST_REFERENCE(EdgeType) v,
+                                               const Graph *g = nullptr) const;
 
   /**
    * @brief Sets the value of a node and notify the observers of a modification.
@@ -111,9 +109,7 @@ public:
    * @param n The node to set the value of.
    * @param v The value to affect for this node.
    **/
-  virtual void
-  setNodeValue(const node n,
-               typename tlp::StoredType<typename NodeType::RealType>::ReturnedConstValue v);
+  virtual void setNodeValue(const node n, TYPE_CONST_REFERENCE(NodeType) v);
 
   /**
    * @brief Set the value of an edge and notify the observers of a modification.
@@ -121,9 +117,7 @@ public:
    * @param e The edge to set the value of.
    * @param v The value to affect for this edge.
    **/
-  virtual void
-  setEdgeValue(const edge e,
-               typename tlp::StoredType<typename EdgeType::RealType>::ReturnedConstValue v);
+  virtual void setEdgeValue(const edge e, TYPE_CONST_REFERENCE(EdgeType) v);
 
   /**
    * @brief Sets the value of all nodes and notify the observers.
@@ -141,9 +135,7 @@ public:
    * to that property, no node value will be modified in it.
    *
    */
-  virtual void
-  setAllNodeValue(typename tlp::StoredType<typename NodeType::RealType>::ReturnedConstValue v,
-                  const Graph *graph = nullptr);
+  virtual void setAllNodeValue(TYPE_CONST_REFERENCE(NodeType) v, const Graph *graph = nullptr);
 
   /**
    * @brief Sets the value assigned as the default one to the future added nodes.
@@ -153,8 +145,7 @@ public:
    * @return Whether the given string was a correct representation for this property's type. If not,
    * the default value is not set.
    */
-  virtual void
-  setNodeDefaultValue(typename tlp::StoredType<typename NodeType::RealType>::ReturnedConstValue v);
+  virtual void setNodeDefaultValue(TYPE_CONST_REFERENCE(NodeType) v);
 
   /**
    * @brief Sets the value assigned as the default one to the future added edges.
@@ -164,8 +155,7 @@ public:
    * @return Whether the given string was a correct representation for this property's type. If not,
    * the default value is not set.
    */
-  virtual void
-  setEdgeDefaultValue(typename tlp::StoredType<typename EdgeType::RealType>::ReturnedConstValue v);
+  virtual void setEdgeDefaultValue(TYPE_CONST_REFERENCE(EdgeType) v);
 
   /**
    * @brief Sets the value of all edges and notify the observers.
@@ -183,9 +173,7 @@ public:
    * to that property, no edge value will be modified in it.
    *
    */
-  virtual void
-  setAllEdgeValue(typename tlp::StoredType<typename EdgeType::RealType>::ReturnedConstValue v,
-                  const Graph *graph = nullptr);
+  virtual void setAllEdgeValue(TYPE_CONST_REFERENCE(EdgeType) v, const Graph *graph = nullptr);
 
   //=================================================================================
 
@@ -334,8 +322,7 @@ public:
    * @param v The value to set.
    *
    **/
-  void setNodeEltValue(const node n, unsigned int i,
-                       typename tlp::StoredType<typename EltType::RealType>::ReturnedConstValue v);
+  void setNodeEltValue(const node n, unsigned int i, TYPE_CONST_REFERENCE(EltType) v);
   /**
    * @brief Gets the value associated to node n, at index i.
    *
@@ -343,7 +330,7 @@ public:
    * @param i The index at which to set the value.
    * @return const EltType& The value at index i in the vector for node n.
    **/
-  typename tlp::StoredType<typename EltType::RealType>::ReturnedConstValue
+  TYPE_CONST_REFERENCE(EltType)
   getNodeEltValue(const node n, unsigned int i) const;
   /**
    * @brief Appends a new value at the end of the vector associated to node n, and notify the
@@ -353,9 +340,7 @@ public:
    * @param v The value to append at the end of the vector.
    *
    **/
-  void
-  pushBackNodeEltValue(const node n,
-                       typename tlp::StoredType<typename EltType::RealType>::ReturnedConstValue v);
+  void pushBackNodeEltValue(const node n, TYPE_CONST_REFERENCE(EltType) v);
   /**
    * @brief Removes the value at the end of the vector associated to node n, and notify the
    *observers of a modification.
@@ -383,8 +368,7 @@ public:
    * @param v The value to set.
    *
    **/
-  void setEdgeEltValue(const edge e, unsigned int i,
-                       typename tlp::StoredType<typename EltType::RealType>::ReturnedConstValue v);
+  void setEdgeEltValue(const edge e, unsigned int i, TYPE_CONST_REFERENCE(EltType) v);
   /**
    * @brief Gets the value associated to edge e, at index i.
    *
@@ -392,7 +376,7 @@ public:
    * @param i The index at which to set the value.
    * @return const EltType& The value at index i in the vector for node n.
    **/
-  typename tlp::StoredType<typename EltType::RealType>::ReturnedConstValue
+  TYPE_CONST_REFERENCE(EltType)
   getEdgeEltValue(const edge n, unsigned int i) const;
   /**
    * @brief Appends a new value at the end of the vector associated to edge e, and notify the
@@ -402,9 +386,7 @@ public:
    * @param v The value to append at the end of the vector.
    *
    **/
-  void
-  pushBackEdgeEltValue(const edge e,
-                       typename tlp::StoredType<typename EltType::RealType>::ReturnedConstValue v);
+  void pushBackEdgeEltValue(const edge e, TYPE_CONST_REFERENCE(EltType) v);
   /**
    * @brief Removes the value at the end of the vector associated to edge e, and notify the
    *observers of a modification.

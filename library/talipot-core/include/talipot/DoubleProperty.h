@@ -46,12 +46,10 @@ public:
     return propertyTypename;
   }
 
-  void setNodeValue(const node n, StoredType<double>::ReturnedConstValue v) override;
-  void setEdgeValue(const edge e, StoredType<double>::ReturnedConstValue v) override;
-  void setAllNodeValue(StoredType<double>::ReturnedConstValue v,
-                       const Graph *graph = nullptr) override;
-  void setAllEdgeValue(StoredType<double>::ReturnedConstValue v,
-                       const Graph *graph = nullptr) override;
+  void setNodeValue(const node n, StoredType<double>::ConstReference v) override;
+  void setEdgeValue(const edge e, StoredType<double>::ConstReference v) override;
+  void setAllNodeValue(StoredType<double>::ConstReference v, const Graph *graph = nullptr) override;
+  void setAllEdgeValue(StoredType<double>::ConstReference v, const Graph *graph = nullptr) override;
 
   enum PredefinedMetaValueCalculator {
     NO_CALC = 0,

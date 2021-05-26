@@ -44,7 +44,7 @@ GraphProperty::~GraphProperty() {
   }
 }
 //==============================
-void GraphProperty::setAllNodeValue(tlp::StoredType<GraphType::RealType>::ReturnedConstValue g,
+void GraphProperty::setAllNodeValue(tlp::StoredType<GraphType::RealType>::ConstReference g,
                                     const Graph *graph) {
   // remove all observed graphs if any
   for (auto n : getNonDefaultValuatedNodes(graph)) {
@@ -63,7 +63,7 @@ void GraphProperty::setAllNodeValue(tlp::StoredType<GraphType::RealType>::Return
 }
 //==============================
 void GraphProperty::setNodeValue(const node n,
-                                 tlp::StoredType<GraphType::RealType>::ReturnedConstValue sg) {
+                                 tlp::StoredType<GraphType::RealType>::ConstReference sg) {
   Graph *oldGraph = getNodeValue(n);
 
   if (oldGraph != nullptr && oldGraph != sg) {

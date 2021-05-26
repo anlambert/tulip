@@ -58,7 +58,7 @@ public:
    * @param graph The graph on which to compute.
    * @return The minimal value on this graph for this property.
    **/
-  typename tlp::StoredType<typename NodeType::RealType>::ReturnedConstValue
+  TYPE_CONST_REFERENCE(NodeType)
   getNodeMin(const Graph *graph = nullptr);
 
   /**
@@ -69,7 +69,7 @@ public:
    * @param graph The graph on which to compute.
    * @return The maximal value on this graph for this property.
    **/
-  typename tlp::StoredType<typename NodeType::RealType>::ReturnedConstValue
+  TYPE_CONST_REFERENCE(NodeType)
   getNodeMax(const Graph *graph = nullptr);
 
   /**
@@ -80,7 +80,7 @@ public:
    * @param graph The graph on which to compute.
    * @return The minimal value on this graph for this property.
    **/
-  typename tlp::StoredType<typename EdgeType::RealType>::ReturnedConstValue
+  TYPE_CONST_REFERENCE(EdgeType)
   getEdgeMin(const Graph *graph = nullptr);
 
   /**
@@ -91,7 +91,7 @@ public:
    * @param graph The graph on which to compute.
    * @return The maximal value on this graph for this property.
    **/
-  typename tlp::StoredType<typename EdgeType::RealType>::ReturnedConstValue
+  TYPE_CONST_REFERENCE(EdgeType)
   getEdgeMax(const Graph *graph = nullptr);
 
   /**
@@ -101,9 +101,7 @@ public:
    * @param n The node for which the value is updated.
    * @param newValue The new value on this node.
    **/
-  void updateNodeValue(
-      tlp::node n,
-      typename tlp::StoredType<typename NodeType::RealType>::ReturnedConstValue newValue);
+  void updateNodeValue(tlp::node n, TYPE_CONST_REFERENCE(NodeType) newValue);
 
   /**
    * @brief Updates the value on an edge, and updates the minimal/maximal cached values if
@@ -113,9 +111,7 @@ public:
    * @param e The edge for which the value is updated.
    * @param newValue The new value on this edge.
    **/
-  virtual void updateEdgeValue(
-      tlp::edge e,
-      typename tlp::StoredType<typename EdgeType::RealType>::ReturnedConstValue newValue);
+  virtual void updateEdgeValue(tlp::edge e, TYPE_CONST_REFERENCE(EdgeType) newValue);
 
   /**
    * @brief Updates the value of all nodes, setting the maximum and minimum values to this.
@@ -123,8 +119,7 @@ public:
    *
    * @param newValue The new maximal and minimal value.
    **/
-  void updateAllNodesValues(
-      typename tlp::StoredType<typename NodeType::RealType>::ReturnedConstValue newValue);
+  void updateAllNodesValues(TYPE_CONST_REFERENCE(NodeType) newValue);
 
   /**
    * @brief Updates the value of all edges, setting the maximum and minimum values to this.
@@ -132,8 +127,7 @@ public:
    *
    * @param newValue The new maximal and minimal value.
    **/
-  void updateAllEdgesValues(
-      typename tlp::StoredType<typename EdgeType::RealType>::ReturnedConstValue newValue);
+  void updateAllEdgesValues(TYPE_CONST_REFERENCE(EdgeType) newValue);
 
 protected:
   MINMAX_MAP(NodeType) _minMaxNode;

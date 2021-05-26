@@ -69,13 +69,13 @@ tlp::MutableContainer<TYPE>::~MutableContainer<TYPE>() {
 }
 //===================================================================
 template <typename TYPE>
-void tlp::MutableContainer<TYPE>::setDefault(typename StoredType<TYPE>::ReturnedConstValue value) {
+void tlp::MutableContainer<TYPE>::setDefault(typename StoredType<TYPE>::ConstReference value) {
   StoredType<TYPE>::destroy(defaultValue);
   defaultValue = StoredType<TYPE>::clone(value);
 }
 //===================================================================
 template <typename TYPE>
-void tlp::MutableContainer<TYPE>::setAll(typename StoredType<TYPE>::ReturnedConstValue value) {
+void tlp::MutableContainer<TYPE>::setAll(typename StoredType<TYPE>::ConstReference value) {
   switch (state) {
   case VECT:
 
@@ -127,7 +127,7 @@ void tlp::MutableContainer<TYPE>::setAll(typename StoredType<TYPE>::ReturnedCons
 // it is also used to implement findAll
 template <typename TYPE>
 tlp::IteratorValue *
-tlp::MutableContainer<TYPE>::findAllValues(typename StoredType<TYPE>::ReturnedConstValue value,
+tlp::MutableContainer<TYPE>::findAllValues(typename StoredType<TYPE>::ConstReference value,
                                            bool equal) const {
   if (equal && StoredType<TYPE>::equal(defaultValue, value))
     // error
@@ -153,7 +153,7 @@ tlp::MutableContainer<TYPE>::findAllValues(typename StoredType<TYPE>::ReturnedCo
 // this method is visible for any class
 template <typename TYPE>
 tlp::Iterator<unsigned int> *
-tlp::MutableContainer<TYPE>::findAll(typename StoredType<TYPE>::ReturnedConstValue value,
+tlp::MutableContainer<TYPE>::findAll(typename StoredType<TYPE>::ConstReference value,
                                      bool equal) const {
   return findAllValues(value, equal);
 }
@@ -202,7 +202,7 @@ void tlp::MutableContainer<TYPE>::vectset(const unsigned int i,
 //===================================================================
 template <typename TYPE>
 void tlp::MutableContainer<TYPE>::set(const unsigned int i,
-                                      typename StoredType<TYPE>::ReturnedConstValue value,
+                                      typename StoredType<TYPE>::ConstReference value,
                                       bool forceDefaultValueRemoval) {
   // Test if after insertion we need to resize
   if (!compressing && !StoredType<TYPE>::equal(defaultValue, value)) {
@@ -341,7 +341,7 @@ void tlp::MutableContainer<TYPE>::add(const unsigned int i, TYPE val) {
 }
 //===================================================================
 template <typename TYPE>
-typename tlp::StoredType<TYPE>::ReturnedConstValue
+typename tlp::StoredType<TYPE>::ConstReference
 tlp::MutableContainer<TYPE>::get(const unsigned int i) const {
   if (maxIndex == UINT_MAX) {
     return StoredType<TYPE>::get(defaultValue);
@@ -418,7 +418,7 @@ void tlp::MutableContainer<TYPE>::invertBooleanValue(const unsigned int i) {
 }
 //===================================================================
 template <typename TYPE>
-typename tlp::StoredType<TYPE>::ReturnedValue tlp::MutableContainer<TYPE>::getDefault() const {
+typename tlp::StoredType<TYPE>::Reference tlp::MutableContainer<TYPE>::getDefault() const {
   return StoredType<TYPE>::get(defaultValue);
 }
 //===================================================================
@@ -443,8 +443,8 @@ bool tlp::MutableContainer<TYPE>::hasNonDefaultValue(const unsigned int i) const
 }
 //===================================================================
 template <typename TYPE>
-typename tlp::StoredType<TYPE>::ReturnedValue
-tlp::MutableContainer<TYPE>::get(const unsigned int i, bool &notDefault) const {
+typename tlp::StoredType<TYPE>::Reference tlp::MutableContainer<TYPE>::get(const unsigned int i,
+                                                                           bool &notDefault) const {
   if (maxIndex == UINT_MAX) {
     notDefault = false;
     return StoredType<TYPE>::get(defaultValue);
@@ -563,7 +563,7 @@ void tlp::MutableContainer<TYPE>::compress(unsigned int min, unsigned int max,
 }
 
 template <typename TYPE>
-typename tlp::StoredType<TYPE>::ReturnedConstValue
+typename tlp::StoredType<TYPE>::ConstReference
 tlp::MutableContainer<TYPE>::operator[](const unsigned int i) const {
   return get(i);
 }

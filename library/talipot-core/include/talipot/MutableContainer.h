@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -49,15 +49,15 @@ public:
   /**
    * Set the default value
    */
-  void setDefault(typename StoredType<TYPE>::ReturnedConstValue value);
+  void setDefault(typename StoredType<TYPE>::ConstReference value);
   /**
    * set the same value to all elements and modify the default value
    */
-  void setAll(typename StoredType<TYPE>::ReturnedConstValue value);
+  void setAll(typename StoredType<TYPE>::ConstReference value);
   /**
    * set the value associated to i
    */
-  void set(const unsigned int i, typename StoredType<TYPE>::ReturnedConstValue value,
+  void set(const unsigned int i, typename StoredType<TYPE>::ConstReference value,
            bool forceDefaultValueRemoval = false);
   /**
    * add val to the value associated to i
@@ -66,15 +66,15 @@ public:
   /**
    * get the value associated to i
    */
-  typename StoredType<TYPE>::ReturnedConstValue get(const unsigned int i) const;
+  typename StoredType<TYPE>::ConstReference get(const unsigned int i) const;
   /**
    * get the value associated to i and indicates if it is not the default one
    */
-  typename StoredType<TYPE>::ReturnedValue get(const unsigned int i, bool &isNotDefault) const;
+  typename StoredType<TYPE>::Reference get(const unsigned int i, bool &isNotDefault) const;
   /**
    * get the default value
    */
-  typename StoredType<TYPE>::ReturnedValue getDefault() const;
+  typename StoredType<TYPE>::Reference getDefault() const;
   /**
    * return if the value associated to i is not the default one
    */
@@ -85,7 +85,7 @@ public:
    * A null pointer is returned in case of an iteration on all the elements
    * whose value is equal to the default value.
    */
-  Iterator<unsigned int> *findAll(typename StoredType<TYPE>::ReturnedConstValue value,
+  Iterator<unsigned int> *findAll(typename StoredType<TYPE>::ConstReference value,
                                   bool equal = true) const;
   /**
    * return the number of non default values
@@ -107,12 +107,12 @@ public:
 private:
   MutableContainer(const MutableContainer<TYPE> &) {}
   void operator=(const MutableContainer<TYPE> &) {}
-  typename StoredType<TYPE>::ReturnedConstValue operator[](const unsigned int i) const;
+  typename StoredType<TYPE>::ConstReference operator[](const unsigned int i) const;
   void vecttohash();
   void hashtovect();
   void compress(unsigned int min, unsigned int max, unsigned int nbElements);
   void vectset(const unsigned int i, typename StoredType<TYPE>::Value value);
-  IteratorValue *findAllValues(typename StoredType<TYPE>::ReturnedConstValue value,
+  IteratorValue *findAllValues(typename StoredType<TYPE>::ConstReference value,
                                bool equal = true) const;
 
 private:

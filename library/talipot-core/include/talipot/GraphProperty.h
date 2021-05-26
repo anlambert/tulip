@@ -57,8 +57,8 @@ public:
   }
 
   // redefinition of some AbstractProperty methods
-  void setNodeValue(const node n, StoredType<GraphType::RealType>::ReturnedConstValue g) override;
-  void setAllNodeValue(StoredType<GraphType::RealType>::ReturnedConstValue g,
+  void setNodeValue(const node n, StoredType<GraphType::RealType>::ConstReference g) override;
+  void setAllNodeValue(StoredType<GraphType::RealType>::ConstReference g,
                        const Graph *graph = nullptr) override;
   bool readNodeDefaultValue(std::istream &iss) override;
   bool readNodeValue(std::istream &iss, node n) override;

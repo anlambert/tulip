@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -50,9 +50,8 @@ public:
   }
 
   // redefinition of some AbstractProperty methods
-  void setNodeValue(const node n, StoredType<Size>::ReturnedConstValue v) override;
-  void setAllNodeValue(StoredType<Size>::ReturnedConstValue v,
-                       const Graph *graph = nullptr) override;
+  void setNodeValue(const node n, StoredType<Size>::ConstReference v) override;
+  void setAllNodeValue(StoredType<Size>::ConstReference v, const Graph *graph = nullptr) override;
 
   int compare(const node n1, const node n2) const override;
 

@@ -283,15 +283,13 @@ public:
   // unsigned int crossingNumber() const;
 
   // redefinition of some AbstractProperty methods
-  void setNodeValue(const node, StoredType<Coord>::ReturnedConstValue v) override;
-  void setEdgeValue(const edge, StoredType<std::vector<Coord>>::ReturnedConstValue v) override;
-  void setAllNodeValue(StoredType<Coord>::ReturnedConstValue v,
-                       const Graph *graph = nullptr) override;
-  void setAllEdgeValue(StoredType<std::vector<Coord>>::ReturnedConstValue v,
+  void setNodeValue(const node, StoredType<Coord>::ConstReference v) override;
+  void setEdgeValue(const edge, StoredType<std::vector<Coord>>::ConstReference v) override;
+  void setAllNodeValue(StoredType<Coord>::ConstReference v, const Graph *graph = nullptr) override;
+  void setAllEdgeValue(StoredType<std::vector<Coord>>::ConstReference v,
                        const Graph *graph = nullptr) override;
 
-  void updateEdgeValue(edge e,
-                       StoredType<LineType::RealType>::ReturnedConstValue newValue) override;
+  void updateEdgeValue(edge e, StoredType<LineType::RealType>::ConstReference newValue) override;
 
 protected:
   void clone_handler(AbstractProperty<PointType, LineType> &) override;

@@ -399,24 +399,23 @@ void LayoutProperty::resetBoundingBox() {
   _minMaxEdge.clear();
 }
 //================================================================================
-void LayoutProperty::setNodeValue(const node n, tlp::StoredType<Coord>::ReturnedConstValue v) {
+void LayoutProperty::setNodeValue(const node n, tlp::StoredType<Coord>::ConstReference v) {
   LayoutMinMaxProperty::updateNodeValue(n, v);
   LayoutMinMaxProperty::setNodeValue(n, v);
 }
 //================================================================================
 void LayoutProperty::setEdgeValue(const edge e,
-                                  tlp::StoredType<std::vector<Coord>>::ReturnedConstValue v) {
+                                  tlp::StoredType<std::vector<Coord>>::ConstReference v) {
   LayoutMinMaxProperty::updateEdgeValue(e, v);
   LayoutMinMaxProperty::setEdgeValue(e, v);
 }
 //=================================================================================
-void LayoutProperty::setAllNodeValue(tlp::StoredType<Coord>::ReturnedConstValue v,
-                                     const Graph *graph) {
+void LayoutProperty::setAllNodeValue(tlp::StoredType<Coord>::ConstReference v, const Graph *graph) {
   resetBoundingBox();
   LayoutMinMaxProperty::setAllNodeValue(v, graph);
 }
 //=================================================================================
-void LayoutProperty::setAllEdgeValue(tlp::StoredType<std::vector<Coord>>::ReturnedConstValue v,
+void LayoutProperty::setAllEdgeValue(tlp::StoredType<std::vector<Coord>>::ConstReference v,
                                      const Graph *graph) {
   resetBoundingBox();
   LayoutMinMaxProperty::setAllEdgeValue(v, graph);
@@ -787,7 +786,7 @@ std::pair<tlp::Coord, tlp::Coord> LayoutProperty::computeMinMaxNode(const Graph 
  *Layout properties (they are specific in that they use the control points of the edges)
  **/
 void LayoutProperty::updateEdgeValue(tlp::edge e,
-                                     StoredType<LineType::RealType>::ReturnedConstValue newValue) {
+                                     StoredType<LineType::RealType>::ConstReference newValue) {
 
   const std::vector<Coord> &oldV = this->getEdgeValue(e);
 

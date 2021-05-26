@@ -47,12 +47,10 @@ public:
   const std::string &getTypename() const override {
     return propertyTypename;
   }
-  void setNodeValue(const node n, StoredType<int>::ReturnedConstValue v) override;
-  void setEdgeValue(const edge e, StoredType<int>::ReturnedConstValue v) override;
-  void setAllNodeValue(StoredType<int>::ReturnedConstValue v,
-                       const Graph *graph = nullptr) override;
-  void setAllEdgeValue(StoredType<int>::ReturnedConstValue v,
-                       const Graph *graph = nullptr) override;
+  void setNodeValue(const node n, StoredType<int>::ConstReference v) override;
+  void setEdgeValue(const edge e, StoredType<int>::ConstReference v) override;
+  void setAllNodeValue(StoredType<int>::ConstReference v, const Graph *graph = nullptr) override;
+  void setAllEdgeValue(StoredType<int>::ConstReference v, const Graph *graph = nullptr) override;
 
   int compare(const node n1, const node n2) const override;
   int compare(const edge e1, const edge e2) const override;
