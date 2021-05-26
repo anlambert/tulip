@@ -18,6 +18,7 @@
 #include <talipot/Size.h>
 #include <talipot/StableIterator.h>
 #include <talipot/StoredType.h>
+#include <talipot/TypeInterface.h>
 
 namespace tlp {
 
@@ -110,7 +111,7 @@ public:
 
   template <typename PROPERTY, typename PROPERTYTYPE>
   void setPropertyValueForData(const std::string &propertyName, const unsigned int dataId,
-                               const typename PROPERTYTYPE::RealType &propertyValue) {
+                               const REAL_TYPE(PROPERTYTYPE) & propertyValue) {
     if (getDataLocation() == NODE) {
       getProperty<PROPERTY>(propertyName)->setNodeValue(node(dataId), propertyValue);
     } else {
@@ -120,7 +121,7 @@ public:
 
   template <typename PROPERTY, typename PROPERTYTYPE>
   void setPropertyValueForAllData(const std::string &propertyName,
-                                  const typename PROPERTYTYPE::RealType &propertyValue) {
+                                  const REAL_TYPE(PROPERTYTYPE) & propertyValue) {
     if (getDataLocation() == NODE) {
       getProperty<PROPERTY>(propertyName)->setAllNodeValue(propertyValue);
     } else {
@@ -129,7 +130,8 @@ public:
   }
 
   template <typename PROPERTY, typename PROPERTYTYPE>
-  typename PROPERTYTYPE::RealType getPropertyMinValue(const std::string &propertyName) {
+  REAL_TYPE(PROPERTYTYPE)
+  getPropertyMinValue(const std::string &propertyName) {
     if (getDataLocation() == NODE) {
       return getProperty<PROPERTY>(propertyName)->getNodeMin(graph_component);
     } else {
@@ -138,7 +140,8 @@ public:
   }
 
   template <typename PROPERTY, typename PROPERTYTYPE>
-  typename PROPERTYTYPE::RealType getPropertyMaxValue(const std::string &propertyName) {
+  REAL_TYPE(PROPERTYTYPE)
+  getPropertyMaxValue(const std::string &propertyName) {
     if (getDataLocation() == NODE) {
       return getProperty<PROPERTY>(propertyName)->getNodeMax(graph_component);
     } else {

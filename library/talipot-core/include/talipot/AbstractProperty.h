@@ -24,6 +24,7 @@
 #include <talipot/Iterator.h>
 #include <talipot/DataSet.h>
 #include <talipot/Graph.h>
+#include <talipot/TypeInterface.h>
 
 namespace tlp {
 
@@ -57,13 +58,13 @@ public:
    * @brief Gets the default node value of the property.
    * @return The default value of nodes.
    */
-  typename NodeType::RealType getNodeDefaultValue() const;
+  REAL_TYPE(NodeType) getNodeDefaultValue() const;
 
   /**
    * @brief Gets the default edge value of the property.
    * @return The default value of edges.
    **/
-  typename EdgeType::RealType getEdgeDefaultValue() const;
+  REAL_TYPE(EdgeType) getEdgeDefaultValue() const;
 
   /**
    * @brief Returns the value associated with the node n in this property.
@@ -291,10 +292,10 @@ protected:
   /// Enable to clone part of sub_class
   virtual void clone_handler(AbstractProperty<NodeType, EdgeType, PropType> &);
 
-  MutableContainer<typename NodeType::RealType> nodeProperties;
-  MutableContainer<typename EdgeType::RealType> edgeProperties;
-  typename NodeType::RealType nodeDefaultValue;
-  typename EdgeType::RealType edgeDefaultValue;
+  MutableContainer<REAL_TYPE(NodeType)> nodeProperties;
+  MutableContainer<REAL_TYPE(EdgeType)> edgeProperties;
+  REAL_TYPE(NodeType) nodeDefaultValue;
+  REAL_TYPE(EdgeType) edgeDefaultValue;
 };
 
 template <typename VecType, typename EltType, typename PropType = VectorPropertyInterface>
@@ -358,8 +359,7 @@ public:
    *EltType().
    *
    **/
-  void resizeNodeValue(const node n, size_t size,
-                       typename EltType::RealType elt = EltType::defaultValue());
+  void resizeNodeValue(const node n, size_t size, REAL_TYPE(EltType) elt = EltType::defaultValue());
   /**
    * @brief Sets the value for edge e, at index i, to v, and notify the observers of a modification.
    *
@@ -404,8 +404,7 @@ public:
    *EltType().
    *
    **/
-  void resizeEdgeValue(const edge e, size_t size,
-                       typename EltType::RealType elt = EltType::defaultValue());
+  void resizeEdgeValue(const edge e, size_t size, REAL_TYPE(EltType) elt = EltType::defaultValue());
 };
 }
 

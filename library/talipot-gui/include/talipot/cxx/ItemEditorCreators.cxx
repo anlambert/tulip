@@ -69,14 +69,13 @@ QWidget *NumberEditorCreator<T>::createWidget(QWidget *parent) const {
 template <typename T>
 void NumberEditorCreator<T>::setEditorData(QWidget *editor, const QVariant &data, bool,
                                            tlp::Graph *) {
-  static_cast<QDoubleSpinBox *>(editor)->setValue(data.value<typename T::RealType>());
+  static_cast<QDoubleSpinBox *>(editor)->setValue(data.value<REAL_TYPE(T)>());
 }
 
 template <typename T>
 QVariant NumberEditorCreator<T>::editorData(QWidget *editor, tlp::Graph *) {
   QVariant result;
-  result.setValue(
-      static_cast<typename T::RealType>(static_cast<QDoubleSpinBox *>(editor)->value()));
+  result.setValue(static_cast<REAL_TYPE(T)>(static_cast<QDoubleSpinBox *>(editor)->value()));
   return result;
 }
 
@@ -88,7 +87,7 @@ QWidget *LineEditEditorCreator<T>::createWidget(QWidget *parent) const {
 template <typename T>
 void LineEditEditorCreator<T>::setEditorData(QWidget *editor, const QVariant &data, bool,
                                              tlp::Graph *) {
-  typename T::RealType val = data.value<typename T::RealType>();
+  REAL_TYPE(T::RealType val = data.value < typename T) > ();
   static_cast<QLineEdit *>(editor)->setText(tlpStringToQString(T::toString(val)));
   static_cast<QLineEdit *>(editor)->selectAll();
 }
@@ -97,10 +96,10 @@ template <typename T>
 QVariant LineEditEditorCreator<T>::editorData(QWidget *editor, tlp::Graph *) {
   std::string strVal = QStringToTlpString(static_cast<QLineEdit *>(editor)->text());
   QVariant result;
-  typename T::RealType val;
+  REAL_TYPE(T) val;
 
   if (T::fromString(val, strVal)) {
-    result.setValue<typename T::RealType>(val);
+    result.setValue<REAL_TYPE(T)>(val);
   }
 
   return result;
@@ -134,7 +133,7 @@ QWidget *MultiLinesEditEditorCreator<T>::createWidget(QWidget *parent) const {
 template <typename T>
 void MultiLinesEditEditorCreator<T>::setEditorData(QWidget *editor, const QVariant &data, bool,
                                                    tlp::Graph *) {
-  auto val = data.value<typename T::RealType>();
+  auto val = data.value<REAL_TYPE(T)>();
   static_cast<QTextEdit *>(editor)->setPlainText(tlpStringToQString(T::toString(val)));
   static_cast<QTextEdit *>(editor)->selectAll();
 }
@@ -143,10 +142,10 @@ template <typename T>
 QVariant MultiLinesEditEditorCreator<T>::editorData(QWidget *editor, tlp::Graph *) {
   std::string strVal = QStringToTlpString(static_cast<QTextEdit *>(editor)->toPlainText());
   QVariant result;
-  typename T::RealType val;
+  REAL_TYPE(T) val;
 
   if (T::fromString(val, strVal)) {
-    result.setValue<typename T::RealType>(val);
+    result.setValue<REAL_TYPE(T)>(val);
   }
 
   return result;
@@ -156,7 +155,7 @@ template <typename T>
 QSize MultiLinesEditEditorCreator<T>::sizeHint(const QStyleOptionViewItem &option,
                                                const QModelIndex &index) const {
   QVariant data = index.model()->data(index);
-  auto val = data.value<typename T::RealType>();
+  auto val = data.value<REAL_TYPE(T)>();
   QString valS = tlpStringToQString(T::toString(val));
   QStringList lines = valS.split(QLatin1Char('\n'));
   QFontMetrics fontMetrics(option.font);
@@ -180,7 +179,7 @@ bool MultiLinesEditEditorCreator<T>::paint(QPainter *painter, const QStyleOption
                                            const QVariant &data, const QModelIndex &index) const {
   ItemEditorCreator::paint(painter, option, data, index);
   QRect rect = option.rect;
-  auto val = data.value<typename T::RealType>();
+  auto val = data.value<REAL_TYPE(T)>();
   QString valS = tlpStringToQString(T::toString(val));
   QStringList lines = valS.split(QLatin1Char('\n'));
 

@@ -41,10 +41,10 @@ namespace tlp {
 template <typename T>
 class TLP_SCOPE SerializableType : public TypeInterface<T> {
 public:
-  static void write(std::ostream &oss, const typename TypeInterface<T>::RealType &v) {
+  static void write(std::ostream &oss, const REAL_TYPE(TypeInterface<T>) & v) {
     oss << v;
   }
-  static bool read(std::istream &iss, typename TypeInterface<T>::RealType &v) {
+  static bool read(std::istream &iss, REAL_TYPE(TypeInterface<T>) & v) {
     return bool(iss >> v);
   }
   FORWARD_STRING_METHODS(typename TypeInterface<T>)
@@ -128,21 +128,19 @@ class TLP_SCOPE SerializableVectorType : public TypeInterface<std::vector<ELT_TY
   }
 
 public:
-  static void write(std::ostream &oss,
-                    const typename TypeInterface<std::vector<ELT_TYPE>>::RealType &v) {
+  static void write(std::ostream &oss, const REAL_TYPE(TypeInterface<std::vector<ELT_TYPE>>) & v) {
     writeVector(oss, v);
   }
-  static void writeb(std::ostream &oss,
-                     const typename TypeInterface<std::vector<ELT_TYPE>>::RealType &v) {
+  static void writeb(std::ostream &oss, const REAL_TYPE(TypeInterface<std::vector<ELT_TYPE>>) & v) {
     unsigned int vSize = v.size();
     oss.write(reinterpret_cast<const char *>(&vSize), sizeof(vSize));
     oss.write(reinterpret_cast<const char *>(v.data()), vSize * sizeof(ELT_TYPE));
   }
-  static bool read(std::istream &iss, typename TypeInterface<std::vector<ELT_TYPE>>::RealType &v,
+  static bool read(std::istream &iss, REAL_TYPE(TypeInterface<std::vector<ELT_TYPE>>) & v,
                    char openChar = '(', char sepChar = ',', char closeChar = ')') {
     return readVector(iss, v, openChar, sepChar, closeChar);
   }
-  static bool readb(std::istream &iss, typename TypeInterface<std::vector<ELT_TYPE>>::RealType &v) {
+  static bool readb(std::istream &iss, REAL_TYPE(TypeInterface<std::vector<ELT_TYPE>>) & v) {
     unsigned int vSize;
 
     if (bool(iss.read(reinterpret_cast<char *>(&vSize), sizeof(vSize)))) {
@@ -152,7 +150,7 @@ public:
     return false;
   }
   static bool read(const std::vector<std::string> &vs,
-                   typename TypeInterface<std::vector<ELT_TYPE>>::RealType &v) {
+                   REAL_TYPE(TypeInterface<std::vector<ELT_TYPE>>) & v) {
     v.clear();
     v.reserve(vs.size());
 

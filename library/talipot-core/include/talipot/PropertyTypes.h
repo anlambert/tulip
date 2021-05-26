@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -210,24 +210,23 @@ DECL_STORED_STRUCT(tlp::ColorVectorType::RealType)
 
 // template class to automate definition of serializers
 template <typename T>
-struct KnownTypeSerializer : public TypedDataSerializer<typename T::RealType> {
-  KnownTypeSerializer(const std::string &otn) : TypedDataSerializer<typename T::RealType>(otn) {}
-  KnownTypeSerializer(const char *otn)
-      : TypedDataSerializer<typename T::RealType>(std::string(otn)) {}
+struct KnownTypeSerializer : public TypedDataSerializer<REAL_TYPE(T)> {
+  KnownTypeSerializer(const std::string &otn) : TypedDataSerializer<REAL_TYPE(T)>(otn) {}
+  KnownTypeSerializer(const char *otn) : TypedDataSerializer<REAL_TYPE(T)>(std::string(otn)) {}
 
   DataTypeSerializer *clone() const override {
     return new KnownTypeSerializer<T>(this->outputTypeName);
   }
 
-  void write(std::ostream &os, const typename T::RealType &v) override {
+  void write(std::ostream &os, const REAL_TYPE(T) & v) override {
     T::write(os, v);
   }
-  bool read(std::istream &iss, typename T::RealType &v) override {
+  bool read(std::istream &iss, REAL_TYPE(T) & v) override {
     return T::read(iss, v);
   }
   bool setData(tlp::DataSet &ds, const std::string &prop, const std::string &value) override {
     bool result = true;
-    typename T::RealType val;
+    REAL_TYPE(T) val;
 
     if (value.empty()) {
       val = T::defaultValue();

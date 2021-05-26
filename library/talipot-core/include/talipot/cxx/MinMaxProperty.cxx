@@ -16,9 +16,8 @@
 
 template <typename NodeType, typename EdgeType, typename PropType>
 tlp::MinMaxProperty<NodeType, EdgeType, PropType>::MinMaxProperty(
-    tlp::Graph *graph, const std::string &name, typename NodeType::RealType nodeMin,
-    typename NodeType::RealType nodeMax, typename EdgeType::RealType edgeMin,
-    typename EdgeType::RealType edgeMax)
+    tlp::Graph *graph, const std::string &name, REAL_TYPE(NodeType) nodeMin,
+    REAL_TYPE(NodeType) nodeMax, REAL_TYPE(EdgeType) edgeMin, REAL_TYPE(EdgeType) edgeMax)
     : AbstractProperty<NodeType, EdgeType, PropType>(graph, name), _nodeMin(nodeMin),
       _nodeMax(nodeMax), _edgeMin(edgeMin), _edgeMax(edgeMax), _needGraphListener(false) {}
 

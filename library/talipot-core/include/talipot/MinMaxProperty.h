@@ -19,7 +19,7 @@
 #include <talipot/Observable.h>
 #include <talipot/AbstractProperty.h>
 
-#define MINMAX_PAIR(TYPE) std::pair<typename TYPE::RealType, typename TYPE::RealType>
+#define MINMAX_PAIR(TYPE) std::pair<REAL_TYPE(TYPE), REAL_TYPE(TYPE)>
 #define MINMAX_MAP(TYPE) typename std::unordered_map<unsigned int, MINMAX_PAIR(TYPE)>
 
 namespace tlp {
@@ -44,9 +44,9 @@ public:
    * @param edgeMin The minimum value the property can take for edges (e.g. INT_MIN)
    * @param edgeMax The maximum value the property can take for edges (e.g. INT_MAX)
    **/
-  MinMaxProperty(tlp::Graph *graph, const std::string &name, typename NodeType::RealType nodeMin,
-                 typename NodeType::RealType nodeMax, typename EdgeType::RealType edgeMin,
-                 typename EdgeType::RealType edgeMax);
+  MinMaxProperty(tlp::Graph *graph, const std::string &name, REAL_TYPE(NodeType) nodeMin,
+                 REAL_TYPE(NodeType) nodeMax, REAL_TYPE(EdgeType) edgeMin,
+                 REAL_TYPE(EdgeType) edgeMax);
 
   void treatEvent(const tlp::Event &ev) override;
 
@@ -133,10 +133,10 @@ protected:
   MINMAX_MAP(NodeType) _minMaxNode;
   MINMAX_MAP(EdgeType) _minMaxEdge;
 
-  typename NodeType::RealType _nodeMin;
-  typename NodeType::RealType _nodeMax;
-  typename EdgeType::RealType _edgeMin;
-  typename EdgeType::RealType _edgeMax;
+  REAL_TYPE(NodeType) _nodeMin;
+  REAL_TYPE(NodeType) _nodeMax;
+  REAL_TYPE(EdgeType) _edgeMin;
+  REAL_TYPE(EdgeType) _edgeMax;
 
   // this will indicate if we can stop PropType::graph observation
   bool _needGraphListener; // default is false

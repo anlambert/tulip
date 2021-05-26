@@ -55,7 +55,7 @@ template <typename T>
 class TLP_QT_SCOPE StringDisplayEditorCreator : public ItemEditorCreator {
 public:
   QString displayText(const QVariant &v) const override {
-    return tlpStringToQString(T::toString(v.value<typename T::RealType>()));
+    return tlpStringToQString(T::toString(v.value<REAL_TYPE(T)>()));
   }
 };
 

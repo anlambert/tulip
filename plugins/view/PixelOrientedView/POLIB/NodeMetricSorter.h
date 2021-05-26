@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -16,6 +16,7 @@
 
 #include <talipot/Graph.h>
 #include <talipot/Observable.h>
+#include <talipot/TypeInterface.h>
 
 #include <map>
 #include <vector>
@@ -29,8 +30,8 @@ public:
   }
 
   bool operator()(tlp::node n1, tlp::node n2) const {
-    typename PROPERTYTYPE::RealType v1 = nodeProperty->getNodeValue(n1);
-    typename PROPERTYTYPE::RealType v2 = nodeProperty->getNodeValue(n2);
+    REAL_TYPE(PROPERTYTYPE) v1 = nodeProperty->getNodeValue(n1);
+    REAL_TYPE(PROPERTYTYPE) v2 = nodeProperty->getNodeValue(n2);
     return v1 < v2;
   }
 
