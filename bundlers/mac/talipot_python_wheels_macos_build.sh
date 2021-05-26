@@ -41,7 +41,8 @@ sudo port -N install \
   yajl \
   zlib \
   zstd \
-  graphviz
+  graphviz \
+  libgit2
 
   source ./macports-ci ccache --save
 
