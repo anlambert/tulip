@@ -87,24 +87,19 @@ namespace tlp {
 
 #ifndef TLP_NO_THREADS
 #ifdef _OPENMP
+unsigned int tlp::ThreadManager::numberOfProcs(omp_get_num_procs());
 unsigned int tlp::ThreadManager::maxNumberOfThreads(omp_get_num_procs());
 #else
+unsigned int ThreadManager::numberOfProcs(std::thread::hardware_concurrency());
 unsigned int ThreadManager::maxNumberOfThreads(std::thread::hardware_concurrency());
 #endif
 #else
+unsigned int ThreadManager::numberOfProcs(1);
 unsigned int ThreadManager::maxNumberOfThreads(1);
 #endif
 
 unsigned int ThreadManager::getNumberOfProcs() {
-#ifndef TLP_NO_THREADS
-#ifdef _OPENMP
-  return omp_get_num_procs();
-#else
-  return std::thread::hardware_concurrency();
-#endif
-#else
-  return 1;
-#endif
+  return numberOfProcs;
 }
 
 unsigned int ThreadManager::getNumberOfThreads() {
