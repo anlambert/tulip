@@ -39,35 +39,23 @@ QTX_WRAP_CPP(
   GeolocationConfigWidget.h
   LeafletMaps.h)
 
-IF(WIN32)
-  SET(GEOVIEW_DLL "GeographicView-talipot-${TalipotVersion}.dll")
-  IF(NOT MSVC)
-    SET(GEOVIEW_DLL "lib${GEOVIEW_DLL}")
-  ENDIF(NOT MSVC)
-  # update the list of bundle libs
-  SET_PROPERTY(
-    GLOBAL APPEND
-    PROPERTY FIXUP_BUNDLE_LIBS
-             "${CMAKE_INSTALL_PREFIX}/lib/talipot/view/${GEOVIEW_DLL}")
-
-  IF(MSVC)
-    # When compiling with Visual Studio, install QtWebEngine process, resources
-    # and locales required for the Geographic view to work when installing
-    # Talipot from a Windows installer
-    IF(EXISTS "${QT_BINARY_DIR}/QtWebEngineProcess.exe")
-      INSTALL(FILES "${QT_BINARY_DIR}/QtWebEngineProcess.exe"
-              DESTINATION ${TalipotBinInstallDir})
-    ENDIF(EXISTS "${QT_BINARY_DIR}/QtWebEngineProcess.exe")
-    IF(EXISTS "${QT_BINARY_DIR}/../resources")
-      INSTALL(DIRECTORY "${QT_BINARY_DIR}/../resources"
-              DESTINATION ${TalipotBinInstallDir})
-    ENDIF(EXISTS "${QT_BINARY_DIR}/../resources")
-    IF(EXISTS "${QT_BINARY_DIR}/../translations/qtwebengine_locales")
-      INSTALL(DIRECTORY "${QT_BINARY_DIR}/../translations/qtwebengine_locales"
-              DESTINATION ${TalipotBinInstallDir}/translations/)
-    ENDIF(EXISTS "${QT_BINARY_DIR}/../translations/qtwebengine_locales")
-  ENDIF(MSVC)
-ENDIF(WIN32)
+IF(MSVC)
+  # When compiling with Visual Studio, install QtWebEngine process, resources
+  # and locales required for the Geographic view to work when installing Talipot
+  # from a Windows installer
+  IF(EXISTS "${QT_BINARY_DIR}/QtWebEngineProcess.exe")
+    INSTALL(FILES "${QT_BINARY_DIR}/QtWebEngineProcess.exe"
+            DESTINATION ${TalipotBinInstallDir})
+  ENDIF(EXISTS "${QT_BINARY_DIR}/QtWebEngineProcess.exe")
+  IF(EXISTS "${QT_BINARY_DIR}/../resources")
+    INSTALL(DIRECTORY "${QT_BINARY_DIR}/../resources"
+            DESTINATION ${TalipotBinInstallDir})
+  ENDIF(EXISTS "${QT_BINARY_DIR}/../resources")
+  IF(EXISTS "${QT_BINARY_DIR}/../translations/qtwebengine_locales")
+    INSTALL(DIRECTORY "${QT_BINARY_DIR}/../translations/qtwebengine_locales"
+            DESTINATION ${TalipotBinInstallDir}/translations/)
+  ENDIF(EXISTS "${QT_BINARY_DIR}/../translations/qtwebengine_locales")
+ENDIF(MSVC)
 
 TALIPOT_ADD_PLUGIN(
   NAME
