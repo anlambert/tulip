@@ -419,7 +419,7 @@ QMap<QString, tlp::Graph *> GraphHierarchiesModel::readProject(tlp::Project *pro
   for (const QString &entry :
        project->entryList(GRAPHS_PATH, QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name)) {
     QString filename;
-    for (const QString &path : {"/graph.tlp", "/graph.tlp.zst", "/graph.tlpb", "/graph.tlpb.zst"}) {
+    for (const QString path : {"/graph.tlp", "/graph.tlp.zst", "/graph.tlpb", "/graph.tlpb.zst"}) {
       filename = GRAPHS_PATH + entry + path;
       if (!project->exists(filename)) {
         continue;

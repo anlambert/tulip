@@ -68,7 +68,7 @@ public:
    **/
   virtual std::list<std::string> gzipFileExtensions() const {
     std::list<std::string> gzipExtensions;
-    for (const std::string &gzExt : {".gz", "z"}) {
+    for (const std::string gzExt : {".gz", "z"}) {
       gzipExtensions.push_back(fileExtension() + gzExt);
     }
     return gzipExtensions;
@@ -76,7 +76,7 @@ public:
 
   virtual std::list<std::string> zstdFileExtensions() const {
     std::list<std::string> zstdExtensions;
-    for (const std::string &zstExt : {".zst", "zst"}) {
+    for (const std::string zstExt : {".zst", "zst"}) {
       zstdExtensions.push_back(fileExtension() + zstExt);
     }
     return zstdExtensions;
