@@ -24,6 +24,8 @@ namespace tlp {
 GraphView::GraphView(Graph *superGraph, BooleanProperty *filter, unsigned int sgId)
     : GraphAbstract(superGraph, sgId) {
 
+  _nodeData.alloc(this);
+
   if (filter == nullptr) {
     return;
   }
@@ -139,8 +141,8 @@ std::vector<node> GraphView::addNodes(unsigned int nb) {
 }
 //----------------------------------------------------------------
 void GraphView::restoreNode(node n) {
-  _nodeData[n] = SGraphNodeData();
   _nodes.add(n);
+  _nodeData[n] = SGraphNodeData();
   notifyAddNode(n);
 }
 //----------------------------------------------------------------
@@ -149,8 +151,8 @@ void GraphView::addNodesInternal(const std::vector<node> &nodes) {
 
   for (auto n : nodes) {
     assert(getRootImpl()->isElement(n));
-    _nodeData[n] = SGraphNodeData();
     _nodes.add(n);
+    _nodeData[n] = SGraphNodeData();
   }
 
   if (hasOnlookers()) {
@@ -284,7 +286,7 @@ void GraphView::addEdges(Iterator<edge> *addedEdges) {
 void GraphView::removeNode(const node n) {
   assert(isElement(n));
   notifyDelNode(n);
-  _nodeData.erase(n);
+  _nodeData.remove(n);
   _nodes.remove(n);
   propertyContainer->erase(n);
 }
@@ -422,7 +424,7 @@ Iterator<edge> *GraphView::getOutEdges(const node n) const {
 //----------------------------------------------------------------
 Iterator<edge> *GraphView::getInOutEdges(const node n) const {
   assert(isElement(n));
-  return stlIterator(_nodeData.at(n).incidence);
+  return stlIterator(_nodeData[n].incidence);
 }
 //----------------------------------------------------------------
 std::vector<edge> GraphView::getEdges(const node src, const node tgt, bool directed) const {

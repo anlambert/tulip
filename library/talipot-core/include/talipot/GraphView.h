@@ -17,8 +17,8 @@
 #include <vector>
 #include <talipot/GraphAbstract.h>
 #include <talipot/GraphImpl.h>
-#include <talipot/MutableContainer.h>
 #include <talipot/IdManager.h>
+#include <talipot/VectorProperty.h>
 
 namespace tlp {
 // used for node management
@@ -27,9 +27,11 @@ struct SGraphNodeData {
   std::vector<edge> incidence;
 
   void inEdgeAdd(edge e) {
+    incidence.reserve(incidence.size() + 1);
     incidence.push_back(e);
   }
   void outEdgeAdd(edge e) {
+    incidence.reserve(incidence.size() + 1);
     incidence.push_back(e);
     outDegree += 1;
   }
@@ -96,7 +98,7 @@ public:
   }
   //=========================================================================
   bool isElement(const node n) const override {
-    return _nodeData.find(n) != _nodeData.end();
+    return _nodes.isElement(n);
   }
   bool isElement(const edge e) const override {
     return _edges.isElement(e);
@@ -111,16 +113,16 @@ public:
   //=========================================================================
   unsigned int deg(const node n) const override {
     assert(isElement(n));
-    return _nodeData.at(n).incidence.size();
+    return _nodeData[n].incidence.size();
   }
   unsigned int indeg(const node n) const override {
     assert(isElement(n));
-    const SGraphNodeData &nData = _nodeData.at(n);
+    const SGraphNodeData &nData = _nodeData[n];
     return nData.incidence.size() - nData.outDegree;
   }
   unsigned int outdeg(const node n) const override {
     assert(isElement(n));
-    return _nodeData.at(n).outDegree;
+    return _nodeData[n].outDegree;
   }
   //=========================================================================
   node source(const edge e) const override {
@@ -177,7 +179,7 @@ public:
   std::vector<edge> getEdges(const node source, const node target,
                              bool directed = true) const override;
   const std::vector<edge> &incidence(const node n) const override {
-    return _nodeData.at(n).incidence;
+    return _nodeData[n].incidence;
   }
   void sortElts() override {
     _nodes.sort();
@@ -215,7 +217,7 @@ protected:
   void removeEdges(const std::vector<edge> &edges);
 
 private:
-  std::unordered_map<tlp::node, SGraphNodeData> _nodeData;
+  tlp::NodeVectorProperty<SGraphNodeData> _nodeData;
   SGraphIdContainer<node> _nodes;
   SGraphIdContainer<edge> _edges;
   edge addEdgeInternal(edge);
