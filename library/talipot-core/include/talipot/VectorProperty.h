@@ -11,8 +11,8 @@
  *
  */
 
-#ifndef TALIPOT_STATIC_PROPERTY_H
-#define TALIPOT_STATIC_PROPERTY_H
+#ifndef TALIPOT_VECTOR_PROPERTY_H
+#define TALIPOT_VECTOR_PROPERTY_H
 
 #include <talipot/Graph.h>
 #include <talipot/GraphParallelTools.h>
@@ -87,6 +87,12 @@ public:
       this->resize(nPos + 1);
     }
     return nPos;
+  }
+
+  void remove(node n) {
+    // last node gets the removed node position
+    (*this)[n] = this->back();
+    this->resize(this->size() - 1);
   }
 
   // get values from a typed instance of PropertyInterface
@@ -194,6 +200,12 @@ public:
     return nPos;
   }
 
+  void remove(node n) {
+    // last node gets the removed node position
+    (*this)[n] = this->back();
+    this->resize(this->size() - 1);
+  }
+
   // get values from a typed instance of PropertyInterface
   template <typename PROP_PTR>
   void copyFromProperty(PROP_PTR prop) {
@@ -288,6 +300,12 @@ public:
     }
 
     return ePos;
+  }
+
+  void remove(edge e) {
+    // last edge gets the removed edge position
+    (*this)[e] = this->back();
+    this->resize(this->size() - 1);
   }
 
   // get values from a typed instance of PropertyInterface
@@ -391,6 +409,12 @@ public:
     return ePos;
   }
 
+  void remove(edge e) {
+    // last edge gets the removed edge position
+    (*this)[e] = this->back();
+    this->resize(this->size() - 1);
+  }
+
   // get values from a typed instance of PropertyInterface
   template <typename PROP_PTR>
   void copyFromProperty(PROP_PTR prop) {
@@ -413,4 +437,4 @@ public:
 };
 }
 
-#endif // TALIPOT_STATIC_PROPERTY_H
+#endif // TALIPOT_VECTOR_PROPERTY_H
