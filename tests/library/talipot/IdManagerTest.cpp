@@ -95,7 +95,7 @@ void IdManagerTest::testIterate() {
 
   unsigned int id = 0;
 
-  for (unsigned int itId : idManager->getIds<unsigned int>()) {
+  for (unsigned int itId : idManager->getIds()) {
     CPPUNIT_ASSERT_EQUAL(id, itId);
     ++id;
   }
@@ -106,7 +106,7 @@ void IdManagerTest::testIterate() {
 
   id = 0;
 
-  for (unsigned int itId : idManager->getIds<unsigned int>()) {
+  for (unsigned int itId : idManager->getIds()) {
     CPPUNIT_ASSERT_EQUAL(2u * id + 1u, itId);
     ++id;
   }

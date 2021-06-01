@@ -20,9 +20,12 @@
 #include <vector>
 #include <deque>
 #include <iostream>
+#include <numeric>
 #include <talipot/MutableContainer.h>
 #include <talipot/StlIterator.h>
 #include <talipot/ParallelTools.h>
+#include <talipot/FilterIterator.h>
+#include <talipot/StableIterator.h>
 
 namespace tlp {
 
@@ -38,55 +41,7 @@ struct IdManagerState {
   IdManagerState() : firstId(0), nextId(0) {}
 };
 
-// define a class to iterate through the non free ids
-// of an IdManagerState
-template <typename TYPE>
-class IdManagerIterator : public Iterator<TYPE> {
-
-private:
-  unsigned int current;
-  unsigned int last;
-  const std::set<unsigned int> &freeIds;
-  std::set<unsigned int>::const_iterator it;
-
-public:
-  IdManagerIterator(const IdManagerState &info)
-      : current(info.firstId), last(info.nextId), freeIds(info.freeIds), it(freeIds.begin()) {
-#ifdef TLP_NO_IDS_REUSE
-    std::set<unsigned int>::const_reverse_iterator itr;
-    itr = freeIds.rbegin();
-
-    while (itr != freeIds.rend() && (*itr) == last - 1) {
-      --last;
-      ++itr;
-    }
-
-#endif
-  }
-  ~IdManagerIterator() override = default;
-
-  bool hasNext() override {
-    return (current < last);
-  }
-
-  TYPE next() override {
-    unsigned int tmp = current;
-    ++current;
-
-    while (it != freeIds.end()) {
-      if (current < *it) {
-        return static_cast<TYPE>(tmp);
-      }
-
-      ++current;
-      ++it;
-    }
-
-    return static_cast<TYPE>(tmp);
-  }
-};
-
-/// class for the management of the identifiers
+// class for the management of the identifiers
 class TLP_SCOPE IdManager {
 
   // the current state
@@ -142,9 +97,12 @@ public:
    * the idManager is modified (free, get) this iterator
    * will be invalid.
    */
-  template <typename TYPE>
-  Iterator<TYPE> *getIds() const {
-    return new IdManagerIterator<TYPE>(state);
+  Iterator<unsigned int> *getIds() const {
+    size_t size = state.nextId - state.firstId;
+    std::vector<unsigned int> ids(size);
+    std::iota(ids.begin(), ids.end(), state.firstId);
+    return stableIterator(filterIterator(
+        ids, [&](unsigned int id) { return state.freeIds.find(id) == state.freeIds.end(); }));
   }
 
   friend std::ostream &operator<<(std::ostream &, const IdManager &);
