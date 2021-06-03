@@ -160,6 +160,10 @@ void PixelOrientedView::setState(const DataSet &dataSet) {
     return;
   }
 
+  if (!smallMultiplesView) {
+    switchFromDetailViewToSmallMultiples();
+  }
+
   if (talipotNodeColorMapping != nullptr && this->pixelOrientedGraph != graph()) {
     delete talipotNodeColorMapping;
     talipotNodeColorMapping = nullptr;
