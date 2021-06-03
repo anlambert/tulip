@@ -147,7 +147,7 @@ void GraphView::restoreNode(node n) {
 }
 //----------------------------------------------------------------
 void GraphView::addNodesInternal(const std::vector<node> &nodes) {
-  _nodes.reserve(_nodes.size() + nodes.size());
+  reserveNodes(_nodes.size() + nodes.size());
 
   for (auto n : nodes) {
     assert(getRootImpl()->isElement(n));
@@ -211,7 +211,7 @@ void GraphView::restoreEdge(edge e, const node, const node) {
 }
 //----------------------------------------------------------------
 void GraphView::addEdgesInternal(const std::vector<edge> &edges) {
-  _edges.reserve(_edges.size() + edges.size());
+  reserveEdges(_edges.size() + edges.size());
 
   for (auto e : edges) {
     assert(getRootImpl()->isElement(e));
@@ -437,18 +437,13 @@ std::vector<edge> GraphView::getEdges(const node src, const node tgt, bool direc
   return edges;
 }
 //----------------------------------------------------------------
-void GraphView::reserveNodes(unsigned int) {
-#ifndef NDEBUG
-  tlp::warning() << "Warning: " << __PRETTY_FUNCTION__ << " ... Impossible operation on a subgraph"
-                 << std::endl;
-#endif
+void GraphView::reserveNodes(unsigned int nb) {
+  _nodeData.alloc(this, nb);
+  _nodes.reserve(nb);
 }
 //----------------------------------------------------------------
-void GraphView::reserveEdges(unsigned int) {
-#ifndef NDEBUG
-  tlp::warning() << "Warning: " << __PRETTY_FUNCTION__ << " ... Impossible operation on a subgraph"
-                 << std::endl;
-#endif
+void GraphView::reserveEdges(unsigned int nb) {
+  _edges.reserve(nb);
 }
 //----------------------------------------------------------------
 bool GraphView::canPop() {
