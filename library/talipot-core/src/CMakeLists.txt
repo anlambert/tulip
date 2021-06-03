@@ -109,7 +109,8 @@ INCLUDE_DIRECTORIES(
   ${QHULL_INCLUDE_DIRS}
   ${GZStreamInclude}
   ${Zstd_INCLUDE_DIRS}
-  ${ZstdStreamInclude})
+  ${ZstdStreamInclude}
+  ${ParallelHashmapInclude})
 
 ADD_CUSTOM_COMMAND(
   OUTPUT

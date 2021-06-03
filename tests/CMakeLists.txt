@@ -13,7 +13,8 @@ MACRO(UNIT_TEST)
   IF(TEST_SRCS)
     INCLUDE_DIRECTORIES(
       ${TalipotCoreBuildInclude} ${TalipotCoreInclude} ${CppUnit_INCLUDE_DIRS}
-      ${CMAKE_SOURCE_DIR}/utils/crash_handler ${CMAKE_SOURCE_DIR}/tests/include)
+      ${CMAKE_SOURCE_DIR}/utils/crash_handler ${CMAKE_SOURCE_DIR}/tests/include
+      ${ParallelHashmapInclude})
     LINK_DIRECTORIES(${CppUnit_LIBRARY_DIRS})
     ADD_EXECUTABLE(${TEST_NAME} ${TEST_SRCS})
     ADD_DEPENDENCIES(tests ${TEST_NAME})

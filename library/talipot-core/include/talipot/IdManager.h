@@ -19,9 +19,17 @@
 #include <set>
 #include <vector>
 #include <deque>
-#include <iostream>
 #include <numeric>
-#include <talipot/MutableContainer.h>
+
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wold-style-cast"
+#endif
+#include <parallel_hashmap/phmap.h>
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif
+
 #include <talipot/StlIterator.h>
 #include <talipot/ParallelTools.h>
 #include <talipot/FilterIterator.h>
@@ -257,52 +265,54 @@ public:
 template <typename ID_TYPE>
 class SGraphIdContainer : public std::vector<ID_TYPE> {
   // used to store the elts positions in the vector
-  MutableContainer<unsigned int> pos;
+  phmap::flat_hash_map<ID_TYPE, unsigned int> pos;
 
 public:
-  SGraphIdContainer() {
-    pos.setAll(UINT_MAX);
-  }
+  SGraphIdContainer() = default;
+  ~SGraphIdContainer() = default;
+
   bool isElement(ID_TYPE elt) const {
-    return (getPos(elt) != UINT_MAX);
+    return pos.find(elt) != pos.end();
   }
 
   unsigned int getPos(ID_TYPE elt) const {
-    return pos.get(elt);
+    try {
+      return pos.at(elt);
+    } catch (std::out_of_range &) {
+      return UINT_MAX;
+    }
   }
 
   void add(ID_TYPE elt) {
     assert(!isElement(elt));
     // put the elt at the end
-    pos.set(elt, this->size());
+    pos[elt] = this->size();
     this->push_back(elt);
   }
 
   void clone(const std::vector<ID_TYPE> &elts) {
     static_cast<std::vector<ID_TYPE> &>(*this) = elts;
-    unsigned int nb = elts.size();
-
-    for (unsigned int i = 0; i < nb; ++i) {
-      pos.set(elts[i], i);
+    for (unsigned int i = 0; i < elts.size(); ++i) {
+      pos[elts[i]] = i;
     }
   }
 
   void remove(ID_TYPE elt) {
     assert(isElement(elt));
     // get the position of the elt to remove
-    unsigned int i = pos.get(elt);
+    unsigned int i = pos[elt];
     assert(i < this->size());
     // put the last elt at the freed position
     unsigned int last = this->size() - 1;
 
     if (i < last) {
-      pos.set(((*this)[i] = (*this)[last]), i);
+      pos[(*this)[i] = (*this)[last]] = i;
     }
 
     // resize the container
     this->resize(last);
     // the elt no longer exist in the container
-    pos.set(elt, UINT_MAX);
+    pos.erase(elt);
   }
 
   // ascending sort
@@ -311,7 +321,7 @@ public:
     unsigned int nbElts = this->size();
 
     for (unsigned int i = 0; i < nbElts; ++i) {
-      pos.set((*this)[i], i);
+      pos[(*this)[i]] = i;
     }
   }
 };
