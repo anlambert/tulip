@@ -30,26 +30,6 @@ using namespace std;
 static const string TalipotBitmapDirSym = "TalipotBitmapDir/";
 static const string TulipBitmapDirSym = "TulipBitmapDir/";
 
-// a template class to iterate into a range of nodes or edges
-template <typename T>
-struct RangeIterator : public Iterator<T> {
-  T first, last, current;
-
-  RangeIterator(T begin, T end) : Iterator<T>(), first(begin), last(end), current(begin) {
-    assert(begin.id <= last.id);
-  }
-  ~RangeIterator() override = default;
-  T next() override {
-    T tmp = current;
-    ++(current.id);
-    return tmp;
-  }
-
-  bool hasNext() override {
-    return current.id <= last.id;
-  }
-};
-
 //================================================================================
 TLPBImport::TLPBImport(tlp::PluginContext *context) : ImportModule(context) {
   addInParameter<std::string>("file::filename", "The pathname of the TLPB file to import.", "");
@@ -111,8 +91,8 @@ bool TLPBImport::importGraph() {
   }
   // read subgraphs
   unsigned int numSubGraphs = 0;
-  MutableContainer<Graph *> subgraphs;
-  subgraphs.set(0, graph);
+  unordered_map<unsigned int, Graph *> subgraphs;
+  subgraphs[0] = graph;
   {
     // read the number of subgraphs
     if (!bool(inputData.is->read(reinterpret_cast<char *>(&numSubGraphs), sizeof(numSubGraphs)))) {
@@ -133,10 +113,10 @@ bool TLPBImport::importGraph() {
       const auto &[sgId, parentId] = ids;
 
       // add subgraph
-      Graph *parent = subgraphs.get(parentId);
+      Graph *parent = subgraphs[parentId];
       Graph *sg = static_cast<GraphAbstract *>(parent)->addSubGraph(sgId);
       // record sg
-      subgraphs.set(sgId, sg);
+      subgraphs[sgId] = sg;
       // read sg nodes ranges
       {
         unsigned int numRanges = 0;
@@ -147,9 +127,10 @@ bool TLPBImport::importGraph() {
         }
 
         // we can use a buffer to limit the disk reads
-        std::vector<std::pair<node, node>> vRanges(MAX_RANGES_TO_READ);
+        std::vector<std::pair<unsigned int, unsigned int>> vRanges(MAX_RANGES_TO_READ);
 
         // loop to read ranges
+        std::vector<node> sgNodes;
         while (numRanges) {
           unsigned int rangesToRead =
               numRanges > MAX_RANGES_TO_READ ? MAX_RANGES_TO_READ : numRanges;
@@ -161,14 +142,16 @@ bool TLPBImport::importGraph() {
             return false;
           }
 
-          // loop to add nodes
           for (unsigned int i = 0; i < rangesToRead; ++i) {
             const auto &[n1, n2] = vRanges[i];
-            sg->addNodes(new RangeIterator<node>(n1, n2));
+            sgNodes.reserve(sgNodes.size() + n2 - n1);
+            for (auto id = n1; id <= n2; ++id) {
+              sgNodes.push_back(node(id));
+            }
           }
-
           numRanges -= rangesToRead;
         }
+        sg->addNodes(sgNodes);
       }
       // read sg edges ranges
       {
@@ -180,8 +163,9 @@ bool TLPBImport::importGraph() {
         }
 
         // loop to read ranges
-        std::vector<std::pair<edge, edge>> vRanges(MAX_RANGES_TO_READ);
+        std::vector<std::pair<unsigned int, unsigned int>> vRanges(MAX_RANGES_TO_READ);
 
+        std::vector<edge> sgEdges;
         while (numRanges) {
           unsigned int rangesToRead =
               numRanges > MAX_RANGES_TO_READ ? MAX_RANGES_TO_READ : numRanges;
@@ -196,11 +180,14 @@ bool TLPBImport::importGraph() {
           // loop to add edges
           for (unsigned int i = 0; i < rangesToRead; ++i) {
             const auto &[e1, e2] = vRanges[i];
-            sg->addEdges(new RangeIterator<edge>(e1, e2));
+            sgEdges.reserve(sgEdges.size() + e2 - e1);
+            for (auto id = e1; id <= e2; ++id) {
+              sgEdges.push_back(edge(id));
+            }
           }
-
           numRanges -= rangesToRead;
         }
+        sg->addEdges(sgEdges);
       }
 
       if (pluginProgress->progress(i + 1, numSubGraphs) != TLP_CONTINUE) {
@@ -248,7 +235,7 @@ bool TLPBImport::importGraph() {
       }
 
       // get corresponding graph
-      Graph *g = subgraphs.get(size);
+      Graph *g = subgraphs[size];
       assert(g);
 
       if (g == nullptr) {
@@ -576,7 +563,7 @@ bool TLPBImport::importGraph() {
       return false;
     }
 
-    Graph *g = id ? subgraphs.get(id) : graph;
+    Graph *g = id ? subgraphs[id] : graph;
     assert(g);
 
     if (g == nullptr) {
