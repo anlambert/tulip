@@ -155,31 +155,41 @@ struct TLPGraphBuilder : public TLPTrue {
     _graph->reserveEdges(nbEdges);
     return true;
   }
-  bool addClusterNode(int nodeId) {
-    node n(nodeId);
-
-    if (version < 2.1) {
-      n = nodeIndex[nodeId];
+  bool addClusterNodes(const std::vector<node> &nodes) {
+    std::vector<node> vNodes;
+    vNodes.reserve(nodes.size());
+    for (auto n : nodes) {
+      if (version < 2.1) {
+        n = nodeIndex[n.id];
+      }
+      vNodes.push_back(n);
+      if (!_graph->isElement(n)) {
+        std::stringstream ess;
+        ess << "node with id " << n.id << " does not exist";
+        parser->errorMsg = ess.str();
+        return false;
+      }
     }
-
-    if (_graph->isElement(n) && _cluster) {
-      _cluster->addNode(n);
-      return true;
-    }
-
-    return false;
+    _cluster->addNodes(vNodes);
+    return true;
   }
-  bool addClusterEdge(int edgeId) {
-    edge e(edgeId);
-
-    if (version < 2.1) {
-      e = edgeIndex[edgeId];
+  bool addClusterEdges(const std::vector<edge> &edges) {
+    std::vector<edge> vEdges;
+    vEdges.reserve(edges.size());
+    for (auto e : edges) {
+      if (version < 2.1) {
+        e = edgeIndex[e.id];
+      }
+      vEdges.push_back(e);
+      if (!_graph->isElement(e)) {
+        std::stringstream ess;
+        ess << "edge with id " << e.id << " does not exist";
+        parser->errorMsg = ess.str();
+        return false;
+      }
     }
 
-    if (_graph->isElement(e) && _cluster) {
-      _cluster->addEdge(e);
-    }
-
+    _cluster->addEdges(vEdges);
     return true;
   }
   bool addEdge(int id, int idSource, int idTarget) {
@@ -591,11 +601,11 @@ struct TLPClusterBuilder : public TLPFalse {
     return true;
   }
   bool addStruct(const std::string &structName, TLPBuilder *&newBuilder) override;
-  bool addNode(int nodeId) const {
-    return graphBuilder->addClusterNode(nodeId);
+  bool addNodes(const std::vector<node> &nodes) const {
+    return graphBuilder->addClusterNodes(nodes);
   }
-  bool addEdge(int edgeId) const {
-    return graphBuilder->addClusterEdge(edgeId);
+  bool addEdges(const std::vector<edge> &edges) const {
+    return graphBuilder->addClusterEdges(edges);
   }
   bool close() override {
     return true;
@@ -604,38 +614,42 @@ struct TLPClusterBuilder : public TLPFalse {
 //=================================================================================
 struct TLPClusterNodeBuilder : public TLPFalse {
   TLPClusterBuilder *clusterBuilder;
+  std::vector<node> nodes;
   TLPClusterNodeBuilder(TLPClusterBuilder *clusterBuilder) : clusterBuilder(clusterBuilder) {}
   bool addInt(const int id) override {
-    return clusterBuilder->addNode(id);
+    nodes.push_back(node(id));
+    return true;
   }
   bool addRange(int first, int second) override {
     while (first <= second) {
-      clusterBuilder->addNode(first);
+      nodes.push_back(node(first));
       ++first;
     }
-
     return true;
   }
   bool close() override {
+    clusterBuilder->addNodes(nodes);
     return true;
   }
 };
 //=================================================================================
 struct TLPClusterEdgeBuilder : public TLPFalse {
   TLPClusterBuilder *clusterBuilder;
+  std::vector<edge> edges;
   TLPClusterEdgeBuilder(TLPClusterBuilder *clusterBuilder) : clusterBuilder(clusterBuilder) {}
   bool addInt(const int id) override {
-    return clusterBuilder->addEdge(id);
+    edges.push_back(edge(id));
+    return true;
   }
   bool addRange(int first, int second) override {
     while (first <= second) {
-      clusterBuilder->addEdge(first);
+      edges.push_back(edge(first));
       ++first;
     }
-
     return true;
   }
   bool close() override {
+    clusterBuilder->addEdges(edges);
     return true;
   }
 };
