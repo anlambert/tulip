@@ -304,27 +304,27 @@ edge GraphAbstract::getRandomEdge() const {
 //=========================================================================
 node GraphAbstract::getInNode(const node n, unsigned int i) const {
   assert(i <= indeg(n) && i > 0);
-  Iterator<node> *itN = getInNodes(n);
   node result;
-
-  while (i--) {
-    result = itN->next();
+  unsigned int cpt = 0;
+  for (auto n : getInNodes(n)) {
+    if (++cpt == i) {
+      result = n;
+      break;
+    }
   }
-
-  delete itN;
   return result;
 }
 //=========================================================================
 node GraphAbstract::getOutNode(const node n, unsigned int i) const {
   assert(i <= outdeg(n) && i > 0);
-  Iterator<node> *itN = getOutNodes(n);
   node result;
-
-  while (i--) {
-    result = itN->next();
+  unsigned int cpt = 0;
+  for (auto n : getOutNodes(n)) {
+    if (++cpt == i) {
+      result = n;
+      break;
+    }
   }
-
-  delete itN;
   return result;
 }
 //=========================================================================
