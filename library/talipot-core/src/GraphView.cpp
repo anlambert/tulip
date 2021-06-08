@@ -172,12 +172,14 @@ void GraphView::addNode(const node n) {
   }
 }
 //----------------------------------------------------------------
-void GraphView::addNodes(Iterator<node> *addedNodes) {
+void GraphView::addNodes(const vector<node> &addedNodes) {
   std::vector<node> nodes;
   std::vector<node> superNodes;
   Graph *super = getSuperGraph();
   bool superIsRoot = (super == getRoot());
 
+  nodes.reserve(addedNodes.size());
+  superNodes.reserve(addedNodes.size());
   for (auto n : addedNodes) {
     if (!isElement(n)) {
       nodes.push_back(n);
@@ -189,7 +191,7 @@ void GraphView::addNodes(Iterator<node> *addedNodes) {
   }
 
   if (!superNodes.empty()) {
-    super->addNodes(stlIterator(superNodes));
+    super->addNodes(superNodes);
   }
 
   if (!nodes.empty()) {
@@ -254,12 +256,14 @@ std::vector<edge> GraphView::addEdges(const std::vector<std::pair<node, node>> &
   return addedEdges;
 }
 //----------------------------------------------------------------
-void GraphView::addEdges(Iterator<edge> *addedEdges) {
+void GraphView::addEdges(const vector<edge> &addedEdges) {
   std::vector<edge> edges;
   std::vector<edge> superEdges;
   Graph *super = getSuperGraph();
   bool superIsRoot = (super == getRoot());
 
+  edges.reserve(addedEdges.size());
+  superEdges.reserve(addedEdges.size());
   for (auto e : addedEdges) {
     assert(getRootImpl()->isElement(e));
     assert(isElement(source(e)));
@@ -275,7 +279,7 @@ void GraphView::addEdges(Iterator<edge> *addedEdges) {
   }
 
   if (!superEdges.empty()) {
-    super->addEdges(stlIterator(superEdges));
+    super->addEdges(superEdges);
   }
 
   if (!edges.empty()) {

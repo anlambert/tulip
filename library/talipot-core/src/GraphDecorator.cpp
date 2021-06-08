@@ -313,7 +313,7 @@ void GraphDecorator::addNode(const node) {
 }
 
 //============================================================
-void GraphDecorator::addNodes(Iterator<node> *) {
+void GraphDecorator::addNodes(const std::vector<node> &) {
   tlp::warning() << "Warning : " << __PRETTY_FUNCTION__ << " ... Impossible operation" << std::endl;
 }
 
@@ -349,7 +349,7 @@ void GraphDecorator::addEdge(const edge) {
 }
 
 //============================================================
-void GraphDecorator::addEdges(Iterator<edge> *) {
+void GraphDecorator::addEdges(const std::vector<edge> &) {
   tlp::warning() << "Warning : " << __PRETTY_FUNCTION__ << " ... Impossible operation" << std::endl;
 }
 
@@ -370,12 +370,8 @@ void GraphDecorator::delNode(const node n, bool deleteInAllGraphs) {
 }
 
 //============================================================
-void GraphDecorator::delNodes(Iterator<node> *itN, bool deleteInAllGraphs) {
-  assert(itN != nullptr);
-
-  for (auto n : itN) {
-    delNode(n, deleteInAllGraphs);
-  }
+void GraphDecorator::delNodes(const std::vector<node> &nodes, bool deleteInAllGraphs) {
+  graph_component->delNodes(nodes, deleteInAllGraphs);
 }
 
 //============================================================
@@ -385,12 +381,8 @@ void GraphDecorator::delEdge(const edge e, bool deleteInAllGraphs) {
 }
 
 //=========================================================================
-void GraphDecorator::delEdges(Iterator<edge> *itE, bool deleteInAllGraphs) {
-  assert(itE != nullptr);
-
-  for (auto e : itE) {
-    delEdge(e, deleteInAllGraphs);
-  }
+void GraphDecorator::delEdges(const std::vector<edge> &edges, bool deleteInAllGraphs) {
+  graph_component->delEdges(edges, deleteInAllGraphs);
 }
 
 //============================================================

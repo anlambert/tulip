@@ -77,10 +77,10 @@ public:
   //=======================================
   bool isMetaNode(const node) const override;
   Graph *getNodeMetaInfo(const node) const override;
-  void delNodes(Iterator<node> *itN, bool deleteInAllGraphs) override;
+  void delNodes(const std::vector<node> &nodes, bool deleteInAllGraphs = false) override;
   bool isMetaEdge(const edge) const override;
   Iterator<edge> *getEdgeMetaInfo(const edge) const override;
-  void delEdges(Iterator<edge> *itE, bool deleteInAllGraphs = false) override;
+  void delEdges(const std::vector<edge> &edges, bool deleteInAllGraphs = false) override;
   //=======================================
   node getOneNode() const override;
   node getRandomNode() const override;

@@ -92,15 +92,15 @@ public:
   node addNode() override;
   std::vector<node> addNodes(unsigned int nb) override;
   void addNode(const node) override;
-  void addNodes(Iterator<node> *nodes) override;
+  void addNodes(const std::vector<node> &nodes) override;
   edge addEdge(const node n1, const node n2) override;
   std::vector<edge> addEdges(const std::vector<std::pair<node, node>> &edges) override;
   void addEdge(const edge) override;
-  void addEdges(Iterator<edge> *edges) override;
+  void addEdges(const std::vector<edge> &edges) override;
   void delNode(const tlp::node n, bool deleteInAllGraphs = false) override;
-  void delNodes(Iterator<node> *itN, bool deleteInAllGraphs) override;
+  void delNodes(const std::vector<node> &nodes, bool deleteInAllGraphs) override;
   void delEdge(const tlp::edge e, bool deleteInAllGraphs = false) override;
-  void delEdges(Iterator<edge> *itE, bool deleteInAllGraphs = false) override;
+  void delEdges(const std::vector<edge> &edges, bool deleteInAllGraphs = false) override;
   void setEdgeOrder(const node n, const std::vector<edge> &s) override;
   void swapEdgeOrder(const node n, const edge e1, const edge e2) override;
 

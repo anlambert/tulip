@@ -110,7 +110,7 @@ void GraphImpl::addNode(const node) {
                  << std::endl;
 }
 //----------------------------------------------------------------
-void GraphImpl::addNodes(Iterator<node> *) {
+void GraphImpl::addNodes(const vector<node> &) {
   tlp::warning() << "Warning : " << __PRETTY_FUNCTION__ << " ... Impossible operation on Root Graph"
                  << std::endl;
 }
@@ -149,7 +149,7 @@ void GraphImpl::addEdge(const edge e) {
                  << ")";
 }
 //----------------------------------------------------------------
-void GraphImpl::addEdges(Iterator<edge> *) {
+void GraphImpl::addEdges(const vector<edge> &) {
   tlp::warning() << "Warning: " << __PRETTY_FUNCTION__ << " ... Impossible operation on Root Graph"
                  << std::endl;
 }

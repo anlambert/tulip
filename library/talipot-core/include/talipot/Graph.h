@@ -620,7 +620,7 @@ public:
    * @param nodes An iterator over nodes to add to this subgraph. The graph takes ownership
    of this iterator.
    */
-  virtual void addNodes(Iterator<node> *nodes) = 0;
+  void addNodes(Iterator<node> *nodes);
 
   /**
   * @brief Adds existing nodes in the graph. The nodes are also added in all the ancestor graphs.
@@ -632,7 +632,7 @@ public:
   *
   * @param nodes a vector of nodes to add to this subgraph.
   */
-  void addNodes(const std::vector<node> &nodes);
+  virtual void addNodes(const std::vector<node> &nodes) = 0;
 
   /**
    * @brief Deletes a node in the graph.
@@ -653,7 +653,7 @@ public:
    * default only removes in the current graph.
    * @see delNode() to remove a single node.
    */
-  virtual void delNodes(Iterator<node> *it, bool deleteInAllGraphs = false) = 0;
+  void delNodes(Iterator<node> *it, bool deleteInAllGraphs = false);
 
   /**
    * @brief Deletes nodes in the graph.
@@ -664,7 +664,7 @@ public:
    * default only removes in the current graph.
    * @see delNode() to remove a single node.
    */
-  void delNodes(const std::vector<node> &nodes, bool deleteInAllGraphs = false);
+  virtual void delNodes(const std::vector<node> &nodes, bool deleteInAllGraphs = false) = 0;
 
   /**
    * @brief Adds a new edge in the graph
@@ -711,7 +711,7 @@ public:
    * @param edges An iterator over edges to add to this subgraph. The graph takes ownership
    of this iterator.
    */
-  virtual void addEdges(Iterator<edge> *edges) = 0;
+  void addEdges(Iterator<edge> *edges);
 
   /**
    * @brief Adds existing edges in the graph. The edges are also added in all
@@ -721,7 +721,7 @@ public:
    * @warning Using this method on the root graph will display a warning on the console.
    * @param edges a vector of the edges to add on this subgraph.
    */
-  void addEdges(const std::vector<edge> &edges);
+  virtual void addEdges(const std::vector<edge> &edges) = 0;
 
   /**
    * @brief Deletes an edge in the graph. The edge is also removed in
@@ -741,7 +741,7 @@ public:
    * @param deleteInAllGraphs  Whether to delete in all its parent graphs or only in this graph. By
    * default only removes in the current graph.
    */
-  virtual void delEdges(Iterator<edge> *itE, bool deleteInAllGraphs = false) = 0;
+  void delEdges(Iterator<edge> *itE, bool deleteInAllGraphs = false);
 
   /**
    * @brief Deletes edges in the graph. These edges are also removed in the subgraphs hierarchy.
@@ -751,7 +751,7 @@ public:
    * @param deleteInAllGraphs  Whether to delete in all its parent graphs or only in this graph. By
    * default only removes in the current graph.
    */
-  void delEdges(const std::vector<edge> &edges, bool deleteInAllGraphs = false);
+  virtual void delEdges(const std::vector<edge> &edges, bool deleteInAllGraphs = false) = 0;
 
   /**
    * @brief Sets the order of the edges around a node.

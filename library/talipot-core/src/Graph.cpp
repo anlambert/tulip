@@ -1670,20 +1670,20 @@ const std::string &GraphEvent::getPropertyName() const {
   return *(info.name);
 }
 
-void Graph::addNodes(const std::vector<node> &nodes) {
-  addNodes(stlIterator(nodes));
+void Graph::addNodes(Iterator<node> *nodes) {
+  addNodes(iteratorVector(nodes));
 }
 
-void Graph::delNodes(const std::vector<node> &nodes, bool deleteInAllGraphs) {
-  delNodes(stlIterator(nodes), deleteInAllGraphs);
+void Graph::delNodes(Iterator<node> *nodes, bool deleteInAllGraphs) {
+  delNodes(iteratorVector(nodes), deleteInAllGraphs);
 }
 
-void Graph::addEdges(const std::vector<edge> &edges) {
-  addEdges(stlIterator(edges));
+void Graph::addEdges(Iterator<edge> *edges) {
+  addEdges(iteratorVector(edges));
 }
 
-void Graph::delEdges(const std::vector<edge> &edges, bool deleteInAllGraphs) {
-  delEdges(stlIterator(edges), deleteInAllGraphs);
+void Graph::delEdges(Iterator<edge> *edges, bool deleteInAllGraphs) {
+  delEdges(iteratorVector(edges), deleteInAllGraphs);
 }
 
 BooleanProperty *Graph::getLocalBooleanProperty(const string &propertyName) {

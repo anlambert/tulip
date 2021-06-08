@@ -328,18 +328,14 @@ node GraphAbstract::getOutNode(const node n, unsigned int i) const {
   return result;
 }
 //=========================================================================
-void GraphAbstract::delNodes(Iterator<node> *itN, bool deleteInAllGraphs) {
-  assert(itN != nullptr);
-
-  for (auto n : itN) {
+void GraphAbstract::delNodes(const std::vector<node> &nodes, bool deleteInAllGraphs) {
+  for (auto n : nodes) {
     delNode(n, deleteInAllGraphs);
   }
 }
 //=========================================================================
-void GraphAbstract::delEdges(Iterator<edge> *itE, bool deleteInAllGraphs) {
-  assert(itE != nullptr);
-
-  for (auto e : itE) {
+void GraphAbstract::delEdges(const std::vector<edge> &edges, bool deleteInAllGraphs) {
+  for (auto e : edges) {
     delEdge(e, deleteInAllGraphs);
   }
 }
