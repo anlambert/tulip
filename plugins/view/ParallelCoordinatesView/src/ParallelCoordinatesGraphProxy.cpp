@@ -122,6 +122,9 @@ void ParallelCoordinatesGraphProxy::deleteData(const uint dataId) {
   }
 }
 
+static std::function<uint(tlp::node)> nodeToId = [](tlp::node n) { return n.id; };
+static std::function<uint(tlp::edge)> edgeToId = [](tlp::edge e) { return e.id; };
+
 Iterator<uint> *ParallelCoordinatesGraphProxy::getDataIterator() {
   if (getDataLocation() == NODE) {
     return conversionIterator<uint>(getNodes(), nodeToId);

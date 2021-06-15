@@ -13,7 +13,6 @@
 
 #include <cstdlib>
 
-#include <talipot/ConversionIterator.h>
 #include <talipot/FilterIterator.h>
 
 template <class NodeType, class EdgeType, class PropType>
@@ -44,14 +43,14 @@ template <class NodeType, class EdgeType, class PropType>
 TYPE_CONST_REFERENCE(NodeType)
 tlp::AbstractProperty<NodeType, EdgeType, PropType>::getNodeValue(const tlp::node n) const {
   assert(n.isValid());
-  return nodeProperties.get(n.id);
+  return nodeProperties.get(n);
 }
 //=============================================================
 template <class NodeType, class EdgeType, class PropType>
 TYPE_CONST_REFERENCE(EdgeType)
 tlp::AbstractProperty<NodeType, EdgeType, PropType>::getEdgeValue(const tlp::edge e) const {
   assert(e.isValid());
-  return edgeProperties.get(e.id);
+  return edgeProperties.get(e);
 }
 //=================================================================================
 template <class NodeType, class EdgeType, class PropType>
@@ -61,16 +60,15 @@ tlp::Iterator<tlp::node> *tlp::AbstractProperty<NodeType, EdgeType, PropType>::g
     return filterIterator(sg == nullptr ? PropType::graph->nodes() : sg->nodes(),
                           [&, val](node n) { return this->getNodeValue(n) == val; });
   } else {
-    return filterIterator(
-        conversionIterator<node>(nodeProperties.findAll(val), idToNode), [&, sg](node n) {
-          if (PropType::name.empty()) {
-            // we always need to check that nodes belong to graph for non registered
-            // properties, because deleted nodes are not erased from them
-            return sg == nullptr ? PropType::graph->isElement(n) : sg->isElement(n);
-          } else {
-            return sg == nullptr || sg == PropType::graph || sg->isElement(n);
-          }
-        });
+    return filterIterator(nodeProperties.findAll(val), [&, sg](node n) {
+      if (PropType::name.empty()) {
+        // we always need to check that nodes belong to graph for non registered
+        // properties, because deleted nodes are not erased from them
+        return sg == nullptr ? PropType::graph->isElement(n) : sg->isElement(n);
+      } else {
+        return sg == nullptr || sg == PropType::graph || sg->isElement(n);
+      }
+    });
   }
 }
 //=================================================================================
@@ -81,16 +79,15 @@ tlp::Iterator<tlp::edge> *tlp::AbstractProperty<NodeType, EdgeType, PropType>::g
     return filterIterator(sg == nullptr ? PropType::graph->edges() : sg->edges(),
                           [&, val](edge e) { return this->getEdgeValue(e) == val; });
   } else {
-    return filterIterator(
-        conversionIterator<edge>(edgeProperties.findAll(val), idToEdge), [&, sg](edge e) {
-          if (PropType::name.empty()) {
-            // we always need to check that edges belong to graph for non registered
-            // properties, because deleted nodes are not erased from them
-            return sg == nullptr ? PropType::graph->isElement(e) : sg->isElement(e);
-          } else {
-            return sg == nullptr || sg == PropType::graph || sg->isElement(e);
-          }
-        });
+    return filterIterator(edgeProperties.findAll(val), [&, sg](edge e) {
+      if (PropType::name.empty()) {
+        // we always need to check that edges belong to graph for non registered
+        // properties, because deleted nodes are not erased from them
+        return sg == nullptr ? PropType::graph->isElement(e) : sg->isElement(e);
+      } else {
+        return sg == nullptr || sg == PropType::graph || sg->isElement(e);
+      }
+    });
   }
 }
 //=============================================================
@@ -99,7 +96,7 @@ void tlp::AbstractProperty<NodeType, EdgeType, PropType>::setNodeValue(
     const tlp::node n, TYPE_CONST_REFERENCE(NodeType) v) {
   assert(n.isValid());
   PropType::notifyBeforeSetNodeValue(n);
-  nodeProperties.set(n.id, v);
+  nodeProperties.set(n, v);
   PropType::notifyAfterSetNodeValue(n);
 }
 //=============================================================
@@ -108,7 +105,7 @@ void tlp::AbstractProperty<NodeType, EdgeType, PropType>::setEdgeValue(
     const tlp::edge e, TYPE_CONST_REFERENCE(EdgeType) v) {
   assert(e.isValid());
   PropType::notifyBeforeSetEdgeValue(e);
-  edgeProperties.set(e.id, v);
+  edgeProperties.set(e, v);
   PropType::notifyAfterSetEdgeValue(e);
 }
 //=============================================================
@@ -126,7 +123,7 @@ void tlp::AbstractProperty<NodeType, EdgeType, PropType>::setNodeDefaultValue(
   std::vector<tlp::node> nodesDefaultToUpdate;
 
   for (auto n : this->getGraph()->nodes()) {
-    auto val = nodeProperties.get(n.id);
+    auto val = nodeProperties.get(n);
 
     if (val == oldDefaultValue) {
       nodesOldDefaultToUpdate.push_back(n);
@@ -142,13 +139,13 @@ void tlp::AbstractProperty<NodeType, EdgeType, PropType>::setNodeDefaultValue(
   // reset the backup nodes to the old default value as there is a new one in the
   // underlying MutableContainer
   for (auto n : nodesOldDefaultToUpdate) {
-    nodeProperties.set(n.id, oldDefaultValue);
+    nodeProperties.set(n, oldDefaultValue);
   }
 
   // reset the backup nodes to their current value in order
   // to synchronize the underlying MutableContainer state
   for (auto n : nodesDefaultToUpdate) {
-    nodeProperties.set(n.id, v, true);
+    nodeProperties.set(n, v, true);
   }
 }
 //=============================================================
@@ -182,7 +179,7 @@ void tlp::AbstractProperty<NodeType, EdgeType, PropType>::setEdgeDefaultValue(
   std::vector<tlp::edge> edgesDefaultToUpdate;
 
   for (auto e : this->getGraph()->edges()) {
-    auto val = edgeProperties.get(e.id);
+    auto val = edgeProperties.get(e);
 
     if (val == oldDefaultValue) {
       edgesOldDefaultToUpdate.push_back(e);
@@ -198,13 +195,13 @@ void tlp::AbstractProperty<NodeType, EdgeType, PropType>::setEdgeDefaultValue(
   // reset the backup edges to the old default value as there is a new one in the
   // underlying MutableContainer
   for (auto e : edgesOldDefaultToUpdate) {
-    edgeProperties.set(e.id, oldDefaultValue);
+    edgeProperties.set(e, oldDefaultValue);
   }
 
   // reset the backup edges to their current value in order
   // to synchronize the underlying MutableContainer state
   for (auto e : edgesDefaultToUpdate) {
-    edgeProperties.set(e.id, v, true);
+    edgeProperties.set(e, v, true);
   }
 }
 //============================================================
@@ -243,17 +240,15 @@ template <class NodeType, class EdgeType, class PropType>
 tlp::Iterator<tlp::node> *
 tlp::AbstractProperty<NodeType, EdgeType, PropType>::getNonDefaultValuatedNodes(
     const Graph *sg) const {
-  return filterIterator(
-      conversionIterator<node>(nodeProperties.findAll(nodeDefaultValue, false), idToNode),
-      [&, sg](node n) {
-        if (PropType::name.empty()) {
-          // we always need to check that nodes belong to graph for non registered
-          // properties, because deleted nodes are not erased from them
-          return sg == nullptr ? PropType::graph->isElement(n) : sg->isElement(n);
-        } else {
-          return sg == nullptr || sg == PropType::graph || sg->isElement(n);
-        }
-      });
+  return filterIterator(nodeProperties.findAll(nodeDefaultValue, false), [&, sg](node n) {
+    if (PropType::name.empty()) {
+      // we always need to check that nodes belong to graph for non registered
+      // properties, because deleted nodes are not erased from them
+      return sg == nullptr ? PropType::graph->isElement(n) : sg->isElement(n);
+    } else {
+      return sg == nullptr || sg == PropType::graph || sg->isElement(n);
+    }
+  });
 }
 //============================================================
 template <class NodeType, class EdgeType, class PropType>
@@ -291,7 +286,7 @@ template <class NodeType, class EdgeType, class PropType>
 void tlp::AbstractProperty<NodeType, EdgeType, PropType>::writeNodeValue(std::ostream &oss,
                                                                          node n) const {
   assert(n.isValid());
-  NodeType::writeb(oss, nodeProperties.get(n.id));
+  NodeType::writeb(oss, nodeProperties.get(n));
 }
 //============================================================
 template <class NodeType, class EdgeType, class PropType>
@@ -309,7 +304,7 @@ bool tlp::AbstractProperty<NodeType, EdgeType, PropType>::readNodeValue(std::ist
   REAL_TYPE(NodeType) val;
 
   if (NodeType::readb(iss, val)) {
-    nodeProperties.set(n.id, val);
+    nodeProperties.set(n, val);
     return true;
   }
 
@@ -320,17 +315,15 @@ template <class NodeType, class EdgeType, class PropType>
 tlp::Iterator<tlp::edge> *
 tlp::AbstractProperty<NodeType, EdgeType, PropType>::getNonDefaultValuatedEdges(
     const Graph *sg) const {
-  return filterIterator(
-      conversionIterator<edge>(edgeProperties.findAll(edgeDefaultValue, false), idToEdge),
-      [&, sg](edge e) {
-        if (PropType::name.empty()) {
-          // we always need to check that edges belong to graph for non registered
-          // properties, because deleted nodes are not erased from them
-          return sg == nullptr ? PropType::graph->isElement(e) : sg->isElement(e);
-        } else {
-          return sg == nullptr || sg == PropType::graph || sg->isElement(e);
-        }
-      });
+  return filterIterator(edgeProperties.findAll(edgeDefaultValue, false), [&, sg](edge e) {
+    if (PropType::name.empty()) {
+      // we always need to check that edges belong to graph for non registered
+      // properties, because deleted nodes are not erased from them
+      return sg == nullptr ? PropType::graph->isElement(e) : sg->isElement(e);
+    } else {
+      return sg == nullptr || sg == PropType::graph || sg->isElement(e);
+    }
+  });
 }
 //============================================================
 template <class NodeType, class EdgeType, class PropType>
@@ -368,7 +361,7 @@ template <class NodeType, class EdgeType, class PropType>
 void tlp::AbstractProperty<NodeType, EdgeType, PropType>::writeEdgeValue(std::ostream &oss,
                                                                          edge e) const {
   assert(e.isValid());
-  EdgeType::writeb(oss, edgeProperties.get(e.id));
+  EdgeType::writeb(oss, edgeProperties.get(e));
 }
 //============================================================
 template <class NodeType, class EdgeType, class PropType>
@@ -386,7 +379,7 @@ bool tlp::AbstractProperty<NodeType, EdgeType, PropType>::readEdgeValue(std::ist
   REAL_TYPE(EdgeType) val;
 
   if (EdgeType::readb(iss, val)) {
-    edgeProperties.set(e.id, val);
+    edgeProperties.set(e, val);
     return true;
   }
 
@@ -561,7 +554,7 @@ bool tlp::AbstractProperty<NodeType, EdgeType, PropType>::copy(const tlp::node d
   auto *tp = dynamic_cast<tlp::AbstractProperty<NodeType, EdgeType, PropType> *>(property);
   assert(tp);
   bool notDefault;
-  TYPE_REFERENCE(NodeType) value = tp->nodeProperties.get(source.id, notDefault);
+  TYPE_REFERENCE(NodeType) value = tp->nodeProperties.get(source, notDefault);
 
   if (ifNotDefault && !notDefault) {
     return false;
@@ -583,7 +576,7 @@ bool tlp::AbstractProperty<NodeType, EdgeType, PropType>::copy(const tlp::edge d
   auto *tp = dynamic_cast<tlp::AbstractProperty<NodeType, EdgeType, PropType> *>(property);
   assert(tp);
   bool notDefault;
-  TYPE_REFERENCE(EdgeType) value = tp->edgeProperties.get(source.id, notDefault);
+  TYPE_REFERENCE(EdgeType) value = tp->edgeProperties.get(source, notDefault);
 
   if (ifNotDefault && !notDefault) {
     return false;
@@ -629,7 +622,7 @@ template <typename NodeType, typename EdgeType, typename PropType>
 tlp::DataMem *tlp::AbstractProperty<NodeType, EdgeType, PropType>::getNonDefaultDataMemValue(
     const tlp::node n) const {
   bool notDefault;
-  TYPE_REFERENCE(NodeType) value = nodeProperties.get(n.id, notDefault);
+  TYPE_REFERENCE(NodeType) value = nodeProperties.get(n, notDefault);
 
   if (notDefault) {
     return new tlp::TypedValueContainer<REAL_TYPE(NodeType)>(value);
@@ -642,7 +635,7 @@ template <typename NodeType, typename EdgeType, typename PropType>
 tlp::DataMem *tlp::AbstractProperty<NodeType, EdgeType, PropType>::getNonDefaultDataMemValue(
     const tlp::edge e) const {
   bool notDefault;
-  TYPE_REFERENCE(EdgeType) value = edgeProperties.get(e.id, notDefault);
+  TYPE_REFERENCE(EdgeType) value = edgeProperties.get(e, notDefault);
 
   if (notDefault) {
     return new tlp::TypedValueContainer<REAL_TYPE(EdgeType)>(value);
@@ -816,7 +809,7 @@ void tlp::AbstractVectorProperty<VecType, EltType, PropType>::setNodeEltValue(
   } else {
     REAL_TYPE(VecType) tmp(vect);
     tmp[i] = v;
-    AbstractProperty<VecType, VecType, PropType>::nodeProperties.set(n.id, tmp);
+    AbstractProperty<VecType, VecType, PropType>::nodeProperties.set(n, tmp);
   }
 
   this->PropType::notifyAfterSetNodeValue(n);

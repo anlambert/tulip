@@ -12,8 +12,8 @@
  */
 
 //===================================================================
-template <typename TYPE>
-tlp::MutableContainer<TYPE>::MutableContainer()
+template <typename TYPE, typename INDEX_TYPE>
+tlp::MutableContainer<TYPE, INDEX_TYPE>::MutableContainer()
     : vData(new std::deque<typename StoredType<TYPE>::Value>()), hData(nullptr), minIndex(UINT_MAX),
       maxIndex(UINT_MAX), defaultValue(StoredType<TYPE>::defaultValue()), state(VECT),
       elementInserted(0),
@@ -21,8 +21,8 @@ tlp::MutableContainer<TYPE>::MutableContainer()
             (3.0 * double(sizeof(void *)) + double(sizeof(typename tlp::StoredType<TYPE>::Value)))),
       compressing(false) {}
 //===================================================================
-template <typename TYPE>
-tlp::MutableContainer<TYPE>::~MutableContainer<TYPE>() {
+template <typename TYPE, typename INDEX_TYPE>
+tlp::MutableContainer<TYPE, INDEX_TYPE>::~MutableContainer<TYPE, INDEX_TYPE>() {
   switch (state) {
   case VECT:
 
@@ -68,14 +68,16 @@ tlp::MutableContainer<TYPE>::~MutableContainer<TYPE>() {
   StoredType<TYPE>::destroy(defaultValue);
 }
 //===================================================================
-template <typename TYPE>
-void tlp::MutableContainer<TYPE>::setDefault(typename StoredType<TYPE>::ConstReference value) {
+template <typename TYPE, typename INDEX_TYPE>
+void tlp::MutableContainer<TYPE, INDEX_TYPE>::setDefault(
+    typename StoredType<TYPE>::ConstReference value) {
   StoredType<TYPE>::destroy(defaultValue);
   defaultValue = StoredType<TYPE>::clone(value);
 }
 //===================================================================
-template <typename TYPE>
-void tlp::MutableContainer<TYPE>::setAll(typename StoredType<TYPE>::ConstReference value) {
+template <typename TYPE, typename INDEX_TYPE>
+void tlp::MutableContainer<TYPE, INDEX_TYPE>::setAll(
+    typename StoredType<TYPE>::ConstReference value) {
   switch (state) {
   case VECT:
 
@@ -125,21 +127,20 @@ void tlp::MutableContainer<TYPE>::setAll(typename StoredType<TYPE>::ConstReferen
 //===================================================================
 // this method is private and used as is by GraphUpdatesRecorder class
 // it is also used to implement findAll
-template <typename TYPE>
-tlp::IteratorValue *
-tlp::MutableContainer<TYPE>::findAllValues(typename StoredType<TYPE>::ConstReference value,
-                                           bool equal) const {
+template <typename TYPE, typename INDEX_TYPE>
+tlp::IteratorValue<INDEX_TYPE> *tlp::MutableContainer<TYPE, INDEX_TYPE>::findAllValues(
+    typename StoredType<TYPE>::ConstReference value, bool equal) const {
   if (equal && StoredType<TYPE>::equal(defaultValue, value))
     // error
     return nullptr;
   else {
     switch (state) {
     case VECT:
-      return new IteratorVect<TYPE>(value, equal, vData, minIndex);
+      return new IteratorVect<TYPE, INDEX_TYPE>(value, equal, vData, minIndex);
       break;
 
     case HASH:
-      return new IteratorHash<TYPE>(value, equal, hData);
+      return new IteratorHash<TYPE, INDEX_TYPE>(value, equal, hData);
       break;
 
     default:
@@ -151,15 +152,16 @@ tlp::MutableContainer<TYPE>::findAllValues(typename StoredType<TYPE>::ConstRefer
 }
 //===================================================================
 // this method is visible for any class
-template <typename TYPE>
-tlp::Iterator<uint> *
-tlp::MutableContainer<TYPE>::findAll(typename StoredType<TYPE>::ConstReference value,
-                                     bool equal) const {
+template <typename TYPE, typename INDEX_TYPE>
+tlp::Iterator<INDEX_TYPE> *
+tlp::MutableContainer<TYPE, INDEX_TYPE>::findAll(typename StoredType<TYPE>::ConstReference value,
+                                                 bool equal) const {
   return findAllValues(value, equal);
 }
 //===================================================================
-template <typename TYPE>
-void tlp::MutableContainer<TYPE>::vectset(const uint i, typename StoredType<TYPE>::Value value) {
+template <typename TYPE, typename INDEX_TYPE>
+void tlp::MutableContainer<TYPE, INDEX_TYPE>::vectset(const INDEX_TYPE i,
+                                                      typename StoredType<TYPE>::Value value) {
   if (minIndex == UINT_MAX) {
     minIndex = i;
     maxIndex = i;
@@ -199,9 +201,10 @@ void tlp::MutableContainer<TYPE>::vectset(const uint i, typename StoredType<TYPE
   }
 }
 //===================================================================
-template <typename TYPE>
-void tlp::MutableContainer<TYPE>::set(const uint i, typename StoredType<TYPE>::ConstReference value,
-                                      bool forceDefaultValueRemoval) {
+template <typename TYPE, typename INDEX_TYPE>
+void tlp::MutableContainer<TYPE, INDEX_TYPE>::set(const INDEX_TYPE i,
+                                                  typename StoredType<TYPE>::ConstReference value,
+                                                  bool forceDefaultValueRemoval) {
   // Test if after insertion we need to resize
   if (!compressing && !StoredType<TYPE>::equal(defaultValue, value)) {
     compressing = true;
@@ -278,8 +281,8 @@ void tlp::MutableContainer<TYPE>::set(const uint i, typename StoredType<TYPE>::C
   }
 }
 //===================================================================
-template <typename TYPE>
-void tlp::MutableContainer<TYPE>::add(const uint i, TYPE val) {
+template <typename TYPE, typename INDEX_TYPE>
+void tlp::MutableContainer<TYPE, INDEX_TYPE>::add(const INDEX_TYPE i, TYPE val) {
   if (!static_cast<bool>(tlp::StoredType<TYPE>::isPointer)) {
     if (maxIndex == UINT_MAX) {
       assert(state == VECT);
@@ -338,9 +341,9 @@ void tlp::MutableContainer<TYPE>::add(const uint i, TYPE val) {
   std::cerr << __PRETTY_FUNCTION__ << "not implemented" << std::endl;
 }
 //===================================================================
-template <typename TYPE>
+template <typename TYPE, typename INDEX_TYPE>
 typename tlp::StoredType<TYPE>::ConstReference
-tlp::MutableContainer<TYPE>::get(const uint i) const {
+tlp::MutableContainer<TYPE, INDEX_TYPE>::get(const INDEX_TYPE i) const {
   if (maxIndex == UINT_MAX) {
     return StoredType<TYPE>::get(defaultValue);
   }
@@ -371,8 +374,8 @@ tlp::MutableContainer<TYPE>::get(const uint i) const {
   }
 }
 //===================================================================
-template <typename TYPE>
-void tlp::MutableContainer<TYPE>::invertBooleanValue(const uint i) {
+template <typename TYPE, typename INDEX_TYPE>
+void tlp::MutableContainer<TYPE, INDEX_TYPE>::invertBooleanValue(const INDEX_TYPE i) {
   if (std::is_same<typename StoredType<TYPE>::Value, bool>::value) {
     switch (state) {
     case VECT: {
@@ -415,13 +418,14 @@ void tlp::MutableContainer<TYPE>::invertBooleanValue(const uint i) {
   std::cerr << __PRETTY_FUNCTION__ << "not implemented" << std::endl;
 }
 //===================================================================
-template <typename TYPE>
-typename tlp::StoredType<TYPE>::Reference tlp::MutableContainer<TYPE>::getDefault() const {
+template <typename TYPE, typename INDEX_TYPE>
+typename tlp::StoredType<TYPE>::Reference
+tlp::MutableContainer<TYPE, INDEX_TYPE>::getDefault() const {
   return StoredType<TYPE>::get(defaultValue);
 }
 //===================================================================
-template <typename TYPE>
-bool tlp::MutableContainer<TYPE>::hasNonDefaultValue(const uint i) const {
+template <typename TYPE, typename INDEX_TYPE>
+bool tlp::MutableContainer<TYPE, INDEX_TYPE>::hasNonDefaultValue(const INDEX_TYPE i) const {
   if (maxIndex == UINT_MAX) {
     return false;
   }
@@ -440,9 +444,9 @@ bool tlp::MutableContainer<TYPE>::hasNonDefaultValue(const uint i) const {
   }
 }
 //===================================================================
-template <typename TYPE>
-typename tlp::StoredType<TYPE>::Reference tlp::MutableContainer<TYPE>::get(const uint i,
-                                                                           bool &notDefault) const {
+template <typename TYPE, typename INDEX_TYPE>
+typename tlp::StoredType<TYPE>::Reference
+tlp::MutableContainer<TYPE, INDEX_TYPE>::get(const INDEX_TYPE i, bool &notDefault) const {
   if (maxIndex == UINT_MAX) {
     notDefault = false;
     return StoredType<TYPE>::get(defaultValue);
@@ -480,20 +484,20 @@ typename tlp::StoredType<TYPE>::Reference tlp::MutableContainer<TYPE>::get(const
   }
 }
 //===================================================================
-template <typename TYPE>
-uint tlp::MutableContainer<TYPE>::numberOfNonDefaultValues() const {
+template <typename TYPE, typename INDEX_TYPE>
+uint tlp::MutableContainer<TYPE, INDEX_TYPE>::numberOfNonDefaultValues() const {
   return elementInserted;
 }
 //===================================================================
-template <typename TYPE>
-void tlp::MutableContainer<TYPE>::vecttohash() {
-  hData = new std::unordered_map<uint, typename StoredType<TYPE>::Value>(elementInserted);
+template <typename TYPE, typename INDEX_TYPE>
+void tlp::MutableContainer<TYPE, INDEX_TYPE>::vecttohash() {
+  hData = new std::unordered_map<INDEX_TYPE, typename StoredType<TYPE>::Value>(elementInserted);
 
-  uint newMaxIndex = 0;
-  uint newMinIndex = UINT_MAX;
+  INDEX_TYPE newMaxIndex = 0;
+  INDEX_TYPE newMinIndex = UINT_MAX;
   elementInserted = 0;
 
-  for (uint i = minIndex; i <= maxIndex; ++i) {
+  for (INDEX_TYPE i = minIndex; i <= maxIndex; ++i) {
     if ((*vData)[i - minIndex] != defaultValue) {
       (*hData)[i] = (*vData)[i - minIndex];
       newMaxIndex = std::max(newMaxIndex, i);
@@ -509,8 +513,8 @@ void tlp::MutableContainer<TYPE>::vecttohash() {
   state = HASH;
 }
 //===================================================================
-template <typename TYPE>
-void tlp::MutableContainer<TYPE>::hashtovect() {
+template <typename TYPE, typename INDEX_TYPE>
+void tlp::MutableContainer<TYPE, INDEX_TYPE>::hashtovect() {
   vData = new std::deque<typename StoredType<TYPE>::Value>();
   minIndex = UINT_MAX;
   maxIndex = UINT_MAX;
@@ -527,8 +531,9 @@ void tlp::MutableContainer<TYPE>::hashtovect() {
   hData = nullptr;
 }
 //===================================================================
-template <typename TYPE>
-void tlp::MutableContainer<TYPE>::compress(uint min, uint max, uint nbElements) {
+template <typename TYPE, typename INDEX_TYPE>
+void tlp::MutableContainer<TYPE, INDEX_TYPE>::compress(INDEX_TYPE min, INDEX_TYPE max,
+                                                       uint nbElements) {
   if (max == UINT_MAX || (max - min) < 10) {
     return;
   }
@@ -559,8 +564,8 @@ void tlp::MutableContainer<TYPE>::compress(uint min, uint max, uint nbElements) 
   }
 }
 
-template <typename TYPE>
+template <typename TYPE, typename INDEX_TYPE>
 typename tlp::StoredType<TYPE>::ConstReference
-tlp::MutableContainer<TYPE>::operator[](const uint i) const {
+tlp::MutableContainer<TYPE, INDEX_TYPE>::operator[](const INDEX_TYPE i) const {
   return get(i);
 }

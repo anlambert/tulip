@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -27,13 +27,13 @@ void BooleanProperty::reverse(const Graph *sg) {
 
   for (auto n : sg->nodes()) {
     notifyBeforeSetNodeValue(n);
-    nodeProperties.invertBooleanValue(n.id);
+    nodeProperties.invertBooleanValue(n);
     notifyAfterSetNodeValue(n);
   }
 
   for (auto e : sg->edges()) {
     notifyBeforeSetEdgeValue(e);
-    edgeProperties.invertBooleanValue(e.id);
+    edgeProperties.invertBooleanValue(e);
     notifyAfterSetEdgeValue(e);
   }
 }

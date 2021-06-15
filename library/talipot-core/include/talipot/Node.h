@@ -55,13 +55,33 @@ struct node {
    *
    * @param j the identifier this node will use.
    */
-  explicit node(uint j) : id(j) {}
+  node(uint j) : id(j) {}
 
   /**
    * @brief operator uint A convenience function to get the id of a node.
    */
   operator uint() const {
     return id;
+  }
+
+  node &operator=(uint id) {
+    this->id = id;
+    return *this;
+  }
+
+  node &operator++() {
+    ++id;
+    return *this;
+  }
+
+  node &operator+=(uint i) {
+    id += i;
+    return *this;
+  }
+
+  node &operator--() {
+    --id;
+    return *this;
   }
 
   /**
@@ -80,6 +100,10 @@ struct node {
    */
   bool operator==(const node n) const {
     return id == n.id;
+  }
+
+  bool operator==(const uint id) const {
+    return this->id == id;
   }
 
   /**
@@ -104,11 +128,6 @@ inline std::ostream &operator<<(std::ostream &os, const std::vector<node> &vn) {
   os << ")";
   return os;
 }
-
-// utility lambda functions for type conversion
-static std::function<tlp::node(uint)> idToNode = [](uint id) { return tlp::node(id); };
-
-static std::function<uint(tlp::node)> nodeToId = [](tlp::node n) { return n.id; };
 
 }
 

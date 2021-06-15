@@ -292,8 +292,8 @@ protected:
   /// Enable to clone part of sub_class
   virtual void clone_handler(AbstractProperty<NodeType, EdgeType, PropType> &);
 
-  MutableContainer<REAL_TYPE(NodeType)> nodeProperties;
-  MutableContainer<REAL_TYPE(EdgeType)> edgeProperties;
+  MutableContainer<REAL_TYPE(NodeType), node> nodeProperties;
+  MutableContainer<REAL_TYPE(EdgeType), edge> edgeProperties;
   REAL_TYPE(NodeType) nodeDefaultValue;
   REAL_TYPE(EdgeType) edgeDefaultValue;
 };

@@ -32,12 +32,13 @@ namespace tlp {
 // we first define an interface
 // to make easier the iteration on values
 // stored in a MutableContainer for the GraphUpdatesRecorder
-class IteratorValue : public Iterator<uint> {
+template <typename INDEX_TYPE>
+class IteratorValue : public Iterator<INDEX_TYPE> {
 public:
-  virtual uint nextValue(DataMem &) = 0;
+  virtual INDEX_TYPE nextValue(DataMem &) = 0;
 };
 //===================================================================
-template <typename TYPE>
+template <typename TYPE, typename INDEX_TYPE = uint>
 class MutableContainer {
   friend class MutableContainerTest;
   friend class GraphUpdatesRecorder;
@@ -57,20 +58,20 @@ public:
   /**
    * set the value associated to i
    */
-  void set(const uint i, typename StoredType<TYPE>::ConstReference value,
+  void set(const INDEX_TYPE i, typename StoredType<TYPE>::ConstReference value,
            bool forceDefaultValueRemoval = false);
   /**
    * add val to the value associated to i
    */
-  void add(const uint i, TYPE val);
+  void add(const INDEX_TYPE i, TYPE val);
   /**
    * get the value associated to i
    */
-  typename StoredType<TYPE>::ConstReference get(const uint i) const;
+  typename StoredType<TYPE>::ConstReference get(const INDEX_TYPE i) const;
   /**
    * get the value associated to i and indicates if it is not the default one
    */
-  typename StoredType<TYPE>::Reference get(const uint i, bool &isNotDefault) const;
+  typename StoredType<TYPE>::Reference get(const INDEX_TYPE i, bool &isNotDefault) const;
   /**
    * get the default value
    */
@@ -78,14 +79,15 @@ public:
   /**
    * return if the value associated to i is not the default one
    */
-  bool hasNonDefaultValue(const uint i) const;
+  bool hasNonDefaultValue(const INDEX_TYPE i) const;
   /**
    * return a pointer on an iterator for all the elements whose associated value
    * is equal to a given value or different from the default value.
    * A null pointer is returned in case of an iteration on all the elements
    * whose value is equal to the default value.
    */
-  Iterator<uint> *findAll(typename StoredType<TYPE>::ConstReference value, bool equal = true) const;
+  Iterator<INDEX_TYPE> *findAll(typename StoredType<TYPE>::ConstReference value,
+                                bool equal = true) const;
   /**
    * return the number of non default values
    */
@@ -101,23 +103,23 @@ public:
   /**
    * invert the boolean value set to i (do nothing for non boolean value)
    */
-  void invertBooleanValue(const uint i);
+  void invertBooleanValue(const INDEX_TYPE i);
 
 private:
   MutableContainer(const MutableContainer<TYPE> &) {}
   void operator=(const MutableContainer<TYPE> &) {}
-  typename StoredType<TYPE>::ConstReference operator[](const uint i) const;
+  typename StoredType<TYPE>::ConstReference operator[](const INDEX_TYPE i) const;
   void vecttohash();
   void hashtovect();
-  void compress(uint min, uint max, uint nbElements);
-  void vectset(const uint i, typename StoredType<TYPE>::Value value);
-  IteratorValue *findAllValues(typename StoredType<TYPE>::ConstReference value,
-                               bool equal = true) const;
+  void compress(INDEX_TYPE min, INDEX_TYPE max, uint nbElements);
+  void vectset(const INDEX_TYPE i, typename StoredType<TYPE>::Value value);
+  IteratorValue<INDEX_TYPE> *findAllValues(typename StoredType<TYPE>::ConstReference value,
+                                           bool equal = true) const;
 
 private:
   std::deque<typename StoredType<TYPE>::Value> *vData;
-  std::unordered_map<uint, typename StoredType<TYPE>::Value> *hData;
-  uint minIndex, maxIndex;
+  std::unordered_map<INDEX_TYPE, typename StoredType<TYPE>::Value> *hData;
+  INDEX_TYPE minIndex, maxIndex;
   typename StoredType<TYPE>::Value defaultValue;
   enum State { VECT = 0, HASH = 1 };
   State state;
@@ -130,8 +132,8 @@ private:
 // we implement 2 templates with IteratorValue as parent class
 // for the two kinds of storage used in a MutableContainer
 // one for vector storage
-template <typename TYPE>
-class IteratorVect : public tlp::IteratorValue {
+template <typename TYPE, typename KEY_TYPE>
+class IteratorVect : public tlp::IteratorValue<KEY_TYPE> {
 public:
   IteratorVect(const TYPE &value, bool equal, std::deque<typename StoredType<TYPE>::Value> *vData,
                uint minIndex)
@@ -144,8 +146,8 @@ public:
   bool hasNext() override {
     return (_pos < UINT_MAX && it != (*vData).end());
   }
-  uint next() override {
-    uint tmp = _pos;
+  KEY_TYPE next() override {
+    KEY_TYPE tmp = _pos;
 
     do {
       ++it;
@@ -154,9 +156,9 @@ public:
 
     return tmp;
   }
-  uint nextValue(DataMem &val) override {
+  KEY_TYPE nextValue(DataMem &val) override {
     static_cast<TypedValueContainer<TYPE> &>(val).value = StoredType<TYPE>::get(*it);
-    uint pos = _pos;
+    KEY_TYPE pos = _pos;
 
     do {
       ++it;
@@ -169,17 +171,17 @@ public:
 private:
   const TYPE _value;
   bool _equal;
-  uint _pos;
+  KEY_TYPE _pos;
   std::deque<typename StoredType<TYPE>::Value> *vData;
   typename std::deque<typename StoredType<TYPE>::Value>::const_iterator it;
 };
 
 // one for hash storage
-template <typename TYPE>
-class IteratorHash : public IteratorValue {
+template <typename TYPE, typename KEY_TYPE>
+class IteratorHash : public IteratorValue<KEY_TYPE> {
 public:
   IteratorHash(const TYPE &value, bool equal,
-               std::unordered_map<uint, typename StoredType<TYPE>::Value> *hData)
+               std::unordered_map<KEY_TYPE, typename StoredType<TYPE>::Value> *hData)
       : _value(value), _equal(equal), hData(hData) {
     it = (*hData).begin();
 
@@ -190,8 +192,8 @@ public:
   bool hasNext() override {
     return (it != (*hData).end());
   }
-  uint next() override {
-    uint tmp = (*it).first;
+  KEY_TYPE next() override {
+    KEY_TYPE tmp = (*it).first;
 
     do {
       ++it;
@@ -199,9 +201,9 @@ public:
 
     return tmp;
   }
-  uint nextValue(DataMem &val) override {
+  KEY_TYPE nextValue(DataMem &val) override {
     static_cast<TypedValueContainer<TYPE> &>(val).value = StoredType<TYPE>::get((*it).second);
-    uint pos = (*it).first;
+    KEY_TYPE pos = (*it).first;
 
     do {
       ++it;
@@ -213,8 +215,8 @@ public:
 private:
   const TYPE _value;
   bool _equal;
-  std::unordered_map<uint, typename StoredType<TYPE>::Value> *hData;
-  typename std::unordered_map<uint, typename StoredType<TYPE>::Value>::const_iterator it;
+  std::unordered_map<KEY_TYPE, typename StoredType<TYPE>::Value> *hData;
+  typename std::unordered_map<KEY_TYPE, typename StoredType<TYPE>::Value>::const_iterator it;
 };
 }
 

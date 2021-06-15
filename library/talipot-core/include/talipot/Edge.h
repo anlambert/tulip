@@ -55,13 +55,33 @@ struct edge {
    *
    * @param j the identifier this edge will use.
    */
-  explicit edge(uint j) : id(j) {}
+  edge(uint j) : id(j) {}
 
   /**
    * @brief operator uint A convenience function to get the id of an edge.
    */
   operator uint() const {
     return id;
+  }
+
+  edge &operator=(uint id) {
+    this->id = id;
+    return *this;
+  }
+
+  edge &operator++() {
+    ++id;
+    return *this;
+  }
+
+  edge &operator+=(uint i) {
+    id += i;
+    return *this;
+  }
+
+  edge &operator--() {
+    --id;
+    return *this;
   }
 
   /**
@@ -71,6 +91,10 @@ struct edge {
    */
   bool operator==(const edge e) const {
     return id == e.id;
+  }
+
+  bool operator==(const uint id) const {
+    return this->id == id;
   }
 
   /**
@@ -104,11 +128,6 @@ inline std::ostream &operator<<(std::ostream &os, const std::vector<edge> &ve) {
   os << ")";
   return os;
 }
-
-// utility lambda functions for type conversion
-static std::function<tlp::edge(uint)> idToEdge = [](uint id) { return tlp::edge(id); };
-
-static std::function<uint(tlp::edge)> edgeToId = [](tlp::edge e) { return e.id; };
 
 }
 
