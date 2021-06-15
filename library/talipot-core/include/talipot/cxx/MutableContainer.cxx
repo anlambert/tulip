@@ -11,6 +11,15 @@
  *
  */
 
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wold-style-cast"
+#endif
+#include <parallel_hashmap/phmap.h>
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif
+
 //===================================================================
 // we implement 2 templates with IteratorValue as parent class
 // for the two kinds of storage used in a MutableContainer
@@ -64,7 +73,7 @@ template <typename TYPE, typename INDEX_TYPE>
 class IteratorHash : public tlp::IteratorValue<INDEX_TYPE> {
 public:
   IteratorHash(const TYPE &value, bool equal,
-               std::unordered_map<INDEX_TYPE, typename tlp::StoredType<TYPE>::Value> *hData)
+               phmap::flat_hash_map<INDEX_TYPE, typename tlp::StoredType<TYPE>::Value> *hData)
       : _value(value), _equal(equal), hData(hData) {
     it = (*hData).begin();
 
@@ -99,8 +108,9 @@ public:
 private:
   const TYPE _value;
   bool _equal;
-  std::unordered_map<INDEX_TYPE, typename tlp::StoredType<TYPE>::Value> *hData;
-  typename std::unordered_map<INDEX_TYPE, typename tlp::StoredType<TYPE>::Value>::const_iterator it;
+  phmap::flat_hash_map<INDEX_TYPE, typename tlp::StoredType<TYPE>::Value> *hData;
+  typename phmap::flat_hash_map<INDEX_TYPE, typename tlp::StoredType<TYPE>::Value>::const_iterator
+      it;
 };
 
 //===================================================================
@@ -588,7 +598,7 @@ uint tlp::MutableContainer<TYPE, INDEX_TYPE>::numberOfNonDefaultValues() const {
 //===================================================================
 template <typename TYPE, typename INDEX_TYPE>
 void tlp::MutableContainer<TYPE, INDEX_TYPE>::vecttohash() {
-  hData = new std::unordered_map<INDEX_TYPE, typename StoredType<TYPE>::Value>(elementInserted);
+  hData = new phmap::flat_hash_map<INDEX_TYPE, typename StoredType<TYPE>::Value>(elementInserted);
 
   INDEX_TYPE newMaxIndex = 0;
   INDEX_TYPE newMinIndex = UINT_MAX;

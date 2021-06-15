@@ -484,6 +484,8 @@ ADD_CUSTOM_TARGET(
   VERBATIM)
 
 ADD_SUBDIRECTORY(thirdparty)
+
+INCLUDE_DIRECTORIES(${ParallelHashmapInclude})
 ADD_SUBDIRECTORY(library)
 ADD_SUBDIRECTORY(plugins)
 ADD_SUBDIRECTORY(utils/crash_handler)

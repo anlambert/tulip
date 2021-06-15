@@ -20,7 +20,8 @@
 #include <cassert>
 #include <climits>
 #include <cstring>
-#include <unordered_map>
+
+#include <parallel_hashmap/phmap_fwd_decl.h>
 
 #include <talipot/config.h>
 #include <talipot/PropertyTypes.h>
@@ -119,7 +120,7 @@ private:
 
 private:
   std::deque<typename StoredType<TYPE>::Value> *vData;
-  std::unordered_map<INDEX_TYPE, typename StoredType<TYPE>::Value> *hData;
+  phmap::flat_hash_map<INDEX_TYPE, typename StoredType<TYPE>::Value> *hData;
   INDEX_TYPE minIndex, maxIndex;
   typename StoredType<TYPE>::Value defaultValue;
   enum State { VECT = 0, HASH = 1 };
