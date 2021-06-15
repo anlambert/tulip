@@ -20,19 +20,18 @@ using namespace tlp;
 //=================================================================
 static ConnectedTestListener instance;
 //=================================================================
-static unsigned int connectedTest(const Graph *const graph, node n,
-                                  NodeVectorProperty<bool> &visited) {
+static uint connectedTest(const Graph *const graph, node n, NodeVectorProperty<bool> &visited) {
   list<node> nodesToVisit;
   visited[n] = true;
   nodesToVisit.push_front(n);
-  unsigned int count = 1;
+  uint count = 1;
 
   while (!nodesToVisit.empty()) {
     node r = nodesToVisit.front();
     nodesToVisit.pop_front();
     // loop on all neighbours
     for (auto neighbour : graph->getInOutNodes(r)) {
-      unsigned int neighPos = graph->nodePos(neighbour);
+      uint neighPos = graph->nodePos(neighbour);
       // check if neighbour has been visited
       if (!visited[neighPos]) {
         // mark neighbour as already visited
@@ -63,7 +62,7 @@ bool ConnectedTest::isConnected(const tlp::Graph *const graph) {
 
   NodeVectorProperty<bool> visited(graph);
   visited.setAll(false);
-  unsigned int count = connectedTest(graph, graph->getOneNode(), visited);
+  uint count = connectedTest(graph, graph->getOneNode(), visited);
   bool result = (count == graph->numberOfNodes());
   graph->addListener(instance);
   return instance.resultsBuffer[graph] = result;
@@ -76,7 +75,7 @@ vector<edge> ConnectedTest::makeConnected(Graph *graph) {
   vector<node> toLink;
   connect(graph, toLink);
 
-  for (unsigned int i = 1; i < toLink.size(); ++i) {
+  for (uint i = 1; i < toLink.size(); ++i) {
     addedEdges.push_back(graph->addEdge(toLink[i - 1], toLink[i]));
   }
 
@@ -84,7 +83,7 @@ vector<edge> ConnectedTest::makeConnected(Graph *graph) {
   return addedEdges;
 }
 //=================================================================
-unsigned int ConnectedTest::numberOfConnectedComponents(const tlp::Graph *const graph) {
+uint ConnectedTest::numberOfConnectedComponents(const tlp::Graph *const graph) {
   if (graph->isEmpty()) {
     return 0u;
   }
@@ -92,7 +91,7 @@ unsigned int ConnectedTest::numberOfConnectedComponents(const tlp::Graph *const 
   graph->removeListener(instance);
   vector<node> toLink;
   connect(graph, toLink);
-  unsigned int result;
+  uint result;
 
   if (!toLink.empty()) {
     result = toLink.size();
@@ -110,7 +109,7 @@ vector<vector<node>> ConnectedTest::computeConnectedComponents(const tlp::Graph 
   NodeVectorProperty<bool> visited(graph);
   visited.setAll(false);
   // do a bfs traversal for each node
-  TLP_MAP_NODES_AND_INDICES(graph, [&](node n, unsigned int i) {
+  TLP_MAP_NODES_AND_INDICES(graph, [&](node n, uint i) {
     // check if curNode has been already visited
     if (!visited[i]) {
       // add a new component
@@ -129,7 +128,7 @@ vector<vector<node>> ConnectedTest::computeConnectedComponents(const tlp::Graph 
 
         // loop on all neighbours
         for (auto neighbour : graph->getInOutNodes(n)) {
-          unsigned int neighPos = graph->nodePos(neighbour);
+          uint neighPos = graph->nodePos(neighbour);
           // check if neighbour has been visited
           if (!visited[neighPos]) {
             // mark neighbour as already visited
@@ -161,7 +160,7 @@ void ConnectedTest::connect(const tlp::Graph *const graph, vector<node> &toLink)
   NodeVectorProperty<bool> visited(graph);
   visited.setAll(false);
 
-  TLP_MAP_NODES_AND_INDICES(graph, [&](node n, unsigned int i) {
+  TLP_MAP_NODES_AND_INDICES(graph, [&](node n, uint i) {
     if (!visited[i]) {
       toLink.push_back(n);
       connectedTest(graph, n, visited);

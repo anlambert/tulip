@@ -51,8 +51,7 @@ void SOMMapElement::setData(SOMMap *map, tlp::ColorProperty *colorProperty) {
   computeNodeAreaSize();
 }
 
-float SOMMapElement::computeMaximizedRadiusForHexagone(unsigned int width, unsigned int height,
-                                                       tlp::Size &size) {
+float SOMMapElement::computeMaximizedRadiusForHexagone(uint width, uint height, tlp::Size &size) {
   float ry = (4 * size.getH()) / (3 * height + 1) / 2;
   float rx = (size.getW() / (cos(DEGTORAD(30)) * width)) / 2;
 
@@ -78,8 +77,8 @@ void SOMMapElement::buildMainComposite(tlp::Coord basePos, tlp::Size gridSize, S
 
     float top = basePos.getY() + gridSize.getH();
 
-    for (unsigned int i = 0; i < map->getHeight(); ++i) {
-      for (unsigned int j = 0; j < map->getWidth(); ++j) {
+    for (uint i = 0; i < map->getHeight(); ++i) {
+      for (uint j = 0; j < map->getWidth(); ++j) {
 
         float x = (j * ri * 2) + ri;
         float y = ((i + 1) * ((2 * r) - h)) - h;
@@ -103,8 +102,8 @@ void SOMMapElement::buildMainComposite(tlp::Coord basePos, tlp::Size gridSize, S
 
     Coord elementSize = {gridSize.getW() / map->getWidth(), gridSize.getH() / map->getHeight()};
 
-    for (unsigned int i = 0; i < map->getHeight(); ++i) {
-      for (unsigned int j = 0; j < map->getWidth(); ++j) {
+    for (uint i = 0; i < map->getHeight(); ++i) {
+      for (uint j = 0; j < map->getWidth(); ++j) {
         Coord topLeft = {j * elementSize.getX(), (map->getHeight() - i) * elementSize.getY()};
         topLeft += basePos;
         Coord bottomRight = {topLeft.getX() + elementSize.getX(),
@@ -138,7 +137,7 @@ void SOMMapElement::updateColors(ColorProperty *newColor) {
   }
 }
 
-tlp::Coord SOMMapElement::getTopLeftPositionForElement(unsigned int x, unsigned int y) {
+tlp::Coord SOMMapElement::getTopLeftPositionForElement(uint x, uint y) {
   Coord pos;
 
   if (som->getConnectivity() == SOMMap::six) {

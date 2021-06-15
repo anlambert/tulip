@@ -24,7 +24,7 @@ static const unsigned char states[4][3][4] = {{{0, 1, 3, 2}, {0, 1, 3, 2}, {1, 0
                                               {{2, 1, 3, 0}, {3, 1, 0, 2}, {3, 2, 2, 0}},
                                               {{2, 3, 1, 0}, {3, 2, 0, 1}, {2, 3, 3, 1}}};
 
-inline Vec2i hilbertPoint(const unsigned int key, const unsigned char order) {
+inline Vec2i hilbertPoint(const uint key, const unsigned char order) {
   //  cerr << "========" << endl;
   unsigned char state = 0;
   Vec2i point;
@@ -47,10 +47,10 @@ inline Vec2i hilbertPoint(const unsigned int key, const unsigned char order) {
   return point;
 }
 
-inline unsigned int hilbertKey(const Vec2i &p, const unsigned char order) {
+inline uint hilbertKey(const Vec2i &p, const unsigned char order) {
   //  cerr << "========" << endl;
   unsigned char state = 0;
-  unsigned int key = 0;
+  uint key = 0;
 
   for (char i = order - 1; i >= 0; --i) {
     // read two bits;
@@ -74,7 +74,7 @@ HilbertLayout::HilbertLayout(unsigned char order) : order(order) {
   shift = int(rint(sqrt(pow(4., order)) / 2.));
 }
 //==============================================================
-unsigned int HilbertLayout::unproject(const Vec2i &point) const {
+uint HilbertLayout::unproject(const Vec2i &point) const {
   Vec2i p;
 
   if (point[0] <= -shift || point[0] >= shift) {
@@ -90,6 +90,6 @@ unsigned int HilbertLayout::unproject(const Vec2i &point) const {
   return hilbertKey(p, order);
 }
 //==============================================================
-Vec2i HilbertLayout::project(const unsigned int id) const {
+Vec2i HilbertLayout::project(const uint id) const {
   return hilbertPoint(id, order) -= shift;
 }

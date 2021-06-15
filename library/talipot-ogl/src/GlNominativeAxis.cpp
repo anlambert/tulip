@@ -32,7 +32,7 @@ void GlNominativeAxis::buildAxisGraduations() {
   setAxisGraduations(labelsOrder, axisLabelsPosition);
   labelsCoord.clear();
 
-  for (unsigned int i = 0; i < labelsOrder.size(); ++i) {
+  for (uint i = 0; i < labelsOrder.size(); ++i) {
     if (axisOrientation == HORIZONTAL_AXIS) {
       labelsCoord[labelsOrder[i]] =
           Coord(axisBaseCoord.getX() + i * spaceBetweenAxisGrads, axisBaseCoord.getY());

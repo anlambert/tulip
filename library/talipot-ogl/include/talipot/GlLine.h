@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -47,17 +47,17 @@ public:
   /**
    * Change number of points
    */
-  virtual void resizePoints(const unsigned int nbPoints);
+  virtual void resizePoints(const uint nbPoints);
   /**
    * Change number of colors
    */
-  virtual void resizeColors(const unsigned int nbColors);
+  virtual void resizeColors(const uint nbColors);
 
-  virtual const Coord &point(const unsigned int i) const;
+  virtual const Coord &point(const uint i) const;
   /**
    * Return the coord of point with given id
    */
-  virtual Coord &point(const unsigned int i);
+  virtual Coord &point(const uint i);
   /**
    * Add a new point with given coord and given color
    */
@@ -66,11 +66,11 @@ public:
   /**
    * return the ith color used for draw the line
    */
-  virtual const Color &color(const unsigned int i) const;
+  virtual const Color &color(const uint i) const;
   /**
    * return the ith color used for draw the line
    */
-  virtual Color &color(const unsigned int i);
+  virtual Color &color(const uint i);
   /**
    * Set line width
    */
@@ -79,7 +79,7 @@ public:
    * Set the style of the line (documentation can be found in OpenGL manuel of function
    * glLineStipple)
    */
-  virtual void setLineStipple(unsigned char factor, unsigned int pattern);
+  virtual void setLineStipple(unsigned char factor, uint pattern);
 
   /**
    * Translate entity
@@ -94,14 +94,14 @@ public:
   /**
    * Function to set data with inString (in XML format)
    */
-  void setWithXML(const std::string &inString, unsigned int &currentPosition) override;
+  void setWithXML(const std::string &inString, uint &currentPosition) override;
 
 protected:
   std::vector<Coord> _points;
   std::vector<Color> _colors;
   float width;
   unsigned char factor;
-  unsigned int pattern;
+  uint pattern;
 };
 }
 

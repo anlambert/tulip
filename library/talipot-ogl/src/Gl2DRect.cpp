@@ -145,7 +145,7 @@ void Gl2DRect::getXML(string &outString) {
   GlXMLTools::getXML(outString, "yInv", yInv);
 }
 //============================================================
-void Gl2DRect::setWithXML(const string &inString, unsigned int &currentPosition) {
+void Gl2DRect::setWithXML(const string &inString, uint &currentPosition) {
 
   GlXMLTools::setWithXML(inString, currentPosition, "top", top);
   GlXMLTools::setWithXML(inString, currentPosition, "bottom", bottom);

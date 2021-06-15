@@ -86,7 +86,7 @@ with open(fa_constants_path, 'w', **open_kwargs) as fa_constants_h:
     fa_constants_h.write(license_header)
     fa_constants = ''
     init_icon_code_points = (
-        'static const unordered_map<string, unsigned int> iconCodePoint = {\n'
+        'static const unordered_map<string, uint> iconCodePoint = {\n'
     )
     for style in sorted(fa_icons.keys()):
         style_upper = style[0].upper() + style[1:]
@@ -159,7 +159,7 @@ with open(md_constants_path, 'w',
     md_constants_h.write(license_header)
     md_constants = ''
     init_icon_code_points = (
-        'static const unordered_map<string, unsigned int> iconCodePoint = {\n'
+        'static const unordered_map<string, uint> iconCodePoint = {\n'
     )
     for icon in md_data:
         icon_constant_name = to_upper_style(icon['name'])

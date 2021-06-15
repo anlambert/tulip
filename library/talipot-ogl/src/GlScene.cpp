@@ -757,7 +757,7 @@ bool GlScene::selectEntities(RenderingEntitiesFlag type, int x, int y, int w, in
 
     const Vec4i &viewport = camera->getViewport();
 
-    unsigned int size = itLayer.entitiesLODVector.size();
+    uint size = itLayer.entitiesLODVector.size();
 
     if (size == 0) {
       continue;
@@ -795,10 +795,10 @@ bool GlScene::selectEntities(RenderingEntitiesFlag type, int x, int y, int w, in
     glDisable(GL_BLEND);
     glDisable(GL_STENCIL_TEST);
 
-    unordered_map<unsigned int, SelectedEntity> idToEntity;
+    unordered_map<uint, SelectedEntity> idToEntity;
 
     if (type & RenderingEntities) {
-      unsigned int id = 1;
+      uint id = 1;
 
       for (const auto &it : itLayer.entitiesLODVector) {
         if (it.lod < 0) {
@@ -945,7 +945,7 @@ void GlScene::setWithXML(string &in, Graph *graph) {
   }
 
   assert(in.substr(0, 7) == "<scene>");
-  unsigned int currentPosition = 7;
+  uint currentPosition = 7;
   GlXMLTools::enterDataNode(in, currentPosition);
   GlXMLTools::setWithXML(in, currentPosition, "viewport", viewport);
   GlXMLTools::setWithXML(in, currentPosition, "background", backgroundColor);

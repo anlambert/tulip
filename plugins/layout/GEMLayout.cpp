@@ -62,7 +62,7 @@ static const float AMAXTEMPDEF = 1.5f;
 static const float ASTARTTEMPDEF = 1.0f;
 static const float AFINALTEMPDEF = 0.02f;
 static const int AMAXITERDEF = 3;
-static const unsigned int MIN_ITER =
+static const uint MIN_ITER =
     30000; // minimum number of iteration (equivalent to a graph with 100 nodes)
 static const float AGRAVITYDEF = 0.1f;
 static const float AOSCILLATIONDEF = 1.f;
@@ -83,13 +83,13 @@ GEMLayout::GEMLayout(const tlp::PluginContext *context)
   addInParameter<NumericProperty *>("edge length", paramHelp[1].data(), "", false);
   addInParameter<LayoutProperty>("initial layout", paramHelp[2].data(), "", false);
   addInParameter<BooleanProperty>("unmovable nodes", paramHelp[3].data(), "", false);
-  addInParameter<unsigned int>("max iterations", paramHelp[4].data(), "0");
+  addInParameter<uint>("max iterations", paramHelp[4].data(), "0");
   addDependency("Connected Component Packing", "1.0");
 }
 //=========================================================
 GEMLayout::~GEMLayout() = default;
 //=========================================================
-unsigned int GEMLayout::select() {
+uint GEMLayout::select() {
   return randomInteger(graph->numberOfNodes() - 1);
 }
 //=========================================================
@@ -108,7 +108,7 @@ void GEMLayout::vertexdata_init(const float starttemp) {
 }
 //=========================================================
 void GEMLayout::updateLayout() {
-  for (unsigned int i = 0; i < graph->numberOfNodes(); ++i) {
+  for (uint i = 0; i < graph->numberOfNodes(); ++i) {
     //    tlp::warning() << "pos up ==> :" << _particules[i].pos << endl;
     result->setNodeValue(_particules[i].n, _particules[i].pos);
   }
@@ -119,14 +119,14 @@ void GEMLayout::updateLayout() {
  * if testPlaced is equal to true, only already placed nodes
  * are considered
  */
-Coord GEMLayout::computeForces(unsigned int v, float shake, float gravity, bool testPlaced) {
+Coord GEMLayout::computeForces(uint v, float shake, float gravity, bool testPlaced) {
   Coord force;
   Coord vPos = _particules[v].pos;
   float vMass = _particules[v].mass;
   node vNode = _particules[v].n;
 
   // Init force in a random position
-  for (unsigned int cnt = 0; cnt < _dim; ++cnt) {
+  for (uint cnt = 0; cnt < _dim; ++cnt) {
     force[cnt] = shake - float(randomDouble(2. * shake));
   }
 
@@ -144,7 +144,7 @@ Coord GEMLayout::computeForces(unsigned int v, float shake, float gravity, bool 
   maxEdgeLength *= maxEdgeLength;
 
   // repulsive forces (magnetic)
-  for (unsigned int u = 0; u < _nbNodes; ++u) {
+  for (uint u = 0; u < _nbNodes; ++u) {
     if (!testPlaced || _particules[u].in > 0) { // test whether the node is already placed
       Coord d = vPos - _particules[u].pos;
       float n = d[0] * d[0] + d[1] * d[1] + d[2] * d[2]; // d.norm() * d.norm();
@@ -194,9 +194,9 @@ void GEMLayout::insert() {
   _maxtemp = i_maxtemp;
 
   node nCenter = graphCenterHeuristic(graph);
-  unsigned int v = _particules[graph->nodePos(nCenter)].id;
+  uint v = _particules[graph->nodePos(nCenter)].id;
 
-  for (unsigned int i = 0; i < _nbNodes; ++i) {
+  for (uint i = 0; i < _nbNodes; ++i) {
     _particules[i].in = 0;
   }
 
@@ -204,7 +204,7 @@ void GEMLayout::insert() {
 
   startNode = -1;
 
-  for (unsigned int i = 0; i < _nbNodes; ++i) {
+  for (uint i = 0; i < _nbNodes; ++i) {
     if (pluginProgress->isPreviewMode()) {
       updateLayout();
     }
@@ -216,7 +216,7 @@ void GEMLayout::insert() {
     // choose particule with the minimum value
     int d = 0;
 
-    for (unsigned int j = 0; j < _nbNodes; ++j) {
+    for (uint j = 0; j < _nbNodes; ++j) {
       if (_particules[j].in < d) {
         d = _particules[j].in;
         v = j;
@@ -278,7 +278,7 @@ void GEMLayout::insert() {
   }
 }
 //==========================================================================
-void GEMLayout::displace(unsigned int v, Coord imp) {
+void GEMLayout::displace(uint v, Coord imp) {
 
   float nV = imp.norm();
 
@@ -307,8 +307,8 @@ void GEMLayout::displace(unsigned int v, Coord imp) {
 }
 //==========================================================================
 void GEMLayout::a_round() {
-  for (unsigned int i = 0; i < _nbNodes; ++i) {
-    unsigned int v = this->select();
+  for (uint i = 0; i < _nbNodes; ++i) {
+    uint v = this->select();
     node vNode = _particules[v].n;
 
     // nothing to do if vNode is a fixed node
@@ -429,7 +429,7 @@ bool GEMLayout::run() {
 
   _particules.resize(_nbNodes);
   /* Max Edge to scale actual edges length to preferres length */
-  unsigned int i = 0;
+  uint i = 0;
   for (auto n : graph->nodes()) {
     _particules[i] = GEMparticule(float(graph->deg(n)));
     _particules[i].n = n;

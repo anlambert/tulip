@@ -68,7 +68,7 @@ static string bSplineSpecificShaderCode =
     "	}"
     "}";
 
-const unsigned int curveDegree = 3;
+const uint curveDegree = 3;
 
 GlOpenUniformCubicBSpline::GlOpenUniformCubicBSpline()
     : AbstractGlCurve("open uniform cubic bspline vertex shader", bSplineSpecificShaderCode) {}
@@ -76,7 +76,7 @@ GlOpenUniformCubicBSpline::GlOpenUniformCubicBSpline()
 GlOpenUniformCubicBSpline::GlOpenUniformCubicBSpline(const vector<Coord> &controlPoints,
                                                      const Color &startColor, const Color &endColor,
                                                      const float startSize, const float endSize,
-                                                     const unsigned int nbCurvePoints)
+                                                     const uint nbCurvePoints)
     : AbstractGlCurve("open uniform cubic bspline vertex shader", bSplineSpecificShaderCode,
                       controlPoints, startColor, endColor, startSize, endSize, nbCurvePoints) {}
 
@@ -89,7 +89,7 @@ void GlOpenUniformCubicBSpline::setCurveVertexShaderRenderingSpecificParameters(
 void GlOpenUniformCubicBSpline::drawCurve(std::vector<Coord> &controlPoints,
                                           const Color &startColor, const Color &endColor,
                                           const float startSize, const float endSize,
-                                          const unsigned int nbCurvePoints) {
+                                          const uint nbCurvePoints) {
 
   nbKnots = controlPoints.size() + curveDegree + 1;
   stepKnots = 1.0f / ((float(nbKnots) - 2.0f * (float(curveDegree) + 1.0f)) + 2.0f - 1.0f);
@@ -119,7 +119,7 @@ Coord GlOpenUniformCubicBSpline::computeCurvePointOnCPU(const std::vector<Coord>
 
 void GlOpenUniformCubicBSpline::computeCurvePointsOnCPU(const std::vector<Coord> &controlPoints,
                                                         std::vector<Coord> &curvePoints,
-                                                        unsigned int nbCurvePoints) {
+                                                        uint nbCurvePoints) {
   computeOpenUniformBsplinePoints(controlPoints, curvePoints, curveDegree, nbCurvePoints);
 }
 }

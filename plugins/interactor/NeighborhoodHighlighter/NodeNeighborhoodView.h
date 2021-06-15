@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -30,15 +30,15 @@ public:
 
   NodeNeighborhoodView(Graph *graph, node n,
                        NeighborNodesType neighborsNodesType = IN_OUT_NEIGHBORS,
-                       unsigned int neighborhoodDist = 1, bool computeReachableSubGraph = false,
+                       uint neighborhoodDist = 1, bool computeReachableSubGraph = false,
                        const std::string &propertyName = "", int nbNodes = 0);
 
-  void updateWithDistance(const unsigned int dist);
+  void updateWithDistance(const uint dist);
 
   bool isElement(const node n) const override;
   bool isElement(const edge e) const override;
-  unsigned int nodePos(const node n) const override;
-  unsigned int edgePos(const edge e) const override;
+  uint nodePos(const node n) const override;
+  uint edgePos(const edge e) const override;
 
   Iterator<node> *getNodes() const override;
   Iterator<node> *getInNodes(const node n) const override;
@@ -53,7 +53,7 @@ public:
     return graphViewNodes;
   }
 
-  unsigned int numberOfNodes() const override {
+  uint numberOfNodes() const override {
     return graphViewNodes.size();
   }
 
@@ -61,7 +61,7 @@ public:
     return graphViewEdges;
   }
 
-  unsigned int numberOfEdges() const override {
+  uint numberOfEdges() const override {
     return graphViewEdges.size();
   }
 
@@ -70,20 +70,20 @@ public:
   }
 
 private:
-  void getNeighbors(node n, unsigned int dist, bool noRecursion = false);
-  void getInNeighbors(node n, unsigned int dist, bool noRecursion = false);
-  void getOutNeighbors(node n, unsigned int dist, bool noRecursion = false);
+  void getNeighbors(node n, uint dist, bool noRecursion = false);
+  void getInNeighbors(node n, uint dist, bool noRecursion = false);
+  void getOutNeighbors(node n, uint dist, bool noRecursion = false);
 
   node centralNode;
 
   std::vector<node> graphViewNodes;
   std::vector<edge> graphViewEdges;
 
-  std::unordered_map<unsigned int, std::vector<node>> nodesAtDist;
-  std::unordered_map<unsigned int, std::vector<edge>> edgesAtDist;
+  std::unordered_map<uint, std::vector<node>> nodesAtDist;
+  std::unordered_map<uint, std::vector<edge>> edgesAtDist;
 
   NeighborNodesType neighborsType;
-  unsigned int currentDist;
+  uint currentDist;
   bool computeReachableSubGraph;
   int nbNodes;
   tlp::DoubleProperty *property;

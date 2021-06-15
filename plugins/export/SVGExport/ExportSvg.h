@@ -67,9 +67,8 @@ public:
   bool exportEdgeExtremity(const unsigned id_src_shape, const unsigned id_tgt_shape,
                            const tlp::EdgeExtremityShape::EdgeExtremityShapes src_anchor_shape_type,
                            const tlp::EdgeExtremityShape::EdgeExtremityShapes tgt_anchor_shape_type,
-                           const tlp::Color &color, const unsigned int id_src_gradient,
-                           const unsigned int id_tgt_gradient,
-                           const std::string &iconName) override;
+                           const tlp::Color &color, const uint id_src_gradient,
+                           const uint id_tgt_gradient, const std::string &iconName) override;
   bool addLabel(const std::string &type, const std::string &label, const tlp::Color &labelcolor,
                 const tlp::Coord &coord, const unsigned &fsize, const tlp::Size &size) override;
   bool addBorder(const tlp::Color &borderColor, const double borderwidth) override;

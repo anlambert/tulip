@@ -24,8 +24,7 @@ const string defaultRejectedChars = " \r\n";
 const string spaceChars = " \t";
 CSVSimpleParser::CSVSimpleParser(const string &fileName, const QString &separator,
                                  const bool mergesep, char textDelimiter, char decimalMark,
-                                 const string &fileEncoding, unsigned int firstLine,
-                                 unsigned int lastLine)
+                                 const string &fileEncoding, uint firstLine, uint lastLine)
     : _fileName(fileName), _separator(separator), _textDelimiter(textDelimiter),
       _decimalMark(decimalMark), _fileEncoding(fileEncoding), _firstLine(firstLine),
       _lastLine(lastLine), _mergesep(mergesep) {}
@@ -52,9 +51,9 @@ bool CSVSimpleParser::parse(CSVContentHandler *handler, PluginProgress *progress
 
   if (*csvFile) {
     // Real row number used to
-    unsigned int row = 0;
+    uint row = 0;
     // Read row number
-    unsigned int columnMax = 0;
+    uint columnMax = 0;
 
     csvFile->seekg(0, std::ios_base::end);
     // get position = file size
@@ -64,7 +63,7 @@ bool CSVSimpleParser::parse(CSVContentHandler *handler, PluginProgress *progress
     string line;
     vector<string> tokens;
 
-    unsigned int displayProgressEachLineNumber = 200;
+    uint displayProgressEachLineNumber = 200;
 
     QTextCodec *codec = QTextCodec::codecForName(_fileEncoding.c_str());
 
@@ -109,7 +108,7 @@ bool CSVSimpleParser::parse(CSVContentHandler *handler, PluginProgress *progress
 
         tokens.clear();
         tokenize(line, tokens, _separator, _mergesep, _textDelimiter, 0);
-        unsigned int column = 0;
+        uint column = 0;
 
         for (column = 0; column < tokens.size(); ++column) {
           tokens[column] = treatToken(tokens[column], row, column);
@@ -191,7 +190,7 @@ bool CSVSimpleParser::multiplatformgetline(istream &is, string &str) const {
 }
 
 void CSVSimpleParser::tokenize(const string &str, vector<string> &tokens, const QString &delimiters,
-                               const bool mergedelim, char textDelim, unsigned int) {
+                               const bool mergedelim, char textDelim, uint) {
   // Skip delimiters at beginning.
   string::size_type lastPos = 0;
   string::size_type pos = 0;
@@ -340,13 +339,13 @@ bool CSVInvertMatrixParser::begin() {
   return true;
 }
 
-bool CSVInvertMatrixParser::line(unsigned int, const std::vector<std::string> &lineTokens) {
+bool CSVInvertMatrixParser::line(uint, const std::vector<std::string> &lineTokens) {
   maxLineSize = max(maxLineSize, uint(lineTokens.size()));
   columns.push_back(lineTokens);
   return true;
 }
 
-bool CSVInvertMatrixParser::end(unsigned int, unsigned int) {
+bool CSVInvertMatrixParser::end(uint, uint) {
   if (!handler->begin()) {
     return false;
   }
@@ -354,8 +353,8 @@ bool CSVInvertMatrixParser::end(unsigned int, unsigned int) {
   vector<string> tokens(columns.size());
 
   // Fill the line with
-  for (unsigned int line = 0; line < maxLineSize; ++line) {
-    for (unsigned int i = 0; i < columns.size(); ++i) {
+  for (uint line = 0; line < maxLineSize; ++line) {
+    for (uint i = 0; i < columns.size(); ++i) {
       // Check if the column is large enough
       tokens[i] = columns[i].size() > line ? columns[i][line] : string();
     }

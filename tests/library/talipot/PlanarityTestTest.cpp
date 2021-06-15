@@ -85,7 +85,7 @@ void PlanarityTestTest::notPlanarGraphs() {
   delete graph;
 }
 //==========================================================
-unsigned int eulerIdentity(Graph *graph) {
+uint eulerIdentity(Graph *graph) {
   return graph->numberOfEdges() - graph->numberOfNodes() + 1u +
          ConnectedTest::numberOfConnectedComponents(graph);
 }
@@ -128,14 +128,14 @@ void PlanarityTestTest::planarMetaGraphsEmbedding() {
   toGroup.reserve(10);
   const std::vector<node> &nodes = graph->nodes();
 
-  for (unsigned int i = 0; i < 10; ++i) {
+  for (uint i = 0; i < 10; ++i) {
     toGroup.push_back(nodes[i]);
   }
 
   g->createMetaNode(toGroup);
   toGroup.clear();
 
-  for (unsigned int i = 10; i < 20; ++i) {
+  for (uint i = 10; i < 20; ++i) {
     toGroup.push_back(nodes[i]);
   }
 
@@ -143,7 +143,7 @@ void PlanarityTestTest::planarMetaGraphsEmbedding() {
   toGroup.clear();
   toGroup.push_back(meta2);
 
-  for (unsigned int i = 20; i < 30; ++i) {
+  for (uint i = 20; i < 30; ++i) {
     toGroup.push_back(nodes[i]);
   }
 

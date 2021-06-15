@@ -85,7 +85,7 @@ public:
 
   QWidget *configurationWidget() const override;
 
-  unsigned int priority() const override {
+  uint priority() const override {
     return StandardInteractorPriority::Fisheye;
   }
 

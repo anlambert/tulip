@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -95,7 +95,7 @@ public:
    * This function is used by the engine to get line colors of the edge
    */
   void getColors(const GlGraphInputData *data, const node src, const node tgt, const Color &eColor,
-                 Color &srcCol, Color &tgtCol, const Coord *vertices, unsigned int numberOfVertices,
+                 Color &srcCol, Color &tgtCol, const Coord *vertices, uint numberOfVertices,
                  std::vector<Color> &colors);
 
   /**

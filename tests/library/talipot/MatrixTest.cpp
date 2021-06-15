@@ -20,12 +20,12 @@ using namespace tlp;
 
 CPPUNIT_TEST_SUITE_REGISTRATION(MatrixTest);
 
-template <typename Obj, unsigned int SIZE>
+template <typename Obj, uint SIZE>
 void display(const Matrix<Obj, SIZE> &mat) {
-  for (unsigned int row = 0; row < SIZE; ++row) {
+  for (uint row = 0; row < SIZE; ++row) {
     cout << "| ";
 
-    for (unsigned int col = 0; col < SIZE; ++col) {
+    for (uint col = 0; col < SIZE; ++col) {
       cout << setw(4) << mat[row][col] << setw(1) << " ";
     }
 
@@ -35,16 +35,16 @@ void display(const Matrix<Obj, SIZE> &mat) {
 
 //==========================================================
 void MatrixTest::testExternalOperation() {
-  const unsigned int SIZE = 4;
+  const uint SIZE = 4;
   Matrix<double, SIZE> mat1, matid, matnull;
   matnull.fill(0);
   matid.fill(0);
   Vector<double, SIZE> vec;
 
-  for (unsigned int i = 0; i < SIZE; ++i) {
+  for (uint i = 0; i < SIZE; ++i) {
     vec[i] = i;
 
-    for (unsigned int j = 0; j < SIZE; ++j) {
+    for (uint j = 0; j < SIZE; ++j) {
       mat1[i][j] = double((i + 1) * (j + SIZE));
 
       if (i == j) {
@@ -89,8 +89,8 @@ void MatrixTest::testExternalOperation() {
 
   result = mat2 * matinv;
 
-  for (unsigned int i = 0; i < SIZE; ++i) {
-    for (unsigned int j = 0; j < SIZE; ++j) {
+  for (uint i = 0; i < SIZE; ++i) {
+    for (uint j = 0; j < SIZE; ++j) {
       double res = fabs(matid[i][j] - result[i][j]);
       bool ok = false;
 
@@ -110,7 +110,7 @@ void MatrixTest::testExternalOperation() {
   vec2 = mat2 * vec;
   vec2 = matinv * vec2;
 
-  for (unsigned int j = 0; j < SIZE; ++j) {
+  for (uint j = 0; j < SIZE; ++j) {
     double res = fabs(vec2[j] - vec[j]);
     bool ok = false;
 
@@ -125,7 +125,7 @@ void MatrixTest::testExternalOperation() {
   vec3 = vec * mat2;
   bool ok = false;
 
-  for (unsigned int j = 0; j < SIZE; ++j) {
+  for (uint j = 0; j < SIZE; ++j) {
     double res = fabs(vec2[j] - vec3[j]);
 
     if (res > 1.E-5) {
@@ -138,7 +138,7 @@ void MatrixTest::testExternalOperation() {
   vec2 = vec * mat2;
   vec3 = vec2 * matinv;
 
-  for (unsigned int j = 0; j < SIZE; ++j) {
+  for (uint j = 0; j < SIZE; ++j) {
     bool ok = false;
     double res = fabs(vec[j] - vec3[j]);
 
@@ -151,13 +151,13 @@ void MatrixTest::testExternalOperation() {
 }
 //==========================================================
 void MatrixTest::testInternalOperation() {
-  const unsigned int SIZE = 4;
+  const uint SIZE = 4;
   Matrix<double, SIZE> mat1, matnull, matid;
   matnull.fill(0);
   matid.fill(0);
 
-  for (unsigned int i = 0; i < SIZE; ++i) {
-    for (unsigned int j = 0; j < SIZE; ++j) {
+  for (uint i = 0; i < SIZE; ++i) {
+    for (uint j = 0; j < SIZE; ++j) {
       mat1[i][j] = double((i + 1) * (j + SIZE));
 
       if (i == j) {
@@ -193,8 +193,8 @@ void MatrixTest::testInternalOperation() {
   matinv.inverse();
   mat1 *= matinv;
 
-  for (unsigned int i = 0; i < SIZE; ++i) {
-    for (unsigned int j = 0; j < SIZE; ++j) {
+  for (uint i = 0; i < SIZE; ++i) {
+    for (uint j = 0; j < SIZE; ++j) {
       double res = fabs(matid[i][j] - mat1[i][j]);
       bool ok = false;
 

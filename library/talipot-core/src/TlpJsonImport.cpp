@@ -247,7 +247,7 @@ public:
         if (_intervalSource == UINT_MAX) {
           _intervalSource = integerVal;
         } else {
-          for (unsigned int id = _intervalSource; id <= integerVal; ++id) {
+          for (uint id = _intervalSource; id <= integerVal; ++id) {
             if (_parsingEdgesIds) {
               edge e(id);
               _graph->addEdge(e);
@@ -424,21 +424,21 @@ public:
   }
 
 private:
-  std::stack<unsigned int> _parsingSubgraph;
+  std::stack<uint> _parsingSubgraph;
   bool _parsingEdges;
   bool _parsingNodes;
   /**
    * @brief indicates whether the parser is currently parsing an array representing an edge
    **/
   bool _newEdge;
-  unsigned int _edgeSource;
+  uint _edgeSource;
 
   bool _parsingNodesIds;
   bool _parsingEdgesIds;
   bool _parsingEdgesNumber;
   bool _parsingInterval;
   bool _newInterval;
-  unsigned int _intervalSource;
+  uint _intervalSource;
 
   tlp::Graph *_graph;
 
@@ -451,7 +451,7 @@ private:
   bool _parsingProperties;
   PropertyInterface *_currentProperty;
   std::string _propertyName;
-  unsigned int _currentIdentifier;
+  uint _currentIdentifier;
   bool _parsingPropertyType;
   bool _parsingPropertyNodeValues;
   bool _parsingPropertyEdgeValues;

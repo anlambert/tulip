@@ -32,7 +32,7 @@ extern "C" int filename_ncmp(const char *s1, const char *s2, size_t n) {
 
 using namespace std;
 
-static asymbol **slurp_symtab(bfd *abfd, bool useMini, long *nSymbols, unsigned int *symbolSize,
+static asymbol **slurp_symtab(bfd *abfd, bool useMini, long *nSymbols, uint *symbolSize,
                               bool *isDynamic) {
   *nSymbols = 0;
   *symbolSize = 0;
@@ -238,10 +238,10 @@ BfdWrapper::~BfdWrapper() {
 
 #ifndef __MINGW32__
 
-pair<const char *, unsigned int> BfdWrapper::getFileAndLineForAddress(const char *mangledSymbol,
-                                                                      const int64_t runtimeAddr,
-                                                                      const int64_t runtimeOffset) {
-  pair<const char *, unsigned int> ret = make_pair("", 0);
+pair<const char *, uint> BfdWrapper::getFileAndLineForAddress(const char *mangledSymbol,
+                                                              const int64_t runtimeAddr,
+                                                              const int64_t runtimeOffset) {
+  pair<const char *, uint> ret = make_pair("", 0);
 
   if (!abfd || !isMini || symbolSize == 0) {
     return ret;
@@ -281,7 +281,7 @@ pair<const char *, unsigned int> BfdWrapper::getFileAndLineForAddress(const char
 
         const char *funcName = nullptr;
         const char *fileName = nullptr;
-        unsigned int lineno = 0;
+        uint lineno = 0;
 
 #ifdef bfd_get_section_vma
         bfd_vma textSection_vma = bfd_get_section_vma(abfd, textSection);
@@ -328,16 +328,16 @@ pair<const char *, unsigned int> BfdWrapper::getFileAndLineForAddress(const char
 
 #else
 
-pair<const char *, unsigned int> BfdWrapper::getFileAndLineForAddress(const int64_t runtimeAddr) {
+pair<const char *, uint> BfdWrapper::getFileAndLineForAddress(const int64_t runtimeAddr) {
 
-  pair<const char *, unsigned int> ret = make_pair("", 0);
+  pair<const char *, uint> ret = make_pair("", 0);
 
   if (!abfd)
     return ret;
 
   const char *funcName = "";
   const char *fileName = "";
-  unsigned int lineno = 0;
+  uint lineno = 0;
 
   int64_t symbolOffset = runtimeAddr - GetModuleBase(runtimeAddr) - 0x1000 - 1;
 #ifdef bfd_section_size
@@ -366,7 +366,7 @@ const char *BfdWrapper::getFunctionForAddress(const int64_t runtimeAddr) {
 
   const char *funcName = "";
   const char *fileName = "";
-  unsigned int lineno = 0;
+  uint lineno = 0;
 
   if (!abfd)
     return funcName;

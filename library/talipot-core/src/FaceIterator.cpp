@@ -144,7 +144,7 @@ NodeFaceIterator::NodeFaceIterator(PlanarConMap *m, const Face face) : i(0) {
 
   nodes.push_back(prev);
 
-  for (unsigned int j = 1; j < m->facesEdges[face].size(); ++j) {
+  for (uint j = 1; j < m->facesEdges[face].size(); ++j) {
     e1 = m->facesEdges[face][j];
     const auto &[e1Src, e1Tgt] = m->ends(e1);
 

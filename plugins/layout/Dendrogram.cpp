@@ -29,7 +29,7 @@ Dendrogram::Dendrogram(const tlp::PluginContext *context) : LayoutAlgorithm(cont
 //====================================================================
 Dendrogram::~Dendrogram() = default;
 //====================================================================
-void Dendrogram::computeLevelHeights(tlp::Graph *tree, tlp::node n, unsigned int depth,
+void Dendrogram::computeLevelHeights(tlp::Graph *tree, tlp::node n, uint depth,
                                      OrientableSizeProxy *oriSize) {
   if (levelHeights.size() == depth) {
     levelHeights.push_back(0);
@@ -74,7 +74,7 @@ bool Dendrogram::run() {
 
   // check if the specified layer spacing is greater
   // than the max of the minimum layer spacing of the tree
-  for (unsigned int i = 0; i < levelHeights.size() - 1; ++i) {
+  for (uint i = 0; i < levelHeights.size() - 1; ++i) {
     float minLayerSpacing = (levelHeights[i] + levelHeights[i + 1]) / 2;
 
     if (minLayerSpacing + nodeSpacing > spacing) {

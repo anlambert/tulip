@@ -39,7 +39,7 @@ class PropertyNameValidator;
 class TLP_QT_SCOPE PropertyConfigurationWidget : public QWidget, public CSVColumn {
   Q_OBJECT
 public:
-  PropertyConfigurationWidget(unsigned int propertyNumber, const QString &propertyName,
+  PropertyConfigurationWidget(uint propertyNumber, const QString &propertyName,
                               bool propertyNameIsEditable, const std::string &PropertyType,
                               PropertyNameValidator *validator, QWidget *parent = nullptr);
   /**
@@ -60,7 +60,7 @@ public:
 
   void toggleUsed();
 
-  unsigned int getPropertyNumber() const;
+  uint getPropertyNumber() const;
 
 private:
   void typeCBChanged(const QString &index);
@@ -69,7 +69,7 @@ private:
   QPushButton *propertyEditButton;
   Ui_CSVPropertyDialog *ui;
   bool nameEditable;
-  unsigned int propertyNumber;
+  uint propertyNumber;
 
 private slots:
   void showPropertyCreationDialog();
@@ -98,12 +98,12 @@ public:
   QValidator::State validate(QString &input, int &pos) const override;
 
   // set the index of the column/property currently edited
-  void setCurrentIndex(unsigned int index) {
+  void setCurrentIndex(uint index) {
     currentIndex = index;
   }
 
 private:
-  unsigned int currentIndex;
+  uint currentIndex;
   const std::vector<PropertyConfigurationWidget *> &widgets;
 };
 
@@ -130,22 +130,22 @@ class TLP_QT_SCOPE CSVTableWidget : public QTableWidget, public CSVContentHandle
 public:
   CSVTableWidget(QWidget *parent = nullptr);
   bool begin() override;
-  bool line(unsigned int row, const std::vector<std::string> &lineTokens) override;
-  bool end(unsigned int rowNumber, unsigned int columnNumber) override;
+  bool line(uint row, const std::vector<std::string> &lineTokens) override;
+  bool end(uint rowNumber, uint columnNumber) override;
   /**
    * @brief Limit the line number of the preview. Need to parse the file again to take this limit
    *into account.
    **/
-  void setMaxPreviewLineNumber(unsigned int lineNumber) {
+  void setMaxPreviewLineNumber(uint lineNumber) {
     // first row is used to display configuration widgets
     maxLineNumber = lineNumber + 1;
   }
 
-  unsigned int getFirstLineIndex() const {
+  uint getFirstLineIndex() const {
     return firstLineIndex;
   }
 
-  void setFirstLineIndex(unsigned int index) {
+  void setFirstLineIndex(uint index) {
     firstLineIndex = index;
   }
 
@@ -154,8 +154,8 @@ public:
   }
 
 private:
-  unsigned int maxLineNumber;
-  unsigned int firstLineIndex;
+  uint maxLineNumber;
+  uint firstLineIndex;
   bool checkCommentsLines;
   int nbCommentsLines;
 };
@@ -172,8 +172,8 @@ public:
   CSVImportConfigurationWidget(QWidget *parent = nullptr);
   ~CSVImportConfigurationWidget() override;
   bool begin() override;
-  bool line(unsigned int row, const std::vector<std::string> &lineTokens) override;
-  bool end(unsigned int rowNumber, unsigned int columnNumber) override;
+  bool line(uint row, const std::vector<std::string> &lineTokens) override;
+  bool end(uint rowNumber, uint columnNumber) override;
   void setFirstLineIndex(int firstLine);
 
   /**
@@ -201,26 +201,26 @@ protected:
 
   bool useFirstLineAsPropertyName() const;
   void setUseFirstLineAsPropertyName(bool useFirstLineAsHeader) const;
-  unsigned int rowCount() const;
-  unsigned int columnCount() const;
+  uint rowCount() const;
+  uint columnCount() const;
 
   /**
    *@brief The index of the first line to get in the file.
    *@brief A line number from 0 to LastLineIndex.
    **/
-  unsigned int getFirstLineIndex() const;
+  uint getFirstLineIndex() const;
 
   /**
    * @brief The index of the last line to take in the file.
    **/
-  unsigned int getLastLineIndex() const;
+  uint getLastLineIndex() const;
   /**
    * @brief The index of the first imported line. This index change if user use the first line as
    *column names.
    * For example if the user wants to import all lines but uses the first line as column names this
    *function will return 1 not 0.
    **/
-  unsigned int getFirstImportedLineIndex() const;
+  uint getFirstImportedLineIndex() const;
 
   /**
    * Empty the properties list.
@@ -243,7 +243,7 @@ protected:
    * @return :PropertyConfigurationWidget*
    **/
   virtual PropertyConfigurationWidget *
-  createPropertyConfigurationWidget(unsigned int propertyNumber, const QString &propertyName,
+  createPropertyConfigurationWidget(uint propertyNumber, const QString &propertyName,
                                     bool propertyNameIsEditable, const std::string &propertyType,
                                     QWidget *parent);
 
@@ -251,12 +251,12 @@ protected:
    * @brief Compute the name of the column. Return the first token for the column if the first lline
    *is used as header r Column_x xhere x is the column index.
    **/
-  QString generateColumnName(unsigned int col) const;
+  QString generateColumnName(uint col) const;
   /**
    * @brief Compute the column data type. Take in account the first row only if it is not used as
    *column label
    **/
-  std::string getColumnType(unsigned int col) const;
+  std::string getColumnType(uint col) const;
 
   std::vector<PropertyConfigurationWidget *> propertyWidgets;
 
@@ -293,7 +293,7 @@ private:
   const std::string &guessDataType(const std::string &data) const;
 
   // update the max line number of the preview table
-  void setMaxPreviewLineNumber(unsigned int lineNumber);
+  void setMaxPreviewLineNumber(uint lineNumber);
 
   // The data type of the header
   std::vector<std::string> columnHeaderType;
@@ -302,10 +302,10 @@ private:
 
   Ui::CSVImportConfigurationWidget *ui;
   PropertyNameValidator *validator;
-  unsigned int maxLineNumber;
-  unsigned int headerColumnCount;
+  uint maxLineNumber;
+  uint headerColumnCount;
   tlp::CSVParser *parser;
-  unsigned int firstLine;
+  uint firstLine;
   bool guessFirstLineIsHeader;
   bool keepPropertyWidgets;
 };

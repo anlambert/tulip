@@ -184,9 +184,9 @@ public:
 };
 
 template <>
-class PyObjectToCppObjectConverter<unsigned int> {
+class PyObjectToCppObjectConverter<uint> {
 public:
-  bool convert(PyObject *pyObject, unsigned int &cppObject) {
+  bool convert(PyObject *pyObject, uint &cppObject) {
     unsigned long val = 0;
     PyObjectToCppObjectConverter<unsigned long> converter;
     bool ok = converter.convert(pyObject, val);
@@ -271,9 +271,9 @@ public:
 };
 
 template <>
-class CppObjectToPyObjectConverter<unsigned int> {
+class CppObjectToPyObjectConverter<uint> {
 public:
-  bool convert(const unsigned int &cppObject, PyObject *&pyObject) {
+  bool convert(const uint &cppObject, PyObject *&pyObject) {
     pyObject = convertUnsignedLongToPyObject(cppObject);
     return true;
   }

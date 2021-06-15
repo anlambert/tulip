@@ -57,27 +57,27 @@ private:
   void computeOrdering();
   void firstNodesPlacement();
   void placement();
-  void initialPlacement(unsigned int, unsigned int);
+  void initialPlacement(uint, uint);
   void kk_local_reffinement(tlp::node);
-  void kk_reffinement(unsigned int, unsigned int);
-  void fr_reffinement(unsigned int, unsigned int);
+  void kk_reffinement(uint, uint);
+  void fr_reffinement(uint, uint);
   void displace(tlp::node);
   void updateLocalTemp(tlp::node);
   void init();
-  void init_heat(unsigned int);
+  void init_heat(uint);
 
-  void seeLayout(unsigned int);
+  void seeLayout(uint);
 
-  unsigned int rounds(unsigned int, unsigned int, unsigned int, unsigned int, unsigned int);
+  uint rounds(uint, uint, uint, uint, uint);
   void set_nbr_size();
   float sched(int, int, int, int, int);
 
   MISFiltering *misf;
   float edgeLength;
   int level;
-  std::unordered_map<tlp::node, std::vector<unsigned int>> neighbors_dist;
+  std::unordered_map<tlp::node, std::vector<uint>> neighbors_dist;
   std::unordered_map<tlp::node, std::vector<tlp::node>> neighbors;
-  std::unordered_map<unsigned int, unsigned int> levelToNbNeighbors;
+  std::unordered_map<uint, uint> levelToNbNeighbors;
   std::unordered_map<tlp::node, tlp::Coord> disp;
   std::unordered_map<tlp::node, tlp::Coord> oldDisp;
   std::unordered_map<tlp::node, double> heat;

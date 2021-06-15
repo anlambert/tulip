@@ -139,7 +139,7 @@ protected:
 
   QWidget *currentModeWidget() const;
   QVector<PlaceHolderWidget *> currentModeSlots() const;
-  unsigned int currentSlotsCount() const;
+  uint currentSlotsCount() const;
 
   void setFocusedPanel(WorkspacePanel *panel);
 };

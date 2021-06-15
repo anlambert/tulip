@@ -31,7 +31,7 @@ void PluginLoaderTxt::loaded(const Plugin *info, const std::list<Dependency> &de
 
   // output dependencies if any
   if (deps.size()) {
-    unsigned int i = deps.size() - 1;
+    uint i = deps.size() - 1;
     std::cout << "depending on ";
 
     for (const auto &d : deps) {

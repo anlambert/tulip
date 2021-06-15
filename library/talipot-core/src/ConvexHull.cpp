@@ -34,8 +34,8 @@ using namespace tlp;
 
 //================================================================================
 
-static bool runQHull(int dim, vector<double> &points, vector<vector<unsigned int>> &facets,
-                     vector<vector<unsigned int>> &neighbors) {
+static bool runQHull(int dim, vector<double> &points, vector<vector<uint>> &facets,
+                     vector<vector<uint>> &neighbors) {
 
   // Set default options for qhull convex hull
   // - Qt : triangulated output
@@ -61,10 +61,10 @@ static bool runQHull(int dim, vector<double> &points, vector<vector<unsigned int
     facetT *facet = nullptr;
     vertexT *vertex = nullptr, **vertexp;
     // iterate over generated facets
-    std::map<unsigned int, unsigned int> faceIds;
+    std::map<uint, uint> faceIds;
     FORALLfacets {
-      std::vector<unsigned int> facetV;
-      std::vector<unsigned int> neighborsV;
+      std::vector<uint> facetV;
+      std::vector<uint> neighborsV;
       FOREACHvertex_(facet->vertices) {
 #ifdef HAVE_REENTRANT_QHULL
         facetV.push_back(qh_pointid(qh, vertex->point));
@@ -82,7 +82,7 @@ static bool runQHull(int dim, vector<double> &points, vector<vector<unsigned int
     }
 
     for (auto &neighbor : neighbors) {
-      for (unsigned int &i : neighbor) {
+      for (uint &i : neighbor) {
         i = faceIds[i];
       }
     }
@@ -102,12 +102,12 @@ static bool runQHull(int dim, vector<double> &points, vector<vector<unsigned int
 }
 
 //================================================================================
-void tlp::convexHull(const std::vector<Coord> &points, std::vector<unsigned int> &hull) {
+void tlp::convexHull(const std::vector<Coord> &points, std::vector<uint> &hull) {
   hull.clear();
 
   vector<double> pointsQHull;
-  vector<vector<unsigned int>> facets;
-  vector<vector<unsigned int>> neighbors;
+  vector<vector<uint>> facets;
+  vector<vector<uint>> neighbors;
 
   for (const auto &point : points) {
     pointsQHull.push_back(point[0]);
@@ -120,13 +120,13 @@ void tlp::convexHull(const std::vector<Coord> &points, std::vector<unsigned int>
     // compute ordering on points defining the hull polygon
     hull.push_back(facets[0][0]);
     hull.push_back(facets[0][1]);
-    unsigned int curFaceId = 0;
+    uint curFaceId = 0;
     float signedArea = 0;
 
     while (1) {
-      unsigned int ridge = hull.back();
-      unsigned int neighFaceAId = neighbors[curFaceId][0];
-      unsigned int neighFaceBId = neighbors[curFaceId][1];
+      uint ridge = hull.back();
+      uint neighFaceAId = neighbors[curFaceId][0];
+      uint neighFaceBId = neighbors[curFaceId][1];
 
       if (facets[neighFaceAId][0] == ridge) {
         hull.push_back(facets[neighFaceAId][1]);
@@ -171,8 +171,8 @@ void tlp::convexHull(const std::vector<Coord> &points, std::vector<unsigned int>
 //================================================================================
 
 void tlp::convexHull(const std::vector<Coord> &points,
-                     std::vector<std::vector<unsigned int>> &convexHullFacets,
-                     std::vector<std::vector<unsigned int>> &facetNeighbors) {
+                     std::vector<std::vector<uint>> &convexHullFacets,
+                     std::vector<std::vector<uint>> &facetNeighbors) {
 
   convexHullFacets.clear();
   facetNeighbors.clear();

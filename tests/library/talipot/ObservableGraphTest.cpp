@@ -34,7 +34,7 @@ public:
     observables.clear();
   }
 
-  unsigned int nbObservables() const {
+  uint nbObservables() const {
     return observables.size();
   }
 
@@ -318,7 +318,7 @@ public:
       case GraphEvent::TLP_ADD_NODES: {
   const std::vector<node>& nodes = gEvt->getNodes();
 
-  for (unsigned int i = 0; i < nodes.size(); ++i)
+  for (uint i = 0; i < nodes.size(); ++i)
     addNode(graph, nodes[i]);
 
   break;
@@ -327,7 +327,7 @@ public:
       case GraphEvent::TLP_ADD_EDGES: {
   const std::vector<edge>& edges = gEvt->getEdges();
 
-  for (unsigned int i = 0; i < edges.size(); ++i)
+  for (uint i = 0; i < edges.size(); ++i)
     addEdge(graph, edges[i]);
 
   break;
@@ -435,9 +435,9 @@ void ObservableGraphTest::testAddDel() {
   //  qWarning() << __PRETTY_FUNCTION__ << endl;
   vector<node> nodes;
   vector<edge> edges;
-  unsigned int NB_NODES = 2;
+  uint NB_NODES = 2;
 
-  for (unsigned int i = 0; i < NB_NODES; ++i) {
+  for (uint i = 0; i < NB_NODES; ++i) {
     gObserver->reset();
     observer->reset();
     nodes.push_back(graph->addNode());
@@ -447,7 +447,7 @@ void ObservableGraphTest::testAddDel() {
     CPPUNIT_ASSERT(observer->found(graph));
   }
 
-  for (unsigned int i = 0; i < NB_NODES; ++i) {
+  for (uint i = 0; i < NB_NODES; ++i) {
     gObserver->reset();
     observer->reset();
     edges.push_back(graph->addEdge(nodes[i], (i == NB_NODES - 1) ? nodes[0] : nodes[i]));
@@ -457,7 +457,7 @@ void ObservableGraphTest::testAddDel() {
     CPPUNIT_ASSERT(observer->found(graph));
   }
 
-  for (unsigned int i = 0; i < NB_NODES / 2; ++i) {
+  for (uint i = 0; i < NB_NODES / 2; ++i) {
     gObserver->reset();
     observer->reset();
     graph->delEdge(edges[2 * i]);
@@ -467,7 +467,7 @@ void ObservableGraphTest::testAddDel() {
     CPPUNIT_ASSERT(observer->found(graph));
   }
 
-  for (unsigned int i = 0; i < NB_NODES; ++i) {
+  for (uint i = 0; i < NB_NODES; ++i) {
     gObserver->reset();
     observer->reset();
     graph->delNode(nodes[i]);
@@ -496,13 +496,13 @@ void ObservableGraphTest::testAddDel() {
 void ObservableGraphTest::testClear() {
   vector<node> nodes;
   vector<edge> edges;
-  unsigned int NB_NODES = 100;
+  uint NB_NODES = 100;
 
-  for (unsigned int i = 0; i < NB_NODES; ++i) {
+  for (uint i = 0; i < NB_NODES; ++i) {
     nodes.push_back(graph->addNode());
   }
 
-  for (unsigned int i = 0; i < NB_NODES; ++i) {
+  for (uint i = 0; i < NB_NODES; ++i) {
     edges.push_back(graph->addEdge(nodes[i], (i == NB_NODES - 1) ? nodes[i] : nodes[i + 1]));
   }
 
@@ -514,14 +514,14 @@ void ObservableGraphTest::testClear() {
   vector<node> &oNodes = gObserver->getObservedNodes();
   CPPUNIT_ASSERT_EQUAL(size_t(NB_NODES), oNodes.size());
 
-  for (unsigned int i = 0; i < NB_NODES; ++i) {
+  for (uint i = 0; i < NB_NODES; ++i) {
     CPPUNIT_ASSERT_EQUAL(oNodes[i], nodes[i]);
   }
 
   vector<edge> &oEdges = gObserver->getObservedEdges();
   CPPUNIT_ASSERT_EQUAL(size_t(NB_NODES), oEdges.size());
 
-  for (unsigned int i = 0; i < NB_NODES; ++i) {
+  for (uint i = 0; i < NB_NODES; ++i) {
     CPPUNIT_ASSERT(oEdges[i] == edges[i]);
   }
 
@@ -532,17 +532,17 @@ void ObservableGraphTest::testClear() {
 void ObservableGraphTest::testReverse() {
   vector<node> nodes;
   vector<edge> edges;
-  unsigned int NB_NODES = 100;
+  uint NB_NODES = 100;
 
-  for (unsigned int i = 0; i < NB_NODES; ++i) {
+  for (uint i = 0; i < NB_NODES; ++i) {
     nodes.push_back(graph->addNode());
   }
 
-  for (unsigned int i = 0; i < NB_NODES; ++i) {
+  for (uint i = 0; i < NB_NODES; ++i) {
     edges.push_back(graph->addEdge(nodes[i], (i == NB_NODES - 1) ? nodes[0] : nodes[i + 1]));
   }
 
-  for (unsigned int i = 0; i < NB_NODES; ++i) {
+  for (uint i = 0; i < NB_NODES; ++i) {
     gObserver->reset();
     observer->reset();
     graph->reverse(edges[i]);
@@ -886,7 +886,7 @@ void ObservableGraphTest::testAddDelProperties() {
 }
 //==========================================================
 void ObservableGraphTest::testObserverWhenRemoveObservable() {
-  unsigned int listeners = graph->countListeners();
+  uint listeners = graph->countListeners();
   auto *graphObserverTmp = new GraphObserverTest();
   graph->addListener(graphObserverTmp);
   CPPUNIT_ASSERT_EQUAL(listeners + 1, graph->countListeners());

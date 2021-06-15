@@ -674,7 +674,7 @@ struct TLPAttributesBuilder : public TLPFalse {
 
     is.unget();
     // to read the id of the graph
-    unsigned int id;
+    uint id;
 
     if (!(is >> id)) {
       return false;

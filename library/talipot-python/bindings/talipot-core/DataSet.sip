@@ -240,7 +240,7 @@ Remove the value associated to a particular key from the data set if it exists.
 :type key: string
 %End
 
-  unsigned int size() const;
+  uint size() const;
 %Docstring
 tlp.DataSet.size()
 

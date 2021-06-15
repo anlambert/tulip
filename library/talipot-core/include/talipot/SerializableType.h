@@ -116,7 +116,7 @@ class TLP_SCOPE SerializableVectorType : public TypeInterface<std::vector<ELT_TY
   static void writeVector(std::ostream &os, const std::vector<ELT_TYPE> &v) {
     os << '(';
 
-    for (unsigned int i = 0; i < v.size(); i++) {
+    for (uint i = 0; i < v.size(); i++) {
       if (i) {
         os << ", ";
       }
@@ -132,7 +132,7 @@ public:
     writeVector(oss, v);
   }
   static void writeb(std::ostream &oss, const REAL_TYPE(TypeInterface<std::vector<ELT_TYPE>>) & v) {
-    unsigned int vSize = v.size();
+    uint vSize = v.size();
     oss.write(reinterpret_cast<const char *>(&vSize), sizeof(vSize));
     oss.write(reinterpret_cast<const char *>(v.data()), vSize * sizeof(ELT_TYPE));
   }
@@ -141,7 +141,7 @@ public:
     return readVector(iss, v, openChar, sepChar, closeChar);
   }
   static bool readb(std::istream &iss, REAL_TYPE(TypeInterface<std::vector<ELT_TYPE>>) & v) {
-    unsigned int vSize;
+    uint vSize;
 
     if (bool(iss.read(reinterpret_cast<char *>(&vSize), sizeof(vSize)))) {
       v.resize(vSize);
@@ -229,7 +229,7 @@ public:
       }
     }
   }
-  static unsigned int valueSize() {
+  static uint valueSize() {
     return 0; // means is not fixed
   }
   FORWARD_STRING_METHODS(typename TypeInterface<std::vector<ELT_TYPE>>)

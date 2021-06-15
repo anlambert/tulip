@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -42,8 +42,7 @@ bool NeighborhoodHighlighterConfigWidget::computeReachableSubGraph() const {
   return _ui->computeReachableSGCB->isChecked();
 }
 
-void NeighborhoodHighlighterConfigWidget::setCurrentMaxDistanceForReachableNodes(
-    unsigned int distance) {
+void NeighborhoodHighlighterConfigWidget::setCurrentMaxDistanceForReachableNodes(uint distance) {
   _ui->distanceLineEdit->setText(QString::number(distance));
 }
 

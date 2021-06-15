@@ -23,9 +23,9 @@
 using namespace std;
 using namespace tlp;
 
-const unsigned int NB_NODES = 4;
-const unsigned int EDGE_RATIO = 3;
-const unsigned int NB_EDGES = EDGE_RATIO * NB_NODES;
+const uint NB_NODES = 4;
+const uint EDGE_RATIO = 3;
+const uint NB_EDGES = EDGE_RATIO * NB_NODES;
 
 CPPUNIT_TEST_SUITE_REGISTRATION(ObservablePropertyTest);
 
@@ -42,7 +42,7 @@ public:
     observables.clear();
   }
 
-  unsigned int nbObservables() const {
+  uint nbObservables() const {
     return observables.size();
   }
 
@@ -79,7 +79,7 @@ public:
     properties.clear();
   }
 
-  unsigned int nbProperties() const {
+  uint nbProperties() const {
     return properties.size();
   }
 
@@ -175,7 +175,7 @@ void ObservablePropertyTest::setUp() {
 
   vector<node> nodes = graph->addNodes(NB_NODES);
 
-  for (unsigned int i = 0; i < NB_EDGES; ++i) {
+  for (uint i = 0; i < NB_EDGES; ++i) {
     graph->addEdge(graph->getRandomNode(), graph->getRandomNode());
   }
 
@@ -385,7 +385,7 @@ void ObservablePropertyTest::testSynchronousDelete() {
   CPPUNIT_ASSERT(observer->nbObservables() == 0);
   CPPUNIT_ASSERT(pObserver->nbProperties() == 0);
 
-  for (unsigned int i = 0; i < 7; ++i) {
+  for (uint i = 0; i < 7; ++i) {
     PropertyInterface *prop = props[i];
     graph->delLocalProperty(prop->getName());
     CPPUNIT_ASSERT(observer->nbObservables() == i + 1);
@@ -401,7 +401,7 @@ void ObservablePropertyTest::testAsynchronousDelete() {
   CPPUNIT_ASSERT(pObserver->nbProperties() == 0);
   Observable::holdObservers();
 
-  for (unsigned int i = 0; i < 7; ++i) {
+  for (uint i = 0; i < 7; ++i) {
     PropertyInterface *prop = props[i];
     graph->delLocalProperty(prop->getName());
     // deletion is not asynchronous

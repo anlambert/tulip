@@ -30,7 +30,7 @@ public:
   ParallelCoordinatesGraphProxy(Graph *graph, const ElementType location = NODE);
   ~ParallelCoordinatesGraphProxy() override;
 
-  unsigned int getNumberOfSelectedProperties() const;
+  uint getNumberOfSelectedProperties() const;
   bool selectedPropertiesisEmpty() const;
   std::vector<std::string> getAllProperties();
   std::vector<std::string> getSelectedProperties();
@@ -42,42 +42,42 @@ public:
     dataLocation = location;
   }
 
-  unsigned int getDataCount() const;
-  Iterator<unsigned int> *getDataIterator();
-  Iterator<unsigned int> *getSelectedDataIterator();
-  Iterator<unsigned int> *getUnselectedDataIterator();
-  Color getDataColor(const unsigned int dataId);
-  std::string getDataTexture(const unsigned int dataId);
-  Size getDataViewSize(const unsigned int dataId);
-  std::string getDataLabel(const unsigned int dataId);
+  uint getDataCount() const;
+  Iterator<uint> *getDataIterator();
+  Iterator<uint> *getSelectedDataIterator();
+  Iterator<uint> *getUnselectedDataIterator();
+  Color getDataColor(const uint dataId);
+  std::string getDataTexture(const uint dataId);
+  Size getDataViewSize(const uint dataId);
+  std::string getDataLabel(const uint dataId);
 
-  bool isDataSelected(const unsigned int dataId);
-  void setDataSelected(const unsigned int dataId, const bool dataSelected);
+  bool isDataSelected(const uint dataId);
+  void setDataSelected(const uint dataId, const bool dataSelected);
   void resetSelection();
 
-  void deleteData(const unsigned int dataId);
+  void deleteData(const uint dataId);
 
   Graph *getGraph() const {
     return graph_component;
   }
 
-  void setUnhighlightedEltsColorAlphaValue(const unsigned int alpha) {
+  void setUnhighlightedEltsColorAlphaValue(const uint alpha) {
     unhighlightedEltsColorAlphaValue = alpha;
   }
-  unsigned int getUnhighlightedEltsColorAlphaValue() const {
+  uint getUnhighlightedEltsColorAlphaValue() const {
     return unhighlightedEltsColorAlphaValue;
   }
-  void addOrRemoveEltToHighlight(const unsigned int eltId);
+  void addOrRemoveEltToHighlight(const uint eltId);
   void unsetHighlightedElts();
   bool highlightedEltsSet() const;
-  bool isDataHighlighted(const unsigned int dataId);
+  bool isDataHighlighted(const uint dataId);
   void selectHighlightedElements();
   void setSelectHighlightedElements(bool val);
-  const std::set<unsigned int> &getHighlightedElts() const {
+  const std::set<uint> &getHighlightedElts() const {
     return highlightedElts;
   }
-  void resetHighlightedElts(const std::set<unsigned int> &highlightedData);
-  void removeHighlightedElement(const unsigned int dataId);
+  void resetHighlightedElts(const std::set<uint> &highlightedData);
+  void removeHighlightedElement(const uint dataId);
   bool graphColorsModified() const {
     return graphColorsChanged;
   }
@@ -101,7 +101,7 @@ public:
 
   template <typename PROPERTY, typename PROPERTYTYPE>
   TYPE_CONST_REFERENCE(PROPERTYTYPE)
-  getPropertyValueForData(const std::string &propertyName, const unsigned int dataId) {
+  getPropertyValueForData(const std::string &propertyName, const uint dataId) {
     if (getDataLocation() == NODE) {
       return getProperty<PROPERTY>(propertyName)->getNodeValue(node(dataId));
     } else {
@@ -110,7 +110,7 @@ public:
   }
 
   template <typename PROPERTY, typename PROPERTYTYPE>
-  void setPropertyValueForData(const std::string &propertyName, const unsigned int dataId,
+  void setPropertyValueForData(const std::string &propertyName, const uint dataId,
                                const REAL_TYPE(PROPERTYTYPE) & propertyValue) {
     if (getDataLocation() == NODE) {
       getProperty<PROPERTY>(propertyName)->setNodeValue(node(dataId), propertyValue);
@@ -150,15 +150,15 @@ public:
   }
 
 private:
-  Color getOriginalDataColor(const unsigned int dataId);
+  Color getOriginalDataColor(const uint dataId);
 
   bool graphColorsChanged;
   ColorProperty *dataColors;
   ColorProperty *originalDataColors;
-  std::set<unsigned int> highlightedElts;
+  std::set<uint> highlightedElts;
   std::vector<std::string> selectedProperties;
   ElementType dataLocation;
-  unsigned int unhighlightedEltsColorAlphaValue;
+  uint unhighlightedEltsColorAlphaValue;
 };
 
 }

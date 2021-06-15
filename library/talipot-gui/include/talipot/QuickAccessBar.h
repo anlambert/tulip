@@ -115,8 +115,8 @@ protected:
   void addSeparator();
   void updateFontButtonStyle();
   void showHideCaption(CaptionItem::CaptionType captionType);
-  void setAllValues(unsigned int eltType, PropertyInterface *prop);
-  void setAllColorValues(unsigned int eltType, ColorProperty *prop, const Color &color);
+  void setAllValues(uint eltType, PropertyInterface *prop);
+  void setAllColorValues(uint eltType, ColorProperty *prop, const Color &color);
 
 public slots:
   void reset() override;

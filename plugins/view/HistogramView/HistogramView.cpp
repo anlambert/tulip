@@ -27,14 +27,14 @@
 
 using namespace std;
 
-const unsigned int OVERVIEW_SIZE = 512;
+const uint OVERVIEW_SIZE = 512;
 
 const string propertiesTypes[] = {"double", "int"};
-const unsigned int nbPropertiesTypes = sizeof(propertiesTypes) / sizeof(string);
+const uint nbPropertiesTypes = sizeof(propertiesTypes) / sizeof(string);
 const vector<string> propertiesTypesFilter(propertiesTypes, propertiesTypes + nbPropertiesTypes);
 
 template <typename T>
-std::string getStringFromNumber(T number, unsigned int precision = 5) {
+std::string getStringFromNumber(T number, uint precision = 5) {
   std::ostringstream oss;
   oss.precision(precision);
   oss << number;
@@ -238,7 +238,7 @@ void HistogramView::setState(const DataSet &dataSet) {
     buildHistograms();
 
     for (const auto &selectedProperty : selectedProperties) {
-      unsigned int nbHistogramBins = 0;
+      uint nbHistogramBins = 0;
 
       Histogram *histo = histogramsMap[selectedProperty];
 
@@ -247,14 +247,14 @@ void HistogramView::setState(const DataSet &dataSet) {
         histo->setNbHistogramBins(nbHistogramBins);
       }
 
-      unsigned int nbXGraduations = 0;
+      uint nbXGraduations = 0;
 
       if (histogramParametersMap[selectedProperty].get("x axis nb graduations", nbXGraduations)) {
         histo->setLayoutUpdateNeeded();
         histo->setNbXGraduations(nbXGraduations);
       }
 
-      unsigned int yAxisIncrementStep = 0;
+      uint yAxisIncrementStep = 0;
 
       if (histogramParametersMap[selectedProperty].get("y axis increment step",
                                                        yAxisIncrementStep)) {
@@ -619,7 +619,7 @@ void HistogramView::buildHistograms() {
   float labelHeight = OVERVIEW_SIZE / 6.0f;
 
   float squareRoot = sqrt(float(selectedProperties.size()));
-  const unsigned int N =
+  const uint N =
       uint(squareRoot) + (fmod(float(selectedProperties.size()), squareRoot) == 0.f ? 0u : 1u);
 
   Color backgroundColor = histoOptionsWidget->getBackgroundColor();
@@ -643,8 +643,8 @@ void HistogramView::buildHistograms() {
 
   for (size_t i = 0; i < selectedProperties.size(); ++i) {
 
-    unsigned int row = i / N;
-    unsigned int col = i % N;
+    uint row = i / N;
+    uint col = i % N;
 
     Coord overviewBLCorner = {
         col * (OVERVIEW_SIZE + spaceBetweenOverviews),
@@ -1103,7 +1103,7 @@ void HistogramView::delEdge(Graph *, const edge e) {
   setSizesUpdateNeeded();
 }
 
-unsigned int HistogramView::getMappedId(unsigned int id) {
+uint HistogramView::getMappedId(uint id) {
   if (dataLocation == EDGE) {
     return nodeToEdge[node(id)].id;
   }

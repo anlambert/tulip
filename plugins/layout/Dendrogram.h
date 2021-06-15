@@ -65,8 +65,7 @@ private:
   void setNodePosition(tlp::node n, float x, float y, float z, OrientableLayout *oriLayout);
   void setCoordY(tlp::node n, float &maxYLeaf, OrientableLayout *oriLayout,
                  OrientableSizeProxy *oriSize);
-  void computeLevelHeights(tlp::Graph *tree, tlp::node n, unsigned int depth,
-                           OrientableSizeProxy *oriSize);
+  void computeLevelHeights(tlp::Graph *tree, tlp::node n, uint depth, OrientableSizeProxy *oriSize);
 };
 
 #endif // DENDROGRAM_H

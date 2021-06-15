@@ -203,7 +203,7 @@ public:
   /**
    * @brief Function to set data with inString (in XML format)
    */
-  void setWithXML(const std::string &inString, unsigned int &currentPosition);
+  void setWithXML(const std::string &inString, uint &currentPosition);
 
   /**
    * This function is automatically call when a GlGraph is added in this layer

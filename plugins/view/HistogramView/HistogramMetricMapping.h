@@ -57,7 +57,7 @@ public:
 
   void draw(float lod, Camera *camera) override;
   void getXML(std::string &) override {}
-  void setWithXML(const std::string &, unsigned int &) override {}
+  void setWithXML(const std::string &, uint &) override {}
 
   Coord getMinPoint() const {
     return minPoint;
@@ -122,7 +122,7 @@ public:
 
   void getXML(std::string &) override {}
 
-  void setWithXML(const std::string &, unsigned int &) override {}
+  void setWithXML(const std::string &, uint &) override {}
 
   Coord getBaseCoord() const {
     return baseCoord;
@@ -182,7 +182,7 @@ public:
 
   void getXML(std::string &) override {}
 
-  void setWithXML(const std::string &, unsigned int &) override {}
+  void setWithXML(const std::string &, uint &) override {}
 
   Coord getBaseCoord() const {
     return baseCoord;
@@ -223,7 +223,7 @@ public:
 
   bool pointerUnderScale(const Coord &sceneCoords);
   void updateGraphWithMapping(Graph *graph, LayoutProperty *histogramLayout);
-  void updateMapping(GlQuantitativeAxis *histoXAxis, unsigned int nbHistogramBins);
+  void updateMapping(GlQuantitativeAxis *histoXAxis, uint nbHistogramBins);
 
 private:
   void initInteractor();

@@ -65,9 +65,9 @@ public:
   /**
    * @brief Define the viewport size.
    **/
-  void setViewPortSize(const unsigned int viewPortWidth, const unsigned int viewPortHeight);
-  unsigned int getViewportWidth();
-  unsigned int getViewportHeight();
+  void setViewPortSize(const uint viewPortWidth, const uint viewPortHeight);
+  uint getViewportWidth();
+  uint getViewportHeight();
   bool frameBufferOk() const;
 
   GlScene *getScene() {
@@ -133,11 +133,11 @@ private:
   QOpenGLContext *glContext;
   QOffscreenSurface *offscreenSurface;
 
-  unsigned int vPWidth, vPHeight;
+  uint vPWidth, vPHeight;
   QOpenGLFramebufferObject *glFrameBuf, *glFrameBuf2;
   GlScene scene;
   GlLayer *mainLayer;
-  unsigned int entitiesCpt;
+  uint entitiesCpt;
   double zoomFactor;
   Coord cameraCenter;
   bool antialiasedFbo;

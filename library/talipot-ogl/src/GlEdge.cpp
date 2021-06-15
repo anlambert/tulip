@@ -307,7 +307,7 @@ void GlEdge::drawEdge(const Coord &srcNodePos, const Coord &tgtNodePos, const Co
     static GlCatmullRomCurve catmull;
     static GlOpenUniformCubicBSpline bspline;
     AbstractGlCurve *curve = nullptr;
-    unsigned int nbCurvePoints = 200;
+    uint nbCurvePoints = 200;
 
     if (shape == EdgeShape::BezierCurve || shape == EdgeShape::BezierCurve + L3D_BIT) {
       curve = &bezier;
@@ -602,7 +602,7 @@ size_t GlEdge::getVertices(const GlGraphInputData *data, const edge e, const nod
 
 void GlEdge::getColors(const GlGraphInputData *data, const node src, const node tgt,
                        const Color &eColor, Color &srcCol, Color &tgtCol, const Coord *vertices,
-                       unsigned int numberOfVertices, std::vector<Color> &colors) {
+                       uint numberOfVertices, std::vector<Color> &colors) {
   if (data->parameters->isEdgeColorInterpolate()) {
     srcCol = data->getElementColor()->getNodeValue(src);
     tgtCol = data->getElementColor()->getNodeValue(tgt);

@@ -57,7 +57,7 @@ public:
 
   PropertyEvent(const tlp::PropertyInterface& prop, PropertyEventType propEvtType,
                 tlp::Event::EventType evtType = tlp::Event::TLP_MODIFICATION,
-                unsigned int id = UINT_MAX);
+                uint id = UINT_MAX);
 
 // ========================================================================================
 

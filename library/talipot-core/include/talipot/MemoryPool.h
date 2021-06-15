@@ -86,7 +86,7 @@ private:
     }
 
     TYPE *getObject() {
-      unsigned int threadId = tlp::ThreadManager::getThreadNumber();
+      uint threadId = tlp::ThreadManager::getThreadNumber();
       TYPE *result = nullptr;
 
       if (_freeObject[threadId].empty()) {
@@ -109,7 +109,7 @@ private:
     }
 
     void releaseObject(void *p) {
-      unsigned int threadId = tlp::ThreadManager::getThreadNumber();
+      uint threadId = tlp::ThreadManager::getThreadNumber();
       _freeObject[threadId].push_back(p);
     }
 

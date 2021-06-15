@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -62,7 +62,7 @@ public:
    * \param drawFirstLabel If false, the first graduation label will not be drawn (useful when some
    * axis have the same base coord to avoid labels overlapping)
    */
-  void setAxisParameters(const double min, const double max, const unsigned int nbGraduations,
+  void setAxisParameters(const double min, const double max, const uint nbGraduations,
                          const LabelPosition &axisGradsLabelsPosition = LEFT_OR_BELOW,
                          const bool drawFirstLabel = true);
 
@@ -71,7 +71,7 @@ public:
                          const LabelPosition &axisGradsLabelsPosition = LEFT_OR_BELOW,
                          const bool drawFirstLabel = true);
 
-  void setAxisParameters(const int min, const int max, const unsigned int incrementStep,
+  void setAxisParameters(const int min, const int max, const uint incrementStep,
                          const LabelPosition &axisGradsLabelsPosition = LEFT_OR_BELOW,
                          const bool drawFirstLabel = true) {
     setAxisParameters(static_cast<long long>(min), static_cast<long long>(max),
@@ -79,7 +79,7 @@ public:
                       drawFirstLabel);
   }
 
-  void setNbGraduations(const unsigned int nbGraduations) {
+  void setNbGraduations(const uint nbGraduations) {
     this->nbGraduations = nbGraduations;
   }
 
@@ -90,7 +90,7 @@ public:
    * \param logScale If true, activate the logarithmic scale on the axis
    * \param logBase If filled, set the logarithm base
    */
-  void setLogScale(const bool logScale, const unsigned int logBase = 10);
+  void setLogScale(const bool logScale, const uint logBase = 10);
 
   /**
    * Method to set the order of the values on the axis (ascending or descending). A call to
@@ -142,14 +142,14 @@ private:
 
   double min, max, scale;
   double minLog, maxLog;
-  unsigned int nbGraduations;
+  uint nbGraduations;
   LabelPosition axisGradsLabelsPosition;
   bool drawFistLabel;
   bool ascendingOrder;
   bool addArrow;
   Coord captionCenterCoord;
   bool logScale;
-  unsigned int logBase;
+  uint logBase;
   bool integerScale;
   unsigned long long incrementStep;
   bool minMaxSet;

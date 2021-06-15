@@ -48,7 +48,7 @@ Returns the graph on which the property has been defined.
 
  //===========================================================================================
 
-  virtual unsigned int numberOfNonDefaultValuatedNodes(const tlp::Graph* subgraph= NULL) const = 0;
+  virtual uint numberOfNonDefaultValuatedNodes(const tlp::Graph* subgraph= NULL) const = 0;
  %Docstring
  tlp.PropertyInterface.numberOfNonDefaultValuatedNodes(subgraph=None)
 
@@ -94,7 +94,7 @@ from the default value.
 
  //===========================================================================================
 
-  virtual unsigned int numberOfNonDefaultValuatedEdges(const tlp::Graph* subgraph= NULL) const = 0;
+  virtual uint numberOfNonDefaultValuatedEdges(const tlp::Graph* subgraph= NULL) const = 0;
  %Docstring
  tlp.PropertyInterface.numberOfNonDefaultValuatedEdges(subgraph=None)
 

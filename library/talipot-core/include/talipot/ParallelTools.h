@@ -64,8 +64,8 @@ class TlpThread;
  */
 class TLP_SCOPE ThreadManager {
 
-  static unsigned int numberOfProcs;
-  static unsigned int maxNumberOfThreads;
+  static uint numberOfProcs;
+  static uint maxNumberOfThreads;
 
 #if !defined(TLP_NO_THREADS) && !defined(_OPENMP)
 
@@ -109,22 +109,22 @@ public:
   /**
    * Returns the number of processors on the host system.
    */
-  static unsigned int getNumberOfProcs();
+  static uint getNumberOfProcs();
 
   /**
    * Returns the number of threads used by default in subsequent OpenMP parallel sections.
    */
-  static unsigned int getNumberOfThreads();
+  static uint getNumberOfThreads();
 
   /**
    * Sets the number of threads used by default in subsequent parallel sections.
    */
-  static void setNumberOfThreads(unsigned int nbThreads);
+  static void setNumberOfThreads(uint nbThreads);
 
   /**
    * Returns the current thread number.
    */
-  static unsigned int getThreadNumber();
+  static uint getThreadNumber();
 
 #ifndef _OPENMP
 
@@ -261,14 +261,14 @@ private:
  * Example of use:
  *
  * @code
- * auto computationIntensiveTask = [&](unsigned int id) {
+ * auto computationIntensiveTask = [&](uint id) {
  *  double result = 0;
  *   ...
  *  return result;
  * };
- * const unsigned int N = ... ;
+ * const uint N = ... ;
  * std::vector<double> result(N);
- * TLP_PARALLEL_MAP_INDICES(N, [&](unsigned int i) {
+ * TLP_PARALLEL_MAP_INDICES(N, [&](uint i) {
  *   // run task in a thread
  *   result[i] = computationIntensiveTask(i);
  * });

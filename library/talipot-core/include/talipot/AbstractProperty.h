@@ -223,16 +223,16 @@ public:
 
   tlp::Iterator<node> *getNonDefaultValuatedNodes(const Graph *g = nullptr) const override;
   bool hasNonDefaultValuatedNodes(const Graph *g = nullptr) const override;
-  unsigned int numberOfNonDefaultValuatedNodes(const Graph *g = nullptr) const override;
-  unsigned int nodeValueSize() const override;
+  uint numberOfNonDefaultValuatedNodes(const Graph *g = nullptr) const override;
+  uint nodeValueSize() const override;
   void writeNodeDefaultValue(std::ostream &) const override;
   void writeNodeValue(std::ostream &, node) const override;
   bool readNodeDefaultValue(std::istream &) override;
   bool readNodeValue(std::istream &, node) override;
   tlp::Iterator<edge> *getNonDefaultValuatedEdges(const Graph *g = nullptr) const override;
   bool hasNonDefaultValuatedEdges(const Graph *g = nullptr) const override;
-  unsigned int numberOfNonDefaultValuatedEdges(const Graph * = nullptr) const override;
-  unsigned int edgeValueSize() const override;
+  uint numberOfNonDefaultValuatedEdges(const Graph * = nullptr) const override;
+  uint edgeValueSize() const override;
   void writeEdgeDefaultValue(std::ostream &) const override;
   void writeEdgeValue(std::ostream &, edge) const override;
   bool readEdgeDefaultValue(std::istream &) override;
@@ -323,7 +323,7 @@ public:
    * @param v The value to set.
    *
    **/
-  void setNodeEltValue(const node n, unsigned int i, TYPE_CONST_REFERENCE(EltType) v);
+  void setNodeEltValue(const node n, uint i, TYPE_CONST_REFERENCE(EltType) v);
   /**
    * @brief Gets the value associated to node n, at index i.
    *
@@ -332,7 +332,7 @@ public:
    * @return const EltType& The value at index i in the vector for node n.
    **/
   TYPE_CONST_REFERENCE(EltType)
-  getNodeEltValue(const node n, unsigned int i) const;
+  getNodeEltValue(const node n, uint i) const;
   /**
    * @brief Appends a new value at the end of the vector associated to node n, and notify the
    *observers of a modification.
@@ -368,7 +368,7 @@ public:
    * @param v The value to set.
    *
    **/
-  void setEdgeEltValue(const edge e, unsigned int i, TYPE_CONST_REFERENCE(EltType) v);
+  void setEdgeEltValue(const edge e, uint i, TYPE_CONST_REFERENCE(EltType) v);
   /**
    * @brief Gets the value associated to edge e, at index i.
    *
@@ -377,7 +377,7 @@ public:
    * @return const EltType& The value at index i in the vector for node n.
    **/
   TYPE_CONST_REFERENCE(EltType)
-  getEdgeEltValue(const edge n, unsigned int i) const;
+  getEdgeEltValue(const edge n, uint i) const;
   /**
    * @brief Appends a new value at the end of the vector associated to edge e, and notify the
    *observers of a modification.

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -28,9 +28,9 @@ const std::string SLIDER_TEXTURE_NAME = ":/parallel_sliders_texture.png";
 
 // data count threshold from which a progress bar is displayed on screen
 // when creating or refreshing the view
-const unsigned int PROGRESS_BAR_DISPLAY_NB_DATA_THRESHOLD = 5000;
+const uint PROGRESS_BAR_DISPLAY_NB_DATA_THRESHOLD = 5000;
 
-const unsigned int DEFAULT_LINES_COLOR_ALPHA_VALUE = 200;
+const uint DEFAULT_LINES_COLOR_ALPHA_VALUE = 200;
 
 const float DEFAULT_AXIS_HEIGHT = 400;
 

@@ -387,7 +387,7 @@ QModelIndex GraphHierarchiesModel::forceGraphIndex(Graph *g) {
     _indexCache[g] = result;
   } else {
     Graph *parent = g->getSuperGraph();
-    unsigned int n = 0;
+    uint n = 0;
 
     for (n = 0; n < parent->numberOfSubGraphs(); ++n) {
       if (parent->getNthSubGraph(n) == g) {
@@ -529,7 +529,7 @@ QModelIndex GraphHierarchiesModel::parent(const QModelIndex &child) const {
   } else {
     Graph *ancestor = parent->getSuperGraph();
 
-    for (unsigned int i = 0; i < ancestor->numberOfSubGraphs(); i++) {
+    for (uint i = 0; i < ancestor->numberOfSubGraphs(); i++) {
       if (ancestor->getNthSubGraph(i) == parent) {
         break;
       }

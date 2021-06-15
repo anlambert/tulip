@@ -33,7 +33,7 @@ protected:
   Qt::MouseButton mButton;
   Qt::KeyboardModifier kModifier;
   Qt::KeyboardModifiers mousePressModifier;
-  unsigned int x, y;
+  uint x, y;
   int w, h;
   bool started;
   Graph *graph;

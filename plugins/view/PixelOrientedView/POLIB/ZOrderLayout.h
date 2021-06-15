@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -19,8 +19,8 @@
 class ZorderLayout : public LayoutFunction {
 public:
   ZorderLayout(unsigned char order);
-  tlp::Vec2i project(const unsigned int id) const override;
-  unsigned int unproject(const tlp::Vec2i &) const override;
+  tlp::Vec2i project(const uint id) const override;
+  uint unproject(const tlp::Vec2i &) const override;
 
 private:
   unsigned char order;

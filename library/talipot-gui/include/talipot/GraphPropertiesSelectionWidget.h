@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -33,7 +33,7 @@ public:
   GraphPropertiesSelectionWidget(QWidget *parent = nullptr,
                                  const StringsListSelectionWidget::ListType &listType =
                                      StringsListSelectionWidget::SIMPLE_LIST,
-                                 const unsigned int maxNbSelectedProperties = 0);
+                                 const uint maxNbSelectedProperties = 0);
 
   /**
    *  Constructor which creates a GraphPropertiesSelectionWidget for a given graph
@@ -51,7 +51,7 @@ public:
       Graph *graph, QWidget *parent = nullptr,
       const StringsListSelectionWidget::ListType &listType =
           StringsListSelectionWidget::SIMPLE_LIST,
-      const unsigned int maxNbSelectedProperties = 0,
+      const uint maxNbSelectedProperties = 0,
       const std::vector<std::string> &propertiesTypes = std::vector<std::string>(),
       const bool includeViewProperties = false);
 

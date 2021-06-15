@@ -43,11 +43,11 @@ void GraphDecorator::delSubGraph(Graph *s) {
   notifyAfterDelSubGraph(s);
 }
 //============================================================
-unsigned int GraphDecorator::numberOfSubGraphs() const {
+uint GraphDecorator::numberOfSubGraphs() const {
   return graph_component->numberOfSubGraphs();
 }
 //============================================================
-unsigned int GraphDecorator::numberOfDescendantGraphs() const {
+uint GraphDecorator::numberOfDescendantGraphs() const {
   return graph_component->numberOfDescendantGraphs();
 }
 //============================================================
@@ -126,7 +126,7 @@ bool GraphDecorator::isDescendantGraph(const Graph *sg) const {
   return graph_component->isDescendantGraph(sg);
 }
 //=========================================================================
-Graph *GraphDecorator::getSubGraph(unsigned int sgId) const {
+Graph *GraphDecorator::getSubGraph(uint sgId) const {
   return graph_component->getSubGraph(sgId);
 }
 //=========================================================================
@@ -134,7 +134,7 @@ Graph *GraphDecorator::getSubGraph(const std::string &name) const {
   return graph_component->getSubGraph(name);
 }
 //=========================================================================
-Graph *GraphDecorator::getDescendantGraph(unsigned int sgId) const {
+Graph *GraphDecorator::getDescendantGraph(uint sgId) const {
   return graph_component->getDescendantGraph(sgId);
 }
 //=========================================================================
@@ -198,17 +198,17 @@ void GraphDecorator::reverse(const edge e) {
 }
 
 //============================================================
-unsigned int GraphDecorator::deg(const node n) const {
+uint GraphDecorator::deg(const node n) const {
   return graph_component->deg(n);
 }
 
 //============================================================
-unsigned int GraphDecorator::indeg(const node n) const {
+uint GraphDecorator::indeg(const node n) const {
   return graph_component->indeg(n);
 }
 
 //============================================================
-unsigned int GraphDecorator::outdeg(const node n) const {
+uint GraphDecorator::outdeg(const node n) const {
   return graph_component->outdeg(n);
 }
 
@@ -228,12 +228,12 @@ node GraphDecorator::getRandomNode() const {
 }
 
 //============================================================
-node GraphDecorator::getInNode(const node n, unsigned int i) const {
+node GraphDecorator::getInNode(const node n, uint i) const {
   return graph_component->getInNode(n, i);
 }
 
 //============================================================
-node GraphDecorator::getOutNode(const node n, unsigned int i) const {
+node GraphDecorator::getOutNode(const node n, uint i) const {
   return graph_component->getOutNode(n, i);
 }
 
@@ -248,17 +248,17 @@ edge GraphDecorator::getRandomEdge() const {
 }
 
 //============================================================
-unsigned int GraphDecorator::numberOfNodes() const {
+uint GraphDecorator::numberOfNodes() const {
   return graph_component->numberOfNodes();
 }
 
 //============================================================
-void GraphDecorator::reserveNodes(unsigned int nbNodes) {
+void GraphDecorator::reserveNodes(uint nbNodes) {
   return graph_component->reserveNodes(nbNodes);
 }
 
 //============================================================
-unsigned int GraphDecorator::numberOfEdges() const {
+uint GraphDecorator::numberOfEdges() const {
   return graph_component->numberOfEdges();
 }
 
@@ -268,7 +268,7 @@ bool GraphDecorator::isEmpty() const {
 }
 
 //============================================================
-void GraphDecorator::reserveEdges(unsigned int nbEdges) {
+void GraphDecorator::reserveEdges(uint nbEdges) {
   return graph_component->reserveEdges(nbEdges);
 }
 
@@ -299,7 +299,7 @@ node GraphDecorator::addNode() {
   return newNode;
 }
 //============================================================
-std::vector<node> GraphDecorator::addNodes(unsigned int nb) {
+std::vector<node> GraphDecorator::addNodes(uint nb) {
   std::vector<node> addedNodes = graph_component->addNodes(nb);
   if (hasOnlookers()) {
     sendEvent(GraphEvent(*this, GraphEvent::TLP_ADD_NODES, nb));
@@ -400,7 +400,7 @@ const std::vector<node> &GraphDecorator::nodes() const {
   return graph_component->nodes();
 }
 //============================================================
-unsigned int GraphDecorator::nodePos(const node n) const {
+uint GraphDecorator::nodePos(const node n) const {
   return graph_component->nodePos(n);
 }
 //============================================================
@@ -443,7 +443,7 @@ const std::vector<edge> &GraphDecorator::edges() const {
   return graph_component->edges();
 }
 //============================================================
-unsigned int GraphDecorator::edgePos(const edge e) const {
+uint GraphDecorator::edgePos(const edge e) const {
   return graph_component->edgePos(e);
 }
 //============================================================

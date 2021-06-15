@@ -124,7 +124,7 @@ public:
    *
    * @warning You don't have to call this function, the Talipot OpenGL engine call it.
    */
-  virtual void setWithXML(const std::string &inString, unsigned int &currentPosition) = 0;
+  virtual void setWithXML(const std::string &inString, uint &currentPosition) = 0;
 
   /**
    * @brief Accept visitor function

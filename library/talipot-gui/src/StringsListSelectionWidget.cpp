@@ -21,16 +21,16 @@ using namespace std;
 
 namespace tlp {
 
-StringsListSelectionWidget::StringsListSelectionWidget(
-    QWidget *parent, const ListType listType, const unsigned int maxSelectedStringsListSize)
+StringsListSelectionWidget::StringsListSelectionWidget(QWidget *parent, const ListType listType,
+                                                       const uint maxSelectedStringsListSize)
     : QWidget(parent), listType(listType), stringsListSelectionWidget(nullptr) {
   setListType(listType);
   stringsListSelectionWidget->setMaxSelectedStringsListSize(maxSelectedStringsListSize);
 }
 
-StringsListSelectionWidget::StringsListSelectionWidget(
-    const vector<string> &unselectedStringsList, QWidget *parent, const ListType listType,
-    const unsigned int maxSelectedStringsListSize)
+StringsListSelectionWidget::StringsListSelectionWidget(const vector<string> &unselectedStringsList,
+                                                       QWidget *parent, const ListType listType,
+                                                       const uint maxSelectedStringsListSize)
     : QWidget(parent), listType(listType), stringsListSelectionWidget(nullptr) {
   setListType(listType);
   stringsListSelectionWidget->setMaxSelectedStringsListSize(maxSelectedStringsListSize);
@@ -91,7 +91,7 @@ void StringsListSelectionWidget::setSelectedStringsListLabel(
 }
 
 void StringsListSelectionWidget::setMaxSelectedStringsListSize(
-    const unsigned int maxSelectedStringsListSize) {
+    const uint maxSelectedStringsListSize) {
   stringsListSelectionWidget->setMaxSelectedStringsListSize(maxSelectedStringsListSize);
 }
 

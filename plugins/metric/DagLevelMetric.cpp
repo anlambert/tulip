@@ -23,7 +23,7 @@ DagLevelMetric::DagLevelMetric(const tlp::PluginContext *context) : DoubleAlgori
 DagLevelMetric::~DagLevelMetric() = default;
 //======================================================
 bool DagLevelMetric::run() {
-  NodeVectorProperty<unsigned int> level(graph);
+  NodeVectorProperty<uint> level(graph);
   dagLevel(graph, level);
   level.copyToProperty(result);
 

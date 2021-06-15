@@ -461,7 +461,7 @@ template<TYPE*>
 
 };
 
-%MappedType std::set<unsigned int> /TypeHint="Set[int]"/ {
+%MappedType std::set<uint> /TypeHint="Set[int]"/ {
 %TypeHeaderCode
 #include <set>
 %End
@@ -476,7 +476,7 @@ template<TYPE*>
 
   // Go through each element in the C++ instance and convert it to a
   // wrapper object.
-  for (unsigned int n : *sipCpp) {
+  for (uint n : *sipCpp) {
     // Add the wrapper to the list.
     PySet_Add(l, PyLong_FromUnsignedLong(n));
   }
@@ -495,7 +495,7 @@ template<TYPE*>
     PyObject *item = NULL;
     while (item = PyIter_Next(iterator)) {
       if (!PyLong_Check(item)) {
-        //printErrorMessage("TypeError : object in list of type " + std::string(item->ob_type->tp_name) + " can not be converted to unsigned int");
+        //printErrorMessage("TypeError : object in list of type " + std::string(item->ob_type->tp_name) + " can not be converted to uint");
         Py_DECREF(item);
         Py_DECREF(iterator);
         return 0;
@@ -506,8 +506,8 @@ template<TYPE*>
     return 1;
   }
 
-  // Convert Python set of integers to a std::set<unsigned int>
-  std::set<unsigned int> *s = new std::set<unsigned int>();
+  // Convert Python set of integers to a std::set<uint>
+  std::set<uint> *s = new std::set<uint>();
 
   PyObject *iterator = PyObject_GetIter(sipPy);
   PyObject *item = NULL;

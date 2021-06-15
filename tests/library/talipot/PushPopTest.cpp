@@ -935,7 +935,7 @@ void PushPopTest::testDelAllSgPopUnpop() {
   graph->unpop();
 
   // need to grab the value and pop otherwise segfault when tearing down
-  unsigned int nbSg = graph->numberOfSubGraphs();
+  uint nbSg = graph->numberOfSubGraphs();
   graph->pop();
 
   // We should have 3 subgraphs for the root graph before the last call to pop
@@ -1102,7 +1102,7 @@ public:
     properties.clear();
   }
 
-  unsigned int nbProperties() const {
+  uint nbProperties() const {
     return properties.size();
   }
 

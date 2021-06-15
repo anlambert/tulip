@@ -33,7 +33,7 @@ void StringPropertyTest::simpleVectorTest() {
   StringVectorProperty *vectorProperty = graph->getStringVectorProperty("data_1");
   vector<string> tmp;
 
-  for (unsigned int i = 0; i < 5; ++i) {
+  for (uint i = 0; i < 5; ++i) {
     stringstream tmpstr;
     tmpstr << "\"test string #\"  : " << i;
     tmp.push_back(tmpstr.str());
@@ -44,7 +44,7 @@ void StringPropertyTest::simpleVectorTest() {
   const vector<string> &value = vectorProperty->getNodeValue(n);
   CPPUNIT_ASSERT_EQUAL(size_t(5), value.size());
 
-  for (unsigned int i = 0; i < value.size(); ++i) {
+  for (uint i = 0; i < value.size(); ++i) {
     CPPUNIT_ASSERT_EQUAL(tmp[i], value[i]);
   }
 }
@@ -54,7 +54,7 @@ void StringPropertyTest::complexVectorTest() {
   StringVectorProperty *vectorProperty = graph->getStringVectorProperty("stp");
   vector<string> tmp;
 
-  for (unsigned int i = 0; i < 5000; ++i) {
+  for (uint i = 0; i < 5000; ++i) {
     stringstream tmpstr;
     tmpstr << "\"test string #\"  : " << i;
     tmp = vectorProperty->getNodeValue(n);
@@ -67,7 +67,7 @@ void StringPropertyTest::complexVectorTest() {
 
   CPPUNIT_ASSERT_EQUAL(size_t(5000), value.size());
 
-  for (unsigned int i = 0; i < value.size(); ++i) {
+  for (uint i = 0; i < value.size(); ++i) {
     CPPUNIT_ASSERT_EQUAL(tmp[i], value[i]);
   }
 }

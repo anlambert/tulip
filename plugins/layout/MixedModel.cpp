@@ -354,7 +354,7 @@ void MixedModel::placeNodesEdges() {
   for (auto e : carte->edges()) {
     const auto &[src, tgt] = carte->ends(e);
     Coord cs, ct, c;
-    unsigned int rs = rank[src], rt = rank[tgt];
+    uint rs = rank[src], rt = rank[tgt];
 
     if (rs != rt) {
       vector<Coord> bends;
@@ -433,8 +433,8 @@ void MixedModel::initPartition() {
     return;
   }
 
-  for (unsigned int i = 0; i < V.size(); ++i) {
-    for (unsigned int j = 0; j < V[i].size(); ++j) {
+  for (uint i = 0; i < V.size(); ++i) {
+    for (uint j = 0; j < V[i].size(); ++j) {
       rank[V[i][j]] = i;
     }
   }
@@ -448,21 +448,21 @@ void MixedModel::assignInOutPoints() { // on considère qu'il n'y a pas d'arc do
   // empirical feedback (95% -> 99%)
   int minProgress = 950, deltaProgress = 40;
 
-  for (unsigned int k = 0; k < V.size(); ++k) {
+  for (uint k = 0; k < V.size(); ++k) {
     // give pluginProgress feedback
     if (pluginProgress->progress(minProgress + (deltaProgress * k) / V.size(), 1000) !=
         TLP_CONTINUE) {
       return;
     }
 
-    unsigned int p = V[k].size();
+    uint p = V[k].size();
 
     vector<node>::iterator il, ir;
     node nl = node(), nr = node();
 
     if (k != 0) {
       // ordonne les arcs "in"
-      unsigned int i;
+      uint i;
 
       for (i = 0; !nl.isValid() && (i < C.size() - 1); ++i) {
         if (existEdge(C[i], V[k][0]).isValid()) {
@@ -486,7 +486,7 @@ void MixedModel::assignInOutPoints() { // on considère qu'il n'y a pas d'arc do
       assert(ir != C.end());
     }
 
-    for (unsigned int i = 0; i < p; ++i) {
+    for (uint i = 0; i < p; ++i) {
       node v = V[k][i];
       unsigned nbIn = 0, nbOut = 0;
       vector<edge> listOfEdgesIN;
@@ -507,7 +507,7 @@ void MixedModel::assignInOutPoints() { // on considère qu'il n'y a pas d'arc do
         node n = (src == v) ? tgt : src;
 
         bool trouve = false;
-        unsigned int r = rank[n];
+        uint r = rank[n];
 
         if (r < k) {
           ++nbIn;
@@ -748,7 +748,7 @@ void MixedModel::assignInOutPoints() { // on considère qu'il n'y a pas d'arc do
 
           if (rank[n_tmp] < k) {
             if (i == 0) {
-              unsigned int t = out_points[n_tmp].size();
+              uint t = out_points[n_tmp].size();
 
               if (n_tmp == nl) {
                 OutPoints[e_tmp] = out_points[n_tmp][t - 1];
@@ -788,7 +788,7 @@ void MixedModel::assignInOutPoints() { // on considère qu'il n'y a pas d'arc do
       inl[v] = in_l;
 
       if (nbIn > 3) {
-        unsigned int j = 0;
+        uint j = 0;
         Coord c = {-float(in_l), 0};
         InPoints[listOfEdgesIN[j]].push_back(c);
         ++j;
@@ -815,7 +815,7 @@ void MixedModel::assignInOutPoints() { // on considère qu'il n'y a pas d'arc do
 
         assert(j == nbIn);
       } else {
-        for (unsigned int j = 0; j < nbIn; ++j) {
+        for (uint j = 0; j < nbIn; ++j) {
           InPoints[listOfEdgesIN[j]].push_back(Coord());
         }
       }
@@ -824,7 +824,7 @@ void MixedModel::assignInOutPoints() { // on considère qu'il n'y a pas d'arc do
       unsigned s = listOfEdgesOUT.size();
       EdgesOUT[v] = vector<edge>(s);
 
-      for (unsigned int i = 0; i < s; ++i) {
+      for (uint i = 0; i < s; ++i) {
         EdgesOUT[v][s - (i + 1)] = listOfEdgesOUT[i];
       }
     }
@@ -860,7 +860,7 @@ void MixedModel::computeCoords() {
   double out_r_moins1 = 0.0;
 
   //-------------  initialisation --------------------------
-  for (unsigned int i = 0; i < V[0].size(); ++i) {
+  for (uint i = 0; i < V[0].size(); ++i) {
     node v = V[0][i];
 
     double out_l = outl[v], out_r = outr[v];
@@ -880,11 +880,11 @@ void MixedModel::computeCoords() {
 
   C = V[0]; // initiation du contour C0
 
-  unsigned int size_V = V.size();
+  uint size_V = V.size();
 
-  for (unsigned int k = 1; k < size_V; ++k) { // parcours de chaque partition
+  for (uint k = 1; k < size_V; ++k) { // parcours de chaque partition
 
-    unsigned int p = V[k].size(); // taille de la partition Vk
+    uint p = V[k].size(); // taille de la partition Vk
     node cl = leftV(k),
          cr = rightV(k); // recherche du left et right de Vk, qui est cherché à l'aide de EdgesIN
 
@@ -914,7 +914,7 @@ void MixedModel::computeCoords() {
     co = nodeSize.get(Z0.id);
     int max_y_taille = int((inr[Z0] < co.getY() / 2.) ? co.getY() / 2. : inr[Z0]);
 
-    for (unsigned int i = 0; i < p; ++i) {
+    for (uint i = 0; i < p; ++i) {
       co = nodeSize.get((V[k][i]).id);
       int taille_tmp = int((inr[V[k][i]] < co.getY() / 2.) ? co.getY() / 2. : inr[V[k][i]]);
 
@@ -923,13 +923,13 @@ void MixedModel::computeCoords() {
       }
     }
 
-    for (unsigned int i = 0; i < p; ++i) {
+    for (uint i = 0; i < p; ++i) {
       // assign y-coords
       NodeCoords[V[k][i]] = Coord(0, max_y_taille + max_y + spacing, 0);
     }
 
     // assign x-coords :
-    unsigned int n = EdgesIN[V[k][p - 1]].size();
+    uint n = EdgesIN[V[k][p - 1]].size();
     int dxl = int(OutPoints[EdgesIN[V[k][0]][0]].getX()),
         dxr = int(OutPoints[EdgesIN[V[k][p - 1]][n - 1]].getX());
 
@@ -996,7 +996,7 @@ void MixedModel::computeCoords() {
       float sum = 0;
 
       // assign x(zi)
-      for (unsigned int i = 0; i < p; ++i) {
+      for (uint i = 0; i < p; ++i) {
         int out_l = outl[V[k][i]];
         out_r = outr[V[k][i]];
         Coord co2 = nodeSize.get((V[k][i]).id);
@@ -1050,9 +1050,9 @@ void MixedModel::computeCoords() {
   }
 
   for (int k = size_V - 1; k >= 0; k--) {
-    unsigned int p = V[k].size();
+    uint p = V[k].size();
 
-    for (unsigned int i = 0; i < p; ++i) {
+    for (uint i = 0; i < p; ++i) {
       node v = V[k][i];
 
       if (find(C.begin(), C.end(), v) == C.end()) {
@@ -1065,7 +1065,7 @@ void MixedModel::computeCoords() {
 }
 
 //====================================================
-node MixedModel::leftV(unsigned int k) {
+node MixedModel::leftV(uint k) {
   assert((0 < k) && (k < V.size()));
   edge el = EdgesIN[V[k][0]][0];
   const auto &[src, tgt] = carte->ends(el);
@@ -1073,10 +1073,10 @@ node MixedModel::leftV(unsigned int k) {
 }
 
 //====================================================
-node MixedModel::rightV(unsigned int k) {
+node MixedModel::rightV(uint k) {
   assert((0 < k) && (k < V.size()));
-  unsigned int p = V[k].size();
-  unsigned int n = EdgesIN[V[k][p - 1]].size();
+  uint p = V[k].size();
+  uint n = EdgesIN[V[k][p - 1]].size();
   edge er = EdgesIN[V[k][p - 1]][n - 1];
   const auto &[src, tgt] = carte->ends(er);
   return (src == V[k][p - 1]) ? tgt : src;

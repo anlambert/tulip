@@ -20,7 +20,7 @@
 #include <talipot/GlQuantitativeAxis.h>
 
 template <typename T>
-std::string getStringFromNumber(T number, unsigned int precision = 4) {
+std::string getStringFromNumber(T number, uint precision = 4) {
   std::ostringstream oss;
   oss.precision(precision);
   oss << number;
@@ -44,8 +44,7 @@ GlQuantitativeAxis::GlQuantitativeAxis(const std::string &axisName, const Coord 
   }
 }
 
-void GlQuantitativeAxis::setAxisParameters(const double minV, const double maxV,
-                                           const unsigned int nbGrads,
+void GlQuantitativeAxis::setAxisParameters(const double minV, const double maxV, const uint nbGrads,
                                            const LabelPosition &axisGradsLabelsPos,
                                            const bool firstLabel) {
   integerScale = false;
@@ -323,7 +322,7 @@ void GlQuantitativeAxis::updateAxis() {
   }
 }
 
-void GlQuantitativeAxis::setLogScale(const bool log, const unsigned int base) {
+void GlQuantitativeAxis::setLogScale(const bool log, const uint base) {
   logScale = log;
   logBase = base;
 }

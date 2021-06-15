@@ -18,7 +18,7 @@
 namespace tlp {
 
 void convexHull(const std::vector<tlp::Coord> &points,
-                std::vector<unsigned int> &convexHull /Out/) /PyName=convexHull2D/;
+                std::vector<uint> &convexHull /Out/) /PyName=convexHull2D/;
 %Docstring
 tlp.convexHull2D(points)
 

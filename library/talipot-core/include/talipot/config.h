@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -74,7 +74,7 @@ inline double sqrt(int i) {
   return std::sqrt(double(i));
 }
 
-inline double sqrt(unsigned int i) {
+inline double sqrt(uint i) {
   return std::sqrt(double(i));
 }
 
@@ -82,7 +82,7 @@ inline double log(int i) {
   return std::log(double(i));
 }
 
-inline double log(unsigned int i) {
+inline double log(uint i) {
   return std::log(double(i));
 }
 
@@ -90,7 +90,7 @@ inline double floor(int i) {
   return std::floor(double(i));
 }
 
-inline double floor(unsigned int i) {
+inline double floor(uint i) {
   return std::floor(double(i));
 }
 

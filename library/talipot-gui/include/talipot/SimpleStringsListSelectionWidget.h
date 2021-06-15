@@ -35,7 +35,7 @@ class TLP_QT_SCOPE SimpleStringsListSelectionWidget : public QWidget,
 
 public:
   SimpleStringsListSelectionWidget(QWidget *parent = nullptr,
-                                   const unsigned int maxSelectedStringsListSize = 0);
+                                   const uint maxSelectedStringsListSize = 0);
   ~SimpleStringsListSelectionWidget() override;
 
   void setUnselectedStringsList(const std::vector<std::string> &unselectedStringsList) override;
@@ -46,7 +46,7 @@ public:
 
   void clearSelectedStringsList() override;
 
-  void setMaxSelectedStringsListSize(const unsigned int maxSelectedStringsListSize) override;
+  void setMaxSelectedStringsListSize(const uint maxSelectedStringsListSize) override;
 
   std::vector<std::string> getSelectedStringsList() const override;
 
@@ -67,7 +67,7 @@ private slots:
 private:
   void qtWidgetsConnection();
 
-  unsigned int maxSelectedStringsListSize;
+  uint maxSelectedStringsListSize;
 };
 }
 

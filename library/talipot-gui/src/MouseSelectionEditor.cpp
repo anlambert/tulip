@@ -197,7 +197,7 @@ bool MouseSelectionEditor::eventFilter(QObject *widget, QEvent *e) {
       int shapeId = -1;
       bool advShape = false;
 
-      for (unsigned int i = 0; (i < select.size()) && (shapeId == -1); ++i) {
+      for (uint i = 0; (i < select.size()) && (shapeId == -1); ++i) {
         for (const auto &control : _controls) {
           if (select[i].getEntity() == &control) {
             shapeId = i;
@@ -798,7 +798,7 @@ bool MouseSelectionEditor::computeFFD(GlWidget *glWidget) {
   max2D = tmp;
 
   // v2, v3, V4
-  for (unsigned int i = 0; i < 3; ++i) {
+  for (uint i = 0; i < 3; ++i) {
     tmp = boundingBox[0];
     tmp[i] += bbsize[i];
     tmp = glWidget->getScene()->getGraphCamera().worldTo2DViewport(tmp);

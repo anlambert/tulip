@@ -82,7 +82,7 @@ private:
   ColorScale colorScale;
   Vec4f deltaRGBA;
   std::vector<std::pair<std::string, Color>> enumeratedMappingResultVector;
-  std::map<std::string, std::vector<unsigned int>> mapMetricElements;
+  std::map<std::string, std::vector<uint>> mapMetricElements;
   double maxInput;
   double minInput;
   bool overrideMaxInput;
@@ -200,8 +200,8 @@ public:
 
       // loop on nodes
       if (targetType.getCurrent() == NODES_TARGET && graph->numberOfNodes() != 0) {
-        unsigned int maxIter = graph->numberOfNodes();
-        unsigned int iter = 0;
+        uint maxIter = graph->numberOfNodes();
+        uint iter = 0;
         double minN = overrideMinInput ? minInput : entryMetric->getNodeDoubleMin(graph);
         double maxN = overrideMaxInput ? maxInput : entryMetric->getNodeDoubleMax(graph);
 
@@ -232,8 +232,8 @@ public:
 
       // loop on edges
       if (targetType.getCurrent() == EDGES_TARGET && graph->numberOfEdges() != 0) {
-        unsigned int maxIter = graph->numberOfEdges();
-        unsigned int iter = 0;
+        uint maxIter = graph->numberOfEdges();
+        uint iter = 0;
 
         double minE = overrideMinInput ? minInput : entryMetric->getEdgeDoubleMin(graph);
         double maxE = overrideMaxInput ? maxInput : entryMetric->getEdgeDoubleMax(graph);
@@ -267,12 +267,12 @@ public:
         delete entryMetric;
       }
     } else {
-      unsigned int maxIter = (targetType.getCurrent() == NODES_TARGET) ? graph->numberOfNodes()
-                                                                       : graph->numberOfEdges();
-      unsigned int iter = 0;
+      uint maxIter = (targetType.getCurrent() == NODES_TARGET) ? graph->numberOfNodes()
+                                                               : graph->numberOfEdges();
+      uint iter = 0;
 
       for (const auto &it : enumeratedMappingResultVector) {
-        const std::vector<unsigned int> &elements = mapMetricElements[it.first];
+        const std::vector<uint> &elements = mapMetricElements[it.first];
 
         for (auto id : elements) {
           if (targetType.getCurrent() == NODES_TARGET) {
@@ -323,7 +323,7 @@ public:
           std::string tmp = metric->getNodeStringValue(n);
 
           if (mapMetricElements.count(tmp) == 0) {
-            mapMetricElements[tmp] = std::vector<unsigned int>();
+            mapMetricElements[tmp] = std::vector<uint>();
           }
 
           mapMetricElements[tmp].push_back(n.id);
@@ -334,7 +334,7 @@ public:
           std::string tmp = metric->getEdgeStringValue(e);
 
           if (mapMetricElements.count(tmp) == 0) {
-            mapMetricElements[tmp] = std::vector<unsigned int>();
+            mapMetricElements[tmp] = std::vector<uint>();
           }
 
           mapMetricElements[tmp].push_back(e.id);

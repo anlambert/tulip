@@ -28,7 +28,7 @@ tlp::MinMaxProperty<NodeType, EdgeType, PropType>::getNodeMin(const tlp::Graph *
     graph = this->PropType::graph;
   }
 
-  unsigned int graphId = graph->getId();
+  uint graphId = graph->getId();
 
   if (const auto it = _minMaxNode.find(graphId); it == _minMaxNode.end()) {
     computeMinMaxNode(graph);
@@ -45,7 +45,7 @@ tlp::MinMaxProperty<NodeType, EdgeType, PropType>::getNodeMax(const tlp::Graph *
     graph = this->PropType::graph;
   }
 
-  unsigned int graphId = graph->getId();
+  uint graphId = graph->getId();
 
   if (const auto it = _minMaxNode.find(graphId); it == _minMaxNode.end()) {
     computeMinMaxNode(graph);
@@ -62,7 +62,7 @@ tlp::MinMaxProperty<NodeType, EdgeType, PropType>::getEdgeMin(const tlp::Graph *
     graph = this->PropType::graph;
   }
 
-  unsigned int graphId = graph->getId();
+  uint graphId = graph->getId();
 
   if (const auto it = _minMaxEdge.find(graphId); it == _minMaxEdge.end()) {
     computeMinMaxEdge(graph);
@@ -79,7 +79,7 @@ tlp::MinMaxProperty<NodeType, EdgeType, PropType>::getEdgeMax(const tlp::Graph *
     graph = this->PropType::graph;
   }
 
-  unsigned int graphId = graph->getId();
+  uint graphId = graph->getId();
 
   if (const auto it = _minMaxEdge.find(graphId); it == _minMaxEdge.end()) {
     computeMinMaxEdge(graph);
@@ -110,7 +110,7 @@ tlp::MinMaxProperty<NodeType, EdgeType, PropType>::computeMinMaxNode(const Graph
     maxN = minN = AbstractProperty<NodeType, EdgeType, PropType>::nodeDefaultValue;
   }
 
-  unsigned int sgi = graph->getId();
+  uint sgi = graph->getId();
 
   // graph observation is now delayed
   // until we need to do some minmax computation
@@ -140,7 +140,7 @@ tlp::MinMaxProperty<NodeType, EdgeType, PropType>::computeMinMaxEdge(const Graph
     maxE = minE = AbstractProperty<NodeType, EdgeType, PropType>::edgeDefaultValue;
   }
 
-  unsigned int sgi = graph->getId();
+  uint sgi = graph->getId();
 
   // graph observation is now delayed
   // until we need to do some minmax computation
@@ -290,7 +290,7 @@ void tlp::MinMaxProperty<NodeType, EdgeType, PropType>::treatEvent(const tlp::Ev
       break;
 
     case GraphEvent::TLP_DEL_NODE: {
-      unsigned int sgi = graph->getId();
+      uint sgi = graph->getId();
 
       if (const auto it = _minMaxNode.find(sgi); it != _minMaxNode.end()) {
         TYPE_CONST_REFERENCE(NodeType) oldV = this->getNodeValue(graphEvent->getNode());
@@ -315,7 +315,7 @@ void tlp::MinMaxProperty<NodeType, EdgeType, PropType>::treatEvent(const tlp::Ev
       break;
 
     case GraphEvent::TLP_DEL_EDGE: {
-      unsigned int sgi = graph->getId();
+      uint sgi = graph->getId();
 
       if (const auto it = _minMaxEdge.find(sgi); it != _minMaxEdge.end()) {
         TYPE_CONST_REFERENCE(EdgeType) oldV = this->getEdgeValue(graphEvent->getEdge());

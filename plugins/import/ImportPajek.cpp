@@ -127,7 +127,7 @@ public:
     return ":/talipot/app/icons/32/import_pajek.png";
   }
 
-  unsigned int nbNodes;
+  uint nbNodes;
   DoubleProperty *weights;
   StringProperty *labels;
   LayoutProperty *layout;
@@ -143,11 +143,11 @@ public:
   };
   TypeOfLine expectedLine;
   Graph *partition;
-  unsigned int curNodeId;
+  uint curNodeId;
   map<string, vector<node>> parts;
   DoubleProperty *vectorProp;
 
-  bool getUnsignedInt(unsigned int &i, const string &str) {
+  bool getUnsignedInt(uint &i, const string &str) {
     const char *ptr = str.c_str();
     char *endPtr;
     long int value = strtol(ptr, &endPtr, 10);
@@ -186,7 +186,7 @@ public:
       return true;
     }
 
-    unsigned int nbTokens = tokens.size();
+    uint nbTokens = tokens.size();
     char c = tokens[0][0];
     string lineWoFirstToken;
 
@@ -333,7 +333,7 @@ public:
     }
 
     // first token is always the # of a vertex
-    unsigned int first;
+    uint first;
 
     if (!getUnsignedInt(first, tokens[0])) {
       return false;
@@ -363,7 +363,7 @@ public:
       }
 
       // get coordinates if any
-      unsigned int i = 2;
+      uint i = 2;
       Coord coord;
 
       if (getFloat(coord[0], tokens[2])) {
@@ -431,11 +431,11 @@ public:
     }
 
     // loop on edges list
-    unsigned int i = 1;
+    uint i = 1;
 
     while (i < nbTokens) {
       // next token is the index of the edge's target
-      unsigned int second;
+      uint second;
 
       if (!getUnsignedInt(second, tokens[i]) || second > nodes.size()) {
         return false;

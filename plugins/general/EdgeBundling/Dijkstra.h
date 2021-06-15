@@ -43,7 +43,7 @@ public:
                     const std::set<tlp::node> &focus);
 
   //========================================================
-  void searchPaths(tlp::node n, tlp::EdgeVectorProperty<unsigned int> &depth);
+  void searchPaths(tlp::node n, tlp::EdgeVectorProperty<uint> &depth);
   void searchPath(tlp::node n, std::vector<tlp::node> &vNodes);
   //=============================================================
 private:

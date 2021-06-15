@@ -157,7 +157,7 @@ If the bounding box is invalid the result is always :const:`False`.
 :rtype: boolean
 %End
 
-  tlp::Coord& operator[](const unsigned int i) const /NoCopy/;
+  tlp::Coord& operator[](const uint i) const /NoCopy/;
 %MethodCode
   if (a0 < 2) {
     sipRes = &(*sipCpp)[a0];

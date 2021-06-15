@@ -40,7 +40,7 @@ public:
     theMax = histogram[0];
     theMin = histogram[0];
 
-    for (unsigned int i = 1; i < histogram.size(); ++i) {
+    for (uint i = 1; i < histogram.size(); ++i) {
       if (theMax < histogram[i]) {
         theMax = histogram[i];
       }
@@ -73,7 +73,7 @@ public:
     QColor c;
     double histoScale = histogram.size() / theMax;
 
-    for (unsigned int i = 0; i < histogram.size(); i++) {
+    for (uint i = 0; i < histogram.size(); i++) {
       c.setHsv(int(i * 360.0 / histogram.size()), 255, 255);
       painter.setBrush(c);
       int height;

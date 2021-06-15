@@ -293,7 +293,7 @@ void HistogramStatistics::computeInteractor() {
     }
   }
 
-  unsigned int nbElements = 0;
+  uint nbElements = 0;
 
   if (histoView->getDataLocation() == NODE) {
     nbElements = graph->numberOfNodes();
@@ -360,7 +360,7 @@ void HistogramStatistics::computeInteractor() {
     }
 
     double val;
-    unsigned int i;
+    uint i;
 
     for (val = min, i = 0; val <= max; val += sampleStep, ++i) {
       float x = histoXAxis->getAxisPointCoordForValue(val).getX();
@@ -437,10 +437,10 @@ void HistogramStatistics::computeInteractor() {
       viewSelection->setAllEdgeValue(false);
       double lowerBound = histoStatsConfigWidget->getSelectionLowerBound();
       double upperBound = histoStatsConfigWidget->getSelectionUpperBound();
-      auto pos = find_if(graphPropertyValueSet.begin(), graphPropertyValueSet.end(),
-                         compose_fn(logical_and<bool>(),
-                                    map_value_greater_equal<unsigned int, double>(lowerBound),
-                                    map_value_less_equal<unsigned int, double>(upperBound)));
+      auto pos =
+          find_if(graphPropertyValueSet.begin(), graphPropertyValueSet.end(),
+                  compose_fn(logical_and<bool>(), map_value_greater_equal<uint, double>(lowerBound),
+                             map_value_less_equal<uint, double>(upperBound)));
 
       while (pos != graphPropertyValueSet.end()) {
         if (histoView->getDataLocation() == EDGE) {
@@ -451,8 +451,8 @@ void HistogramStatistics::computeInteractor() {
 
         pos = find_if(++pos, graphPropertyValueSet.end(),
                       compose_fn(logical_and<bool>(),
-                                 map_value_greater_equal<unsigned int, double>(lowerBound),
-                                 map_value_less_equal<unsigned int, double>(upperBound)));
+                                 map_value_greater_equal<uint, double>(lowerBound),
+                                 map_value_less_equal<uint, double>(upperBound)));
       }
 
       Observable::unholdObservers();

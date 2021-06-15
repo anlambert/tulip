@@ -47,7 +47,7 @@ const vector<string> &MaterialDesignIcons::getSupportedIcons() {
   return iconsNames;
 }
 
-unsigned int MaterialDesignIcons::getIconCodePoint(const string &iconName) {
+uint MaterialDesignIcons::getIconCodePoint(const string &iconName) {
   if (const auto it = iconCodePoint.find(iconName); it != iconCodePoint.end()) {
     return it->second;
   }

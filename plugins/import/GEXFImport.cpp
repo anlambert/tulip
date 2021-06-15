@@ -290,9 +290,9 @@ public:
     while (!(xmlReader.isEndElement() && xmlReader.name() == "node")) {
       // parse node color
       if (xmlReader.isStartElement() && xmlReader.qualifiedName() == "viz:color") {
-        unsigned int r = xmlReader.attributes().value("r").toString().toUInt();
-        unsigned int g = xmlReader.attributes().value("g").toString().toUInt();
-        unsigned int b = xmlReader.attributes().value("b").toString().toUInt();
+        uint r = xmlReader.attributes().value("r").toString().toUInt();
+        uint g = xmlReader.attributes().value("g").toString().toUInt();
+        uint b = xmlReader.attributes().value("b").toString().toUInt();
         float a = 1.0f;
 
         if (xmlReader.attributes().hasAttribute("a")) {

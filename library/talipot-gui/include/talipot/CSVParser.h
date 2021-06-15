@@ -75,8 +75,8 @@ public:
    **/
   CSVSimpleParser(const std::string &fileName, const QString &separator = ";",
                   const bool mergesep = false, char textDelimiter = '"', char delimiterMark = '.',
-                  const std::string &fileEncoding = std::string("UTF-8"),
-                  unsigned int firstLine = 0, unsigned int lastLine = UINT_MAX);
+                  const std::string &fileEncoding = std::string("UTF-8"), uint firstLine = 0,
+                  uint lastLine = UINT_MAX);
 
   ~CSVSimpleParser() override;
 
@@ -115,7 +115,7 @@ protected:
 
 private:
   void tokenize(const std::string &str, std::vector<std::string> &tokens, const QString &delimiters,
-                const bool mergedelim, char _textDelimiter, unsigned int numberOfCol);
+                const bool mergedelim, char _textDelimiter, uint numberOfCol);
   std::string convertStringEncoding(const std::string &toConvert, QTextCodec *encoder);
 
   /**
@@ -130,8 +130,8 @@ private:
   char _textDelimiter;
   char _decimalMark;
   std::string _fileEncoding;
-  unsigned int _firstLine;
-  unsigned int _lastLine;
+  uint _firstLine;
+  uint _lastLine;
   bool _mergesep;
 };
 
@@ -151,14 +151,14 @@ public:
              bool firstLineOnly = false) override;
 
   bool begin() override;
-  bool line(unsigned int row, const std::vector<std::string> &lineTokens) override;
-  bool end(unsigned int rowNumber, unsigned int columnNumber) override;
+  bool line(uint row, const std::vector<std::string> &lineTokens) override;
+  bool end(uint rowNumber, uint columnNumber) override;
 
 private:
   CSVParser *parser;
   CSVContentHandler *handler;
   std::vector<std::vector<std::string>> columns;
-  unsigned int maxLineSize;
+  uint maxLineSize;
 };
 }
 #endif // TALIPOT_CSV_PARSER_H

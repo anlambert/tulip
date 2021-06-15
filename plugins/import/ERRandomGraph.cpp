@@ -46,7 +46,7 @@ public:
                     "For all pairs of vertices v,w there is an edge (v,w) with probability p.",
                     "1.1", "Graph")
   ERRandomGraph(tlp::PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "50");
+    addInParameter<uint>("nodes", paramHelp[0].data(), "50");
     addInParameter<double>("probability", paramHelp[1].data(), "0.5");
     addInParameter<bool>("self loop", paramHelp[2].data(), "false");
     addInParameter<bool>("directed", paramHelp[3].data(), "false");
@@ -56,7 +56,7 @@ public:
     // initialize a random sequence according to the given seed
     tlp::initRandomSequence();
 
-    unsigned int nbNodes = 50;
+    uint nbNodes = 50;
     double proba = 0.5;
     bool self_loop = false;
     bool directed = false;
@@ -98,12 +98,12 @@ public:
         return pluginProgress->state() != TLP_CANCEL;
       }
 
-      unsigned int max_index_j = nbNodes - i + 1;
+      uint max_index_j = nbNodes - i + 1;
       if (directed) {
         max_index_j = nbNodes;
       }
 
-      for (unsigned int j = 0; j < max_index_j; ++j) {
+      for (uint j = 0; j < max_index_j; ++j) {
         node v = nodes[j];
 
         if ((u == v) && (!self_loop)) {

@@ -89,14 +89,14 @@ bool ConnectedComponentPacking::run() {
   std::vector<std::vector<edge>> ccEdges;
   ccEdges.resize(ccNodes.size());
 
-  for (unsigned int i = 0; i < ccNodes.size(); ++i) {
+  for (uint i = 0; i < ccNodes.size(); ++i) {
     std::vector<edge> &edges = ccEdges[i];
     MutableContainer<bool> visited;
     visited.setAll(false);
     const std::vector<node> &nodes = ccNodes[i];
-    unsigned int nbNodes = nodes.size();
+    uint nbNodes = nodes.size();
 
-    for (unsigned int j = 0; j < nbNodes; ++j) {
+    for (uint j = 0; j < nbNodes; ++j) {
       for (auto e : graph->getInOutEdges(nodes[j])) {
         if (!visited.get(e.id)) {
           visited.set(e.id, true);
@@ -149,7 +149,7 @@ bool ConnectedComponentPacking::run() {
     result->setEdgeValue(e, layout->getEdgeValue(e));
   }
 
-  for (unsigned int i = 0; i < ccNodes.size(); ++i) {
+  for (uint i = 0; i < ccNodes.size(); ++i) {
     Coord move(rectangles[i][0][0] - rectanglesBackup[i][0][0],
                rectangles[i][0][1] - rectanglesBackup[i][0][1], 0);
     result->translate(move, stlIterator(ccNodes[i]), stlIterator(ccEdges[i]));

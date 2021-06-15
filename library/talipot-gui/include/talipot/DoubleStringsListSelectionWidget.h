@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -33,7 +33,7 @@ class TLP_QT_SCOPE DoubleStringsListSelectionWidget : public QWidget,
 
 public:
   DoubleStringsListSelectionWidget(QWidget *parent = nullptr,
-                                   const unsigned int maxSelectedStringsListSize = 0);
+                                   const uint maxSelectedStringsListSize = 0);
   ~DoubleStringsListSelectionWidget() override;
 
   void setUnselectedStringsList(const std::vector<std::string> &unselectedStringsList) override;
@@ -44,7 +44,7 @@ public:
 
   void clearSelectedStringsList() override;
 
-  void setMaxSelectedStringsListSize(const unsigned int maxSelectedStringsListSize) override;
+  void setMaxSelectedStringsListSize(const uint maxSelectedStringsListSize) override;
 
   std::vector<std::string> getSelectedStringsList() const override;
 

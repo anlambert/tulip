@@ -19,17 +19,17 @@
 using namespace tlp;
 using namespace std;
 
-CSVImportParameters::CSVImportParameters(unsigned int fromLine, unsigned int toLine,
+CSVImportParameters::CSVImportParameters(uint fromLine, uint toLine,
                                          const vector<CSVColumn *> &columns)
     : fromLine(fromLine), toLine(toLine), columns(columns) {}
 
 CSVImportParameters::~CSVImportParameters() = default;
 
-unsigned int CSVImportParameters::columnNumber() const {
+uint CSVImportParameters::columnNumber() const {
   return columns.size();
 }
 
-bool CSVImportParameters::importColumn(unsigned int column) const {
+bool CSVImportParameters::importColumn(uint column) const {
   if (column < columns.size()) {
     return columns[column]->isUsed();
   } else {
@@ -37,7 +37,7 @@ bool CSVImportParameters::importColumn(unsigned int column) const {
   }
 }
 
-string CSVImportParameters::getColumnName(unsigned int column) const {
+string CSVImportParameters::getColumnName(uint column) const {
   if (column < columns.size()) {
     return columns[column]->name();
   } else {
@@ -45,7 +45,7 @@ string CSVImportParameters::getColumnName(unsigned int column) const {
   }
 }
 
-string CSVImportParameters::getColumnDataType(unsigned int column) const {
+string CSVImportParameters::getColumnDataType(uint column) const {
   if (column < columns.size()) {
     return columns[column]->dataType();
   } else {
@@ -53,14 +53,14 @@ string CSVImportParameters::getColumnDataType(unsigned int column) const {
   }
 }
 
-char CSVImportParameters::getColumnMultiValueSeparator(unsigned int column) const {
+char CSVImportParameters::getColumnMultiValueSeparator(uint column) const {
   if (column < columns.size()) {
     return columns[column]->getMultiValueSeparator();
   }
   return 0;
 }
 
-CSVColumn::Action CSVImportParameters::getColumnActionForToken(unsigned int column,
+CSVColumn::Action CSVImportParameters::getColumnActionForToken(uint column,
                                                                const std::string &token) const {
   if (column < columns.size()) {
     return columns[column]->getActionForToken(token);
@@ -68,19 +68,19 @@ CSVColumn::Action CSVImportParameters::getColumnActionForToken(unsigned int colu
   return CSVColumn::Action::SKIP_ROW;
 }
 
-bool CSVImportParameters::importRow(unsigned int row) const {
+bool CSVImportParameters::importRow(uint row) const {
   return row >= fromLine && row <= toLine;
 }
 
-unsigned int CSVImportParameters::getFirstLineIndex() const {
+uint CSVImportParameters::getFirstLineIndex() const {
   return fromLine;
 }
-unsigned int CSVImportParameters::getLastLineIndex() const {
+uint CSVImportParameters::getLastLineIndex() const {
   return toLine;
 }
 
 AbstractCSVToGraphDataMapping::AbstractCSVToGraphDataMapping(Graph *graph, ElementType type,
-                                                             const vector<unsigned int> &colIds,
+                                                             const vector<uint> &colIds,
                                                              const vector<string> &propertyNames)
     : graph(graph), type(type), columnIds(colIds) {
   assert(graph != nullptr);
@@ -91,7 +91,7 @@ AbstractCSVToGraphDataMapping::AbstractCSVToGraphDataMapping(Graph *graph, Eleme
   }
 }
 
-void AbstractCSVToGraphDataMapping::init(unsigned int) {
+void AbstractCSVToGraphDataMapping::init(uint) {
   // Clean old information.
   valueToId.clear();
 
@@ -119,14 +119,14 @@ void AbstractCSVToGraphDataMapping::init(unsigned int) {
   }
 }
 
-pair<ElementType, vector<unsigned int>>
+pair<ElementType, vector<uint>>
 AbstractCSVToGraphDataMapping::getElementsForRow(const vector<vector<string>> &tokens) {
-  vector<unsigned int> results(1);
+  vector<uint> results(1);
 
   bool idsOK = true;
 
   // Check if the ids are available for this line
-  for (unsigned int columnId : columnIds) {
+  for (uint columnId : columnIds) {
     if (columnId >= tokens.size()) {
       idsOK = false;
       break;
@@ -137,7 +137,7 @@ AbstractCSVToGraphDataMapping::getElementsForRow(const vector<vector<string>> &t
     string key;
     vector<string> keys;
 
-    for (unsigned int columnId : columnIds) {
+    for (uint columnId : columnIds) {
       for (const string &token : tokens[columnId]) {
         key.append(token);
         keys.push_back(token);
@@ -146,7 +146,7 @@ AbstractCSVToGraphDataMapping::getElementsForRow(const vector<vector<string>> &t
 
     if (valueToId.find(key) == valueToId.end()) {
       // Try to generate the element
-      unsigned int id = buildIndexForRow(0, keys);
+      uint id = buildIndexForRow(0, keys);
 
       // If the token was correctly generated.
       if (id != UINT_MAX) {
@@ -163,29 +163,29 @@ AbstractCSVToGraphDataMapping::getElementsForRow(const vector<vector<string>> &t
     results[0] = UINT_MAX;
   }
 
-  return pair<ElementType, vector<unsigned int>>(type, results);
+  return pair<ElementType, vector<uint>>(type, results);
 }
 
 CSVToNewNodeIdMapping::CSVToNewNodeIdMapping(Graph *graph) : graph(graph) {}
 
-void CSVToNewNodeIdMapping::init(unsigned int rowNumber) {
+void CSVToNewNodeIdMapping::init(uint rowNumber) {
   Graph *root = graph->getRoot();
   root->reserveNodes(root->numberOfNodes() + rowNumber);
 }
 
-pair<ElementType, vector<unsigned int>>
+pair<ElementType, vector<uint>>
 CSVToNewNodeIdMapping::getElementsForRow(const vector<vector<string>> &) {
-  vector<unsigned int> result(1);
+  vector<uint> result(1);
   result[0] = graph->addNode().id;
   return make_pair(NODE, result);
 }
 
-CSVToGraphNodeIdMapping::CSVToGraphNodeIdMapping(Graph *graph, const vector<unsigned int> &colIds,
+CSVToGraphNodeIdMapping::CSVToGraphNodeIdMapping(Graph *graph, const vector<uint> &colIds,
                                                  const vector<string> &propNames, bool createNode)
     : AbstractCSVToGraphDataMapping(graph, NODE, colIds, propNames),
       createMissingNodes(createNode) {}
 
-void CSVToGraphNodeIdMapping::init(unsigned int rowNumber) {
+void CSVToGraphNodeIdMapping::init(uint rowNumber) {
   AbstractCSVToGraphDataMapping::init(rowNumber);
 
   if (createMissingNodes) {
@@ -194,11 +194,11 @@ void CSVToGraphNodeIdMapping::init(unsigned int rowNumber) {
   }
 }
 
-unsigned int CSVToGraphNodeIdMapping::buildIndexForRow(unsigned int, const vector<string> &keys) {
+uint CSVToGraphNodeIdMapping::buildIndexForRow(uint, const vector<string> &keys) {
   if (createMissingNodes && keys.size() == keyProperties.size()) {
     node newNode = graph->addNode();
 
-    for (unsigned int i = 0; i < keys.size(); ++i) {
+    for (uint i = 0; i < keys.size(); ++i) {
       keyProperties[i]->setNodeStringValue(newNode, keys[i]);
     }
 
@@ -208,16 +208,16 @@ unsigned int CSVToGraphNodeIdMapping::buildIndexForRow(unsigned int, const vecto
   }
 }
 
-CSVToGraphEdgeIdMapping::CSVToGraphEdgeIdMapping(Graph *graph, const vector<unsigned int> &colIds,
+CSVToGraphEdgeIdMapping::CSVToGraphEdgeIdMapping(Graph *graph, const vector<uint> &colIds,
                                                  const vector<string> &propNames)
     : AbstractCSVToGraphDataMapping(graph, EDGE, colIds, propNames) {}
 
-unsigned int CSVToGraphEdgeIdMapping::buildIndexForRow(unsigned int, const vector<string> &) {
+uint CSVToGraphEdgeIdMapping::buildIndexForRow(uint, const vector<string> &) {
   return UINT_MAX;
 }
 
 CSVToGraphEdgeSrcTgtMapping::CSVToGraphEdgeSrcTgtMapping(
-    Graph *graph, const vector<unsigned int> &srcColIds, const vector<unsigned int> &tgtColIds,
+    Graph *graph, const vector<uint> &srcColIds, const vector<uint> &tgtColIds,
     const vector<string> &srcPropNames, const vector<string> &tgtPropNames, bool createMissinNodes)
     : graph(graph), srcColumnIds(srcColIds), tgtColumnIds(tgtColIds),
       sameSrcTgtProperties(srcPropNames.size() == tgtPropNames.size()),
@@ -229,14 +229,14 @@ CSVToGraphEdgeSrcTgtMapping::CSVToGraphEdgeSrcTgtMapping(
     srcProperties.push_back(graph->getProperty(srcPropName));
   }
 
-  for (unsigned int i = 0; i < tgtPropNames.size(); ++i) {
+  for (uint i = 0; i < tgtPropNames.size(); ++i) {
     assert(graph->existProperty(tgtPropNames[i]));
     tgtProperties.push_back(graph->getProperty(tgtPropNames[i]));
     sameSrcTgtProperties = sameSrcTgtProperties && (tgtPropNames[i] == srcPropNames[i]);
   }
 }
 
-void CSVToGraphEdgeSrcTgtMapping::init(unsigned int rowNumber) {
+void CSVToGraphEdgeSrcTgtMapping::init(uint rowNumber) {
   srcValueToId.clear();
   for (auto n : graph->nodes()) {
     string key;
@@ -268,10 +268,10 @@ void CSVToGraphEdgeSrcTgtMapping::init(unsigned int rowNumber) {
   }
 }
 
-pair<ElementType, vector<unsigned int>>
+pair<ElementType, vector<uint>>
 CSVToGraphEdgeSrcTgtMapping::getElementsForRow(const vector<vector<string>> &tokens) {
 
-  vector<unsigned int> results;
+  vector<uint> results;
 
   vector<node> srcs;
   vector<node> tgts;
@@ -279,7 +279,7 @@ CSVToGraphEdgeSrcTgtMapping::getElementsForRow(const vector<vector<string>> &tok
   bool idsOK = true;
 
   // Check if the src ids are available for this line
-  for (unsigned int srcColumnId : srcColumnIds) {
+  for (uint srcColumnId : srcColumnIds) {
     if (srcColumnId >= tokens.size()) {
       idsOK = false;
       break;
@@ -289,14 +289,14 @@ CSVToGraphEdgeSrcTgtMapping::getElementsForRow(const vector<vector<string>> &tok
   if (idsOK) {
     vector<vector<string>> keyTokens;
 
-    for (unsigned int srcColumnId : srcColumnIds) {
+    for (uint srcColumnId : srcColumnIds) {
       const vector<string> &currentTokens = tokens[srcColumnId];
 
       // merge current tokens with previous ones
       if (keyTokens.empty()) {
         keyTokens.resize(currentTokens.size());
 
-        for (unsigned int j = 0; j < currentTokens.size(); ++j) {
+        for (uint j = 0; j < currentTokens.size(); ++j) {
           keyTokens[j].push_back(currentTokens[j]);
         }
       } else {
@@ -304,8 +304,8 @@ CSVToGraphEdgeSrcTgtMapping::getElementsForRow(const vector<vector<string>> &tok
         keyTokens.clear();
         keyTokens.resize(previousTokens.size() * currentTokens.size());
 
-        for (unsigned int j = 0; j < previousTokens.size(); ++j) {
-          for (unsigned int k = 0; k < currentTokens.size(); ++k) {
+        for (uint j = 0; j < previousTokens.size(); ++j) {
+          for (uint k = 0; k < currentTokens.size(); ++k) {
             keyTokens[j * currentTokens.size() + k] = previousTokens[j];
             keyTokens[j * currentTokens.size() + k].push_back(currentTokens[k]);
           }
@@ -331,7 +331,7 @@ CSVToGraphEdgeSrcTgtMapping::getElementsForRow(const vector<vector<string>> &tok
         node src = graph->addNode();
         srcs.push_back(src);
 
-        for (unsigned int j = 0; j < keyToken.size(); ++j) {
+        for (uint j = 0; j < keyToken.size(); ++j) {
           srcProperties[j]->setNodeStringValue(src, keyToken[j]);
         }
 
@@ -341,7 +341,7 @@ CSVToGraphEdgeSrcTgtMapping::getElementsForRow(const vector<vector<string>> &tok
   }
 
   // Check if the target ids are available for this line
-  for (unsigned int tgtColumnId : tgtColumnIds) {
+  for (uint tgtColumnId : tgtColumnIds) {
     if (tgtColumnId >= tokens.size()) {
       idsOK = false;
       break;
@@ -351,14 +351,14 @@ CSVToGraphEdgeSrcTgtMapping::getElementsForRow(const vector<vector<string>> &tok
   if (idsOK) {
     vector<vector<string>> keyTokens;
 
-    for (unsigned int tgtColumnId : tgtColumnIds) {
+    for (uint tgtColumnId : tgtColumnIds) {
       const vector<string> &currentTokens = tokens[tgtColumnId];
 
       // merge current tokens with previous ones
       if (keyTokens.empty()) {
         keyTokens.resize(currentTokens.size());
 
-        for (unsigned int j = 0; j < currentTokens.size(); ++j) {
+        for (uint j = 0; j < currentTokens.size(); ++j) {
           keyTokens[j].push_back(currentTokens[j]);
         }
       } else {
@@ -366,8 +366,8 @@ CSVToGraphEdgeSrcTgtMapping::getElementsForRow(const vector<vector<string>> &tok
         keyTokens.clear();
         keyTokens.resize(previousTokens.size() * currentTokens.size());
 
-        for (unsigned int j = 0; j < previousTokens.size(); ++j) {
-          for (unsigned int k = 0; k < currentTokens.size(); ++k) {
+        for (uint j = 0; j < previousTokens.size(); ++j) {
+          for (uint k = 0; k < currentTokens.size(); ++k) {
             keyTokens[j * currentTokens.size() + k] = previousTokens[j];
             keyTokens[j * currentTokens.size() + k].push_back(currentTokens[k]);
           }
@@ -375,7 +375,7 @@ CSVToGraphEdgeSrcTgtMapping::getElementsForRow(const vector<vector<string>> &tok
       }
     }
 
-    std::unordered_map<string, unsigned int> &valueToId =
+    std::unordered_map<string, uint> &valueToId =
         sameSrcTgtProperties ? srcValueToId : tgtValueToId;
 
     for (const auto &keyToken : keyTokens) {
@@ -396,7 +396,7 @@ CSVToGraphEdgeSrcTgtMapping::getElementsForRow(const vector<vector<string>> &tok
         node tgt = graph->addNode();
         tgts.push_back(tgt);
 
-        for (unsigned int j = 0; j < keyToken.size(); ++j) {
+        for (uint j = 0; j < keyToken.size(); ++j) {
           tgtProperties[j]->setNodeStringValue(tgt, keyToken[j]);
         }
 
@@ -427,7 +427,7 @@ CSVImportColumnToGraphPropertyMappingProxy::generateApproximateProperty(const st
                                                                         const std::string &type) {
   // loop to generate a non existing approximate name
   std::ostringstream nameBuf;
-  unsigned int nb = 1;
+  uint nb = 1;
   while (true) {
     nameBuf << name << '_' << setfill('0') << setw(2) << nb;
     if (!graph->existProperty(nameBuf.str())) {
@@ -440,8 +440,7 @@ CSVImportColumnToGraphPropertyMappingProxy::generateApproximateProperty(const st
 }
 
 PropertyInterface *
-CSVImportColumnToGraphPropertyMappingProxy::getPropertyInterface(unsigned int column,
-                                                                 const string &) {
+CSVImportColumnToGraphPropertyMappingProxy::getPropertyInterface(uint column, const string &) {
   auto it = propertiesBuffer.find(column);
 
   // No properties
@@ -512,7 +511,7 @@ bool CSVGraphImport::begin() {
   return true;
 }
 
-bool CSVGraphImport::line(unsigned int row, const vector<string> &lineTokens) {
+bool CSVGraphImport::line(uint row, const vector<string> &lineTokens) {
   // Check if user wants to import the line.
   if (!importParameters.importRow(row)) {
     return true;
@@ -605,7 +604,7 @@ bool CSVGraphImport::line(unsigned int row, const vector<string> &lineTokens) {
   }
 
   // Compute the element id associated to the line
-  pair<ElementType, vector<unsigned int>> elements = mapping->getElementsForRow(tokens);
+  pair<ElementType, vector<uint>> elements = mapping->getElementsForRow(tokens);
 
   for (size_t column = 0; column < lineTokens.size(); ++column) {
     PropertyInterface *property = props[column];
@@ -615,7 +614,7 @@ bool CSVGraphImport::line(unsigned int row, const vector<string> &lineTokens) {
     if (property != nullptr && !tokens[column].empty()) {
       bool isVectorProperty = (property->getTypename().find("vector") == 0);
       if (elements.first == NODE) {
-        for (unsigned int i : elements.second) {
+        for (uint i : elements.second) {
           if (i == UINT_MAX) {
             continue;
           }
@@ -632,7 +631,7 @@ bool CSVGraphImport::line(unsigned int row, const vector<string> &lineTokens) {
           }
         }
       } else {
-        for (unsigned int i : elements.second) {
+        for (uint i : elements.second) {
           if (!(isVectorProperty
                     ? static_cast<VectorPropertyInterface *>(property)->setEdgeStringValueAsVector(
                           edge(i), tokens[column])
@@ -651,6 +650,6 @@ bool CSVGraphImport::line(unsigned int row, const vector<string> &lineTokens) {
   return true;
 }
 
-bool CSVGraphImport::end(unsigned int, unsigned int) {
+bool CSVGraphImport::end(uint, uint) {
   return true;
 }

@@ -666,7 +666,7 @@ double LayoutProperty::averageEdgeLength(const Graph *sg) const {
 }
 //=================================================================================
 // removed until we have a working implementation
-// unsigned int LayoutProperty::crossingNumber() const {
+// uint LayoutProperty::crossingNumber() const {
 //  tlp::warning() << "!!! Warning: Not Implemented function :";
 //  tlp::warning() << __PRETTY_FUNCTION__ << std::endl;
 //  return 0;
@@ -700,9 +700,9 @@ void LayoutProperty::treatEvent(const Event &evt) {
 
       // reverse bends if needed
       if (bends.size() > 1) {
-        unsigned int halfSize = bends.size() / 2;
+        uint halfSize = bends.size() / 2;
 
-        for (unsigned int i = 0, j = bends.size() - 1; i < halfSize; ++i, --j) {
+        for (uint i = 0, j = bends.size() - 1; i < halfSize; ++i, --j) {
           Coord tmp = bends[i];
           bends[i] = bends[j];
           bends[j] = tmp;
@@ -732,13 +732,13 @@ PropertyInterface *CoordVectorProperty::clonePrototype(Graph *g, const std::stri
 }
 
 static inline void maxV(tlp::Coord &res, const tlp::Coord &cmp) {
-  for (unsigned int i = 0; i < 3; ++i) {
+  for (uint i = 0; i < 3; ++i) {
     res[i] = std::max(res[i], cmp[i]);
   }
 }
 
 static inline void minV(tlp::Coord &res, const tlp::Coord &cmp) {
-  for (unsigned int i = 0; i < 3; ++i) {
+  for (uint i = 0; i < 3; ++i) {
     res[i] = std::min(res[i], cmp[i]);
   }
 }
@@ -769,7 +769,7 @@ std::pair<tlp::Coord, tlp::Coord> LayoutProperty::computeMinMaxNode(const Graph 
     }
   }
 
-  unsigned int sgi = sg->getId();
+  uint sgi = sg->getId();
 
   // graph observation is now delayed
   // until we need to do some minmax computation

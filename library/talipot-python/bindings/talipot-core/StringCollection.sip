@@ -59,7 +59,7 @@ Returns the current selected string value.
 
 // ===========================================================================
 
-  bool setCurrent(unsigned int param);
+  bool setCurrent(uint param);
 %Docstring
 tlp.StringCollection.setCurrent(index)
 
@@ -121,7 +121,7 @@ Returns :const:`True` if the collection is empty.
 
 // ===========================================================================
 
-  std::string at(const unsigned int index);
+  std::string at(const uint index);
 %Docstring
 tlp.StringCollection.at(index)
 
@@ -134,7 +134,7 @@ Returns the string element at a certain index in the collection.
 
 // ===========================================================================
 
-  unsigned int size();
+  uint size();
 %Docstring
 tlp.StringCollection.size()
 
@@ -145,7 +145,7 @@ Returns the number of strings in the collection.
 
 // ===========================================================================
 
-  std::string operator[](const unsigned int i) const;
+  std::string operator[](const uint i) const;
 %MethodCode
   if (a0 < sipCpp->size()) {
     sipRes = new std::string((*sipCpp)[a0]);

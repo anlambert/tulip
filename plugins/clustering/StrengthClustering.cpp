@@ -23,13 +23,13 @@ StrengthClustering::~StrengthClustering() = default;
 //==============================================================================
 double StrengthClustering::computeMQValue(const vector<unordered_set<node>> &partition, Graph *sg) {
 
-  vector<unsigned int> nbIntraEdges(partition.size(), 0);
+  vector<uint> nbIntraEdges(partition.size(), 0);
 
-  map<pair<unsigned int, unsigned int>, unsigned int> nbExtraEdges;
+  map<pair<uint, uint>, uint> nbExtraEdges;
 
-  MutableContainer<unsigned int> clusterId;
+  MutableContainer<uint> clusterId;
 
-  unsigned int i = 0;
+  uint i = 0;
   for (const auto &p : partition) {
     for (auto n : p) {
       clusterId.set(n.id, i);
@@ -44,8 +44,8 @@ double StrengthClustering::computeMQValue(const vector<unordered_set<node>> &par
       std::swap(src, tgt);
     }
 
-    unsigned int srcClustId = clusterId.get(src.id);
-    unsigned int tgtClustId = clusterId.get(tgt.id);
+    uint srcClustId = clusterId.get(src.id);
+    uint tgtClustId = clusterId.get(tgt.id);
 
     if (srcClustId == tgtClustId) {
       nbIntraEdges[srcClustId] += 1;
@@ -62,7 +62,7 @@ double StrengthClustering::computeMQValue(const vector<unordered_set<node>> &par
 
   double positive = 0;
 
-  for (unsigned int i = 0; i < partition.size(); ++i) {
+  for (uint i = 0; i < partition.size(); ++i) {
     if (partition[i].size() > 1) {
       positive +=
           2.0 * double(nbIntraEdges[i]) / double(partition[i].size() * (partition[i].size() - 1));
@@ -212,7 +212,7 @@ bool StrengthClustering::run() {
     }
 
     mult->uniformQuantification(100);
-    unsigned int steps = 0, maxSteps = graph->numberOfEdges();
+    uint steps = 0, maxSteps = graph->numberOfEdges();
 
     if (maxSteps < 10) {
       maxSteps = 10;
@@ -233,7 +233,7 @@ bool StrengthClustering::run() {
   }
 
   bool stopped = false;
-  const unsigned int NB_TEST = 100;
+  const uint NB_TEST = 100;
 
   if (pluginProgress) {
     pluginProgress->setComment("Partitioning nodes...");
@@ -249,7 +249,7 @@ bool StrengthClustering::run() {
   vector<unordered_set<node>> tmp;
   computeNodePartition(threshold, tmp);
 
-  for (unsigned int i = 0; i < tmp.size(); ++i) {
+  for (uint i = 0; i < tmp.size(); ++i) {
     for (auto n : tmp[i]) {
       result->setNodeValue(n, i);
     }

@@ -34,7 +34,7 @@ public:
 
   virtual void clearSelectedStringsList() = 0;
 
-  virtual void setMaxSelectedStringsListSize(const unsigned int maxSelectedStringsListSize) = 0;
+  virtual void setMaxSelectedStringsListSize(const uint maxSelectedStringsListSize) = 0;
 
   virtual std::vector<std::string> getSelectedStringsList() const = 0;
 

@@ -59,7 +59,7 @@ void ParallelCoordinatesDrawing::createAxis(GlWidget *glWidget, GlProgressBar *p
 
   glWidget->makeCurrent();
 
-  unsigned int pos = 0;
+  uint pos = 0;
   vector<string> selectedProperties(graphProxy->getSelectedProperties());
   GlAxis::CaptionLabelPosition captionPosition;
 
@@ -141,7 +141,7 @@ void ParallelCoordinatesDrawing::createAxis(GlWidget *glWidget, GlProgressBar *p
     captionPosition = GlAxis::BELOW;
   }
 
-  unsigned int cpt = 0;
+  uint cpt = 0;
 
   for (const string &selectedProp : selectedProperties) {
 
@@ -243,7 +243,7 @@ void ParallelCoordinatesDrawing::plotAllData(GlWidget *glWidget, GlProgressBar *
     QApplication::processEvents();
   }
 
-  for (unsigned int dataId : graphProxy->getDataIterator()) {
+  for (uint dataId : graphProxy->getDataIterator()) {
 
     if (!graphProxy->isDataSelected(dataId)) {
       color = graphProxy->getDataColor(dataId);
@@ -270,7 +270,7 @@ void ParallelCoordinatesDrawing::plotAllData(GlWidget *glWidget, GlProgressBar *
   lastHighlightedElements = graphProxy->getHighlightedElts();
 }
 
-void ParallelCoordinatesDrawing::plotData(const unsigned int dataId, const Color &color) {
+void ParallelCoordinatesDrawing::plotData(const uint dataId, const Color &color) {
 
   Size eltMinSize = graphProxy->getSizeProperty("viewSize")->getMin();
   Size dataViewSize = graphProxy->getDataViewSize(dataId);
@@ -420,7 +420,7 @@ void ParallelCoordinatesDrawing::plotData(const unsigned int dataId, const Color
   glEntitiesDataMap[line] = dataId;
 }
 
-unsigned int ParallelCoordinatesDrawing::nbParallelAxis() const {
+uint ParallelCoordinatesDrawing::nbParallelAxis() const {
   return nbAxis;
 }
 
@@ -464,7 +464,7 @@ void ParallelCoordinatesDrawing::swapAxis(ParallelAxis *axis1, ParallelAxis *axi
   createAxisFlag = false;
 }
 
-bool ParallelCoordinatesDrawing::getDataIdFromGlEntity(GlEntity *glEntity, unsigned int &dataId) {
+bool ParallelCoordinatesDrawing::getDataIdFromGlEntity(GlEntity *glEntity, uint &dataId) {
 
   bool dataMatch = glEntitiesDataMap.find(glEntity) != glEntitiesDataMap.end();
 
@@ -475,7 +475,7 @@ bool ParallelCoordinatesDrawing::getDataIdFromGlEntity(GlEntity *glEntity, unsig
   return dataMatch;
 }
 
-bool ParallelCoordinatesDrawing::getDataIdFromAxisPoint(node axisPoint, unsigned int &dataId) {
+bool ParallelCoordinatesDrawing::getDataIdFromAxisPoint(node axisPoint, uint &dataId) {
 
   bool dataMatch = axisPointsDataMap.find(axisPoint) != axisPointsDataMap.end();
 
@@ -575,7 +575,7 @@ void ParallelCoordinatesDrawing::computeResizeFactor() {
 
   Size deltaSize = eltMaxSize - eltMinSize;
 
-  for (unsigned int i = 0; i < 3; ++i) {
+  for (uint i = 0; i < 3; ++i) {
     if (deltaSize[i] != 0.0f) {
       resizeFactor[i] = (axisPointMaxSize[i] - axisPointMinSize[i]) / deltaSize[i];
     } else {
@@ -606,28 +606,28 @@ vector<ParallelAxis *> ParallelCoordinatesDrawing::getAllAxis() {
 
 void ParallelCoordinatesDrawing::updateWithAxisSlidersRange(
     ParallelAxis *axis, HighlightedEltsSetOp highlightedEltsSetOp) {
-  set<unsigned int> dataSubset;
+  set<uint> dataSubset;
 
   if (highlightedEltsSetOp == INTERSECTION) {
-    const set<unsigned int> &eltsInSlidersRange(axis->getDataInSlidersRange());
-    const set<unsigned int> &currentHighlightedElts(graphProxy->getHighlightedElts());
-    unsigned int size = eltsInSlidersRange.size() > currentHighlightedElts.size()
-                            ? eltsInSlidersRange.size()
-                            : currentHighlightedElts.size();
-    vector<unsigned int> intersection(size);
+    const set<uint> &eltsInSlidersRange(axis->getDataInSlidersRange());
+    const set<uint> &currentHighlightedElts(graphProxy->getHighlightedElts());
+    uint size = eltsInSlidersRange.size() > currentHighlightedElts.size()
+                    ? eltsInSlidersRange.size()
+                    : currentHighlightedElts.size();
+    vector<uint> intersection(size);
     auto intersectionEnd = std::set_intersection(
         eltsInSlidersRange.begin(), eltsInSlidersRange.end(), currentHighlightedElts.begin(),
         currentHighlightedElts.end(), intersection.begin());
-    dataSubset = set<unsigned int>(intersection.begin(), intersectionEnd);
+    dataSubset = set<uint>(intersection.begin(), intersectionEnd);
   } else if (highlightedEltsSetOp == UNION) {
-    const set<unsigned int> &eltsInSlidersRange(axis->getDataInSlidersRange());
-    const set<unsigned int> &currentHighlightedElts(graphProxy->getHighlightedElts());
+    const set<uint> &eltsInSlidersRange(axis->getDataInSlidersRange());
+    const set<uint> &currentHighlightedElts(graphProxy->getHighlightedElts());
 
-    vector<unsigned int> unionSet(eltsInSlidersRange.size() + currentHighlightedElts.size());
+    vector<uint> unionSet(eltsInSlidersRange.size() + currentHighlightedElts.size());
     auto unionEnd = std::set_union(eltsInSlidersRange.begin(), eltsInSlidersRange.end(),
                                    currentHighlightedElts.begin(), currentHighlightedElts.end(),
                                    unionSet.begin());
-    dataSubset = set<unsigned int>(unionSet.begin(), unionEnd);
+    dataSubset = set<uint>(unionSet.begin(), unionEnd);
   } else {
     dataSubset = axis->getDataInSlidersRange();
   }
@@ -690,7 +690,7 @@ void ParallelCoordinatesDrawing::treatEvent(const tlp::Event &evt) {
   }
 }
 
-void ParallelCoordinatesDrawing::removeHighlightedElt(const unsigned int dataId) {
+void ParallelCoordinatesDrawing::removeHighlightedElt(const uint dataId) {
   if (lastHighlightedElements.erase(dataId)) {
     graphProxy->removeHighlightedElement(dataId);
 

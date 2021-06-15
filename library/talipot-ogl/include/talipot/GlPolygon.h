@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -46,29 +46,28 @@ public:
    * @brief Constructor with a number of point, a number of fill color, a number of outline color
    * and if the polygon is filled, outlined and the ouline size
    */
-  GlPolygon(const unsigned int nbPoints, const unsigned int nbFillColors,
-            const unsigned int nbOutlineColors, const bool filled = true,
-            const bool outlined = true, const std::string &textureName = "",
-            const float outlineSize = 1);
+  GlPolygon(const uint nbPoints, const uint nbFillColors, const uint nbOutlineColors,
+            const bool filled = true, const bool outlined = true,
+            const std::string &textureName = "", const float outlineSize = 1);
   ~GlPolygon() override;
 
   /**
    * @brief Change number of point of the polygon
    */
-  virtual void resizePoints(const unsigned int nbPoints);
+  virtual void resizePoints(const uint nbPoints);
   /**
    * @brief Change number of colors of the polygon
    */
-  virtual void resizeColors(const unsigned int nbColors);
+  virtual void resizeColors(const uint nbColors);
 
   /**
    * @brief return the ith point
    */
-  virtual const Coord &point(const unsigned int i) const;
+  virtual const Coord &point(const uint i) const;
   /**
    * @brief return the ith point
    */
-  virtual Coord &point(const unsigned int i);
+  virtual Coord &point(const uint i);
 };
 }
 #endif // TALIPOT_GL_POLYGON_H

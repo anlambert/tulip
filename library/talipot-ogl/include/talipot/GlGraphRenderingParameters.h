@@ -129,12 +129,12 @@ public:
   /**
    * @brief Return the type of fonts used in the renderer(0=3D,1=bitmap,2=texture)
    */
-  unsigned int getFontsType() const;
+  uint getFontsType() const;
 
   /**
    * @brief Set fonts type used in the renderer (0=3D,1=bitmap,2=texture)
    */
-  void setFontsType(unsigned int type);
+  void setFontsType(uint type);
 
   /**
    * @brief Set the path for the texture loading

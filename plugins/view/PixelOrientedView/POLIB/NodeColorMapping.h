@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -25,7 +25,7 @@ class NodeColorMapping : public ColorFunction {
 public:
   NodeColorMapping(tlp::Graph *graph);
 
-  tlp::Color getColor(double, unsigned int itemId) const override;
+  tlp::Color getColor(double, uint itemId) const override;
 
 private:
   tlp::Graph *graph;

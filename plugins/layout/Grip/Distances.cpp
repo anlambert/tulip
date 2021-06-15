@@ -16,9 +16,9 @@
 using namespace tlp;
 using namespace std;
 
-unsigned int getDist(Graph *g, node n1, node n2) {
+uint getDist(Graph *g, node n1, node n2) {
   vector<node> nextNodes;
-  std::unordered_map<node, unsigned int> nodeDepth;
+  std::unordered_map<node, uint> nodeDepth;
   MutableContainer<bool> alreadyTreated;
   bool found = false;
   alreadyTreated.setAll(false);
@@ -26,7 +26,7 @@ unsigned int getDist(Graph *g, node n1, node n2) {
   nodeDepth[n1] = 0;
   alreadyTreated.set(n1.id, true);
 
-  for (unsigned int i = 0; !found && i < nextNodes.size(); ++i) {
+  for (uint i = 0; !found && i < nextNodes.size(); ++i) {
     node current = nextNodes[i];
 
     for (auto v : g->getInOutNodes(current)) {

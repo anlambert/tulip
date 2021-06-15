@@ -55,7 +55,7 @@ connected. Returns a list of added edges.
 //===========================================================================================
 
 
-  static unsigned int numberOfConnectedComponents(const tlp::Graph *graph);
+  static uint numberOfConnectedComponents(const tlp::Graph *graph);
 %Docstring
 tlp.ConnectedTest.numberOfConnectedComponents(graph)
 

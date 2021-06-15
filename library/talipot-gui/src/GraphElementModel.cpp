@@ -17,7 +17,7 @@
 using namespace tlp;
 using namespace std;
 
-GraphElementModel::GraphElementModel(Graph *graph, unsigned int id, QObject *parent)
+GraphElementModel::GraphElementModel(Graph *graph, uint id, QObject *parent)
     : Model(parent), _graph(graph), _id(id) {}
 
 int GraphElementModel::rowCount(const QModelIndex &parent) const {

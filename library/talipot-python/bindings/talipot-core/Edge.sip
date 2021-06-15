@@ -31,10 +31,10 @@ The edge identifier can be accessed through the **id** class member.
 
 public:
 
-  unsigned int id;
+  uint id;
 
   edge();
-  edge(unsigned int);
+  edge(uint);
 
   bool __eq__(const tlp::edge) const;
 

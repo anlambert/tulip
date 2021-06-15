@@ -30,8 +30,8 @@ void GlGraphRenderer::visitGraph(GlSceneVisitor *visitor, bool visitHiddenEntiti
     return;
   }
 
-  unsigned int nbNodes = graph->numberOfNodes();
-  unsigned int nbEdges = graph->numberOfEdges();
+  uint nbNodes = graph->numberOfNodes();
+  uint nbEdges = graph->numberOfEdges();
   if (!visitHiddenEntities && !inputData->parameters->isViewMetaLabel()) {
     if (!inputData->parameters->isDisplayNodes() && !inputData->parameters->isViewNodeLabel()) {
       nbNodes = 0;

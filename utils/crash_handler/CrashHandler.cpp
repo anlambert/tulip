@@ -18,6 +18,7 @@
 
 #include <talipot/SystemDefinition.h>
 #include <talipot/Release.h>
+#include <talipot/config.h>
 
 #include <fstream>
 

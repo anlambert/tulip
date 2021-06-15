@@ -32,7 +32,7 @@ class CylinderBase {
 public:
   void drawCylinder(float cylinderHeight = 1.0, float dz = 0) {
     if (cylinderVertices.empty()) {
-      const unsigned int numberOfSides = 30;
+      const uint numberOfSides = 30;
       cylinderVertices = computeRegularPolygon(numberOfSides, Coord(0, 0, -cylinderHeight / 2 + dz),
                                                Size(0.5, 0.5));
       cylinderVertices.push_back(Coord(0, 0, -cylinderHeight / 2 + dz));
@@ -59,7 +59,7 @@ public:
             Vec2f(cylinderVertices[i][0] + 0.5, cylinderVertices[i][2] + 0.5));
       }
 
-      for (unsigned int i = 0; i < numberOfSides - 1; ++i) {
+      for (uint i = 0; i < numberOfSides - 1; ++i) {
         cylinderIndices.push_back(numberOfSides);
         cylinderIndices.push_back(i + 1);
         cylinderIndices.push_back(i);
@@ -69,7 +69,7 @@ public:
       cylinderIndices.push_back(0);
       cylinderIndices.push_back(numberOfSides - 1);
 
-      for (unsigned int i = 0; i < numberOfSides - 1; ++i) {
+      for (uint i = 0; i < numberOfSides - 1; ++i) {
         cylinderIndices.push_back(numberOfSides + 1 + i);
         cylinderIndices.push_back(numberOfSides + 1 + i + 1);
         cylinderIndices.push_back(2 * numberOfSides);
@@ -79,7 +79,7 @@ public:
       cylinderIndices.push_back(numberOfSides + 1);
       cylinderIndices.push_back(numberOfSides + 1 + numberOfSides - 1);
 
-      for (unsigned int i = 0; i < numberOfSides - 1; ++i) {
+      for (uint i = 0; i < numberOfSides - 1; ++i) {
         cylinderIndices.push_back(startIdx + i);
         cylinderIndices.push_back(startIdx + i + 1);
         cylinderIndices.push_back(startIdx + numberOfSides + i);
@@ -146,7 +146,7 @@ private:
   vector<Coord> cylinderNormals;
   vector<Vec2f> cylinderTexCoords;
   vector<unsigned short> cylinderIndices;
-  vector<unsigned int> buffers;
+  vector<uint> buffers;
 };
 
 /// A 3D glyph.

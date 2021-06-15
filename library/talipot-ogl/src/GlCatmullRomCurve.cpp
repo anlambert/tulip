@@ -109,8 +109,7 @@ GlCatmullRomCurve::GlCatmullRomCurve()
 GlCatmullRomCurve::GlCatmullRomCurve(const vector<Coord> &controlPoints, const Color &startColor,
                                      const Color &endColor, const float startSize,
                                      const float endSize, const bool closedCurve,
-                                     const unsigned int nbCurvePoints,
-                                     const ParameterizationType paramType)
+                                     const uint nbCurvePoints, const ParameterizationType paramType)
     : AbstractGlCurve("catmull rom vertex shader", catmullRomSpecificShaderCode, controlPoints,
                       startColor, endColor, startSize, endSize, nbCurvePoints),
       closedCurve(closedCurve), paramType(paramType) {}
@@ -123,7 +122,7 @@ Coord GlCatmullRomCurve::computeCurvePointOnCPU(const std::vector<Coord> &contro
 
 void GlCatmullRomCurve::computeCurvePointsOnCPU(const std::vector<Coord> &controlPoints,
                                                 std::vector<Coord> &curvePoints,
-                                                unsigned int nbCurvePoints) {
+                                                uint nbCurvePoints) {
   computeCatmullRomPoints(controlPoints, curvePoints, closedCurve, nbCurvePoints, alpha);
 }
 
@@ -135,7 +134,7 @@ void GlCatmullRomCurve::setCurveVertexShaderRenderingSpecificParameters() {
 
 void GlCatmullRomCurve::drawCurve(vector<Coord> &controlPoints, const Color &startColor,
                                   const Color &endColor, const float startSize, const float endSize,
-                                  const unsigned int nbCurvePoints) {
+                                  const uint nbCurvePoints) {
 
   GLint renderMode;
   glGetIntegerv(GL_RENDER_MODE, &renderMode);

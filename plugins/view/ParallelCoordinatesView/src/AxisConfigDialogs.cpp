@@ -217,7 +217,7 @@ void NominalAxisConfigDialog::pressButtonDown() {
 
 void NominalAxisConfigDialog::pressButtonLexOrder() {
   axisLabelsOrder->clear();
-  static unsigned int clickCount = 0;
+  static uint clickCount = 0;
   vector<string> labelsOrder = axis->getLabelsOrder();
   std::sort(labelsOrder.begin(), labelsOrder.end());
 

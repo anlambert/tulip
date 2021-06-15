@@ -35,7 +35,7 @@ using namespace tlp;
 using namespace std;
 
 PropertyConfigurationWidget::PropertyConfigurationWidget(
-    unsigned int propertyNumber, const QString &propertyName, bool propertyNameIsEditable,
+    uint propertyNumber, const QString &propertyName, bool propertyNameIsEditable,
     const std::string &propertyType, PropertyNameValidator *validator, QWidget *parent)
     : QWidget(parent), CSVColumn(QStringToTlpString(propertyName), propertyType),
       propertyNameValidator(validator), propertyEditButton(new QPushButton(this)),
@@ -73,7 +73,7 @@ void PropertyConfigurationWidget::setPropertyName(const QString &pName) {
   propertyEditButton->setText(QString("%1\n[%2]").arg(pName).arg(QString(_type.c_str())));
 }
 
-unsigned int PropertyConfigurationWidget::getPropertyNumber() const {
+uint PropertyConfigurationWidget::getPropertyNumber() const {
   return propertyNumber;
 }
 
@@ -253,7 +253,7 @@ bool CSVTableWidget::begin() {
   return true;
 }
 
-bool CSVTableWidget::line(unsigned int row, const vector<string> &lineTokens) {
+bool CSVTableWidget::line(uint row, const vector<string> &lineTokens) {
 
   if ((row < firstLineIndex) || // Wait for the first line index
                                 // If the maximum line number is reached ignore the token.
@@ -288,7 +288,7 @@ bool CSVTableWidget::line(unsigned int row, const vector<string> &lineTokens) {
   return true;
 }
 
-bool CSVTableWidget::end(unsigned int, unsigned int) {
+bool CSVTableWidget::end(uint, uint) {
   return true;
 }
 
@@ -395,7 +395,7 @@ bool CSVImportConfigurationWidget::begin() {
   return true;
 }
 
-bool CSVImportConfigurationWidget::line(unsigned int row, const vector<string> &lineTokens) {
+bool CSVImportConfigurationWidget::line(uint row, const vector<string> &lineTokens) {
   ui->previewTableWidget->line(row, lineTokens);
 
   if (keepPropertyWidgets) {
@@ -445,7 +445,7 @@ bool CSVImportConfigurationWidget::line(unsigned int row, const vector<string> &
   return true;
 }
 
-bool CSVImportConfigurationWidget::end(unsigned int rowNumber, unsigned int) {
+bool CSVImportConfigurationWidget::end(uint rowNumber, uint) {
   maxLineNumber = rowNumber;
 
   // Force the table to correctly update.
@@ -459,7 +459,7 @@ bool CSVImportConfigurationWidget::end(unsigned int rowNumber, unsigned int) {
   return true;
 }
 
-void CSVImportConfigurationWidget::setMaxPreviewLineNumber(unsigned int lineNumber) {
+void CSVImportConfigurationWidget::setMaxPreviewLineNumber(uint lineNumber) {
   if (useFirstLineAsPropertyName()) {
     ++lineNumber;
   }
@@ -499,17 +499,17 @@ void CSVImportConfigurationWidget::setUseFirstLineAsPropertyName(bool useFirstLi
   ui->useFirstLineAsPropertyNamecheckBox->setChecked(useFirstLineAsHeader);
 }
 
-unsigned int CSVImportConfigurationWidget::rowCount() const {
+uint CSVImportConfigurationWidget::rowCount() const {
   return ui->previewTableWidget->rowCount();
 }
-unsigned int CSVImportConfigurationWidget::columnCount() const {
+uint CSVImportConfigurationWidget::columnCount() const {
   return ui->previewTableWidget->columnCount();
 }
 
 void CSVImportConfigurationWidget::updateTableHeaders() {
   QStringList itemsLabels;
 
-  for (unsigned int i = 0; i < columnCount(); ++i) {
+  for (uint i = 0; i < columnCount(); ++i) {
     // Update the column name
     QString columnName = generateColumnName(i);
     itemsLabels << ""; // columnName;
@@ -521,9 +521,9 @@ void CSVImportConfigurationWidget::updateTableHeaders() {
   ui->previewTableWidget->setHorizontalHeaderLabels(itemsLabels);
   itemsLabels.clear();
   // Ensure that the first visible row has the number 1.
-  unsigned int currentRow = useFirstLineAsPropertyName() ? 0 : 1;
+  uint currentRow = useFirstLineAsPropertyName() ? 0 : 1;
 
-  for (unsigned int i = 0; i < rowCount(); ++i) {
+  for (uint i = 0; i < rowCount(); ++i) {
     itemsLabels << QString::number(currentRow);
     ++currentRow;
   }
@@ -531,7 +531,7 @@ void CSVImportConfigurationWidget::updateTableHeaders() {
   ui->previewTableWidget->setVerticalHeaderLabels(itemsLabels);
 }
 
-QString CSVImportConfigurationWidget::generateColumnName(unsigned int col) const {
+QString CSVImportConfigurationWidget::generateColumnName(uint col) const {
   if (useFirstLineAsPropertyName()) {
     QTableWidgetItem *item = ui->previewTableWidget->item(1, col);
 
@@ -545,7 +545,7 @@ QString CSVImportConfigurationWidget::generateColumnName(unsigned int col) const
   }
 }
 
-string CSVImportConfigurationWidget::getColumnType(unsigned int col) const {
+string CSVImportConfigurationWidget::getColumnType(uint col) const {
   if (useFirstLineAsPropertyName()) {
     return columnType[col];
   } else {
@@ -616,8 +616,8 @@ void CSVImportConfigurationWidget::addPropertyToPropertyList(const string &prope
 }
 
 PropertyConfigurationWidget *CSVImportConfigurationWidget::createPropertyConfigurationWidget(
-    unsigned int propertyNumber, const QString &propertyName, bool isEditable,
-    const string &propertyType, QWidget *parent) {
+    uint propertyNumber, const QString &propertyName, bool isEditable, const string &propertyType,
+    QWidget *parent) {
   auto *propertyConfigurationWidget = new PropertyConfigurationWidget(
       propertyNumber, propertyName, isEditable, propertyType, validator, parent);
   propertyConfigurationWidget->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
@@ -662,18 +662,18 @@ const vector<CSVColumn *> CSVImportConfigurationWidget::getPropertiesToImport() 
   return properties;
 }
 
-unsigned int CSVImportConfigurationWidget::getFirstImportedLineIndex() const {
-  unsigned int firstLine = getFirstLineIndex();
+uint CSVImportConfigurationWidget::getFirstImportedLineIndex() const {
+  uint firstLine = getFirstLineIndex();
   // Shift the line number if we use the first line as header.
   return useFirstLineAsPropertyName() ? ++firstLine : firstLine;
 }
 
-unsigned int CSVImportConfigurationWidget::getFirstLineIndex() const {
+uint CSVImportConfigurationWidget::getFirstLineIndex() const {
   return firstLine;
 }
 
-unsigned int CSVImportConfigurationWidget::getLastLineIndex() const {
-  unsigned int lastLine = ui->toLineSpinBox->value();
+uint CSVImportConfigurationWidget::getLastLineIndex() const {
+  uint lastLine = ui->toLineSpinBox->value();
 
   if (!useFirstLineAsPropertyName()) {
     --lastLine;

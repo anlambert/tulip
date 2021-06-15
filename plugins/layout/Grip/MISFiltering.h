@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -27,22 +27,21 @@ public:
   ~MISFiltering();
 
   void computeFiltering();
-  void getNearest(tlp::node, std::vector<tlp::node> &, std::vector<unsigned int> &, unsigned int,
-                  unsigned int = 3);
+  void getNearest(tlp::node, std::vector<tlp::node> &, std::vector<uint> &, uint, uint = 3);
 
   std::vector<tlp::node> ordering;
-  std::vector<unsigned int> index;
+  std::vector<uint> index;
 
 private:
-  unsigned int level;
+  uint level;
   tlp::MutableContainer<bool> inLastVi;
   tlp::MutableContainer<bool> inCurVi;
   tlp::MutableContainer<bool> removed;
-  std::vector<unsigned int> v_dist;
+  std::vector<uint> v_dist;
 
-  std::unordered_map<unsigned int, std::unordered_set<tlp::node>> levelToNodes;
+  std::unordered_map<uint, std::unordered_set<tlp::node>> levelToNodes;
 
-  void bfsDepth(tlp::node, unsigned int);
+  void bfsDepth(tlp::node, uint);
   void updateVectors();
 
   tlp::Graph *g_copy;

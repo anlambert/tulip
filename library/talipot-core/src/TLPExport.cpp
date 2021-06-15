@@ -97,16 +97,16 @@ public:
       os << "(cluster " << g->getId() << endl;
 
       const std::vector<node> &nodes = g->nodes();
-      unsigned int nbNodes = nodes.size();
+      uint nbNodes = nodes.size();
       const std::vector<edge> &edges = g->edges();
-      unsigned int nbEdges = edges.size();
+      uint nbEdges = edges.size();
       node beginNode, previousNode;
-      unsigned int progupdate = 1 + (nbNodes + nbEdges) / 100;
+      uint progupdate = 1 + (nbNodes + nbEdges) / 100;
 
       if (nbNodes) {
         os << "(nodes";
 
-        for (unsigned int i = 0; i < nbNodes; ++i) {
+        for (uint i = 0; i < nbNodes; ++i) {
           if (progress % progupdate == 0) {
             pluginProgress->progress(progress, nbNodes + nbEdges);
           }
@@ -143,7 +143,7 @@ public:
       if (nbEdges) {
         os << "(edges";
 
-        for (unsigned int i = 0; i < nbEdges; ++i) {
+        for (uint i = 0; i < nbEdges; ++i) {
           if (progress % progupdate == 0) {
             pluginProgress->progress(progress, nbNodes + nbEdges);
           }
@@ -175,7 +175,7 @@ public:
         os << ")" << endl;
       }
     } else {
-      unsigned int nbElts = g->numberOfNodes();
+      uint nbElts = g->numberOfNodes();
 
       os << "(nb_nodes " << nbElts << ")" << endl;
 
@@ -202,7 +202,7 @@ public:
       os << "(nb_edges " << nbElts << ")" << endl;
 
       os << ";(edge <edge_id> <source_id> <target_id>)" << endl;
-      unsigned int progupdate = 1 + nbElts / 100;
+      uint progupdate = 1 + nbElts / 100;
       const std::vector<edge> &edges = g->edges();
 
       for (unsigned i = 0; i < nbElts; ++i) {
@@ -305,7 +305,7 @@ public:
           }
         } else if (g->getId() != 0 && // if it is not the real root graph
                    prop->getTypename() == GraphProperty::propertyTypename) {
-          unsigned int id = strtoul(tmp.c_str(), nullptr, 10);
+          uint id = strtoul(tmp.c_str(), nullptr, 10);
 
           // we must check if the pointed subgraph
           // is a descendant of the currently export graph

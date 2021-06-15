@@ -82,7 +82,7 @@ void GlAbstractPolygon::setOutlineSize(float size) {
   outlineSize = size;
 }
 //=====================================================
-Color GlAbstractPolygon::getFillColor(unsigned int i) {
+Color GlAbstractPolygon::getFillColor(uint i) {
   if (fillColors.size() < i) {
     fillColors.resize(i, fillColors.back());
   }
@@ -90,7 +90,7 @@ Color GlAbstractPolygon::getFillColor(unsigned int i) {
   return fillColors[i];
 }
 //=====================================================
-void GlAbstractPolygon::setFillColor(unsigned int i, const Color &color) {
+void GlAbstractPolygon::setFillColor(uint i, const Color &color) {
   if (fillColors.size() < i) {
     fillColors.resize(i, fillColors.back());
   }
@@ -104,7 +104,7 @@ void GlAbstractPolygon::setFillColor(const Color &color) {
   fillColors.push_back(color);
 }
 //=====================================================
-Color GlAbstractPolygon::getOutlineColor(unsigned int i) {
+Color GlAbstractPolygon::getOutlineColor(uint i) {
   if (outlineColors.size() < i) {
     outlineColors.resize(i, outlineColors.back());
   }
@@ -112,7 +112,7 @@ Color GlAbstractPolygon::getOutlineColor(unsigned int i) {
   return outlineColors[i];
 }
 //=====================================================
-void GlAbstractPolygon::setOutlineColor(unsigned int i, const Color &color) {
+void GlAbstractPolygon::setOutlineColor(uint i, const Color &color) {
   if (outlineColors.size() < i) {
     outlineColors.resize(i, outlineColors.back());
   }
@@ -459,7 +459,7 @@ void GlAbstractPolygon::getXMLOnlyData(string &outString) {
   GlXMLTools::getXML(outString, "outlineSize", outlineSize);
 }
 //============================================================
-void GlAbstractPolygon::setWithXML(const string &inString, unsigned int &currentPosition) {
+void GlAbstractPolygon::setWithXML(const string &inString, uint &currentPosition) {
 
   points.clear();
   GlXMLTools::setWithXML(inString, currentPosition, "points", points);
@@ -485,7 +485,7 @@ void GlAbstractPolygon::setPoints(const vector<Coord> &points) {
   recomputeBoundingBox();
 }
 //============================================================
-void GlAbstractPolygon::setPoint(unsigned int index, const Coord &point) {
+void GlAbstractPolygon::setPoint(uint index, const Coord &point) {
   assert(points.size() > index);
 
   this->points[index] = point;

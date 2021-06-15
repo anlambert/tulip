@@ -681,7 +681,7 @@ void GeographicViewGraphicsView::createLayoutWithAddresses(const string &address
             }
           }
 
-          unsigned int idx = 0;
+          uint idx = 0;
           vector<NominatimGeocoderResult> geocodingResults =
               nominatimGeocoder.getLatLngForAddress(addr);
 
@@ -1042,13 +1042,13 @@ void GeographicViewGraphicsView::switchViewType() {
 
       for (auto e : graph->edges()) {
         const auto &[src, tgt] = graph->ends(e);
-        unsigned int bendsNumber = 2;
+        uint bendsNumber = 2;
         vector<Coord> bends;
 
         Coord srcCoord = latLngToPolar(nodeLatLng[src]);
         Coord tgtCoord = latLngToPolar(nodeLatLng[tgt]);
 
-        for (unsigned int i = 0; i < bendsNumber; ++i) {
+        for (uint i = 0; i < bendsNumber; ++i) {
           Coord tmp = srcCoord + ((tgtCoord - srcCoord) / (bendsNumber + 1.f)) * (i + 1.f);
           bends.push_back(polarToSpherical(tmp, 75));
         }

@@ -113,7 +113,7 @@ public:
 
   Vec3f(const tlp::Vec3f &);
 
-  float operator[](const unsigned int i) const;
+  float operator[](const uint i) const;
 %MethodCode
   if (a0 < 3) {
     sipRes = (*sipCpp)[a0];
@@ -306,7 +306,7 @@ public:
 
   Vec4f(const tlp::Vec4f &);
 
-  float operator[](const unsigned int i) const;
+  float operator[](const uint i) const;
 %MethodCode
   if (a0 < 4) {
     sipRes = (*sipCpp)[a0];
@@ -448,7 +448,7 @@ public:
 
   Vec4i(const tlp::Vec4i &);
 
-  int operator[](const unsigned int i) const;
+  int operator[](const uint i) const;
 %MethodCode
   if (a0 < 4) {
     sipRes = (*sipCpp)[a0];

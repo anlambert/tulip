@@ -54,9 +54,9 @@ public:
    * @brief Gets the number of connected components in the graph.
    *
    * @param graph The graph in which to count the number of connected components.
-   * @return unsigned int The number of connected componments.
+   * @return uint The number of connected componments.
    **/
-  static unsigned int numberOfConnectedComponents(const Graph *const graph);
+  static uint numberOfConnectedComponents(const Graph *const graph);
 
   /**
    * @brief Computes the set of connected components.

@@ -48,7 +48,7 @@ TLP_SCOPE double averageClusteringCoefficient(const Graph *);
  * see http://en.wikipedia.org/wiki/Clustering_coefficient for more details
  */
 TLP_SCOPE void clusteringCoefficient(const Graph *g, tlp::NodeVectorProperty<double> &result,
-                                     unsigned int maxDepth = 1);
+                                     uint maxDepth = 1);
 /*
  * assign to each node of a graph its (in/ou/inout) degree.
  * The weighted degree of a node is the sum of weights of
@@ -69,11 +69,11 @@ TLP_SCOPE void degree(const Graph *graph, tlp::NodeVectorProperty<double> &deg,
  *
  * Warning: the graph must be acyclic (no self loops).
  */
-TLP_SCOPE void dagLevel(const Graph *graph, tlp::NodeVectorProperty<unsigned int> &level);
+TLP_SCOPE void dagLevel(const Graph *graph, tlp::NodeVectorProperty<uint> &level);
 // return the maximum value of the degree of the graph's nodes
-TLP_SCOPE unsigned int maxDegree(const Graph *);
+TLP_SCOPE uint maxDegree(const Graph *);
 // return the minimum value of the degree of the graph's nodes
-TLP_SCOPE unsigned int minDegree(const Graph *);
+TLP_SCOPE uint minDegree(const Graph *);
 /*
  * compute the maximum distance from the n (graph->nodes[nPos]) to all the other nodes of graph
  * and store it into distance, (stored value is UINT_MAX for non connected nodes),
@@ -81,9 +81,9 @@ TLP_SCOPE unsigned int minDegree(const Graph *);
  * and INV_DIRECTED use reverse directed graph (ie. all edges are reversed)
  * all the edge's weight is set to 1. (it uses a bfs thus the complexity is o(m), m = |E|).
  */
-TLP_SCOPE unsigned int maxDistance(const Graph *graph, const unsigned int nPos,
-                                   tlp::NodeVectorProperty<unsigned int> &distance,
-                                   EDGE_TYPE direction = UNDIRECTED);
+TLP_SCOPE uint maxDistance(const Graph *graph, const uint nPos,
+                           tlp::NodeVectorProperty<uint> &distance,
+                           EDGE_TYPE direction = UNDIRECTED);
 
 /*
  * compute the maximum distance from the n (graph->nodes[nPos]) to all the other nodes of graph
@@ -94,7 +94,7 @@ TLP_SCOPE unsigned int maxDistance(const Graph *graph, const unsigned int nPos,
  * (the complexity is then o((m + n)log n)) otherwise
  * all the edge's weight is set to 1. (it uses a bfs thus the complexity is o(m), m = |E|).
  */
-TLP_SCOPE double maxDistance(const Graph *graph, const unsigned int nPos,
+TLP_SCOPE double maxDistance(const Graph *graph, const uint nPos,
                              tlp::NodeVectorProperty<double> &distance,
                              const NumericProperty *const weights,
                              EDGE_TYPE direction = UNDIRECTED);

@@ -205,8 +205,7 @@ void MouseShowElementInfo::viewChanged(View *view) {
   _view->graphicsView()->scene()->addItem(_informationWidgetItem);
 }
 
-QAbstractItemModel *MouseShowElementInfo::buildModel(ElementType elementType,
-                                                     unsigned int elementId,
+QAbstractItemModel *MouseShowElementInfo::buildModel(ElementType elementType, uint elementId,
                                                      QObject *parent) const {
   if (elementType == NODE) {
     return new GraphNodeElementModel(view()->graph(), elementId, parent);
@@ -215,7 +214,7 @@ QAbstractItemModel *MouseShowElementInfo::buildModel(ElementType elementType,
   }
 }
 
-QString MouseShowElementInfo::elementName(ElementType elementType, unsigned int elementId) const {
+QString MouseShowElementInfo::elementName(ElementType elementType, uint elementId) const {
   QString elementTypeLabel = elementType == NODE ? QString("Node") : QString("Edge");
   return elementTypeLabel + " #" + QString::number(elementId);
 }

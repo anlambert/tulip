@@ -374,7 +374,7 @@ public:
    * @return the number of nodes with a non default value.
    *
    */
-  virtual unsigned int numberOfNonDefaultValuatedNodes(const Graph * = nullptr) const = 0;
+  virtual uint numberOfNonDefaultValuatedNodes(const Graph * = nullptr) const = 0;
 
   /**
    * @brief Gets an Iterator on all non-default valuated edges.
@@ -399,14 +399,14 @@ public:
    * @return the number of edges with a non default value.
    *
    */
-  virtual unsigned int numberOfNonDefaultValuatedEdges(const Graph * = nullptr) const = 0;
+  virtual uint numberOfNonDefaultValuatedEdges(const Graph * = nullptr) const = 0;
 
   /**
    * @brief Returns the size in bytes of a node's value.
    * @return the size of a node's value (0 means the size is not fixed)
    *
    */
-  virtual unsigned int nodeValueSize() const = 0;
+  virtual uint nodeValueSize() const = 0;
 
   /**
    * @brief Writes the nodes default value
@@ -437,7 +437,7 @@ public:
    * @return the size of a node's value (0 means the size is not fixed)
    *
    */
-  virtual unsigned int edgeValueSize() const = 0;
+  virtual uint edgeValueSize() const = 0;
 
   /**
    * @brief Writes the edges default value
@@ -642,7 +642,7 @@ public:
     TLP_AFTER_SET_EDGE_VALUE
   };
   PropertyEvent(const PropertyInterface &prop, PropertyEventType propEvtType,
-                Event::EventType evtType = Event::TLP_MODIFICATION, unsigned int id = UINT_MAX)
+                Event::EventType evtType = Event::TLP_MODIFICATION, uint id = UINT_MAX)
       : Event(prop, evtType), evtType(propEvtType), eltId(id) {}
 
   PropertyInterface *getProperty() const {
@@ -665,7 +665,7 @@ public:
 
 protected:
   PropertyEventType evtType;
-  unsigned int eltId;
+  uint eltId;
 };
 }
 

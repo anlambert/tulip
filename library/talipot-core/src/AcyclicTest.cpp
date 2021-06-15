@@ -97,8 +97,8 @@ void AcyclicTest::makeAcyclic(Graph *graph, vector<edge> &reversed,
   auto edges = graph->edges();
   // newly added edges during the loop
   // will not be taken into account
-  unsigned int nbEdges = edges.size();
-  for (unsigned int i = 0; i < nbEdges; ++i) {
+  uint nbEdges = edges.size();
+  for (uint i = 0; i < nbEdges; ++i) {
     edge e = edges[i];
     const auto &[src, tgt] = graph->ends(e);
 

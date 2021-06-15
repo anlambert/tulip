@@ -152,15 +152,14 @@ tlp::MutableContainer<TYPE>::findAllValues(typename StoredType<TYPE>::ConstRefer
 //===================================================================
 // this method is visible for any class
 template <typename TYPE>
-tlp::Iterator<unsigned int> *
+tlp::Iterator<uint> *
 tlp::MutableContainer<TYPE>::findAll(typename StoredType<TYPE>::ConstReference value,
                                      bool equal) const {
   return findAllValues(value, equal);
 }
 //===================================================================
 template <typename TYPE>
-void tlp::MutableContainer<TYPE>::vectset(const unsigned int i,
-                                          typename StoredType<TYPE>::Value value) {
+void tlp::MutableContainer<TYPE>::vectset(const uint i, typename StoredType<TYPE>::Value value) {
   if (minIndex == UINT_MAX) {
     minIndex = i;
     maxIndex = i;
@@ -201,8 +200,7 @@ void tlp::MutableContainer<TYPE>::vectset(const unsigned int i,
 }
 //===================================================================
 template <typename TYPE>
-void tlp::MutableContainer<TYPE>::set(const unsigned int i,
-                                      typename StoredType<TYPE>::ConstReference value,
+void tlp::MutableContainer<TYPE>::set(const uint i, typename StoredType<TYPE>::ConstReference value,
                                       bool forceDefaultValueRemoval) {
   // Test if after insertion we need to resize
   if (!compressing && !StoredType<TYPE>::equal(defaultValue, value)) {
@@ -281,7 +279,7 @@ void tlp::MutableContainer<TYPE>::set(const unsigned int i,
 }
 //===================================================================
 template <typename TYPE>
-void tlp::MutableContainer<TYPE>::add(const unsigned int i, TYPE val) {
+void tlp::MutableContainer<TYPE>::add(const uint i, TYPE val) {
   if (!static_cast<bool>(tlp::StoredType<TYPE>::isPointer)) {
     if (maxIndex == UINT_MAX) {
       assert(state == VECT);
@@ -342,7 +340,7 @@ void tlp::MutableContainer<TYPE>::add(const unsigned int i, TYPE val) {
 //===================================================================
 template <typename TYPE>
 typename tlp::StoredType<TYPE>::ConstReference
-tlp::MutableContainer<TYPE>::get(const unsigned int i) const {
+tlp::MutableContainer<TYPE>::get(const uint i) const {
   if (maxIndex == UINT_MAX) {
     return StoredType<TYPE>::get(defaultValue);
   }
@@ -374,7 +372,7 @@ tlp::MutableContainer<TYPE>::get(const unsigned int i) const {
 }
 //===================================================================
 template <typename TYPE>
-void tlp::MutableContainer<TYPE>::invertBooleanValue(const unsigned int i) {
+void tlp::MutableContainer<TYPE>::invertBooleanValue(const uint i) {
   if (std::is_same<typename StoredType<TYPE>::Value, bool>::value) {
     switch (state) {
     case VECT: {
@@ -423,7 +421,7 @@ typename tlp::StoredType<TYPE>::Reference tlp::MutableContainer<TYPE>::getDefaul
 }
 //===================================================================
 template <typename TYPE>
-bool tlp::MutableContainer<TYPE>::hasNonDefaultValue(const unsigned int i) const {
+bool tlp::MutableContainer<TYPE>::hasNonDefaultValue(const uint i) const {
   if (maxIndex == UINT_MAX) {
     return false;
   }
@@ -443,7 +441,7 @@ bool tlp::MutableContainer<TYPE>::hasNonDefaultValue(const unsigned int i) const
 }
 //===================================================================
 template <typename TYPE>
-typename tlp::StoredType<TYPE>::Reference tlp::MutableContainer<TYPE>::get(const unsigned int i,
+typename tlp::StoredType<TYPE>::Reference tlp::MutableContainer<TYPE>::get(const uint i,
                                                                            bool &notDefault) const {
   if (maxIndex == UINT_MAX) {
     notDefault = false;
@@ -483,19 +481,19 @@ typename tlp::StoredType<TYPE>::Reference tlp::MutableContainer<TYPE>::get(const
 }
 //===================================================================
 template <typename TYPE>
-unsigned int tlp::MutableContainer<TYPE>::numberOfNonDefaultValues() const {
+uint tlp::MutableContainer<TYPE>::numberOfNonDefaultValues() const {
   return elementInserted;
 }
 //===================================================================
 template <typename TYPE>
 void tlp::MutableContainer<TYPE>::vecttohash() {
-  hData = new std::unordered_map<unsigned int, typename StoredType<TYPE>::Value>(elementInserted);
+  hData = new std::unordered_map<uint, typename StoredType<TYPE>::Value>(elementInserted);
 
-  unsigned int newMaxIndex = 0;
-  unsigned int newMinIndex = UINT_MAX;
+  uint newMaxIndex = 0;
+  uint newMinIndex = UINT_MAX;
   elementInserted = 0;
 
-  for (unsigned int i = minIndex; i <= maxIndex; ++i) {
+  for (uint i = minIndex; i <= maxIndex; ++i) {
     if ((*vData)[i - minIndex] != defaultValue) {
       (*hData)[i] = (*vData)[i - minIndex];
       newMaxIndex = std::max(newMaxIndex, i);
@@ -530,8 +528,7 @@ void tlp::MutableContainer<TYPE>::hashtovect() {
 }
 //===================================================================
 template <typename TYPE>
-void tlp::MutableContainer<TYPE>::compress(unsigned int min, unsigned int max,
-                                           unsigned int nbElements) {
+void tlp::MutableContainer<TYPE>::compress(uint min, uint max, uint nbElements) {
   if (max == UINT_MAX || (max - min) < 10) {
     return;
   }
@@ -564,6 +561,6 @@ void tlp::MutableContainer<TYPE>::compress(unsigned int min, unsigned int max,
 
 template <typename TYPE>
 typename tlp::StoredType<TYPE>::ConstReference
-tlp::MutableContainer<TYPE>::operator[](const unsigned int i) const {
+tlp::MutableContainer<TYPE>::operator[](const uint i) const {
   return get(i);
 }

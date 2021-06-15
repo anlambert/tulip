@@ -331,7 +331,7 @@ Sets the value of a particular edge.
 
 //===========================================================================================
 
-  virtual unsigned int numberOfNonDefaultValuatedNodes(const tlp::Graph* subgraph= NULL) const;
+  virtual uint numberOfNonDefaultValuatedNodes(const tlp::Graph* subgraph= NULL) const;
 
 //===========================================================================================
 
@@ -365,7 +365,7 @@ whose associated value is equal to the one given in parameter.
 
 //===========================================================================================
 
-  virtual unsigned int numberOfNonDefaultValuatedEdges(const tlp::Graph* subgraph= NULL) const;
+  virtual uint numberOfNonDefaultValuatedEdges(const tlp::Graph* subgraph= NULL) const;
 
 //===========================================================================================
 
@@ -655,7 +655,7 @@ value will not be modified.
 
 //===========================================================================================
 
-  void setNodeEltValue(const tlp::node node, unsigned int index, const @CPP_TYPE@ &val /TypeHint="@PYTHON_NODE_TYPEHINT@"/);
+  void setNodeEltValue(const tlp::node node, uint index, const @CPP_TYPE@ &val /TypeHint="@PYTHON_NODE_TYPEHINT@"/);
 %Docstring
 tlp.@VEC_PROPERTY_TYPE@VectorProperty.setNodeEltValue(node, index, val)
 
@@ -688,7 +688,7 @@ Sets the value in the list attached to a particular node at the given index.
 
 //===========================================================================================
 
-  const @CPP_TYPE@ getNodeEltValue(const tlp::node node, unsigned int index) /TypeHint="@PYTHON_NODE_TYPEHINT@"/;
+  const @CPP_TYPE@ getNodeEltValue(const tlp::node node, uint index) /TypeHint="@PYTHON_NODE_TYPEHINT@"/;
 %Docstring
 tlp.@VEC_PROPERTY_TYPE@VectorProperty.getNodeEltValue(node, index)
 
@@ -764,7 +764,7 @@ Removes the value at the end of the list (if not empty) attached to a particular
 
 //===========================================================================================
 
-  void resizeNodeValue(const tlp::node node, unsigned int size);
+  void resizeNodeValue(const tlp::node node, uint size);
 %Docstring
 tlp.@VEC_PROPERTY_TYPE@VectorProperty.resizeNodeValue(node, size)
 
@@ -787,7 +787,7 @@ Resizes the list attached to a particular node. A default value will be assigned
 
 //===========================================================================================
 
-  void resizeNodeValue(const tlp::node node, unsigned int size, @CPP_TYPE@ elt /TypeHint="@PYTHON_NODE_TYPEHINT@"/);
+  void resizeNodeValue(const tlp::node node, uint size, @CPP_TYPE@ elt /TypeHint="@PYTHON_NODE_TYPEHINT@"/);
 %Docstring
 tlp.@VEC_PROPERTY_TYPE@VectorProperty.resizeNodeValue(node, size, val)
 
@@ -812,7 +812,7 @@ Resizes the list attached to a particular node. The value given in parameter wil
 
 //===========================================================================================
 
-  void setEdgeEltValue(const tlp::edge edge, unsigned int index, const @CPP_TYPE@ &val /TypeHint="@PYTHON_NODE_TYPEHINT@"/);
+  void setEdgeEltValue(const tlp::edge edge, uint index, const @CPP_TYPE@ &val /TypeHint="@PYTHON_NODE_TYPEHINT@"/);
 %Docstring
 tlp.@VEC_PROPERTY_TYPE@VectorProperty.setEdgeEltValue(edge, index, val)
 
@@ -845,7 +845,7 @@ Sets the value in the list attached to a particular edge at the given index.
 
 //===========================================================================================
 
-  const @CPP_TYPE@ getEdgeEltValue(const tlp::edge edge, unsigned int index) /TypeHint="@PYTHON_NODE_TYPEHINT@"/;
+  const @CPP_TYPE@ getEdgeEltValue(const tlp::edge edge, uint index) /TypeHint="@PYTHON_NODE_TYPEHINT@"/;
 %Docstring
 tlp.@VEC_PROPERTY_TYPE@VectorProperty.getEdgeEltValue(edge, index)
 
@@ -921,7 +921,7 @@ Removes the value at the end of the list (if not empty) attached to a particular
 
 //===========================================================================================
 
-  void resizeEdgeValue(const tlp::edge edge, unsigned int size);
+  void resizeEdgeValue(const tlp::edge edge, uint size);
 %Docstring
 tlp.@VEC_PROPERTY_TYPE@VectorProperty.resizeEdgeValue(edge, size)
 
@@ -944,7 +944,7 @@ Resizes the list attached to a particular edge. A default value will be assigned
 
 //===========================================================================================
 
-  void resizeEdgeValue(const tlp::edge edge, unsigned int size, @CPP_TYPE@ val /TypeHint="@PYTHON_NODE_TYPEHINT@"/);
+  void resizeEdgeValue(const tlp::edge edge, uint size, @CPP_TYPE@ val /TypeHint="@PYTHON_NODE_TYPEHINT@"/);
 %Docstring
 tlp.@VEC_PROPERTY_TYPE@VectorProperty.resizeEdgeValue(edge, size, val)
 

@@ -138,7 +138,7 @@ class GraphUpdatesRecorder : public Observable {
   void recordIncidence(std::unordered_map<node, std::vector<edge>> &, GraphImpl *, node,
                        edge e = edge());
   void recordIncidence(std::unordered_map<node, std::vector<edge>> &, GraphImpl *, node,
-                       const std::vector<edge> &, unsigned int);
+                       const std::vector<edge> &, uint);
   // remove an edge from a node's edges container
   void removeFromIncidence(std::unordered_map<node, std::vector<edge>> &, edge, node);
 
@@ -179,7 +179,7 @@ public:
   // graphAddedEdges
   void addEdge(Graph *g, const edge e);
 
-  void addEdges(Graph *g, unsigned int nbAddedEdges);
+  void addEdges(Graph *g, uint nbAddedEdges);
 
   // graphDeletedNodes
   void delNode(Graph *g, const node n);

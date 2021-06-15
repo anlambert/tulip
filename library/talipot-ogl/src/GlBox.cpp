@@ -171,7 +171,7 @@ void GlBox::draw(float lod, Camera *) {
     if (!generated) {
       GLfloat newCubeCoordArrays[72];
 
-      for (unsigned int i = 0; i < 24; ++i) {
+      for (uint i = 0; i < 24; ++i) {
         newCubeCoordArrays[i * 3] = cubeCoordArrays[i * 3] * size[0] + position[0];
         newCubeCoordArrays[i * 3 + 1] = cubeCoordArrays[i * 3 + 1] * size[1] + position[1];
         newCubeCoordArrays[i * 3 + 2] = cubeCoordArrays[i * 3 + 2] * size[2] + position[2];
@@ -195,7 +195,7 @@ void GlBox::draw(float lod, Camera *) {
     if (!generated) {
       newCubeCoordArrays = new GLfloat[72];
 
-      for (unsigned int i = 0; i < 24; ++i) {
+      for (uint i = 0; i < 24; ++i) {
         newCubeCoordArrays[i * 3] = cubeCoordArrays[i * 3] * size[0] + position[0];
         newCubeCoordArrays[i * 3 + 1] = cubeCoordArrays[i * 3 + 1] * size[1] + position[1];
         newCubeCoordArrays[i * 3 + 2] = cubeCoordArrays[i * 3 + 2] * size[2] + position[2];
@@ -362,7 +362,7 @@ void GlBox::getXML(string &outString) {
   GlXMLTools::getXML(outString, "outlineSize", outlineSize);
 }
 //============================================================
-void GlBox::setWithXML(const string &inString, unsigned int &currentPosition) {
+void GlBox::setWithXML(const string &inString, uint &currentPosition) {
 
   GlXMLTools::setWithXML(inString, currentPosition, "position", position);
   GlXMLTools::setWithXML(inString, currentPosition, "size", size);

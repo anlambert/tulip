@@ -27,17 +27,17 @@
 
 using namespace std;
 
-unsigned int tlp::GlXMLTools::indentationNumber = 0;
+uint tlp::GlXMLTools::indentationNumber = 0;
 
 namespace tlp {
 
 void GlXMLTools::applyIndentation(string &outString) {
-  for (unsigned int i = 0; i < indentationNumber; ++i) {
+  for (uint i = 0; i < indentationNumber; ++i) {
     outString.append("  ");
   }
 }
 
-void GlXMLTools::goToNextCaracter(const string &inString, unsigned int &currentPosition) {
+void GlXMLTools::goToNextCaracter(const string &inString, uint &currentPosition) {
   while (inString[currentPosition] == ' ' || inString[currentPosition] == '\n') {
     currentPosition++;
   }
@@ -55,13 +55,13 @@ void GlXMLTools::endDataNode(string &outString) {
   outString.append("</data>\n");
 }
 
-void GlXMLTools::enterDataNode(const string &inString, unsigned int &currentPosition) {
+void GlXMLTools::enterDataNode(const string &inString, uint &currentPosition) {
   goToNextCaracter(inString, currentPosition);
   assert(inString.substr(currentPosition, 6) == "<data>");
   currentPosition += 6;
 }
 
-void GlXMLTools::leaveDataNode(const string &inString, unsigned int &currentPosition) {
+void GlXMLTools::leaveDataNode(const string &inString, uint &currentPosition) {
   goToNextCaracter(inString, currentPosition);
   assert(inString.substr(currentPosition, 7) == "</data>");
   currentPosition += 7;
@@ -79,9 +79,9 @@ void GlXMLTools::endChildNode(string &outString, const string &name) {
   outString.append("</" + name + ">\n");
 }
 
-string GlXMLTools::enterChildNode(const string &inString, unsigned int &currentPosition) {
+string GlXMLTools::enterChildNode(const string &inString, uint &currentPosition) {
   goToNextCaracter(inString, currentPosition);
-  unsigned int beginPosition = currentPosition + 1;
+  uint beginPosition = currentPosition + 1;
   size_t endPosition = inString.find('>', currentPosition);
 
   if (inString.substr(beginPosition - 1, endPosition - beginPosition).find("</") != string::npos) {
@@ -98,7 +98,7 @@ string GlXMLTools::enterChildNode(const string &inString, unsigned int &currentP
   }
 }
 
-void GlXMLTools::leaveChildNode(const string &inString, unsigned int &currentPosition,
+void GlXMLTools::leaveChildNode(const string &inString, uint &currentPosition,
                                 const string &childName) {
   currentPosition = inString.find("</" + childName + ">", currentPosition) + 3 + childName.size();
 }
@@ -118,8 +118,7 @@ void GlXMLTools::createProperty(string &outString, const string &name, const str
   }
 }
 
-map<string, string> GlXMLTools::getProperties(const string &inString,
-                                              unsigned int &currentPosition) {
+map<string, string> GlXMLTools::getProperties(const string &inString, uint &currentPosition) {
   map<string, string> properties;
   size_t beginPosition = inString.rfind('<', currentPosition);
   size_t propertyPosition = inString.find('=', beginPosition);

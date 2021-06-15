@@ -56,8 +56,8 @@ class PixelOrientedViewQuickAccessBar;
  */
 class PixelOrientedView : public GlView {
 
-  static const unsigned int MIN_IMAGE_WIDTH = 512;
-  static const unsigned int MIN_IMAGE_HEIGHT = 512;
+  static const uint MIN_IMAGE_WIDTH = 512;
+  static const uint MIN_IMAGE_HEIGHT = 512;
 
   Q_OBJECT
 
@@ -141,15 +141,15 @@ private:
   void setColorFunction(ColorFunction *colorFunction);
   void setLayoutFunction(LayoutFunction *layoutFunction);
 
-  unsigned int lastNbNodes;
+  uint lastNbNodes;
   std::vector<std::string> selectedGraphProperties;
   std::map<std::string, PixelOrientedOverview *> overviewsMap;
   std::map<std::string, bool> overviewGenMap;
   std::map<std::string, GraphDimension *> dataMap;
 
-  unsigned int overviewWidth;
-  unsigned int overviewHeight;
-  unsigned int minWidth;
+  uint overviewWidth;
+  uint overviewHeight;
+  uint minWidth;
   float refSize;
 
   HilbertLayout *hilbertLayout;

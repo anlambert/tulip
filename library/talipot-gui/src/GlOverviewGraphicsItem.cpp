@@ -33,7 +33,7 @@ GlOverviewGraphicsItem::~GlOverviewGraphicsItem() {
   overview.setParentItem(nullptr);
 }
 
-void GlOverviewGraphicsItem::setSize(unsigned int width, unsigned int height) {
+void GlOverviewGraphicsItem::setSize(uint width, uint height) {
   this->width = width;
   this->height = height;
   draw(true);
@@ -73,7 +73,7 @@ void GlOverviewGraphicsItem::draw(bool generatePixmap) {
     overview.setParentItem(&overviewBorder);
 
     // Init lines and polygons item
-    for (unsigned int i = 0; i < 8; ++i) {
+    for (uint i = 0; i < 8; ++i) {
       line[i].setParentItem(&overview);
 
       if (i < 4) {
@@ -87,7 +87,7 @@ void GlOverviewGraphicsItem::draw(bool generatePixmap) {
   Color backgroundColor = baseScene.getBackgroundColor();
   int bgV = backgroundColor.getV();
 
-  for (unsigned int i = 0; i < 8; ++i) {
+  for (uint i = 0; i < 8; ++i) {
     if (bgV < 128) {
       line[i].setPen(QColor(255, 255, 255));
     } else {
@@ -133,7 +133,7 @@ void GlOverviewGraphicsItem::draw(bool generatePixmap) {
 
   eyesVector = eyesVector * (1.f / eyesVector[2]);
 
-  for (unsigned int i = 0; i < 4; i++) {
+  for (uint i = 0; i < 4; i++) {
     cameraBoundingBox[i] = cameraBoundingBox[i] - eyesVector * cameraBoundingBox[i][2];
   }
 
@@ -149,7 +149,7 @@ void GlOverviewGraphicsItem::draw(bool generatePixmap) {
       _oldCameras.push_back(it.second->getCamera());
     }
   } else {
-    unsigned int i = 0;
+    uint i = 0;
 
     for (const auto &it : layerList) {
       it.second->getCamera() = _oldCameras[i];
@@ -227,7 +227,7 @@ void GlOverviewGraphicsItem::draw(bool generatePixmap) {
   }
 
   // invert applied camera transformations
-  unsigned int i = 0;
+  uint i = 0;
 
   for (const auto &it : layerList) {
     it.second->getCamera() = cameras[i];
@@ -328,7 +328,7 @@ void GlOverviewGraphicsItem::setScenePosition(QPointF pos) {
     centerPos.push_back(it.second->getCamera().viewportTo3DWorld(position));
   }
 
-  unsigned int i = 0;
+  uint i = 0;
 
   for (const auto &it : layerList) {
     Coord eyesVector = cameras[i].getEyes() - cameras[i].getCenter();

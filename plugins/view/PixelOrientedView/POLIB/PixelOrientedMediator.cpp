@@ -121,7 +121,7 @@ void PixelOrientedMediator::translateFishEye(const int x, const int y) {
                     fishCenter[1] + ((totalFishMove[1] + lastMousePosition[1] - yScreen)));
 }
 
-unsigned int PixelOrientedMediator::getRankForPixelPos(Vec2i pos) {
+uint PixelOrientedMediator::getRankForPixelPos(Vec2i pos) {
   Vec2f fPos = screenToScene(pos);
   Vec2i fPosI;
   fPosI[0] = int(rint(fPos[0]));
@@ -139,7 +139,7 @@ Color PixelOrientedMediator::getColorForPixelAtPos(Vec2i pos, DimensionBase *dat
   fPosI[0] = int(rint(fPos[0]));
   fPosI[1] = int(rint(fPos[1]));
 
-  unsigned int rank = layout->unproject(fPosI);
+  uint rank = layout->unproject(fPosI);
 
   if (rank < data->numberOfItems()) {
     Color curColor = color->getColor(data->getItemValueAtRank(rank), data->getItemIdAtRank(rank));
@@ -155,7 +155,7 @@ Color PixelOrientedMediator::getColorForPixelAtPos(Vec2i pos, DimensionBase *dat
       tmp[1] = pos[1] - double(imageSize[0]) / 2. - fishTranslation[1];
 
       if ((fishCenter - tmp).norm() < 70.) {
-        for (unsigned int i = 0; i < 3; ++i) {
+        for (uint i = 0; i < 3; ++i) {
           double a = -double(curColor[i]);
           double b = curColor[i];
           curColor[i] = uchar(a * dist * dist + b);
@@ -170,6 +170,6 @@ Color PixelOrientedMediator::getColorForPixelAtPos(Vec2i pos, DimensionBase *dat
   }
 }
 
-Vec2i PixelOrientedMediator::getPixelPosForRank(const unsigned int rank) {
+Vec2i PixelOrientedMediator::getPixelPosForRank(const uint rank) {
   return sceneToScreen(layout->project(rank));
 }

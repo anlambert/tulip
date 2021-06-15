@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -62,19 +62,18 @@ public:
 protected:
   tlp::Graph *graph;
   std::vector<std::string> columns;
-  std::vector<unsigned int> nodeColumnIds;
+  std::vector<uint> nodeColumnIds;
   std::vector<std::string> nodeProperties;
-  std::vector<unsigned int> edgeColumnIds;
+  std::vector<uint> edgeColumnIds;
   std::vector<std::string> edgeProperties;
-  std::vector<unsigned int> srcColumnIds;
-  std::vector<unsigned int> tgtColumnIds;
+  std::vector<uint> srcColumnIds;
+  std::vector<uint> tgtColumnIds;
   std::vector<std::string> srcProperties;
   std::vector<std::string> tgtProperties;
 
 private:
   Ui::CSVGraphMappingConfigurationWidget *ui;
-  void selectColumns(const QString &title, std::vector<unsigned int> &columnIds,
-                     QPushButton *button);
+  void selectColumns(const QString &title, std::vector<uint> &columnIds, QPushButton *button);
   void selectProperties(const QString &title, std::vector<std::string> &selProperties,
                         QPushButton *button);
 

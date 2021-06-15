@@ -734,7 +734,7 @@ bool decodeGraphvizColor(Color &outColor, const string &inValue) {
   // #RRGGBBAA ?
   {
     if (inValue.size() >= 7 && inValue[0] == '#') {
-      unsigned int r, g, b, a = 255;
+      uint r, g, b, a = 255;
       int n = sscanf(inValue.c_str(), "#%02x%02x%02x%02x", &r, &g, &b, &a);
 
       if (n == 3 || n == 4) {

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -47,14 +47,14 @@ public:
     return color;
   }
 
-  void setImageSize(unsigned int width, unsigned int height) {
+  void setImageSize(uint width, uint height) {
     imageSize[0] = width;
     imageSize[1] = height;
   }
-  unsigned int getImageWidth() const {
+  uint getImageWidth() const {
     return imageSize[0];
   }
-  unsigned int getImageHeight() const {
+  uint getImageHeight() const {
     return imageSize[1];
   }
 
@@ -65,10 +65,10 @@ public:
                                     double fishEyeRadius);
   void restoreScreenFunctionsParameters();
 
-  unsigned int getCenterItem() const {
+  uint getCenterItem() const {
     return centerItem;
   }
-  void setCenterItem(const unsigned int centerItem) {
+  void setCenterItem(const uint centerItem) {
     this->centerItem = centerItem;
   }
 
@@ -83,8 +83,8 @@ public:
   }
 
   tlp::Color getColorForPixelAtPos(tlp::Vec2i pos, DimensionBase *data, bool withFishEye = false);
-  unsigned int getRankForPixelPos(tlp::Vec2i pos);
-  tlp::Vec2i getPixelPosForRank(const unsigned int rank);
+  uint getRankForPixelPos(tlp::Vec2i pos);
+  tlp::Vec2i getPixelPosForRank(const uint rank);
 
 private:
   tlp::Vec2f screenToScene(const tlp::Vec2i &p);
@@ -99,7 +99,7 @@ private:
 
   double zoomBak, translationXBak, translationYBak, fishEyeRadiusBak;
 
-  unsigned int centerItem;
+  uint centerItem;
 
   double zoom;
   tlp::Vec2i lastMousePosition;

@@ -86,8 +86,8 @@ void SOMPreviewComposite::setFrameColor(tlp::Color color) {
   frame->setOutlineColor(color);
 }
 
-Size SOMPreviewComposite::computeAspectRatio(unsigned int width, unsigned int height,
-                                             float maxWidth, float maxHeight) {
+Size SOMPreviewComposite::computeAspectRatio(uint width, uint height, float maxWidth,
+                                             float maxHeight) {
 
   Size elementsSize;
 

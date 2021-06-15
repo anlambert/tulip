@@ -77,9 +77,9 @@ public:
 
   tlp::Mat4f cofactor() const;
 
-  tlp::Vec4f powerIteration(const unsigned int nIterations) const;
+  tlp::Vec4f powerIteration(const uint nIterations) const;
 
-  tlp::Vec4f& operator[](const unsigned int i)  /NoCopy/;
+  tlp::Vec4f& operator[](const uint i)  /NoCopy/;
 %MethodCode
   if (a0 < 4) {
     sipRes = &(*sipCpp)[a0];

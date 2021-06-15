@@ -37,7 +37,7 @@ class ScatterPlot2D : public GlComposite {
 public:
   ScatterPlot2D(Graph *graph, Graph *edgeGraph, std::unordered_map<node, edge> &nodeMap,
                 const std::string &xDim, const std::string &yDim, const ElementType &dataLocation,
-                Coord blCorner, unsigned int size, const Color &backgroundColor,
+                Coord blCorner, uint size, const Color &backgroundColor,
                 const Color &foregroundColor);
   ~ScatterPlot2D() override;
 
@@ -149,7 +149,7 @@ private:
   std::string xDim, yDim;
   std::string xType, yType;
   Coord blCorner;
-  unsigned int size;
+  uint size;
   Graph *graph;
   GlGraph *glGraph;
   LayoutProperty *scatterLayout, *scatterEdgeLayout;

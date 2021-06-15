@@ -212,7 +212,7 @@ public:
   In Plugin system we have a priority system to display interactor icon
   If priority is low, you interactor will be at the left of the interactord tool bar
   */
-  unsigned int priority() const {
+  uint priority() const {
     return 5;
   }
 };

@@ -62,16 +62,15 @@ struct EntityLODUnit : public LODUnit {
 
 // struct to store complex entity (nodes/edges) lod
 struct GraphElementLODUnit : public LODUnit {
-  GraphElementLODUnit(unsigned int id = UINT_MAX) : LODUnit(), id(id) {}
-  GraphElementLODUnit(unsigned int id, const BoundingBox &boundingBox)
-      : LODUnit(boundingBox), id(id) {}
+  GraphElementLODUnit(uint id = UINT_MAX) : LODUnit(), id(id) {}
+  GraphElementLODUnit(uint id, const BoundingBox &boundingBox) : LODUnit(boundingBox), id(id) {}
 
-  void init(unsigned int i, const BoundingBox &bb) {
+  void init(uint i, const BoundingBox &bb) {
     id = i;
     boundingBox = bb;
   }
 
-  unsigned int id;
+  uint id;
 };
 
 struct LayerLODUnit {
@@ -124,7 +123,7 @@ public:
   /**
    * Reserve memory to store nodes and edges LOD
    */
-  void reserveMemoryForGraphElts(unsigned int /*nbNodes*/, unsigned int /*nbEdges*/) override {}
+  void reserveMemoryForGraphElts(uint /*nbNodes*/, uint /*nbEdges*/) override {}
   /**
    * Set scene use by this LOD calculator
    */

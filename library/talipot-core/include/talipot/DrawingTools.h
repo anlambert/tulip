@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -153,7 +153,7 @@ TLP_SCOPE bool isLayoutCoPlanar(const std::vector<Coord> &points, Mat3f &invTran
  * @return a vector filled with the numberOfSides polygon vertices
  *
  */
-TLP_SCOPE std::vector<tlp::Coord> computeRegularPolygon(unsigned int numberOfSides,
+TLP_SCOPE std::vector<tlp::Coord> computeRegularPolygon(uint numberOfSides,
                                                         const tlp::Coord &center,
                                                         const tlp::Size &size,
                                                         float startAngle = 0);

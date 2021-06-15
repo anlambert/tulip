@@ -31,7 +31,7 @@ float minRadius(float radius1, float alpha1, float radius2, float alpha2) {
               (sqr(cos(alpha1) - cos(alpha2)) + sqr(sin(alpha1) - sin(alpha2))));
 }
 //===============================================================
-void ConeTreeExtended::computeLayerSize(tlp::node n, unsigned int level) {
+void ConeTreeExtended::computeLayerSize(tlp::node n, uint level) {
   if (levelSize.size() < level + 1) {
     levelSize.push_back(0);
   }
@@ -49,7 +49,7 @@ void ConeTreeExtended::computeYCoodinates(tlp::node root) {
   yCoordinates.resize(levelSize.size());
   yCoordinates[0] = 0;
 
-  for (unsigned int i = 1; i < levelSize.size(); ++i) {
+  for (uint i = 1; i < levelSize.size(); ++i) {
     yCoordinates[i] =
         yCoordinates[i - 1] + levelSize[i] / 2.0f + levelSize[i - 1] / 2.0f + spaceBetweenLevels;
   }
@@ -96,7 +96,7 @@ double ConeTreeExtended::treePlace3D(tlp::node n, std::unordered_map<tlp::node, 
   double angle = 0;
   vangles[0] = 0;
 
-  for (unsigned int i = 1; i < subCircleRadius.size(); ++i) {
+  for (uint i = 1; i < subCircleRadius.size(); ++i) {
     angle += (subCircleRadius[i - 1] + subCircleRadius[i]) / radius;
     vangles[i] = angle;
   }
@@ -104,8 +104,8 @@ double ConeTreeExtended::treePlace3D(tlp::node n, std::unordered_map<tlp::node, 
   // compute new radius
   newRadius = 0;
 
-  for (unsigned int i = 0; i < subCircleRadius.size() - 1; ++i) {
-    for (unsigned int j = i + 1; j < subCircleRadius.size(); ++j) {
+  for (uint i = 0; i < subCircleRadius.size() - 1; ++i) {
+    for (uint j = i + 1; j < subCircleRadius.size(); ++j) {
       newRadius = std::max(newRadius, minRadius(float(subCircleRadius[i]), float(vangles[i]),
                                                 float(subCircleRadius[j]), float(vangles[j])));
     }
@@ -118,7 +118,7 @@ double ConeTreeExtended::treePlace3D(tlp::node n, std::unordered_map<tlp::node, 
   // compute Circle Hull
   vector<Circlef> circles(subCircleRadius.size());
 
-  for (unsigned int i = 0; i < subCircleRadius.size(); ++i) {
+  for (uint i = 0; i < subCircleRadius.size(); ++i) {
     circles[i][0] = newRadius * float(cos(vangles[i]));
     circles[i][1] = newRadius * float(sin(vangles[i]));
     circles[i].radius = float(subCircleRadius[i]);
@@ -129,7 +129,7 @@ double ConeTreeExtended::treePlace3D(tlp::node n, std::unordered_map<tlp::node, 
   // Place relative position
   itN = tree->getOutNodes(n);
 
-  for (unsigned int i = 0; i < subCircleRadius.size(); ++i) {
+  for (uint i = 0; i < subCircleRadius.size(); ++i) {
     node itn = itN->next();
     (*posRelX)[itn] = newRadius * cos(vangles[i]) - circleH[0];
     (*posRelY)[itn] = newRadius * sin(vangles[i]) - circleH[1];

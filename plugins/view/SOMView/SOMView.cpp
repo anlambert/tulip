@@ -345,7 +345,7 @@ void SOMView::drawPreviews() {
     Size previewSize = {thumbWidth, thumbHeight};
 
     // If the input data uses normalized values we had to translate it to get the real value.
-    unsigned int propertyIndex = inputSample.findIndexForProperty(p);
+    uint propertyIndex = inputSample.findIndexForProperty(p);
     double minimumDisplayed = inputSample.isUsingNormalizedValues()
                                   ? inputSample.unnormalize(minValue, propertyIndex)
                                   : minValue;
@@ -642,7 +642,7 @@ void SOMView::computeSOMMap() {
 
 void SOMView::computeMapping() {
   double medDist;
-  unsigned int maxSize;
+  uint maxSize;
   mappingTab.clear();
   algorithm.computeMapping(som, inputSample, mappingTab, medDist, maxSize);
 
@@ -677,7 +677,7 @@ void SOMView::computeMapping() {
   float minElementHeight = maxElementHeight * minElementSizeCoef;
 
   SOMPropertiesWidget::SizeMappingType mt = properties->getSizeMapping();
-  unsigned int x, y;
+  uint x, y;
   Coord nodeDisplayAreaTopLeft;
   Coord nodeCoord;
   Size nodeSize;
@@ -685,7 +685,7 @@ void SOMView::computeMapping() {
   for (const auto &it : mappingTab) {
     som->getPosForNode(it.first, x, y);
     nodeDisplayAreaTopLeft = marginShift + mapCompositeElements->getTopLeftPositionForElement(x, y);
-    unsigned int num = 0;
+    uint num = 0;
 
     for (auto n : it.second) {
       // Compute node center

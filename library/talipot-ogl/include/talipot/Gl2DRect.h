@@ -92,7 +92,7 @@ public:
 
   void getXML(std::string &outString) override;
 
-  void setWithXML(const std::string &inString, unsigned int &currentPosition) override;
+  void setWithXML(const std::string &inString, uint &currentPosition) override;
 
 protected:
   float top;

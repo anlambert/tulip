@@ -25,9 +25,8 @@ static const string PERCENT_ID = "percent label";
 
 namespace tlp {
 
-GlProgressBar::GlProgressBar(const Coord &centerPosition, const unsigned int width,
-                             const unsigned int height, const Color &pbColor,
-                             const Color &commColor)
+GlProgressBar::GlProgressBar(const Coord &centerPosition, const uint width, const uint height,
+                             const Color &pbColor, const Color &commColor)
     : progressBarColor(pbColor), commentColor(commColor) {
   Coord globalFrameVertice1 =
       Coord(centerPosition.getX() - (width / 2.), centerPosition.getY() + (height / 2.));

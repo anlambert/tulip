@@ -23,7 +23,7 @@
 namespace tlp {
 // used for node management
 struct SGraphNodeData {
-  unsigned int outDegree = 0;
+  uint outDegree = 0;
   std::vector<edge> incidence;
 
   void inEdgeAdd(edge e) {
@@ -67,11 +67,11 @@ class GraphView : public GraphAbstract {
   friend class GraphImpl;
 
 public:
-  GraphView(Graph *supergraph, BooleanProperty *filter, unsigned int id);
+  GraphView(Graph *supergraph, BooleanProperty *filter, uint id);
   ~GraphView() override;
   //========================================================================
   node addNode() override;
-  std::vector<node> addNodes(unsigned int nb) override;
+  std::vector<node> addNodes(uint nb) override;
   void addNode(const node) override;
   void addNodes(const std::vector<node> &nodes) override;
   edge addEdge(const node n1, const node n2) override;
@@ -104,23 +104,23 @@ public:
     return _edges.isElement(e);
   }
   edge existEdge(const node source, const node target, bool directed) const override;
-  unsigned int numberOfNodes() const override {
+  uint numberOfNodes() const override {
     return _nodes.size();
   }
-  unsigned int numberOfEdges() const override {
+  uint numberOfEdges() const override {
     return _edges.size();
   }
   //=========================================================================
-  unsigned int deg(const node n) const override {
+  uint deg(const node n) const override {
     assert(isElement(n));
     return _nodeData[n].incidence.size();
   }
-  unsigned int indeg(const node n) const override {
+  uint indeg(const node n) const override {
     assert(isElement(n));
     const SGraphNodeData &nData = _nodeData[n];
     return nData.incidence.size() - nData.outDegree;
   }
-  unsigned int outdeg(const node n) const override {
+  uint outdeg(const node n) const override {
     assert(isElement(n));
     return _nodeData[n].outDegree;
   }
@@ -159,7 +159,7 @@ public:
   const std::vector<node> &nodes() const override {
     return _nodes;
   }
-  unsigned int nodePos(const node n) const override {
+  uint nodePos(const node n) const override {
     return _nodes.getPos(n);
   }
   Iterator<node> *getNodes() const override;
@@ -169,7 +169,7 @@ public:
   const std::vector<edge> &edges() const override {
     return _edges;
   }
-  unsigned int edgePos(const edge e) const override {
+  uint edgePos(const edge e) const override {
     return _edges.getPos(e);
   }
   Iterator<edge> *getEdges() const override;
@@ -191,8 +191,8 @@ public:
   }
   //=========================================================================
   // only implemented on a root graph
-  void reserveNodes(unsigned int nbNodes) override;
-  void reserveEdges(unsigned int nbEdges) override;
+  void reserveNodes(uint nbNodes) override;
+  void reserveEdges(uint nbEdges) override;
   //=========================================================================
   // updates management
   void push(bool unpopAllowed = true,

@@ -60,9 +60,9 @@ void GlAxis::setAxisGraduations(const std::vector<std::string> &axisGradsLabels,
 
   gradsComposite->reset(true);
   ostringstream oss;
-  unsigned int gradsCpt = 0;
+  uint gradsCpt = 0;
 
-  for (unsigned int i = 0; i < axisGradsLabels.size(); ++i) {
+  for (uint i = 0; i < axisGradsLabels.size(); ++i) {
     auto *axisGraduation = new GlLine();
     axisGraduation->setStencil(1);
     axisGraduation->setLineWidth(2.0);
@@ -147,15 +147,15 @@ void GlAxis::setAxisGraduations(const std::vector<std::string> &axisGradsLabels,
 void GlAxis::buildAxisLine() {
   auto *axisLine = new GlLine();
   axisLine->addPoint(axisBaseCoord, axisColor);
-  const unsigned int nbLineSegments = 30;
+  const uint nbLineSegments = 30;
   float step = axisLength / nbLineSegments;
 
   if (axisOrientation == VERTICAL_AXIS) {
-    for (unsigned int i = 1; i <= nbLineSegments; ++i) {
+    for (uint i = 1; i <= nbLineSegments; ++i) {
       axisLine->addPoint(Coord(axisBaseCoord.getX(), axisBaseCoord.getY() + i * step), axisColor);
     }
   } else if (axisOrientation == HORIZONTAL_AXIS) {
-    for (unsigned int i = 1; i <= nbLineSegments; ++i) {
+    for (uint i = 1; i <= nbLineSegments; ++i) {
       axisLine->addPoint(Coord(axisBaseCoord.getX() + i * step, axisBaseCoord.getY()), axisColor);
     }
   }
@@ -253,7 +253,7 @@ void GlAxis::addAxisCaption(const Coord &captionLabelCenter, const bool frame) {
                    Coord(labelBB[0][0] + captionWidth + 1, labelBB[0][1] - 1), axisColor, axisColor,
                    false, true);
 
-    for (unsigned int i = 0; i < 4; ++i) {
+    for (uint i = 0; i < 4; ++i) {
       captionLabelInnerFrame->setOutlineColor(i, axisColor);
     }
 
@@ -264,7 +264,7 @@ void GlAxis::addAxisCaption(const Coord &captionLabelCenter, const bool frame) {
                    Coord(labelBB[0][0] + captionWidth + 2, labelBB[0][1] - 2), axisColor, axisColor,
                    false, true);
 
-    for (unsigned int i = 0; i < 4; ++i) {
+    for (uint i = 0; i < 4; ++i) {
       captionLabelOuterFrame->setOutlineColor(i, axisColor);
     }
 
@@ -326,7 +326,7 @@ void GlAxis::computeBoundingBox() {
 void GlAxis::setGradsLabelsHeight(float height) {
   labelHeight = height;
 
-  unsigned int i = 0;
+  uint i = 0;
 
   for (auto *l : gradsLabelsVector) {
     BoundingBox textBoundingBox = l->getTextBoundingBox();

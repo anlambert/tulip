@@ -30,7 +30,7 @@
 
 using namespace std;
 
-const unsigned int OVERVIEWS_SIZE = 512;
+const uint OVERVIEWS_SIZE = 512;
 const float OFFSET_BETWEEN_PREVIEWS = 16;
 
 namespace tlp {
@@ -53,7 +53,7 @@ private:
 };
 
 const string propertiesTypes[] = {"double", "int"};
-const unsigned int nbPropertiesTypes = sizeof(propertiesTypes) / sizeof(string);
+const uint nbPropertiesTypes = sizeof(propertiesTypes) / sizeof(string);
 const vector<string> propertiesTypesFilter(propertiesTypes, propertiesTypes + nbPropertiesTypes);
 
 ScatterPlot2DView::ScatterPlot2DView(const PluginContext *)
@@ -409,7 +409,7 @@ void ScatterPlot2DView::computeNodeSizes() {
   Size resizeFactor;
   Size deltaSize = eltMaxSize - eltMinSize;
 
-  for (unsigned int i = 0; i < 3; ++i) {
+  for (uint i = 0; i < 3; ++i) {
     if (deltaSize[i] != 0) {
       resizeFactor[i] = (pointMaxSize[i] - pointMinSize[i]) / deltaSize[i];
     } else {
@@ -474,7 +474,7 @@ void ScatterPlot2DView::buildScatterPlotsMatrix() {
     lineH0->addPoint(Coord(gridRight - cellSize, gridBottom, -1.0f), Color(0, 0, 0, 255));
     grid->addGlEntity(lineH0, "lineH0");
 
-    for (unsigned int i = 0; i < selectedGraphProperties.size(); ++i) {
+    for (uint i = 0; i < selectedGraphProperties.size(); ++i) {
       auto *lineV = new GlLine();
       lineV->addPoint(Coord(gridLeft + cellSize * (i + 1), gridBottom, -1.0f), Color(0, 0, 0, 255));
       lineV->addPoint(Coord(gridLeft + cellSize * (i + 1), gridTop - cellSize * (i + 1), -1.0f),
@@ -804,8 +804,7 @@ void ScatterPlot2DView::generateScatterPlots() {
     mainLayer->deleteGlEntity("coeffLabel");
   }
 
-  unsigned int nbOverviews =
-      (selectedGraphProperties.size() - 1) * selectedGraphProperties.size() / 2;
+  uint nbOverviews = (selectedGraphProperties.size() - 1) * selectedGraphProperties.size() / 2;
   unsigned currentStep = 0;
 
   double sceneRadiusBak = getGlWidget()->getScene()->getGraphCamera().getSceneRadius();
@@ -1149,7 +1148,7 @@ void ScatterPlot2DView::delEdge(Graph *, const edge e) {
   edgeToNode.erase(e);
 }
 
-unsigned int ScatterPlot2DView::getMappedId(unsigned int id) {
+uint ScatterPlot2DView::getMappedId(uint id) {
   if (dataLocation == EDGE) {
     return nodeToEdge[node(id)].id;
   }

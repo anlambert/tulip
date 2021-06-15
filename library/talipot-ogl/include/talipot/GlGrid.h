@@ -73,7 +73,7 @@ public:
   /**
    * @brief Function to set data with inString (in XML format)
    */
-  void setWithXML(const std::string &inString, unsigned int &currentPosition) override;
+  void setWithXML(const std::string &inString, uint &currentPosition) override;
 
 protected:
   bool displayDim[3];    /**< Which dimensions should be displayed ? Note that only one dimension at

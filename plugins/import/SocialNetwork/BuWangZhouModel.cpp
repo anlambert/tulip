@@ -46,15 +46,15 @@ public:
                     "high clustering complex networks.</b><br/>Physica A, 374, 864--868, 2007.",
                     "1.0", "Social network")
   BuWangZhouModel(PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "200");
-    addInParameter<unsigned int>("types of nodes", paramHelp[1].data(), "3");
-    addInParameter<unsigned int>("m", paramHelp[2].data(), "2");
+    addInParameter<uint>("nodes", paramHelp[0].data(), "200");
+    addInParameter<uint>("types of nodes", paramHelp[1].data(), "3");
+    addInParameter<uint>("m", paramHelp[2].data(), "2");
   }
 
   bool importGraph() override {
-    unsigned int nb_nodes = 200;
-    unsigned int types_of_nodes = 3;
-    unsigned int m = 2;
+    uint nb_nodes = 200;
+    uint types_of_nodes = 3;
+    uint m = 2;
 
     if (dataSet != nullptr) {
       dataSet->get("nodes", nb_nodes);
@@ -77,7 +77,7 @@ public:
 
     // In the paper, there are 3 types starting from a triangle without telling if the whole graph
     // or a cycle has to be taken into account.
-    for (unsigned int i = 0; i < types_of_nodes; ++i) {
+    for (uint i = 0; i < types_of_nodes; ++i) {
       nodes[i].push_back(graph->addNode());
 
       for (unsigned j = 0; j < i; ++j) {
@@ -87,13 +87,13 @@ public:
 
     graph->addEdge(nodes[types_of_nodes - 1][0], nodes[0][0]);
 
-    unsigned int random_type, random_node;
+    uint random_type, random_node;
     double pr, k_sum, pr_sum;
 
-    for (unsigned int i = 0; i < nb_nodes - types_of_nodes; ++i) {
+    for (uint i = 0; i < nb_nodes - types_of_nodes; ++i) {
       nodes[i % types_of_nodes].push_back(graph->addNode());
 
-      for (unsigned int j = 0; j < m; ++j) {
+      for (uint j = 0; j < m; ++j) {
 
         // Random type
         do {

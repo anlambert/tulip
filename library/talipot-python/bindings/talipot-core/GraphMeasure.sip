@@ -53,7 +53,7 @@ as the average of the local clustering coefficients
 
 //===========================================================================================
 
-  void clusteringCoefficient(const tlp::Graph *g, tlp::DoubleProperty *result, unsigned int maxDepth = 1);
+  void clusteringCoefficient(const tlp::Graph *g, tlp::DoubleProperty *result, uint maxDepth = 1);
 %Docstring
 tlp.clusteringCoefficient(graph, result, maxDepth=1)
 
@@ -96,14 +96,14 @@ The algorithm ensures that the number of level used is minimal.
 %End
 
 %MethodCode
-  tlp::NodeVectorProperty<unsigned int> result(a0);
+  tlp::NodeVectorProperty<uint> result(a0);
   tlp::dagLevel(a0, result);
   result.copyToProperty(a1);
 %End
 
 //===========================================================================================
 
-  unsigned int maxDegree(const tlp::Graph *graph);
+  uint maxDegree(const tlp::Graph *graph);
 %Docstring
 tlp.maxDegree(graph)
 
@@ -116,7 +116,7 @@ Returns the maximum degree of the graph's nodes.
 
 //===========================================================================================
 
-  unsigned int minDegree(const tlp::Graph *graph);
+  uint minDegree(const tlp::Graph *graph);
 %Docstring
 tlp.minDegree(graph)
 
@@ -129,7 +129,7 @@ Returns the minimum degree of the graph's nodes.
 
 //===========================================================================================
 
-  unsigned int maxDistance(const tlp::Graph *graph, const tlp::node node, tlp::IntegerProperty *result, tlp::EDGE_TYPE direction = tlp::UNDIRECTED);
+  uint maxDistance(const tlp::Graph *graph, const tlp::node node, tlp::IntegerProperty *result, tlp::EDGE_TYPE direction = tlp::UNDIRECTED);
 %Docstring
 tlp.maxDistance(graph, node, result, direction)
 
@@ -149,7 +149,7 @@ Computes the distances from a node to all the other nodes of a graph and return 
 
 %MethodCode
   if (a0->isElement(*a1)) {
-    tlp::NodeVectorProperty<unsigned int> result(a0);
+    tlp::NodeVectorProperty<uint> result(a0);
     sipRes = tlp::maxDistance(a0, *a1, result, a3);
     result.copyToProperty(a2);
   } else {
@@ -192,7 +192,7 @@ Computes the distances from a node to all the other nodes of a weighted graph an
 
 //===========================================================================================
 
-  void reachableNodes(const tlp::Graph *graph, const tlp::node startNode, std::set<tlp::node> &result /Out/, unsigned int maxDistance, tlp::EDGE_TYPE direction = tlp::UNDIRECTED);
+  void reachableNodes(const tlp::Graph *graph, const tlp::node startNode, std::set<tlp::node> &result /Out/, uint maxDistance, tlp::EDGE_TYPE direction = tlp::UNDIRECTED);
 %Docstring
 tlp.reachableNodes(graph, startNode, maxDistance, direction)
 

@@ -516,8 +516,8 @@ void MovablePathItem::updatePath() {
                160 - 160 * (lastValue.first - _minMetric) / (_maxMetric - _minMetric)));
   }
 
-  for (unsigned int i1 = 0; i1 < pathsPoints.size(); ++i1) {
-    for (unsigned int i2 = 0; i2 < pathsPoints[i1].size(); ++i2) {
+  for (uint i1 = 0; i1 < pathsPoints.size(); ++i1) {
+    for (uint i2 = 0; i2 < pathsPoints[i1].size(); ++i2) {
       if (i2 == 0) {
         paths[i1].moveTo(pathsPoints[i1][i2]);
       } else {

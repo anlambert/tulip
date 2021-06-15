@@ -35,7 +35,7 @@ bool GeographicViewInteractor::isCompatible(const std::string &viewName) const {
 GeographicViewInteractorNavigation::GeographicViewInteractorNavigation(const PluginContext *)
     : GeographicViewInteractor(interactorIcon(InteractorType::Navigation), "Navigate in view") {}
 
-unsigned int GeographicViewInteractorNavigation::priority() const {
+uint GeographicViewInteractorNavigation::priority() const {
   return StandardInteractorPriority::Navigation;
 }
 
@@ -63,7 +63,7 @@ QCursor GeographicViewInteractorSelection::cursor() const {
   return Qt::CrossCursor;
 }
 
-unsigned int GeographicViewInteractorSelection::priority() const {
+uint GeographicViewInteractorSelection::priority() const {
   return StandardInteractorPriority::RectangleSelection;
 }
 
@@ -88,7 +88,7 @@ QCursor GeographicViewInteractorSelectionEditor::cursor() const {
   return Qt::CrossCursor;
 }
 
-unsigned int GeographicViewInteractorSelectionEditor::priority() const {
+uint GeographicViewInteractorSelectionEditor::priority() const {
   return StandardInteractorPriority::RectangleSelectionModifier;
 }
 

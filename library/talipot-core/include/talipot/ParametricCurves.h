@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -37,8 +37,7 @@ TLP_SCOPE Coord computeBezierPoint(const std::vector<Coord> &controlPoints, cons
  *  \param nbCurvePoints number of points to generate
  */
 TLP_SCOPE void computeBezierPoints(const std::vector<Coord> &controlPoints,
-                                   std::vector<Coord> &curvePoints,
-                                   const unsigned int nbCurvePoints = 100);
+                                   std::vector<Coord> &curvePoints, const uint nbCurvePoints = 100);
 
 /**
  * Compute the position of a point 'p' at t (0 <= t <= 1)
@@ -75,8 +74,7 @@ TLP_SCOPE Coord computeCatmullRomPoint(const std::vector<Coord> &controlPoints, 
 TLP_SCOPE void computeCatmullRomPoints(const std::vector<Coord> &controlPoints,
                                        std::vector<Coord> &curvePoints,
                                        const bool closedCurve = false,
-                                       const unsigned int nbCurvePoints = 100,
-                                       const float alpha = 0.5);
+                                       const uint nbCurvePoints = 100, const float alpha = 0.5);
 
 /**
  * Compute the position of a point 'p' at t (0 <= t <= 1)
@@ -94,7 +92,7 @@ TLP_SCOPE void computeCatmullRomPoints(const std::vector<Coord> &controlPoints,
  */
 
 TLP_SCOPE Coord computeOpenUniformBsplinePoint(const std::vector<Coord> &controlPoints,
-                                               const float t, const unsigned int curveDegree = 3);
+                                               const float t, const uint curveDegree = 3);
 
 /** Compute a set of points approximating an open uniform B-spline curve
  *
@@ -105,8 +103,8 @@ TLP_SCOPE Coord computeOpenUniformBsplinePoint(const std::vector<Coord> &control
  */
 TLP_SCOPE void computeOpenUniformBsplinePoints(const std::vector<Coord> &controlPoints,
                                                std::vector<Coord> &curvePoints,
-                                               const unsigned int curveDegree = 3,
-                                               const unsigned int nbCurvePoints = 100);
+                                               const uint curveDegree = 3,
+                                               const uint nbCurvePoints = 100);
 }
 
 #endif // TALIPOT_PARAMETRIC_CURVES_H

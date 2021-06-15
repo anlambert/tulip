@@ -359,9 +359,9 @@ void main() {
 
 )";
 
-unordered_map<unsigned int, vector<GLfloat>> AbstractGlCurve::curveVertexBuffersData;
-unordered_map<unsigned int, vector<vector<GLushort>>> AbstractGlCurve::curveVertexBuffersIndices;
-unordered_map<unsigned int, vector<GLuint>> AbstractGlCurve::curveVertexBuffersObject;
+unordered_map<uint, vector<GLfloat>> AbstractGlCurve::curveVertexBuffersData;
+unordered_map<uint, vector<vector<GLushort>>> AbstractGlCurve::curveVertexBuffersIndices;
+unordered_map<uint, vector<GLuint>> AbstractGlCurve::curveVertexBuffersObject;
 unordered_map<string, unique_ptr<GlShaderProgram>> AbstractGlCurve::curvesShadersMap;
 unordered_map<string, unique_ptr<GlShaderProgram>> AbstractGlCurve::curvesBillboardShadersMap;
 bool AbstractGlCurve::canUseGeometryShader = false;
@@ -384,7 +384,7 @@ AbstractGlCurve::AbstractGlCurve(const string &shaderProgramName,
                                  const string &curveSpecificShaderCode,
                                  const vector<Coord> &controlPoints, const Color &startColor,
                                  const Color &endColor, const float startSize, const float endSize,
-                                 const unsigned int nbCurvePoints)
+                                 const uint nbCurvePoints)
     : shaderProgramName(shaderProgramName), curveShaderProgramNormal(nullptr),
       curveShaderProgramBillboard(nullptr), curveShaderProgram(nullptr),
       controlPoints(controlPoints), startColor(startColor), endColor(endColor),
@@ -403,7 +403,7 @@ AbstractGlCurve::AbstractGlCurve(const string &shaderProgramName,
 
 AbstractGlCurve::~AbstractGlCurve() = default;
 
-void AbstractGlCurve::buildCurveVertexBuffers(const unsigned int nbCurvePoints, bool vboOk) {
+void AbstractGlCurve::buildCurveVertexBuffers(const uint nbCurvePoints, bool vboOk) {
   curveVertexBuffersObject[nbCurvePoints].resize(5);
   curveVertexBuffersData[nbCurvePoints].resize(nbCurvePoints * 6);
   curveVertexBuffersIndices[nbCurvePoints].resize(4);
@@ -412,7 +412,7 @@ void AbstractGlCurve::buildCurveVertexBuffers(const unsigned int nbCurvePoints, 
   curveVertexBuffersIndices[nbCurvePoints][2].resize(nbCurvePoints);
   curveVertexBuffersIndices[nbCurvePoints][3].resize(nbCurvePoints);
 
-  for (unsigned int i = 0; i < nbCurvePoints; ++i) {
+  for (uint i = 0; i < nbCurvePoints; ++i) {
     float t = i / float(nbCurvePoints - 1);
     curveVertexBuffersData[nbCurvePoints][6 * i] = t;
     curveVertexBuffersData[nbCurvePoints][6 * i + 1] = 1.0f;
@@ -598,7 +598,7 @@ void AbstractGlCurve::initShader(const std::string &shaderProgramName,
 
 void AbstractGlCurve::drawCurve(std::vector<Coord> &controlPoints, const Color &startColor,
                                 const Color &endColor, const float startSize, const float endSize,
-                                const unsigned int nbCurvePoints) {
+                                const uint nbCurvePoints) {
 
   GLint renderMode;
   glGetIntegerv(GL_RENDER_MODE, &renderMode);
@@ -610,7 +610,7 @@ void AbstractGlCurve::drawCurve(std::vector<Coord> &controlPoints, const Color &
   glDisable(GL_CULL_FACE);
 
   if (!texture.empty()) {
-    unsigned int i = nbCurvePoints / 2;
+    uint i = nbCurvePoints / 2;
     Coord firstCurvePoint = computeCurvePointOnCPU(controlPoints, i / float(nbCurvePoints - 1));
     Coord nexCurvePoint = computeCurvePointOnCPU(controlPoints, (i + 1) / float(nbCurvePoints - 1));
     float dist = firstCurvePoint.dist(nexCurvePoint);
@@ -903,5 +903,5 @@ void AbstractGlCurve::translate(const Coord &move) {
 
 void AbstractGlCurve::getXML(string &) {}
 
-void AbstractGlCurve::setWithXML(const string &, unsigned int &) {}
+void AbstractGlCurve::setWithXML(const string &, uint &) {}
 }

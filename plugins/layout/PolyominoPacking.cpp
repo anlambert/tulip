@@ -84,8 +84,8 @@ private:
   bool polyominoFits(Polyomino &info, int x, int y);
   void placePolyomino(int i, Polyomino &info);
 
-  unsigned int margin;
-  unsigned int bndIncrement;
+  uint margin;
+  uint bndIncrement;
 
   std::vector<Polyomino> polyominos;
 
@@ -114,8 +114,8 @@ PolyominoPacking::PolyominoPacking(const PluginContext *context) : LayoutAlgorit
   addInParameter<LayoutProperty>("coordinates", paramHelp[0].data(), "viewLayout");
   addNodeSizePropertyParameter(this);
   addInParameter<DoubleProperty>("rotation", paramHelp[1].data(), "viewRotation");
-  addInParameter<unsigned int>("margin", paramHelp[2].data(), "1");
-  addInParameter<unsigned int>("increment", paramHelp[3].data(), "1");
+  addInParameter<uint>("margin", paramHelp[2].data(), "1");
+  addInParameter<uint>("increment", paramHelp[3].data(), "1");
 }
 
 PolyominoPacking::~PolyominoPacking() = default;
@@ -158,11 +158,11 @@ bool PolyominoPacking::run() {
 
   for (size_t i = 0; i < connectedComponents.size(); ++i) {
     std::vector<node> &ccNodes = connectedComponents[i];
-    unsigned int nbNodes = ccNodes.size();
+    uint nbNodes = ccNodes.size();
     std::vector<edge> ccEdges;
 
     // get edges of current connected component
-    for (unsigned int j = 0; j < nbNodes; ++j) {
+    for (uint j = 0; j < nbNodes; ++j) {
       for (auto e : graph->getOutEdges(ccNodes[j])) {
         ccEdges.push_back(e);
       }
@@ -218,9 +218,9 @@ bool PolyominoPacking::run() {
   for (const auto &poly : polyominos) {
     Coord move = Coord(poly.newPlace[0], poly.newPlace[1]);
     const std::vector<node> &ccNodes = *poly.ccNodes;
-    unsigned int nbNodes = ccNodes.size();
+    uint nbNodes = ccNodes.size();
 
-    for (unsigned int j = 0; j < nbNodes; ++j) {
+    for (uint j = 0; j < nbNodes; ++j) {
       node n = ccNodes[j];
       result->setNodeValue(n, layout->getNodeValue(n) + move);
       for (auto e : graph->getOutEdges(n)) {
@@ -300,9 +300,9 @@ void PolyominoPacking::genPolyomino(Polyomino &poly, LayoutProperty *layout, Siz
   int dx = -rint(ccBB[0][0]);
   int dy = -rint(ccBB[0][1]);
 
-  unsigned int nbNodes = ccNodes.size();
+  uint nbNodes = ccNodes.size();
 
-  for (unsigned int i = 0; i < nbNodes; ++i) {
+  for (uint i = 0; i < nbNodes; ++i) {
     node n = ccNodes[i];
     const Coord &nodeCoord = layout->getNodeValue(n);
     const Size &nodeSize = size->getNodeValue(n);

@@ -280,7 +280,7 @@ public:
    * Returns the number of crossings in the layout
    **/
   // methods removed until we have a working implementation
-  // unsigned int crossingNumber() const;
+  // uint crossingNumber() const;
 
   // redefinition of some AbstractProperty methods
   void setNodeValue(const node, StoredType<Coord>::ConstReference v) override;
@@ -303,7 +303,7 @@ private:
 
 public:
   // the number of edges with bends
-  unsigned int nbBendedEdges;
+  uint nbBendedEdges;
 };
 
 DECLARE_DLL_TEMPLATE_INSTANCE(

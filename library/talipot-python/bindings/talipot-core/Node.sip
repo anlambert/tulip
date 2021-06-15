@@ -27,9 +27,9 @@ The node identifier can be accessed through the **id** class member.
 %End
 
 public:
-  unsigned int id;
+  uint id;
   node();
-  node(unsigned int);
+  node(uint);
   bool __eq__(const tlp::node);
   bool __ne__(const tlp::node);
   bool isValid();

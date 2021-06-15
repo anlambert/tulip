@@ -36,7 +36,7 @@ public:
   bool hasNext() override;
 
 private:
-  unsigned int i;
+  uint i;
   PlanarConMap *mgraph;
 };
 
@@ -52,7 +52,7 @@ public:
 
 private:
   std::vector<Face> facesAdj;
-  unsigned int i;
+  uint i;
 };
 
 //============================================================
@@ -68,7 +68,7 @@ public:
 private:
   /** contains the set of computed nodes */
   std::vector<node> nodes;
-  unsigned int i;
+  uint i;
 };
 
 //============================================================
@@ -84,7 +84,7 @@ public:
 private:
   /** reference on the current face */
   std::vector<edge> ve;
-  unsigned int i;
+  uint i;
 };
 }
 #endif // TALIPOT_FACE_ITERATOR_H

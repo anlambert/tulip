@@ -23,8 +23,8 @@ static constexpr std::string_view paramHelp[] = {
 MakeSelectionGraph::MakeSelectionGraph(const tlp::PluginContext *context)
     : BooleanAlgorithm(context) {
   addInParameter<BooleanProperty>("selection", paramHelp[0].data(), "viewSelection");
-  addOutParameter<unsigned int>("#elements selected",
-                                "The number of graph elements (nodes + edges) selected");
+  addOutParameter<uint>("#elements selected",
+                        "The number of graph elements (nodes + edges) selected");
 }
 bool MakeSelectionGraph::run() {
   BooleanProperty *sel = graph->getBooleanProperty("viewSelection");

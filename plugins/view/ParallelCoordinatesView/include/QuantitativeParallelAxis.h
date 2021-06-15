@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -18,7 +18,7 @@
 
 #include <talipot/GlQuantitativeAxis.h>
 
-const unsigned int DEFAULT_NB_AXIS_GRAD = 20;
+const uint DEFAULT_NB_AXIS_GRAD = 20;
 
 namespace tlp {
 
@@ -44,14 +44,14 @@ public:
                            const Color &axisColor = Color(0, 0, 0), const float rotationAngle = 0,
                            const GlAxis::CaptionLabelPosition captionPosition = GlAxis::BELOW);
 
-  void setNbAxisGrad(const unsigned int nbAxisGrad) {
+  void setNbAxisGrad(const uint nbAxisGrad) {
     this->nbAxisGrad = nbAxisGrad;
   }
-  unsigned int getNbAxisGrad() const {
+  uint getNbAxisGrad() const {
     return nbAxisGrad;
   }
 
-  Coord getPointCoordOnAxisForData(const unsigned int dataIdx) override;
+  Coord getPointCoordOnAxisForData(const uint dataIdx) override;
 
   void translate(const Coord &c) override;
   void redraw() override;
@@ -88,14 +88,14 @@ public:
   std::string getTopSliderTextValue() override;
   std::string getBottomSliderTextValue() override;
 
-  const std::set<unsigned int> &getDataInSlidersRange() override;
-  void updateSlidersWithDataSubset(const std::set<unsigned int> &dataSubset) override;
+  const std::set<uint> &getDataInSlidersRange() override;
+  void updateSlidersWithDataSubset(const std::set<uint> &dataSubset) override;
 
   void setBoxPlotHighlightBounds(BoxPlotValue lowBound, BoxPlotValue highBound) {
     boxPlotLowBound = lowBound;
     boxPlotHighBound = highBound;
   }
-  const std::set<unsigned int> &getDataBetweenBoxPlotBounds();
+  const std::set<uint> &getDataBetweenBoxPlotBounds();
 
   bool hasAscendingOrder() const {
     return glQuantitativeAxis->hasAscendingOrder();
@@ -135,7 +135,7 @@ public:
   }
 
 private:
-  const std::set<unsigned int> &getDataInRange(float yLowBound, float yHighBound);
+  const std::set<uint> &getDataInRange(float yLowBound, float yHighBound);
 
   void computeBoxPlotCoords();
 
@@ -145,7 +145,7 @@ private:
 
   GlQuantitativeAxis *glQuantitativeAxis;
 
-  unsigned int nbAxisGrad;
+  uint nbAxisGrad;
   double axisMinValue, axisMaxValue;
 
   ParallelCoordinatesGraphProxy *graphProxy;

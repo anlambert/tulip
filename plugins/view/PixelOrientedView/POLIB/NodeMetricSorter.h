@@ -48,9 +48,9 @@ public:
 
   void sortNodesForProperty(const std::string &propertyName);
   void cleanupSortNodesForProperty(const std::string &propertyName);
-  unsigned int getNbValuesForProperty(const std::string &propertyName);
-  tlp::node getNodeAtRankForProperty(const unsigned int rank, const std::string &propertyName);
-  unsigned int getNodeRankForProperty(tlp::node n, const std::string &propertyName);
+  uint getNbValuesForProperty(const std::string &propertyName);
+  tlp::node getNodeAtRankForProperty(const uint rank, const std::string &propertyName);
+  uint getNodeRankForProperty(tlp::node n, const std::string &propertyName);
 
 private:
   NodeMetricSorter(tlp::Graph *graph);
@@ -59,7 +59,7 @@ private:
 
   tlp::Graph *graph;
   std::map<std::string, std::vector<tlp::node>> nodeSortingMap;
-  std::map<std::string, unsigned int> nbValuesPropertyMap;
+  std::map<std::string, uint> nbValuesPropertyMap;
 
   static std::map<tlp::Graph *, NodeMetricSorter *> instances;
 };

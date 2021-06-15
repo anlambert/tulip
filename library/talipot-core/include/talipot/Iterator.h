@@ -141,8 +141,8 @@ auto end(Iterator<T> *it) -> decltype(it->end()) {
  * @return The number of iterated elements
  **/
 template <typename T>
-unsigned int iteratorCount(Iterator<T> *it) {
-  unsigned int count = 0;
+uint iteratorCount(Iterator<T> *it) {
+  uint count = 0;
   while (it->hasNext()) {
     ++count;
     it->next();
@@ -163,8 +163,8 @@ unsigned int iteratorCount(Iterator<T> *it) {
  * @return true if the iterator returns at least n values
  **/
 template <typename T>
-bool iteratorCountCheck(Iterator<T> *it, unsigned int minNbElements) {
-  unsigned int count = 0;
+bool iteratorCountCheck(Iterator<T> *it, uint minNbElements) {
+  uint count = 0;
   while (it->hasNext()) {
     ++count;
     if (count == minNbElements) {

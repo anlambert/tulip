@@ -17,9 +17,9 @@ using namespace std;
 using namespace tlp;
 
 //==============================================================
-SquareLayout::SquareLayout(unsigned int width) : _width(width) {}
+SquareLayout::SquareLayout(uint width) : _width(width) {}
 //==============================================================
-unsigned int SquareLayout::unproject(const Vec2i &point) const {
+uint SquareLayout::unproject(const Vec2i &point) const {
 
   int x = point[0] + _width / 2;
   int y = point[1] + _width / 2;
@@ -35,7 +35,7 @@ unsigned int SquareLayout::unproject(const Vec2i &point) const {
   return uint(y) * _width + uint(x);
 }
 //==============================================================
-Vec2i SquareLayout::project(const unsigned int id) const {
+Vec2i SquareLayout::project(const uint id) const {
   Vec2i point;
   point[0] = id % _width - _width / 2;
   point[1] = id / _width - _width / 2;

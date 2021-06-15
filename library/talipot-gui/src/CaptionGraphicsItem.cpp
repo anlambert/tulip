@@ -50,7 +50,7 @@ void CaptionGraphicsItem::loadConfiguration() {
   constructConfigWidget();
 }
 
-void CaptionGraphicsItem::setType(unsigned int type) {
+void CaptionGraphicsItem::setType(uint type) {
   if (type == 1 || type == 2) {
     _nodesEdgesTextItem->setText("on nodes");
   } else {

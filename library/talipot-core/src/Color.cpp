@@ -101,10 +101,10 @@ const tlp::Color tlp::Color::Yellow(255, 255, 0);
   Redefined in order to output char in numerical format
 */
 std::ostream &tlp::operator<<(std::ostream &os, const tlp::Color &a) {
-  const unsigned int SIZE = 4;
+  const uint SIZE = 4;
   os << "(";
 
-  for (unsigned int i = 0; i < SIZE; ++i) {
+  for (uint i = 0; i < SIZE; ++i) {
     if (i > 0) {
       os << ",";
     }
@@ -120,7 +120,7 @@ std::ostream &tlp::operator<<(std::ostream &os, const tlp::Color &a) {
   Redefined in order to input char in numerical format
 */
 std::istream &tlp::operator>>(std::istream &is, tlp::Color &outA) {
-  const unsigned int SIZE = 4;
+  const uint SIZE = 4;
   char c;
   int pos = is.tellg();
   is.clear();
@@ -131,14 +131,14 @@ std::istream &tlp::operator>>(std::istream &is, tlp::Color &outA) {
     return is;
   }
 
-  for (unsigned int i = 0; i < SIZE; ++i) {
+  for (uint i = 0; i < SIZE; ++i) {
     if (i > 0 && (!bool(is >> c) || c != ',')) {
       is.seekg(pos);
       is.setstate(std::ios::failbit);
       return is;
     }
 
-    unsigned int vi = 0;
+    uint vi = 0;
     bool done = bool(is >> vi);
     outA[i] = vi;
 
@@ -162,7 +162,7 @@ std::istream &tlp::operator>>(std::istream &is, tlp::Color &outA) {
 long tlp::Color::getTrueColor() {
   long ret = 0;
   long tmp;
-  unsigned int RR = (*this)[0], BB = (*this)[1], GG = (*this)[2];
+  uint RR = (*this)[0], BB = (*this)[1], GG = (*this)[2];
   tmp = RR << 16;
   ret = tmp;
   tmp = GG << 8;

@@ -214,11 +214,11 @@ void Settings::setProxyHost(const QString &h) {
   instance().setValue(TS_ProxyHost, h);
 }
 
-unsigned int Settings::proxyPort() {
+uint Settings::proxyPort() {
   return instance().value(TS_ProxyPort).toUInt();
 }
 
-void Settings::setProxyPort(unsigned int p) {
+void Settings::setProxyPort(uint p) {
   instance().setValue(TS_ProxyPort, p);
 }
 
@@ -328,11 +328,11 @@ void Settings::setResultPropertyStored(bool f) {
   instance().setValue(TS_ResultPropertyStored, f);
 }
 
-unsigned int Settings::logPluginCall() {
+uint Settings::logPluginCall() {
   return instance().value(TS_LogPluginCall, NoLog).toUInt();
 }
 
-void Settings::setLogPluginCall(unsigned int val) {
+void Settings::setLogPluginCall(uint val) {
   instance().setValue(TS_LogPluginCall, val);
 }
 
@@ -344,11 +344,11 @@ void Settings::setUseTlpbFileFormat(bool f) {
   instance().setValue(TS_UseTlpbFileFormat, f);
 }
 
-unsigned int Settings::seedOfRandomSequence() {
+uint Settings::seedOfRandomSequence() {
   return instance().value(TS_SeedForRandomSequence, tlp::getSeedOfRandomSequence()).toUInt();
 }
 
-void Settings::setSeedOfRandomSequence(unsigned int seed) {
+void Settings::setSeedOfRandomSequence(uint seed) {
   instance().setValue(TS_SeedForRandomSequence, seed);
 }
 

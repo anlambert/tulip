@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -17,12 +17,14 @@
 #include <climits>
 #include <functional>
 
+#include <talipot/config.h>
+
 namespace tlp {
 
 struct Face {
-  unsigned int id;
+  uint id;
   Face() : id(UINT_MAX) {}
-  explicit Face(unsigned int j) : id(j) {}
+  explicit Face(uint j) : id(j) {}
   bool operator!=(const Face f) const {
     return id != f.id;
   }

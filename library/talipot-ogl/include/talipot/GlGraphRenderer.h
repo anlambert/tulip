@@ -84,8 +84,8 @@ protected:
 
   bool selectionDrawActivate;
   RenderingEntitiesFlag selectionType;
-  std::unordered_map<unsigned int, SelectedEntity> *selectionIdMap;
-  unsigned int *selectionCurrentId;
+  std::unordered_map<uint, SelectedEntity> *selectionIdMap;
+  uint *selectionCurrentId;
 };
 }
 

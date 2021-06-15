@@ -65,10 +65,10 @@ QList<QWidget *> SOMPropertiesWidget::configurationWidgets() const {
   return widgets;
 }
 
-unsigned int SOMPropertiesWidget::getGridWidth() const {
+uint SOMPropertiesWidget::getGridWidth() const {
   return _ui->gridWidthSpinBox->value();
 }
-unsigned int SOMPropertiesWidget::getGridHeight() const {
+uint SOMPropertiesWidget::getGridHeight() const {
   return _ui->gridHeightSpinBox->value();
 }
 
@@ -92,7 +92,7 @@ QString SOMPropertiesWidget::getDiffusionRateMethodLabel() const {
   return _ui->diffusionRateComputationMethodComboBox->currentText();
 }
 
-unsigned int SOMPropertiesWidget::getMaxDistanceValue() const {
+uint SOMPropertiesWidget::getMaxDistanceValue() const {
   return _ui->maxDistanceSpinBox->value();
 }
 
@@ -112,7 +112,7 @@ bool SOMPropertiesWidget::useAnimation() const {
   return _ui->animationCheckBox->isChecked();
 }
 
-unsigned int SOMPropertiesWidget::getAnimationDuration() const {
+uint SOMPropertiesWidget::getAnimationDuration() const {
   return _ui->animationStepsSpinBox->value();
 }
 
@@ -240,7 +240,7 @@ DataSet SOMPropertiesWidget::getData() const {
 void SOMPropertiesWidget::setData(const DataSet &data) {
 
   double doubleValue = 0;
-  unsigned int uintValue = 0;
+  uint uintValue = 0;
   bool boolValue = false;
   int intValue = 0;
   // Restore grid state.

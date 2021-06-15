@@ -45,8 +45,7 @@ static vector<node> extractCycle(node n, deque<node> &st) {
 }
 //===============================================================================
 static void dfs(node n, const Graph *sg, deque<node> &st, vector<node> &maxCycle,
-                MutableContainer<bool> &flag, unsigned int &nbCalls,
-                PluginProgress *pluginProgress) {
+                MutableContainer<bool> &flag, uint &nbCalls, PluginProgress *pluginProgress) {
   {
     // to enable stop of the recursion
     ++nbCalls;
@@ -86,7 +85,7 @@ static vector<node> findMaxCycle(Graph *graph, PluginProgress *pluginProgress) {
   auto components = ConnectedTest::computeConnectedComponents(graph);
 
   vector<node> max;
-  unsigned int nbCalls = 0;
+  uint nbCalls = 0;
   for (const auto &component : components) {
     Graph *sg = graph->inducedSubGraph(component);
     MutableContainer<bool> flag;

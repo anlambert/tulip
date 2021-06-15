@@ -28,27 +28,27 @@ inline float sqrnorm(const Coord &v) {
 //================================================
 static float sqrnorm(const Coord &p0, const Coord &p1) {
   float result = 0;
-  for (unsigned int i = 0; i < 3; ++i) {
+  for (uint i = 0; i < 3; ++i) {
     auto li = p0[i] - p1[i];
     result += li * li;
   }
   return result;
 }
 //================================================
-static float lineLength(const Coord *line, unsigned int lineSize, vector<float> &norms) {
+static float lineLength(const Coord *line, uint lineSize, vector<float> &norms) {
   norms.resize(lineSize - 1);
   float ll = 0;
-  for (unsigned int i = 1; i < lineSize; ++i) {
+  for (uint i = 1; i < lineSize; ++i) {
     ll += norms[i - 1] = sqrnorm(line[i - 1], line[i]);
   }
   return ll;
 }
 //================================================
-void getColors(const Coord *line, const unsigned int lineSize, const Color &c1, const Color &c2,
+void getColors(const Coord *line, const uint lineSize, const Color &c1, const Color &c2,
                vector<Color> &result) {
   tlp::Vec4f _c1, _c2;
 
-  for (unsigned int i = 0; i < 4; ++i) {
+  for (uint i = 0; i < 4; ++i) {
     _c1[i] = c1[i];
     _c2[i] = c2[i];
   }
@@ -64,7 +64,7 @@ void getColors(const Coord *line, const unsigned int lineSize, const Color &c1, 
   _c2 -= _c1;
   vector<float> norms;
   _c2 /= lineLength(line, lineSize, norms);
-  for (unsigned int i = 1; i < lineSize - 1; ++i) {
+  for (uint i = 1; i < lineSize - 1; ++i) {
     _c1 += _c2 * norms[i - 1];
     result[i].set(uchar(_c1[0]), uchar(_c1[1]), uchar(_c1[2]), uchar(_c1[3]));
   }
@@ -83,7 +83,7 @@ void getSizes(const vector<Coord> &lines, float s1, float s2, vector<float> &res
 
   vector<float> norms;
   s2 /= lineLength(lines.data(), sz, norms);
-  for (unsigned int i = 1; i < sz - 1; ++i) {
+  for (uint i = 1; i < sz - 1; ++i) {
     s1 += s2 * norms[i - 1];
     result[i] = s1;
   }
@@ -91,8 +91,8 @@ void getSizes(const vector<Coord> &lines, float s1, float s2, vector<float> &res
 //===============================================
 struct CurvePoints {
   GLfloat *data;
-  unsigned int size;
-  CurvePoints(unsigned int size) : size(size) {
+  uint size;
+  CurvePoints(uint size) : size(size) {
     data = new GLfloat[2 * size * 3];
   }
   CurvePoints(const CurvePoints &cp) {
@@ -109,15 +109,15 @@ struct CurvePoints {
     data = newData;
     ++size;
   }
-  Coord &operator()(unsigned int i, unsigned int j) const {
+  Coord &operator()(uint i, uint j) const {
     return reinterpret_cast<Coord &>(data[j * size * 3 + i * 3]);
   }
 };
 //================================================
 GLfloat *buildCurvePoints(const vector<Coord> &vertices, const vector<float> &sizes,
-                          const Coord &startN, const Coord &endN, unsigned int &resultSize,
-                          vector<unsigned int> *dec) {
-  unsigned int resultDec = 0;
+                          const Coord &startN, const Coord &endN, uint &resultSize,
+                          vector<uint> *dec) {
+  uint resultDec = 0;
   bool inversion = false;
   CurvePoints result(vertices.size());
   // start point
@@ -134,7 +134,7 @@ GLfloat *buildCurvePoints(const vector<Coord> &vertices, const vector<float> &si
   result(0, 1) = vertices[0] + dir * sizes[0];
 
   //============
-  for (unsigned int i = 1; i < vertices.size() - 1; ++i) {
+  for (uint i = 1; i < vertices.size() - 1; ++i) {
 
     Coord xu = vertices[i - 1] - vertices[i];
     Coord xv = vertices[i + 1] - vertices[i];
@@ -349,7 +349,7 @@ void buildCurvePoints(const vector<Coord> &vertices, const vector<float> &sizes,
                                  vertices[1], sizes[0], inversion, result, false, twoPointsCurve);
   }
 
-  for (unsigned int i = 1; i < sz - 1; ++i) {
+  for (uint i = 1; i < sz - 1; ++i) {
     inversion = computeExtrusion(vertices[i - 1], vertices[i], vertices[i + 1], sizes[i], inversion,
                                  result, false, twoPointsCurve);
   }
@@ -369,7 +369,7 @@ vector<Coord> splineCurve(const vector<Coord> &vertices) {
   curve.reserve(2 + 3 * (vertices.size() - 2));
   curve.push_back(vertices[0]);
 
-  for (unsigned int i = 1; i < vertices.size() - 1; ++i) {
+  for (uint i = 1; i < vertices.size() - 1; ++i) {
     Coord xu = vertices[i - 1] - vertices[i];
     Coord xv = vertices[i + 1] - vertices[i];
 
@@ -409,7 +409,7 @@ void computeCleanVertices(const vector<Coord> &bends, const Coord &startPoint,
       result.push_back(lastPoint);
     }
 
-    for (unsigned int i = 1; i < bends.size(); ++i) {
+    for (uint i = 1; i < bends.size(); ++i) {
       const Coord &currentPoint = bends[i];
 
       if ((currentPoint - lastPoint).norm() > 1E-4) {
@@ -489,12 +489,12 @@ void polyQuad(const vector<Coord> &vertices, const Color &c1, const Color &c2, f
   buildCurvePoints(vertices, sizes, startN, endN, quadVertices);
 
   float length = 0;
-  const unsigned int nbQuads_div2 = quadVertices.size() / 2;
+  const uint nbQuads_div2 = quadVertices.size() / 2;
 
   vector<Coord> centerLine;
   centerLine.reserve(nbQuads_div2);
-  vector<unsigned int> bottomOutlineIndices(nbQuads_div2);
-  vector<unsigned int> topOutlineIndices(nbQuads_div2);
+  vector<uint> bottomOutlineIndices(nbQuads_div2);
+  vector<uint> topOutlineIndices(nbQuads_div2);
   vector<float> texCoords(quadVertices.size() * 2);
 
   for (size_t i = 0; i < nbQuads_div2; ++i) {
@@ -596,7 +596,7 @@ void simpleQuad(const vector<Coord> &vertices, const Color &c1, const Color &c2,
 
   //============
   Coord v = vertices[1] - vertices[0];
-  for (unsigned int i = 1; i < sz - 1; ++i) {
+  for (uint i = 1; i < sz - 1; ++i) {
     float newSize = sizes[i];
     Coord u = -v;
     v = vertices[i + 1] - vertices[i];
@@ -665,7 +665,7 @@ void simpleQuad(const vector<Coord> &vertices, const Color &c1, const Color &c2,
   float length = 0;
   glBegin(GL_QUAD_STRIP);
 
-  for (unsigned int i = 0; i < sz; ++i) {
+  for (uint i = 0; i < sz; ++i) {
     glColor4ubv(reinterpret_cast<const GLubyte *>(&colors[i]));
 
     if (i == 0) {
@@ -713,7 +713,7 @@ void simpleQuad(const vector<Coord> &vertices, const Color &c1, const Color &c2,
       glColor4ubv(reinterpret_cast<const GLubyte *>(&borderColor));
     }
 
-    for (unsigned int i = 0; i < sz; ++i) {
+    for (uint i = 0; i < sz; ++i) {
       if (colorInterpolate) {
         glColor4ubv(reinterpret_cast<const GLubyte *>(&colors[i]));
       }
@@ -729,7 +729,7 @@ void simpleQuad(const vector<Coord> &vertices, const Color &c1, const Color &c2,
       glColor4ubv(reinterpret_cast<const GLubyte *>(&borderColor));
     }
 
-    for (unsigned int i = 0; i < sz; ++i) {
+    for (uint i = 0; i < sz; ++i) {
       if (colorInterpolate) {
         glColor4ubv(reinterpret_cast<const GLubyte *>(&colors[i]));
       }
@@ -745,7 +745,7 @@ void simpleQuad(const vector<Coord> &vertices, const Color &c1, const Color &c2,
 
 void bezierQuad(const vector<Coord> &vertices, const Color &c1, const Color &c2, float s1, float s2,
                 const Coord &startN, const Coord &endN) {
-  unsigned int MAX_BENDS = 8;
+  uint MAX_BENDS = 8;
 
   if (vertices.size() > MAX_BENDS) {
     vector<float> sizes;
@@ -754,7 +754,7 @@ void bezierQuad(const vector<Coord> &vertices, const Color &c1, const Color &c2,
     getColors(vertices, c1, c2, colors);
     vector<Coord> points(MAX_BENDS);
 
-    for (unsigned int i = 0; i < MAX_BENDS; ++i) {
+    for (uint i = 0; i < MAX_BENDS; ++i) {
       points[i] = vertices[i];
     }
 
@@ -767,7 +767,7 @@ void bezierQuad(const vector<Coord> &vertices, const Color &c1, const Color &c2,
     newCurve[0] = vertices[MAX_BENDS - 1];
     newCurve[1] = vertices[MAX_BENDS - 1] + dir;
 
-    for (unsigned int i = MAX_BENDS; i < vertices.size(); ++i) {
+    for (uint i = MAX_BENDS; i < vertices.size(); ++i) {
       newCurve[i - (MAX_BENDS) + 2] = vertices[i];
     }
 
@@ -776,16 +776,16 @@ void bezierQuad(const vector<Coord> &vertices, const Color &c1, const Color &c2,
     return;
   }
 
-  unsigned int steps = 40;
+  uint steps = 40;
   Vec4f baseColor, delta;
 
-  for (unsigned int i = 0; i < 4; ++i) {
+  for (uint i = 0; i < 4; ++i) {
     baseColor[i] = c1[i];
     delta[i] = float(c2[i]) - float(c1[i]);
   }
 
   delta /= float(steps);
-  unsigned int size;
+  uint size;
   vector<float> sizes;
   getSizes(vertices, s1, s2, sizes);
   GLfloat *points = buildCurvePoints(vertices, sizes, startN, endN, size);
@@ -797,7 +797,7 @@ void bezierQuad(const vector<Coord> &vertices, const Color &c1, const Color &c2,
 
   Vec4f color = baseColor;
 
-  for (unsigned int i = 0; i <= steps; ++i) {
+  for (uint i = 0; i <= steps; ++i) {
     glColor4ub(uchar(color[0]), uchar(color[1]), uchar(color[2]), uchar(color[3]));
     glTexCoord2f(0.0f, 0.0f);
     glEvalCoord2f(i / GLfloat(steps), 0);
@@ -813,7 +813,7 @@ void bezierQuad(const vector<Coord> &vertices, const Color &c1, const Color &c2,
   color = baseColor;
   glBegin(GL_LINE_STRIP);
 
-  for (unsigned int i = 0; i <= steps; ++i) {
+  for (uint i = 0; i <= steps; ++i) {
     glColor4ub(uchar(color[0]), uchar(color[1]), uchar(color[2]), uchar(color[3]));
     glEvalCoord2f(i / GLfloat(steps), 0);
     color += delta;
@@ -823,7 +823,7 @@ void bezierQuad(const vector<Coord> &vertices, const Color &c1, const Color &c2,
   color = baseColor;
   glBegin(GL_LINE_STRIP);
 
-  for (unsigned int i = 0; i <= steps; ++i) {
+  for (uint i = 0; i <= steps; ++i) {
     glColor4ub(uchar(color[0]), uchar(color[1]), uchar(color[2]), uchar(color[3]));
     glEvalCoord2f(i / GLfloat(steps), 1);
     color += delta;
@@ -837,14 +837,14 @@ void bezierQuad(const vector<Coord> &vertices, const Color &c1, const Color &c2,
 
 void bezierLine(const vector<Coord> &vertices, const Color &c1, const Color &c2) {
 
-  unsigned int MAX_BENDS = 8;
+  uint MAX_BENDS = 8;
 
   if (vertices.size() > MAX_BENDS) {
     vector<Coord> points(MAX_BENDS);
     vector<Color> colors;
     getColors(vertices, c1, c2, colors);
 
-    for (unsigned int i = 0; i < MAX_BENDS; ++i) {
+    for (uint i = 0; i < MAX_BENDS; ++i) {
       points[i] = vertices[i];
     }
 
@@ -858,7 +858,7 @@ void bezierLine(const vector<Coord> &vertices, const Color &c1, const Color &c2)
     newCurve[0] = vertices[MAX_BENDS - 1];
     newCurve[1] = vertices[MAX_BENDS - 1] + dir;
 
-    for (unsigned int i = MAX_BENDS; i < vertices.size(); ++i) {
+    for (uint i = MAX_BENDS; i < vertices.size(); ++i) {
       newCurve[i - (MAX_BENDS) + 2] = vertices[i];
     }
 
@@ -875,16 +875,16 @@ void bezierLine(const vector<Coord> &vertices, const Color &c1, const Color &c2)
 
   glBegin(GL_LINE_STRIP);
 
-  unsigned int steps = 40;
+  uint steps = 40;
   Vec4f color, delta;
 
-  for (unsigned int i = 0; i < 4; ++i) {
+  for (uint i = 0; i < 4; ++i) {
     color[i] = c1[i];
     delta[i] = float(c2[i]) - float(c1[i]);
   }
 
   delta /= float(steps);
-  for (unsigned int i = 0; i <= steps; ++i) {
+  for (uint i = 0; i <= steps; ++i) {
     setColor(Color(uchar(color[0]), uchar(color[1]), uchar(color[2]), uchar(color[3])));
     glEvalCoord1f(i / GLfloat(steps));
     color += delta;

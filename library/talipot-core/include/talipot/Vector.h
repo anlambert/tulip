@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -223,20 +223,20 @@ extern TLP_TEMPLATE_DECLARE_SCOPE VECTOR operator^(const VECTOR &, const VECTOR 
 TEMPLATEVECTOR
 extern TLP_TEMPLATE_DECLARE_SCOPE VECTOR operator-(const VECTOR &);
 /**
- * @brief typedef for 2D vector of unsigned int
+ * @brief typedef for 2D vector of uint
  */
-typedef Vector<unsigned int, 2> Vec2ui;
-DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(Vector<unsigned int, 2>), TLP_TEMPLATE_DECLARE_SCOPE)
+typedef Vector<uint, 2> Vec2ui;
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(Vector<uint, 2>), TLP_TEMPLATE_DECLARE_SCOPE)
 /**
- * @brief typedef for 3D vector of unsigned int
+ * @brief typedef for 3D vector of uint
  */
-typedef Vector<unsigned int, 3> Vec3ui;
-DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(Vector<unsigned int, 3>), TLP_TEMPLATE_DECLARE_SCOPE)
+typedef Vector<uint, 3> Vec3ui;
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(Vector<uint, 3>), TLP_TEMPLATE_DECLARE_SCOPE)
 /**
- * @brief typedef for 4D vector of unsigned int
+ * @brief typedef for 4D vector of uint
  */
-typedef Vector<unsigned int, 4> Vec4ui;
-DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(Vector<unsigned int, 4>), TLP_TEMPLATE_DECLARE_SCOPE)
+typedef Vector<uint, 4> Vec4ui;
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(Vector<uint, 4>), TLP_TEMPLATE_DECLARE_SCOPE)
 /**
  * @brief typedef for 2D vector of int
  */

@@ -22,7 +22,7 @@ using namespace std;
 namespace tlp {
 
 DoubleStringsListSelectionWidget::DoubleStringsListSelectionWidget(
-    QWidget *parent, const unsigned int maxSelectedStringsListSize)
+    QWidget *parent, const uint maxSelectedStringsListSize)
     : QWidget(parent), _ui(new Ui::DoubleStringsListSelectionWidget()) {
   _ui->setupUi(this);
   _ui->upButton->setIcon(FontIconManager::icon(MaterialDesignIcons::ArrowUpBold));
@@ -72,7 +72,7 @@ void DoubleStringsListSelectionWidget::setSelectedStringsListLabel(
 }
 
 void DoubleStringsListSelectionWidget::setMaxSelectedStringsListSize(
-    const unsigned int maxSelectedStringsListSize) {
+    const uint maxSelectedStringsListSize) {
   _ui->outputList->setMaxListSize(maxSelectedStringsListSize);
 
   if (maxSelectedStringsListSize != 0) {

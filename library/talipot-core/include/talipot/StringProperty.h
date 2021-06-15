@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -41,10 +41,10 @@ public:
     return propertyTypename;
   }
   // the value size of a StringVectorProperty is not fixed
-  unsigned int nodeValueSize() const override {
+  uint nodeValueSize() const override {
     return 0;
   }
-  unsigned int edgeValueSize() const override {
+  uint edgeValueSize() const override {
     return 0;
   }
   int compare(const node n1, const node n2) const override;
@@ -73,10 +73,10 @@ public:
     return propertyTypename;
   }
   // the value size of a StringVectorProperty is not fixed
-  unsigned int nodeValueSize() const override {
+  uint nodeValueSize() const override {
     return 0;
   }
-  unsigned int edgeValueSize() const override {
+  uint edgeValueSize() const override {
     return 0;
   }
 };

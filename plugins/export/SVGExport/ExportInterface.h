@@ -99,8 +99,8 @@ public:
   exportEdgeExtremity(const unsigned id_src_shape, const unsigned id_tgt_shape,
                       const tlp::EdgeExtremityShape::EdgeExtremityShapes src_anchor_shape_type,
                       const tlp::EdgeExtremityShape::EdgeExtremityShapes tgt_anchor_shape_type,
-                      const tlp::Color &color, const unsigned int id_src_gradient,
-                      const unsigned int id_tgt_gradient, const std::string &iconName) = 0;
+                      const tlp::Color &color, const uint id_src_gradient,
+                      const uint id_tgt_gradient, const std::string &iconName) = 0;
 
   // This method represents edges according to incoming parameters
   virtual bool startEdge(const unsigned id) = 0;

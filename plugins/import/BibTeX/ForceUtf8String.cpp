@@ -31,7 +31,7 @@ string &forceUtf8String(string &str) {
   char c5[2] = {'\305', ' '};
   char charComposing = 0;
 
-  for (unsigned int i = 0; i < str.size(); ++i) {
+  for (uint i = 0; i < str.size(); ++i) {
     if ((str[i] > '\301') && (str[i] < '\340') && (i + 1) < str.size() &&
         // begin of a 2 chars utf8 sequence
         // skip next char if it is valid utf8

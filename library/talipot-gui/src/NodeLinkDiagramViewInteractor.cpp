@@ -18,7 +18,7 @@
 using namespace tlp;
 
 NodeLinkDiagramViewInteractor::NodeLinkDiagramViewInteractor(const QIcon &icon, const QString &text,
-                                                             unsigned int priority)
+                                                             uint priority)
     : GLInteractorComposite(icon, text), _label(new QLabel), _priority(priority) {
   _label->setWordWrap(true);
   _label->setAlignment(Qt::AlignTop);
@@ -37,6 +37,6 @@ QLabel *NodeLinkDiagramViewInteractor::docWidget() const {
   return _label->text().isEmpty() ? nullptr : _label;
 }
 
-unsigned int NodeLinkDiagramViewInteractor::priority() const {
+uint NodeLinkDiagramViewInteractor::priority() const {
   return _priority;
 }

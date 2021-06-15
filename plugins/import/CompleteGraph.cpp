@@ -29,12 +29,12 @@ public:
   PLUGININFORMATION("Complete General Graph", "Auber", "16/12/2002",
                     "Imports a new complete graph.", "1.2", "Graph")
   CompleteGraph(tlp::PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "5");
+    addInParameter<uint>("nodes", paramHelp[0].data(), "5");
     addInParameter<bool>("directed", paramHelp[1].data(), "false");
   }
 
   bool importGraph() override {
-    unsigned int nbNodes = 5;
+    uint nbNodes = 5;
     bool directed = false;
 
     if (dataSet != nullptr) {

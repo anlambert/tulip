@@ -76,7 +76,7 @@ private:
    * @brief Perform #(step) single linkage clustering in order to find the partition
    * which maximise the average density
    **/
-  double findBestThreshold(unsigned int, const std::vector<edge> &edges);
+  double findBestThreshold(uint, const std::vector<edge> &edges);
   /**
    * @brief Compute the partition of dual node for the given threshold value
    * and return average density of this edge partition
@@ -111,7 +111,7 @@ LinkCommunities::LinkCommunities(const tlp::PluginContext *context)
     : DoubleAlgorithm(context), dual(tlp::newGraph()), metric(nullptr) {
   addInParameter<NumericProperty *>("metric", paramHelp[0].data(), "", false);
   addInParameter<bool>("Group isthmus", paramHelp[1].data(), "true", true);
-  addInParameter<unsigned int>("Number of steps", paramHelp[2].data(), "200", true);
+  addInParameter<uint>("Number of steps", paramHelp[2].data(), "200", true);
 }
 //==============================================================================================================
 LinkCommunities::~LinkCommunities() = default;
@@ -119,7 +119,7 @@ LinkCommunities::~LinkCommunities() = default;
 bool LinkCommunities::run() {
   metric = nullptr;
   bool group_isthmus = true;
-  unsigned int nb_steps = 200;
+  uint nb_steps = 200;
 
   if (dataSet != nullptr) {
     dataSet->get("metric", metric);
@@ -157,17 +157,17 @@ bool LinkCommunities::run() {
 }
 //==============================================================================================================
 void LinkCommunities::createDualGraph(const std::vector<edge> &edges) {
-  unsigned int nbEdges = edges.size();
+  uint nbEdges = edges.size();
   dual->reserveNodes(nbEdges);
   similarity.alloc(dual.get(), nbEdges);
   mapKeystone.alloc(dual.get(), nbEdges);
 
-  for (unsigned int i = 0; i < nbEdges; ++i) {
+  for (uint i = 0; i < nbEdges; ++i) {
     node dn = dual->addNode();
     const auto &[src, tgt] = graph->ends(edges[i]);
 
     for (auto ee : graph->getInOutEdges(src)) {
-      unsigned int eePos = graph->edgePos(ee);
+      uint eePos = graph->edgePos(ee);
 
       if (eePos < i) {
         if (!dual->existEdge(dn, node(eePos), false).isValid()) {
@@ -177,7 +177,7 @@ void LinkCommunities::createDualGraph(const std::vector<edge> &edges) {
       }
     }
     for (auto ee : graph->getInOutEdges(tgt)) {
-      unsigned int eePos = graph->edgePos(ee);
+      uint eePos = graph->edgePos(ee);
 
       if (eePos < i) {
         if (!dual->existEdge(dn, node(eePos), false).isValid()) {
@@ -192,12 +192,12 @@ void LinkCommunities::createDualGraph(const std::vector<edge> &edges) {
 void LinkCommunities::computeSimilarities(const std::vector<edge> &edges) {
   similarity.resize(dual->numberOfEdges());
   if (metric == nullptr) {
-    TLP_PARALLEL_MAP_INDICES(dual->numberOfEdges(), [&](unsigned int i) {
+    TLP_PARALLEL_MAP_INDICES(dual->numberOfEdges(), [&](uint i) {
       edge e = edge(i);
       similarity[e] = getSimilarity(e, edges);
     });
   } else {
-    TLP_PARALLEL_MAP_INDICES(dual->numberOfEdges(), [&](unsigned int i) {
+    TLP_PARALLEL_MAP_INDICES(dual->numberOfEdges(), [&](uint i) {
       edge e = edge(i);
       similarity[e] = getWeightedSimilarity(e, edges);
     });
@@ -213,7 +213,7 @@ double LinkCommunities::getSimilarity(edge ee, const std::vector<edge> &edges) {
   node n1 = (e1Src != key) ? e1Src : e1Tgt;
   const auto &[e2Src, e2Tgt] = graph->ends(e2);
   node n2 = (e2Src != key) ? e2Src : e2Tgt;
-  unsigned int wuv = 0, m = 0;
+  uint wuv = 0, m = 0;
   for (auto n : graph->getInOutNodes(n1)) {
     if (graph->existEdge(n2, n, true).isValid()) {
       wuv += 1;
@@ -331,17 +331,17 @@ double LinkCommunities::computeAverageDensity(double threshold, const std::vecto
   NodeVectorProperty<bool> dn_visited(dual.get());
   dn_visited.setAll(false);
 
-  unsigned int sz = dual->numberOfNodes();
+  uint sz = dual->numberOfNodes();
 
-  for (unsigned int i = 0; i < sz; ++i) {
+  for (uint i = 0; i < sz; ++i) {
     node dn = node(i);
 
     if (!dn_visited[dn]) {
-      unsigned int nbDNodes = 1;
+      uint nbDNodes = 1;
       dn_visited[dn] = true;
       edge re = edges[dn.id];
       MutableContainer<bool> visited;
-      unsigned int nbNodes = 1;
+      uint nbNodes = 1;
       const auto &[reSrc, reTgt] = graph->ends(re);
       visited.set(reSrc.id, true);
 
@@ -400,9 +400,9 @@ void LinkCommunities::setEdgeValues(double threshold, bool group_isthmus,
   dn_visited.setAll(false);
 
   double val = 1;
-  unsigned int sz = dual->numberOfNodes();
+  uint sz = dual->numberOfNodes();
 
-  for (unsigned int i = 0; i < sz; ++i) {
+  for (uint i = 0; i < sz; ++i) {
     node dn = node(i);
 
     if (!dn_visited[dn]) {
@@ -443,17 +443,16 @@ void LinkCommunities::setEdgeValues(double threshold, bool group_isthmus,
   }
 }
 //==============================================================================================================
-double LinkCommunities::findBestThreshold(unsigned int numberOfSteps,
-                                          const std::vector<edge> &edges) {
+double LinkCommunities::findBestThreshold(uint numberOfSteps, const std::vector<edge> &edges) {
   double maxD = -2;
   double threshold = 0.0;
 
   double min = 1.1;
   double max = -1.0;
 
-  unsigned int sz = dual->numberOfEdges();
+  uint sz = dual->numberOfEdges();
 
-  for (unsigned int i = 0; i < sz; ++i) {
+  for (uint i = 0; i < sz; ++i) {
     double value = similarity[edge(i)];
 
     if (value < min) {
@@ -465,7 +464,7 @@ double LinkCommunities::findBestThreshold(unsigned int numberOfSteps,
 
   double deltaThreshold = (max - min) / double(numberOfSteps);
 
-  TLP_PARALLEL_MAP_INDICES(numberOfSteps, [&](unsigned int i) {
+  TLP_PARALLEL_MAP_INDICES(numberOfSteps, [&](uint i) {
     double step = min + i * deltaThreshold;
     double d = computeAverageDensity(step, edges);
     TLP_LOCK_SECTION(findBestThreshold) {

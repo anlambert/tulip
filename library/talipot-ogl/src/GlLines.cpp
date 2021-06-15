@@ -19,8 +19,8 @@ using namespace tlp;
 
 //=============================================================
 void GlLines::glDrawLine(const Coord &startPoint, const Coord &endPoint, const double width,
-                         const unsigned int stippleType, const Color &startColor,
-                         const Color &endColor, const bool, const double, const double) {
+                         const uint stippleType, const Color &startColor, const Color &endColor,
+                         const bool, const double, const double) {
   GlLines::glEnableLineStipple(stippleType);
   glLineWidth(width);
   glBegin(GL_LINES);
@@ -33,7 +33,7 @@ void GlLines::glDrawLine(const Coord &startPoint, const Coord &endPoint, const d
 }
 //=============================================================
 void GlLines::glDrawCurve(const Coord &startPoint, const vector<Coord> &bends,
-                          const Coord &endPoint, const double width, const unsigned int stippleType,
+                          const Coord &endPoint, const double width, const uint stippleType,
                           const Color &startColor, const Color &endColor, const bool arrow,
                           const double arrowWidth, const double arrowHeight) {
   if (bends.empty()) {
@@ -81,8 +81,8 @@ void GlLines::glDrawCurve(const Coord &startPoint, const vector<Coord> &bends,
 }
 //=============================================================
 void GlLines::glDrawBezierCurve(const Coord &startPoint, const vector<Coord> &bends,
-                                const Coord &endPoint, unsigned int steps, const double width,
-                                const unsigned int stippleType, const Color &startColor,
+                                const Coord &endPoint, uint steps, const double width,
+                                const uint stippleType, const Color &startColor,
                                 const Color &endColor, const bool arrow, const double arrowWidth,
                                 const double arrowHeight) {
   if (bends.empty()) {
@@ -110,11 +110,11 @@ void GlLines::glDrawBezierCurve(const Coord &startPoint, const vector<Coord> &be
 
   glBegin(GL_LINE_STRIP);
 
-  for (unsigned int i = 0; i <= steps; i++) {
+  for (uint i = 0; i <= steps; i++) {
     setColor(colorStart);
     glEvalCoord1f(i / GLfloat(steps));
 
-    for (unsigned int j = 0; j < 4; j++) {
+    for (uint j = 0; j < 4; j++) {
       colorStart[j] += colorDelta[j];
     }
   }
@@ -128,8 +128,8 @@ void GlLines::glDrawBezierCurve(const Coord &startPoint, const vector<Coord> &be
 }
 //=============================================================
 void GlLines::glDrawSplineCurve(const Coord &startPoint, const vector<Coord> &bends,
-                                const Coord &endPoint, unsigned int steps, const double width,
-                                const unsigned int stippleType, const Color &startColor,
+                                const Coord &endPoint, uint steps, const double width,
+                                const uint stippleType, const Color &startColor,
                                 const Color &endColor, const bool arrow, const double arrowWidth,
                                 const double arrowHeight) {
   if (bends.empty()) {
@@ -191,11 +191,11 @@ void GlLines::glDrawSplineCurve(const Coord &startPoint, const vector<Coord> &be
     glEnable(GL_MAP1_VERTEX_3);
     glBegin(GL_LINE_STRIP);
 
-    for (unsigned int i = 0; i <= steps; i++) {
+    for (uint i = 0; i <= steps; i++) {
       setColor(colorStart);
       glEvalCoord1f(i / GLfloat(steps));
 
-      for (unsigned int j = 0; j < 4; j++) {
+      for (uint j = 0; j < 4; j++) {
         colorStart[j] += colorDelta[j];
       }
     }
@@ -205,7 +205,7 @@ void GlLines::glDrawSplineCurve(const Coord &startPoint, const vector<Coord> &be
     delete[] bendsCoordinates;
   }
 
-  for (unsigned int i = 1; i < bends.size(); ++i) {
+  for (uint i = 1; i < bends.size(); ++i) {
     p0 = bends[i - 1];
     p1 = p1next;
     p3 = bends[i];
@@ -240,11 +240,11 @@ void GlLines::glDrawSplineCurve(const Coord &startPoint, const vector<Coord> &be
     glEnable(GL_MAP1_VERTEX_3);
     glBegin(GL_LINE_STRIP);
 
-    for (unsigned int i = 0; i <= steps; i++) {
+    for (uint i = 0; i <= steps; i++) {
       setColor(colorStart);
       glEvalCoord1f(i / GLfloat(steps));
 
-      for (unsigned int j = 0; j < 4; j++) {
+      for (uint j = 0; j < 4; j++) {
         colorStart[j] += colorDelta[j];
       }
     }
@@ -266,11 +266,11 @@ void GlLines::glDrawSplineCurve(const Coord &startPoint, const vector<Coord> &be
     glEnable(GL_MAP1_VERTEX_3);
     glBegin(GL_LINE_STRIP);
 
-    for (unsigned int i = 0; i <= steps; i++) {
+    for (uint i = 0; i <= steps; i++) {
       setColor(colorStart);
       glEvalCoord1f(i / GLfloat(steps));
 
-      for (unsigned int j = 0; j < 4; j++) {
+      for (uint j = 0; j < 4; j++) {
         colorStart[j] += colorDelta[j];
       }
     }
@@ -284,8 +284,8 @@ void GlLines::glDrawSplineCurve(const Coord &startPoint, const vector<Coord> &be
 }
 //=============================================================
 void GlLines::glDrawSpline2Curve(const Coord &startPoint, const vector<Coord> &bends,
-                                 const Coord &endPoint, unsigned int steps, const double width,
-                                 const unsigned int stippleType, const Color &startColor,
+                                 const Coord &endPoint, uint steps, const double width,
+                                 const uint stippleType, const Color &startColor,
                                  const Color &endColor, const bool arrow, const double arrowWidth,
                                  const double arrowHeight) {
   if (bends.empty()) {
@@ -333,7 +333,7 @@ void GlLines::glDrawSpline2Curve(const Coord &startPoint, const vector<Coord> &b
     tmpVect[tmpVectIdx++] = p2;
   }
 
-  for (unsigned int i = 1; i < bends.size(); ++i) {
+  for (uint i = 1; i < bends.size(); ++i) {
     p0 = bends[i - 1];
     p1 = p1next;
     p3 = bends[i];
@@ -391,13 +391,13 @@ void GlLines::glDrawPoint(const Coord &p) {
   glEnd();
 }
 //=============================================================
-void GlLines::glDisableLineStipple(unsigned int stippleType) {
+void GlLines::glDisableLineStipple(uint stippleType) {
   if (stippleType > 0) {
     glDisable(GL_LINE_STIPPLE);
   }
 }
 //=============================================================
-void GlLines::glEnableLineStipple(unsigned int stippleType) {
+void GlLines::glEnableLineStipple(uint stippleType) {
   if (stippleType > 0) {
     glEnable(GL_LINE_STIPPLE);
 
@@ -448,7 +448,7 @@ GLfloat *GlLines::buildCurvePoints(const Coord &p0, const Coord &p1, const Coord
                                    const Coord &p3) {
   auto *bendsCoordinates = new GLfloat[4 * 3];
 
-  for (unsigned int i = 0; i < 3; ++i) {
+  for (uint i = 0; i < 3; ++i) {
     bendsCoordinates[i] = p0[i];
     bendsCoordinates[i + 3] = p1[i];
     bendsCoordinates[i + 6] = p2[i];

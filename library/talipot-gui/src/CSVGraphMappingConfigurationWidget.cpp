@@ -66,7 +66,7 @@ void CSVGraphMappingConfigurationWidget::updateWidget(tlp::Graph *graph,
   edgeColumnIds.clear();
   int srcColumn = -1, tgtColumn = -1;
 
-  for (unsigned int i = 0; i < importParameters.columnNumber(); ++i) {
+  for (uint i = 0; i < importParameters.columnNumber(); ++i) {
     if (importParameters.importColumn(i)) {
       columns.push_back(importParameters.getColumnName(i));
 
@@ -151,8 +151,8 @@ CSVToGraphDataMapping *CSVGraphMappingConfigurationWidget::buildMappingObject() 
   } else if (ui->mappingConfigurationStackedWidget->currentWidget() ==
              ui->importEdgesFromNodesPage) {
     // src and tgt columns must be different
-    for (unsigned int srcColumnId : srcColumnIds) {
-      for (unsigned int tgtColumnId : tgtColumnIds) {
+    for (uint srcColumnId : srcColumnIds) {
+      for (uint tgtColumnId : tgtColumnIds) {
         if (srcColumnId == tgtColumnId) {
           QMessageBox::critical(parentWidget(), "Import of new relations failed",
                                 "Source columns and destination columns are not different.");
@@ -179,8 +179,8 @@ bool CSVGraphMappingConfigurationWidget::isValid() const {
   } else if (ui->mappingConfigurationStackedWidget->currentWidget() ==
              ui->importEdgesFromNodesPage) {
     // src and tgt columns must be different
-    for (unsigned int srcColumnId : srcColumnIds) {
-      for (unsigned int tgtColumnId : tgtColumnIds) {
+    for (uint srcColumnId : srcColumnIds) {
+      for (uint tgtColumnId : tgtColumnIds) {
         if (srcColumnId == tgtColumnId) {
           return false;
         }
@@ -212,7 +212,7 @@ void CSVGraphMappingConfigurationWidget::selectProperties(const QString &title,
     } else {
       QString buttonName;
 
-      for (unsigned int i = 0; i < selProperties.size(); ++i) {
+      for (uint i = 0; i < selProperties.size(); ++i) {
         if (i) {
           buttonName.append(", ");
         }
@@ -244,7 +244,7 @@ void CSVGraphMappingConfigurationWidget::selectEdgeProperties() {
 }
 
 void CSVGraphMappingConfigurationWidget::selectColumns(const QString &title,
-                                                       std::vector<unsigned int> &columnIds,
+                                                       std::vector<uint> &columnIds,
                                                        QPushButton *button) {
   vector<string> tmpColumns;
   vector<string> selColumns;
@@ -255,7 +255,7 @@ void CSVGraphMappingConfigurationWidget::selectColumns(const QString &title,
     }
   }
 
-  for (unsigned int columnId : columnIds) {
+  for (uint columnId : columnIds) {
     selColumns.push_back(columns[columnId]);
   }
 
@@ -263,7 +263,7 @@ void CSVGraphMappingConfigurationWidget::selectColumns(const QString &title,
     if (selColumns.size() == 0) {
       columnIds.clear();
 
-      for (unsigned int i = 0; i < columns.size(); ++i) {
+      for (uint i = 0; i < columns.size(); ++i) {
         if (!columns[i].empty()) {
           columnIds.push_back(i);
           break;
@@ -273,14 +273,14 @@ void CSVGraphMappingConfigurationWidget::selectColumns(const QString &title,
       columnIds.clear();
       QString buttonName;
 
-      for (unsigned int i = 0; i < selColumns.size(); ++i) {
+      for (uint i = 0; i < selColumns.size(); ++i) {
         if (i) {
           buttonName.append(", ");
         }
 
         buttonName.append(tlpStringToQString(selColumns[i]));
 
-        for (unsigned int j = 0; j < columns.size(); ++j) {
+        for (uint j = 0; j < columns.size(); ++j) {
           if (selColumns[i] == columns[j]) {
             columnIds.push_back(j);
             break;

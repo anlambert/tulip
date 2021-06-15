@@ -30,7 +30,7 @@ class Histogram : public GlComposite {
 public:
   Histogram(Graph *graph, Graph *edgeGraph, std::unordered_map<edge, node> &edgeMap,
             const std::string &propertyName, const ElementType &dataLocation, const Coord &blCorner,
-            unsigned int size, const Color &backgroundColor, const Color &textColor);
+            uint size, const Color &backgroundColor, const Color &textColor);
   ~Histogram() override;
 
   const std::string &getPropertyName() const {
@@ -55,24 +55,24 @@ public:
     return glGraph;
   }
 
-  void setNbHistogramBins(const unsigned int nbHistogramBins) {
+  void setNbHistogramBins(const uint nbHistogramBins) {
     this->nbHistogramBins = nbHistogramBins;
   }
-  unsigned int getNbHistogramBins() const {
+  uint getNbHistogramBins() const {
     return nbHistogramBins;
   }
 
-  unsigned int getMaxBinSize() const {
+  uint getMaxBinSize() const {
     return maxBinSize;
   }
   double getHistogramBinsWidth() const {
     return binWidth;
   }
 
-  void setYAxisIncrementStep(const unsigned int yAxisIncrementStep) {
+  void setYAxisIncrementStep(const uint yAxisIncrementStep) {
     this->yAxisIncrementStep = yAxisIncrementStep;
   }
-  unsigned int getYAxisIncrementStep() const {
+  uint getYAxisIncrementStep() const {
     return yAxisIncrementStep;
   }
 
@@ -107,10 +107,10 @@ public:
     return yAxisLogScale;
   }
 
-  void setNbXGraduations(const unsigned int nbXGraduations) {
+  void setNbXGraduations(const uint nbXGraduations) {
     this->nbXGraduations = nbXGraduations;
   }
-  unsigned int getNbXGraduations() const {
+  uint getNbXGraduations() const {
     return nbXGraduations;
   }
 
@@ -189,15 +189,15 @@ private:
   Graph *graph;
   std::string propertyName;
   Coord blCorner;
-  unsigned int size;
-  unsigned int nbHistogramBins;
-  std::vector<std::vector<unsigned int>> histogramBins;
+  uint size;
+  uint nbHistogramBins;
+  std::vector<std::vector<uint>> histogramBins;
   double binWidth;
-  unsigned int maxBinSize;
+  uint maxBinSize;
   GlQuantitativeAxis *xAxis, *yAxis;
   bool xAxisLogScale, yAxisLogScale;
-  unsigned int nbXGraduations;
-  unsigned int yAxisIncrementStep;
+  uint nbXGraduations;
+  uint yAxisIncrementStep;
   LayoutProperty *histogramLayout, *histogramEdgeLayout;
   SizeProperty *histogramSize;
   GlComposite *histoBinsComposite;
@@ -206,7 +206,7 @@ private:
   std::vector<std::string> uniformQuantificationAxisLabels;
   bool uniformQuantification;
   bool cumulativeFreqHisto, lastCumulHisto;
-  std::unordered_map<unsigned int, std::pair<double, double>> binMinMaxMap;
+  std::unordered_map<uint, std::pair<double, double>> binMinMaxMap;
   std::string textureName;
   GlGraph *glGraph;
   Graph *edgeAsNodeGraph;

@@ -102,7 +102,7 @@ void DataSet::setData(const std::string &str, const DataType *value) {
   data[str] = val;
 }
 
-unsigned int DataSet::size() const {
+uint DataSet::size() const {
   return uint(data.size());
 }
 

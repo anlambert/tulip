@@ -105,8 +105,8 @@ public:
     }
 
     double avg_path_length = 0.;
-    unsigned int nbNodes = graph->numberOfNodes();
-    unsigned int count = 0;
+    uint nbNodes = graph->numberOfNodes();
+    uint count = 0;
 
     pluginProgress->showPreview(false);
 

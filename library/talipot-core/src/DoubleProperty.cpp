@@ -47,7 +47,7 @@ static void computeNodeAvgValue(
   }
 
   double value = 0;
-  unsigned int nbNodes = 0;
+  uint nbNodes = 0;
   for (auto n : sg->nodes()) {
     ++nbNodes;
     value += metric->getNodeValue(n);
@@ -62,7 +62,7 @@ static void computeEdgeAvgValue(
     AbstractProperty<tlp::DoubleType, tlp::DoubleType, tlp::NumericProperty> *metric, edge mE,
     Iterator<edge> *itE) {
   double value = 0;
-  unsigned int nbEdges = 0;
+  uint nbEdges = 0;
 
   for (auto e : itE) {
     ++nbEdges;
@@ -262,7 +262,7 @@ DoubleProperty::DoubleProperty(Graph *g, const std::string &n)
 }
 
 //===============================================================
-void DoubleProperty::nodesUniformQuantification(unsigned int k) {
+void DoubleProperty::nodesUniformQuantification(uint k) {
   std::map<double, int> nodeMapping;
   buildNodesUniformQuantification(graph, this, k, nodeMapping);
 
@@ -271,7 +271,7 @@ void DoubleProperty::nodesUniformQuantification(unsigned int k) {
   }
 }
 //===============================================================
-void DoubleProperty::edgesUniformQuantification(unsigned int k) {
+void DoubleProperty::edgesUniformQuantification(uint k) {
   std::map<double, int> edgeMapping;
   buildEdgesUniformQuantification(graph, this, k, edgeMapping);
 

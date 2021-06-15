@@ -474,7 +474,7 @@ template<T1, T2*>
 %End
 };
 
-%MappedType std::pair<unsigned int, unsigned int> /TypeHint="Tuple[int, int]"/{
+%MappedType std::pair<uint, uint> /TypeHint="Tuple[int, int]"/{
 %TypeHeaderCode
 #include <utility>
 %End
@@ -506,13 +506,13 @@ template<T1, T2*>
   int t1State = 0;
   int t2State = 0;
 
-  unsigned int ui1 = 0;
-  unsigned int ui2 = 0;
+  uint ui1 = 0;
+  uint ui2 = 0;
 
   ui1 = PyLong_AsUnsignedLong(itm1);
   ui2 = PyLong_AsUnsignedLong(itm2);
 
-  std::pair<unsigned int, unsigned int> *p = new std::pair<unsigned int, unsigned int>(ui1, ui2);
+  std::pair<uint, uint> *p = new std::pair<uint, uint>(ui1, ui2);
 
   *sipCppPtr = p;
   return sipGetState(sipTransferObj);

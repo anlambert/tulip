@@ -36,7 +36,7 @@ static constexpr std::string_view paramHelp[] = {
  */
 class RandomTreeGeneral : public ImportModule {
 
-  bool buildNode(node n, unsigned int sizeM, int arityMax) {
+  bool buildNode(node n, uint sizeM, int arityMax) {
     if (graph->numberOfNodes() >= sizeM) {
       return true;
     }
@@ -78,9 +78,9 @@ public:
     // initialize a random sequence according the given seed
     tlp::initRandomSequence();
 
-    unsigned int sizeMin = 10;
-    unsigned int sizeMax = 100;
-    unsigned int arityMax = 5;
+    uint sizeMin = 10;
+    uint sizeMax = 100;
+    uint arityMax = 5;
     bool needLayout = false;
 
     if (dataSet != nullptr) {
@@ -126,7 +126,7 @@ public:
 
     bool ok = true;
     int i = 0;
-    unsigned int nbTest = 0;
+    uint nbTest = 0;
 
     while (ok) {
       ++nbTest;

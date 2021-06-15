@@ -38,7 +38,7 @@ public:
   CaptionGraphicsItem(View *view);
   ~CaptionGraphicsItem() override;
 
-  void setType(unsigned int type);
+  void setType(uint type);
 
   void loadConfiguration();
 

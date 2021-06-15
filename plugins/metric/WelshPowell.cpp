@@ -23,7 +23,7 @@ public:
   CompNodes(Graph *g) : graph(g) {}
 
   bool operator()(const node u, const node v) const {
-    unsigned int du = graph->deg(u), dv = graph->deg(v);
+    uint du = graph->deg(u), dv = graph->deg(v);
 
     if (du == dv) {
       return u.id > v.id;
@@ -81,10 +81,10 @@ public:
 
   bool run() override {
     const std::vector<node> nodes = graph->nodes();
-    unsigned int nbNodes = nodes.size();
+    uint nbNodes = nodes.size();
     std::vector<nodeInfo> nodesInfo(nbNodes);
 
-    TLP_PARALLEL_MAP_NODES_AND_INDICES(graph, [&](const node n, unsigned int i) {
+    TLP_PARALLEL_MAP_NODES_AND_INDICES(graph, [&](const node n, uint i) {
       nodeInfo nInfo;
       nInfo.n = n, nInfo.val = graph->deg(n);
       nodesInfo[i] = nInfo;
@@ -93,9 +93,9 @@ public:
     // sort the nodes in descending order of their degrees
     sort(nodesInfo.begin(), nodesInfo.end(), nodesInfoCmp());
     // build a map
-    NodeVectorProperty<unsigned int> toNodesInfo(graph);
+    NodeVectorProperty<uint> toNodesInfo(graph);
 
-    TLP_PARALLEL_MAP_INDICES(nbNodes, [&](unsigned int i) {
+    TLP_PARALLEL_MAP_INDICES(nbNodes, [&](uint i) {
       nodeInfo &nInfo = nodesInfo[i];
       // initialize the value
       nInfo.val = -1;
@@ -103,17 +103,17 @@ public:
     });
 
     int currentColor = 0;
-    unsigned int numberOfColoredNodes = 0;
-    unsigned int minIndex = 0;
-    unsigned int maxIndex = nbNodes;
+    uint numberOfColoredNodes = 0;
+    uint minIndex = 0;
+    uint maxIndex = nbNodes;
 
     while (numberOfColoredNodes != nbNodes) {
 #ifndef NDEBUG
       cout << "nbColored :" << numberOfColoredNodes << endl;
 #endif
-      unsigned int nextMaxIndex = minIndex;
+      uint nextMaxIndex = minIndex;
 
-      for (unsigned int i = minIndex; i < maxIndex; ++i) {
+      for (uint i = minIndex; i < maxIndex; ++i) {
 #ifndef NDEBUG
         cout << "i:" << i << endl;
 #endif

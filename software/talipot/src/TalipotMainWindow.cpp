@@ -1359,7 +1359,7 @@ void TalipotMainWindow::CSVImport() {
   }
 
   // get the number of line displayed in the logger
-  unsigned int nbLogsBefore = _logger->countByType(TalipotLogger::Error);
+  uint nbLogsBefore = _logger->countByType(TalipotLogger::Error);
   nbLogsBefore += _logger->countByType(TalipotLogger::Warning);
 
   wizard.setGraph(g);
@@ -1379,7 +1379,7 @@ void TalipotMainWindow::CSVImport() {
 
     return;
   } else {
-    unsigned int nbLogsAfter = _logger->countByType(TalipotLogger::Error);
+    uint nbLogsAfter = _logger->countByType(TalipotLogger::Error);
     nbLogsAfter += _logger->countByType(TalipotLogger::Warning);
     applyDefaultLayout(g);
     bool openPanels = true;

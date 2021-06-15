@@ -517,11 +517,10 @@ void GlGraphHighDetailsRenderer::draw(float, Camera *camera) {
 void GlGraphHighDetailsRenderer::selectEntities(Camera *camera, RenderingEntitiesFlag type, int x,
                                                 int y, int w, int h,
                                                 vector<SelectedEntity> &selectedEntities) {
-  unordered_map<unsigned int, SelectedEntity> idToEntity;
-  unsigned int id = 1;
+  unordered_map<uint, SelectedEntity> idToEntity;
+  uint id = 1;
 
-  unsigned int size =
-      inputData->getGraph()->numberOfNodes() + inputData->getGraph()->numberOfEdges();
+  uint size = inputData->getGraph()->numberOfNodes() + inputData->getGraph()->numberOfEdges();
 
   // Allocate memory to store the result of the selection
   vector<std::array<GLuint, 4>> selectBuf(size);
@@ -543,9 +542,10 @@ void GlGraphHighDetailsRenderer::selectEntities(Camera *camera, RenderingEntitie
   }
 }
 //===================================================================
-void GlGraphHighDetailsRenderer::initSelectionRendering(
-    RenderingEntitiesFlag type, int x, int y, int w, int h,
-    unordered_map<unsigned int, SelectedEntity> &idMap, unsigned int &currentId) {
+void GlGraphHighDetailsRenderer::initSelectionRendering(RenderingEntitiesFlag type, int x, int y,
+                                                        int w, int h,
+                                                        unordered_map<uint, SelectedEntity> &idMap,
+                                                        uint &currentId) {
   selectionType = type;
   selectionIdMap = &idMap;
   selectionCurrentId = &currentId;

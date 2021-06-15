@@ -271,7 +271,7 @@ Sets the value component of the color in the HSV color space (must be in the ran
 
 %End
 
-  unsigned short operator[](const unsigned int i) const;
+  unsigned short operator[](const uint i) const;
 %MethodCode
   if (a0 < 4) {
     sipRes = (*sipCpp)[a0];

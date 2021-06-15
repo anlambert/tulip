@@ -23,7 +23,7 @@ const Color COLOR_SELECT = {255, 102, 255, 255};
 
 NodeColorMapping::NodeColorMapping(Graph *graph) : graph(graph) {}
 
-Color NodeColorMapping::getColor(double, unsigned int itemId) const {
+Color NodeColorMapping::getColor(double, uint itemId) const {
   Color ret;
 
   if (graph->getBooleanProperty("viewSelection")->getNodeValue(node(itemId))) {

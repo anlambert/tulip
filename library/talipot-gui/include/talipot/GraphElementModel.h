@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -24,7 +24,7 @@ namespace tlp {
 class TLP_QT_SCOPE GraphElementModel : public Model {
 
 public:
-  GraphElementModel(Graph *graph, unsigned int id, QObject *parent = nullptr);
+  GraphElementModel(Graph *graph, uint id, QObject *parent = nullptr);
 
   int rowCount(const QModelIndex &parent = QModelIndex()) const override;
   int columnCount(const QModelIndex &parent = QModelIndex()) const override;
@@ -34,8 +34,8 @@ public:
   QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
   QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-  virtual QString headerText(unsigned int id) const = 0;
-  virtual QVariant value(unsigned int id, PropertyInterface *prop) const = 0;
+  virtual QString headerText(uint id) const = 0;
+  virtual QVariant value(uint id, PropertyInterface *prop) const = 0;
 
   Qt::ItemFlags flags(const QModelIndex &index) const override;
 
@@ -45,20 +45,20 @@ protected:
   QVector<PropertyInterface *> getGraphProperties() const;
 
   Graph *_graph;
-  unsigned int _id;
+  uint _id;
 };
 
 class TLP_QT_SCOPE GraphNodeElementModel : public GraphElementModel {
 
 public:
-  GraphNodeElementModel(Graph *graph, unsigned int id, QObject *parent = nullptr)
+  GraphNodeElementModel(Graph *graph, uint id, QObject *parent = nullptr)
       : GraphElementModel(graph, id, parent) {}
 
-  QString headerText(unsigned int id) const override {
+  QString headerText(uint id) const override {
     return QString("node: ") + QString::number(id);
   }
 
-  QVariant value(unsigned int id, PropertyInterface *prop) const override {
+  QVariant value(uint id, PropertyInterface *prop) const override {
     return GraphModel::nodeValue(id, prop);
   }
 
@@ -68,14 +68,14 @@ public:
 class TLP_QT_SCOPE GraphEdgeElementModel : public GraphElementModel {
 
 public:
-  GraphEdgeElementModel(Graph *graph, unsigned int id, QObject *parent = nullptr)
+  GraphEdgeElementModel(Graph *graph, uint id, QObject *parent = nullptr)
       : GraphElementModel(graph, id, parent) {}
 
-  QString headerText(unsigned int id) const override {
+  QString headerText(uint id) const override {
     return QString("edge: ") + QString::number(id);
   }
 
-  QVariant value(unsigned int id, PropertyInterface *prop) const override {
+  QVariant value(uint id, PropertyInterface *prop) const override {
     return GraphModel::edgeValue(id, prop);
   }
 

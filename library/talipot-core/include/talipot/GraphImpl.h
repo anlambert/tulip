@@ -47,7 +47,7 @@ public:
   }
   edge existEdge(const node source, const node target, bool directed = true) const override;
   node addNode() override;
-  std::vector<node> addNodes(unsigned int nb) override;
+  std::vector<node> addNodes(uint nb) override;
   void addNode(const node) override;
   void addNodes(const std::vector<node> &nodes) override;
   edge addEdge(const node, const node) override;
@@ -76,7 +76,7 @@ public:
   const std::vector<node> &nodes() const override {
     return storage.nodes();
   }
-  unsigned int nodePos(const node n) const override {
+  uint nodePos(const node n) const override {
     return storage.nodePos(n);
   }
   Iterator<node> *getNodes() const override;
@@ -86,7 +86,7 @@ public:
   const std::vector<edge> &edges() const override {
     return storage.edges();
   }
-  unsigned int edgePos(const edge e) const override {
+  uint edgePos(const edge e) const override {
     return storage.edgePos(e);
   }
   Iterator<edge> *getEdges() const override;
@@ -103,15 +103,15 @@ public:
     return storage.incidence(n);
   }
   //========================================================================
-  unsigned int deg(const node n) const override {
+  uint deg(const node n) const override {
     assert(isElement(n));
     return storage.deg(n);
   }
-  unsigned int indeg(const node n) const override {
+  uint indeg(const node n) const override {
     assert(isElement(n));
     return storage.indeg(n);
   }
-  unsigned int outdeg(const node n) const override {
+  uint outdeg(const node n) const override {
     assert(isElement(n));
     return storage.outdeg(n);
   }
@@ -142,10 +142,10 @@ public:
   void setEnds(const edge, const node, const node) override;
   void reverse(const edge) override;
   //=======================================================================
-  unsigned int numberOfEdges() const override {
+  uint numberOfEdges() const override {
     return storage.numberOfEdges();
   }
-  unsigned int numberOfNodes() const override {
+  uint numberOfNodes() const override {
     return storage.numberOfNodes();
   }
   void sortElts() override {
@@ -166,13 +166,13 @@ public:
   void treatEvents(const std::vector<Event> &) override;
 
   // for subgraph id management
-  unsigned int getSubGraphId(unsigned int id);
-  void freeSubGraphId(unsigned int id);
+  uint getSubGraphId(uint id);
+  void freeSubGraphId(uint id);
 
   // to improve memory allocation
   // attempt to reserve enough space to store nodes/edges
-  void reserveNodes(unsigned int nbNodes) override;
-  void reserveEdges(unsigned int nbEdges) override;
+  void reserveNodes(uint nbNodes) override;
+  void reserveEdges(uint nbEdges) override;
 
 protected:
   // designed to reassign an id to a previously deleted elt

@@ -267,7 +267,7 @@ bool tlp::AbstractProperty<NodeType, EdgeType, PropType>::hasNonDefaultValuatedN
 }
 //============================================================
 template <class NodeType, class EdgeType, class PropType>
-unsigned int tlp::AbstractProperty<NodeType, EdgeType, PropType>::numberOfNonDefaultValuatedNodes(
+uint tlp::AbstractProperty<NodeType, EdgeType, PropType>::numberOfNonDefaultValuatedNodes(
     const Graph *g) const {
   if (g == nullptr) {
     return nodeProperties.numberOfNonDefaultValues();
@@ -277,7 +277,7 @@ unsigned int tlp::AbstractProperty<NodeType, EdgeType, PropType>::numberOfNonDef
 }
 //============================================================
 template <class NodeType, class EdgeType, class PropType>
-unsigned int tlp::AbstractProperty<NodeType, EdgeType, PropType>::nodeValueSize() const {
+uint tlp::AbstractProperty<NodeType, EdgeType, PropType>::nodeValueSize() const {
   return NodeType::valueSize();
 }
 //============================================================
@@ -344,7 +344,7 @@ bool tlp::AbstractProperty<NodeType, EdgeType, PropType>::hasNonDefaultValuatedE
 }
 //============================================================
 template <class NodeType, class EdgeType, class PropType>
-unsigned int tlp::AbstractProperty<NodeType, EdgeType, PropType>::numberOfNonDefaultValuatedEdges(
+uint tlp::AbstractProperty<NodeType, EdgeType, PropType>::numberOfNonDefaultValuatedEdges(
     const Graph *g) const {
   if (g == nullptr) {
     return edgeProperties.numberOfNonDefaultValues();
@@ -354,7 +354,7 @@ unsigned int tlp::AbstractProperty<NodeType, EdgeType, PropType>::numberOfNonDef
 }
 //============================================================
 template <class NodeType, class EdgeType, class PropType>
-unsigned int tlp::AbstractProperty<NodeType, EdgeType, PropType>::edgeValueSize() const {
+uint tlp::AbstractProperty<NodeType, EdgeType, PropType>::edgeValueSize() const {
   return EdgeType::valueSize();
 }
 //============================================================
@@ -803,7 +803,7 @@ bool tlp::AbstractVectorProperty<VecType, EltType, PropType>::setEdgeStringValue
 //============================================================
 template <typename VecType, typename EltType, typename PropType>
 void tlp::AbstractVectorProperty<VecType, EltType, PropType>::setNodeEltValue(
-    const node n, unsigned int i, TYPE_CONST_REFERENCE(EltType) v) {
+    const node n, uint i, TYPE_CONST_REFERENCE(EltType) v) {
   assert(n.isValid());
   bool isNotDefault;
   TYPE_REFERENCE(VecType)
@@ -825,7 +825,7 @@ void tlp::AbstractVectorProperty<VecType, EltType, PropType>::setNodeEltValue(
 template <typename VecType, typename EltType, typename PropType>
 TYPE_CONST_REFERENCE(EltType)
 tlp::AbstractVectorProperty<VecType, EltType, PropType>::getNodeEltValue(const node n,
-                                                                         unsigned int i) const {
+                                                                         uint i) const {
   assert(n.isValid());
   TYPE_CONST_REFERENCE(VecType)
   vect = AbstractProperty<VecType, VecType, PropType>::nodeProperties.get(n);
@@ -882,7 +882,7 @@ void tlp::AbstractVectorProperty<VecType, EltType, PropType>::resizeNodeValue(co
 //============================================================
 template <typename VecType, typename EltType, typename PropType>
 void tlp::AbstractVectorProperty<VecType, EltType, PropType>::setEdgeEltValue(
-    const edge e, unsigned int i, TYPE_CONST_REFERENCE(EltType) v) {
+    const edge e, uint i, TYPE_CONST_REFERENCE(EltType) v) {
   assert(e.isValid());
   bool isNotDefault;
   TYPE_REFERENCE(VecType)
@@ -904,7 +904,7 @@ void tlp::AbstractVectorProperty<VecType, EltType, PropType>::setEdgeEltValue(
 template <typename VecType, typename EltType, typename PropType>
 TYPE_CONST_REFERENCE(EltType)
 tlp::AbstractVectorProperty<VecType, EltType, PropType>::getEdgeEltValue(const edge e,
-                                                                         unsigned int i) const {
+                                                                         uint i) const {
   assert(e.isValid());
   TYPE_CONST_REFERENCE(VecType)
   vect = AbstractProperty<VecType, VecType, PropType>::edgeProperties.get(e);

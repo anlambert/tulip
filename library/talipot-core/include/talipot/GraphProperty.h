@@ -64,10 +64,10 @@ public:
   bool readNodeValue(std::istream &iss, node n) override;
   // GraphType encapsulates a Graph pointer but that is the graph id
   // that gets serialized when using the TLPB format
-  unsigned int nodeValueSize() const override {
-    return sizeof(unsigned int);
+  uint nodeValueSize() const override {
+    return sizeof(uint);
   }
-  unsigned int edgeValueSize() const override {
+  uint edgeValueSize() const override {
     return 0;
   }
 

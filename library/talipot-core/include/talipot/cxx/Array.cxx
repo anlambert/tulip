@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -11,12 +11,14 @@
  *
  */
 
+#include <talipot/config.h>
+
 //=================================================================
 template <typename T, size_t N>
 std::ostream &tlp::operator<<(std::ostream &os, const tlp::Array<T, N> &a) {
   os << "(";
 
-  for (unsigned int i = 0; i < N; ++i) {
+  for (uint i = 0; i < N; ++i) {
     if (i > 0) {
       os << ",";
     }
@@ -44,7 +46,7 @@ std::istream &tlp::operator>>(std::istream &is, tlp::Array<T, N> &outA) {
     return is;
   }
 
-  for (unsigned int i = 0; i < N; ++i) {
+  for (uint i = 0; i < N; ++i) {
     bool ok;
 
     if (i > 0) {

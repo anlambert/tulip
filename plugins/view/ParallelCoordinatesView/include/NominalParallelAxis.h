@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -33,7 +33,7 @@ public:
 
   Coord getLabelCoord(const std::string &label);
 
-  Coord getPointCoordOnAxisForData(const unsigned int dataIdx) override;
+  Coord getPointCoordOnAxisForData(const uint dataIdx) override;
 
   void showConfigDialog() override;
 
@@ -55,8 +55,8 @@ public:
     return " ";
   }
 
-  const std::set<unsigned int> &getDataInSlidersRange() override;
-  void updateSlidersWithDataSubset(const std::set<unsigned int> &dataSubset) override;
+  const std::set<uint> &getDataInSlidersRange() override;
+  void updateSlidersWithDataSubset(const std::set<uint> &dataSubset) override;
 
 private:
   GlNominativeAxis *glNominativeAxis;

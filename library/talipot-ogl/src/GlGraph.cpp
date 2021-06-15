@@ -109,7 +109,7 @@ void GlGraph::getXML(string &outString) {
   GlXMLTools::createProperty(outString, "type", "GlGraph", "GlEntity");
 }
 //====================================================
-void GlGraph::setWithXML(const string &, unsigned int &) {}
+void GlGraph::setWithXML(const string &, uint &) {}
 
 void GlGraph::treatEvent(const Event &evt) {
   const auto *graphEvent = dynamic_cast<const GraphEvent *>(&evt);

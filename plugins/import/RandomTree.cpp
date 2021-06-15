@@ -33,7 +33,7 @@ static constexpr std::string_view paramHelp[] = {
  */
 class RandomTree : public ImportModule {
 
-  bool buildNode(node n, unsigned int sizeM) {
+  bool buildNode(node n, uint sizeM) {
     if (graph->numberOfNodes() >= sizeM - 1) {
       return false;
     }
@@ -61,8 +61,8 @@ public:
   PLUGININFORMATION("Uniform Random Binary Tree", "Auber", "16/02/2001",
                     "Imports a new randomly generated uniform binary tree.", "1.1", "Graph")
   RandomTree(tlp::PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("Minimum size", paramHelp[0].data(), "50");
-    addInParameter<unsigned int>("Maximum size", paramHelp[1].data(), "60");
+    addInParameter<uint>("Minimum size", paramHelp[0].data(), "50");
+    addInParameter<uint>("Maximum size", paramHelp[1].data(), "60");
     addInParameter<bool>("tree layout", paramHelp[2].data(), "false");
     addDependency("Tree Leaf", "1.0");
   }
@@ -71,8 +71,8 @@ public:
     // initialize a random sequence according the given seed
     tlp::initRandomSequence();
 
-    unsigned int minSize = 100;
-    unsigned int maxSize = 1000;
+    uint minSize = 100;
+    uint maxSize = 1000;
     bool needLayout = false;
 
     if (dataSet != nullptr) {

@@ -48,7 +48,7 @@ public:
    * Returns the Unicode code point associated to an icon name
    * @param iconName the name of the icon to get the codepoint
    */
-  static unsigned int getIconCodePoint(const std::string &iconName);
+  static uint getIconCodePoint(const std::string &iconName);
 
   /**
    * Returns the font family name associated to an icon name

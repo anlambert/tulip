@@ -22,9 +22,8 @@ class LinLogLayout {
 public:
   LinLogLayout(tlp::Graph *_graph, tlp::PluginProgress *pluginProgress);
   bool initAlgo(tlp::LayoutProperty *_layoutResult, tlp::NumericProperty *_weight,
-                double _attrExponent, double _repuExponent, double _gravFactor,
-                unsigned int _max_iter, bool _is3D, bool _useOctTree,
-                tlp::BooleanProperty *_skipNodes);
+                double _attrExponent, double _repuExponent, double _gravFactor, uint _max_iter,
+                bool _is3D, bool _useOctTree, tlp::BooleanProperty *_skipNodes);
 
   bool startAlgo();
 
@@ -37,9 +36,9 @@ private:
 
   tlp::PluginProgress *pluginProgress;
 
-  unsigned int _dim;     // 2 or 3;
-  unsigned int _nbNodes; // number of nodes in the graph
-  unsigned int max_iter; // the max number of iterations
+  uint _dim;     // 2 or 3;
+  uint _nbNodes; // number of nodes in the graph
+  uint max_iter; // the max number of iterations
   bool useOctTree;
 
   /** Factor for repulsion energy. */

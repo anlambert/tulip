@@ -84,7 +84,7 @@ bool PathAlgorithm::computePath(Graph *graph, PathType pathType, EdgeOrientation
     if (!weights) {
       eWeights.setAll(SMALLEST_WEIGHT);
     } else {
-      auto fn = [&](edge e, unsigned int i) {
+      auto fn = [&](edge e, uint i) {
         double val(weights->getEdgeValue(e));
 
         eWeights[i] = val ? val : SMALLEST_WEIGHT;

@@ -371,10 +371,10 @@ template<TYPE*>
 };
 
 // ****************************************************
-// Specialization for std::vector<unsigned int>
+// Specialization for std::vector<uint>
 // ****************************************************
 
-%MappedType std::vector<unsigned int> /TypeHint="List[int]"/ {
+%MappedType std::vector<uint> /TypeHint="List[int]"/ {
 %TypeHeaderCode
 #include <vector>
 %End
@@ -415,7 +415,7 @@ template<TYPE*>
   }
 
   // Convert Python list of integers to a std::vector<int>
-  std::vector<unsigned int> *v = new std::vector<unsigned int>();
+  std::vector<uint> *v = new std::vector<uint>();
   v->reserve(PyList_GET_SIZE(sipPy));
   for (SIP_SSIZE_T i = 0; i < PyList_GET_SIZE(sipPy); ++i) {
     v->push_back(uint(PyLong_AsUnsignedLong(PyList_GET_ITEM(sipPy, i))));

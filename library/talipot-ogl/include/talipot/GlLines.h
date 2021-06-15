@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -33,32 +33,32 @@ struct TLP_GL_SCOPE GlLines {
   static void glDrawPoint(const Coord &p);
 
   static void glDrawLine(const Coord &startPoint, const Coord &endPoint, const double width,
-                         const unsigned int stippleType, const Color &startColor,
-                         const Color &endColor, const bool arrow = false,
-                         const double arrowWidth = 1, const double arrowHeight = 1);
+                         const uint stippleType, const Color &startColor, const Color &endColor,
+                         const bool arrow = false, const double arrowWidth = 1,
+                         const double arrowHeight = 1);
   static void glDrawCurve(const Coord &startPoint, const std::vector<Coord> &bends,
-                          const Coord &endPoint, const double width, const unsigned int stippleType,
+                          const Coord &endPoint, const double width, const uint stippleType,
                           const Color &startColor, const Color &endColor, const bool arrow = false,
                           const double arrowWidth = 1, const double arrowHeight = 1);
   static void glDrawBezierCurve(const Coord &startPoint, const std::vector<Coord> &bends,
-                                const Coord &endPoint, unsigned int steps, const double width,
-                                const unsigned int stippleType, const Color &startColor,
+                                const Coord &endPoint, uint steps, const double width,
+                                const uint stippleType, const Color &startColor,
                                 const Color &endColor, const bool arrow = false,
                                 const double arrowWidth = 1, const double arrowHeight = 1);
   static void glDrawSplineCurve(const Coord &startPoint, const std::vector<Coord> &bends,
-                                const Coord &endPoint, unsigned int steps, const double width,
-                                const unsigned int stippleType, const Color &startColor,
+                                const Coord &endPoint, uint steps, const double width,
+                                const uint stippleType, const Color &startColor,
                                 const Color &endColor, const bool arrow = false,
                                 const double arrowWidth = 1, const double arrowHeight = 1);
   static void glDrawSpline2Curve(const Coord &startPoint, const std::vector<Coord> &bends,
-                                 const Coord &endPoint, unsigned int steps, const double width,
-                                 const unsigned int stippleType, const Color &startColor,
+                                 const Coord &endPoint, uint steps, const double width,
+                                 const uint stippleType, const Color &startColor,
                                  const Color &endColor, const bool arrow = false,
                                  const double arrowWidth = 1, const double arrowHeight = 1);
 
 private:
-  static void glDisableLineStipple(unsigned int stippleType);
-  static void glEnableLineStipple(unsigned int stippleType);
+  static void glDisableLineStipple(uint stippleType);
+  static void glEnableLineStipple(uint stippleType);
   static GLfloat *buildCurvePoints(const Coord &startPoint, const std::vector<Coord> &bends,
                                    const Coord &endPoint);
   static GLfloat *buildCurvePoints(const Coord &p0, const Coord &p1, const Coord &p2,

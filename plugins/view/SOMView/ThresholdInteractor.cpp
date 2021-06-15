@@ -422,7 +422,7 @@ void ThresholdInteractor::performSelection(SOMView *view, tlp::Iterator<node> *i
   // If we are using normalized values we display unnormalized values, to compare them we need to
   // renormalize them
   InputSample &inputSample = view->getInputSample();
-  unsigned int propertyIndex = inputSample.findIndexForProperty(view->getSelectedProperty());
+  uint propertyIndex = inputSample.findIndexForProperty(view->getSelectedProperty());
   double rightSliderRealValue = inputSample.isUsingNormalizedValues()
                                     ? inputSample.normalize(rSlider->getValue(), propertyIndex)
                                     : rSlider->getValue();
@@ -504,7 +504,7 @@ void ThresholdInteractor::buildSliders(SOMView *somView) {
   }
 
   InputSample &inputSample = somView->getInputSample();
-  unsigned int propertyIndex = inputSample.findIndexForProperty(somView->getSelectedProperty());
+  uint propertyIndex = inputSample.findIndexForProperty(somView->getSelectedProperty());
 
   if (textureName.empty()) {
     generateSliderTexture();

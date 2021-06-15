@@ -196,7 +196,7 @@ private:
 
   // (it helps to calculate an embedding of G, if G is planar);
   MutableContainer<bool> hasBackEdge;
-  unsigned int numberOfNodesInG;
+  uint numberOfNodesInG;
 };
 }
 

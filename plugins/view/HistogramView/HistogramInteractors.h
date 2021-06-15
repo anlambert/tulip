@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -27,7 +27,7 @@ class HistoStatsConfigWidget;
 class HistogramInteractor : public NodeLinkDiagramViewInteractor {
 
 public:
-  HistogramInteractor(const QIcon &icon, const QString &text, const unsigned int priority = 0);
+  HistogramInteractor(const QIcon &icon, const QString &text, const uint priority = 0);
 
   bool isCompatible(const std::string &viewName) const override;
 };

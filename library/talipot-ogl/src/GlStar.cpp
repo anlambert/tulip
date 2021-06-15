@@ -19,7 +19,7 @@ using namespace std;
 
 namespace tlp {
 
-GlStar::GlStar(const Coord &position, const Size &size, unsigned int numberOfStarPoints,
+GlStar::GlStar(const Coord &position, const Size &size, uint numberOfStarPoints,
                const Color &fillColor, const Color &outlineColor, bool outlined,
                const string &textureName, float outlineSize)
     : GlComplexPolygon(vector<Coord>(), fillColor, outlineColor, 0, textureName),
@@ -34,7 +34,7 @@ GlStar::GlStar(const Coord &position, const Size &size, unsigned int numberOfSta
 //=====================================================
 GlStar::~GlStar() = default;
 //=====================================================
-unsigned int GlStar::getNumberOfStarPoints() const {
+uint GlStar::getNumberOfStarPoints() const {
   return numberOfStarPoints;
 }
 //=====================================================
@@ -45,7 +45,7 @@ void GlStar::computeStar() {
   vector<Coord> points;
   auto delta = float(2.0 * M_PI / numberOfStarPoints);
 
-  for (unsigned int i = 0; i < numberOfStarPoints; ++i) {
+  for (uint i = 0; i < numberOfStarPoints; ++i) {
     float deltaX = cos(i * delta + startAngle);
     float deltaY = sin(i * delta + startAngle);
     points.push_back(Coord(deltaX, deltaY, 0));

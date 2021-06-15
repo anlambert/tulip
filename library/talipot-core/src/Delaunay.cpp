@@ -34,9 +34,8 @@ using namespace tlp;
 typedef Matrix<long double, 3> Mat3ld;
 typedef Vector<long double, 3> Vec3ld;
 
-static bool runQHull(int dim, vector<double> &points,
-                     vector<pair<unsigned int, unsigned int>> &edges,
-                     vector<vector<unsigned int>> &simplices) {
+static bool runQHull(int dim, vector<double> &points, vector<pair<uint, uint>> &edges,
+                     vector<vector<uint>> &simplices) {
 
   // Set default options for qhull delaunay triangulation
   // - Qt : triangulated output
@@ -62,7 +61,7 @@ static bool runQHull(int dim, vector<double> &points,
 
   if (!qhullKo) {
 
-    set<pair<unsigned int, unsigned int>> placedEdges;
+    set<pair<uint, uint>> placedEdges;
 
 // call qhull delaunay triangulation
 #ifdef HAVE_REENTRANT_QHULL
@@ -110,7 +109,7 @@ static bool runQHull(int dim, vector<double> &points,
           ++i;
         }
 
-        vector<unsigned int> simplex;
+        vector<uint> simplex;
         pair edge1 = {min(pointId0, pointId1), max(pointId0, pointId1)};
         pair edge2 = {min(pointId1, pointId2), max(pointId1, pointId2)};
         pair edge3 = {min(pointId2, pointId0), max(pointId2, pointId0)};
@@ -276,7 +275,7 @@ static tlp::Coord computeTetrahedronCircumscribedCenter(const tlp::Coord &A, con
 //================================================================================================
 
 struct Face {
-  Face(unsigned int n1 = UINT_MAX, unsigned int n2 = UINT_MAX, unsigned int n3 = UINT_MAX) {
+  Face(uint n1 = UINT_MAX, uint n2 = UINT_MAX, uint n3 = UINT_MAX) {
     sortedIndexes.reserve(3);
     sortedIndexes.push_back(n1);
     sortedIndexes.push_back(n2);
@@ -293,10 +292,10 @@ struct Face {
     return sortedIndexes[0] != UINT_MAX && sortedIndexes[1] != UINT_MAX;
   }
 
-  unsigned int size() const {
-    unsigned int ret = 0;
+  uint size() const {
+    uint ret = 0;
 
-    for (unsigned int i = 0; i < 3; ++i) {
+    for (uint i = 0; i < 3; ++i) {
       if (sortedIndexes[i] != UINT_MAX) {
         ++ret;
       }
@@ -305,7 +304,7 @@ struct Face {
     return ret;
   }
 
-  vector<unsigned int> sortedIndexes;
+  vector<uint> sortedIndexes;
 };
 
 namespace std {
@@ -323,9 +322,8 @@ struct hash<Face> {
 
 //================================================================================================
 
-bool tlp::delaunayTriangulation(vector<Coord> &points,
-                                vector<pair<unsigned int, unsigned int>> &edges,
-                                vector<vector<unsigned int>> &simplices, bool voronoiMode) {
+bool tlp::delaunayTriangulation(vector<Coord> &points, vector<pair<uint, uint>> &edges,
+                                vector<vector<uint>> &simplices, bool voronoiMode) {
 
   vector<double> pointsQHull;
   BoundingBox bb;
@@ -486,10 +484,10 @@ static void addVoronoiEdge(VoronoiDiagram &voronoiDiagram, const Face &face,
 
 bool tlp::voronoiDiagram(vector<Coord> &sites, VoronoiDiagram &voronoiDiagram) {
 
-  vector<pair<unsigned int, unsigned int>> edges;
-  vector<vector<unsigned int>> simplices;
+  vector<pair<uint, uint>> edges;
+  vector<vector<uint>> simplices;
   voronoiDiagram.sites = sites;
-  unsigned int nbSites = sites.size();
+  uint nbSites = sites.size();
 
   // compute the Delaunay triangulation (some dummy sites will be added in the sites vector
   // in order to have a connected voronoi cell for each input sites)
@@ -498,14 +496,14 @@ bool tlp::voronoiDiagram(vector<Coord> &sites, VoronoiDiagram &voronoiDiagram) {
   // now compute the dual voronoi diagram
   if (ret) {
     // Iterate over each delaunay simplex
-    std::unordered_map<Face, unsigned int> faceToCircumCenter;
-    map<Coord, unsigned int> circumCenterToIdx;
+    std::unordered_map<Face, uint> faceToCircumCenter;
+    map<Coord, uint> circumCenterToIdx;
     tlp::Coord A, B, C, D;
 
     for (const auto &simplex : simplices) {
-      vector<unsigned int> sitesIdx;
+      vector<uint> sitesIdx;
 
-      unsigned int j = 0;
+      uint j = 0;
       for (auto idx : simplex) {
         if (j == 0) {
           A = sites[idx];
@@ -522,7 +520,7 @@ bool tlp::voronoiDiagram(vector<Coord> &sites, VoronoiDiagram &voronoiDiagram) {
 
       bool treatSimplex = false;
 
-      for (unsigned int j : sitesIdx) {
+      for (uint j : sitesIdx) {
         if (j < nbSites) {
           treatSimplex = true;
           break;
@@ -543,7 +541,7 @@ bool tlp::voronoiDiagram(vector<Coord> &sites, VoronoiDiagram &voronoiDiagram) {
         circumCenterPos = computeTetrahedronCircumscribedCenter(A, B, C, D);
       }
 
-      unsigned int circumCenterIdx = 0;
+      uint circumCenterIdx = 0;
 
       if (circumCenterToIdx.find(circumCenterPos) != circumCenterToIdx.end()) {
         circumCenterIdx = circumCenterToIdx[circumCenterPos];
@@ -606,7 +604,7 @@ bool tlp::voronoiDiagram(vector<Coord> &sites, VoronoiDiagram &voronoiDiagram) {
     // compute the voronoi cells associated to sites
     voronoiDiagram.cells.reserve(nbSites);
 
-    for (unsigned int i = 0; i < nbSites; ++i) {
+    for (uint i = 0; i < nbSites; ++i) {
       VoronoiDiagram::Cell cell;
       const vector<VoronoiDiagram::Edge> &voronoiEdges = voronoiDiagram.voronoiEdgesForSite(i);
 

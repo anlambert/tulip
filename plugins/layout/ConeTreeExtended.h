@@ -58,7 +58,7 @@ private:
                      std::unordered_map<tlp::node, double> *posRelY);
   void calcLayout(tlp::node n, std::unordered_map<tlp::node, double> *px,
                   std::unordered_map<tlp::node, double> *py, double x, double y, int level);
-  void computeLayerSize(tlp::node n, unsigned int level);
+  void computeLayerSize(tlp::node n, uint level);
   void computeYCoodinates(tlp::node root);
   tlp::Graph *tree;
   tlp::SizeProperty *nodeSize;

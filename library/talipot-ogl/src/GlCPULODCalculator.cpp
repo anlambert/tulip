@@ -60,13 +60,13 @@ void GlCPULODCalculator::addEdgeBoundingBox(Graph *graph, edge e, const Bounding
 BoundingBox GlCPULODCalculator::getSceneBoundingBox() {
   BoundingBox bb = bbs[0];
 
-  for (unsigned int i = 1; i < bbs.size(); ++i) {
+  for (uint i = 1; i < bbs.size(); ++i) {
     bb.expand(bbs[i]);
   }
   return bb;
 }
 
-void GlCPULODCalculator::reserveMemoryForGraphElts(unsigned int nbNodes, unsigned int nbEdges) {
+void GlCPULODCalculator::reserveMemoryForGraphElts(uint nbNodes, uint nbEdges) {
   currentLayerLODUnit->nodesLODVector.resize(nbNodes);
   currentLayerLODUnit->edgesLODVector.resize(nbEdges);
 }
@@ -95,10 +95,10 @@ void GlCPULODCalculator::computeFor3DCamera(LayerLODUnit *layerLODUnit, const Co
                                             const Vec4i &globalViewport,
                                             const Vec4i &currentViewport) {
 
-  unsigned int nb = 0;
+  uint nb = 0;
   if ((renderingEntitiesFlag & RenderingEntities) != 0) {
     nb = layerLODUnit->entitiesLODVector.size();
-    TLP_PARALLEL_MAP_INDICES(nb, [&](unsigned int i) {
+    TLP_PARALLEL_MAP_INDICES(nb, [&](uint i) {
       layerLODUnit->entitiesLODVector[i].lod =
           calculateAABBSize(layerLODUnit->entitiesLODVector[i].boundingBox, eye, transformMatrix,
                             globalViewport, currentViewport);
@@ -107,7 +107,7 @@ void GlCPULODCalculator::computeFor3DCamera(LayerLODUnit *layerLODUnit, const Co
 
   if ((renderingEntitiesFlag & RenderingNodes) != 0) {
     nb = layerLODUnit->nodesLODVector.size();
-    TLP_PARALLEL_MAP_INDICES(nb, [&](unsigned int i) {
+    TLP_PARALLEL_MAP_INDICES(nb, [&](uint i) {
       layerLODUnit->nodesLODVector[i].lod =
           calculateAABBSize(layerLODUnit->nodesLODVector[i].boundingBox, eye, transformMatrix,
                             globalViewport, currentViewport);
@@ -118,14 +118,13 @@ void GlCPULODCalculator::computeFor3DCamera(LayerLODUnit *layerLODUnit, const Co
     nb = layerLODUnit->edgesLODVector.size();
 
     if (computeEdgesLOD) {
-      TLP_PARALLEL_MAP_INDICES(nb, [&](unsigned int i) {
+      TLP_PARALLEL_MAP_INDICES(nb, [&](uint i) {
         layerLODUnit->edgesLODVector[i].lod =
             calculateAABBSize(layerLODUnit->edgesLODVector[i].boundingBox, eye, transformMatrix,
                               globalViewport, currentViewport);
       });
     } else {
-      TLP_PARALLEL_MAP_INDICES(nb,
-                               [&](unsigned int i) { layerLODUnit->edgesLODVector[i].lod = 10; });
+      TLP_PARALLEL_MAP_INDICES(nb, [&](uint i) { layerLODUnit->edgesLODVector[i].lod = 10; });
     }
   }
 }

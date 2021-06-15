@@ -83,7 +83,7 @@ class EdgeCardinalityCalculator : public IntegerMinMaxProperty::MetaValueCalcula
 public:
   void computeMetaValue(AbstractProperty<IntegerType, IntegerType, NumericProperty> *card, edge mE,
                         Iterator<edge> *itE, Graph *) override {
-    unsigned int nbEdges = iteratorCount(itE);
+    uint nbEdges = iteratorCount(itE);
     card->setEdgeValue(mE, nbEdges);
   }
 };
@@ -322,7 +322,7 @@ public:
 
           // compute cardinaly if needed
           if (cardProp) {
-            unsigned int card = cardProp->getEdgeValue(mE) + cardProp->getEdgeValue(op);
+            uint card = cardProp->getEdgeValue(mE) + cardProp->getEdgeValue(op);
 
             if (opOK) {
               cardProp->setEdgeValue(op, card);

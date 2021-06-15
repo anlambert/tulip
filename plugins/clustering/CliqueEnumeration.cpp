@@ -24,8 +24,8 @@ using namespace std;
 //================================================================================
 CliqueEnumeration::CliqueEnumeration(tlp::PluginContext *context)
     : Algorithm(context), minsize(0), cliqueid(0) {
-  addInParameter<unsigned int>("minimum size", "Clique minimum size", "0");
-  addOutParameter<unsigned int>("#cliques created", "Number of cliques (subgraphs) created");
+  addInParameter<uint>("minimum size", "Clique minimum size", "0");
+  addOutParameter<uint>("#cliques created", "Number of cliques (subgraphs) created");
 }
 
 //================================================================================
@@ -44,10 +44,10 @@ void CliqueEnumeration::getNeighborhood(const node u, set<node> &neigh) {
 //================================================================================
 node CliqueEnumeration::choosePivot(const set<node> &C) {
   node pivot;
-  unsigned int maxinter = 0;
+  uint maxinter = 0;
 
   for (auto c : C) {
-    unsigned int inter = 0;
+    uint inter = 0;
     for (auto v : graph->getInOutNodes(c)) {
       if (C.find(v) != C.end()) {
         inter++;
@@ -106,7 +106,7 @@ void CliqueEnumeration::maxCliquePivot(set<node> &P, const vector<node> &R, set<
 //================================================================================
 struct DegreeOrderingElem {
   DegreeOrderingElem() : deg(0) {}
-  DegreeOrderingElem(tlp::node n, unsigned int deg) : n(n), deg(deg) {}
+  DegreeOrderingElem(tlp::node n, uint deg) : n(n), deg(deg) {}
   bool operator==(const DegreeOrderingElem &b) const {
     return n == b.n;
   }
@@ -114,7 +114,7 @@ struct DegreeOrderingElem {
     return n != b.n;
   }
   tlp::node n;
-  unsigned int deg;
+  uint deg;
 };
 
 //================================================================================
@@ -166,20 +166,20 @@ bool CliqueEnumeration::run() {
   vector<node> ordering;
   getDegenerateOrdering(ordering);
 
-  for (unsigned int i = 0; i < ordering.size(); ++i) {
+  for (uint i = 0; i < ordering.size(); ++i) {
     set<node> neighu;
     getNeighborhood(ordering[i], neighu);
     set<node> P, X;
     vector<node> R;
     R.push_back(ordering[i]);
 
-    for (unsigned int j = 0; j <= i; ++j) {
+    for (uint j = 0; j <= i; ++j) {
       if (neighu.find(ordering[j]) != neighu.end()) {
         X.insert(ordering[j]);
       }
     }
 
-    for (unsigned int j = i + 1; j < ordering.size(); ++j) {
+    for (uint j = i + 1; j < ordering.size(); ++j) {
       if (neighu.find(ordering[j]) != neighu.end()) {
         P.insert(ordering[j]);
       }

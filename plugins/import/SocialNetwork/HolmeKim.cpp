@@ -44,14 +44,14 @@ struct HolmeKim : public ImportModule {
                     "1.0", "Social network")
 
   HolmeKim(PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "300");
-    addInParameter<unsigned int>("m", paramHelp[1].data(), "5");
+    addInParameter<uint>("nodes", paramHelp[0].data(), "300");
+    addInParameter<uint>("m", paramHelp[1].data(), "5");
     addInParameter<double>("p", paramHelp[2].data(), "0.5");
   }
 
   bool importGraph() override {
-    unsigned int n = 300;
-    unsigned int m = 5;
+    uint n = 300;
+    uint m = 5;
     double mu = 0.5;
 
     if (dataSet != nullptr) {
@@ -77,11 +77,11 @@ struct HolmeKim : public ImportModule {
     /*
      * Initial ring construction
      */
-    unsigned int m0 = 3;
+    uint m0 = 3;
     graph->addNodes(n);
     const vector<node> &nodes = graph->nodes();
 
-    for (unsigned int i = 1; i < m0; ++i) {
+    for (uint i = 1; i < m0; ++i) {
       graph->addEdge(nodes[i - 1], nodes[i]);
     }
 
@@ -90,16 +90,16 @@ struct HolmeKim : public ImportModule {
     /*
      * Main loop
      */
-    for (unsigned int i = m0; i < n; ++i) {
+    for (uint i = m0; i < n; ++i) {
       double k_sum = 0; // degree of present nodes
 
-      for (unsigned int j = 0; j < i; ++j) {
+      for (uint j = 0; j < i; ++j) {
         k_sum += graph->deg(nodes[j]);
       }
 
       double proba = tlp::randomDouble();
 
-      for (unsigned int j = 0; j < m; ++j) {
+      for (uint j = 0; j < m; ++j) {
         // Preferential attachment
         double pr = tlp::randomDouble();
         double pr_sum = 0;
@@ -125,7 +125,7 @@ struct HolmeKim : public ImportModule {
 
           if (!freeNeighbours.empty()) {
             // randomly choose one of the free neighbours to connect with
-            unsigned int randomNeighbour = tlp::randomUnsignedInteger(freeNeighbours.size() - 1);
+            uint randomNeighbour = tlp::randomUnsignedInteger(freeNeighbours.size() - 1);
             graph->addEdge(nodes[i], freeNeighbours[randomNeighbour]);
             continue;
           }
@@ -134,7 +134,7 @@ struct HolmeKim : public ImportModule {
         // Preferential attachment
         pr = tlp::randomDouble();
         pr_sum = 0;
-        unsigned int rn = 0;
+        uint rn = 0;
 
         while (pr_sum < pr && rn < (i - 1)) {
           pr_sum += graph->deg(nodes[rn]) / k_sum;

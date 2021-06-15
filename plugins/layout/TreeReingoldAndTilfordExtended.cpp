@@ -422,7 +422,7 @@ bool TreeReingoldAndTilfordExtended::run() {
   // check if the specified layer spacing is greater
   // than the max of the minimum layer spacing of the tree
   if (!compactLayout) {
-    for (unsigned int i = 0; i < maxSizeLevel.size() - 1; ++i) {
+    for (uint i = 0; i < maxSizeLevel.size() - 1; ++i) {
       float minLayerSpacing = float((maxSizeLevel[i] + maxSizeLevel[i + 1]) / 2);
 
       if (minLayerSpacing + nodeSpacing > spacing) {

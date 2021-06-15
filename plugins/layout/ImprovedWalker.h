@@ -83,7 +83,7 @@ private:
   nodeToNodeType ancestor;
 
   int initializeAllNodes(tlp::node root);
-  int initializeNode(tlp::node root, unsigned int depth);
+  int initializeNode(tlp::node root, uint depth);
   int countSibling(tlp::node from, tlp::node to);
   ImprovedWalkerIterator *iterateSibling(tlp::node from, tlp::node to);
   tlp::Iterator<tlp::node> *getChildren(tlp::node n);

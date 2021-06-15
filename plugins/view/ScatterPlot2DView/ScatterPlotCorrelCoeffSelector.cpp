@@ -634,7 +634,7 @@ void ScatterPlotCorrelCoeffSelector::mapPolygonColorToCorrelCoeffOfData(
       endColor = optionsWidget->getOneColor();
     }
 
-    for (unsigned int i = 0; i < 4; ++i) {
+    for (uint i = 0; i < 4; ++i) {
       polygonColor[i] =
           uchar((double(startColor[i]) +
                  (double(endColor[i]) - double(startColor[i])) * abs(correlationCoeff)));

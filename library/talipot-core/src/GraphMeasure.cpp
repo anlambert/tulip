@@ -18,20 +18,19 @@ using namespace std;
 using namespace tlp;
 
 //================================================================
-unsigned int tlp::maxDistance(const Graph *graph, unsigned int nPos,
-                              tlp::NodeVectorProperty<unsigned int> &distance,
-                              EDGE_TYPE direction) {
-  deque<unsigned int> fifo;
+uint tlp::maxDistance(const Graph *graph, uint nPos, tlp::NodeVectorProperty<uint> &distance,
+                      EDGE_TYPE direction) {
+  deque<uint> fifo;
   distance.setAll(UINT_MAX);
   fifo.push_back(nPos);
   distance[nPos] = 0;
   const std::vector<node> &nodes = graph->nodes();
-  unsigned int maxDist = 0;
+  uint maxDist = 0;
 
   while (!fifo.empty()) {
-    unsigned int curPos = fifo.front();
+    uint curPos = fifo.front();
     fifo.pop_front();
-    unsigned int nDist = distance[curPos] + 1;
+    uint nDist = distance[curPos] + 1;
 
     for (auto n : getAdjacentNodesIterator(graph, nodes[curPos], direction)) {
       nPos = graph->nodePos(n);
@@ -46,13 +45,13 @@ unsigned int tlp::maxDistance(const Graph *graph, unsigned int nPos,
   return maxDist;
 }
 //================================================================
-double tlp::maxDistance(const Graph *graph, const unsigned int nPos,
+double tlp::maxDistance(const Graph *graph, const uint nPos,
                         tlp::NodeVectorProperty<double> &distance,
                         const NumericProperty *const weights, EDGE_TYPE direction) {
   if (!weights) {
-    NodeVectorProperty<unsigned int> dist_int(graph);
+    NodeVectorProperty<uint> dist_int(graph);
     dist_int.setAll(0);
-    unsigned int res = maxDistance(graph, nPos, dist_int, direction);
+    uint res = maxDistance(graph, nPos, dist_int, direction);
     for (auto n : graph->getNodes()) {
       distance[n] = double(dist_int[n]);
     }
@@ -82,24 +81,24 @@ double tlp::maxDistance(const Graph *graph, const unsigned int nPos,
 double tlp::averagePathLength(const Graph *graph) {
   double result = 0;
 
-  unsigned int nbNodes = graph->numberOfNodes();
+  uint nbNodes = graph->numberOfNodes();
 
   if (nbNodes < 2) {
     return result;
   }
 
-  TLP_PARALLEL_MAP_INDICES(nbNodes, [&](unsigned int i) {
-    tlp::NodeVectorProperty<unsigned int> distance(graph);
+  TLP_PARALLEL_MAP_INDICES(nbNodes, [&](uint i) {
+    tlp::NodeVectorProperty<uint> distance(graph);
     maxDistance(graph, i, distance, UNDIRECTED);
 
     double tmp_result = 0;
 
-    for (unsigned int j = 0; j < nbNodes; ++j) {
+    for (uint j = 0; j < nbNodes; ++j) {
       if (j == i) {
         continue;
       }
 
-      unsigned int d = distance[j];
+      uint d = distance[j];
       if (d != UINT_MAX) {
         tmp_result += d;
       }
@@ -117,26 +116,26 @@ double tlp::averagePathLength(const Graph *graph) {
 double tlp::averageClusteringCoefficient(const Graph *graph) {
   tlp::NodeVectorProperty<double> clusters(graph);
   tlp::clusteringCoefficient(graph, clusters, UINT_MAX);
-  unsigned int nbNodes = graph->numberOfNodes();
+  uint nbNodes = graph->numberOfNodes();
   double sum = 0;
 
-  for (unsigned int i = 0; i < nbNodes; ++i) {
+  for (uint i = 0; i < nbNodes; ++i) {
     sum += clusters[i];
   }
 
   return sum / nbNodes;
 }
 //================================================================
-unsigned int tlp::maxDegree(const Graph *graph) {
-  unsigned int maxdeg = 0;
+uint tlp::maxDegree(const Graph *graph) {
+  uint maxdeg = 0;
   for (auto n : graph->nodes()) {
     maxdeg = std::max(maxdeg, graph->deg(n));
   }
   return maxdeg;
 }
 //================================================================
-unsigned int tlp::minDegree(const Graph *graph) {
-  unsigned int mindeg = graph->numberOfNodes();
+uint tlp::minDegree(const Graph *graph) {
+  uint mindeg = graph->numberOfNodes();
   for (auto n : graph->nodes()) {
     mindeg = std::min(mindeg, graph->deg(n));
   }
@@ -144,9 +143,9 @@ unsigned int tlp::minDegree(const Graph *graph) {
 }
 //=================================================
 void tlp::clusteringCoefficient(const Graph *graph, tlp::NodeVectorProperty<double> &clusters,
-                                unsigned int maxDepth) {
+                                uint maxDepth) {
 
-  TLP_MAP_NODES_AND_INDICES(graph, [&](node n, unsigned int i) {
+  TLP_MAP_NODES_AND_INDICES(graph, [&](node n, uint i) {
     std::unordered_map<node, bool> reachables;
     markReachableNodes(graph, n, reachables, maxDepth);
     double nbEdge = 0; // e(N_v)*2$
@@ -173,11 +172,11 @@ void tlp::clusteringCoefficient(const Graph *graph, tlp::NodeVectorProperty<doub
   });
 }
 //==================================================
-void tlp::dagLevel(const Graph *graph, tlp::NodeVectorProperty<unsigned int> &level) {
-  tlp::NodeVectorProperty<unsigned int> totreat(graph);
+void tlp::dagLevel(const Graph *graph, tlp::NodeVectorProperty<uint> &level) {
+  tlp::NodeVectorProperty<uint> totreat(graph);
   deque<node> fifo;
-  TLP_MAP_NODES_AND_INDICES(graph, [&](node n, unsigned int i) {
-    unsigned int indegree = graph->indeg(n);
+  TLP_MAP_NODES_AND_INDICES(graph, [&](node n, uint i) {
+    uint indegree = graph->indeg(n);
 
     if (indegree == 0) {
       fifo.push_back(n);
@@ -191,10 +190,10 @@ void tlp::dagLevel(const Graph *graph, tlp::NodeVectorProperty<unsigned int> &le
   while (!fifo.empty()) {
     node current = fifo.front();
     fifo.pop_front();
-    unsigned int curLevel = level.getNodeValue(current) + 1;
+    uint curLevel = level.getNodeValue(current) + 1;
     for (auto child : graph->getOutNodes(current)) {
-      unsigned int childPos = graph->nodePos(child);
-      unsigned int childLevel = totreat[childPos];
+      uint childPos = graph->nodePos(child);
+      uint childLevel = totreat[childPos];
 
       if (childLevel > 0) {
         totreat[childPos] = childLevel - 1;
@@ -209,25 +208,25 @@ void tlp::dagLevel(const Graph *graph, tlp::NodeVectorProperty<unsigned int> &le
 //==================================================
 void tlp::degree(const Graph *graph, tlp::NodeVectorProperty<double> &deg, EDGE_TYPE direction,
                  NumericProperty *weights, bool norm) {
-  unsigned int nbNodes = graph->numberOfNodes();
+  uint nbNodes = graph->numberOfNodes();
 
   if (!weights) {
     if (!norm) {
       switch (direction) {
       case UNDIRECTED:
-        TLP_PARALLEL_MAP_NODES_AND_INDICES(
-            graph, [&](const node n, unsigned int i) { deg[i] = graph->deg(n); });
+        TLP_PARALLEL_MAP_NODES_AND_INDICES(graph,
+                                           [&](const node n, uint i) { deg[i] = graph->deg(n); });
 
         break;
 
       case INV_DIRECTED:
-        TLP_PARALLEL_MAP_NODES_AND_INDICES(
-            graph, [&](const node n, unsigned int i) { deg[i] = graph->indeg(n); });
+        TLP_PARALLEL_MAP_NODES_AND_INDICES(graph,
+                                           [&](const node n, uint i) { deg[i] = graph->indeg(n); });
         break;
 
       case DIRECTED:
         TLP_PARALLEL_MAP_NODES_AND_INDICES(
-            graph, [&](const node n, unsigned int i) { deg[i] = graph->outdeg(n); });
+            graph, [&](const node n, uint i) { deg[i] = graph->outdeg(n); });
 
         break;
       }
@@ -241,18 +240,17 @@ void tlp::degree(const Graph *graph, tlp::NodeVectorProperty<double> &deg, EDGE_
       switch (direction) {
       case UNDIRECTED:
         TLP_PARALLEL_MAP_NODES_AND_INDICES(
-            graph, [&](const node n, unsigned int i) { deg[i] = normalization * graph->deg(n); });
+            graph, [&](const node n, uint i) { deg[i] = normalization * graph->deg(n); });
         break;
 
       case INV_DIRECTED:
         TLP_PARALLEL_MAP_NODES_AND_INDICES(
-            graph, [&](const node n, unsigned int i) { deg[i] = normalization * graph->indeg(n); });
+            graph, [&](const node n, uint i) { deg[i] = normalization * graph->indeg(n); });
         break;
 
       case DIRECTED:
-        TLP_PARALLEL_MAP_NODES_AND_INDICES(graph, [&](const node n, unsigned int i) {
-          deg[i] = normalization * graph->outdeg(n);
-        });
+        TLP_PARALLEL_MAP_NODES_AND_INDICES(
+            graph, [&](const node n, uint i) { deg[i] = normalization * graph->outdeg(n); });
         break;
       }
     }
@@ -260,7 +258,7 @@ void tlp::degree(const Graph *graph, tlp::NodeVectorProperty<double> &deg, EDGE_
     if (!norm) {
       switch (direction) {
       case UNDIRECTED:
-        TLP_PARALLEL_MAP_NODES_AND_INDICES(graph, [&](const node n, unsigned int i) {
+        TLP_PARALLEL_MAP_NODES_AND_INDICES(graph, [&](const node n, uint i) {
           double nWeight = 0.0;
           for (auto e : graph->getInOutEdges(n)) {
             nWeight += weights->getEdgeDoubleValue(e);
@@ -270,7 +268,7 @@ void tlp::degree(const Graph *graph, tlp::NodeVectorProperty<double> &deg, EDGE_
         break;
 
       case INV_DIRECTED:
-        TLP_PARALLEL_MAP_NODES_AND_INDICES(graph, [&](const node n, unsigned int i) {
+        TLP_PARALLEL_MAP_NODES_AND_INDICES(graph, [&](const node n, uint i) {
           double nWeight = 0.0;
           for (auto e : graph->getInEdges(n)) {
             nWeight += weights->getEdgeDoubleValue(e);
@@ -281,7 +279,7 @@ void tlp::degree(const Graph *graph, tlp::NodeVectorProperty<double> &deg, EDGE_
         break;
 
       case DIRECTED:
-        TLP_PARALLEL_MAP_NODES_AND_INDICES(graph, [&](const node n, unsigned int i) {
+        TLP_PARALLEL_MAP_NODES_AND_INDICES(graph, [&](const node n, uint i) {
           double nWeight = 0.0;
           for (auto e : graph->getOutEdges(n)) {
             nWeight += weights->getEdgeDoubleValue(e);
@@ -293,7 +291,7 @@ void tlp::degree(const Graph *graph, tlp::NodeVectorProperty<double> &deg, EDGE_
       }
     } else {
       double normalization = 1.0;
-      unsigned int nbEdges = graph->numberOfEdges();
+      uint nbEdges = graph->numberOfEdges();
 
       if (nbNodes > 1 && nbEdges > 0) {
         double sum = 0;
@@ -313,7 +311,7 @@ void tlp::degree(const Graph *graph, tlp::NodeVectorProperty<double> &deg, EDGE_
 
       switch (direction) {
       case UNDIRECTED:
-        TLP_PARALLEL_MAP_NODES_AND_INDICES(graph, [&](const node n, unsigned int i) {
+        TLP_PARALLEL_MAP_NODES_AND_INDICES(graph, [&](const node n, uint i) {
           double nWeight = 0.0;
           for (auto e : graph->getInOutEdges(n)) {
             nWeight += weights->getEdgeDoubleValue(e);
@@ -324,7 +322,7 @@ void tlp::degree(const Graph *graph, tlp::NodeVectorProperty<double> &deg, EDGE_
         break;
 
       case INV_DIRECTED:
-        TLP_PARALLEL_MAP_NODES_AND_INDICES(graph, [&](const node n, unsigned int i) {
+        TLP_PARALLEL_MAP_NODES_AND_INDICES(graph, [&](const node n, uint i) {
           double nWeight = 0.0;
           for (auto e : graph->getInEdges(n)) {
             nWeight += weights->getEdgeDoubleValue(e);
@@ -335,7 +333,7 @@ void tlp::degree(const Graph *graph, tlp::NodeVectorProperty<double> &deg, EDGE_
         break;
 
       case DIRECTED:
-        TLP_PARALLEL_MAP_NODES_AND_INDICES(graph, [&](const node n, unsigned int i) {
+        TLP_PARALLEL_MAP_NODES_AND_INDICES(graph, [&](const node n, uint i) {
           double nWeight = 0.0;
           for (auto e : graph->getOutEdges(n)) {
             nWeight += weights->getEdgeDoubleValue(e);

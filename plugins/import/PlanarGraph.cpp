@@ -38,12 +38,12 @@ public:
   PLUGININFORMATION("Planar Graph", "Auber", "25/06/2005",
                     "Imports a new randomly generated planar graph.", "1.0", "Graph")
   PlanarGraph(tlp::PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "30");
+    addInParameter<uint>("nodes", paramHelp[0].data(), "30");
   }
   ~PlanarGraph() override = default;
 
   bool importGraph() override {
-    unsigned int nbNodes = 30;
+    uint nbNodes = 30;
 
     if (dataSet != nullptr) {
       dataSet->get("nodes", nbNodes);
@@ -74,11 +74,11 @@ public:
     newLayout->setNodeValue(f.a, Coord(-val, -val, 0));
     newLayout->setNodeValue(f.b, Coord(0, val, 0));
     newLayout->setNodeValue(f.c, Coord(val, -val, 0));
-    unsigned int nb = 3;
+    uint nb = 3;
 
     while (nb < nbNodes) {
       // choose a Triangle randomly
-      unsigned int i = randomUnsignedInteger(faces.size() - 1);
+      uint i = randomUnsignedInteger(faces.size() - 1);
       Triangle f = faces[i];
       node n = graph->addNode();
       Coord tmp = newLayout->getNodeValue(f.a) + newLayout->getNodeValue(f.b) +

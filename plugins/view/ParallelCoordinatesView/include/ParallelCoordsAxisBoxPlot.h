@@ -34,7 +34,7 @@ public:
 
   void getXML(std::string &) override {}
 
-  void setWithXML(const std::string &, unsigned int &) override {}
+  void setWithXML(const std::string &, uint &) override {}
 
   void setHighlightRangeIfAny(Coord sceneCoords);
 
@@ -76,7 +76,7 @@ private:
   Graph *currentGraph;
   std::map<QuantitativeParallelAxis *, GlAxisBoxPlot *> axisBoxPlotMap;
   ParallelAxis *selectedAxis;
-  unsigned int lastNbAxis;
+  uint lastNbAxis;
 };
 }
 

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -61,7 +61,7 @@ void PlanarityTestImpl::extractBoundaryCycle(Graph *sG, node cNode, list<edge> &
   listEdges.push_back(e);
   u = sG->target(e);
 #ifndef NDEBUG
-  unsigned int count = 0;
+  uint count = 0;
 #endif
 
   while (u != parent.get(cNode.id)) {

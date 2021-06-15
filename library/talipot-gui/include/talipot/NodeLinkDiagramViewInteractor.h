@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -26,10 +26,10 @@ namespace tlp {
  */
 class TLP_QT_SCOPE NodeLinkDiagramViewInteractor : public GLInteractorComposite {
   QLabel *_label;
-  unsigned int _priority;
+  uint _priority;
 
 public:
-  NodeLinkDiagramViewInteractor(const QIcon &icon, const QString &text, unsigned int priority = 0);
+  NodeLinkDiagramViewInteractor(const QIcon &icon, const QString &text, uint priority = 0);
 
   ~NodeLinkDiagramViewInteractor() override;
 
@@ -37,7 +37,7 @@ public:
 
   QLabel *docWidget() const override;
 
-  unsigned int priority() const override;
+  uint priority() const override;
 };
 }
 

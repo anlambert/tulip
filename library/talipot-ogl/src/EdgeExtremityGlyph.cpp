@@ -68,7 +68,7 @@ void EdgeExtremityGlyph::get3DTransformationMatrix(const Coord &src, const Coord
     vW /= nW;
   }
 
-  for (unsigned int i = 0; i < 3; ++i) {
+  for (uint i = 0; i < 3; ++i) {
     transformationMatrix[0][i] = vW[i];
     transformationMatrix[1][i] = vV[i];
     transformationMatrix[2][i] = vAB[i];
@@ -129,7 +129,7 @@ void EdgeExtremityGlyph::get2DTransformationMatrix(const Coord &src, const Coord
     vW /= nW;
   }
 
-  for (unsigned int i = 0; i < 3; ++i) {
+  for (uint i = 0; i < 3; ++i) {
     transformationMatrix[0][i] = vAB[i];
     transformationMatrix[1][i] = vW[i];
     transformationMatrix[2][i] = vV[i];

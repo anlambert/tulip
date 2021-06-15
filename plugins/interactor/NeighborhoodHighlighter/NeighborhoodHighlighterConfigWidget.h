@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -36,7 +36,7 @@ public:
 
   NodeNeighborhoodView::NeighborNodesType getNeighborsType() const;
   bool computeReachableSubGraph() const;
-  void setCurrentMaxDistanceForReachableNodes(unsigned int distance);
+  void setCurrentMaxDistanceForReachableNodes(uint distance);
   bool bringAndGoAnimation1() const;
   std::string propertyToUse() const;
   int numberOfNodesToBring() const;

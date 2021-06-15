@@ -20,7 +20,7 @@ using namespace std;
 namespace tlp {
 
 static void computeLinearBezierPoints(const Coord &p0, const Coord &p1, vector<Coord> &curvePoints,
-                                      const unsigned int nbCurvePoints) {
+                                      const uint nbCurvePoints) {
   float h = 1.0 / float((nbCurvePoints - 1));
   Coord firstFD = (p1 - p0) * h;
   Coord c = p0;
@@ -30,7 +30,7 @@ static void computeLinearBezierPoints(const Coord &p0, const Coord &p1, vector<C
   // Compute points at each step
   curvePoints[0] = c;
 
-  for (unsigned int i = 0; i < nbCurvePoints - 2; ++i) {
+  for (uint i = 0; i < nbCurvePoints - 2; ++i) {
 
     c += firstFD;
 
@@ -41,8 +41,7 @@ static void computeLinearBezierPoints(const Coord &p0, const Coord &p1, vector<C
 }
 
 static void computeQuadraticBezierPoints(const Coord &p0, const Coord &p1, const Coord &p2,
-                                         vector<Coord> &curvePoints,
-                                         const unsigned int nbCurvePoints) {
+                                         vector<Coord> &curvePoints, const uint nbCurvePoints) {
 
   // Compute our step size
   float h = 1.0 / float(nbCurvePoints - 1);
@@ -59,7 +58,7 @@ static void computeQuadraticBezierPoints(const Coord &p0, const Coord &p1, const
   // Compute points at each step
   curvePoints[0] = c;
 
-  for (unsigned int i = 0; i < nbCurvePoints - 2; ++i) {
+  for (uint i = 0; i < nbCurvePoints - 2; ++i) {
 
     c += firstFD;
 
@@ -73,7 +72,7 @@ static void computeQuadraticBezierPoints(const Coord &p0, const Coord &p1, const
 
 static void computeCubicBezierPoints(const Coord &p0, const Coord &p1, const Coord &p2,
                                      const Coord &p3, vector<Coord> &curvePoints,
-                                     const unsigned int nbCurvePoints) {
+                                     const uint nbCurvePoints) {
 
   // Compute polynomial coefficients from Bezier points
   Coord A = p0 * -1.f + (p1 - p2) * 3.f + p3;
@@ -99,7 +98,7 @@ static void computeCubicBezierPoints(const Coord &p0, const Coord &p1, const Coo
   // Compute points at each step
   curvePoints[0] = c;
 
-  for (unsigned int i = 0; i < nbCurvePoints - 2; ++i) {
+  for (uint i = 0; i < nbCurvePoints - 2; ++i) {
 
     c += firstFD;
 
@@ -115,9 +114,9 @@ static void computeCubicBezierPoints(const Coord &p0, const Coord &p1, const Coo
 
 static map<double, vector<double>> tCoeffs;
 static map<double, vector<double>> sCoeffs;
-static map<unsigned int, unsigned int> computedCoefficients;
+static map<uint, uint> computedCoefficients;
 
-static void computeCoefficients(double t, unsigned int nbControlPoints) {
+static void computeCoefficients(double t, uint nbControlPoints) {
   double s = (1.0 - t);
   TLP_LOCK_SECTION(computeCoefficients) {
     auto &tCoeff = tCoeffs[t];
@@ -163,7 +162,7 @@ Coord computeBezierPoint(const vector<Coord> &controlPoints, const float t) {
 }
 
 void computeBezierPoints(const vector<Coord> &controlPoints, vector<Coord> &curvePoints,
-                         unsigned int nbCurvePoints) {
+                         uint nbCurvePoints) {
   assert(controlPoints.size() > 1);
 
   switch (controlPoints.size()) {
@@ -184,9 +183,8 @@ void computeBezierPoints(const vector<Coord> &controlPoints, vector<Coord> &curv
   default:
     curvePoints.resize(nbCurvePoints);
     float h = 1.0 / float(nbCurvePoints - 1);
-    TLP_PARALLEL_MAP_INDICES(nbCurvePoints, [&](unsigned int i) {
-      curvePoints[i] = computeBezierPoint(controlPoints, i * h);
-    });
+    TLP_PARALLEL_MAP_INDICES(
+        nbCurvePoints, [&](uint i) { curvePoints[i] = computeBezierPoint(controlPoints, i * h); });
   }
 }
 
@@ -317,8 +315,7 @@ Coord computeCatmullRomPoint(const vector<Coord> &controlPoints, const float t,
 }
 
 void computeCatmullRomPoints(const vector<Coord> &controlPoints, vector<Coord> &curvePoints,
-                             const bool closedCurve, const unsigned int nbCurvePoints,
-                             const float alpha) {
+                             const bool closedCurve, const uint nbCurvePoints, const float alpha) {
   // assert(controlPoints.size() > 2);
   if (controlPoints.size() <= 2) {
     return;
@@ -333,7 +330,7 @@ void computeCatmullRomPoints(const vector<Coord> &controlPoints, vector<Coord> &
 
   computeCatmullRomGlobalParameter(controlPointsCp, globalParameter, alpha);
   curvePoints.resize(nbCurvePoints);
-  TLP_PARALLEL_MAP_INDICES(nbCurvePoints, [&](unsigned int i) {
+  TLP_PARALLEL_MAP_INDICES(nbCurvePoints, [&](uint i) {
     curvePoints[i] = computeCatmullRomPointImpl(controlPointsCp, i / float(nbCurvePoints - 1),
                                                 globalParameter, closedCurve, alpha);
   });
@@ -344,9 +341,9 @@ static float clamp(float f, float minVal, float maxVal) {
 }
 
 Coord computeOpenUniformBsplinePoint(const vector<Coord> &controlPoints, const float t,
-                                     const unsigned int curveDegree) {
+                                     const uint curveDegree) {
   assert(controlPoints.size() > 3);
-  unsigned int nbKnots = controlPoints.size() + curveDegree + 1;
+  uint nbKnots = controlPoints.size() + curveDegree + 1;
   float stepKnots = 1.0f / ((float(nbKnots) - 2.0f * (float(curveDegree) + 1.0f)) + 2.0f - 1.0f);
 
   if (t == 0.0) {
@@ -393,7 +390,7 @@ Coord computeOpenUniformBsplinePoint(const vector<Coord> &controlPoints, const f
     Coord curvePoint;
     int startIdx = k - curveDegree;
 
-    for (unsigned int i = 0; i <= curveDegree; ++i) {
+    for (uint i = 0; i <= curveDegree; ++i) {
       curvePoint += coeffs[i] * controlPoints[startIdx + i];
     }
 
@@ -403,10 +400,9 @@ Coord computeOpenUniformBsplinePoint(const vector<Coord> &controlPoints, const f
 }
 
 void computeOpenUniformBsplinePoints(const vector<Coord> &controlPoints, vector<Coord> &curvePoints,
-                                     const unsigned int curveDegree,
-                                     const unsigned int nbCurvePoints) {
+                                     const uint curveDegree, const uint nbCurvePoints) {
   curvePoints.resize(nbCurvePoints);
-  TLP_PARALLEL_MAP_INDICES(nbCurvePoints, [&](unsigned int i) {
+  TLP_PARALLEL_MAP_INDICES(nbCurvePoints, [&](uint i) {
     curvePoints[i] =
         computeOpenUniformBsplinePoint(controlPoints, i / float(nbCurvePoints - 1), curveDegree);
   });

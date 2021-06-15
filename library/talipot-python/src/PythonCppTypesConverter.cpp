@@ -28,7 +28,7 @@ static const unordered_map<string, string> cppTypenameToSipTypename = {
     {demangleClassName<Coord>(), "tlp::Coord"},
     {demangleClassName<Size>(), "tlp::Size"},
     {demangleClassName<vector<int>>(), "std::vector<int>"},
-    {demangleClassName<vector<unsigned int>>(), "std::vector<uint>"},
+    {demangleClassName<vector<uint>>(), "std::vector<uint>"},
     {demangleClassName<vector<long>>(), "std::vector<long>"},
     {demangleClassName<vector<unsigned long>>(), "std::vector<unsigned long>"},
     {demangleClassName<vector<float>>(), "std::vector<float>"},
@@ -52,7 +52,7 @@ static const unordered_map<string, string> cppTypenameToSipTypename = {
     {demangleClassName<vector<StringProperty *>>(), "std::vector<tlp::StringProperty *>"},
     {demangleClassName<vector<PropertyInterface *>>(), "std::vector<tlp::PropertyInterface *>"},
     {demangleClassName<list<int>>(), "std::list<int>"},
-    {demangleClassName<list<unsigned int>>(), "std::list<uint>"},
+    {demangleClassName<list<uint>>(), "std::list<uint>"},
     {demangleClassName<list<long>>(), "std::list<long>"},
     {demangleClassName<list<unsigned long>>(), "std::list<unsigned long>"},
     {demangleClassName<list<float>>(), "std::list<float>"},
@@ -76,7 +76,7 @@ static const unordered_map<string, string> cppTypenameToSipTypename = {
     {demangleClassName<list<StringProperty *>>(), "std::list<tlp::StringProperty *>"},
     {demangleClassName<list<PropertyInterface *>>(), "std::list<tlp::PropertyInterface *>"},
     {demangleClassName<set<int>>(), "std::set<int>"},
-    {demangleClassName<set<unsigned int>>(), "std::set<uint>"},
+    {demangleClassName<set<uint>>(), "std::set<uint>"},
     {demangleClassName<set<long>>(), "std::set<long>"},
     {demangleClassName<set<unsigned long>>(), "std::set<unsigned long>"},
     {demangleClassName<set<float>>(), "std::set<float>"},
@@ -242,7 +242,7 @@ PyObject *getPyObjectFromDataType(const DataType *dataType, bool noCopy) {
   CHECK_BASE_CPP_TYPE_CONVERSION(bool)
   CHECK_BASE_CPP_TYPE_CONVERSION(int)
   CHECK_BASE_CPP_TYPE_CONVERSION(long)
-  CHECK_BASE_CPP_TYPE_CONVERSION(unsigned int)
+  CHECK_BASE_CPP_TYPE_CONVERSION(uint)
   CHECK_BASE_CPP_TYPE_CONVERSION(unsigned long)
   CHECK_BASE_CPP_TYPE_CONVERSION(double)
   CHECK_BASE_CPP_TYPE_CONVERSION(float)
@@ -293,7 +293,7 @@ PyObject *getPyObjectFromDataType(const DataType *dataType, bool noCopy) {
   CHECK_SIP_CPP_TYPE_CONVERSION(vector<bool>)
   CHECK_SIP_CPP_TYPE_CONVERSION(vector<int>)
   CHECK_SIP_CPP_TYPE_CONVERSION(vector<long>)
-  CHECK_SIP_CPP_TYPE_CONVERSION(vector<unsigned int>)
+  CHECK_SIP_CPP_TYPE_CONVERSION(vector<uint>)
   CHECK_SIP_CPP_TYPE_CONVERSION(vector<unsigned long>)
   CHECK_SIP_CPP_TYPE_CONVERSION(vector<double>)
   CHECK_SIP_CPP_TYPE_CONVERSION(vector<float>)
@@ -306,7 +306,7 @@ PyObject *getPyObjectFromDataType(const DataType *dataType, bool noCopy) {
   CHECK_SIP_CPP_TYPE_CONVERSION(set<Size>)
   CHECK_SIP_CPP_TYPE_CONVERSION(set<int>)
   CHECK_SIP_CPP_TYPE_CONVERSION(set<long>)
-  CHECK_SIP_CPP_TYPE_CONVERSION(set<unsigned int>)
+  CHECK_SIP_CPP_TYPE_CONVERSION(set<uint>)
   CHECK_SIP_CPP_TYPE_CONVERSION(set<unsigned long>)
   CHECK_SIP_CPP_TYPE_CONVERSION(set<double>)
   CHECK_SIP_CPP_TYPE_CONVERSION(set<float>)
@@ -330,7 +330,7 @@ PyObject *getPyObjectFromDataType(const DataType *dataType, bool noCopy) {
   CHECK_SIP_CPP_TYPE_CONVERSION(list<int>)
   CHECK_SIP_CPP_TYPE_CONVERSION(list<long>)
   CHECK_SIP_CPP_TYPE_CONVERSION(list<bool>)
-  CHECK_SIP_CPP_TYPE_CONVERSION(list<unsigned int>)
+  CHECK_SIP_CPP_TYPE_CONVERSION(list<uint>)
   CHECK_SIP_CPP_TYPE_CONVERSION(list<unsigned long>)
   CHECK_SIP_CPP_TYPE_CONVERSION(list<double>)
   CHECK_SIP_CPP_TYPE_CONVERSION(list<float>)
@@ -383,8 +383,8 @@ bool setCppValueFromPyObject(PyObject *pyObj, ValueSetter &valSetter, DataType *
 
     if (dataType && dataType->getTypeName() == string(typeid(int).name())) {
       valSetter.setValue(int(val));
-    } else if (dataType && dataType->getTypeName() == string(typeid(unsigned int).name())) {
-      valSetter.setValue(getCppObjectFromPyObject<unsigned int>(pyObj));
+    } else if (dataType && dataType->getTypeName() == string(typeid(uint).name())) {
+      valSetter.setValue(getCppObjectFromPyObject<uint>(pyObj));
     } else if (dataType && dataType->getTypeName() == string(typeid(long).name())) {
       valSetter.setValue(val);
     } else if (dataType && dataType->getTypeName() == string(typeid(unsigned long).name())) {
@@ -415,8 +415,8 @@ bool setCppValueFromPyObject(PyObject *pyObj, ValueSetter &valSetter, DataType *
   if (sipCanConvertToType(pyObj, sipFindType("std::vector<long>"), SIP_NOT_NONE)) {
     if (dataType && dataType->getTypeName() == string(typeid(vector<int>).name())) {
       valSetter.setValue(getCppObjectFromPyObject<vector<int>>(pyObj));
-    } else if (dataType && dataType->getTypeName() == string(typeid(vector<unsigned int>).name())) {
-      valSetter.setValue(getCppObjectFromPyObject<vector<unsigned int>>(pyObj));
+    } else if (dataType && dataType->getTypeName() == string(typeid(vector<uint>).name())) {
+      valSetter.setValue(getCppObjectFromPyObject<vector<uint>>(pyObj));
     } else if (dataType && dataType->getTypeName() == string(typeid(vector<long>).name())) {
       valSetter.setValue(getCppObjectFromPyObject<vector<long>>(pyObj));
     } else if (dataType &&
@@ -429,8 +429,8 @@ bool setCppValueFromPyObject(PyObject *pyObj, ValueSetter &valSetter, DataType *
 
     } else if (dataType && dataType->getTypeName() == string(typeid(list<int>).name())) {
       valSetter.setValue(getCppObjectFromPyObject<list<int>>(pyObj));
-    } else if (dataType && dataType->getTypeName() == string(typeid(list<unsigned int>).name())) {
-      valSetter.setValue(getCppObjectFromPyObject<list<unsigned int>>(pyObj));
+    } else if (dataType && dataType->getTypeName() == string(typeid(list<uint>).name())) {
+      valSetter.setValue(getCppObjectFromPyObject<list<uint>>(pyObj));
     } else if (dataType && dataType->getTypeName() == string(typeid(list<long>).name())) {
       valSetter.setValue(getCppObjectFromPyObject<list<long>>(pyObj));
     } else if (dataType && dataType->getTypeName() == string(typeid(list<unsigned long>).name())) {
@@ -463,8 +463,8 @@ bool setCppValueFromPyObject(PyObject *pyObj, ValueSetter &valSetter, DataType *
   if (sipCanConvertToType(pyObj, sipFindType("std::set<long>"), SIP_NOT_NONE)) {
     if (dataType && dataType->getTypeName() == string(typeid(set<int>).name())) {
       valSetter.setValue(getCppObjectFromPyObject<set<int>>(pyObj));
-    } else if (dataType && dataType->getTypeName() == string(typeid(set<unsigned int>).name())) {
-      valSetter.setValue(getCppObjectFromPyObject<set<unsigned int>>(pyObj));
+    } else if (dataType && dataType->getTypeName() == string(typeid(set<uint>).name())) {
+      valSetter.setValue(getCppObjectFromPyObject<set<uint>>(pyObj));
     } else if (dataType && dataType->getTypeName() == string(typeid(set<long>).name())) {
       valSetter.setValue(getCppObjectFromPyObject<set<long>>(pyObj));
     } else if (dataType && dataType->getTypeName() == string(typeid(set<unsigned long>).name())) {

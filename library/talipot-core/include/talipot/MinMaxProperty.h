@@ -20,7 +20,7 @@
 #include <talipot/AbstractProperty.h>
 
 #define MINMAX_PAIR(TYPE) std::pair<REAL_TYPE(TYPE), REAL_TYPE(TYPE)>
-#define MINMAX_MAP(TYPE) typename std::unordered_map<unsigned int, MINMAX_PAIR(TYPE)>
+#define MINMAX_MAP(TYPE) typename std::unordered_map<uint, MINMAX_PAIR(TYPE)>
 
 namespace tlp {
 

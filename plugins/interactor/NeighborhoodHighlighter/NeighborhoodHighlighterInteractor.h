@@ -52,7 +52,7 @@ public:
     return configWidget;
   }
 
-  unsigned int priority() const override {
+  uint priority() const override {
     return StandardInteractorPriority::NeighborhoodHighlighter;
   }
 
@@ -133,7 +133,7 @@ private:
   bool circleLayoutSet;
   GlWidget *glWidget;
   node selectedNeighborNode;
-  unsigned int neighborhoodDist;
+  uint neighborhoodDist;
 
   NeighborhoodHighlighterConfigWidget *configWidget;
 

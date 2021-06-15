@@ -42,7 +42,7 @@ void NominalParallelAxis::setLabels() {
 
   vector<string> labels;
 
-  for (unsigned int dataId : graphProxy->getDataIterator()) {
+  for (uint dataId : graphProxy->getDataIterator()) {
     string labelName =
         graphProxy->getPropertyValueForData<StringProperty, StringType>(getAxisName(), dataId);
 
@@ -58,7 +58,7 @@ void NominalParallelAxis::setLabels() {
   glNominativeAxis->setAxisGraduationsLabels(labelsOrder, GlAxis::RIGHT_OR_ABOVE);
 }
 
-Coord NominalParallelAxis::getPointCoordOnAxisForData(const unsigned int dataIdx) {
+Coord NominalParallelAxis::getPointCoordOnAxisForData(const uint dataIdx) {
   string propertyValue =
       graphProxy->getPropertyValueForData<StringProperty, StringType>(getAxisName(), dataIdx);
   Coord axisPointCoord = glNominativeAxis->getAxisPointCoordForValue(propertyValue);
@@ -75,10 +75,10 @@ void NominalParallelAxis::showConfigDialog() {
   dialog.exec();
 }
 
-const set<unsigned int> &NominalParallelAxis::getDataInSlidersRange() {
+const set<uint> &NominalParallelAxis::getDataInSlidersRange() {
 
   dataSubset.clear();
-  map<string, unsigned int> labelsInRange;
+  map<string, uint> labelsInRange;
 
   for (const auto &l : labelsOrder) {
     Coord labelCoord = glNominativeAxis->getAxisPointCoordForValue(l);
@@ -89,7 +89,7 @@ const set<unsigned int> &NominalParallelAxis::getDataInSlidersRange() {
     }
   }
 
-  for (unsigned int dataId : graphProxy->getDataIterator()) {
+  for (uint dataId : graphProxy->getDataIterator()) {
     string labelName =
         graphProxy->getPropertyValueForData<StringProperty, StringType>(getAxisName(), dataId);
 
@@ -101,7 +101,7 @@ const set<unsigned int> &NominalParallelAxis::getDataInSlidersRange() {
   return dataSubset;
 }
 
-void NominalParallelAxis::updateSlidersWithDataSubset(const set<unsigned int> &dataSubset) {
+void NominalParallelAxis::updateSlidersWithDataSubset(const set<uint> &dataSubset) {
   float rotAngleBak = rotationAngle;
   rotationAngle = 0.0f;
   Coord max = getBaseCoord();

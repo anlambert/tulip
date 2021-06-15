@@ -34,7 +34,7 @@ public:
   virtual void visit(GlEdge *) {}
   virtual void visit(GlLayer *) {}
   virtual void endOfVisit() {}
-  virtual void reserveMemoryForGraphElts(unsigned int /*nbNodes*/, unsigned int /*nbEdges*/) {}
+  virtual void reserveMemoryForGraphElts(uint /*nbNodes*/, uint /*nbEdges*/) {}
 
   bool isThreadSafe() const {
     return threadSafe;

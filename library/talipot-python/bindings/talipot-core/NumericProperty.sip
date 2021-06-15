@@ -155,7 +155,7 @@ Returns the maximum value on the edges for that double property.
 
 //===========================================================================================
 
-  void uniformQuantification(unsigned int n);
+  void uniformQuantification(uint n);
 %Docstring
 tlp.NumericProperty.uniformQuantification(n)
 
@@ -170,7 +170,7 @@ An uniform quantification tries to separate the nodes and edges in n classes of 
 
 //===========================================================================================
 
-  void nodesUniformQuantification(unsigned int n);
+  void nodesUniformQuantification(uint n);
 %Docstring
 tlp.NumericProperty.nodesUniformQuantification(n)
 
@@ -185,7 +185,7 @@ An uniform quantification tries to separate the nodes in n classes of equivalent
 
 //===========================================================================================
 
-  void edgesUniformQuantification(unsigned int n);
+  void edgesUniformQuantification(uint n);
 %Docstring
 tlp.NumericProperty.edgesUniformQuantification(n)
 

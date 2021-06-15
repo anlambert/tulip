@@ -36,7 +36,7 @@ public:
   bool eventFilter(QObject *, QEvent *) override;
 
 private:
-  unsigned int x, y;
+  uint x, y;
   int w, h;
   bool started;
   Graph *graph;

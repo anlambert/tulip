@@ -31,11 +31,11 @@ static vector<Coord> coneVertices;
 static vector<Coord> coneNormals;
 static vector<Vec2f> coneTexCoords;
 static vector<unsigned short> coneIndices;
-static vector<unsigned int> buffers;
+static vector<uint> buffers;
 
 static void drawCone() {
   if (coneVertices.empty()) {
-    const unsigned int numberOfSides = 30;
+    const uint numberOfSides = 30;
     coneVertices = computeRegularPolygon(numberOfSides, Coord(0, 0, -0.5), Size(0.5, 0.5));
     coneVertices.push_back(Coord(0, 0, -0.5));
     coneVertices.push_back(Coord(0, 0, 0.5));
@@ -44,7 +44,7 @@ static void drawCone() {
       coneTexCoords.push_back(Vec2f(coneVertice[0] + 0.5, coneVertice[1] + 0.5));
     }
 
-    for (unsigned int i = 0; i < numberOfSides - 1; ++i) {
+    for (uint i = 0; i < numberOfSides - 1; ++i) {
       coneIndices.push_back(numberOfSides);
       coneIndices.push_back(i + 1);
       coneIndices.push_back(i);
@@ -54,7 +54,7 @@ static void drawCone() {
     coneIndices.push_back(0);
     coneIndices.push_back(numberOfSides - 1);
 
-    for (unsigned int i = 0; i < numberOfSides - 1; ++i) {
+    for (uint i = 0; i < numberOfSides - 1; ++i) {
       coneIndices.push_back(i);
       coneIndices.push_back(i + 1);
       coneIndices.push_back(numberOfSides + 1);

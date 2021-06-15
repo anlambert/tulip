@@ -228,7 +228,7 @@ void PreferencesDialog::writeSettings() {
 
   if (_ui->randomSeedCheck->isChecked()) {
     bool ok = true;
-    unsigned int seed = _ui->randomSeedEdit->text().toUInt(&ok);
+    uint seed = _ui->randomSeedEdit->text().toUInt(&ok);
     tlp::setSeedOfRandomSequence(seed);
   } else {
     tlp::setSeedOfRandomSequence();
@@ -321,7 +321,7 @@ void PreferencesDialog::readSettings() {
   }
 
   // initialize seed according to settings
-  unsigned int seed;
+  uint seed;
   tlp::setSeedOfRandomSequence(seed = Settings::seedOfRandomSequence());
   // UINT_MAX seed value means the seed is random
   bool isSeedRandom = (seed == UINT_MAX);

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -28,17 +28,17 @@ public:
   GraphDimension(tlp::Graph *graph, const std::string &dimensionName);
   ~GraphDimension() override;
 
-  unsigned int numberOfItems() const override;
-  unsigned int numberOfValues() const override;
-  std::string getItemLabelAtRank(const unsigned int rank) const override;
-  std::string getItemLabel(const unsigned int itemId) const override;
-  double getItemValue(const unsigned int itemId) const override;
-  double getItemValueAtRank(const unsigned int rank) const override;
-  unsigned int getItemIdAtRank(const unsigned int rank) override;
-  unsigned int getRankForItem(const unsigned int itemId) override;
+  uint numberOfItems() const override;
+  uint numberOfValues() const override;
+  std::string getItemLabelAtRank(const uint rank) const override;
+  std::string getItemLabel(const uint itemId) const override;
+  double getItemValue(const uint itemId) const override;
+  double getItemValueAtRank(const uint rank) const override;
+  uint getItemIdAtRank(const uint rank) override;
+  uint getRankForItem(const uint itemId) override;
   double minValue() const override;
   double maxValue() const override;
-  std::vector<unsigned int> links(const unsigned int itemId) const override;
+  std::vector<uint> links(const uint itemId) const override;
   std::string getDimensionName() const override {
     return dimName;
   }
@@ -57,7 +57,7 @@ private:
   std::vector<tlp::node> dataOrder;
 
   NodeMetricSorter *nodeSorter;
-  static std::map<tlp::Graph *, unsigned int> graphDimensionsMap;
+  static std::map<tlp::Graph *, uint> graphDimensionsMap;
 };
 
 #endif // GRAPH_DIMENSION_H

@@ -227,6 +227,6 @@ struct Rectangle : public Array<Vector<Obj, 2, OTYPE>, 2> {
 typedef Rectangle<double, long double> Rectd;
 typedef Rectangle<float, double> Rectf;
 typedef Rectangle<int, double> Recti;
-typedef Rectangle<unsigned int, double> Rectui;
+typedef Rectangle<uint, double> Rectui;
 }
 #endif // TALIPOT_RECTANGLE_H

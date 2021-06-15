@@ -367,7 +367,7 @@ QVector<PlaceHolderWidget *> Workspace::currentModeSlots() const {
   return _modeToSlots[currentModeWidget()];
 }
 
-unsigned int Workspace::currentSlotsCount() const {
+uint Workspace::currentSlotsCount() const {
   return currentModeSlots().size();
 }
 

@@ -100,7 +100,7 @@ Size SizeProperty::getMax(const Graph *sg) {
     sg = graph;
   }
 
-  unsigned int sgi = sg->getId();
+  uint sgi = sg->getId();
 
   if (minMaxOk.find(sgi) == minMaxOk.end()) {
     minMaxOk[sgi] = false;
@@ -118,7 +118,7 @@ Size SizeProperty::getMin(const Graph *sg) {
     sg = graph;
   }
 
-  unsigned int sgi = sg->getId();
+  uint sgi = sg->getId();
 
   if (minMaxOk.find(sgi) == minMaxOk.end()) {
     minMaxOk[sgi] = false;
@@ -144,7 +144,7 @@ void SizeProperty::computeMinMax(const Graph *sg) {
     }
   }
 
-  unsigned int sgi = sg->getId();
+  uint sgi = sg->getId();
   minMaxOk[sgi] = true;
   min[sgi] = minS;
   max[sgi] = maxS;

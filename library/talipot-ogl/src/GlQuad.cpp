@@ -74,7 +74,7 @@ void GlQuad::getXML(string &outString) {
   GlPolygon::getXMLOnlyData(outString);
 }
 //============================================================
-void GlQuad::setWithXML(const string &inString, unsigned int &currentPosition) {
+void GlQuad::setWithXML(const string &inString, uint &currentPosition) {
 
   GlPolygon::setWithXML(inString, currentPosition);
 }

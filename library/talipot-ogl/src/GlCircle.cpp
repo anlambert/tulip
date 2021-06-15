@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -21,7 +21,7 @@ namespace tlp {
 //===================================================
 GlCircle::GlCircle(const Coord &center, float radius, const Color &outlineColor,
                    const Color &fillColor, bool filled, bool outlined, float startAngle,
-                   unsigned int segments)
+                   uint segments)
     : GlRegularPolygon(center, Size(radius, radius, 0), segments, fillColor, outlineColor, filled,
                        outlined) {
   assert(segments <= 256);

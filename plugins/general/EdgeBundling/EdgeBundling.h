@@ -49,13 +49,13 @@ public:
   bool run() override;
 
 private:
-  void fixEdgeType(tlp::EdgeVectorProperty<unsigned int> &);
+  void fixEdgeType(tlp::EdgeVectorProperty<uint> &);
   void computeDistances();
-  void computeDistance(tlp::node, unsigned int = UINT_MAX);
+  void computeDistance(tlp::node, uint = UINT_MAX);
   double longEdges;
   double splitRatio;
-  unsigned int optimizationLevel;
-  unsigned int maxThread;
+  uint optimizationLevel;
+  uint maxThread;
   bool forceEdgeTest;
   bool edgeNodeOverlap;
   bool layout3D;

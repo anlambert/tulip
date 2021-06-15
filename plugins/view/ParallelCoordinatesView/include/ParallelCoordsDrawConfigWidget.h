@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -33,21 +33,21 @@ public:
   ParallelCoordsDrawConfigWidget(QWidget *parent = nullptr);
   ~ParallelCoordsDrawConfigWidget() override;
 
-  unsigned int getAxisHeight() const;
-  void setAxisHeight(const unsigned int axisHeight);
+  uint getAxisHeight() const;
+  void setAxisHeight(const uint axisHeight);
   bool drawPointOnAxis() const;
   void setDrawPointOnAxis(const bool drawPointOnAxis);
   Size getAxisPointMinSize() const;
-  void setAxisPointMinSize(const unsigned int axisPointMinSize);
+  void setAxisPointMinSize(const uint axisPointMinSize);
   Size getAxisPointMaxSize() const;
-  void setAxisPointMaxSize(const unsigned int axisPointMaxSize);
+  void setAxisPointMaxSize(const uint axisPointMaxSize);
   bool displayNodeLabels() const;
-  void setLinesColorAlphaValue(unsigned int value);
-  unsigned int getLinesColorAlphaValue() const;
+  void setLinesColorAlphaValue(uint value);
+  uint getLinesColorAlphaValue() const;
   Color getBackgroundColor() const;
   void setBackgroundColor(const Color &color);
-  unsigned int getUnhighlightedEltsColorsAlphaValue() const;
-  void setUnhighlightedEltsColorsAlphaValue(const unsigned int alphaValue);
+  uint getUnhighlightedEltsColorsAlphaValue() const;
+  void setUnhighlightedEltsColorsAlphaValue(const uint alphaValue);
   std::string getLinesTextureFilename() const;
   void setLinesTextureFilename(const std::string &linesTextureFileName);
   void setDisplayNodeLabels(const bool set);
@@ -62,14 +62,14 @@ private slots:
 
 private:
   bool oldValuesInitialized;
-  unsigned int oldAxisHeight;
+  uint oldAxisHeight;
   bool oldDrawPointOnAxis;
   Size oldAxisPointMinSize;
   Size oldAxisPointMaxSize;
   bool oldDisplayNodesLabels;
-  unsigned int oldLinesColorAlphaValue;
+  uint oldLinesColorAlphaValue;
   Color oldBackgroundColor;
-  unsigned int oldUnhighlightedEltsColorsAlphaValue;
+  uint oldUnhighlightedEltsColorsAlphaValue;
   std::string oldLinesTextureFilename;
   Ui::ParallelCoordsDrawConfigWidget *_ui;
 };

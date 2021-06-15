@@ -86,12 +86,12 @@ public:
   /**
    * Get the ith color used to filling the polygon
    */
-  Color getFillColor(unsigned int i);
+  Color getFillColor(uint i);
 
   /**
    * Set the ith color used to filling the polygon
    */
-  void setFillColor(unsigned int i, const Color &color);
+  void setFillColor(uint i, const Color &color);
 
   /**
    * @brief Set color used to filling the whole polygon
@@ -101,12 +101,12 @@ public:
   /**
    * Get the ith color used to outlining the polygon
    */
-  Color getOutlineColor(unsigned int i);
+  Color getOutlineColor(uint i);
 
   /**
    * Set the ith color used to outlining the polygon
    */
-  void setOutlineColor(unsigned int i, const Color &color);
+  void setOutlineColor(uint i, const Color &color);
 
   /**
    * @brief Set the color used to outlining the whole polygon
@@ -176,7 +176,7 @@ public:
   /**
    * Function to set data with inString (in XML format)
    */
-  void setWithXML(const std::string &outString, unsigned int &currentPosition) override;
+  void setWithXML(const std::string &outString, uint &currentPosition) override;
 
 protected:
   /**
@@ -187,7 +187,7 @@ protected:
   /**
    * set ith Coord of the polygon
    */
-  virtual void setPoint(unsigned int index, const Coord &point);
+  virtual void setPoint(uint index, const Coord &point);
 
   /**
    * set fill colors of the polygon

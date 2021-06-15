@@ -106,7 +106,7 @@ public:
   /**
    * @brief Function to set data with inString (in XML format)
    */
-  void setWithXML(const std::string &inString, unsigned int &currentPosition) override;
+  void setWithXML(const std::string &inString, uint &currentPosition) override;
 
 private:
   void generateBuffers(int space);
@@ -117,11 +117,11 @@ private:
   std::string textureFile;
   Coord rot;
 
-  std::vector<unsigned int> buffers;
+  std::vector<uint> buffers;
   std::vector<float> vertices;
   std::vector<float> texturesCoord;
   std::vector<unsigned short> indices;
-  unsigned int verticesCount;
+  uint verticesCount;
 };
 }
 

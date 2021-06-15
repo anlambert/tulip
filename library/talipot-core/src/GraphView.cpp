@@ -21,7 +21,7 @@
 using namespace std;
 namespace tlp {
 //----------------------------------------------------------------
-GraphView::GraphView(Graph *superGraph, BooleanProperty *filter, unsigned int sgId)
+GraphView::GraphView(Graph *superGraph, BooleanProperty *filter, uint sgId)
     : GraphAbstract(superGraph, sgId) {
 
   _nodeData.alloc(this);
@@ -132,7 +132,7 @@ node GraphView::addNode() {
   return tmp;
 }
 //----------------------------------------------------------------
-std::vector<node> GraphView::addNodes(unsigned int nb) {
+std::vector<node> GraphView::addNodes(uint nb) {
   std::vector<node> addedNodes = getSuperGraph()->addNodes(nb);
   if (!addedNodes.empty()) {
     addNodesInternal(addedNodes);
@@ -441,12 +441,12 @@ std::vector<edge> GraphView::getEdges(const node src, const node tgt, bool direc
   return edges;
 }
 //----------------------------------------------------------------
-void GraphView::reserveNodes(unsigned int nb) {
+void GraphView::reserveNodes(uint nb) {
   _nodeData.alloc(this, nb);
   _nodes.reserve(nb);
 }
 //----------------------------------------------------------------
-void GraphView::reserveEdges(unsigned int nb) {
+void GraphView::reserveEdges(uint nb) {
   _edges.reserve(nb);
 }
 //----------------------------------------------------------------

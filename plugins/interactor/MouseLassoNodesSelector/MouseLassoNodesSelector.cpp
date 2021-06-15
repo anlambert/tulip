@@ -58,7 +58,7 @@ MouseLassoNodesSelectorInteractorComponent::~MouseLassoNodesSelectorInteractorCo
 
 // found on http://local.wasp.uwa.edu.au/~pbourke/geometry/insidepoly/
 bool pointInsidePolygon(const vector<Coord> &polygon, const Coord &point) {
-  unsigned int i, j;
+  uint i, j;
   bool ret = false;
 
   for (i = 0, j = polygon.size() - 1; i < polygon.size(); j = i++) {
@@ -94,7 +94,7 @@ void MouseLassoNodesSelectorInteractorComponent::selectGraphElementsUnderPolygon
   vector<Coord> polygonVprt;
   BoundingBox polygonVprtBB;
 
-  for (unsigned int i = 0; i < polygon.size(); ++i) {
+  for (uint i = 0; i < polygon.size(); ++i) {
     polygonVprt.push_back(polygon[i]);
     polygonVprtBB.expand(polygonVprt[i]);
   }
@@ -186,8 +186,8 @@ void MouseLassoNodesSelectorInteractorComponent::selectGraphElementsUnderPolygon
       }
     }
 
-    for (unsigned int i = 0; i < selectedNodes.size(); ++i) {
-      for (unsigned int j = i + 1; j < selectedNodes.size(); ++j) {
+    for (uint i = 0; i < selectedNodes.size(); ++i) {
+      for (uint j = i + 1; j < selectedNodes.size(); ++j) {
         vector<edge> edges = graph->getEdges(selectedNodes[i], selectedNodes[j], false);
 
         for (auto edge : edges) {

@@ -86,7 +86,7 @@ void DataSetTest::testSetGetString() {
 
 //==========================================================
 struct Struct {
-  static unsigned int nbInstances;
+  static uint nbInstances;
 
   std::string value;
 
@@ -109,7 +109,7 @@ struct Struct {
   }
 };
 
-unsigned int Struct::nbInstances = 0;
+uint Struct::nbInstances = 0;
 
 void DataSetTest::testSetGetStruct() {
   DataSet dSet;
@@ -117,7 +117,7 @@ void DataSetTest::testSetGetStruct() {
 
   Struct v1("test"), v2;
 
-  unsigned int nbInstances = 2;
+  uint nbInstances = 2;
   CPPUNIT_ASSERT_EQUAL(nbInstances, Struct::nbInstances);
   CPPUNIT_ASSERT(!v1.value.empty());
   CPPUNIT_ASSERT(v2.value.empty());
@@ -158,9 +158,9 @@ void DataSetTest::testDataSetSerialization() {
   const int i = 33;
   dataSet.set("int", i);
 
-  // unsigned int
-  const unsigned int ui = 256;
-  dataSet.set("unsigned int", ui);
+  // uint
+  const uint ui = 256;
+  dataSet.set("uint", ui);
 
   // long
   const long l = 56845725;
@@ -212,7 +212,7 @@ void DataSetTest::testDataSetSerialization() {
   set<edge> se;
   vector<edge> ve;
   vector<node> vn;
-  for (unsigned int i = 0; i < 100; ++i) {
+  for (uint i = 0; i < 100; ++i) {
     vn.push_back(node(i));
     ve.push_back(edge(i));
     se.insert(edge(i));
@@ -266,8 +266,8 @@ void DataSetTest::testDataSetSerialization() {
   CPPUNIT_ASSERT(dataSet2.get("int", i2));
   CPPUNIT_ASSERT_EQUAL(i, i2);
 
-  unsigned int ui2 = 0;
-  CPPUNIT_ASSERT(dataSet2.get("unsigned int", ui2));
+  uint ui2 = 0;
+  CPPUNIT_ASSERT(dataSet2.get("uint", ui2));
   CPPUNIT_ASSERT_EQUAL(ui, ui2);
 
   long l2;

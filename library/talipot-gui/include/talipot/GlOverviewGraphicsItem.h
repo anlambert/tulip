@@ -36,11 +36,11 @@ public:
   GlOverviewGraphicsItem(GlView *view, GlScene &scene);
   ~GlOverviewGraphicsItem() override;
 
-  void setSize(unsigned int width, unsigned int height);
-  unsigned int getWidth() const {
+  void setSize(uint width, uint height);
+  uint getWidth() const {
     return width;
   }
-  unsigned int getHeight() const {
+  uint getHeight() const {
     return height;
   }
 
@@ -66,7 +66,7 @@ private:
 
   GlView *view;
   GlScene &baseScene;
-  unsigned int width, height;
+  uint width, height;
 
   QGraphicsPixmapItem overview;
   QGraphicsPathItem overviewBorder;

@@ -61,10 +61,10 @@ private:
     return carte->existEdge(n, v, false);
   }
 
-  tlp::node rightV(unsigned int k);
-  tlp::node leftV(unsigned int k);
-  int next_right(unsigned int k, const tlp::node v);
-  int next_left(unsigned int k, const tlp::node v);
+  tlp::node rightV(uint k);
+  tlp::node leftV(uint k);
+  int next_right(uint k, const tlp::node v);
+  int next_left(uint k, const tlp::node v);
 
   tlp::PlanarConMap *carte;
   std::vector<std::vector<tlp::node>> V;
@@ -75,7 +75,7 @@ private:
   std::unordered_map<tlp::node, int> inl;
   std::unordered_map<tlp::node, int> inr;
 
-  std::unordered_map<tlp::node, unsigned int> rank;
+  std::unordered_map<tlp::node, uint> rank;
   std::unordered_map<tlp::node, std::vector<tlp::edge>> EdgesIN;
   std::unordered_map<tlp::node, std::vector<tlp::edge>> EdgesOUT;
 

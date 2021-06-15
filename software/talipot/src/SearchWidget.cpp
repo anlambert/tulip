@@ -348,7 +348,7 @@ void SearchWidget::search() {
   edge e;
 
   QString searchOpDescription;
-  unsigned int resultsCountNodes = 0, resultsCountEdges = 0;
+  uint resultsCountNodes = 0, resultsCountEdges = 0;
 
   if (_ui->selectionModeCombo->currentIndex() == 0) { // replace current selection
     output->copy(result);

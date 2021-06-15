@@ -24,7 +24,7 @@ using namespace std;
 namespace tlp {
 
 PixelOrientedInteractor::PixelOrientedInteractor(const QIcon &icon, const QString &text,
-                                                 const unsigned int priority)
+                                                 const uint priority)
     : NodeLinkDiagramViewInteractor(icon, text, priority) {}
 
 bool PixelOrientedInteractor::isCompatible(const std::string &viewName) const {

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -205,7 +205,7 @@ void GlSphere::getXML(string &outString) {
   GlXMLTools::getXML(outString, "rotation", rot);
 }
 //============================================================
-void GlSphere::setWithXML(const string &inString, unsigned int &currentPosition) {
+void GlSphere::setWithXML(const string &inString, uint &currentPosition) {
 
   GlXMLTools::setWithXML(inString, currentPosition, "position", position);
   GlXMLTools::setWithXML(inString, currentPosition, "radius", radius);

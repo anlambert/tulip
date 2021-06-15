@@ -312,7 +312,7 @@ public:
   /**
    * @brief Returns the number of registered values
    */
-  unsigned int size() const;
+  uint size() const;
 
   /**
    * @brief Indicates whether the set is empty of not

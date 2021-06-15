@@ -77,11 +77,11 @@ vector<NominatimGeocoderResult> NominatimGeocoder::getLatLngForAddress(const str
   NominatimResultsParser nominatimParser;
   nominatimParser.parse(jsonData.constData(), jsonData.size());
 
-  unsigned int nbResults = nominatimParser.addresses.size();
+  uint nbResults = nominatimParser.addresses.size();
 
   vector<NominatimGeocoderResult> ret;
 
-  for (unsigned int i = 0; i < nbResults; ++i) {
+  for (uint i = 0; i < nbResults; ++i) {
     NominatimGeocoderResult result;
     result.address = nominatimParser.addresses[i];
     result.latLng = nominatimParser.latLngs[i];

@@ -44,14 +44,14 @@ struct FuLiao : public ImportModule {
                     "1.0", "Social network")
 
   FuLiao(PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "300");
-    addInParameter<unsigned int>("m", paramHelp[1].data(), "5");
+    addInParameter<uint>("nodes", paramHelp[0].data(), "300");
+    addInParameter<uint>("m", paramHelp[1].data(), "5");
     addInParameter<double>("delta", paramHelp[2].data(), "0.5");
   }
 
   bool importGraph() override {
-    unsigned int n = 300;
-    unsigned int m = 5;
+    uint n = 300;
+    uint m = 5;
     double d = 0.5;
 
     if (dataSet != nullptr) {
@@ -67,12 +67,12 @@ struct FuLiao : public ImportModule {
     }
 
     tlp::initRandomSequence();
-    unsigned int i, j;
+    uint i, j;
 
     /*
      * Initial ring construction
      */
-    unsigned int m0 = 3;
+    uint m0 = 3;
     graph->addNodes(n);
     const vector<node> &nodes = graph->nodes();
 
@@ -94,7 +94,7 @@ struct FuLiao : public ImportModule {
 
       // add first edge
       double pr_sum = 0;
-      unsigned int rn = 0;
+      uint rn = 0;
       double pr = tlp::randomDouble();
 
       while (pr_sum < pr && rn < (i - 1)) {

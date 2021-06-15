@@ -74,7 +74,7 @@ struct ParameterDescriptionList {
 
   tlp::IteratorParameter* getParameters() const /TransferBack, TypeHint="Iterator[tlp.ParameterDescription]"/;
 
-  unsigned int size() const;
+  uint size() const;
 
   bool empty() const;
 
@@ -222,7 +222,7 @@ Adds an unsigned integer parameter to the plug-in.
 %End
 
 %MethodCode
- addParameter<unsigned int>(sipCpp, *a0, *a1, *a2, a3, a4, a5, *a6);
+ addParameter<uint>(sipCpp, *a0, *a1, *a2, a3, a4, a5, *a6);
 %End
 
 // ==================================================================================

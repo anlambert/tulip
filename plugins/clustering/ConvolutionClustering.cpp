@@ -43,7 +43,7 @@ double g(int k, double width, double amplitude) {
 }
 //================================================================================
 int getInterval(int d, const vector<int> &ranges) {
-  for (unsigned int i = 0; i < ranges.size() - 1; ++i) {
+  for (uint i = 0; i < ranges.size() - 1; ++i) {
     if ((d >= ranges[i]) && (d < ranges[i + 1])) {
       return i;
     }
@@ -72,7 +72,7 @@ list<int> ConvolutionClustering::getLocalMinimum() {
   double current = discretHisto[1];
   bool slopeSens = !(previous > current); // false descent
 
-  for (unsigned int i = 1; i < discretHisto.size(); ++i) {
+  for (uint i = 1; i < discretHisto.size(); ++i) {
     current = discretHisto[i];
     bool newSlopeSens = !(previous > current);
 
@@ -168,7 +168,7 @@ void ConvolutionClustering::autoSetParameter() {
     double current = discretHisto[1];
     bool slopeSens = !(previous > current);
 
-    for (unsigned int i = 1; i < discretHisto.size(); ++i) {
+    for (uint i = 1; i < discretHisto.size(); ++i) {
       double current = discretHisto[i];
       bool newSlopeSens = !(previous > current);
 

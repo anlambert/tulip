@@ -28,20 +28,20 @@ GlLine::GlLine(const vector<Coord> &points, const vector<Color> &colors)
 //=====================================================
 GlLine::~GlLine() = default;
 //=====================================================
-void GlLine::resizePoints(const unsigned int nbPoints) {
+void GlLine::resizePoints(const uint nbPoints) {
   _points.resize(nbPoints);
 }
 //=====================================================
-void GlLine::resizeColors(const unsigned int nbColors) {
+void GlLine::resizeColors(const uint nbColors) {
   assert(nbColors >= 1);
   _points.resize(nbColors);
 }
 //=====================================================
-const tlp::Coord &GlLine::point(const unsigned int i) const {
+const tlp::Coord &GlLine::point(const uint i) const {
   return _points[i];
 }
 //=====================================================
-tlp::Coord &GlLine::point(const unsigned int i) {
+tlp::Coord &GlLine::point(const uint i) {
   return _points[i];
 }
 //=====================================================
@@ -51,11 +51,11 @@ void GlLine::addPoint(const Coord &point, const Color &color) {
   boundingBox.expand(point);
 }
 //=====================================================
-const tlp::Color &GlLine::color(const unsigned int i) const {
+const tlp::Color &GlLine::color(const uint i) const {
   return _colors[i];
 }
 //=====================================================
-tlp::Color &GlLine::color(const unsigned int i) {
+tlp::Color &GlLine::color(const uint i) {
   return _colors[i];
 }
 //=====================================================
@@ -88,7 +88,7 @@ void GlLine::setLineWidth(float width) {
   this->width = width;
 }
 //=====================================================
-void GlLine::setLineStipple(unsigned char factor, unsigned int pattern) {
+void GlLine::setLineStipple(unsigned char factor, uint pattern) {
   this->factor = factor;
   this->pattern = pattern;
 }
@@ -111,7 +111,7 @@ void GlLine::getXML(string &outString) {
   GlXMLTools::getXML(outString, "pattern", pattern);
 }
 //============================================================
-void GlLine::setWithXML(const string &inString, unsigned int &currentPosition) {
+void GlLine::setWithXML(const string &inString, uint &currentPosition) {
 
   GlXMLTools::setWithXML(inString, currentPosition, "points", _points);
   GlXMLTools::setWithXML(inString, currentPosition, "colors", _colors);

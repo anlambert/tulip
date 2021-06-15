@@ -39,12 +39,12 @@ struct WangEtAl : public ImportModule {
                     "1.0", "Social network")
 
   WangEtAl(PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "300");
+    addInParameter<uint>("nodes", paramHelp[0].data(), "300");
   }
 
   bool importGraph() override {
 
-    unsigned int n = 300;
+    uint n = 300;
 
     if (dataSet != nullptr) {
       dataSet->get("nodes", n);
@@ -60,7 +60,7 @@ struct WangEtAl : public ImportModule {
 
     vector<edge> e(2 * n - 3);
     e[0] = graph->addEdge(nodes[0], nodes[1]);
-    unsigned int nbe = 1;
+    uint nbe = 1;
 
     for (unsigned i = 2; i < n; ++i) {
       if (i % 100 == 0) {

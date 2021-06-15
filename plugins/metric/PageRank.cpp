@@ -80,7 +80,7 @@ struct PageRank : public DoubleAlgorithm {
     // Initialize the PageRank
     NodeVectorProperty<double> pr(graph);
     NodeVectorProperty<double> next_pr(graph);
-    unsigned int nbNodes = graph->numberOfNodes();
+    uint nbNodes = graph->numberOfNodes();
 
     double oon = 1. / nbNodes;
 
@@ -92,9 +92,9 @@ struct PageRank : public DoubleAlgorithm {
     NodeVectorProperty<double> deg(graph);
     tlp::degree(graph, deg, directed ? DIRECTED : UNDIRECTED, weight, false);
 
-    for (unsigned int k = 0; k < kMax + 1; ++k) {
+    for (uint k = 0; k < kMax + 1; ++k) {
       if (!weight) {
-        TLP_PARALLEL_MAP_NODES_AND_INDICES(graph, [&](const node n, unsigned int i) {
+        TLP_PARALLEL_MAP_NODES_AND_INDICES(graph, [&](const node n, uint i) {
           double n_sum = 0;
           for (auto nin :
                getAdjacentNodesIterator(graph, n, directed ? INV_DIRECTED : UNDIRECTED)) {
@@ -103,7 +103,7 @@ struct PageRank : public DoubleAlgorithm {
           next_pr[i] = one_minus_d + d * n_sum;
         });
       } else {
-        TLP_PARALLEL_MAP_NODES_AND_INDICES(graph, [&](const node n, unsigned int i) {
+        TLP_PARALLEL_MAP_NODES_AND_INDICES(graph, [&](const node n, uint i) {
           double n_sum = 0;
           for (auto e : getIncidentEdgesIterator(graph, n, directed ? INV_DIRECTED : UNDIRECTED)) {
             node nin = graph->opposite(e, n);

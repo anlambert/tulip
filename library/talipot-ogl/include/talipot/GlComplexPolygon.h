@@ -224,7 +224,7 @@ public:
   /**
    * @brief Function to set data with inString (in XML format)
    */
-  void setWithXML(const std::string &inString, unsigned int &currentPosition) override;
+  void setWithXML(const std::string &inString, uint &currentPosition) override;
 
   const std::vector<std::vector<Coord>> &getPolygonSides() const {
     return points;
@@ -246,7 +246,7 @@ protected:
   std::vector<std::vector<Coord>> points;
   std::vector<std::vector<float>> pointsIdx;
   std::vector<float> verticesData;
-  std::vector<unsigned int> verticesIndices;
+  std::vector<uint> verticesIndices;
   int currentVector;
   bool outlined;
   Color fillColor;

@@ -26,6 +26,8 @@
 #include <utility>
 #include <string>
 
+#include <talipot/config.h>
+
 // On FreeBSD, the ansidecl.h header file from the binutils port, containing the ATTRIBUTE_UNUSED
 // and ENUM_BITFIELD
 // preprocessor macro is not installed and its use from bfd.h is also removed (see
@@ -60,11 +62,11 @@ public:
   ~BfdWrapper();
 
 #ifndef __MINGW32__
-  std::pair<const char *, unsigned int> getFileAndLineForAddress(const char *unmangledFuncName,
-                                                                 const int64_t runtimeAddr,
-                                                                 const int64_t runtimeOffset);
+  std::pair<const char *, uint> getFileAndLineForAddress(const char *unmangledFuncName,
+                                                         const int64_t runtimeAddr,
+                                                         const int64_t runtimeOffset);
 #else
-  std::pair<const char *, unsigned int> getFileAndLineForAddress(const int64_t runtimeAddr);
+  std::pair<const char *, uint> getFileAndLineForAddress(const int64_t runtimeAddr);
   const char *getFunctionForAddress(const int64_t runtimeAddr);
 #endif
 
@@ -78,7 +80,7 @@ private:
   asection *textSection;
   asymbol **symbolTable;
   long nSymbols;
-  unsigned int symbolSize;
+  uint symbolSize;
   bool isMini;
   bool isDynamic;
   asymbol *scratchSymbol;

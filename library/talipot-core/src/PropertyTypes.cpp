@@ -34,7 +34,7 @@ void GraphType::write(ostream &oss, const RealType &v) {
 }
 
 void GraphType::writeb(ostream &oss, const RealType &v) {
-  unsigned int id = v ? v->getId() : 0;
+  uint id = v ? v->getId() : 0;
   oss.write(reinterpret_cast<const char *>(&id), sizeof(id));
 }
 
@@ -74,13 +74,13 @@ void EdgeSetType::write(ostream &os, const RealType &v) {
 }
 
 void EdgeSetType::writeb(ostream &oss, const RealType &v) {
-  unsigned int vSize = v.size();
+  uint vSize = v.size();
   // write the size of the set
   oss.write(reinterpret_cast<const char *>(&vSize), sizeof(vSize));
 
   // loop to write the edges
   for (auto e : v) {
-    oss.write(reinterpret_cast<const char *>(&(e.id)), sizeof(unsigned int));
+    oss.write(reinterpret_cast<const char *>(&(e.id)), sizeof(uint));
   }
 }
 
@@ -130,10 +130,10 @@ bool EdgeSetType::read(istream &is, RealType &v) {
 bool EdgeSetType::readb(istream &iss, RealType &s) {
   s.clear();
 
-  unsigned int size;
+  uint size;
 
   // get the set size
-  if (!bool(iss.read(reinterpret_cast<char *>(&size), sizeof(unsigned int)))) {
+  if (!bool(iss.read(reinterpret_cast<char *>(&size), sizeof(uint)))) {
     return false;
   }
 
@@ -143,7 +143,7 @@ bool EdgeSetType::readb(istream &iss, RealType &s) {
   edge *data = v.data();
 
   // get the edges in one read
-  if (!bool(iss.read(reinterpret_cast<char *>(v.data()), size * sizeof(unsigned int)))) {
+  if (!bool(iss.read(reinterpret_cast<char *>(v.data()), size * sizeof(uint)))) {
     return false;
   }
 
@@ -297,11 +297,11 @@ long LongType::defaultValue() {
 }
 
 // UnsignedIntegerType
-unsigned int UnsignedIntegerType::undefinedValue() {
+uint UnsignedIntegerType::undefinedValue() {
   return UINT_MAX;
 }
 
-unsigned int UnsignedIntegerType::defaultValue() {
+uint UnsignedIntegerType::defaultValue() {
   return 0;
 }
 
@@ -348,7 +348,7 @@ bool BooleanType::read(istream &is, RealType &v, bool untilEnd) {
     return false;
   }
 
-  for (unsigned int i = 1; i < s.size(); ++i) {
+  for (uint i = 1; i < s.size(); ++i) {
     if (!(is >> c)) {
       return false;
     }
@@ -385,7 +385,7 @@ bool BooleanType::fromString(RealType &v, const std::string &s, bool untilEnd) {
 void BooleanVectorType::write(ostream &os, const RealType &v) {
   os << '(';
 
-  for (unsigned int i = 0; i < v.size(); i++) {
+  for (uint i = 0; i < v.size(); i++) {
     if (i) {
       os << ", ";
     }
@@ -397,7 +397,7 @@ void BooleanVectorType::write(ostream &os, const RealType &v) {
 }
 
 void BooleanVectorType::writeb(ostream &oss, const RealType &v) {
-  unsigned int vSize = v.size();
+  uint vSize = v.size();
   // write the size of the vector
   oss.write(reinterpret_cast<const char *>(&vSize), sizeof(vSize));
 
@@ -407,7 +407,7 @@ void BooleanVectorType::writeb(ostream &oss, const RealType &v) {
   // loop to write boolean as char
   char *data = vc.data();
 
-  for (unsigned int i = 0; i < vSize; ++i, ++data) {
+  for (uint i = 0; i < vSize; ++i, ++data) {
     *data = v[i] ? 1 : 0;
   }
 
@@ -535,7 +535,7 @@ bool BooleanVectorType::tokenize(const std::string &s, std::vector<std::string> 
 }
 
 bool BooleanVectorType::readb(istream &iss, RealType &v) {
-  unsigned int vSize = v.size();
+  uint vSize = v.size();
 
   // read the size of the vector
   if (!iss.read(reinterpret_cast<char *>(&vSize), sizeof(vSize))) {
@@ -554,7 +554,7 @@ bool BooleanVectorType::readb(istream &iss, RealType &v) {
 
   v.resize(vSize);
 
-  for (unsigned int i = 0; i < vSize; ++i, ++data) {
+  for (uint i = 0; i < vSize; ++i, ++data) {
     v[i] = *data != 0;
   }
 
@@ -682,7 +682,7 @@ bool PointType::read(istream &is, RealType &v) {
     return false;
   }
 
-  for (unsigned int i = 0; i < 3; ++i) {
+  for (uint i = 0; i < 3; ++i) {
     if (i > 0) {
       // skip spaces
       while ((ok = bool(is >> c)) && isspace(c)) {
@@ -815,7 +815,7 @@ void StringType::write(ostream &os, const RealType &v, char openCloseChar) {
 
 void StringType::writeb(ostream &os, const RealType &str) {
   // write size of str
-  unsigned int size = str.size();
+  uint size = str.size();
   os.write(reinterpret_cast<const char *>(&size), sizeof(size));
 
   // then write c_str()
@@ -886,7 +886,7 @@ bool StringType::read(istream &is, RealType &v, char openChar, char closeChar) {
 
 bool StringType::readb(istream &iss, RealType &str) {
   // read size of str
-  unsigned int size;
+  uint size;
 
   if (!bool(iss.read(reinterpret_cast<char *>(&size), sizeof(size)))) {
     return false;
@@ -906,7 +906,7 @@ bool StringType::fromString(RealType &v, const string &s) {
 void StringVectorType::write(ostream &os, const RealType &v) {
   os << '(';
 
-  for (unsigned int i = 0; i < v.size(); i++) {
+  for (uint i = 0; i < v.size(); i++) {
     if (i) {
       os << ", ";
     }
@@ -919,11 +919,11 @@ void StringVectorType::write(ostream &os, const RealType &v) {
 
 void StringVectorType::writeb(ostream &os, const RealType &v) {
   // write size of vector
-  unsigned int size = v.size();
+  uint size = v.size();
   os.write(reinterpret_cast<const char *>(&size), sizeof(size));
 
   // loop to write strings
-  for (unsigned int i = 0; i < size; ++i) {
+  for (uint i = 0; i < size; ++i) {
     StringType::writeb(os, v[i]);
   }
 }
@@ -994,7 +994,7 @@ bool StringVectorType::read(istream &is, RealType &v, char openChar, char sepCha
 
 bool StringVectorType::readb(istream &iss, RealType &v) {
   // read size of vector
-  unsigned int size;
+  uint size;
 
   if (!bool(iss.read(reinterpret_cast<char *>(&size), sizeof(size)))) {
     return false;
@@ -1003,7 +1003,7 @@ bool StringVectorType::readb(istream &iss, RealType &v) {
   v.resize(size);
 
   // loop to read strings
-  for (unsigned int i = 0; i < size; ++i) {
+  for (uint i = 0; i < size; ++i) {
     if (!StringType::readb(iss, v[i])) {
       return false;
     }
@@ -1135,11 +1135,11 @@ struct NodeVectorTypeSerializer : public TypedDataSerializer<vector<node>> {
   }
 
   void write(ostream &os, const vector<node> &vn) override {
-    uintVecSerializer->write(os, reinterpret_cast<const vector<unsigned int> &>(vn));
+    uintVecSerializer->write(os, reinterpret_cast<const vector<uint> &>(vn));
   }
 
   bool read(istream &is, vector<node> &vn) override {
-    return uintVecSerializer->read(is, reinterpret_cast<vector<unsigned int> &>(vn));
+    return uintVecSerializer->read(is, reinterpret_cast<vector<uint> &>(vn));
   }
 
   bool setData(tlp::DataSet &, const string &, const string &) override {
@@ -1195,11 +1195,11 @@ struct EdgeVectorTypeSerializer : public TypedDataSerializer<vector<edge>> {
   }
 
   void write(ostream &os, const vector<edge> &ve) override {
-    uintVecSerializer->write(os, reinterpret_cast<const vector<unsigned int> &>(ve));
+    uintVecSerializer->write(os, reinterpret_cast<const vector<uint> &>(ve));
   }
 
   bool read(istream &is, vector<edge> &ve) override {
-    return uintVecSerializer->read(is, reinterpret_cast<vector<unsigned int> &>(ve));
+    return uintVecSerializer->read(is, reinterpret_cast<vector<uint> &>(ve));
   }
 
   bool setData(tlp::DataSet &, const string &, const string &) override {
@@ -1219,7 +1219,7 @@ struct StringCollectionSerializer : public TypedDataSerializer<StringCollection>
     os << '"';
     std::vector<std::string> values = sc.getValues();
 
-    for (unsigned int i = 0; i < values.size(); ++i) {
+    for (uint i = 0; i < values.size(); ++i) {
       if (i) {
         os << ';';
       }

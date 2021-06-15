@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -20,7 +20,7 @@
 class LinearMappingColor : public ColorFunction {
 public:
   LinearMappingColor(double min, double max);
-  tlp::Color getColor(double value, unsigned int) const override;
+  tlp::Color getColor(double value, uint) const override;
 
 private:
   double _min;

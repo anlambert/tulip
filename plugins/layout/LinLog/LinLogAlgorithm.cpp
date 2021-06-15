@@ -51,7 +51,7 @@ LinLogAlgorithm::LinLogAlgorithm(const tlp::PluginContext *context) : LayoutAlgo
   addInParameter<bool>("3D layout", paramHelp[0].data(), "false");
   addInParameter<bool>("octtree", paramHelp[1].data(), "true");
   addInParameter<NumericProperty *>("edge weight", paramHelp[2].data(), "", false);
-  addInParameter<unsigned int>("max iterations", paramHelp[3].data(), "100");
+  addInParameter<uint>("max iterations", paramHelp[3].data(), "100");
   addInParameter<float>("repulsion exponent", paramHelp[4].data(), "0.0");
   addInParameter<float>("attraction exponent", paramHelp[5].data(), "1.0");
   addInParameter<float>("gravitation factor", paramHelp[6].data(), "0.05");
@@ -65,7 +65,7 @@ bool LinLogAlgorithm::run() {
   bool is3D = false;
   bool useOctTree = false;
 
-  unsigned int max_iter = 100;
+  uint max_iter = 100;
   tlp::NumericProperty *edgeWeight = nullptr;
   tlp::BooleanProperty *skipNodes = nullptr;
   float aExp = 1.0;

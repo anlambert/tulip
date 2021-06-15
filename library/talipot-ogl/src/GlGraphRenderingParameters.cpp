@@ -158,9 +158,9 @@ void GlGraphRenderingParameters::setParameters(const DataSet &data) {
     setLabelsAreBillboarded(b);
   }
 
-  unsigned int ui = 0;
+  uint ui = 0;
 
-  if (data.get<unsigned int>("fontType", ui)) {
+  if (data.get<uint>("fontType", ui)) {
     setFontsType(ui);
   }
 
@@ -238,14 +238,14 @@ void GlGraphRenderingParameters::setViewMetaLabel(bool b) {
   _viewMetaLabel = b;
 }
 //====================================================
-unsigned int GlGraphRenderingParameters::getFontsType() const {
+uint GlGraphRenderingParameters::getFontsType() const {
   if (_labelScaled) {
     return 0;
   } else {
     return 1;
   }
 }
-void GlGraphRenderingParameters::setFontsType(unsigned int i) {
+void GlGraphRenderingParameters::setFontsType(uint i) {
   if (i == 1) {
     _labelsDensity = 100;
   } else {

@@ -299,7 +299,7 @@ void StringCollectionEditorCreator::setEditorData(QWidget *widget, const QVarian
   auto col = var.value<StringCollection>();
   auto *combo = static_cast<QComboBox *>(widget);
 
-  for (unsigned int i = 0; i < col.size(); ++i) {
+  for (uint i = 0; i < col.size(); ++i) {
     combo->addItem(tlp::tlpStringToQString(col[i]));
   }
 

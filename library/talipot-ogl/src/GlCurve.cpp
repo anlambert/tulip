@@ -31,20 +31,20 @@ GlCurve::GlCurve(const vector<Coord> &points, const Color &beginFColor, const Co
   }
 }
 //=====================================================
-GlCurve::GlCurve(const unsigned int nbPoints) : _points(nbPoints) {}
+GlCurve::GlCurve(const uint nbPoints) : _points(nbPoints) {}
 //=====================================================
 GlCurve::~GlCurve() = default;
 //=====================================================
-void GlCurve::resizePoints(const unsigned int nbPoints) {
+void GlCurve::resizePoints(const uint nbPoints) {
   assert(nbPoints >= 3);
   _points.resize(nbPoints);
 }
 //=====================================================
-const tlp::Coord &GlCurve::point(const unsigned int i) const {
+const tlp::Coord &GlCurve::point(const uint i) const {
   return _points[i];
 }
 //=====================================================
-tlp::Coord &GlCurve::point(const unsigned int i) {
+tlp::Coord &GlCurve::point(const uint i) {
   return _points[i];
 }
 //=====================================================
@@ -56,7 +56,7 @@ void GlCurve::draw(float, Camera *) {
   // glEnable(GL_COLOR_MATERIAL);
   vector<Coord> newPoints(_points.size());
 
-  for (unsigned int i = 0; i < _points.size(); ++i) {
+  for (uint i = 0; i < _points.size(); ++i) {
     newPoints[i] = _points[i];
   }
 
@@ -100,7 +100,7 @@ void GlCurve::getXML(string &outString) {
   GlXMLTools::getXML(outString, "endSize", _endSize);
 }
 //============================================================
-void GlCurve::setWithXML(const string &inString, unsigned int &currentPosition) {
+void GlCurve::setWithXML(const string &inString, uint &currentPosition) {
 
   GlXMLTools::setWithXML(inString, currentPosition, "points", _points);
   GlXMLTools::setWithXML(inString, currentPosition, "beginFillColor", _beginFillColor);

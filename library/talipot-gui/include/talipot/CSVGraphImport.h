@@ -108,55 +108,55 @@ protected:
  **/
 class TLP_QT_SCOPE CSVImportParameters {
 public:
-  CSVImportParameters(unsigned int fromLine = 0, unsigned int toLine = UINT_MAX,
+  CSVImportParameters(uint fromLine = 0, uint toLine = UINT_MAX,
                       const std::vector<CSVColumn *> &columns = std::vector<CSVColumn *>());
   virtual ~CSVImportParameters();
 
   /**
    * @brief Return the number of column.
    **/
-  unsigned int columnNumber() const;
+  uint columnNumber() const;
 
   /**
    * @brief return true if the column is marked for import
    **/
-  bool importColumn(unsigned int column) const;
+  bool importColumn(uint column) const;
   /**
    * @brief Get the column name
    **/
-  std::string getColumnName(unsigned int column) const;
+  std::string getColumnName(uint column) const;
   /**
    * @brief Get the column data type
    **/
-  std::string getColumnDataType(unsigned int column) const;
+  std::string getColumnDataType(uint column) const;
 
   /**
    * @brief Get the column separator for multiple values
    **/
-  char getColumnMultiValueSeparator(unsigned int column) const;
+  char getColumnMultiValueSeparator(uint column) const;
 
   /**
    * @brief Get the column action according to the given token
    **/
-  CSVColumn::Action getColumnActionForToken(unsigned int column, const std::string &token) const;
+  CSVColumn::Action getColumnActionForToken(uint column, const std::string &token) const;
 
   /**
    * @brief Return the index of the first line to import
    **/
-  unsigned int getFirstLineIndex() const;
+  uint getFirstLineIndex() const;
   /**
    * @brief Return the index of the last line to import
    **/
-  unsigned int getLastLineIndex() const;
+  uint getLastLineIndex() const;
   /**
    * @brief Return true if the given row is between the first row to import and the last row to
    *import
    **/
-  bool importRow(unsigned int row) const;
+  bool importRow(uint row) const;
 
 private:
-  unsigned int fromLine;
-  unsigned int toLine;
+  uint fromLine;
+  uint toLine;
   std::vector<CSVColumn *> columns;
 };
 
@@ -170,15 +170,15 @@ private:
  * parser->parse(mapping);
  * //Now the mapping has been built.
  * //Get the element for the first row.
- * pair<tlp::ElementType,unsigned int> element = mapping->getElementForRow(0);
+ * pair<tlp::ElementType,uint> element = mapping->getElementForRow(0);
  * @endcode
  **/
 class TLP_QT_SCOPE CSVToGraphDataMapping {
 public:
   virtual ~CSVToGraphDataMapping() = default;
-  virtual std::pair<tlp::ElementType, std::vector<unsigned int>>
+  virtual std::pair<tlp::ElementType, std::vector<uint>>
   getElementsForRow(const std::vector<std::vector<std::string>> &tokens) = 0;
-  virtual void init(unsigned int rowNumber) = 0;
+  virtual void init(uint rowNumber) = 0;
 };
 
 /**
@@ -191,12 +191,12 @@ public:
 class TLP_QT_SCOPE AbstractCSVToGraphDataMapping : public CSVToGraphDataMapping {
 public:
   AbstractCSVToGraphDataMapping(tlp::Graph *graph, tlp::ElementType type,
-                                const std::vector<unsigned int> &columnIds,
+                                const std::vector<uint> &columnIds,
                                 const std::vector<std::string> &propertyNames);
   ~AbstractCSVToGraphDataMapping() override = default;
 
-  void init(unsigned int rowNumber) override;
-  std::pair<tlp::ElementType, std::vector<unsigned int>>
+  void init(uint rowNumber) override;
+  std::pair<tlp::ElementType, std::vector<uint>>
   getElementsForRow(const std::vector<std::vector<std::string>> &tokens) override;
 
 protected:
@@ -204,13 +204,13 @@ protected:
    * @brief Create a new element if no elements for the given row was found.
    * @return Return the graph element id or UINT_MAX if no new element is created.
    **/
-  virtual unsigned int buildIndexForRow(unsigned int row, const std::vector<std::string> &keys) = 0;
+  virtual uint buildIndexForRow(uint row, const std::vector<std::string> &keys) = 0;
 
 protected:
-  std::unordered_map<std::string, unsigned int> valueToId;
+  std::unordered_map<std::string, uint> valueToId;
   tlp::Graph *graph;
   tlp::ElementType type;
-  std::vector<unsigned int> columnIds;
+  std::vector<uint> columnIds;
   std::vector<tlp::PropertyInterface *> keyProperties;
 };
 /**
@@ -219,8 +219,8 @@ protected:
 class TLP_QT_SCOPE CSVToNewNodeIdMapping : public CSVToGraphDataMapping {
 public:
   CSVToNewNodeIdMapping(tlp::Graph *graph);
-  void init(unsigned int rowNumber) override;
-  std::pair<tlp::ElementType, std::vector<unsigned int>>
+  void init(uint rowNumber) override;
+  std::pair<tlp::ElementType, std::vector<uint>>
   getElementsForRow(const std::vector<std::vector<std::string>> &tokens) override;
 
 private:
@@ -244,12 +244,12 @@ public:
    * @param createNode If set to true if there is no node for an id in the CSV file a new node will
    *be created for this id.
    **/
-  CSVToGraphNodeIdMapping(tlp::Graph *graph, const std::vector<unsigned int> &columnIds,
+  CSVToGraphNodeIdMapping(tlp::Graph *graph, const std::vector<uint> &columnIds,
                           const std::vector<std::string> &propertyNames, bool createNode = false);
-  void init(unsigned int rowNumber) override;
+  void init(uint rowNumber) override;
 
 protected:
-  unsigned int buildIndexForRow(unsigned int row, const std::vector<std::string> &keys) override;
+  uint buildIndexForRow(uint row, const std::vector<std::string> &keys) override;
 
 private:
   bool createMissingNodes;
@@ -269,11 +269,11 @@ public:
    * @param firstRow The first row to search ids.
    * @param lastRow The last row to search ids.
    **/
-  CSVToGraphEdgeIdMapping(tlp::Graph *graph, const std::vector<unsigned int> &columnIds,
+  CSVToGraphEdgeIdMapping(tlp::Graph *graph, const std::vector<uint> &columnIds,
                           const std::vector<std::string> &propertyNames);
 
 protected:
-  unsigned int buildIndexForRow(unsigned int row, const std::vector<std::string> &keys) override;
+  uint buildIndexForRow(uint row, const std::vector<std::string> &keys) override;
 };
 
 /**
@@ -296,22 +296,22 @@ public:
    * @param createMissinElements If true create source node, destination node if one of them is not
    *found in the graph.
    **/
-  CSVToGraphEdgeSrcTgtMapping(tlp::Graph *graph, const std::vector<unsigned int> &srcColumnIds,
-                              const std::vector<unsigned int> &tgtColumnIds,
+  CSVToGraphEdgeSrcTgtMapping(tlp::Graph *graph, const std::vector<uint> &srcColumnIds,
+                              const std::vector<uint> &tgtColumnIds,
                               const std::vector<std::string> &srcPropNames,
                               const std::vector<std::string> &tgtPropNames,
                               bool createMissinElements = false);
-  std::pair<tlp::ElementType, unsigned int> getElementForRow(unsigned int row);
-  void init(unsigned int lineNumbers) override;
-  std::pair<tlp::ElementType, std::vector<unsigned int>>
+  std::pair<tlp::ElementType, uint> getElementForRow(uint row);
+  void init(uint lineNumbers) override;
+  std::pair<tlp::ElementType, std::vector<uint>>
   getElementsForRow(const std::vector<std::vector<std::string>> &tokens) override;
 
 private:
   tlp::Graph *graph;
-  std::unordered_map<std::string, unsigned int> srcValueToId;
-  std::unordered_map<std::string, unsigned int> tgtValueToId;
-  std::vector<unsigned int> srcColumnIds;
-  std::vector<unsigned int> tgtColumnIds;
+  std::unordered_map<std::string, uint> srcValueToId;
+  std::unordered_map<std::string, uint> tgtValueToId;
+  std::vector<uint> srcColumnIds;
+  std::vector<uint> tgtColumnIds;
   std::vector<tlp::PropertyInterface *> srcProperties;
   std::vector<tlp::PropertyInterface *> tgtProperties;
   bool sameSrcTgtProperties;
@@ -333,8 +333,7 @@ public:
    *
    * The token parameter is used to guess property type if needed.
    **/
-  virtual tlp::PropertyInterface *getPropertyInterface(unsigned int column,
-                                                       const std::string &token) = 0;
+  virtual tlp::PropertyInterface *getPropertyInterface(uint column, const std::string &token) = 0;
 };
 
 /**
@@ -351,13 +350,12 @@ public:
                                              const CSVImportParameters &importParameters,
                                              QWidget *parent = nullptr);
   ~CSVImportColumnToGraphPropertyMappingProxy() override = default;
-  tlp::PropertyInterface *getPropertyInterface(unsigned int column,
-                                               const std::string &token) override;
+  tlp::PropertyInterface *getPropertyInterface(uint column, const std::string &token) override;
 
 private:
   tlp::Graph *graph;
   CSVImportParameters importParameters;
-  std::unordered_map<unsigned int, tlp::PropertyInterface *> propertiesBuffer;
+  std::unordered_map<uint, tlp::PropertyInterface *> propertiesBuffer;
   QMessageBox::StandardButton overwritePropertiesButton;
   QWidget *parent;
   PropertyInterface *generateApproximateProperty(const std::string &name, const std::string &type);
@@ -375,8 +373,8 @@ public:
                  const CSVImportParameters &importParameters);
   ~CSVGraphImport() override;
   bool begin() override;
-  bool line(unsigned int row, const std::vector<std::string> &lineTokens) override;
-  bool end(unsigned int rowNumber, unsigned int columnNumber) override;
+  bool line(uint row, const std::vector<std::string> &lineTokens) override;
+  bool end(uint rowNumber, uint columnNumber) override;
 
 protected:
   CSVToGraphDataMapping *mapping;

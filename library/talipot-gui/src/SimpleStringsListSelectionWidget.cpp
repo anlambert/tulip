@@ -26,7 +26,7 @@ using namespace std;
 namespace tlp {
 
 SimpleStringsListSelectionWidget::SimpleStringsListSelectionWidget(
-    QWidget *parent, const unsigned int maxSelectedStringsListSize)
+    QWidget *parent, const uint maxSelectedStringsListSize)
     : QWidget(parent), _ui(new Ui::SimpleStringsListSelectionWidget()),
       maxSelectedStringsListSize(maxSelectedStringsListSize) {
 
@@ -134,7 +134,7 @@ void SimpleStringsListSelectionWidget::clearSelectedStringsList() {
 }
 
 void SimpleStringsListSelectionWidget::setMaxSelectedStringsListSize(
-    const unsigned int maxSelectedStringsListSize) {
+    const uint maxSelectedStringsListSize) {
   this->maxSelectedStringsListSize = maxSelectedStringsListSize;
 
   if (maxSelectedStringsListSize != 0) {

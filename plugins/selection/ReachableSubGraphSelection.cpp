@@ -45,15 +45,15 @@ ReachableSubGraphSelection::ReachableSubGraphSelection(const tlp::PluginContext 
                                    directionValuesDescription);
   addInParameter<BooleanProperty>("starting nodes", paramHelp[1].data(), "viewSelection");
   addInParameter<int>("distance", paramHelp[2].data(), "5");
-  addOutParameter<unsigned int>("#edges selected", "The number of newly selected edges");
-  addOutParameter<unsigned int>("#nodes selected", "The number of newly selected nodes");
+  addOutParameter<uint>("#edges selected", "The number of newly selected edges");
+  addOutParameter<uint>("#nodes selected", "The number of newly selected nodes");
   // old name
   declareDeprecatedName("Reachable Sub-Graph");
 }
 
 ///===========================================================
 bool ReachableSubGraphSelection::run() {
-  unsigned int maxDistance = 5;
+  uint maxDistance = 5;
   StringCollection edgeDirectionCollecion;
   EDGE_TYPE edgeDirection = DIRECTED;
   BooleanProperty *startNodes = graph->getBooleanProperty("viewSelection");

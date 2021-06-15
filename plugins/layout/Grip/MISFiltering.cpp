@@ -36,7 +36,7 @@ void MISFiltering::computeFiltering() {
   }
 
   level = 1;
-  unsigned int nb = g_copy->numberOfNodes();
+  uint nb = g_copy->numberOfNodes();
 
   while (nb > 3) {
     nb = 0;
@@ -49,7 +49,7 @@ void MISFiltering::computeFiltering() {
     inCurVi.setAll(false);
     inCurVi.set(firstNode.id, true);
 
-    unsigned int depth = 2u << (level - 1u);
+    uint depth = 2u << (level - 1u);
 
     for (auto current : toVisit) {
       if (removedVisit.get(current.id)) {
@@ -62,7 +62,7 @@ void MISFiltering::computeFiltering() {
 
     inLastVi.setAll(false);
 
-    for (unsigned int id : inCurVi.findAll(true)) {
+    for (uint id : inCurVi.findAll(true)) {
       node n(id);
       levelToNodes[level].insert(n);
       inLastVi.set(n.id, true);
@@ -77,16 +77,16 @@ void MISFiltering::computeFiltering() {
   updateVectors();
 }
 //========================================
-void MISFiltering::bfsDepth(node n, unsigned int depth) {
+void MISFiltering::bfsDepth(node n, uint depth) {
   vector<node> nextNodes;
-  std::unordered_map<node, unsigned int> nodeDepth;
+  std::unordered_map<node, uint> nodeDepth;
   MutableContainer<bool> inNext;
   inNext.setAll(false);
   inNext.set(n.id, true);
   nextNodes.push_back(n);
   nodeDepth[n] = 0;
 
-  for (unsigned int i = 0; i < nextNodes.size(); ++i) {
+  for (uint i = 0; i < nextNodes.size(); ++i) {
     node current = nextNodes[i];
     for (auto v : g_copy->getInOutNodes(current)) {
       if (visited.get(v.id) || inNext.get(v.id)) {
@@ -122,7 +122,7 @@ void MISFiltering::updateVectors() {
   ordering.resize(g_copy->numberOfNodes());
 
   if (level == 1) {
-    unsigned int curPos = 0;
+    uint curPos = 0;
     for (auto n : g_copy->nodes()) {
       ordering[curPos++] = n;
     }
@@ -131,7 +131,7 @@ void MISFiltering::updateVectors() {
 
   MutableContainer<bool> considered;
   considered.setAll(false);
-  unsigned int curPos = 0;
+  uint curPos = 0;
 
   while (level + 1) {
     auto it = levelToNodes[level].begin();
@@ -183,12 +183,12 @@ void MISFiltering::updateVectors() {
   }
 }
 //========================================
-void MISFiltering::getNearest(node n, vector<node> &neighbors, vector<unsigned int> &neighbors_dist,
-                              unsigned int level, unsigned int nbNeighbors) {
+void MISFiltering::getNearest(node n, vector<node> &neighbors, vector<uint> &neighbors_dist,
+                              uint level, uint nbNeighbors) {
   vector<node> nextNodes;
   MutableContainer<bool> alreadyTreated;
   MutableContainer<bool> toTreat;
-  std::unordered_map<node, unsigned int> nodeDepth;
+  std::unordered_map<node, uint> nodeDepth;
   bool found = false;
   unsigned nbFound = 0;
 
@@ -200,11 +200,11 @@ void MISFiltering::getNearest(node n, vector<node> &neighbors, vector<unsigned i
   nextNodes.push_back(n);
   alreadyTreated.set(n.id, true);
 
-  for (unsigned int i = 0; i < index[level + 1]; ++i) {
+  for (uint i = 0; i < index[level + 1]; ++i) {
     toTreat.set(ordering[i].id, true);
   }
 
-  for (unsigned int i = 0; !found && i < nextNodes.size(); ++i) {
+  for (uint i = 0; !found && i < nextNodes.size(); ++i) {
     node current = nextNodes[i];
 
     for (auto v : g_copy->getInOutNodes(current)) {

@@ -46,7 +46,7 @@ void QuantitativeParallelAxis::setAxisLabels() {
 
   if (propertyMin >= INT_MIN && propertyMax <= INT_MAX) {
     if (getAxisDataTypeName() == "double") {
-      for (unsigned int n : graphProxy->getDataIterator()) {
+      for (uint n : graphProxy->getDataIterator()) {
         double val =
             graphProxy->getPropertyValueForData<DoubleProperty, DoubleType>(getAxisName(), n);
         double intpart, fracpart;
@@ -90,7 +90,7 @@ void QuantitativeParallelAxis::computeBoxPlotCoords() {
 
   set<double> propertyValuesSet;
 
-  for (unsigned int dataId : graphProxy->getDataIterator()) {
+  for (uint dataId : graphProxy->getDataIterator()) {
     double value;
 
     if (getAxisDataTypeName() == "double") {
@@ -105,7 +105,7 @@ void QuantitativeParallelAxis::computeBoxPlotCoords() {
   }
 
   vector<double> propertyValuesVector(propertyValuesSet.begin(), propertyValuesSet.end());
-  unsigned int vectorSize = propertyValuesVector.size();
+  uint vectorSize = propertyValuesVector.size();
 
   if (vectorSize < 4) {
 
@@ -197,7 +197,7 @@ double QuantitativeParallelAxis::getAssociatedPropertyMinValue() {
 
     double min = DBL_MAX;
 
-    for (unsigned int dataId : graphProxy->getDataIterator()) {
+    for (uint dataId : graphProxy->getDataIterator()) {
       double propertyValue;
 
       if (getAxisDataTypeName() == "double") {
@@ -231,7 +231,7 @@ void QuantitativeParallelAxis::translate(const Coord &c) {
   boxPlotValuesCoord[TOP_OUTLIER] += c;
 }
 
-Coord QuantitativeParallelAxis::getPointCoordOnAxisForData(const unsigned int dataIdx) {
+Coord QuantitativeParallelAxis::getPointCoordOnAxisForData(const uint dataIdx) {
   double value = 0;
 
   if (getAxisDataTypeName() == "double") {
@@ -308,13 +308,12 @@ std::string QuantitativeParallelAxis::getBottomSliderTextValue() {
   }
 }
 
-const set<unsigned int> &QuantitativeParallelAxis::getDataInRange(float yLowBound,
-                                                                  float yHighBound) {
+const set<uint> &QuantitativeParallelAxis::getDataInRange(float yLowBound, float yHighBound) {
   dataSubset.clear();
   float rotAngleBak = rotationAngle;
   rotationAngle = 0.0f;
 
-  for (unsigned int dataId : graphProxy->getDataIterator()) {
+  for (uint dataId : graphProxy->getDataIterator()) {
     Coord dataCoord = getPointCoordOnAxisForData(dataId);
 
     if (dataCoord.getY() <= yHighBound && dataCoord.getY() >= yLowBound) {
@@ -326,11 +325,11 @@ const set<unsigned int> &QuantitativeParallelAxis::getDataInRange(float yLowBoun
   return dataSubset;
 }
 
-const set<unsigned int> &QuantitativeParallelAxis::getDataInSlidersRange() {
+const set<uint> &QuantitativeParallelAxis::getDataInSlidersRange() {
   return getDataInRange(bottomSliderCoord.getY(), topSliderCoord.getY());
 }
 
-const set<unsigned int> &QuantitativeParallelAxis::getDataBetweenBoxPlotBounds() {
+const set<uint> &QuantitativeParallelAxis::getDataBetweenBoxPlotBounds() {
   if (boxPlotLowBound != NO_VALUE && boxPlotHighBound != NO_VALUE) {
     return getDataInRange(boxPlotValuesCoord[boxPlotLowBound].getY(),
                           boxPlotValuesCoord[boxPlotHighBound].getY());
@@ -340,7 +339,7 @@ const set<unsigned int> &QuantitativeParallelAxis::getDataBetweenBoxPlotBounds()
   }
 }
 
-void QuantitativeParallelAxis::updateSlidersWithDataSubset(const set<unsigned int> &dataSubset) {
+void QuantitativeParallelAxis::updateSlidersWithDataSubset(const set<uint> &dataSubset) {
   float rotAngleBak = rotationAngle;
   rotationAngle = 0.0f;
   Coord max = getBaseCoord();

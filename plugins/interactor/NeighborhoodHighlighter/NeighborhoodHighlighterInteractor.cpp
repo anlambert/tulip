@@ -534,7 +534,7 @@ void NeighborhoodHighlighter::computeNeighborhoodGraphCircleLayout() {
     float edgeLength = centralNodeCoord.dist(neighborNodeCoord);
 
     bool nodePosOk = false;
-    unsigned int j = 1;
+    uint j = 1;
 
     while (!nodePosOk) {
       float ratio = ((centralNodeSize.getW() / 2) + j++ * neighborNodeSize.getW()) / edgeLength;
@@ -547,7 +547,7 @@ void NeighborhoodHighlighter::computeNeighborhoodGraphCircleLayout() {
       nodePosOk = true;
 
       if (i > 0) {
-        for (unsigned int k = 0; k < i; ++k) {
+        for (uint k = 0; k < i; ++k) {
           nodePosOk = nodePosOk &&
                       !neighborhoodNodesNewLayoutBB[i].intersect(neighborhoodNodesNewLayoutBB[k]) &&
                       !neighborhoodNodesNewLayoutBB[i].intersect(centralNodeBB);

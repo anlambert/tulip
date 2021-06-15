@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -25,7 +25,7 @@ public:
   void draw(float lod, tlp::Camera *camera) override;
 
   void getXML(std::string &) override {}
-  void setWithXML(const std::string &, unsigned int &) override {}
+  void setWithXML(const std::string &, uint &) override {}
 
 private:
   MatrixView *_view;

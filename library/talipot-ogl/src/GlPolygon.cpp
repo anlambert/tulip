@@ -36,9 +36,9 @@ GlPolygon::GlPolygon(const vector<Coord> &points, const vector<Color> &fcolors,
   setOutlineSize(outlineSize);
 }
 //=====================================================
-GlPolygon::GlPolygon(const unsigned int nbPoints, const unsigned int nbFillColors,
-                     const unsigned int nbOutlineColors, const bool filled, const bool outlined,
-                     const string &textureName, const float outlineSize) {
+GlPolygon::GlPolygon(const uint nbPoints, const uint nbFillColors, const uint nbOutlineColors,
+                     const bool filled, const bool outlined, const string &textureName,
+                     const float outlineSize) {
   vector<Coord> points;
   points.resize(nbPoints);
   setPoints(points);
@@ -56,23 +56,23 @@ GlPolygon::GlPolygon(const unsigned int nbPoints, const unsigned int nbFillColor
 //=====================================================
 GlPolygon::~GlPolygon() = default;
 //=====================================================
-void GlPolygon::resizePoints(const unsigned int nbPoints) {
+void GlPolygon::resizePoints(const uint nbPoints) {
   assert(nbPoints >= 3);
   points.resize(nbPoints);
   clearGenerated();
 }
 //=====================================================
-void GlPolygon::resizeColors(const unsigned int nbColors) {
+void GlPolygon::resizeColors(const uint nbColors) {
   assert(nbColors >= 1);
   points.resize(nbColors);
   clearGenerated();
 }
 //=====================================================
-const tlp::Coord &GlPolygon::point(const unsigned int i) const {
+const tlp::Coord &GlPolygon::point(const uint i) const {
   return points[i];
 }
 //=====================================================
-tlp::Coord &GlPolygon::point(const unsigned int i) {
+tlp::Coord &GlPolygon::point(const uint i) {
   return points[i];
 }
 }

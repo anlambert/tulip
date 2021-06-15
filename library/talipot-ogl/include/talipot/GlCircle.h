@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -38,7 +38,7 @@ public:
   GlCircle(const Coord &center = Coord(0, 0, 0), float radius = 1.,
            const Color &outlineColor = Color(255, 0, 0, 255),
            const Color &fillColor = Color(0, 0, 255, 255), bool filled = false,
-           bool outlined = true, float startAngle = 0.0, unsigned int segments = 10);
+           bool outlined = true, float startAngle = 0.0, uint segments = 10);
 
   /**
    * @brief Write-acess Accessor to the center, the radius and the startAngle of the circle.

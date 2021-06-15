@@ -20,7 +20,7 @@
 
 namespace tlp {
 
-ItemsListWidget::ItemsListWidget(QWidget *parent, const unsigned int maxListSize)
+ItemsListWidget::ItemsListWidget(QWidget *parent, const uint maxListSize)
     : QListWidget(parent), maxListSize(maxListSize) {
   setAcceptDrops(true);
 }

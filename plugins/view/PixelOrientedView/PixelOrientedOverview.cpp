@@ -61,10 +61,10 @@ PixelOrientedOverview::PixelOrientedOverview(GraphDimension *data,
 
   textureName = dimName + " texture " + getStringFromNumber(overviewId);
 
-  unsigned int width = pixelOrientedMediator->getImageWidth();
-  unsigned int height = pixelOrientedMediator->getImageHeight();
+  uint width = pixelOrientedMediator->getImageWidth();
+  uint height = pixelOrientedMediator->getImageHeight();
 
-  unsigned int labelHeight = height / 4;
+  uint labelHeight = height / 4;
 
   Graph *graph = data->getGraph();
   pixelLayout = new LayoutProperty(graph);
@@ -145,8 +145,8 @@ void PixelOrientedOverview::computePixelView(GlWidget *glWidget) {
 
   Graph *graph = data->getGraph();
 
-  unsigned int width = pixelOrientedMediator->getImageWidth();
-  unsigned int height = pixelOrientedMediator->getImageHeight();
+  uint width = pixelOrientedMediator->getImageWidth();
+  uint height = pixelOrientedMediator->getImageHeight();
 
   GlProgressBar *glProgressBar = nullptr;
 
@@ -158,13 +158,13 @@ void PixelOrientedOverview::computePixelView(GlWidget *glWidget) {
     addGlEntity(glProgressBar, "progress bar");
   }
 
-  unsigned int currentStep = 0;
-  unsigned int maxStep = graph->numberOfNodes();
-  unsigned int drawStep = maxStep / 10;
+  uint currentStep = 0;
+  uint maxStep = graph->numberOfNodes();
+  uint drawStep = maxStep / 10;
 
   set<int> xCoordSet;
 
-  for (unsigned int i = 0; i < graph->numberOfNodes(); ++i) {
+  for (uint i = 0; i < graph->numberOfNodes(); ++i) {
     node n = node(data->getItemIdAtRank(i));
     Vec2i pos = pixelOrientedMediator->getPixelPosForRank(i);
     Coord nodeCoord = Coord(pos[0], pos[1], 0);

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -44,12 +44,12 @@ public:
   /**
    * Enter into a data node and set the currentPosition integer to the position next the data tag
    */
-  static void enterDataNode(const std::string &inString, unsigned int &currentPosition);
+  static void enterDataNode(const std::string &inString, uint &currentPosition);
 
   /**
    * Leave a data node and set the currentPosition integer to the position next the data end tag
    */
-  static void leaveDataNode(const std::string &inString, unsigned int &currentPosition);
+  static void leaveDataNode(const std::string &inString, uint &currentPosition);
 
   /**
    * Create and enter into a new children node with name : name
@@ -65,14 +65,14 @@ public:
    * Enter into a child node and set the currentPosition integer to the position next the child tag
    * \return child name
    */
-  static std::string enterChildNode(const std::string &inString, unsigned int &currentPosition);
+  static std::string enterChildNode(const std::string &inString, uint &currentPosition);
 
   /**
    * Leave into a child node and set the currentPosition integer to the position next the child end
    * tag
    * \return child name
    */
-  static void leaveChildNode(const std::string &inString, unsigned int &currentPosition,
+  static void leaveChildNode(const std::string &inString, uint &currentPosition,
                              const std::string &childName);
 
   /**
@@ -86,7 +86,7 @@ public:
    * These properties is returned into a map of string/string
    */
   static std::map<std::string, std::string> getProperties(const std::string &inString,
-                                                          unsigned int &currentPosition);
+                                                          uint &currentPosition);
 
   /**
    * Create a GlEntity with the given name
@@ -119,7 +119,7 @@ public:
    * Set vector of Object with the given XML
    */
   template <typename Obj>
-  static void setWithXML(const std::string &inString, unsigned int &currentPosition,
+  static void setWithXML(const std::string &inString, uint &currentPosition,
                          const std::string &name, std::vector<Obj> &vect) {
 
     goToNextCaracter(inString, currentPosition);
@@ -155,9 +155,9 @@ public:
     outString.append("<" + name + ">" + str.str() + "</" + name + ">\n");
   }
 
-  static bool checkNextXMLtag(const std::string &inString, unsigned int &currentPosition,
+  static bool checkNextXMLtag(const std::string &inString, uint &currentPosition,
                               const std::string &name) {
-    unsigned int tmp = currentPosition;
+    uint tmp = currentPosition;
     goToNextCaracter(inString, tmp);
     std::string nameTag = inString.substr(tmp, name.size() + 2);
     return (nameTag == "<" + name + ">");
@@ -167,7 +167,7 @@ public:
    * Set an Object with the given XML
    */
   template <typename Obj>
-  static void setWithXML(const std::string &inString, unsigned int &currentPosition,
+  static void setWithXML(const std::string &inString, uint &currentPosition,
                          const std::string &name, Obj &value) {
 
     goToNextCaracter(inString, currentPosition);
@@ -188,7 +188,7 @@ public:
    * Set an Object with the given XML and default value
    */
   template <typename Obj>
-  static void setWithXML(const std::string &inString, unsigned int &currentPosition,
+  static void setWithXML(const std::string &inString, uint &currentPosition,
                          const std::string &name, Obj &value, const Obj &defValue) {
     goToNextCaracter(inString, currentPosition);
 
@@ -210,9 +210,9 @@ public:
 
 private:
   static void applyIndentation(std::string &outString);
-  static void goToNextCaracter(const std::string &inString, unsigned int &currentPosition);
+  static void goToNextCaracter(const std::string &inString, uint &currentPosition);
 
-  static unsigned int indentationNumber;
+  static uint indentationNumber;
 };
 }
 

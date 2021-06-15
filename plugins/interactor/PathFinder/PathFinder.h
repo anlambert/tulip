@@ -53,7 +53,7 @@ public:
   PathFinder(const tlp::PluginContext *);
   ~PathFinder() override;
   void construct() override;
-  unsigned int priority() const override {
+  uint priority() const override {
     return tlp::StandardInteractorPriority::PathSelection;
   }
   QWidget *configurationWidget() const override;

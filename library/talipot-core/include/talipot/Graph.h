@@ -473,7 +473,7 @@ public:
    * @param n the index of the subgraph to retrieve.
    * @return The n-th subgraph.
    */
-  virtual Graph *getNthSubGraph(unsigned int n) const;
+  virtual Graph *getNthSubGraph(uint n) const;
 
   /**
    * @brief Return the number of direct subgraphs.
@@ -489,7 +489,7 @@ public:
    * @return The number of direct subgraphs.
    * @see numberOfDescendantGraphs() to count in the whole hierarchy.
    */
-  virtual unsigned int numberOfSubGraphs() const = 0;
+  virtual uint numberOfSubGraphs() const = 0;
 
   /**
    * @brief Return the number of descendant subgraphs.
@@ -505,7 +505,7 @@ public:
    * @return The number of descendants subgraphs.
    * @see numberOfSubGraphs() to count only direct subgraphs.
    */
-  virtual unsigned int numberOfDescendantGraphs() const = 0;
+  virtual uint numberOfDescendantGraphs() const = 0;
 
   /**
    * @brief Indicates if the graph argument is a direct subgraph.
@@ -528,9 +528,9 @@ public:
    * or nullptr if there is no subgraph with that id.
    * @param id The id of the subgraph to retrieve.
    * @return A subgraph of the given id, or null if no such subgraph exists on this graph.
-   * @see getDescendantGraph(unsigned int) to search in the whole hierarchy.
+   * @see getDescendantGraph(uint) to search in the whole hierarchy.
    */
-  virtual Graph *getSubGraph(unsigned int id) const = 0;
+  virtual Graph *getSubGraph(uint id) const = 0;
 
   /**
    * @brief Returns a pointer on the subgraph with the corresponding name
@@ -547,9 +547,9 @@ public:
    * @param id The id of the descendant graph to retrieve.
    * @return A graph with the given id, or nullptr if no such graph exists in this graph's
    * descendants.
-   * @see getSubGraph(unsigned int) to search only in direct subgraphs.
+   * @see getSubGraph(uint) to search only in direct subgraphs.
    */
-  virtual Graph *getDescendantGraph(unsigned int id) const = 0;
+  virtual Graph *getDescendantGraph(uint id) const = 0;
 
   /**
    * @brief Returns a pointer on the first descendant graph with the corresponding name
@@ -594,7 +594,7 @@ public:
    * @return The newly added nodes in a vector.
    * @see addNode() to add a single node.
    */
-  virtual std::vector<node> addNodes(unsigned int nbNodes) = 0;
+  virtual std::vector<node> addNodes(uint nbNodes) = 0;
 
   /**
    * @brief Adds an existing node in the graph. This node is also added in all the ancestor graphs.
@@ -805,10 +805,10 @@ public:
   virtual void reverse(const edge e) = 0;
   // Attempts to reserve enough space to store nodes.
   // Only defined on root graph.
-  virtual void reserveNodes(unsigned int nbNodes) = 0;
+  virtual void reserveNodes(uint nbNodes) = 0;
   // Attempts to reserve enough space to store edges.
   // Only defined on root graph.
-  virtual void reserveEdges(unsigned int nbEdges) = 0;
+  virtual void reserveEdges(uint nbEdges) = 0;
   //================================================================================
   // Iterators on the graph structure.
   //================================================================================
@@ -851,7 +851,7 @@ public:
    * @brief Return the position of a node in the vector of nodes of the graph
    * @param n The node for which the position is requested
    */
-  virtual unsigned int nodePos(const node n) const = 0;
+  virtual uint nodePos(const node n) const = 0;
 
   /**
    * @brief Gets an iterator over this graph's nodes.
@@ -884,7 +884,7 @@ public:
    * @see getInNodes()
    * @see getInEdges()
    */
-  virtual node getInNode(const node n, unsigned int i) const = 0;
+  virtual node getInNode(const node n, uint i) const = 0;
 
   /**
    * @brief Gets an iterator over the input nodes of a node.
@@ -917,7 +917,7 @@ public:
    * @see getOutNodes()
    * @see getOutEdges()
    */
-  virtual node getOutNode(const node n, unsigned int i) const = 0;
+  virtual node getOutNode(const node n, uint i) const = 0;
 
   /**
    * @brief Gets an iterator over the output nodes of a node.
@@ -995,7 +995,7 @@ public:
    * @brief Return the position of an edge in the vector of edges of the graph
    * @param e The edge for which the position is requested
    */
-  virtual unsigned int edgePos(const edge e) const = 0;
+  virtual uint edgePos(const edge e) const = 0;
 
   /**
    * @brief Get an iterator over all the graph's edges.
@@ -1077,7 +1077,7 @@ public:
    * @brief Gets the unique identifier of the graph.
    * @return The unique identifier of this graph.
    */
-  unsigned int getId() const {
+  uint getId() const {
     return id;
   }
 
@@ -1094,34 +1094,34 @@ public:
    * @return The number of nodes in this graph.
    * @see numberOfEdges()
    */
-  virtual unsigned int numberOfNodes() const = 0;
+  virtual uint numberOfNodes() const = 0;
 
   /**
    * @brief Gets the number of edges in this graph.
    * @return The number of edges in this graph.
    * @see numberOfNodes()
    */
-  virtual unsigned int numberOfEdges() const = 0;
+  virtual uint numberOfEdges() const = 0;
 
   /**
    * @param n The node to get the degree of.
    * @return The degree of the given node.
    */
-  virtual unsigned int deg(const node n) const = 0;
+  virtual uint deg(const node n) const = 0;
 
   /**
    * @brief Get the input degree of a node.
    * @param n The node to get the input degree of.
    * @return The input degree of the given node.
    */
-  virtual unsigned int indeg(const node n) const = 0;
+  virtual uint indeg(const node n) const = 0;
 
   /**
    * @brief Get the output degree of a node.
    * @param n The node to get the output degree of.
    * @return The output degree of the given node.
    */
-  virtual unsigned int outdeg(const node n) const = 0;
+  virtual uint outdeg(const node n) const = 0;
 
   /**
    * @brief Gets the source of an edge.
@@ -2081,7 +2081,7 @@ protected:
     notifyDestroy();
   }
 
-  unsigned int id;
+  uint id;
   std::unordered_map<std::string, tlp::PropertyInterface *> circularCalls;
 };
 
@@ -2127,7 +2127,7 @@ public:
   };
 
   // constructor for node/edge/nodes/edges events
-  GraphEvent(const Graph &g, GraphEventType graphEvtType, unsigned int id,
+  GraphEvent(const Graph &g, GraphEventType graphEvtType, uint id,
              Event::EventType evtType = Event::TLP_MODIFICATION)
       : Event(g, evtType), evtType(graphEvtType) {
     if (graphEvtType == TLP_ADD_NODES || graphEvtType == TLP_ADD_EDGES) {
@@ -2179,14 +2179,14 @@ public:
 
   const std::vector<node> &getNodes() const;
 
-  unsigned int getNumberOfNodes() const {
+  uint getNumberOfNodes() const {
     assert(evtType == TLP_ADD_NODES);
     return info.nbElts;
   }
 
   const std::vector<edge> &getEdges() const;
 
-  unsigned int getNumberOfEdges() const {
+  uint getNumberOfEdges() const {
     assert(evtType == TLP_ADD_EDGES);
     return info.nbElts;
   }
@@ -2226,10 +2226,10 @@ public:
 protected:
   GraphEventType evtType;
   union {
-    unsigned int eltId;
+    uint eltId;
     const Graph *subGraph;
     std::string *name;
-    unsigned int nbElts;
+    uint nbElts;
     std::pair<PropertyInterface *, std::string> *renamedProp;
   } info;
   union {

@@ -191,7 +191,7 @@ bool CsvExport::exportGraph(std::ostream &os) {
   // use vectors for further access to exported properties
   vector<PropertyInterface *> props;
   vector<bool> propIsString;
-  unsigned int nbProps = 0;
+  uint nbProps = 0;
 
   for (PropertyInterface *prop : graph->getObjectProperties()) {
     const string &propName = prop->getName();
@@ -245,7 +245,7 @@ bool CsvExport::exportGraph(std::ostream &os) {
         }
       }
 
-      for (unsigned int i = 0; i < nbProps; ++i) {
+      for (uint i = 0; i < nbProps; ++i) {
         PropertyInterface *prop = props[i];
         string value = prop->getNodeStringValue(n);
 
@@ -285,7 +285,7 @@ bool CsvExport::exportGraph(std::ostream &os) {
         }
       }
 
-      for (unsigned int i = 0; i < nbProps; ++i) {
+      for (uint i = 0; i < nbProps; ++i) {
         PropertyInterface *prop = props[i];
         string value = prop->getEdgeStringValue(e);
 

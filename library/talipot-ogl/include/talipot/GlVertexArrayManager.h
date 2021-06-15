@@ -69,7 +69,7 @@ public:
 
   void endOfVisit() override;
 
-  void reserveMemoryForGraphElts(unsigned int nbNodes, unsigned int nbEdges) override;
+  void reserveMemoryForGraphElts(uint nbNodes, uint nbEdges) override;
 
   /**
    * Call this function when you want to change input data used by this GlVertexArrayManager
@@ -211,9 +211,9 @@ protected:
   std::vector<GLuint> pointsEdgesSelectedRenderingIndexArray;
 
   struct edgeInfos {
-    unsigned int linesIndex;
+    uint linesIndex;
     std::vector<Coord> lineVertices;
-    unsigned int quadsIndex;
+    uint quadsIndex;
     std::vector<Coord> quadVertices;
     std::vector<Color> lineColors;
     std::vector<Color> quadColors;

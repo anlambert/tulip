@@ -112,9 +112,9 @@ bool KCores::run() {
   degree(graph, nodeK, degree_type, metric, false);
   const std::vector<node> &nodes = graph->nodes();
   // the number of non deleted nodes
-  unsigned int nbNodes = nodes.size();
+  uint nbNodes = nodes.size();
 
-  for (unsigned int i = 0; i < nbNodes; ++i) {
+  for (uint i = 0; i < nbNodes; ++i) {
     k = std::min(k, nodeK[i]);
     nodeDeleted[i] = false;
   }
@@ -128,7 +128,7 @@ bool KCores::run() {
       modify = false;
 
       // finally set the values
-      for (unsigned int i = 0; i < nodes.size(); ++i) {
+      for (uint i = 0; i < nodes.size(); ++i) {
         // nothing to do if the node
         // is already deleted
         if (nodeDeleted[i]) {
@@ -166,7 +166,7 @@ bool KCores::run() {
               m = (src == n) ? tgt : src;
             }
 
-            unsigned int mPos = graph->nodePos(m);
+            uint mPos = graph->nodePos(m);
 
             if (nodeDeleted[mPos]) {
               continue;

@@ -507,7 +507,7 @@ bool TableView::setAllHighlightedRows(PropertyInterface *prop) {
   return true;
 }
 
-bool TableView::setCurrentValue(PropertyInterface *prop, unsigned int eltId) {
+bool TableView::setCurrentValue(PropertyInterface *prop, uint eltId) {
   QVariant val =
       ItemDelegate::showEditorDialog(NODES_DISPLAYED ? NODE : EDGE, prop, graph(),
                                      static_cast<ItemDelegate *>(_ui->table->itemDelegate()),
@@ -550,7 +550,7 @@ bool TableView::getNodeOrEdgeAtViewportPos(int x, int y, node &n, edge &e) const
           _ui->table->mapToGlobal(QPoint(0, 0));
     if (_ui->table->rowAt(pos.y()) >= 0) {
       QModelIndex idx = _ui->table->indexAt(pos);
-      unsigned int eltId = idx.data(Model::ElementIdRole).toUInt();
+      uint eltId = idx.data(Model::ElementIdRole).toUInt();
       if (NODES_DISPLAYED) {
         n = node(eltId);
         return n.isValid();
@@ -568,7 +568,7 @@ void TableView::showCustomContextMenu(const QPoint &pos) {
     return;
 
   QModelIndex idx = _ui->table->indexAt(pos);
-  unsigned int eltId = idx.data(Model::ElementIdRole).toUInt();
+  uint eltId = idx.data(Model::ElementIdRole).toUInt();
 
   QString eltsName(NODES_DISPLAYED ? "nodes" : "edges");
   QString eltName(NODES_DISPLAYED ? "node" : "edge");

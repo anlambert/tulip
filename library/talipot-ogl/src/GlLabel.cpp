@@ -786,7 +786,7 @@ void GlLabel::getXML(string &outString) {
   GlXMLTools::getXML(outString, "textureName", textureName);
 }
 //============================================================
-void GlLabel::setWithXML(const string &inString, unsigned int &currentPosition) {
+void GlLabel::setWithXML(const string &inString, uint &currentPosition) {
   string fontName;
   GlXMLTools::setWithXML(inString, currentPosition, "text", text);
   GlXMLTools::setWithXML(inString, currentPosition, "renderingMode", renderingMode);

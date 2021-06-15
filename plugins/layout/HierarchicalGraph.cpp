@@ -52,11 +52,11 @@ public:
 };
 //================================================================================
 void HierarchicalGraph::buildGrid(tlp::Graph *sg) {
-  tlp::NodeVectorProperty<unsigned int> levels(sg);
+  tlp::NodeVectorProperty<uint> levels(sg);
   dagLevel(graph, levels);
 
-  TLP_MAP_NODES_AND_INDICES(graph, [&](const node n, unsigned int i) {
-    unsigned int level = levels[i];
+  TLP_MAP_NODES_AND_INDICES(graph, [&](const node n, uint i) {
+    uint level = levels[i];
 
     if (level >= grid.size()) {
       grid.resize(level + 1);
@@ -67,14 +67,14 @@ void HierarchicalGraph::buildGrid(tlp::Graph *sg) {
   });
 }
 //================================================================================
-inline unsigned int HierarchicalGraph::degree(tlp::Graph *sg, tlp::node n, bool directed) {
+inline uint HierarchicalGraph::degree(tlp::Graph *sg, tlp::node n, bool directed) {
   return directed ? sg->outdeg(n) : sg->indeg(n);
 }
 //================================================================================
-void HierarchicalGraph::twoLayerCrossReduction(tlp::Graph *sg, unsigned int freeLayer) {
+void HierarchicalGraph::twoLayerCrossReduction(tlp::Graph *sg, uint freeLayer) {
   for (auto n : grid[freeLayer]) {
     double sum = embedding->getNodeValue(n);
-    unsigned int deg = 1;
+    uint deg = 1;
     for (auto itn : sg->getInOutNodes(n)) {
       sum += embedding->getNodeValue(itn);
       ++deg;
@@ -115,35 +115,35 @@ void HierarchicalGraph::crossReduction(tlp::Graph *sg) {
     initCross(sg, root, visited, 1);
   }
 
-  unsigned int maxDepth = grid.size();
+  uint maxDepth = grid.size();
 
-  for (unsigned int i = 0; i < maxDepth; ++i) {
+  for (uint i = 0; i < maxDepth; ++i) {
     vector<node> &igrid = grid[i];
     stable_sort(igrid.begin(), igrid.end(), lessNode);
 
-    for (unsigned int j = 0; j < igrid.size(); ++j) {
+    for (uint j = 0; j < igrid.size(); ++j) {
       embedding->setNodeValue(igrid[j], j);
     }
   }
 
   // Iterations of the sweeping
-  for (unsigned int a = 0; a < NB_UPDOWN_SWEEP; ++a) {
+  for (uint a = 0; a < NB_UPDOWN_SWEEP; ++a) {
     // Up sweeping
     for (int i = maxDepth - 1; i >= 0; --i) {
       twoLayerCrossReduction(graph, i);
     }
 
     // Down sweeping
-    for (unsigned int i = 0; i < maxDepth; ++i) {
+    for (uint i = 0; i < maxDepth; ++i) {
       twoLayerCrossReduction(graph, i);
     }
   }
 
-  for (unsigned int i = 0; i < maxDepth; ++i) {
+  for (uint i = 0; i < maxDepth; ++i) {
     vector<node> &igrid = grid[i];
     stable_sort(igrid.begin(), igrid.end(), lessNode);
 
-    for (unsigned int j = 0; j < igrid.size(); ++j) {
+    for (uint j = 0; j < igrid.size(); ++j) {
       embedding->setNodeValue(igrid[j], j);
     }
   }
@@ -383,16 +383,16 @@ bool HierarchicalGraph::run() {
 
   // post processing
   // Prevent edge node overlapping
-  unsigned int nbGrids = grid.size();
+  uint nbGrids = grid.size();
   std::vector<float> levelMaxSize(nbGrids);
-  MutableContainer<unsigned int> nodeLevel;
+  MutableContainer<uint> nodeLevel;
 
-  for (unsigned int i = 0; i < nbGrids; ++i) {
+  for (uint i = 0; i < nbGrids; ++i) {
     float levelMax = levelMaxSize[i] = 0;
     std::vector<node> &igrid = grid[i];
-    unsigned int nbNodes = igrid.size();
+    uint nbNodes = igrid.size();
 
-    for (unsigned int j = 0; j < nbNodes; ++j) {
+    for (uint j = 0; j < nbNodes; ++j) {
       node n = igrid[j];
 
       if (graph->isElement(n)) {
@@ -411,8 +411,8 @@ bool HierarchicalGraph::run() {
       continue;
     }
 
-    unsigned int srcLevel = nodeLevel.get(src.id);
-    unsigned int tgtLevel = nodeLevel.get(tgt.id);
+    uint srcLevel = nodeLevel.get(src.id);
+    uint tgtLevel = nodeLevel.get(tgt.id);
     Coord srcPos = result->getNodeValue(src);
     Coord tgtPos = result->getNodeValue(tgt);
     float curSpacing;

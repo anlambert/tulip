@@ -25,7 +25,7 @@
 using namespace std;
 
 const float DEFAULT_AXIS_LENGTH = 1000.0f;
-const unsigned int DEFAULT_NB_GRADS = 15;
+const uint DEFAULT_NB_GRADS = 15;
 
 template <typename T>
 std::string getStringFromNumber(T number) {
@@ -58,8 +58,7 @@ static void setGraphView(GlGraph *glGraph, bool displayEdges, bool nodelabel, bo
 ScatterPlot2D::ScatterPlot2D(Graph *graph, Graph *edgeGraph,
                              std::unordered_map<node, edge> &nodeMap, const string &xDim,
                              const string &yDim, const ElementType &dataLocation, Coord blCorner,
-                             unsigned int size, const Color &backgroundColor,
-                             const Color &foregroundColor)
+                             uint size, const Color &backgroundColor, const Color &foregroundColor)
     : xDim(xDim), yDim(yDim), blCorner(blCorner), size(size), graph(graph),
       scatterLayout(new LayoutProperty(graph)), scatterEdgeLayout(new LayoutProperty(graph)),
       xAxis(nullptr), yAxis(nullptr), overviewGen(false), backgroundColor(backgroundColor),
@@ -152,7 +151,7 @@ void ScatterPlot2D::generateOverview(GlWidget *glWidget, LayoutProperty *reverse
       endColor = oneColor;
     }
 
-    for (unsigned int i = 0; i < 4; ++i) {
+    for (uint i = 0; i < 4; ++i) {
       backgroundColor[i] =
           uchar((double(startColor[i]) +
                  (double(endColor[i]) - double(startColor[i])) * abs(correlationCoeff)));
@@ -306,7 +305,7 @@ void ScatterPlot2D::createAxis() {
 void ScatterPlot2D::computeScatterPlotLayout(GlWidget *glWidget, LayoutProperty *reverseLayout) {
   Graph *_graph = glGraph->getGraph();
   double sumxiyi = 0.0, sumxi = 0.0, sumyi = 0.0, sumxi2 = 0.0, sumyi2 = 0.0;
-  unsigned int nbGraphNodes = _graph->numberOfNodes();
+  uint nbGraphNodes = _graph->numberOfNodes();
 
   currentStep = 0;
   maxStep = nbGraphNodes;

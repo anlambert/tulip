@@ -81,7 +81,7 @@ void GraphUpdatesRecorder::treatEvent(const Event &ev) {
     case GraphEvent::TLP_ADD_NODES: {
       const std::vector<node> &nodes = graph->nodes();
 
-      for (unsigned int i = nodes.size() - gEvt->getNumberOfNodes(); i < nodes.size(); ++i) {
+      for (uint i = nodes.size() - gEvt->getNumberOfNodes(); i < nodes.size(); ++i) {
         addNode(graph, nodes[i]);
       }
 
@@ -217,14 +217,14 @@ void GraphUpdatesRecorder::recordIncidence(std::unordered_map<node, std::vector<
 
 void GraphUpdatesRecorder::recordIncidence(std::unordered_map<node, std::vector<edge>> &incidences,
                                            GraphImpl *g, node n, const vector<edge> &edges,
-                                           unsigned int nbAdded) {
+                                           uint nbAdded) {
   if (incidences.find(n) == incidences.end()) {
     auto &incidence = incidences[n] = g->storage.incidence(n);
     // we must ensure that the last edges added in gEdges
     // are previously removed from the current node incidence,
     // so we look (in reverse order because they must be at the end)
     // for the elts of incidence that are in the last edges added and remove them
-    unsigned int edgeAdded = 0;
+    uint edgeAdded = 0;
     for (auto e : reversed(incidence)) {
       if (std::find(edges.end() - nbAdded, edges.end(), e) != edges.end()) {
         ++edgeAdded;
@@ -422,7 +422,7 @@ void GraphUpdatesRecorder::recordNewNodeValues(PropertyInterface *p) {
 
     if (const auto itp = oldValues.find(p); itp != oldValues.end() && itp->second.recordedNodes) {
 
-      for (unsigned int id : itp->second.recordedNodes->findAll(true)) {
+      for (uint id : itp->second.recordedNodes->findAll(true)) {
         node n(id);
 
         if (nv->copy(n, n, p)) {
@@ -475,7 +475,7 @@ void GraphUpdatesRecorder::recordNewEdgeValues(PropertyInterface *p) {
     }
   } else {
     if (const auto itp = oldValues.find(p); itp != oldValues.end() && itp->second.recordedEdges) {
-      for (unsigned int id : itp->second.recordedEdges->findAll(true)) {
+      for (uint id : itp->second.recordedEdges->findAll(true)) {
         edge e(id);
         if (nv->copy(e, e, p)) {
           re->set(e, true);
@@ -775,7 +775,7 @@ void GraphUpdatesRecorder::doUpdates(GraphImpl *g, bool undo) {
 
     if (recordedValues.recordedNodes) {
 
-      for (unsigned int id : recordedValues.recordedNodes->findAllValues(false, false)) {
+      for (uint id : recordedValues.recordedNodes->findAllValues(false, false)) {
         node n(id);
         property->copy(n, n, nv);
       }
@@ -783,7 +783,7 @@ void GraphUpdatesRecorder::doUpdates(GraphImpl *g, bool undo) {
 
     if (recordedValues.recordedEdges) {
 
-      for (unsigned int id : recordedValues.recordedEdges->findAllValues(false, false)) {
+      for (uint id : recordedValues.recordedEdges->findAllValues(false, false)) {
         edge e(id);
         property->copy(e, e, nv);
       }
@@ -979,7 +979,7 @@ void GraphUpdatesRecorder::addEdge(Graph *g, edge e) {
   }
 }
 
-void GraphUpdatesRecorder::addEdges(Graph *g, unsigned int nbAdded) {
+void GraphUpdatesRecorder::addEdges(Graph *g, uint nbAdded) {
   if (graphAddedEdges.find(g) == graphAddedEdges.end()) {
     graphAddedEdges[g] = {};
   }
@@ -987,7 +987,7 @@ void GraphUpdatesRecorder::addEdges(Graph *g, unsigned int nbAdded) {
   unordered_set<edge> &ge = graphAddedEdges[g];
   auto gEdges = g->edges();
 
-  for (unsigned int i = gEdges.size() - nbAdded; i < gEdges.size(); ++i) {
+  for (uint i = gEdges.size() - nbAdded; i < gEdges.size(); ++i) {
     edge e = gEdges[i];
     ge.insert(e);
 

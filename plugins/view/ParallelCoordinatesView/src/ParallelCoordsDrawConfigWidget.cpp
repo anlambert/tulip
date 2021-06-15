@@ -47,11 +47,11 @@ void ParallelCoordsDrawConfigWidget::pressButtonBrowse() {
   _ui->userTextureFile->setText(fileName);
 }
 
-unsigned int ParallelCoordsDrawConfigWidget::getAxisHeight() const {
+uint ParallelCoordsDrawConfigWidget::getAxisHeight() const {
   return _ui->axisHeight->value();
 }
 
-void ParallelCoordsDrawConfigWidget::setAxisHeight(const unsigned int aHeight) {
+void ParallelCoordsDrawConfigWidget::setAxisHeight(const uint aHeight) {
   _ui->axisHeight->setValue(aHeight);
 }
 
@@ -97,11 +97,11 @@ Size ParallelCoordsDrawConfigWidget::getAxisPointMaxSize() const {
   return Size(pointSize, pointSize, pointSize);
 }
 
-void ParallelCoordsDrawConfigWidget::setAxisPointMinSize(const unsigned int axisPointMinSize) {
+void ParallelCoordsDrawConfigWidget::setAxisPointMinSize(const uint axisPointMinSize) {
   _ui->minAxisPointSize->setValue(axisPointMinSize);
 }
 
-void ParallelCoordsDrawConfigWidget::setAxisPointMaxSize(const unsigned int axisPointMaxSize) {
+void ParallelCoordsDrawConfigWidget::setAxisPointMaxSize(const uint axisPointMaxSize) {
   _ui->maxAxisPointSize->setValue(axisPointMaxSize);
 }
 
@@ -130,7 +130,7 @@ void ParallelCoordsDrawConfigWidget::maxAxisPointSizeValueChanged(const int newV
   }
 }
 
-void ParallelCoordsDrawConfigWidget::setLinesColorAlphaValue(unsigned int value) {
+void ParallelCoordsDrawConfigWidget::setLinesColorAlphaValue(uint value) {
   if (value > 255) {
     _ui->viewColorAlphaRb->setChecked(true);
     _ui->userAlphaRb->setChecked(false);
@@ -141,7 +141,7 @@ void ParallelCoordsDrawConfigWidget::setLinesColorAlphaValue(unsigned int value)
   }
 }
 
-unsigned int ParallelCoordsDrawConfigWidget::getLinesColorAlphaValue() const {
+uint ParallelCoordsDrawConfigWidget::getLinesColorAlphaValue() const {
   if (_ui->viewColorAlphaRb->isChecked()) {
     return 300;
   } else {
@@ -161,12 +161,11 @@ void ParallelCoordsDrawConfigWidget::setDrawPointOnAxis(const bool drawPointOnAx
   _ui->gBoxAxisPoints->setChecked(drawPointOnAxis);
 }
 
-unsigned int ParallelCoordsDrawConfigWidget::getUnhighlightedEltsColorsAlphaValue() const {
+uint ParallelCoordsDrawConfigWidget::getUnhighlightedEltsColorsAlphaValue() const {
   return _ui->nonHighlightedEltsAlphaValue->value();
 }
 
-void ParallelCoordsDrawConfigWidget::setUnhighlightedEltsColorsAlphaValue(
-    const unsigned int alphaValue) {
+void ParallelCoordsDrawConfigWidget::setUnhighlightedEltsColorsAlphaValue(const uint alphaValue) {
   _ui->nonHighlightedEltsAlphaValue->setValue(alphaValue);
 }
 

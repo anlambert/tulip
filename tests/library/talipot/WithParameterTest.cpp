@@ -34,7 +34,7 @@ const std::string CoordParameter = "coordParameter";
 const std::string SizeParameter = "sizeParameter";
 const std::string ColorParameter = "colorParameter";
 
-typedef unsigned int uint;
+typedef uint uint;
 
 #define EXPECTED_VALUE(TYPE, VALUE)            \
   TYPE TYPE##Value = TYPE();                   \

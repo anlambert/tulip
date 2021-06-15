@@ -19,6 +19,8 @@
 #include <functional>
 #include <vector>
 
+#include <talipot/config.h>
+
 namespace tlp {
 
 /**
@@ -38,7 +40,7 @@ struct node {
   /**
    * @brief id The identifier of the node.
    */
-  unsigned int id;
+  uint id;
 
   /**
    * @brief node creates an invalid node.
@@ -53,12 +55,12 @@ struct node {
    *
    * @param j the identifier this node will use.
    */
-  explicit node(unsigned int j) : id(j) {}
+  explicit node(uint j) : id(j) {}
 
   /**
-   * @brief operator unsigned int A convenience function to get the id of a node.
+   * @brief operator uint A convenience function to get the id of a node.
    */
-  operator unsigned int() const {
+  operator uint() const {
     return id;
   }
 
@@ -93,7 +95,7 @@ struct node {
 
 inline std::ostream &operator<<(std::ostream &os, const std::vector<node> &vn) {
   os << "(";
-  for (unsigned int i = 0; i < vn.size(); ++i) {
+  for (uint i = 0; i < vn.size(); ++i) {
     os << "node(" << vn[i].id << ")";
     if (i != vn.size() - 1) {
       os << ", ";
@@ -104,11 +106,9 @@ inline std::ostream &operator<<(std::ostream &os, const std::vector<node> &vn) {
 }
 
 // utility lambda functions for type conversion
-static std::function<tlp::node(unsigned int)> idToNode = [](unsigned int id) {
-  return tlp::node(id);
-};
+static std::function<tlp::node(uint)> idToNode = [](uint id) { return tlp::node(id); };
 
-static std::function<unsigned int(tlp::node)> nodeToId = [](tlp::node n) { return n.id; };
+static std::function<uint(tlp::node)> nodeToId = [](tlp::node n) { return n.id; };
 
 }
 

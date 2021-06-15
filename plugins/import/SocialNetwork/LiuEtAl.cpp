@@ -39,14 +39,14 @@ struct LiuEtAl : public ImportModule {
                     "1.0", "Social network")
 
   LiuEtAl(PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "300");
+    addInParameter<uint>("nodes", paramHelp[0].data(), "300");
   }
 
   ~LiuEtAl() override = default;
 
   bool importGraph() override {
-    unsigned int n = 300;
-    unsigned int m = 5;
+    uint n = 300;
+    uint m = 5;
 
     if (dataSet != nullptr) {
       dataSet->get("nodes", n);
@@ -55,12 +55,12 @@ struct LiuEtAl : public ImportModule {
     pluginProgress->showPreview(false);
     tlp::initRandomSequence();
 
-    unsigned int i, j;
+    uint i, j;
 
     /*
      * Initial ring construction
      */
-    unsigned int m0 = 3;
+    uint m0 = 3;
     graph->addNodes(n);
     const vector<node> &nodes = graph->nodes();
 
@@ -94,7 +94,7 @@ struct LiuEtAl : public ImportModule {
       for (j = 0; j < m / 2; ++j) {
         double pr = tlp::randomDouble();
         double pr_sum = 0;
-        unsigned int rn = 0;
+        uint rn = 0;
 
         while (pr_sum < pr && rn < (i - 1)) {
           pr_sum += graph->deg(nodes[rn]) / (k_sum + j);

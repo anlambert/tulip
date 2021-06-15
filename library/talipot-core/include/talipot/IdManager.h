@@ -40,11 +40,11 @@ namespace tlp {
 // define a minimal structure to hold the state of an id manager
 struct IdManagerState {
   // the first id in use
-  unsigned int firstId;
+  uint firstId;
   // the next id to use
-  unsigned int nextId;
+  uint nextId;
   // the unused ids between the first and the next
-  std::set<unsigned int> freeIds;
+  std::set<uint> freeIds;
 
   IdManagerState() : firstId(0), nextId(0) {}
 };
@@ -60,15 +60,15 @@ public:
   /**
    * Returns true if the id is not used else false.
    */
-  bool is_free(unsigned int) const;
+  bool is_free(uint) const;
   /**
    * Free the id given in parameter.
    */
-  void free(const unsigned int);
+  void free(const uint);
   /**
    * Returns a new id.
    */
-  unsigned int get() {
+  uint get() {
 #ifdef TLP_NO_IDS_REUSE
     return state.nextId++;
 #else
@@ -80,14 +80,14 @@ public:
   /**
    * remove and return the first available id from the free ids
    */
-  unsigned int getFreeId();
+  uint getFreeId();
 #endif
   /**
    * assuming the given id is free.
    * remove it from free ids
    * (used to ensure the same id when loading a graph with subgraphs)
    */
-  void getFreeId(unsigned int id);
+  void getFreeId(uint id);
   /**
    * return the current state of the Id manager
    */
@@ -105,12 +105,12 @@ public:
    * the idManager is modified (free, get) this iterator
    * will be invalid.
    */
-  Iterator<unsigned int> *getIds() const {
+  Iterator<uint> *getIds() const {
     size_t size = state.nextId - state.firstId;
-    std::vector<unsigned int> ids(size);
+    std::vector<uint> ids(size);
     std::iota(ids.begin(), ids.end(), state.firstId);
     return stableIterator(filterIterator(
-        ids, [&](unsigned int id) { return state.freeIds.find(id) == state.freeIds.end(); }));
+        ids, [&](uint id) { return state.freeIds.find(id) == state.freeIds.end(); }));
   }
 
   friend std::ostream &operator<<(std::ostream &, const IdManager &);
@@ -120,13 +120,13 @@ public:
 std::ostream &operator<<(std::ostream &, const IdManager &);
 
 // class for the management of the identifiers: node, edge
-// or any type which can be easily cast in an unsigned int
+// or any type which can be easily cast in an uint
 template <typename ID_TYPE>
 class TLP_SCOPE IdContainer : public std::vector<ID_TYPE> {
   // queue of free ids
   std::deque<ID_TYPE> freeIds;
   // the position of the ids
-  std::vector<unsigned int> pos;
+  std::vector<uint> pos;
 
 public:
   IdContainer() : std::vector<ID_TYPE>() {}
@@ -150,13 +150,13 @@ public:
   }
 
   // return the number of elts in the free storage
-  unsigned int numberOfFree() const {
+  uint numberOfFree() const {
     return freeIds.size();
   }
 
   // return whether the id exist or not
   bool isElement(ID_TYPE elt) const {
-    unsigned int id = elt;
+    uint id = elt;
     return id < pos.size() && pos[id] != UINT_MAX;
   }
 
@@ -166,14 +166,14 @@ public:
   }
 
   // return the position of an existing elt
-  unsigned int getPos(ID_TYPE elt) const {
+  uint getPos(ID_TYPE elt) const {
     assert(isElement(elt));
     return pos[elt];
   }
 
   // add a new elt
   ID_TYPE add() {
-    unsigned int curSize = this->size();
+    uint curSize = this->size();
     // use a previously freed id if available,
     // create a new one otherwise
     ID_TYPE elt = hasFree() ? freeIds.front() : ID_TYPE(curSize);
@@ -189,9 +189,9 @@ public:
   }
 
   // add nb new elts
-  std::vector<ID_TYPE> addNb(unsigned int nb) {
-    unsigned int lastPos = this->size();
-    unsigned int i = 0;
+  std::vector<ID_TYPE> addNb(uint nb) {
+    uint lastPos = this->size();
+    uint i = 0;
     while (i++ < nb) {
       // use a previously freed id if available
       if (hasFree()) {
@@ -215,8 +215,8 @@ public:
 
   // push the elt in the free storage
   void free(ID_TYPE elt) {
-    unsigned int curPos = pos[elt];
-    unsigned int lastPos = this->size() - 1;
+    uint curPos = pos[elt];
+    uint lastPos = this->size() - 1;
 
     if (curPos != lastPos) {
       // swap the elt with the last one
@@ -250,8 +250,8 @@ public:
 
   // recompute elts positions
   void reIndex() {
-    unsigned int nbElts = this->size();
-    TLP_PARALLEL_MAP_INDICES(nbElts, [&](unsigned int i) { pos[(*this)[i]] = i; });
+    uint nbElts = this->size();
+    TLP_PARALLEL_MAP_INDICES(nbElts, [&](uint i) { pos[(*this)[i]] = i; });
   }
 
   // ascending sort
@@ -265,7 +265,7 @@ public:
 template <typename ID_TYPE>
 class SGraphIdContainer : public std::vector<ID_TYPE> {
   // used to store the elts positions in the vector
-  phmap::flat_hash_map<ID_TYPE, unsigned int> pos;
+  phmap::flat_hash_map<ID_TYPE, uint> pos;
 
 public:
   SGraphIdContainer() = default;
@@ -275,7 +275,7 @@ public:
     return pos.find(elt) != pos.end();
   }
 
-  unsigned int getPos(ID_TYPE elt) const {
+  uint getPos(ID_TYPE elt) const {
     try {
       return pos.at(elt);
     } catch (std::out_of_range &) {
@@ -292,7 +292,7 @@ public:
 
   void clone(const std::vector<ID_TYPE> &elts) {
     static_cast<std::vector<ID_TYPE> &>(*this) = elts;
-    for (unsigned int i = 0; i < elts.size(); ++i) {
+    for (uint i = 0; i < elts.size(); ++i) {
       pos[elts[i]] = i;
     }
   }
@@ -300,10 +300,10 @@ public:
   void remove(ID_TYPE elt) {
     assert(isElement(elt));
     // get the position of the elt to remove
-    unsigned int i = pos[elt];
+    uint i = pos[elt];
     assert(i < this->size());
     // put the last elt at the freed position
-    unsigned int last = this->size() - 1;
+    uint last = this->size() - 1;
 
     if (i < last) {
       pos[(*this)[i] = (*this)[last]] = i;
@@ -318,9 +318,9 @@ public:
   // ascending sort
   void sort() {
     std::sort(this->begin(), this->end());
-    unsigned int nbElts = this->size();
+    uint nbElts = this->size();
 
-    for (unsigned int i = 0; i < nbElts; ++i) {
+    for (uint i = 0; i < nbElts; ++i) {
       pos[(*this)[i]] = i;
     }
   }

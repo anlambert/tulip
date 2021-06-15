@@ -56,7 +56,7 @@ public:
   }
 
   void getXML(std::string &) override {}
-  void setWithXML(const std::string &, unsigned int &) override {}
+  void setWithXML(const std::string &, uint &) override {}
 };
 
 /// This interactor allows to move/add/delete EdgeBends

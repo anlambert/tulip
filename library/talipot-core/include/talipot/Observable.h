@@ -162,7 +162,7 @@ public:
    * @return the number of times holdObservers() has been called without a matching
    * unholdObservers() call.
    */
-  static unsigned int observersHoldCounter() {
+  static uint observersHoldCounter() {
     return _oHoldCounter;
   }
 
@@ -268,7 +268,7 @@ public:
    * @brief gets the number of sent events.
    * @return the number of sent events
    */
-  unsigned int getSent() const {
+  uint getSent() const {
     return _sent;
   }
 
@@ -276,7 +276,7 @@ public:
    * @brief get the number of received events.
    * @return the number of received events
    */
-  unsigned int getReceived() const {
+  uint getReceived() const {
     return _received;
   }
 
@@ -284,13 +284,13 @@ public:
    * @brief gets the number of observers attached to this object.
    * @return the number of observers attached to this object.
    */
-  unsigned int countObservers() const;
+  uint countObservers() const;
 
   /**
    * @brief gets the number of listeners attached to this object.
    * @return the number of listeners attached to this object.
    */
-  unsigned int countListeners() const;
+  uint countListeners() const;
 
 public:
   /**
@@ -317,7 +317,7 @@ public:
    * @param n The node of an Observable object
    * @return the number of scheduled events involving this Observable as sender or receiver.
    */
-  static unsigned int getScheduled(tlp::node n);
+  static uint getScheduled(tlp::node n);
 
   /**
    * @brief internal function for debugging purpose
@@ -434,12 +434,12 @@ private:
   /**
    * @brief The number of sent events
    */
-  unsigned int _sent;
+  uint _sent;
 
   /**
    * @brief received The number of received events.
    */
-  unsigned int _received;
+  uint _received;
 
   /**
    * @brief return an Iterator on all Onlookers
@@ -501,7 +501,7 @@ private:
   /**
    * @brief _oHoldCounter counter of nested holds
    */
-  static unsigned int _oHoldCounter;
+  static uint _oHoldCounter;
 
   /**
    * @brief _oDisabled used to disable the events notification

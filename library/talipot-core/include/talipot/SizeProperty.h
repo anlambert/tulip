@@ -59,8 +59,8 @@ protected:
   void resetMinMax();
 
 private:
-  std::unordered_map<unsigned int, Size> max, min;
-  std::unordered_map<unsigned int, bool> minMaxOk;
+  std::unordered_map<uint, Size> max, min;
+  std::unordered_map<uint, bool> minMaxOk;
   void computeMinMax(const Graph *sg = nullptr);
 };
 

@@ -24,7 +24,7 @@ static constexpr std::string_view paramHelp[] = {
     "If the layer spacing is uniform, the spacing between two consecutive layers will be the "
     "same."};
 
-void TreeLeaf::computeLevelHeights(tlp::Graph *tree, tlp::node n, unsigned int depth,
+void TreeLeaf::computeLevelHeights(tlp::Graph *tree, tlp::node n, uint depth,
                                    OrientableSizeProxy *oriSize) {
   if (levelHeights.size() == depth) {
     levelHeights.push_back(0);
@@ -41,7 +41,7 @@ void TreeLeaf::computeLevelHeights(tlp::Graph *tree, tlp::node n, unsigned int d
   }
 }
 
-float TreeLeaf::dfsPlacement(tlp::Graph *tree, tlp::node n, float x, float y, unsigned int depth,
+float TreeLeaf::dfsPlacement(tlp::Graph *tree, tlp::node n, float x, float y, uint depth,
                              OrientableLayout *oriLayout, OrientableSizeProxy *oriSize) {
   float minX = 0;
   float maxX = 0;
@@ -143,7 +143,7 @@ bool TreeLeaf::run() {
   // check if the specified layer spacing is greater
   // than the max of the minimum layer spacing of the tree
   if (uniformLayerDistance) {
-    for (unsigned int i = 0; i < levelHeights.size() - 1; ++i) {
+    for (uint i = 0; i < levelHeights.size() - 1; ++i) {
       float layerSpacing = (levelHeights[i] + levelHeights[i + 1]) / 2 + nodeSpacing;
 
       if (layerSpacing > minLayerSpacing) {

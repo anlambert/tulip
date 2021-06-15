@@ -72,8 +72,8 @@ EdgeBundling::EdgeBundling(const PluginContext *context) : Algorithm(context) {
   addInParameter<bool>("sphere_layout", paramHelp[4].data(), "false");
   addInParameter<double>("long_edges", paramHelp[5].data(), "0.9");
   addInParameter<double>("split_ratio", paramHelp[6].data(), "10");
-  addInParameter<unsigned int>("iterations", paramHelp[7].data(), "2");
-  addInParameter<unsigned int>("max_thread", paramHelp[8].data(), "0");
+  addInParameter<uint>("iterations", paramHelp[7].data(), "2");
+  addInParameter<uint>("max_thread", paramHelp[8].data(), "0");
   addInParameter<bool>("edge_node_overlap", paramHelp[9].data(), "false");
   addDependency("Voronoi diagram", "1.1");
 }
@@ -137,8 +137,8 @@ void updateLayout(node src, edge e, Graph *graph, LayoutProperty *layout,
 }
 //============================================
 // fix all graph edge to 1 and all grid edge to 0 graph-grid edge 2 edge on the contour of a node 3
-void EdgeBundling::fixEdgeType(EdgeVectorProperty<unsigned int> &ntype) {
-  TLP_PARALLEL_MAP_EDGES_AND_INDICES(graph, [&](edge e, unsigned int i) {
+void EdgeBundling::fixEdgeType(EdgeVectorProperty<uint> &ntype) {
+  TLP_PARALLEL_MAP_EDGES_AND_INDICES(graph, [&](edge e, uint i) {
     if (oriGraph->isElement(e)) {
       ntype[i] = 1;
     } else {
@@ -155,7 +155,7 @@ void EdgeBundling::fixEdgeType(EdgeVectorProperty<unsigned int> &ntype) {
 //============================================
 static void computeDik(Dijkstra &dijkstra, const Graph *const vertexCoverGraph,
                        const Graph *const oriGraph, const node n,
-                       const EdgeVectorProperty<double> &mWeights, unsigned int optimizatioLevel) {
+                       const EdgeVectorProperty<double> &mWeights, uint optimizatioLevel) {
   set<node> focus;
 
   if (optimizatioLevel > 0) {
@@ -168,11 +168,10 @@ static void computeDik(Dijkstra &dijkstra, const Graph *const vertexCoverGraph,
 }
 //==========================================================================
 void EdgeBundling::computeDistances() {
-  TLP_PARALLEL_MAP_NODES_AND_INDICES(oriGraph,
-                                     [&](node n, unsigned int i) { computeDistance(n, i); });
+  TLP_PARALLEL_MAP_NODES_AND_INDICES(oriGraph, [&](node n, uint i) { computeDistance(n, i); });
 }
 //==========================================================================
-void EdgeBundling::computeDistance(node n, unsigned int i) {
+void EdgeBundling::computeDistance(node n, uint i) {
   double maxDist = 0;
   Coord nPos = layout->getNodeValue(n);
   for (auto n2 : vertexCoverGraph->getInOutNodes(n)) {
@@ -196,7 +195,7 @@ bool EdgeBundling::run() {
 
   optimizationLevel = 3;
   maxThread = 0;
-  unsigned int MAX_ITER = 2;
+  uint MAX_ITER = 2;
   edgeNodeOverlap = false;
   longEdges = 0.9;
   splitRatio = 10;
@@ -258,7 +257,7 @@ bool EdgeBundling::run() {
       // delete edges in reverse order to avoid
       // the use of a stable iterator
       auto edges = graph->edges();
-      unsigned int sz = edges.size();
+      uint sz = edges.size();
       while (sz) {
         auto e = edges[--sz];
         if (oriGraph->isElement(e)) {
@@ -280,7 +279,7 @@ bool EdgeBundling::run() {
       Graph *workGraph = graph->addCloneSubGraph();
       // we use a hash map to ease the retrieve of the vector of the nodes
       // having the same position
-      std::unordered_map<std::string, std::pair<node, unsigned int>> clusters;
+      std::unordered_map<std::string, std::pair<node, uint>> clusters;
 
       // iterate on graph nodes
       for (auto n : graph->nodes()) {
@@ -297,7 +296,7 @@ bool EdgeBundling::run() {
           // register the first node at position represented by key
           clusters[key] = std::make_pair(n, UINT_MAX);
         } else {
-          std::pair<node, unsigned int> &infos = it->second;
+          std::pair<node, uint> &infos = it->second;
 
           if (infos.second == UINT_MAX) {
             // we find a second node at the position represented by key
@@ -344,7 +343,7 @@ bool EdgeBundling::run() {
     // delete nodes in reverse order to avoid
     // the use of a stable iterator
     auto nodes = graph->nodes();
-    unsigned int sz = nodes.size();
+    uint sz = nodes.size();
     while (sz) {
       auto n = nodes[--sz];
       if (oriGraph->isElement(n)) {
@@ -365,7 +364,7 @@ bool EdgeBundling::run() {
     ThreadManager::setNumberOfThreads(maxThread);
   }
 
-  EdgeVectorProperty<unsigned int> ntype(graph);
+  EdgeVectorProperty<uint> ntype(graph);
   fixEdgeType(ntype);
 
   //==========================================================
@@ -382,7 +381,7 @@ bool EdgeBundling::run() {
   }
   gridGraph->setName("Grid Graph");
   // remove all original graph edges
-  TLP_PARALLEL_MAP_EDGES_AND_INDICES(graph, [&](edge e, unsigned int i) {
+  TLP_PARALLEL_MAP_EDGES_AND_INDICES(graph, [&](edge e, uint i) {
     if (ntype[i] == 1 && gridGraph->isElement(e)) {
       gridGraph->delEdge(e);
     }
@@ -423,7 +422,7 @@ bool EdgeBundling::run() {
   //==========================================================
   EdgeVectorProperty<double> mWeights(graph);
   EdgeVectorProperty<double> mWeightsInit(graph);
-  TLP_PARALLEL_MAP_EDGES_AND_INDICES(graph, [&](edge e, unsigned int i) {
+  TLP_PARALLEL_MAP_EDGES_AND_INDICES(graph, [&](edge e, uint i) {
     const auto &[src, tgt] = graph->ends(e);
     const Coord &a = layout->getNodeValue(src);
     const Coord &b = layout->getNodeValue(tgt);
@@ -439,10 +438,10 @@ bool EdgeBundling::run() {
 
   //==========================================================
 
-  EdgeVectorProperty<unsigned int> depth(graph);
+  EdgeVectorProperty<uint> depth(graph);
 
   // Routing edges into bundles
-  for (unsigned int iteration = 0; iteration < MAX_ITER; iteration++) {
+  for (uint iteration = 0; iteration < MAX_ITER; iteration++) {
 
     if (iteration < MAX_ITER - 1) {
       depth.setAll(0);
@@ -467,7 +466,7 @@ bool EdgeBundling::run() {
       stringstream strm;
       strm << "Computing iteration " << iteration + 1 << "/" << MAX_ITER;
       pluginProgress->setComment(strm.str());
-      unsigned int i = oriGraph->numberOfEdges() - vertexCoverGraph->numberOfEdges();
+      uint i = oriGraph->numberOfEdges() - vertexCoverGraph->numberOfEdges();
 
       if (((i % 10) == 0) &&
           (pluginProgress->progress(i, oriGraph->numberOfEdges()) != TLP_CONTINUE)) {
@@ -531,7 +530,7 @@ bool EdgeBundling::run() {
       int nbThreads = toTreatByThreads.size();
 
       if (iteration < MAX_ITER - 1) {
-        TLP_PARALLEL_MAP_INDICES(nbThreads, [&](unsigned int j) {
+        TLP_PARALLEL_MAP_INDICES(nbThreads, [&](uint j) {
           node n = toTreatByThreads[j];
           Dijkstra dijkstra(gridGraph);
 
@@ -566,7 +565,7 @@ bool EdgeBundling::run() {
           }
         });
       } else {
-        TLP_PARALLEL_MAP_INDICES(nbThreads, [&](unsigned int j) {
+        TLP_PARALLEL_MAP_INDICES(nbThreads, [&](uint j) {
           node n = toTreatByThreads[j];
           Dijkstra dijkstra(gridGraph);
 
@@ -681,7 +680,7 @@ bool EdgeBundling::run() {
     // delete nodes in reverse order to avoid
     // the use of a stable iterator
     auto nodes = graph->nodes();
-    unsigned int sz = nodes.size();
+    uint sz = nodes.size();
     while (sz) {
       auto n = nodes[--sz];
       if (!oriGraph->isElement(n)) {

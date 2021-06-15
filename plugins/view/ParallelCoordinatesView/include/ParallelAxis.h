@@ -35,10 +35,10 @@ public:
   void draw(float lod, Camera *camera) override;
   void translate(const Coord &c) override;
   void getXML(std::string &) override {}
-  void setWithXML(const std::string &, unsigned int &) override {}
+  void setWithXML(const std::string &, uint &) override {}
 
   virtual void redraw();
-  virtual Coord getPointCoordOnAxisForData(const unsigned int dataIdx) = 0;
+  virtual Coord getPointCoordOnAxisForData(const uint dataIdx) = 0;
   virtual void showConfigDialog() = 0;
 
   void setBaseCoord(const Coord &baseCoord);
@@ -98,8 +98,8 @@ public:
     return hidden;
   }
 
-  virtual const std::set<unsigned int> &getDataInSlidersRange() = 0;
-  virtual void updateSlidersWithDataSubset(const std::set<unsigned int> &dataSubset) = 0;
+  virtual const std::set<uint> &getDataInSlidersRange() = 0;
+  virtual void updateSlidersWithDataSubset(const std::set<uint> &dataSubset) = 0;
 
   void enableTrickForSelection();
   void disableTrickForSelection();
@@ -123,7 +123,7 @@ protected:
   Coord bottomSliderCoord;
   float rotationAngle;
   bool hidden;
-  std::set<unsigned int> dataSubset;
+  std::set<uint> dataSubset;
 };
 }
 

@@ -63,7 +63,7 @@ void makeProperDag(Graph *graph, list<node> &addedNodes,
 
   assert(AcyclicTest::isAcyclic(graph));
   // We compute the dag level metric on resulting sg.
-  NodeVectorProperty<unsigned int> dLevel(graph);
+  NodeVectorProperty<uint> dLevel(graph);
   dagLevel(graph, dLevel);
 
   if (edgeLength) {
@@ -73,12 +73,12 @@ void makeProperDag(Graph *graph, list<node> &addedNodes,
   // we now transform the dag in a proper Dag, two linked nodes of a proper dag
   // must have a difference of one of dag level metric.
   const vector<edge> &edges = graph->edges();
-  unsigned int nbEdges = edges.size();
-  for (unsigned int i = 0; i < nbEdges; ++i) {
+  uint nbEdges = edges.size();
+  for (uint i = 0; i < nbEdges; ++i) {
     edge e = edges[i];
     auto [src, tgt] = graph->ends(e);
-    unsigned int fLevel = dLevel.getNodeValue(src);
-    unsigned int sLevel = dLevel.getNodeValue(tgt);
+    uint fLevel = dLevel.getNodeValue(src);
+    uint sLevel = dLevel.getNodeValue(tgt);
     int delta = sLevel - fLevel;
 
     if (delta > 1) {
@@ -135,7 +135,7 @@ vector<vector<node>> computeCanonicalOrdering(PlanarConMap *carte, std::vector<e
   }
 
   vector<vector<node>> res;
-  unsigned int nbMax = o.size();
+  uint nbMax = o.size();
 
   if (nbMax) {
     res.reserve(nbMax);
@@ -150,15 +150,15 @@ vector<vector<node>> computeCanonicalOrdering(PlanarConMap *carte, std::vector<e
 //======================================================================
 std::vector<node> computeGraphCenters(Graph *graph) {
   assert(ConnectedTest::isConnected(graph));
-  tlp::NodeVectorProperty<unsigned int> dist(graph);
+  tlp::NodeVectorProperty<uint> dist(graph);
   const std::vector<node> &nodes = graph->nodes();
-  unsigned int nbNodes = nodes.size();
-  unsigned int minD = UINT_MAX;
-  unsigned int minPos = 0;
+  uint nbNodes = nodes.size();
+  uint minD = UINT_MAX;
+  uint minPos = 0;
 
-  TLP_PARALLEL_MAP_INDICES(nbNodes, [&](unsigned int i) {
-    tlp::NodeVectorProperty<unsigned int> tmp(graph);
-    unsigned int maxD = tlp::maxDistance(graph, i, tmp, UNDIRECTED);
+  TLP_PARALLEL_MAP_INDICES(nbNodes, [&](uint i) {
+    tlp::NodeVectorProperty<uint> tmp(graph);
+    uint maxD = tlp::maxDistance(graph, i, tmp, UNDIRECTED);
     dist[i] = maxD;
     TLP_LOCK_SECTION(COMPUTE_MIN) {
       if (minD > maxD) {
@@ -171,7 +171,7 @@ std::vector<node> computeGraphCenters(Graph *graph) {
 
   vector<node> result;
 
-  for (unsigned int i = minPos; i < nbNodes; ++i) {
+  for (uint i = minPos; i < nbNodes; ++i) {
     if (dist[i] == minD) {
       result.push_back(nodes[i]);
     }
@@ -183,7 +183,7 @@ std::vector<node> computeGraphCenters(Graph *graph) {
 node graphCenterHeuristic(Graph *graph, PluginProgress *pluginProgress) {
   assert(ConnectedTest::isConnected(graph));
 
-  unsigned int nbNodes = graph->numberOfNodes();
+  uint nbNodes = graph->numberOfNodes();
 
   if (nbNodes == 0) {
     return node();
@@ -192,11 +192,11 @@ node graphCenterHeuristic(Graph *graph, PluginProgress *pluginProgress) {
   const vector<node> &nodes = graph->nodes();
   tlp::NodeVectorProperty<bool> toTreat(graph);
   toTreat.setAll(true);
-  tlp::NodeVectorProperty<unsigned int> dist(graph);
-  unsigned int i = 0, n = 0, result = 0;
-  unsigned int cDist = UINT_MAX - 2;
-  unsigned int nbTry = 2 + sqrt(nbNodes);
-  unsigned int maxTries = nbTry;
+  tlp::NodeVectorProperty<uint> dist(graph);
+  uint i = 0, n = 0, result = 0;
+  uint cDist = UINT_MAX - 2;
+  uint nbTry = 2 + sqrt(nbNodes);
+  uint maxTries = nbTry;
 
   while (nbTry) {
     --nbTry;
@@ -211,16 +211,16 @@ node graphCenterHeuristic(Graph *graph, PluginProgress *pluginProgress) {
 
     if (toTreat[n]) {
       ++i;
-      unsigned int di = tlp::maxDistance(graph, n, dist);
+      uint di = tlp::maxDistance(graph, n, dist);
       toTreat[n] = false;
 
       if (di < cDist) {
         result = n;
         cDist = di;
       } else {
-        unsigned int delta = di - cDist;
+        uint delta = di - cDist;
 
-        for (unsigned int v = 0; v < nbNodes; v++) {
+        for (uint v = 0; v < nbNodes; v++) {
           if (dist[v] < delta) {
             // all the nodes at distance less than delta can't be center
             toTreat[v] = false;
@@ -228,9 +228,9 @@ node graphCenterHeuristic(Graph *graph, PluginProgress *pluginProgress) {
         }
       }
 
-      unsigned int nextMax = 0;
+      uint nextMax = 0;
 
-      for (unsigned int v = 0; v < nbNodes; v++) {
+      for (uint v = 0; v < nbNodes; v++) {
         if (dist[v] > (di / 2 + di % 2)) {
           toTreat[v] = false;
         } else {
@@ -263,13 +263,13 @@ void selectSpanningForest(Graph *graph, BooleanProperty *selectionProperty,
 
   NodeVectorProperty<bool> nodeFlag(graph);
   const std::vector<node> &nodes = graph->nodes();
-  unsigned int nbNodes = nodes.size();
+  uint nbNodes = nodes.size();
 
-  unsigned int nbSelectedNodes = selectionProperty->numberOfNonDefaultValuatedNodes();
+  uint nbSelectedNodes = selectionProperty->numberOfNonDefaultValuatedNodes();
 
   // get previously selected nodes
   if (nbSelectedNodes) {
-    for (unsigned int i = 0; i < nbNodes; ++i) {
+    for (uint i = 0; i < nbNodes; ++i) {
       node n = nodes[i];
 
       if (selectionProperty->getNodeValue(n)) {
@@ -293,7 +293,7 @@ void selectSpanningForest(Graph *graph, BooleanProperty *selectionProperty,
   }
 
   bool ok = true;
-  unsigned int edgeCount = 0;
+  uint edgeCount = 0;
 
   while (ok) {
     while (!fifo.empty()) {
@@ -301,7 +301,7 @@ void selectSpanningForest(Graph *graph, BooleanProperty *selectionProperty,
       fifo.pop_front();
       for (auto adjit : graph->getOutEdges(n1)) {
         node tgt = graph->target(adjit);
-        unsigned int tgtPos = graph->nodePos(tgt);
+        uint tgtPos = graph->nodePos(tgt);
 
         if (!nodeFlag[tgtPos]) {
           nodeFlag[tgtPos] = true;
@@ -331,7 +331,7 @@ void selectSpanningForest(Graph *graph, BooleanProperty *selectionProperty,
     bool degZ = false;
     node goodNode = graph->getOneNode();
 
-    for (unsigned int i = 0; i < nbNodes; ++i) {
+    for (uint i = 0; i < nbNodes; ++i) {
       node n = nodes[i];
 
       if (!nodeFlag[i]) {
@@ -376,10 +376,10 @@ void selectSpanningTree(Graph *graph, BooleanProperty *selection, PluginProgress
   selection->setAllEdgeValue(false);
 
   node root = graphCenterHeuristic(graph, pluginProgress);
-  unsigned int size = graph->numberOfNodes();
-  unsigned int nbNodes = 1, edgeCount = 0;
+  uint size = graph->numberOfNodes();
+  uint nbNodes = 1, edgeCount = 0;
   vector<node> roots;
-  unsigned int i = 0;
+  uint i = 0;
   selection->setNodeValue(root, true);
   roots.push_back(root);
 
@@ -444,24 +444,24 @@ void selectMinimumSpanningTree(Graph *graph, BooleanProperty *selection,
 
   selection->setAllEdgeValue(false);
 
-  NodeVectorProperty<unsigned int> classes(graph);
+  NodeVectorProperty<uint> classes(graph);
 
-  unsigned int nbNodes = nodes.size();
-  unsigned int numClasses = nbNodes;
+  uint nbNodes = nodes.size();
+  uint numClasses = nbNodes;
 
-  TLP_PARALLEL_MAP_INDICES(nbNodes, [&](unsigned int i) { classes[i] = i; });
+  TLP_PARALLEL_MAP_INDICES(nbNodes, [&](uint i) { classes[i] = i; });
 
-  unsigned int maxCount = numClasses;
-  unsigned int edgeCount = 0;
+  uint maxCount = numClasses;
+  uint edgeCount = 0;
 
   std::vector<edge> sortedEdges(graph->edges());
   std::sort(sortedEdges.begin(), sortedEdges.end(), ltEdge(edgeWeight));
-  unsigned int nbEdges = sortedEdges.size();
-  unsigned int iE = 0;
+  uint nbEdges = sortedEdges.size();
+  uint iE = 0;
 
   while (numClasses > 1) {
     edge cur;
-    unsigned int srcClass = 0, tgtClass = 0;
+    uint srcClass = 0, tgtClass = 0;
 
     for (; iE < nbEdges; ++iE) {
       const auto &[src, tgt] = graph->ends(cur = sortedEdges[iE]);
@@ -485,7 +485,7 @@ void selectMinimumSpanningTree(Graph *graph, BooleanProperty *selection,
       }
     }
 
-    TLP_PARALLEL_MAP_INDICES(nbNodes, [&](unsigned int i) {
+    TLP_PARALLEL_MAP_INDICES(nbNodes, [&](uint i) {
       if (classes[i] == tgtClass)
         classes[i] = srcClass;
     });
@@ -668,14 +668,14 @@ std::vector<tlp::edge> dfsEdges(const Graph *graph) {
 }
 
 //==================================================
-void buildNodesUniformQuantification(const Graph *graph, const NumericProperty *prop,
-                                     unsigned int k, std::map<double, int> &nodeMapping) {
+void buildNodesUniformQuantification(const Graph *graph, const NumericProperty *prop, uint k,
+                                     std::map<double, int> &nodeMapping) {
   // build the histogram of node values
   map<double, int> histogram;
   const std::vector<node> &nodes = graph->nodes();
-  unsigned int nbNodes = nodes.size();
+  uint nbNodes = nodes.size();
 
-  for (unsigned int i = 0; i < nbNodes; ++i) {
+  for (uint i = 0; i < nbNodes; ++i) {
     double value = prop->getNodeDoubleValue(nodes[i]);
 
     if (auto it = histogram.find(value); it == histogram.end()) {
@@ -700,8 +700,8 @@ void buildNodesUniformQuantification(const Graph *graph, const NumericProperty *
   }
 }
 //==================================================
-void buildEdgesUniformQuantification(const Graph *graph, const NumericProperty *prop,
-                                     unsigned int k, std::map<double, int> &edgeMapping) {
+void buildEdgesUniformQuantification(const Graph *graph, const NumericProperty *prop, uint k,
+                                     std::map<double, int> &edgeMapping) {
   // build the histogram of edges values
   map<double, int> histogram;
   for (auto e : graph->edges()) {
@@ -797,7 +797,7 @@ bool selectShortestPaths(const Graph *const graph, node src, node tgt, ShortestP
   if (!weights) {
     eWeights.setAll(SMALLEST_WEIGHT);
   } else {
-    auto fn = [&](edge e, unsigned int i) {
+    auto fn = [&](edge e, uint i) {
       double val(weights->getEdgeValue(e));
 
       eWeights[i] = val ? val : SMALLEST_WEIGHT;
@@ -815,11 +815,11 @@ bool selectShortestPaths(const Graph *const graph, node src, node tgt, ShortestP
 }
 
 void markReachableNodes(const Graph *graph, const node startNode,
-                        std::unordered_map<node, bool> &result, unsigned int maxDistance,
+                        std::unordered_map<node, bool> &result, uint maxDistance,
                         EDGE_TYPE direction) {
   deque<node> fifo;
   MutableContainer<bool> visited;
-  MutableContainer<unsigned int> distance;
+  MutableContainer<uint> distance;
   visited.setAll(false);
   distance.setAll(graph->numberOfNodes());
   fifo.push_back(startNode);
@@ -828,7 +828,7 @@ void markReachableNodes(const Graph *graph, const node startNode,
 
   while (!fifo.empty()) {
     node current = fifo.front();
-    unsigned int curDist = distance.get(current.id);
+    uint curDist = distance.get(current.id);
     fifo.pop_front();
 
     if (curDist < maxDistance) {

@@ -39,15 +39,15 @@ using namespace std;
 namespace tlp {
 
 struct TextureInfo {
-  unsigned int width;
-  unsigned int height;
+  uint width;
+  uint height;
   unsigned char *data;
 };
 
 static bool generateTexture(const TextureInfo &texti, GlTexture &glTexture) {
 
-  unsigned int width = texti.width;
-  unsigned int height = texti.height;
+  uint width = texti.width;
+  uint height = texti.height;
 
   bool canUseMipmaps = OpenGlConfigManager::isExtensionSupported("GL_ARB_framebuffer_object") ||
                        OpenGlConfigManager::isExtensionSupported("GL_EXT_framebuffer_object");
@@ -79,8 +79,8 @@ static bool generateTexture(const TextureInfo &texti, GlTexture &glTexture) {
 //====================================================================
 static unsigned char *invertImage(int pitch, int height, unsigned char *imagePixels) {
   auto *tempRow = new unsigned char[pitch];
-  auto heightDiv2 = static_cast<unsigned int>(height * .5);
-  for (unsigned int index = 0; index < heightDiv2; ++index) {
+  auto heightDiv2 = static_cast<uint>(height * .5);
+  for (uint index = 0; index < heightDiv2; ++index) {
     memcpy(tempRow, imagePixels + pitch * index, pitch);
     memcpy(imagePixels + pitch * index, imagePixels + pitch * (height - index - 1), pitch);
     memcpy(imagePixels + pitch * (height - index - 1), tempRow, pitch);
@@ -89,7 +89,7 @@ static unsigned char *invertImage(int pitch, int height, unsigned char *imagePix
   return imagePixels;
 }
 //====================================================================
-static unsigned int nearestPOT(unsigned int x) {
+static uint nearestPOT(uint x) {
   return pow(2, ceil(log(x) / log(2)));
 }
 //====================================================================
@@ -102,7 +102,7 @@ bool GlTextureLoader::loadTexture(const string &filename, GlTexture &texture) {
     return false;
   }
   int w, h, n;
-  static const unsigned int nbBytesPerPixel = 4;
+  static const uint nbBytesPerPixel = 4;
   unsigned char *pixels = stbi_load(filename.c_str(), &w, &h, &n, nbBytesPerPixel);
   if (pixels) {
     int nearestpotW = nearestPOT(w);

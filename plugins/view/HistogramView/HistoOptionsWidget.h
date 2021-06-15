@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -34,14 +34,14 @@ public:
 
   void setWidgetEnabled(const bool enabled);
 
-  void setNbOfHistogramBins(const unsigned int nbOfHistogramBins);
-  unsigned int getNbOfHistogramBins();
+  void setNbOfHistogramBins(const uint nbOfHistogramBins);
+  uint getNbOfHistogramBins();
 
-  void setNbXGraduations(const unsigned int nbXGraduations);
-  unsigned int getNbXGraduations();
+  void setNbXGraduations(const uint nbXGraduations);
+  uint getNbXGraduations();
 
-  void setYAxisIncrementStep(const unsigned int yAxisIncrementStep);
-  unsigned int getYAxisIncrementStep();
+  void setYAxisIncrementStep(const uint yAxisIncrementStep);
+  uint getYAxisIncrementStep();
 
   void setCumulativeFrequenciesHistogram(const bool cumulHisto);
   bool cumulativeFrequenciesHisto();
@@ -92,9 +92,9 @@ private slots:
 
 private:
   bool oldValueInitialized;
-  unsigned int oldNbOfHistogramBins;
-  unsigned int oldNbXGraduations;
-  unsigned int oldYAxisIncrementStep;
+  uint oldNbOfHistogramBins;
+  uint oldNbXGraduations;
+  uint oldYAxisIncrementStep;
   bool oldCumulativeFrequenciesHistogram;
   bool oldUniformQuantification;
   bool oldXAxisLogScale;

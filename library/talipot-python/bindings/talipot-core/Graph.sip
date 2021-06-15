@@ -81,9 +81,9 @@ bool callGraphPropertyAlgorithm(tlp::Graph *graph, const std::string &algoName, 
   return ret;
 }
 
-tlp::DataSet *getDataSetFilledWithPropertiesValues(tlp::Graph *graph, unsigned int eltId, bool nodeValues);
+tlp::DataSet *getDataSetFilledWithPropertiesValues(tlp::Graph *graph, uint eltId, bool nodeValues);
 
-bool setPropertiesValuesFromDataSet(tlp::Graph *graph, const tlp::DataSet *dataSet, unsigned int eltId, bool nodeValues);
+bool setPropertiesValuesFromDataSet(tlp::Graph *graph, const tlp::DataSet *dataSet, uint eltId, bool nodeValues);
 
 %End
 
@@ -142,7 +142,7 @@ void updateWrappedDataSetAfterAlgorithmCall(tlp::DataSet *algorithmOutputDataset
   }
 }
 
-tlp::DataSet *getDataSetFilledWithPropertiesValues(tlp::Graph *graph, unsigned int eltId, bool nodeValues) {
+tlp::DataSet *getDataSetFilledWithPropertiesValues(tlp::Graph *graph, uint eltId, bool nodeValues) {
   tlp::DataSet *ret = new tlp::DataSet();
   for(tlp::PropertyInterface *prop : graph->getObjectProperties()) {
     tlp::BooleanProperty *booleanProp = dynamic_cast<tlp::BooleanProperty*>(prop);
@@ -197,7 +197,7 @@ tlp::DataSet *getDataSetFilledWithPropertiesValues(tlp::Graph *graph, unsigned i
   return ret;
 }
 
-bool setPropertiesValuesFromDataSet(tlp::Graph *graph, const tlp::DataSet *dataSet, unsigned int eltId, bool nodeValues) {
+bool setPropertiesValuesFromDataSet(tlp::Graph *graph, const tlp::DataSet *dataSet, uint eltId, bool nodeValues) {
   PyObject *graphWrapper = sipGetPyObject(graph, sipFindType("tlp::Graph"));
   PyObject *pSetItem = PyUnicode_FromString("__setitem__");
   PyObject *pGetItem = PyUnicode_FromString("__getitem__");
@@ -590,7 +590,7 @@ Returns :const:`True` if the graph argument is a descendant of this graph.
 
 //===========================================================================================
 
-  tlp::Graph* getSubGraph(unsigned int id) const;
+  tlp::Graph* getSubGraph(uint id) const;
 %Docstring
 tlp.Graph.getSubGraph(id)
 
@@ -616,7 +616,7 @@ Returns the subgraph with the corresponding name or :const:`None` if there is no
 
 //===========================================================================================
 
-  tlp::Graph* getDescendantGraph(unsigned int id) const;
+  tlp::Graph* getDescendantGraph(uint id) const;
 %Docstring
 tlp.Graph.getDescendantGraph(id)
 
@@ -642,7 +642,7 @@ Returns the descendant graph with the corresponding name or :const:`None` if the
 
 //===========================================================================================
 
-  tlp::Graph *getNthSubGraph(unsigned int n) const;
+  tlp::Graph *getNthSubGraph(uint n) const;
 %Docstring
 tlp.Graph.getNthSubGraph(n)
 
@@ -673,7 +673,7 @@ Returns the number of direct subgraphs.
 
 //===========================================================================================
 
-  unsigned int numberOfDescendantGraphs() const;
+  uint numberOfDescendantGraphs() const;
 %Docstring
 tlp.Graph.numberOfDescendantGraphs()
 
@@ -725,7 +725,7 @@ through the use of a dictionary (see :meth:`tlp.Graph.setNodePropertiesValues` f
 
 //===========================================================================================
 
-  std::vector<tlp::node> addNodes(unsigned int nbNodes);
+  std::vector<tlp::node> addNodes(uint nbNodes);
 %Docstring
 tlp.Graph.addNodes(nbNodes)
 
@@ -1437,7 +1437,7 @@ Returns the list of nodes belonging to the graph.
 %End
 //===========================================================================================
 
-  unsigned int nodePos(const tlp::node node) const;
+  uint nodePos(const tlp::node node) const;
 %Docstring
 tlp.Graph.nodePos(node)
 
@@ -1474,7 +1474,7 @@ Returns an iterator on the nodes.
 
 //===========================================================================================
 
-  tlp::node getInNode(const tlp::node node, unsigned int i) const;
+  tlp::node getInNode(const tlp::node node, uint i) const;
 %Docstring
 tlp.Graph.getInNode(node, i)
 
@@ -1533,7 +1533,7 @@ Return an iterator on the predecessors of a node.
 
 //===========================================================================================
 
-  tlp::node getOutNode(const tlp::node node, unsigned int i) const;
+  tlp::node getOutNode(const tlp::node node, uint i) const;
 %Docstring
 tlp.Graph.getOutNode(node, i)
 
@@ -1755,7 +1755,7 @@ Returns the list of edges belonging to the graph.
 %End
 //===========================================================================================
 
-  unsigned int edgePos(const tlp::edge edge) const;
+  uint edgePos(const tlp::edge edge) const;
 %Docstring
 tlp.Graph.edgePos(edge)
 
@@ -1924,7 +1924,7 @@ Returns the list of all edges adjacent to a given node.
 
 //===========================================================================================
 
-  unsigned int getId() const;
+  uint getId() const;
 %Docstring
 tlp.Graph.getId()
 
@@ -1946,7 +1946,7 @@ Returns :const:`True` if the graph has no nodes.
 
 //===========================================================================================
 
-  unsigned int numberOfNodes() const;
+  uint numberOfNodes() const;
 %Docstring
 tlp.Graph.numberOfNodes()
 
@@ -1957,7 +1957,7 @@ Returns the number of nodes in the graph.
 
 //===========================================================================================
 
-  unsigned int numberOfEdges() const;
+  uint numberOfEdges() const;
 %Docstring
 tlp.Graph.numberOfEdges()
 
@@ -1968,7 +1968,7 @@ Returns the number of edges in the graph.
 
 //===========================================================================================
 
-  unsigned int deg(const tlp::node node) const;
+  uint deg(const tlp::node node) const;
 %Docstring
 tlp.Graph.deg(node)
 
@@ -1990,7 +1990,7 @@ Returns the degree of a node.
 
 //===========================================================================================
 
-  unsigned int indeg(const tlp::node node) const;
+  uint indeg(const tlp::node node) const;
 %Docstring
 tlp.Graph.indeg(node)
 
@@ -2012,7 +2012,7 @@ Returns the incoming degree of a node.
 
 //===========================================================================================
 
-  unsigned int outdeg(const tlp::node node) const;
+  uint outdeg(const tlp::node node) const;
 %Docstring
 tlp.Graph.outdeg(node)
 

@@ -50,7 +50,7 @@ static void computeGraphPoints(const std::vector<node> &nodes, const std::vector
       points[2].set(+nSize[0] / 2., -nSize[1] / 2., -nSize[2] / 2.);
       points[3].set(-nSize[0] / 2., +nSize[1] / 2., +nSize[2] / 2.);
 
-      for (unsigned int i = 0; i < 4; ++i) {
+      for (uint i = 0; i < 4; ++i) {
         if (rot) {
           rotate(points[i], rot);
         }
@@ -148,11 +148,11 @@ pair<Coord, Coord> tlp::computeBoundingRadius(const Graph *graph, const LayoutPr
 }
 //======================================================================================
 vector<Coord> tlp::computeConvexHull(const std::vector<Coord> &allPoints) {
-  vector<unsigned int> hullIndices;
+  vector<uint> hullIndices;
   convexHull(allPoints, hullIndices); // compute the convex hull
   vector<Coord> finalResult(hullIndices.size());
 
-  unsigned int i = 0;
+  uint i = 0;
   for (auto idx : hullIndices) {
     finalResult[i] = allPoints[idx];
     finalResult[i++][2] = 0;
@@ -298,9 +298,8 @@ bool tlp::isLayoutCoPlanar(const vector<Coord> &points, Mat3f &invTransformMatri
 
 //======================================================================================================
 
-std::vector<tlp::Coord> tlp::computeRegularPolygon(unsigned int numberOfSides,
-                                                   const tlp::Coord &center, const tlp::Size &size,
-                                                   float startAngle) {
+std::vector<tlp::Coord> tlp::computeRegularPolygon(uint numberOfSides, const tlp::Coord &center,
+                                                   const tlp::Size &size, float startAngle) {
 
   assert(numberOfSides > 2);
 
@@ -308,7 +307,7 @@ std::vector<tlp::Coord> tlp::computeRegularPolygon(unsigned int numberOfSides,
   vector<Coord> points;
   float delta = (2.0f * M_PI) / float(numberOfSides);
 
-  for (unsigned int i = 0; i < numberOfSides; ++i) {
+  for (uint i = 0; i < numberOfSides; ++i) {
     float deltaX = cos(i * delta + startAngle);
     float deltaY = sin(i * delta + startAngle);
     points.push_back(Coord(deltaX, deltaY, center[2]));

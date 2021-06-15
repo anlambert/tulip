@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -33,7 +33,7 @@ void StringsListSelectionDialog::setListType(const StringsListSelectionWidget::L
 /**
  * sets the maximum size of the selected strings list
  */
-void StringsListSelectionDialog::setMaxSelectedStringsListSize(const unsigned int maxSize) {
+void StringsListSelectionDialog::setMaxSelectedStringsListSize(const uint maxSize) {
   ui->stringsListSelectionWidget->setMaxSelectedStringsListSize(maxSize);
 }
 
@@ -55,7 +55,7 @@ void StringsListSelectionDialog::setStringsList(const std::vector<std::string> &
  **/
 StringsListSelectionDialog::StringsListSelectionDialog(
     QString title, QWidget *parent, const StringsListSelectionWidget::ListType listType,
-    const unsigned int maxSize)
+    const uint maxSize)
     : QDialog(parent), ui(new Ui::StringsListSelectionDialog) {
   ui->setupUi(this);
   setWindowTitle(title);
@@ -84,7 +84,7 @@ StringsListSelectionDialog::~StringsListSelectionDialog() {
 bool StringsListSelectionDialog::choose(QString title, const std::vector<std::string> &strList,
                                         std::vector<std::string> &selList, QWidget *parent,
                                         const StringsListSelectionWidget::ListType listType,
-                                        const unsigned int maxSize) {
+                                        const uint maxSize) {
   StringsListSelectionDialog dialog(title, parent, listType, maxSize);
   dialog.setStringsList(strList, selList);
   int result = dialog.exec();

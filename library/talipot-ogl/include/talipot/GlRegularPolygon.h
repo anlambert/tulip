@@ -32,7 +32,7 @@ public:
    *
    * The fill is inside the regular polygon
    */
-  GlRegularPolygon(const Coord &position, const Size &size, unsigned int numberOfSides,
+  GlRegularPolygon(const Coord &position, const Size &size, uint numberOfSides,
                    const Color &outlineColor = Color(255, 0, 0, 255),
                    const Color &fillColor = Color(0, 0, 255, 255), bool filled = true,
                    bool outlined = true, const std::string &textureName = "",
@@ -52,24 +52,24 @@ public:
   /**
    * @brief Get the number of Sides
    */
-  unsigned int getNumberOfSides() const;
+  uint getNumberOfSides() const;
 
   /**
    * @brief Set the number of sides (use setNumberOfSides)
    */
-  void resizePoints(const unsigned int number) override;
+  void resizePoints(const uint number) override;
 
   /**
    * @brief Set the number of sides
    */
-  void setNumberOfSides(unsigned int number);
+  void setNumberOfSides(uint number);
 
 protected:
   void computePolygon();
 
   Coord position;
   Size size;
-  unsigned int numberOfSides;
+  uint numberOfSides;
   float startAngle;
 };
 }

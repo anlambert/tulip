@@ -25,7 +25,7 @@ void FaceIteratorTest::setUp() {
   edges.clear();
   nodes.clear();
 
-  for (unsigned int i = 0; i < 10; i++) {
+  for (uint i = 0; i < 10; i++) {
     nodes.push_back(map->addNode());
   }
 
@@ -59,14 +59,14 @@ void FaceIteratorTest::tearDown() {
 //============================================================
 void FaceIteratorTest::testNodeFaceIterator() {
   for (tlp::Face f : map->getFaces()) {
-    unsigned int i = iteratorCount(map->getFaceNodes(f));
+    uint i = iteratorCount(map->getFaceNodes(f));
     CPPUNIT_ASSERT_EQUAL_MESSAGE(" test NodeFaceIterator ", map->nbFacesEdges(f), i);
   }
 }
 
 //============================================================
 void FaceIteratorTest::testFaceAdjIterator() {
-  unsigned int i = iteratorCount(map->getFacesAdj(nodes[4]));
+  uint i = iteratorCount(map->getFacesAdj(nodes[4]));
   CPPUNIT_ASSERT_EQUAL_MESSAGE(" test FaceAdjIterator nbFaces ", 3u, i);
 
   i = iteratorCount(map->getFacesAdj(nodes[1]));

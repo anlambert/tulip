@@ -58,8 +58,7 @@ GlOffscreenRenderer::~GlOffscreenRenderer() {
   delete glContext;
 }
 
-void GlOffscreenRenderer::setViewPortSize(const unsigned int viewPortWidth,
-                                          const unsigned int viewPortHeight) {
+void GlOffscreenRenderer::setViewPortSize(const uint viewPortWidth, const uint viewPortHeight) {
   vPWidth = viewPortWidth;
   vPHeight = viewPortHeight;
 }
@@ -68,11 +67,11 @@ void GlOffscreenRenderer::setSceneBackgroundColor(const Color &color) {
   scene.setBackgroundColor(color);
 }
 
-unsigned int GlOffscreenRenderer::getViewportWidth() {
+uint GlOffscreenRenderer::getViewportWidth() {
   return glFrameBuf->width();
 }
 
-unsigned int GlOffscreenRenderer::getViewportHeight() {
+uint GlOffscreenRenderer::getViewportHeight() {
   return glFrameBuf->height();
 }
 

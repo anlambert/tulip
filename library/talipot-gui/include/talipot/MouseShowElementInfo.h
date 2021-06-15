@@ -71,7 +71,7 @@ protected:
    * @param parent the parent for the model creation.
    * @return
    */
-  virtual QAbstractItemModel *buildModel(ElementType elementType, unsigned int elementId,
+  virtual QAbstractItemModel *buildModel(ElementType elementType, uint elementId,
                                          QObject *parent) const;
   /**
    * @brief elementName returns the title of the element.
@@ -79,7 +79,7 @@ protected:
    * @param elementId the id of the element
    * @return
    */
-  virtual QString elementName(ElementType elementType, unsigned int elementId) const;
+  virtual QString elementName(ElementType elementType, uint elementId) const;
 
 private slots:
 

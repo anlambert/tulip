@@ -122,7 +122,7 @@ public:
   // return the id of the corresponding graph elt
   // see ScatterPlot2DMouseShowElementInfo
   // in ScatterPlot2DInteractors.cpp
-  unsigned int getMappedId(unsigned int id);
+  uint getMappedId(uint id);
 
 public slots:
 
@@ -192,7 +192,7 @@ private:
   GlRect *emptyRect2;
 
   bool isConstruct;
-  unsigned int lastNbHistograms;
+  uint lastNbHistograms;
 
   ElementType dataLocation;
   bool needUpdateHistogram;

@@ -20,12 +20,12 @@ namespace tlp {
 
 GraphPropertiesSelectionWidget::GraphPropertiesSelectionWidget(
     QWidget *parent, const StringsListSelectionWidget::ListType &listType,
-    const unsigned int maxNbSelectedProperties)
+    const uint maxNbSelectedProperties)
     : StringsListSelectionWidget(parent, listType, maxNbSelectedProperties) {}
 
 GraphPropertiesSelectionWidget::GraphPropertiesSelectionWidget(
     Graph *graph, QWidget *parent, const StringsListSelectionWidget::ListType &listType,
-    const unsigned int maxNbSelectedProperties, const std::vector<std::string> &propertiesTypes,
+    const uint maxNbSelectedProperties, const std::vector<std::string> &propertiesTypes,
     const bool includeViewProperties)
     : StringsListSelectionWidget(parent, listType, maxNbSelectedProperties), graph(graph),
       propertiesTypes(propertiesTypes), includeViewProperties(includeViewProperties) {

@@ -30,7 +30,7 @@ using namespace std;
 namespace tlp {
 
 ScatterPlot2DInteractor::ScatterPlot2DInteractor(const QIcon &icon, const QString &text,
-                                                 const unsigned int priority)
+                                                 const uint priority)
     : NodeLinkDiagramViewInteractor(icon, text, priority) {}
 
 bool ScatterPlot2DInteractor::isCompatible(const std::string &viewName) const {
@@ -120,7 +120,7 @@ protected:
    * @param parent the parent for the model creation.
    * @return
    */
-  QAbstractItemModel *buildModel(ElementType elementType, unsigned int elementId,
+  QAbstractItemModel *buildModel(ElementType elementType, uint elementId,
                                  QObject *parent) const override {
     if (scp2DView->getDataLocation() == EDGE) {
       elementId = scp2DView->getMappedId(elementId);
@@ -136,7 +136,7 @@ protected:
    * @param elementId the id of the element
    * @return
    */
-  QString elementName(ElementType elementType, unsigned int elementId) const override {
+  QString elementName(ElementType elementType, uint elementId) const override {
     if (scp2DView->getDataLocation() == EDGE) {
       elementId = scp2DView->getMappedId(elementId);
       return QString("Edge") + " #" + QString::number(elementId);

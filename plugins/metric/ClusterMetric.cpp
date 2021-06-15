@@ -25,7 +25,7 @@ static constexpr std::string_view paramHelp[] = {
     "Maximal depth of a computed cluster."};
 //=================================================
 ClusterMetric::ClusterMetric(const tlp::PluginContext *context) : DoubleAlgorithm(context) {
-  addInParameter<unsigned int>("depth", paramHelp[0].data(), "1");
+  addInParameter<uint>("depth", paramHelp[0].data(), "1");
 }
 //=================================================
 static double clusterGetEdgeValue(Graph *graph, tlp::NodeVectorProperty<double> &clusters,
@@ -44,7 +44,7 @@ static double clusterGetEdgeValue(Graph *graph, tlp::NodeVectorProperty<double> 
 }
 //=================================================
 bool ClusterMetric::run() {
-  unsigned int maxDepth = 1;
+  uint maxDepth = 1;
 
   if (dataSet != nullptr) {
     dataSet->get("depth", maxDepth);
@@ -55,9 +55,9 @@ bool ClusterMetric::run() {
   clusters.copyToProperty(result);
 
   const std::vector<edge> &edges = graph->edges();
-  unsigned int nbEdges = edges.size();
+  uint nbEdges = edges.size();
 
-  for (unsigned int i = 0; i < nbEdges; ++i) {
+  for (uint i = 0; i < nbEdges; ++i) {
     edge e = edges[i];
     result->setEdgeValue(e, clusterGetEdgeValue(graph, clusters, e));
   }

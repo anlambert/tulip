@@ -295,7 +295,7 @@ void TestAlgorithmTest::testBiconnected() {
 
   Graph *tmpGraph;
 
-  for (unsigned int i = 0; i < 5; ++i) {
+  for (uint i = 0; i < 5; ++i) {
     tmpGraph = tlp_loadGraph(GRAPHPATH + "planar/unbiconnected.tlp");
     CPPUNIT_ASSERT(!BiconnectedTest::isBiconnected(tmpGraph));
     vector<edge> vEdges = BiconnectedTest::makeBiconnected(tmpGraph);

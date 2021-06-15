@@ -32,7 +32,7 @@ public:
    *
    * The fill is inside the regular star
    */
-  GlStar(const Coord &position, const Size &size, unsigned int numberOfStarPoints,
+  GlStar(const Coord &position, const Size &size, uint numberOfStarPoints,
          const Color &fillColor = Color(0, 0, 255), const Color &outlineColor = Color(0, 0, 0),
          bool outlined = true, const std::string &textureName = "", float outlineSize = 1.);
   /**
@@ -43,14 +43,14 @@ public:
   /**
    * @brief Get the number of star points
    */
-  unsigned int getNumberOfStarPoints() const;
+  uint getNumberOfStarPoints() const;
 
 protected:
   void computeStar();
 
   Coord position;
   Size size;
-  unsigned int numberOfStarPoints;
+  uint numberOfStarPoints;
 };
 }
 #endif // TALIPOT_GL_STAR_H

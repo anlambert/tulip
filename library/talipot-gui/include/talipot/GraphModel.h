@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -30,14 +30,14 @@ class BooleanProperty;
 class TLP_QT_SCOPE GraphModel : public tlp::Model, public Observable {
 
 public:
-  static QVariant nodeValue(unsigned int, tlp::PropertyInterface *);
+  static QVariant nodeValue(uint, tlp::PropertyInterface *);
   static QVariant nodeDefaultValue(tlp::PropertyInterface *);
-  static bool setNodeValue(unsigned int, tlp::PropertyInterface *, QVariant);
+  static bool setNodeValue(uint, tlp::PropertyInterface *, QVariant);
   static bool setNodeDefaultValue(tlp::PropertyInterface *, QVariant);
   static bool setAllNodeValue(tlp::PropertyInterface *, QVariant, const Graph *graph = nullptr);
-  static QVariant edgeValue(unsigned int, tlp::PropertyInterface *);
+  static QVariant edgeValue(uint, tlp::PropertyInterface *);
   static QVariant edgeDefaultValue(tlp::PropertyInterface *);
-  static bool setEdgeValue(unsigned int, tlp::PropertyInterface *, QVariant);
+  static bool setEdgeValue(uint, tlp::PropertyInterface *, QVariant);
   static bool setEdgeDefaultValue(tlp::PropertyInterface *, QVariant);
   static bool setAllEdgeValue(tlp::PropertyInterface *, QVariant, const Graph *graph = nullptr);
 
@@ -60,21 +60,21 @@ public:
   void treatEvent(const tlp::Event &) override;
   void treatEvents(const std::vector<tlp::Event> &) override;
 
-  unsigned int elementAt(int) const;
-  virtual bool lessThan(unsigned int, unsigned int, tlp::PropertyInterface *) const = 0;
-  virtual QString stringValue(unsigned int, tlp::PropertyInterface *) const = 0;
-  virtual QVariant value(unsigned int, tlp::PropertyInterface *) const = 0;
+  uint elementAt(int) const;
+  virtual bool lessThan(uint, uint, tlp::PropertyInterface *) const = 0;
+  virtual QString stringValue(uint, tlp::PropertyInterface *) const = 0;
+  virtual QVariant value(uint, tlp::PropertyInterface *) const = 0;
   virtual bool isNode() const = 0;
 
 protected:
   tlp::Graph *_graph;
-  QVector<unsigned int> _elements;
-  QVector<QPair<unsigned int, bool>> _elementsToModify;
+  QVector<uint> _elements;
+  QVector<QPair<uint, bool>> _elementsToModify;
   QVector<PropertyInterface *> _properties;
   QSet<PropertyInterface *> _propertiesModified;
 
-  virtual bool setValue(unsigned int, tlp::PropertyInterface *, QVariant) const = 0;
-  void addRemoveRowsSequence(QVector<unsigned int> &rowsSequence, bool add);
+  virtual bool setValue(uint, tlp::PropertyInterface *, QVariant) const = 0;
+  void addRemoveRowsSequence(QVector<uint> &rowsSequence, bool add);
 };
 
 class TLP_QT_SCOPE GraphSortFilterProxyModel : public QSortFilterProxyModel, public Observable {
@@ -103,9 +103,9 @@ public:
 
   void treatEvent(const tlp::Event &) override;
   void treatEvents(const std::vector<tlp::Event> &) override;
-  bool lessThan(unsigned int, unsigned int, tlp::PropertyInterface *) const override;
-  QString stringValue(unsigned int, tlp::PropertyInterface *) const override;
-  QVariant value(unsigned int, tlp::PropertyInterface *) const override;
+  bool lessThan(uint, uint, tlp::PropertyInterface *) const override;
+  QString stringValue(uint, tlp::PropertyInterface *) const override;
+  QVariant value(uint, tlp::PropertyInterface *) const override;
   QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
 
   bool isNode() const override {
@@ -115,7 +115,7 @@ public:
   static QString getNodeTooltip(Graph *graph, node n);
 
 protected:
-  bool setValue(unsigned int, tlp::PropertyInterface *, QVariant) const override;
+  bool setValue(uint, tlp::PropertyInterface *, QVariant) const override;
 
 private:
   bool _nodesAdded;
@@ -128,9 +128,9 @@ public:
   void setGraph(Graph *) override;
   void treatEvent(const tlp::Event &) override;
   void treatEvents(const std::vector<tlp::Event> &) override;
-  bool lessThan(unsigned int, unsigned int, tlp::PropertyInterface *) const override;
-  QString stringValue(unsigned int, tlp::PropertyInterface *) const override;
-  QVariant value(unsigned int, tlp::PropertyInterface *) const override;
+  bool lessThan(uint, uint, tlp::PropertyInterface *) const override;
+  QString stringValue(uint, tlp::PropertyInterface *) const override;
+  QVariant value(uint, tlp::PropertyInterface *) const override;
   QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
 
   bool isNode() const override {
@@ -140,7 +140,7 @@ public:
   static QString getEdgeTooltip(Graph *graph, edge e);
 
 protected:
-  bool setValue(unsigned int, tlp::PropertyInterface *, QVariant) const override;
+  bool setValue(uint, tlp::PropertyInterface *, QVariant) const override;
 
 private:
   bool _edgesAdded;

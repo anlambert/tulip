@@ -46,12 +46,12 @@ using namespace tlp;
 struct FontIcon {
 
   string fontFile;
-  unsigned int iconCodePoint;
+  uint iconCodePoint;
   GLuint renderingDataBuffer;
   GLuint indicesBuffer;
-  unsigned int nbVertices;
-  unsigned int nbIndices;
-  unsigned int nbOutlineIndices;
+  uint nbVertices;
+  uint nbIndices;
+  uint nbOutlineIndices;
   BoundingBox boundingBox;
 
 public:
@@ -158,14 +158,14 @@ public:
     vector<unsigned short> indices;
     vector<unsigned short> outlineIndices;
 
-    unordered_map<Coord, unsigned int> vertexIdx;
+    unordered_map<Coord, uint> vertexIdx;
 
-    unsigned int idx = 0;
+    uint idx = 0;
 
-    for (unsigned int t = 0; t < mesh->TesselationCount(); ++t) {
+    for (uint t = 0; t < mesh->TesselationCount(); ++t) {
       const FTTesselation *subMesh = mesh->Tesselation(t);
 
-      for (unsigned int i = 0; i < subMesh->PointCount(); ++i) {
+      for (uint i = 0; i < subMesh->PointCount(); ++i) {
         FTPoint point = subMesh->Point(i);
         Coord p = {point.Xf() / HRESf, point.Yf() / HRESf};
 
@@ -180,10 +180,10 @@ public:
       }
     }
 
-    for (unsigned int t = 0; t < vectoriser.ContourCount(); ++t) {
+    for (uint t = 0; t < vectoriser.ContourCount(); ++t) {
       const FTContour *contour = vectoriser.Contour(t);
 
-      for (unsigned int i = 0; i < contour->PointCount() - 1; ++i) {
+      for (uint i = 0; i < contour->PointCount() - 1; ++i) {
         FTPoint point = contour->Point(i);
         Coord p = {point.Xf() / HRESf, point.Yf() / HRESf};
         outlineIndices.push_back(ushort_cast(vertexIdx[p]));

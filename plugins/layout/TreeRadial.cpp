@@ -57,11 +57,10 @@ public:
   struct dfsNodeRadiiStruct {
     node current;
     float radius;
-    unsigned int depth;
+    uint depth;
     Iterator<node> *neighbours;
 
-    dfsNodeRadiiStruct(node n = node(), float r = 0, unsigned int d = 0,
-                       Iterator<node> *it = nullptr)
+    dfsNodeRadiiStruct(node n = node(), float r = 0, uint d = 0, Iterator<node> *it = nullptr)
         : current(n), radius(r), depth(d), neighbours(it) {}
   };
 
@@ -76,7 +75,7 @@ public:
       dfsParams = dfsLevels.top();
       n = dfsParams.current;
       float radius = dfsParams.radius;
-      unsigned int depth = dfsParams.depth;
+      uint depth = dfsParams.depth;
       Iterator<node> *it = dfsParams.neighbours;
 
       if (!visited.get(n.id)) {
@@ -114,9 +113,9 @@ public:
 
     float lRadius = 0, lSpacingMax = 0;
     lRadii.push_back(0);
-    unsigned int nbLayers = bfs.size() - 1;
+    uint nbLayers = bfs.size() - 1;
 
-    for (unsigned int i = 0; i < nbLayers; ++i) {
+    for (uint i = 0; i < nbLayers; ++i) {
       float lRadiusPrev = lRadius;
       lRadius += nRadii[i] + nRadii[i + 1] + lSpacing;
       // check if there is enough space for nodes of layer i + 1
@@ -136,14 +135,14 @@ public:
     ++nbLayers;
     lRadius = lSpacingMax;
 
-    for (unsigned int i = 1; i < nbLayers; ++i, lRadius += lSpacingMax) {
+    for (uint i = 1; i < nbLayers; ++i, lRadius += lSpacingMax) {
       lRadii[i] = lRadius;
     }
   }
 
   /* the original code using dfs recursive calls
      is easier to understand but may result in stack overflow
-  double dfsComputeAngularSpread(node n, unsigned int depth,
+  double dfsComputeAngularSpread(node n, uint depth,
          SizeProperty *sizes, DoubleProperty *angles) {
     double cAngle = 0;
     for(const node &on : tree->getOutNodes(n)) {
@@ -169,10 +168,10 @@ public:
   struct dfsAngularSpreadStruct {
     node current;
     double cAngle;
-    unsigned int depth;
+    uint depth;
     Iterator<node> *neighbours;
 
-    dfsAngularSpreadStruct(node n = node(), unsigned int d = 0, Iterator<node> *it = nullptr)
+    dfsAngularSpreadStruct(node n = node(), uint d = 0, Iterator<node> *it = nullptr)
         : current(n), cAngle(0), depth(d), neighbours(it) {}
   };
 
@@ -185,7 +184,7 @@ public:
     while (!dfsLevels.empty()) {
       dfsParams = dfsLevels.top();
       n = dfsParams.current;
-      unsigned int depth = dfsParams.depth;
+      uint depth = dfsParams.depth;
       Iterator<node> *it = dfsParams.neighbours;
 
       if (it->hasNext()) {
@@ -224,7 +223,7 @@ public:
 
   /* the original code using dfs recursive calls
      is easier to understand but may result in stack overflow
-  void doLayout(node n, unsigned int depth, double startAngle, double endAngle,
+  void doLayout(node n, uint depth, double startAngle, double endAngle,
     DoubleProperty *angles, bool checkAngle = false) {
     double sAngle = endAngle - startAngle;
     // this will avoid crossing between the edges from n to its children
@@ -261,11 +260,11 @@ public:
     double sAngle;
     double nSpread;
     bool checkAngle;
-    unsigned int depth;
+    uint depth;
     Iterator<node> *neighbours;
 
     dfsDoLayoutStruct(node n = node(), double bAngle = 0, double eAngle = 0, double spread = 0,
-                      bool flag = false, unsigned int d = 0, Iterator<node> *it = nullptr)
+                      bool flag = false, uint d = 0, Iterator<node> *it = nullptr)
         : current(n), startAngle(bAngle), endAngle(eAngle), sAngle(eAngle - bAngle),
           nSpread(spread), checkAngle(flag), depth(d), neighbours(it) {}
   };
@@ -283,7 +282,7 @@ public:
       double startAngle = dfsParams.startAngle;
       double endAngle = dfsParams.endAngle;
       double sAngle = dfsParams.sAngle;
-      unsigned int depth = dfsParams.depth;
+      uint depth = dfsParams.depth;
       bool checkAngle = visited.get(n.id);
 
       if (!visited.get(n.id)) {

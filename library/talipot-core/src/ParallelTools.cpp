@@ -87,26 +87,26 @@ namespace tlp {
 
 #ifndef TLP_NO_THREADS
 #ifdef _OPENMP
-unsigned int tlp::ThreadManager::numberOfProcs(omp_get_num_procs());
-unsigned int tlp::ThreadManager::maxNumberOfThreads(omp_get_num_procs());
+uint tlp::ThreadManager::numberOfProcs(omp_get_num_procs());
+uint tlp::ThreadManager::maxNumberOfThreads(omp_get_num_procs());
 #else
-unsigned int ThreadManager::numberOfProcs(std::thread::hardware_concurrency());
-unsigned int ThreadManager::maxNumberOfThreads(std::thread::hardware_concurrency());
+uint ThreadManager::numberOfProcs(std::thread::hardware_concurrency());
+uint ThreadManager::maxNumberOfThreads(std::thread::hardware_concurrency());
 #endif
 #else
-unsigned int ThreadManager::numberOfProcs(1);
-unsigned int ThreadManager::maxNumberOfThreads(1);
+uint ThreadManager::numberOfProcs(1);
+uint ThreadManager::maxNumberOfThreads(1);
 #endif
 
-unsigned int ThreadManager::getNumberOfProcs() {
+uint ThreadManager::getNumberOfProcs() {
   return numberOfProcs;
 }
 
-unsigned int ThreadManager::getNumberOfThreads() {
+uint ThreadManager::getNumberOfThreads() {
   return maxNumberOfThreads;
 }
 
-void ThreadManager::setNumberOfThreads(unsigned int nbThreads) {
+void ThreadManager::setNumberOfThreads(uint nbThreads) {
 #ifndef TLP_NO_THREADS
   maxNumberOfThreads = std::min(nbThreads, uint(TLP_MAX_NB_THREADS));
 #ifdef _OPENMP
@@ -142,7 +142,7 @@ void ThreadManager::freeThreadNumber() {
   // exclusive access to tNumManager
   tNumMtx.lock();
   auto tNum = std::this_thread::get_id();
-  unsigned int num = tNumMap[tNum];
+  uint num = tNumMap[tNum];
   tNumMap.erase(tNum);
   assert(num > 0);
   tNumManager.free(num - 1);
@@ -151,7 +151,7 @@ void ThreadManager::freeThreadNumber() {
 
 #endif
 
-unsigned int ThreadManager::getThreadNumber() {
+uint ThreadManager::getThreadNumber() {
 #ifndef TLP_NO_THREADS
 #ifdef _OPENMP
   return omp_get_thread_num();

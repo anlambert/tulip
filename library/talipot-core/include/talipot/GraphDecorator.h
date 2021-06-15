@@ -35,12 +35,12 @@ public:
   const std::vector<Graph *> &subGraphs() const override;
   bool isSubGraph(const Graph *sg) const override;
   bool isDescendantGraph(const Graph *sg) const override;
-  Graph *getSubGraph(unsigned int id) const override;
+  Graph *getSubGraph(uint id) const override;
   Graph *getSubGraph(const std::string &name) const override;
-  Graph *getDescendantGraph(unsigned int id) const override;
+  Graph *getDescendantGraph(uint id) const override;
   Graph *getDescendantGraph(const std::string &name) const override;
-  unsigned int numberOfSubGraphs() const override;
-  unsigned int numberOfDescendantGraphs() const override;
+  uint numberOfSubGraphs() const override;
+  uint numberOfDescendantGraphs() const override;
 
   //============================================================
   node source(const edge e) const override;
@@ -55,9 +55,9 @@ public:
   const std::pair<node, node> &ends(const edge e) const override;
   void setEnds(const edge, const node, const node) override;
   void reverse(const edge e) override;
-  unsigned int deg(const node n) const override;
-  unsigned int indeg(const node n) const override;
-  unsigned int outdeg(const node n) const override;
+  uint deg(const node n) const override;
+  uint indeg(const node n) const override;
+  uint outdeg(const node n) const override;
   Graph *getNodeMetaInfo(const node n) const override;
 
   //============================================================
@@ -70,19 +70,19 @@ public:
   //============================================================
   node getOneNode() const override;
   node getRandomNode() const override;
-  node getInNode(const node n, unsigned int i) const override;
-  node getOutNode(const node n, unsigned int i) const override;
+  node getInNode(const node n, uint i) const override;
+  node getOutNode(const node n, uint i) const override;
   edge getOneEdge() const override;
   edge getRandomEdge() const override;
 
-  unsigned int numberOfNodes() const override;
-  unsigned int numberOfEdges() const override;
+  uint numberOfNodes() const override;
+  uint numberOfEdges() const override;
   bool isEmpty() const override;
 
   //=========================================================================
 
-  void reserveNodes(unsigned int nbNodes) override;
-  void reserveEdges(unsigned int nbEdges) override;
+  void reserveNodes(uint nbNodes) override;
+  void reserveEdges(uint nbEdges) override;
 
   //============================================================
   bool isElement(const node n) const override;
@@ -90,7 +90,7 @@ public:
   bool isElement(const edge e) const override;
   bool isMetaEdge(const edge e) const override;
   node addNode() override;
-  std::vector<node> addNodes(unsigned int nb) override;
+  std::vector<node> addNodes(uint nb) override;
   void addNode(const node) override;
   void addNodes(const std::vector<node> &nodes) override;
   edge addEdge(const node n1, const node n2) override;
@@ -105,7 +105,7 @@ public:
   void swapEdgeOrder(const node n, const edge e1, const edge e2) override;
 
   const std::vector<node> &nodes() const override;
-  unsigned int nodePos(const node) const override;
+  uint nodePos(const node) const override;
   Iterator<node> *getNodes() const override;
   Iterator<node> *getInNodes(const node n) const override;
   Iterator<node> *getOutNodes(const node n) const override;
@@ -115,7 +115,7 @@ public:
   Iterator<edge> *bfsEdges(const node root = node(), bool directed = false) const override;
   Iterator<edge> *dfsEdges(const node root = node(), bool directed = false) const override;
   const std::vector<edge> &edges() const override;
-  unsigned int edgePos(const edge) const override;
+  uint edgePos(const edge) const override;
   Iterator<edge> *getEdges() const override;
   Iterator<edge> *getOutEdges(const node n) const override;
   Iterator<edge> *getInOutEdges(const node n) const override;

@@ -43,15 +43,15 @@ public:
   PLUGININFORMATION("Grid Approximation", "Auber", "25/06/2002",
                     "Imports a new grid approximation graph.", "1.0", "Graph")
   SmallWorldGraph(tlp::PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "200");
-    addInParameter<unsigned int>("degree", paramHelp[1].data(), "10");
+    addInParameter<uint>("nodes", paramHelp[0].data(), "200");
+    addInParameter<uint>("degree", paramHelp[1].data(), "10");
     addInParameter<bool>("long edge", paramHelp[2].data(), "false");
   }
   ~SmallWorldGraph() override = default;
 
   bool importGraph() override {
-    unsigned int nbNodes = 200;
-    unsigned int avgDegree = 10;
+    uint nbNodes = 200;
+    uint avgDegree = 10;
     bool enableLongEdge = false;
 
     if (dataSet != nullptr) {
@@ -97,10 +97,10 @@ public:
 
     // double minSize = DBL_MAX;
 
-    for (unsigned int i = 0; i < nbNodes - 1; ++i) {
+    for (uint i = 0; i < nbNodes - 1; ++i) {
       bool longEdge = false;
 
-      for (unsigned int j = i + 1; j < nbNodes; ++j) {
+      for (uint j = i + 1; j < nbNodes; ++j) {
         if (i != j) {
           double distance =
               newLayout->getNodeValue(nodes[i]).dist(newLayout->getNodeValue(nodes[j]));

@@ -38,7 +38,7 @@ Dijkstra::Dijkstra(const Graph *const graph, node src, const EdgeVectorProperty<
     numberOfPaths->set(this->src.id, 1);
   }
 
-  unsigned int i = 0;
+  uint i = 0;
   for (auto n : graph->nodes()) {
     DijkstraElement *tmp;
     if (n != src) {

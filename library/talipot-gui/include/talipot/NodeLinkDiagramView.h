@@ -130,7 +130,7 @@ protected slots:
 
 protected:
   bool isNode;
-  unsigned int itemId;
+  uint itemId;
 
   void graphChanged(tlp::Graph *) override;
 

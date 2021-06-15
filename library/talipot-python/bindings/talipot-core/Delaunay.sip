@@ -13,14 +13,14 @@
 
 %ModuleHeaderCode
 #include <talipot/Delaunay.h>
-typedef std::pair<unsigned int, unsigned int> pairUintUint;
-typedef std::vector<unsigned int> vectorUint;
+typedef std::pair<uint, uint> pairUintUint;
+typedef std::vector<uint> vectorUint;
 typedef std::vector<pairUintUint> vector_pairUintUint;
 typedef std::vector<vectorUint> vector_vectorUint;
 %End
 
-typedef std::pair<unsigned int, unsigned int> pairUintUint /TypeHint="Tuple[int, int]"/;
-typedef std::vector<unsigned int> vectorUint /TypeHint="List[int]"/;
+typedef std::pair<uint, uint> pairUintUint /TypeHint="Tuple[int, int]"/;
+typedef std::vector<uint> vectorUint /TypeHint="List[int]"/;
 typedef std::vector<pairUintUint> vector_pairUintUint /TypeHint="List[Tuple[int, int]]"/;
 typedef std::vector<vectorUint> vector_vectorUint /TypeHint="List[List[int]]"/;
 
@@ -41,10 +41,10 @@ Edges and simplices are defined using indexes into the original list of points.
 %End
 
 %MethodCode
-  std::vector<std::pair<unsigned int, unsigned int> > edges;
-  std::vector<std::vector<unsigned int> > simplices;
+  std::vector<std::pair<uint, uint> > edges;
+  std::vector<std::vector<uint> > simplices;
   if (tlp::delaunayTriangulation(*a0, edges, simplices)) {
-    sipRes = new std::pair<std::vector<std::pair<unsigned int, unsigned int> >, std::vector<std::vector<unsigned int> > >(edges, simplices);
+    sipRes = new std::pair<std::vector<std::pair<uint, uint> >, std::vector<std::vector<uint> > >(edges, simplices);
   } else {
     sipRes = NULL;
   }
@@ -62,7 +62,7 @@ to get an instance of it.
 
 public:
 
-  unsigned int nbSites() const;
+  uint nbSites() const;
 %Docstring
 tlp.VoronoiDiagram.nbSites()
 
@@ -71,7 +71,7 @@ Returns the number of voronoi sites.
 :rtype: integer
 %End
 
-  unsigned int nbVertices() const;
+  uint nbVertices() const;
 %Docstring
 tlp.VoronoiDiagram.nbVertices()
 
@@ -80,7 +80,7 @@ Returns the number of voronoi vertices.
 :rtype: integer
 %End
 
-  unsigned int nbEdges() const;
+  uint nbEdges() const;
 %Docstring
 tlp.VoronoiDiagram.nbEdges()
 
@@ -89,7 +89,7 @@ Returns the number of voronoi edges.
 :rtype: integer
 %End
 
-  const tlp::Coord &site(const unsigned int siteIdx);
+  const tlp::Coord &site(const uint siteIdx);
 %Docstring
 tlp.VoronoiDiagram.site(siteIdx)
 
@@ -100,7 +100,7 @@ Returns the ith voronoi site.
 :rtype: :class:`tlp.Coord`
 %End
 
-  const tlp::Coord &vertex(const unsigned int vertexIdx);
+  const tlp::Coord &vertex(const uint vertexIdx);
 %Docstring
 tlp.VoronoiDiagram.vertex(vertexIdx)
 
@@ -111,7 +111,7 @@ Returns the ith voronoi vertex.
 :rtype: :class:`tlp.Coord`
 %End
 
-  const pairUintUint &edge(const unsigned int edgeIdx) /TypeHint="Tuple[int, int]"/;
+  const pairUintUint &edge(const uint edgeIdx) /TypeHint="Tuple[int, int]"/;
 %Docstring
 tlp.VoronoiDiagram.edge(edgeIdx)
 
@@ -122,7 +122,7 @@ Returns the ith voronoi edge. An edge is defined by two indexes in the voronoi v
 :rtype: (integer, integer)
 %End
 
-  const std::set<unsigned int> &cell(const unsigned int cellIdx);
+  const std::set<uint> &cell(const uint cellIdx);
 %Docstring
 tlp.VoronoiDiagram.cell(cellIdx)
 
@@ -133,7 +133,7 @@ Returns the ith voronoi cell. A cell is defined by a list of indexes in the voro
 :rtype: set of integer
 %End
 
-  unsigned int degreeOfVertex(const unsigned int vertexIdx);
+  uint degreeOfVertex(const uint vertexIdx);
 %Docstring
 tlp.VoronoiDiagram.degreeOfVertex(vertexIdx)
 
@@ -144,7 +144,7 @@ Returns the degree (number of incident edges) of the ith voronoi vertex
 :rtype: integer
 %End
 
-  std::vector<pairUintUint> voronoiEdgesForSite(const unsigned int siteIdx) /TypeHint="List[Tuple[int, int]]"/;
+  std::vector<pairUintUint> voronoiEdgesForSite(const uint siteIdx) /TypeHint="List[Tuple[int, int]]"/;
 %Docstring
 tlp.VoronoiDiagram.voronoiEdgesForSite(siteIdx)
 
@@ -155,7 +155,7 @@ Returns the voronoi edges surrounding the ith site.
 :rtype: list of (integer, integer)
 %End
 
-  const std::set<unsigned int> &voronoiCellForSite(const unsigned int siteIdx);
+  const std::set<uint> &voronoiCellForSite(const uint siteIdx);
 %Docstring
 tlp.VoronoiDiagram.voronoiCellForSite(siteIdx)
 

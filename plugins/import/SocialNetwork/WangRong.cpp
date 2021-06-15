@@ -46,15 +46,15 @@ struct WangRong : public ImportModule {
                     "1.0", "Social network")
 
   WangRong(PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "300");
-    addInParameter<unsigned int>("m0", paramHelp[1].data(), "5");
-    addInParameter<unsigned int>("m", paramHelp[2].data(), "5");
+    addInParameter<uint>("nodes", paramHelp[0].data(), "300");
+    addInParameter<uint>("m0", paramHelp[1].data(), "5");
+    addInParameter<uint>("m", paramHelp[2].data(), "5");
   }
 
   bool importGraph() override {
-    unsigned int n = 300;
-    unsigned int m0 = 5;
-    unsigned int m = 5;
+    uint n = 300;
+    uint m0 = 5;
+    uint m = 5;
 
     if (dataSet != nullptr) {
       dataSet->get("nodes", n);
@@ -74,7 +74,7 @@ struct WangRong : public ImportModule {
     pluginProgress->showPreview(false);
     tlp::initRandomSequence();
 
-    unsigned int i, j;
+    uint i, j;
 
     /*
      * Initial ring construction
@@ -91,7 +91,7 @@ struct WangRong : public ImportModule {
     /*
      * Main loop
      */
-    unsigned int nbNodes = m0;
+    uint nbNodes = m0;
 
     while (nbNodes < n) {
       if (nbNodes % 100 == 0) {
@@ -117,7 +117,7 @@ struct WangRong : public ImportModule {
       for (i = nbNodes; i < (nbNodes + m); ++i) {
         double pr = tlp::randomDouble();
         double pr_sum = 0;
-        unsigned int rn = 0;
+        uint rn = 0;
 
         while (pr_sum < pr && rn < (nbNodes - 1)) {
           pr_sum += graph->deg(nodes[rn]) / k_sum;

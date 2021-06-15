@@ -101,9 +101,9 @@ std::string pOpen(const std::string &cmd) {
   return "";
 }
 
-std::pair<const char *, unsigned int> extractFileAndLine(const std::string &atosOutput) {
+std::pair<const char *, uint> extractFileAndLine(const std::string &atosOutput) {
   std::string ext[5] = {".cpp", ".cc", ".c", ".hpp", ".h"};
-  std::pair<const char *, unsigned int> ret = std::make_pair("", 0);
+  std::pair<const char *, uint> ret = std::make_pair("", 0);
 
   for (size_t i = 0; i < 5; ++i) {
     size_t pos = atosOutput.find(ext[i]);
@@ -148,7 +148,7 @@ StackWalkerGCC::~StackWalkerGCC() {
 
 #define MAX_BACKTRACE_SIZE 128
 
-void StackWalkerGCC::printCallStack(std::ostream &os, unsigned int maxDepth) {
+void StackWalkerGCC::printCallStack(std::ostream &os, uint maxDepth) {
 
   void *array[MAX_BACKTRACE_SIZE];
   int size = backtrace(array, MAX_BACKTRACE_SIZE);
@@ -258,7 +258,7 @@ void StackWalkerGCC::printCallStack(std::ostream &os, unsigned int maxDepth) {
         break;
       }
 
-      std::pair<const char *, unsigned int> info = std::make_pair("", 0);
+      std::pair<const char *, uint> info = std::make_pair("", 0);
 
 #ifdef HAVE_BFD
 
@@ -331,7 +331,7 @@ StackWalkerMinGW::~StackWalkerMinGW() {
 #endif
 }
 
-void StackWalkerMinGW::printCallStack(std::ostream &os, unsigned int maxDepth) {
+void StackWalkerMinGW::printCallStack(std::ostream &os, uint maxDepth) {
   HANDLE process = GetCurrentProcess();
   HANDLE thread = GetCurrentThread();
 
@@ -439,10 +439,10 @@ void StackWalkerMinGW::printCallStack(std::ostream &os, unsigned int maxDepth) {
     }
 
 #ifdef HAVE_BFD
-    std::pair<const char *, unsigned int> info =
+    std::pair<const char *, uint> info =
         bfdMap[moduleNameStr]->getFileAndLineForAddress(frame.AddrPC.Offset);
 #else
-    std::pair<const char *, unsigned int> info = std::make_pair("", 0);
+    std::pair<const char *, uint> info = std::make_pair("", 0);
 #endif
 
     if (info.first == nullptr || info.second == 0) {
@@ -465,7 +465,7 @@ StackWalkerMSVC::StackWalkerMSVC() : context(nullptr) {}
 
 StackWalkerMSVC::~StackWalkerMSVC() {}
 
-void StackWalkerMSVC::printCallStack(std::ostream &os, unsigned int maxDepth) {
+void StackWalkerMSVC::printCallStack(std::ostream &os, uint maxDepth) {
 
   BOOL result;
   HANDLE process = GetCurrentProcess();

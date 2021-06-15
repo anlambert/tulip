@@ -33,7 +33,7 @@ using namespace std;
 using namespace tlp;
 
 ParallelCoordinatesInteractor::ParallelCoordinatesInteractor(const QIcon &icon, const QString &text,
-                                                             const unsigned int priority)
+                                                             const uint priority)
     : NodeLinkDiagramViewInteractor(icon, text, priority) {}
 
 bool ParallelCoordinatesInteractor::isCompatible(const string &viewName) const {

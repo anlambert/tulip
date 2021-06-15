@@ -64,7 +64,7 @@ void ImportExportTest::testAttributes() {
   const double d = 3.14;
   const float f = 0.2f;
   const int i = 33;
-  const unsigned int ui = 256;
+  const uint ui = 256;
   const long l = 56845725;
   const Coord c = {1, 2, 3};
   const Coord c2 = {10, 20, 30};
@@ -240,7 +240,7 @@ Graph *ImportExportTest::createSimpleGraph() const {
   Graph *original = tlp::newGraph();
   LayoutProperty *layout = original->getLayoutProperty("viewLayout");
 
-  for (unsigned int i = 0; i < 100; ++i) {
+  for (uint i = 0; i < 100; ++i) {
     node n = original->addNode();
     layout->setNodeValue(n, Coord(i % 11, i / 10));
   }
@@ -284,7 +284,7 @@ Graph *ImportExportTest::createSimpleGraph() const {
   std::ostringstream oss;
   for (auto n : original->nodes()) {
 
-    unsigned int vecSize = tlp::randomUnsignedInteger(9) + 1;
+    uint vecSize = tlp::randomUnsignedInteger(9) + 1;
     vector<bool> boolVec;
     vector<Color> colorVec;
     vector<Coord> coordVec;
@@ -292,7 +292,7 @@ Graph *ImportExportTest::createSimpleGraph() const {
     vector<int> intVec;
     vector<Size> sizeVec;
     vector<string> stringVec;
-    for (unsigned int i = 0; i < vecSize; ++i) {
+    for (uint i = 0; i < vecSize; ++i) {
       boolVec.push_back((n.id + i) % 2 == 0);
       coordVec.push_back(genRandomCoord());
       colorVec.push_back(genRandomColor());
@@ -325,7 +325,7 @@ Graph *ImportExportTest::createSimpleGraph() const {
 
   for (auto e : original->edges()) {
 
-    unsigned int vecSize = tlp::randomUnsignedInteger(9) + 1;
+    uint vecSize = tlp::randomUnsignedInteger(9) + 1;
     vector<bool> boolVec;
     vector<Color> colorVec;
     vector<Coord> coordVec;
@@ -334,7 +334,7 @@ Graph *ImportExportTest::createSimpleGraph() const {
     vector<Size> sizeVec;
     vector<string> stringVec;
 
-    for (unsigned int i = 0; i < vecSize; ++i) {
+    for (uint i = 0; i < vecSize; ++i) {
       boolVec.push_back((e.id + i) % 2 == 0);
       coordVec.push_back(genRandomCoord());
       colorVec.push_back(genRandomColor());
@@ -407,8 +407,8 @@ void ImportExportTest::testMetaGraphImportExport() {
   // Add a groups subgraph and create a bunch of meta-nodes
   // and meta-edges
   Graph *groups = graph->addCloneSubGraph("groups");
-  unsigned int groupsSize = 20;
-  unsigned int nbNodes = graph->numberOfNodes();
+  uint groupsSize = 20;
+  uint nbNodes = graph->numberOfNodes();
   for (uint i = 0; i < nbNodes; i += groupsSize) {
     vector<node> group;
     group.reserve(groupsSize);
@@ -542,8 +542,8 @@ void ImportExportTest::testGraphAttributesAreEqual(tlp::Graph *first, tlp::Graph
 }
 
 void ImportExportTest::testGraphPropertiesAreEqual(Graph *first, Graph *second) {
-  unsigned int firstPropertiesCount = iteratorCount(first->getObjectProperties());
-  unsigned int secondPropertiesCount = iteratorCount(second->getObjectProperties());
+  uint firstPropertiesCount = iteratorCount(first->getObjectProperties());
+  uint secondPropertiesCount = iteratorCount(second->getObjectProperties());
   IntegerProperty *secondIdProperty = second->getIntegerProperty("id");
 
   CPPUNIT_ASSERT_EQUAL_MESSAGE("Graphs have different number of properties", firstPropertiesCount,
@@ -609,8 +609,8 @@ void ImportExportTest::testGraphsTopologiesAreEqual(tlp::Graph *first, tlp::Grap
   LayoutProperty *firstLayout = first->getLayoutProperty("viewLayout");
   LayoutProperty *secondLayout = second->getLayoutProperty("viewLayout");
 
-  std::set<unsigned int> fNodes;
-  std::set<unsigned int> sNodes;
+  std::set<uint> fNodes;
+  std::set<uint> sNodes;
 
   Iterator<node> *firstNodeIt = first->getNodes();
   Iterator<node> *secondNodeIt = second->getNodes();
@@ -642,8 +642,8 @@ void ImportExportTest::testGraphsTopologiesAreEqual(tlp::Graph *first, tlp::Grap
   }
   delete secondNodeIt;
 
-  std::set<unsigned int> fEdges;
-  std::set<unsigned int> sEdges;
+  std::set<uint> fEdges;
+  std::set<uint> sEdges;
 
   Iterator<edge> *firstEdgeIt = first->getEdges();
   Iterator<edge> *secondEdgeIt = second->getEdges();

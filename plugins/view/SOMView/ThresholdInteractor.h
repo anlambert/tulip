@@ -106,7 +106,7 @@ public:
   void endShift() override;
   void draw(float lod, tlp::Camera *camera) override;
   void getXML(std::string &) override {}
-  void setWithXML(const std::string &, unsigned int &) override {}
+  void setWithXML(const std::string &, uint &) override {}
 
 protected:
   ColorScaleSlider *left;

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -23,11 +23,11 @@ LinearMappingColor::LinearMappingColor(double min, double max) : _min(min), _max
   endColor[2] = 255;
 }
 
-tlp::Color LinearMappingColor::getColor(double value, unsigned int) const {
+tlp::Color LinearMappingColor::getColor(double value, uint) const {
   double ratio = (value - _min) / (_max - _min);
   tlp::Color color;
 
-  for (unsigned int i = 0; i < 3; ++i) {
+  for (uint i = 0; i < 3; ++i) {
     color[i] = uchar(double(startColor[i]) + (double(endColor[i]) - double(startColor[i])) * ratio);
   }
 

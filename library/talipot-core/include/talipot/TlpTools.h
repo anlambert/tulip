@@ -110,13 +110,13 @@ std::string demangleTlpClassName() {
  * @param seed the value of the seed.
  * Set seed to UINT_MAX if you need a random choice of the seed.
  */
-TLP_SCOPE void setSeedOfRandomSequence(unsigned int seed = UINT_MAX);
+TLP_SCOPE void setSeedOfRandomSequence(uint seed = UINT_MAX);
 
 /**
  * @brief Returns the value of the seed used for further initialization
  * of a random sequence
  */
-TLP_SCOPE unsigned int getSeedOfRandomSequence();
+TLP_SCOPE uint getSeedOfRandomSequence();
 
 /**
  * @brief Initializes a random sequence with the seed previously set
@@ -139,7 +139,7 @@ TLP_SCOPE int randomInteger(int max);
 /**
  * @brief Returns a random unsigned integer in the range [0, max]
  */
-TLP_SCOPE unsigned int randomUnsignedInteger(unsigned int max);
+TLP_SCOPE uint randomUnsignedInteger(uint max);
 
 /**
  * @brief Returns a random double in the range [0, max]

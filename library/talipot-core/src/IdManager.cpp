@@ -17,7 +17,7 @@ using namespace std;
 namespace tlp {
 
 //-----------------------------------------------------------
-bool IdManager::is_free(const unsigned int id) const {
+bool IdManager::is_free(const uint id) const {
   if (id < state.firstId) {
     return true;
   }
@@ -33,7 +33,7 @@ bool IdManager::is_free(const unsigned int id) const {
   return false;
 }
 //-----------------------------------------------------------
-void IdManager::free(const unsigned int id) {
+void IdManager::free(const uint id) {
   if (id < state.firstId) {
     return;
   }
@@ -71,16 +71,16 @@ void IdManager::free(const unsigned int id) {
 }
 //-----------------------------------------------------------
 #ifndef TLP_NO_IDS_REUSE
-unsigned int IdManager::getFreeId() {
+uint IdManager::getFreeId() {
   auto it = state.freeIds.begin();
   assert(it != state.freeIds.end());
-  unsigned int tmp = *it;
+  uint tmp = *it;
   state.freeIds.erase(it);
   return tmp;
 }
 #endif
 //-----------------------------------------------------------
-void IdManager::getFreeId(unsigned int id) {
+void IdManager::getFreeId(uint id) {
   assert(id > state.firstId);
 
   if (id >= state.nextId) {

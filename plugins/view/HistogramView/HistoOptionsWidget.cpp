@@ -37,27 +37,27 @@ void HistoOptionsWidget::setWidgetEnabled(const bool enabled) {
   _ui->frame->setEnabled(enabled);
 }
 
-void HistoOptionsWidget::setNbOfHistogramBins(const unsigned int nbOfHistogramBins) {
+void HistoOptionsWidget::setNbOfHistogramBins(const uint nbOfHistogramBins) {
   _ui->nbHistoBins->setValue(nbOfHistogramBins);
 }
 
-unsigned int HistoOptionsWidget::getNbOfHistogramBins() {
+uint HistoOptionsWidget::getNbOfHistogramBins() {
   return _ui->nbHistoBins->value();
 }
 
-void HistoOptionsWidget::setNbXGraduations(const unsigned int nbXGrads) {
+void HistoOptionsWidget::setNbXGraduations(const uint nbXGrads) {
   _ui->nbXGraduations->setValue(nbXGrads);
 }
 
-unsigned int HistoOptionsWidget::getNbXGraduations() {
+uint HistoOptionsWidget::getNbXGraduations() {
   return _ui->nbXGraduations->value();
 }
 
-void HistoOptionsWidget::setYAxisIncrementStep(const unsigned int yAxisIncrementStep) {
+void HistoOptionsWidget::setYAxisIncrementStep(const uint yAxisIncrementStep) {
   _ui->YAxisIncrementStep->setValue(yAxisIncrementStep);
 }
 
-unsigned int HistoOptionsWidget::getYAxisIncrementStep() {
+uint HistoOptionsWidget::getYAxisIncrementStep() {
   return _ui->YAxisIncrementStep->value();
 }
 

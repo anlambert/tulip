@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -34,7 +34,7 @@ private:
   tlp::MutableContainer<bool> *mutBool;
   tlp::MutableContainer<double> *mutDouble;
   tlp::MutableContainer<std::string> *mutString;
-  static const unsigned int NBTEST = 1000;
+  static const uint NBTEST = 1000;
 
 public:
   void setUp() override;

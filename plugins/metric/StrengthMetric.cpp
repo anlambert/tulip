@@ -165,7 +165,7 @@ double StrengthMetric::getNodeValue(const tlp::node n) {
 }
 //=============================================================
 bool StrengthMetric::run() {
-  unsigned int steps = 0, maxSteps = graph->numberOfEdges();
+  uint steps = 0, maxSteps = graph->numberOfEdges();
 
   if (maxSteps < 10) {
     maxSteps = 10;

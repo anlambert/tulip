@@ -25,7 +25,7 @@ using namespace tlp;
 const string metaGraphPropertyName = "viewMetaGraph";
 
 //=========================================================================
-GraphAbstract::GraphAbstract(Graph *supergraph, unsigned int sgId)
+GraphAbstract::GraphAbstract(Graph *supergraph, uint sgId)
     : supergraph(supergraph ? supergraph : this),
       root((supergraph == this) ? this : supergraph->getRoot()), subGraphToKeep(nullptr),
       metaGraphProperty(nullptr) {
@@ -83,8 +83,7 @@ void GraphAbstract::setSubGraphToKeep(Graph *sg) {
   subGraphToKeep = sg;
 }
 //=========================================================================
-Graph *GraphAbstract::addSubGraph(unsigned int id, BooleanProperty *selection,
-                                  const std::string &name) {
+Graph *GraphAbstract::addSubGraph(uint id, BooleanProperty *selection, const std::string &name) {
   Graph *tmp = new GraphView(this, selection, id);
 
   if (!name.empty()) {
@@ -97,7 +96,7 @@ Graph *GraphAbstract::addSubGraph(unsigned int id, BooleanProperty *selection,
   return tmp;
 }
 //=========================================================================
-Graph *GraphAbstract::getNthSubGraph(unsigned int n) const {
+Graph *GraphAbstract::getNthSubGraph(uint n) const {
 
   if (n >= subgraphs.size()) {
     return nullptr;
@@ -106,8 +105,8 @@ Graph *GraphAbstract::getNthSubGraph(unsigned int n) const {
   return subgraphs[n];
 }
 //=========================================================================
-unsigned int GraphAbstract::numberOfDescendantGraphs() const {
-  unsigned int result = numberOfSubGraphs();
+uint GraphAbstract::numberOfDescendantGraphs() const {
+  uint result = numberOfSubGraphs();
 
   for (auto *sg : subgraphs) {
     result += sg->numberOfDescendantGraphs();
@@ -220,7 +219,7 @@ bool GraphAbstract::isDescendantGraph(const Graph *g) const {
   return false;
 }
 //=========================================================================
-Graph *GraphAbstract::getSubGraph(unsigned int sgId) const {
+Graph *GraphAbstract::getSubGraph(uint sgId) const {
   for (auto *sg : subgraphs) {
     if (sg->getId() == sgId) {
       return sg;
@@ -240,7 +239,7 @@ Graph *GraphAbstract::getSubGraph(const std::string &name) const {
   return nullptr;
 }
 //=========================================================================
-Graph *GraphAbstract::getDescendantGraph(unsigned int sgId) const {
+Graph *GraphAbstract::getDescendantGraph(uint sgId) const {
   Graph *sg = getSubGraph(sgId);
 
   if (sg) {
@@ -302,10 +301,10 @@ edge GraphAbstract::getRandomEdge() const {
   return edge();
 }
 //=========================================================================
-node GraphAbstract::getInNode(const node n, unsigned int i) const {
+node GraphAbstract::getInNode(const node n, uint i) const {
   assert(i <= indeg(n) && i > 0);
   node result;
-  unsigned int cpt = 0;
+  uint cpt = 0;
   for (auto n : getInNodes(n)) {
     if (++cpt == i) {
       result = n;
@@ -315,10 +314,10 @@ node GraphAbstract::getInNode(const node n, unsigned int i) const {
   return result;
 }
 //=========================================================================
-node GraphAbstract::getOutNode(const node n, unsigned int i) const {
+node GraphAbstract::getOutNode(const node n, uint i) const {
   assert(i <= outdeg(n) && i > 0);
   node result;
-  unsigned int cpt = 0;
+  uint cpt = 0;
   for (auto n : getOutNodes(n)) {
     if (++cpt == i) {
       result = n;

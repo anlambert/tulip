@@ -194,7 +194,7 @@ bool StrahlerMetric::run() {
   std::unordered_map<node, Strahler> cachedValues;
   int curPref = 0;
 
-  unsigned int i = 0;
+  uint i = 0;
 
   if (pluginProgress) {
     pluginProgress->showPreview(false);

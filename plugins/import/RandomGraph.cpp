@@ -79,8 +79,8 @@ public:
   PLUGININFORMATION("Random General Graph", "Auber", "16/06/2002",
                     "Imports a new randomly generated graph.", "2.0", "Graph")
   RandomGraph(tlp::PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "500");
-    addInParameter<unsigned int>("edges", paramHelp[1].data(), "1000");
+    addInParameter<uint>("nodes", paramHelp[0].data(), "500");
+    addInParameter<uint>("edges", paramHelp[1].data(), "1000");
     addInParameter<bool>("directed", paramHelp[2].data(), "False", false);
   }
   ~RandomGraph() override = default;
@@ -89,8 +89,8 @@ public:
     // initialize a random sequence according the given seed
     tlp::initRandomSequence();
 
-    unsigned int nbNodes = 5;
-    unsigned int nbEdges = 9;
+    uint nbNodes = 5;
+    uint nbEdges = 9;
     bool directed = false;
 
     if (dataSet != nullptr) {
@@ -125,7 +125,7 @@ public:
       return false;
     }
 
-    unsigned int nb_disctint_pairs_needed = nbEdges;
+    uint nb_disctint_pairs_needed = nbEdges;
     if (density_g > MAX_DENSITY_FOR_LINEAR) {
       if (directed) {
         nb_disctint_pairs_needed = nbNodes * (nbNodes - 1) - nbEdges;
@@ -205,8 +205,8 @@ public:
   PLUGININFORMATION("Random Simple Graph", "Auber", "16/06/2002",
                     "Imports a new randomly generated simple graph.", "1.0", "Graph")
   RandomSimpleGraph(tlp::PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "500");
-    addInParameter<unsigned int>("edges", paramHelp[1].data(), "1000");
+    addInParameter<uint>("nodes", paramHelp[0].data(), "500");
+    addInParameter<uint>("edges", paramHelp[1].data(), "1000");
   }
 
   bool importGraph() override {

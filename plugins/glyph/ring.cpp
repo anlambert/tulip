@@ -31,16 +31,16 @@ static vector<Coord> ringVertices;
 static vector<Vec2f> ringTexCoords;
 static vector<unsigned short> ringIndices;
 static vector<unsigned short> ringOutlineIndices;
-static vector<unsigned int> buffers;
+static vector<uint> buffers;
 
 static void drawRing() {
   if (ringVertices.empty()) {
-    const unsigned int numberOfSides = 30;
+    const uint numberOfSides = 30;
     ringVertices = computeRegularPolygon(30, Coord(0, 0, 0), Size(0.5, 0.5));
     vector<Coord> tmp = computeRegularPolygon(numberOfSides, Coord(0, 0, 0), Size(0.25, 0.25));
     ringVertices.insert(ringVertices.end(), tmp.begin(), tmp.end());
 
-    for (unsigned int i = 0; i < numberOfSides - 1; ++i) {
+    for (uint i = 0; i < numberOfSides - 1; ++i) {
       ringIndices.push_back(i);
       ringIndices.push_back(i + 1);
       ringIndices.push_back(numberOfSides + i);

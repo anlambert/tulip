@@ -128,11 +128,11 @@ public:
   node predCycleNode(const node, const node) const;
 
   /// Return the number of faces.
-  unsigned int nbFaces();
+  uint nbFaces();
   /// Return the number of nodes contained into a face.
-  unsigned int nbFacesNodes(const Face);
+  uint nbFacesNodes(const Face);
   /// Return the number of edges contained into a face.
-  unsigned int nbFacesEdges(const Face);
+  uint nbFacesEdges(const Face);
 
   /// Return true if the face contains the node.
   bool containNode(const Face, const node);
@@ -171,7 +171,7 @@ private:
   nodeMap nodesFaces;
   mutable std::vector<Face> faces;
 
-  unsigned int faceId;
+  uint faceId;
 };
 
 // Compute a PlanarConMap from a graph.

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -35,8 +35,8 @@ protected:
   bool firstNode;
 
   // Maximum depth of tree nodes.
-  unsigned int MAX_DEPTH; // = 18;
-  unsigned int MAX_CHILDREN;
+  uint MAX_DEPTH; // = 18;
+  uint MAX_CHILDREN;
 
   // For leafs, the corresponding graph node; for non-leafs <code>null</code>.
   tlp::node node;
@@ -45,7 +45,7 @@ protected:
   OctTree **_children;
 
   // Number of children of this tree node.
-  unsigned int childCount; // = 0;
+  uint childCount; // = 0;
 
   // Barycenter of the contained graph nodes.
   Coord position;
@@ -70,13 +70,13 @@ public:
   ~OctTree();
 
   // Adds a graph node to the octtree
-  void addNode(tlp::node newNode, Coord newPos, unsigned int depth);
+  void addNode(tlp::node newNode, Coord newPos, uint depth);
 
   // Adds a graph node to the OctTree, without changing the position and weight of the root
-  void addNode2(tlp::node newNode, Coord newPos, unsigned int depth);
+  void addNode2(tlp::node newNode, Coord newPos, uint depth);
 
   // Removes a graph node from the octtree
-  void removeNode(tlp::node oldNode, Coord oldPos, unsigned int depth);
+  void removeNode(tlp::node oldNode, Coord oldPos, uint depth);
   // Returns the maximum extension of the octtree
   double width();
 
@@ -87,10 +87,10 @@ public:
   tlp::node getNode();
 
   // Sets the maximum number of children for a branch of the octtree
-  void setMaxChildren(unsigned int);
+  void setMaxChildren(uint);
 
   // Prints the tree on a console output
-  void printTree(unsigned int);
+  void printTree(uint);
 };
 
 #endif // OCT_TREE_H

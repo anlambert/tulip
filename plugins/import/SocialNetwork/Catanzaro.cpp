@@ -45,14 +45,14 @@ struct Catanzaro : public ImportModule {
                     "1.0", "Social network")
 
   Catanzaro(PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "300");
-    addInParameter<unsigned int>("m", paramHelp[1].data(), "5");
+    addInParameter<uint>("nodes", paramHelp[0].data(), "300");
+    addInParameter<uint>("m", paramHelp[1].data(), "5");
     addInParameter<double>("p", paramHelp[2].data(), "0.5");
   }
 
   bool importGraph() override {
-    unsigned int n = 300;
-    unsigned int m = 5;
+    uint n = 300;
+    uint m = 5;
     double p = 0.5;
 
     if (dataSet != nullptr) {
@@ -73,7 +73,7 @@ struct Catanzaro : public ImportModule {
     pluginProgress->showPreview(false);
     tlp::initRandomSequence();
 
-    unsigned int i, j;
+    uint i, j;
 
     /*
      * Initial ring construction
@@ -101,7 +101,7 @@ struct Catanzaro : public ImportModule {
 
         double pr = tlp::randomDouble();
         double pr_sum = 0;
-        unsigned int u = 0;
+        uint u = 0;
 
         while (pr_sum < pr && u < (i - 1)) {
           pr_sum += graph->deg(nodes[u]) / (k_sum + j);
@@ -115,7 +115,7 @@ struct Catanzaro : public ImportModule {
         } else {
           pr_sum = 0;
           k_sum = 0;
-          unsigned int k, l = 0;
+          uint k, l = 0;
 
           for (k = 0; k < i; ++k) {
             for (l = 0; l < k; ++l) {

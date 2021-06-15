@@ -28,8 +28,7 @@ PLUGIN(SOMViewSelection)
 PLUGIN(SOMViewProperties)
 PLUGIN(SOMViewThreshold)
 
-SOMViewInteractor::SOMViewInteractor(const QIcon &icon, const QString &text,
-                                     const unsigned int priority)
+SOMViewInteractor::SOMViewInteractor(const QIcon &icon, const QString &text, const uint priority)
     : NodeLinkDiagramViewInteractor(icon, text, priority) {}
 
 bool SOMViewInteractor::isCompatible(const std::string &viewName) const {

@@ -58,12 +58,12 @@ public:
 
 private:
   // the number of nodes of the original graph
-  unsigned int nb_nodes;
+  uint nb_nodes;
 
   // a quotient graph of the original graph
   Graph *quotient;
   // number of nodes in the quotient graph and size of all vectors
-  unsigned int nb_qnodes;
+  uint nb_qnodes;
 
   // the mapping between the nodes of the original graph
   // and the quotient nodes
@@ -77,11 +77,11 @@ private:
   double ootw;
 
   std::vector<double> neigh_weight;
-  std::vector<unsigned int> neigh_pos;
-  unsigned int neigh_last;
+  std::vector<uint> neigh_pos;
+  uint neigh_last;
 
   // community to which each node belongs
-  std::vector<unsigned int> n2c;
+  std::vector<uint> n2c;
   // used to renumber the communities
   std::vector<int> renumber;
   // used to compute the modularity participation of each community
@@ -95,11 +95,11 @@ private:
 
   // return the weighted degree and selfloops of a node
   // of the current quotient graph
-  void get_weighted_degree_and_selfloops(unsigned int n, double &wdg, double &nsl) {
+  void get_weighted_degree_and_selfloops(uint n, double &wdg, double &nsl) {
     wdg = nsl = 0;
     const std::vector<edge> &edges = quotient->incidence(node(n));
 
-    for (unsigned int i = 0; i < edges.size(); ++i) {
+    for (uint i = 0; i < edges.size(); ++i) {
       edge e = edges[i];
       double weight = (*weights)[e];
       wdg += weight;
@@ -122,8 +122,7 @@ private:
   //       d(node,com) = number of links from node to comm
   //       deg(node)   = node degree
   //       m           = number of links
-  inline double modularity_gain(unsigned int /*node*/, unsigned int comm, double dnode_comm,
-                                double w_degree) {
+  inline double modularity_gain(uint /*node*/, uint comm, double dnode_comm, double w_degree) {
     return (dnode_comm - tot[comm] * w_degree * ootw);
   }
 
@@ -131,7 +130,7 @@ private:
   double modularity() {
     double q = 0.;
 
-    for (unsigned int i = 0; i < nb_qnodes; i++) {
+    for (uint i = 0; i < nb_qnodes; i++) {
       if (tot[i] > 0) {
         q += ootw * (in[i] - tot[i] * tot[i] * ootw);
       }
@@ -142,8 +141,8 @@ private:
 
   // compute the set of neighboring communities of node
   // for each community, gives the number of links from node to comm
-  void neigh_comm(unsigned int n) {
-    for (unsigned int i = 0; i < neigh_last; i++) {
+  void neigh_comm(uint n) {
+    for (uint i = 0; i < neigh_last; i++) {
       neigh_weight[neigh_pos[i]] = -1;
     }
 
@@ -155,8 +154,8 @@ private:
 
     for (auto e : quotient->incidence(node(n))) {
       const auto &[src, tgt] = quotient->ends(e);
-      unsigned int neigh = (src == node(n)) ? tgt : src;
-      unsigned int neigh_comm = n2c[neigh];
+      uint neigh = (src == node(n)) ? tgt : src;
+      uint neigh_comm = n2c[neigh];
       double neigh_w = (*weights)[e];
 
       if (neigh != n) {
@@ -175,21 +174,21 @@ private:
     // Renumber communities
     vector<int> renumber(nb_qnodes, -1);
 
-    for (unsigned int n = 0; n < nb_qnodes; n++) {
+    for (uint n = 0; n < nb_qnodes; n++) {
       renumber[n2c[n]] = 0;
     }
 
     int final = 0;
 
-    for (unsigned int i = 0; i < nb_qnodes; i++) {
+    for (uint i = 0; i < nb_qnodes; i++) {
       if (renumber[i] != -1) {
         renumber[i] = final++;
       }
     }
 
     // update clustering
-    TLP_PARALLEL_MAP_INDICES(
-        nb_nodes, [&](unsigned int i) { (*clusters)[i] = renumber[n2c[(*clusters)[i]]]; });
+    TLP_PARALLEL_MAP_INDICES(nb_nodes,
+                             [&](uint i) { (*clusters)[i] = renumber[n2c[(*clusters)[i]]]; });
 
     // Compute weighted graph
     new_quotient->addNodes(final);
@@ -199,8 +198,8 @@ private:
       auto [src, tgt] = quotient->ends(e);
       auto ends = quotient->ends(e);
 
-      unsigned int src_comm = renumber[n2c[src]];
-      unsigned int tgt_comm = renumber[n2c[tgt]];
+      uint src_comm = renumber[n2c[src]];
+      uint tgt_comm = renumber[n2c[tgt]];
       double weight = (*weights)[e];
       edge e_comm = new_quotient->existEdge(node(src_comm), node(tgt_comm), false);
       total_weight += weight;
@@ -240,8 +239,8 @@ private:
     new_mod = modularity();
     double cur_mod = new_mod;
 
-    vector<unsigned int> random_order(nb_qnodes);
-    TLP_PARALLEL_MAP_INDICES(nb_qnodes, [&](unsigned int i) { random_order[i] = i; });
+    vector<uint> random_order(nb_qnodes);
+    TLP_PARALLEL_MAP_INDICES(nb_qnodes, [&](uint i) { random_order[i] = i; });
 
     shuffle(random_order.begin(), random_order.end(), getRandomNumberGenerator());
 
@@ -256,7 +255,7 @@ private:
       // remove the node from its community
       // and insert it in the best community
       for (auto n : random_order) {
-        unsigned int n_comm = n2c[n];
+        uint n_comm = n2c[n];
         double n_wdg;
         double n_nsl;
         get_weighted_degree_and_selfloops(n, n_wdg, n_nsl);
@@ -270,11 +269,11 @@ private:
 
         // compute the nearest community for node
         // default choice for future insertion is the former community
-        unsigned int best_comm = n_comm;
+        uint best_comm = n_comm;
         double best_nblinks = 0.;
         double best_increase = 0.;
 
-        for (unsigned int i = 0; i < neigh_last; i++) {
+        for (uint i = 0; i < neigh_last; i++) {
           double increase = modularity_gain(n, neigh_pos[i], neigh_weight[neigh_pos[i]], n_wdg);
 
           if (increase > best_increase ||
@@ -317,7 +316,7 @@ private:
     in.resize(nb_qnodes);
     tot.resize(nb_qnodes);
 
-    TLP_PARALLEL_MAP_INDICES(nb_qnodes, [&](unsigned int i) {
+    TLP_PARALLEL_MAP_INDICES(nb_qnodes, [&](uint i) {
       n2c[i] = i;
       double wdg, nsl;
       get_weighted_degree_and_selfloops(i, wdg, nsl);
@@ -345,7 +344,7 @@ LouvainClustering::LouvainClustering(const tlp::PluginContext *context)
   addInParameter<NumericProperty *>("metric", paramHelp[0].data(), "", false);
   addInParameter<double>("precision", paramHelp[1].data(), "0.000001", false);
   addOutParameter<double>("modularity", "The computed modularity");
-  addOutParameter<unsigned int>("#communities", "The number of communities found");
+  addOutParameter<uint>("#communities", "The number of communities found");
 }
 //========================================================================================
 bool LouvainClustering::run() {
@@ -367,7 +366,7 @@ bool LouvainClustering::run() {
 
   clusters = new NodeVectorProperty<int>(graph);
 
-  TLP_PARALLEL_MAP_INDICES(nb_nodes, [&](unsigned int i) { (*clusters)[i] = i; });
+  TLP_PARALLEL_MAP_INDICES(nb_nodes, [&](uint i) { (*clusters)[i] = i; });
 
   weights = new EdgeVectorProperty<double>(quotient);
   // init total_weight, weights and quotient edges
@@ -414,13 +413,13 @@ bool LouvainClustering::run() {
   // Renumber communities
   vector<int> renumber(nb_qnodes, -1);
 
-  for (unsigned int n = 0; n < nb_qnodes; n++) {
+  for (uint n = 0; n < nb_qnodes; n++) {
     renumber[n2c[n]] = 0;
   }
 
   int final = 0;
 
-  for (unsigned int i = 0; i < nb_qnodes; i++) {
+  for (uint i = 0; i < nb_qnodes; i++) {
     if (renumber[i] != -1) {
       renumber[i] = final++;
     }
@@ -428,7 +427,7 @@ bool LouvainClustering::run() {
 
   // then set measure values
   int maxVal = -1;
-  TLP_MAP_NODES_AND_INDICES(graph, [&](const node n, unsigned int i) {
+  TLP_MAP_NODES_AND_INDICES(graph, [&](const node n, uint i) {
     int val = renumber[n2c[(*clusters)[i]]];
     result->setNodeValue(n, val);
     maxVal = std::max(val, maxVal);

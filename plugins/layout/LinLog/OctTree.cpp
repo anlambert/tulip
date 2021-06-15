@@ -55,7 +55,7 @@ OctTree::OctTree(tlp::node _node, Coord _position, Coord _minPos, Coord _maxPos,
 OctTree::~OctTree() {
   if (_children != nullptr) {
 
-    for (unsigned int i = 0; i < MAX_CHILDREN; ++i) {
+    for (uint i = 0; i < MAX_CHILDREN; ++i) {
       if (_children[i] != nullptr) {
         delete _children[i];
       }
@@ -74,7 +74,7 @@ OctTree::~OctTree() {
  *  @param max maximum nimber of children
  */
 
-void OctTree::setMaxChildren(unsigned int max) {
+void OctTree::setMaxChildren(uint max) {
   MAX_CHILDREN = max;
 }
 
@@ -85,7 +85,7 @@ void OctTree::setMaxChildren(unsigned int max) {
  * @param newPos   position of the graph node
  * @param depth    depth of this tree node in the octtree
  */
-void OctTree::addNode(tlp::node newNode, Coord newPos, unsigned int depth) {
+void OctTree::addNode(tlp::node newNode, Coord newPos, uint depth) {
   if (depth > MAX_DEPTH - 1) {
     std::cerr << "assert: adding a node at a depth deeper than the max depth (add1)\n";
     return;
@@ -127,7 +127,7 @@ tlp::node OctTree::getNode() {
  * @param newPos   position of the graph node
  * @param depth    depth of this tree node in the octtree
  */
-void OctTree::addNode2(tlp::node newNode, Coord newPos, unsigned int depth) {
+void OctTree::addNode2(tlp::node newNode, Coord newPos, uint depth) {
   if (depth > MAX_DEPTH - 1) {
     std::cerr << "assert: adding a node at a depth deeper than the max depth! (add2)\n";
     return;
@@ -138,11 +138,11 @@ void OctTree::addNode2(tlp::node newNode, Coord newPos, unsigned int depth) {
       OctTree **_oldChildren = _children;
       _children = new OctTree *[2 * MAX_CHILDREN];
 
-      for (unsigned int i = 0; i < MAX_CHILDREN; ++i) {
+      for (uint i = 0; i < MAX_CHILDREN; ++i) {
         _children[i] = _oldChildren[i];
       }
 
-      for (unsigned int i = MAX_CHILDREN; i < MAX_CHILDREN * 2; ++i) {
+      for (uint i = MAX_CHILDREN; i < MAX_CHILDREN * 2; ++i) {
         _children[i] = nullptr;
       }
 
@@ -152,7 +152,7 @@ void OctTree::addNode2(tlp::node newNode, Coord newPos, unsigned int depth) {
     if (childCount == 0 || _children == nullptr) {
       _children = new OctTree *[MAX_CHILDREN];
 
-      for (unsigned int i = 0; i < MAX_CHILDREN; ++i) {
+      for (uint i = 0; i < MAX_CHILDREN; ++i) {
         _children[i] = nullptr;
       }
     }
@@ -174,7 +174,7 @@ void OctTree::addNode2(tlp::node newNode, Coord newPos, unsigned int depth) {
   if (childCount == 0 || _children == nullptr) {
     _children = new OctTree *[MAX_CHILDREN];
 
-    for (unsigned int i = 0; i < MAX_CHILDREN; ++i) {
+    for (uint i = 0; i < MAX_CHILDREN; ++i) {
       _children[i] = nullptr;
     }
   }
@@ -208,10 +208,10 @@ void OctTree::addNode2(tlp::node newNode, Coord newPos, unsigned int depth) {
  * @param depth the desired depth
  */
 
-void OctTree::printTree(unsigned int depth) {
+void OctTree::printTree(uint depth) {
   std::cerr << "\n";
 
-  for (unsigned int i = 0; i < depth; ++i) {
+  for (uint i = 0; i < depth; ++i) {
     std::cerr << "\t";
   }
 
@@ -219,7 +219,7 @@ void OctTree::printTree(unsigned int depth) {
             << position[0] << "," << position[1] << "," << position[2] << "),";
 
   if (_children != nullptr) {
-    for (unsigned int i = 0; i < MAX_CHILDREN; ++i) {
+    for (uint i = 0; i < MAX_CHILDREN; ++i) {
       if (_children[i] == nullptr) {
         std::cerr << "X,";
       } else {
@@ -228,7 +228,7 @@ void OctTree::printTree(unsigned int depth) {
     }
   }
 
-  for (unsigned int i = 0; i < MAX_CHILDREN; ++i) {
+  for (uint i = 0; i < MAX_CHILDREN; ++i) {
     if (_children[i] != nullptr) {
       if (depth < MAX_DEPTH) {
         _children[i]->printTree(depth + 1);
@@ -246,7 +246,7 @@ void OctTree::printTree(unsigned int depth) {
  * @param oldPos   position of the graph node
  * @param depth    current depth
  */
-void OctTree::removeNode(tlp::node oldNode, Coord oldPos, unsigned int depth) {
+void OctTree::removeNode(tlp::node oldNode, Coord oldPos, uint depth) {
   if (depth > MAX_DEPTH - 1) {
     std::cerr << "assert: remove a node at a depth deeper than the max depth: " << depth << " / "
               << MAX_DEPTH - 1 << "\n";
@@ -261,7 +261,7 @@ void OctTree::removeNode(tlp::node oldNode, Coord oldPos, unsigned int depth) {
 
   if (weight <= onWeight) {
     weight = 0.0;
-    for (unsigned int i = 0; i < childCount; ++i) {
+    for (uint i = 0; i < childCount; ++i) {
       delete _children[i];
       _children[i] = nullptr;
     }
@@ -281,7 +281,7 @@ void OctTree::removeNode(tlp::node oldNode, Coord oldPos, unsigned int depth) {
 
   if (depth == MAX_DEPTH - 1) {
     if (childCount > 0) {
-      unsigned int childIndex = 0;
+      uint childIndex = 0;
 
       bool endwhile = false;
 
@@ -310,7 +310,7 @@ void OctTree::removeNode(tlp::node oldNode, Coord oldPos, unsigned int depth) {
       delete _children[childIndex];
       _children[childIndex] = nullptr;
 
-      for (unsigned int i = childIndex; i < childCount - 1; ++i) {
+      for (uint i = childIndex; i < childCount - 1; ++i) {
         _children[i] = _children[i + 1];
       }
 
@@ -373,7 +373,7 @@ double OctTree::width() {
 int OctTree::getHeight() {
   int height = -1;
 
-  for (unsigned int i = 0; i < childCount; ++i) {
+  for (uint i = 0; i < childCount; ++i) {
     OctTree *aChild = _children[i];
 
     if (aChild != nullptr) {

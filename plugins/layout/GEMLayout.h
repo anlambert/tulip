@@ -79,7 +79,7 @@ public:
   bool run() override;
 
 private:
-  tlp::Coord computeForces(unsigned int v, float shake, float gravity, bool testPlaced);
+  tlp::Coord computeForces(uint v, float shake, float gravity, bool testPlaced);
 
   struct GEMparticule {
     tlp::node n;
@@ -89,7 +89,7 @@ private:
     float dir;      // direction
     float heat;     // heat
     float mass;     // weight = nr incident edges
-    unsigned int id;
+    uint id;
     GEMparticule(float m = 0) : in(0), id(UINT_MAX) {
       pos.fill(0);
       imp.fill(0);
@@ -103,10 +103,10 @@ private:
    * Functions used to implement the GEM3D layout.
    */
 
-  unsigned int select();
+  uint select();
   void vertexdata_init(const float starttemp);
   void insert();
-  void displace(unsigned int v, tlp::Coord imp);
+  void displace(uint v, tlp::Coord imp);
   void a_round();
   void arrange();
   void updateLayout();
@@ -153,12 +153,12 @@ private:
   const float i_shake;
   const float a_shake;
 
-  unsigned int _dim;                // 2 or 3;
-  unsigned int _nbNodes;            // number of nodes in the graph
+  uint _dim;                        // 2 or 3;
+  uint _nbNodes;                    // number of nodes in the graph
   bool _useLength;                  // if we manage edge length
   tlp::NumericProperty *metric;     // metric for edge length
   tlp::BooleanProperty *fixedNodes; // selection of not movable nodes
-  unsigned int max_iter;            // the max number of iterations
+  uint max_iter;                    // the max number of iterations
 };
 
 #endif // GEM_LAYOUT_H

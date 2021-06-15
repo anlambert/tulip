@@ -66,11 +66,11 @@ bool TLPBImport::importGraph() {
   {
     // we can use a buffer to limit the disk reads
     std::vector<std::pair<node, node>> vEdges(MAX_EDGES_TO_READ);
-    unsigned int nbEdges = header.numEdges;
+    uint nbEdges = header.numEdges;
     pluginProgress->setComment(inputData.filename + ": reading edges...");
 
     while (nbEdges) {
-      unsigned int edgesToRead = nbEdges > MAX_EDGES_TO_READ ? MAX_EDGES_TO_READ : nbEdges;
+      uint edgesToRead = nbEdges > MAX_EDGES_TO_READ ? MAX_EDGES_TO_READ : nbEdges;
       vEdges.resize(edgesToRead);
 
       // read a bunch of edges
@@ -90,8 +90,8 @@ bool TLPBImport::importGraph() {
     }
   }
   // read subgraphs
-  unsigned int numSubGraphs = 0;
-  unordered_map<unsigned int, Graph *> subgraphs;
+  uint numSubGraphs = 0;
+  unordered_map<uint, Graph *> subgraphs;
   subgraphs[0] = graph;
   {
     // read the number of subgraphs
@@ -102,8 +102,8 @@ bool TLPBImport::importGraph() {
     // read loop for subgraphs
     pluginProgress->setComment(inputData.filename + ": reading subgraphs...");
 
-    for (unsigned int i = 0; i < numSubGraphs; ++i) {
-      std::pair<unsigned int, unsigned int> ids;
+    for (uint i = 0; i < numSubGraphs; ++i) {
+      std::pair<uint, uint> ids;
 
       // read subgraph id and parent id
       if (!bool(inputData.is->read(reinterpret_cast<char *>(&ids), sizeof(ids)))) {
@@ -119,7 +119,7 @@ bool TLPBImport::importGraph() {
       subgraphs[sgId] = sg;
       // read sg nodes ranges
       {
-        unsigned int numRanges = 0;
+        uint numRanges = 0;
 
         // read the number of nodes ranges
         if (!bool(inputData.is->read(reinterpret_cast<char *>(&numRanges), sizeof(numRanges)))) {
@@ -127,13 +127,12 @@ bool TLPBImport::importGraph() {
         }
 
         // we can use a buffer to limit the disk reads
-        std::vector<std::pair<unsigned int, unsigned int>> vRanges(MAX_RANGES_TO_READ);
+        std::vector<std::pair<uint, uint>> vRanges(MAX_RANGES_TO_READ);
 
         // loop to read ranges
         std::vector<node> sgNodes;
         while (numRanges) {
-          unsigned int rangesToRead =
-              numRanges > MAX_RANGES_TO_READ ? MAX_RANGES_TO_READ : numRanges;
+          uint rangesToRead = numRanges > MAX_RANGES_TO_READ ? MAX_RANGES_TO_READ : numRanges;
           vRanges.resize(rangesToRead);
 
           // read a bunch of ranges
@@ -142,7 +141,7 @@ bool TLPBImport::importGraph() {
             return false;
           }
 
-          for (unsigned int i = 0; i < rangesToRead; ++i) {
+          for (uint i = 0; i < rangesToRead; ++i) {
             const auto &[n1, n2] = vRanges[i];
             sgNodes.reserve(sgNodes.size() + n2 - n1);
             for (auto id = n1; id <= n2; ++id) {
@@ -155,7 +154,7 @@ bool TLPBImport::importGraph() {
       }
       // read sg edges ranges
       {
-        unsigned int numRanges = 0;
+        uint numRanges = 0;
 
         // read the number of edges ranges
         if (!bool(inputData.is->read(reinterpret_cast<char *>(&numRanges), sizeof(numRanges)))) {
@@ -163,12 +162,11 @@ bool TLPBImport::importGraph() {
         }
 
         // loop to read ranges
-        std::vector<std::pair<unsigned int, unsigned int>> vRanges(MAX_RANGES_TO_READ);
+        std::vector<std::pair<uint, uint>> vRanges(MAX_RANGES_TO_READ);
 
         std::vector<edge> sgEdges;
         while (numRanges) {
-          unsigned int rangesToRead =
-              numRanges > MAX_RANGES_TO_READ ? MAX_RANGES_TO_READ : numRanges;
+          uint rangesToRead = numRanges > MAX_RANGES_TO_READ ? MAX_RANGES_TO_READ : numRanges;
           vRanges.resize(rangesToRead);
 
           // read a bunch of ranges
@@ -178,7 +176,7 @@ bool TLPBImport::importGraph() {
           }
 
           // loop to add edges
-          for (unsigned int i = 0; i < rangesToRead; ++i) {
+          for (uint i = 0; i < rangesToRead; ++i) {
             const auto &[e1, e2] = vRanges[i];
             sgEdges.reserve(sgEdges.size() + e2 - e1);
             for (auto id = e1; id <= e2; ++id) {
@@ -197,7 +195,7 @@ bool TLPBImport::importGraph() {
   }
   // read properties
   {
-    unsigned int numProperties = 0;
+    uint numProperties = 0;
 
     // read number of properties
     if (!bool(
@@ -208,8 +206,8 @@ bool TLPBImport::importGraph() {
     // read loop on properties
     pluginProgress->setComment(inputData.filename + ": reading properties...");
 
-    for (unsigned int i = 0; i < numProperties; ++i) {
-      unsigned int size = 0;
+    for (uint i = 0; i < numProperties; ++i) {
+      uint size = 0;
 
       // read name length
       if (!bool(inputData.is->read(reinterpret_cast<char *>(&size), sizeof(size)))) {
@@ -336,7 +334,7 @@ bool TLPBImport::importGraph() {
 
       // nodes / edges values
       {
-        unsigned int numValues = 0;
+        uint numValues = 0;
 
         // read the number of nodes values
         if (!bool(inputData.is->read(reinterpret_cast<char *>(&numValues), sizeof(numValues)))) {
@@ -368,18 +366,17 @@ bool TLPBImport::importGraph() {
           unique_ptr<char[]> vBuf;
 
           if (numValues < MAX_VALUES_TO_READ) {
-            vBuf.reset(new char[numValues * (sizeof(unsigned int) + size)]);
+            vBuf.reset(new char[numValues * (sizeof(uint) + size)]);
           } else {
-            vBuf.reset(new char[MAX_VALUES_TO_READ * (sizeof(unsigned int) + size)]);
+            vBuf.reset(new char[MAX_VALUES_TO_READ * (sizeof(uint) + size)]);
           }
 
           while (numValues) {
             // read a bunch of <node, prop_value>
-            unsigned int valuesToRead =
-                (numValues > MAX_VALUES_TO_READ) ? MAX_VALUES_TO_READ : numValues;
+            uint valuesToRead = (numValues > MAX_VALUES_TO_READ) ? MAX_VALUES_TO_READ : numValues;
 
             if (!inputData.is->read(reinterpret_cast<char *>(vBuf.get()),
-                                    valuesToRead * (sizeof(unsigned int) + size))) {
+                                    valuesToRead * (sizeof(uint) + size))) {
               return false;
             }
 
@@ -387,13 +384,13 @@ bool TLPBImport::importGraph() {
             stringstream vs;
             // set read buffer of stringstream to vBuf
             vs.rdbuf()->pubsetbuf(reinterpret_cast<char *>(vBuf.get()),
-                                  valuesToRead * (sizeof(unsigned int) + size));
+                                  valuesToRead * (sizeof(uint) + size));
 
-            for (unsigned int i = 0; i < valuesToRead; ++i) {
+            for (uint i = 0; i < valuesToRead; ++i) {
               node n;
 
               // read node id
-              if (!bool(vs.read(reinterpret_cast<char *>(&n.id), sizeof(unsigned int)))) {
+              if (!bool(vs.read(reinterpret_cast<char *>(&n.id), sizeof(uint)))) {
                 return false;
               }
 
@@ -410,12 +407,11 @@ bool TLPBImport::importGraph() {
         } else {
           // we cannot predict the size of property values
           // so the loop is simpler but with more disk reads
-          for (unsigned int i = 0; i < numValues; ++i) {
+          for (uint i = 0; i < numValues; ++i) {
             node n;
 
             // read node id
-            if (!bool(
-                    inputData.is->read(reinterpret_cast<char *>(&(n.id)), sizeof(unsigned int)))) {
+            if (!bool(inputData.is->read(reinterpret_cast<char *>(&(n.id)), sizeof(uint)))) {
               return false;
             }
 
@@ -465,31 +461,30 @@ bool TLPBImport::importGraph() {
           unique_ptr<char[]> vBuf;
 
           if (numValues < MAX_VALUES_TO_READ) {
-            vBuf.reset(new char[numValues * (sizeof(unsigned int) + size)]);
+            vBuf.reset(new char[numValues * (sizeof(uint) + size)]);
           } else {
-            vBuf.reset(new char[MAX_VALUES_TO_READ * (sizeof(unsigned int) + size)]);
+            vBuf.reset(new char[MAX_VALUES_TO_READ * (sizeof(uint) + size)]);
           }
 
           while (numValues) {
             // read a bunch of <edge, prop_value> in vBuf
-            unsigned int valuesToRead =
-                (numValues > MAX_VALUES_TO_READ) ? MAX_VALUES_TO_READ : numValues;
+            uint valuesToRead = (numValues > MAX_VALUES_TO_READ) ? MAX_VALUES_TO_READ : numValues;
 
             if (!inputData.is->read(reinterpret_cast<char *>(vBuf.get()),
-                                    valuesToRead * (sizeof(unsigned int) + size))) {
+                                    valuesToRead * (sizeof(uint) + size))) {
               return false;
             }
 
             // use a stringstream to read edges and properties
             stringstream vs;
             // set read buffer of stringstream to vBuf
-            vs.rdbuf()->pubsetbuf(vBuf.get(), valuesToRead * (sizeof(unsigned int) + size));
+            vs.rdbuf()->pubsetbuf(vBuf.get(), valuesToRead * (sizeof(uint) + size));
 
-            for (unsigned int i = 0; i < valuesToRead; ++i) {
+            for (uint i = 0; i < valuesToRead; ++i) {
               edge e;
 
               // read edge id
-              if (!bool(vs.read(reinterpret_cast<char *>(&e.id), sizeof(unsigned int)))) {
+              if (!bool(vs.read(reinterpret_cast<char *>(&e.id), sizeof(uint)))) {
                 return false;
               }
 
@@ -529,11 +524,11 @@ bool TLPBImport::importGraph() {
         } else {
           // we cannot predict the size of property values
           // so the loop is simpler but with more disk reads
-          for (unsigned int i = 0; i < numValues; ++i) {
+          for (uint i = 0; i < numValues; ++i) {
             edge e;
 
             // read edge id
-            if (!bool(inputData.is->read(reinterpret_cast<char *>(&e.id), sizeof(unsigned int)))) {
+            if (!bool(inputData.is->read(reinterpret_cast<char *>(&e.id), sizeof(uint)))) {
               return false;
             }
 
@@ -555,8 +550,8 @@ bool TLPBImport::importGraph() {
   // read graphs (root graph + subgraphs) attributes
   pluginProgress->setComment(inputData.filename + ": reading attributes of graphs...");
 
-  for (unsigned int i = 0; i < numSubGraphs + 1; ++i) {
-    unsigned int id = 0;
+  for (uint i = 0; i < numSubGraphs + 1; ++i) {
+    uint id = 0;
 
     // read graph id
     if (!bool(inputData.is->read(reinterpret_cast<char *>(&id), sizeof(id)))) {

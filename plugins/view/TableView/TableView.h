@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -72,7 +72,7 @@ protected slots:
   void toggleHighlightedRows();
   void selectHighlightedRows();
   bool setAllHighlightedRows(tlp::PropertyInterface *);
-  bool setCurrentValue(tlp::PropertyInterface *, unsigned int);
+  bool setCurrentValue(tlp::PropertyInterface *, uint);
   void setLabelsOfHighlightedRows(tlp::PropertyInterface *);
   void setColumnsFilter(const QString &);
   void setColumnsFilterCase();

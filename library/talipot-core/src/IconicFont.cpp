@@ -35,7 +35,7 @@ bool IconicFont::isIconSupported(const std::string &iconName) {
                                     : MaterialDesignIcons::isIconSupported(iconName);
 }
 
-unsigned int IconicFont::getIconCodePoint(const std::string &iconName) {
+uint IconicFont::getIconCodePoint(const std::string &iconName) {
   assert(isIconSupported(iconName));
   return (iconName.find("fa") == 0) ? FontAwesome::getIconCodePoint(iconName)
                                     : MaterialDesignIcons::getIconCodePoint(iconName);

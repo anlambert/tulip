@@ -239,7 +239,7 @@ struct TLP_SCOPE ParameterDescriptionList {
    *
    * @return The number of parameters
    **/
-  unsigned int size() const {
+  uint size() const {
     return parameters.size();
   }
 

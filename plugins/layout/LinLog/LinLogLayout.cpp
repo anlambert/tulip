@@ -37,7 +37,7 @@ LinLogLayout::LinLogLayout(tlp::Graph *_graph, tlp::PluginProgress *_pluginProgr
 
 bool LinLogLayout::initAlgo(tlp::LayoutProperty *_layout, tlp::NumericProperty *_weight,
                             double _attrExponent, double _repuExponent, double _gravFactor,
-                            unsigned int _max_iter, bool _is3D, bool _useOctTree,
+                            uint _max_iter, bool _is3D, bool _useOctTree,
                             tlp::BooleanProperty *_skipNodes) {
   // initializes with the current layout,
   // we might want to initialize it with a random layout too, not in this class
@@ -176,7 +176,7 @@ double LinLogLayout::getRepulsionEnergy(node u, OctTree *tree) {
   if (tree->childCount > 0 && dist < 2.0 * tree->width()) {
     double energy = 0.0;
 
-    for (unsigned int i = 0; i < tree->childCount; ++i) {
+    for (uint i = 0; i < tree->childCount; ++i) {
       energy += getRepulsionEnergy(u, (tree->_children)[i]);
     }
 
@@ -241,7 +241,7 @@ double LinLogLayout::getGravitationEnergy(node u) {
 double LinLogLayout::getDist(const Coord &pos1, const Coord &pos2) const {
   double dist = 0.0;
 
-  for (unsigned int d = 0; d < _dim; ++d) {
+  for (uint d = 0; d < _dim; ++d) {
     double diff = pos1[d] - pos2[d];
     dist += diff * diff;
   }
@@ -252,7 +252,7 @@ double LinLogLayout::getDist(const Coord &pos1, const Coord &pos2) const {
 double LinLogLayout::getDistForComparison(const Coord &pos1, const Coord &pos2) const {
   double dist = 0.0;
 
-  for (unsigned int d = 0; d < _dim; ++d) {
+  for (uint d = 0; d < _dim; ++d) {
     double diff = pos1[d] - pos2[d];
     dist += diff * diff;
   }
@@ -297,7 +297,7 @@ double LinLogLayout::addRepulsionDir(node u, double *dir) {
 
     dir2 += tmp * fabs(repuExponent - 1);
 
-    for (unsigned int d = 0; d < _dim; ++d) {
+    for (uint d = 0; d < _dim; ++d) {
       dir[d] -= (position2[d] - position[d]) * tmp;
     }
   }
@@ -326,7 +326,7 @@ double LinLogLayout::addRepulsionDir(node u, double *dir, OctTree *tree) {
   if (tree->childCount > 0 && dist < 2.0 * tree->width()) {
     double dir2 = 0.0;
 
-    for (unsigned int i = 0; i < tree->childCount; ++i) {
+    for (uint i = 0; i < tree->childCount; ++i) {
       dir2 += addRepulsionDir(u, dir, (tree->_children)[i]);
     }
 
@@ -335,7 +335,7 @@ double LinLogLayout::addRepulsionDir(node u, double *dir, OctTree *tree) {
 
   double tmp = repuFactor * u_weight * tree->weight * pow(dist, repuExponent - 2);
 
-  for (unsigned int d = 0; d < _dim; ++d) {
+  for (uint d = 0; d < _dim; ++d) {
     dir[d] -= (tree->position[d] - position[d]) * tmp;
   }
 
@@ -368,7 +368,7 @@ double LinLogLayout::addAttractionDir(node u, double *dir) {
 
     dir2 += tmp * fabs(attrExponent - 1);
 
-    for (unsigned int d = 0; d < _dim; ++d) {
+    for (uint d = 0; d < _dim; ++d) {
       dir[d] += (position2[d] - position[d]) * tmp;
     }
   }
@@ -392,7 +392,7 @@ double LinLogLayout::addGravitationDir(node u, double *dir) {
 
   double tmp = gravFactor * repuFactor * u_weight * pow(dist, attrExponent - 2);
 
-  for (unsigned int d = 0; d < _dim; ++d) {
+  for (uint d = 0; d < _dim; ++d) {
     dir[d] += (baryCenter[d] - position[d]) * tmp;
   }
 
@@ -407,7 +407,7 @@ double LinLogLayout::addGravitationDir(node u, double *dir) {
  */
 void LinLogLayout::getDirection(node u, double *dir) {
 
-  for (unsigned int d = 0; d < _dim; ++d) {
+  for (uint d = 0; d < _dim; ++d) {
     dir[d] = 0.0;
   }
 
@@ -428,7 +428,7 @@ void LinLogLayout::getDirection(node u, double *dir) {
 
   if (dir2 != 0.0) {
     // normalize force vector with second derivation of energy
-    for (unsigned int d = 0; d < _dim; ++d) {
+    for (uint d = 0; d < _dim; ++d) {
       dir[d] /= dir2;
     }
 
@@ -440,19 +440,19 @@ void LinLogLayout::getDirection(node u, double *dir) {
     if (avgDist > 0.0 && length > avgDist) {
       length /= avgDist;
 
-      for (unsigned int d = 0; d < _dim; ++d) {
+      for (uint d = 0; d < _dim; ++d) {
         dir[d] /= length;
       }
     }
   } else {
-    for (unsigned int d = 0; d < _dim; ++d) {
+    for (uint d = 0; d < _dim; ++d) {
       dir[d] = 0.0;
     }
   }
 }
 
 void LinLogLayout::getDirection(node u, double *dir, OctTree *tree) {
-  for (unsigned int d = 0; d < _dim; ++d) {
+  for (uint d = 0; d < _dim; ++d) {
     dir[d] = 0.0;
   }
 
@@ -462,7 +462,7 @@ void LinLogLayout::getDirection(node u, double *dir, OctTree *tree) {
 
   if (dir2 != 0.0) {
     // normalize force vector with second derivation of energy
-    for (unsigned int d = 0; d < _dim; ++d) {
+    for (uint d = 0; d < _dim; ++d) {
       dir[d] /= dir2;
     }
 
@@ -471,7 +471,7 @@ void LinLogLayout::getDirection(node u, double *dir, OctTree *tree) {
     // to prevent the node from leaving the octtree region
     double scale = 1.0;
 
-    for (unsigned int d = 0; d < _dim; ++d) {
+    for (uint d = 0; d < _dim; ++d) {
       double width = tree->maxPos[d] - tree->minPos[d];
 
       if (width > 0.0) {
@@ -479,11 +479,11 @@ void LinLogLayout::getDirection(node u, double *dir, OctTree *tree) {
       }
     }
 
-    for (unsigned int d = 0; d < _dim; ++d) {
+    for (uint d = 0; d < _dim; ++d) {
       dir[d] *= scale;
     }
   } else {
-    for (unsigned int d = 0; d < _dim; ++d) {
+    for (uint d = 0; d < _dim; ++d) {
       dir[d] = 0.0;
     }
   }
@@ -557,20 +557,20 @@ bool LinLogLayout::minimizeEnergyNoTree(int nrIterations) {
       // line search: compute length of the move
       Coord pos = layoutResult->getNodeValue(u);
 
-      for (unsigned int d = 0; d < _dim; ++d) {
+      for (uint d = 0; d < _dim; ++d) {
         oldPos[d] = pos[d];
       }
 
       double bestEnergy = oldEnergy;
       int bestMultiple = 0;
 
-      for (unsigned int d = 0; d < _dim; ++d) {
+      for (uint d = 0; d < _dim; ++d) {
         bestDir[d] /= 32;
       }
 
       for (int multiple = 32; multiple >= 1 && (bestMultiple == 0 || bestMultiple / 2 == multiple);
            multiple /= 2) {
-        for (unsigned int d = 0; d < _dim; ++d) {
+        for (uint d = 0; d < _dim; ++d) {
           pos[d] = oldPos[d] + bestDir[d] * multiple;
         }
 
@@ -588,7 +588,7 @@ bool LinLogLayout::minimizeEnergyNoTree(int nrIterations) {
       }
 
       for (int multiple = 64; multiple <= 128 && bestMultiple == multiple / 2; multiple *= 2) {
-        for (unsigned int d = 0; d < _dim; ++d) {
+        for (uint d = 0; d < _dim; ++d) {
           pos[d] = oldPos[d] + bestDir[d] * multiple;
         }
 
@@ -605,7 +605,7 @@ bool LinLogLayout::minimizeEnergyNoTree(int nrIterations) {
         }
       }
 
-      for (unsigned int d = 0; d < _dim; ++d) {
+      for (uint d = 0; d < _dim; ++d) {
         pos[d] = oldPos[d] + bestDir[d] * bestMultiple;
       }
 
@@ -682,14 +682,14 @@ bool LinLogLayout::minimizeEnergy(int nrIterations) {
       // line search: compute length of the move
       Coord pos = layoutResult->getNodeValue(u);
 
-      for (unsigned int d = 0; d < _dim; ++d) {
+      for (uint d = 0; d < _dim; ++d) {
         oldPos[d] = pos[d];
       }
 
       double bestEnergy = oldEnergy;
       int bestMultiple = 0;
 
-      for (unsigned int d = 0; d < _dim; ++d) {
+      for (uint d = 0; d < _dim; ++d) {
         bestDir[d] /= 32;
       }
 
@@ -697,7 +697,7 @@ bool LinLogLayout::minimizeEnergy(int nrIterations) {
            multiple /= 2) {
         octTree->removeNode(u, pos, 0);
 
-        for (unsigned int d = 0; d < _dim; ++d) {
+        for (uint d = 0; d < _dim; ++d) {
           pos[d] = oldPos[d] + bestDir[d] * multiple;
         }
 
@@ -718,7 +718,7 @@ bool LinLogLayout::minimizeEnergy(int nrIterations) {
       for (int multiple = 64; multiple <= 128 && bestMultiple == multiple / 2; multiple *= 2) {
         octTree->removeNode(u, pos, 0);
 
-        for (unsigned int d = 0; d < _dim; ++d) {
+        for (uint d = 0; d < _dim; ++d) {
           pos[d] = oldPos[d] + bestDir[d] * multiple;
         }
 
@@ -736,7 +736,7 @@ bool LinLogLayout::minimizeEnergy(int nrIterations) {
         }
       }
 
-      for (unsigned int d = 0; d < _dim; ++d) {
+      for (uint d = 0; d < _dim; ++d) {
         pos[d] = oldPos[d] + bestDir[d] * bestMultiple;
       }
 
@@ -761,7 +761,7 @@ bool LinLogLayout::minimizeEnergy(int nrIterations) {
  * and stores it in the attribute <code>baryCenter</code>.
  */
 void LinLogLayout::computeBaryCenter() {
-  for (unsigned int d = 0; d < _dim; ++d) {
+  for (uint d = 0; d < _dim; ++d) {
     baryCenter[d] = 0.0;
   }
 
@@ -771,13 +771,13 @@ void LinLogLayout::computeBaryCenter() {
     weightSum += u_weight;
     const Coord &position = layoutResult->getNodeValue(u);
 
-    for (unsigned int d = 0; d < _dim; ++d) {
+    for (uint d = 0; d < _dim; ++d) {
       baryCenter[d] += u_weight * position[d];
     }
   }
 
   if (weightSum > 0.0) {
-    for (unsigned int d = 0; d < _dim; ++d) {
+    for (uint d = 0; d < _dim; ++d) {
       baryCenter[d] /= weightSum;
     }
   }
@@ -826,7 +826,7 @@ OctTree *LinLogLayout::buildOctTree() {
   for (auto u : linLogWeight.getNonDefaultValuatedNodes()) {
     const Coord &position = layoutResult->getNodeValue(u);
 
-    for (unsigned int d = 0; d < _dim; ++d) {
+    for (uint d = 0; d < _dim; ++d) {
       minPos[d] = std::min(position[d], minPos[d]);
       maxPos[d] = std::max(position[d], maxPos[d]);
     }
@@ -834,7 +834,7 @@ OctTree *LinLogLayout::buildOctTree() {
   }
 
   // provide additional space for moving nodes
-  for (unsigned int d = 0; d < _dim; ++d) {
+  for (uint d = 0; d < _dim; ++d) {
     double posDiff = maxPos[d] - minPos[d];
     maxPos[d] += posDiff / 2;
     minPos[d] -= posDiff / 2;

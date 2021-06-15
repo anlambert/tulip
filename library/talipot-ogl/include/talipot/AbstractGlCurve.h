@@ -36,7 +36,7 @@ public:
   AbstractGlCurve(const std::string &shaderProgramName, const std::string &curveSpecificShaderCode,
                   const std::vector<Coord> &controlPoints, const Color &startColor,
                   const Color &endColor, const float startSize, const float endSize,
-                  const unsigned int nbCurvePoints);
+                  const uint nbCurvePoints);
 
   ~AbstractGlCurve() override;
 
@@ -89,11 +89,11 @@ public:
 
   void getXML(std::string &) override;
 
-  void setWithXML(const std::string &, unsigned int &) override;
+  void setWithXML(const std::string &, uint &) override;
 
   virtual void drawCurve(std::vector<Coord> &controlPoints, const Color &startColor,
                          const Color &endColor, const float startSize, const float endSize,
-                         const unsigned int nbCurvePoints = 100);
+                         const uint nbCurvePoints = 100);
 
 protected:
   virtual void setCurveVertexShaderRenderingSpecificParameters() {}
@@ -103,17 +103,15 @@ protected:
   virtual Coord computeCurvePointOnCPU(const std::vector<Coord> &controlPoints, float t) = 0;
 
   virtual void computeCurvePointsOnCPU(const std::vector<Coord> &controlPoints,
-                                       std::vector<Coord> &curvePoints,
-                                       unsigned int nbCurvePoints) = 0;
+                                       std::vector<Coord> &curvePoints, uint nbCurvePoints) = 0;
 
-  static void buildCurveVertexBuffers(const unsigned int nbCurvePoints, bool vboOk);
+  static void buildCurveVertexBuffers(const uint nbCurvePoints, bool vboOk);
 
   void initShader(const std::string &shaderProgramName, const std::string &curveSpecificShaderCode);
 
-  static std::unordered_map<unsigned int, std::vector<GLfloat>> curveVertexBuffersData;
-  static std::unordered_map<unsigned int, std::vector<std::vector<GLushort>>>
-      curveVertexBuffersIndices;
-  static std::unordered_map<unsigned int, std::vector<GLuint>> curveVertexBuffersObject;
+  static std::unordered_map<uint, std::vector<GLfloat>> curveVertexBuffersData;
+  static std::unordered_map<uint, std::vector<std::vector<GLushort>>> curveVertexBuffersIndices;
+  static std::unordered_map<uint, std::vector<GLuint>> curveVertexBuffersObject;
   static std::unordered_map<std::string, std::unique_ptr<GlShaderProgram>> curvesShadersMap;
   static std::unordered_map<std::string, std::unique_ptr<GlShaderProgram>>
       curvesBillboardShadersMap;
@@ -135,7 +133,7 @@ protected:
   Color endColor;
   float startSize;
   float endSize;
-  unsigned int nbCurvePoints;
+  uint nbCurvePoints;
   bool outlined;
   Color outlineColor;
   std::string texture;

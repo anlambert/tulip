@@ -22,7 +22,7 @@
 using namespace tlp;
 using namespace std;
 
-map<Graph *, unsigned int> GraphDimension::graphDimensionsMap;
+map<Graph *, uint> GraphDimension::graphDimensionsMap;
 
 GraphDimension::GraphDimension(Graph *graph, const string &dimName)
     : graph(graph), dimName(dimName) {
@@ -50,11 +50,11 @@ void GraphDimension::updateNodesRank() {
   nodeSorter->sortNodesForProperty(dimName);
 }
 
-unsigned int GraphDimension::numberOfItems() const {
+uint GraphDimension::numberOfItems() const {
   return graph->numberOfNodes();
 }
 
-unsigned int GraphDimension::numberOfValues() const {
+uint GraphDimension::numberOfValues() const {
   return nodeSorter->getNbValuesForProperty(dimName);
 }
 
@@ -66,18 +66,18 @@ double GraphDimension::getNodeValue(const node n) const {
   return (d - minValue()) / delta;
 }
 
-std::string GraphDimension::getItemLabelAtRank(const unsigned int rank) const {
+std::string GraphDimension::getItemLabelAtRank(const uint rank) const {
   node n = nodeSorter->getNodeAtRankForProperty(rank, dimName);
   string label = graph->getStringProperty("viewLabel")->getNodeValue(n);
   return label;
 }
 
-std::string GraphDimension::getItemLabel(const unsigned int itemId) const {
+std::string GraphDimension::getItemLabel(const uint itemId) const {
   string label = graph->getStringProperty("viewLabel")->getNodeValue(node(itemId));
   return label;
 }
 
-double GraphDimension::getItemValue(const unsigned int itemId) const {
+double GraphDimension::getItemValue(const uint itemId) const {
   if (propertyType == "double") {
     return getNodeValue<DoubleProperty>(node(itemId));
   } else if (propertyType == "int") {
@@ -87,7 +87,7 @@ double GraphDimension::getItemValue(const unsigned int itemId) const {
   }
 }
 
-double GraphDimension::getItemValueAtRank(const unsigned int rank) const {
+double GraphDimension::getItemValueAtRank(const uint rank) const {
   node n = nodeSorter->getNodeAtRankForProperty(rank, dimName);
 
   if (propertyType == "double") {
@@ -99,12 +99,12 @@ double GraphDimension::getItemValueAtRank(const unsigned int rank) const {
   }
 }
 
-unsigned int GraphDimension::getItemIdAtRank(const unsigned int rank) {
+uint GraphDimension::getItemIdAtRank(const uint rank) {
   node n = nodeSorter->getNodeAtRankForProperty(rank, dimName);
   return n.id;
 }
 
-unsigned int GraphDimension::getRankForItem(const unsigned int itemId) {
+uint GraphDimension::getRankForItem(const uint itemId) {
   return nodeSorter->getNodeRankForProperty(node(itemId), dimName);
 }
 
@@ -128,8 +128,8 @@ double GraphDimension::maxValue() const {
   }
 }
 
-vector<unsigned int> GraphDimension::links(const unsigned int itemId) const {
-  return iteratorVector(conversionIterator<unsigned int>(
+vector<uint> GraphDimension::links(const uint itemId) const {
+  return iteratorVector(conversionIterator<uint>(
       concatIterator(graph->getInNodes(node(itemId)), graph->getOutNodes(node(itemId))),
       [](node n) { return n.id; }));
 }

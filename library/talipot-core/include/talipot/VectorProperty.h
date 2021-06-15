@@ -42,11 +42,11 @@ public:
     this->resize(size);
   }
 
-  typename std::vector<TYPE>::const_reference operator[](unsigned int i) const {
+  typename std::vector<TYPE>::const_reference operator[](uint i) const {
     return std::vector<TYPE>::operator[](i);
   }
 
-  typename std::vector<TYPE>::reference operator[](unsigned int i) {
+  typename std::vector<TYPE>::reference operator[](uint i) {
     if (i + 1 > this->size()) {
       this->resize(i + 1);
     }
@@ -76,12 +76,12 @@ public:
   // set all to same values
   void setAll(const TYPE &val) {
     assert(graph);
-    TLP_PARALLEL_MAP_INDICES(graph->numberOfNodes(), [&](unsigned int i) { (*this)[i] = val; });
+    TLP_PARALLEL_MAP_INDICES(graph->numberOfNodes(), [&](uint i) { (*this)[i] = val; });
   }
 
-  unsigned int nodePos(node n) {
+  uint nodePos(node n) {
     assert(graph);
-    unsigned int nPos = graph->nodePos(n);
+    uint nPos = graph->nodePos(n);
 
     if (nPos + 1 > this->size()) {
       this->resize(nPos + 1);
@@ -115,9 +115,9 @@ public:
   void copyToProperty(PROP_PTR prop) {
     assert(graph);
     const std::vector<node> &nodes = graph->nodes();
-    unsigned int nbNodes = nodes.size();
+    uint nbNodes = nodes.size();
 
-    for (unsigned int i = 0; i < nbNodes; ++i) {
+    for (uint i = 0; i < nbNodes; ++i) {
       prop->setNodeValue(nodes[i], (*this)[i]);
     }
   }
@@ -150,11 +150,11 @@ public:
     return graph;
   }
 
-  bool operator[](unsigned int i) const {
+  bool operator[](uint i) const {
     return static_cast<bool>(std::vector<unsigned char>::operator[](i));
   }
 
-  std::vector<unsigned char>::reference operator[](unsigned int i) {
+  std::vector<unsigned char>::reference operator[](uint i) {
     if (i + 1 > this->size()) {
       this->resize(i + 1);
     }
@@ -186,12 +186,12 @@ public:
   // set all to same values
   void setAll(const bool &val) {
     assert(graph);
-    TLP_PARALLEL_MAP_INDICES(graph->numberOfNodes(), [&](unsigned int i) { (*this)[i] = val; });
+    TLP_PARALLEL_MAP_INDICES(graph->numberOfNodes(), [&](uint i) { (*this)[i] = val; });
   }
 
-  unsigned int nodePos(node n) {
+  uint nodePos(node n) {
     assert(graph);
-    unsigned int nPos = graph->nodePos(n);
+    uint nPos = graph->nodePos(n);
 
     if (nPos + 1 > this->size()) {
       this->resize(nPos + 1);
@@ -219,9 +219,9 @@ public:
   void copyToProperty(PROP_PTR prop) {
     assert(graph);
     const std::vector<node> &nodes = graph->nodes();
-    unsigned int nbNodes = nodes.size();
+    uint nbNodes = nodes.size();
 
-    for (unsigned int i = 0; i < nbNodes; ++i) {
+    for (uint i = 0; i < nbNodes; ++i) {
       prop->setNodeValue(nodes[i], (*this)[i]);
     }
   }
@@ -254,11 +254,11 @@ public:
     return graph;
   }
 
-  typename std::vector<TYPE>::const_reference operator[](unsigned int i) const {
+  typename std::vector<TYPE>::const_reference operator[](uint i) const {
     return std::vector<TYPE>::operator[](i);
   }
 
-  typename std::vector<TYPE>::reference operator[](unsigned int i) {
+  typename std::vector<TYPE>::reference operator[](uint i) {
     if (i + 1 > this->size()) {
       this->resize(i + 1);
     }
@@ -287,13 +287,13 @@ public:
 
   void setAll(const TYPE &val) {
     assert(graph);
-    TLP_PARALLEL_MAP_INDICES(graph->numberOfEdges(), [&](unsigned int i) { (*this)[i] = val; });
+    TLP_PARALLEL_MAP_INDICES(graph->numberOfEdges(), [&](uint i) { (*this)[i] = val; });
   }
 
   // add a value for a newly created edge
-  unsigned int edgePos(edge e) {
+  uint edgePos(edge e) {
     assert(graph);
-    unsigned int ePos = graph->edgePos(e);
+    uint ePos = graph->edgePos(e);
 
     if (ePos + 1 > this->size()) {
       this->resize(ePos + 1);
@@ -328,9 +328,9 @@ public:
   void copyToProperty(PROP_PTR prop) {
     assert(graph);
     const std::vector<edge> &edges = graph->edges();
-    unsigned int nbEdges = edges.size();
+    uint nbEdges = edges.size();
 
-    for (unsigned int i = 0; i < nbEdges; ++i) {
+    for (uint i = 0; i < nbEdges; ++i) {
       prop->setEdgeValue(edges[i], (*this)[i]);
     }
   }
@@ -359,11 +359,11 @@ public:
     this->resize(size);
   }
 
-  bool operator[](unsigned int i) const {
+  bool operator[](uint i) const {
     return static_cast<bool>(std::vector<unsigned char>::operator[](i));
   }
 
-  std::vector<unsigned char>::reference operator[](unsigned int i) {
+  std::vector<unsigned char>::reference operator[](uint i) {
     if (i + 1 > this->size()) {
       this->resize(i + 1);
     }
@@ -395,12 +395,12 @@ public:
   // set all to same values
   void setAll(const bool &val) {
     assert(graph);
-    TLP_PARALLEL_MAP_INDICES(graph->numberOfEdges(), [&](unsigned int i) { (*this)[i] = val; });
+    TLP_PARALLEL_MAP_INDICES(graph->numberOfEdges(), [&](uint i) { (*this)[i] = val; });
   }
 
-  unsigned int edgePos(edge e) {
+  uint edgePos(edge e) {
     assert(graph);
-    unsigned int ePos = graph->edgePos(e);
+    uint ePos = graph->edgePos(e);
 
     if (ePos + 1 > this->size()) {
       this->resize(ePos + 1);
@@ -428,9 +428,9 @@ public:
   void copyToProperty(PROP_PTR prop) {
     assert(graph);
     const std::vector<edge> &edges = graph->edges();
-    unsigned int nbEdges = edges.size();
+    uint nbEdges = edges.size();
 
-    for (unsigned int i = 0; i < nbEdges; ++i) {
+    for (uint i = 0; i < nbEdges; ++i) {
       prop->setEdgeValue(edges[i], (*this)[i]);
     }
   }

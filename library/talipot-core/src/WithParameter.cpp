@@ -56,7 +56,7 @@ static string getParameterTypename(const string &name, const string &typeId) {
     return BOOLEAN_TYPE;
   } else if (typeId == typeid(int).name()) {
     return INT_TYPE;
-  } else if (typeId == typeid(unsigned int).name()) {
+  } else if (typeId == typeid(uint).name()) {
     return UINT_TYPE;
   } else if (typeId == typeid(float).name()) {
     return FLOAT_TYPE;

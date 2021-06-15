@@ -361,10 +361,10 @@ template<TYPE>
 };
 
 // ****************************************************
-// Specialization for std::list<unsigned int>
+// Specialization for std::list<uint>
 // ****************************************************
 
-%MappedType std::list<unsigned int> /TypeHint="List[int]"/ {
+%MappedType std::list<uint> /TypeHint="List[int]"/ {
 %TypeHeaderCode
 #include <list>
 %End
@@ -380,7 +380,7 @@ template<TYPE>
   // Go through each element in the C++ instance and convert it to a
   // wrapped object.
   int i = 0;
-  for (unsigned int n : *sipCpp) {
+  for (uint n : *sipCpp) {
     // Add the wrapper to the list.
     PyList_SET_ITEM(l, i++, PyLong_FromUnsignedLong(n));
   }
@@ -406,7 +406,7 @@ template<TYPE>
     }
 
     // Convert Python list of integers to a std::vector<int>
-    std::list<unsigned int> *v = new std::list<unsigned int>();
+    std::list<uint> *v = new std::list<uint>();
     for (SIP_SSIZE_T i = 0; i < PyList_GET_SIZE(sipPy); ++i) {
       v->push_back(uint(PyLong_AsUnsignedLong(PyList_GET_ITEM(sipPy, i))));
     }
@@ -494,7 +494,7 @@ template<TYPE>
   // Go through each element in the C++ instance and convert it to a
   // wrapped object.
   int i = 0;
-  for (unsigned int n : *sipCpp) {
+  for (uint n : *sipCpp) {
     // Add the wrapper to the list.
     PyList_SET_ITEM(l, i++, PyLong_FromUnsignedLong(n));
   }

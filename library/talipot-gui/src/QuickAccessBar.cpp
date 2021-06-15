@@ -303,7 +303,7 @@ void QuickAccessBarImpl::showHideCaption(CaptionItem::CaptionType captionType) {
   _captions[captionIndice]->captionGraphicsItem()->setVisible(
       !_captions[captionIndice]->captionGraphicsItem()->isVisible());
 
-  unsigned int numberVisible = 0;
+  uint numberVisible = 0;
 
   for (auto *caption : _captions) {
     if (caption->captionGraphicsItem()->isVisible()) {
@@ -382,8 +382,7 @@ void QuickAccessBarImpl::setLabelColor(const QColor &c) {
   emit settingsChanged();
 }
 
-void QuickAccessBarImpl::setAllColorValues(unsigned int eltType, ColorProperty *prop,
-                                           const Color &color) {
+void QuickAccessBarImpl::setAllColorValues(uint eltType, ColorProperty *prop, const Color &color) {
   BooleanProperty *selected = inputData()->getElementSelected();
   bool hasSelected = false;
 
@@ -432,7 +431,7 @@ void QuickAccessBarImpl::setEdgeBorderColor(const QColor &c) {
   setAllColorValues(EDGE, inputData()->getElementBorderColor(), QColorToColor(c));
 }
 
-void QuickAccessBarImpl::setAllValues(unsigned int eltType, PropertyInterface *prop) {
+void QuickAccessBarImpl::setAllValues(uint eltType, PropertyInterface *prop) {
   QVariant val = ItemDelegate::showEditorDialog(static_cast<tlp::ElementType>(eltType), prop,
                                                 _mainView->graph(), delegate,
                                                 _mainView->graphicsView()->window());

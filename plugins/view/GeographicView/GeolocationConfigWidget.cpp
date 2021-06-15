@@ -25,7 +25,7 @@ const string viewPropertiesName[] = {
     "viewLabelPosition", "viewLayout",      "viewMetaGraph", "viewRotation", "viewSelection",
     "viewShape",         "viewSize",        "viewTexture",   "viewMetric"};
 
-const unsigned int nbViewProperties = sizeof(viewPropertiesName) / sizeof(string);
+const uint nbViewProperties = sizeof(viewPropertiesName) / sizeof(string);
 
 const vector<string> graphViewProperties(viewPropertiesName, viewPropertiesName + nbViewProperties);
 

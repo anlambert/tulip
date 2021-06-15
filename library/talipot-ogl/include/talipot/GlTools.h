@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -70,14 +70,14 @@ TLP_GL_SCOPE std::vector<Coord> computeNormals(const std::vector<Coord> &vertice
  * Computes the normals associated to the vertices of a triangulated mesh.
  *
  * @param vertices a vector containing the vertices to compute associated normals
- * @param facesIndices a vector containing the unsigned int indices of the triangles faces (its size
+ * @param facesIndices a vector containing the uint indices of the triangles faces (its size
  * must be a multiple of 3)
  * @return a vector, with the same size as the one holding vertices, filled with the computed
  * normals
  *
  */
 TLP_GL_SCOPE std::vector<Coord> computeNormals(const std::vector<Coord> &vertices,
-                                               const std::vector<unsigned int> &facesIndices);
+                                               const std::vector<uint> &facesIndices);
 }
 
 #endif // TALIPOT_GL_TOOLS_H

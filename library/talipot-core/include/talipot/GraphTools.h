@@ -198,14 +198,14 @@ TLP_SCOPE std::vector<edge> dfsEdges(const Graph *graph);
  * of the nodes of a graph
  */
 TLP_SCOPE void buildNodesUniformQuantification(const Graph *graph, const NumericProperty *prop,
-                                               unsigned int k, std::map<double, int> &mapping);
+                                               uint k, std::map<double, int> &mapping);
 
 /*
  * builds a uniform quantification with the NumericProperty associated values
  * of the edges of a graph
  */
 TLP_SCOPE void buildEdgesUniformQuantification(const Graph *graph, const NumericProperty *prop,
-                                               unsigned int k, std::map<double, int> &mapping);
+                                               uint k, std::map<double, int> &mapping);
 
 /**
  * @brief Extends selection to have a graph (no dangling edge)
@@ -257,8 +257,8 @@ TLP_SCOPE bool selectShortestPaths(const Graph *const graph, node src, node tgt,
  * and INV_DIRECTED use reverse directed graph (ie. all edges are reversed)
  */
 TLP_SCOPE void markReachableNodes(const Graph *graph, const node startNode,
-                                  std::unordered_map<node, bool> &reachables,
-                                  unsigned int maxDistance, EDGE_TYPE direction = UNDIRECTED);
+                                  std::unordered_map<node, bool> &reachables, uint maxDistance,
+                                  EDGE_TYPE direction = UNDIRECTED);
 
 TLP_SCOPE void computeDijkstra(const Graph *const graph, node src,
                                const EdgeVectorProperty<double> &weights,

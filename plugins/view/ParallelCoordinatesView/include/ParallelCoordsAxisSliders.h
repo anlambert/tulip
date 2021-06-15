@@ -62,7 +62,7 @@ public:
   }
 
   void getXML(std::string &) override {}
-  void setWithXML(const std::string &, unsigned int &) override {}
+  void setWithXML(const std::string &, uint &) override {}
 
 private:
   sliderType type;
@@ -107,7 +107,7 @@ private:
   int slidersRangeLength;
   int xClick, yClick;
   float lastAxisHeight;
-  unsigned int lastNbAxis;
+  uint lastNbAxis;
   ParallelCoordinatesDrawing::HighlightedEltsSetOp highlightedEltsSetOperation;
   std::map<ParallelAxis *, std::pair<float, float>> slidersYBoundaries;
   GlLayer *selectionLayer;

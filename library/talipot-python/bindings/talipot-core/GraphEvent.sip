@@ -100,7 +100,7 @@ public:
     TLP_BEFORE_ADD_INHERITED_PROPERTY = 29
   };
 
-  GraphEvent(const tlp::Graph& g, GraphEventType graphEvtType, unsigned int id,
+  GraphEvent(const tlp::Graph& g, GraphEventType graphEvtType, uint id,
              tlp::Event::EventType evtType = tlp::Event::TLP_MODIFICATION);
 
   GraphEvent(const tlp::Graph& g, GraphEventType graphEvtType, const tlp::Graph* sg);

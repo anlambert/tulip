@@ -21,7 +21,7 @@
 using namespace std;
 
 template <typename T>
-std::string getStringFromNumber(T number, unsigned int precision = 5) {
+std::string getStringFromNumber(T number, uint precision = 5) {
   std::ostringstream oss;
   oss.precision(precision);
   oss << number;
@@ -373,7 +373,7 @@ GlSizeScale::GlSizeScale(const float minSize, const float maxSize, const Coord &
   polyquad->setOutlined(true);
 
   if (orientation == Vertical) {
-    for (unsigned int i = 0; i <= 100; ++i) {
+    for (uint i = 0; i <= 100; ++i) {
       float edgeLength = (i / 100.) * thickness;
       float y = baseCoord.getY() + (i / 100.) * length;
       polyquad->addQuadEdge(Coord(baseCoord.getX() - edgeLength / 2, y),
@@ -389,7 +389,7 @@ GlSizeScale::GlSizeScale(const float minSize, const float maxSize, const Coord &
     boundingBox.expand(Coord(baseCoord.getX() - thickness / 2, baseCoord.getY()));
     boundingBox.expand(Coord(baseCoord.getX() + thickness / 2, baseCoord.getY() + length));
   } else {
-    for (unsigned int i = 0; i <= 100; ++i) {
+    for (uint i = 0; i <= 100; ++i) {
       float edgeLength = (i / 100.) * thickness;
       float x = baseCoord.getX() + (i / 100.) * length;
       polyquad->addQuadEdge(Coord(x, baseCoord.getY() - edgeLength / 2),
@@ -1113,8 +1113,7 @@ void HistogramMetricMapping::updateGraphWithMapping(Graph *graph, LayoutProperty
   }
 }
 
-void HistogramMetricMapping::updateMapping(GlQuantitativeAxis *histoXAxis,
-                                           unsigned int nbHistogramBins) {
+void HistogramMetricMapping::updateMapping(GlQuantitativeAxis *histoXAxis, uint nbHistogramBins) {
   if (mappinqPolyQuad != nullptr) {
     delete mappinqPolyQuad;
     mappinqPolyQuad = nullptr;

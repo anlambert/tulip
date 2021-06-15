@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -27,7 +27,7 @@ void PlanarConMapTest::build() {
   edges.clear();
   nodes.clear();
 
-  for (unsigned int i = 0; i < 4; ++i)
+  for (uint i = 0; i < 4; ++i)
     nodes.push_back(graph->addNode());
 
   edges.push_back(graph->addEdge(nodes[0], nodes[1]));
@@ -45,10 +45,10 @@ void PlanarConMapTest::build2() {
   edges.clear();
   nodes.clear();
 
-  for (unsigned int i = 0; i < 6; ++i)
+  for (uint i = 0; i < 6; ++i)
     nodes.push_back(graph->addNode());
 
-  for (unsigned int i = 1; i < 6; ++i)
+  for (uint i = 1; i < 6; ++i)
     edges.push_back(graph->addEdge(nodes[0], nodes[i]));
 
   delete carte;
@@ -61,7 +61,7 @@ void PlanarConMapTest::build3() {
   edges.clear();
   nodes.clear();
 
-  for (unsigned int i = 0; i < 4; ++i)
+  for (uint i = 0; i < 4; ++i)
     nodes.push_back(graph->addNode());
 
   edges.push_back(graph->addEdge(nodes[0], nodes[1]));
@@ -81,7 +81,7 @@ void PlanarConMapTest::build4() {
   edges.clear();
   nodes.clear();
 
-  for (unsigned int i = 0; i < 10; ++i)
+  for (uint i = 0; i < 10; ++i)
     nodes.push_back(graph->addNode());
 
   edges.push_back(graph->addEdge(nodes[0], nodes[1]));
@@ -120,7 +120,7 @@ void PlanarConMapTest::testAddEdgeMap() {
   cycles[2].push_back(edges[2]);
   cycles[2].push_back(e);
 
-  for (unsigned int i = 0; i < 3; i++) {
+  for (uint i = 0; i < 3; i++) {
     vector<edge> tmp;
     Iterator<edge> *it;
 
@@ -163,7 +163,7 @@ void PlanarConMapTest::testAddEdgeMap() {
   cycles2[1].push_back(edges[2]);
   cycles2[1].push_back(e);
 
-  for (unsigned int i = 0; i < 2; i++) {
+  for (uint i = 0; i < 2; i++) {
     vector<edge> tmp;
 
     if (i == 0)
@@ -223,7 +223,7 @@ void PlanarConMapTest::testAddEdgeMap() {
   cycles3[3].push_back(edges[3]);
   cycles3[3].push_back(edges[11]);
 
-  for (unsigned int i = 0; i < 4; ++i) {
+  for (uint i = 0; i < 4; ++i) {
     vector<edge> tmp;
 
     if (i == 0)
@@ -271,7 +271,7 @@ void PlanarConMapTest::testDelEdgeMap() {
   cycles[1].push_back(edges[0]);
   cycles[0].push_back(edges[1]);
 
-  for (unsigned int i = 0; i < 2; i++) {
+  for (uint i = 0; i < 2; i++) {
     vector<edge> tmp;
     Iterator<edge> *it;
 
@@ -306,7 +306,7 @@ void PlanarConMapTest::testUpdate() {
 
   build();
 
-  unsigned int tmp = carte->nbFaces();
+  uint tmp = carte->nbFaces();
   edge e = graph->addEdge(nodes[0], nodes[2]);
   carte->update();
   CPPUNIT_ASSERT_EQUAL_MESSAGE(" test update() ", (tmp + 1), carte->nbFaces());
@@ -334,7 +334,7 @@ void PlanarConMapTest::testMergeFaces() {
   cycles[1].push_back(edges[0]);
   cycles[0].push_back(edges[1]);
 
-  for (unsigned int i = 0; i < 2; i++) {
+  for (uint i = 0; i < 2; i++) {
     vector<edge> tmp;
     Iterator<edge> *it;
 
@@ -378,7 +378,7 @@ void PlanarConMapTest::testSplitFace() {
   cycles[2].push_back(edges[2]);
   cycles[2].push_back(e);
 
-  for (unsigned int i = 0; i < 3; i++) {
+  for (uint i = 0; i < 3; i++) {
     Iterator<edge> *it = nullptr;
 
     if (i == 0)
@@ -446,7 +446,7 @@ void PlanarConMapTest::testSplitFace() {
   cycles3[3].push_back(edges[3]);
   cycles3[3].push_back(edges[11]);
 
-  for (unsigned int i = 0; i < 4; ++i) {
+  for (uint i = 0; i < 4; ++i) {
     vector<edge> tmp;
     Iterator<edge> *it;
 
@@ -485,7 +485,7 @@ void PlanarConMapTest::testSuccCycleEdge() {
   cycles.push_back(edges[3]);
   cycles.push_back(edges[4]);
 
-  unsigned int i = 0;
+  uint i = 0;
   Iterator<edge> *it = carte->getInOutEdges(nodes[0]);
   edge e = it->next();
   delete it;
@@ -512,7 +512,7 @@ void PlanarConMapTest::testPrecCycleEdge() {
   cycles.push_back(edges[2]);
   cycles.push_back(edges[1]);
 
-  unsigned int i = 0;
+  uint i = 0;
   Iterator<edge> *it = carte->getInOutEdges(nodes[0]);
   edge e = it->next();
   delete it;

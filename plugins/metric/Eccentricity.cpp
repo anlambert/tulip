@@ -52,7 +52,7 @@ EccentricityMetric::EccentricityMetric(const tlp::PluginContext *context)
 //====================================================================
 EccentricityMetric::~EccentricityMetric() = default;
 //====================================================================
-double EccentricityMetric::compute(unsigned int nPos) {
+double EccentricityMetric::compute(uint nPos) {
 
   NodeVectorProperty<double> distance(graph);
   distance.setAll(0);
@@ -64,13 +64,13 @@ double EccentricityMetric::compute(unsigned int nPos) {
 
   double nbAcc = 0.;
   val = 0.;
-  unsigned int nbNodes = graph->numberOfNodes();
+  uint nbNodes = graph->numberOfNodes();
   double max_d_acc = nbNodes + 0.;
   if (weight) {
     max_d_acc = nbNodes * weight->getEdgeDoubleMax();
   }
 
-  for (unsigned int i = 0; i < nbNodes; ++i) {
+  for (uint i = 0; i < nbNodes; ++i) {
     double d = distance[i];
 
     if (d < max_d_acc) {
@@ -115,11 +115,11 @@ bool EccentricityMetric::run() {
   }
 
   NodeVectorProperty<double> res(graph);
-  unsigned int nbNodes = graph->numberOfNodes();
+  uint nbNodes = graph->numberOfNodes();
 
   double diameter = 1.0;
   std::atomic<bool> stopfor(false);
-  TLP_PARALLEL_MAP_INDICES(nbNodes, [&](unsigned int i) {
+  TLP_PARALLEL_MAP_INDICES(nbNodes, [&](uint i) {
     if (stopfor.load()) {
       return;
     }
@@ -147,7 +147,7 @@ bool EccentricityMetric::run() {
     return pluginProgress->state() != TLP_CANCEL;
   }
 
-  TLP_MAP_NODES_AND_INDICES(graph, [&](const node n, unsigned int i) {
+  TLP_MAP_NODES_AND_INDICES(graph, [&](const node n, uint i) {
     if (!allPaths && norm) {
       result->setNodeValue(n, res[i] / diameter);
     } else {

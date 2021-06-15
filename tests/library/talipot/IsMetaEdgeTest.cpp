@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -19,13 +19,13 @@
 using namespace tlp;
 using namespace std;
 
-const unsigned int nbNodesPerCluster = 5;
+const uint nbNodesPerCluster = 5;
 
 void createCompleteGraphAndSelect(Graph *graph, BooleanProperty *selection) {
 
   vector<node> addedNodes;
 
-  for (unsigned int j = 0; j < nbNodesPerCluster; ++j) {
+  for (uint j = 0; j < nbNodesPerCluster; ++j) {
     node n = graph->addNode();
     addedNodes.push_back(n);
     selection->setNodeValue(n, true);
@@ -80,8 +80,8 @@ void IsMetaEdgeTest::tearDown() {
 }
 
 void IsMetaEdgeTest::testIsMetaEdge() {
-  unsigned int nbMetaNodes = 0;
-  unsigned int nbMetaEdges = 0;
+  uint nbMetaNodes = 0;
+  uint nbMetaEdges = 0;
 
   // check if we have two nodes and one edge in the quotient
   CPPUNIT_ASSERT_EQUAL(2u, quotientGraph->numberOfNodes());

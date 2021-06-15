@@ -45,7 +45,7 @@ ostream &operator<<(ostream &os, const Graph *graph) {
     node beginNode, previousNode;
     beginNode = previousNode = graph->getOneNode();
     os << beginNode.id;
-    unsigned int i = 0;
+    uint i = 0;
 
     for (auto current : graph->nodes()) {
 
@@ -492,7 +492,7 @@ void tlp::copyToGraph(Graph *outG, const Graph *inG, BooleanProperty *inSel,
   // the selected nodes
   Iterator<node> *nodeIt = nullptr;
   // the number of selected nodes
-  unsigned int nbSelNodes = 0;
+  uint nbSelNodes = 0;
 
   if (inSel) {
     nodeIt = inSel->getNonDefaultValuatedNodes(inG);
@@ -1251,7 +1251,7 @@ node Graph::createMetaNode(Graph *subGraph, bool multiEdges, bool edgeDelAll) {
   for (auto n : subGraph->nodes()) {
     for (auto e : getSuperGraph()->getInOutEdges(n)) {
       auto [src, tgt] = ends(e);
-      unsigned int toDelete = isElement(src);
+      uint toDelete = isElement(src);
 
       if (toDelete && subGraph->isElement(tgt)) {
         if (multiEdges || edges[src].empty()) {
@@ -1375,9 +1375,9 @@ void Graph::openMetaNode(node metaNode, bool updateProperties) {
   // add node from meta to graph
   {
     auto nodes = metaGraph->nodes();
-    unsigned int nbNodes = nodes.size();
+    uint nbNodes = nodes.size();
     // stable in case of fractal graph
-    for (unsigned int i = 0; i < nbNodes; ++i) {
+    for (uint i = 0; i < nbNodes; ++i) {
       node n = nodes[i];
       addNode(n);
       mappingM.set(n.id, n);
@@ -1555,7 +1555,7 @@ void Graph::openMetaNode(node metaNode, bool updateProperties) {
 }
 //====================================================================================
 struct MetaEdge {
-  unsigned int source, target;
+  uint source, target;
   edge mE;
 };
 
@@ -1608,8 +1608,8 @@ void Graph::createMetaNodes(Iterator<Graph *> *itS, Graph *quotientGraph, vector
       // (meta source, meta target) if it does not already exists
       // and register the edge as associated to this meta edge
       const vector<edge> &edges = this->edges();
-      unsigned int nbEdges = edges.size();
-      for (unsigned int i = 0; i < nbEdges; ++i) {
+      uint nbEdges = edges.size();
+      for (uint i = 0; i < nbEdges; ++i) {
         edge e = edges[i];
 
         const auto &[src, tgt] = ends(e);
@@ -1649,8 +1649,8 @@ void Graph::createMetaNodes(Iterator<Graph *> *itS, Graph *quotientGraph, vector
   Observable::unholdObservers();
 }
 
-Graph *Graph::getNthSubGraph(unsigned int n) const {
-  unsigned int i = 0;
+Graph *Graph::getNthSubGraph(uint n) const {
+  uint i = 0;
   for (tlp::Graph *sg : subGraphs()) {
     if (i++ == n) {
       return sg;
@@ -1848,7 +1848,7 @@ const std::vector<node> &GraphEvent::getNodes() const {
   assert(evtType == TLP_ADD_NODES);
 
   if (vectInfos.addedNodes == nullptr) {
-    unsigned int nbElts = info.nbElts;
+    uint nbElts = info.nbElts;
     auto *addedNodes = new std::vector<node>();
     addedNodes->reserve(nbElts);
     const std::vector<node> &nodes = getGraph()->nodes();
@@ -1866,7 +1866,7 @@ const std::vector<edge> &GraphEvent::getEdges() const {
   assert(evtType == TLP_ADD_EDGES);
 
   if (vectInfos.addedEdges == nullptr) {
-    unsigned int nbElts = info.nbElts;
+    uint nbElts = info.nbElts;
     auto *addedEdges = new std::vector<edge>();
     addedEdges->reserve(nbElts);
     const std::vector<edge> &edges = getGraph()->edges();

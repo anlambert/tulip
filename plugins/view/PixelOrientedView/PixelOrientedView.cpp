@@ -39,7 +39,7 @@ static void setGraphView(tlp::GlGraph *glGraph, bool displayNodes) {
 }
 
 const string propertiesTypes[] = {"double", "int"};
-const unsigned int nbPropertiesTypes = sizeof(propertiesTypes) / sizeof(string);
+const uint nbPropertiesTypes = sizeof(propertiesTypes) / sizeof(string);
 const vector<string> propertiesTypesFilter(propertiesTypes, propertiesTypes + nbPropertiesTypes);
 
 namespace tlp {
@@ -336,7 +336,7 @@ void PixelOrientedView::initPixelView() {
     overviewHeight *= 2;
   }
 
-  unsigned int labelHeight = overviewHeight / 4;
+  uint labelHeight = overviewHeight / 4;
   float spaceBetweenOverviews = overviewWidth / 10;
 
   pixelOrientedMediator->setImageSize(overviewWidth, overviewHeight);
@@ -351,7 +351,7 @@ void PixelOrientedView::initPixelView() {
   }
 
   float squareRoot = sqrt(float(selectedGraphProperties.size()));
-  const unsigned int N =
+  const uint N =
       uint(squareRoot) + (fmod(float(selectedGraphProperties.size()), squareRoot) == 0.f ? 0u : 1u);
 
   for (size_t i = 0; i < selectedGraphProperties.size(); ++i) {
@@ -363,8 +363,8 @@ void PixelOrientedView::initPixelView() {
       dataMap[selectedGraphProperties[i]]->updateNodesRank();
     }
 
-    unsigned int row = i / N;
-    unsigned int col = i % N;
+    uint row = i / N;
+    uint col = i % N;
 
     Coord overviewBLCorner =
         Coord(col * (overviewWidth + spaceBetweenOverviews),
@@ -479,7 +479,7 @@ void PixelOrientedView::draw() {
 
   if (pixelOrientedGraph != nullptr) {
     scene->setBackgroundColor(optionsWidget->getBackgroundColor());
-    unsigned int lastNbDimensionsSelected = selectedGraphProperties.size();
+    uint lastNbDimensionsSelected = selectedGraphProperties.size();
     destroyOverviewsIfNeeded();
 
     if (pixelOrientedGraph->numberOfNodes() >= 2) { // We stop the creation of pixel overviews if we
@@ -602,7 +602,7 @@ void PixelOrientedView::updateOverviews(const bool updateAll) {
     mainLayer->deleteGlEntity(detailViewLabel);
   }
 
-  unsigned int nbOverviews = selectedGraphProperties.size();
+  uint nbOverviews = selectedGraphProperties.size();
   unsigned currentStep = 0;
   Camera &cam = getGlWidget()->getScene()->getGraphCamera();
   double sceneRadiusBak = cam.getSceneRadius();

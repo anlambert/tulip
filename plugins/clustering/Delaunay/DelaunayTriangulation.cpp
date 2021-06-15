@@ -20,8 +20,8 @@ static bool delaunayTriangulation(tlp::Graph *graph, bool simplicesSubGraphs, bo
   tlp::NodeVectorProperty<tlp::Coord> points(graph);
   points.copyFromProperty(graph->getLayoutProperty("viewLayout"));
 
-  vector<pair<unsigned int, unsigned int>> edges;
-  vector<vector<unsigned int>> simplices;
+  vector<pair<uint, uint>> edges;
+  vector<vector<uint>> simplices;
   bool ret = tlp::delaunayTriangulation(points, edges, simplices);
 
   if (ret) {
@@ -42,7 +42,7 @@ static bool delaunayTriangulation(tlp::Graph *graph, bool simplicesSubGraphs, bo
       for (size_t i = 0; i < simplices.size(); ++i) {
         vector<tlp::node> sNodes(simplices[i].size());
         tlp::TLP_PARALLEL_MAP_INDICES(sNodes.size(),
-                                      [&](unsigned int j) { sNodes[j] = nodes[simplices[i][j]]; });
+                                      [&](uint j) { sNodes[j] = nodes[simplices[i][j]]; });
 
         ostringstream oss;
         oss << (simplices[i].size() == 3 ? "triangle " : "tetrahedron ") << i;

@@ -32,9 +32,9 @@ public:
   void draw(float lod, Camera *camera) override;
   BoundingBox getBoundingBox() override;
   void getXML(std::string &) override {}
-  void setWithXML(const std::string &, unsigned int &) override {}
+  void setWithXML(const std::string &, uint &) override {}
 
-  unsigned int getNumberOfVertex() const {
+  uint getNumberOfVertex() const {
     return polygonPoints.size();
   }
 

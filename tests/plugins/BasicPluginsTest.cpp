@@ -363,17 +363,17 @@ void BasicPluginsTest::testEqualValueClustering() {
   // fill graph & metric
   vector<node> nodes;
   vector<edge> edges;
-  unsigned int NB_ADD = 100;
-  unsigned int EDGE_RATIO = 100;
+  uint NB_ADD = 100;
+  uint EDGE_RATIO = 100;
 
-  for (unsigned int i = 0; i < NB_ADD; ++i) {
+  for (uint i = 0; i < NB_ADD; ++i) {
     nodes.push_back(graph->addNode());
     metric->setNodeValue(nodes[i], randomUnsignedInteger(NB_ADD - 1));
   }
 
-  unsigned int NB_EDGES = EDGE_RATIO * NB_ADD;
+  uint NB_EDGES = EDGE_RATIO * NB_ADD;
 
-  for (unsigned int i = 0; i < NB_EDGES; ++i) {
+  for (uint i = 0; i < NB_EDGES; ++i) {
     graph->addEdge(graph->getRandomNode(), graph->getRandomNode());
   }
 

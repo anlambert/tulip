@@ -13,13 +13,15 @@
 
 #include <string>
 
+#include <talipot/config.h>
+
 using namespace std;
 
 // normalize aKey
 // remove any accented chars
 // we assume aKey is utf8 encoded
 string &normalizeString(string &aKey) {
-  for (unsigned int k = 0; k < aKey.size() - 1; ++k) {
+  for (uint k = 0; k < aKey.size() - 1; ++k) {
     if (aKey[k] == '\303') {
       switch (aKey[k + 1]) {
       case '\200': // À

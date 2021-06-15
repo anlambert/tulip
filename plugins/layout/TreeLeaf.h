@@ -52,10 +52,9 @@ private:
   float nodeSpacing;
   bool uniformLayerDistance;
   std::vector<float> levelHeights;
-  float dfsPlacement(tlp::Graph *tree, tlp::node n, float x, float y, unsigned int depth,
+  float dfsPlacement(tlp::Graph *tree, tlp::node n, float x, float y, uint depth,
                      OrientableLayout *oriLayout, OrientableSizeProxy *oriSize);
-  void computeLevelHeights(tlp::Graph *tree, tlp::node n, unsigned int depth,
-                           OrientableSizeProxy *oriSize);
+  void computeLevelHeights(tlp::Graph *tree, tlp::node n, uint depth, OrientableSizeProxy *oriSize);
 };
 
 #endif // TREE_LEAF_H

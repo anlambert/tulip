@@ -18,10 +18,9 @@ using namespace std;
 
 namespace tlp {
 
-GlRegularPolygon::GlRegularPolygon(const Coord &position, const Size &size,
-                                   unsigned int numberOfSides, const Color &fillColor,
-                                   const Color &outlineColor, bool filled, bool outlined,
-                                   const string &textureName, float outlineSize)
+GlRegularPolygon::GlRegularPolygon(const Coord &position, const Size &size, uint numberOfSides,
+                                   const Color &fillColor, const Color &outlineColor, bool filled,
+                                   bool outlined, const string &textureName, float outlineSize)
     : position(position), size(size), numberOfSides(numberOfSides), startAngle(float(M_PI) / 2.0f) {
   computePolygon();
 
@@ -42,16 +41,16 @@ void GlRegularPolygon::setStartAngle(float angle) {
   computePolygon();
 }
 //=====================================================
-unsigned int GlRegularPolygon::getNumberOfSides() const {
+uint GlRegularPolygon::getNumberOfSides() const {
   return numberOfSides;
 }
 //=====================================================
-void GlRegularPolygon::setNumberOfSides(unsigned int number) {
+void GlRegularPolygon::setNumberOfSides(uint number) {
   numberOfSides = number;
   computePolygon();
 }
 //=====================================================
-void GlRegularPolygon::resizePoints(const unsigned int number) {
+void GlRegularPolygon::resizePoints(const uint number) {
   setNumberOfSides(number);
 }
 //=====================================================

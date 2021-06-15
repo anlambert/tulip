@@ -28,7 +28,7 @@ list<node> findCycle(Graph *sg) {
   std::unordered_map<node, bool> visited;
   std::list<node> bfs;
   node startNode = sg->getOneNode();
-  unsigned int maxDeg = sg->deg(startNode);
+  uint maxDeg = sg->deg(startNode);
 
   for (auto n : sg->nodes()) {
     if (sg->deg(n) > maxDeg) {

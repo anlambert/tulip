@@ -28,10 +28,10 @@ static ConnectedTestListener instance;
 // structure below is used to implement dfs loop
 struct dfsBiconnectStruct {
   node from, u, first;
-  unsigned int depth;
+  uint depth;
   Iterator<node> *inOutNodes;
 
-  dfsBiconnectStruct(Graph *graph, node n, unsigned int d = 0, node u = node(), node first = node())
+  dfsBiconnectStruct(Graph *graph, node n, uint d = 0, node u = node(), node first = node())
       : from(n), u(u), first(first), depth(d),
         inOutNodes(stableIterator(graph->getInOutNodes(from))) {}
 };
@@ -84,7 +84,7 @@ static void makeBiconnectedDFS(Graph *graph, vector<edge> &addedEdges) {
         dfsParams.from = to;
         dfsParams.first = node();
         dfsParams.u = u;
-        unsigned int currentDepth = dfsParams.depth + 1;
+        uint currentDepth = dfsParams.depth + 1;
         dfsParams.depth = currentDepth;
         depth.set(to.id, currentDepth);
         low.set(to.id, currentDepth);
@@ -127,10 +127,10 @@ static void makeBiconnectedDFS(Graph *graph, vector<edge> &addedEdges) {
 }
 
 //=================================================================
-bool biconnectedTest(const Graph *graph, node v, MutableContainer<unsigned int> &low,
-                     MutableContainer<unsigned int> &dfsNumber, MutableContainer<node> &supergraph,
-                     unsigned int &count) {
-  unsigned int vDfs = count++;
+bool biconnectedTest(const Graph *graph, node v, MutableContainer<uint> &low,
+                     MutableContainer<uint> &dfsNumber, MutableContainer<node> &supergraph,
+                     uint &count) {
+  uint vDfs = count++;
   dfsNumber.set(v.id, vDfs);
   low.set(v.id, vDfs);
 
@@ -165,11 +165,11 @@ bool biconnectedTest(const Graph *graph, node v, MutableContainer<unsigned int> 
 }
 //=================================================================
 static bool biconnectedTest(const Graph *graph) {
-  MutableContainer<unsigned int> low;
-  MutableContainer<unsigned int> dfsNumber;
+  MutableContainer<uint> low;
+  MutableContainer<uint> dfsNumber;
   dfsNumber.setAll(UINT_MAX);
   MutableContainer<node> supergraph;
-  unsigned int count = 1;
+  uint count = 1;
   return (biconnectedTest(graph, graph->nodes()[0], low, dfsNumber, supergraph, count) &&
           (count == graph->numberOfNodes() + 1));
 }

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -52,13 +52,13 @@ public:
    */
   GlOpenUniformCubicBSpline(const std::vector<Coord> &controlPoints, const Color &startColor,
                             const Color &endColor, const float startSize, const float endSize,
-                            const unsigned int nbCurvePoints = 200);
+                            const uint nbCurvePoints = 200);
 
   ~GlOpenUniformCubicBSpline() override;
 
   void drawCurve(std::vector<Coord> &controlPoints, const Color &startColor, const Color &endColor,
                  const float startSize, const float endSize,
-                 const unsigned int nbCurvePoints = 200) override;
+                 const uint nbCurvePoints = 200) override;
 
 protected:
   void setCurveVertexShaderRenderingSpecificParameters() override;
@@ -66,8 +66,7 @@ protected:
   Coord computeCurvePointOnCPU(const std::vector<Coord> &controlPoints, float t) override;
 
   void computeCurvePointsOnCPU(const std::vector<Coord> &controlPoints,
-                               std::vector<Coord> &curvePoints,
-                               unsigned int nbCurvePoints) override;
+                               std::vector<Coord> &curvePoints, uint nbCurvePoints) override;
 
 private:
   unsigned nbKnots;

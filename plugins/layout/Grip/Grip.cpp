@@ -32,7 +32,7 @@ Grip::~Grip() = default;
 
 void Grip::computeCurrentGraphLayout() {
   if (currentGraph->numberOfNodes() <= 3) {
-    unsigned int nb_nodes = currentGraph->numberOfNodes();
+    uint nb_nodes = currentGraph->numberOfNodes();
     auto nodes = currentGraph->nodes();
 
     if (nb_nodes == 1) {
@@ -197,7 +197,7 @@ void Grip::firstNodesPlacement() {
 }
 //======================================================
 void Grip::placement() {
-  unsigned int misf_size = misf->index.size();
+  uint misf_size = misf->index.size();
 
   if (misf_size == 1) {
     initialPlacement(misf->index[0], misf->ordering.size() - 1);
@@ -205,7 +205,7 @@ void Grip::placement() {
     return;
   }
 
-  for (unsigned int i = 0; i < misf_size - 1; ++i) {
+  for (uint i = 0; i < misf_size - 1; ++i) {
     initialPlacement(misf->index[i], misf->index[i + 1] - 1);
     kk_reffinement(0, misf->index[i + 1] - 1);
     init_heat(misf->index[i + 1] - 1);
@@ -216,13 +216,13 @@ void Grip::placement() {
   fr_reffinement(0, misf->ordering.size() - 1);
 }
 //======================================================
-void Grip::seeLayout(unsigned int end) {
+void Grip::seeLayout(uint end) {
   cerr << "profondeur " << level << endl;
 
-  for (unsigned int i = 0; i <= end; ++i) {
+  for (uint i = 0; i <= end; ++i) {
     node n = misf->ordering[i];
 
-    for (unsigned int j = 0; j < neighbors[n].size(); ++j) {
+    for (uint j = 0; j < neighbors[n].size(); ++j) {
       cerr << "distance euclidienne "
            << (result->getNodeValue(n) - result->getNodeValue(neighbors[n][j])).norm() / edgeLength
            << " et distance dans le graphe " << neighbors_dist[n][j] << endl;
@@ -230,19 +230,19 @@ void Grip::seeLayout(unsigned int end) {
   }
 }
 //======================================================
-void Grip::initialPlacement(unsigned int start, unsigned int end) {
-  for (unsigned int i = start; i <= end; ++i) {
+void Grip::initialPlacement(uint start, uint end) {
+  for (uint i = start; i <= end; ++i) {
     node currNode = misf->ordering[i];
     misf->getNearest(currNode, neighbors[currNode], neighbors_dist[currNode], level,
                      levelToNbNeighbors[level + 1]);
   }
 
-  for (unsigned int i = start; i <= end; ++i) {
+  for (uint i = start; i <= end; ++i) {
     node currNode = misf->ordering[i];
     Coord c_tmp;
     float nbConsidered = 0.;
 
-    for (unsigned int j = 0; j < neighbors[currNode].size(); ++j) {
+    for (uint j = 0; j < neighbors[currNode].size(); ++j) {
       c_tmp += result->getNodeValue(neighbors[currNode][j]);
       oldDisp[currNode] += oldDisp[neighbors[currNode][j]];
       nbConsidered += 1.;
@@ -270,13 +270,13 @@ void Grip::initialPlacement(unsigned int start, unsigned int end) {
 //======================================================
 void Grip::kk_local_reffinement(node currNode) {
   //  cerr << __PRETTY_FUNCTION__ << endl;
-  unsigned int cpt = 6;
+  uint cpt = 6;
 
   while (cpt > 1) {
     disp[currNode] = Coord(0, 0, 0);
     const Coord &c = result->getNodeValue(currNode);
 
-    for (unsigned int j = 0; j < neighbors[currNode].size() /*&& j < 3*/; ++j) {
+    for (uint j = 0; j < neighbors[currNode].size() /*&& j < 3*/; ++j) {
       node n = neighbors[currNode][j];
       const Coord &c_n = result->getNodeValue(n);
       Coord c_tmp = c_n - c;
@@ -308,17 +308,17 @@ void Grip::displace(node n) {
   }
 }
 //======================================================
-void Grip::kk_reffinement(unsigned int start, unsigned int end) {
+void Grip::kk_reffinement(uint start, uint end) {
   // cerr << __PRETTY_FUNCTION__ << endl;
-  unsigned int cpt = rounds(end, 0, 20, currentGraph->numberOfNodes(), 30) + 2;
+  uint cpt = rounds(end, 0, 20, currentGraph->numberOfNodes(), 30) + 2;
 
   while (cpt >= 1) {
-    for (unsigned int i = start; i <= end; ++i) {
+    for (uint i = start; i <= end; ++i) {
       node currNode = misf->ordering[i];
       disp[currNode] = Coord(0, 0, 0);
       const Coord &c = result->getNodeValue(currNode);
 
-      for (unsigned int j = 0; j < neighbors[currNode].size(); ++j) {
+      for (uint j = 0; j < neighbors[currNode].size(); ++j) {
         node n = neighbors[currNode][j];
         const Coord &c_n = result->getNodeValue(n);
         Coord c_tmp = c_n - c;
@@ -335,7 +335,7 @@ void Grip::kk_reffinement(unsigned int start, unsigned int end) {
     }
 
     // update node position
-    for (unsigned int i = 0; i <= end; ++i) {
+    for (uint i = 0; i <= end; ++i) {
       displace(misf->ordering[i]);
     }
 
@@ -343,13 +343,13 @@ void Grip::kk_reffinement(unsigned int start, unsigned int end) {
   }
 }
 //======================================================
-void Grip::fr_reffinement(unsigned int start, unsigned int end) {
+void Grip::fr_reffinement(uint start, uint end) {
   // cerr << __PRETTY_FUNCTION__ << endl;
 
-  unsigned int cpt = rounds(end, 0, 20, currentGraph->numberOfNodes(), 30) + 2;
+  uint cpt = rounds(end, 0, 20, currentGraph->numberOfNodes(), 30) + 2;
 
   while (cpt >= 1) {
-    for (unsigned int i = start; i <= end; ++i) {
+    for (uint i = start; i <= end; ++i) {
       node currNode = misf->ordering[i];
       const Coord &curCoord = result->getNodeValue(currNode);
       disp[currNode] = Coord(0, 0, 0);
@@ -369,7 +369,7 @@ void Grip::fr_reffinement(unsigned int start, unsigned int end) {
       }
 
       // repulsive force calculation
-      for (unsigned int j = 0; j < neighbors[currNode].size(); ++j) {
+      for (uint j = 0; j < neighbors[currNode].size(); ++j) {
         node n = neighbors[currNode][j];
         const Coord &c_n = result->getNodeValue(n);
         Coord c_tmp = curCoord - c_n;
@@ -399,7 +399,7 @@ void Grip::fr_reffinement(unsigned int start, unsigned int end) {
     }
 
     // update node position
-    for (unsigned int i = 0; i <= end; ++i) {
+    for (uint i = 0; i <= end; ++i) {
       displace(misf->ordering[i]);
     }
 
@@ -438,8 +438,7 @@ void Grip::updateLocalTemp(node v) {
   }
 }
 //======================================================
-unsigned int Grip::rounds(unsigned int x, unsigned int max, unsigned int maxVal, unsigned int min,
-                          unsigned int minVal) {
+uint Grip::rounds(uint x, uint max, uint maxVal, uint min, uint minVal) {
   if (x <= max) {
     return maxVal;
   } else if (max <= x && x <= min) {
@@ -472,17 +471,17 @@ void Grip::init() {
   }
 }
 //======================================================
-void Grip::init_heat(unsigned int end) {
+void Grip::init_heat(uint end) {
 
-  for (unsigned int i = 0; i <= end; ++i) {
+  for (uint i = 0; i <= end; ++i) {
     heat[misf->ordering[i]] = edgeLength / 6.;
   }
 }
 //======================================================
 void Grip::set_nbr_size() {
-  unsigned int maxCxty = 0;
+  uint maxCxty = 0;
   int initCxty = 10000;
-  unsigned int maxLevel = 0;
+  uint maxLevel = 0;
 
   for (auto n : currentGraph->nodes()) {
     maxCxty += currentGraph->deg(n);
@@ -492,7 +491,7 @@ void Grip::set_nbr_size() {
     maxCxty = initCxty;
   }
 
-  for (unsigned int i = 1; i < misf->index.size(); ++i) {
+  for (uint i = 1; i < misf->index.size(); ++i) {
     if (int(misf->index[i] * misf->index[i]) - initCxty >= 0) {
       maxLevel = i;
       break;
@@ -504,7 +503,7 @@ void Grip::set_nbr_size() {
     maxLevel = misf->index.size();
   }
 
-  for (unsigned int i = 1; i < misf->index.size(); ++i) {
+  for (uint i = 1; i < misf->index.size(); ++i) {
     if (i >= maxLevel) {
       levelToNbNeighbors[i] =
           min(uint(sched(misf->index.size() - i, 0, 2, 10000, 1) * maxCxty / (misf->index[i])),

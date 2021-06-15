@@ -25,13 +25,13 @@ static constexpr std::string_view paramHelp[] = {
 
 struct BottomNode {
   node n;
-  unsigned int degree;
+  uint degree;
 };
 
 //=================================================================================
 
 struct TopNode {
-  unsigned int degree;
+  uint degree;
   vector<node> bottom_nodes;
 };
 
@@ -60,28 +60,28 @@ struct GuillaumeLatapyModel : public ImportModule {
                     "1.0", "Social network")
 
   GuillaumeLatapyModel(PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "200");
+    addInParameter<uint>("nodes", paramHelp[0].data(), "200");
   }
 
   bool importGraph() override {
 
-    unsigned int nbNodes = 200;
+    uint nbNodes = 200;
 
     if (dataSet != nullptr) {
       dataSet->get("nodes", nbNodes);
     }
 
     pluginProgress->showPreview(false);
-    unsigned int iterations = nbNodes * 3;
-    unsigned int i, j, l;
+    uint iterations = nbNodes * 3;
+    uint i, j, l;
 
     vector<BottomNode> vec_bottom_nodes(nbNodes);
     vector<TopNode> vec_top_nodes(nbNodes);
 
     auto nbNodesSmallWorld = uint(ceil(0.8 * nbNodes));
-    unsigned int nbNodesScaleFree = nbNodes - nbNodesSmallWorld;
-    unsigned int maxDegreeSmallWorldNodes = 2;
-    unsigned int numberOfEdges = 0;
+    uint nbNodesScaleFree = nbNodes - nbNodesSmallWorld;
+    uint maxDegreeSmallWorldNodes = 2;
+    uint numberOfEdges = 0;
 
     tlp::initRandomSequence();
 
@@ -105,8 +105,8 @@ struct GuillaumeLatapyModel : public ImportModule {
       vec_bottom_nodes[i].n = graph->addNode();
     }
 
-    unsigned int degreeTop = numberOfEdges / nbNodes;
-    unsigned int dixieme = uint(ceil((10.0 * numberOfEdges) / nbNodes)) % 10;
+    uint degreeTop = numberOfEdges / nbNodes;
+    uint dixieme = uint(ceil((10.0 * numberOfEdges) / nbNodes)) % 10;
 
     for (i = 0; i < nbNodes - 1; ++i) {
       if (i % 10 >= dixieme) {

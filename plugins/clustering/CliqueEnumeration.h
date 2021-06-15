@@ -55,7 +55,7 @@ class CliqueEnumeration : public tlp::Algorithm {
   tlp::node choosePivot(const std::set<tlp::node> &);
   void maxCliquePivot(std::set<tlp::node> &, const std::vector<tlp::node> &, std::set<tlp::node> &);
 
-  unsigned int minsize;
+  uint minsize;
   unsigned cliqueid;
 
 public:

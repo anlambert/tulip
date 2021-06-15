@@ -48,19 +48,19 @@ public:
 
   ~ParallelCoordinatesDrawing() override;
 
-  bool getDataIdFromGlEntity(GlEntity *glEntity, unsigned int &dataId);
-  bool getDataIdFromAxisPoint(node axisPoint, unsigned int &dataId);
+  bool getDataIdFromGlEntity(GlEntity *glEntity, uint &dataId);
+  bool getDataIdFromAxisPoint(node axisPoint, uint &dataId);
 
-  unsigned int nbParallelAxis() const;
+  uint nbParallelAxis() const;
   const std::vector<std::string> &getAxisNames() const;
   void swapAxis(ParallelAxis *axis1, ParallelAxis *axis2);
   void removeAxis(ParallelAxis *axis);
   void addAxis(ParallelAxis *axis);
 
-  void setAxisHeight(const unsigned int axisHeight) {
+  void setAxisHeight(const uint axisHeight) {
     this->height = axisHeight;
   }
-  void setSpaceBetweenAxis(const unsigned int spaceBetweenAxis) {
+  void setSpaceBetweenAxis(const uint spaceBetweenAxis) {
     this->spaceBetweenAxis = spaceBetweenAxis;
   }
   void setAxisPointMinSize(const Size &axisPointMinSize) {
@@ -72,7 +72,7 @@ public:
   void setDrawPointsOnAxis(const bool drawPointsOnAxis) {
     this->drawPointsOnAxis = drawPointsOnAxis;
   }
-  void setLinesColorAlphaValue(const unsigned int linesColorAlphaValue) {
+  void setLinesColorAlphaValue(const uint linesColorAlphaValue) {
     this->linesColorAlphaValue = linesColorAlphaValue;
   }
   void setLineTextureFilename(const std::string &lineTextureFilename) {
@@ -110,25 +110,25 @@ private:
   void createAxis(GlWidget *glWidget, GlProgressBar *progressBar);
   void destroyAxisIfNeeded();
   void plotAllData(GlWidget *glWidget, GlProgressBar *progressBar);
-  void plotData(const unsigned int dataIdx, const Color &color);
+  void plotData(const uint dataIdx, const Color &color);
 
   void erase();
   void eraseDataPlot();
   void eraseAxisPlot();
-  void removeHighlightedElt(const unsigned int dataId);
+  void removeHighlightedElt(const uint dataId);
 
-  unsigned int nbAxis;
+  uint nbAxis;
   Coord firstAxisPos;
-  unsigned int width, height;
-  unsigned int spaceBetweenAxis;
-  unsigned int linesColorAlphaValue;
+  uint width, height;
+  uint spaceBetweenAxis;
+  uint linesColorAlphaValue;
   bool drawPointsOnAxis;
 
   std::vector<std::string> axisOrder;
   std::map<std::string, ParallelAxis *> parallelAxis;
 
-  std::map<GlEntity *, unsigned int> glEntitiesDataMap;
-  std::map<node, unsigned int> axisPointsDataMap;
+  std::map<GlEntity *, uint> glEntitiesDataMap;
+  std::map<node, uint> axisPointsDataMap;
 
   ParallelCoordinatesGraphProxy *graphProxy;
 
@@ -142,7 +142,7 @@ private:
   GlComposite *axisPlotComposite;
 
   bool createAxisFlag;
-  std::set<unsigned int> lastHighlightedElements;
+  std::set<uint> lastHighlightedElements;
 
   Graph *axisPointsGraph;
   LayoutProperty *axisPointsGraphLayout;

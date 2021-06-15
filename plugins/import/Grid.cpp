@@ -45,8 +45,8 @@ public:
   PLUGININFORMATION("Grid", "Jonathan Dubois", "02/12/2003", "Imports a new grid structured graph.",
                     "2.0", "Graph")
   Grid(tlp::PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("width", paramHelp[0].data(), "10");
-    addInParameter<unsigned int>("height", paramHelp[1].data(), "10");
+    addInParameter<uint>("width", paramHelp[0].data(), "10");
+    addInParameter<uint>("height", paramHelp[1].data(), "10");
     addInParameter<StringCollection>("connectivity", paramHelp[2].data(), "4;6;8", true,
                                      "<b>4</b> <br> <b>6</b> <br> <b>8</b>");
     addInParameter<bool>("oppositeNodesConnected", paramHelp[3].data(), "false");
@@ -54,7 +54,7 @@ public:
   }
   ~Grid() override = default;
 
-  void buildRow(const vector<node> &nodes, vector<pair<node, node>> &ends, unsigned int iRow,
+  void buildRow(const vector<node> &nodes, vector<pair<node, node>> &ends, uint iRow,
                 unsigned width, int conn, bool isTore, double spacing) {
     LayoutProperty *layout = graph->getLayoutProperty("viewLayout");
 
@@ -71,10 +71,10 @@ public:
       shift += 0;
     }
 
-    unsigned int iBegin = iRow * width;
+    uint iBegin = iRow * width;
     node previous, current;
 
-    for (unsigned int i = 0; i < width; ++i) {
+    for (uint i = 0; i < width; ++i) {
       current = nodes[iBegin + i];
 
       if (conn == 6) {
@@ -96,12 +96,12 @@ public:
     }
   }
 
-  void connectRow(const vector<node> &nodes, vector<pair<node, node>> &ends, unsigned int row1,
-                  unsigned int row2, unsigned int width, int conn, bool isTore) {
-    unsigned int row1Begin = row1 * width;
-    unsigned int row2Begin = row2 * width;
+  void connectRow(const vector<node> &nodes, vector<pair<node, node>> &ends, uint row1, uint row2,
+                  uint width, int conn, bool isTore) {
+    uint row1Begin = row1 * width;
+    uint row2Begin = row2 * width;
 
-    for (unsigned int i = 0; i < width; ++i) {
+    for (uint i = 0; i < width; ++i) {
       ends.push_back(pair<node, node>(nodes[row1Begin + i], nodes[row2Begin + i]));
 
       if (conn == 8) {
@@ -139,8 +139,8 @@ public:
   }
 
   bool importGraph() override {
-    unsigned int width = 10;
-    unsigned int height = 10;
+    uint width = 10;
+    uint height = 10;
     bool isTore = false;
     int conn = 4;
     StringCollection connectivity;
@@ -204,7 +204,7 @@ public:
     graph->addNodes(height * width);
 
     // compute nb edges
-    unsigned int nbEdges = height * (width - 1);
+    uint nbEdges = height * (width - 1);
 
     if (isTore) {
       nbEdges += height;
@@ -238,7 +238,7 @@ public:
     const vector<node> &nodes = graph->nodes();
     buildRow(nodes, ends, 0, width, conn, isTore, spacing);
 
-    for (unsigned int i = 1; i < height; ++i) {
+    for (uint i = 1; i < height; ++i) {
       buildRow(nodes, ends, i, width, conn, isTore, spacing);
       connectRow(nodes, ends, i - 1, i, width, conn, isTore);
     }

@@ -57,7 +57,7 @@ public:
   /**
    * @brief Return the number of nodes in the graph
    */
-  unsigned int numberOfNodes() const {
+  uint numberOfNodes() const {
     return nodeIds.size();
   }
   //=======================================================
@@ -71,7 +71,7 @@ public:
   /**
    * @brief Return the number of edges in the graph
    */
-  unsigned int numberOfEdges() const {
+  uint numberOfEdges() const {
     return edgeIds.size();
   }
   //=======================================================
@@ -187,7 +187,7 @@ public:
   /**
    * @brief Return the degree of a node
    */
-  unsigned int deg(const node n) const {
+  uint deg(const node n) const {
     assert(isElement(n));
     return nodeData[n.id].edges.size();
   }
@@ -195,7 +195,7 @@ public:
   /**
    * @brief Return the out degree of a node
    */
-  unsigned int outdeg(const node n) const {
+  uint outdeg(const node n) const {
     assert(isElement(n));
     return nodeData[n.id].outDegree;
   }
@@ -203,7 +203,7 @@ public:
   /**
    * @brief Return the in degree of a node
    */
-  unsigned int indeg(const node n) const {
+  uint indeg(const node n) const {
     assert(isElement(n));
     const NodeData &ctnr = nodeData[n.id];
     return ctnr.edges.size() - ctnr.outDegree;
@@ -219,7 +219,7 @@ public:
   /**
    * @brief Return the position of an edge in the edges of the graph
    */
-  unsigned int edgePos(const edge e) const {
+  uint edgePos(const edge e) const {
     return edgeIds.getPos(e);
   }
   //=======================================================
@@ -233,7 +233,7 @@ public:
   /**
    * @brief Return the position of a node in the nodes of the graph
    */
-  unsigned int nodePos(const node n) const {
+  uint nodePos(const node n) const {
     return nodeIds.getPos(n);
   }
   //=======================================================
@@ -331,7 +331,7 @@ public:
    * and thus devalidate all iterators on it.
    * @complexity: o(1)
    */
-  std::vector<node> addNodes(unsigned int nb);
+  std::vector<node> addNodes(uint nb);
   //=======================================================
   /**
    * @brief remove a node from the nodes structure only
@@ -395,7 +395,7 @@ private:
   // specific types
   struct NodeData {
     std::vector<edge> edges;
-    unsigned int outDegree;
+    uint outDegree;
 
     NodeData() : outDegree(0) {}
   };

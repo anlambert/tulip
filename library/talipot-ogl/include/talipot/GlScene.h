@@ -54,7 +54,7 @@ struct SelectedEntity {
   SelectedEntity(GlEntity *entity)
       : entity(entity), complexEntityId(uint(-1)), entityType(SIMPLE_ENTITY_SELECTED),
         complexEntityGraph(nullptr) {}
-  SelectedEntity(Graph *graph, unsigned int id, SelectedEntityType type)
+  SelectedEntity(Graph *graph, uint id, SelectedEntityType type)
       : entity(nullptr), complexEntityId(id), entityType(type), complexEntityGraph(graph) {}
 
   GlEntity *getEntity() const {
@@ -62,7 +62,7 @@ struct SelectedEntity {
     return entity;
   }
 
-  unsigned int getComplexEntityId() const {
+  uint getComplexEntityId() const {
     assert(complexEntityId != uint(-1));
     return complexEntityId;
   }
@@ -113,7 +113,7 @@ struct SelectedEntity {
 
 protected:
   GlEntity *entity;
-  unsigned int complexEntityId;
+  uint complexEntityId;
   SelectedEntityType entityType;
   Graph *complexEntityGraph;
 };

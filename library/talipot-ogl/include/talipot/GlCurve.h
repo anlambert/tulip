@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -31,7 +31,7 @@ public:
   /**
    * Basic constructor with number of points
    */
-  GlCurve(const unsigned int nbPoints = 3u);
+  GlCurve(const uint nbPoints = 3u);
   ~GlCurve() override;
 
   /**
@@ -47,16 +47,16 @@ public:
   /**
    * Change the number of points
    */
-  virtual void resizePoints(const unsigned int nbPoints);
+  virtual void resizePoints(const uint nbPoints);
 
   /**
    * Return the ith coord
    */
-  virtual const tlp::Coord &point(const unsigned int i) const;
+  virtual const tlp::Coord &point(const uint i) const;
   /**
    * Return the ith coord
    */
-  virtual tlp::Coord &point(const unsigned int i);
+  virtual tlp::Coord &point(const uint i);
 
   /**
    * Translate entity
@@ -71,7 +71,7 @@ public:
   /**
    * Function to set data with inString (in XML format)
    */
-  void setWithXML(const std::string &inString, unsigned int &currentPosition) override;
+  void setWithXML(const std::string &inString, uint &currentPosition) override;
 
 protected:
   std::vector<tlp::Coord> _points;

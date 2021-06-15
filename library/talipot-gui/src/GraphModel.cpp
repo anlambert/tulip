@@ -22,7 +22,7 @@ using namespace tlp;
 // Abstract Graph model
 GraphModel::GraphModel(QObject *parent) : Model(parent), _graph(nullptr) {}
 
-unsigned int GraphModel::elementAt(int row) const {
+uint GraphModel::elementAt(int row) const {
   return _elements[row];
 }
 
@@ -293,7 +293,7 @@ void GraphModel::treatEvent(const Event &ev) {
 #define GET_NODE_VALUE(PROP, TYPE)       \
   else if (dynamic_cast<PROP *>(prop) != \
            nullptr) return QVariant::fromValue<TYPE>(static_cast<PROP *>(prop)->getNodeValue(n))
-QVariant GraphModel::nodeValue(unsigned int id, PropertyInterface *prop) {
+QVariant GraphModel::nodeValue(uint id, PropertyInterface *prop) {
   node n(id);
 
   if (dynamic_cast<IntegerProperty *>(prop) != nullptr) {
@@ -430,7 +430,7 @@ bool GraphModel::setAllNodeValue(PropertyInterface *prop, QVariant v, const Grap
 #define SET_NODE_VALUE(PROP, TYPE)                                                         \
   else if (dynamic_cast<PROP *>(prop) != nullptr) static_cast<PROP *>(prop)->setNodeValue( \
       n, v.value<TYPE>())
-bool GraphModel::setNodeValue(unsigned int id, PropertyInterface *prop, QVariant v) {
+bool GraphModel::setNodeValue(uint id, PropertyInterface *prop, QVariant v) {
   node n(id);
 
   if (dynamic_cast<IntegerProperty *>(prop) != nullptr) {
@@ -508,7 +508,7 @@ bool GraphModel::setNodeDefaultValue(PropertyInterface *prop, QVariant v) {
 #define GET_EDGE_VALUE(PROP, TYPE)       \
   else if (dynamic_cast<PROP *>(prop) != \
            nullptr) return QVariant::fromValue<TYPE>(static_cast<PROP *>(prop)->getEdgeValue(e))
-QVariant GraphModel::edgeValue(unsigned int id, PropertyInterface *prop) {
+QVariant GraphModel::edgeValue(uint id, PropertyInterface *prop) {
   edge e(id);
 
   if (dynamic_cast<IntegerProperty *>(prop) != nullptr) {
@@ -630,7 +630,7 @@ QVariant GraphModel::edgeDefaultValue(PropertyInterface *prop) {
 #define SET_EDGE_VALUE(PROP, TYPE)                                                         \
   else if (dynamic_cast<PROP *>(prop) != nullptr) static_cast<PROP *>(prop)->setEdgeValue( \
       e, v.value<TYPE>())
-bool GraphModel::setEdgeValue(unsigned int id, PropertyInterface *prop, QVariant v) {
+bool GraphModel::setEdgeValue(uint id, PropertyInterface *prop, QVariant v) {
   edge e(id);
 
   if (dynamic_cast<IntegerProperty *>(prop) != nullptr) {
@@ -777,7 +777,7 @@ bool GraphModel::setAllEdgeValue(PropertyInterface *prop, QVariant v, const Grap
 NodesGraphModel::NodesGraphModel(QObject *parent)
     : GraphModel(parent), _nodesAdded(false), _nodesRemoved(false) {}
 
-bool NodesGraphModel::lessThan(unsigned int a, unsigned int b, PropertyInterface *prop) const {
+bool NodesGraphModel::lessThan(uint a, uint b, PropertyInterface *prop) const {
   return prop->compare(node(a), node(b)) <= -1;
 }
 
@@ -799,15 +799,15 @@ void NodesGraphModel::setGraph(Graph *g) {
   // reset();
 }
 
-QString NodesGraphModel::stringValue(unsigned int id, PropertyInterface *pi) const {
+QString NodesGraphModel::stringValue(uint id, PropertyInterface *pi) const {
   return tlpStringToQString(pi->getNodeStringValue(node(id)));
 }
 
-QVariant NodesGraphModel::value(unsigned int id, PropertyInterface *prop) const {
+QVariant NodesGraphModel::value(uint id, PropertyInterface *prop) const {
   return nodeValue(id, prop);
 }
 
-bool NodesGraphModel::setValue(unsigned int id, PropertyInterface *prop, QVariant v) const {
+bool NodesGraphModel::setValue(uint id, PropertyInterface *prop, QVariant v) const {
   prop->getGraph()->push();
 
   if (setNodeValue(id, prop, v)) {
@@ -822,7 +822,7 @@ bool NodesGraphModel::setValue(unsigned int id, PropertyInterface *prop, QVarian
 // Edges model
 EdgesGraphModel::EdgesGraphModel(QObject *parent)
     : GraphModel(parent), _edgesAdded(false), _edgesRemoved(false) {}
-QString EdgesGraphModel::stringValue(unsigned int id, PropertyInterface *pi) const {
+QString EdgesGraphModel::stringValue(uint id, PropertyInterface *pi) const {
   return tlpStringToQString(pi->getEdgeStringValue(edge(id)));
 }
 
@@ -841,10 +841,10 @@ void EdgesGraphModel::setGraph(Graph *g) {
   // reset();
 }
 
-QVariant EdgesGraphModel::value(unsigned int id, PropertyInterface *prop) const {
+QVariant EdgesGraphModel::value(uint id, PropertyInterface *prop) const {
   return edgeValue(id, prop);
 }
-bool EdgesGraphModel::setValue(unsigned int id, PropertyInterface *prop, QVariant v) const {
+bool EdgesGraphModel::setValue(uint id, PropertyInterface *prop, QVariant v) const {
   prop->getGraph()->push();
 
   if (setEdgeValue(id, prop, v)) {
@@ -856,7 +856,7 @@ bool EdgesGraphModel::setValue(unsigned int id, PropertyInterface *prop, QVarian
   return false;
 }
 
-bool EdgesGraphModel::lessThan(unsigned int a, unsigned int b, PropertyInterface *prop) const {
+bool EdgesGraphModel::lessThan(uint a, uint b, PropertyInterface *prop) const {
   return prop->compare(edge(a), edge(b)) <= -1;
 }
 
@@ -881,7 +881,7 @@ bool GraphSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelInde
     return true;
   }
 
-  unsigned int id = graphModel->elementAt(sourceRow);
+  uint id = graphModel->elementAt(sourceRow);
 
   bool selected = true;
 
@@ -934,7 +934,7 @@ BooleanProperty *GraphSortFilterProxyModel::filterProperty() const {
   return _filterProperty;
 }
 
-void GraphModel::addRemoveRowsSequence(QVector<unsigned int> &rowsSequence, bool add) {
+void GraphModel::addRemoveRowsSequence(QVector<uint> &rowsSequence, bool add) {
   if (add) {
     beginInsertRows(QModelIndex(), _elements.size(), _elements.size() + rowsSequence.size() - 1);
 
@@ -957,13 +957,13 @@ void GraphModel::addRemoveRowsSequence(QVector<unsigned int> &rowsSequence, bool
  */
 void GraphModel::treatEvents(const std::vector<tlp::Event> &) {
   // vector to hold a sequence of graph elements ids to add to / remove from the model
-  QVector<unsigned int> rowsSequence;
+  QVector<uint> rowsSequence;
   bool lastAdded = false;
-  typedef QPair<unsigned int, bool> PUB;
+  typedef QPair<uint, bool> PUB;
 
   for (const PUB &e : _elementsToModify) {
     bool add = e.second;
-    unsigned int id = e.first;
+    uint id = e.first;
 
     // current operation changed, flush the rows to add/remove if any
     if (lastAdded != add && !rowsSequence.isEmpty()) {
@@ -992,7 +992,7 @@ void GraphModel::treatEvents(const std::vector<tlp::Event> &) {
         // insert according to id
         // to ensure that deleted elements are re-inserted at the
         // same place on undo (graph->pop())
-        unsigned int idx = _elements.size();
+        uint idx = _elements.size();
 
         while (idx && _elements[idx - 1] > id) {
           --idx;
@@ -1007,8 +1007,7 @@ void GraphModel::treatEvents(const std::vector<tlp::Event> &) {
       // as _elements vector is always sorted in ascending order,
       // for performance improvement with large graphs,
       // we perform a binary search instead of using QVector::indexOf method
-      unsigned int index =
-          std::lower_bound(_elements.begin(), _elements.end(), id) - _elements.begin();
+      uint index = std::lower_bound(_elements.begin(), _elements.end(), id) - _elements.begin();
 
       // if the index to remove is not contiguous with the last one stored in the current sequence
       // of indices to remove, flush that sequence to remove the elements from the model
@@ -1063,7 +1062,7 @@ void NodesGraphModel::treatEvent(const Event &ev) {
           _nodesRemoved ? _elementsToModify.indexOf(qMakePair(graphEv->getNode().id, false)) : -1;
 
       if (wasDeleted == -1) {
-        _elementsToModify.push_back(QPair<unsigned int, bool>(graphEv->getNode().id, true));
+        _elementsToModify.push_back(QPair<uint, bool>(graphEv->getNode().id, true));
       } else {
         _elementsToModify.remove(wasDeleted);
       }
@@ -1077,7 +1076,7 @@ void NodesGraphModel::treatEvent(const Event &ev) {
         int wasDeleted = _nodesRemoved ? _elementsToModify.indexOf(qMakePair(n.id, false)) : -1;
 
         if (wasDeleted == -1) {
-          _elementsToModify.push_back(QPair<unsigned int, bool>(n.id, true));
+          _elementsToModify.push_back(QPair<uint, bool>(n.id, true));
         } else {
           _elementsToModify.remove(wasDeleted);
         }
@@ -1092,7 +1091,7 @@ void NodesGraphModel::treatEvent(const Event &ev) {
 
       if (wasAdded == -1) {
         auto id = graphEv->getNode().id;
-        _elementsToModify.push_back(QPair<unsigned int, bool>(id, false));
+        _elementsToModify.push_back(QPair<uint, bool>(id, false));
       } else {
         _elementsToModify.remove(wasAdded);
       }
@@ -1149,7 +1148,7 @@ void EdgesGraphModel::treatEvent(const Event &ev) {
           _edgesRemoved ? _elementsToModify.indexOf(qMakePair(graphEv->getEdge().id, false)) : -1;
 
       if (wasDeleted == -1) {
-        _elementsToModify.push_back(QPair<unsigned int, bool>(graphEv->getEdge().id, true));
+        _elementsToModify.push_back(QPair<uint, bool>(graphEv->getEdge().id, true));
       } else {
         _elementsToModify.remove(wasDeleted);
       }
@@ -1163,7 +1162,7 @@ void EdgesGraphModel::treatEvent(const Event &ev) {
         int wasDeleted = _edgesRemoved ? _elementsToModify.indexOf(qMakePair(e.id, false)) : -1;
 
         if (wasDeleted == -1) {
-          _elementsToModify.push_back(QPair<unsigned int, bool>(e.id, true));
+          _elementsToModify.push_back(QPair<uint, bool>(e.id, true));
         } else {
           _elementsToModify.remove(wasDeleted);
         }
@@ -1177,7 +1176,7 @@ void EdgesGraphModel::treatEvent(const Event &ev) {
           _edgesAdded ? _elementsToModify.indexOf(qMakePair(graphEv->getEdge().id, true)) : -1;
 
       if (wasAdded == -1) {
-        _elementsToModify.push_back(QPair<unsigned int, bool>(graphEv->getEdge().id, false));
+        _elementsToModify.push_back(QPair<uint, bool>(graphEv->getEdge().id, false));
       } else {
         _elementsToModify.remove(wasAdded);
       }

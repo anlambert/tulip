@@ -128,7 +128,7 @@ void Dijkstra::initDijkstra(const tlp::Graph *const forbidden, tlp::node src,
   resultEdges.setAll(false);
 }
 //=======================================================================
-void Dijkstra::searchPaths(node n, EdgeVectorProperty<unsigned int> &depth) {
+void Dijkstra::searchPaths(node n, EdgeVectorProperty<uint> &depth) {
 
   if (resultNodes[n]) {
     return;

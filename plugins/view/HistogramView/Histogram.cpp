@@ -26,7 +26,7 @@ const std::string XAXIS_ID = "x axis";
 const std::string YAXIS_ID = "y axis";
 
 template <typename T>
-std::string getStringFromNumber(T number, unsigned int precision = 5) {
+std::string getStringFromNumber(T number, uint precision = 5) {
   std::ostringstream oss;
   oss.precision(precision);
   oss << number;
@@ -54,7 +54,7 @@ int Histogram::overviewCpt(0);
 
 Histogram::Histogram(Graph *graph, Graph *edgeGraph, std::unordered_map<edge, node> &edgeMap,
                      const std::string &propertyName, const ElementType &dataLocation,
-                     const Coord &blCorner, unsigned int size, const Color &backgroundColor,
+                     const Coord &blCorner, uint size, const Color &backgroundColor,
                      const Color &textColor)
     : graph(graph), propertyName(propertyName), blCorner(blCorner), size(size),
       nbHistogramBins(100), xAxis(nullptr), yAxis(nullptr), xAxisLogScale(false),
@@ -118,7 +118,7 @@ void Histogram::setDataLocation(const ElementType &dataLocation) {
   this->dataLocation = dataLocation;
 }
 
-static unsigned int clamp(unsigned int ui, unsigned int minVal, unsigned int maxVal) {
+static uint clamp(uint ui, uint minVal, uint maxVal) {
   return min(max(ui, minVal), maxVal);
 }
 
@@ -191,7 +191,7 @@ void Histogram::computeHistogram() {
 
     propertyCopy.uniformQuantification(nbHistogramBins);
 
-    for (unsigned int i = 0; i < nbHistogramBins; ++i) {
+    for (uint i = 0; i < nbHistogramBins; ++i) {
       binMinMaxMap[i].first = DBL_MAX;
       binMinMaxMap[i].second = 0;
     }
@@ -253,7 +253,7 @@ void Histogram::computeHistogram() {
 
     uniformQuantificationAxisLabels.clear();
 
-    for (unsigned int i = 0; i < nbHistogramBins; ++i) {
+    for (uint i = 0; i < nbHistogramBins; ++i) {
       if (histogramBins[i].size() > 0) {
         uniformQuantificationAxisLabels.push_back(getStringFromNumber(binMinMaxMap[i].first));
       } else {
@@ -284,8 +284,7 @@ void Histogram::computeHistogram() {
         }
 
         if (value != max) {
-          unsigned int nodeHistoBin =
-              clamp(uint(floor((value - min) / binWidth)), 0, nbHistogramBins - 1);
+          uint nodeHistoBin = clamp(uint(floor((value - min) / binWidth)), 0, nbHistogramBins - 1);
           histogramBins[nodeHistoBin].push_back(n.id);
 
           if (histogramBins[nodeHistoBin].size() > maxBinSize) {
@@ -340,7 +339,7 @@ void Histogram::createAxis() {
 
   const float axisLength = DEFAULT_AXIS_LENGTH;
 
-  unsigned int maxAxisValue, minAxisValue = 0;
+  uint maxAxisValue, minAxisValue = 0;
 
   if (cumulativeFreqHisto) {
     if (dataLocation == NODE) {
@@ -374,7 +373,7 @@ void Histogram::createAxis() {
   }
 
   if (lastCumulHisto != cumulativeFreqHisto) {
-    unsigned int n;
+    uint n;
 
     if (!lastCumulHisto) {
       n = maxBinSize;
@@ -466,10 +465,10 @@ void Histogram::updateLayout() {
   computeHistogram();
   createAxis();
 
-  unsigned int cumulativeSize = 0;
+  uint cumulativeSize = 0;
 
-  for (unsigned int i = 0; i < nbHistogramBins; ++i) {
-    unsigned int binSize = histogramBins[i].size();
+  for (uint i = 0; i < nbHistogramBins; ++i) {
+    uint binSize = histogramBins[i].size();
     cumulativeSize += binSize;
     float binXCoord, binXCoordEnd;
 
@@ -483,7 +482,7 @@ void Histogram::updateLayout() {
 
     float nodeXCoord = (binXCoord + binXCoordEnd) / 2.f;
 
-    for (unsigned int j = 0; j < binSize; ++j) {
+    for (uint j = 0; j < binSize; ++j) {
       float nodeYCoord;
 
       if (!cumulativeFreqHisto) {
@@ -524,7 +523,7 @@ void Histogram::updateSizes() {
   float minSize = (refSize / 10.);
   Size deltaSize = eltMaxSize - eltMinSize;
 
-  for (unsigned int i = 0; i < 2; ++i) {
+  for (uint i = 0; i < 2; ++i) {
     if (deltaSize[i] != 0) {
       resizeFactor[i] = (refSize - minSize) / deltaSize[i];
     } else {
@@ -538,9 +537,9 @@ void Histogram::updateSizes() {
     resize = false;
   }
 
-  for (unsigned int i = 0; i < nbHistogramBins; ++i) {
+  for (uint i = 0; i < nbHistogramBins; ++i) {
 
-    unsigned int binSize = histogramBins[i].size();
+    uint binSize = histogramBins[i].size();
 
     float binXCoord, binXCoordEnd;
 
@@ -552,7 +551,7 @@ void Histogram::updateSizes() {
       binXCoordEnd = (i + 1) * refSizeX;
     }
 
-    for (unsigned int j = 0; j < binSize; ++j) {
+    for (uint j = 0; j < binSize; ++j) {
       if (dataLocation == NODE) {
         const Size &currentNodeSize = viewSize->getNodeValue(node(histogramBins[i][j]));
         Size newNodeSize;
@@ -599,20 +598,20 @@ void Histogram::update() {
   reset(true);
   histoBinsComposite->reset(true);
 
-  unsigned int cumulativeSize = 0;
-  unsigned int rectCpt = 0;
+  uint cumulativeSize = 0;
+  uint rectCpt = 0;
   auto *cumulativeHistogram = new GlPolyQuad();
 
-  for (unsigned int i = 0; i < nbHistogramBins; ++i) {
+  for (uint i = 0; i < nbHistogramBins; ++i) {
     Vec4i quadColorCumul;
     quadColorCumul.fill(0);
     Color quadColor;
-    unsigned int binSize = histogramBins[i].size();
+    uint binSize = histogramBins[i].size();
     cumulativeSize += binSize;
 
-    for (unsigned int j = 0; j < binSize; ++j) {
+    for (uint j = 0; j < binSize; ++j) {
       if (dataLocation == NODE) {
-        for (unsigned int k = 0; k < 4; ++k) {
+        for (uint k = 0; k < 4; ++k) {
           quadColorCumul[k] += uint(viewColor->getNodeValue(node(histogramBins[i][j]))[k]);
         }
       }

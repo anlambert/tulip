@@ -167,10 +167,10 @@ public:
     } else {
       // only saving relevant nodes and edges
       const std::vector<node> &nodes = g->nodes();
-      unsigned int nbElts = nodes.size();
-      std::vector<unsigned int> pos(nbElts);
+      uint nbElts = nodes.size();
+      std::vector<uint> pos(nbElts);
 
-      for (unsigned int i = 0; i < nbElts; ++i) {
+      for (uint i = 0; i < nbElts; ++i) {
         pos[i] = graph->nodePos(nodes[i]);
       }
 
@@ -180,7 +180,7 @@ public:
       const std::vector<edge> &edges = g->edges();
       pos.resize(nbElts = edges.size());
 
-      for (unsigned int i = 0; i < nbElts; ++i) {
+      for (uint i = 0; i < nbElts; ++i) {
         pos[i] = graph->edgePos(edges[i]);
       }
 
@@ -240,7 +240,7 @@ public:
 
           if (g->getId() != 0 && // if it is not the real root graph
               property->getTypename() == GraphProperty::propertyTypename) {
-            unsigned int id = strtoul(sValue.c_str(), nullptr, 10);
+            uint id = strtoul(sValue.c_str(), nullptr, 10);
 
             // we must check if the pointed subgraph
             // is a descendant of the currently exported graph
@@ -374,16 +374,16 @@ public:
    * @param iterator An iterator over the values to save.
    * @return void
    **/
-  void writeInterval(const std::string &intervalName, std::vector<unsigned int> &pos) {
+  void writeInterval(const std::string &intervalName, std::vector<uint> &pos) {
     _writer.writeString(intervalName);
     _writer.writeArrayOpen();
-    unsigned int intervalBegin = UINT_MAX;
-    unsigned int intervalEnd = UINT_MAX;
-    unsigned int previousId = UINT_MAX;
-    unsigned int currentId = UINT_MAX;
-    unsigned int nbElts = pos.size();
+    uint intervalBegin = UINT_MAX;
+    uint intervalEnd = UINT_MAX;
+    uint previousId = UINT_MAX;
+    uint currentId = UINT_MAX;
+    uint nbElts = pos.size();
 
-    for (unsigned int i = 0; i < nbElts; ++i) {
+    for (uint i = 0; i < nbElts; ++i) {
       currentId = pos[i];
 
       // we don't need/want to do all this on the first time we loop

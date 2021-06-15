@@ -67,8 +67,7 @@ CSVParserConfigurationWidget::~CSVParserConfigurationWidget() {
   delete ui;
 }
 
-CSVParser *CSVParserConfigurationWidget::buildParser(unsigned int firstLine,
-                                                     unsigned int lastLine) const {
+CSVParser *CSVParserConfigurationWidget::buildParser(uint firstLine, uint lastLine) const {
   CSVParser *parser = nullptr;
 
   if (isValid()) {

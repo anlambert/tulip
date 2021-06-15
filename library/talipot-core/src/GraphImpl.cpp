@@ -70,7 +70,7 @@ edge GraphImpl::existEdge(const node src, const node tgt, bool directed) const {
   return !edges.empty() ? edges[0] : edge();
 }
 //----------------------------------------------------------------
-unsigned int GraphImpl::getSubGraphId(unsigned int id) {
+uint GraphImpl::getSubGraphId(uint id) {
   if (id == 0) {
     return graphIds.get();
   }
@@ -79,7 +79,7 @@ unsigned int GraphImpl::getSubGraphId(unsigned int id) {
   return id;
 }
 //----------------------------------------------------------------
-void GraphImpl::freeSubGraphId(unsigned int id) {
+void GraphImpl::freeSubGraphId(uint id) {
   graphIds.free(id);
 }
 //----------------------------------------------------------------
@@ -94,7 +94,7 @@ node GraphImpl::addNode() {
   return newNode;
 }
 //----------------------------------------------------------------
-std::vector<node> GraphImpl::addNodes(unsigned int nb) {
+std::vector<node> GraphImpl::addNodes(uint nb) {
   std::vector<node> addedNodes;
   if (nb) {
     addedNodes = storage.addNodes(nb);
@@ -115,7 +115,7 @@ void GraphImpl::addNodes(const vector<node> &) {
                  << std::endl;
 }
 //----------------------------------------------------------------
-void GraphImpl::reserveNodes(unsigned int nb) {
+void GraphImpl::reserveNodes(uint nb) {
   storage.reserveNodes(nb);
 }
 //----------------------------------------------------------------
@@ -154,7 +154,7 @@ void GraphImpl::addEdges(const vector<edge> &) {
                  << std::endl;
 }
 //----------------------------------------------------------------
-void GraphImpl::reserveEdges(unsigned int nb) {
+void GraphImpl::reserveEdges(uint nb) {
   storage.reserveEdges(nb);
 }
 //----------------------------------------------------------------
@@ -420,7 +420,7 @@ void GraphImpl::push(bool unpopAllowed, std::vector<PropertyInterface *> *propsT
   // as in BubbleTree for example
   if (unpopAllowed) {
     // delete first pushed recorders (those at the end of the list) if needed
-    unsigned int nb = recorders.size();
+    uint nb = recorders.size();
 
     if (nb > NB_MAX_RECORDERS) {
       auto it = recorders.rbegin();

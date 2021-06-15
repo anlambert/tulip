@@ -104,8 +104,8 @@ protected:
 
   void setHaveToCompute();
 
-  std::vector<QuadTreeNode<unsigned int> *> nodesQuadTree;
-  std::vector<QuadTreeNode<unsigned int> *> edgesQuadTree;
+  std::vector<QuadTreeNode<uint> *> nodesQuadTree;
+  std::vector<QuadTreeNode<uint> *> edgesQuadTree;
   std::vector<QuadTreeNode<GlEntity *> *> entitiesQuadTree;
   std::vector<std::vector<EntityLODUnit>> entities;
 
@@ -113,9 +113,9 @@ protected:
   bool haveToInitObservers;
 
   // index of simple entities bounding in bbs (see CPULODCalculator.h)
-  const unsigned int seBBIndex;
+  const uint seBBIndex;
   // offset of edge entities bounding in bbs
-  const unsigned int eBBOffset;
+  const uint eBBOffset;
 
   std::vector<Camera *> cameras;
   std::unordered_map<GlLayer *, Camera> layerToCamera;

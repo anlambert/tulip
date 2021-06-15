@@ -73,7 +73,7 @@ void PropertyValuesDispatcher::afterSetNodeValue(tlp::PropertyInterface *sourceP
     }
   } else if (sourceProp->getGraph()->getRoot() == _target->getRoot()) {
     PropertyInterface *targetProp = _source->getProperty(sourceProp->getName());
-    unsigned int id = _displayedNodesToGraphEntities->getNodeValue(n);
+    uint id = _displayedNodesToGraphEntities->getNodeValue(n);
 
     if (_displayedNodesAreNodes->getNodeValue(n)) {
       targetProp->setNodeStringValue(node(id), sourceProp->getNodeStringValue(n));
@@ -132,7 +132,7 @@ void PropertyValuesDispatcher::afterSetEdgeValue(tlp::PropertyInterface *sourceP
     }
   } else if (sourceProp->getGraph()->getRoot() == _target->getRoot()) {
     PropertyInterface *targetProp = _source->getProperty(sourceProp->getName());
-    unsigned int id = _displayedEdgesToGraphEdges->getEdgeValue(e);
+    uint id = _displayedEdgesToGraphEdges->getEdgeValue(e);
     std::string strVal = sourceProp->getEdgeStringValue(e);
     targetProp->setEdgeStringValue(edge(id), strVal);
 

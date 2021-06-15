@@ -50,7 +50,7 @@ public:
   MCLClustering(const tlp::PluginContext *);
   ~MCLClustering() override;
   bool run() override;
-  bool inflate(double r, unsigned int k, node n, bool equal /*, bool noprune*/);
+  bool inflate(double r, uint k, node n, bool equal /*, bool noprune*/);
   void prune(node n);
   // void pruneT(node n);
 
@@ -62,7 +62,7 @@ public:
   EdgeVectorProperty<double> inW, outW;
   NumericProperty *weights;
   double _r;
-  unsigned int _k;
+  uint _k;
 };
 
 const double epsilon = 1E-9;
@@ -114,7 +114,7 @@ struct pvectCmp {
 };
 
 void MCLClustering::prune(node n) {
-  unsigned int outdeg = g->outdeg(n);
+  uint outdeg = g->outdeg(n);
 
   if (outdeg == 0) {
     return;
@@ -134,7 +134,7 @@ void MCLClustering::prune(node n) {
   std::sort(pvect.begin(), pvect.end(), pvectCmp());
   double t = pvect[outdeg - 1].first;
 
-  for (unsigned int i = 0; i < outdeg; ++i) {
+  for (uint i = 0; i < outdeg; ++i) {
     pair<double, edge> p = pvect[i];
 
     if (p.first < t || inW[p.second] < epsilon) {
@@ -143,9 +143,9 @@ void MCLClustering::prune(node n) {
   }
 }
 //=================================================
-bool MCLClustering::inflate(double r, unsigned int k, node n, bool equal
+bool MCLClustering::inflate(double r, uint k, node n, bool equal
                             /*, bool noprune */) {
-  unsigned int sz = g->outdeg(n);
+  uint sz = g->outdeg(n);
   // we use a specific vector to hold out edges needed info
   // in order to
   // - improve the locality of reference
@@ -164,7 +164,7 @@ bool MCLClustering::inflate(double r, unsigned int k, node n, bool equal
   if (sum > 0.) {
     double oos = 1. / sum;
 
-    for (unsigned int i = 0; i < sz; ++i) {
+    for (uint i = 0; i < sz; ++i) {
       pair<double, edge> &p = pvect[i];
       p.first = outW[p.second] = pow(p.first, r) * oos;
     }
@@ -177,7 +177,7 @@ bool MCLClustering::inflate(double r, unsigned int k, node n, bool equal
   std::sort(pvect.begin(), pvect.end(), pvectCmp());
   double t = pvect[sz - 1].first;
   --k;
-  unsigned int outdeg = sz;
+  uint outdeg = sz;
 
   for (int i = sz - 2; i > 0; --i) {
     pair<double, edge> &p = pvect[i];
@@ -203,7 +203,7 @@ bool MCLClustering::inflate(double r, unsigned int k, node n, bool equal
   // makeStoc step
   sum = 0.;
 
-  for (unsigned int i = 0; i < sz; ++i) {
+  for (uint i = 0; i < sz; ++i) {
     pair<double, edge> &p = pvect[i];
 
     if (p.second.isValid()) {
@@ -214,7 +214,7 @@ bool MCLClustering::inflate(double r, unsigned int k, node n, bool equal
   if (sum > 0.) {
     double oos = 1. / sum;
 
-    for (unsigned int i = 0; i < sz; ++i) {
+    for (uint i = 0; i < sz; ++i) {
       pair<double, edge> &p = pvect[i];
       edge e = p.second;
 
@@ -230,7 +230,7 @@ bool MCLClustering::inflate(double r, unsigned int k, node n, bool equal
   } else {
     double ood = 1. / outdeg;
 
-    for (unsigned int i = 0; i < sz; ++i) {
+    for (uint i = 0; i < sz; ++i) {
       edge e = pvect[i].second;
 
       if (e.isValid()) {
@@ -261,7 +261,7 @@ MCLClustering::MCLClustering(const tlp::PluginContext *context)
     : DoubleAlgorithm(context), g(tlp::newGraph()), weights(nullptr), _r(2.0), _k(5) {
   addInParameter<double>("inflate", paramHelp[0].data(), "2.", false);
   addInParameter<NumericProperty *>("weights", paramHelp[1].data(), "", false);
-  addInParameter<unsigned int>("pruning", paramHelp[2].data(), "5", false);
+  addInParameter<uint>("pruning", paramHelp[2].data(), "5", false);
 }
 //===================================================================================
 MCLClustering::~MCLClustering() = default;
@@ -269,7 +269,7 @@ MCLClustering::~MCLClustering() = default;
 struct DegreeSort {
   DegreeSort(Graph *g) : g(g) {}
   bool operator()(node a, node b) const {
-    unsigned int da = g->deg(a), db = g->deg(b);
+    uint da = g->deg(a), db = g->deg(b);
 
     if (da == db) {
       return a.id > b.id;
@@ -297,7 +297,7 @@ bool MCLClustering::run() {
   g->reserveNodes(graph->numberOfNodes());
 
   // add nodes to g
-  unsigned int nbEdges = 0;
+  uint nbEdges = 0;
   for (auto n : graph->nodes()) {
     nodeMapping[n] = g->addNode();
     nbEdges += 2 * graph->deg(n) + 1;

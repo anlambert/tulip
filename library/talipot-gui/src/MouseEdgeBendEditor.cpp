@@ -628,7 +628,7 @@ bool MouseEdgeBendEditor::computeBendsCircles(GlWidget *glWidget) {
     }
   }
 
-  for (unsigned int i = 0; i < circles.size(); ++i) {
+  for (uint i = 0; i < circles.size(); ++i) {
     circlesComposite->addGlEntity(&circles[i], IntegerType::toString(i));
   }
 

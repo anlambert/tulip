@@ -45,13 +45,13 @@ struct BollobasModel : public ImportModule {
                     "1.1", "Social network")
 
   BollobasModel(PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "2000");
-    addInParameter<unsigned int>("minimum degree", paramHelp[1].data(), "4");
+    addInParameter<uint>("nodes", paramHelp[0].data(), "2000");
+    addInParameter<uint>("minimum degree", paramHelp[1].data(), "4");
   }
 
   bool importGraph() override {
-    unsigned int n = 2000;
-    unsigned int d = 4;
+    uint n = 2000;
+    uint d = 4;
 
     if (dataSet != nullptr) {
       dataSet->get("nodes", n);
@@ -67,11 +67,11 @@ struct BollobasModel : public ImportModule {
     pluginProgress->showPreview(false);
     tlp::initRandomSequence();
 
-    vector<unsigned int> M(2 * n * d);
+    vector<uint> M(2 * n * d);
     graph->addNodes(n);
 
-    for (unsigned int v = 0; v < n; ++v) {
-      for (unsigned int i = 0; i < d; ++i) {
+    for (uint v = 0; v < n; ++v) {
+      for (uint i = 0; i < d; ++i) {
         M[2 * (v * d + i)] = v;
         int r = tlp::randomInteger(2 * (v * d + i) + 1);
         M[2 * (v * d + i) + 1] = M[r];
@@ -88,7 +88,7 @@ struct BollobasModel : public ImportModule {
 
     const vector<node> &nodes = graph->nodes();
 
-    for (unsigned int i = 0; i < (n * d); ++i) {
+    for (uint i = 0; i < (n * d); ++i) {
       graph->addEdge(nodes[M[2 * i]], nodes[M[2 * i + 1]]);
 
       if (i % 100 == 0) {

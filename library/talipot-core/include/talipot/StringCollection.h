@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -83,7 +83,7 @@ public:
    *
    * @param param a valid index in the string collection
    */
-  bool setCurrent(const unsigned int param);
+  bool setCurrent(const uint param);
 
   /**
    * Sets the current selected string value.
@@ -144,10 +144,10 @@ public:
     return _data.size();
   }
 
-  std::string operator[](const unsigned int i) const {
+  std::string operator[](const uint i) const {
     return _data[i];
   }
-  std::string &operator[](const unsigned int i) {
+  std::string &operator[](const uint i) {
     return _data[i];
   }
 };

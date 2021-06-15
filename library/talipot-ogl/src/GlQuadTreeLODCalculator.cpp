@@ -300,12 +300,12 @@ void GlQuadTreeLODCalculator::computeFor3DCamera(LayerLODUnit *layerLODUnit, con
     // compute nodes dedicated bb
     BoundingBox bb = bbs[0];
 
-    for (unsigned int i = 1; i < eBBOffset; ++i) {
+    for (uint i = 1; i < eBBOffset; ++i) {
       bb.expand(bbs[i]);
     }
 
     if (bb.isValid()) {
-      nodesQuadTree.push_back(new QuadTreeNode<unsigned int>(bb));
+      nodesQuadTree.push_back(new QuadTreeNode<uint>(bb));
     } else {
       nodesQuadTree.push_back(nullptr);
     }
@@ -313,12 +313,12 @@ void GlQuadTreeLODCalculator::computeFor3DCamera(LayerLODUnit *layerLODUnit, con
     // compute edges dedicated bb
     bb = bbs[eBBOffset];
 
-    for (unsigned int i = eBBOffset + 1; i < seBBIndex; ++i) {
+    for (uint i = eBBOffset + 1; i < seBBIndex; ++i) {
       bb.expand(bbs[i]);
     }
 
     if (bb.isValid()) {
-      edgesQuadTree.push_back(new QuadTreeNode<unsigned int>(bb));
+      edgesQuadTree.push_back(new QuadTreeNode<uint>(bb));
     } else {
       edgesQuadTree.push_back(nullptr);
     }
@@ -387,8 +387,8 @@ void GlQuadTreeLODCalculator::computeFor3DCamera(LayerLODUnit *layerLODUnit, con
     ratio = currentViewport[3];
   }
 
-  vector<unsigned int> resNodes;
-  vector<unsigned int> resEdges;
+  vector<uint> resNodes;
+  vector<uint> resEdges;
   vector<GlEntity *> resEntities;
 
   // Get result of quadtrees
@@ -450,13 +450,13 @@ void GlQuadTreeLODCalculator::computeFor3DCamera(LayerLODUnit *layerLODUnit, con
     }
   };
   TLP_PARALLEL_SECTIONS(thrdF1, thrdF2, thrdF3);
-  TLP_PARALLEL_MAP_INDICES(resNodes.size(), [&](unsigned int i) {
-    unsigned int nId = resNodes[i];
+  TLP_PARALLEL_MAP_INDICES(resNodes.size(), [&](uint i) {
+    uint nId = resNodes[i];
     GlNode glNode(node(nId), inputData->getGraph());
     layerLODUnit->nodesLODVector[i].init(nId, glNode.getBoundingBox(inputData));
   });
-  TLP_PARALLEL_MAP_INDICES(resEdges.size(), [&](unsigned int i) {
-    unsigned int eId = resEdges[i];
+  TLP_PARALLEL_MAP_INDICES(resEdges.size(), [&](uint i) {
+    uint eId = resEdges[i];
     GlEdge glEdge(edge(eId), inputData->getGraph());
     layerLODUnit->edgesLODVector[i].init(eId, glEdge.getBoundingBox(inputData));
   });

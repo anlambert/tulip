@@ -28,7 +28,7 @@ public:
     return T();
   }
 
-  static unsigned int valueSize() {
+  static uint valueSize() {
     return sizeof(T);
   }
 

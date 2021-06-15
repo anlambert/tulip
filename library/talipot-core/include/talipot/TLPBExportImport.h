@@ -132,13 +132,13 @@ public:
 
 // structures used in both tlpb import/export plugins
 struct TLPBHeader {
-  unsigned int magicNumber;
+  uint magicNumber;
   unsigned char major;
   unsigned char minor;
-  unsigned int numNodes;
-  unsigned int numEdges;
+  uint numNodes;
+  uint numEdges;
 
-  TLPBHeader(unsigned int nbN = 0, unsigned int nbE = 0)
+  TLPBHeader(uint nbN = 0, uint nbE = 0)
       : magicNumber(TLPB_MAGIC_NUMBER), major(TLPB_MAJOR), minor(TLPB_MINOR), numNodes(nbN),
         numEdges(nbE) {}
 

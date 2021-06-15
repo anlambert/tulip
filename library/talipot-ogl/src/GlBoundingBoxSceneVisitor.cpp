@@ -29,7 +29,7 @@ GlBoundingBoxSceneVisitor::GlBoundingBoxSceneVisitor(GlGraphInputData *inputData
 BoundingBox GlBoundingBoxSceneVisitor::getBoundingBox() {
   BoundingBox bb = bbs[0];
 
-  for (unsigned int i = 1; i < bbs.size(); ++i) {
+  for (uint i = 1; i < bbs.size(); ++i) {
     bb.expand(bbs[i]);
   }
   return bb;

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -21,7 +21,7 @@ GlCubicBSplineInterpolation::GlCubicBSplineInterpolation(const vector<Coord> &po
                                                          const Color &startColor,
                                                          const Color &endColor,
                                                          const float startSize, const float endSize,
-                                                         const unsigned int nbCurvePoints)
+                                                         const uint nbCurvePoints)
     : GlOpenUniformCubicBSpline(constructInterpolatingCubicBSpline(pointsToInterpolate), startColor,
                                 endColor, startSize, endSize, nbCurvePoints) {}
 

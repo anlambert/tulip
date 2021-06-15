@@ -44,7 +44,7 @@ public:
   // the count of events scheduled to be treated by an object
   // the object's associated node is deleted only when this count is null
   // in order to prevent the node reuse and ensure the alive associated value
-  tlp::NodeVectorProperty<unsigned int> eventsToTreat;
+  tlp::NodeVectorProperty<uint> eventsToTreat;
   // the type of relation between two Observable Objects
   tlp::EdgeVectorProperty<unsigned char> type;
 
@@ -59,11 +59,11 @@ static ObservationGraph observationGraph;
 static std::vector<tlp::node> _oDelayedDelNode;
 static std::set<std::pair<tlp::node, tlp::node>> _oDelayedEvents;
 //_oNotifying counter of nested notify calls
-static unsigned int _oNotifying = 0;
+static uint _oNotifying = 0;
 //_oUnholding counter of nested unhold calls
-static unsigned int _oUnholding = 0;
+static uint _oUnholding = 0;
 //----------------------------------
-unsigned int Observable::_oHoldCounter = 0;
+uint Observable::_oHoldCounter = 0;
 bool Observable::_oDisabled = false;
 
 class ObservableException : public tlp::Exception {
@@ -102,7 +102,7 @@ bool Observable::isAlive(tlp::node n) {
   return observationGraph.alive[n.id];
 }
 //----------------------------------
-unsigned int Observable::getScheduled(tlp::node n) {
+uint Observable::getScheduled(tlp::node n) {
   return observationGraph.eventsToTreat[n.id];
 }
 //----------------------------------
@@ -378,7 +378,7 @@ void Observable::sendEvent(const Event &message) {
     throw ObservableException("Notify called on a deleted Observable");
   }
 
-  const unsigned int RECCALL = 200;
+  const uint RECCALL = 200;
 
   if (_oNotifying > RECCALL) {
     std::stringstream str;
@@ -577,12 +577,12 @@ bool Observable::hasOnlookers() const {
   return observationGraph.indeg(_n) > 0;
 }
 //----------------------------------------
-unsigned int Observable::countListeners() const {
+uint Observable::countListeners() const {
   if (!hasOnlookers()) {
     return 0;
   }
 
-  unsigned int count = 0;
+  uint count = 0;
   for (auto e : observationGraph.incidence(_n)) {
     if (_n == observationGraph.target(e) && (observationGraph.type[e.id] & LISTENER)) {
       ++count;
@@ -591,12 +591,12 @@ unsigned int Observable::countListeners() const {
   return count;
 }
 //----------------------------------------
-unsigned int Observable::countObservers() const {
+uint Observable::countObservers() const {
   if (!hasOnlookers()) {
     return 0;
   }
 
-  unsigned int count = 0;
+  uint count = 0;
   for (auto e : observationGraph.incidence(_n)) {
     if (_n == observationGraph.target(e) && (observationGraph.type[e.id] & OBSERVER)) {
       ++count;

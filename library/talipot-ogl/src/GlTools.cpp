@@ -158,11 +158,11 @@ GLfloat projectSize(const BoundingBox &bb, const MatrixGL &projectionMatrix,
   MatrixGL translate;
   translate.fill(0);
 
-  for (unsigned int i = 0; i < 4; ++i) {
+  for (uint i = 0; i < 4; ++i) {
     translate[i][i] = 1;
   }
 
-  for (unsigned int i = 0; i < 3; ++i) {
+  for (uint i = 0; i < 3; ++i) {
     translate[3][i] = bb[0][i] + bbSize[i] / 2;
   }
 
@@ -323,12 +323,11 @@ float calculate2DLod(const BoundingBox &bb, const Vec4i &, const Vec4i &) {
 
 std::vector<Coord> computeNormals(const std::vector<Coord> &vertices,
                                   const std::vector<unsigned short> &facesIndices) {
-  return computeNormals(vertices,
-                        std::vector<unsigned int>(facesIndices.begin(), facesIndices.end()));
+  return computeNormals(vertices, std::vector<uint>(facesIndices.begin(), facesIndices.end()));
 }
 
 std::vector<Coord> computeNormals(const std::vector<Coord> &vertices,
-                                  const std::vector<unsigned int> &facesIndices) {
+                                  const std::vector<uint> &facesIndices) {
   assert(vertices.size() >= 3);
   assert(facesIndices.size() >= 3 && facesIndices.size() % 3 == 0);
   std::vector<Coord> normals;

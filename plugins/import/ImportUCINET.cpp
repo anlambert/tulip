@@ -30,7 +30,7 @@ using namespace std;
 using namespace tlp;
 
 namespace {
-bool getUnsignedInt(unsigned int &i, const string &str) {
+bool getUnsignedInt(uint &i, const string &str) {
   const char *ptr = str.c_str();
   char *endPtr;
   long int value = strtol(ptr, &endPtr, 10);
@@ -71,7 +71,7 @@ bool skipEqualSign(const string &str, string::size_type &pos) {
   return false;
 }
 
-bool nextUnsignedInt(const string &str, unsigned int &value, string::size_type &pos) {
+bool nextUnsignedInt(const string &str, uint &value, string::size_type &pos) {
   string::size_type lastPos = str.find_first_not_of(" \r\t ,=", pos);
   // Find next separator
   pos = str.find_first_of(" \r\t ,", lastPos);
@@ -217,7 +217,7 @@ public:
     return ":/talipot/app/icons/32/import_ucinet.png";
   }
 
-  unsigned int nbNodes;
+  uint nbNodes;
   string defaultMetric;
   vector<DoubleProperty *> metrics;
   // n indicates the number of nodes if the graph is not bipartite
@@ -226,7 +226,7 @@ public:
   // nm indicates the number of matrix (describing relationships present
   // in the file)
   // current indicates the current index
-  unsigned int n, nr, nc, nm, current;
+  uint n, nr, nc, nm, current;
   // dl_found indicates that 'dl' marker has been found
   // diagonal indicates the presence/absence of the diagonal
   // in the matrix data
@@ -245,7 +245,7 @@ public:
   TypeOfLine expectedLine;
   enum TypeOfLabelEmbedding { DL_NONE = 0, DL_ROWS = 1, DL_COLS = 2, DL_ALL = 4 };
   // indicates what labels are embedded in the data to be read
-  unsigned int embedding;
+  uint embedding;
   enum TypeOfData { DL_FM, DL_UH, DL_LH, DL_NL1, DL_NL2, DL_NL1B, DL_EL1, DL_EL2, DL_BM };
   // indicates the current format for the data to be read
   TypeOfData dataFormat;
@@ -611,7 +611,7 @@ public:
         } else {
           if (metrics.empty()) {
             // create metrics with default name
-            for (unsigned int i = 0; i < nm; ++i) {
+            for (uint i = 0; i < nm; ++i) {
               stringstream sstr;
               sstr << defaultMetric << (i + 1);
               DoubleProperty *metric = graph->getDoubleProperty(sstr.str());
@@ -633,8 +633,8 @@ public:
   }
 
   bool readLabels(const string &str, stringstream &error,
-                  std::unordered_map<std::string, node> &labelsHMap, unsigned int nbLabels,
-                  unsigned int offset, const vector<node> &nodes) {
+                  std::unordered_map<std::string, node> &labelsHMap, uint nbLabels, uint offset,
+                  const vector<node> &nodes) {
     vector<std::string> labels;
     StringProperty *label = graph->getStringProperty("viewLabel");
 
@@ -648,7 +648,7 @@ public:
       return false;
     }
 
-    for (unsigned int i = 0; i < labels.size(); ++i, ++current) {
+    for (uint i = 0; i < labels.size(); ++i, ++current) {
       // assign label to each corresponding node
       label->setNodeValue(nodes[offset + current], labels[i]);
       // and memorize the corresponding uppercase label for each node
@@ -665,8 +665,8 @@ public:
     return true;
   }
 
-  void checkColumnLabels(vector<std::string> &tokens, unsigned int &ir, unsigned int &ic,
-                         unsigned int &i, const vector<node> &nodes) {
+  void checkColumnLabels(vector<std::string> &tokens, uint &ir, uint &ic, uint &i,
+                         const vector<node> &nodes) {
     if (ir == 0 && embedding & uint(DL_COLS)) {
       StringProperty *label = graph->getStringProperty("viewLabel");
 
@@ -683,11 +683,11 @@ public:
     }
   }
 
-  node getNodeFromInfo(string &token, unsigned int &i, bool findCol, const vector<node> &nodes) {
+  node getNodeFromInfo(string &token, uint &i, bool findCol, const vector<node> &nodes) {
     if (embedding == DL_NONE ||
         (embedding != DL_ALL && !(embedding & (findCol ? DL_COLS : DL_ROWS)))) {
       // token is row index (first is 1)
-      unsigned int row;
+      uint row;
 
       if (!getUnsignedInt(row, token) || row > nbNodes) {
         return node();
@@ -750,10 +750,10 @@ public:
     }
   }
 
-  bool readData(vector<std::string> &tokens, stringstream &error, unsigned int &ir,
-                unsigned int &ic, DoubleProperty *metric, const vector<node> &nodes) {
+  bool readData(vector<std::string> &tokens, stringstream &error, uint &ir, uint &ic,
+                DoubleProperty *metric, const vector<node> &nodes) {
     // index of current token
-    unsigned int i = 0;
+    uint i = 0;
 
     switch (dataFormat) {
     case DL_FM:
@@ -868,7 +868,7 @@ public:
     case DL_NL1B: {
       node src = nodes[nc + ir];
       // first token indicates the number of cols in that row
-      unsigned int nbCols;
+      uint nbCols;
 
       if (!getUnsignedInt(nbCols, tokens[0]) ||
           // nbCols must equal to the number of remaining tokens
@@ -879,7 +879,7 @@ public:
 
       for (i = 1; i < tokens.size(); ++i) {
         // each subsequent token is a col index (first is 1)
-        unsigned int col;
+        uint col;
 
         if (!getUnsignedInt(col, tokens[i])) {
           error << "invalid column";
@@ -954,7 +954,7 @@ public:
     DoubleProperty *metric = nullptr;
 
     // index of row, column and metric when reading data
-    unsigned int ic, ir, im;
+    uint ic, ir, im;
     ic = ir = im = 0;
 
     const std::vector<node> &nodes = graph->nodes();

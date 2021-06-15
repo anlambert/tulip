@@ -48,7 +48,7 @@ const vector<string> &FontAwesome::getSupportedIcons() {
   return iconsNames;
 }
 
-unsigned int FontAwesome::getIconCodePoint(const string &iconName) {
+uint FontAwesome::getIconCodePoint(const string &iconName) {
   if (const auto it = iconCodePoint.find(iconName); it != iconCodePoint.end()) {
     return it->second;
   }

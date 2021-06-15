@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -49,7 +49,7 @@ public:
    * size restriction)
    */
   StringsListSelectionWidget(QWidget *parent = nullptr, const ListType listType = DOUBLE_LIST,
-                             const unsigned int maxSelectedStringsListSize = 0);
+                             const uint maxSelectedStringsListSize = 0);
 
   /**
    * This constructor creates the widget and initializes the unselected strings list
@@ -61,7 +61,7 @@ public:
    */
   StringsListSelectionWidget(const std::vector<std::string> &unselectedStringsList,
                              QWidget *parent = nullptr, const ListType listType = DOUBLE_LIST,
-                             const unsigned int maxSelectedStringsListSize = 0);
+                             const uint maxSelectedStringsListSize = 0);
 
   /**
    * Method which sets the look of the widget
@@ -106,7 +106,7 @@ public:
   /**
    * Method which sets the maximum size of the selected strings list
    */
-  void setMaxSelectedStringsListSize(const unsigned int maxSelectedStringsListSize) override;
+  void setMaxSelectedStringsListSize(const uint maxSelectedStringsListSize) override;
 
   /**
    * Method which returns the selected strings as a vector

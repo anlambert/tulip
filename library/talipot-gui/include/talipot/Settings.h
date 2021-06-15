@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -87,8 +87,8 @@ public:
   static QString proxyHost();
   static void setProxyHost(const QString &);
 
-  static unsigned int proxyPort();
-  static void setProxyPort(unsigned int);
+  static uint proxyPort();
+  static void setProxyPort(uint);
 
   static bool isUseProxyAuthentification();
   static void setUseProxyAuthentification(bool);
@@ -126,14 +126,14 @@ public:
   static void setResultPropertyStored(bool);
 
   enum LogPluginCall { NoLog = 0, LogCall = 1, LogCallWithExecutionTime = 2 };
-  static unsigned int logPluginCall();
-  static void setLogPluginCall(unsigned int);
+  static uint logPluginCall();
+  static void setLogPluginCall(uint);
 
   static bool isUseTlpbFileFormat();
   static void setUseTlpbFileFormat(bool);
 
-  static unsigned int seedOfRandomSequence();
-  static void setSeedOfRandomSequence(unsigned int);
+  static uint seedOfRandomSequence();
+  static void setSeedOfRandomSequence(uint);
   static void initSeedOfRandomSequence();
 
   static bool loggerAnchored();

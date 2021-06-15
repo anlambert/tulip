@@ -84,14 +84,14 @@ public:
   static long defaultValue();
 };
 
-class TLP_SCOPE UnsignedIntegerType : public SerializableType<unsigned int> {
+class TLP_SCOPE UnsignedIntegerType : public SerializableType<uint> {
 public:
-  static unsigned int undefinedValue();
-  static unsigned int defaultValue();
+  static uint undefinedValue();
+  static uint defaultValue();
 };
 
 typedef SerializableVectorType<int, IntegerType, false> IntegerVectorType;
-typedef SerializableVectorType<unsigned int, UnsignedIntegerType, false> UnsignedIntegerVectorType;
+typedef SerializableVectorType<uint, UnsignedIntegerType, false> UnsignedIntegerVectorType;
 
 class TLP_SCOPE BooleanType : public TypeInterface<bool> {
 public:
@@ -245,12 +245,12 @@ template class SerializableType<double>;
 template class SerializableType<float>;
 template class SerializableType<int>;
 template class SerializableType<long>;
-template class SerializableType<unsigned int>;
+template class SerializableType<uint>;
 template class SerializableType<tlp::Coord>;
 template class SerializableType<tlp::Size>;
 template class SerializableVectorType<double, DoubleType, false>;
 template class SerializableVectorType<int, IntegerType, false>;
-template class SerializableVectorType<unsigned int, UnsignedIntegerType, false>;
+template class SerializableVectorType<uint, UnsignedIntegerType, false>;
 template class SerializableVectorType<tlp::Coord, PointType, false>;
 template class SerializableVectorType<tlp::Size, SizeType, true>;
 template class SerializableVectorType<tlp::Color, ColorType, true>;

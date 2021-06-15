@@ -19,8 +19,8 @@
 class LayoutFunction {
 public:
   virtual ~LayoutFunction() = default;
-  virtual tlp::Vec2i project(const unsigned int id) const = 0;
-  virtual unsigned int unproject(const tlp::Vec2i &) const = 0;
+  virtual tlp::Vec2i project(const uint id) const = 0;
+  virtual uint unproject(const tlp::Vec2i &) const = 0;
 };
 
 #endif // LAYOUT_FUNCTION_H

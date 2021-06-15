@@ -30,7 +30,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(ExtendedClusterOperationTest);
 void ExtendedClusterOperationTest::setUp() {
   graph = tlp::newGraph();
 
-  for (unsigned int i = 0; i < 5; ++i) {
+  for (uint i = 0; i < 5; ++i) {
     nodes.push_back(graph->addNode());
   }
 

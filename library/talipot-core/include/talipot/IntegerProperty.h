@@ -81,9 +81,9 @@ public:
     return getEdgeMax(g);
   }
 
-  void nodesUniformQuantification(unsigned int) override;
+  void nodesUniformQuantification(uint) override;
 
-  void edgesUniformQuantification(unsigned int) override;
+  void edgesUniformQuantification(uint) override;
 
   NumericProperty *copyProperty(Graph *g) override {
     auto *newProp = new IntegerProperty(g);

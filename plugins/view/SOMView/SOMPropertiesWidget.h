@@ -49,13 +49,13 @@ public:
   SOMPropertiesWidget(SOMView *view, QWidget *parent = nullptr);
   ~SOMPropertiesWidget() override;
 
-  unsigned int getGridWidth() const;
-  unsigned int getGridHeight() const;
+  uint getGridWidth() const;
+  uint getGridHeight() const;
   QString getConnectivityLabel() const;
   bool getOppositeConnected() const;
   double getLearningRateValue() const;
   QString getDiffusionRateMethodLabel() const;
-  unsigned int getMaxDistanceValue() const;
+  uint getMaxDistanceValue() const;
   double getDiffusionRateValue() const;
   bool getAutoMapping() const;
   bool getLinkColor() const;
@@ -83,7 +83,7 @@ public:
   /**
    * @brief Return the duration of the animation in second.
    */
-  unsigned int getAnimationDuration() const;
+  uint getAnimationDuration() const;
 
   /**
    * @brief Store the configuration widget data properties.

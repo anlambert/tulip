@@ -161,7 +161,7 @@ void GlLayer::getXMLOnlyForCameras(string &outString) {
   GlXMLTools::endDataNode(outString);
 }
 
-void GlLayer::setWithXML(const string &inString, unsigned int &currentPosition) {
+void GlLayer::setWithXML(const string &inString, uint &currentPosition) {
 
   GlXMLTools::enterDataNode(inString, currentPosition);
   string childName = GlXMLTools::enterChildNode(inString, currentPosition);

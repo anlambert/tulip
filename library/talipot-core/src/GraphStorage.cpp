@@ -306,9 +306,9 @@ void GraphStorage::swapEdgeOrder(const node n, const edge e1, const edge e2) {
   }
 
   std::vector<edge> &adjacency = nodeData[n.id].edges;
-  unsigned int e1Pos = UINT_MAX, e2Pos = UINT_MAX;
+  uint e1Pos = UINT_MAX, e2Pos = UINT_MAX;
 
-  for (unsigned int i = 0; i < deg(n); ++i) {
+  for (uint i = 0; i < deg(n); ++i) {
     if (adjacency[i] == e1) {
       e1Pos = i;
     }
@@ -357,9 +357,9 @@ node GraphStorage::addNode() {
  * @brief Add nb new nodes in the structure
  * and return them in addedNodes
  */
-std::vector<node> GraphStorage::addNodes(unsigned int nb) {
+std::vector<node> GraphStorage::addNodes(uint nb) {
   std::vector<node> addedNodes = nodeIds.addNb(nb);
-  unsigned int sz = nodeData.size();
+  uint sz = nodeData.size();
 
   if (sz < nodeIds.size()) {
     nodeData.resize(nodeIds.size());
@@ -458,15 +458,15 @@ edge GraphStorage::addEdge(const node src, const node tgt) {
  * in the addedEdges vector
  */
 std::vector<edge> GraphStorage::addEdges(const std::vector<std::pair<node, node>> &ends) {
-  unsigned int nb = ends.size();
+  uint nb = ends.size();
   std::vector<edge> addedEdges = edgeIds.addNb(nb);
-  unsigned int sz = edgeEnds.size();
+  uint sz = edgeEnds.size();
 
   if (sz < edgeIds.size()) {
     edgeEnds.resize(edgeIds.size());
   }
 
-  for (unsigned int i = 0; i < nb; ++i) {
+  for (uint i = 0; i < nb; ++i) {
     const auto &[src, tgt] = ends[i];
     edge e = addedEdges[i];
     edgeEnds[e.id] = {src, tgt};

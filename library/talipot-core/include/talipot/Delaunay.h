@@ -35,8 +35,8 @@ namespace tlp {
  * set of points.
  */
 TLP_SCOPE bool delaunayTriangulation(std::vector<Coord> &points,
-                                     std::vector<std::pair<unsigned int, unsigned int>> &edges,
-                                     std::vector<std::vector<unsigned int>> &simplices,
+                                     std::vector<std::pair<uint, uint>> &edges,
+                                     std::vector<std::vector<uint>> &simplices,
                                      bool voronoiMode = false);
 
 /**
@@ -52,56 +52,56 @@ public:
   typedef Coord Vertex;
 
   // A voronoi edge defined by the indexes of its extremities in the vertices vector
-  typedef std::pair<unsigned int, unsigned int> Edge;
+  typedef std::pair<uint, uint> Edge;
 
   // A voronoi Cell defined by the indexes of its vertices in the vertices vector
-  typedef std::set<unsigned int> Cell;
+  typedef std::set<uint> Cell;
 
   // Returns the number of voronoi sites
-  unsigned int nbSites() const {
+  uint nbSites() const {
     return sites.size();
   }
 
   // Returns the number of voronoi vertices
-  unsigned int nbVertices() const {
+  uint nbVertices() const {
     return vertices.size();
   }
 
   // Returns the number of voronoi edges
-  unsigned int nbEdges() const {
+  uint nbEdges() const {
     return edges.size();
   }
 
   // Returns the ith site
-  const Site &site(const unsigned int siteIdx) {
+  const Site &site(const uint siteIdx) {
     return sites[siteIdx];
   }
 
   // Returns the ith voronoi vertex
-  const Vertex &vertex(const unsigned int vertexIdx) {
+  const Vertex &vertex(const uint vertexIdx) {
     return vertices[vertexIdx];
   }
 
   // Returns the ith voronoi edge
-  const Edge &edge(const unsigned int edgeIdx) {
+  const Edge &edge(const uint edgeIdx) {
     return edges[edgeIdx];
   }
 
   // Returns the ith voronoi cell
-  const Cell &cell(const unsigned int cellIdx) {
+  const Cell &cell(const uint cellIdx) {
     return cells[cellIdx];
   }
 
   // Returns the degree of the ith voronoi vertex
-  unsigned int degreeOfVertex(const unsigned int vertexIdx) {
+  uint degreeOfVertex(const uint vertexIdx) {
     return verticesDegree[vertexIdx];
   }
 
   // Returns the edges of the voronoi cell for the ith site
-  std::vector<Edge> voronoiEdgesForSite(const unsigned int siteIdx) {
+  std::vector<Edge> voronoiEdgesForSite(const uint siteIdx) {
     std::vector<Edge> ret;
 
-    for (unsigned int i : siteToCellEdges[siteIdx]) {
+    for (uint i : siteToCellEdges[siteIdx]) {
       ret.push_back(edges[i]);
     }
 
@@ -109,7 +109,7 @@ public:
   }
 
   // Returns the cell for the ith site
-  const Cell &voronoiCellForSite(const unsigned int siteIdx) {
+  const Cell &voronoiCellForSite(const uint siteIdx) {
     return cells[siteToCell[siteIdx]];
   }
 
@@ -118,9 +118,9 @@ public:
   std::vector<Vertex> vertices;
   std::vector<Edge> edges;
   std::vector<Cell> cells;
-  std::unordered_map<unsigned int, std::vector<unsigned int>> siteToCellEdges;
-  std::unordered_map<unsigned int, unsigned int> siteToCell;
-  std::unordered_map<unsigned int, unsigned int> verticesDegree;
+  std::unordered_map<uint, std::vector<uint>> siteToCellEdges;
+  std::unordered_map<uint, uint> siteToCell;
+  std::unordered_map<uint, uint> verticesDegree;
 };
 
 /**

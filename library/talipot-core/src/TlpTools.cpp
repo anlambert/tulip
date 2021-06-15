@@ -318,18 +318,18 @@ std::string tlp::demangleClassName(const std::string &className, bool) {
 // random sequence management
 //=========================================================
 
-static unsigned int randomSeed = UINT_MAX;
+static uint randomSeed = UINT_MAX;
 // uniformly-distributed integer random number generator that produces non-deterministic random
 // numbers
 static std::random_device rd;
 // Mersenne Twister pseudo-random generator of 32-bit numbers
 static std::mt19937 mt;
 
-void tlp::setSeedOfRandomSequence(unsigned int seed) {
+void tlp::setSeedOfRandomSequence(uint seed) {
   randomSeed = seed;
 }
 
-unsigned int tlp::getSeedOfRandomSequence() {
+uint tlp::getSeedOfRandomSequence() {
   return randomSeed;
 }
 
@@ -358,11 +358,11 @@ int tlp::randomInteger(int max) {
   }
 }
 
-unsigned int tlp::randomUnsignedInteger(unsigned int max) {
+uint tlp::randomUnsignedInteger(uint max) {
   if (max == 0) {
     return 0;
   } else {
-    std::uniform_int_distribution<unsigned int> dist(0, max);
+    std::uniform_int_distribution<uint> dist(0, max);
     return dist(mt);
   }
 }

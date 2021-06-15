@@ -269,9 +269,8 @@ DataSet GlCompositeHierarchyManager::getData() {
   DataSet set;
 
   for (const auto &it : _graphsComposites) {
-    unsigned int graphId = it.first->getId();
-    unsigned int visibility =
-        uint(it.second.first->isVisible()) * 2 + uint(it.second.second->isVisible());
+    uint graphId = it.first->getId();
+    uint visibility = uint(it.second.first->isVisible()) * 2 + uint(it.second.second->isVisible());
     stringstream graph;
     graph << graphId;
     set.set(graph.str(), visibility);
@@ -286,7 +285,7 @@ void GlCompositeHierarchyManager::setData(const DataSet &dataSet) {
     graph << it.first->getId();
 
     if (dataSet.exists(graph.str())) {
-      unsigned int visibility = 0;
+      uint visibility = 0;
       dataSet.get(graph.str(), visibility);
       bool firstVisibility = visibility - 1 > 0;
       it.second.first->setVisible(firstVisibility);

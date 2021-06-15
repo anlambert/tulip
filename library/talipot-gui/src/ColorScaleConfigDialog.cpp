@@ -127,9 +127,9 @@ void ColorScaleConfigDialog::accept() {
 
 vector<Color> ColorScaleConfigDialog::getColorScaleFromImageFile(const QString &imageFilePath) {
   QImage gradientImage(imageFilePath);
-  unsigned int imageHeight = gradientImage.height();
+  uint imageHeight = gradientImage.height();
 
-  unsigned int step = 1;
+  uint step = 1;
 
   if (imageHeight > 50) {
     step = 10;
@@ -137,7 +137,7 @@ vector<Color> ColorScaleConfigDialog::getColorScaleFromImageFile(const QString &
 
   vector<Color> colors;
 
-  for (unsigned int i = 0; i < imageHeight; i += step) {
+  for (uint i = 0; i < imageHeight; i += step) {
     QColor pixelColor = gradientImage.pixelColor(0, i);
     colors.push_back(QColorToColor(pixelColor));
   }
@@ -462,7 +462,7 @@ void ColorScaleConfigDialog::setColorScale(const ColorScale &colorScale) {
 
     // init dialog with colors in the color Scale
     const auto &colorMap = colorScale.getColorMap();
-    unsigned int row = 0;
+    uint row = 0;
 
     if (colorScale.isGradient()) {
       _ui->colorsTable->setRowCount(colorMap.size());

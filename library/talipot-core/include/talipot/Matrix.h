@@ -115,7 +115,7 @@ public:
    * Returns a new vector equal to the most influent eigenvector of the
    * matrix
    */
-  Vector<Obj, SIZE> powerIteration(const unsigned int nIterations) const;
+  Vector<Obj, SIZE> powerIteration(const uint nIterations) const;
 
   /**
    * Simplifies a 3x3 matrix in 2x2 matrix to be used with computeEigenVector

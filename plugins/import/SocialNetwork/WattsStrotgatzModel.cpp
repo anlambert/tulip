@@ -49,15 +49,15 @@ struct WattsStrogatzModel : public ImportModule {
                     "1.0", "Social network")
 
   WattsStrogatzModel(PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "200");
-    addInParameter<unsigned int>("k", paramHelp[1].data(), "3");
+    addInParameter<uint>("nodes", paramHelp[0].data(), "200");
+    addInParameter<uint>("k", paramHelp[1].data(), "3");
     addInParameter<double>("p", paramHelp[2].data(), "0.02");
     addInParameter<bool>("original model", paramHelp[3].data(), "false");
   }
 
   bool importGraph() override {
-    unsigned int nbNodes = 200;
-    unsigned int k = 3;
+    uint nbNodes = 200;
+    uint k = 3;
     double p = 0.02;
     bool original_model = false;
 
@@ -108,14 +108,14 @@ struct WattsStrogatzModel : public ImportModule {
       graph->reserveEdges(nbNodes * (k + 1));
     }
 
-    for (unsigned int i = 1; i < nbNodes; ++i) {
+    for (uint i = 1; i < nbNodes; ++i) {
       graph->addEdge(nodes[i - 1], nodes[i]);
     }
 
     graph->addEdge(nodes[nbNodes - 1], nodes[0]);
 
-    for (unsigned int i = 0; i < nbNodes; ++i) {
-      for (unsigned int j = 0; j < k; ++j) {
+    for (uint i = 0; i < nbNodes; ++i) {
+      for (uint j = 0; j < k; ++j) {
         int d = i - j - 2;
 
         if (d < 0) {

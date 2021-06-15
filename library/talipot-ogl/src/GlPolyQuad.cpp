@@ -71,8 +71,8 @@ void GlPolyQuad::draw(float, Camera *) {
   vector<unsigned short> quadIndices;
   vector<unsigned short> outlineIndices;
 
-  unsigned int nbSubdivisionsPerSegment = 1;
-  unsigned int nbVertices = polyQuadEdges.size();
+  uint nbSubdivisionsPerSegment = 1;
+  uint nbVertices = polyQuadEdges.size();
   vector<Coord> *vertices = &polyQuadEdges;
 
   texCoordsArray.reserve(nbVertices * 2);
@@ -109,9 +109,9 @@ void GlPolyQuad::draw(float, Camera *) {
 
     } else {
 
-      for (unsigned int j = 0; j < nbSubdivisionsPerSegment; ++j) {
+      for (uint j = 0; j < nbSubdivisionsPerSegment; ++j) {
 
-        unsigned int n = i * nbSubdivisionsPerSegment + j;
+        uint n = i * nbSubdivisionsPerSegment + j;
 
         Coord v1 = polyQuadEdges[2 * i] + (j / float(nbSubdivisionsPerSegment - 1)) *
                                               (polyQuadEdges[2 * (i + 1)] - polyQuadEdges[2 * i]);
@@ -233,7 +233,7 @@ void GlPolyQuad::getXML(string &outString) {
   GlXMLTools::getXML(outString, "textureName", textureName);
 }
 
-void GlPolyQuad::setWithXML(const string &inString, unsigned int &currentPosition) {
+void GlPolyQuad::setWithXML(const string &inString, uint &currentPosition) {
 
   GlXMLTools::setWithXML(inString, currentPosition, "polyQuadEdges", polyQuadEdges);
   GlXMLTools::setWithXML(inString, currentPosition, "polyQuadEdgesColors", polyQuadEdgesColors);

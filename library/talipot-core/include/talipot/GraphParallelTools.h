@@ -31,7 +31,7 @@ void inline TLP_MAP_NODES(const tlp::Graph *graph, const NodeFunction &nodeFunct
 template <typename NodeIndexFunction>
 void inline TLP_MAP_NODES_AND_INDICES(const tlp::Graph *graph,
                                       const NodeIndexFunction &nodeIndexFunction) {
-  unsigned int i = 0;
+  uint i = 0;
   for (auto n : graph->nodes()) {
     nodeIndexFunction(n, i++);
   }
@@ -79,13 +79,13 @@ void inline TLP_PARALLEL_MAP_NODES(const tlp::Graph *graph, const NodeFunction &
  * Example of use:
  *
  * @code
- * auto computationIntensiveTask = [&](const tlp::node &n, unsigned int i) {
+ * auto computationIntensiveTask = [&](const tlp::node &n, uint i) {
  *  double result = 0;
  *   ...
  *  return result;
  * };
  * tlp::NodeVectorProperty<double> result(graph);
- * TLP_PARALLEL_MAP_EDGES(graph, [&](const tlp::node &n, unsigned int i) {
+ * TLP_PARALLEL_MAP_EDGES(graph, [&](const tlp::node &n, uint i) {
  *   // run task in a thread
  *   result[n] = computationIntensiveTask(n, i);
  * });
@@ -109,7 +109,7 @@ void inline TLP_MAP_EDGES(const tlp::Graph *graph, const EdgeFunction &edgeFunct
 template <typename EdgeIndexFunction>
 void inline TLP_MAP_EDGES_AND_INDICES(const tlp::Graph *graph,
                                       const EdgeIndexFunction &edgeIndexFunction) {
-  unsigned int i = 0;
+  uint i = 0;
   for (auto e : graph->edges()) {
     edgeIndexFunction(e, i++);
   }
@@ -157,13 +157,13 @@ void inline TLP_PARALLEL_MAP_EDGES(const tlp::Graph *graph, const EdgeFunction &
  * Example of use:
  *
  * @code
- * auto computationIntensiveTask = [&](const tlp::edge &e, unsigned int i) {
+ * auto computationIntensiveTask = [&](const tlp::edge &e, uint i) {
  *  double result = 0;
  *   ...
  *  return result;
  * };
  * tlp::EdgeVectorProperty<double> result(graph);
- * TLP_PARALLEL_MAP_EDGES(graph, [&](const tlp::edge &e, unsigned int i) {
+ * TLP_PARALLEL_MAP_EDGES(graph, [&](const tlp::edge &e, uint i) {
  *   // run task in a thread
  *   result[e] = computationIntensiveTask(e, i);
  * });

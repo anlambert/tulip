@@ -64,7 +64,7 @@ double BubblePack::computeRelativePosition(tlp::node n,
     sizeFather = 0.1;
   }
 
-  unsigned int outdeg = tree->outdeg(n);
+  uint outdeg = tree->outdeg(n);
 
   /**
    * Special case if the node is a leaf.
@@ -94,7 +94,7 @@ double BubblePack::computeRelativePosition(tlp::node n,
   {
     std::vector<unsigned> index(outdeg);
 
-    for (unsigned int i = 0; i < outdeg; ++i) {
+    for (uint i = 0; i < outdeg; ++i) {
       index[i] = i;
     }
 
@@ -107,7 +107,7 @@ double BubblePack::computeRelativePosition(tlp::node n,
       double curRad = sizeFather;
       bool sens = true;
 
-      for (unsigned int i = 0; i < index.size(); ++i) {
+      for (uint i = 0; i < index.size(); ++i) {
         double radius = realCircleRadius[index[i]];
         double crad = radius + curRad + 0.01;
         double calpha;
@@ -161,13 +161,13 @@ double BubblePack::computeRelativePosition(tlp::node n,
         placed.push_back(circles[index[i]]);
       }
     } else { //        if (false) //polyo packing
-      for (unsigned int i : index) {
+      for (uint i : index) {
         double radius = realCircleRadius[i];
         double bestRadius = FLT_MAX;
         int discret = ceil(2. * (sizeFather + radius) * M_PI) + 3;
         angle += M_PI / 3.;
 
-        TLP_PARALLEL_MAP_INDICES(discret, [&](unsigned int j) {
+        TLP_PARALLEL_MAP_INDICES(discret, [&](uint j) {
           float _angle = float(j) * 2. * M_PI / float(discret) + angle;
           double spiralRadius = sizeFather + radius + 1E-3;
           Circled tmp(spiralRadius * cos(_angle), spiralRadius * sin(_angle), radius);
@@ -220,7 +220,7 @@ double BubblePack::computeRelativePosition(tlp::node n,
    */
   Iterator<node> *itN = tree->getOutNodes(n);
 
-  for (unsigned int i = 0; i < outdeg; ++i) {
+  for (uint i = 0; i < outdeg; ++i) {
     Vec4f &relPos = relativePosition[itN->next()];
     Circled &circle = circles[i];
     relPos[0] = circle[0] - circleH[0];

@@ -29,7 +29,7 @@ edge PlanarityTestImpl::edgeReversal(edge e) {
 }
 //=================================================================
 static void dfsAux(Graph *sG, node n, MutableContainer<int> &dfsPre, MutableContainer<int> &dfsPos,
-                   list<edge> &dfsEdges, unsigned int &preCount, unsigned int &postCount) {
+                   list<edge> &dfsEdges, uint &preCount, uint &postCount) {
   dfsPre.set(n.id, ++preCount);
   for (auto e : sG->getOutEdges(n)) {
     node target = sG->target(e);
@@ -47,8 +47,8 @@ list<edge> posDFS(Graph *sG, MutableContainer<int> &dfsPos) {
   list<edge> dfsEdges;
   MutableContainer<int> dfsPre;
   dfsPre.setAll(0);
-  unsigned int preCount = 0;
-  unsigned int postCount = 0;
+  uint preCount = 0;
+  uint postCount = 0;
   for (auto n : sG->nodes()) {
     if (dfsPre.get(n.id) == 0) {
       dfsAux(sG, n, dfsPre, dfsPos, dfsEdges, preCount, postCount);
@@ -129,7 +129,7 @@ void PlanarityTestImpl::sortNodesIncreasingOrder(Graph *g, MutableContainer<int>
   }
 
   for (int i = 1; i <= numberOfNodes; ++i) {
-    unsigned int tmp = value.get(a[i].id);
+    uint tmp = value.get(a[i].id);
     ++c[tmp];
   }
 

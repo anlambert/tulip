@@ -54,15 +54,15 @@ public:
                     "1.0", "Social network")
 
   AttractAndIntroduce(tlp::PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "750");
-    addInParameter<unsigned int>("edges", paramHelp[1].data(), "3150");
+    addInParameter<uint>("nodes", paramHelp[0].data(), "750");
+    addInParameter<uint>("edges", paramHelp[1].data(), "3150");
     addInParameter<double>("alpha", paramHelp[2].data(), "0.9");
     addInParameter<double>("beta", paramHelp[3].data(), "0.3");
   }
 
   bool importGraph() override {
-    unsigned int nbNodes = 750;
-    unsigned int nbEdges = 3150;
+    uint nbNodes = 750;
+    uint nbEdges = 3150;
 
     double alpha = 0.9;
     double beta = 0.3;
@@ -86,7 +86,7 @@ public:
     pluginProgress->showPreview(false);
     tlp::initRandomSequence();
 
-    unsigned int iterations = nbNodes + nbEdges;
+    uint iterations = nbNodes + nbEdges;
 
     graph->addNodes(nbNodes);
     graph->reserveEdges(nbEdges);
@@ -94,7 +94,7 @@ public:
     NodeVectorProperty<double> pAttractProperty(graph);
     NodeVectorProperty<double> pIntroduceProperty(graph);
 
-    for (unsigned int i = 0; i < nbNodes; ++i) {
+    for (uint i = 0; i < nbNodes; ++i) {
       pAttractProperty[i] = ((1 - alpha) > randomDouble(1.0)) ? 0 : randomDouble(1.0);
       pIntroduceProperty[i] = (beta > randomDouble(1.0)) ? 1 : 0;
 
@@ -105,12 +105,12 @@ public:
       }
     }
 
-    unsigned int tmpE = 0;
+    uint tmpE = 0;
     const vector<node> &nodes = graph->nodes();
 
     while (tmpE < nbEdges) {
-      unsigned int i = randomInteger(nbNodes - 1);
-      unsigned int j;
+      uint i = randomInteger(nbNodes - 1);
+      uint j;
 
       do {
         j = randomInteger(nbNodes - 1);

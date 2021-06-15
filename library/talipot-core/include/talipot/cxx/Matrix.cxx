@@ -331,14 +331,14 @@ tlp::Vector<Obj, SIZE> tlp::operator*(const tlp::Vector<Obj, SIZE> &vec, const M
 
 //=====================================================================================
 template <typename Obj, size_t SIZE>
-tlp::Vector<Obj, SIZE> MATRIX::powerIteration(const unsigned int nIterations) const {
+tlp::Vector<Obj, SIZE> MATRIX::powerIteration(const uint nIterations) const {
   tlp::Vector<Obj, SIZE> iteration;
 
   for (size_t i = 0; i < SIZE; i++) {
     iteration[i] = 1;
   }
 
-  for (unsigned int i = 0; i < nIterations; i++) {
+  for (uint i = 0; i < nIterations; i++) {
     iteration = (*this) * iteration;
     iteration /= iteration.norm();
   }

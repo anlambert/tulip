@@ -19,17 +19,17 @@
 
 struct DimensionBase {
   virtual ~DimensionBase() = default;
-  virtual unsigned int numberOfItems() const = 0;
-  virtual unsigned int numberOfValues() const = 0;
-  virtual std::string getItemLabelAtRank(const unsigned int rank) const = 0;
-  virtual std::string getItemLabel(const unsigned int itemId) const = 0;
-  virtual double getItemValue(const unsigned int itemId) const = 0;
-  virtual double getItemValueAtRank(const unsigned int rank) const = 0;
-  virtual unsigned int getItemIdAtRank(const unsigned int rank) = 0;
-  virtual unsigned int getRankForItem(const unsigned int itemId) = 0;
+  virtual uint numberOfItems() const = 0;
+  virtual uint numberOfValues() const = 0;
+  virtual std::string getItemLabelAtRank(const uint rank) const = 0;
+  virtual std::string getItemLabel(const uint itemId) const = 0;
+  virtual double getItemValue(const uint itemId) const = 0;
+  virtual double getItemValueAtRank(const uint rank) const = 0;
+  virtual uint getItemIdAtRank(const uint rank) = 0;
+  virtual uint getRankForItem(const uint itemId) = 0;
   virtual double minValue() const = 0;
   virtual double maxValue() const = 0;
-  virtual std::vector<unsigned int> links(const unsigned int itemId) const = 0;
+  virtual std::vector<uint> links(const uint itemId) const = 0;
   virtual std::string getDimensionName() const = 0;
 };
 

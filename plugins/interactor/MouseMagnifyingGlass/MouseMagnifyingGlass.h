@@ -74,7 +74,7 @@ public:
 
   void construct() override;
 
-  unsigned int priority() const override {
+  uint priority() const override {
     return StandardInteractorPriority::MagnifyingGlass;
   }
   QWidget *configurationWidget() const override {

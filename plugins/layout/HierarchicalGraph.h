@@ -57,7 +57,7 @@ private:
   void DagLevelSpanningTree(tlp::Graph *sg, tlp::DoubleProperty *embedding);
   std::vector<std::vector<tlp::node>> grid;
   std::unique_ptr<tlp::DoubleProperty> embedding;
-  void twoLayerCrossReduction(tlp::Graph *sg, unsigned int freeLayer);
+  void twoLayerCrossReduction(tlp::Graph *sg, uint freeLayer);
   void crossReduction(tlp::Graph *sg);
   void computeEdgeBends(const tlp::Graph *mySGraph, tlp::LayoutProperty &tmpLayout,
                         const std::unordered_map<tlp::edge, tlp::edge> &replacedEdges,
@@ -65,7 +65,7 @@ private:
   void computeSelfLoops(tlp::Graph *mySGraph, tlp::LayoutProperty &tmpLayout,
                         std::vector<tlp::SelfLoops> &listSelfLoops);
   void buildGrid(tlp::Graph *);
-  unsigned int degree(tlp::Graph *sg, tlp::node n, bool sense);
+  uint degree(tlp::Graph *sg, tlp::node n, bool sense);
   void initCross(tlp::Graph *sg, tlp::node n, tlp::MutableContainer<bool> &visited, int id);
 
   LessThanNode2 lessNode;

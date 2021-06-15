@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -58,7 +58,7 @@ public:
   /**
    * sets the maximum size of the selected strings list
    */
-  void setMaxSelectedStringsListSize(const unsigned int maxSize);
+  void setMaxSelectedStringsListSize(const uint maxSize);
 
   /**
    * sets the strings list and the already selected strings
@@ -75,7 +75,7 @@ public:
   explicit StringsListSelectionDialog(
       QString title, QWidget *parent = nullptr,
       const StringsListSelectionWidget::ListType listType = StringsListSelectionWidget::SIMPLE_LIST,
-      const unsigned int maxSelectedStringsListSize = 0);
+      const uint maxSelectedStringsListSize = 0);
   ~StringsListSelectionDialog() override;
 
   /**
@@ -94,7 +94,7 @@ public:
       QString title, const std::vector<std::string> &strList, std::vector<std::string> &selList,
       QWidget *parent = nullptr,
       const StringsListSelectionWidget::ListType listType = StringsListSelectionWidget::SIMPLE_LIST,
-      const unsigned int maxSize = 0);
+      const uint maxSize = 0);
 
 private:
   Ui::StringsListSelectionDialog *ui;

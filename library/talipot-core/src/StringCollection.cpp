@@ -91,7 +91,7 @@ const std::string &StringCollection::getCurrentString() const {
   return emptyString;
 }
 
-bool StringCollection::setCurrent(const unsigned int param) {
+bool StringCollection::setCurrent(const uint param) {
   if (param < _data.size()) {
     current = param;
     return true;
@@ -101,7 +101,7 @@ bool StringCollection::setCurrent(const unsigned int param) {
 }
 
 bool StringCollection::setCurrent(const string param) {
-  for (unsigned int i = 0; i < _data.size(); ++i) {
+  for (uint i = 0; i < _data.size(); ++i) {
     if (_data.at(i) == param) {
       current = i;
       return true;

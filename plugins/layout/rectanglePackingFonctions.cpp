@@ -68,7 +68,7 @@ bool RectanglePackingLimitPositions(vector<Rectangle<float>> &v, const char *qua
   int counter = 1;
   int entrySize = v.size();
 
-  unsigned int numberTestedPositions;
+  uint numberTestedPositions;
   vector<Rectangle<float>>::iterator itNewRect;
 
   RectanglePacking rectPack(entrySize);

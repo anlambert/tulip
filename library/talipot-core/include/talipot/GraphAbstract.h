@@ -38,13 +38,13 @@ class TLP_SCOPE GraphAbstract : public Graph {
   GraphProperty *metaGraphProperty;
 
 protected:
-  GraphAbstract(Graph *supergraph, unsigned int id = 0);
+  GraphAbstract(Graph *supergraph, uint id = 0);
 
 public:
   ~GraphAbstract() override;
   void clear() override;
   // use to enforce subgraph id
-  Graph *addSubGraph(unsigned int id, BooleanProperty *selection = nullptr,
+  Graph *addSubGraph(uint id, BooleanProperty *selection = nullptr,
                      const std::string &name = "unnamed");
   Graph *addSubGraph(BooleanProperty *selection = nullptr,
                      const std::string &name = "unnamed") override {
@@ -64,15 +64,15 @@ public:
   }
   bool isSubGraph(const Graph *sg) const override;
   bool isDescendantGraph(const Graph *sg) const override;
-  Graph *getSubGraph(unsigned int id) const override;
+  Graph *getSubGraph(uint id) const override;
   Graph *getSubGraph(const std::string &name) const override;
-  Graph *getDescendantGraph(unsigned int id) const override;
+  Graph *getDescendantGraph(uint id) const override;
   Graph *getDescendantGraph(const std::string &name) const override;
-  Graph *getNthSubGraph(unsigned int n) const override;
-  unsigned int numberOfSubGraphs() const override {
+  Graph *getNthSubGraph(uint n) const override;
+  uint numberOfSubGraphs() const override {
     return subgraphs.size();
   }
-  unsigned int numberOfDescendantGraphs() const override;
+  uint numberOfDescendantGraphs() const override;
 
   //=======================================
   bool isMetaNode(const node) const override;
@@ -84,8 +84,8 @@ public:
   //=======================================
   node getOneNode() const override;
   node getRandomNode() const override;
-  node getInNode(const node, unsigned int) const override;
-  node getOutNode(const node, unsigned int) const override;
+  node getInNode(const node, uint) const override;
+  node getOutNode(const node, uint) const override;
   edge getOneEdge() const override;
   edge getRandomEdge() const override;
   //========================================

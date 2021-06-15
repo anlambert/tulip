@@ -28,7 +28,7 @@ static constexpr std::string_view paramHelp[] = {
 //======================================================
 Kruskal::Kruskal(const tlp::PluginContext *context) : BooleanAlgorithm(context) {
   addInParameter<NumericProperty *>("edge weight", paramHelp[0].data(), "viewMetric");
-  addOutParameter<unsigned int>("#edges selected", "The number of newly selected edges");
+  addOutParameter<uint>("#edges selected", "The number of newly selected edges");
 }
 
 //======================================================

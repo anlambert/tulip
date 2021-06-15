@@ -127,7 +127,7 @@ public:
       }
 
       // loop on entries
-      unsigned int i = 0;
+      uint i = 0;
 
       for (auto &fe : entries) {
 
@@ -210,14 +210,14 @@ public:
             vector<string> authPropValue;
             vector<node> authorNodes;
 
-            for (unsigned int j = 0; j < authors.size(); ++j) {
+            for (uint j = 0; j < authors.size(); ++j) {
 
               xdkbib::Author &auth = authors[j];
               vector<string> firstNames = auth.first();
               string aName;
               string aKey;
 
-              for (unsigned int k = 0; k < firstNames.size(); ++k) {
+              for (uint k = 0; k < firstNames.size(); ++k) {
                 string &firstName = firstNames[k];
 
                 if (k) {
@@ -287,7 +287,7 @@ public:
               }
               auto addLink = [&](node a1, node a2) {
                 edge e = graph->existEdge(a1, a2);
-                unsigned int cnt = 0;
+                uint cnt = 0;
                 if (e.isValid()) {
                   cnt = countProp->getEdgeValue(e);
                 } else {
@@ -309,8 +309,8 @@ public:
                 }
               } else {
                 if (oneEdgePerPubli) {
-                  for (unsigned int j = 0; j < authorNodes.size() - 1; ++j) {
-                    for (unsigned int k = j + 1; k < authorNodes.size(); ++k) {
+                  for (uint j = 0; j < authorNodes.size() - 1; ++j) {
+                    for (uint k = j + 1; k < authorNodes.size(); ++k) {
                       edge e = graph->addEdge(authorNodes[j], authorNodes[k]);
                       // setup key, type and year
                       keyProp->setEdgeValue(e, key);
@@ -319,8 +319,8 @@ public:
                     }
                   }
                 } else {
-                  for (unsigned int j = 0; j < authorNodes.size() - 1; ++j) {
-                    for (unsigned int k = j + 1; k < authorNodes.size(); ++k) {
+                  for (uint j = 0; j < authorNodes.size() - 1; ++j) {
+                    for (uint k = j + 1; k < authorNodes.size(); ++k) {
                       addLink(authorNodes[j], authorNodes[k]);
                     }
                   }

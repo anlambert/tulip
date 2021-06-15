@@ -22,12 +22,12 @@
 
 CPPUNIT_TEST_SUITE_REGISTRATION(IteratorTest);
 
-const unsigned int numberOfNodes = 4;
+const uint numberOfNodes = 4;
 
 void IteratorTest::setUp() {
   graph = tlp::newGraph();
   idMetric = graph->getDoubleProperty("idMetric");
-  for (unsigned int i = 0; i < numberOfNodes; ++i) {
+  for (uint i = 0; i < numberOfNodes; ++i) {
     tlp::node n = graph->addNode();
     idMetric->setNodeValue(n, n.id);
   }
@@ -42,7 +42,7 @@ void IteratorTest::testIterator() {
   for (tlp::node n : graph->getNodes()) {
     nodesSet.insert(n);
   }
-  CPPUNIT_ASSERT_EQUAL(numberOfNodes, static_cast<unsigned int>(nodesSet.size()));
+  CPPUNIT_ASSERT_EQUAL(numberOfNodes, static_cast<uint>(nodesSet.size()));
 }
 
 void IteratorTest::testFilterIterator() {
@@ -51,7 +51,7 @@ void IteratorTest::testFilterIterator() {
        tlp::filterIterator(graph->getNodes(), [](const tlp::node &n) { return n.id % 2 == 0; })) {
     nodesSet.insert(n);
   }
-  CPPUNIT_ASSERT_EQUAL(numberOfNodes / 2, static_cast<unsigned int>(nodesSet.size()));
+  CPPUNIT_ASSERT_EQUAL(numberOfNodes / 2, static_cast<uint>(nodesSet.size()));
 }
 
 void IteratorTest::testSortIterator() {
@@ -123,8 +123,8 @@ void IteratorTest::testConcatIterator() {
 }
 
 void IteratorTest::testStableIterator() {
-  unsigned int notStableIterated = 0;
-  unsigned int stableIterated = 0;
+  uint notStableIterated = 0;
+  uint stableIterated = 0;
   tlp::Iterator<tlp::node> *stableIt = tlp::stableIterator(graph->getNodes());
   graph->clear();
   notStableIterated = tlp::iteratorCount(graph->getNodes());
@@ -146,17 +146,17 @@ void IteratorTest::testIteratorMap() {
 }
 
 void IteratorTest::testIteratorReduce() {
-  unsigned int refVal = 0;
+  uint refVal = 0;
   for (tlp::node n : graph->getNodes()) {
     refVal += n.id;
   }
-  unsigned int val = tlp::iteratorReduce(
-      graph->getNodes(), 0u, [](unsigned int curVal, const tlp::node &n) { return curVal + n.id; });
+  uint val = tlp::iteratorReduce(graph->getNodes(), 0u,
+                                 [](uint curVal, const tlp::node &n) { return curVal + n.id; });
   CPPUNIT_ASSERT_EQUAL(refVal, val);
 }
 
 void IteratorTest::testIteratorCountCheck() {
-  for (unsigned int i = 0; i < numberOfNodes; ++i) {
+  for (uint i = 0; i < numberOfNodes; ++i) {
     CPPUNIT_ASSERT(tlp::iteratorCountCheck(graph->getNodes(), i + 1));
   }
   CPPUNIT_ASSERT(tlp::iteratorEmpty(graph->getEdges()));

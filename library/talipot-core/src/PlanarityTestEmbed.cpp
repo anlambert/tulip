@@ -653,7 +653,7 @@ bool PlanarityTestImpl::isPlanarEmbedding(const tlp::Graph *sG) {
   }
 
   int m = sG->numberOfEdges();
-  unsigned int count = 0;
+  uint count = 0;
   MutableContainer<char> considered;
   MutableContainer<bool> sens;
   considered.setAll(0);

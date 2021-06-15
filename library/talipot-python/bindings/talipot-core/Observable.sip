@@ -177,7 +177,7 @@ It is possible to check whether the events are being help by checking the :meth:
 
 // =======================================================================================================
 
-  static unsigned int observersHoldCounter();
+  static uint observersHoldCounter();
 %Docstring
 tlp.Observable.observableHoldCounters()
 
@@ -240,7 +240,7 @@ The Listener will no longer receive events from this object.
 
 // =======================================================================================================
 
-  unsigned int getSent() const;
+  uint getSent() const;
 %Docstring
 tlp.Observable.getSent()
 
@@ -251,7 +251,7 @@ Gets the number of sent events.
 
 // =======================================================================================================
 
-  unsigned int getReceived() const;
+  uint getReceived() const;
 %Docstring
 tlp.Observable.getReceived()
 
@@ -262,7 +262,7 @@ Gets the number of received events.
 
 // =======================================================================================================
 
-  unsigned int countListeners() const;
+  uint countListeners() const;
 %Docstring
 tlp.Observable.countListeners()
 
@@ -273,7 +273,7 @@ Gets the number of Listeners attached to this object.
 
 // =======================================================================================================
 
-  unsigned int countObservers() const;
+  uint countObservers() const;
 %Docstring
 tlp.Observable.countObservers()
 

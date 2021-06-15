@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -32,7 +32,7 @@ class TLP_QT_SCOPE ItemDelegate : public QStyledItemDelegate {
 public:
   static QVariant showEditorDialog(tlp::ElementType, tlp::PropertyInterface *, tlp::Graph *,
                                    ItemDelegate *, QWidget *dialogParent = nullptr,
-                                   unsigned int id = UINT_MAX);
+                                   uint id = UINT_MAX);
 
   explicit ItemDelegate(QObject *parent = nullptr);
   ~ItemDelegate() override;

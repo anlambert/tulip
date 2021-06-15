@@ -68,7 +68,7 @@ double BubbleTree::computeRelativePosition(tlp::node n,
    * A node is dynamically inserted in the neighborhood of n in order to
    * reserve space for the connection of the father of n
    */
-  unsigned int Nc = tree->outdeg(n) + 1;
+  uint Nc = tree->outdeg(n) + 1;
   vector<double> angularSector(Nc);
   std::vector<double> realCircleRadius(Nc);
   realCircleRadius[0] = sizeVirtualNode;
@@ -76,7 +76,7 @@ double BubbleTree::computeRelativePosition(tlp::node n,
 
   Iterator<node> *itN = tree->getOutNodes(n);
 
-  for (unsigned int i = 1; itN->hasNext(); ++i) {
+  for (uint i = 1; itN->hasNext(); ++i) {
     node itn = itN->next();
     realCircleRadius[i] = computeRelativePosition(itn, relativePosition);
     sumRadius += realCircleRadius[i];
@@ -90,9 +90,9 @@ double BubbleTree::computeRelativePosition(tlp::node n,
     std::vector<double> subCircleRadius(Nc);
     subCircleRadius[0] = realCircleRadius[0];
     double maxRadius = sizeVirtualNode;
-    unsigned int maxRadiusIndex = 0;
+    uint maxRadiusIndex = 0;
 
-    for (unsigned int i = 0; i < Nc; ++i) {
+    for (uint i = 0; i < Nc; ++i) {
       subCircleRadius[i] = realCircleRadius[i];
 
       if (maxRadius < subCircleRadius[i]) {
@@ -110,7 +110,7 @@ double BubbleTree::computeRelativePosition(tlp::node n,
         ratio = 1.;
       }
 
-      for (unsigned int i = 0; i < Nc; ++i) {
+      for (uint i = 0; i < Nc; ++i) {
         if (i != maxRadiusIndex) {
           subCircleRadius[i] *= ratio;
         }
@@ -119,7 +119,7 @@ double BubbleTree::computeRelativePosition(tlp::node n,
       sumRadius = 2. * maxRadius;
     }
 
-    for (unsigned int i = 0; i < Nc; ++i) {
+    for (uint i = 0; i < Nc; ++i) {
       angularSector[i] = 2. * M_PI * subCircleRadius[i] / sumRadius;
     }
   } else {
@@ -163,7 +163,7 @@ double BubbleTree::computeRelativePosition(tlp::node n,
   double angle = 0.;
   vector<Circled> circles(Nc);
 
-  for (unsigned int i = 0; i < Nc; ++i) {
+  for (uint i = 0; i < Nc; ++i) {
     double packRadius;
 
     if (fabs(sin(angularSector[i])) > 1E-05) {
@@ -193,7 +193,7 @@ double BubbleTree::computeRelativePosition(tlp::node n,
    */
   itN = tree->getOutNodes(n);
 
-  for (unsigned int i = 1; i < Nc; ++i) {
+  for (uint i = 1; i < Nc; ++i) {
     node itn = itN->next();
     relativePosition[itn][0] = circles[i][0] - circleH[0];
     relativePosition[itn][1] = circles[i][1] - circleH[1];

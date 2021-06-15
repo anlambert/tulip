@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -56,7 +56,7 @@ class View;
   */
 class TLP_QT_SCOPE Interactor : public QObject, public Plugin {
   Q_OBJECT
-  Q_PROPERTY(unsigned int priority READ priority)
+  Q_PROPERTY(uint priority READ priority)
   Q_PROPERTY(QAction *action READ action)
   Q_PROPERTY(tlp::View *view READ view WRITE setView)
   Q_PROPERTY(QCursor cursor READ cursor)
@@ -96,7 +96,7 @@ public:
     Interactors with the top-most priority value will be displayed at the beginning of the list
     while lowest priority will be position at the end.
     */
-  virtual unsigned int priority() const = 0;
+  virtual uint priority() const = 0;
 
   /**
     @return a QAction associated to this interactor.
@@ -237,7 +237,7 @@ public:
     QWidget *configurationActionsWidget() const {                                                  \
       return getComponent()->configurationWidget();                                                \
     }                                                                                              \
-    unsigned int priority() const {                                                                \
+    uint priority() const {                                                                        \
       return getComponent()->priority();                                                           \
     }                                                                                              \
     QAction *action() const {                                                                      \
@@ -325,7 +325,7 @@ public:
     QWidget *configurationActionsWidget() const {                                                  \
       return getComponent()->configurationWidget();                                                \
     }                                                                                              \
-    unsigned int priority() const {                                                                \
+    uint priority() const {                                                                        \
       return PRIORITY;                                                                             \
     }                                                                                              \
     QAction *action() const {                                                                      \

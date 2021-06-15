@@ -82,7 +82,7 @@ bool PlanarityTest::isPlanar(Graph *graph) {
     return itr->second;
   }
 
-  unsigned int nbOfNodes = graph->numberOfNodes();
+  uint nbOfNodes = graph->numberOfNodes();
 
   if (nbOfNodes == 0) {
     return instance.resultsBuffer[graph] = true;

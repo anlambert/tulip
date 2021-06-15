@@ -64,7 +64,7 @@ private:
 protected:
   HistogramView *histoView;
   HistoStatsConfigWidget *histoStatsConfigWidget;
-  std::map<unsigned int, double> graphPropertyValueSet;
+  std::map<uint, double> graphPropertyValueSet;
   double propertyMean;
   double propertyStandardDeviation;
   std::vector<Coord> densityEstimationCurvePoints;

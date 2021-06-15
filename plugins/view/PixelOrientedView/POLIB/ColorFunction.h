@@ -19,7 +19,7 @@
 class ColorFunction {
 public:
   virtual ~ColorFunction() = default;
-  virtual tlp::Color getColor(double value, unsigned int itemId) const = 0;
+  virtual tlp::Color getColor(double value, uint itemId) const = 0;
 };
 
 #endif // COLOR_FUNCTION_H

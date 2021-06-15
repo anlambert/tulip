@@ -425,7 +425,7 @@ the :class:`tlp.StringAlgorithm` interface in Python.
 
 //=====================================================================
 
-unsigned int getSeedOfRandomSequence();
+uint getSeedOfRandomSequence();
 %Docstring
 tlp.getSeedOfRandomSequence()
 
@@ -436,7 +436,7 @@ Returns the value of the seed used for further initialization of a random sequen
 
 //=====================================================================
 
-void setSeedOfRandomSequence(unsigned int seed);
+void setSeedOfRandomSequence(uint seed);
 %Docstring
 tlp.setSeedOfRandomSequence(seed)
 

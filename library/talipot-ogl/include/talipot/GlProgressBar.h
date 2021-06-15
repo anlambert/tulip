@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -36,7 +36,7 @@ public:
    * \param progressBarColor the color of the progress bar
    * \param commentColor the color of the comment and the frame
    */
-  GlProgressBar(const Coord &centerPosition, const unsigned int width, const unsigned int height,
+  GlProgressBar(const Coord &centerPosition, const uint width, const uint height,
                 const Color &progressBarcolor, const Color &commentColor = Color(0, 0, 0));
 
   ~GlProgressBar() override;
@@ -59,7 +59,7 @@ private:
   Coord progressBarTLCorner;
   Coord commentLabelCenter;
 
-  unsigned int currentPercent;
+  uint currentPercent;
   std::string comment;
 };
 }

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -38,7 +38,7 @@ public:
    *range of line to import.
    * The user takes the ownership of the widget.
    **/
-  CSVParser *buildParser(unsigned int firstLine = 0, unsigned int lastLine = UINT_MAX) const;
+  CSVParser *buildParser(uint firstLine = 0, uint lastLine = UINT_MAX) const;
 
   std::string getFile() const;
   bool isValid() const;

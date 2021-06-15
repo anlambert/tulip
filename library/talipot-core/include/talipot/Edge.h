@@ -19,6 +19,8 @@
 #include <functional>
 #include <vector>
 
+#include <talipot/config.h>
+
 namespace tlp {
 
 /**
@@ -38,7 +40,7 @@ struct edge {
   /**
    * @brief id The identifier of the edge.
    */
-  unsigned int id;
+  uint id;
 
   /**
    * @brief edge creates an invalid edge.
@@ -53,12 +55,12 @@ struct edge {
    *
    * @param j the identifier this edge will use.
    */
-  explicit edge(unsigned int j) : id(j) {}
+  explicit edge(uint j) : id(j) {}
 
   /**
-   * @brief operator unsigned int A convenience function to get the id of an edge.
+   * @brief operator uint A convenience function to get the id of an edge.
    */
-  operator unsigned int() const {
+  operator uint() const {
     return id;
   }
 
@@ -93,7 +95,7 @@ struct edge {
 
 inline std::ostream &operator<<(std::ostream &os, const std::vector<edge> &ve) {
   os << "(";
-  for (unsigned int i = 0; i < ve.size(); ++i) {
+  for (uint i = 0; i < ve.size(); ++i) {
     os << "edge(" << ve[i].id << ")";
     if (i != ve.size() - 1) {
       os << ", ";
@@ -104,11 +106,9 @@ inline std::ostream &operator<<(std::ostream &os, const std::vector<edge> &ve) {
 }
 
 // utility lambda functions for type conversion
-static std::function<tlp::edge(unsigned int)> idToEdge = [](unsigned int id) {
-  return tlp::edge(id);
-};
+static std::function<tlp::edge(uint)> idToEdge = [](uint id) { return tlp::edge(id); };
 
-static std::function<unsigned int(tlp::edge)> edgeToId = [](tlp::edge e) { return e.id; };
+static std::function<uint(tlp::edge)> edgeToId = [](tlp::edge e) { return e.id; };
 
 }
 

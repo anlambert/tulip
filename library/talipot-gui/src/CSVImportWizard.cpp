@@ -68,7 +68,7 @@ void CSVParsingConfigurationQWizardPage::parserChanged() {
     progress.showPreview(false);
     progress.setWindowTitle("Parsing file");
     parser->parse(previewTableWidget, &progress);
-    unsigned int nbCommentsLines = previewTableWidget->getNbCommentsLines();
+    uint nbCommentsLines = previewTableWidget->getNbCommentsLines();
 
     if (nbCommentsLines) {
       parserConfigurationWidget->setNbIgnoredLines(nbCommentsLines);

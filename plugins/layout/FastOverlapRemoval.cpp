@@ -132,7 +132,7 @@ bool FastOverlapRemoval::run() {
 
   for (float passIndex = 1; passIndex <= nbPasses; ++passIndex) {
     // initialization
-    TLP_PARALLEL_MAP_NODES_AND_INDICES(graph, [&](const node &curNode, unsigned int i) {
+    TLP_PARALLEL_MAP_NODES_AND_INDICES(graph, [&](const node &curNode, uint i) {
       Size sz = viewSize->getNodeValue(curNode) * passIndex / float(nbPasses);
       const Coord &pos = viewLayout->getNodeValue(curNode);
       double curRot = viewRot->getNodeValue(curNode);
@@ -158,7 +158,7 @@ bool FastOverlapRemoval::run() {
       removeRectangleOverlapY(nbNodes, nodeRectangles.data(), yBorder);
     }
 
-    for (unsigned int i = 0; i < nbNodes; ++i) {
+    for (uint i = 0; i < nbNodes; ++i) {
       Coord newPos = Coord(nodeRectangles[i].getCentreX(), nodeRectangles[i].getCentreY());
       LayoutAlgorithm::result->setNodeValue(nodes[i], newPos);
     }

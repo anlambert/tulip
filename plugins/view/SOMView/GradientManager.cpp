@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -45,7 +45,7 @@ void GradientManager::init(const std::vector<std::string> &properties) {
   newColors.second.setV(255);
   newColors.second.setS(255);
 
-  for (unsigned int i = 0; i < properties.size(); ++i) {
+  for (uint i = 0; i < properties.size(); ++i) {
 
     // newColors.second.setS(minSVal);
     newColors.first.setS(255);

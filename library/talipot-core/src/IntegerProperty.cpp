@@ -92,7 +92,7 @@ PropertyInterface *IntegerVectorProperty::clonePrototype(Graph *g, const std::st
 }
 
 //===============================================================
-void IntegerProperty::nodesUniformQuantification(unsigned int k) {
+void IntegerProperty::nodesUniformQuantification(uint k) {
   std::map<double, int> nodeMapping;
   buildNodesUniformQuantification(graph, this, k, nodeMapping);
 
@@ -102,7 +102,7 @@ void IntegerProperty::nodesUniformQuantification(unsigned int k) {
 }
 
 //===============================================================
-void IntegerProperty::edgesUniformQuantification(unsigned int k) {
+void IntegerProperty::edgesUniformQuantification(uint k) {
   std::map<double, int> edgeMapping;
   buildEdgesUniformQuantification(graph, this, k, edgeMapping);
 

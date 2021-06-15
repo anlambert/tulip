@@ -28,7 +28,7 @@ ItemDelegate::ItemDelegate(QObject *parent)
       _currentMonitoredCombo(nullptr) {
   registerCreator<bool>(new BooleanEditorCreator);
   registerCreator<int>(new NumberEditorCreator<tlp::IntegerType>);
-  registerCreator<unsigned int>(new NumberEditorCreator<tlp::UnsignedIntegerType>);
+  registerCreator<uint>(new NumberEditorCreator<tlp::UnsignedIntegerType>);
   registerCreator<long>(new NumberEditorCreator<tlp::LongType>);
   registerCreator<double>(new NumberEditorCreator<tlp::DoubleType>);
   registerCreator<float>(new NumberEditorCreator<tlp::FloatType>);
@@ -255,7 +255,7 @@ void ItemDelegate::comboDataChanged() {
 
 QVariant ItemDelegate::showEditorDialog(tlp::ElementType elType, tlp::PropertyInterface *pi,
                                         tlp::Graph *g, ItemDelegate *delegate,
-                                        QWidget *dialogParent, unsigned int id) {
+                                        QWidget *dialogParent, uint id) {
   QVariant value;
   bool valid;
   if (elType == tlp::NODE) {

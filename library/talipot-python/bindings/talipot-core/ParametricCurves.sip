@@ -33,7 +33,7 @@ along a Bezier curve defined by a set of control points.
 
 // =================================================================================================
 
-void computeBezierPoints(const std::vector<tlp::Coord> &controlPoints, std::vector<tlp::Coord> &curvePoints /Out/, const unsigned int nbCurvePoints = 100);
+void computeBezierPoints(const std::vector<tlp::Coord> &controlPoints, std::vector<tlp::Coord> &curvePoints /Out/, const uint nbCurvePoints = 100);
 %Docstring
 tlp.computeBezierPoints(controlPoints, nbCurvePoints=100)
 
@@ -74,7 +74,7 @@ The features of this type of spline are the following :
 
 // =================================================================================================
 
-void computeCatmullRomPoints(const std::vector<tlp::Coord> &controlPoints, std::vector<tlp::Coord> &curvePoints /Out/, const bool closedCurve = false, const unsigned int nbCurvePoints = 100, const float alpha = 0.5);
+void computeCatmullRomPoints(const std::vector<tlp::Coord> &controlPoints, std::vector<tlp::Coord> &curvePoints /Out/, const bool closedCurve = false, const uint nbCurvePoints = 100, const float alpha = 0.5);
 %Docstring
 tlp.computeCatmullRomPoints(controlPoints, closedCurve=False, nbCurvePoints=100, alpha=0.5)
 
@@ -93,7 +93,7 @@ Computes a set of points approximating a Catmull-Rom curve.
 
 // =================================================================================================
 
-tlp::Coord computeOpenUniformBsplinePoint(const std::vector<tlp::Coord> &controlPoints, const float t, const unsigned int curveDegree = 3);
+tlp::Coord computeOpenUniformBsplinePoint(const std::vector<tlp::Coord> &controlPoints, const float t, const uint curveDegree = 3);
 %Docstring
 tlp.computeOpenUniformBsplinePoint(controlPoints, t, curveDegree=3)
 
@@ -118,7 +118,7 @@ A B-spline is qualified as open when it passes through its first and last contro
 
 // =================================================================================================
 
-void computeOpenUniformBsplinePoints(const std::vector<tlp::Coord> &controlPoints, std::vector<tlp::Coord> &curvePoints /Out/, const unsigned int curveDegree = 3, const unsigned int nbCurvePoints = 100);
+void computeOpenUniformBsplinePoints(const std::vector<tlp::Coord> &controlPoints, std::vector<tlp::Coord> &curvePoints /Out/, const uint curveDegree = 3, const uint nbCurvePoints = 100);
 %Docstring
 tlp.computeOpenUniformBsplinePoints(controlPoints, curveDegree=3, nbCurvePoints=100)
 

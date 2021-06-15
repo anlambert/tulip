@@ -25,7 +25,7 @@ ParallelEdgesSelection::ParallelEdgesSelection(const tlp::PluginContext *context
     : BooleanAlgorithm(context) {
   addInParameter<bool>("directed",
                        "Indicates if the graph should be considered as directed or not.", "false");
-  addOutParameter<unsigned int>("#edges selected", "The number of parallel edges selected");
+  addOutParameter<uint>("#edges selected", "The number of parallel edges selected");
 }
 
 bool ParallelEdgesSelection::run() {

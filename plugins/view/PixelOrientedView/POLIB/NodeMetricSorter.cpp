@@ -55,8 +55,7 @@ void NodeMetricSorter::cleanupSortNodesForProperty(const std::string &propertyNa
   nodeSortingMap.erase(propertyName);
 }
 
-node NodeMetricSorter::getNodeAtRankForProperty(const unsigned int rank,
-                                                const string &propertyName) {
+node NodeMetricSorter::getNodeAtRankForProperty(const uint rank, const string &propertyName) {
   if (nodeSortingMap.find(propertyName) == nodeSortingMap.end()) {
     sortNodesForProperty(propertyName);
   }
@@ -64,9 +63,9 @@ node NodeMetricSorter::getNodeAtRankForProperty(const unsigned int rank,
   return nodeSortingMap[propertyName][rank];
 }
 
-unsigned int NodeMetricSorter::getNbValuesForProperty(const string &propertyName) {
+uint NodeMetricSorter::getNbValuesForProperty(const string &propertyName) {
   if (nbValuesPropertyMap.find(propertyName) == nbValuesPropertyMap.end()) {
-    unsigned int count = 0;
+    uint count = 0;
     const string &propertyType = graph->getProperty(propertyName)->getTypename();
 
     if (propertyType == "double") {
@@ -97,12 +96,12 @@ void NodeMetricSorter::reset() {
   nodeSortingMap.clear();
 }
 
-unsigned int NodeMetricSorter::getNodeRankForProperty(tlp::node n, const string &propertyName) {
+uint NodeMetricSorter::getNodeRankForProperty(tlp::node n, const string &propertyName) {
   if (nodeSortingMap.find(propertyName) == nodeSortingMap.end()) {
     sortNodesForProperty(propertyName);
   }
 
-  for (unsigned int i = 0; i < nodeSortingMap[propertyName].size(); ++i) {
+  for (uint i = 0; i < nodeSortingMap[propertyName].size(); ++i) {
     if (nodeSortingMap[propertyName][i] == n) {
       return i;
     }

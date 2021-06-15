@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -43,10 +43,10 @@ public:
   size_t size() {
     return _data.size();
   }
-  std::vector<node> operator[](const unsigned int i) const {
+  std::vector<node> operator[](const uint i) const {
     return _data[i];
   }
-  std::vector<node> &operator[](const unsigned int i) {
+  std::vector<node> &operator[](const uint i) {
     return _data[i];
   }
 

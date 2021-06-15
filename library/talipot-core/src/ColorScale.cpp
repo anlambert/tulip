@@ -117,7 +117,7 @@ Color ColorScale::getColorAtPos(const float pos) const {
       Color ret;
       double ratio = (pos - startPos) / (endPos - startPos);
 
-      for (unsigned int i = 0; i < 4; ++i) {
+      for (uint i = 0; i < 4; ++i) {
         ret[i] =
             uchar((double(startColor[i]) + (double(endColor[i]) - double(startColor[i])) * ratio));
       }
@@ -184,7 +184,7 @@ bool ColorScale::operator==(const std::vector<Color> &colors) const {
     return false;
   }
 
-  unsigned int i = 0;
+  uint i = 0;
 
   for (const auto &[t, color] : colorMap) {
     if (color != colors[i++]) {

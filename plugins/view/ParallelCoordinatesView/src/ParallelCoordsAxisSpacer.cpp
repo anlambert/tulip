@@ -53,7 +53,7 @@ bool ParallelCoordsAxisSpacer::eventFilter(QObject *widget, QEvent *e) {
         }
       }
 
-      for (unsigned int i = 1; i < allAxis.size() - 1; ++i) {
+      for (uint i = 1; i < allAxis.size() - 1; ++i) {
         if (selectedAxis == allAxis[i]) {
           neighborsAxis = make_pair(allAxis[i - 1], allAxis[i + 1]);
         }

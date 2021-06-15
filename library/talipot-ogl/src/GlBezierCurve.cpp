@@ -17,7 +17,7 @@
 
 using namespace std;
 
-static const unsigned int CONTROL_POINTS_LIMIT = 120;
+static const uint CONTROL_POINTS_LIMIT = 120;
 
 static string bezierSpecificVertexShaderSrc =
 
@@ -52,15 +52,14 @@ GlBezierCurve::GlBezierCurve()
 
 GlBezierCurve::GlBezierCurve(const vector<Coord> &controlPoints, const Color &startColor,
                              const Color &endColor, const float &startSize, const float &endSize,
-                             const unsigned int nbCurvePoints)
+                             const uint nbCurvePoints)
     : AbstractGlCurve("bezier vertex shader", bezierSpecificVertexShaderSrc, controlPoints,
                       startColor, endColor, startSize, endSize, nbCurvePoints) {}
 
 GlBezierCurve::~GlBezierCurve() = default;
 
 void GlBezierCurve::computeCurvePointsOnCPU(const std::vector<Coord> &controlPoints,
-                                            std::vector<Coord> &curvePoints,
-                                            unsigned int nbCurvePoints) {
+                                            std::vector<Coord> &curvePoints, uint nbCurvePoints) {
   computeBezierPoints(controlPoints, curvePoints, nbCurvePoints);
 }
 
@@ -70,7 +69,7 @@ Coord GlBezierCurve::computeCurvePointOnCPU(const std::vector<Coord> &controlPoi
 
 void GlBezierCurve::drawCurve(std::vector<Coord> &controlPoints, const Color &startColor,
                               const Color &endColor, const float startSize, const float endSize,
-                              const unsigned int nbCurvePoints) {
+                              const uint nbCurvePoints) {
 
   if (controlPoints.size() <= CONTROL_POINTS_LIMIT) {
     AbstractGlCurve::drawCurve(controlPoints, startColor, endColor, startSize, endSize,
@@ -79,7 +78,7 @@ void GlBezierCurve::drawCurve(std::vector<Coord> &controlPoints, const Color &st
 
     static GlCatmullRomCurve curve;
 
-    const unsigned int nbApproximationPoints = 40;
+    const uint nbApproximationPoints = 40;
     vector<Coord> curvePoints;
     computeBezierPoints(controlPoints, curvePoints, nbApproximationPoints);
     curve.setClosedCurve(false);

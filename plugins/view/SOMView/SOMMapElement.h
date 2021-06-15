@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -37,7 +37,7 @@ public:
   SOMMapElement(Coord position, Size size, SOMMap *map, ColorProperty *colorProperty);
   ~SOMMapElement() override;
 
-  tlp::Coord getTopLeftPositionForElement(unsigned int x, unsigned int y);
+  tlp::Coord getTopLeftPositionForElement(uint x, uint y);
   tlp::Size getNodeAreaSize();
 
   /**
@@ -56,7 +56,7 @@ public:
 protected:
   void computeNodeAreaSize();
 
-  float computeMaximizedRadiusForHexagone(unsigned int width, unsigned int height, Size &size);
+  float computeMaximizedRadiusForHexagone(uint width, uint height, Size &size);
 
   void buildMainComposite(Coord topLeft, Size elementSize, SOMMap *map);
 

@@ -27,7 +27,7 @@
 using namespace std;
 
 const string propertiesTypes[] = {"double", "int", "string"};
-const unsigned int nbPropertiesTypes = sizeof(propertiesTypes) / sizeof(string);
+const uint nbPropertiesTypes = sizeof(propertiesTypes) / sizeof(string);
 const vector<string> propertiesTypesFilter(propertiesTypes, propertiesTypes + nbPropertiesTypes);
 
 namespace tlp {
@@ -206,8 +206,8 @@ void ParallelCoordinatesView::setState(const DataSet &dataSet) {
 
     // overviewWidget->setObservedView(mainWidget, parallelCoordsDrawing);
 
-    unsigned int axisHeight = DEFAULT_AXIS_HEIGHT;
-    unsigned int linesColorAlphaValue = DEFAULT_LINES_COLOR_ALPHA_VALUE;
+    uint axisHeight = DEFAULT_AXIS_HEIGHT;
+    uint linesColorAlphaValue = DEFAULT_LINES_COLOR_ALPHA_VALUE;
 
     if (dataSet.exists("dataLocation")) {
       int dataLocation = 0;
@@ -222,13 +222,13 @@ void ParallelCoordinatesView::setState(const DataSet &dataSet) {
     }
 
     if (dataSet.exists("axisPointMinSize")) {
-      unsigned int axisPointMinSize = 0;
+      uint axisPointMinSize = 0;
       dataSet.get("axisPointMinSize", axisPointMinSize);
       drawConfigWidget->setAxisPointMinSize(axisPointMinSize);
     }
 
     if (dataSet.exists("axisPointMaxSize")) {
-      unsigned int axisPointMaxSize = 0;
+      uint axisPointMaxSize = 0;
       dataSet.get("axisPointMaxSize", axisPointMaxSize);
       drawConfigWidget->setAxisPointMaxSize(axisPointMaxSize);
     }
@@ -254,7 +254,7 @@ void ParallelCoordinatesView::setState(const DataSet &dataSet) {
     }
 
     if (dataSet.exists("non highlighted alpha value")) {
-      unsigned int nonHighlightedAlphaValue = 0;
+      uint nonHighlightedAlphaValue = 0;
       dataSet.get("non highlighted alpha value", nonHighlightedAlphaValue);
       drawConfigWidget->setUnhighlightedEltsColorsAlphaValue(nonHighlightedAlphaValue);
     }
@@ -343,8 +343,8 @@ DataSet ParallelCoordinatesView::state() const {
   dataSet.set("dataLocation", int(graphProxy->getDataLocation()));
   dataSet.set("backgroundColor", drawConfigWidget->getBackgroundColor());
   dataSet.set("axisHeight", drawConfigWidget->getAxisHeight());
-  unsigned int axisPointMinSize = uint(drawConfigWidget->getAxisPointMinSize().getW());
-  unsigned int axisPointMaxSize = uint(drawConfigWidget->getAxisPointMaxSize().getW());
+  uint axisPointMinSize = uint(drawConfigWidget->getAxisPointMinSize().getW());
+  uint axisPointMaxSize = uint(drawConfigWidget->getAxisPointMaxSize().getW());
   dataSet.set("axisPointMinSize", axisPointMinSize);
   dataSet.set("axisPointMaxSize", axisPointMaxSize);
   dataSet.set("drawPointsOnAxis", drawConfigWidget->drawPointOnAxis());
@@ -521,7 +521,7 @@ bool ParallelCoordinatesView::eventFilter(QObject *obj, QEvent *event) {
 }
 
 bool ParallelCoordinatesView::getNodeOrEdgeAtViewportPos(int x, int y, node &n, edge &e) const {
-  set<unsigned int> data;
+  set<uint> data;
 
   if (mapGlEntitiesInRegionToData(data, x, y)) {
     if (graphProxy->getDataLocation() == NODE) {
@@ -752,10 +752,9 @@ ParallelCoordinatesDrawing::LinesThickness ParallelCoordinatesView::getLinesThic
                                    : ParallelCoordinatesDrawing::THIN;
 }
 
-bool ParallelCoordinatesView::mapGlEntitiesInRegionToData(std::set<unsigned int> &mappedData,
-                                                          const int x, const int y,
-                                                          const unsigned int width,
-                                                          const unsigned int height) const {
+bool ParallelCoordinatesView::mapGlEntitiesInRegionToData(std::set<uint> &mappedData, const int x,
+                                                          const int y, const uint width,
+                                                          const uint height) const {
 
   vector<SelectedEntity> selectedEntities;
   vector<SelectedEntity> selectedAxisPoints;
@@ -768,7 +767,7 @@ bool ParallelCoordinatesView::mapGlEntitiesInRegionToData(std::set<unsigned int>
   if (result) {
     for (const auto &ite : selectedEntities) {
       GlEntity *entity = ite.getEntity();
-      unsigned int selectedEltId;
+      uint selectedEltId;
 
       if (parallelCoordsDrawing->getDataIdFromGlEntity(entity, selectedEltId)) {
         mappedData.insert(selectedEltId);
@@ -780,7 +779,7 @@ bool ParallelCoordinatesView::mapGlEntitiesInRegionToData(std::set<unsigned int>
 
   for (const auto &entity : selectedAxisPoints) {
     node n(entity.getComplexEntityId());
-    unsigned int selectedEltId;
+    uint selectedEltId;
 
     if (parallelCoordsDrawing->getDataIdFromAxisPoint(n, selectedEltId)) {
       mappedData.insert(selectedEltId);
@@ -792,7 +791,7 @@ bool ParallelCoordinatesView::mapGlEntitiesInRegionToData(std::set<unsigned int>
 
 void ParallelCoordinatesView::setDataUnderPointerSelectFlag(const int x, const int y,
                                                             const bool selectFlag) {
-  set<unsigned int> dataUnderPointer;
+  set<uint> dataUnderPointer;
   mapGlEntitiesInRegionToData(dataUnderPointer, x, y);
 
   for (auto i : dataUnderPointer) {
@@ -802,11 +801,9 @@ void ParallelCoordinatesView::setDataUnderPointerSelectFlag(const int x, const i
   }
 }
 
-void ParallelCoordinatesView::setDataInRegionSelectFlag(const int x, const int y,
-                                                        const unsigned int width,
-                                                        const unsigned int height,
-                                                        const bool selectFlag) {
-  set<unsigned int> dataUnderPointer;
+void ParallelCoordinatesView::setDataInRegionSelectFlag(const int x, const int y, const uint width,
+                                                        const uint height, const bool selectFlag) {
+  set<uint> dataUnderPointer;
   mapGlEntitiesInRegionToData(dataUnderPointer, x, y, width, height);
 
   for (auto i : dataUnderPointer) {
@@ -821,7 +818,7 @@ void ParallelCoordinatesView::resetSelection() {
 }
 
 void ParallelCoordinatesView::deleteDataUnderPointer(const int x, const int y) {
-  set<unsigned int> dataUnderPointer;
+  set<uint> dataUnderPointer;
   mapGlEntitiesInRegionToData(dataUnderPointer, x, y);
 
   for (auto i : dataUnderPointer) {
@@ -833,11 +830,11 @@ void ParallelCoordinatesView::deleteDataUnderPointer(const int x, const int y) {
 
 bool ParallelCoordinatesView::getDataUnderPointerProperties(const int x, const int y,
                                                             SelectedEntity &selectedEntity) {
-  set<unsigned int> dataUnderPointer;
+  set<uint> dataUnderPointer;
   mapGlEntitiesInRegionToData(dataUnderPointer, x, y);
 
   if (!dataUnderPointer.empty()) {
-    unsigned int dataId;
+    uint dataId;
 
     if (!graphProxy->highlightedEltsSet()) {
       dataId = *(dataUnderPointer.begin());
@@ -873,7 +870,7 @@ void ParallelCoordinatesView::highlightDataUnderPointer(const int x, const int y
     graphProxy->unsetHighlightedElts();
   }
 
-  set<unsigned int> dataUnderPointer;
+  set<uint> dataUnderPointer;
   mapGlEntitiesInRegionToData(dataUnderPointer, x, y);
 
   for (auto i : dataUnderPointer) {
@@ -890,7 +887,7 @@ void ParallelCoordinatesView::highlightDataInRegion(const int x, const int y, co
     graphProxy->unsetHighlightedElts();
   }
 
-  set<unsigned int> dataUnderPointer;
+  set<uint> dataUnderPointer;
   mapGlEntitiesInRegionToData(dataUnderPointer, x, y, width, height);
 
   for (auto i : dataUnderPointer) {
@@ -945,7 +942,7 @@ void ParallelCoordinatesView::updateAxisSlidersPosition() {
   if (!graphProxy->highlightedEltsSet()) {
     parallelCoordsDrawing->resetAxisSlidersPosition();
   } else {
-    const set<unsigned int> &highlightedElts(graphProxy->getHighlightedElts());
+    const set<uint> &highlightedElts(graphProxy->getHighlightedElts());
     vector<ParallelAxis *> axis(getAllAxis());
 
     for (auto *ax : axis) {
@@ -965,7 +962,7 @@ bool ParallelCoordinatesView::highlightedElementsSet() const {
 }
 
 void ParallelCoordinatesView::highlightDataInAxisBoxPlotRange(QuantitativeParallelAxis *axis) {
-  const set<unsigned int> &eltToHighlight(axis->getDataBetweenBoxPlotBounds());
+  const set<uint> &eltToHighlight(axis->getDataBetweenBoxPlotBounds());
 
   if (!eltToHighlight.empty()) {
     graphProxy->resetHighlightedElts(eltToHighlight);

@@ -42,10 +42,10 @@ static bool treatEdges(Graph *graph, tlp::PluginProgress *pp, ExportInterface &e
     return false;
   }
 
-  unsigned int id_src_shape = 0;
-  unsigned int id_tgt_shape = 0;
-  unsigned int id_src_grad = 0;
-  unsigned int id_tgt_grad = 0;
+  uint id_src_shape = 0;
+  uint id_tgt_shape = 0;
+  uint id_src_grad = 0;
+  uint id_tgt_grad = 0;
   GlGraphRenderingParameters rp;
   GlGraphInputData inputData(graph, &rp);
   for (auto e : graph->edges()) {

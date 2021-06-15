@@ -56,7 +56,7 @@ public:
   void construct() override;
 
   QWidget *configurationWidget() const override;
-  unsigned int priority() const override;
+  uint priority() const override;
 };
 
 class GeographicViewInteractorSelection : public GeographicViewInteractor {
@@ -73,7 +73,7 @@ public:
 
   QCursor cursor() const override;
 
-  unsigned int priority() const override;
+  uint priority() const override;
 };
 
 class GeographicViewInteractorSelectionEditor : public GeographicViewInteractor {
@@ -90,7 +90,7 @@ public:
 
   QCursor cursor() const override;
 
-  unsigned int priority() const override;
+  uint priority() const override;
 };
 
 class GeographicViewInteractorAddEdges : public NodeLinkDiagramViewInteractor {

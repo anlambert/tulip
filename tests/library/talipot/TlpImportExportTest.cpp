@@ -135,7 +135,7 @@ void TlpImportExportTest::testExportAttributes() {
   Coord coord = {5., 6., 7.}, scoord = {0., 8., 9.};
   float f = 200., sf = 100.;
   int i = -10, si = -5;
-  unsigned int ui = 10, sui = 5;
+  uint ui = 10, sui = 5;
   Size size = {8., 9., 10.}, ssize = {10., 9., 8.};
   string str = "data", sstr = "atad";
   vector<string> sv;

@@ -20,6 +20,7 @@
 #include <cstdint>
 
 #include <talipot/ConsoleUtils.h>
+#include <talipot/config.h>
 
 #ifndef _MSC_VER
 #ifdef HAVE_BFD
@@ -32,16 +33,16 @@ typedef __int64 int64_t;
 class StackWalker {
 public:
   virtual ~StackWalker() = default;
-  virtual void printCallStack(std::ostream &os, unsigned int maxDepth = 50) = 0;
+  virtual void printCallStack(std::ostream &os, uint maxDepth = 50) = 0;
 
-  void printCallStackToStdErr(unsigned int maxDepth = 50) {
+  void printCallStackToStdErr(uint maxDepth = 50) {
     printCallStack(std::cerr, maxDepth);
   }
 
-  virtual void printFrameInfo(std::ostream &os, unsigned int frameId, int64_t pcAddress,
+  virtual void printFrameInfo(std::ostream &os, uint frameId, int64_t pcAddress,
                               const std::string &moduleName, const std::string &funcName = "",
                               int64_t symbolOffset = 0, const std::string &fileName = "",
-                              unsigned int line = 0) {
+                              uint line = 0) {
 
     if (frameId % 2 == 0) {
       os << setTextBackgroundColor(DARK_GRAY);
@@ -95,7 +96,7 @@ public:
 
   ~StackWalkerGCC() override;
 
-  void printCallStack(std::ostream &os, unsigned int maxDepth = 50) override;
+  void printCallStack(std::ostream &os, uint maxDepth = 50) override;
 
   void setCallerAddress(void *callerAddress) {
     this->callerAddress = callerAddress;
@@ -117,7 +118,7 @@ public:
   StackWalkerMinGW();
   ~StackWalkerMinGW();
 
-  void printCallStack(std::ostream &os, unsigned int maxDepth = 50);
+  void printCallStack(std::ostream &os, uint maxDepth = 50);
 
   void setContext(LPCONTEXT context) {
     this->context = context;
@@ -137,7 +138,7 @@ public:
   StackWalkerMSVC();
   ~StackWalkerMSVC();
 
-  void printCallStack(std::ostream &os, unsigned int maxDepth = 50);
+  void printCallStack(std::ostream &os, uint maxDepth = 50);
   void setExtraSymbolsSearchPaths(const std::string &searchPaths) {
     extraSymbolsSearchPaths = searchPaths;
   }

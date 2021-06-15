@@ -262,7 +262,7 @@ void GlComposite::getXML(string &outString) {
   GlXMLTools::endChildNode(outString);
 }
 //============================================================
-void GlComposite::setWithXML(const string &inString, unsigned int &currentPosition) {
+void GlComposite::setWithXML(const string &inString, uint &currentPosition) {
 
   string childName = GlXMLTools::enterChildNode(inString, currentPosition);
   assert(childName == "children");

@@ -68,11 +68,11 @@ bool EqualValueClustering::run() {
 }
 
 bool EqualValueClustering::computeClusters(NumericProperty *prop, bool onNodes, bool connected) {
-  unsigned int step = 0;
-  unsigned int maxSteps;
+  uint step = 0;
+  uint maxSteps;
 
   std::unordered_map<double, Graph *> clusters;
-  std::unordered_map<std::string, unsigned int> valuesCount;
+  std::unordered_map<std::string, uint> valuesCount;
   MutableContainer<bool> visited;
   visited.setAll(false);
 
@@ -278,11 +278,11 @@ bool EqualValueClustering::computeClusters(NumericProperty *prop, bool onNodes, 
 }
 
 bool EqualValueClustering::computeClusters(PropertyInterface *prop, bool onNodes, bool connected) {
-  unsigned int step = 0;
-  unsigned int maxSteps;
+  uint step = 0;
+  uint maxSteps;
 
   std::unordered_map<std::string, Graph *> clusters;
-  std::unordered_map<std::string, unsigned int> valuesCount;
+  std::unordered_map<std::string, uint> valuesCount;
   MutableContainer<bool> visited;
   visited.setAll(false);
 

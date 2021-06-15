@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -80,19 +80,19 @@ public:
    * @brief computes a uniform quantification for the nodes
    * associated values
    */
-  virtual void nodesUniformQuantification(unsigned int) = 0;
+  virtual void nodesUniformQuantification(uint) = 0;
 
   /**
    * @brief computes a uniform quantification for the edges
    * associated values
    */
-  virtual void edgesUniformQuantification(unsigned int) = 0;
+  virtual void edgesUniformQuantification(uint) = 0;
 
   /**
    * @brief computes a uniform quantification for the nodes/edges
    * associated values
    */
-  void uniformQuantification(unsigned int k) {
+  void uniformQuantification(uint k) {
     nodesUniformQuantification(k);
     edgesUniformQuantification(k);
   }

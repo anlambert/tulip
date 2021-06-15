@@ -93,7 +93,7 @@ bool ImprovedWalker::run() {
 
   // check if the specified layer spacing is greater
   // than the max of the minimum layer spacing of the tree
-  for (unsigned int i = 0; i < maxYbyLevel.size() - 1; ++i) {
+  for (uint i = 0; i < maxYbyLevel.size() - 1; ++i) {
     float minLayerSpacing = (maxYbyLevel[i] + maxYbyLevel[i + 1]) / 2.f;
 
     if (minLayerSpacing + nodeSpacing > spacing) {
@@ -118,7 +118,7 @@ int ImprovedWalker::initializeAllNodes(tlp::node root) {
   return initializeNode(root, 0);
 }
 //====================================================================
-int ImprovedWalker::initializeNode(tlp::node n, unsigned int depth) {
+int ImprovedWalker::initializeNode(tlp::node n, uint depth) {
   if (maxYbyLevel.size() == depth) {
     maxYbyLevel.push_back(0);
   }

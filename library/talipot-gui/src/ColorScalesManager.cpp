@@ -75,9 +75,9 @@ list<string> ColorScalesManager::getColorScalesList() {
 
 static ColorScale getColorScaleFromImageFile(const QString &imageFilePath) {
   QImage gradientImage(imageFilePath);
-  unsigned int imageHeight = gradientImage.height();
+  uint imageHeight = gradientImage.height();
 
-  unsigned int step = 1;
+  uint step = 1;
 
   if (imageHeight > 50) {
     step = 10;
@@ -85,7 +85,7 @@ static ColorScale getColorScaleFromImageFile(const QString &imageFilePath) {
 
   vector<Color> colors;
 
-  for (unsigned int i = 0; i < imageHeight; i += step) {
+  for (uint i = 0; i < imageHeight; i += step) {
     QRgb pixelValue = gradientImage.pixel(0, i);
     colors.push_back(
         Color(qRed(pixelValue), qGreen(pixelValue), qBlue(pixelValue), qAlpha(pixelValue)));
@@ -179,7 +179,7 @@ void ColorScalesManager::registerColorScale(const string &colorScaleName,
     if (colorScale.hasRegularStops()) {
       QList<QVariant> colorsVector;
 
-      for (unsigned int i = 0; i < const_cast<ColorScale &>(colorScale).getStopsCount(); ++i) {
+      for (uint i = 0; i < const_cast<ColorScale &>(colorScale).getStopsCount(); ++i) {
         float stop = i / float(const_cast<ColorScale &>(colorScale).getStopsCount() - 1);
         Color color = colorScale.getColorAtPos(stop);
         colorsVector.push_back(QVariant(colorToQColor(color)));

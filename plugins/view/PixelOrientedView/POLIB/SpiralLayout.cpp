@@ -23,7 +23,7 @@ inline double eq2D2(const double c) {
 }
 
 //==============================================================
-unsigned int SpiralLayout::unproject(const Vec2i &point) const {
+uint SpiralLayout::unproject(const Vec2i &point) const {
   int x = point[0];
   int y = point[1];
 
@@ -33,8 +33,8 @@ unsigned int SpiralLayout::unproject(const Vec2i &point) const {
 
   int c = std::max(x, y);
   c = std::max(c, std::max(-x, -y));
-  unsigned int t1 = (c - 1), t2 = t1 << 2;
-  unsigned int p = t2 * t1 + t2 + 1; // p equal the number of if id in the disk
+  uint t1 = (c - 1), t2 = t1 << 2;
+  uint p = t2 * t1 + t2 + 1; // p equal the number of if id in the disk
 
   if (x == c && y == c) { // last point
     p += 8 * c - 1;
@@ -51,7 +51,7 @@ unsigned int SpiralLayout::unproject(const Vec2i &point) const {
   return p;
 }
 //==============================================================
-Vec2i SpiralLayout::project(const unsigned int _id) const {
+Vec2i SpiralLayout::project(const uint _id) const {
   Vec2i point;
 
   if (_id == 0) {
@@ -67,7 +67,7 @@ Vec2i SpiralLayout::project(const unsigned int _id) const {
       c = int(ceil(eq2D2(1. - double(_id))));
     }
 
-    unsigned int t1 = (c - 1), t2 = t1 << 2;
+    uint t1 = (c - 1), t2 = t1 << 2;
     int p = _id - (t1 * t2 + t2 + 1);
     unsigned char k = p / (2 * c);
 

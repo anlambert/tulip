@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2020  The Talipot developers
+ * Copyright (C) 2020-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -29,14 +29,14 @@
 INSTANTIATE_DLL_TEMPLATE(SINGLE_ARG(tlp::Vector<unsigned char, 4>), TLP_TEMPLATE_DEFINE_SCOPE)
 INSTANTIATE_OPERATORS(SINGLE_ARG(tlp::Vector<unsigned char, 4>), unsigned char)
 
-INSTANTIATE_DLL_TEMPLATE(SINGLE_ARG(tlp::Vector<unsigned int, 2>), TLP_TEMPLATE_DEFINE_SCOPE)
-INSTANTIATE_OPERATORS(SINGLE_ARG(tlp::Vector<unsigned int, 2>), unsigned int)
+INSTANTIATE_DLL_TEMPLATE(SINGLE_ARG(tlp::Vector<uint, 2>), TLP_TEMPLATE_DEFINE_SCOPE)
+INSTANTIATE_OPERATORS(SINGLE_ARG(tlp::Vector<uint, 2>), uint)
 
-INSTANTIATE_DLL_TEMPLATE(SINGLE_ARG(tlp::Vector<unsigned int, 3>), TLP_TEMPLATE_DEFINE_SCOPE)
-INSTANTIATE_OPERATORS(SINGLE_ARG(tlp::Vector<unsigned int, 3>), unsigned int)
+INSTANTIATE_DLL_TEMPLATE(SINGLE_ARG(tlp::Vector<uint, 3>), TLP_TEMPLATE_DEFINE_SCOPE)
+INSTANTIATE_OPERATORS(SINGLE_ARG(tlp::Vector<uint, 3>), uint)
 
-INSTANTIATE_DLL_TEMPLATE(SINGLE_ARG(tlp::Vector<unsigned int, 4>), TLP_TEMPLATE_DEFINE_SCOPE)
-INSTANTIATE_OPERATORS(SINGLE_ARG(tlp::Vector<unsigned int, 4>), unsigned int)
+INSTANTIATE_DLL_TEMPLATE(SINGLE_ARG(tlp::Vector<uint, 4>), TLP_TEMPLATE_DEFINE_SCOPE)
+INSTANTIATE_OPERATORS(SINGLE_ARG(tlp::Vector<uint, 4>), uint)
 
 INSTANTIATE_DLL_TEMPLATE(SINGLE_ARG(tlp::Vector<int, 2>), TLP_TEMPLATE_DEFINE_SCOPE)
 INSTANTIATE_OPERATORS(SINGLE_ARG(tlp::Vector<int, 2>), int)

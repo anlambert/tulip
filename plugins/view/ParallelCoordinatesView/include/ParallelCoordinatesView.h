@@ -103,8 +103,8 @@ public:
 
   // methods called by interactors
   void setDataUnderPointerSelectFlag(const int x, const int y, const bool selectFlag);
-  void setDataInRegionSelectFlag(const int x, const int y, const unsigned int width,
-                                 const unsigned int height, const bool selectFlag);
+  void setDataInRegionSelectFlag(const int x, const int y, const uint width, const uint height,
+                                 const bool selectFlag);
   void resetSelection();
   void deleteDataUnderPointer(const int x, const int y);
   bool getDataUnderPointerProperties(const int x, const int y, SelectedEntity &selectedEntity);
@@ -137,7 +137,7 @@ public:
   ParallelCoordinatesDrawing::LinesType getLinesType() const;
   ParallelCoordinatesDrawing::LinesThickness getLinesThickness() const;
 
-  // unsigned int getSpaceBetweenAxis() {return drawConfigWidget->getSpaceBetweenAxis();}
+  // uint getSpaceBetweenAxis() {return drawConfigWidget->getSpaceBetweenAxis();}
 
 public slots:
 
@@ -149,7 +149,7 @@ public slots:
   }
 
   // TODO : reactivate this
-  void elementSelectedSlot(unsigned int, bool) {
+  void elementSelectedSlot(uint, bool) {
     // emit elementSelected(id,isNode);
   }
   void centerSetupAndDrawView();
@@ -169,9 +169,8 @@ protected slots:
   void removeSelectHighlightedElementsSlot();
 
 private:
-  bool mapGlEntitiesInRegionToData(std::set<unsigned int> &mappedData, const int x, const int y,
-                                   const unsigned int width = 1,
-                                   const unsigned int height = 1) const;
+  bool mapGlEntitiesInRegionToData(std::set<uint> &mappedData, const int x, const int y,
+                                   const uint width = 1, const uint height = 1) const;
   void initGlWidget();
   void buildContextMenu();
   void showAxisConfigDialog(ParallelAxis *axis);
@@ -208,7 +207,7 @@ private:
   QAction *removeSelectHighlightedElements;
   QAction *resetHightlightedElements;
 
-  unsigned int dataUnderMousePointer;
+  uint dataUnderMousePointer;
   GlLayer *mainLayer;
   GlLayer *axisSelectionLayer;
 
@@ -224,7 +223,7 @@ private:
   ParallelCoordsDrawConfigWidget *drawConfigWidget;
 
   bool firstSet;
-  unsigned int lastNbSelectedProperties;
+  uint lastNbSelectedProperties;
   bool center;
 
   int lastViewWindowWidth, lastViewWindowHeight;

@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -69,14 +69,14 @@ TLP_GL_SCOPE void splineLine(const std::vector<Coord> &, /* polyline vertces */
                              const Color &,              /* start color */
                              const Color &);             /* end color */
 //====================================================================
-TLP_GL_SCOPE void getColors(const Coord *line, unsigned int lineSize, const Color &c1,
-                            const Color &c2, std::vector<Color> &);
+TLP_GL_SCOPE void getColors(const Coord *line, uint lineSize, const Color &c1, const Color &c2,
+                            std::vector<Color> &);
 TLP_GL_SCOPE void getSizes(const std::vector<Coord> &line, float s1, float s2,
                            std::vector<float> &);
 TLP_GL_SCOPE GLfloat *buildCurvePoints(const std::vector<Coord> &vertices,
                                        const std::vector<float> &sizes, const Coord &startN,
-                                       const Coord &endN, unsigned int &resultSize,
-                                       std::vector<unsigned int> *dec = nullptr);
+                                       const Coord &endN, uint &resultSize,
+                                       std::vector<uint> *dec = nullptr);
 TLP_GL_SCOPE void buildCurvePoints(const std::vector<Coord> &vertices,
                                    const std::vector<float> &sizes, const Coord &startN,
                                    const Coord &endN, std::vector<Coord> &result);

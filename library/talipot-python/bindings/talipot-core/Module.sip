@@ -341,6 +341,8 @@ bool isTupleAndCanConvertToVec3fType(PyObject *pyObj) {
 
 %End
 
+typedef unsigned int uint;
+
 %Import ../stl/Module.sip
 
 %Include Iterator.sip

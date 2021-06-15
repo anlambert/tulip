@@ -377,7 +377,7 @@ void Camera::getXML(string &outString) {
   GlXMLTools::endDataNode(outString);
 }
 //====================================================
-void Camera::setWithXML(const string &inString, unsigned int &currentPosition) {
+void Camera::setWithXML(const string &inString, uint &currentPosition) {
 
   GlXMLTools::enterDataNode(inString, currentPosition);
 

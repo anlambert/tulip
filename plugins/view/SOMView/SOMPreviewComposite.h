@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -66,8 +66,7 @@ public:
   bool isElement(GlEntity *entity);
 
 protected:
-  tlp::Size computeAspectRatio(unsigned int width, unsigned int height, float maxWidth,
-                               float maxHeight);
+  tlp::Size computeAspectRatio(uint width, uint height, float maxWidth, float maxHeight);
 
   void buildMainComposite(const std::string &colorPropertyName, SOMMap *map, tlp::Coord topLeft,
                           tlp::Size elementSize);

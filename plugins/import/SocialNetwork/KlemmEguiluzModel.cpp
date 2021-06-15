@@ -45,15 +45,15 @@ struct KlemmEguiluzModel : public ImportModule {
                     "1.0", "Social network")
 
   KlemmEguiluzModel(PluginContext *context) : ImportModule(context) {
-    addInParameter<unsigned int>("nodes", paramHelp[0].data(), "200");
-    addInParameter<unsigned int>("m", paramHelp[1].data(), "10");
+    addInParameter<uint>("nodes", paramHelp[0].data(), "200");
+    addInParameter<uint>("m", paramHelp[1].data(), "10");
     addInParameter<double>("mu", paramHelp[2].data(), "0.5");
   }
 
   bool importGraph() override {
 
-    unsigned int n = 200;
-    unsigned int m = 10;
+    uint n = 200;
+    uint m = 10;
     double mu = 0.5;
 
     if (dataSet != nullptr) {
@@ -82,10 +82,10 @@ struct KlemmEguiluzModel : public ImportModule {
     const vector<node> &nodes = graph->nodes();
 
     // fully connect and activate the m first nodes
-    for (unsigned int i = 0; i < m; ++i) {
+    for (uint i = 0; i < m; ++i) {
       activated[i] = true;
 
-      for (unsigned int j = i + 1; j < m; ++j) {
+      for (uint j = i + 1; j < m; ++j) {
         graph->addEdge(nodes[i], nodes[j]);
       }
     }
@@ -98,19 +98,19 @@ struct KlemmEguiluzModel : public ImportModule {
       }
 
       double a = 0, pr, pr_sum;
-      for (unsigned int j = 0; j < i; ++j) {
+      for (uint j = 0; j < i; ++j) {
         a += 1 / double(graph->deg(nodes[j]));
       }
 
       // the new node is connected to m nodes
-      for (unsigned int j = 0; j < i; ++j) {
+      for (uint j = 0; j < i; ++j) {
         if (activated[j]) {
           double proba = tlp::randomDouble();
 
           if (proba < mu) { // rewire the edge to a random node chosen with preferential attachment
             pr = tlp::randomDouble();
             pr_sum = 0;
-            unsigned int sn = 0;
+            uint sn = 0;
 
             while (pr_sum < pr && sn <= i) {
               pr_sum += (1 / double(graph->deg(nodes[sn]))) * a;
@@ -130,7 +130,7 @@ struct KlemmEguiluzModel : public ImportModule {
       // deactivate one of the previously m activated nodes
       a = 0;
 
-      for (unsigned int j = 0; j < i; ++j) {
+      for (uint j = 0; j < i; ++j) {
         if (activated[j]) {
           a += 1 / double(graph->deg(nodes[j]));
         }
@@ -138,7 +138,7 @@ struct KlemmEguiluzModel : public ImportModule {
 
       pr = tlp::randomDouble();
       pr_sum = 0;
-      unsigned int sn = 0;
+      uint sn = 0;
 
       while (pr_sum < pr && sn < i) {
         if (activated[sn]) {

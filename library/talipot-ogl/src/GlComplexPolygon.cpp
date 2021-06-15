@@ -295,7 +295,7 @@ void GlComplexPolygon::createPolygon(const vector<Coord> &coords, int polygonEdg
     }
   } else if (polygonEdgesType == 2) {
 
-    const unsigned int nbCurvePoints = 20;
+    const uint nbCurvePoints = 20;
     addPoint(coords[0]);
 
     for (size_t i = 0; i + 3 < coords.size(); i += 3) {
@@ -373,7 +373,7 @@ void GlComplexPolygon::runTessellation() {
     const float *verts = tessGetVertices(tess);
     const int *elems = tessGetElements(tess);
     const int nelems = tessGetElementCount(tess);
-    std::unordered_map<Coord, unsigned int> vidx;
+    std::unordered_map<Coord, uint> vidx;
 
     // iterate over polygons computed by Tessellation
     for (int i = 0; i < nelems; ++i) {
@@ -584,7 +584,7 @@ void GlComplexPolygon::getXMLOnlyData(string &outString) {
   GlXMLTools::getXML(outString, "textureName", textureName);
 }
 //============================================================
-void GlComplexPolygon::setWithXML(const string &inString, unsigned int &currentPosition) {
+void GlComplexPolygon::setWithXML(const string &inString, uint &currentPosition) {
 
   int numberOfVector;
   GlXMLTools::setWithXML(inString, currentPosition, "numberOfVector", numberOfVector);

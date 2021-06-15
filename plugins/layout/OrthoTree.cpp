@@ -22,8 +22,8 @@ using namespace tlp;
 
 class OrthoTree : public tlp::LayoutAlgorithm {
 
-  unsigned int nodeSpacing;
-  unsigned int layerSpacing;
+  uint nodeSpacing;
+  uint layerSpacing;
   tlp::SizeProperty *size;
   tlp::Graph *tree;
 
@@ -49,8 +49,8 @@ static constexpr std::string_view paramHelp[] = {
 
 OrthoTree::OrthoTree(const tlp::PluginContext *context)
     : tlp::LayoutAlgorithm(context), nodeSpacing(4), layerSpacing(10), size(nullptr) {
-  addInParameter<unsigned int>("layer spacing", paramHelp[0].data(), "10", true);
-  addInParameter<unsigned int>("node spacing", paramHelp[1].data(), "4", true);
+  addInParameter<uint>("layer spacing", paramHelp[0].data(), "10", true);
+  addInParameter<uint>("node spacing", paramHelp[1].data(), "4", true);
 }
 
 void OrthoTree::computeVerticalSize(const node n, NodeVectorProperty<double> &verticalSize) {

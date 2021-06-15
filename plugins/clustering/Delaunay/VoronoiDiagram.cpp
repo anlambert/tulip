@@ -26,9 +26,9 @@ static bool voronoiDiagram(tlp::Graph *graph, bool voronoiCellsSubGraphs,
 
   sites.reserve(graph->numberOfNodes());
   const std::vector<tlp::node> &nodes = graph->nodes();
-  unsigned int nbNodes = nodes.size();
+  uint nbNodes = nodes.size();
 
-  for (unsigned int i = 0; i < nbNodes; ++i) {
+  for (uint i = 0; i < nbNodes; ++i) {
     sites.push_back(layout->getNodeValue(nodes[i]));
   }
 
@@ -54,9 +54,9 @@ static bool voronoiDiagram(tlp::Graph *graph, bool voronoiCellsSubGraphs,
 
     if (voronoiCellsSubGraphs) {
       ostringstream oss;
-      unsigned int cellCpt = 0;
+      uint cellCpt = 0;
 
-      for (unsigned int i = 0; i < voronoiDiag.nbSites(); ++i) {
+      for (uint i = 0; i < voronoiDiag.nbSites(); ++i) {
         oss.str("");
         oss << "voronoi cell " << cellCpt++;
         const tlp::VoronoiDiagram::Cell &cell = voronoiDiag.voronoiCellForSite(i);
@@ -73,7 +73,7 @@ static bool voronoiDiagram(tlp::Graph *graph, bool voronoiCellsSubGraphs,
     }
 
     if (connectNodeToCellBorder) {
-      for (unsigned int i = 0; i < voronoiDiag.nbSites(); ++i) {
+      for (uint i = 0; i < voronoiDiag.nbSites(); ++i) {
         voronoiSg->addNode(nodes[i]);
 
         const tlp::VoronoiDiagram::Cell &cell = voronoiDiag.voronoiCellForSite(i);
