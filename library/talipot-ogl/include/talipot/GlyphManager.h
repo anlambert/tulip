@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -14,11 +14,10 @@
 #ifndef TALIPOT_GLYPH_MANAGER_H
 #define TALIPOT_GLYPH_MANAGER_H
 
-//#include <string>
+#include <memory>
 
 #include <talipot/config.h>
 #include <talipot/Glyph.h>
-#include <talipot/MutableContainer.h>
 
 namespace tlp {
 
@@ -31,6 +30,11 @@ class Graph;
 class TLP_GL_SCOPE GlyphManager {
 
 public:
+  GlyphManager(GlGraphInputData *inputData);
+  ~GlyphManager();
+
+  Glyph *getGlyph(int id) const;
+
   /**
    * Return the name of glyph with given id
    */
@@ -44,16 +48,9 @@ public:
    */
   static void loadGlyphPlugins();
 
-  /**
-   * Create the glyph list and store it in glyphs parameter
-   */
-  static void initGlyphList(Graph **graph, GlGraphInputData *glGraphInputData,
-                            MutableContainer<Glyph *> &glyphs);
-  /**
-   * Clear the glyph list
-   */
-  static void clearGlyphList(Graph **graph, GlGraphInputData *glGraphInputData,
-                             MutableContainer<Glyph *> &glyphs);
+private:
+  std::unordered_map<int, Glyph *> _glyphs;
+  std::unique_ptr<Glyph> _defaultGlyph;
 };
 }
 

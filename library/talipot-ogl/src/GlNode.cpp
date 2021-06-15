@@ -14,7 +14,7 @@
 #include <talipot/GlNode.h>
 
 #include <talipot/GlMetaNodeRenderer.h>
-#include <talipot/Glyph.h>
+#include <talipot/GlyphManager.h>
 #include <talipot/GlGraphRenderingParameters.h>
 #include <talipot/GlVertexArrayManager.h>
 #include <talipot/GlGlyphRenderer.h>
@@ -115,7 +115,7 @@ void GlNode::draw(float lod, const GlGraphInputData *data, Camera *camera) {
     nodeSize[2] = FLT_EPSILON;
   }
 
-  auto *glyphObj = data->glyphs.get(glyph);
+  auto *glyphObj = data->glyphManager->getGlyph(glyph);
   // Some glyphs can not benefit from the shader rendering optimization
   // due to the use of quadrics or modelview matrix modification or lighting effect
   if (data->getGlGlyphRenderer()->renderingHasStarted() && glyphObj->shaderSupported()) {
@@ -167,7 +167,7 @@ void GlNode::drawLabel(OcclusionTest *test, const GlGraphInputData *data, float 
                        Camera *camera) {
   init(data);
   // If glyph cannot render label: return
-  if (data->glyphs.get(glyph)->renderLabel()) {
+  if (data->glyphManager->getGlyph(glyph)->renderLabel()) {
     return;
   }
 
@@ -209,7 +209,7 @@ void GlNode::drawLabel(OcclusionTest *test, const GlGraphInputData *data, float 
   int labelPos = data->getElementLabelPosition()->getNodeValue(n);
 
   BoundingBox includeBB;
-  data->glyphs.get(glyph)->getTextBoundingBox(includeBB, n);
+  data->glyphManager->getGlyph(glyph)->getTextBoundingBox(includeBB, n);
   Coord centerBB = includeBB.center();
   Vec3f sizeBB = includeBB[1] - includeBB[0];
 

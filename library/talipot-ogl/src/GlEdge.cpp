@@ -12,7 +12,7 @@
  */
 
 #include <talipot/GlEdge.h>
-#include <talipot/EdgeExtremityGlyph.h>
+#include <talipot/EdgeExtremityGlyphManager.h>
 #include <talipot/GlyphManager.h>
 #include <talipot/Curves.h>
 #include <talipot/GlGraphRenderingParameters.h>
@@ -55,7 +55,7 @@ BoundingBox GlEdge::getBoundingBox(const GlGraphInputData *data, const edge e, c
   Coord srcAnchor, tgtAnchor, tmpAnchor;
   bool hasBends(!bends.empty());
   int srcGlyphId = data->getElementShape()->getNodeValue(src);
-  Glyph *srcGlyph = data->glyphs.get(srcGlyphId);
+  Glyph *srcGlyph = data->glyphManager->getGlyph(srcGlyphId);
   tmpAnchor = hasBends ? bends.front() : tgtCoord;
   srcAnchor = srcGlyph->getAnchor(srcCoord, tmpAnchor, srcSize, srcRot);
 
@@ -65,7 +65,7 @@ BoundingBox GlEdge::getBoundingBox(const GlGraphInputData *data, const edge e, c
     tgtGlyphId = data->getElementShape()->getNodeValue(tgt);
   }
 
-  Glyph *tgtGlyph = data->glyphs.get(tgtGlyphId);
+  Glyph *tgtGlyph = data->glyphManager->getGlyph(tgtGlyphId);
   // this time we don't take srcCoord but srcAnchor to be oriented to where the line comes from
   tmpAnchor = hasBends ? bends.back() : srcAnchor;
   tgtAnchor = tgtGlyph->getAnchor(tgtCoord, tmpAnchor, tgtSize, tgtRot);
@@ -183,9 +183,9 @@ void GlEdge::draw(float lod, const GlGraphInputData *data, Camera *camera) {
 
   if (data->parameters->isViewArrow()) {
     EdgeExtremityGlyph *startEdgeGlyph =
-        data->extremityGlyphs.get(data->getElementSrcAnchorShape()->getEdgeValue(e));
+        data->extremityGlyphManager->getGlyph(data->getElementSrcAnchorShape()->getEdgeValue(e));
     EdgeExtremityGlyph *endEdgeGlyph =
-        data->extremityGlyphs.get(data->getElementTgtAnchorShape()->getEdgeValue(e));
+        data->extremityGlyphManager->getGlyph(data->getElementTgtAnchorShape()->getEdgeValue(e));
 
     float selectionOutlineSize = 0.f;
 
@@ -543,9 +543,9 @@ size_t GlEdge::getVertices(const GlGraphInputData *data, const edge e, const nod
   getEdgeAnchor(data, src, tgt, bends, srcCoord, tgtCoord, srcSize, tgtSize, srcAnchor, tgtAnchor);
 
   EdgeExtremityGlyph *startEdgeGlyph =
-      data->extremityGlyphs.get(data->getElementSrcAnchorShape()->getEdgeValue(e));
+      data->extremityGlyphManager->getGlyph(data->getElementSrcAnchorShape()->getEdgeValue(e));
   EdgeExtremityGlyph *endEdgeGlyph =
-      data->extremityGlyphs.get(data->getElementTgtAnchorShape()->getEdgeValue(e));
+      data->extremityGlyphManager->getGlyph(data->getElementTgtAnchorShape()->getEdgeValue(e));
 
   Coord beginLineAnchor;
   bool selected = data->getElementSelected()->getEdgeValue(e);
@@ -658,13 +658,13 @@ void GlEdge::getEdgeAnchor(const GlGraphInputData *data, const node src, const n
 
   // compute anchor, (clip line with the glyph)
   int srcGlyphId = data->getElementShape()->getNodeValue(src);
-  Glyph *srcGlyph = data->glyphs.get(srcGlyphId);
+  Glyph *srcGlyph = data->glyphManager->getGlyph(srcGlyphId);
   srcAnchor = (bends.size() > 0) ? bends.front() : tgtCoord;
   srcAnchor = srcGlyph->getAnchor(srcCoord, srcAnchor, srcSize, srcRot);
 
   // compute anchor, (clip line with the glyph)
   int tgtGlyphId = data->getElementShape()->getNodeValue(tgt);
-  Glyph *tgtGlyph = data->glyphs.get(tgtGlyphId);
+  Glyph *tgtGlyph = data->glyphManager->getGlyph(tgtGlyphId);
   tgtAnchor = (bends.size() > 0) ? bends.back() : srcAnchor;
   tgtAnchor = tgtGlyph->getAnchor(tgtCoord, tgtAnchor, tgtSize, tgtRot);
 }

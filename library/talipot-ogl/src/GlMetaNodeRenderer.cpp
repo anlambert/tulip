@@ -14,7 +14,7 @@
 #include <talipot/GlMetaNodeRenderer.h>
 #include <talipot/GlCPULODCalculator.h>
 #include <talipot/GlGraph.h>
-#include <talipot/Glyph.h>
+#include <talipot/GlyphManager.h>
 
 using namespace std;
 
@@ -85,7 +85,7 @@ void GlMetaNodeRenderer::render(node n, float, Camera *camera) {
   GlNode glNode(n, metaGraph);
 
   BoundingBox includeBB;
-  _inputData->glyphs.get(_inputData->getElementShape()->getNodeValue(n))
+  _inputData->glyphManager->getGlyph(_inputData->getElementShape()->getNodeValue(n))
       ->getIncludeBoundingBox(includeBB, n);
   BoundingBox bbTmp = glNode.getBoundingBox(_inputData);
   BoundingBox bb(bbTmp.center() - Coord((bbTmp.width() / 2.f) * (includeBB[0][0] * -2.f),

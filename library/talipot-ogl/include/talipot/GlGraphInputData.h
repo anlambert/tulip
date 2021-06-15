@@ -34,6 +34,8 @@ class GlVertexArrayManager;
 class GlMetaNodeRenderer;
 class GlGraphRenderingParameters;
 class GlGlyphRenderer;
+class GlyphManager;
+class EdgeExtremityGlyphManager;
 
 /**
  * Class use to store inputData of the graph
@@ -473,8 +475,8 @@ public:
 
   GlGraphRenderingParameters *parameters;
 
-  MutableContainer<Glyph *> glyphs;
-  MutableContainer<EdgeExtremityGlyph *> extremityGlyphs;
+  GlyphManager *glyphManager;
+  EdgeExtremityGlyphManager *extremityGlyphManager;
 
 protected:
   std::set<PropertyInterface *> _properties;

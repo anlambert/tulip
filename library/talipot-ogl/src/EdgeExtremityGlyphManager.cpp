@@ -64,22 +64,24 @@ void EdgeExtremityGlyphManager::loadGlyphPlugins() {
   }
 }
 //====================================================
-void EdgeExtremityGlyphManager::initGlyphList(Graph **graph, GlGraphInputData *glGraphInputData,
-                                              MutableContainer<EdgeExtremityGlyph *> &glyphs) {
-  GlyphContext gc = GlyphContext(graph, glGraphInputData);
-  glyphs.setAll(nullptr);
-
+EdgeExtremityGlyphManager::EdgeExtremityGlyphManager(GlGraphInputData *inputData) {
+  GlyphContext gc = GlyphContext(inputData);
   for (const auto &glyphName : plugins) {
     auto *newGlyph = PluginsManager::getPluginObject<EdgeExtremityGlyph>(glyphName, &gc);
-    glyphs.set(PluginsManager::pluginInformation(glyphName).id(), newGlyph);
+    _glyphs[PluginsManager::pluginInformation(glyphName).id()] = newGlyph;
   }
 }
 
-void EdgeExtremityGlyphManager::clearGlyphList(Graph **, GlGraphInputData *,
-                                               MutableContainer<EdgeExtremityGlyph *> &glyphs) {
-
-  for (const auto &glyphName : plugins) {
-    delete glyphs.get(PluginsManager::pluginInformation(glyphName).id());
+EdgeExtremityGlyphManager::~EdgeExtremityGlyphManager() {
+  for (const auto &[id, glyph] : _glyphs) {
+    delete glyph;
   }
+}
+
+EdgeExtremityGlyph *EdgeExtremityGlyphManager::getGlyph(int id) const {
+  if (const auto &it = _glyphs.find(id); it != _glyphs.end()) {
+    return it->second;
+  }
+  return nullptr;
 }
 }

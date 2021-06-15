@@ -34,8 +34,7 @@ class GlyphContext : public PluginContext {
 public:
   GlGraphInputData *glGraphInputData;
   ///
-  GlyphContext(Graph ** = nullptr, GlGraphInputData *glGraphInputData = nullptr, int = 5, int = 5)
-      : glGraphInputData(glGraphInputData) {}
+  GlyphContext(GlGraphInputData *glGraphInputData = nullptr) : glGraphInputData(glGraphInputData) {}
   ///
   ~GlyphContext() override = default;
 };

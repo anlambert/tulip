@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -14,10 +14,8 @@
 #ifndef TALIPOT_EDGE_EXTREMITY_GLYPH_MANAGER_H
 #define TALIPOT_EDGE_EXTREMITY_GLYPH_MANAGER_H
 
-#include <string>
-
 #include <talipot/config.h>
-#include <talipot/MutableContainer.h>
+#include <talipot/EdgeExtremityGlyph.h>
 
 namespace tlp {
 class GlGraphInputData;
@@ -27,6 +25,11 @@ class Graph;
 class TLP_GL_SCOPE EdgeExtremityGlyphManager {
 
 public:
+  EdgeExtremityGlyphManager(GlGraphInputData *inputData);
+  ~EdgeExtremityGlyphManager();
+
+  EdgeExtremityGlyph *getGlyph(int id) const;
+
   /**
    * Return the name of glyph with given id
    */
@@ -40,16 +43,8 @@ public:
    */
   static void loadGlyphPlugins();
 
-  /**
-   * Create the glyph list and store it in glyphs parameter
-   */
-  static void initGlyphList(Graph **graph, GlGraphInputData *glGraphInputData,
-                            MutableContainer<EdgeExtremityGlyph *> &glyphs);
-  /**
-   * Clear the glyph list
-   */
-  static void clearGlyphList(Graph **graph, GlGraphInputData *glGraphInputData,
-                             MutableContainer<EdgeExtremityGlyph *> &glyphs);
+private:
+  std::unordered_map<int, EdgeExtremityGlyph *> _glyphs;
 };
 }
 #endif // TALIPOT_EDGE_EXTREMITY_GLYPH_MANAGER_H

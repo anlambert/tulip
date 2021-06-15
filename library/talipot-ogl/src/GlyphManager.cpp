@@ -56,31 +56,27 @@ void GlyphManager::loadGlyphPlugins() {
   }
 }
 
-void GlyphManager::initGlyphList(Graph **graph, GlGraphInputData *glGraphInputData,
-                                 MutableContainer<Glyph *> &glyphs) {
-  // first destroy current default glyph
-  Glyph *defaultGlyph = glyphs.getDefault();
-
-  if (defaultGlyph) {
-    delete defaultGlyph;
-  }
-
-  // then set a new one
-  GlyphContext gc = GlyphContext(graph, glGraphInputData);
-  glyphs.setAll(PluginsManager::getPluginObject<Glyph>("3D - Cube OutLined", &gc));
+GlyphManager::GlyphManager(GlGraphInputData *inputData) {
+  GlyphContext gc = GlyphContext(inputData);
+  _defaultGlyph.reset(PluginsManager::getPluginObject<Glyph>("3D - Cube OutLined", &gc));
 
   for (const std::string &glyphName : glyphList) {
     auto *newGlyph = PluginsManager::getPluginObject<Glyph>(glyphName, &gc);
-    glyphs.set(PluginsManager::pluginInformation(glyphName).id(), newGlyph);
+    _glyphs[PluginsManager::pluginInformation(glyphName).id()] = newGlyph;
   }
 }
 
-void GlyphManager::clearGlyphList(Graph **, GlGraphInputData *, MutableContainer<Glyph *> &glyphs) {
-
-  for (const std::string &glyphName : glyphList) {
-    delete glyphs.get(PluginsManager::pluginInformation(glyphName).id());
+GlyphManager::~GlyphManager() {
+  for (const auto &[id, glyph] : _glyphs) {
+    delete glyph;
   }
-
-  delete glyphs.getDefault();
 }
+
+Glyph *GlyphManager::getGlyph(int id) const {
+  if (const auto &it = _glyphs.find(id); it != _glyphs.end()) {
+    return it->second;
+  }
+  return _defaultGlyph.get();
+}
+
 }

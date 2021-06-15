@@ -29,9 +29,8 @@ GlGraphInputData::GlGraphInputData(Graph *graph, GlGraphRenderingParameters *par
     graph->addListener(this);
   }
 
-  GlyphManager::initGlyphList(&this->graph, this, glyphs);
-
-  EdgeExtremityGlyphManager::initGlyphList(&this->graph, this, extremityGlyphs);
+  glyphManager = new GlyphManager(this);
+  extremityGlyphManager = new EdgeExtremityGlyphManager(this);
 
   if (renderer) {
     _metaNodeRenderer = renderer;
@@ -54,10 +53,10 @@ void GlGraphInputData::setMetaNodeRenderer(GlMetaNodeRenderer *renderer,
 
 GlGraphInputData::~GlGraphInputData() {
   delete _glVertexArrayManager;
-  GlyphManager::clearGlyphList(&this->graph, this, glyphs);
-  EdgeExtremityGlyphManager::clearGlyphList(&this->graph, this, extremityGlyphs);
   delete _metaNodeRenderer;
   delete _glGlyphRenderer;
+  delete glyphManager;
+  delete extremityGlyphManager;
 }
 
 // add this class to ensure proper deletion of the viewAnimationFrame property
