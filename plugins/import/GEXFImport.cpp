@@ -236,7 +236,10 @@ public:
       pn = nodesMap[pid];
     }
 
-    Graph *sg = nodeToSubgraph.get(pn.id);
+    Graph *sg = nullptr;
+    if (const auto it = nodeToSubgraph.find(pn); it != nodeToSubgraph.end()) {
+      sg = it->second;
+    }
 
     if (sg == nullptr) {
       // add a subgraph for the fake meta node
@@ -244,7 +247,7 @@ public:
       // record pn as its fake meta node
       sg->setAttribute<node>("meta-node", pn);
       // and vice-versa
-      nodeToSubgraph.set(pn.id, sg);
+      nodeToSubgraph[pn] = sg;
     }
 
     // add n in the subgraph found
@@ -333,7 +336,10 @@ public:
       }
       // check for subgraph
       else if (xmlReader.isStartElement() && xmlReader.qualifiedName() == "nodes") {
-        Graph *sg = nodeToSubgraph.get(n.id);
+        Graph *sg = nullptr;
+        if (const auto it = nodeToSubgraph.find(n); it != nodeToSubgraph.end()) {
+          sg = it->second;
+        }
 
         if (sg == nullptr) {
           // add subgraph
@@ -341,7 +347,7 @@ public:
           // record the current node as its fake meta node
           sg->setAttribute<node>("meta-node", n);
           // and vice-versa
-          nodeToSubgraph.set(n.id, sg);
+          nodeToSubgraph[n] = sg;
         }
 
         // create its nodes
@@ -430,7 +436,10 @@ public:
 
       // iterate on nodes
       for (auto n : stableIterator(sg->getNodes())) {
-        Graph *msg = nodeToSubgraph.get(n.id);
+        Graph *msg = nullptr;
+        if (const auto it = nodeToSubgraph.find(n); it != nodeToSubgraph.end()) {
+          msg = it->second;
+        }
 
         if (msg) {
           // if the current node is a fake meta node
@@ -472,7 +481,10 @@ public:
       // iterate on nodes
       vector<node> sgNodes(sg->nodes());
       for (auto n : sgNodes) {
-        Graph *msg = nodeToSubgraph.get(n.id);
+        Graph *msg = nullptr;
+        if (const auto it = nodeToSubgraph.find(n); it != nodeToSubgraph.end()) {
+          msg = it->second;
+        }
 
         if (msg != nullptr) {
           // n is a fake meta node
@@ -519,7 +531,7 @@ public:
           // remove fake meta node
           graph->delNode(n);
           msg->removeAttribute("meta-node");
-          nodeToSubgraph.set(n.id, nullptr);
+          nodeToSubgraph[n] = nullptr;
         }
       }
     }
@@ -576,7 +588,7 @@ private:
   IntegerProperty *viewShape;
   // to register the subgraph corresponding
   // to a fake meta node
-  MutableContainer<Graph *> nodeToSubgraph;
+  unordered_map<node, Graph *> nodeToSubgraph;
 
   bool nodesHaveCoordinates;
 };
