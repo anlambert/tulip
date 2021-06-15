@@ -375,7 +375,7 @@ void tlp::MutableContainer<TYPE, INDEX_TYPE>::set(const INDEX_TYPE i,
 //===================================================================
 template <typename TYPE, typename INDEX_TYPE>
 void tlp::MutableContainer<TYPE, INDEX_TYPE>::add(const INDEX_TYPE i, TYPE val) {
-  if (!static_cast<bool>(tlp::StoredType<TYPE>::isPointer)) {
+  if constexpr (!static_cast<bool>(tlp::StoredType<TYPE>::isPointer)) {
     if (maxIndex == UINT_MAX) {
       assert(state == VECT);
       minIndex = i;
@@ -427,6 +427,9 @@ void tlp::MutableContainer<TYPE, INDEX_TYPE>::add(const INDEX_TYPE i, TYPE val) 
       assert(false);
       std::cerr << __PRETTY_FUNCTION__ << "unexpected state value (serious bug)" << std::endl;
     }
+  } else {
+    std::ignore = i;
+    std::ignore = val;
   }
 
   assert(false);
@@ -468,7 +471,7 @@ tlp::MutableContainer<TYPE, INDEX_TYPE>::get(const INDEX_TYPE i) const {
 //===================================================================
 template <typename TYPE, typename INDEX_TYPE>
 void tlp::MutableContainer<TYPE, INDEX_TYPE>::invertBooleanValue(const INDEX_TYPE i) {
-  if (std::is_same<typename StoredType<TYPE>::Value, bool>::value) {
+  if constexpr (std::is_same<typename StoredType<TYPE>::Value, bool>::value) {
     switch (state) {
     case VECT: {
       if (i > maxIndex || i < minIndex) {
@@ -504,6 +507,8 @@ void tlp::MutableContainer<TYPE, INDEX_TYPE>::invertBooleanValue(const INDEX_TYP
       tlp::error() << __PRETTY_FUNCTION__ << "unexpected state value (serious bug)" << std::endl;
       break;
     }
+  } else {
+    std::ignore = i;
   }
 
   assert(false);

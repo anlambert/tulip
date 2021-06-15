@@ -76,7 +76,8 @@ SET(talipot_LIB_SRCS
     TLPBExport.cpp
     TLPBImport.cpp
     Vector.cpp
-    Matrix.cpp)
+    Matrix.cpp
+    MutableContainer.cpp)
 
 # disable GCC var tracking on these file as it eats too much compile time and
 # warnings are emitted otherwise

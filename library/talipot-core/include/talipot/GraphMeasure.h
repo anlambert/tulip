@@ -17,7 +17,6 @@
 #include <set>
 
 #include <talipot/Node.h>
-#include <talipot/MutableContainer.h>
 #include <talipot/VectorProperty.h>
 #include <talipot/GraphTools.h>
 

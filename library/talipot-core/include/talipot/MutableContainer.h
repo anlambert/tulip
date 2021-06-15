@@ -21,8 +21,9 @@
 #include <climits>
 #include <cstring>
 #include <unordered_map>
+
 #include <talipot/config.h>
-#include <talipot/StoredType.h>
+#include <talipot/PropertyTypes.h>
 #include <talipot/DataSet.h>
 #include <talipot/Iterator.h>
 
@@ -128,8 +129,101 @@ private:
   bool compressing;
 };
 
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<edge>), TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<node>), TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<uint>), TLP_TEMPLATE_DECLARE_SCOPE)
+
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(BooleanType)>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(BooleanVectorType)>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(ColorType)>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(ColorVectorType)>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(DoubleType)>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(DoubleVectorType)>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(IntegerType)>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(IntegerVectorType)>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(LineType)>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(PointType)>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(SizeType)>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(SizeVectorType)>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(StringType)>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(StringVectorType)>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(BooleanType), node>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(BooleanVectorType), node>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(ColorType), node>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(ColorVectorType), node>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(DoubleType), node>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(DoubleVectorType), node>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(IntegerType), node>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(IntegerVectorType), node>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(LineType), node>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(PointType), node>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(SizeType), node>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(SizeVectorType), node>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(StringType), node>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(StringVectorType), node>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(BooleanType), edge>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(BooleanVectorType), edge>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(ColorType), edge>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(ColorVectorType), edge>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(DoubleType), edge>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(DoubleVectorType), edge>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(IntegerType), edge>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(IntegerVectorType), edge>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(LineType), edge>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(PointType), edge>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(SizeType), edge>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(SizeVectorType), edge>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(StringType), edge>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+DECLARE_DLL_TEMPLATE_INSTANCE(SINGLE_ARG(MutableContainer<REAL_TYPE(StringVectorType), edge>),
+                              TLP_TEMPLATE_DECLARE_SCOPE)
+
 }
 
+#ifdef DLL_TALIPOT
 #include "cxx/MutableContainer.cxx"
+#endif
 
 #endif // TALIPOT_MUTABLE_CONTAINER_H
