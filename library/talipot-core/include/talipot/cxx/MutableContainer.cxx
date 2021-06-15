@@ -12,6 +12,98 @@
  */
 
 //===================================================================
+// we implement 2 templates with IteratorValue as parent class
+// for the two kinds of storage used in a MutableContainer
+// one for vector storage
+template <typename TYPE, typename INDEX_TYPE>
+class IteratorVect : public tlp::IteratorValue<INDEX_TYPE> {
+public:
+  IteratorVect(const TYPE &value, bool equal,
+               std::deque<typename tlp::StoredType<TYPE>::Value> *vData, uint minIndex)
+      : _value(value), _equal(equal), _pos(minIndex), vData(vData), it(vData->begin()) {
+    while (it != (*vData).end() && tlp::StoredType<TYPE>::equal((*it), _value) != _equal) {
+      ++it;
+      ++_pos;
+    }
+  }
+  bool hasNext() override {
+    return (_pos < UINT_MAX && it != (*vData).end());
+  }
+  INDEX_TYPE next() override {
+    INDEX_TYPE tmp = _pos;
+
+    do {
+      ++it;
+      ++_pos;
+    } while (it != (*vData).end() && tlp::StoredType<TYPE>::equal((*it), _value) != _equal);
+
+    return tmp;
+  }
+  INDEX_TYPE nextValue(tlp::DataMem &val) override {
+    static_cast<tlp::TypedValueContainer<TYPE> &>(val).value = tlp::StoredType<TYPE>::get(*it);
+    INDEX_TYPE pos = _pos;
+
+    do {
+      ++it;
+      ++_pos;
+    } while (it != (*vData).end() && tlp::StoredType<TYPE>::equal((*it), _value) != _equal);
+
+    return pos;
+  }
+
+private:
+  const TYPE _value;
+  bool _equal;
+  INDEX_TYPE _pos;
+  std::deque<typename tlp::StoredType<TYPE>::Value> *vData;
+  typename std::deque<typename tlp::StoredType<TYPE>::Value>::const_iterator it;
+};
+
+// one for hash storage
+template <typename TYPE, typename INDEX_TYPE>
+class IteratorHash : public tlp::IteratorValue<INDEX_TYPE> {
+public:
+  IteratorHash(const TYPE &value, bool equal,
+               std::unordered_map<INDEX_TYPE, typename tlp::StoredType<TYPE>::Value> *hData)
+      : _value(value), _equal(equal), hData(hData) {
+    it = (*hData).begin();
+
+    while (it != (*hData).end() && tlp::StoredType<TYPE>::equal((*it).second, _value) != _equal) {
+      ++it;
+    }
+  }
+  bool hasNext() override {
+    return (it != (*hData).end());
+  }
+  INDEX_TYPE next() override {
+    INDEX_TYPE tmp = (*it).first;
+
+    do {
+      ++it;
+    } while (it != (*hData).end() && tlp::StoredType<TYPE>::equal((*it).second, _value) != _equal);
+
+    return tmp;
+  }
+  INDEX_TYPE nextValue(tlp::DataMem &val) override {
+    static_cast<tlp::TypedValueContainer<TYPE> &>(val).value =
+        tlp::StoredType<TYPE>::get((*it).second);
+    INDEX_TYPE pos = (*it).first;
+
+    do {
+      ++it;
+    } while (it != (*hData).end() && tlp::StoredType<TYPE>::equal((*it).second, _value) != _equal);
+
+    return pos;
+  }
+
+private:
+  const TYPE _value;
+  bool _equal;
+  std::unordered_map<INDEX_TYPE, typename tlp::StoredType<TYPE>::Value> *hData;
+  typename std::unordered_map<INDEX_TYPE, typename tlp::StoredType<TYPE>::Value>::const_iterator it;
+};
+
+//===================================================================
 template <typename TYPE, typename INDEX_TYPE>
 tlp::MutableContainer<TYPE, INDEX_TYPE>::MutableContainer()
     : vData(new std::deque<typename StoredType<TYPE>::Value>()), hData(nullptr), minIndex(UINT_MAX),
