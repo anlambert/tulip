@@ -112,13 +112,6 @@ static std::function<uint(tlp::edge)> edgeToId = [](tlp::edge e) { return e.id; 
 
 }
 
-#ifdef _MSC_VER
-#include <vector>
-#include <talipot/config.h>
-// needed by MSVC to avoid multiple definitions
-struct TLP_SCOPE __tlp_vector_edge : public std::vector<tlp::edge> {};
-#endif
-
 // these three functions allow to use tlp::edge as a key in a hash-based data structure (e.g.
 // hashmap).
 namespace std {

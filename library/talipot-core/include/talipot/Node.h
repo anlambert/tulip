@@ -112,13 +112,6 @@ static std::function<uint(tlp::node)> nodeToId = [](tlp::node n) { return n.id; 
 
 }
 
-#ifdef _MSC_VER
-#include <vector>
-#include <talipot/config.h>
-// needed by MSVC to avoid multiple definitions
-struct TLP_SCOPE __tlp_vector_node : public std::vector<tlp::node> {};
-#endif
-
 // these three functions allow to use tlp::node as a key in a hash-based data structure (e.g.
 // hashmap).
 namespace std {

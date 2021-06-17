@@ -304,12 +304,4 @@ std::set<T> iteratorSet(Iterator<T> *it) {
 }
 }
 
-#ifdef _MSC_VER
-
-#include <talipot/Edge.h>
-#include <talipot/Node.h>
-
-template struct TLP_SCOPE tlp::Iterator<tlp::edge>;
-template struct TLP_SCOPE tlp::Iterator<tlp::node>;
-#endif
 #endif // TALIPOT_ITERATOR_H
