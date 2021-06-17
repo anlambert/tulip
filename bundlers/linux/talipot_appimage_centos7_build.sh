@@ -20,8 +20,17 @@ yum -y install devtoolset-8-gcc devtoolset-8-gcc-c++
 # install talipot deps
 yum -y install zlib-devel libzstd-devel qhull-devel yajl-devel graphviz-devel binutils-devel
 yum -y install freetype-devel fontconfig-devel glew-devel fribidi-devel
-yum -y install python36-devel python36-pip
 yum -y install qt5-qtbase-devel qt5-qtimageformats qt5-qtsvg quazip-qt5-devel qt5-qtwebkit-devel
+
+# install Python 3.9
+yum -y groupinstall "Development Tools"
+yum -y install openssl-devel libffi-devel bzip2-devel
+wget https://www.python.org/ftp/python/3.9.5/Python-3.9.5.tgz
+tar xvf Python-3.9.5.tgz
+cd Python-3.9.5
+./configure --enable-optimizations --enable-shared --prefix=/usr
+make -j4 install
+cd ..
 
 # needed for qt5 gtk3 platform theme
 yum -y install gtk3-devel
@@ -31,9 +40,7 @@ yum -y install fuse fuse-libs file
 
 # needed for generating the doc
 yum -y install doxygen graphviz
-pip3.6 install sphinx
-# https://github.com/sphinx-doc/sphinx/issues/9063
-pip3.6 install 'docutils==0.16'
+pip3.9 install sphinx
 
 # needed to build and run tests
 yum -y install cppunit-devel xorg-x11-server-Xvfb
@@ -59,7 +66,7 @@ cmake3 -DCMAKE_BUILD_TYPE=Release \
        -DCMAKE_C_COMPILER=/opt/rh/devtoolset-8/root/usr/bin/gcc \
        -DCMAKE_CXX_COMPILER=/opt/rh/devtoolset-8/root/usr/bin/g++ \
        -DCMAKE_INSTALL_PREFIX=$PWD/install \
-       -DPYTHON_EXECUTABLE=/usr/bin/python3.6 \
+       -DPYTHON_EXECUTABLE=/usr/bin/python3.9 \
        -DTALIPOT_USE_CCACHE=$CCACHE \
        -DTALIPOT_BUILD_FOR_APPIMAGE=ON \
        -DTALIPOT_BUILD_TESTS=$RUN_TESTS \
