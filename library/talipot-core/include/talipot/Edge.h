@@ -14,12 +14,7 @@
 #ifndef TALIPOT_EDGE_H
 #define TALIPOT_EDGE_H
 
-#include <climits>
-#include <iostream>
-#include <functional>
-#include <vector>
-
-#include <talipot/config.h>
+#include <talipot/IndexElement.h>
 
 namespace tlp {
 
@@ -36,122 +31,8 @@ namespace tlp {
  * @see tlp::node
  * @see tlp::Graph
  */
-struct edge {
-  /**
-   * @brief id The identifier of the edge.
-   */
-  uint id;
-
-  /**
-   * @brief edge creates an invalid edge.
-   */
-  edge() : id(UINT_MAX) {}
-
-  /**
-   * @brief edge Create an edge of given identifier.
-   * It is your responsibility to make sure an edge of this ID exists when you create the edge.
-   * If you want to make sure this edge exists, use Graph::isElement(), as isValid() will only tell
-   * is the edge was correctly initialized.
-   *
-   * @param j the identifier this edge will use.
-   */
-  edge(uint j) : id(j) {}
-
-  /**
-   * @brief operator uint A convenience function to get the id of an edge.
-   */
-  operator uint() const {
-    return id;
-  }
-
-  edge &operator=(uint id) {
-    this->id = id;
-    return *this;
-  }
-
-  edge &operator++() {
-    ++id;
-    return *this;
-  }
-
-  edge &operator+=(uint i) {
-    id += i;
-    return *this;
-  }
-
-  edge &operator--() {
-    --id;
-    return *this;
-  }
-
-  /**
-   * @brief operator == checks if two edges are equals.
-   * @param n The other edge to compare this one to.
-   * @return Whether or not the two edges are equal.
-   */
-  bool operator==(const edge e) const {
-    return id == e.id;
-  }
-
-  bool operator==(const uint id) const {
-    return this->id == id;
-  }
-
-  /**
-   * @brief operator != checks if two edges are different.
-   * @param n The other edge to compare this one to.
-   * @return Whether or not the two edges are different.
-   */
-  bool operator!=(const edge e) const {
-    return id != e.id;
-  }
-
-  /**
-   * @brief isValid checks if the edge is valid.
-   * An invalid edge is an edge whose id is UINT_MAX.
-   *
-   * @return whether the edge is valid or not.
-   */
-  bool isValid() const {
-    return id != UINT_MAX;
-  }
-};
-
-inline std::ostream &operator<<(std::ostream &os, const std::vector<edge> &ve) {
-  os << "(";
-  for (uint i = 0; i < ve.size(); ++i) {
-    os << "edge(" << ve[i].id << ")";
-    if (i != ve.size() - 1) {
-      os << ", ";
-    }
-  }
-  os << ")";
-  return os;
+TLP_INDEX_ELEMENT(edge)
 }
-
-}
-
-// these three functions allow to use tlp::edge as a key in a hash-based data structure (e.g.
-// hashmap).
-namespace std {
-template <>
-struct hash<tlp::edge> {
-  size_t operator()(const tlp::edge e) const {
-    return e.id;
-  }
-};
-template <>
-struct equal_to<tlp::edge> {
-  size_t operator()(const tlp::edge e, const tlp::edge e2) const {
-    return e.id == e2.id;
-  }
-};
-template <>
-struct less<tlp::edge> {
-  size_t operator()(const tlp::edge e, const tlp::edge e2) const {
-    return e.id < e2.id;
-  }
-};
-} // namespace std
+TLP_INDEX_ELEMENT_HASH(edge)
 
 #endif // TALIPOT_EDGE_H

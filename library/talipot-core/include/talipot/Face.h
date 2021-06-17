@@ -14,48 +14,12 @@
 #ifndef TALIPOT_FACE_H
 #define TALIPOT_FACE_H
 
-#include <climits>
-#include <functional>
-
-#include <talipot/config.h>
+#include <talipot/IndexElement.h>
 
 namespace tlp {
-
-struct Face {
-  uint id;
-  Face() : id(UINT_MAX) {}
-  explicit Face(uint j) : id(j) {}
-  bool operator!=(const Face f) const {
-    return id != f.id;
-  }
-  bool operator==(const Face f) const {
-    return id == f.id;
-  }
-  bool isValid() const {
-    return id != UINT_MAX;
-  }
-};
+TLP_INDEX_ELEMENT(Face)
 }
 
-namespace std {
-template <>
-struct hash<tlp::Face> {
-  size_t operator()(const tlp::Face f) const {
-    return f.id;
-  }
-};
-template <>
-struct equal_to<tlp::Face> {
-  size_t operator()(const tlp::Face f, const tlp::Face f2) const {
-    return f.id == f2.id;
-  }
-};
-template <>
-struct less<tlp::Face> {
-  size_t operator()(const tlp::Face f, const tlp::Face f2) const {
-    return f.id < f2.id;
-  }
-};
-} // namespace std
+TLP_INDEX_ELEMENT_HASH(Face)
 
 #endif // TALIPOT_FACE_H

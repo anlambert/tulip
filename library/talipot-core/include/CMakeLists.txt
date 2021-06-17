@@ -85,6 +85,7 @@ INSTALL(
         ${CMAKE_CURRENT_BINARY_DIR}/talipot/Release.h
         talipot/FontAwesomeConstants.h
         talipot/MaterialDesignIconsConstants.h
+        talipot/IndexElement.h
   DESTINATION ${TalipotIncludeInstallDir}/talipot/)
 
 INSTALL(
