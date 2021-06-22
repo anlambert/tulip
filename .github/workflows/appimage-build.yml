@@ -2,10 +2,16 @@ name: appimage-build
 on: [push, pull_request]
 jobs:
   appimage:
-    name: Talipot AppImage build on CentOS 7
+    name: ${{ matrix.config.name }}
     runs-on: ubuntu-18.04
-    env:
-      DOCKER_IMAGE: centos:7
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - name: Talipot AppImage build on CentOS 7
+            docker-image: centos:7
+          - name: Talipot AppImage build on CentOS 8
+            docker-image: centos:8
     steps:
       - name: Checkout Talipot code
         uses: actions/checkout@v2
@@ -18,23 +24,23 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/ccache
-          key: appimage-ccache-${{ steps.get-current-date.outputs.date }}
+          key: appimage-${{ matrix.config.docker-image }}-ccache-${{ steps.get-current-date.outputs.date }}
           restore-keys: |
             appimage-ccache-
-      - name: Pull ${{ env.DOCKER_IMAGE }} docker image
-        run: sudo docker pull ${DOCKER_IMAGE}
+      - name: Pull ${{ matrix.config.docker-image }} docker image
+        run: sudo docker pull ${{ matrix.config.docker-image }}
       - name: Create ccache docker volume
         run: sudo docker create
           -v ~/ccache:/ccache
           --name ccache
-          ${DOCKER_IMAGE}
+          ${{ matrix.config.docker-image }}
       - name: Build Talipot AppImage in CentOS
         run: sudo docker run
           -e CCACHE_DIR=/ccache
           --volumes-from ccache
           -v `pwd`:/talipot:rw
-          ${DOCKER_IMAGE}
-          /bin/bash -c "bash -xe /talipot/bundlers/linux/talipot_appimage_centos7_build.sh CCACHE RUN_TESTS"
+          ${{ matrix.config.docker-image }}
+          /bin/bash -c "bash -xe /talipot/bundlers/linux/talipot_appimage_centos_build.sh"
       - name: Get Talipot version
         id: get-talipot-version
         run: |
@@ -43,5 +49,5 @@ jobs:
       - name: Upload Taliot AppImage to GitHub Actions artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: Talipot AppImage
+          name: Talipot AppImages
           path: ./build/Talipot*.AppImage
