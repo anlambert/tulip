@@ -54,6 +54,11 @@ class AlphaMapping(tlp.ColorAlgorithm):
     def __init__(self, context):
         tlp.ColorAlgorithm.__init__(self, context)
 
+        self.addColorPropertyParameter(
+            'colors',
+            'The input color property from which to compute new alpha values',
+            'viewColor')
+
         self.addNumericPropertyParameter(
             'metric',
             'The input numeric property from which to compute alpha mapping',
@@ -78,8 +83,8 @@ class AlphaMapping(tlp.ColorAlgorithm):
              'to map on graph elements colors'), '255')
 
     def run(self):
-        vColor = self.graph.getColorProperty("viewColor")
-        self.result.copy(vColor)
+        colors = self.dataSet['colors']
+        self.result.copy(colors)
 
         inputMetric = self.dataSet['metric']
         minAlpha = clamp(self.dataSet['min alpha'], 0, 255)
@@ -111,7 +116,7 @@ class AlphaMapping(tlp.ColorAlgorithm):
                 val = inputMetric[n]
                 t = getFactor(val - minValue, maxValue - minValue)
                 alpha = minAlpha + t * (maxAlpha - minAlpha)
-                color = vColor[n]
+                color = colors[n]
                 color[3] = int(alpha)
                 self.result[n] = color
 
@@ -123,7 +128,7 @@ class AlphaMapping(tlp.ColorAlgorithm):
                 val = inputMetric[e]
                 t = getFactor(val - minValue, maxValue - minValue)
                 alpha = minAlpha + t * (maxAlpha - minAlpha)
-                color = vColor[e]
+                color = colors[e]
                 color[3] = int(alpha)
                 self.result[e] = color
 
