@@ -1,4 +1,4 @@
-# Copyright (C) 2020  The Talipot developers
+# Copyright (C) 2020-2021  The Talipot developers
 #
 # Talipot is a fork of Tulip, created by David Auber
 # and the Tulip development Team from LaBRI, University of Bordeaux
@@ -55,3 +55,68 @@ class TestTalipotPlugins(unittest.TestCase):
         # check that the layout failed as the 3D_layout parameter
         # has not been set to true
         self.assertFalse(ret[0])
+
+    def test_alpha_mapping(self):
+        nodeColor = (255, 0, 0, 255)
+        nodeColorAfter = (255, 0, 0, 0)
+        edgeColor = (0, 255, 0, 255)
+        edgeColorAfter = (0, 255, 0, 0)
+        graph = tlp.importGraph('Grid')
+        graph['viewMetric'].setAllNodeValue(0)
+        graph['viewMetric'].setAllEdgeValue(0)
+        graph['viewColor'].setAllNodeValue(nodeColor)
+        graph['viewColor'].setAllEdgeValue(edgeColor)
+
+        # check for viewColor output property
+        params = tlp.getDefaultPluginParameters('Alpha Mapping', graph)
+        params['target'] = 'nodes'
+        graph.applyColorAlgorithm('Alpha Mapping', params)
+
+        for n in graph.nodes():
+            self.assertEqual(graph['viewColor'][n], nodeColorAfter)
+
+        for e in graph.edges():
+            self.assertEqual(graph['viewColor'][e], edgeColor)
+
+        graph['viewColor'].setAllNodeValue(nodeColor)
+        graph['viewColor'].setAllEdgeValue(edgeColor)
+
+        params['target'] = 'edges'
+        graph.applyColorAlgorithm('Alpha Mapping', params)
+
+        for n in graph.nodes():
+            self.assertEqual(graph['viewColor'][n], nodeColor)
+
+        for e in graph.edges():
+            self.assertEqual(graph['viewColor'][e], edgeColorAfter)
+
+        # check for anonymous or not viewColor output property
+        colorProps = [tlp.ColorProperty(graph), graph.getColorProperty('colors')]
+
+        for colorProp in colorProps:
+          colorProp.setAllNodeValue(tlp.Color.White)
+          colorProp.setAllEdgeValue(tlp.Color.Black)
+
+          graph['viewColor'].setAllNodeValue(nodeColor)
+          graph['viewColor'].setAllEdgeValue(edgeColor)
+
+          params['target'] = 'nodes'
+          graph.applyColorAlgorithm('Alpha Mapping', colorProp, params)
+
+          for n in graph.nodes():
+              self.assertEqual(colorProp[n], nodeColorAfter)
+
+          for e in graph.edges():
+              self.assertEqual(colorProp[e], edgeColor)
+
+          graph['viewColor'].setAllNodeValue(nodeColor)
+          graph['viewColor'].setAllEdgeValue(edgeColor)
+
+          params['target'] = 'edges'
+          graph.applyColorAlgorithm('Alpha Mapping', colorProp, params)
+
+          for n in graph.nodes():
+              self.assertEqual(colorProp[n], nodeColor)
+
+          for e in graph.edges():
+              self.assertEqual(colorProp[e], edgeColorAfter)

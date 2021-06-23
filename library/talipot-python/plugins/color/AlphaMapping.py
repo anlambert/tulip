@@ -55,7 +55,7 @@ class AlphaMapping(tlp.ColorAlgorithm):
         tlp.ColorAlgorithm.__init__(self, context)
 
         self.addNumericPropertyParameter(
-            'input property',
+            'metric',
             'The input numeric property from which to compute alpha mapping',
             'viewMetric')
 
@@ -79,7 +79,9 @@ class AlphaMapping(tlp.ColorAlgorithm):
 
     def run(self):
         vColor = self.graph.getColorProperty("viewColor")
-        inputMetric = self.dataSet['input property']
+        self.result.copy(vColor)
+
+        inputMetric = self.dataSet['metric']
         minAlpha = clamp(self.dataSet['min alpha'], 0, 255)
         maxAlpha = clamp(self.dataSet['max alpha'], 0, 255)
         target = self.dataSet['target']
@@ -137,4 +139,4 @@ according to the values stored in a numeric property of a graph.
 # The line below does the magic to register the plugin into the plugin database
 # and updates the GUI to make it accessible through the menus.
 talipotplugins.registerPlugin('AlphaMapping', 'Alpha Mapping', 'Antoine Lambert',
-                            '20/04/2017', pluginDoc, '1.1')
+                              '20/04/2017', pluginDoc, '1.2')
