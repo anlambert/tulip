@@ -61,8 +61,8 @@ class AlphaMapping(tlp.ColorAlgorithm):
 
         self.addStringCollectionParameter(
             'target',
-            'Whether alpha values are computed for nodes or edges',
-            'nodes;edges')
+            'Whether alpha values are computed for nodes, edges or both',
+            'nodes;edges;both')
 
         self.addStringCollectionParameter(
             'type', mappingTypeDoc, 'linear;logarithmic;uniform')
@@ -103,7 +103,7 @@ class AlphaMapping(tlp.ColorAlgorithm):
             for e in self.graph.getEdges():
                 inputMetric[e] = math.log(1+inputMetric[e]-minE)
 
-        if target == 'nodes':
+        if target in ('nodes', 'both'):
             minValue = inputMetric.getNodeDoubleMin(self.graph)
             maxValue = inputMetric.getNodeDoubleMax(self.graph)
 
@@ -115,7 +115,7 @@ class AlphaMapping(tlp.ColorAlgorithm):
                 color[3] = int(alpha)
                 self.result[n] = color
 
-        else:
+        if target in ('edges', 'both'):
             minValue = inputMetric.getEdgeDoubleMin(self.graph)
             maxValue = inputMetric.getEdgeDoubleMax(self.graph)
 

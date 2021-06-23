@@ -90,6 +90,15 @@ class TestTalipotPlugins(unittest.TestCase):
         for e in graph.edges():
             self.assertEqual(graph['viewColor'][e], edgeColorAfter)
 
+        params['target'] = 'both'
+        graph.applyColorAlgorithm('Alpha Mapping', params)
+
+        for n in graph.nodes():
+            self.assertEqual(graph['viewColor'][n], nodeColorAfter)
+
+        for e in graph.edges():
+            self.assertEqual(graph['viewColor'][e], edgeColorAfter)
+
         # check for anonymous or not viewColor output property
         colorProps = [tlp.ColorProperty(graph), graph.getColorProperty('colors')]
 
