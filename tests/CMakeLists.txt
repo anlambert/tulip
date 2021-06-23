@@ -41,7 +41,11 @@ if platform.system() == 'Windows' and sys.version_info >= (3, 8):
 import ${PYTHON_TEST_MODULE}
 tests = unittest.defaultTestLoader.loadTestsFromModule(${PYTHON_TEST_MODULE})
 runner = unittest.TextTestRunner()
-runner.run(tests)")
+if runner.run(tests).wasSuccessful():
+    sys.exit(0)
+else:
+    sys.exit(1)
+")
   ENDIF()
   # In order to run the tests on windows, we need to add the paths of the dll
   # dependencies (cppunit, tulip, gzstream, yajl) in the PATH environment
