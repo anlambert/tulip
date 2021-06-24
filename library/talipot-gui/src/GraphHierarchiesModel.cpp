@@ -23,6 +23,7 @@
 #include <talipot/GraphNeedsSavingObserver.h>
 #include <talipot/TlpQtTools.h>
 #include <talipot/StableIterator.h>
+#include <talipot/GlTextureManager.h>
 
 using namespace std;
 using namespace tlp;
@@ -738,6 +739,7 @@ static void addListenerToWholeGraphHierarchy(Graph *root, Observable *listener) 
   }
   root->addListener(listener);
   root->addObserver(listener);
+  root->getStringProperty("viewTexture")->addListener(listener);
 }
 
 void GraphHierarchiesModel::addGraph(tlp::Graph *graph) {
@@ -793,6 +795,28 @@ void GraphHierarchiesModel::removeGraph(tlp::Graph *g) {
 
 // Observation
 void GraphHierarchiesModel::treatEvent(const Event &e) {
+  const auto *pe = dynamic_cast<const PropertyEvent *>(&e);
+  if (pe) {
+    // ensure to load textures once they are set and not during graph rendering
+    // to avoid recursive repaint when a texture must be downloaded from a HTTP
+    // URL (due to QEventLoop use in FileDownloader class implementation)
+    string texture;
+    auto *viewTexture = static_cast<StringProperty *>(pe->getProperty());
+    if (pe->getType() == PropertyEvent::TLP_AFTER_SET_NODE_VALUE) {
+      texture = viewTexture->getNodeValue(pe->getNode());
+    } else if (pe->getType() == PropertyEvent::TLP_AFTER_SET_EDGE_VALUE) {
+      texture = viewTexture->getEdgeValue(pe->getEdge());
+    } else if (pe->getType() == PropertyEvent::TLP_AFTER_SET_ALL_NODE_VALUE) {
+      texture = viewTexture->getNodeDefaultValue();
+    } else if (pe->getType() == PropertyEvent::TLP_AFTER_SET_ALL_EDGE_VALUE) {
+      texture = viewTexture->getEdgeDefaultValue();
+    }
+    if (!texture.empty()) {
+      GlTextureManager::loadTexture(texture);
+    }
+    return;
+  }
+
   auto *g = static_cast<tlp::Graph *>(e.sender());
 
   if (e.type() == Event::TLP_DELETE && _graphs.contains(g)) { // A root graph has been deleted
