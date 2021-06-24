@@ -12,6 +12,7 @@
  */
 
 #include <QFileDialog>
+#include <QImageReader>
 
 #include <talipot/TextureFileDialog.h>
 
@@ -56,8 +57,13 @@ void TextureFileDialog::setData(const TextureFile &tf) {
 }
 
 void TextureFileDialog::browse() {
+  QString filter = "Images (";
+  for (auto f : QImageReader::supportedImageFormats()) {
+    filter += QString(" *.%1").arg(QString(f).toLower());
+  }
+  filter += ')';
   QString result = QFileDialog::getOpenFileName(parentWidget(), "Choose a texture file",
-                                                _data.texturePath, "Images (*.jpg *.jpeg *.png)");
+                                                _data.texturePath, filter);
 
   if (!result.isEmpty()) {
     ui->fileOrDirLineEdit->setText(result);
