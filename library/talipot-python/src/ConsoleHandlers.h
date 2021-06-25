@@ -21,6 +21,7 @@
 #include <QElapsedTimer>
 #include <QScrollBar>
 #include <QDebug>
+#include <QRegularExpression>
 
 #include <talipot/TlpQtTools.h>
 
@@ -81,19 +82,21 @@ public slots:
     cursor.insertText(output + '\n', format);
 
     if (textBrowser) {
-      QRegExp rx("^.*File.*\"(.*)\".*line.*(\\d+).*$");
-      QRegExp rx2("^.*File.*\"(.*)\".*line.*(\\d+).*in (.*)$");
+      QRegularExpression rx("^.*File.*\"(.*)\".*line.*(\\d+).*$");
+      QRegularExpression rx2("^.*File.*\"(.*)\".*line.*(\\d+).*in (.*)$");
       cursor = textBrowser->document()->find(rx, QTextCursor(textBrowser->document()->begin()));
 
       while (!cursor.isNull()) {
-        rx.indexIn(cursor.selectedText());
-        rx2.indexIn(cursor.selectedText());
+        QRegularExpressionMatch match, match2;
 
-        if (rx.cap(1) != "<string>" && rx2.cap(3) != "tlpimporthook") {
+        if (cursor.selectedText().indexOf(rx, 0, &match) != -1 &&
+            cursor.selectedText().indexOf(rx2, 0, &match2) != -1 &&
+            match.captured(1) != "<string>" && match2.captured(3) != "tlpimporthook") {
           format = cursor.charFormat();
           format.setAnchor(true);
           format.setUnderlineStyle(QTextCharFormat::SingleUnderline);
-          format.setAnchorHref(QUrl::toPercentEncoding(rx.cap(1) + ":" + rx.cap(2)));
+          format.setAnchorHref(
+              QUrl::toPercentEncoding(match.captured(1) + ":" + match.captured(2)));
           cursor.setCharFormat(format);
         }
 

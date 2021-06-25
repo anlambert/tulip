@@ -117,7 +117,7 @@ public:
     while (!xmlReader.atEnd()) {
       if (xmlReader.readNextStartElement()) {
         // only static graph are supported
-        if (xmlReader.name() == "graph") {
+        if (xmlReader.name() == QString("graph")) {
           string mode = QStringToTlpString(xmlReader.attributes().value("mode").toString());
 
           if (mode == "dynamic") {
@@ -126,15 +126,15 @@ public:
           }
         }
         // create Talipot Properties from Gephi attributes
-        else if (xmlReader.name() == "attributes") {
+        else if (xmlReader.name() == QString("attributes")) {
           createPropertiesFromAttributes(xmlReader);
         }
         // parse graph node data
-        else if (xmlReader.name() == "nodes") {
+        else if (xmlReader.name() == QString("nodes")) {
           createNodes(xmlReader, graph);
         }
         // parse graph edge data
-        else if (xmlReader.name() == "edges") {
+        else if (xmlReader.name() == QString("edges")) {
           createEdges(xmlReader);
         }
       }
@@ -172,15 +172,15 @@ public:
   // Create a set of Talipot Properties from the attributes declared in the GEXF file
   // according to data types
   void createPropertiesFromAttributes(QXmlStreamReader &xmlReader) {
-    bool nodeProperties = xmlReader.attributes().value("class") == "node";
+    bool nodeProperties = xmlReader.attributes().value("class") == QString("node");
     unordered_map<string, PropertyInterface *> &propertiesMap =
         nodeProperties ? nodePropertiesMap : edgePropertiesMap;
 
-    while (!(xmlReader.isEndElement() && xmlReader.name() == "attributes")) {
+    while (!(xmlReader.isEndElement() && xmlReader.name() == QString("attributes"))) {
       xmlReader.readNext();
 
       // create a Talipot property and store mapping between attribute id and property
-      if (xmlReader.isStartElement() && xmlReader.name() == "attribute") {
+      if (xmlReader.isStartElement() && xmlReader.name() == QString("attribute")) {
         string attributeId = QStringToTlpString(xmlReader.attributes().value("id").toString());
         string attributeName = QStringToTlpString(xmlReader.attributes().value("title").toString());
         string attributeType = QStringToTlpString(xmlReader.attributes().value("type").toString());
@@ -200,11 +200,11 @@ public:
 
   // create nodes
   void createNodes(QXmlStreamReader &xmlReader, Graph *g) {
-    while (!(xmlReader.isEndElement() && xmlReader.name() == "nodes")) {
+    while (!(xmlReader.isEndElement() && xmlReader.name() == QString("nodes"))) {
       xmlReader.readNext();
 
       // must be a node
-      if (xmlReader.isStartElement() && xmlReader.name() == "node") {
+      if (xmlReader.isStartElement() && xmlReader.name() == QString("node")) {
         parseNode(xmlReader, g);
       }
     }
@@ -212,11 +212,11 @@ public:
 
   // create edges
   void createEdges(QXmlStreamReader &xmlReader) {
-    while (!(xmlReader.isEndElement() && xmlReader.name() == "edges")) {
+    while (!(xmlReader.isEndElement() && xmlReader.name() == QString("edges"))) {
       xmlReader.readNext();
 
       // must be an edge
-      if (xmlReader.isStartElement() && xmlReader.name() == "edge") {
+      if (xmlReader.isStartElement() && xmlReader.name() == QString("edge")) {
         parseEdge(xmlReader);
       }
     }
@@ -290,9 +290,9 @@ public:
 
     xmlReader.readNext();
 
-    while (!(xmlReader.isEndElement() && xmlReader.name() == "node")) {
+    while (!(xmlReader.isEndElement() && xmlReader.name() == QString("node"))) {
       // parse node color
-      if (xmlReader.isStartElement() && xmlReader.qualifiedName() == "viz:color") {
+      if (xmlReader.isStartElement() && xmlReader.qualifiedName() == QString("viz:color")) {
         uint r = xmlReader.attributes().value("r").toString().toUInt();
         uint g = xmlReader.attributes().value("g").toString().toUInt();
         uint b = xmlReader.attributes().value("b").toString().toUInt();
@@ -305,7 +305,7 @@ public:
         viewColor->setNodeValue(n, Color(uchar(r), uchar(g), uchar(b), uchar(a * 255)));
       }
       // parse node coordinates
-      else if (xmlReader.isStartElement() && xmlReader.qualifiedName() == "viz:position") {
+      else if (xmlReader.isStartElement() && xmlReader.qualifiedName() == QString("viz:position")) {
         nodesHaveCoordinates = true;
         float x = xmlReader.attributes().value("x").toString().toFloat();
         float y = xmlReader.attributes().value("y").toString().toFloat();
@@ -313,12 +313,12 @@ public:
         viewLayout->setNodeValue(n, Coord(x, y, z));
       }
       // parse node size
-      else if (xmlReader.isStartElement() && xmlReader.qualifiedName() == "viz:size") {
+      else if (xmlReader.isStartElement() && xmlReader.qualifiedName() == QString("viz:size")) {
         float size = xmlReader.attributes().value("value").toString().toFloat();
         viewSize->setNodeValue(n, Size(size, size, size));
       }
       // parse node attributes
-      else if (xmlReader.isStartElement() && xmlReader.qualifiedName() == "attvalue") {
+      else if (xmlReader.isStartElement() && xmlReader.qualifiedName() == QString("attvalue")) {
         string attributeId;
 
         if (xmlReader.attributes().hasAttribute("id")) {
@@ -335,7 +335,7 @@ public:
         }
       }
       // check for subgraph
-      else if (xmlReader.isStartElement() && xmlReader.qualifiedName() == "nodes") {
+      else if (xmlReader.isStartElement() && xmlReader.qualifiedName() == QString("nodes")) {
         Graph *sg = nullptr;
         if (const auto it = nodeToSubgraph.find(n); it != nodeToSubgraph.end()) {
           sg = it->second;
@@ -352,15 +352,15 @@ public:
 
         // create its nodes
         createNodes(xmlReader, sg);
-      } else if (xmlReader.isStartElement() && xmlReader.qualifiedName() == "edges") {
+      } else if (xmlReader.isStartElement() && xmlReader.qualifiedName() == QString("edges")) {
         // create its edges
         createEdges(xmlReader);
-      } else if (xmlReader.isStartElement() && xmlReader.qualifiedName() == "parents") {
-        while (!(xmlReader.isEndElement() && xmlReader.name() == "parents")) {
+      } else if (xmlReader.isStartElement() && xmlReader.qualifiedName() == QString("parents")) {
+        while (!(xmlReader.isEndElement() && xmlReader.name() == QString("parents"))) {
           xmlReader.readNext();
 
           // must be a parent
-          if (xmlReader.isStartElement() && xmlReader.name() == "parent") {
+          if (xmlReader.isStartElement() && xmlReader.name() == QString("parent")) {
             string pid = QStringToTlpString(xmlReader.attributes().value("for").toString());
 
             if (g == graph) {
@@ -395,9 +395,9 @@ public:
 
       xmlReader.readNext();
 
-      while (!(xmlReader.isEndElement() && xmlReader.name() == "edge")) {
+      while (!(xmlReader.isEndElement() && xmlReader.name() == QString("edge"))) {
         // parse edge attribute
-        if (xmlReader.isStartElement() && xmlReader.qualifiedName() == "attvalue") {
+        if (xmlReader.isStartElement() && xmlReader.qualifiedName() == QString("attvalue")) {
           string attributeId;
 
           if (xmlReader.attributes().hasAttribute("id")) {

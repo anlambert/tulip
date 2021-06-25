@@ -30,8 +30,8 @@ bool ParallelCoordsGlEntitiesSelector::eventFilter(QObject *widget, QEvent *e) {
     if (qMouseEv->buttons() == Qt::LeftButton) {
 
       if (!started) {
-        x = qMouseEv->x();
-        y = qMouseEv->y();
+        x = qMouseEv->pos().x();
+        y = qMouseEv->pos().y();
         w = 0;
         h = 0;
         started = true;
@@ -47,12 +47,12 @@ bool ParallelCoordsGlEntitiesSelector::eventFilter(QObject *widget, QEvent *e) {
     auto *qMouseEv = static_cast<QMouseEvent *>(e);
 
     if (qMouseEv->buttons() & Qt::LeftButton && started) {
-      if ((qMouseEv->x() > 0) && (qMouseEv->x() < glWidget->width())) {
-        w = qMouseEv->x() - x;
+      if ((qMouseEv->pos().x() > 0) && (qMouseEv->pos().x() < glWidget->width())) {
+        w = qMouseEv->pos().x() - x;
       }
 
-      if ((qMouseEv->y() > 0) && (qMouseEv->y() < glWidget->height())) {
-        h = qMouseEv->y() - y;
+      if ((qMouseEv->pos().y() > 0) && (qMouseEv->pos().y() < glWidget->height())) {
+        h = qMouseEv->pos().y() - y;
       }
 
       parallelView->refresh();

@@ -25,13 +25,13 @@ SET(LIB_SRCS
     SOMViewInteractor.cpp
     ZoomUtils.cpp)
 
-QTX_WRAP_UI(LIB_UI_HEADERS ComputeSOMWidget.ui SOMPropertiesWidget.ui
-            SOMWidget.ui)
+QT_WRAP_UI(LIB_UI_HEADERS ComputeSOMWidget.ui SOMPropertiesWidget.ui
+           SOMWidget.ui)
 
-QTX_WRAP_CPP(LIB_MOC_SRCS ColorScalePreview.h ComputeSOMWidget.h
-             SOMPropertiesWidget.h SOMWidget.h SOMView.h)
+QT_WRAP_CPP(LIB_MOC_SRCS ColorScalePreview.h ComputeSOMWidget.h
+            SOMPropertiesWidget.h SOMWidget.h SOMView.h)
 
-QTX_ADD_RESOURCES(LIB_RCC_SRCS SOMViewResource.qrc)
+QT_ADD_RESOURCES(LIB_RCC_SRCS SOMViewResource.qrc)
 
 TALIPOT_ADD_PLUGIN(
   NAME

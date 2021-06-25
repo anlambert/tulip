@@ -37,9 +37,9 @@ TALIPOT_ADD_PLUGIN(
 IF(NOT TALIPOT_BUILD_CORE_ONLY)
   QTX_SET_INCLUDES_AND_DEFINITIONS()
 
-  QTX_WRAP_UI(ConvolutionClustering_UI_SRCS ConvolutionClusteringSetup.ui)
+  QT_WRAP_UI(ConvolutionClustering_UI_SRCS ConvolutionClusteringSetup.ui)
 
-  QTX_WRAP_CPP(ConvolutionClustering_MOC_SRCS ConvolutionClusteringSetup.h)
+  QT_WRAP_CPP(ConvolutionClustering_MOC_SRCS ConvolutionClusteringSetup.h)
 
   SET(ConvolutionClustering_SRCS ConvolutionClustering.cpp
                                  ConvolutionClusteringSetup.cpp)

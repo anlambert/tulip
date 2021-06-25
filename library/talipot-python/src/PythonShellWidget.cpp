@@ -20,8 +20,6 @@
 
 using namespace tlp;
 
-static QRegExp linesepRegExp = QRegExp("\r\n|\n|\r");
-
 static QString ps1 = ">>> ";
 static QString ps2 = "... ";
 

@@ -250,56 +250,7 @@ contains the given pattern</string>
  <resources>
   <include location="../../../library/talipot-gui/resources/TalipotGUIResource.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>tableView</sender>
-   <signal>customContextMenuRequested(QPoint)</signal>
-   <receiver>PropertiesEditor</receiver>
-   <slot>showCustomContextMenu(QPoint)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>199</x>
-     <y>160</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>199</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>propsVisibilityCheck</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>PropertiesEditor</receiver>
-   <slot>setPropsVisibility(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>86</x>
-     <y>84</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>-40</x>
-     <y>108</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>visualPropertiesCheck</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>PropertiesEditor</receiver>
-   <slot>showVisualProperties(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>204</x>
-     <y>69</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>199</x>
-     <y>220</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
  <slots>
   <slot>showCustomContextMenu(QPoint)</slot>
   <slot>showSystemProperties(bool)</slot>

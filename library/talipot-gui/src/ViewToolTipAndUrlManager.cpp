@@ -11,6 +11,7 @@
  *
  */
 
+#include <QActionGroup>
 #include <QGraphicsView>
 #include <QKeyEvent>
 #include <QToolTip>
@@ -186,7 +187,7 @@ bool ViewToolTipAndUrlManager::eventFilter(QObject *, QEvent *event) {
 
     node tmpNode;
     edge tmpEdge;
-    if (_view->getNodeOrEdgeAtViewportPos(he->x(), he->y(), tmpNode, tmpEdge)) {
+    if (_view->getNodeOrEdgeAtViewportPos(he->pos().x(), he->pos().y(), tmpNode, tmpEdge)) {
       QString ttip;
 
       if (tmpNode.isValid()) {

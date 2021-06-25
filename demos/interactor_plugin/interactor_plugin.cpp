@@ -86,7 +86,8 @@ public:
           */
           SelectedEntity selectedEntity;
 
-          if (glView->getGlWidget()->pickNodesEdges(qMouseEv->x(), qMouseEv->y(), selectedEntity)) {
+          if (glView->getGlWidget()->pickNodesEdges(qMouseEv->pos().x(), qMouseEv->pos().y(),
+                                                    selectedEntity)) {
 
             /*
             Change text of the information label with

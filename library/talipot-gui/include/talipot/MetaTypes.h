@@ -135,6 +135,7 @@ Q_DECLARE_METATYPE(tlp::EdgeExtremityShape::EdgeExtremityShapes)
 Q_DECLARE_METATYPE(tlp::LabelPosition::LabelPositions)
 Q_DECLARE_METATYPE(tlp::Font)
 
+Q_DECLARE_METATYPE(QString)
 Q_DECLARE_METATYPE(QStringList)
 
 namespace tlp {

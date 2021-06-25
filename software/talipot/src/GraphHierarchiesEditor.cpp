@@ -45,8 +45,16 @@ int CustomTreeView::sizeHintForColumn(int col) const {
 
   while (index.isValid()) {
     if (viewport()->rect().contains(visualRect(index))) {
+      QStyleOptionViewItem option;
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+      initViewItemOption(&option);
       hint = qMax(hint, visualRect(index).x() +
-                            itemDelegate(index)->sizeHint(viewOptions(), index).width());
+                            itemDelegateForIndex(index)->sizeHint(option, index).width());
+#else
+      option = viewOptions();
+      hint =
+          qMax(hint, visualRect(index).x() + itemDelegate(index)->sizeHint(option, index).width());
+#endif
     }
 
     index = indexBelow(index);
@@ -157,6 +165,39 @@ GraphHierarchiesEditor::GraphHierarchiesEditor(QWidget *parent)
 
   connect(_ui->hierarchiesTree, &QAbstractItemView::clicked, this,
           &GraphHierarchiesEditor::clicked);
+  connect(_ui->hierarchiesTree, &CustomTreeView::customContextMenuRequested, this,
+          &GraphHierarchiesEditor::contextMenuRequested);
+  connect(_ui->actionAdd_sub_graph, &QAction::triggered, this,
+          &GraphHierarchiesEditor::addSubGraph);
+  connect(_ui->actionClone_subgraph, &QAction::triggered, this,
+          &GraphHierarchiesEditor::cloneSubGraph);
+  connect(_ui->actionClone_sibling, &QAction::triggered, this,
+          &GraphHierarchiesEditor::cloneSibling);
+  connect(_ui->actionClone_sibling_with_properties, &QAction::triggered, this,
+          QOverload<>::of(&GraphHierarchiesEditor::cloneSiblingWithProperties));
+  connect(_ui->actionDelete_graph, &QAction::triggered, this, &GraphHierarchiesEditor::delGraph);
+  connect(_ui->actionDelete_All, &QAction::triggered, this, &GraphHierarchiesEditor::delAllGraph);
+  connect(_ui->actionCreate_panel, &QAction::triggered, this, &GraphHierarchiesEditor::createPanel);
+  connect(_ui->actionExpand_hierarchy, &QAction::triggered, this,
+          &GraphHierarchiesEditor::expandGraphHierarchy);
+  connect(_ui->actionCollapse_hierarchy, &QAction::triggered, this,
+          &GraphHierarchiesEditor::collapseGraphHierarchy);
+  connect(_ui->actionExport, &QAction::triggered, this, &GraphHierarchiesEditor::exportGraph);
+  connect(_ui->actionRename, &QAction::triggered, this, &GraphHierarchiesEditor::renameGraph);
+  connect(_ui->hierarchiesTree, &CustomTreeView::doubleClicked, this,
+          &GraphHierarchiesEditor::doubleClicked);
+  connect(_ui->actionSave_to_file, &QAction::triggered, this,
+          QOverload<>::of(&GraphHierarchiesEditor::saveGraphHierarchyInTlpFile));
+  connect(_ui->actionCreate_induced_sub_graph, &QAction::triggered, this,
+          &GraphHierarchiesEditor::addInducedSubGraph);
+  connect(_ui->actionDelete_all_edges, &QAction::triggered, this,
+          &GraphHierarchiesEditor::delAllEdges);
+  connect(_ui->actionDelete_all_nodes, &QAction::triggered, this,
+          &GraphHierarchiesEditor::delAllNodes);
+  connect(_ui->actionDelete_selection, &QAction::triggered, this,
+          &GraphHierarchiesEditor::delSelection);
+  connect(_ui->actionDelete_selection_from_root_graph, &QAction::triggered, this,
+          &GraphHierarchiesEditor::delSelectionFromRoot);
 }
 
 bool GraphHierarchiesEditor::synchronized() const {

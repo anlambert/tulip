@@ -22,7 +22,7 @@ void GraphTableItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem
                                    const QModelIndex &index) const {
   auto *pi = index.data(Model::PropertyRole).value<PropertyInterface *>();
 
-  if (index.data().type() == QVariant::Double && dynamic_cast<DoubleProperty *>(pi) != nullptr) {
+  if (index.data().canConvert<double>() && dynamic_cast<DoubleProperty *>(pi) != nullptr) {
     auto *prop = static_cast<DoubleProperty *>(pi);
     auto value = index.data().value<double>();
     double min = 0, max = 0;

@@ -31,19 +31,19 @@ SET(LIB_SRCS
     POLIB/UniformDeformationScreen.cpp
     POLIB/ZOrderLayout.cpp)
 
-QTX_WRAP_UI(
+QT_WRAP_UI(
   LIB_UI_HEADERS
   ${CMAKE_CURRENT_SOURCE_DIR}/../utils/ViewGraphPropertiesSelectionWidget.ui
   PixelOrientedOptionsWidget.ui)
 
-QTX_WRAP_CPP(
+QT_WRAP_CPP(
   LIB_MOC_SRCS
   ${CMAKE_CURRENT_SOURCE_DIR}/../utils/ViewGraphPropertiesSelectionWidget.h
   PixelOrientedView.h
   PixelOrientedOptionsWidget.h
   PixelOrientedViewQuickAccessBar.h)
 
-QTX_ADD_RESOURCES(LIB_RCC_SRCS PixelOrientedView.qrc)
+QT_ADD_RESOURCES(LIB_RCC_SRCS PixelOrientedView.qrc)
 
 TALIPOT_ADD_PLUGIN(
   NAME

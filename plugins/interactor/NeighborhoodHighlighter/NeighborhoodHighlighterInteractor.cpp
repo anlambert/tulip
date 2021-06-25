@@ -211,7 +211,7 @@ bool NeighborhoodHighlighter::eventFilter(QObject *, QEvent *e) {
     auto *qMouseEv = static_cast<QMouseEvent *>(e);
 
     if (!centralNodeLocked) {
-      node tmpNode = selectNodeInOriginalGraph(glWidget, qMouseEv->x(), qMouseEv->y());
+      node tmpNode = selectNodeInOriginalGraph(glWidget, qMouseEv->pos().x(), qMouseEv->pos().y());
 
       if (tmpNode != selectedNode) {
         buildNeighborhoodGraph(tmpNode, originalGraph);
@@ -225,7 +225,7 @@ bool NeighborhoodHighlighter::eventFilter(QObject *, QEvent *e) {
     } else {
       *neighborhoodGraphColors = *neighborhoodGraphBackupColors;
 
-      if (selectInAugmentedDisplayGraph(qMouseEv->x(), qMouseEv->y(), selectedEntity) &&
+      if (selectInAugmentedDisplayGraph(qMouseEv->pos().x(), qMouseEv->pos().y(), selectedEntity) &&
           selectedEntity.getEntityType() == SelectedEntity::NODE_SELECTED) {
         if (selectedEntity.getComplexEntityId() != neighborhoodGraphCentralNode.id) {
           neighborhoodGraphColors->setNodeValue(node(selectedEntity.getComplexEntityId()),

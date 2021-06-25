@@ -17,9 +17,10 @@
 #include "TalipotLogger.h"
 
 #include <QApplication>
-#include <QMainWindow>
+#include <QFile>
 #include <QGraphicsView>
 #include <QGraphicsProxyWidget>
+#include <QMainWindow>
 
 using namespace tlp;
 

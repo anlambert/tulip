@@ -31,7 +31,7 @@ bool MouseNodeBuilder::eventFilter(QObject *widget, QEvent *e) {
     }
 
     if (e->type() == QEvent::MouseMove) {
-      if (glWidget->pickNodesEdges(qMouseEv->x(), qMouseEv->y(), selectedEntity) &&
+      if (glWidget->pickNodesEdges(qMouseEv->pos().x(), qMouseEv->pos().y(), selectedEntity) &&
           selectedEntity.getEntityType() == SelectedEntity::NODE_SELECTED) {
         glWidget->setCursor(Qt::ForbiddenCursor);
       } else {
@@ -43,7 +43,7 @@ bool MouseNodeBuilder::eventFilter(QObject *widget, QEvent *e) {
 
     if (e->type() == _eventType) {
       if (qMouseEv->button() == Qt::LeftButton) {
-        if (glWidget->pickNodesEdges(qMouseEv->x(), qMouseEv->y(), selectedEntity) &&
+        if (glWidget->pickNodesEdges(qMouseEv->pos().x(), qMouseEv->pos().y(), selectedEntity) &&
             selectedEntity.getEntityType() == SelectedEntity::NODE_SELECTED) {
           return true;
         }
@@ -56,7 +56,8 @@ bool MouseNodeBuilder::eventFilter(QObject *widget, QEvent *e) {
         Observable::holdObservers();
         node newNode;
         newNode = _graph->addNode();
-        Coord point = Coord(glWidget->width() - float(qMouseEv->x()), float(qMouseEv->y()));
+        Coord point =
+            Coord(glWidget->width() - float(qMouseEv->pos().x()), float(qMouseEv->pos().y()));
         point = glWidget->getScene()->getGraphCamera().viewportTo3DWorld(
             glWidget->screenToViewport(point));
 

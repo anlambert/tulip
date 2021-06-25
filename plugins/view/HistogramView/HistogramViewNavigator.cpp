@@ -49,8 +49,8 @@ bool HistogramViewNavigator::eventFilter(QObject *widget, QEvent *e) {
 
   if (e->type() == QEvent::MouseMove && histoView->smallMultiplesViewSet()) {
     auto *me = static_cast<QMouseEvent *>(e);
-    float x = glWidget->width() - me->x();
-    float y = me->y();
+    float x = glWidget->width() - me->pos().x();
+    float y = me->pos().y();
     Coord screenCoords = {x, y};
     Coord sceneCoords = glWidget->getScene()->getGraphCamera().viewportTo3DWorld(
         glWidget->screenToViewport(screenCoords));

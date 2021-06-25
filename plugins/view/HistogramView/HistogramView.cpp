@@ -417,8 +417,8 @@ bool HistogramView::eventFilter(QObject *object, QEvent *event) {
       !detailedHistogram->uniformQuantificationHistogram()) {
     GlWidget *glw = getGlWidget();
     auto *he = static_cast<QHelpEvent *>(event);
-    float x = glw->width() - he->x();
-    float y = he->y();
+    float x = glw->width() - he->pos().x();
+    float y = he->pos().y();
     Coord screenCoords = {x, y};
     Coord sceneCoords = glw->getScene()->getLayer("Main")->getCamera().viewportTo3DWorld(
         glw->screenToViewport(screenCoords));

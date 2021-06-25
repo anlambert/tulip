@@ -34,6 +34,12 @@ PropertiesEditor::PropertiesEditor(QWidget *parent)
   _ui->setupUi(this);
   _ui->newButton->setIcon(FontIconManager::icon(MaterialDesignIcons::PlusBox));
   connect(_ui->newButton, &QAbstractButton::clicked, this, &PropertiesEditor::newProperty);
+  connect(_ui->tableView, &QTableView::customContextMenuRequested, this,
+          &PropertiesEditor::showCustomContextMenu);
+  connect(_ui->propsVisibilityCheck, &QCheckBox::stateChanged, this,
+          &PropertiesEditor::setPropsVisibility);
+  connect(_ui->visualPropertiesCheck, &QCheckBox::clicked, this,
+          &PropertiesEditor::showVisualProperties);
 }
 
 PropertiesEditor::~PropertiesEditor() {
@@ -94,8 +100,13 @@ void PropertiesEditor::setGraph(tlp::Graph *g) {
 
 void PropertiesEditor::setPropertiesFilter(QString filter) {
   filteringProperties = true;
-  static_cast<QSortFilterProxyModel *>(_ui->tableView->model())
-      ->setFilterRegExp(QRegExp(filter, _caseSensitiveSearch));
+  auto *model = static_cast<QSortFilterProxyModel *>(_ui->tableView->model());
+#if (QT_VERSION < QT_VERSION_CHECK(5, 12, 0))
+  model->setFilterRegExp(filter);
+#else
+  model->setFilterRegularExpression(filter);
+#endif
+  model->setFilterCaseSensitivity(_caseSensitiveSearch);
   filteringProperties = false;
 }
 

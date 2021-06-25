@@ -216,8 +216,8 @@ bool ScatterPlotCorrelCoeffSelector::eventFilter(QObject *obj, QEvent *e) {
 
   if (e->type() == QEvent::MouseMove) {
     auto *me = static_cast<QMouseEvent *>(e);
-    x = glWidget->screenToViewport(glWidget->width() - me->x());
-    y = glWidget->screenToViewport(me->y());
+    x = glWidget->screenToViewport(glWidget->width() - me->pos().x());
+    y = glWidget->screenToViewport(me->pos().y());
     Coord newPointerSceneCoords = camera.viewportTo3DWorld(Coord(x, y, 0));
     Coord translationVectorScene = newPointerSceneCoords - currentPointerSceneCoords;
     currentPointerSceneCoords = newPointerSceneCoords;
@@ -250,8 +250,8 @@ bool ScatterPlotCorrelCoeffSelector::eventFilter(QObject *obj, QEvent *e) {
     } else if (polygonEdit.size() > 2) {
       Coord startPolygonPointScr = camera.worldTo2DViewport(polygonEdit[0]);
       Coord pointerGlViewportCoord =
-          Coord(glWidget->screenToViewport(me->x()),
-                glWidget->screenToViewport(glWidget->height() - me->y()));
+          Coord(glWidget->screenToViewport(me->pos().x()),
+                glWidget->screenToViewport(glWidget->height() - me->pos().y()));
       bool underFirstPoint =
           (pointerGlViewportCoord.getX() > (startPolygonPointScr.getX() - POINT_RADIUS) &&
            pointerGlViewportCoord.getX() < (startPolygonPointScr.getX() + POINT_RADIUS) &&
@@ -269,8 +269,8 @@ bool ScatterPlotCorrelCoeffSelector::eventFilter(QObject *obj, QEvent *e) {
     return true;
   } else if (e->type() == QEvent::MouseButtonPress) {
     auto *me = static_cast<QMouseEvent *>(e);
-    x = glWidget->screenToViewport(glWidget->width() - me->x());
-    y = glWidget->screenToViewport(me->y());
+    x = glWidget->screenToViewport(glWidget->width() - me->pos().x());
+    y = glWidget->screenToViewport(me->pos().y());
     currentPointerSceneCoords = camera.viewportTo3DWorld(Coord(x, y, 0));
 
     if (me->buttons() == Qt::LeftButton) {
@@ -281,8 +281,8 @@ bool ScatterPlotCorrelCoeffSelector::eventFilter(QObject *obj, QEvent *e) {
       } else {
         Coord startPolygonPointScr = camera.worldTo2DViewport(polygonEdit[0]);
         Coord pointerGlViewportCoord =
-            Coord(glWidget->screenToViewport(me->x()),
-                  glWidget->screenToViewport(glWidget->height() - me->y()));
+            Coord(glWidget->screenToViewport(me->pos().x()),
+                  glWidget->screenToViewport(glWidget->height() - me->pos().y()));
         bool underFirstPoint =
             (pointerGlViewportCoord.getX() > (startPolygonPointScr.getX() - POINT_RADIUS) &&
              pointerGlViewportCoord.getX() < (startPolygonPointScr.getX() + POINT_RADIUS) &&
@@ -313,8 +313,8 @@ bool ScatterPlotCorrelCoeffSelector::eventFilter(QObject *obj, QEvent *e) {
     return true;
   } else if (e->type() == QEvent::MouseButtonDblClick) {
     auto *me = static_cast<QMouseEvent *>(e);
-    x = glWidget->screenToViewport(glWidget->width() - me->x());
-    y = glWidget->screenToViewport(me->y());
+    x = glWidget->screenToViewport(glWidget->width() - me->pos().x());
+    y = glWidget->screenToViewport(me->pos().y());
     currentPointerSceneCoords = camera.viewportTo3DWorld(Coord(x, y, 0.0f));
 
     if (selectedPolygon != nullptr && selectedPolygonPoint != nullptr) {

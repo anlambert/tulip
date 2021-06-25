@@ -105,16 +105,16 @@ STRING_CMP(NoCaseContainsOperator, a.contains(b, Qt::CaseInsensitive))
 class MatchesOperator : public StringSearchOperator {
 public:
   bool compareStrings(const QString &a, const QString &b) override {
-    QRegExp regexp(b);
-    return regexp.exactMatch(a);
+    QRegularExpression regexp(b);
+    return regexp.match(a).hasMatch();
   }
 };
 
 class NoCaseMatchesOperator : public StringSearchOperator {
 public:
   bool compareStrings(const QString &a, const QString &b) override {
-    QRegExp regexp(b, Qt::CaseInsensitive);
-    return regexp.exactMatch(a);
+    QRegularExpression regexp(b, QRegularExpression::CaseInsensitiveOption);
+    return regexp.match(a).hasMatch();
   }
 };
 

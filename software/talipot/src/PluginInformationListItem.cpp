@@ -47,6 +47,10 @@ void PluginInformationListItem::focusOut() {}
 
 void PluginInformationListItem::focusIn() {}
 
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
 void PluginInformationListItem::enterEvent(QEvent *) {
+#else
+void PluginInformationListItem::enterEvent(QEnterEvent *) {
+#endif
   emit focused();
 }

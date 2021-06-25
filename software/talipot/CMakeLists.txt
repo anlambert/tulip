@@ -20,9 +20,9 @@ SET(SRCS
 QTX_SET_INCLUDES_AND_DEFINITIONS()
 QTXWEB_SET_INCLUDES_AND_DEFINITIONS()
 
-QTX_ADD_RESOURCES(RCC_SRCS resources/TalipotApp.qrc OPTIONS -name TalipotApp)
+QT_ADD_RESOURCES(RCC_SRCS resources/TalipotApp.qrc OPTIONS -name TalipotApp)
 
-QTX_WRAP_CPP(
+QT_WRAP_CPP(
   MOC_SRCS
   include/AlgorithmRunner.h
   include/AlgorithmRunnerItem.h
@@ -36,9 +36,12 @@ QTX_WRAP_CPP(
   include/PreferencesDialog.h
   include/SearchWidget.h
   include/TalipotLogger.h
-  include/TalipotMainWindow.h)
+  include/TalipotMainWindow.h
+  OPTIONS
+  -b
+  <talipot/PropertyInterface.h>)
 
-QTX_WRAP_UI(
+QT_WRAP_UI(
   UI_SRCS
   designer/AlgorithmRunner.ui
   designer/AlgorithmRunnerItem.ui

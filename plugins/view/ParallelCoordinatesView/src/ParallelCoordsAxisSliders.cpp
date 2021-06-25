@@ -258,21 +258,22 @@ bool ParallelCoordsAxisSliders::eventFilter(QObject *widget, QEvent *e) {
 
   if (e->type() == QEvent::MouseMove) {
     auto *me = static_cast<QMouseEvent *>(e);
-    float x = glWidget->width() - me->x();
-    float y = me->y();
+    float x = glWidget->width() - me->pos().x();
+    float y = me->pos().y();
     Coord screenCoords = {x, y};
     Coord sceneCoords = glWidget->getScene()->getLayer("Main")->getCamera().viewportTo3DWorld(
         glWidget->screenToViewport(screenCoords));
 
     if (!axisSliderDragStarted && !slidersRangeDragStarted) {
-      selectedAxis = parallelView->getAxisUnderPointer(me->x(), me->y());
+      selectedAxis = parallelView->getAxisUnderPointer(me->pos().x(), me->pos().y());
 
       if (selectedAxis != nullptr) {
         if (parallelView->getLayoutType() == ParallelCoordinatesDrawing::CIRCULAR) {
           rotateVector(sceneCoords, -(selectedAxis->getRotationAngle()), Z_ROT);
         }
 
-        selectedSlider = getSliderUnderPointer(glWidget, selectedAxis, me->x(), me->y());
+        selectedSlider =
+            getSliderUnderPointer(glWidget, selectedAxis, me->pos().x(), me->pos().y());
         pointerBetweenSliders =
             (sceneCoords.getY() <
              axisSlidersMap[selectedAxis][TOP_SLIDER]->getSliderCoord().getY()) &&
@@ -372,8 +373,8 @@ bool ParallelCoordsAxisSliders::eventFilter(QObject *widget, QEvent *e) {
       slidersRangeDragStarted = true;
       slidersRangeLength = axisSlidersMap[selectedAxis][TOP_SLIDER]->getSliderCoord().getY() -
                            axisSlidersMap[selectedAxis][BOTTOM_SLIDER]->getSliderCoord().getY();
-      yClick = me->y();
-      xClick = me->x();
+      yClick = me->pos().y();
+      xClick = me->pos().x();
       return true;
     }
   } else if (e->type() == QEvent::MouseButtonRelease) {

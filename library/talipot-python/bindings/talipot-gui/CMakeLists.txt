@@ -21,8 +21,8 @@ ADD_CUSTOM_COMMAND(
   DEPENDS ${TALIPOT_GUI_SIP_FILES} ${TALIPOT_SIP_FILES} ${STL_SIP_FILES}
   VERBATIM)
 
-QTX_WRAP_CPP(talipotguiutils_MOC ViewsUtils.h)
-QTX_ADD_RESOURCES(talipotgui_RCC_SRCS TalipotGui.qrc)
+QT_WRAP_CPP(talipotguiutils_MOC ViewsUtils.h)
+QT_ADD_RESOURCES(talipotgui_RCC_SRCS TalipotGui.qrc)
 
 SET(TALIPOT_GUI_PYTHON_BINDINGS_SRC
     ${TALIPOT_GUI_PYTHON_BINDINGS_SRC} ViewsUtils.cpp ${talipotguiutils_MOC}

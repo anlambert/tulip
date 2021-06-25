@@ -69,8 +69,12 @@ void FontDialog::fontChanged() {
   }
 
   Font selectedFont = font();
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
   QFontDatabase fontDb;
   _ui->preview->setFont(fontDb.font(tlpStringToQString(selectedFont.fontFamily()),
+#else
+  _ui->preview->setFont(QFontDatabase::font(tlpStringToQString(selectedFont.fontFamily()),
+#endif
                                     tlpStringToQString(selectedFont.fontStyle()),
                                     _ui->sizeSpin->value()));
 }

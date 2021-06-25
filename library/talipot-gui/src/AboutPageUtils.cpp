@@ -26,7 +26,9 @@ QString getTalipotGitRevision() {
 
   if (gitCommitFile.open(QFile::ReadOnly | QFile::Text)) {
     QTextStream in(&gitCommitFile);
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     in.setCodec("UTF-8");
+#endif
     return in.readAll().replace("\n", "");
   }
   return "";

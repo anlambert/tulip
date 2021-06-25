@@ -44,8 +44,8 @@ std::vector<tlp::View *> ViewsManager::getOpenedViews() {
   tlp::Workspace *workspace = tlpWorkspace();
 
   if (workspace) {
-    QList<tlp::View *> views = workspace->panels();
-    return views.toVector().toStdVector();
+    QVector<tlp::View *> views = workspace->panels().toVector();
+    return {views.begin(), views.end()};
   } else {
     return openedViews;
   }

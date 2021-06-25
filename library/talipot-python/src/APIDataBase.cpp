@@ -14,6 +14,7 @@
 #include "talipot/APIDataBase.h"
 
 #include <QFile>
+#include <QRegularExpression>
 #include <QTextStream>
 
 using namespace tlp;
@@ -78,15 +79,15 @@ void APIDataBase::addApiEntry(const QString &apiEnt) {
   QString apiEntry(apiEnt);
   int pos = apiEntry.indexOf('.');
 
-  if (apiEntry.contains(QRegExp("^_talipotgui.*\\..+"))) {
+  if (apiEntry.contains(QRegularExpression("^_talipotgui.*\\..+"))) {
     apiEntry = apiEntry.mid(pos + 1);
   }
 
-  if (apiEntry.contains(QRegExp("^_talipot.*\\..+"))) {
+  if (apiEntry.contains(QRegularExpression("^_talipot.*\\..+"))) {
     apiEntry = apiEntry.mid(pos + 1);
   }
 
-  apiEntry.replace(QRegExp("\\?[0-9]+"), "");
+  apiEntry.replace(QRegularExpression("\\?[0-9]+"), "");
   int parenPos = apiEntry.indexOf('(');
   bool func = parenPos != -1;
   QString withoutParams = apiEntry;

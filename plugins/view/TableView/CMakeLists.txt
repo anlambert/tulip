@@ -4,11 +4,11 @@ INCLUDE_DIRECTORIES(
 
 SET(LIB_SRCS TableView.cpp PropertiesEditor.cpp NavigableTableView.cpp)
 
-QTX_WRAP_UI(LIB_UI_HEADERS TableView.ui PropertiesEditor.ui)
+QT_WRAP_UI(LIB_UI_HEADERS TableView.ui PropertiesEditor.ui)
 
-QTX_WRAP_CPP(LIB_MOC_SRCS TableView.h PropertiesEditor.h NavigableTableView.h)
+QT_WRAP_CPP(LIB_MOC_SRCS TableView.h PropertiesEditor.h NavigableTableView.h)
 
-QTX_ADD_RESOURCES(LIB_RCC_SRCS TableView.qrc)
+QT_ADD_RESOURCES(LIB_RCC_SRCS TableView.qrc)
 
 TALIPOT_ADD_PLUGIN(
   NAME

@@ -36,7 +36,7 @@ RangeSlider::RangeSlider(Qt::Orientation orientation, QWidget *parent)
   connect(this, &QAbstractSlider::sliderReleased, this, &RangeSlider::movePressedHandle);
 }
 
-void RangeSlider::initStyleOption(QStyleOptionSlider *option, RangeHandle handle) const {
+void RangeSlider::initStyle(QStyleOptionSlider *option, RangeHandle handle) const {
   if (!option) {
     return;
   }
@@ -65,7 +65,7 @@ void RangeSlider::initStyleOption(QStyleOptionSlider *option, RangeHandle handle
 
 int RangeSlider::pixelPosToRangeValue(int pos) const {
   QStyleOptionSlider opt;
-  initStyleOption(&opt);
+  initStyle(&opt);
 
   int sliderMin = 0;
   int sliderMax = 0;
@@ -90,7 +90,7 @@ int RangeSlider::pixelPosToRangeValue(int pos) const {
 void RangeSlider::handleMousePress(const QPoint &pos, QStyle::SubControl &control, int value,
                                    RangeHandle handle) {
   QStyleOptionSlider opt;
-  initStyleOption(&opt, handle);
+  initStyle(&opt, handle);
   const QStyle::SubControl oldControl = control;
   control = style()->hitTestComplexControl(QStyle::CC_Slider, &opt, pos, this);
   const QRect sr = style()->subControlRect(QStyle::CC_Slider, &opt, QStyle::SC_SliderHandle, this);
@@ -124,7 +124,7 @@ void RangeSlider::setupPainter(QPainter *painter, Qt::Orientation orientation, q
 
 void RangeSlider::drawRange(QStylePainter *painter, const QRect &rect) const {
   QStyleOptionSlider opt;
-  initStyleOption(&opt);
+  initStyle(&opt);
 
   // area
   QRect groove = style()->subControlRect(QStyle::CC_Slider, &opt, QStyle::SC_SliderGroove, this);
@@ -152,7 +152,7 @@ void RangeSlider::drawRange(QStylePainter *painter, const QRect &rect) const {
 
 void RangeSlider::drawHandle(QStylePainter *painter, RangeHandle handle) const {
   QStyleOptionSlider opt;
-  initStyleOption(&opt, handle);
+  initStyle(&opt, handle);
   opt.subControls = QStyle::SC_SliderHandle;
   QStyle::SubControl pressed = (handle == LowerHandle ? lowerPressed : upperPressed);
 
@@ -466,7 +466,7 @@ void RangeSlider::mouseMoveEvent(QMouseEvent *event) {
   }
 
   QStyleOptionSlider opt;
-  initStyleOption(&opt);
+  initStyle(&opt);
   const int m = style()->pixelMetric(QStyle::PM_MaximumDragDistance, &opt, this);
   int newPosition = pixelPosToRangeValue(pick(event->pos()) - offset);
 
@@ -540,7 +540,7 @@ void RangeSlider::paintEvent(QPaintEvent *) {
 
   // groove & ticks
   QStyleOptionSlider opt;
-  initStyleOption(&opt);
+  initStyle(&opt);
   opt.sliderValue = 0;
   opt.sliderPosition = 0;
   opt.subControls = QStyle::SC_SliderGroove | QStyle::SC_SliderTickmarks;

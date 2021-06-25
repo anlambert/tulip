@@ -897,12 +897,20 @@ bool GraphSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelInde
     return false;
   }
 
+#if (QT_VERSION < QT_VERSION_CHECK(5, 12, 0))
   if (filterRegExp().isEmpty()) {
+#else
+  if (filterRegularExpression().pattern().isEmpty()) {
+#endif
     return true;
   }
 
   for (auto *pi : _properties) {
+#if (QT_VERSION < QT_VERSION_CHECK(5, 12, 0))
     if (graphModel->stringValue(id, pi).contains(filterRegExp())) {
+#else
+    if (graphModel->stringValue(id, pi).contains(filterRegularExpression())) {
+#endif
       return true;
     }
   }
