@@ -2,7 +2,7 @@ FIND_PACKAGE(Talipot REQUIRED)
 FIND_PACKAGE(Qt4 REQUIRED)
 INCLUDE(${QT_USE_FILE})
 
-QTX_ADD_RESOURCES(LIB_RCC_SRCS interactor_plugin_resource.qrc)
+QT_ADD_RESOURCES(LIB_RCC_SRCS interactor_plugin_resource.qrc)
 
 INCLUDE_DIRECTORIES(${TalipotCoreBuildInclude} ${TalipotCoreInclude}
                     ${TalipotOGLInclude} ${TalipotGUIInclude})

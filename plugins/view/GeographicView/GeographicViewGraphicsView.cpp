@@ -26,11 +26,12 @@
 #include <talipot/GlOffscreenRenderer.h>
 #include <talipot/Gl2DRect.h>
 
-#include <QPushButton>
 #include <QApplication>
+#include <QFile>
 #include <QMessageBox>
 #include <QOpenGLFramebufferObject>
 #include <QOpenGLPaintDevice>
+#include <QPushButton>
 
 using namespace std;
 

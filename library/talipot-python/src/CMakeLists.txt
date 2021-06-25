@@ -52,9 +52,8 @@ IF(PYTHONLIBS_FOUND)
         ../include/talipot/PythonPluginCreationDialog.h
         ../include/talipot/PythonREPLWidget.h)
 
-    QTX_WRAP_UI(${LibTalipotPythonName}_UI_SRCS ${${LibTalipotPythonName}_UI})
-    QTX_WRAP_CPP(${LibTalipotPythonName}_MOC_SRCS
-                 ${${LibTalipotPythonName}_MOC})
+    QT_WRAP_UI(${LibTalipotPythonName}_UI_SRCS ${${LibTalipotPythonName}_UI})
+    QT_WRAP_CPP(${LibTalipotPythonName}_MOC_SRCS ${${LibTalipotPythonName}_MOC})
 
     ADD_LIBRARY(
       ${LibTalipotPythonName} SHARED

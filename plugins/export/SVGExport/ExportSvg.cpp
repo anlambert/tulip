@@ -49,7 +49,9 @@ QString tlpAlphaColor2Opacity(const Color &color) {
 ExportSvg::ExportSvg(PluginProgress *pp, ostream &os, const bool autoformatting)
     : ExportInterface(pp, os), _res(&_out), _gloweffectAdded(false) {
   _res.setAutoFormatting(autoformatting);
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
   _res.setCodec("UTF-8");
+#endif
 }
 
 bool ExportSvg::writeHeader(const BoundingBox &bb) {

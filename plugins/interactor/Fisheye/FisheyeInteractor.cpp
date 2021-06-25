@@ -159,8 +159,8 @@ bool FisheyeInteractorComponent::eventFilter(QObject *obj, QEvent *e) {
       e->type() == QEvent::MouseButtonRelease) {
     _activateFisheye = true;
     auto *me = static_cast<QMouseEvent *>(e);
-    _x = me->x();
-    _y = me->y();
+    _x = me->pos().x();
+    _y = me->pos().y();
   } else if (e->type() == QEvent::Wheel) {
     auto *wheelEvent = static_cast<QWheelEvent *>(e);
     int numSteps = wheelEvent->angleDelta().y() / 120;

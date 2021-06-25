@@ -17,6 +17,7 @@
 #include <talipot/MaterialDesignIcons.h>
 
 #include <QDesktopServices>
+#include <QRegularExpression>
 #include <QUrl>
 
 #include "ui_FontIconDialog.h"
@@ -49,14 +50,14 @@ FontIconDialog::FontIconDialog(QWidget *parent) : QDialog(parent), _ui(new Ui::F
 void FontIconDialog::updateIconList() {
   _ui->iconListWidget->clear();
 
-  QRegExp regexp(_ui->iconNameFilterLineEdit->text());
+  QRegularExpression regexp(_ui->iconNameFilterLineEdit->text());
 
   std::vector<std::string> iconNames = FontAwesome::getSupportedIcons();
 
   for (const auto &ic : iconNames) {
     QString iconName = tlpStringToQString(ic);
 
-    if (regexp.indexIn(iconName) != -1) {
+    if (iconName.indexOf(regexp) != -1) {
       _ui->iconListWidget->addItem(new QListWidgetItem(FontIconManager::icon(iconName), iconName));
     }
   }
@@ -66,7 +67,7 @@ void FontIconDialog::updateIconList() {
   for (const auto &ic : iconNames) {
     QString iconName = tlpStringToQString(ic);
 
-    if (regexp.indexIn(iconName) != -1) {
+    if (iconName.indexOf(regexp) != -1) {
       _ui->iconListWidget->addItem(new QListWidgetItem(FontIconManager::icon(iconName), iconName));
     }
   }

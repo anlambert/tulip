@@ -15,6 +15,7 @@
 #include <QApplication>
 #include <QMessageBox>
 #include <QProxyStyle>
+#include <QRegularExpression>
 
 #include <CrashHandler.h>
 
@@ -106,9 +107,10 @@ public:
 int main(int argc, char **argv) {
 
   CrashHandler::install();
-
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
   QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
   QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
+#endif
   QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts, true);
 
 #ifdef QT_HAS_WEBENGINE
@@ -132,7 +134,8 @@ int main(int argc, char **argv) {
   QString inputFilePath;
   QVariantMap extraParams;
 
-  QRegExp extraParametersRegexp("^\\-\\-([^=]*)=(.*)");
+  static QRegularExpression extraParametersRegexp("^\\-\\-([^=]*)=(.*)");
+  QRegularExpressionMatch match;
 
   QStringList args = QApplication::arguments();
 
@@ -145,8 +148,8 @@ int main(int argc, char **argv) {
       usage("");
     } else if (a == "--debug-plugins-load") {
       debugPluginsLoad = true;
-    } else if (extraParametersRegexp.exactMatch(a)) {
-      extraParams[extraParametersRegexp.cap(1)] = extraParametersRegexp.cap(2);
+    } else if (a.indexOf(extraParametersRegexp, 0, &match) && match.hasMatch()) {
+      extraParams[match.captured(1)] = match.captured(2);
     } else {
       inputFilePath = a;
     }

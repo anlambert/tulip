@@ -23,13 +23,13 @@ SET(LIB_SRCS
     GeographicViewShowElementInfo.cpp
     NominatimGeocoder.cpp)
 
-QTX_WRAP_UI(
+QT_WRAP_UI(
   LIB_UI_HEADERS GeolocationConfigWidget.ui GeographicViewConfigWidget.ui
   ProgressWidget.ui AddressSelectionDialog.ui)
 
-QTX_ADD_RESOURCES(LIB_RCC_SRCS GeographicViewResource.qrc)
+QT_ADD_RESOURCES(LIB_RCC_SRCS GeographicViewResource.qrc)
 
-QTX_WRAP_CPP(
+QT_WRAP_CPP(
   LIB_MOC_SRCS
   GeographicView.h
   GeographicViewGraphicsView.h

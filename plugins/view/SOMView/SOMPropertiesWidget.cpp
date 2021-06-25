@@ -36,7 +36,7 @@ SOMPropertiesWidget::SOMPropertiesWidget(SOMView *view, QWidget *parent)
   defaultScale->addObserver(this);
 
   auto *sizeMappingLayout = new QVBoxLayout(_ui->nodeSizeMappingGroupBox);
-  sizeMappingLayout->setMargin(0);
+  sizeMappingLayout->setContentsMargins(0, 0, 0, 0);
   sizeMappingLayout->setSpacing(0);
   sizeMappingLayout->setContentsMargins(0, 5, 0, 0);
   sizeMappingButtonGroup = new QButtonGroup();

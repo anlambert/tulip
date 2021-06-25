@@ -20,7 +20,7 @@ SET(LIB_SRCS
     SizeScaleConfigDialog.cpp
     GlyphScaleConfigDialog.cpp)
 
-QTX_WRAP_UI(
+QT_WRAP_UI(
   LIB_UI_HEADERS
   ${CMAKE_CURRENT_SOURCE_DIR}/../utils/ViewGraphPropertiesSelectionWidget.ui
   HistoStatsConfigWidget.ui
@@ -28,7 +28,7 @@ QTX_WRAP_UI(
   SizeScaleConfigDialog.ui
   GlyphScaleConfigDialog.ui)
 
-QTX_WRAP_CPP(
+QT_WRAP_CPP(
   LIB_MOC_SRCS
   HistogramView.h
   HistogramStatistics.h
@@ -38,7 +38,7 @@ QTX_WRAP_CPP(
   HistoStatsConfigWidget.h
   ${CMAKE_CURRENT_SOURCE_DIR}/../utils/ViewGraphPropertiesSelectionWidget.h)
 
-QTX_ADD_RESOURCES(LIB_RCC_SRCS HistogramResource.qrc)
+QT_ADD_RESOURCES(LIB_RCC_SRCS HistogramResource.qrc)
 
 TALIPOT_ADD_PLUGIN(
   NAME

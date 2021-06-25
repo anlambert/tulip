@@ -35,7 +35,7 @@ bool ParallelCoordsAxisSpacer::eventFilter(QObject *widget, QEvent *e) {
   if (e->type() == QEvent::MouseMove) {
 
     if (!dragStarted) {
-      selectedAxis = parallelView->getAxisUnderPointer(me->x(), me->y());
+      selectedAxis = parallelView->getAxisUnderPointer(me->pos().x(), me->pos().y());
       vector<ParallelAxis *> allAxis(parallelView->getAllAxis());
 
       if (selectedAxis == allAxis[0] && allAxis.size() > 1) {
@@ -61,8 +61,8 @@ bool ParallelCoordsAxisSpacer::eventFilter(QObject *widget, QEvent *e) {
 
       parallelView->refresh();
     } else if (selectedAxis != nullptr) {
-      x = glWidget->width() - me->x();
-      y = me->y();
+      x = glWidget->width() - me->pos().x();
+      y = me->pos().y();
       Coord screenCoords = Coord(x, y);
       Coord sceneCoords = glWidget->getScene()->getLayer("Main")->getCamera().viewportTo3DWorld(
           glWidget->screenToViewport(screenCoords));

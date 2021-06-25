@@ -13,6 +13,8 @@
 
 #include "talipot/ParenMatcherHighlighter.h"
 
+#include <QRegularExpression>
+
 ParenInfoTextBlockData::ParenInfoTextBlockData() = default;
 
 QVector<ParenInfo> ParenInfoTextBlockData::parens() {
@@ -41,27 +43,29 @@ void ParenMatcherHighlighter::highlightBlock(const QString &text) {
   auto *data = new ParenInfoTextBlockData;
 
   QString modifiedText = text;
-  QRegExp dblQuotesRegexp("\"[^\"]*\"");
-  QRegExp simpleQuotesRegexp("'[^']*'");
+  QRegularExpression dblQuotesRegexp("\"[^\"]*\"");
+  QRegularExpression simpleQuotesRegexp("'[^']*'");
 
-  int pos = dblQuotesRegexp.indexIn(modifiedText);
+  QRegularExpressionMatch match;
+
+  int pos = modifiedText.indexOf(dblQuotesRegexp, 0, &match);
 
   while (pos != -1) {
-    for (int i = pos; i < pos + dblQuotesRegexp.matchedLength(); ++i) {
+    for (int i = pos; i < pos + match.capturedLength(); ++i) {
       modifiedText[i] = ' ';
     }
 
-    pos = dblQuotesRegexp.indexIn(modifiedText, pos + dblQuotesRegexp.matchedLength());
+    pos = modifiedText.indexOf(dblQuotesRegexp, pos + match.capturedLength(), &match);
   }
 
-  pos = simpleQuotesRegexp.indexIn(modifiedText);
+  pos = modifiedText.indexOf(simpleQuotesRegexp, 0, &match);
 
   while (pos != -1) {
-    for (int i = pos; i < pos + simpleQuotesRegexp.matchedLength(); ++i) {
+    for (int i = pos; i < pos + match.capturedLength(); ++i) {
       modifiedText[i] = ' ';
     }
 
-    pos = simpleQuotesRegexp.indexIn(modifiedText, pos + simpleQuotesRegexp.matchedLength());
+    pos = modifiedText.indexOf(simpleQuotesRegexp, pos + match.capturedLength(), &match);
   }
 
   for (char c : _leftParensToMatch) {

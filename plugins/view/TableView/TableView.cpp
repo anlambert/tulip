@@ -389,8 +389,13 @@ void TableView::filterChanged() {
   }
 
   sortModel->setProperties(props);
-  sortModel->setFilterRegExp(
-      QRegExp(filter, _ui->filtercase->isChecked() ? Qt::CaseSensitive : Qt::CaseInsensitive));
+#if (QT_VERSION < QT_VERSION_CHECK(5, 12, 0))
+  sortModel->setFilterRegExp(filter);
+#else
+  sortModel->setFilterRegularExpression(filter);
+#endif
+  sortModel->setFilterCaseSensitivity(_ui->filtercase->isChecked() ? Qt::CaseSensitive
+                                                                   : Qt::CaseInsensitive);
 }
 
 void TableView::mapToGraphSelection() {

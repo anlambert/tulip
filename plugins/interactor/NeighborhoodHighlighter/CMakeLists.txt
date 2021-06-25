@@ -7,10 +7,10 @@ INCLUDE_DIRECTORIES(
 SET(LIB_SRCS NeighborhoodHighlighterConfigWidget.cpp
              NeighborhoodHighlighterInteractor.cpp NodeNeighborhoodView.cpp)
 
-QTX_WRAP_UI(LIB_UI_HEADERS NeighborhoodHighlighterConfigWidget.ui)
+QT_WRAP_UI(LIB_UI_HEADERS NeighborhoodHighlighterConfigWidget.ui)
 
-QTX_WRAP_CPP(LIB_MOC_SRCS NeighborhoodHighlighterInteractor.h
-             NeighborhoodHighlighterConfigWidget.h)
+QT_WRAP_CPP(LIB_MOC_SRCS NeighborhoodHighlighterInteractor.h
+            NeighborhoodHighlighterConfigWidget.h)
 
 TALIPOT_ADD_PLUGIN(
   NAME

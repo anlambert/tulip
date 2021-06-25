@@ -43,7 +43,7 @@
 #include <QClipboard>
 #include <QMimeData>
 #include <QTimer>
-#include <QDesktopWidget>
+#include <QScreen>
 #include <QDragEnterEvent>
 #include <QDropEvent>
 #include <QCloseEvent>
@@ -443,7 +443,7 @@ TalipotMainWindow::TalipotMainWindow()
 
   // set a default position and size that works seamlessly on all platforms
   move(0, 0);
-  QSize desktopSize = QDesktopWidget().availableGeometry(this).size();
+  QSize desktopSize = qApp->primaryScreen()->availableGeometry().size();
   resize(desktopSize * 0.9);
   _ui->workspace->setMinimumWidth(0.5 * desktopSize.width());
   _ui->mainSplitter->setSizes({int(0.29 * width()), int(0.71 * width())});
@@ -983,7 +983,7 @@ void TalipotMainWindow::initPythonIDE() {
     _ui->docksWidget->addWidget(_pythonIDE);
     _ui->pythonButton->setCheckable(true);
   } else {
-    auto desktopSize = QDesktopWidget().availableGeometry(this).size();
+    auto desktopSize = qApp->primaryScreen()->availableGeometry().size();
     _pythonIDE->resize(desktopSize.width() * 0.3, desktopSize.height() * 0.7);
     _pythonIDE->move(desktopSize.width() / 2 - _pythonIDE->width() / 2,
                      desktopSize.height() / 2 - _pythonIDE->height() / 2);
@@ -1002,7 +1002,7 @@ void TalipotMainWindow::anchoredPythonIDE(bool anchored) {
     showHideDockWidget(_ui->graphsButton, true);
     _ui->docksWidget->removeWidget(_pythonIDE);
     _pythonIDE->setParent(nullptr);
-    auto desktopSize = QDesktopWidget().availableGeometry(this).size();
+    auto desktopSize = qApp->primaryScreen()->availableGeometry().size();
     _pythonIDE->resize(desktopSize.width() * 0.3, desktopSize.height() * 0.7);
     _pythonIDE->show();
   }

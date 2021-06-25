@@ -147,7 +147,7 @@ QString getPluginPackageName(const QString &pluginName) {
 }
 
 QString getPluginLocalInstallationDir() {
-  return QStandardPaths::standardLocations(QStandardPaths::DataLocation).at(0) + "/plugins";
+  return QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).at(0) + "/plugins";
 }
 
 QString localPluginsPath() {
@@ -491,18 +491,23 @@ const QColor &textColor() {
 static unordered_map<string, int> fontIds;
 
 void addFontToQFontDatabase(const Font &font) {
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
   QFontDatabase fontDb;
-  if (!fontDb.styles(tlpStringToQString(font.fontFamily()))
+  if (!fontDb
+           .styles(tlpStringToQString(font.fontFamily()))
+#else
+  if (!QFontDatabase::styles(tlpStringToQString(font.fontFamily()))
+#endif
            .contains(tlpStringToQString(font.fontStyle())) &&
       fontIds.find(font.fontFile()) == fontIds.end()) {
-    fontIds[font.fontFile()] = fontDb.addApplicationFont(tlpStringToQString(font.fontFile()));
+    fontIds[font.fontFile()] =
+        QFontDatabase::addApplicationFont(tlpStringToQString(font.fontFile()));
   }
 }
 
 void removeFontFromQFontDatabase(const string &fontFile) {
-  QFontDatabase fontDb;
   if (fontIds.find(fontFile) != fontIds.end()) {
-    fontDb.removeApplicationFont(fontIds[fontFile]);
+    QFontDatabase::removeApplicationFont(fontIds[fontFile]);
     fontIds.erase(fontFile);
   }
 }

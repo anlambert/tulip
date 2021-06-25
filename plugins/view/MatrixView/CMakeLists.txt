@@ -12,12 +12,12 @@ SET(LIB_SRCS
     MatrixViewConfigurationWidget.cpp GlMatrixBackgroundGrid.cpp
     MatrixViewQuickAccessBar.cpp)
 
-QTX_WRAP_UI(LIB_UI_HEADERS MatrixViewConfigurationWidget.ui)
+QT_WRAP_UI(LIB_UI_HEADERS MatrixViewConfigurationWidget.ui)
 
-QTX_WRAP_CPP(LIB_MOC_SRCS MatrixView.h MatrixViewConfigurationWidget.h
-             MatrixViewQuickAccessBar.h)
+QT_WRAP_CPP(LIB_MOC_SRCS MatrixView.h MatrixViewConfigurationWidget.h
+            MatrixViewQuickAccessBar.h)
 
-QTX_ADD_RESOURCES(LIB_RCC_SRCS MatrixView.qrc)
+QT_ADD_RESOURCES(LIB_RCC_SRCS MatrixView.qrc)
 
 TALIPOT_ADD_PLUGIN(
   NAME

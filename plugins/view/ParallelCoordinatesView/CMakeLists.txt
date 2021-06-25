@@ -31,12 +31,12 @@ SET(LIB_SRCS
     src/ParallelCoordinatesViewQuickAccessbar.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../utils/ViewGraphPropertiesSelectionWidget.cpp)
 
-QTX_WRAP_UI(
+QT_WRAP_UI(
   LIB_UI_HEADERS designer/ParallelCoordsDrawConfigWidget.ui
   designer/AxisSlidersOptions.ui
   ${CMAKE_CURRENT_SOURCE_DIR}/../utils/ViewGraphPropertiesSelectionWidget.ui)
 
-QTX_WRAP_CPP(
+QT_WRAP_CPP(
   LIB_MOC_SRCS
   include/ParallelCoordinatesView.h
   include/AxisConfigDialogs.h
@@ -45,7 +45,7 @@ QTX_WRAP_CPP(
   include/ParallelCoordinatesInteractors.h
   ${CMAKE_CURRENT_SOURCE_DIR}/../utils/ViewGraphPropertiesSelectionWidget.h)
 
-QTX_ADD_RESOURCES(LIB_RCC_SRCS resources/ParallelResource.qrc)
+QT_ADD_RESOURCES(LIB_RCC_SRCS resources/ParallelResource.qrc)
 
 TALIPOT_ADD_PLUGIN(
   NAME

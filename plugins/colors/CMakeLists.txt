@@ -5,9 +5,9 @@ INCLUDE_DIRECTORIES(
 IF(NOT TALIPOT_BUILD_CORE_ONLY)
   QTX_SET_INCLUDES_AND_DEFINITIONS()
 
-  QTX_WRAP_UI(ColorMapping_UI_SRCS DoubleStringsListRelationDialog.ui)
+  QT_WRAP_UI(ColorMapping_UI_SRCS DoubleStringsListRelationDialog.ui)
 
-  QTX_WRAP_CPP(ColorMapping_MOC_SRCS DoubleStringsListRelationDialog.h)
+  QT_WRAP_CPP(ColorMapping_MOC_SRCS DoubleStringsListRelationDialog.h)
 
   SET(ColorMapping_SRCS ColorMapping.cpp DoubleStringsListRelationDialog.cpp
                         ${ColorMapping_UI_SRCS} ${ColorMapping_MOC_SRCS})

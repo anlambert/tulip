@@ -4,9 +4,9 @@ INCLUDE_DIRECTORIES(
 
 SET(LIB_SRCS FisheyeInteractor.cpp FisheyeConfigWidget.cpp)
 
-QTX_WRAP_UI(LIB_UI_HEADERS FisheyeConfigWidget.ui)
+QT_WRAP_UI(LIB_UI_HEADERS FisheyeConfigWidget.ui)
 
-QTX_WRAP_CPP(LIB_MOC_SRCS)
+QT_WRAP_CPP(LIB_MOC_SRCS)
 
 TALIPOT_ADD_PLUGIN(
   NAME

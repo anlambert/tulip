@@ -812,7 +812,7 @@ bool SOMView::eventFilter(QObject *obj, QEvent *event) {
 
       if (me->button() == Qt::LeftButton) {
         vector<SOMPreviewComposite *> properties;
-        Coord screenCoords = Coord(me->x(), me->y());
+        Coord screenCoords = Coord(me->pos().x(), me->pos().y());
         Coord viewportCoords = getGlWidget()->screenToViewport(screenCoords);
         getPreviewsAtViewportCoord(viewportCoords.x(), viewportCoords.y(), properties);
 
@@ -827,7 +827,7 @@ bool SOMView::eventFilter(QObject *obj, QEvent *event) {
     if (event->type() == QMouseEvent::ToolTip) {
       auto *he = static_cast<QHelpEvent *>(event);
       vector<SOMPreviewComposite *> properties;
-      Coord screenCoords = Coord(he->x(), he->y(), 0.0f);
+      Coord screenCoords = Coord(he->pos().x(), he->pos().y(), 0.0f);
       Coord viewportCoords = getGlWidget()->screenToViewport(screenCoords);
       getPreviewsAtViewportCoord(viewportCoords.x(), viewportCoords.y(), properties);
 

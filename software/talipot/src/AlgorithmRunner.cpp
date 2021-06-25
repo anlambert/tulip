@@ -15,6 +15,7 @@
 
 #include "ExpandableGroupBox.h"
 
+#include <QActionGroup>
 #include <QDropEvent>
 #include <QPainter>
 #include <QToolButton>

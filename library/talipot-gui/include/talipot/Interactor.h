@@ -17,20 +17,20 @@
 #include <talipot/Plugin.h>
 #include <talipot/MaterialDesignIcons.h>
 
-#include <QObject>
+#include <QAction>
 #include <QCursor>
 #include <QMap>
+#include <QObject>
 
 #include <string>
 
-class QAction;
 class QLabel;
 
 namespace tlp {
 
-static const std::string INTERACTOR_CATEGORY = "Interactor";
-
 class View;
+
+static const std::string INTERACTOR_CATEGORY = "Interactor";
 
 /**
   @ingroup Plugins

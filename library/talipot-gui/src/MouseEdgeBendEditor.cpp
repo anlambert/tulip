@@ -72,7 +72,7 @@ bool MouseEdgeBendEditor::eventFilter(QObject *widget, QEvent *e) {
   if (e->type() == QEvent::MouseButtonDblClick && qMouseEv->button() == Qt::LeftButton &&
       haveSelection(glWidget)) {
     _operation = NEW_OP;
-    mMouseCreate(qMouseEv->x(), qMouseEv->y(), glWidget);
+    mMouseCreate(qMouseEv->pos().x(), qMouseEv->pos().y(), glWidget);
     return true;
   }
 
@@ -84,8 +84,8 @@ bool MouseEdgeBendEditor::eventFilter(QObject *widget, QEvent *e) {
     initProxies(glWidget);
     bool hasSelection = haveSelection(glWidget);
 
-    editPosition[0] = qMouseEv->x();
-    editPosition[1] = qMouseEv->y();
+    editPosition[0] = qMouseEv->pos().x();
+    editPosition[1] = qMouseEv->pos().y();
     editPosition[2] = 0;
 
     switch (qMouseEv->buttons()) {
@@ -153,7 +153,7 @@ bool MouseEdgeBendEditor::eventFilter(QObject *widget, QEvent *e) {
     if (selectedEntity == "targetTriangle") {
       SelectedEntity selectedEntity;
 
-      if (glWidget->pickNodesEdges(qMouseEv->x(), qMouseEv->y(), selectedEntity) &&
+      if (glWidget->pickNodesEdges(qMouseEv->pos().x(), qMouseEv->pos().y(), selectedEntity) &&
           selectedEntity.getEntityType() == SelectedEntity::NODE_SELECTED) {
         const auto &[src, tgt] = glWidget->getScene()->getGlGraph()->getGraph()->ends(mEdge);
         _graph->setEnds(mEdge, src, node(selectedEntity.getComplexEntityId()));
@@ -168,7 +168,7 @@ bool MouseEdgeBendEditor::eventFilter(QObject *widget, QEvent *e) {
     } else if (selectedEntity == "sourceCircle") {
       SelectedEntity selectedEntity;
 
-      if (glWidget->pickNodesEdges(qMouseEv->x(), qMouseEv->y(), selectedEntity) &&
+      if (glWidget->pickNodesEdges(qMouseEv->pos().x(), qMouseEv->pos().y(), selectedEntity) &&
           selectedEntity.getEntityType() == SelectedEntity::NODE_SELECTED) {
         const auto &[src, tgt] = glWidget->getScene()->getGlGraph()->getGraph()->ends(mEdge);
         _graph->setEnds(mEdge, node(selectedEntity.getComplexEntityId()), tgt);
@@ -191,7 +191,7 @@ bool MouseEdgeBendEditor::eventFilter(QObject *widget, QEvent *e) {
 
   if (e->type() == QEvent::MouseButtonPress) {
     vector<SelectedEntity> selectedEntities;
-    glWidget->pickGlEntities(qMouseEv->x(), qMouseEv->y(), selectedEntities);
+    glWidget->pickGlEntities(qMouseEv->pos().x(), qMouseEv->pos().y(), selectedEntities);
 
     if (!selectedEntities.empty()) {
       if (selectedEntities[0].getEntityType() == SelectedEntity::SIMPLE_ENTITY_SELECTED) {
@@ -205,7 +205,7 @@ bool MouseEdgeBendEditor::eventFilter(QObject *widget, QEvent *e) {
 
   if (e->type() == QEvent::MouseButtonRelease) {
     vector<SelectedEntity> selectedEntities;
-    glWidget->pickGlEntities(qMouseEv->x(), qMouseEv->y(), selectedEntities);
+    glWidget->pickGlEntities(qMouseEv->pos().x(), qMouseEv->pos().y(), selectedEntities);
 
     if (!selectedEntities.empty()) {
       if (selectedEntities[0].getEntityType() == SelectedEntity::SIMPLE_ENTITY_SELECTED) {
@@ -225,7 +225,7 @@ bool MouseEdgeBendEditor::eventFilter(QObject *widget, QEvent *e) {
 
       switch (_operation) {
       case TRANSLATE_OP:
-        mMouseTranslate(qMouseEv->x(), qMouseEv->y(), glWidget);
+        mMouseTranslate(qMouseEv->pos().x(), qMouseEv->pos().y(), glWidget);
         return true;
 
       default:
@@ -237,10 +237,10 @@ bool MouseEdgeBendEditor::eventFilter(QObject *widget, QEvent *e) {
 
       auto *g = static_cast<GlWidget *>(widget);
 
-      if (g->pickNodesEdges(qMouseEv->x(), qMouseEv->y(), selectedEntity) &&
+      if (g->pickNodesEdges(qMouseEv->pos().x(), qMouseEv->pos().y(), selectedEntity) &&
           selectedEntity.getEntityType() == SelectedEntity::NODE_SELECTED) {
         g->setCursor(Qt::CrossCursor);
-      } else if (g->pickGlEntities(qMouseEv->x(), qMouseEv->y(), selectedEntities)) {
+      } else if (g->pickGlEntities(qMouseEv->pos().x(), qMouseEv->pos().y(), selectedEntities)) {
         for (const auto &selection : selectedEntities) {
           if (!circlesComposite->findKey(selection.getEntity()).empty()) {
             g->setCursor(Qt::CrossCursor);

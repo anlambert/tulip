@@ -316,8 +316,8 @@ bool ThresholdInteractor::eventFilter(QObject *widget, QEvent *event) {
     // Update Camera for selection
     layer->set2DMode();
     glWidget->getScene()->addExistingLayer(layer);
-    glWidget->getScene()->selectEntities(RenderingEntities, me->x(), me->y(), 0, 0, layer,
-                                         selectedEntities);
+    glWidget->getScene()->selectEntities(RenderingEntities, me->pos().x(), me->pos().y(), 0, 0,
+                                         layer, selectedEntities);
     glWidget->getScene()->removeLayer(layer, false);
 
     if (!selectedEntities.empty()) {
@@ -351,7 +351,7 @@ bool ThresholdInteractor::eventFilter(QObject *widget, QEvent *event) {
         glWidget->setMouseTracking(true);
         startDrag = true;
         movingSlider->beginShift();
-        XPosCursor = me->x();
+        XPosCursor = me->pos().x();
         glWidget->getScene()->getGraphCamera().initGl();
 
         layer->setVisible(false);
@@ -368,8 +368,8 @@ bool ThresholdInteractor::eventFilter(QObject *widget, QEvent *event) {
 
   if (event->type() == QEvent::MouseMove) {
     if (startDrag) {
-      float xShift = me->x() - XPosCursor;
-      XPosCursor = me->x();
+      float xShift = me->pos().x() - XPosCursor;
+      XPosCursor = me->pos().x();
 
       if (xShift == 0) {
         return true;

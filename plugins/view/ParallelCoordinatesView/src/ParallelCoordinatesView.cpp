@@ -21,6 +21,7 @@
 #include <talipot/GlGraph.h>
 #include <talipot/TlpQtTools.h>
 
+#include <QActionGroup>
 #include <QKeyEvent>
 #include <QMenu>
 

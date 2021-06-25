@@ -82,7 +82,7 @@ private:
   Q_PROPERTY(int lowerPosition READ lowerPosition WRITE setLowerPosition)
   Q_PROPERTY(int upperPosition READ upperPosition WRITE setUpperPosition)
 
-  void initStyleOption(QStyleOptionSlider *option, RangeHandle handle = UpperHandle) const;
+  void initStyle(QStyleOptionSlider *option, RangeHandle handle = UpperHandle) const;
   int pick(const QPoint &pt) const {
     return orientation() == Qt::Horizontal ? pt.x() : pt.y();
   }

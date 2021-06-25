@@ -129,7 +129,7 @@ TARGET_LINK_LIBRARIES(talipot-about-page-utils ${QT_LIBRARIES})
 SET_TARGET_PROPERTIES(talipot-about-page-utils
                       PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-QTX_WRAP_UI(
+QT_WRAP_UI(
   UI_HEADERS
   ../designer/AboutPage.ui
   ../designer/ColorScaleConfigDialog.ui
@@ -161,7 +161,7 @@ QTX_WRAP_UI(
   ../designer/InteractorConfigWidget.ui
   ../designer/HeaderFrame.ui)
 
-QTX_WRAP_CPP(
+QT_WRAP_CPP(
   MOC_SRCS
   ../include/talipot/AboutPage.h
   ../include/talipot/CaptionGraphicsItem.h
@@ -224,9 +224,18 @@ QTX_WRAP_CPP(
   ../include/talipot/FontIconDialog.h
   ../include/talipot/ShapeDialog.h
   ../include/talipot/ViewActionsManager.h
-  ../include/talipot/ViewToolTipAndUrlManager.h)
+  ../include/talipot/ViewToolTipAndUrlManager.h
+  OPTIONS
+  -b
+  <talipot/Graph.h>
+  -b
+  <talipot/Interactor.h>
+  -b
+  <talipot/View.h>
+  -b
+  <talipot/WorkspacePanel.h>)
 
-QTX_ADD_RESOURCES(RCC_SRCS ../resources/TalipotGUIResource.qrc)
+QT_ADD_RESOURCES(RCC_SRCS ../resources/TalipotGUIResource.qrc)
 
 INCLUDE_DIRECTORIES(
   ${TalipotGUIBuildInclude}

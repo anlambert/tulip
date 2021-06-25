@@ -119,7 +119,7 @@ ConvolutionClusteringSetup::ConvolutionClusteringSetup(ConvolutionClustering *co
   _ui->setupUi(this);
   histogramWidget = new HistogramWidget(this, _ui->Frame3);
   auto *flayout = new QGridLayout(_ui->Frame3);
-  flayout->setMargin(1);
+  flayout->setContentsMargins(1, 1, 1, 1);
   flayout->addWidget(histogramWidget, 0, 0);
 
   int a, b, c;
@@ -130,6 +130,17 @@ ConvolutionClusteringSetup::ConvolutionClusteringSetup(ConvolutionClustering *co
   _ui->discretizationSlider->setMinimum(1);
   _ui->discretizationSlider->setMaximum(2 * a);
   _ui->discretizationSlider->setValue(a);
+
+  connect(_ui->widthSlider, &QSlider::valueChanged, this, QOverload<>::of(&QDialog::update));
+  connect(_ui->okButton, &QPushButton::pressed, this, QOverload<>::of(&QDialog::accept));
+  connect(_ui->cancelButton, &QPushButton::pressed, this, QOverload<>::of(&QDialog::reject));
+  connect(_ui->discretizationSlider, &QSlider::valueChanged, this,
+          QOverload<>::of(&QDialog::update));
+  connect(_ui->discretizationSlider, &QSlider::valueChanged, _ui->LCDNumber1_3,
+          QOverload<int>::of(&QLCDNumber::display));
+  connect(_ui->CheckBox1, &QCheckBox::toggled, this, &ConvolutionClusteringSetup::setlog);
+  connect(_ui->widthSlider, &QSlider::valueChanged, _ui->LCDNumber1,
+          QOverload<int>::of(&QLCDNumber::display));
 }
 
 ConvolutionClusteringSetup::~ConvolutionClusteringSetup() {

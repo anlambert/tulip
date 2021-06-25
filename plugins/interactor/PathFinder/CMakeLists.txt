@@ -15,11 +15,11 @@ SET(LIB_SRCS
     highlighters/PathHighlighter.cpp
     highlighters/ZoomAndPanHighlighter.cpp)
 
-QTX_WRAP_UI(LIB_UI_HEADERS designer/EnclosingCircleConfiguration.ui
-            designer/PathFinderConfiguration.ui)
+QT_WRAP_UI(LIB_UI_HEADERS designer/EnclosingCircleConfiguration.ui
+           designer/PathFinderConfiguration.ui)
 
-QTX_WRAP_CPP(LIB_MOC_SRCS PathFinderConfigurationWidget.h PathFinder.h
-             highlighters/EnclosingCircleHighlighter.h)
+QT_WRAP_CPP(LIB_MOC_SRCS PathFinderConfigurationWidget.h PathFinder.h
+            highlighters/EnclosingCircleHighlighter.h)
 
 TALIPOT_ADD_PLUGIN(
   NAME

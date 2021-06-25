@@ -139,7 +139,7 @@ bool GeographicViewShowElementInfo::eventFilter(QObject *widget, QEvent *e) {
     SelectedEntity selectedEntity;
 
     if (e->type() == QEvent::MouseMove) {
-      if (pick(qMouseEv->x(), qMouseEv->y(), selectedEntity)) {
+      if (pick(qMouseEv->pos().x(), qMouseEv->pos().y(), selectedEntity)) {
         geoView->getGeographicViewGraphicsView()->getGlWidget()->setCursor(Qt::WhatsThisCursor);
       } else {
         geoView->getGeographicViewGraphicsView()->getGlWidget()->setCursor(QCursor());
@@ -155,7 +155,7 @@ bool GeographicViewShowElementInfo::eventFilter(QObject *widget, QEvent *e) {
       if (!_informationWidgetItem->isVisible()) {
 
         // Show widget if we click on node or edge
-        if (pick(qMouseEv->x(), qMouseEv->y(), selectedEntity)) {
+        if (pick(qMouseEv->pos().x(), qMouseEv->pos().y(), selectedEntity)) {
           if (selectedEntity.getEntityType() == SelectedEntity::NODE_SELECTED ||
               selectedEntity.getEntityType() == SelectedEntity::EDGE_SELECTED) {
             _informationWidgetItem->setVisible(true);

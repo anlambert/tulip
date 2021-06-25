@@ -23,6 +23,8 @@
 #include <talipot/EdgeExtremityGlyph.h>
 #include <talipot/TlpQtTools.h>
 
+#include <QRegularExpression>
+
 using namespace std;
 using namespace tlp;
 
@@ -294,18 +296,18 @@ void AutoCompletionDataBase::analyseCurrentScriptCode(const QString &code, const
 
   QTextStream in(&codeCp);
 
-  QRegExp importRegexp("^import[ \t]+[A-Za-z_][A-Za-z0-9_]*.*$");
-  QRegExp globalVarRegexp("^global[ \t]+[A-Za-z_][A-Za-z0-9_]*.*$");
-  QRegExp varAssignRegexp("^[a-zA-Z_][a-zA-Z0-9_.]*[ \t]*=[ \t]*.*$");
-  QRegExp forRegexp("^for[ \t]+[a-zA-Z_][a-zA-Z0-9_]*[ \t]+in[ \t]+.*:$");
-  QRegExp funcRegexp("^def[ \t]+[A-Za-z_][A-Za-z0-9_]+\\(.*\\)[ \t]*:$");
-  QRegExp classRegexp("^class[ \t]+[A-Za-z_][A-Za-z0-9_]*.*:$");
-  QRegExp methodCallRegexp("[A-Za-z_][A-Za-z0-9_]*\\.[A-Za-z_][A-Za-z0-9_]*\\(.*\\)");
-  QRegExp pluginDataSetRegexp(
+  QRegularExpression importRegexp("^import[ \t]+[A-Za-z_][A-Za-z0-9_]*.*$");
+  QRegularExpression globalVarRegexp("^global[ \t]+[A-Za-z_][A-Za-z0-9_]*.*$");
+  QRegularExpression varAssignRegexp("^[a-zA-Z_][a-zA-Z0-9_.]*[ \t]*=[ \t]*.*$");
+  QRegularExpression forRegexp("^for[ \t]+[a-zA-Z_][a-zA-Z0-9_]*[ \t]+in[ \t]+.*:$");
+  QRegularExpression funcRegexp("^def[ \t]+[A-Za-z_][A-Za-z0-9_]+\\(.*\\)[ \t]*:$");
+  QRegularExpression classRegexp("^class[ \t]+[A-Za-z_][A-Za-z0-9_]*.*:$");
+  QRegularExpression methodCallRegexp("[A-Za-z_][A-Za-z0-9_]*\\.[A-Za-z_][A-Za-z0-9_]*\\(.*\\)");
+  QRegularExpression pluginDataSetRegexp(
       "^[a-zA-Z_][a-zA-Z0-9_]*[ \t]*=[ \t]*tlp\\.getDefaultPluginParameters\\(.*\\).*$");
-  QRegExp graphPropRegexp("\\w+\\[\".+\"\\]");
-  QRegExp graphPropAccessRegexp("\\w+\\[\".+\"\\]\\[.+\\]");
-  QRegExp graphPropAccessRegexp2("\\w+\\[.+\\]");
+  QRegularExpression graphPropRegexp("\\w+\\[\".+\"\\]");
+  QRegularExpression graphPropAccessRegexp("\\w+\\[\".+\"\\]\\[.+\\]");
+  QRegularExpression graphPropAccessRegexp2("\\w+\\[.+\\]");
 
   QString currentClassName = "";
   QString currentFunctionName = "global";
@@ -340,7 +342,7 @@ void AutoCompletionDataBase::analyseCurrentScriptCode(const QString &code, const
       fullName = currentClassName + "." + fullName;
     }
 
-    if (ln < currentLine && pluginDataSetRegexp.indexIn(line) != -1) {
+    if (ln < currentLine && line.indexOf(pluginDataSetRegexp) != -1) {
       QString varName = line.mid(0, line.indexOf('=')).trimmed();
       QString pattern = "getDefaultPluginParameters(";
       int pos = line.indexOf(pattern);
@@ -382,10 +384,10 @@ void AutoCompletionDataBase::analyseCurrentScriptCode(const QString &code, const
       }
     }
 
-    if (methodCallRegexp.indexIn(line) != -1) {
-      QString expr = line.mid(methodCallRegexp.indexIn(line),
-                              line.indexOf('(', methodCallRegexp.indexIn(line)) -
-                                  methodCallRegexp.indexIn(line));
+    if (line.indexOf(methodCallRegexp) != -1) {
+      QString expr = line.mid(line.indexOf(methodCallRegexp),
+                              line.indexOf('(', line.indexOf(methodCallRegexp)) -
+                                  line.indexOf(methodCallRegexp));
       QStringList parts = expr.split(".");
       QString varName = parts.at(0);
       QString funcName = parts.at(1);
@@ -404,7 +406,7 @@ void AutoCompletionDataBase::analyseCurrentScriptCode(const QString &code, const
       _globalAutoCompletionList.insert(funcName);
     }
 
-    if (ln < currentLine && varAssignRegexp.indexIn(line) != -1) {
+    if (ln < currentLine && line.indexOf(varAssignRegexp) != -1) {
       QString varName = line.mid(0, line.indexOf('=')).trimmed();
       QString expr = line.mid(line.indexOf('=') + 1).trimmed();
 
@@ -466,9 +468,9 @@ void AutoCompletionDataBase::analyseCurrentScriptCode(const QString &code, const
       continue;
     }
 
-    if (ln < currentLine && forRegexp.indexIn(line) != -1) {
+    if (ln < currentLine && line.indexOf(forRegexp) != -1) {
       QString varName = line.mid(4).trimmed();
-      varName = varName.mid(0, varName.indexOf(QRegExp("\\bin\\b"))).trimmed();
+      varName = varName.mid(0, varName.indexOf(QRegularExpression("\\bin\\b"))).trimmed();
 
       if (currentFunctionName == "global") {
         _globalAutoCompletionList.insert(varName);
@@ -476,7 +478,7 @@ void AutoCompletionDataBase::analyseCurrentScriptCode(const QString &code, const
         _functionAutoCompletionList[fullName].insert(varName);
       }
 
-      QString expr = line.mid(line.indexOf(QRegExp("\\bin\\b")) + 3).trimmed();
+      QString expr = line.mid(line.indexOf(QRegularExpression("\\bin\\b")) + 3).trimmed();
       expr = expr.mid(0, expr.indexOf(":")).trimmed();
 
       QString type = findTypeForExpr(expr, fullName);
@@ -505,7 +507,7 @@ void AutoCompletionDataBase::analyseCurrentScriptCode(const QString &code, const
       continue;
     }
 
-    if (funcRegexp.indexIn(line) != -1) {
+    if (line.indexOf(funcRegexp) != -1) {
       QString funcName = line.mid(0, line.indexOf('('));
       funcName = funcName.mid(4, line.indexOf('(')).trimmed();
       currentFunctionName = funcName;
@@ -535,13 +537,15 @@ void AutoCompletionDataBase::analyseCurrentScriptCode(const QString &code, const
           QString withParamsFull = currentClassName + "." + withParams;
 
           if (!withParams.startsWith("__")) {
-            withParamsFull = withParamsFull.replace(QRegExp("[ \t]*self[ \t]*,[ \t]*"), "");
-            withParamsFull = withParamsFull.replace(QRegExp("[ \t]*self[ \t]*"), "");
+            withParamsFull =
+                withParamsFull.replace(QRegularExpression("[ \t]*self[ \t]*,[ \t]*"), "");
+            withParamsFull = withParamsFull.replace(QRegularExpression("[ \t]*self[ \t]*"), "");
           } else if (withParams.startsWith("__init__")) {
             _apiDb->addApiEntry(moduleName + "." + withParamsFull);
+            withParamsFull = withParamsFull.replace(
+                QRegularExpression(".__init__\\([ \t]*self[ \t]*,[ \t]*"), "(");
             withParamsFull =
-                withParamsFull.replace(QRegExp(".__init__\\([ \t]*self[ \t]*,[ \t]*"), "(");
-            withParamsFull = withParamsFull.replace(QRegExp(".__init__\\([ \t]*self[ \t]*"), "(");
+                withParamsFull.replace(QRegularExpression(".__init__\\([ \t]*self[ \t]*"), "(");
           }
 
           withParams = withParamsFull;
@@ -581,19 +585,19 @@ void AutoCompletionDataBase::analyseCurrentScriptCode(const QString &code, const
       continue;
     }
 
-    if (globalVarRegexp.indexIn(line) != -1) {
+    if (line.indexOf(globalVarRegexp) != -1) {
       QString varName = line.mid(7).trimmed();
       _globalAutoCompletionList.insert(varName);
       continue;
     }
 
-    if (importRegexp.indexIn(line) != -1) {
+    if (line.indexOf(importRegexp) != -1) {
       QString varName = line.mid(7).trimmed();
       _globalAutoCompletionList.insert(varName);
       continue;
     }
 
-    if (classRegexp.indexIn(line) != -1) {
+    if (line.indexOf(classRegexp) != -1) {
       QString className = line;
       int pos = className.indexOf('(');
 
@@ -634,8 +638,9 @@ void AutoCompletionDataBase::analyseCurrentScriptCode(const QString &code, const
       continue;
     }
 
-    if (_graph && graphPropRegexp.indexIn(line) != -1) {
-      QString expr = line.mid(graphPropRegexp.indexIn(line), graphPropRegexp.matchedLength());
+    if (_graph && line.indexOf(graphPropRegexp) != -1) {
+      QRegularExpressionMatch match;
+      QString expr = line.mid(line.indexOf(graphPropRegexp, 0, &match), match.capturedLength());
       QString varName = expr.mid(0, expr.indexOf("["));
       QString propName =
           expr.mid(expr.indexOf("\"") + 1, expr.lastIndexOf("\"") - expr.indexOf("\"") - 1);
@@ -653,9 +658,10 @@ void AutoCompletionDataBase::analyseCurrentScriptCode(const QString &code, const
       }
     }
 
-    if (_graph && graphPropAccessRegexp.indexIn(line) != -1) {
+    if (_graph && line.indexOf(graphPropAccessRegexp) != -1) {
+      QRegularExpressionMatch match;
       QString expr =
-          line.mid(graphPropAccessRegexp.indexIn(line), graphPropAccessRegexp.matchedLength());
+          line.mid(line.indexOf(graphPropAccessRegexp, 0, &match), match.capturedLength());
       int pos = expr.indexOf("[");
       QString varName = expr.mid(0, pos);
       QString propName =
@@ -687,9 +693,10 @@ void AutoCompletionDataBase::analyseCurrentScriptCode(const QString &code, const
       }
     }
 
-    if (graphPropAccessRegexp2.indexIn(line) != -1) {
+    if (line.indexOf(graphPropAccessRegexp2) != -1) {
+      QRegularExpressionMatch match;
       QString expr =
-          line.mid(graphPropAccessRegexp2.indexIn(line), graphPropAccessRegexp2.matchedLength());
+          line.mid(line.indexOf(graphPropAccessRegexp2, 0, &match), match.capturedLength());
       int pos = expr.indexOf("[");
       QString varName = expr.mid(0, pos);
       QString varName2 = expr.mid(pos + 1, expr.lastIndexOf("]") - pos - 1);

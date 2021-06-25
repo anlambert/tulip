@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (C) 2019-2020  The Talipot developers
+ * Copyright (C) 2019-2021  The Talipot developers
  *
  * Talipot is a fork of Tulip, created by David Auber
  * and the Tulip development Team from LaBRI, University of Bordeaux
@@ -14,6 +14,7 @@
 #ifndef TALIPOT_PYTHON_CODE_HIGHLIGHTER_H
 #define TALIPOT_PYTHON_CODE_HIGHLIGHTER_H
 
+#include <QRegularExpression>
 #include <QSyntaxHighlighter>
 
 #include <QHash>
@@ -24,7 +25,7 @@ class QTextDocument;
 class PythonCodeHighlighter : public QSyntaxHighlighter {
 
   struct HighlightingRule {
-    QRegExp pattern;
+    QRegularExpression pattern;
     QTextCharFormat format;
   };
 
@@ -52,8 +53,8 @@ public:
 protected:
   void highlightBlock(const QString &text) override;
 
-  bool highlightMultilineString(const QString &text, const QRegExp &delimiter, const int inState,
-                                const QTextCharFormat &style);
+  bool highlightMultilineString(const QString &text, const QRegularExpression &delimiter,
+                                const int inState, const QTextCharFormat &style);
 };
 
 #endif // TALIPOT_PYTHON_CODE_HIGHLIGHTER_H

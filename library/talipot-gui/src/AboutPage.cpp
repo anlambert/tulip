@@ -129,13 +129,17 @@ AboutPage::AboutPage(QWidget *parent) : QWidget(parent), _ui(new Ui::AboutPage()
 
   if (authorsFile.open(QFile::ReadOnly | QFile::Text)) {
     QTextStream in(&authorsFile);
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     in.setCodec("UTF-8");
+#endif
     _ui->authorsTextEdit->setText(in.readAll());
   }
 
   if (licenseFile.open(QFile::ReadOnly | QFile::Text)) {
     QTextStream in(&licenseFile);
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     in.setCodec("UTF-8");
+#endif
     _ui->licenseTextEdit->setText(in.readAll());
   }
 }

@@ -19,6 +19,7 @@
 #include <QXmlStreamReader>
 #include <QMainWindow>
 #include <QCryptographicHash>
+#include <QRegularExpression>
 
 #include <talipot/Algorithm.h>
 #include <talipot/Project.h>
@@ -56,8 +57,8 @@ static QString cleanPropertyName(const QString &propertyName) {
   ret.replace(' ', '_');
 
   // check if the name is only numbers and prefix it by prop_ if necessary
-  QRegExp re("\\d*"); // a digit (\d), zero or more times (*)
-  if (re.exactMatch(ret)) {
+  static QRegularExpression re("\\d*"); // a digit (\d), zero or more times (*)
+  if (re.match(ret).hasMatch()) {
     ret.insert(0, "prop_");
   }
   int i = 0;
@@ -743,13 +744,14 @@ static bool checkAndGetPluginInfoFromSrcCode(const QString &pluginCode, QString 
   int idx1 = pluginCode.indexOf(s);
 
   if (idx1 != -1) {
-    QRegExp rx("class ([a-zA-Z_][a-zA-Z0-9_]*)\\(([^,\\(\\)]+)\\)");
+    QRegularExpression rx("class ([a-zA-Z_][a-zA-Z0-9_]*)\\(([^,\\(\\)]+)\\)");
+    QRegularExpressionMatch match;
 
-    int pos = rx.indexIn(pluginCode);
+    int pos = pluginCode.indexOf(rx, 0, &match);
 
     while (pos != -1) {
-      pluginClassName = rx.cap(1);
-      pluginClass = rx.cap(2);
+      pluginClassName = match.captured(1);
+      pluginClass = match.captured(2);
 
       if (pluginClass == "tlp.Algorithm") {
         pluginType = "General";
@@ -777,20 +779,20 @@ static bool checkAndGetPluginInfoFromSrcCode(const QString &pluginCode, QString 
         break;
       }
 
-      pos = rx.indexIn(pluginCode, pos + rx.matchedLength());
+      pos = pluginCode.indexOf(rx, pos + match.capturedLength(), &match);
     }
 
-    rx.setPattern("^.*pluginName=['\"]([^,]+)['\"],.*$");
+    rx.setPattern("pluginName=['\"]([^,]+)['\"],");
 
-    if (rx.indexIn(pluginCode) != -1) {
-      pluginName = rx.cap(1);
+    if (pluginCode.indexOf(rx, 0, &match) != -1) {
+      pluginName = match.captured(1);
       return true;
     }
 
-    rx.setPattern("^.*registerPlugin.*\\(.*['\"]([^,]+)['\"],.*$");
+    rx.setPattern("registerPlugin.*\\(.*['\"]([^,]+)['\"],");
 
-    if (rx.indexIn(pluginCode) != -1) {
-      pluginName = rx.cap(1);
+    if (pluginCode.indexOf(rx, 0, &match) != -1) {
+      pluginName = match.captured(1);
       return true;
     }
   }
@@ -1071,8 +1073,8 @@ void PythonIDE::removePythonPlugin() {
 }
 
 bool PythonIDE::indicateErrors() const {
-  QRegExp rx("^.*File.*\"(.*)\".*line.*(\\d+).*$");
-  QRegExp rx2("^.*File.*\"(.*)\".*line.*(\\d+).*in (.*)$");
+  static QRegularExpression rx("^.*File.*\"(.*)\".*line.*(\\d+).*$");
+  QRegularExpressionMatch match;
 
   QMap<QString, QVector<int>> errorLines;
   QString consoleOutput = _pythonInterpreter->getStandardErrorOutput();
@@ -1081,17 +1083,15 @@ bool PythonIDE::indicateErrors() const {
   for (int i = 0; i < outputLines.count() - 1; ++i) {
     int pos = 0;
 
-    while ((pos = rx.indexIn(outputLines[i], pos)) != -1) {
-      rx2.indexIn(outputLines[i], pos);
-
-      QString file = rx.cap(1);
+    while ((pos = outputLines[i].indexOf(rx, pos, &match)) != -1) {
+      QString file = match.captured(1);
 #ifdef WIN32
       file.replace("\\", "/");
 #endif
-      int line = rx.cap(2).toInt();
+      int line = match.captured(2).toInt();
       errorLines[file].push_back(line);
 
-      pos += rx.matchedLength();
+      pos += match.capturedLength();
     }
   }
 
