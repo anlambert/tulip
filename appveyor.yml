@@ -3,17 +3,17 @@
 # define build jobs
 environment:
   matrix:
-    # Windows MSYS2 GCC core build
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
-      MSYS2_ARCH: x86_64
-      MSYSTEM: MINGW64
-      BUILD_WHEELS: "false"
+    # # Windows MSYS2 GCC core build
+    # - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+    #   MSYS2_ARCH: x86_64
+    #   MSYSTEM: MINGW64
+    #   BUILD_WHEELS: "false"
 
-    # Windows MSYS2 GCC complete build
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
-      MSYS2_ARCH: x86_64
-      MSYSTEM: MINGW64
-      BUILD_WHEELS: "false"
+    # # Windows MSYS2 GCC complete build
+    # - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+    #   MSYS2_ARCH: x86_64
+    #   MSYSTEM: MINGW64
+    #   BUILD_WHEELS: "false"
 
     # # MacOS core build
     # - APPVEYOR_BUILD_WORKER_IMAGE: macos-mojave
@@ -22,6 +22,20 @@ environment:
     # # MacOS complete build
     # - APPVEYOR_BUILD_WORKER_IMAGE: macos-mojave
     #   BUILD_WHEELS: "false"
+
+    # Windows MSVC core build
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      CMAKE_VS_GENERATOR: Visual Studio 16 2019
+      MSVC_ARCH: x64
+      QT5_DIR: C:/Qt/5.15/msvc2019_64
+      PYTHON_EXECUTABLE: C:/Python39-x64/python.exe
+
+    # Windows MSVC complete build
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      CMAKE_VS_GENERATOR: Visual Studio 16 2019
+      MSVC_ARCH: x64
+      QT5_DIR: C:/Qt/5.15/msvc2019_64
+      PYTHON_EXECUTABLE: C:/Python39-x64/python.exe
 
     # Windows MSYS2 GCC Python wheels build
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
@@ -50,20 +64,6 @@ environment:
           dg57bgn2mRZWfK+3qBUPIhzaH5PqJ7FW4qKADpiANyHs+8EES
           sxXIe/QPXpqPeAjbwdrcJ7QmL2vIllXthlGgryWyg62ZE6kIy
           Dy+jye9nWLq
-
-    # Windows MSVC core build
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
-      CMAKE_VS_GENERATOR: Visual Studio 16 2019
-      MSVC_ARCH: x64
-      QT5_DIR: C:/Qt/5.15/msvc2019_64
-      PYTHON_EXECUTABLE: C:/Python39-x64/python.exe
-
-    # Windows MSVC complete build
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
-      CMAKE_VS_GENERATOR: Visual Studio 16 2019
-      MSVC_ARCH: x64
-      QT5_DIR: C:/Qt/5.15/msvc2019_64
-      PYTHON_EXECUTABLE: C:/Python39-x64/python.exe
 
 # build jobs configuration according to OS
 for:
