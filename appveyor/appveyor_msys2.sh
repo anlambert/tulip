@@ -33,21 +33,22 @@ pacman --noconfirm -S --needed \
   mingw-w64-$MSYS2_ARCH-python \
   mingw-w64-$MSYS2_ARCH-cppunit
 
+# Install Talipot complete build dependencies
+pacman --noconfirm -S --needed \
+  mingw-w64-$MSYS2_ARCH-fontconfig \
+  mingw-w64-$MSYS2_ARCH-freetype \
+  mingw-w64-$MSYS2_ARCH-fribidi \
+  mingw-w64-$MSYS2_ARCH-glew \
+  mingw-w64-$MSYS2_ARCH-qt5 \
+  mingw-w64-$MSYS2_ARCH-quazip \
+  mingw-w64-$MSYS2_ARCH-qtwebkit \
+  mingw-w64-$MSYS2_ARCH-python-sphinx \
+  mingw-w64-$MSYS2_ARCH-python-packaging
+
 export TALIPOT_BUILD_DOC=OFF
 
 if [[ "$TALIPOT_BUILD_CORE_ONLY" == "0" ]]
 then
-  # Install Talipot complete build dependencies
-  pacman --noconfirm -S --needed \
-    mingw-w64-$MSYS2_ARCH-fontconfig \
-    mingw-w64-$MSYS2_ARCH-freetype \
-    mingw-w64-$MSYS2_ARCH-fribidi \
-    mingw-w64-$MSYS2_ARCH-glew \
-    mingw-w64-$MSYS2_ARCH-qt5 \
-    mingw-w64-$MSYS2_ARCH-quazip \
-    mingw-w64-$MSYS2_ARCH-qtwebkit \
-    mingw-w64-$MSYS2_ARCH-python-sphinx \
-    mingw-w64-$MSYS2_ARCH-python-packaging
   export TALIPOT_BUILD_DOC=ON
 fi
 
