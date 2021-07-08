@@ -64,5 +64,11 @@ string FontAwesome::getIconFamily(const string &iconName) {
 }
 
 string FontAwesome::getIconUtf8String(const string &iconName) {
-  return utf32to8(u32string(1, static_cast<char32_t>(iconCodePoint.at(iconName))));
+  try {
+    return utf32to8(u32string(1, static_cast<char32_t>(iconCodePoint.at(iconName))));
+  } catch (std::out_of_range &) {
+    tlp::warning() << iconName << " icon does not exist, falling back to "
+                   << FontAwesome::Solid::QuestionCircle << std::endl;
+    return getIconUtf8String(FontAwesome::Solid::QuestionCircle);
+  }
 }
